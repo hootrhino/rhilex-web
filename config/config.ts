@@ -39,7 +39,7 @@ export default defineConfig({
   theme: {
     // 如果不想要 configProvide 动态设置主题需要把这个设置为 default
     // 只有设置为 variable， 才能使用 configProvide 动态设置主色调
-    'root-entry-name': 'variable',
+    'root-entry-name': 'variable，',
   },
   /**
    * @name moment 的国际化配置
@@ -47,14 +47,7 @@ export default defineConfig({
    * @doc https://umijs.org/docs/api/config#ignoremomentlocale
    */
   ignoreMomentLocale: true,
-  /**
-   * @name 代理配置
-   * @description 可以让你的本地服务器代理到你的服务器上，这样你就可以访问服务器的数据了
-   * @see 要注意以下 代理只能在本地开发时使用，build 之后就无法使用了。
-   * @doc 代理介绍 https://umijs.org/docs/guides/proxy
-   * @doc 代理配置 https://umijs.org/docs/api/config#proxy
-   */
-  proxy: proxy[REACT_APP_ENV as keyof typeof proxy],
+  proxy: proxy[(REACT_APP_ENV as keyof typeof proxy) || 'dev'],
   /**
    * @name 快速热更新配置
    * @description 一个不错的热更新组件，更新时可以保留 state
@@ -72,15 +65,13 @@ export default defineConfig({
    * @doc https://umijs.org/docs/max/data-flow#%E5%85%A8%E5%B1%80%E5%88%9D%E5%A7%8B%E7%8A%B6%E6%80%81
    */
   initialState: {},
+  title: defaultSettings.title as string,
   /**
    * @name layout 插件
    * @doc https://umijs.org/docs/max/layout-menu
    */
-  title: 'Ant Design Pro',
-  layout: {
-    locale: true,
-    ...defaultSettings,
-  },
+  // title: 'Ant Design Pro',
+  layout: defaultSettings,
   /**
    * @name moment2dayjs 插件
    * @description 将项目中的 moment 替换为 dayjs
@@ -137,8 +128,6 @@ export default defineConfig({
   openAPI: [
     {
       requestLibPath: "import { request } from '@umijs/max'",
-      // 或者使用在线的版本
-      // schemaPath: "https://gw.alipayobjects.com/os/antfincdn/M%24jrzTTYJN/oneapi.json"
       schemaPath: join(__dirname, 'oneapi.json'),
       mock: false,
     },

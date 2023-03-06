@@ -1,9 +1,9 @@
 import { outLogin } from '@/services/ant-design-pro/api';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { setAlpha } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { history, useModel } from '@umijs/max';
 import { Avatar, Spin } from 'antd';
-import { setAlpha } from '@ant-design/pro-components';
 import { stringify } from 'querystring';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import React, { useCallback } from 'react';
@@ -26,6 +26,7 @@ const Name = () => {
       lineHeight: '48px',
       whiteSpace: 'nowrap',
       textOverflow: 'ellipsis',
+      color: '#fff',
       [`@media only screen and (max-width: ${token.screenMD}px)`]: {
         display: 'none',
       },
