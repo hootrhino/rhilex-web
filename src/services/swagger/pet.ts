@@ -72,16 +72,12 @@ export async function updatePetWithForm(
 /** Deletes a pet DELETE /pet/${param0} */
 export async function deletePet(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.deletePetParams & {
-    // header
-    api_key?: string;
-  },
+  params: API.deletePetParams,
   options?: { [key: string]: any },
 ) {
   const { petId: param0, ...queryParams } = params;
   return request<any>(`/pet/${param0}`, {
     method: 'DELETE',
-    headers: {},
     params: { ...queryParams },
     ...(options || {}),
   });
