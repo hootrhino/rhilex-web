@@ -38,19 +38,19 @@ export default [
         redirect: '/sources/list',
       },
       {
-        path: 'list',
-        name: '资源管理列表',
+        path: '/sources/list',
+        name: '资源列表',
         component: './Sources',
         hideInMenu: true,
       },
       {
-        path: 'new',
+        path: '/sources/new',
         name: '新建',
         component: './Sources/components/UpdateForm',
         hideInMenu: true,
       },
       {
-        path: 'edit/:id',
+        path: '/sources/edit/:id',
         name: '编辑',
         component: './Sources/components/UpdateForm',
         hideInMenu: true,
@@ -61,13 +61,35 @@ export default [
     path: '/rules',
     name: '规则管理',
     icon: 'profile',
-    component: './Rules',
+    routes: [
+      {
+        path: '/rules',
+        redirect: '/rules/list',
+      },
+      {
+        path: '/rules/list',
+        name: '规则列表',
+        component: './Rules',
+        hideInMenu: true,
+      },
+    ],
   },
   {
     path: '/targets',
     name: '目标管理',
     icon: 'api',
-    component: './Targets',
+    routes: [
+      {
+        path: '/targets',
+        redirect: '/targets/list',
+      },
+      {
+        path: '/targets/list',
+        name: '目标列表',
+        component: './Targets',
+        hideInMenu: true,
+      },
+    ],
   },
   {
     path: '/devices',
@@ -79,19 +101,19 @@ export default [
         redirect: '/devices/list',
       },
       {
-        path: 'list',
-        name: '设备管理列表',
+        path: '/devices/list',
+        name: '设备列表',
         component: './Devices',
         hideInMenu: true,
       },
       {
-        path: 'new',
+        path: '/devices/new',
         name: '新建',
         component: './Devices/components/UpdateForm',
         hideInMenu: true,
       },
       {
-        path: 'edit/:id',
+        path: '/devices/edit/:id',
         name: '编辑',
         component: './Devices/components/UpdateForm',
         hideInMenu: true,
@@ -102,43 +124,36 @@ export default [
     path: '/plugins',
     name: '插件管理',
     icon: 'control',
-    component: './Plugins',
+    routes: [
+      {
+        path: '/plugins',
+        redirect: '/plugins/list',
+      },
+      {
+        path: '/plugins/list',
+        name: '插件列表',
+        component: './Plugins',
+        hideInMenu: true,
+      },
+    ],
   },
   {
     path: '/drives',
     name: '驱动管理',
     icon: 'setting',
-    component: './Drives',
+    routes: [
+      {
+        path: '/drives',
+        redirect: '/drives/list',
+      },
+      {
+        path: '/drives/list',
+        name: '驱动列表',
+        component: './Drives',
+        hideInMenu: true,
+      },
+    ],
   },
-  // {
-  //   path: '/welcome',
-  //   name: 'welcome',
-  //   icon: 'smile',
-  //   component: './Welcome',
-  // },
-  // {
-  //   path: '/admin',
-  //   name: 'admin',
-  //   icon: 'crown',
-  //   access: 'canAdmin',
-  //   routes: [
-  //     {
-  //       path: '/admin',
-  //       redirect: '/admin/sub-page',
-  //     },
-  //     {
-  //       path: '/admin/sub-page',
-  //       name: 'sub-page',
-  //       component: './Admin',
-  //     },
-  //   ],
-  // },
-  // {
-  //   name: 'list.table-list',
-  //   icon: 'table',
-  //   path: '/list',
-  //   component: './TableList',
-  // },
   {
     path: '/',
     redirect: '/dashboard',

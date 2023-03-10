@@ -1,22 +1,91 @@
+# **/*.svg
+# .umi
+# .umi-production
+# /dist
+# .dockerignore
+# .DS_Store
+# .eslintignore
+# *.png
+# *.toml
+# docker
+# .editorconfig
+# Dockerfile*
+# .gitignore
+# .prettierignore
+# LICENSE
+# .eslintcache
+# *.lock
+# yarn-error.log
+# .history
+# CNAME
+# /build
+# /public
+.husky
+build
+coverage
+dist
+es
+lib
+lambda
+public
+node_modules
+.yarn
+.history
+mock
+scripts
+demo
+demos
+example
+examples
+template
+templates
+
+**/.umi
+**/.umi-production
+**/services
+
+**/*.min.js
+**/*-min.js
+**/*.bundle.js
+**/*.min.css
+**/*-min.css
+**/*.zip
+**/*.njk
+**/*.proto
+**/*.go
+**/*.jpg
+**/*.png
+**/*.gif
 **/*.svg
-.umi
-.umi-production
-/dist
-.dockerignore
+**/*.ico
+**/*.eot
+**/*.ttf
+**/*.woff
+**/*.woff2
+**/*.otf
+**/*.ttc
+**/*.map
+**/*.ejs
+
+
 .DS_Store
-.eslintignore
-*.png
-*.toml
-docker
-.editorconfig
 Dockerfile*
+.docker
+.dockerignore
+.editorconfig
 .gitignore
 .prettierignore
-LICENSE
+.eslintignore
 .eslintcache
-*.lock
+.markdownlintignore
+.stylelintignore
+.gitkeep
+LICENSE
 yarn-error.log
-.history
 CNAME
-/build
-/public
+
+*.svg
+*.png
+*.toml
+*.lock
+

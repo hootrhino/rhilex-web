@@ -1,8 +1,37 @@
-/lambda/
-/scripts
-/config
-.history
-public
+# /lambda/
+# /scripts
+# /config
+# .history
+# public
+# dist
+# .umi
+# mock
+build
+coverage
+config
 dist
-.umi
+es
+lib
+lambda
+public
+node_modules
+.yarn
+.history
 mock
+scripts
+demo
+demos
+example
+examples
+template
+templates
+
+**/.umi
+**/.umi-production
+**/services
+
+**/*.min.js
+**/*-min.js
+**/*.bundle.js
+**/*.min.css
+**/*-min.css

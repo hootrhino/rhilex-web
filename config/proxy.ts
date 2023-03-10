@@ -21,6 +21,13 @@ export default {
   //     changeOrigin: true,
   //   },
   // },
+  dev: {
+    '/api/': {
+      target: 'http://10.55.23.58:2580/',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+  },
 
   /**
    * @name 详细的代理配置
