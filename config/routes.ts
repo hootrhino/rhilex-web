@@ -155,6 +155,23 @@ export default [
     ],
   },
   {
+    path: '/app-stack',
+    name: '轻量应用',
+    icon: 'appstoreAdd',
+    routes: [
+      {
+        path: '/app-stack',
+        redirect: '/app-stack/list',
+      },
+      {
+        path: '/app-stack/list',
+        name: '轻量应用列表',
+        component: './AppStack',
+        hideInMenu: true,
+      },
+    ],
+  },
+  {
     path: '/',
     redirect: '/dashboard',
   },
