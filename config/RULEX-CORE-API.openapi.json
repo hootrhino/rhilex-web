@@ -140,7 +140,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852073-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852073-run"
       },
       "get": {
         "summary": "设备列表",
@@ -366,7 +366,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852075-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852075-run"
       },
       "delete": {
         "summary": "删除设备",
@@ -434,7 +434,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852084-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852084-run"
       },
       "put": {
         "summary": "更新设备",
@@ -570,7 +570,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852085-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852085-run"
       }
     },
     "/api/v1/login": {
@@ -658,7 +658,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852107-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852107-run"
       }
     },
     "/api/v1/logs": {
@@ -719,7 +719,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852109-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852109-run"
       }
     },
     "/api/v1/drivers": {
@@ -769,7 +769,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852114-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852114-run"
       }
     },
     "/api/v1/rules": {
@@ -889,7 +889,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852116-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852116-run"
       },
       "delete": {
         "summary": "删除规则",
@@ -950,7 +950,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852117-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852117-run"
       },
       "get": {
         "summary": "规则列表",
@@ -1075,7 +1075,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852118-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852118-run"
       }
     },
     "/api/v1/system": {
@@ -1279,7 +1279,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852281-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852281-run"
       }
     },
     "/api/v1/outends": {
@@ -1418,7 +1418,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852653-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852653-run"
       },
       "delete": {
         "summary": "删除输出资源",
@@ -1479,7 +1479,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852661-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852661-run"
       },
       "put": {
         "summary": "更新输出资源",
@@ -1614,7 +1614,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852662-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852662-run"
       },
       "get": {
         "summary": "输出资源列表",
@@ -1706,7 +1706,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852663-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-30852663-run"
       }
     },
     "/api/v1/users": {
@@ -1774,7 +1774,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-37612678-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-37612678-run"
       },
       "post": {
         "summary": "用户创建",
@@ -1860,7 +1860,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-54023089-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-54023089-run"
       },
       "delete": {
         "summary": "用户删除",
@@ -1946,7 +1946,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-54023892-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-54023892-run"
       }
     },
     "/api/v1/inends": {
@@ -2083,7 +2083,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-54020034-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-54020034-run"
       },
       "get": {
         "summary": "输出输入资源",
@@ -2175,7 +2175,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-54020035-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-54020035-run"
       },
       "post": {
         "summary": "新建输入资源",
@@ -2312,7 +2312,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-54020036-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-54020036-run"
       },
       "delete": {
         "summary": "删除输入资源",
@@ -2373,7 +2373,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-54020037-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-54020037-run"
       }
     },
     "/api/v1/logs/remote": {
@@ -2445,7 +2445,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-54022726-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-54022726-run"
       }
     },
     "/api/v1/plugins": {
@@ -2495,7 +2495,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-57022135-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-57022135-run"
       }
     },
     "/api/v1/app": {
@@ -2580,7 +2580,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-73798934-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-73798934-run"
       },
       "delete": {
         "summary": "删除应用",
@@ -2632,7 +2632,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-73798935-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-73798935-run"
       },
       "put": {
         "summary": "更新应用",
@@ -2727,7 +2727,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-73798936-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-73798936-run"
       },
       "get": {
         "summary": "应用详情",
@@ -2744,6 +2744,7 @@
             "in": "query",
             "description": "",
             "required": true,
+            "example": "APP3dd8fdb63b5849a487bc5415aa63ae8b",
             "schema": {
               "type": "string"
             }
@@ -2843,7 +2844,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-73799311-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-73799311-run"
       }
     },
     "/api/v1/app/start": {
@@ -2952,7 +2953,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-73799341-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-73799341-run"
       }
     },
     "/api/v1/app/stop": {
@@ -3061,7 +3062,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-73799350-run"
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-73799350-run"
       }
     }
   },

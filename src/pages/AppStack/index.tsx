@@ -1,20 +1,87 @@
-import { PlusOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Button, Popconfirm } from 'antd';
-import { useRef } from 'react';
+import { deleteApp,getApp,postApp,putApp } from '@/services/rulex/qingliangyingyong';
+import { MinusCircleOutlined,PlusOutlined,SyncOutlined } from '@ant-design/icons';
+import type { ProFormInstance } from '@ant-design/pro-components';
+import {
+ActionType,
+ModalForm,
+PageContainer,
+ProColumns,
+ProFormSegmented,
+ProFormText,
+ProTable
+} from '@ant-design/pro-components';
+import { Button,message,Popconfirm,Tag } from 'antd';
 
-type Item = {
+import { useRef, useState } from 'react';
+import { useRequest } from 'umi';
+
+type TableItem = {
+  uuid?: string;
+  name?: string;
+  version?: string;
+  autoStart?: boolean;
+  appState?: number;
+  filepath?: string;
+  luaSource?: string;
   [key: string]: any;
+};
+
+type FormItem = {
+  name: string;
+  version: string;
+  autoStart: boolean;
+  description: string;
+  luaSource: string;
 };
 
 const AppStack = () => {
   const actionRef = useRef<ActionType>();
+  const formRef = useRef<ProFormInstance>();
+
+  const [open, setOpen] = useState<boolean>(false);
+  const [initValue, setValue] = useState<TableItem | undefined>();
+
+  // 获取详情
+  const { run: getDetail } = useRequest((id: string) => getApp({ uuid: id }), {
+    manual: true,
+    formatResult: (res) => res?.data,
+    onSuccess: (data) => {
+      setValue(data);
+      formRef.current?.setFieldsValue({ ...data, autoStart: data?.autoStart.toString() });
+    },
+  });
+
+  // 新建 & 编辑
+  const handleOnFinish = async (values: FormItem) => {
+    try {
+      const params = { ...values, autoStart: Boolean(values?.autoStart) };
+      if (initValue?.uuid) {
+        await putApp({ ...params, uuid: initValue?.uuid });
+        message.success('更新成功');
+      } else {
+        await postApp(params);
+        message.success('新建成功');
+      }
+      actionRef.current?.reload();
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
 
   // 删除
-  const handleDelete = () => {};
+  const handleDelete = async (values: API.deleteAppParams) => {
+    try {
+      await deleteApp(values);
+      message.success('删除成功');
+      actionRef.current?.reload();
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
 
-  const columns: ProColumns<Item>[] = [
+  const columns: ProColumns<TableItem>[] = [
     {
       title: 'APP 名称',
       dataIndex: 'name',
@@ -27,11 +94,22 @@ const AppStack = () => {
     {
       title: '是否自启',
       dataIndex: 'autoStart',
+      renderText: (autoStart) => (
+        <Tag color={autoStart ? 'success' : 'error'}>{autoStart ? '是' : '否'}</Tag>
+      ),
+    },
+    {
+      title: 'APP 状态',
+      dataIndex: 'appState',
       width: 100,
-      valueEnum: {
-        true: { text: '是', status: 'Success' },
-        false: { text: '否', status: 'Error' },
-      },
+      renderText: (appState) => (
+        <Tag
+          icon={appState === 1 ? <SyncOutlined spin /> : <MinusCircleOutlined />}
+          color={appState === 1 ? 'processing' : 'default'}
+        >
+          {appState === 1 ? '正在运行' : '已结束'}
+        </Tag>
+      ),
     },
     {
       title: '描述信息',
@@ -45,10 +123,19 @@ const AppStack = () => {
       key: 'option',
       valueType: 'option',
       render: (_, record) => [
-        <a key="edit">编辑</a>,
+        <a
+          key="edit"
+          onClick={() => {
+            setOpen(true);
+            // setValue({ ...record });
+            getDetail(record?.uuid || '');
+          }}
+        >
+          编辑
+        </a>,
         <Popconfirm
           title="你确定要删除该应用?"
-          onConfirm={() => handleDelete({ uuid: record.uuid })}
+          onConfirm={() => handleDelete({ uuid: record?.uuid || '' })}
           okText="是"
           cancelText="否"
           key="delete"
@@ -65,28 +152,45 @@ const AppStack = () => {
         rowKey="uuid"
         actionRef={actionRef}
         columns={columns}
-        // request={async () => {
-        //   const res = await getDevices();
-
-        //   return Promise.resolve({
-        //     data: (res as any)?.data,
-        //     success: true,
-        //   });
-        // }}
-        dataSource={[]}
         search={false}
         pagination={false}
+        request={async () => {
+          const res = await getApp({ uuid: '' });
+
+          return Promise.resolve({
+            data: (res as any)?.data,
+            success: true,
+          });
+        }}
         toolBarRender={() => [
-          <Button
-            key="new"
-            type="primary"
-            icon={<PlusOutlined />}
-            // onClick={() => history.push('/devices/new')}
-          >
+          <Button key="new" type="primary" icon={<PlusOutlined />} onClick={() => setOpen(true)}>
             新建
           </Button>,
         ]}
       />
+      <ModalForm
+        formRef={formRef}
+        title={initValue?.uuid ? '更新应用' : '新建应用'}
+        open={open}
+        onFinish={handleOnFinish}
+        onOpenChange={setOpen}
+        layout="horizontal"
+        initialValues={initValue}
+      >
+        <ProFormText name="name" label="APP 名称" />
+        <ProFormText name="version" label="APP 版本" />
+        <ProFormSegmented
+          name="autoStart"
+          label="是否自启"
+          valueEnum={{
+            true: '是',
+            false: '否',
+          }}
+          width="md"
+          fieldProps={{ block: true } as any}
+        />
+        <ProFormText name="description" label="描述信息" />
+      </ModalForm>
     </PageContainer>
   );
 };
