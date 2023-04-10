@@ -3286,6 +3286,20 @@
   resolved "https://registry.npmmirror.com/@mapbox/whoots-js/-/whoots-js-3.1.0.tgz#497c67a1cef50d1a2459ba60f315e448d2ad87fe"
   integrity sha512-Es6WcD0nO5l+2BOQS4uLfNPYQaNDfbot3X1XUoloz+x0mPDS3eeORZJl06HXjwBG1fOGwCRnzK88LMdxKRrd6Q==
 
+"@monaco-editor/loader@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.npmmirror.com/@monaco-editor/loader/-/loader-1.3.3.tgz#7f1742bd3cc21c0362a46a4056317f6e5215cfca"
+  integrity sha512-6KKF4CTzcJiS8BJwtxtfyYt9shBiEv32ateQ9T4UVogwn4HM/uPo9iJd2Dmbkpz8CM6Y0PDUpjnZzCwC+eYo2Q==
+  dependencies:
+    state-local "^1.0.6"
+
+"@monaco-editor/react@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.npmmirror.com/@monaco-editor/react/-/react-4.5.0.tgz#5a581f1ce5af6597dd127ac2c0d22d15ca3f3928"
+  integrity sha512-VJMkp5Fe1+w8pLEq8tZPHZKu8zDXQIA1FtiDTSNccg1D3wg1YIZaH2es2Qpvop1k62g3c/YySRb3bnGXu2XwYQ==
+  dependencies:
+    "@monaco-editor/loader" "^1.3.3"
+
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
   resolved "https://registry.npmmirror.com/@nicolo-ribaudo/chokidar-2/-/chokidar-2-2.1.8-no-fsevents.3.tgz#323d72dd25103d0c4fbdce89dadf574a787b1f9b"
@@ -14832,6 +14846,11 @@ stacktrace-js@^2.0.2:
     error-stack-parser "^2.0.6"
     stack-generator "^2.0.5"
     stacktrace-gps "^3.0.4"
+
+state-local@^1.0.6:
+  version "1.0.7"
+  resolved "https://registry.npmmirror.com/state-local/-/state-local-1.0.7.tgz#da50211d07f05748d53009bee46307a37db386d5"
+  integrity sha512-HTEHMNieakEnoe33shBYcZ7NX83ACUjCu8c40iOGEZsngj9zRnkqS9j1pqQPXwobB0ZcVTk27REb7COQ0UR59w==
 
 statuses@2.0.1:
   version "2.0.1"

@@ -1,18 +1,21 @@
 import { deleteApp,getApp,postApp,putApp } from '@/services/rulex/qingliangyingyong';
 import { MinusCircleOutlined,PlusOutlined,SyncOutlined } from '@ant-design/icons';
-import type { ProFormInstance } from '@ant-design/pro-components';
 import {
 ActionType,
 ModalForm,
 PageContainer,
 ProColumns,
+ProForm,
+ProFormInstance,
 ProFormSegmented,
 ProFormText,
 ProTable
 } from '@ant-design/pro-components';
 import { Button,message,Popconfirm,Tag } from 'antd';
 
-import { useRef, useState } from 'react';
+import Editor from '@monaco-editor/react';
+
+import { useEffect,useRef,useState } from 'react';
 import { useRequest } from 'umi';
 
 type TableItem = {
@@ -45,10 +48,7 @@ const AppStack = () => {
   const { run: getDetail } = useRequest((id: string) => getApp({ uuid: id }), {
     manual: true,
     formatResult: (res) => res?.data,
-    onSuccess: (data) => {
-      setValue(data);
-      formRef.current?.setFieldsValue({ ...data, autoStart: data?.autoStart.toString() });
-    },
+    onSuccess: (data) => setValue(data),
   });
 
   // 新建 & 编辑
@@ -127,7 +127,6 @@ const AppStack = () => {
           key="edit"
           onClick={() => {
             setOpen(true);
-            // setValue({ ...record });
             getDetail(record?.uuid || '');
           }}
         >
@@ -146,6 +145,23 @@ const AppStack = () => {
     },
   ];
 
+  useEffect(() => {
+    if (initValue) {
+      formRef.current?.setFieldsValue({
+        ...initValue,
+        autoStart: initValue?.autoStart?.toString(),
+      });
+    } else {
+      formRef.current?.setFieldsValue({
+        name: '',
+        version: '',
+        autoStart: 'true',
+        luaSource: '',
+        description: '',
+      });
+    }
+  }, [initValue]);
+
   return (
     <PageContainer>
       <ProTable
@@ -163,7 +179,15 @@ const AppStack = () => {
           });
         }}
         toolBarRender={() => [
-          <Button key="new" type="primary" icon={<PlusOutlined />} onClick={() => setOpen(true)}>
+          <Button
+            key="new"
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => {
+              setOpen(true);
+              setValue(undefined);
+            }}
+          >
             新建
           </Button>,
         ]}
@@ -189,6 +213,11 @@ const AppStack = () => {
           width="md"
           fieldProps={{ block: true } as any}
         />
+        {initValue?.uuid && (
+          <ProForm.Item name="luaSource" label="Lua 源码">
+            <Editor height="40vh" defaultLanguage="lua" theme="vs-dark" />
+          </ProForm.Item>
+        )}
         <ProFormText name="description" label="描述信息" />
       </ModalForm>
     </PageContainer>
