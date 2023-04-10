@@ -1,4 +1,8 @@
 declare namespace API {
+  type deleteAppParams = {
+    uuid: string;
+  };
+
   type deleteDevicesParams = {
     uuid: string;
   };
@@ -13,6 +17,18 @@ declare namespace API {
 
   type deleteRulesParams = {
     uuid?: string;
+  };
+
+  type getAppParams = {
+    uuid: string;
+  };
+
+  type putAppStartParams = {
+    uuid: string;
+  };
+
+  type putAppStopParams = {
+    uuid: string;
   };
 
   type putLogsRemoteParams = {

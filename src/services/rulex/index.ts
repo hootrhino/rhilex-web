@@ -4,6 +4,7 @@
 // API 唯一标识：
 import * as chajianguanli from './chajianguanli';
 import * as guizeguanli from './guizeguanli';
+import * as qingliangyingyong from './qingliangyingyong';
 import * as qudongguanli from './qudongguanli';
 import * as rizhiguanli from './rizhiguanli';
 import * as shebeiguanli from './shebeiguanli';
@@ -21,4 +22,5 @@ export default {
   shuchuziyuanguanli,
   shuruziyuanguanli,
   chajianguanli,
+  qingliangyingyong,
 };
