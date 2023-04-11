@@ -29,28 +29,28 @@ export default [
     component: './Dashboard',
   },
   {
-    path: '/sources',
+    path: '/inends',
     name: '资源管理',
     icon: 'medicineBox',
     routes: [
       {
-        path: '/sources',
-        redirect: '/sources/list',
+        path: '/inends',
+        redirect: '/inends/list',
       },
       {
-        path: '/sources/list',
+        path: '/inends/list',
         name: '资源列表',
         component: './Sources',
         hideInMenu: true,
       },
       {
-        path: '/sources/new',
+        path: '/inends/new',
         name: '新建',
         component: './Sources/components/UpdateForm',
         hideInMenu: true,
       },
       {
-        path: '/sources/edit/:id',
+        path: '/inends/edit/:id',
         name: '编辑',
         component: './Sources/components/UpdateForm',
         hideInMenu: true,

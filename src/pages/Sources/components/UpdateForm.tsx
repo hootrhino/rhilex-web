@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 
 import { history, useParams } from 'umi';
 
@@ -19,9 +19,7 @@ import { message } from 'antd';
 
 import { getInends, postInends, putInends } from '@/services/rulex/shuruziyuanguanli';
 
-export type UpdateFormProps = {};
-
-const UpdateForm: React.FC<UpdateFormProps> = () => {
+const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
 
@@ -36,7 +34,7 @@ const UpdateForm: React.FC<UpdateFormProps> = () => {
         message.success('新建成功');
       }
 
-      history.push('/sources/list');
+      history.push('/inends/list');
       return true;
     } catch (error) {
       return false;
@@ -49,7 +47,10 @@ const UpdateForm: React.FC<UpdateFormProps> = () => {
   });
 
   return (
-    <PageContainer header={{ title: id ? '编辑资源' : '新建资源' }}>
+    <PageContainer
+      header={{ title: id ? '编辑资源' : '新建资源' }}
+      onBack={() => history.push('/inends/list')}
+    >
       <ProCard>
         <ProForm
           className="source"

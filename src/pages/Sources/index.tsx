@@ -3,8 +3,8 @@ import { useRef } from 'react';
 import { history } from 'umi';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button, message, Popconfirm } from 'antd';
 
 import { deleteInends, getInends } from '@/services/rulex/shuruziyuanguanli';
@@ -71,7 +71,7 @@ const Sources = () => {
       key: 'option',
       valueType: 'option',
       render: (_, record) => [
-        <a key="edit" onClick={() => history.push(`/sources/edit/${record.uuid}`)}>
+        <a key="edit" onClick={() => history.push(`/inends/edit/${record.uuid}`)}>
           编辑
         </a>,
         <Popconfirm
@@ -108,7 +108,7 @@ const Sources = () => {
             key="new"
             type="primary"
             icon={<PlusOutlined />}
-            onClick={() => history.push('/sources/new')}
+            onClick={() => history.push('/inends/new')}
           >
             新建
           </Button>,
