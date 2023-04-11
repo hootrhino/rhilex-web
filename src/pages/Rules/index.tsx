@@ -1,14 +1,12 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { Button, message, Popconfirm } from 'antd';
+import type { ActionType,ProColumns } from '@ant-design/pro-components';
+import { PageContainer,ProTable } from '@ant-design/pro-components';
+import { Button,message,Popconfirm } from 'antd';
 
-import { deleteRules, getRules, postRules } from '@/services/rulex/guizeguanli';
-
-import type { FormItem } from './components/UpdateForm';
-import UpdateForm from './components/UpdateForm';
+import { deleteRules, getRules } from '@/services/rulex/guizeguanli';
+import { history } from 'umi';
 
 export type Item = {
   uuid: string;
@@ -17,26 +15,6 @@ export type Item = {
 
 const Rules = () => {
   const actionRef = useRef<ActionType>();
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [initialValue, setInitialValue] = useState<Item>();
-
-  // 新建&编辑
-  const handleOnFinish = async (values: FormItem) => {
-    try {
-      if (initialValue?.uuid) {
-        // TODO 编辑
-      } else {
-        await postRules(values);
-      }
-      setModalVisible(false);
-      setInitialValue(undefined);
-      actionRef.current?.reload();
-      message.success(initialValue?.uuid ? '更新成功' : '新建成功');
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
 
   // 删除
   const handleOnDelete = async (value: API.deleteRulesParams) => {
@@ -81,7 +59,7 @@ const Rules = () => {
       key: 'option',
       width: 150,
       fixed: 'right',
-      render: (_, record) => [
+      render: (_, { uuid }) => [
         <a
           key="detail"
           onClick={() => {
@@ -90,18 +68,12 @@ const Rules = () => {
         >
           详情
         </a>,
-        // <a
-        //   key="edit"
-        //   onClick={() => {
-        //     setModalVisible(true);
-        //     setInitialValue(record);
-        //   }}
-        // >
-        //   编辑
-        // </a>,
+        <a key="edit" onClick={() => history.push(`/rules/edit/${uuid}`)}>
+          编辑
+        </a>,
         <Popconfirm
           title="确定要删除该规则？"
-          onConfirm={() => handleOnDelete({ uuid: record?.uuid })}
+          onConfirm={() => handleOnDelete({ uuid })}
           key="delete"
         >
           <a>删除</a>
@@ -111,46 +83,28 @@ const Rules = () => {
   ];
 
   return (
-    <>
-      <PageContainer>
-        <ProTable
-          rowKey="uuid"
-          actionRef={actionRef}
-          columns={columns}
-          request={async () => {
-            const res = await getRules();
+    <PageContainer>
+      <ProTable
+        rowKey="uuid"
+        actionRef={actionRef}
+        columns={columns}
+        request={async () => {
+          const res = await getRules();
 
-            return Promise.resolve({
-              data: (res as any)?.data,
-              success: true,
-            });
-          }}
-          search={false}
-          pagination={false}
-          toolBarRender={() => [
-            <Button
-              type="primary"
-              key="primary"
-              onClick={() => {
-                setModalVisible(true);
-              }}
-            >
-              <PlusOutlined /> 新建
-            </Button>,
-          ]}
-        />
-      </PageContainer>
-      <UpdateForm
-        onSubmit={handleOnFinish}
-        onCancel={() => {
-          setModalVisible(false);
-          setInitialValue(undefined);
+          return Promise.resolve({
+            data: (res as any)?.data,
+            success: true,
+          });
         }}
-        updateModalVisible={modalVisible}
-        onVisibleChange={setModalVisible}
-        values={initialValue}
+        search={false}
+        pagination={false}
+        toolBarRender={() => [
+          <Button type="primary" key="primary" onClick={() => history.push('/rules/new')}>
+            <PlusOutlined /> 新建
+          </Button>,
+        ]}
       />
-    </>
+    </PageContainer>
   );
 };
 

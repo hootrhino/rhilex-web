@@ -72,6 +72,18 @@ export default [
         component: './Rules',
         hideInMenu: true,
       },
+      {
+        path: '/rules/new',
+        name: '新建',
+        component: './Rules/components/UpdateForm',
+        hideInMenu: true,
+      },
+      {
+        path: '/rules/edit/:id',
+        name: '编辑',
+        component: './Rules/components/UpdateForm',
+        hideInMenu: true,
+      },
     ],
   },
   {
