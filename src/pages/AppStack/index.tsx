@@ -1,21 +1,20 @@
 import { deleteApp,getApp,postApp,putApp } from '@/services/rulex/qingliangyingyong';
 import { MinusCircleOutlined,PlusOutlined,SyncOutlined } from '@ant-design/icons';
 import {
-ActionType,
-ModalForm,
-PageContainer,
-ProColumns,
-ProForm,
-ProFormInstance,
-ProFormSegmented,
-ProFormText,
-ProTable
+  ActionType,
+  ModalForm,
+  PageContainer,
+  ProColumns,
+  ProForm,
+  ProFormInstance,
+  ProFormSegmented,
+  ProFormText,
+  ProTable,
 } from '@ant-design/pro-components';
-import { Button,message,Popconfirm,Tag } from 'antd';
+import { Button, message, Popconfirm, Tag } from 'antd';
 
-import Editor from '@monaco-editor/react';
-
-import { useEffect,useRef,useState } from 'react';
+import FullScreenEditor from '@/components/FullScreenEditor';
+import { useEffect, useRef, useState } from 'react';
 import { useRequest } from 'umi';
 
 type TableItem = {
@@ -40,6 +39,7 @@ type FormItem = {
 const AppStack = () => {
   const actionRef = useRef<ActionType>();
   const formRef = useRef<ProFormInstance>();
+  const editorRef = useRef(null);
 
   const [open, setOpen] = useState<boolean>(false);
   const [initValue, setValue] = useState<TableItem | undefined>();
@@ -215,7 +215,7 @@ const AppStack = () => {
         />
         {initValue?.uuid && (
           <ProForm.Item name="luaSource" label="Lua 源码">
-            <Editor height="40vh" defaultLanguage="lua" theme="vs-dark" />
+            <FullScreenEditor ref={editorRef} />
           </ProForm.Item>
         )}
         <ProFormText name="description" label="描述信息" />
