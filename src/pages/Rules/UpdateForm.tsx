@@ -1,28 +1,30 @@
-import { useRef, useState } from 'react';
+import { useRef,useState } from 'react';
 
-import { history,useParams } from 'umi';
+import { history, useParams } from 'umi';
 
 import {
-FooterToolbar,
-PageContainer,
-ProCard,
-ProForm,
-ProFormDependency,
-ProFormInstance,
-ProFormRadio,
-ProFormSelect,
-ProFormText,
-ProFormTextArea
+  PageContainer,
+  ProCard,
+  ProForm,
+  ProFormDependency,
+  ProFormInstance,
+  ProFormRadio,
+  ProFormSelect,
+  ProFormText,
+  ProFormTextArea,
 } from '@ant-design/pro-components';
 import { useRequest } from 'umi';
 
 import { getDevices } from '@/services/rulex/shebeiguanli';
 import { getInends } from '@/services/rulex/shuruziyuanguanli';
 
+import FormFooter from '@/components/FromFooter';
+import FullScreenEditor from '@/components/FullScreenEditor';
+import GoBackFooter from '@/components/GoBackFooter';
 import { postRules } from '@/services/rulex/guizeguanli';
-import { Button,message,Modal,Popconfirm } from 'antd';
+import { message, Modal } from 'antd';
 import omit from 'lodash/omit';
-import FullScreenEditor from './FullScreenEditor';
+// import FullScreenEditor from './FullScreenEditor';
 
 export type FormItem = {
   actions: string;
@@ -49,8 +51,9 @@ end`;
 
 const config = {
   title: '你还有表单未提交，确定要返回列表吗？',
-  okText: '确定',
+  footer: [<GoBackFooter onConfirm={() => history.push('/rules/list')} key="gobackFooter" />],
   onOk: () => history.push('/rules/list'),
+  onCancel: () => Modal.destroyAll(),
 };
 
 const UpdateForm = () => {
@@ -108,11 +111,6 @@ const UpdateForm = () => {
     }
   };
 
-  // 获取详情
-  useRequest(() => getInends({ params: { uuid: id } }), {
-    onSuccess: (res: any) => formRef.current?.setFieldsValue(res?.data),
-  });
-
   return (
     <>
       <PageContainer
@@ -124,21 +122,7 @@ const UpdateForm = () => {
             formRef={formRef}
             submitter={{
               render: ({ reset, submit }) => {
-                return (
-                  <FooterToolbar>
-                    <Popconfirm
-                      key="reset"
-                      title="重置会清空表单，确定要重置吗？"
-                      onConfirm={reset}
-                    >
-                      <Button>重置</Button>
-                    </Popconfirm>
-
-                    <Button key="submit" type="primary" onClick={submit}>
-                      提交
-                    </Button>
-                  </FooterToolbar>
-                );
+                return <FormFooter onReset={reset} onSubmit={submit} />;
               },
             }}
             onFinish={onFinish}

@@ -46,13 +46,13 @@ export default [
       {
         path: '/inends/new',
         name: '新建',
-        component: './Sources/components/UpdateForm',
+        component: './Sources/UpdateForm',
         hideInMenu: true,
       },
       {
         path: '/inends/edit/:id',
         name: '编辑',
-        component: './Sources/components/UpdateForm',
+        component: './Sources/UpdateForm',
         hideInMenu: true,
       },
     ],
@@ -75,13 +75,13 @@ export default [
       {
         path: '/rules/new',
         name: '新建',
-        component: './Rules/components/UpdateForm',
+        component: './Rules/UpdateForm',
         hideInMenu: true,
       },
       {
         path: '/rules/edit/:id',
         name: '编辑',
-        component: './Rules/components/UpdateForm',
+        component: './Rules/UpdateForm',
         hideInMenu: true,
       },
     ],

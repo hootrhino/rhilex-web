@@ -1,17 +1,18 @@
+import FormFooter from '@/components/FromFooter';
 import FullScreenEditor from '@/components/FullScreenEditor';
+import GoBackFooter from '@/components/GoBackFooter';
 import { getApp,postApp,putApp } from '@/services/rulex/qingliangyingyong';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
-FooterToolbar,
-PageContainer,
-ProCard,
-ProForm,
-ProFormSegmented,
-ProFormText
+  PageContainer,
+  ProCard,
+  ProForm,
+  ProFormSegmented,
+  ProFormText,
 } from '@ant-design/pro-components';
-import { Button,message,Modal,Popconfirm } from 'antd';
-import { useEffect,useRef } from 'react';
-import { history,useParams,useRequest } from 'umi';
+import { message, Modal } from 'antd';
+import { useEffect, useRef } from 'react';
+import { history, useParams, useRequest } from 'umi';
 
 type FormItem = {
   name: string;
@@ -22,9 +23,10 @@ type FormItem = {
 };
 
 const config = {
-  title: '你还有表单未提交，确定要返回列表吗？',
-  okText: '确定',
+  title: '离开可能会丢失数据，确定要返回列表吗？',
+  footer: [<GoBackFooter onConfirm={() => history.push('/app-stack/list')} key="gobackFooter" />],
   onOk: () => history.push('/app-stack/list'),
+  onCancel: () => Modal.destroyAll(),
 };
 
 const UpdateForm = () => {
@@ -87,26 +89,17 @@ const UpdateForm = () => {
             submitter={{
               render: ({ reset, submit }) => {
                 return (
-                  <FooterToolbar>
-                    <Popconfirm
-                      key="reset"
-                      title="重置可能会丢失数据，确定要重置吗？"
-                      onConfirm={() =>
-                        id
-                          ? formRef.current?.setFieldsValue({
-                              ...detail,
-                              autoStart: detail?.autoStart?.toString(),
-                            })
-                          : reset()
-                      }
-                    >
-                      <Button>重置</Button>
-                    </Popconfirm>
-
-                    <Button key="submit" type="primary" onClick={submit}>
-                      提交
-                    </Button>
-                  </FooterToolbar>
+                  <FormFooter
+                    onReset={() =>
+                      id
+                        ? formRef.current?.setFieldsValue({
+                            ...detail,
+                            autoStart: detail?.autoStart?.toString(),
+                          })
+                        : reset()
+                    }
+                    onSubmit={submit}
+                  />
                 );
               },
             }}
