@@ -74,7 +74,7 @@ const AppStack = () => {
       key: 'option',
       valueType: 'option',
       render: (_, { uuid }) => [
-        <a key="edit" onClick={() => history.push(`/app-stack/editor/${uuid}`)}>
+        <a key="edit" onClick={() => history.push(`/app-stack/edit/${uuid}`)}>
           编辑
         </a>,
         <Popconfirm
