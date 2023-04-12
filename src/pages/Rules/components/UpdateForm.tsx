@@ -3,16 +3,16 @@ import { useRef, useState } from 'react';
 import { history,useParams } from 'umi';
 
 import {
-  FooterToolbar,
-  PageContainer,
-  ProCard,
-  ProForm,
-  ProFormDependency,
-  ProFormInstance,
-  ProFormRadio,
-  ProFormSelect,
-  ProFormText,
-  ProFormTextArea,
+FooterToolbar,
+PageContainer,
+ProCard,
+ProForm,
+ProFormDependency,
+ProFormInstance,
+ProFormRadio,
+ProFormSelect,
+ProFormText,
+ProFormTextArea
 } from '@ant-design/pro-components';
 import { useRequest } from 'umi';
 
@@ -20,7 +20,7 @@ import { getDevices } from '@/services/rulex/shebeiguanli';
 import { getInends } from '@/services/rulex/shuruziyuanguanli';
 
 import { postRules } from '@/services/rulex/guizeguanli';
-import { message } from 'antd';
+import { Button,message,Modal,Popconfirm } from 'antd';
 import omit from 'lodash/omit';
 import FullScreenEditor from './FullScreenEditor';
 
@@ -47,12 +47,19 @@ const defaultFailed = `function Failed(error)
   rulexlib:log(error)
 end`;
 
+const config = {
+  title: '你还有表单未提交，确定要返回列表吗？',
+  okText: '确定',
+  onOk: () => history.push('/rules/list'),
+};
+
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
   const failRef = useRef(null);
   const actionRef = useRef(null);
   const successRef = useRef(null);
+  const [modal, contextHolder] = Modal.useModal();
 
   const [sources, setSources] = useState([]);
 
@@ -107,107 +114,124 @@ const UpdateForm = () => {
   });
 
   return (
-    <PageContainer
-      header={{ title: id ? '编辑规则' : '新建规则' }}
-      onBack={() => history.push('/rules/list')}
-    >
-      <ProCard>
-        <ProForm
-          formRef={formRef}
-          submitter={{
-            render: (props, dom) => {
-              return <FooterToolbar>{dom}</FooterToolbar>;
-            },
-          }}
-          onFinish={onFinish}
-          initialValues={{
-            actions: defaultActions,
-            success: defaultSuccess,
-            failed: defaultFailed,
-            type: 'fromSource',
-          }}
-          onValuesChange={(changedValue) => {
-            if (changedValue?.type === 'fromSource') {
-              getSourceList?.run();
-            } else if (changedValue?.type === 'fromDevice') {
-              getDeviceList?.run();
-            }
-          }}
-        >
-          <ProFormText
-            label="规则名称"
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: '规则名称为必填项',
-              },
-            ]}
-          />
-          <ProFormRadio.Group
-            name="type"
-            label="数据来源"
-            options={[
-              {
-                label: '输入资源',
-                value: 'fromSource',
-              },
-              {
-                label: '设备',
-                value: 'fromDevice',
-              },
-            ]}
-          />
-          <ProFormDependency name={['type']}>
-            {({ type }) => {
-              if (type === 'fromSource') {
+    <>
+      <PageContainer
+        header={{ title: id ? '编辑规则' : '新建规则' }}
+        onBack={() => modal.warning(config)}
+      >
+        <ProCard>
+          <ProForm
+            formRef={formRef}
+            submitter={{
+              render: ({ reset, submit }) => {
                 return (
-                  <ProFormSelect
-                    label="输入资源"
-                    name="fromSource"
-                    options={sources}
-                    placeholder="请选择数据源"
-                    rules={[{ required: true, message: '请选择数据源' }]}
-                  />
+                  <FooterToolbar>
+                    <Popconfirm
+                      key="reset"
+                      title="重置会清空表单，确定要重置吗？"
+                      onConfirm={reset}
+                    >
+                      <Button>重置</Button>
+                    </Popconfirm>
+
+                    <Button key="submit" type="primary" onClick={submit}>
+                      提交
+                    </Button>
+                  </FooterToolbar>
                 );
-              } else {
-                return (
-                  <ProFormSelect
-                    label="输入资源"
-                    name="fromDevice"
-                    options={sources}
-                    placeholder="请选择数据源"
-                    rules={[{ required: true, message: '请选择数据源' }]}
-                  />
-                );
+              },
+            }}
+            onFinish={onFinish}
+            initialValues={{
+              actions: defaultActions,
+              success: defaultSuccess,
+              failed: defaultFailed,
+              type: 'fromSource',
+            }}
+            onValuesChange={(changedValue) => {
+              if (changedValue?.type === 'fromSource') {
+                getSourceList?.run();
+              } else if (changedValue?.type === 'fromDevice') {
+                getDeviceList?.run();
               }
             }}
-          </ProFormDependency>
-          <ProForm.Item
-            label="规则回调"
-            name="actions"
-            rules={[{ required: true, message: '请输入规则回调' }]}
           >
-            <FullScreenEditor defaultValue={defaultActions} ref={actionRef} />
-          </ProForm.Item>
-          <ProForm.Item
-            label="成功回调"
-            name="success"
-            rules={[{ required: true, message: '请输入成功回调' }]}
-          >
-            <FullScreenEditor defaultValue={defaultSuccess} ref={successRef} />
-          </ProForm.Item>
-          <ProForm.Item
-            label="失败回调"
-            name="failed"
-            rules={[{ required: true, message: '请输入失败回调' }]}
-          >
-            <FullScreenEditor defaultValue={defaultFailed} ref={failRef} />
-          </ProForm.Item>
-          <ProFormTextArea label="备注信息" name="description" />
-        </ProForm>
-      </ProCard>
-    </PageContainer>
+            <ProFormText
+              label="规则名称"
+              name="name"
+              rules={[
+                {
+                  required: true,
+                  message: '规则名称为必填项',
+                },
+              ]}
+            />
+            <ProFormRadio.Group
+              name="type"
+              label="数据来源"
+              options={[
+                {
+                  label: '输入资源',
+                  value: 'fromSource',
+                },
+                {
+                  label: '设备',
+                  value: 'fromDevice',
+                },
+              ]}
+            />
+            <ProFormDependency name={['type']}>
+              {({ type }) => {
+                if (type === 'fromSource') {
+                  return (
+                    <ProFormSelect
+                      label="输入资源"
+                      name="fromSource"
+                      options={sources}
+                      placeholder="请选择数据源"
+                      rules={[{ required: true, message: '请选择数据源' }]}
+                    />
+                  );
+                } else {
+                  return (
+                    <ProFormSelect
+                      label="输入资源"
+                      name="fromDevice"
+                      options={sources}
+                      placeholder="请选择数据源"
+                      rules={[{ required: true, message: '请选择数据源' }]}
+                    />
+                  );
+                }
+              }}
+            </ProFormDependency>
+            <ProForm.Item
+              label="规则回调"
+              name="actions"
+              rules={[{ required: true, message: '请输入规则回调' }]}
+            >
+              <FullScreenEditor defaultValue={defaultActions} ref={actionRef} />
+            </ProForm.Item>
+            <ProForm.Item
+              label="成功回调"
+              name="success"
+              rules={[{ required: true, message: '请输入成功回调' }]}
+            >
+              <FullScreenEditor defaultValue={defaultSuccess} ref={successRef} />
+            </ProForm.Item>
+            <ProForm.Item
+              label="失败回调"
+              name="failed"
+              rules={[{ required: true, message: '请输入失败回调' }]}
+            >
+              <FullScreenEditor defaultValue={defaultFailed} ref={failRef} />
+            </ProForm.Item>
+            <ProFormTextArea label="备注信息" name="description" />
+          </ProForm>
+        </ProCard>
+      </PageContainer>
+      {contextHolder}
+    </>
   );
 };
 
