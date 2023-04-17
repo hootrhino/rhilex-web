@@ -1,19 +1,12 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button, message, Popconfirm } from 'antd';
+import { history } from 'umi';
 
-import {
-  deleteOutends,
-  getOutends,
-  postOutends,
-  putOutends,
-} from '@/services/rulex/shuchuziyuanguanli';
-
-import UpdateForm from './components/UpdateForm';
-import type { FormItem } from './components/UpdateForm';
+import { deleteOutends, getOutends } from '@/services/rulex/shuchuziyuanguanli';
 
 export type Item = {
   name: string;
@@ -26,26 +19,6 @@ export type Item = {
 
 const Targets = () => {
   const actionRef = useRef<ActionType>();
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [initialValue, setInitialValue] = useState<Item | undefined>();
-
-  // 新建&编辑
-  const handleOnFinish = async (values: FormItem) => {
-    try {
-      if (initialValue?.uuid) {
-        await putOutends({ ...values, uuid: initialValue.uuid } as any);
-      } else {
-        await postOutends(values);
-      }
-      message.success(initialValue?.uuid ? '更新成功' : '新建成功');
-      setModalVisible(false);
-      setInitialValue(undefined);
-      actionRef.current?.reload();
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
 
   // 删除
   const handleOnDelete = async (values: API.deleteOutendsParams) => {
@@ -99,13 +72,7 @@ const Targets = () => {
       width: 100,
       fixed: 'right',
       render: (_, record) => [
-        <a
-          key="edit"
-          onClick={() => {
-            setModalVisible(true);
-            setInitialValue(record);
-          }}
-        >
+        <a key="edit" onClick={() => history.push(`/outends/edit/${record.uuid}`)}>
           编辑
         </a>,
         <Popconfirm
@@ -137,28 +104,12 @@ const Targets = () => {
           search={false}
           pagination={false}
           toolBarRender={() => [
-            <Button
-              type="primary"
-              key="primary"
-              onClick={() => {
-                setModalVisible(true);
-                setInitialValue(undefined);
-              }}
-            >
+            <Button type="primary" key="primary" onClick={() => history.push('/outends/new')}>
               <PlusOutlined /> 新建
             </Button>,
           ]}
         />
       </PageContainer>
-      <UpdateForm
-        onSubmit={handleOnFinish}
-        onCancel={() => {
-          setModalVisible(false);
-        }}
-        updateModalVisible={modalVisible}
-        onVisibleChange={setModalVisible}
-        values={initialValue}
-      />
     </>
   );
 };

@@ -1,17 +1,17 @@
 import { useRef,useState } from 'react';
 
-import { history, useParams } from 'umi';
+import { history,useParams } from 'umi';
 
 import {
-  PageContainer,
-  ProCard,
-  ProForm,
-  ProFormDependency,
-  ProFormInstance,
-  ProFormRadio,
-  ProFormSelect,
-  ProFormText,
-  ProFormTextArea,
+PageContainer,
+ProCard,
+ProForm,
+ProFormDependency,
+ProFormInstance,
+ProFormRadio,
+ProFormSelect,
+ProFormText,
+ProFormTextArea
 } from '@ant-design/pro-components';
 import { useRequest } from 'umi';
 
@@ -22,8 +22,8 @@ import FormFooter from '@/components/FromFooter';
 import FullScreenEditor from '@/components/FullScreenEditor';
 import GoBackFooter from '@/components/GoBackFooter';
 import { postRules } from '@/services/rulex/guizeguanli';
-import { message, Modal } from 'antd';
-import omit from 'lodash/omit';
+import { message,Modal } from 'antd';
+import { omit } from 'lodash';
 // import FullScreenEditor from './FullScreenEditor';
 
 export type FormItem = {

@@ -1,23 +1,23 @@
-import { useEffect, useRef } from 'react';
+import { useEffect,useRef } from 'react';
 
-import { history, useParams, useRequest } from 'umi';
+import { history,useParams,useRequest } from 'umi';
 
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
-  PageContainer,
-  ProCard,
-  ProForm,
-  ProFormDependency,
-  ProFormDigit,
-  ProFormSelect,
-  ProFormText,
-  ProFormTextArea,
+PageContainer,
+ProCard,
+ProForm,
+ProFormDependency,
+ProFormDigit,
+ProFormSelect,
+ProFormText,
+ProFormTextArea
 } from '@ant-design/pro-components';
-import { message, Modal } from 'antd';
+import { message,Modal } from 'antd';
 
 import FormFooter from '@/components/FromFooter';
 import GoBackFooter from '@/components/GoBackFooter';
-import { getInends, postInends, putInends } from '@/services/rulex/shuruziyuanguanli';
+import { getInends,postInends,putInends } from '@/services/rulex/shuruziyuanguanli';
 
 const config = {
   title: '离开可能会丢失数据，确定要返回列表吗？',
@@ -53,7 +53,6 @@ const UpdateForm = () => {
   const { run: getDetail, data: detail } = useRequest(() => getInends({ params: { uuid: id } }), {
     manual: true,
     onSuccess: (data: any) => {
-      console.log(data);
       formRef.current?.setFieldsValue(data);
     },
   });

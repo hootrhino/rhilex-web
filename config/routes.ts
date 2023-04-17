@@ -87,18 +87,30 @@ export default [
     ],
   },
   {
-    path: '/targets',
+    path: '/outends',
     name: '目标管理',
     icon: 'api',
     routes: [
       {
-        path: '/targets',
-        redirect: '/targets/list',
+        path: '/outends',
+        redirect: '/outends/list',
       },
       {
-        path: '/targets/list',
+        path: '/outends/list',
         name: '目标列表',
         component: './Targets',
+        hideInMenu: true,
+      },
+      {
+        path: '/outends/new',
+        name: '新建',
+        component: './Targets/UpdateForm',
+        hideInMenu: true,
+      },
+      {
+        path: '/outends/edit/:id',
+        name: '编辑',
+        component: './Targets/UpdateForm',
         hideInMenu: true,
       },
     ],
