@@ -116,30 +116,30 @@ export default [
     ],
   },
   {
-    path: '/devices',
+    path: '/device',
     name: '设备管理',
     icon: 'fundProjectionScreen',
     routes: [
       {
-        path: '/devices',
-        redirect: '/devices/list',
+        path: '/device',
+        redirect: '/device/list',
       },
       {
-        path: '/devices/list',
+        path: '/device/list',
         name: '设备列表',
         component: './Devices',
         hideInMenu: true,
       },
       {
-        path: '/devices/new',
+        path: '/device/new',
         name: '新建',
-        component: './Devices/components/UpdateForm',
+        component: './Devices/components/BaseForm',
         hideInMenu: true,
       },
       {
-        path: '/devices/edit/:id',
+        path: '/device/edit/:id',
         name: '编辑',
-        component: './Devices/components/UpdateForm',
+        component: './Devices/components/BaseForm',
         hideInMenu: true,
       },
     ],

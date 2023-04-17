@@ -3,11 +3,11 @@ import { useRef } from 'react';
 import { history } from 'umi';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { Button, message, Popconfirm } from 'antd';
+import type { ActionType,ProColumns } from '@ant-design/pro-components';
+import { PageContainer,ProTable } from '@ant-design/pro-components';
+import { Button,message,Popconfirm } from 'antd';
 
-import { deleteDevices, getDevices } from '@/services/rulex/shebeiguanli';
+import { deleteDevices,getDevices } from '@/services/rulex/shebeiguanli';
 
 export type Item = {
   name: string;
@@ -51,7 +51,7 @@ const Devices = () => {
     {
       title: '状态',
       dataIndex: 'state',
-      width: 100,
+      width: 120,
       valueEnum: {
         0: { text: '停止', status: 'Default' },
         1: { text: '启用', status: 'Success' },
@@ -70,7 +70,7 @@ const Devices = () => {
       key: 'option',
       valueType: 'option',
       render: (_, record) => [
-        <a key="edit" onClick={() => history.push(`/devices/edit/${record.uuid}`)}>
+        <a key="edit" onClick={() => history.push(`/device/edit/${record.uuid}`)}>
           编辑
         </a>,
         <Popconfirm
@@ -107,7 +107,7 @@ const Devices = () => {
             key="new"
             type="primary"
             icon={<PlusOutlined />}
-            onClick={() => history.push('/devices/new')}
+            onClick={() => history.push('/device/new')}
           >
             新建
           </Button>,
