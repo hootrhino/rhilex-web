@@ -4,15 +4,15 @@ import GoBackFooter from '@/components/GoBackFooter';
 import { getApp,postApp,putApp } from '@/services/rulex/qingliangyingyong';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
-  PageContainer,
-  ProCard,
-  ProForm,
-  ProFormSegmented,
-  ProFormText,
+PageContainer,
+ProCard,
+ProForm,
+ProFormSegmented,
+ProFormText
 } from '@ant-design/pro-components';
-import { message, Modal } from 'antd';
-import { useEffect, useRef } from 'react';
-import { history, useParams, useRequest } from 'umi';
+import { message,Modal } from 'antd';
+import { useEffect,useRef } from 'react';
+import { history,useParams,useRequest } from 'umi';
 
 type FormItem = {
   name: string;
@@ -51,12 +51,18 @@ const UpdateForm = () => {
     try {
       const params = { ...values, autoStart: Boolean(values?.autoStart) };
       if (id) {
-        await putApp({ ...params, uuid: id });
+        const { code, msg } = await putApp({ ...params, uuid: id });
+        if (code === 200) {
+          message.success('更新成功');
+          history.push('/app-stack/list');
+        } else {
+          message.error(msg || '更新失败');
+        }
       } else {
         await postApp(params);
+        message.success('新建成功');
+        history.push('/app-stack/list');
       }
-      message.success(id ? '更新成功' : '新建成功');
-      history.push('/app-stack/list');
       return true;
     } catch (error) {
       return false;
