@@ -1,10 +1,10 @@
 import {
-  ProForm,
-  ProFormDependency,
-  ProFormDigit,
-  ProFormSegmented,
-  ProFormSelect,
-  ProFormText,
+ProForm,
+ProFormDependency,
+ProFormDigit,
+ProFormSegmented,
+ProFormSelect,
+ProFormText
 } from '@ant-design/pro-components';
 
 const SnmpForm = () => {
@@ -72,8 +72,7 @@ const SnmpForm = () => {
         />
         <ProFormDigit
           width="lg"
-          label="采集频率"
-          tooltip="单位为秒"
+          label="采集频率（毫秒）"
           name={['config', 'frequency']}
           rules={[{ required: true, message: '请输入采集频率' }]}
         />

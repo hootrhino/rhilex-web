@@ -1,9 +1,9 @@
 import {
-  ProForm,
-  ProFormDigit,
-  ProFormSegmented,
-  ProFormSelect,
-  ProFormText,
+ProForm,
+ProFormDigit,
+ProFormSegmented,
+ProFormSelect,
+ProFormText
 } from '@ant-design/pro-components';
 
 const G776Form = () => {
@@ -82,15 +82,13 @@ const G776Form = () => {
       <ProForm.Group>
         <ProFormDigit
           width="lg"
-          label="采集频率"
-          tooltip="单位为秒"
+          label="采集频率（毫秒）"
           name={['config', 'frequency']}
           rules={[{ required: true, message: '请输入采集频率' }]}
         />
         <ProFormDigit
           width="lg"
-          label="超时时间"
-          tooltip="单位为秒"
+          label="超时时间（毫秒）"
           name={['config', 'timeout']}
           rules={[{ required: true, message: '请输入超时时间' }]}
         />
