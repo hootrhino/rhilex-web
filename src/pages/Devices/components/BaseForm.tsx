@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect,useRef } from 'react';
 
-import { history, useParams } from 'umi';
+import { history,useParams } from 'umi';
 
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -10,7 +10,6 @@ import {
   ProFormDependency,
   ProFormSelect,
   ProFormText,
-  ProFormTextArea,
 } from '@ant-design/pro-components';
 import { useRequest } from 'ahooks';
 import { message, Modal } from 'antd';
@@ -20,6 +19,7 @@ import FormFooter from '@/components/FromFooter';
 import GoBackFooter from '@/components/GoBackFooter';
 import { getDevices, postDevices, putDevices } from '@/services/rulex/shebeiguanli';
 import G776Form from './G776';
+import GenericProtocolForm from './GenericProtocol';
 import SnmpForm from './Snmp';
 import YK08Form from './YK08';
 
@@ -79,6 +79,7 @@ const BaseForm = () => {
       getDetail();
     } else {
       formRef.current?.setFieldsValue({
+        type: 'YK08_RELAY',
         config: {
           mode: 'RTU',
           timeout: 5,
@@ -125,34 +126,48 @@ const BaseForm = () => {
             }}
             onFinish={onFinish}
           >
-            <ProFormText
-              label="设备名称"
-              placeholder="请输入设备名称"
-              name="name"
-              rules={[
-                {
-                  required: true,
-                  message: '请输入设备名称',
-                },
-              ]}
-            />
-            <ProFormSelect
-              label="设备类型"
-              name="type"
-              options={[
-                { label: '远程继电器控制器', value: 'YK08_RELAY' },
-                { label: 'SNMP协议采集器', value: 'GENERIC_SNMP' },
-                { label: '利亚德大屏', value: 'KCOMMANDER' },
-                { label: '泥人门禁网关', value: 'NIREN_RELAY' },
-                { label: '有人4G串口通信DTU', value: 'USER_G776' },
-                { label: '自定义串口协议', value: 'GENERIC_PROTOCOL' },
-              ]}
-              placeholder="请选择资源类型"
-              rules={[{ required: true, message: '请选择资源类型' }]}
-            />
+            <ProForm.Group>
+              <ProFormText
+                width="lg"
+                label="设备名称"
+                placeholder="请输入设备名称"
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: '请输入设备名称',
+                  },
+                ]}
+              />
+              <ProFormSelect
+                width="md"
+                label="设备类型"
+                name="type"
+                options={[
+                  { label: '远程继电器控制器', value: 'YK08_RELAY' },
+                  { label: 'SNMP协议采集器', value: 'GENERIC_SNMP' },
+                  { label: '利亚德大屏', value: 'KCOMMANDER' },
+                  { label: '泥人门禁网关', value: 'NIREN_RELAY' },
+                  { label: '有人4G串口通信DTU', value: 'USER_G776' },
+                  { label: '自定义串口协议', value: 'GENERIC_PROTOCOL' },
+                ]}
+                placeholder="请选择资源类型"
+                rules={[{ required: true, message: '请选择资源类型' }]}
+              />
+              <ProFormText
+                width="xl"
+                label="备注信息"
+                name="description"
+                placeholder="请输入备注信息"
+                rules={[{ required: true, message: '请输入备注信息' }]}
+              />
+            </ProForm.Group>
+
             <ProFormDependency name={['type']}>
               {({ type }) => {
-                return ['YK08_RELAY', 'TSS200V02', 'GENERIC_SNMP', 'USER_G776'].includes(type) ? (
+                return ['YK08_RELAY', 'GENERIC_PROTOCOL', 'GENERIC_SNMP', 'USER_G776'].includes(
+                  type,
+                ) ? (
                   <ProForm.Item label="设备配置">
                     <ProCard
                       bordered
@@ -162,17 +177,18 @@ const BaseForm = () => {
                       {type === 'YK08_RELAY' && <YK08Form />}
                       {type === 'GENERIC_SNMP' && <SnmpForm />}
                       {type === 'USER_G776' && <G776Form />}
+                      {type === 'GENERIC_PROTOCOL' && <GenericProtocolForm />}
                     </ProCard>
                   </ProForm.Item>
                 ) : null;
               }}
             </ProFormDependency>
-            <ProFormTextArea
+            {/* <ProFormTextArea
               label="备注信息"
               name="description"
               placeholder="请输入备注信息"
               rules={[{ required: true, message: '请输入备注信息' }]}
-            />
+            /> */}
           </ProForm>
         </ProCard>
       </PageContainer>
