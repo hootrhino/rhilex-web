@@ -1,5 +1,4 @@
 import {
-ProCard,
 ProForm,
 ProFormDependency,
 ProFormDigit,
@@ -11,30 +10,41 @@ ProFormText
 
 const SnmpForm = () => {
   return (
-    <ProForm.Group title="通用配置">
-      <ProFormList
-        name={['config', 'commonConfig']}
-        initialValue={[
-          {
-            mode: 'RTU',
-            timeout: 5,
-            frequency: 5,
-            decollator: '/n',
-            dataBits: 8,
-            stopBits: 1,
-            securityModel: 0,
-            target: '127.0.0.1',
-            transport: 'udp',
-            community: 'public',
-            port: 161,
-            slaverIds: 1,
-          },
-        ]}
-        creatorButtonProps={false}
-        copyIconProps={false}
-        deleteIconProps={false}
-      >
-        <ProCard bordered>
+    <>
+      <ProForm.Group title="通用配置">
+        <ProFormList
+          name={['config', 'commonConfig']}
+          creatorButtonProps={false}
+          copyIconProps={false}
+          deleteIconProps={false}
+        >
+          <ProForm.Group>
+            <ProFormSegmented
+              width="lg"
+              name="autoRequest"
+              label="是否启动轮询"
+              valueEnum={{
+                true: '是',
+                false: '否',
+              }}
+              fieldProps={{ block: true } as any}
+            />
+            <ProFormDigit
+              width="lg"
+              label="采集频率（毫秒）"
+              name="frequency"
+              rules={[{ required: true, message: '请输入采集频率' }]}
+            />
+          </ProForm.Group>
+        </ProFormList>
+      </ProForm.Group>
+      <ProForm.Group title="SNMP 配置">
+        <ProFormList
+          name={['config', 'snmpConfig']}
+          creatorButtonProps={false}
+          copyIconProps={false}
+          deleteIconProps={false}
+        >
           <ProForm.Group>
             <ProFormText
               width="lg"
@@ -85,36 +95,6 @@ const SnmpForm = () => {
                 },
               ]}
             />
-            <ProFormSegmented
-              width="lg"
-              name="autoRequest"
-              label="是否启动轮询"
-              valueEnum={{
-                true: '是',
-                false: '否',
-              }}
-              fieldProps={{ block: true } as any}
-            />
-            <ProFormDigit
-              width="lg"
-              label="采集频率（毫秒）"
-              name="frequency"
-              rules={[{ required: true, message: '请输入采集频率' }]}
-            />
-          </ProForm.Group>
-          <ProForm.Group>
-            <ProFormText
-              width="lg"
-              label="用户名"
-              name="username"
-              placeholder="请输入用户名"
-              rules={[
-                {
-                  required: true,
-                  message: '请输入用户名',
-                },
-              ]}
-            />
             <ProFormSelect
               width="lg"
               label="安全模式"
@@ -126,13 +106,22 @@ const SnmpForm = () => {
                 { label: 'V3 认证', value: 3 },
               ]}
             />
-          </ProForm.Group>
-
-          <ProFormDependency name={['securityModel']}>
-            {({ securityModel }) =>
-              securityModel === 3 && (
-                <>
+            <ProFormDependency name={['securityModel']}>
+              {({ securityModel }) =>
+                securityModel === 3 && (
                   <ProForm.Group>
+                    <ProFormText
+                      width="lg"
+                      label="用户名"
+                      name="username"
+                      placeholder="请输入用户名"
+                      rules={[
+                        {
+                          required: true,
+                          message: '请输入用户名',
+                        },
+                      ]}
+                    />
                     <ProFormSelect
                       width="lg"
                       label="消息选项"
@@ -162,7 +151,16 @@ const SnmpForm = () => {
                         { label: 'SHA512', value: 7 },
                       ]}
                     />
-
+                  </ProForm.Group>
+                )
+              }
+            </ProFormDependency>
+          </ProForm.Group>
+          <ProFormDependency name={['securityModel']}>
+            {({ securityModel }) =>
+              securityModel === 3 && (
+                <>
+                  <ProForm.Group>
                     <ProFormText
                       width="lg"
                       label="SNMP 认证密钥"
@@ -170,8 +168,6 @@ const SnmpForm = () => {
                       placeholder="请选择 SNMP 认证密钥"
                       rules={[{ required: true, message: '请选择 SNMP 认证密钥' }]}
                     />
-                  </ProForm.Group>
-                  <ProForm.Group>
                     <ProFormSelect
                       width="lg"
                       label="私有认证协议"
@@ -205,9 +201,9 @@ const SnmpForm = () => {
               )
             }
           </ProFormDependency>
-        </ProCard>
-      </ProFormList>
-    </ProForm.Group>
+        </ProFormList>
+      </ProForm.Group>
+    </>
   );
 };
 

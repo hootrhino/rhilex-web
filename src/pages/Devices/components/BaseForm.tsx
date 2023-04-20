@@ -3,24 +3,68 @@ import { useEffect,useRef } from 'react';
 import { history,useParams } from 'umi';
 
 import {
-  PageContainer,
-  ProCard,
-  ProForm,
-  ProFormDependency,
-  ProFormInstance,
-  ProFormSelect,
-  ProFormText,
+PageContainer,
+ProCard,
+ProForm,
+ProFormDependency,
+ProFormInstance,
+ProFormSelect,
+ProFormText
 } from '@ant-design/pro-components';
 import { useRequest } from 'ahooks';
-import { message, Modal } from 'antd';
+import { message,Modal } from 'antd';
 import { cloneDeep } from 'lodash';
 
 import FormFooter from '@/components/FromFooter';
 import GoBackFooter from '@/components/GoBackFooter';
-import { getDevices, postDevices, putDevices } from '@/services/rulex/shebeiguanli';
+import { getDevices,postDevices,putDevices } from '@/services/rulex/shebeiguanli';
 import G776Form from './G776';
 import GenericProtocolForm from './GenericProtocol';
 import SnmpForm from './Snmp';
+
+export const DEFAULT_DEVICE_CONFIG = {
+  type: 1,
+  rw: 1,
+  checkAlgorithm: 'NONECHECK',
+  bufferSize: 0,
+  timeSlice: 10,
+  checksumValuePos: 0,
+  checksumBegin: 0,
+  checksumEnd: 0,
+  autoRequest: 'false',
+  onCheckError: 'IGNORE',
+};
+
+const DEFAULT_UART_CONFIG = [
+  {
+    timeout: 3000,
+    baudRate: 9600,
+    dataBits: 8,
+    parity: 'N',
+    stopBits: 1,
+    uart: 'COM1',
+  },
+];
+
+const DEFAULT_SNMP_CONFIG = [
+  {
+    securityModel: 0,
+    target: '127.0.0.1',
+    transport: 'udp',
+    community: 'public',
+    port: 161,
+  },
+];
+
+const DEFAULT_COMMON_CONFIG = [
+  {
+    frequency: 3000,
+    retryTime: 5,
+    autoRequest: 'false',
+    separator: '/n',
+    transport: 'rs485rawserial',
+  },
+];
 
 const config = {
   title: '离开可能会丢失数据，确定要返回列表吗？',
@@ -38,23 +82,30 @@ const BaseForm = () => {
   const onFinish = async (values: any) => {
     try {
       let params = cloneDeep(values);
-      if (params.type === 'YK08_RELAY') {
-        params = {
-          ...params,
+      const deviceConfigFomat = new Object();
+      params?.config?.deviceConfig?.forEach((item: any) => {
+        deviceConfigFomat[item?.name] = {
+          ...item,
+          autoRequest: Boolean(item?.autoRequest),
+          autoRequestGap: 0,
+          timeSlice: [3, 4].includes(item?.type) ? item?.timeSlice : 0,
+        };
+      });
 
-          config: {
-            ...params?.config,
-            registers: [],
-            slaverIds: [params?.config?.slaverIds],
+      params = {
+        ...params,
+        config: {
+          ...params?.config,
+          commonConfig: {
+            ...params?.config?.commonConfig?.[0],
+            autoRequest: Boolean(params?.config?.commonConfig?.[0]?.autoRequest),
           },
-        };
-      }
-      if (['KCOMMANDER', 'NIREN_RELAY'].includes(params.type)) {
-        params = {
-          ...params,
-          config: {},
-        };
-      }
+          snmpConfig: params?.config?.snmpConfig?.[0],
+          deviceConfig: deviceConfigFomat,
+          uartConfig: params?.config?.uartConfig?.[0],
+        },
+      };
+
       if (id) {
         await putDevices({ ...params, uuid: id });
       } else {
@@ -70,7 +121,19 @@ const BaseForm = () => {
 
   // 获取详情
   const { run: getDetail, data: detail } = useRequest(() => getDevices({ params: { uuid: id } }), {
-    onSuccess: (res: any) => formRef.current?.setFieldsValue(res?.data),
+    manual: true,
+    onSuccess: (res: any) =>
+      formRef.current?.setFieldsValue({
+        ...res?.data,
+        config: {
+          ...res?.data?.config,
+          commonConfig: [res?.data?.config?.commonConfig],
+          deviceConfig:
+            res?.data?.config?.deviceConfig && Object.values(res?.data?.config?.deviceConfig),
+          snmpConfig: [res?.data?.config?.snmpConfig],
+          uartConfig: [res?.data?.config?.uartConfig],
+        },
+      }),
   });
 
   useEffect(() => {
@@ -79,6 +142,12 @@ const BaseForm = () => {
     } else {
       formRef.current?.setFieldsValue({
         type: 'GENERIC_SNMP',
+        config: {
+          commonConfig: DEFAULT_COMMON_CONFIG,
+          snmpConfig: DEFAULT_SNMP_CONFIG,
+          uartConfig: DEFAULT_UART_CONFIG,
+          deviceConfig: [DEFAULT_DEVICE_CONFIG],
+        },
       });
     }
   }, [id]);
@@ -135,7 +204,6 @@ const BaseForm = () => {
                 label="备注信息"
                 name="description"
                 placeholder="请输入备注信息"
-                rules={[{ required: true, message: '请输入备注信息' }]}
               />
             </ProForm.Group>
 
