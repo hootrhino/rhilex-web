@@ -1,13 +1,13 @@
 import { useEffect,useRef } from 'react';
 
-import { history, useParams } from 'umi';
+import { history,useParams } from 'umi';
 
-import type { ProFormInstance } from '@ant-design/pro-components';
 import {
   PageContainer,
   ProCard,
   ProForm,
   ProFormDependency,
+  ProFormInstance,
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
@@ -21,7 +21,6 @@ import { getDevices, postDevices, putDevices } from '@/services/rulex/shebeiguan
 import G776Form from './G776';
 import GenericProtocolForm from './GenericProtocol';
 import SnmpForm from './Snmp';
-import YK08Form from './YK08';
 
 const config = {
   title: '离开可能会丢失数据，确定要返回列表吗？',
@@ -79,27 +78,7 @@ const BaseForm = () => {
       getDetail();
     } else {
       formRef.current?.setFieldsValue({
-        type: 'YK08_RELAY',
-        config: {
-          mode: 'RTU',
-          timeout: 5,
-          frequency: 5,
-          decollator: '/n',
-          dataBits: 8,
-          stopBits: 1,
-          securityModel: 0,
-          target: '127.0.0.1',
-          transport: 'udp',
-          community: 'public',
-          port: 161,
-          slaverIds: 1,
-          config: {
-            baudRate: 9600,
-            dataBits: 8,
-            parity: 'N',
-            stopBits: 1,
-          },
-        },
+        type: 'GENERIC_SNMP',
       });
     }
   }, [id]);
@@ -144,10 +123,7 @@ const BaseForm = () => {
                 label="设备类型"
                 name="type"
                 options={[
-                  { label: '远程继电器控制器', value: 'YK08_RELAY' },
                   { label: 'SNMP协议采集器', value: 'GENERIC_SNMP' },
-                  { label: '利亚德大屏', value: 'KCOMMANDER' },
-                  { label: '泥人门禁网关', value: 'NIREN_RELAY' },
                   { label: '有人4G串口通信DTU', value: 'USER_G776' },
                   { label: '自定义串口协议', value: 'GENERIC_PROTOCOL' },
                 ]}
@@ -165,22 +141,15 @@ const BaseForm = () => {
 
             <ProFormDependency name={['type']}>
               {({ type }) => {
-                return ['YK08_RELAY', 'GENERIC_PROTOCOL', 'GENERIC_SNMP', 'USER_G776'].includes(
-                  type,
-                ) ? (
-                  <ProForm.Item label="设备配置">
-                    <ProCard
-                      bordered
-                      bodyStyle={{ paddingBlockEnd: 0 }}
-                      className="device-config-card"
-                    >
-                      {type === 'YK08_RELAY' && <YK08Form />}
-                      {type === 'GENERIC_SNMP' && <SnmpForm />}
-                      {type === 'USER_G776' && <G776Form />}
-                      {type === 'GENERIC_PROTOCOL' && <GenericProtocolForm />}
-                    </ProCard>
-                  </ProForm.Item>
-                ) : null;
+                if (type === 'GENERIC_SNMP') {
+                  return <SnmpForm />;
+                } else if (type === 'USER_G776') {
+                  return <G776Form />;
+                } else if (type === 'GENERIC_PROTOCOL') {
+                  return <GenericProtocolForm />;
+                } else {
+                  return null;
+                }
               }}
             </ProFormDependency>
           </ProForm>
