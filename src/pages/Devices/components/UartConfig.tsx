@@ -1,12 +1,13 @@
-import {
-ProForm,
-ProFormDigit,
-ProFormList,
-ProFormSelect,
-ProFormText
-} from '@ant-design/pro-components';
+import { getUarts } from '@/services/rulex/xitongshuju';
+import { ProForm,ProFormDigit,ProFormList,ProFormSelect } from '@ant-design/pro-components';
+import { AutoComplete } from 'antd';
+import { useRequest } from 'umi';
 
 const UartConfigForm = () => {
+  const { data } = useRequest(() => getUarts(), {
+    formatResult: (res) => res?.data?.map((item: string) => ({ value: item })),
+  });
+
   return (
     <ProForm.Group title="串口配置">
       <ProFormList
@@ -66,18 +67,22 @@ const UartConfigForm = () => {
             name="stopBits"
             rules={[{ required: true, message: '请输入串口通信停止位' }]}
           />
-          <ProFormText
-            width="lg"
+          <ProForm.Item
             label="串口路径"
             name="uart"
-            placeholder="请输入本地系统的串口路径"
             rules={[
               {
                 required: true,
                 message: '请输入本地系统的串口路径',
               },
             ]}
-          />
+          >
+            <AutoComplete
+              style={{ width: 440 }}
+              options={data}
+              placeholder="请输入本地系统的串口路径"
+            />
+          </ProForm.Item>
         </ProForm.Group>
       </ProFormList>
     </ProForm.Group>
