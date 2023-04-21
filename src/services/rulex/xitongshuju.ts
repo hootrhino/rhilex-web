@@ -26,3 +26,11 @@ export async function getSystem(options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
+
+/** 串口列表 GET /api/v1/uarts */
+export async function getUarts(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/uarts', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
