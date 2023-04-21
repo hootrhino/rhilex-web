@@ -37,7 +37,7 @@ export const DEFAULT_DEVICE_CONFIG = {
 
 const DEFAULT_UART_CONFIG = [
   {
-    timeout: 3000,
+    timeout: 30,
     baudRate: 9600,
     dataBits: 8,
     parity: 'N',

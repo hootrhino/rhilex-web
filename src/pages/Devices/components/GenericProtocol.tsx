@@ -1,15 +1,25 @@
 import {
-ProCard,
-ProForm,
-ProFormDependency,
-ProFormDigit,
-ProFormList,
-ProFormSegmented,
-ProFormSelect,
-ProFormText
+  ProCard,
+  ProForm,
+  ProFormDependency,
+  ProFormDigit,
+  ProFormList,
+  ProFormSegmented,
+  ProFormSelect,
+  ProFormText,
 } from '@ant-design/pro-components';
 import { DEFAULT_DEVICE_CONFIG } from './BaseForm';
 import UartConfigForm from './UartConfig';
+
+const toolTip = (
+  <a
+    href="https://github.com/i4de/rulex/blob/master/device/custom_protocol_device.md"
+    target="_blank"
+    rel="noreferrer"
+  >
+    详细戳这里
+  </a>
+);
 
 const GenericProtocolForm = () => {
   return (
@@ -85,20 +95,13 @@ const GenericProtocolForm = () => {
                   message: '请输入协议名称',
                 },
               ]}
+              tooltip={toolTip}
             />
             <ProFormSelect
               width="lg"
               label="协议类型"
               name="type"
-              tooltip={
-                <a
-                  href="https://github.com/i4de/rulex/blob/master/device/custom_protocol_device.md"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  详细戳这里
-                </a>
-              }
+              tooltip={toolTip}
               placeholder="请选择协议类型"
               rules={[
                 {
@@ -127,6 +130,7 @@ const GenericProtocolForm = () => {
                   message: '请选择读取权限',
                 },
               ]}
+              tooltip={toolTip}
               options={[
                 { label: '只读', value: 1 },
                 { label: '只写', value: 2 },
@@ -142,6 +146,7 @@ const GenericProtocolForm = () => {
                       label="缓冲区大小"
                       name="bufferSize"
                       rules={[{ required: true, message: '请输入缓冲区大小' }]}
+                      tooltip={toolTip}
                     />
                   );
                 } else if ([3, 4].includes(type)) {
@@ -151,6 +156,7 @@ const GenericProtocolForm = () => {
                       label="定时请求倒计时（毫秒）"
                       name="timeSlice"
                       rules={[{ required: true, message: '请输入定时请求倒计时' }]}
+                      tooltip={toolTip}
                     />
                   );
                 } else {
@@ -164,6 +170,7 @@ const GenericProtocolForm = () => {
               label="指令等待时间（毫秒）"
               name="timeout"
               rules={[{ required: true, message: '请输入指令等待时间' }]}
+              tooltip={toolTip}
             />
           </ProForm.Group>
           <ProFormDependency name={['type']}>
@@ -190,18 +197,21 @@ const GenericProtocolForm = () => {
                         { label: 'CRC16 校验', value: 'CRC16' },
                         { label: '不校验（默认）', value: 'NONECHECK' },
                       ]}
+                      tooltip={toolTip}
                     />
                     <ProFormDigit
                       width="lg"
                       label="校验值比对位"
                       name="checksumValuePos"
                       rules={[{ required: isRequired, message: '请输入校验值比对位' }]}
+                      tooltip={toolTip}
                     />
                     <ProFormDigit
                       width="lg"
                       label="校验算法起始位置"
                       name="checksumBegin"
                       rules={[{ required: isRequired, message: '请输入校验算法起始位置' }]}
+                      tooltip={toolTip}
                     />
                   </ProForm.Group>
                   <ProForm.Group>
@@ -210,6 +220,7 @@ const GenericProtocolForm = () => {
                       label="校验算法结束位置"
                       name="checksumEnd"
                       rules={[{ required: isRequired, message: '请输入校验算法结束位置' }]}
+                      tooltip={toolTip}
                     />
                     <ProFormDependency name={['checkAlgorithm']}>
                       {({ checkAlgorithm }) =>
@@ -229,6 +240,7 @@ const GenericProtocolForm = () => {
                               { label: '输出到日志', value: 'LOG' },
                               { label: '忽略错误', value: 'IGNORE' },
                             ]}
+                            tooltip={toolTip}
                           />
                         )
                       }
@@ -249,6 +261,7 @@ const GenericProtocolForm = () => {
                           message: '请选择是否启动轮询',
                         },
                       ]}
+                      tooltip={toolTip}
                     />
                   </ProForm.Group>
                   <ProForm.Group>
@@ -256,7 +269,7 @@ const GenericProtocolForm = () => {
                       width="lg"
                       name={['protocol', 'in']}
                       label="协议请求参数"
-                      tooltip="用大写十六进制表示法，否则会解析失败, 例如：FFFFFF014CB2AA55"
+                      tooltip={toolTip}
                       rules={[
                         {
                           required: isRequired,
