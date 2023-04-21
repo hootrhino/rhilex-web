@@ -28,6 +28,7 @@ export const DEFAULT_DEVICE_CONFIG = {
   checkAlgorithm: 'NONECHECK',
   bufferSize: 0,
   timeSlice: 10,
+  timeout: 30,
   checksumValuePos: 0,
   checksumBegin: 0,
   checksumEnd: 0,
