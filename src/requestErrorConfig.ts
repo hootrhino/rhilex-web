@@ -1,5 +1,5 @@
 ﻿import type { RequestConfig } from '@umijs/max';
-import { message, notification } from 'antd';
+import { message,notification } from 'antd';
 
 // 错误处理方案： 错误类型
 enum ErrorShowType {
@@ -17,6 +17,48 @@ interface ResponseStructure {
   errorMessage?: string;
   showType?: ErrorShowType;
 }
+
+type BizErrorInfo = {
+  errorCode: number | string;
+  errorMessage: string;
+  errorShowType: ErrorShowType;
+};
+
+const codeMessage = {
+  400: '请求参数错误',
+  401: '您的登录已失效，请重新登录',
+  403: '权限验证不通过',
+  404: '找不到该接口',
+  405: '请求方法不被允许',
+  406: '请求的资源特性不满足请求头条件',
+  407: '需要在代理服务器进行身份验证',
+  408: '请求超时',
+  409: '请求状态冲突',
+  410: '请求的资源已被永久删除',
+  411: '请求被拒绝，需要定义内容长度',
+  412: '服务器无法满足请求头条件',
+  413: '请求提交的数据大小超出范围',
+  414: '请求的 URI 长度超出范围',
+  415: '请求提交的数据格式不支持',
+  416: '请求的数据范围不可用',
+  417: '服务器无法满足 Expect 标头期望值',
+  422: '请求语义错误',
+  426: '服务器拒绝使用当前协议执行请求',
+  429: '请求过于频繁',
+  431: '请求头字段太大',
+  451: '请求了非法资源',
+  500: '接口链路调用发生错误',
+  501: '服务器不支持该请求方法',
+  502: '网关错误',
+  503: '服务不可用',
+  504: '网关超时',
+  505: '服务器不支持请求中所使用的 HTTP 协议版本',
+  506: '服务器配置错误',
+  507: '服务器配置错误',
+  508: '服务器在处理请求时检测到无限循环',
+  510: '客户端需要对请求扩展',
+  511: '客户端需要进行身份验证',
+};
 
 /**
  * @name 错误处理
@@ -68,18 +110,9 @@ export const errorConfig: RequestConfig = {
               message.error(errorMessage);
           }
         }
-      } else if (error.response) {
-        // Axios 的错误
-        // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
-        message.error(`Response status:${error.response.status}`);
-      } else if (error.request) {
-        // 请求已经成功发起，但没有收到响应
-        // \`error.request\` 在浏览器中是 XMLHttpRequest 的实例，
-        // 而在node.js中是 http.ClientRequest 的实例
-        message.error('None response! Please retry.');
       } else {
         // 发送请求时出了点问题
-        message.error('Request error, please retry.');
+        message.error(error.message || '请求错误，请重试');
       }
     },
   },
@@ -95,13 +128,25 @@ export const errorConfig: RequestConfig = {
 
   // 响应拦截器
   responseInterceptors: [
-    // (response) => {
-    //   // 拦截响应数据，进行个性化处理
-    //   const { data } = response as unknown as ResponseStructure;
-    //   if (data?.success === false) {
-    //     message.error('请求失败！');
-    //   }
-    //   return response;
-    // },
+    (response) => {
+      // 拦截响应数据，进行个性化处理
+      const { data, status, config } = response;
+
+      const shouldThrowError =
+        !(data instanceof Promise) && ![200, 'ok'].includes(data['code'] || status);
+
+      if (shouldThrowError) {
+        const error: any = new Error();
+        const bizErrorInfo: BizErrorInfo = {
+          errorCode: data['code'] || status || -9999,
+          errorMessage: data['msg'] || codeMessage[status] || '请求错误，请重试',
+          errorShowType: config['errorShowType'],
+        };
+        error.name = 'BizError';
+        error.info = bizErrorInfo;
+        throw error;
+      }
+      return response;
+    },
   ],
 };

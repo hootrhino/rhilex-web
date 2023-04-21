@@ -1,12 +1,12 @@
 // import Footer from '@/components/Footer';
 import { login } from '@/services/ant-design-pro/login';
 
-import { LockOutlined,UserOutlined } from '@ant-design/icons';
-import { LoginForm,ProFormCheckbox,ProFormText } from '@ant-design/pro-components';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { FormattedMessage,Helmet,history,useIntl,useModel } from '@umijs/max';
-import { Alert,message } from 'antd';
-import React,{ useState } from 'react';
+import { FormattedMessage, Helmet, history, useIntl, useModel } from '@umijs/max';
+import { Alert, message } from 'antd';
+import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
 
@@ -81,6 +81,7 @@ const Login: React.FC = () => {
     try {
       // 登录
       const msg = await login(values);
+
       if (msg.status === 'ok') {
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
@@ -89,6 +90,7 @@ const Login: React.FC = () => {
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
+
         history.push(urlParams.get('redirect') || '/');
         return;
       }
