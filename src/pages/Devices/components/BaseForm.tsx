@@ -61,7 +61,7 @@ const DEFAULT_COMMON_CONFIG = [
     frequency: 3000,
     retryTime: 5,
     autoRequest: 'false',
-    separator: '/n',
+    separator: 'LF',
     transport: 'rs485rawserial',
   },
 ];

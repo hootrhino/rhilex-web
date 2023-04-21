@@ -3,6 +3,7 @@ import {
   ProFormDigit,
   ProFormList,
   ProFormSegmented,
+  ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
 import UartConfigForm from './UartConfig';
@@ -29,11 +30,16 @@ const G776Form = () => {
               },
             ]}
           />
-          <ProFormText
+
+          <ProFormSelect
             width="lg"
             label="协议分隔符"
             name="separator"
             placeholder="请输入协议分隔符"
+            options={[
+              { label: 'LF', value: 'LF' },
+              { label: 'CRLF', value: 'CRLF' },
+            ]}
           />
           <ProFormSegmented
             width="lg"
