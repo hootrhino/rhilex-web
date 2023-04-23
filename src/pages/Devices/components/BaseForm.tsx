@@ -32,6 +32,8 @@ export const DEFAULT_DEVICE_CONFIG = {
   checksumValuePos: 0,
   checksumBegin: 0,
   checksumEnd: 0,
+  weight: 1,
+  initValue: 0,
   autoRequest: 'false',
   onCheckError: 'IGNORE',
 };

@@ -277,6 +277,8 @@ const GenericProtocolForm = () => {
                         },
                       ]}
                     />
+                    <ProFormDigit width="lg" label="权重指数" name="weight" tooltip={toolTip} />
+                    <ProFormDigit width="lg" label="初始值" name="initValue" tooltip={toolTip} />
                   </ProForm.Group>
                 </>
               ) : null;
