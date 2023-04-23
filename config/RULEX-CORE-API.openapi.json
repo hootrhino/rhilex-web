@@ -35,6 +35,9 @@
     },
     {
       "name": "用户管理"
+    },
+    {
+      "name": "AI能力"
     }
   ],
   "paths": {
@@ -3194,6 +3197,56 @@
         },
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-76792324-run"
       }
+    },
+    "/api/v1/aibase": {
+      "get": {
+        "summary": "AI能力列表",
+        "x-apifox-folder": "AI能力",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "AI能力"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "uuid": "BUILDIN_MNIST",
+                          "name": "BUILDIN_MNIST",
+                          "type": "BUILDIN_MNIST",
+                          "filepath": "...",
+                          "config": {
+                            "document": "http://yann.lecun.com/exdb/mnist"
+                          },
+                          "description": "BUILDIN_MNIST"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-77202058-run"
+      }
     }
   },
   "components": {
@@ -3234,5 +3287,10 @@
       }
     }
   },
-  "servers": []
+  "servers": [
+    {
+      "url": "http://127.0.0.1:2580",
+      "description": "测试环境"
+    }
+  ]
 }

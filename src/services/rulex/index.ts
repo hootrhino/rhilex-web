@@ -2,6 +2,7 @@
 /* eslint-disable */
 // API 更新时间：
 // API 唯一标识：
+import * as AInengli from './AInengli';
 import * as chajianguanli from './chajianguanli';
 import * as guizeguanli from './guizeguanli';
 import * as qingliangyingyong from './qingliangyingyong';
@@ -23,4 +24,5 @@ export default {
   shuruziyuanguanli,
   chajianguanli,
   qingliangyingyong,
+  AInengli,
 };
