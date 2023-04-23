@@ -1,12 +1,12 @@
 import {
-  ProCard,
-  ProForm,
-  ProFormDependency,
-  ProFormDigit,
-  ProFormList,
-  ProFormSegmented,
-  ProFormSelect,
-  ProFormText,
+ProCard,
+ProForm,
+ProFormDependency,
+ProFormDigit,
+ProFormList,
+ProFormSegmented,
+ProFormSelect,
+ProFormText
 } from '@ant-design/pro-components';
 import { DEFAULT_DEVICE_CONFIG } from './BaseForm';
 import UartConfigForm from './UartConfig';
@@ -277,7 +277,7 @@ const GenericProtocolForm = () => {
                         },
                       ]}
                     />
-                    <ProFormDigit width="lg" label="权重指数" name="weight" tooltip={toolTip} />
+                    <ProFormDigit width="lg" label="权重系数" name="weight" tooltip={toolTip} />
                     <ProFormDigit width="lg" label="初始值" name="initValue" tooltip={toolTip} />
                   </ProForm.Group>
                 </>
