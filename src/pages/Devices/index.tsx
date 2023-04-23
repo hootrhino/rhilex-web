@@ -3,11 +3,11 @@ import { useRef } from 'react';
 import { history } from 'umi';
 
 import { PlusOutlined } from '@ant-design/icons';
-import type { ActionType,ProColumns } from '@ant-design/pro-components';
-import { PageContainer,ProTable } from '@ant-design/pro-components';
-import { Button,message,Popconfirm } from 'antd';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { Button, message, Popconfirm } from 'antd';
 
-import { deleteDevices,getDevices } from '@/services/rulex/shebeiguanli';
+import { deleteDevices, getDevices } from '@/services/rulex/shebeiguanli';
 
 export type Item = {
   name: string;
@@ -74,7 +74,7 @@ const Devices = () => {
           编辑
         </a>,
         <Popconfirm
-          title="你确定要删除该资源?"
+          title="你确定要删除该设备?"
           onConfirm={() => handleDelete({ uuid: record.uuid })}
           okText="是"
           cancelText="否"
