@@ -208,6 +208,23 @@ export default [
     ],
   },
   {
+    path: '/ai',
+    name: 'AI 能力',
+    icon: 'reddit',
+    routes: [
+      {
+        path: '/ai',
+        redirect: '/ai/list',
+      },
+      {
+        path: '/ai/list',
+        name: 'AI 能力列表',
+        component: './AI',
+        hideInMenu: true,
+      },
+    ],
+  },
+  {
     path: '/',
     redirect: '/dashboard',
   },
