@@ -2,6 +2,7 @@ import { getUarts } from '@/services/rulex/xitongshuju';
 import { ProForm,ProFormDigit,ProFormList,ProFormSelect } from '@ant-design/pro-components';
 import { AutoComplete } from 'antd';
 import { useRequest } from 'umi';
+import { toolTip } from './BaseForm';
 
 const UartConfigForm = () => {
   const { data } = useRequest(() => getUarts(), {
@@ -22,6 +23,7 @@ const UartConfigForm = () => {
             label="超时时间（毫秒）"
             name="timeout"
             rules={[{ required: true, message: '请输入超时时间' }]}
+            tooltip={toolTip}
           />
           <ProFormSelect
             width="lg"
@@ -34,6 +36,7 @@ const UartConfigForm = () => {
               { label: '9600', value: 9600 },
               { label: '115200', value: 115200 },
             ]}
+            tooltip={toolTip}
           />
           <ProFormDigit
             width="lg"
@@ -41,6 +44,7 @@ const UartConfigForm = () => {
             name="dataBits"
             placeholder="请输入串口通信数据位"
             rules={[{ required: true, message: '请输入串口通信数据位' }]}
+            tooltip={toolTip}
           />
         </ProForm.Group>
         <ProForm.Group>
@@ -60,12 +64,14 @@ const UartConfigForm = () => {
               { label: '偶校验', value: 'O' },
               { label: '不校验', value: 'N' },
             ]}
+            tooltip={toolTip}
           />
           <ProFormDigit
             width="lg"
             label="停止位"
             name="stopBits"
             rules={[{ required: true, message: '请输入串口通信停止位' }]}
+            tooltip={toolTip}
           />
           <ProForm.Item
             label="串口路径"
@@ -76,6 +82,7 @@ const UartConfigForm = () => {
                 message: '请输入本地系统的串口路径',
               },
             ]}
+            tooltip={toolTip}
           >
             <AutoComplete
               style={{ width: 440 }}

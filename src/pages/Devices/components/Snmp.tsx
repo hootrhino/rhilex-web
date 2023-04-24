@@ -7,6 +7,7 @@ ProFormSegmented,
 ProFormSelect,
 ProFormText
 } from '@ant-design/pro-components';
+import { toolTip } from './BaseForm';
 
 const SnmpForm = () => {
   return (
@@ -57,6 +58,7 @@ const SnmpForm = () => {
                   message: '请输入主机地址',
                 },
               ]}
+              tooltip={toolTip}
             />
             <ProFormDigit
               width="lg"
@@ -69,6 +71,7 @@ const SnmpForm = () => {
                   message: '请输入主机端口',
                 },
               ]}
+              tooltip={toolTip}
             />
             <ProFormSelect
               width="lg"
@@ -80,6 +83,7 @@ const SnmpForm = () => {
                 { label: 'TCP', value: 'tcp' },
                 { label: 'UDP', value: 'udp' },
               ]}
+              tooltip={toolTip}
             />
           </ProForm.Group>
           <ProForm.Group>
@@ -94,6 +98,7 @@ const SnmpForm = () => {
                   message: '请输入Community',
                 },
               ]}
+              tooltip={toolTip}
             />
             <ProFormSelect
               width="lg"
@@ -105,6 +110,7 @@ const SnmpForm = () => {
                 { label: '不认证', value: 0 },
                 { label: 'V3 认证', value: 3 },
               ]}
+              tooltip={toolTip}
             />
             <ProFormDependency name={['securityModel']}>
               {({ securityModel }) =>
@@ -121,6 +127,7 @@ const SnmpForm = () => {
                           message: '请输入用户名',
                         },
                       ]}
+                      tooltip={toolTip}
                     />
                     <ProFormSelect
                       width="lg"
@@ -134,6 +141,7 @@ const SnmpForm = () => {
                         { label: 'AuthPriv', value: 2 },
                         { label: 'Reportable', value: 3 },
                       ]}
+                      tooltip={toolTip}
                     />
                     <ProFormSelect
                       width="lg"
@@ -150,6 +158,7 @@ const SnmpForm = () => {
                         { label: 'SHA384', value: 6 },
                         { label: 'SHA512', value: 7 },
                       ]}
+                      tooltip={toolTip}
                     />
                   </ProForm.Group>
                 )
@@ -167,6 +176,7 @@ const SnmpForm = () => {
                       name="authenticationPassphrase"
                       placeholder="请选择 SNMP 认证密钥"
                       rules={[{ required: true, message: '请选择 SNMP 认证密钥' }]}
+                      tooltip={toolTip}
                     />
                     <ProFormSelect
                       width="lg"
@@ -183,6 +193,7 @@ const SnmpForm = () => {
                         { label: 'AES192C', value: 6 },
                         { label: 'AES256C', value: 7 },
                       ]}
+                      tooltip={toolTip}
                     />
                     <ProFormText
                       width="lg"
@@ -195,6 +206,7 @@ const SnmpForm = () => {
                           message: '请输入私有认证协议密钥',
                         },
                       ]}
+                      tooltip={toolTip}
                     />
                   </ProForm.Group>
                 </>

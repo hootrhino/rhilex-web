@@ -1,25 +1,15 @@
 import {
-ProCard,
-ProForm,
-ProFormDependency,
-ProFormDigit,
-ProFormList,
-ProFormSegmented,
-ProFormSelect,
-ProFormText
+  ProCard,
+  ProForm,
+  ProFormDependency,
+  ProFormDigit,
+  ProFormList,
+  ProFormSegmented,
+  ProFormSelect,
+  ProFormText,
 } from '@ant-design/pro-components';
-import { DEFAULT_DEVICE_CONFIG } from './BaseForm';
+import { DEFAULT_DEVICE_CONFIG, toolTip } from './BaseForm';
 import UartConfigForm from './UartConfig';
-
-const toolTip = (
-  <a
-    href="https://github.com/i4de/rulex/blob/master/device/custom_protocol_device.md"
-    target="_blank"
-    rel="noreferrer"
-  >
-    详细戳这里
-  </a>
-);
 
 const GenericProtocolForm = () => {
   return (

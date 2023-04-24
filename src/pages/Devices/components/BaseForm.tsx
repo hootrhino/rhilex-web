@@ -22,6 +22,16 @@ import G776Form from './G776';
 import GenericProtocolForm from './GenericProtocol';
 import SnmpForm from './Snmp';
 
+export const toolTip = (
+  <a
+    href="https://github.com/i4de/rulex/blob/master/device/custom_protocol_device.md"
+    target="_blank"
+    rel="noreferrer"
+  >
+    详细戳这里
+  </a>
+);
+
 export const DEFAULT_DEVICE_CONFIG = {
   type: 1,
   rw: 1,
