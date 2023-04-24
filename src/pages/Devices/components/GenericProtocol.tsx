@@ -1,55 +1,21 @@
 import {
-  ProCard,
-  ProForm,
-  ProFormDependency,
-  ProFormDigit,
-  ProFormList,
-  ProFormSegmented,
-  ProFormSelect,
-  ProFormText,
+ProCard,
+ProForm,
+ProFormDependency,
+ProFormDigit,
+ProFormList,
+ProFormSegmented,
+ProFormSelect,
+ProFormText
 } from '@ant-design/pro-components';
-import { DEFAULT_DEVICE_CONFIG, toolTip } from './BaseForm';
+import { DEFAULT_DEVICE_CONFIG,toolTip } from './BaseForm';
+import CommonConfigForm from './CommonConfig';
 import UartConfigForm from './UartConfig';
 
 const GenericProtocolForm = () => {
   return (
     <>
-      <ProForm.Group title="通用配置">
-        <ProFormList
-          name={['config', 'commonConfig']}
-          creatorButtonProps={false}
-          copyIconProps={false}
-          deleteIconProps={false}
-        >
-          <ProForm.Group>
-            <ProFormSelect
-              width="lg"
-              label="通信形式"
-              name="transport"
-              placeholder="请选择通信形式"
-              rules={[{ required: true, message: '请选择通信形式' }]}
-              options={[
-                // { label: 'rawtcp', value: 'rawtcp' },
-                // { label: 'rawudp', value: 'rawudp' },
-                { label: 'RS485串口连接', value: 'rs485rawserial' },
-                // { label: 'rs485rawtcp', value: 'rs485rawtcp' },
-              ]}
-            />
-            <ProFormDigit
-              width="lg"
-              label="重试次数"
-              name="retryTime"
-              rules={[{ required: true, message: '请输入重试次数' }]}
-            />
-            <ProFormDigit
-              width="lg"
-              label="采集频率（毫秒）"
-              name="frequency"
-              rules={[{ required: true, message: '请输入采集频率' }]}
-            />
-          </ProForm.Group>
-        </ProFormList>
-      </ProForm.Group>
+      <CommonConfigForm type="GENERIC_PROTOCOL" />
 
       <UartConfigForm />
 

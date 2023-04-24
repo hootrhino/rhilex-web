@@ -1,44 +1,18 @@
 import {
-ProForm,
-ProFormDependency,
-ProFormDigit,
-ProFormList,
-ProFormSegmented,
-ProFormSelect,
-ProFormText
+  ProForm,
+  ProFormDependency,
+  ProFormDigit,
+  ProFormList,
+  ProFormSelect,
+  ProFormText,
 } from '@ant-design/pro-components';
 import { toolTip } from './BaseForm';
+import CommonConfigForm from './CommonConfig';
 
 const SnmpForm = () => {
   return (
     <>
-      <ProForm.Group title="通用配置">
-        <ProFormList
-          name={['config', 'commonConfig']}
-          creatorButtonProps={false}
-          copyIconProps={false}
-          deleteIconProps={false}
-        >
-          <ProForm.Group>
-            <ProFormSegmented
-              width="lg"
-              name="autoRequest"
-              label="是否启动轮询"
-              valueEnum={{
-                true: '是',
-                false: '否',
-              }}
-              fieldProps={{ block: true } as any}
-            />
-            <ProFormDigit
-              width="lg"
-              label="采集频率（毫秒）"
-              name="frequency"
-              rules={[{ required: true, message: '请输入采集频率' }]}
-            />
-          </ProForm.Group>
-        </ProFormList>
-      </ProForm.Group>
+      <CommonConfigForm />
       <ProForm.Group title="SNMP 配置">
         <ProFormList
           name={['config', 'snmpConfig']}
