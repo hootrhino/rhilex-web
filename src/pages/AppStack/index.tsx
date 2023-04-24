@@ -1,4 +1,4 @@
-import { deleteApp,getApp } from '@/services/rulex/qingliangyingyong';
+import { deleteApp,getApp,putAppStart,putAppStop } from '@/services/rulex/qingliangyingyong';
 import { MinusCircleOutlined,PlusOutlined,SyncOutlined } from '@ant-design/icons';
 import { ActionType,PageContainer,ProColumns,ProTable } from '@ant-design/pro-components';
 import { Button,message,Popconfirm,Tag } from 'antd';
@@ -25,6 +25,24 @@ const AppStack = () => {
     try {
       await deleteApp(values);
       message.success('删除成功');
+      actionRef.current?.reload();
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  // 启动
+  const handleScript = async (values: API.putAppStartParams, type: 'start' | 'stop') => {
+    try {
+      if (type === 'start') {
+        await putAppStart(values);
+        message.success('启动成功');
+      } else {
+        await putAppStop(values);
+        message.success('停止成功');
+      }
+
       actionRef.current?.reload();
       return true;
     } catch (error) {
@@ -73,7 +91,13 @@ const AppStack = () => {
       fixed: 'right',
       key: 'option',
       valueType: 'option',
-      render: (_, { uuid }) => [
+      render: (_, { uuid, appState }) => [
+        <a
+          key="start"
+          onClick={() => handleScript({ uuid: uuid || '' }, appState === 1 ? 'stop' : 'start')}
+        >
+          {appState === 1 ? '停止' : '启动'}
+        </a>,
         <a key="edit" onClick={() => history.push(`/app-stack/edit/${uuid}`)}>
           编辑
         </a>,
