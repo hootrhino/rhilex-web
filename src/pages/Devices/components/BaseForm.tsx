@@ -191,7 +191,7 @@ const BaseForm = () => {
                 ]}
               />
               <ProFormSelect
-                width="md"
+                width="lg"
                 label="设备类型"
                 name="type"
                 options={[
@@ -203,7 +203,7 @@ const BaseForm = () => {
                 rules={[{ required: true, message: '请选择资源类型' }]}
               />
               <ProFormText
-                width="xl"
+                width="lg"
                 label="备注信息"
                 name="description"
                 placeholder="请输入备注信息"
