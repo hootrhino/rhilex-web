@@ -76,7 +76,7 @@ const UpdateForm = () => {
     } else {
       formRef.current?.setFieldsValue({
         name: '',
-        version: '',
+        version: '1.0.0',
         type: 'lua',
         autoStart: 'true',
         luaSource: '',
