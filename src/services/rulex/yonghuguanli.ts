@@ -21,19 +21,9 @@ export async function postLogin(
 }
 
 /** 用户注销 POST /api/v1/logout */
-export async function postLogout(
-  body: {
-    username: string;
-    password: string;
-  },
-  options?: { [key: string]: any },
-) {
+export async function postLogout(options?: { [key: string]: any }) {
   return request<{ code: number; msg: string; data: string }>('/api/v1/logout', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
     ...(options || {}),
   });
 }

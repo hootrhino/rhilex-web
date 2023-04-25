@@ -3079,36 +3079,6 @@
           "用户管理"
         ],
         "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "username": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "username",
-                  "password"
-                ],
-                "x-apifox-orders": [
-                  "username",
-                  "password"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "username": "rulex",
-                "password": "rulex"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "成功",
@@ -3287,10 +3257,5 @@
       }
     }
   },
-  "servers": [
-    {
-      "url": "http://127.0.0.1:2580",
-      "description": "测试环境"
-    }
-  ]
+  "servers": []
 }
