@@ -5,6 +5,10 @@ import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 
 import type { CurrentUser } from './pages/User/Login';
+import { App } from 'antd';
+import { createElement } from 'react';
+import type {ReactNode} from 'react';
+import PopupHack from '@/components/PopupHack';
 
 const loginPath = '/user/login';
 
@@ -79,4 +83,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
  */
 export const request = {
   ...errorConfig,
+};
+
+export const rootContainer = (container: ReactNode) => {
+  return createElement(App, null, container, createElement(PopupHack, null));
 };

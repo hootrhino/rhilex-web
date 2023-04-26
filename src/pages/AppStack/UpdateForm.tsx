@@ -1,6 +1,7 @@
 import FormFooter from '@/components/FromFooter';
 import FullScreenEditor from '@/components/FullScreenEditor';
 import GoBackFooter from '@/components/GoBackFooter';
+import { message, modal } from '@/components/PopupHack';
 import { getApp,postApp,putApp } from '@/services/rulex/qingliangyingyong';
 import {
 PageContainer,
@@ -11,7 +12,7 @@ ProFormSegmented,
 ProFormSelect,
 ProFormText
 } from '@ant-design/pro-components';
-import { message,Modal } from 'antd';
+import { Modal } from 'antd';
 import { useEffect,useRef } from 'react';
 import { history,useParams,useRequest } from 'umi';
 
@@ -34,7 +35,6 @@ const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
   const editorRef = useRef(null);
-  const [modal, contextHolder] = Modal.useModal();
 
   // 获取详情
   const { run: getDetail, data: detail } = useRequest(() => getApp({ uuid: id || '' }), {
@@ -86,103 +86,100 @@ const UpdateForm = () => {
   }, [id]);
 
   return (
-    <>
-      <PageContainer
-        header={{ title: id ? '更新应用' : '新建应用' }}
-        onBack={() => modal.warning(config)}
-      >
-        <ProCard>
-          <ProForm
-            formRef={formRef}
-            submitter={{
-              render: ({ reset, submit }) => {
-                return (
-                  <FormFooter
-                    onReset={() =>
-                      id
-                        ? formRef.current?.setFieldsValue({
-                            ...detail,
-                            autoStart: detail?.autoStart?.toString(),
-                          })
-                        : reset()
-                    }
-                    onSubmit={submit}
-                  />
-                );
-              },
-            }}
-            onFinish={handleOnFinish}
-          >
-            <ProForm.Group>
-              <ProFormText
-                width="lg"
-                name="name"
-                label="APP 名称"
-                rules={[{ required: true, message: '请输入 APP 名称' }]}
-              />
-              <ProFormText
-                width="lg"
-                name="version"
-                label="APP 版本"
-                rules={[{ required: true, message: '请输入 APP 版本' }]}
-              />
-              <ProFormSegmented
-                name="autoStart"
-                label="是否自启"
-                valueEnum={{
-                  true: '是',
-                  false: '否',
-                }}
-                width="lg"
-                fieldProps={{ block: true } as any}
-                rules={[{ required: true, message: '请选择是否自启' }]}
-              />
-            </ProForm.Group>
-            <ProForm.Group>
-              <ProFormSelect
-                width="lg"
-                label="脚本类型"
-                name="type"
-                tooltip={
-                  <a href="https://rulex.pages.dev/" target="_blank" rel="noreferrer">
-                    详细戳这里
-                  </a>
-                }
-                options={[
-                  { label: 'LUA脚本', value: 'lua' },
-                  // { label: '规则表达式', value: 'expr' },
-                ]}
-                placeholder="请选择脚本类型"
-                rules={[{ required: true, message: '请选择脚本类型' }]}
-              />
-              <ProFormText width="lg" name="description" label="描述信息" />
-            </ProForm.Group>
+    <PageContainer
+      header={{ title: id ? '更新应用' : '新建应用' }}
+      onBack={() => modal.warning(config)}
+    >
+      <ProCard>
+        <ProForm
+          formRef={formRef}
+          submitter={{
+            render: ({ reset, submit }) => {
+              return (
+                <FormFooter
+                  onReset={() =>
+                    id
+                      ? formRef.current?.setFieldsValue({
+                          ...detail,
+                          autoStart: detail?.autoStart?.toString(),
+                        })
+                      : reset()
+                  }
+                  onSubmit={submit}
+                />
+              );
+            },
+          }}
+          onFinish={handleOnFinish}
+        >
+          <ProForm.Group>
+            <ProFormText
+              width="lg"
+              name="name"
+              label="APP 名称"
+              rules={[{ required: true, message: '请输入 APP 名称' }]}
+            />
+            <ProFormText
+              width="lg"
+              name="version"
+              label="APP 版本"
+              rules={[{ required: true, message: '请输入 APP 版本' }]}
+            />
+            <ProFormSegmented
+              name="autoStart"
+              label="是否自启"
+              valueEnum={{
+                true: '是',
+                false: '否',
+              }}
+              width="lg"
+              fieldProps={{ block: true } as any}
+              rules={[{ required: true, message: '请选择是否自启' }]}
+            />
+          </ProForm.Group>
+          <ProForm.Group>
+            <ProFormSelect
+              width="lg"
+              label="脚本类型"
+              name="type"
+              tooltip={
+                <a href="https://rulex.pages.dev/" target="_blank" rel="noreferrer">
+                  详细戳这里
+                </a>
+              }
+              options={[
+                { label: 'LUA脚本', value: 'lua' },
+                // { label: '规则表达式', value: 'expr' },
+              ]}
+              placeholder="请选择脚本类型"
+              rules={[{ required: true, message: '请选择脚本类型' }]}
+            />
+            <ProFormText width="lg" name="description" label="描述信息" />
+          </ProForm.Group>
 
-            {id && (
-              <ProForm.Item
-                name="luaSource"
-                label="Lua 源码"
-                rules={[
-                  { required: true, message: '请输入 Lua 源码' },
-                  // {
-                  //   validator(_, value) {
-                  //     console.log(value);
-                  //     if (!value) {
-                  //       return Promise.reject(new Error('请输入 Lua 源码'));
-                  //     }
-                  //     return Promise.resolve();
-                  //   },
-                  // },
-                ]}
-              >
-                <FullScreenEditor ref={editorRef} />
-              </ProForm.Item>
-            )}
-          </ProForm>
-        </ProCard>
-      </PageContainer>
-      {contextHolder}
-    </>
+          {id && (
+            <ProForm.Item
+              name="luaSource"
+              label="Lua 源码"
+              rules={[
+                { required: true, message: '请输入 Lua 源码' },
+                // {
+                //   validator(_, value) {
+                //     console.log(value);
+                //     if (!value) {
+                //       return Promise.reject(new Error('请输入 Lua 源码'));
+                //     }
+                //     return Promise.resolve();
+                //   },
+                // },
+              ]}
+            >
+              <FullScreenEditor ref={editorRef} />
+            </ProForm.Item>
+          )}
+        </ProForm>
+      </ProCard>
+    </PageContainer>
   );
 };
 

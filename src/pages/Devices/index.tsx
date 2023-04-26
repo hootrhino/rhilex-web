@@ -5,9 +5,10 @@ import { history } from 'umi';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Button, message, Popconfirm } from 'antd';
+import { Button, Popconfirm } from 'antd';
 
 import { deleteDevices, getDevices } from '@/services/rulex/shebeiguanli';
+import { message } from '@/components/PopupHack';
 
 export type Item = {
   name: string;

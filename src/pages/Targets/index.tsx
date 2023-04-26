@@ -3,10 +3,11 @@ import { useRef } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Button, message, Popconfirm } from 'antd';
+import { Button, Popconfirm } from 'antd';
 import { history } from 'umi';
 
 import { deleteOutends, getOutends } from '@/services/rulex/shuchuziyuanguanli';
+import { message } from '@/components/PopupHack';
 
 export type Item = {
   name: string;

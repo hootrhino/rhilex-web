@@ -1,6 +1,7 @@
 import { useIntl } from '@umijs/max';
-import { Button, message, notification } from 'antd';
+import { Button } from 'antd';
 import defaultSettings from '../config/defaultSettings';
+import { message, notification } from './components/PopupHack';
 
 const { pwa } = defaultSettings;
 const isHttps = document.location.protocol === 'https:';

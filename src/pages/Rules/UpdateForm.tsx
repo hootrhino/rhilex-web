@@ -22,9 +22,9 @@ import FormFooter from '@/components/FromFooter';
 import FullScreenEditor from '@/components/FullScreenEditor';
 import GoBackFooter from '@/components/GoBackFooter';
 import { postRules } from '@/services/rulex/guizeguanli';
-import { message,Modal } from 'antd';
+import { Modal } from 'antd';
 import { omit } from 'lodash';
-// import FullScreenEditor from './FullScreenEditor';
+import { message, modal } from '@/components/PopupHack';
 
 export type FormItem = {
   actions: string;
@@ -62,7 +62,6 @@ const UpdateForm = () => {
   const failRef = useRef(null);
   const actionRef = useRef(null);
   const successRef = useRef(null);
-  const [modal, contextHolder] = Modal.useModal();
 
   const [sources, setSources] = useState([]);
 
@@ -214,7 +213,6 @@ const UpdateForm = () => {
           </ProForm>
         </ProCard>
       </PageContainer>
-      {contextHolder}
     </>
   );
 };

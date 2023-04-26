@@ -12,7 +12,7 @@ ProFormSelect,
 ProFormText
 } from '@ant-design/pro-components';
 import { useRequest } from 'ahooks';
-import { message,Modal } from 'antd';
+import { Modal } from 'antd';
 import { cloneDeep } from 'lodash';
 
 import FormFooter from '@/components/FromFooter';
@@ -21,6 +21,7 @@ import { getDevices,postDevices,putDevices } from '@/services/rulex/shebeiguanli
 import G776Form from './G776';
 import GenericProtocolForm from './GenericProtocol';
 import SnmpForm from './Snmp';
+import { message, modal } from '@/components/PopupHack';
 
 export const toolTip = (
   <a
@@ -89,7 +90,6 @@ const config = {
 const BaseForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
-  const [modal, contextHolder] = Modal.useModal();
 
   // 新建&编辑
   const onFinish = async (values: any) => {
@@ -236,7 +236,6 @@ const BaseForm = () => {
           </ProForm>
         </ProCard>
       </PageContainer>
-      {contextHolder}
     </>
   );
 };

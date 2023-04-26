@@ -1,5 +1,6 @@
 import FormFooter from '@/components/FromFooter';
 import GoBackFooter from '@/components/GoBackFooter';
+import { message, modal } from '@/components/PopupHack';
 import { getOutends, postOutends, putOutends } from '@/services/rulex/shuchuziyuanguanli';
 import {
   PageContainer,
@@ -11,7 +12,7 @@ import {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
-import { message, Modal } from 'antd';
+import { Modal } from 'antd';
 import { useEffect, useRef } from 'react';
 import { history, useParams, useRequest } from 'umi';
 
@@ -47,7 +48,6 @@ const renderMongoForm = () => {
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
-  const [modal, contextHolder] = Modal.useModal();
 
   // 新建&编辑
   const onFinish = async (values: any) => {
@@ -141,7 +141,6 @@ const UpdateForm = () => {
           </ProForm>
         </ProCard>
       </PageContainer>
-      {contextHolder}
     </>
   );
 };

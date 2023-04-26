@@ -1,7 +1,8 @@
+import { modal } from '@/components/PopupHack';
 import { getAibase } from '@/services/rulex/AInengli';
 import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer,ProColumns,ProTable } from '@ant-design/pro-components';
-import { Button, Descriptions, Modal } from 'antd';
+import { Button, Descriptions } from 'antd';
 import { isEmpty } from 'lodash';
 
 type TableItem = {
@@ -14,8 +15,6 @@ type TableItem = {
 };
 
 const AI = () => {
-  const [modal, contextHolder] = Modal.useModal();
-
   const columns: ProColumns<TableItem>[] = [
     {
       title: 'UUID',
@@ -113,7 +112,6 @@ const AI = () => {
           }}
         />
       </PageContainer>
-      {contextHolder}
     </>
   );
 };

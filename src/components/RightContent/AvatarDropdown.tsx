@@ -37,9 +37,6 @@ const Name = () => {
 };
 
 const AvatarLogo = () => {
-  const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState || {};
-
   const avatarClassName = useEmotionCss(({ token }) => {
     return {
       marginRight: '8px',
