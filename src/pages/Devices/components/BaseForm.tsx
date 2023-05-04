@@ -90,10 +90,15 @@ const DEFAULT_TCP_CONFIG = [
   },
 ];
 
-const DEFAULT_REGISTER_CONFIG = [{
-  weight: 1,
-  initValue: 0,
-}];
+const DEFAULT_REGISTER_CONFIG = [
+  {
+    weight: 1,
+    initValue: 0,
+    slaverId: 1,
+    address: 0,
+    quantity: 1,
+  },
+];
 
 const config = {
   title: '离开可能会丢失数据，确定要返回列表吗？',
@@ -111,9 +116,10 @@ const BaseForm = () => {
   const onFinish = async (values: any) => {
     try {
       let params = cloneDeep(values);
-      const deviceConfigFomat = new Object();
+      const deviceConfigFormat = new Object();
+
       params?.config?.deviceConfig?.forEach((item: any) => {
-        deviceConfigFomat[item?.name] = {
+        deviceConfigFormat[item?.name] = {
           ...item,
           autoRequest: Boolean(item?.autoRequest),
           autoRequestGap: 0,
@@ -130,8 +136,13 @@ const BaseForm = () => {
             autoRequest: Boolean(params?.config?.commonConfig?.[0]?.autoRequest),
           },
           snmpConfig: params?.config?.snmpConfig?.[0],
-          deviceConfig: deviceConfigFomat,
+          deviceConfig: deviceConfigFormat,
           uartConfig: params?.config?.uartConfig?.[0],
+          rtuConfig: params?.config?.rtuConfig?.[0],
+          registers: params?.config?.registers?.map((item: Record<string, any>) => ({
+            ...item,
+            value: '',
+          })),
         },
       };
 

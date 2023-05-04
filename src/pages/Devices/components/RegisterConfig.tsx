@@ -146,7 +146,6 @@ const RegisterConfigForm = () => {
               },
             ]}
           />
-          <ProFormText width="lg" label="值" name="value" placeholder="请输入值" />
         </ProForm.Group>
       </ProFormList>
     </ProForm.Group>
