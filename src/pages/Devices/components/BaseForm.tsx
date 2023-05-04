@@ -1,4 +1,4 @@
-import { useEffect,useRef } from 'react';
+import { useEffect,useRef,useState } from 'react';
 
 import { history,useParams } from 'umi';
 
@@ -17,11 +17,12 @@ import { cloneDeep } from 'lodash';
 
 import FormFooter from '@/components/FromFooter';
 import GoBackFooter from '@/components/GoBackFooter';
+import { message,modal } from '@/components/PopupHack';
 import { getDevices,postDevices,putDevices } from '@/services/rulex/shebeiguanli';
 import G776Form from './G776';
 import GenericProtocolForm from './GenericProtocol';
+import ModbusForm from './Modbus';
 import SnmpForm from './Snmp';
-import { message, modal } from '@/components/PopupHack';
 
 export const toolTip = (
   <a
@@ -77,8 +78,22 @@ const DEFAULT_COMMON_CONFIG = [
     autoRequest: 'false',
     separator: 'LF',
     transport: 'rs485rawserial',
+    mode: 'RTU',
+    timeout: 30
   },
 ];
+
+const DEFAULT_TCP_CONFIG = [
+  {
+    host: '127.0.0.1',
+    port: 502,
+  },
+];
+
+const DEFAULT_REGISTER_CONFIG = [{
+  weight: 1,
+  initValue: 0,
+}];
 
 const config = {
   title: '离开可能会丢失数据，确定要返回列表吗？',
@@ -90,6 +105,7 @@ const config = {
 const BaseForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
+  const [mode, setMode] = useState<string>('rtu');
 
   // 新建&编辑
   const onFinish = async (values: any) => {
@@ -160,6 +176,9 @@ const BaseForm = () => {
           snmpConfig: DEFAULT_SNMP_CONFIG,
           uartConfig: DEFAULT_UART_CONFIG,
           deviceConfig: [DEFAULT_DEVICE_CONFIG],
+          rtuConfig: DEFAULT_UART_CONFIG,
+          tcpConfig: DEFAULT_TCP_CONFIG,
+          registers: DEFAULT_REGISTER_CONFIG,
         },
       });
     }
@@ -186,6 +205,12 @@ const BaseForm = () => {
               },
             }}
             onFinish={onFinish}
+            onValuesChange={(changeValues) => {
+              if (changeValues?.config?.commonConfig) {
+                const changeMode = changeValues?.config?.commonConfig?.[0]?.mode;
+                setMode(changeMode);
+              }
+            }}
           >
             <ProForm.Group>
               <ProFormText
@@ -208,6 +233,7 @@ const BaseForm = () => {
                   { label: 'SNMP协议采集器', value: 'GENERIC_SNMP' },
                   { label: '有人4G串口通信DTU', value: 'USER_G776' },
                   { label: '自定义串口协议', value: 'GENERIC_PROTOCOL' },
+                  { label: '通用Modbus协议采集器', value: 'MODBUS' },
                 ]}
                 placeholder="请选择资源类型"
                 rules={[{ required: true, message: '请选择资源类型' }]}
@@ -228,6 +254,8 @@ const BaseForm = () => {
                   return <G776Form />;
                 } else if (type === 'GENERIC_PROTOCOL') {
                   return <GenericProtocolForm />;
+                } else if (type === 'MODBUS') {
+                  return <ModbusForm mode={mode} />;
                 } else {
                   return null;
                 }

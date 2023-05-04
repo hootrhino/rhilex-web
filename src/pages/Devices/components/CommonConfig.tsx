@@ -1,18 +1,17 @@
 import {
-  ProForm,
-  ProFormDigit,
-  ProFormList,
-  ProFormSegmented,
-  ProFormSelect,
-  ProFormText,
+ProForm,
+ProFormDigit,
+ProFormList,
+ProFormSegmented,
+ProFormSelect,
+ProFormText
 } from '@ant-design/pro-components';
 
 type CommonConfigProps = {
-  type?: 'GENERIC_SNMP' | 'USER_G776' | 'GENERIC_PROTOCOL';
+  type?: 'GENERIC_SNMP' | 'USER_G776' | 'GENERIC_PROTOCOL' | 'MODBUS';
 };
 
 const CommonConfigForm = ({ type = 'GENERIC_SNMP' }: CommonConfigProps) => {
-  console.log(type);
   return (
     <ProForm.Group title="通用配置">
       <ProFormList
@@ -45,13 +44,13 @@ const CommonConfigForm = ({ type = 'GENERIC_SNMP' }: CommonConfigProps) => {
             <>
               <ProFormText
                 width="lg"
-                label="数据 Tag"
+                label="数据标签"
                 name="tag"
-                placeholder="给数据打个tag"
+                placeholder="请输入数据标签"
                 rules={[
                   {
                     required: true,
-                    message: '请输入数据tag',
+                    message: '请输入数据标签',
                   },
                 ]}
               />
@@ -80,6 +79,14 @@ const CommonConfigForm = ({ type = 'GENERIC_SNMP' }: CommonConfigProps) => {
               />
             </>
           )}
+          {type === 'MODBUS' && (
+            <ProFormDigit
+              width="lg"
+              label="超时时间（毫秒）"
+              name="timeout"
+              rules={[{ required: true, message: '请输入超时时间' }]}
+            />
+          )}
         </ProForm.Group>
         <ProForm.Group>
           {type === 'USER_G776' && (
@@ -92,6 +99,19 @@ const CommonConfigForm = ({ type = 'GENERIC_SNMP' }: CommonConfigProps) => {
                 { label: 'LF', value: 'LF' },
                 { label: 'CRLF', value: 'CRLF' },
               ]}
+            />
+          )}
+          {type === 'MODBUS' && (
+            <ProFormSelect
+              width="lg"
+              label="工作模式"
+              name="mode"
+              placeholder="请选择工作模式"
+              options={[
+                { label: 'RTU', value: 'rtu' },
+                { label: 'TCP', value: 'tcp' },
+              ]}
+              rules={[{ required: true, message: '请选择工作模式' }]}
             />
           )}
         </ProForm.Group>

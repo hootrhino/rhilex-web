@@ -4,15 +4,19 @@ import { AutoComplete } from 'antd';
 import { useRequest } from 'umi';
 import { toolTip } from './BaseForm';
 
-const UartConfigForm = () => {
+type UartConfigFormProps = {
+  type?: 'Normal' | 'Modbus';
+};
+
+const UartConfigForm = ({ type = 'Normal' }: UartConfigFormProps) => {
   const { data } = useRequest(() => getUarts(), {
     formatResult: (res) => res?.data?.map((item: string) => ({ value: item })),
   });
 
   return (
-    <ProForm.Group title="串口配置">
+    <ProForm.Group title={type === 'Normal' ? '串口配置' : 'RTU 配置'}>
       <ProFormList
-        name={['config', 'uartConfig']}
+        name={['config', type === 'Normal' ? 'uartConfig' : 'rtuConfig']}
         creatorButtonProps={false}
         copyIconProps={false}
         deleteIconProps={false}
