@@ -1,27 +1,33 @@
-import { ProCard, ProForm, ProFormDigit, ProFormList, ProFormSelect, ProFormText } from '@ant-design/pro-components';
+import {
+ProCard,
+ProForm,
+ProFormDigit,
+ProFormList,
+ProFormSelect,
+ProFormText
+} from '@ant-design/pro-components';
 
 const RegisterConfigForm = () => {
-
   return (
     <ProForm.Group title="寄存器配置">
       <ProFormList
         name={['config', 'registers']}
-        creatorButtonProps={{position: 'top'}}
+        creatorButtonProps={{ position: 'top' }}
         min={1}
-          itemRender={({ listDom, action }, { record }) => {
-            return (
-              <ProCard
-                bordered
-                extra={action}
-                title={record?.name}
-                style={{
-                  marginBlockEnd: 8,
-                }}
-              >
-                {listDom}
-              </ProCard>
-            );
-          }}
+        itemRender={({ listDom, action }, { record }) => {
+          return (
+            <ProCard
+              bordered
+              extra={action}
+              title={record?.name}
+              style={{
+                marginBlockEnd: 8,
+              }}
+            >
+              {listDom}
+            </ProCard>
+          );
+        }}
       >
         <ProForm.Group>
           <ProFormText
@@ -36,21 +42,31 @@ const RegisterConfigForm = () => {
               },
             ]}
           />
-        <ProFormDigit width="lg" label="权重系数" name="weight"  rules={[
+          <ProFormDigit
+            width="lg"
+            label="权重系数"
+            name="weight"
+            rules={[
               {
                 required: true,
                 message: '请输入权重系数',
               },
-            ]}/>
-        <ProFormDigit width="lg" label="初始值" name="initValue"  rules={[
+            ]}
+          />
+          <ProFormDigit
+            width="lg"
+            label="初始值"
+            name="initValue"
+            rules={[
               {
                 required: true,
                 message: '请输入初始值',
               },
-            ]}/>
+            ]}
+          />
         </ProForm.Group>
         <ProForm.Group>
-        <ProFormSelect
+          <ProFormSelect
             width="lg"
             label="Modbus 功能"
             name="function"
@@ -67,59 +83,71 @@ const RegisterConfigForm = () => {
               { label: '写多个保持寄存器', value: 16 },
             ]}
           />
-<ProFormDigit width="lg" label="从机 ID" name="slaverId" placeholder="请输入从机 ID"  rules={[
+          <ProFormDigit
+            width="lg"
+            label="从设备 ID"
+            name="slaverId"
+            placeholder="请输入从机 ID"
+            rules={[
               {
                 required: true,
-                message: '请输入从机 ID',
+                message: '请输入从设备 ID',
               },
               {
                 max: 255,
                 type: 'integer',
-                message: '从机 ID 在 1-255 之间'
+                message: '从设备 ID 在 1-255 之间',
               },
               {
                 min: 1,
                 type: 'integer',
-                message: '从机 ID 在 1-255 之间'
-              }
-            ]} />
-            <ProFormDigit width="lg" label="地址" name="address" placeholder="请输入地址"  rules={[
+                message: '从设备 ID 在 1-255 之间',
+              },
+            ]}
+          />
+          <ProFormDigit
+            width="lg"
+            label="起始地址"
+            name="address"
+            placeholder="请输入起始地址"
+            rules={[
               {
                 required: true,
-                message: '请输入地址',
+                message: '请输入起始地址',
               },
               {
                 max: 65535,
                 type: 'integer',
-                message: '地址在 0-65535 之间'
+                message: '起始地址在 0-65535 之间',
               },
-            ]} />
+            ]}
+          />
         </ProForm.Group>
         <ProForm.Group>
-        <ProFormDigit width="lg" label="数量" name="quantity" placeholder="请输入数量"  rules={[
+          <ProFormDigit
+            width="lg"
+            label="读取数量"
+            name="quantity"
+            placeholder="请输入读取数量"
+            rules={[
               {
                 required: true,
-                message: '请输入数量',
+                message: '请输入读取数量',
               },
               {
                 min: 1,
                 type: 'integer',
-                message: '数量在 1-255 之间'
+                message: '读取数量在 1-255 之间',
               },
               {
                 max: 255,
                 type: 'integer',
-                message: '数量在 1-255 之间'
+                message: '读取数量在 1-255 之间',
               },
-            ]} />
-        <ProFormText
-            width="lg"
-            label="值"
-            name="value"
-            placeholder="请输入值"
+            ]}
           />
-
-</ProForm.Group>
+          <ProFormText width="lg" label="值" name="value" placeholder="请输入值" />
+        </ProForm.Group>
       </ProFormList>
     </ProForm.Group>
   );
