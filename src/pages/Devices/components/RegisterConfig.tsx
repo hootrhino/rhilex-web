@@ -73,14 +73,14 @@ const RegisterConfigForm = () => {
             placeholder="请选择 Modbus 功能"
             rules={[{ required: true, message: '请选择 Modbus 功能' }]}
             options={[
-              { label: '读线圈状态', value: 1 },
-              { label: '读离散输入状态', value: 2 },
-              { label: '读保持寄存器', value: 3 },
-              { label: '读输入寄存器', value: 4 },
-              { label: '写单个线圈', value: 5 },
-              { label: '写单个保持寄存器', value: 6 },
-              { label: '写多个线圈', value: 15 },
-              { label: '写多个保持寄存器', value: 16 },
+              { label: '01 读线圈状态', value: 1 },
+              { label: '02 读离散输入状态', value: 2 },
+              { label: '03 读保持寄存器', value: 3 },
+              { label: '04 读输入寄存器', value: 4 },
+              { label: '05 写单个线圈', value: 5 },
+              { label: '06 写单个保持寄存器', value: 6 },
+              { label: '15 写多个线圈', value: 15 },
+              { label: '16 写多个保持寄存器', value: 16 },
             ]}
           />
           <ProFormDigit
