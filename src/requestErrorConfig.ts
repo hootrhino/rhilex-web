@@ -124,6 +124,21 @@ export const errorConfig: RequestConfig = {
     //   const url = config?.url?.concat('?token = 123');
     //   return { ...config, url };
     // },
+    (url, options) => {
+      // 添加缓存控制头
+      return {
+        url,
+        options: {
+          ...options,
+          headers: {
+            ...options.headers,
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+          },
+        },
+      };
+    },
   ],
 
   // 响应拦截器

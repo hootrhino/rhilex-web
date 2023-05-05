@@ -27,7 +27,7 @@ type FormItem = {
 const config = {
   title: '离开可能会丢失数据，确定要返回列表吗？',
   footer: [<GoBackFooter onConfirm={() => history.push('/app-stack/list')} key="gobackFooter" />],
-  onOk: () => history.push('/app-stack/list'),
+  onOk: () => {history.push('/app-stack/list');},
   onCancel: () => Modal.destroyAll(),
 };
 
@@ -52,13 +52,15 @@ const UpdateForm = () => {
     try {
       const params = { ...values, autoStart: Boolean(values?.autoStart) };
       if (id) {
-        const { code, msg } = await putApp({ ...params, uuid: id });
-        if (code === 200) {
-          message.success('更新成功');
+        await putApp({ ...params, uuid: id });
+        // if (code === 200) {
+        //   message.success('更新成功');
+        //   history.push('/app-stack/list');
+        // } else {
+        //   message.error(msg || '更新失败');
+        // }
+        message.success('更新成功');
           history.push('/app-stack/list');
-        } else {
-          message.error(msg || '更新失败');
-        }
       } else {
         await postApp(params);
         message.success('新建成功');
