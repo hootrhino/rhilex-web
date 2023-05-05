@@ -90,15 +90,13 @@ const DEFAULT_TCP_CONFIG = [
   },
 ];
 
-const DEFAULT_REGISTER_CONFIG = [
-  {
-    weight: 1,
-    initValue: 0,
-    slaverId: 1,
-    address: 0,
-    quantity: 1,
-  },
-];
+export const DEFAULT_REGISTER_CONFIG = {
+  weight: 1,
+  initValue: 0,
+  slaverId: 1,
+  address: 0,
+  quantity: 1,
+};
 
 const config = {
   title: '离开可能会丢失数据，确定要返回列表吗？',
@@ -189,7 +187,7 @@ const BaseForm = () => {
           deviceConfig: [DEFAULT_DEVICE_CONFIG],
           rtuConfig: DEFAULT_UART_CONFIG,
           tcpConfig: DEFAULT_TCP_CONFIG,
-          registers: DEFAULT_REGISTER_CONFIG,
+          registers: [DEFAULT_REGISTER_CONFIG],
         },
       });
     }

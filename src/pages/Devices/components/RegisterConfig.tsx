@@ -1,17 +1,19 @@
 import {
-ProCard,
-ProForm,
-ProFormDigit,
-ProFormList,
-ProFormSelect,
-ProFormText
+  ProCard,
+  ProForm,
+  ProFormDigit,
+  ProFormList,
+  ProFormSelect,
+  ProFormText,
 } from '@ant-design/pro-components';
+import { DEFAULT_REGISTER_CONFIG } from './BaseForm';
 
 const RegisterConfigForm = () => {
   return (
     <ProForm.Group title="寄存器配置">
       <ProFormList
         name={['config', 'registers']}
+        creatorRecord={DEFAULT_REGISTER_CONFIG}
         creatorButtonProps={{ position: 'top' }}
         min={1}
         itemRender={({ listDom, action }, { record }) => {
