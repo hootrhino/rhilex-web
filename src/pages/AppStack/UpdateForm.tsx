@@ -1,7 +1,7 @@
 import FormFooter from '@/components/FromFooter';
 import FullScreenEditor from '@/components/FullScreenEditor';
-import GoBackFooter from '@/components/GoBackFooter';
-import { message, modal } from '@/components/PopupHack';
+import { message } from '@/components/PopupHack';
+import useGoBack from '@/hooks/useGoBack';
 import { getApp,postApp,putApp } from '@/services/rulex/qingliangyingyong';
 import {
 PageContainer,
@@ -12,7 +12,6 @@ ProFormSegmented,
 ProFormSelect,
 ProFormText
 } from '@ant-design/pro-components';
-import { Modal } from 'antd';
 import { useEffect,useRef } from 'react';
 import { history,useParams,useRequest } from 'umi';
 
@@ -24,17 +23,11 @@ type FormItem = {
   luaSource: string;
 };
 
-const config = {
-  title: '离开可能会丢失数据，确定要返回列表吗？',
-  footer: [<GoBackFooter onConfirm={() => history.push('/app-stack/list')} key="gobackFooter" />],
-  onOk: () => {history.push('/app-stack/list');},
-  onCancel: () => Modal.destroyAll(),
-};
-
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
   const editorRef = useRef(null);
+  const { showModal } = useGoBack();
 
   // 获取详情
   const { run: getDetail, data: detail } = useRequest(() => getApp({ uuid: id || '' }), {
@@ -90,7 +83,7 @@ const UpdateForm = () => {
   return (
     <PageContainer
       header={{ title: id ? '更新应用' : '新建应用' }}
-      onBack={() => modal.warning(config)}
+      onBack={() => showModal({url: '/app-stack/list'})}
     >
       <ProCard>
         <ProForm

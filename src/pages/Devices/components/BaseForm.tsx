@@ -12,17 +12,17 @@ ProFormSelect,
 ProFormText
 } from '@ant-design/pro-components';
 import { useRequest } from 'ahooks';
-import { Modal } from 'antd';
+
 import { cloneDeep } from 'lodash';
 
 import FormFooter from '@/components/FromFooter';
-import GoBackFooter from '@/components/GoBackFooter';
-import { message,modal } from '@/components/PopupHack';
+import { message } from '@/components/PopupHack';
 import { getDevices,postDevices,putDevices } from '@/services/rulex/shebeiguanli';
 import G776Form from './G776';
 import GenericProtocolForm from './GenericProtocol';
 import ModbusForm from './Modbus';
 import SnmpForm from './Snmp';
+import useGoBack from '@/hooks/useGoBack';
 
 export const toolTip = (
   <a
@@ -98,17 +98,11 @@ export const DEFAULT_REGISTER_CONFIG = {
   quantity: 1,
 };
 
-const config = {
-  title: '离开可能会丢失数据，确定要返回列表吗？',
-  footer: [<GoBackFooter onConfirm={() => history.push('/device/list')} key="gobackFooter" />],
-  onOk: () => history.push('/outends/list'),
-  onCancel: () => Modal.destroyAll(),
-};
-
 const BaseForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
   const [mode, setMode] = useState<string>('rtu');
+  const { showModal } = useGoBack();
 
   // 新建&编辑
   const onFinish = async (values: any) => {
@@ -197,7 +191,7 @@ const BaseForm = () => {
     <>
       <PageContainer
         header={{ title: id ? '编辑设备' : '新建设备' }}
-        onBack={() => modal.warning(config)}
+        onBack={() => showModal({url: '/device/list'})}
       >
         <ProCard>
           <ProForm

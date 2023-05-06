@@ -20,11 +20,10 @@ import { getInends } from '@/services/rulex/shuruziyuanguanli';
 
 import FormFooter from '@/components/FromFooter';
 import FullScreenEditor from '@/components/FullScreenEditor';
-import GoBackFooter from '@/components/GoBackFooter';
 import { postRules } from '@/services/rulex/guizeguanli';
-import { Modal } from 'antd';
 import { omit } from 'lodash';
-import { message, modal } from '@/components/PopupHack';
+import { message } from '@/components/PopupHack';
+import useGoBack from '@/hooks/useGoBack';
 
 export type FormItem = {
   actions: string;
@@ -49,19 +48,13 @@ const defaultFailed = `function Failed(error)
   rulexlib:log(error)
 end`;
 
-const config = {
-  title: '你还有表单未提交，确定要返回列表吗？',
-  footer: [<GoBackFooter onConfirm={() => history.push('/rules/list')} key="gobackFooter" />],
-  onOk: () => history.push('/rules/list'),
-  onCancel: () => Modal.destroyAll(),
-};
-
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
   const failRef = useRef(null);
   const actionRef = useRef(null);
   const successRef = useRef(null);
+  const { showModal } = useGoBack();
 
   const [sources, setSources] = useState([]);
 
@@ -114,7 +107,7 @@ const UpdateForm = () => {
     <>
       <PageContainer
         header={{ title: id ? '编辑规则' : '新建规则' }}
-        onBack={() => modal.warning(config)}
+        onBack={() => showModal({url: '/rules/list'})}
       >
         <ProCard>
           <ProForm

@@ -13,23 +13,18 @@ ProFormSelect,
 ProFormText,
 ProFormTextArea
 } from '@ant-design/pro-components';
-import { Modal } from 'antd';
 
 import FormFooter from '@/components/FromFooter';
-import GoBackFooter from '@/components/GoBackFooter';
 import { getInends,postInends,putInends } from '@/services/rulex/shuruziyuanguanli';
-import { message, modal } from '@/components/PopupHack';
+import { message } from '@/components/PopupHack';
+import useGoBack from '@/hooks/useGoBack';
 
-const config = {
-  title: '离开可能会丢失数据，确定要返回列表吗？',
-  footer: [<GoBackFooter onConfirm={() => history.push('/inends/list')} key="gobackFooter" />],
-  onOk: () => history.push('/inends/list'),
-  onCancel: () => Modal.destroyAll(),
-};
+
 
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
+  const { showModal } = useGoBack();
 
   // 新建&编辑
   const onFinish = async (values: any) => {
@@ -70,7 +65,7 @@ const UpdateForm = () => {
   return (
     <PageContainer
       header={{ title: id ? '编辑资源' : '新建资源' }}
-      onBack={() => modal.warning(config)}
+      onBack={() => showModal({url: '/inends/list'})}
     >
       <ProCard>
         <ProForm
