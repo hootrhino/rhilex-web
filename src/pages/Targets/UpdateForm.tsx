@@ -104,6 +104,7 @@ const UpdateForm = () => {
               },
             }}
             onFinish={onFinish}
+            initialValues={{config: {mongoUrl: 'mongodb://127.0.0.1:27017',database: 'test', collection: 'test'}}}
           >
             <ProFormText
               label="目标名称"

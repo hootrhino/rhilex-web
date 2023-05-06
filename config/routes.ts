@@ -24,7 +24,7 @@ export default [
   },
   {
     path: '/dashboard',
-    name: 'Dashboard',
+    name: '系统首页',
     icon: 'dashboard',
     component: './Dashboard',
   },
@@ -209,7 +209,7 @@ export default [
   },
   {
     path: '/ai',
-    name: 'AI 能力',
+    name: `A${'\xa0'}I${'\xa0\xa0\xa0'}能力`,
     icon: 'reddit',
     routes: [
       {
