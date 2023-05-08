@@ -6,7 +6,7 @@ const useWebsocket = () => {
   const [logs, setLogs] = useState<Record<string, any>[]>([]);
   const [connected, setConnected] = useState(false);
 
-  const { sendMessage } = useWebSocket('ws://10.55.23.96:2580/ws', {
+  const { sendMessage, readyState } = useWebSocket('ws://10.55.23.96:2580/ws', {
     onMessage: ({ data }) => {
       if (data && data !== 'Connected') {
         let newLog = [...logs, JSON.parse(data)];
@@ -25,6 +25,7 @@ const useWebsocket = () => {
   useEffect(() => {
     if (!connected) {
       setTimeout(() => {
+        if (readyState === WebSocket.OPEN) {}
         sendMessage?.('WsTerminal');
       }, 2000);
     }

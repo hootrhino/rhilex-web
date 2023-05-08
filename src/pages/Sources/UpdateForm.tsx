@@ -199,7 +199,6 @@ const UpdateForm = () => {
             label="备注信息"
             name="description"
             placeholder="请输入备注信息"
-            rules={[{ required: true, message: '请输入备注信息' }]}
           />
         </ProForm>
       </ProCard>

@@ -1,9 +1,10 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { PlusOutlined } from '@ant-design/icons';
-import type { ActionType,ProColumns } from '@ant-design/pro-components';
+import { ActionType,ProColumns, ProDescriptions } from '@ant-design/pro-components';
 import { PageContainer,ProTable } from '@ant-design/pro-components';
-import { Button,Popconfirm } from 'antd';
+import { Button,Drawer,Popconfirm } from 'antd';
+import type {ProDescriptionsItemProps} from '@ant-design/pro-components';
 
 import { deleteRules, getRules } from '@/services/rulex/guizeguanli';
 import { history } from 'umi';
@@ -16,6 +17,8 @@ export type Item = {
 
 const Rules = () => {
   const actionRef = useRef<ActionType>();
+  const [open, setOpen] = useState<boolean>(false);
+  const [id, setId] = useState<string>('');
 
   // 删除
   const handleOnDelete = async (value: API.deleteRulesParams) => {
@@ -63,15 +66,13 @@ const Rules = () => {
       render: (_, { uuid }) => [
         <a
           key="detail"
-          onClick={() => {
-            // TODO 详情
-          }}
+          onClick={() => {setId(uuid);setOpen(true);}}
         >
           详情
         </a>,
-        <a key="edit" onClick={() => history.push(`/rules/edit/${uuid}`)}>
-          编辑
-        </a>,
+        // <a key="edit" onClick={() => history.push(`/rules/edit/${uuid}`)}>
+        //   编辑
+        // </a>,
         <Popconfirm
           title="确定要删除该规则？"
           onConfirm={() => handleOnDelete({ uuid })}
@@ -83,8 +84,45 @@ const Rules = () => {
     },
   ];
 
+  const detailColumns: ProDescriptionsItemProps<Record<string, any>>[] = [
+    {
+      title: '名称',
+      dataIndex: 'name',
+      ellipsis: true,
+    },
+    {
+      title: '数据来源',
+      dataIndex: 'type',
+      valueEnum: {
+        fromSource: '输入资源',
+        fromDevice: '设备'
+      },
+    },
+    {
+      title: '输入资源',
+      dataIndex: 'fromSource',
+      render: (_, {fromSource, fromDevice}) => fromSource || fromDevice
+    },
+    {
+      title: '规则回调',
+      dataIndex: 'actions',
+     valueType: 'code'
+    },
+    {
+      title: '成功回调',
+      dataIndex: 'success',
+      valueType: 'code'
+    },
+    {
+      title: '失败回调',
+      dataIndex: 'failed',
+      valueType: 'code'
+    },
+  ];
+
   return (
-    <PageContainer>
+    <>
+     <PageContainer>
       <ProTable
         rowKey="uuid"
         actionRef={actionRef}
@@ -106,6 +144,25 @@ const Rules = () => {
         ]}
       />
     </PageContainer>
+    <Drawer title="规则详情" placement="right" onClose={() => setOpen(false)} open={open} width="30%">
+    <ProDescriptions
+      column={1}
+      columns={detailColumns}
+      labelStyle={{justifyContent: 'flex-end', minWidth: 80}}
+      request={async () => {
+        const res = await getRules({uuid: id});
+
+        return Promise.resolve({
+          success: true,
+          data: res?.data?.[0]
+        });
+      }}
+
+    />
+
+      </Drawer>
+    </>
+
   );
 };
 
