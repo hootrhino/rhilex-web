@@ -236,7 +236,7 @@ const BaseForm = () => {
                   { label: 'SNMP协议采集器', value: 'GENERIC_SNMP' },
                   { label: '有人4G串口通信DTU', value: 'USER_G776' },
                   { label: '自定义串口协议', value: 'GENERIC_PROTOCOL' },
-                  { label: '通用Modbus协议采集器', value: 'MODBUS' },
+                  { label: '通用Modbus协议采集器', value: 'GENERIC_MODBUS' },
                 ]}
                 placeholder="请选择资源类型"
                 rules={[{ required: true, message: '请选择资源类型' }]}
@@ -257,7 +257,7 @@ const BaseForm = () => {
                   return <G776Form />;
                 } else if (type === 'GENERIC_PROTOCOL') {
                   return <GenericProtocolForm />;
-                } else if (type === 'MODBUS') {
+                } else if (type === 'GENERIC_MODBUS') {
                   return <ModbusForm mode={mode} />;
                 } else {
                   return null;
