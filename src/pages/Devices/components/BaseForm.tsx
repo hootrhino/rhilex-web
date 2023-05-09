@@ -131,6 +131,7 @@ const BaseForm = () => {
           deviceConfig: deviceConfigFormat,
           uartConfig: params?.config?.uartConfig?.[0],
           rtuConfig: params?.config?.rtuConfig?.[0],
+          tcpConfig: params?.config?.tcpConfig?.[0],
           registers: params?.config?.registers?.map((item: Record<string, any>) => ({
             ...item,
             value: '',
