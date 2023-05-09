@@ -2,7 +2,7 @@ name: Release Package
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
   build:
@@ -12,23 +12,23 @@ jobs:
         node-version: [16.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: |
-        sudo apt install zip -y
-        npm install --global yarn
-        yarn
-        bash ./release.sh
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: |
+          sudo apt install zip tree -y
+          bash ./release.sh
+          tree -d
 
-    - name: Upload package
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.ACCESS_TOKEN }}
-        file: ./_release/*.zip
-        tag: ${{ github.ref }}
-        overwrite: true
-        file_glob: true
+      - name: Upload package
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.ACCESS_TOKEN }}
+          file: _release/www.zip
+          tag: ${{ github.ref }}
+          overwrite: true
+          file_glob: true
+          body: ${{ github.ref }}

@@ -6,10 +6,11 @@ build() {
         rm -rf ./_release/
         mkdir -p ./_release/
     fi
-    npm run build
+    yarn run build
     zip -j $1.zip ./dist/*
     mv ./$1.zip ./_release
-
 }
-
+#--
+npm install --global yarn
+yarn
 build www
