@@ -5,7 +5,7 @@ import { useRequest } from 'umi';
 import { toolTip } from './BaseForm';
 
 type UartConfigFormProps = {
-  type?: 'Normal' | 'Modbus';
+  type?: 'Normal' | 'GENERIC_MODBUS';
 };
 
 const UartConfigForm = ({ type = 'Normal' }: UartConfigFormProps) => {

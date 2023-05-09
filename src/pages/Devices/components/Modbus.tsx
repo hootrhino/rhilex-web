@@ -12,8 +12,8 @@ type ModbusFormProps = {
 const ModbusForm = ({ mode }: ModbusFormProps) => {
   return (
     <>
-      <CommonConfigForm type="MODBUS" />
-      {mode === 'rtu' ? <UartConfigForm type="Modbus" /> : <TcpConfigForm />}
+      <CommonConfigForm type="GENERIC_MODBUS" />
+      {mode === 'rtu' ? <UartConfigForm type="GENERIC_MODBUS" /> : <TcpConfigForm />}
       <RegisterConfigForm />
     </>
   );

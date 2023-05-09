@@ -8,7 +8,7 @@ ProFormText
 } from '@ant-design/pro-components';
 
 type CommonConfigProps = {
-  type?: 'GENERIC_SNMP' | 'USER_G776' | 'GENERIC_PROTOCOL' | 'MODBUS';
+  type?: 'GENERIC_SNMP' | 'USER_G776' | 'GENERIC_PROTOCOL' | 'GENERIC_MODBUS';
 };
 
 const CommonConfigForm = ({ type = 'GENERIC_SNMP' }: CommonConfigProps) => {
@@ -79,7 +79,7 @@ const CommonConfigForm = ({ type = 'GENERIC_SNMP' }: CommonConfigProps) => {
               />
             </>
           )}
-          {type === 'MODBUS' && (
+          {type === 'GENERIC_MODBUS' && (
             <ProFormDigit
               width="lg"
               label="超时时间（毫秒）"
@@ -101,7 +101,7 @@ const CommonConfigForm = ({ type = 'GENERIC_SNMP' }: CommonConfigProps) => {
               ]}
             />
           )}
-          {type === 'MODBUS' && (
+          {type === 'GENERIC_MODBUS' && (
             <ProFormSelect
               width="lg"
               label="工作模式"

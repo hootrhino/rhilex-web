@@ -165,6 +165,8 @@ const BaseForm = () => {
             res?.data?.config?.deviceConfig && Object.values(res?.data?.config?.deviceConfig),
           snmpConfig: [res?.data?.config?.snmpConfig],
           uartConfig: [res?.data?.config?.uartConfig],
+          rtuConfig: [res?.data?.config?.rtuConfig],
+          tcpConfig: [res?.data?.config?.tcpConfig],
         },
       }),
   });
