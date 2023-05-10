@@ -17,6 +17,8 @@ export async function getSystem(options?: { [key: string]: any }) {
         systemMem?: number;
         totalMem?: number;
         version?: string;
+        ip?: string[];
+        wsUrl?: string[];
       };
       sourceCount: { inends?: number; outends?: number; plugins?: number; rules?: number };
       statistic: { inSuccess?: number; outSuccess?: number; inFailed?: number; outFailed?: number };

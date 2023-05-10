@@ -19,22 +19,22 @@
       "name": "设备管理"
     },
     {
-      "name": "轻量应用"
-    },
-    {
       "name": "规则管理"
     },
     {
       "name": "驱动管理"
     },
     {
-      "name": "插件管理"
-    },
-    {
       "name": "日志管理"
     },
     {
       "name": "用户管理"
+    },
+    {
+      "name": "轻量应用"
+    },
+    {
+      "name": "插件管理"
     },
     {
       "name": "AI能力"
@@ -1135,17 +1135,31 @@
                             },
                             "version": {
                               "type": "string"
+                            },
+                            "ip": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "wsUrl": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
                             }
                           },
                           "required": [
                             "allocMem",
                             "cpuPercent",
                             "diskInfo",
+                            "ip",
                             "osArch",
                             "startedTime",
                             "systemMem",
                             "totalMem",
-                            "version"
+                            "version",
+                            "wsUrl"
                           ],
                           "x-apifox-orders": [
                             "allocMem",
@@ -1155,7 +1169,9 @@
                             "startedTime",
                             "systemMem",
                             "totalMem",
-                            "version"
+                            "version",
+                            "ip",
+                            "wsUrl"
                           ],
                           "x-apifox-ignore-properties": []
                         },
@@ -1254,13 +1270,23 @@
                       "data": {
                         "hardWareInfo": {
                           "allocMem": 14,
-                          "cpuPercent": 18.75,
-                          "diskInfo": 65,
-                          "osArch": "windows-amd64",
-                          "startedTime": "2022-12-30 14:01:14",
-                          "systemMem": 27,
-                          "totalMem": 16,
-                          "version": "V0.4.1"
+                          "cpuPercent": 6.25,
+                          "diskInfo": 0,
+                          "ip": [
+                            "10.55.23.96",
+                            "192.168.250.1",
+                            "172.17.0.1"
+                          ],
+                          "osArch": "linux-amd64",
+                          "startedTime": "2023-05-10 15:24:08",
+                          "systemMem": 31,
+                          "totalMem": 18,
+                          "version": "v0.4.4-hotfix",
+                          "wsUrl": [
+                            "ws://10.55.23.96:2580/ws",
+                            "ws://192.168.250.1:2580/ws",
+                            "ws://172.17.0.1:2580/ws"
+                          ]
                         },
                         "sourceCount": {
                           "inends": 0,

@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useRequest, useModel } from 'umi';
+import { useModel } from 'umi';
 
 import { RingProgress } from '@ant-design/charts';
 import { PageContainer, ProCard, ProTable, StatisticCard } from '@ant-design/pro-components';
 import add from 'lodash/add';
 import RcResizeObserver from 'rc-resize-observer';
 import { nanoid } from 'nanoid'
-
-import { getSystem } from '@/services/rulex/xitongshuju';
 
 import ExportIcon from '@/assets/dashboard/export.svg';
 import ImportIcon from '@/assets/dashboard/import.svg';
@@ -36,12 +34,13 @@ type Pagination = {
 
 const Dashboard = () => {
   const {logs} = useModel('useWebsocket');
+  const {data} = useModel('useSystem');
   const [responsive, setResponsive] = useState(false);
   const [pagination, setPagination] = useState<Pagination>({current: 1, pageSize: 10, total: 0});
 
-  const { data } = useRequest(() => getSystem(), {
-    formatResult: (res) => res.data,
-  });
+  // const { data } = useRequest(() => getSystem(), {
+  //   formatResult: (res) => res.data,
+  // });
 
   const inCount = add(data?.statistic?.inSuccess || 0, data?.statistic?.inFailed || 0);
   const outCount = add(data?.statistic?.outSuccess || 0, data?.statistic?.outFailed || 0);
