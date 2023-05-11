@@ -18,7 +18,7 @@ import { history,useParams,useRequest } from 'umi';
 type FormItem = {
   name: string;
   version: string;
-  autoStart: boolean;
+  autoStart: string;
   description: string;
   luaSource: string;
 };
@@ -43,15 +43,10 @@ const UpdateForm = () => {
   // 新建 & 编辑
   const handleOnFinish = async (values: FormItem) => {
     try {
-      const params = { ...values, autoStart: Boolean(values?.autoStart) };
+      const params = { ...values, autoStart: JSON.parse(values?.autoStart) };
       if (id) {
         await putApp({ ...params, uuid: id });
-        // if (code === 200) {
-        //   message.success('更新成功');
-        //   history.push('/app-stack/list');
-        // } else {
-        //   message.error(msg || '更新失败');
-        // }
+
         message.success('更新成功');
           history.push('/app-stack/list');
       } else {
