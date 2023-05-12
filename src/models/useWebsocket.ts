@@ -27,7 +27,7 @@ const useWebsocket = () => {
   });
 
   useEffect(() => {
-    if (!connected) {
+    if (connected) {
       setTimeout(() => {
         if (readyState === WebSocket.OPEN) {}
         sendMessage?.('WsTerminal');
@@ -46,24 +46,6 @@ const useWebsocket = () => {
       connect!()
     }
   }, [sockUrl])
-  // useEffect(() => {
-  //   let pingInterval: NodeJS.Timeout;
-
-  //   if (!connected) {
-  //     const retryInterval = setInterval(() => {
-  //       sendMessage?.('WsTerminal');
-  //     }, 2000);
-
-  //     pingInterval = setInterval(() => {
-  //       sendMessage?.('ping');
-  //     }, 30000);
-
-  //     return () => {
-  //       clearInterval(retryInterval);
-  //       clearInterval(pingInterval);
-  //     };
-  //   }
-  // }, [connected, sendMessage]);
 
   return { logs };
 };
