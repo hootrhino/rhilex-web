@@ -1,11 +1,12 @@
-import { FullscreenExitOutlined,FullscreenOutlined } from '@ant-design/icons';
+import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import type { EditorProps } from '@monaco-editor/react';
 import { Editor } from '@monaco-editor/react';
 import { useFullscreen } from 'ahooks';
+import { formatText } from 'lua-fmt';
 import { forwardRef, useState } from 'react';
 import { Resizable } from 'react-resizable';
-import '../../../node_modules/react-resizable/css/styles.css';
 
+import '../../../node_modules/react-resizable/css/styles.css';
 import './index.less';
 
 type FullScreenEditorProps = Partial<EditorProps>;
@@ -16,6 +17,17 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(
       pageFullscreen: true,
     });
     const [h, setHeight] = useState<number>(200);
+
+    const handleFormat = (editor: Record<string, any>) => {
+      editor
+        ?.getAction('editor.action.formatDocument')
+        .run()
+        .then(() => {
+          const formatCode = formatText(editor.getValue());
+          console.log('Code formatted!', formatCode);
+          editor.setValue(formatCode);
+        });
+    };
 
     return (
       <Resizable
@@ -36,9 +48,18 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(
           </div>
           <Editor
             onChange={onChange}
-            defaultLanguage="lua"
+            language="lua"
             theme="vs-dark"
             className="editor"
+            onMount={(editor) => {
+              editor.addAction({
+                id: 'format-menu',
+                label: 'Format',
+                contextMenuGroupId: 'navigation',
+                contextMenuOrder: 1,
+                run: () => handleFormat(editor),
+              });
+            }}
             {...props}
           />
         </div>
