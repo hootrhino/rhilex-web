@@ -159,6 +159,12 @@ export default [
         component: './Plugins',
         hideInMenu: true,
       },
+      {
+        path: '/plugins/:id/detail',
+        name: '客户端列表',
+        component: './Plugins/Detail',
+        hideInMenu: true,
+      },
     ],
   },
   {

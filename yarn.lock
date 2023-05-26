@@ -11061,7 +11061,7 @@ lua-fmt@^2.6.0:
     get-stdin "^5.0.1"
     luaparse oxyc/luaparse#ac42a00ebf4020b8c9d3219e4b0f84bf7ce6e802
 
-"luaparse@github:oxyc/luaparse#ac42a00ebf4020b8c9d3219e4b0f84bf7ce6e802":
+luaparse@oxyc/luaparse#ac42a00ebf4020b8c9d3219e4b0f84bf7ce6e802:
   version "0.2.1"
   resolved "https://codeload.github.com/oxyc/luaparse/tar.gz/ac42a00ebf4020b8c9d3219e4b0f84bf7ce6e802"
 

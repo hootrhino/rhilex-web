@@ -1,11 +1,12 @@
-import { Link } from 'umi';
+import { history, Link } from 'umi';
+// import { useHistory } from '@umijs/hooks';
 
-import { PageContainer, ProTable } from '@ant-design/pro-components';
 import type { ProColumns } from '@ant-design/pro-components';
+import { PageContainer, ProTable } from '@ant-design/pro-components';
 
 import { getPlugins } from '@/services/rulex/chajianguanli';
 
-type Item = {};
+type Item = Record<string, any>;
 
 const Plugins = () => {
   const columns: ProColumns<Item>[] = [
@@ -42,6 +43,27 @@ const Plugins = () => {
     {
       title: '协议',
       dataIndex: 'license',
+    },
+    {
+      title: '操作',
+      valueType: 'option',
+      width: 80,
+      fixed: 'right',
+      key: 'option',
+      render: (_, { uuid }) => {
+        return uuid === 'RULEX-MqttServer'
+          ? [
+              <a
+                key="detail"
+                onClick={() => {
+                  history.push(`/plugins/${uuid}/detail`);
+                }}
+              >
+                详情
+              </a>,
+            ]
+          : '-';
+      },
     },
   ];
 

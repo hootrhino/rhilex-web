@@ -48,9 +48,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "设备管理"
-        ],
+        "tags": ["设备管理"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -74,18 +72,8 @@
                     "x-apifox-ignore-properties": []
                   }
                 },
-                "required": [
-                  "type",
-                  "name",
-                  "description",
-                  "config"
-                ],
-                "x-apifox-orders": [
-                  "type",
-                  "name",
-                  "description",
-                  "config"
-                ],
+                "required": ["type", "name", "description", "config"],
+                "x-apifox-orders": ["type", "name", "description", "config"],
                 "x-apifox-ignore-properties": []
               },
               "example": {
@@ -120,14 +108,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
+                  "required": ["code", "msg"],
+                  "x-apifox-orders": ["code", "msg"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -151,9 +133,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "设备列表",
-        "tags": [
-          "设备管理"
-        ],
+        "tags": ["设备管理"],
         "parameters": [],
         "responses": {
           "200": {
@@ -281,13 +261,7 @@
                                 "type": "integer"
                               }
                             },
-                            "required": [
-                              "config",
-                              "frequency",
-                              "mode",
-                              "registers",
-                              "timeout"
-                            ],
+                            "required": ["config", "frequency", "mode", "registers", "timeout"],
                             "x-apifox-orders": [
                               "config",
                               "frequency",
@@ -311,16 +285,8 @@
                       }
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -377,9 +343,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "设备管理"
-        ],
+        "tags": ["设备管理"],
         "parameters": [
           {
             "name": "uuid",
@@ -407,14 +371,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
+                  "required": ["code", "msg"],
+                  "x-apifox-orders": ["code", "msg"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -445,9 +403,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "设备管理"
-        ],
+        "tags": ["设备管理"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -477,14 +433,7 @@
                     "x-apifox-ignore-properties": []
                   }
                 },
-                "required": [
-                  "uuid",
-                  "name",
-                  "type",
-                  "actionScript",
-                  "description",
-                  "config"
-                ],
+                "required": ["uuid", "name", "type", "actionScript", "description", "config"],
                 "x-apifox-orders": [
                   "uuid",
                   "name",
@@ -543,14 +492,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
+                  "required": ["code", "msg"],
+                  "x-apifox-orders": ["code", "msg"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -583,9 +526,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "用户管理"
-        ],
+        "tags": ["用户管理"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -600,14 +541,8 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "username",
-                  "password"
-                ],
-                "x-apifox-orders": [
-                  "username",
-                  "password"
-                ],
+                "required": ["username", "password"],
+                "x-apifox-orders": ["username", "password"],
                 "x-apifox-ignore-properties": []
               },
               "example": {
@@ -635,16 +570,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -671,9 +598,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "系统日志列表",
-        "tags": [
-          "日志管理"
-        ],
+        "tags": ["日志管理"],
         "parameters": [],
         "responses": {
           "200": {
@@ -696,16 +621,8 @@
                       }
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -732,9 +649,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "驱动管理"
-        ],
+        "tags": ["驱动管理"],
         "parameters": [],
         "responses": {
           "200": {
@@ -782,9 +697,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "新建规则",
-        "tags": [
-          "规则管理"
-        ],
+        "tags": ["规则管理"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -845,9 +758,7 @@
                 "description": "just_a_test",
                 "failed": "function Failed(error) print(\"[lua] call error:\",error)end",
                 "fromSource": [],
-                "fromDevice": [
-                  "DEVICE:f90c6d20af3a4a69a4e57d2f607b6051"
-                ],
+                "fromDevice": ["DEVICE:f90c6d20af3a4a69a4e57d2f607b6051"],
                 "name": "just_a_test",
                 "success": "function Success() print(\"[lua] call success\")end"
               }
@@ -869,14 +780,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
+                  "required": ["code", "msg"],
+                  "x-apifox-orders": ["code", "msg"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -900,9 +805,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "规则管理"
-        ],
+        "tags": ["规则管理"],
         "parameters": [
           {
             "name": "uuid",
@@ -930,14 +833,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
+                  "required": ["code", "msg"],
+                  "x-apifox-orders": ["code", "msg"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -961,9 +858,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "规则管理"
-        ],
+        "tags": ["规则管理"],
         "parameters": [],
         "responses": {
           "200": {
@@ -1037,16 +932,8 @@
                       }
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -1061,9 +948,7 @@
                           "uuid": "RULE:85c6c71e77a6430e860fa04400d9b609",
                           "status": 1,
                           "name": "just_a_test",
-                          "fromSource": [
-                            "IN:ea9f5060776146dab7ea3d357f19463e"
-                          ],
+                          "fromSource": ["IN:ea9f5060776146dab7ea3d357f19463e"],
                           "fromDevice": [],
                           "actions": "Actions ={function(data) print('Data ======> ',data) return true,data end}",
                           "success": "function Success() print(\"[lua] call success\")end",
@@ -1088,9 +973,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "获取首页dashboard数据",
-        "tags": [
-          "系统数据"
-        ],
+        "tags": ["系统数据"],
         "parameters": [],
         "responses": {
           "200": {
@@ -1191,18 +1074,8 @@
                               "type": "integer"
                             }
                           },
-                          "required": [
-                            "inends",
-                            "outends",
-                            "plugins",
-                            "rules"
-                          ],
-                          "x-apifox-orders": [
-                            "inends",
-                            "outends",
-                            "plugins",
-                            "rules"
-                          ],
+                          "required": ["inends", "outends", "plugins", "rules"],
+                          "x-apifox-orders": ["inends", "outends", "plugins", "rules"],
                           "x-apifox-ignore-properties": []
                         },
                         "statistic": {
@@ -1221,44 +1094,18 @@
                               "type": "integer"
                             }
                           },
-                          "required": [
-                            "inSuccess",
-                            "outSuccess",
-                            "inFailed",
-                            "outFailed"
-                          ],
-                          "x-apifox-orders": [
-                            "inSuccess",
-                            "outSuccess",
-                            "inFailed",
-                            "outFailed"
-                          ],
+                          "required": ["inSuccess", "outSuccess", "inFailed", "outFailed"],
+                          "x-apifox-orders": ["inSuccess", "outSuccess", "inFailed", "outFailed"],
                           "x-apifox-ignore-properties": []
                         }
                       },
-                      "required": [
-                        "hardWareInfo",
-                        "sourceCount",
-                        "statistic"
-                      ],
-                      "x-apifox-orders": [
-                        "hardWareInfo",
-                        "sourceCount",
-                        "statistic"
-                      ],
+                      "required": ["hardWareInfo", "sourceCount", "statistic"],
+                      "x-apifox-orders": ["hardWareInfo", "sourceCount", "statistic"],
                       "x-apifox-ignore-properties": []
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -1272,11 +1119,7 @@
                           "allocMem": 14,
                           "cpuPercent": 6.25,
                           "diskInfo": 0,
-                          "ip": [
-                            "10.55.23.96",
-                            "192.168.250.1",
-                            "172.17.0.1"
-                          ],
+                          "ip": ["10.55.23.96", "192.168.250.1", "172.17.0.1"],
                           "osArch": "linux-amd64",
                           "startedTime": "2023-05-10 15:24:08",
                           "systemMem": 31,
@@ -1318,9 +1161,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "新建资源",
-        "tags": [
-          "输出资源管理"
-        ],
+        "tags": ["输出资源管理"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -1383,18 +1224,8 @@
                     "x-apifox-ignore-properties": []
                   }
                 },
-                "required": [
-                  "type",
-                  "name",
-                  "description",
-                  "config"
-                ],
-                "x-apifox-orders": [
-                  "type",
-                  "name",
-                  "description",
-                  "config"
-                ],
+                "required": ["type", "name", "description", "config"],
+                "x-apifox-orders": ["type", "name", "description", "config"],
                 "x-apifox-ignore-properties": []
               },
               "example": {
@@ -1424,14 +1255,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
+                  "required": ["code", "msg"],
+                  "x-apifox-orders": ["code", "msg"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -1455,9 +1280,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "删除输出资源",
-        "tags": [
-          "输出资源管理"
-        ],
+        "tags": ["输出资源管理"],
         "parameters": [
           {
             "name": "uuid",
@@ -1485,14 +1308,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
+                  "required": ["code", "msg"],
+                  "x-apifox-orders": ["code", "msg"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -1516,9 +1333,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "更新输出资源",
-        "tags": [
-          "输出资源管理"
-        ],
+        "tags": ["输出资源管理"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -1545,29 +1360,13 @@
                         "type": "integer"
                       }
                     },
-                    "required": [
-                      "server",
-                      "port"
-                    ],
-                    "x-apifox-orders": [
-                      "server",
-                      "port"
-                    ],
+                    "required": ["server", "port"],
+                    "x-apifox-orders": ["server", "port"],
                     "x-apifox-ignore-properties": []
                   }
                 },
-                "required": [
-                  "type",
-                  "name",
-                  "description",
-                  "config"
-                ],
-                "x-apifox-orders": [
-                  "type",
-                  "name",
-                  "description",
-                  "config"
-                ],
+                "required": ["type", "name", "description", "config"],
+                "x-apifox-orders": ["type", "name", "description", "config"],
                 "x-apifox-ignore-properties": []
               },
               "example": {
@@ -1612,14 +1411,7 @@
                       "x-apifox-ignore-properties": []
                     }
                   },
-                  "required": [
-                    "uuid",
-                    "name",
-                    "type",
-                    "actionScript",
-                    "description",
-                    "config"
-                  ],
+                  "required": ["uuid", "name", "type", "actionScript", "description", "config"],
                   "x-apifox-orders": [
                     "uuid",
                     "name",
@@ -1651,9 +1443,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "输出资源列表",
-        "tags": [
-          "输出资源管理"
-        ],
+        "tags": ["输出资源管理"],
         "parameters": [],
         "responses": {
           "200": {
@@ -1679,18 +1469,8 @@
                       "x-apifox-ignore-properties": []
                     }
                   },
-                  "required": [
-                    "type",
-                    "name",
-                    "description",
-                    "config"
-                  ],
-                  "x-apifox-orders": [
-                    "type",
-                    "name",
-                    "description",
-                    "config"
-                  ],
+                  "required": ["type", "name", "description", "config"],
+                  "x-apifox-orders": ["type", "name", "description", "config"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -1745,9 +1525,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "用户列表",
-        "tags": [
-          "用户管理"
-        ],
+        "tags": ["用户管理"],
         "parameters": [],
         "responses": {
           "200": {
@@ -1778,25 +1556,13 @@
                             "type": "string"
                           }
                         },
-                        "x-apifox-orders": [
-                          "role",
-                          "username",
-                          "description"
-                        ],
+                        "x-apifox-orders": ["role", "username", "description"],
                         "x-apifox-ignore-properties": []
                       }
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
                 }
               }
@@ -1811,9 +1577,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "用户管理"
-        ],
+        "tags": ["用户管理"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -1828,14 +1592,8 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "username",
-                  "password"
-                ],
-                "x-apifox-orders": [
-                  "username",
-                  "password"
-                ],
+                "required": ["username", "password"],
+                "x-apifox-orders": ["username", "password"],
                 "x-apifox-ignore-properties": []
               },
               "example": {
@@ -1863,16 +1621,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -1897,9 +1647,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "用户管理"
-        ],
+        "tags": ["用户管理"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -1914,14 +1662,8 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "username",
-                  "password"
-                ],
-                "x-apifox-orders": [
-                  "username",
-                  "password"
-                ],
+                "required": ["username", "password"],
+                "x-apifox-orders": ["username", "password"],
                 "x-apifox-ignore-properties": []
               },
               "example": {
@@ -1949,16 +1691,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -1985,9 +1719,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "更新输出资源",
-        "tags": [
-          "输入资源管理"
-        ],
+        "tags": ["输入资源管理"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -2014,29 +1746,13 @@
                         "type": "integer"
                       }
                     },
-                    "required": [
-                      "server",
-                      "port"
-                    ],
-                    "x-apifox-orders": [
-                      "server",
-                      "port"
-                    ],
+                    "required": ["server", "port"],
+                    "x-apifox-orders": ["server", "port"],
                     "x-apifox-ignore-properties": []
                   }
                 },
-                "required": [
-                  "type",
-                  "name",
-                  "description",
-                  "config"
-                ],
-                "x-apifox-orders": [
-                  "type",
-                  "name",
-                  "description",
-                  "config"
-                ],
+                "required": ["type", "name", "description", "config"],
+                "x-apifox-orders": ["type", "name", "description", "config"],
                 "x-apifox-ignore-properties": []
               },
               "example": {
@@ -2081,14 +1797,7 @@
                       "x-apifox-ignore-properties": []
                     }
                   },
-                  "required": [
-                    "uuid",
-                    "name",
-                    "type",
-                    "actionScript",
-                    "description",
-                    "config"
-                  ],
+                  "required": ["uuid", "name", "type", "actionScript", "description", "config"],
                   "x-apifox-orders": [
                     "uuid",
                     "name",
@@ -2120,9 +1829,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "输出资源列表",
-        "tags": [
-          "输入资源管理"
-        ],
+        "tags": ["输入资源管理"],
         "parameters": [],
         "responses": {
           "200": {
@@ -2148,18 +1855,8 @@
                       "x-apifox-ignore-properties": []
                     }
                   },
-                  "required": [
-                    "type",
-                    "name",
-                    "description",
-                    "config"
-                  ],
-                  "x-apifox-orders": [
-                    "type",
-                    "name",
-                    "description",
-                    "config"
-                  ],
+                  "required": ["type", "name", "description", "config"],
+                  "x-apifox-orders": ["type", "name", "description", "config"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -2212,9 +1909,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "新建资源",
-        "tags": [
-          "输入资源管理"
-        ],
+        "tags": ["输入资源管理"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -2277,18 +1972,8 @@
                     "x-apifox-ignore-properties": []
                   }
                 },
-                "required": [
-                  "type",
-                  "name",
-                  "description",
-                  "config"
-                ],
-                "x-apifox-orders": [
-                  "type",
-                  "name",
-                  "description",
-                  "config"
-                ],
+                "required": ["type", "name", "description", "config"],
+                "x-apifox-orders": ["type", "name", "description", "config"],
                 "x-apifox-ignore-properties": []
               },
               "example": {
@@ -2318,14 +2003,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
+                  "required": ["code", "msg"],
+                  "x-apifox-orders": ["code", "msg"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -2349,9 +2028,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "删除输出资源",
-        "tags": [
-          "输入资源管理"
-        ],
+        "tags": ["输入资源管理"],
         "parameters": [
           {
             "name": "uuid",
@@ -2379,14 +2056,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
+                  "required": ["code", "msg"],
+                  "x-apifox-orders": ["code", "msg"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -2412,9 +2083,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "系统日志列表",
-        "tags": [
-          "日志管理"
-        ],
+        "tags": ["日志管理"],
         "parameters": [
           {
             "name": "action",
@@ -2448,16 +2117,8 @@
                       }
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -2484,9 +2145,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "插件管理"
-        ],
+        "tags": ["插件管理"],
         "parameters": [],
         "responses": {
           "200": {
@@ -2534,9 +2193,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "轻量应用"
-        ],
+        "tags": ["轻量应用"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -2557,18 +2214,8 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "name",
-                  "version",
-                  "autoStart",
-                  "description"
-                ],
-                "x-apifox-orders": [
-                  "name",
-                  "version",
-                  "autoStart",
-                  "description"
-                ],
+                "required": ["name", "version", "autoStart", "description"],
+                "x-apifox-orders": ["name", "version", "autoStart", "description"],
                 "x-apifox-ignore-properties": []
               },
               "example": {
@@ -2595,14 +2242,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
+                  "required": ["code", "msg"],
+                  "x-apifox-orders": ["code", "msg"],
                   "x-apifox-ignore-properties": []
                 }
               }
@@ -2617,9 +2258,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "轻量应用"
-        ],
+        "tags": ["轻量应用"],
         "parameters": [
           {
             "name": "uuid",
@@ -2647,14 +2286,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
+                  "required": ["code", "msg"],
+                  "x-apifox-orders": ["code", "msg"],
                   "x-apifox-ignore-properties": []
                 }
               }
@@ -2669,9 +2302,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "轻量应用"
-        ],
+        "tags": ["轻量应用"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -2698,14 +2329,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "uuid",
-                  "name",
-                  "version",
-                  "autoStart",
-                  "description",
-                  "luaSource"
-                ],
+                "required": ["uuid", "name", "version", "autoStart", "description", "luaSource"],
                 "x-apifox-orders": [
                   "uuid",
                   "name",
@@ -2742,14 +2366,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
+                  "required": ["code", "msg"],
+                  "x-apifox-orders": ["code", "msg"],
                   "x-apifox-ignore-properties": []
                 }
               }
@@ -2764,9 +2382,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "设备列表",
-        "tags": [
-          "轻量应用"
-        ],
+        "tags": ["轻量应用"],
         "parameters": [
           {
             "name": "uuid",
@@ -2839,16 +2455,8 @@
                       "x-apifox-ignore-properties": []
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -2883,9 +2491,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "设备列表",
-        "tags": [
-          "轻量应用"
-        ],
+        "tags": ["轻量应用"],
         "parameters": [
           {
             "name": "uuid",
@@ -2957,16 +2563,8 @@
                       "x-apifox-ignore-properties": []
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -2992,9 +2590,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "设备列表",
-        "tags": [
-          "轻量应用"
-        ],
+        "tags": ["轻量应用"],
         "parameters": [
           {
             "name": "uuid",
@@ -3066,16 +2662,8 @@
                       "x-apifox-ignore-properties": []
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -3101,9 +2689,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "用户管理"
-        ],
+        "tags": ["用户管理"],
         "parameters": [],
         "responses": {
           "200": {
@@ -3123,16 +2709,8 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -3159,9 +2737,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "系统数据"
-        ],
+        "tags": ["系统数据"],
         "parameters": [],
         "responses": {
           "200": {
@@ -3180,10 +2756,7 @@
                     "value": {
                       "code": 200,
                       "msg": "Success",
-                      "data": [
-                        "/dev/ttyS0",
-                        "/dev/ttyUSB1"
-                      ]
+                      "data": ["/dev/ttyS0", "/dev/ttyUSB1"]
                     }
                   }
                 }
@@ -3201,9 +2774,7 @@
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "AI能力"
-        ],
+        "tags": ["AI能力"],
         "parameters": [],
         "responses": {
           "200": {
@@ -3243,6 +2814,104 @@
         },
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-77202058-run"
       }
+    },
+    "/api/v1/plugin/service": {
+      "post": {
+        "summary": "请求插件提供的接口",
+        "x-apifox-folder": "插件管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["插件管理"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["uuid", "name"],
+                "x-apifox-orders": ["uuid", "name"],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "remote": {
+                            "type": "string"
+                          },
+                          "listener": {
+                            "type": "string"
+                          },
+                          "username": {
+                            "type": "string"
+                          },
+                          "cleanSession": {
+                            "type": "boolean"
+                          }
+                        },
+                        "x-apifox-orders": ["id", "remote", "listener", "username", "cleanSession"],
+                        "x-apifox-ignore-properties": []
+                      }
+                    }
+                  },
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "id": "MasterAAA",
+                          "remote": "127.0.0.1:35550",
+                          "listener": "",
+                          "username": "MasterAAA",
+                          "cleanSession": true
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1341241/apis/api-84534367-run"
+      }
     }
   },
   "components": {
@@ -3266,18 +2935,8 @@
             "x-apifox-ignore-properties": []
           }
         },
-        "required": [
-          "type",
-          "name",
-          "description",
-          "config"
-        ],
-        "x-apifox-orders": [
-          "type",
-          "name",
-          "description",
-          "config"
-        ],
+        "required": ["type", "name", "description", "config"],
+        "x-apifox-orders": ["type", "name", "description", "config"],
         "x-apifox-ignore-properties": [],
         "x-apifox-folder": ""
       }
