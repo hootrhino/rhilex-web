@@ -1,25 +1,23 @@
-import { useEffect,useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-import { history,useParams,useRequest } from 'umi';
+import { history, useParams, useRequest } from 'umi';
 
-import type { ProFormInstance } from '@ant-design/pro-components';
 import {
-PageContainer,
-ProCard,
-ProForm,
-ProFormDependency,
-ProFormDigit,
-ProFormSelect,
-ProFormText,
-ProFormTextArea
+  PageContainer,
+  ProCard,
+  ProForm,
+  ProFormDependency,
+  ProFormDigit,
+  ProFormInstance,
+  ProFormSelect,
+  ProFormText,
+  ProFormTextArea,
 } from '@ant-design/pro-components';
 
 import FormFooter from '@/components/FromFooter';
-import { getInends,postInends,putInends } from '@/services/rulex/shuruziyuanguanli';
 import { message } from '@/components/PopupHack';
 import useGoBack from '@/hooks/useGoBack';
-
-
+import { getInends, postInends, putInends } from '@/services/rulex/shuruziyuanguanli';
 
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
@@ -65,7 +63,7 @@ const UpdateForm = () => {
   return (
     <PageContainer
       header={{ title: id ? '编辑资源' : '新建资源' }}
-      onBack={() => showModal({url: '/inends/list'})}
+      onBack={() => showModal({ url: '/inends/list' })}
     >
       <ProCard>
         <ProForm
@@ -195,11 +193,7 @@ const UpdateForm = () => {
               ) : null;
             }}
           </ProFormDependency>
-          <ProFormTextArea
-            label="备注信息"
-            name="description"
-            placeholder="请输入备注信息"
-          />
+          <ProFormTextArea label="备注信息" name="description" placeholder="请输入备注信息" />
         </ProForm>
       </ProCard>
     </PageContainer>
