@@ -7,8 +7,8 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 
-import { deleteInends, getInends } from '@/services/rulex/shuruziyuanguanli';
 import { message } from '@/components/PopupHack';
+import { deleteInends, getInends } from '@/services/rulex/shuruziyuanguanli';
 
 export type Item = {
   name: string;

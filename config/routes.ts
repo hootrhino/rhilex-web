@@ -40,19 +40,19 @@ export default [
       {
         path: '/inends/list',
         name: '资源列表',
-        component: './Sources',
+        component: './Inends',
         hideInMenu: true,
       },
       {
         path: '/inends/new',
         name: '新建',
-        component: './Sources/UpdateForm',
+        component: './Inends/UpdateForm',
         hideInMenu: true,
       },
       {
         path: '/inends/edit/:id',
         name: '编辑',
-        component: './Sources/UpdateForm',
+        component: './Inends/UpdateForm',
         hideInMenu: true,
       },
     ],
