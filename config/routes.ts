@@ -98,19 +98,19 @@ export default [
       {
         path: '/outends/list',
         name: '目标列表',
-        component: './Targets',
+        component: './Outends',
         hideInMenu: true,
       },
       {
         path: '/outends/new',
         name: '新建',
-        component: './Targets/UpdateForm',
+        component: './Outends/UpdateForm',
         hideInMenu: true,
       },
       {
         path: '/outends/edit/:id',
         name: '编辑',
-        component: './Targets/UpdateForm',
+        component: './Outends/UpdateForm',
         hideInMenu: true,
       },
     ],
