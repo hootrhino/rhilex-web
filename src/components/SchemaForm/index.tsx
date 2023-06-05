@@ -8,6 +8,7 @@ import {
   ProCard,
   ProConfigProvider,
   ProFormInstance,
+  ProFormProps,
 } from '@ant-design/pro-components';
 
 import FormFooter from '@/components/FromFooter';
@@ -15,12 +16,11 @@ import useGoBack from '@/hooks/useGoBack';
 import { AutoComplete, Segmented } from 'antd';
 import omit from 'lodash/omit';
 
-type SchemaFormProps<T = any> = {
-  title: string;
+type SchemaFormProps<T = any> = ProFormProps & {
+  title?: string;
   goBack: string;
   columns: T[];
   initialValue: T;
-  onFinish: (values: any) => Promise<void>;
 };
 
 export const toolTip = (
@@ -35,7 +35,7 @@ export const toolTip = (
 
 const customizeValueType = {
   segmented: {
-    renderFormItem: () => (
+    renderFormItem: (_: any, props: any) => (
       <Segmented
         block
         style={{ width: 440 }}
@@ -43,17 +43,23 @@ const customizeValueType = {
           { label: '是', value: 'true' },
           { label: '否', value: 'false' },
         ]}
+        {...props?.fieldProps}
       />
     ),
   },
   autoComplete: {
-    renderFormItem: () => (
-      <AutoComplete style={{ width: 440 }} options={[]} placeholder="请输入本地系统的串口路径" />
+    renderFormItem: (_: any, props: any) => (
+      <AutoComplete
+        style={{ width: 440 }}
+        options={[]}
+        placeholder="请输入本地系统的串口路径"
+        {...props?.fieldProps}
+      />
     ),
   },
 };
 
-const processColumns = (columns: any) => {
+export const processColumns = (columns: any) => {
   return columns.map((col: any) => {
     if (col.valueType === 'group') {
       return { ...col, columns: processColumns(col.columns) };
@@ -63,7 +69,6 @@ const processColumns = (columns: any) => {
       return {
         ...col,
         columns: (params: any) => {
-          console.log(params, col?.name);
           return processColumns(col.columns(params));
         },
       };
@@ -132,7 +137,7 @@ const SchemaForm = ({ title, columns, initialValue, goBack, onFinish }: SchemaFo
     formRef.current?.setFieldsValue({
       ...initialValue,
     });
-  }, [initialValue?.id]);
+  }, [initialValue]);
 
   return (
     <PageContainer header={{ title: title || '' }} onBack={() => showModal({ url: goBack })}>
