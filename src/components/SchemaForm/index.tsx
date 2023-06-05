@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'react';
 
-import { useParams } from 'umi';
-
 import {
   BetaSchemaForm,
   PageContainer,
@@ -128,9 +126,15 @@ export const processColumns = (columns: any) => {
   });
 };
 
-const SchemaForm = ({ title, columns, initialValue, goBack, onFinish }: SchemaFormProps) => {
+const SchemaForm = ({
+  title,
+  columns,
+  initialValue,
+  goBack,
+  onFinish,
+  onValuesChange,
+}: SchemaFormProps) => {
   const formRef = useRef<ProFormInstance>();
-  const { id } = useParams();
   const { showModal } = useGoBack();
 
   useEffect(() => {
@@ -152,12 +156,16 @@ const SchemaForm = ({ title, columns, initialValue, goBack, onFinish }: SchemaFo
               render: ({ reset, submit }) => {
                 return (
                   <FormFooter
-                    onReset={() => (id ? formRef.current?.setFieldsValue(initialValue) : reset())}
+                    onReset={() => {
+                      reset();
+                      formRef.current?.setFieldsValue(initialValue);
+                    }}
                     onSubmit={submit}
                   />
                 );
               },
             }}
+            onValuesChange={onValuesChange}
           />
         </ProCard>
       </ProConfigProvider>
