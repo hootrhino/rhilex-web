@@ -1,32 +1,31 @@
 import { useRef } from 'react';
 
-import { history } from 'umi';
-
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
+import { history } from 'umi';
 
-import { deleteInends, getInends } from '@/services/rulex/shuruziyuanguanli';
 import { message } from '@/components/PopupHack';
+import { deleteOutends, getOutends } from '@/services/rulex/shuchuziyuanguanli';
 
 export type Item = {
   name: string;
   type: string;
   state: number;
   description: string;
-  config: Record<string, any>;
   uuid: string;
+  [key: string]: any;
 };
 
-const Sources = () => {
+const Targets = () => {
   const actionRef = useRef<ActionType>();
 
   // 删除
-  const handleDelete = async (values: API.deleteInendsParams) => {
+  const handleOnDelete = async (values: API.deleteOutendsParams) => {
     try {
-      await deleteInends(values);
-      actionRef.current?.reload();
+      await deleteOutends(values);
+      actionRef?.current?.reload();
       message.success('删除成功');
       return true;
     } catch (error) {
@@ -49,6 +48,7 @@ const Sources = () => {
       title: '类型',
       dataIndex: 'type',
     },
+
     {
       title: '状态',
       dataIndex: 'state',
@@ -60,6 +60,7 @@ const Sources = () => {
         3: { text: '停止', status: 'Default' },
       },
     },
+
     {
       title: '信息',
       dataIndex: 'description',
@@ -67,19 +68,17 @@ const Sources = () => {
     },
     {
       title: '操作',
-      width: 120,
-      fixed: 'right',
-      key: 'option',
       valueType: 'option',
+      key: 'option',
+      width: 100,
+      fixed: 'right',
       render: (_, record) => [
-        <a key="edit" onClick={() => history.push(`/inends/edit/${record.uuid}`)}>
+        <a key="edit" onClick={() => history.push(`/outends/edit/${record.uuid}`)}>
           编辑
         </a>,
         <Popconfirm
-          title="你确定要删除该资源?"
-          onConfirm={() => handleDelete({ uuid: record.uuid })}
-          okText="是"
-          cancelText="否"
+          title="确定要删除该目标？"
+          onConfirm={() => handleOnDelete({ uuid: record.uuid })}
           key="delete"
         >
           <a>删除</a>
@@ -89,34 +88,31 @@ const Sources = () => {
   ];
 
   return (
-    <PageContainer>
-      <ProTable
-        rowKey="uuid"
-        actionRef={actionRef}
-        columns={columns}
-        request={async () => {
-          const res = await getInends();
+    <>
+      <PageContainer>
+        <ProTable
+          rowKey="uuid"
+          actionRef={actionRef}
+          columns={columns}
+          request={async () => {
+            const res = await getOutends();
 
-          return Promise.resolve({
-            data: (res as any)?.data,
-            success: true,
-          });
-        }}
-        search={false}
-        pagination={false}
-        toolBarRender={() => [
-          <Button
-            key="new"
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={() => history.push('/inends/new')}
-          >
-            新建
-          </Button>,
-        ]}
-      />
-    </PageContainer>
+            return Promise.resolve({
+              data: (res as any)?.data,
+              success: true,
+            });
+          }}
+          search={false}
+          pagination={false}
+          toolBarRender={() => [
+            <Button type="primary" key="primary" onClick={() => history.push('/outends/new')}>
+              <PlusOutlined /> 新建
+            </Button>,
+          ]}
+        />
+      </PageContainer>
+    </>
   );
 };
 
-export default Sources;
+export default Targets;
