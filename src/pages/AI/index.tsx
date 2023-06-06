@@ -1,7 +1,7 @@
 import { modal } from '@/components/PopupHack';
 import { getAibase } from '@/services/rulex/AInengli';
 import { PlusOutlined } from '@ant-design/icons';
-import { PageContainer,ProColumns,ProTable } from '@ant-design/pro-components';
+import { PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { Button, Descriptions } from 'antd';
 import { isEmpty } from 'lodash';
 
@@ -20,6 +20,7 @@ const AI = () => {
       title: 'UUID',
       dataIndex: 'uuid',
       ellipsis: true,
+      copyable: true,
     },
     {
       title: '名称',

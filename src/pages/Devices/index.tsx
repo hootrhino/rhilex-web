@@ -7,8 +7,8 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 
-import { deleteDevices, getDevices } from '@/services/rulex/shebeiguanli';
 import { message } from '@/components/PopupHack';
+import { deleteDevices, getDevices } from '@/services/rulex/shebeiguanli';
 
 export type Item = {
   name: string;
@@ -39,6 +39,7 @@ const Devices = () => {
       title: 'UUID',
       dataIndex: 'uuid',
       ellipsis: true,
+      copyable: true,
     },
     {
       title: '名称',

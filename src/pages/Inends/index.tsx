@@ -39,6 +39,7 @@ const Sources = () => {
       title: 'UUID',
       dataIndex: 'uuid',
       ellipsis: true,
+      copyable: true,
     },
     {
       title: '名称',
