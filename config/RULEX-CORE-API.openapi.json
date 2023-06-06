@@ -2835,10 +2835,16 @@
                   },
                   "name": {
                     "type": "string"
+                  },
+                  "args": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 },
-                "required": ["uuid", "name"],
-                "x-apifox-orders": ["uuid", "name"],
+                "required": ["uuid", "name", "args"],
+                "x-apifox-orders": ["uuid", "name", "args"],
                 "x-apifox-ignore-properties": []
               }
             }
@@ -2894,17 +2900,36 @@
                     "value": {
                       "code": 200,
                       "msg": "Success",
-                      "data": [
-                        {
-                          "id": "MasterAAA",
-                          "remote": "127.0.0.1:35550",
-                          "listener": "",
-                          "username": "MasterAAA",
-                          "cleanSession": true
-                        }
-                      ]
+                      "data": ["kick out success"]
                     }
                   }
+                }
+              }
+            }
+          },
+          "x-200:成功": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": ["code", "msg", "data"],
+                  "x-apifox-orders": ["code", "msg", "data"],
+                  "x-apifox-ignore-properties": []
                 }
               }
             }
