@@ -7,14 +7,21 @@ import SchemaForm from '@/components/SchemaForm';
 import { getInends, postInends, putInends } from '@/services/rulex/shuruziyuanguanli';
 import { columns } from './columns';
 
-type InendsFormItem = {
+type Config = {
+  host?: string;
+  port?: number;
+  [key: string]: any;
+};
+type InendsFormItem<T extends any> = {
+  name: string;
   type: string;
-  config: Record<string, any>[];
+  config: T;
 };
 
 const UpdateForm = () => {
   const { id } = useParams();
-  const [initialValue, setInitialValue] = useState<InendsFormItem>({
+  const [initialValue, setInitialValue] = useState<InendsFormItem<Config[]>>({
+    name: '',
     type: 'COAP',
     config: [{ host: '127.0.0.1', port: 2582 }],
   });
@@ -22,11 +29,15 @@ const UpdateForm = () => {
   // 新建&编辑
   const onFinish = async (values: any) => {
     try {
+      const params = {
+        ...values,
+        config: values?.config?.[0],
+      };
       if (id) {
-        await putInends({ ...values, uuid: id });
+        await putInends({ ...params, uuid: id });
         message.success('更新成功');
       } else {
-        await postInends(values);
+        await postInends(params);
         message.success('新建成功');
       }
 
@@ -38,8 +49,9 @@ const UpdateForm = () => {
   };
 
   // 获取详情
-  const { run: getDetail, data: detail } = useRequest(() => getInends({ params: { uuid: id } }), {
+  const { run: getDetail } = useRequest(() => getInends({ params: { uuid: id } }), {
     manual: true,
+    onSuccess: (res: any) => setInitialValue({ ...res, config: [res?.config] }),
   });
 
   useEffect(() => {
@@ -53,7 +65,7 @@ const UpdateForm = () => {
       title={id ? '编辑资源' : '新建资源'}
       goBack="/inends/list"
       columns={columns}
-      initialValue={id ? detail : initialValue}
+      initialValue={initialValue}
       onFinish={onFinish}
       onValuesChange={(changedValue) => {
         if (changedValue?.type) {
@@ -87,6 +99,7 @@ const UpdateForm = () => {
               break;
           }
           setInitialValue({
+            ...initialValue,
             type: changedValue?.type,
             config: [{ ...initialValue?.config?.[0], port }],
           });
