@@ -11,8 +11,10 @@ import {
 
 import FormFooter from '@/components/FromFooter';
 import useGoBack from '@/hooks/useGoBack';
+import { getUarts } from '@/services/rulex/xitongshuju';
 import { AutoComplete, Segmented } from 'antd';
 import omit from 'lodash/omit';
+import { useRequest } from 'umi';
 import FullScreenEditor from '../FullScreenEditor';
 
 type SchemaFormProps<T = any> = ProFormProps & {
@@ -113,6 +115,10 @@ const SchemaForm = ({
   const editorRef = useRef(null);
   const { showModal } = useGoBack();
 
+  const { data: uartOptions } = useRequest(() => getUarts(), {
+    formatResult: (res) => res?.data?.map((item: string) => ({ value: item })),
+  });
+
   const customizeValueType = {
     segmented: {
       renderFormItem: (_: any, props: any) => (
@@ -131,7 +137,7 @@ const SchemaForm = ({
       renderFormItem: (_: any, props: any) => (
         <AutoComplete
           style={{ width: 440 }}
-          options={[]}
+          options={uartOptions}
           placeholder="请输入本地系统的串口路径"
           {...props?.fieldProps}
         />

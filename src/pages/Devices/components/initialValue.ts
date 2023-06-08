@@ -1,11 +1,11 @@
-export const initialValue = {
+export const defaultValue = {
   type: 'GENERIC_SNMP',
   config: {
     commonConfig: [
       {
         frequency: 3000,
         retryTime: 5,
-        timeout: 30,
+        timeout: 3000,
         autoRequest: 'false',
         separator: 'LF',
         transport: 'rs485rawserial',
@@ -23,7 +23,7 @@ export const initialValue = {
     ],
     uartConfig: [
       {
-        timeout: 30,
+        timeout: 3000,
         baudRate: 9600,
         dataBits: 8,
         stopBits: 1,
@@ -37,7 +37,7 @@ export const initialValue = {
         rw: 1,
         bufferSize: 0,
         timeSlice: 10,
-        timeout: 30,
+        timeout: 3000,
         checksumValuePos: 0,
         checksumBegin: 0,
         checksumEnd: 0,
@@ -50,7 +50,7 @@ export const initialValue = {
     ],
     rtuConfig: [
       {
-        timeout: 30,
+        timeout: 3000,
         baudRate: 9600,
         dataBits: 8,
         parity: 'N',

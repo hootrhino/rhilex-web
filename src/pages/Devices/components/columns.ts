@@ -358,7 +358,7 @@ export const columns = [
                 checkAlgorithm: 'NONECHECK',
                 bufferSize: 0,
                 timeSlice: 10,
-                timeout: 30,
+                timeout: 3000,
                 checksumValuePos: 0,
                 checksumBegin: 0,
                 checksumEnd: 0,

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { history, useParams } from 'umi';
 
@@ -10,11 +10,14 @@ import { message } from '@/components/PopupHack';
 import { getDevices, postDevices, putDevices } from '@/services/rulex/shebeiguanli';
 
 import SchemaForm from '@/components/SchemaForm';
+
+import { has, isEmpty } from 'lodash';
 import { columns } from './columns';
-import { initialValue } from './initialValue';
+import { defaultValue } from './initialValue';
 
 const BaseForm = () => {
   const { id } = useParams();
+  const [initialValue, setValue] = useState<any>(defaultValue);
 
   // 新建&编辑
   const onFinish = async (values: any) => {
@@ -65,8 +68,25 @@ const BaseForm = () => {
   };
 
   // 获取详情
-  const { run: getDetail, data: detail } = useRequest(() => getDevices({ params: { uuid: id } }), {
+  const { run: getDetail } = useRequest(() => getDevices({ params: { uuid: id } }), {
     manual: true,
+    onSuccess: ({ data }: any) => {
+      const newConfig = Object.fromEntries(
+        Object.entries(data?.config || {}).map(([key, value]) => {
+          if (has(value, 'autoRequest')) {
+            return [
+              key,
+              isEmpty(value)
+                ? []
+                : [{ ...(value as any), autoRequest: (value as any)?.autoRequest.toString() }],
+            ];
+          }
+          return [key, isEmpty(value) ? [] : [value]];
+        }),
+      );
+
+      setValue({ ...data, config: newConfig });
+    },
   });
 
   useEffect(() => {
@@ -80,7 +100,7 @@ const BaseForm = () => {
       title={id ? '编辑设备' : '新建设备'}
       goBack="/device/list"
       columns={columns}
-      initialValue={id ? detail : initialValue}
+      initialValue={initialValue}
       onFinish={async (values) => await onFinish(values)}
     />
   );
