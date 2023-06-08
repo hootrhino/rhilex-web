@@ -3,7 +3,7 @@ import { getAibase } from '@/services/rulex/AInengli';
 import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { Button, Descriptions } from 'antd';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 type TableItem = {
   uuid: string;

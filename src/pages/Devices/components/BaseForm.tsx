@@ -5,13 +5,14 @@ import { history, useParams } from 'umi';
 import { useRequest } from 'ahooks';
 
 import cloneDeep from 'lodash/cloneDeep';
+import has from 'lodash/has';
+import isEmpty from 'lodash/isEmpty';
 
 import { message } from '@/components/PopupHack';
 import { getDevices, postDevices, putDevices } from '@/services/rulex/shebeiguanli';
 
 import SchemaForm from '@/components/SchemaForm';
 
-import { has, isEmpty } from 'lodash';
 import { columns } from './columns';
 import { defaultValue } from './initialValue';
 
