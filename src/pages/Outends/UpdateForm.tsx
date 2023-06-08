@@ -3,20 +3,48 @@ import SchemaForm from '@/components/SchemaForm';
 
 import { getOutends, postOutends, putOutends } from '@/services/rulex/shuchuziyuanguanli';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { columns } from './columns';
 
+type Config = {
+  host?: string;
+  port?: number;
+  clientId?: string;
+  username?: string;
+  password?: string;
+  productId?: string;
+  deviceName?: string;
+  [key: string]: any;
+};
+
+type UpdateFormItem<T = any> = {
+  type: string;
+  name: string;
+  description?: string;
+  config?: T;
+  uuid?: string;
+};
+
 const UpdateForm = () => {
   const { id } = useParams();
+  const [initialValue, setValue] = useState<UpdateFormItem<Config[]>>({
+    name: '',
+    type: 'MONGO_SINGLE',
+    config: [{ mongoUrl: 'mongodb://127.0.0.1:27017', database: 'test', collection: 'test' }],
+  });
 
   // 新建&编辑
   const onFinish = async (values: any) => {
     try {
+      const params = {
+        ...values,
+        config: values?.config?.[0],
+      };
       if (id) {
-        await putOutends({ ...values, uuid: id });
+        await putOutends({ ...params, uuid: id } as any);
       } else {
-        await postOutends(values);
+        await postOutends(params as any);
       }
       message.success(id ? '更新成功' : '新建成功');
       history.push('/outends/list');
@@ -27,8 +55,9 @@ const UpdateForm = () => {
   };
 
   // 获取详情
-  const { run: getDetail, data: detail } = useRequest(() => getOutends({ params: { uuid: id } }), {
+  const { run: getDetail } = useRequest(() => getOutends({ params: { uuid: id } }), {
     manual: true,
+    onSuccess: (res: any) => setValue({ ...res, config: [res?.config] }),
   });
 
   useEffect(() => {
@@ -42,16 +71,7 @@ const UpdateForm = () => {
       title={id ? '编辑目标' : '新建目标'}
       goBack="/outends/list"
       columns={columns}
-      initialValue={
-        id
-          ? detail
-          : {
-              type: 'MONGO_SINGLE',
-              config: [
-                { mongoUrl: 'mongodb://127.0.0.1:27017', database: 'test', collection: 'test' },
-              ],
-            }
-      }
+      initialValue={initialValue}
       onFinish={onFinish}
     />
   );
