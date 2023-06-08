@@ -9,7 +9,7 @@ export const defaultValue = {
         autoRequest: 'false',
         separator: 'LF',
         transport: 'rs485rawserial',
-        mode: 'rtu',
+        mode: 'RTU',
       },
     ],
     snmpConfig: [

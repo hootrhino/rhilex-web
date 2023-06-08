@@ -555,7 +555,7 @@ export const columns = [
           columns: ({ config }: any) => {
             const deviceMode = config?.commonConfig[0]?.mode;
 
-            if (deviceMode === 'rtu') {
+            if (deviceMode === 'RTU') {
               return [
                 {
                   title: 'RTU 配置',

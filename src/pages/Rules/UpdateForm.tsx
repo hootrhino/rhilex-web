@@ -1,17 +1,17 @@
-import { useRef,useState } from 'react';
+import { useRef, useState } from 'react';
 
-import { history,useParams } from 'umi';
+import { history, useParams } from 'umi';
 
 import {
-PageContainer,
-ProCard,
-ProForm,
-ProFormDependency,
-ProFormInstance,
-ProFormRadio,
-ProFormSelect,
-ProFormText,
-ProFormTextArea
+  PageContainer,
+  ProCard,
+  ProForm,
+  ProFormDependency,
+  ProFormInstance,
+  ProFormRadio,
+  ProFormSelect,
+  ProFormText,
+  ProFormTextArea,
 } from '@ant-design/pro-components';
 import { useRequest } from 'umi';
 
@@ -20,10 +20,10 @@ import { getInends } from '@/services/rulex/shuruziyuanguanli';
 
 import FormFooter from '@/components/FromFooter';
 import FullScreenEditor from '@/components/FullScreenEditor';
-import { postRules } from '@/services/rulex/guizeguanli';
-import { omit } from 'lodash';
 import { message } from '@/components/PopupHack';
 import useGoBack from '@/hooks/useGoBack';
+import { postRules } from '@/services/rulex/guizeguanli';
+import omit from 'lodash/omit';
 
 export type FormItem = {
   actions: string;
@@ -107,7 +107,7 @@ const UpdateForm = () => {
     <>
       <PageContainer
         header={{ title: id ? '编辑规则' : '新建规则' }}
-        onBack={() => showModal({url: '/rules/list'})}
+        onBack={() => showModal({ url: '/rules/list' })}
       >
         <ProCard>
           <ProForm

@@ -73,15 +73,10 @@ const BaseForm = () => {
     onSuccess: ({ data }: any) => {
       const newConfig = Object.fromEntries(
         Object.entries(data?.config || {}).map(([key, value]) => {
-          if (has(value, 'autoRequest')) {
-            return [
-              key,
-              isEmpty(value)
-                ? []
-                : [{ ...(value as any), autoRequest: (value as any)?.autoRequest.toString() }],
-            ];
-          }
-          return [key, isEmpty(value) ? [] : [value]];
+          const newValue = Array.isArray(value) ? value : isEmpty(value) ? [] : [value];
+          return has(value, 'autoRequest')
+            ? [key, [{ ...(value as any), autoRequest: (value as any)?.autoRequest.toString() }]]
+            : [key, newValue];
         }),
       );
 
