@@ -1,8 +1,8 @@
 import { message } from '@/components/PopupHack';
-import { deleteApp,getApp,putAppStart,putAppStop } from '@/services/rulex/qingliangyingyong';
-import { MinusCircleOutlined,PlusOutlined,SyncOutlined } from '@ant-design/icons';
-import { ActionType,PageContainer,ProColumns,ProTable } from '@ant-design/pro-components';
-import { Button,Popconfirm,Tag } from 'antd';
+import { deleteApp, getApp, putAppStart, putAppStop } from '@/services/rulex/qingliangyingyong';
+import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
+import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
+import { Button, Popconfirm, Tag } from 'antd';
 
 import { useRef } from 'react';
 import { history } from 'umi';
@@ -65,7 +65,7 @@ const AppStack = () => {
       title: '是否自启',
       dataIndex: 'autoStart',
       renderText: (autoStart) => (
-        <Tag color={autoStart ? 'success' : 'error'}>{autoStart ? '是' : '否'}</Tag>
+        <Tag color={autoStart ? 'success' : 'error'}>{autoStart === true ? '是' : '否'}</Tag>
       ),
     },
     {
