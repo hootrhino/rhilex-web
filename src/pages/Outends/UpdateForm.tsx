@@ -31,7 +31,13 @@ const UpdateForm = () => {
   const [initialValue, setValue] = useState<UpdateFormItem<Config[]>>({
     name: '',
     type: 'MONGO_SINGLE',
-    config: [{ mongoUrl: 'mongodb://127.0.0.1:27017', database: 'test', collection: 'test' }],
+    config: [
+      {
+        mongoUrl: 'mongodb://root:root@127.0.0.1:27017/?connect=direct',
+        database: 'rulexdb',
+        collection: 'rulex',
+      },
+    ],
   });
 
   // 新建&编辑
