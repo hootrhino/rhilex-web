@@ -18,7 +18,7 @@ const Settings: ProLayoutProps & {
   splitMenus: false,
   title: 'Rhino EEKit',
   pwa: true,
-  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+  logo: '/logo.svg',
   iconfontUrl: '',
   menu: { locale: false },
   token: {

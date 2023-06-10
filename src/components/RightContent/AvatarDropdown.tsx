@@ -1,12 +1,12 @@
 import { postLogout } from '@/services/rulex/yonghuguanli';
-import { LogoutOutlined,SettingOutlined,UserOutlined } from '@ant-design/icons';
+import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { setAlpha } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { history,useModel } from '@umijs/max';
-import { Avatar,Spin } from 'antd';
+import { history, useModel } from '@umijs/max';
+import { Avatar, Spin } from 'antd';
 import { stringify } from 'querystring';
 import type { MenuInfo } from 'rc-menu/lib/interface';
-import React,{ useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { flushSync } from 'react-dom';
 import HeaderDropdown from '../HeaderDropdown';
 
@@ -49,14 +49,7 @@ const AvatarLogo = () => {
     };
   });
 
-  return (
-    <Avatar
-      size="small"
-      className={avatarClassName}
-      src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
-      alt="avatar"
-    />
-  );
+  return <Avatar size="small" className={avatarClassName} src="/logo.svg" alt="avatar" />;
 };
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
