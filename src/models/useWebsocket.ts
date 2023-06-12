@@ -16,10 +16,7 @@ const useWebsocket = () => {
       if (data && data !== 'Connected') {
         let newLog = [...logs, JSON.parse(data)];
         newLog = orderBy(newLog, 'time', 'desc');
-        console.log(newLog);
-
-        newLog = slice(newLog, 0, 2);
-        console.log(newLog);
+        newLog = slice(newLog, 0, 100);
         setLogs(newLog);
       }
     },
