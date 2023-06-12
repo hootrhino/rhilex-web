@@ -274,7 +274,7 @@ export const columns = [
         {
           title: '串口配置',
           valueType: 'group',
-          hideInForm: type !== 'USER_G776',
+          hideInForm: !['USER_G776', 'GENERIC_PROTOCOL'].includes(type),
           columns: [
             {
               valueType: 'formList',
