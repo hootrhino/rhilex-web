@@ -307,9 +307,19 @@ export const columns = [
                     {
                       title: '数据位',
                       dataIndex: 'dataBits',
-                      valueType: 'digit',
+                      valueType: 'select',
                       required: true,
                       tooltip: true,
+                      valueEnum: new Map([
+                        [1, '1'],
+                        [2, '2'],
+                        [3, '3'],
+                        [4, '4'],
+                        [5, '5'],
+                        [6, '6'],
+                        [7, '7'],
+                        [8, '8'],
+                      ]),
                     },
                   ],
                 },
@@ -327,9 +337,14 @@ export const columns = [
                     {
                       title: '停止位',
                       dataIndex: 'stopBits',
-                      valueType: 'digit',
+                      valueType: 'select',
                       required: true,
                       tooltip: true,
+                      valueEnum: new Map([
+                        [1, '1'],
+                        [1.5, '1.5'],
+                        [2, '2'],
+                      ]),
                     },
                     {
                       title: '串口路径',
@@ -592,9 +607,19 @@ export const columns = [
                             {
                               title: '数据位',
                               dataIndex: 'dataBits',
-                              valueType: 'digit',
+                              valueType: 'select',
                               required: true,
                               tooltip: true,
+                              valueEnum: new Map([
+                                [1, '1'],
+                                [2, '2'],
+                                [3, '3'],
+                                [4, '4'],
+                                [5, '5'],
+                                [6, '6'],
+                                [7, '7'],
+                                [8, '8'],
+                              ]),
                             },
                           ],
                         },
@@ -612,9 +637,14 @@ export const columns = [
                             {
                               title: '停止位',
                               dataIndex: 'stopBits',
-                              valueType: 'digit',
+                              valueType: 'select',
                               required: true,
                               tooltip: true,
+                              valueEnum: new Map([
+                                [1, '1'],
+                                [1.5, '1.5'],
+                                [2, '2'],
+                              ]),
                             },
                             {
                               title: '串口路径',

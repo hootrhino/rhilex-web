@@ -86,10 +86,10 @@ const BaseForm = () => {
           let newValue;
           newValue = Array.isArray(value) ? value : isEmpty(value) ? [] : [value];
 
-          Object.values(value)?.forEach((item) => {
+          Object.values(value as any)?.forEach((item) => {
             if (typeof item === 'object') {
               console.log(item);
-              newValue = Object.values(value);
+              newValue = Object.values(value as any);
             }
           });
 
