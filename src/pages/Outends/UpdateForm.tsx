@@ -56,6 +56,7 @@ const UpdateForm = () => {
       history.push('/outends/list');
       return true;
     } catch (error) {
+      history.push('/outends/list');
       return false;
     }
   };

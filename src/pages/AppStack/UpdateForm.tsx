@@ -39,16 +39,15 @@ const UpdateForm = () => {
       const params = { ...values, autoStart: values?.autoStart === 'true' ? true : false };
       if (id) {
         await putApp({ ...params, uuid: id });
-
         message.success('更新成功');
-        history.push('/app-stack/list');
       } else {
         await postApp(params);
         message.success('新建成功');
-        history.push('/app-stack/list');
       }
+      history.push('/app-stack/list');
       return true;
     } catch (error) {
+      history.push('/app-stack/list');
       return false;
     }
   };

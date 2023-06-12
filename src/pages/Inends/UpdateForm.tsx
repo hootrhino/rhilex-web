@@ -44,6 +44,7 @@ const UpdateForm = () => {
       history.push('/inends/list');
       return true;
     } catch (error) {
+      history.push('/inends/list');
       return false;
     }
   };

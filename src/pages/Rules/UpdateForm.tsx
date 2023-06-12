@@ -99,6 +99,7 @@ const UpdateForm = () => {
       history.push('/rules/list');
       return true;
     } catch (error) {
+      history.push('/rules/list');
       return false;
     }
   };
