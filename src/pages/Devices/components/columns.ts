@@ -48,6 +48,7 @@ export const columns = [
                       dataIndex: 'frequency',
                       valueType: 'digit',
                       required: true,
+                      hideInForm: type === 'GENERIC_PROTOCOL',
                     },
                     {
                       title: '是否启动轮询',
@@ -343,211 +344,211 @@ export const columns = [
             },
           ],
         },
-        {
-          title: '设备配置',
-          valueType: 'group',
-          hideInForm: type !== 'GENERIC_PROTOCOL',
-          columns: [
-            {
-              valueType: 'formList',
-              dataIndex: ['config', 'deviceConfig'],
-              mode: 'multiple',
-              initialValue: {
-                type: 1,
-                rw: 1,
-                checkAlgorithm: 'NONECHECK',
-                bufferSize: 0,
-                timeSlice: 10,
-                timeout: 3000,
-                checksumValuePos: 0,
-                checksumBegin: 0,
-                checksumEnd: 0,
-                weight: 1,
-                initValue: 0,
-                autoRequest: 'false',
-                onCheckError: 'IGNORE',
-              },
-              columns: [
-                {
-                  valueType: 'group',
-                  columns: [
-                    {
-                      title: '协议名称',
-                      dataIndex: 'name',
-                      required: true,
-                      tooltip: true,
-                    },
-                    {
-                      title: '协议类型',
-                      dataIndex: 'type',
-                      valueType: 'select',
-                      required: true,
-                      tooltip: true,
-                      valueEnum: new Map([
-                        [1, '静态协议'],
-                        [2, '动态协议'],
-                        [3, '自定义时间片读'],
-                        [4, '自定义时间片读写'],
-                      ]),
-                    },
-                    {
-                      title: '备注信息',
-                      dataIndex: 'description',
-                    },
-                  ],
-                },
-                {
-                  valueType: 'group',
-                  columns: [
-                    {
-                      title: '读取权限',
-                      dataIndex: 'rw',
-                      valueType: 'select',
-                      required: true,
-                      tooltip: true,
-                      valueEnum: new Map([
-                        [1, '只读'],
-                        [2, '只写'],
-                        [3, '读写'],
-                      ]),
-                    },
-                    {
-                      valueType: 'dependency',
-                      name: ['type'],
-                      columns: ({ type }: any) => {
-                        return [
-                          {
-                            title: '缓冲区大小',
-                            dataIndex: 'bufferSize',
-                            valueType: 'digit',
-                            required: true,
-                            tooltip: true,
-                            hideInForm: type !== 1,
-                          },
-                          {
-                            title: '定时请求倒计时（毫秒）',
-                            dataIndex: 'timeSlice',
-                            valueType: 'digit',
-                            required: true,
-                            tooltip: true,
-                            hideInForm: ![3, 4].includes(type),
-                          },
-                        ];
-                      },
-                    },
-                    {
-                      title: '指令等待时间（毫秒）',
-                      dataIndex: 'timeout',
-                      valueType: 'digit',
-                      required: true,
-                      tooltip: true,
-                    },
-                  ],
-                },
-                {
-                  valueType: 'dependency',
-                  name: ['type'],
-                  columns: ({ type }: any) =>
-                    [1, 2].includes(type)
-                      ? [
-                          {
-                            valueType: 'group',
-                            columns: [
-                              {
-                                title: '数据校验算法',
-                                dataIndex: 'checkAlgorithm',
-                                valueType: 'select',
-                                required: true,
-                                tooltip: true,
-                                valueEnum: {
-                                  XOR: 'XOR 校验',
-                                  CRC16: 'CRC16 校验',
-                                  NONECHECK: '不校验（默认）',
-                                },
-                              },
-                              {
-                                title: '校验值比对位',
-                                dataIndex: 'checksumValuePos',
-                                valueType: 'digit',
-                                required: true,
-                                tooltip: true,
-                              },
-                              {
-                                title: '校验算法起始位置',
-                                dataIndex: 'checksumBegin',
-                                valueType: 'digit',
-                                required: true,
-                                tooltip: true,
-                              },
-                            ],
-                          },
-                          {
-                            valueType: 'group',
-                            columns: [
-                              {
-                                title: '校验算法结束位置',
-                                dataIndex: 'checksumEnd',
-                                valueType: 'digit',
-                                required: true,
-                                tooltip: true,
-                              },
-                              {
-                                valueType: 'dependency',
-                                name: ['checkAlgorithm'],
-                                columns: ({ checkAlgorithm }: any) => [
-                                  {
-                                    title: '校验失败处理',
-                                    dataIndex: 'onCheckError',
-                                    valueType: 'select',
-                                    required: true,
-                                    tooltip: true,
-                                    hideInForm: checkAlgorithm === 'NONECHECK',
-                                    valueEnum: {
-                                      LOG: '输出到日志',
-                                      IGNORE: '忽略错误',
-                                    },
-                                  },
-                                ],
-                              },
-                              {
-                                title: '是否启动轮询',
-                                dataIndex: 'autoRequest',
-                                valueType: 'segmented',
-                                tooltip: true,
-                                hideInForm: type === 'GENERIC_PROTOCOL',
-                              },
-                            ],
-                          },
-                          {
-                            valueType: 'group',
-                            columns: [
-                              {
-                                title: '协议请求参数',
-                                dataIndex: ['protocol', 'in'],
-                                required: true,
-                                tooltip: true,
-                              },
-                              {
-                                title: '权重系数',
-                                dataIndex: 'weight',
-                                valueType: 'digit',
-                                tooltip: true,
-                              },
-                              {
-                                title: '初始值',
-                                dataIndex: 'initValue',
-                                valueType: 'digit',
-                                tooltip: true,
-                              },
-                            ],
-                          },
-                        ]
-                      : [],
-                },
-              ],
-            },
-          ],
-        },
+        // {
+        //   title: '设备配置',
+        //   valueType: 'group',
+        //   hideInForm: type !== 'GENERIC_PROTOCOL',
+        //   columns: [
+        //     {
+        //       valueType: 'formList',
+        //       dataIndex: ['config', 'deviceConfig'],
+        //       mode: 'multiple',
+        //       initialValue: {
+        //         type: 1,
+        //         rw: 1,
+        //         checkAlgorithm: 'NONECHECK',
+        //         bufferSize: 0,
+        //         timeSlice: 10,
+        //         timeout: 3000,
+        //         checksumValuePos: 0,
+        //         checksumBegin: 0,
+        //         checksumEnd: 0,
+        //         weight: 1,
+        //         initValue: 0,
+        //         autoRequest: 'false',
+        //         onCheckError: 'IGNORE',
+        //       },
+        //       columns: [
+        //         {
+        //           valueType: 'group',
+        //           columns: [
+        //             {
+        //               title: '协议名称',
+        //               dataIndex: 'name',
+        //               required: true,
+        //               tooltip: true,
+        //             },
+        //             {
+        //               title: '协议类型',
+        //               dataIndex: 'type',
+        //               valueType: 'select',
+        //               required: true,
+        //               tooltip: true,
+        //               valueEnum: new Map([
+        //                 [1, '静态协议'],
+        //                 [2, '动态协议'],
+        //                 [3, '自定义时间片读'],
+        //                 [4, '自定义时间片读写'],
+        //               ]),
+        //             },
+        //             {
+        //               title: '备注信息',
+        //               dataIndex: 'description',
+        //             },
+        //           ],
+        //         },
+        //         {
+        //           valueType: 'group',
+        //           columns: [
+        //             {
+        //               title: '读取权限',
+        //               dataIndex: 'rw',
+        //               valueType: 'select',
+        //               required: true,
+        //               tooltip: true,
+        //               valueEnum: new Map([
+        //                 [1, '只读'],
+        //                 [2, '只写'],
+        //                 [3, '读写'],
+        //               ]),
+        //             },
+        //             {
+        //               valueType: 'dependency',
+        //               name: ['type'],
+        //               columns: ({ type }: any) => {
+        //                 return [
+        //                   {
+        //                     title: '缓冲区大小',
+        //                     dataIndex: 'bufferSize',
+        //                     valueType: 'digit',
+        //                     required: true,
+        //                     tooltip: true,
+        //                     hideInForm: type !== 1,
+        //                   },
+        //                   {
+        //                     title: '定时请求倒计时（毫秒）',
+        //                     dataIndex: 'timeSlice',
+        //                     valueType: 'digit',
+        //                     required: true,
+        //                     tooltip: true,
+        //                     hideInForm: ![3, 4].includes(type),
+        //                   },
+        //                 ];
+        //               },
+        //             },
+        //             {
+        //               title: '指令等待时间（毫秒）',
+        //               dataIndex: 'timeout',
+        //               valueType: 'digit',
+        //               required: true,
+        //               tooltip: true,
+        //             },
+        //           ],
+        //         },
+        //         {
+        //           valueType: 'dependency',
+        //           name: ['type'],
+        //           columns: ({ type }: any) =>
+        //             [1, 2].includes(type)
+        //               ? [
+        //                   {
+        //                     valueType: 'group',
+        //                     columns: [
+        //                       {
+        //                         title: '数据校验算法',
+        //                         dataIndex: 'checkAlgorithm',
+        //                         valueType: 'select',
+        //                         required: true,
+        //                         tooltip: true,
+        //                         valueEnum: {
+        //                           XOR: 'XOR 校验',
+        //                           CRC16: 'CRC16 校验',
+        //                           NONECHECK: '不校验（默认）',
+        //                         },
+        //                       },
+        //                       {
+        //                         title: '校验值比对位',
+        //                         dataIndex: 'checksumValuePos',
+        //                         valueType: 'digit',
+        //                         required: true,
+        //                         tooltip: true,
+        //                       },
+        //                       {
+        //                         title: '校验算法起始位置',
+        //                         dataIndex: 'checksumBegin',
+        //                         valueType: 'digit',
+        //                         required: true,
+        //                         tooltip: true,
+        //                       },
+        //                     ],
+        //                   },
+        //                   {
+        //                     valueType: 'group',
+        //                     columns: [
+        //                       {
+        //                         title: '校验算法结束位置',
+        //                         dataIndex: 'checksumEnd',
+        //                         valueType: 'digit',
+        //                         required: true,
+        //                         tooltip: true,
+        //                       },
+        //                       {
+        //                         valueType: 'dependency',
+        //                         name: ['checkAlgorithm'],
+        //                         columns: ({ checkAlgorithm }: any) => [
+        //                           {
+        //                             title: '校验失败处理',
+        //                             dataIndex: 'onCheckError',
+        //                             valueType: 'select',
+        //                             required: true,
+        //                             tooltip: true,
+        //                             hideInForm: checkAlgorithm === 'NONECHECK',
+        //                             valueEnum: {
+        //                               LOG: '输出到日志',
+        //                               IGNORE: '忽略错误',
+        //                             },
+        //                           },
+        //                         ],
+        //                       },
+        //                       {
+        //                         title: '是否启动轮询',
+        //                         dataIndex: 'autoRequest',
+        //                         valueType: 'segmented',
+        //                         tooltip: true,
+        //                         hideInForm: type === 'GENERIC_PROTOCOL',
+        //                       },
+        //                     ],
+        //                   },
+        //                   {
+        //                     valueType: 'group',
+        //                     columns: [
+        //                       {
+        //                         title: '协议请求参数',
+        //                         dataIndex: ['protocol', 'in'],
+        //                         required: true,
+        //                         tooltip: true,
+        //                       },
+        //                       {
+        //                         title: '权重系数',
+        //                         dataIndex: 'weight',
+        //                         valueType: 'digit',
+        //                         tooltip: true,
+        //                       },
+        //                       {
+        //                         title: '初始值',
+        //                         dataIndex: 'initValue',
+        //                         valueType: 'digit',
+        //                         tooltip: true,
+        //                       },
+        //                     ],
+        //                   },
+        //                 ]
+        //               : [],
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // },
         {
           valueType: 'dependency',
           name: ['config', 'commonConfig', 'mode'],

@@ -29,7 +29,7 @@ const BaseForm = () => {
       params?.config?.deviceConfig?.forEach((item: any) => {
         deviceConfigFormat[item?.name] = {
           ...item,
-          autoRequest: Boolean(item?.autoRequest),
+          autoRequest: item?.autoRequest === 'true' ? true : false,
           autoRequestGap: 0,
           timeSlice: [3, 4].includes(item?.type) ? item?.timeSlice : 0,
         };
@@ -72,9 +72,27 @@ const BaseForm = () => {
   const { run: getDetail } = useRequest(() => getDevices({ params: { uuid: id } }), {
     manual: true,
     onSuccess: ({ data }: any) => {
+      // const newConfig = Object.fromEntries(
+      //   Object.entries(data?.config || {}).map(([key, value]) => {
+      //     console.log(key, value);
+      //     const newValue = Array.isArray(value) ? value : isEmpty(value) ? [] : [value];
+      // return has(value, 'autoRequest')
+      //   ? [key, [{ ...(value as any), autoRequest: (value as any)?.autoRequest.toString() }]]
+      //   : [key, newValue];
+      //   }),
+      // );
       const newConfig = Object.fromEntries(
         Object.entries(data?.config || {}).map(([key, value]) => {
-          const newValue = Array.isArray(value) ? value : isEmpty(value) ? [] : [value];
+          let newValue;
+          newValue = Array.isArray(value) ? value : isEmpty(value) ? [] : [value];
+
+          Object.values(value)?.forEach((item) => {
+            if (typeof item === 'object') {
+              console.log(item);
+              newValue = Object.values(value);
+            }
+          });
+
           return has(value, 'autoRequest')
             ? [key, [{ ...(value as any), autoRequest: (value as any)?.autoRequest.toString() }]]
             : [key, newValue];
