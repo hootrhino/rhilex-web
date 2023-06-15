@@ -12,18 +12,26 @@ import {
 import { Button, Drawer, Popconfirm } from 'antd';
 
 import { message } from '@/components/PopupHack';
-import { deleteRules, getRules } from '@/services/rulex/guizeguanli';
-import { history } from 'umi';
+import { deleteRules, getRules, getRulesDetail } from '@/services/rulex/guizeguanli';
+import { history, useModel } from 'umi';
 
 export type Item = {
   uuid: string;
   [key: string]: any;
 };
 
+type Option = {
+  label: string;
+  value: string;
+};
+
 const Rules = () => {
   const actionRef = useRef<ActionType>();
   const [open, setOpen] = useState<boolean>(false);
-  const [id, setId] = useState<string>('');
+  const [uuid, setId] = useState<string>();
+
+  const { data: sources, run: getSources } = useModel('useSource');
+  const { data: devices, run: getDevices } = useModel('useDevice');
 
   // 删除
   const handleOnDelete = async (value: API.deleteRulesParams) => {
@@ -73,15 +81,17 @@ const Rules = () => {
         <a
           key="detail"
           onClick={() => {
+            getSources();
+            getDevices();
             setId(uuid);
             setOpen(true);
           }}
         >
           详情
         </a>,
-        // <a key="edit" onClick={() => history.push(`/rules/edit/${uuid}`)}>
-        //   编辑
-        // </a>,
+        <a key="edit" onClick={() => history.push(`/rules/edit/${uuid}`)}>
+          编辑
+        </a>,
         <Popconfirm
           title="确定要删除该规则？"
           onConfirm={() => handleOnDelete({ uuid })}
@@ -95,13 +105,13 @@ const Rules = () => {
 
   const detailColumns: ProDescriptionsItemProps<Record<string, any>>[] = [
     {
-      title: '名称',
+      title: '规则名称',
       dataIndex: 'name',
       ellipsis: true,
     },
     {
       title: '数据来源',
-      dataIndex: 'type',
+      dataIndex: 'sourceType',
       valueEnum: {
         fromSource: '输入资源',
         fromDevice: '设备',
@@ -110,7 +120,22 @@ const Rules = () => {
     {
       title: '输入资源',
       dataIndex: 'fromSource',
-      render: (_, { fromSource, fromDevice }) => fromSource || fromDevice,
+      render: (_, { fromSource, fromDevice }) => {
+        let url = '';
+        let name: string = '';
+
+        if (fromSource?.length > 0) {
+          const current = sources?.find((item: Option) => item?.value === fromSource?.[0]);
+          name = current?.label || '';
+          url = '/inends';
+        } else {
+          const current = devices?.find((item: Option) => item?.value === fromDevice?.[0]);
+          name = current?.label || '';
+          url = '/device';
+        }
+
+        return <a onClick={() => history.push(url)}>{name}</a>;
+      },
     },
     {
       title: '规则回调',
@@ -137,7 +162,7 @@ const Rules = () => {
           actionRef={actionRef}
           columns={columns}
           request={async () => {
-            const res = await getRules();
+            const res = await getRules({});
 
             return Promise.resolve({
               data: (res as any)?.data,
@@ -165,11 +190,17 @@ const Rules = () => {
           columns={detailColumns}
           labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
           request={async () => {
-            const res = await getRules({ uuid: id });
+            const res = await getRulesDetail({ uuid });
 
             return Promise.resolve({
               success: true,
-              data: res?.data?.[0],
+              data: {
+                ...res?.data,
+                sourceType:
+                  res?.data?.fromDevice && res?.data?.fromDevice?.length > 0
+                    ? 'fromDevice'
+                    : 'fromSource',
+              },
             });
           }}
         />

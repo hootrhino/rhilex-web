@@ -3,24 +3,40 @@
 import { request } from '@umijs/max';
 
 /** 规则列表 GET /api/v1/rules */
-export async function getRules(options?: { [key: string]: any }) {
-  return request<{
-    code: number;
-    msg: string;
-    data: {
-      id?: string;
-      uuid?: string;
-      status?: number;
-      name?: string;
-      fromSource?: string[];
-      fromDevice?: string[];
-      actions?: string;
-      success?: string;
-      failed?: string;
-      description?: string;
-    }[];
-  }>('/api/v1/rules', {
+export async function getRules(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getRulesParams,
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: any }>('/api/v1/rules', {
     method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 更新规则 PUT /api/v1/rules */
+export async function putRules(
+  body: {
+    uuid: string;
+    name: string;
+    fromSource: string[];
+    fromDevice: string[];
+    actions: string;
+    success: string;
+    failed: string;
+    description: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/rules', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
     ...(options || {}),
   });
 }
@@ -56,6 +72,37 @@ export async function deleteRules(
 ) {
   return request<{ code: number; msg: string }>('/api/v1/rules', {
     method: 'DELETE',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 规则详情 GET /api/v1/rules/detail */
+export async function getRulesDetail(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getRulesDetailParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      uuid?: string;
+      fromSource?: string[];
+      fromDevice?: string[];
+      name?: string;
+      type?: string;
+      status?: number;
+      expression?: string;
+      description?: string;
+      actions?: string;
+      success?: string;
+      failed?: string;
+    };
+  }>('/api/v1/rules/detail', {
+    method: 'GET',
     params: {
       ...params,
     },

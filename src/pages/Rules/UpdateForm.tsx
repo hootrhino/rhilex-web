@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { history, useParams } from 'umi';
 
@@ -13,16 +13,13 @@ import {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
-import { useRequest } from 'umi';
-
-import { getDevices } from '@/services/rulex/shebeiguanli';
-import { getInends } from '@/services/rulex/shuruziyuanguanli';
+import { useModel, useRequest } from 'umi';
 
 import FormFooter from '@/components/FromFooter';
 import FullScreenEditor from '@/components/FullScreenEditor';
 import { message } from '@/components/PopupHack';
 import useGoBack from '@/hooks/useGoBack';
-import { postRules } from '@/services/rulex/guizeguanli';
+import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanli';
 import omit from 'lodash/omit';
 
 export type FormItem = {
@@ -33,6 +30,7 @@ export type FormItem = {
   fromDevice: string[];
   name: string;
   success: string;
+  uuid?: string;
 };
 
 const defaultActions = `Actions = {
@@ -56,31 +54,35 @@ const UpdateForm = () => {
   const successRef = useRef(null);
   const { showModal } = useGoBack();
 
-  const [sources, setSources] = useState([]);
+  const { data: sources, run: getSources } = useModel('useSource');
+  const { data: devices, run: getDevices } = useModel('useDevice');
 
-  // 输入资源列表
-  const getSourceList = useRequest(() => getInends(), {
-    formatResult: (res: any) => res?.data,
-    onSuccess: (data) => {
-      const options = data?.map((item: any) => ({ label: item?.name, value: item?.uuid }));
-      setSources(options);
-    },
-  });
-
-  // 设备列表
-  const getDeviceList = useRequest(() => getDevices(), {
+  // 获取详情
+  const { run: getDetail } = useRequest((uuid: string) => getRulesDetail({ uuid: uuid || '' }), {
     manual: true,
     formatResult: (res) => res?.data,
     onSuccess: (data) => {
-      const options = data?.map((item: any) => ({ label: item?.name, value: item?.uuid }));
-      setSources(options);
+      let params = {};
+
+      if (data?.fromDevice?.length > 0) {
+        params = {
+          sourceType: 'fromDevice',
+          fromDevice: data?.fromDevice?.[0],
+        };
+      } else {
+        params = {
+          sourceType: 'fromSource',
+          fromSource: data?.fromSource?.[0],
+        };
+      }
+      formRef.current?.setFieldsValue({ ...data, ...params });
     },
   });
 
   // 新建&编辑
   const onFinish = async (values: any) => {
     try {
-      let params = omit(values, ['type']);
+      let params = omit(values, ['sourceType']);
       params = {
         ...params,
         fromSource: params?.fromSource ? [params?.fromSource] : [],
@@ -88,9 +90,8 @@ const UpdateForm = () => {
       };
 
       if (id) {
-        // TODO 编辑
-        // await putInends({ ...values, uuid: id });
-        // message.success('更新成功');
+        await putRules({ ...(params as FormItem), uuid: id });
+        message.success('更新成功');
       } else {
         await postRules(params as FormItem);
         message.success('新建成功');
@@ -99,10 +100,27 @@ const UpdateForm = () => {
       history.push('/rules/list');
       return true;
     } catch (error) {
-      history.push('/rules/list');
       return false;
     }
   };
+
+  useEffect(() => {
+    if (id) {
+      getDetail(id);
+    } else {
+      formRef.current?.setFieldsValue({
+        actions: defaultActions,
+        success: defaultSuccess,
+        failed: defaultFailed,
+        sourceType: 'fromSource',
+      });
+    }
+  }, [id]);
+
+  useEffect(() => {
+    getSources();
+    getDevices();
+  }, []);
 
   return (
     <>
@@ -119,19 +137,6 @@ const UpdateForm = () => {
               },
             }}
             onFinish={onFinish}
-            initialValues={{
-              actions: defaultActions,
-              success: defaultSuccess,
-              failed: defaultFailed,
-              type: 'fromSource',
-            }}
-            onValuesChange={(changedValue) => {
-              if (changedValue?.type === 'fromSource') {
-                getSourceList?.run();
-              } else if (changedValue?.type === 'fromDevice') {
-                getDeviceList?.run();
-              }
-            }}
           >
             <ProFormText
               label="规则名称"
@@ -144,7 +149,7 @@ const UpdateForm = () => {
               ]}
             />
             <ProFormRadio.Group
-              name="type"
+              name="sourceType"
               label="数据来源"
               options={[
                 {
@@ -157,9 +162,9 @@ const UpdateForm = () => {
                 },
               ]}
             />
-            <ProFormDependency name={['type']}>
-              {({ type }) => {
-                if (type === 'fromSource') {
+            <ProFormDependency name={['sourceType']}>
+              {({ sourceType }) => {
+                if (sourceType === 'fromSource') {
                   return (
                     <ProFormSelect
                       label="输入资源"
@@ -174,7 +179,7 @@ const UpdateForm = () => {
                     <ProFormSelect
                       label="输入资源"
                       name="fromDevice"
-                      options={sources}
+                      options={devices}
                       placeholder="请选择数据源"
                       rules={[{ required: true, message: '请选择数据源' }]}
                     />

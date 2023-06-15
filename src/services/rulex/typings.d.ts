@@ -23,6 +23,14 @@ declare namespace API {
     uuid: string;
   };
 
+  type getRulesDetailParams = {
+    uuid?: string;
+  };
+
+  type getRulesParams = {
+    uuid?: string;
+  };
+
   type putAppStartParams = {
     uuid: string;
   };
