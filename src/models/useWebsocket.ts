@@ -1,11 +1,11 @@
-import { useModel } from '@umijs/max';
+// import { useModel } from '@umijs/max';
 import { useWebSocket } from 'ahooks';
 import orderBy from 'lodash/orderBy';
 import slice from 'lodash/slice';
 import { useEffect, useState } from 'react';
 
 const useWebsocket = () => {
-  const { data } = useModel('useSystem');
+  // const { data } = useModel('useSystem');
   const [logs, setLogs] = useState<Record<string, any>[]>([]);
   const [connected, setConnected] = useState(false);
   const [sockUrl, setUrl] = useState<string>('');
@@ -38,11 +38,17 @@ const useWebsocket = () => {
     }
   }, [connected, sendMessage]);
 
+  // useEffect(() => {
+  //   if (data?.hardWareInfo && data?.hardWareInfo?.wsUrl && data?.hardWareInfo?.wsUrl?.length > 0) {
+  //     setUrl(data?.hardWareInfo?.wsUrl?.[0]);
+  //   }
+  // }, [data]);
+
   useEffect(() => {
-    if (data?.hardWareInfo && data?.hardWareInfo?.wsUrl && data?.hardWareInfo?.wsUrl?.length > 0) {
-      setUrl(data?.hardWareInfo?.wsUrl?.[0]);
+    if (window?.location?.hostname) {
+      setUrl(`ws://${window?.location?.hostname}:2580/ws`);
     }
-  }, [data]);
+  }, [window?.location?.hostname]);
 
   useEffect(() => {
     if (sockUrl) {
