@@ -106,8 +106,8 @@ export const columns = [
                       required: true,
                       hideInForm: type !== 'GENERIC_MODBUS',
                       valueEnum: {
-                        rtu: 'RTU',
-                        tcp: 'TCP',
+                        RTU: 'RTU',
+                        TCP: 'TCP',
                       },
                     },
                   ],
