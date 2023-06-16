@@ -183,7 +183,7 @@ const Rules = () => {
         placement="right"
         onClose={() => setOpen(false)}
         open={open}
-        width="30%"
+        width="40%"
       >
         <ProDescriptions
           column={1}
