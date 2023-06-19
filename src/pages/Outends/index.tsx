@@ -6,8 +6,8 @@ import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 import { history } from 'umi';
 
-import { deleteOutends, getOutends } from '@/services/rulex/shuchuziyuanguanli';
 import { message } from '@/components/PopupHack';
+import { deleteOutends, getOutends } from '@/services/rulex/shuchuziyuanguanli';
 
 export type Item = {
   name: string;
@@ -38,6 +38,7 @@ const Targets = () => {
       title: 'UUID',
       dataIndex: 'uuid',
       ellipsis: true,
+      copyable: true,
     },
     {
       title: '名称',

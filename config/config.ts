@@ -1,11 +1,11 @@
 // https://umijs.org/config/
 import { defineConfig } from '@umijs/max';
+import zhCN from 'antd/locale/zh_CN';
 import { join } from 'path';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
 import theme from './theme';
-import zhCN from 'antd/locale/zh_CN';
 
 const { REACT_APP_ENV = 'dev' } = process.env;
 
@@ -123,8 +123,9 @@ export default defineConfig({
    */
   headScripts: [
     // 解决首次加载时白屏的问题
-    { src: '/scripts/loading.js', async: true },
+    { src: '/loading.js', async: true },
   ],
+  copy: ['./loading.js'],
   //================ pro 插件配置 =================
   presets: ['umi-presets-pro'],
   /**

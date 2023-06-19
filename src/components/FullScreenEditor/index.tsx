@@ -24,7 +24,6 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(
         .run()
         .then(() => {
           const formatCode = formatText(editor.getValue());
-          console.log('Code formatted!', formatCode);
           editor.setValue(formatCode);
         });
     };

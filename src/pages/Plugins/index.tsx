@@ -14,35 +14,41 @@ const Plugins = () => {
       title: '插件名称',
       dataIndex: 'name',
       ellipsis: true,
+      fixed: 'left',
     },
     {
       title: '版本',
       dataIndex: 'version',
+      width: 80,
     },
-    {
-      title: '主页',
-      dataIndex: 'homepage',
-      ellipsis: true,
-      renderText: (page) => <Link to={page}>{page}</Link>,
-    },
+    // {
+    //   title: '主页',
+    //   dataIndex: 'homepage',
+    //   ellipsis: true,
+    //   renderText: (page) => <Link to={page}>{page}</Link>,
+    // },
     {
       title: '文档地址',
       dataIndex: 'helpLink',
       ellipsis: true,
+      width: 250,
       renderText: (address) => <Link to={address}>{address}</Link>,
     },
     {
       title: '作者',
       dataIndex: 'author',
+      width: 80,
     },
     {
       title: '邮箱',
       dataIndex: 'email',
       ellipsis: true,
+      width: 180,
     },
     {
       title: '协议',
       dataIndex: 'license',
+      width: 80,
     },
     {
       title: '操作',

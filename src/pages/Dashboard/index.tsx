@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
-import { useModel } from 'umi';
+import { useModel, useRequest } from 'umi';
 
 import { RingProgress } from '@ant-design/charts';
 import { PageContainer, ProCard, ProTable, StatisticCard } from '@ant-design/pro-components';
 import add from 'lodash/add';
+import { nanoid } from 'nanoid';
 import RcResizeObserver from 'rc-resize-observer';
-import { nanoid } from 'nanoid'
 
 import ExportIcon from '@/assets/dashboard/export.svg';
 import ImportIcon from '@/assets/dashboard/import.svg';
 import PluginIcon from '@/assets/dashboard/plugin.svg';
 import RuleIcon from '@/assets/dashboard/rule.svg';
 
-import './index.less';
+import { getSystem } from '@/services/rulex/xitongshuju';
 import { Tag } from 'antd';
+import './index.less';
 
 enum levelColor {
   fatal = 'error',
@@ -21,7 +22,7 @@ enum levelColor {
   warn = 'warning',
   warning = 'warning',
   debug = 'default',
-  info = 'blue'
+  info = 'blue',
 }
 
 const { Divider } = StatisticCard;
@@ -30,41 +31,44 @@ type Pagination = {
   current: number;
   pageSize: number;
   total: number;
-}
+};
 
 const Dashboard = () => {
-  const {logs} = useModel('useWebsocket');
-  const {data} = useModel('useSystem');
+  const { logs } = useModel('useWebsocket');
   const [responsive, setResponsive] = useState(false);
-  const [pagination, setPagination] = useState<Pagination>({current: 1, pageSize: 10, total: 0});
+  const [pagination, setPagination] = useState<Pagination>({ current: 1, pageSize: 10, total: 0 });
 
-  // const { data } = useRequest(() => getSystem(), {
-  //   formatResult: (res) => res.data,
-  // });
+  const { data } = useRequest(() => getSystem(), {
+    formatResult: (res) => res.data,
+    pollingInterval: 5000,
+  });
 
   const inCount = add(data?.statistic?.inSuccess || 0, data?.statistic?.inFailed || 0);
   const outCount = add(data?.statistic?.outSuccess || 0, data?.statistic?.outFailed || 0);
 
-  const columns = [{
-    title: '时间',
-    dataIndex: 'time',
-    valueType: 'dateTime',
-    width: 180,
-  },{
-    title: '等级',
-    dataIndex: 'level',
-    renderText: (level: string) =>  <Tag color={levelColor[level]}>{level}</Tag>,
-    width: 80,
-  },
-  {
-    title: '内容',
-    dataIndex: 'msg',
-    ellipsis: true,
-  }];
+  const columns = [
+    {
+      title: '时间',
+      dataIndex: 'time',
+      valueType: 'dateTime',
+      width: 180,
+    },
+    {
+      title: '等级',
+      dataIndex: 'level',
+      renderText: (level: string) => <Tag color={levelColor[level]}>{level}</Tag>,
+      width: 80,
+    },
+    {
+      title: '内容',
+      dataIndex: 'msg',
+      ellipsis: true,
+    },
+  ];
 
   useEffect(() => {
-    setPagination({...pagination, total: logs?.length})
-  }, [logs?.length])
+    setPagination({ ...pagination, total: logs?.length });
+  }, [logs?.length]);
 
   return (
     <PageContainer>
@@ -122,8 +126,8 @@ const Dashboard = () => {
             chartPlacement="left"
           />
         </StatisticCard.Group>
-        </RcResizeObserver>
-        <RcResizeObserver
+      </RcResizeObserver>
+      <RcResizeObserver
         key="resize-observer2"
         onResize={(offset) => {
           setResponsive(offset.width < 596);
@@ -162,8 +166,8 @@ const Dashboard = () => {
             }}
           />
         </StatisticCard.Group>
-        </RcResizeObserver>
-        <RcResizeObserver
+      </RcResizeObserver>
+      <RcResizeObserver
         key="resize-observer3"
         onResize={(offset) => {
           setResponsive(offset.width < 596);
@@ -210,15 +214,17 @@ const Dashboard = () => {
           />
         </StatisticCard.Group>
       </RcResizeObserver>
-      <ProCard style={{marginTop: 24}}>
-      <ProTable
+      <ProCard style={{ marginTop: 24 }}>
+        <ProTable
           rowKey={() => nanoid()}
           columns={columns}
           dataSource={logs}
           search={false}
-          pagination={{...pagination, onChange: (current, pageSize) => setPagination({...pagination, current, pageSize})}}
+          pagination={{
+            ...pagination,
+            onChange: (current, pageSize) => setPagination({ ...pagination, current, pageSize }),
+          }}
           options={false}
-
         />
       </ProCard>
     </PageContainer>

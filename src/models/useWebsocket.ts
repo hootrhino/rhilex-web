@@ -1,10 +1,9 @@
-import { useModel } from '@umijs/max';
 import { useWebSocket } from 'ahooks';
 import orderBy from 'lodash/orderBy';
-import { useEffect,useState } from 'react';
+import slice from 'lodash/slice';
+import { useEffect, useState } from 'react';
 
 const useWebsocket = () => {
-  const {data} = useModel('useSystem');
   const [logs, setLogs] = useState<Record<string, any>[]>([]);
   const [connected, setConnected] = useState(false);
   const [sockUrl, setUrl] = useState<string>('');
@@ -15,6 +14,7 @@ const useWebsocket = () => {
       if (data && data !== 'Connected') {
         let newLog = [...logs, JSON.parse(data)];
         newLog = orderBy(newLog, 'time', 'desc');
+        newLog = slice(newLog, 0, 100);
         setLogs(newLog);
       }
     },
@@ -29,23 +29,24 @@ const useWebsocket = () => {
   useEffect(() => {
     if (connected) {
       setTimeout(() => {
-        if (readyState === WebSocket.OPEN) {}
+        if (readyState === WebSocket.OPEN) {
+        }
         sendMessage?.('WsTerminal');
       }, 2000);
     }
   }, [connected, sendMessage]);
 
   useEffect(() => {
-    if (data?.hardWareInfo && data?.hardWareInfo?.wsUrl && data?.hardWareInfo?.wsUrl?.length > 0) {
-      setUrl(data?.hardWareInfo?.wsUrl?.[0])
+    if (window?.location?.hostname) {
+      setUrl(`ws://${window?.location?.hostname}:2580/ws`);
     }
-  }, [data]);
+  }, [window?.location?.hostname]);
 
   useEffect(() => {
     if (sockUrl) {
-      connect!()
+      connect!();
     }
-  }, [sockUrl])
+  }, [sockUrl]);
 
   return { logs };
 };
