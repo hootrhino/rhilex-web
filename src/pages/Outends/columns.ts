@@ -118,16 +118,6 @@ export const columns = [
                       },
                     ],
                   },
-                  {
-                    valueType: 'group',
-                    columns: [
-                      {
-                        title: '订阅 TOPIC',
-                        dataIndex: 'subTopic',
-                        required: true,
-                      },
-                    ],
-                  },
                 ],
               },
             ],
