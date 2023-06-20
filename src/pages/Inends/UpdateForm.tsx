@@ -5,6 +5,7 @@ import { history, useParams, useRequest } from 'umi';
 import { message } from '@/components/PopupHack';
 import SchemaForm from '@/components/SchemaForm';
 import { getInends, postInends, putInends } from '@/services/rulex/shuruziyuanguanli';
+import random from 'lodash/random';
 import { columns } from './columns';
 
 type Config = {
@@ -20,6 +21,7 @@ type InendsFormItem<T extends any> = {
 
 const UpdateForm = () => {
   const { id } = useParams();
+  const randomNumber = random(1000, 9999);
   const [initialValue, setInitialValue] = useState<InendsFormItem<Config[]>>({
     name: '',
     type: 'COAP',
@@ -70,34 +72,48 @@ const UpdateForm = () => {
       onFinish={onFinish}
       onValuesChange={(changedValue) => {
         if (changedValue?.type) {
-          let port = 2582;
-          let mode = '';
+          let config: Config = {
+            port: 2582,
+          };
 
           switch (changedValue?.type) {
             case 'COAP':
-              port = 2582;
+              config = {
+                port: 2582,
+              };
 
               break;
             case 'GENERIC_IOT_HUB':
-              port = 1883;
-              mode = 'DC';
+              config = {
+                port: 1883,
+                mode: 'DC',
+                productId: `eekit${randomNumber}`,
+                deviceName: `eekit${randomNumber}`,
+                clientId: `eekit${randomNumber}`,
+              };
 
               break;
             case 'RULEX_UDP':
-              port = 2583;
+              config = {
+                port: 2583,
+              };
 
               break;
             case 'HTTP':
-              port = 2584;
-
+              config = {
+                port: 2584,
+              };
               break;
             case 'NATS_SERVER':
-              port = 4222;
+              config = {
+                port: 4222,
+              };
 
               break;
             case 'GRPC':
-              port = 2585;
-
+              config = {
+                port: 2585,
+              };
               break;
             default:
               break;
@@ -105,7 +121,7 @@ const UpdateForm = () => {
           setInitialValue({
             ...initialValue,
             type: changedValue?.type,
-            config: [{ ...initialValue?.config?.[0], port, mode }],
+            config: [{ ...initialValue?.config?.[0], ...config, host: '127.0.0.1' }],
           });
         }
       }}
