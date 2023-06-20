@@ -71,6 +71,8 @@ const UpdateForm = () => {
       onValuesChange={(changedValue) => {
         if (changedValue?.type) {
           let port = 2582;
+          let mode = '';
+
           switch (changedValue?.type) {
             case 'COAP':
               port = 2582;
@@ -78,6 +80,7 @@ const UpdateForm = () => {
               break;
             case 'GENERIC_IOT_HUB':
               port = 1883;
+              mode = 'DC';
 
               break;
             case 'RULEX_UDP':
@@ -102,7 +105,7 @@ const UpdateForm = () => {
           setInitialValue({
             ...initialValue,
             type: changedValue?.type,
-            config: [{ ...initialValue?.config?.[0], port }],
+            config: [{ ...initialValue?.config?.[0], port, mode }],
           });
         }
       }}
