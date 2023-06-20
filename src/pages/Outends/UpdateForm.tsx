@@ -100,7 +100,6 @@ const UpdateForm = () => {
                 port: 1883,
                 host: '127.0.0.1',
                 clientId: `eekit${randomNumber}`,
-                username: `eekit${randomNumber}`,
                 pubTopic: `eekit${randomNumber}`,
               },
             ],
