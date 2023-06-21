@@ -38,6 +38,7 @@ const LoginMessage: React.FC<{
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<LoginResult>();
   const { setInitialState } = useModel('@@initialState');
+  const { run: getSystem } = useModel('useSystem');
 
   const containerClassName = useEmotionCss(() => {
     return {
@@ -79,7 +80,8 @@ const Login: React.FC = () => {
             currentUser: values,
           }));
         });
-
+        // 请求 Dashboard
+        getSystem();
         const urlParams = new URL(window.location.href).searchParams;
 
         history.push(urlParams.get('redirect') || '/');
@@ -183,6 +185,8 @@ const Login: React.FC = () => {
                 float: 'right',
               }}
               href="https://hootrhino.github.io/"
+              target="_blank"
+              rel="noreferrer"
             >
               <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
             </a>
