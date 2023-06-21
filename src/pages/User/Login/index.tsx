@@ -1,14 +1,14 @@
+import { message } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
-import { LockOutlined,UserOutlined } from '@ant-design/icons';
-import { LoginForm,ProFormCheckbox,ProFormText } from '@ant-design/pro-components';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { FormattedMessage,Helmet,useIntl,useModel } from '@umijs/max';
+import { FormattedMessage, Helmet, useIntl, useModel } from '@umijs/max';
 import { Alert } from 'antd';
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import { history } from 'umi';
 import Settings from '../../../../config/defaultSettings';
-import { message } from '@/components/PopupHack';
 
 export type CurrentUser = {
   username: string;
@@ -18,7 +18,7 @@ export type CurrentUser = {
 type LoginResult = {
   code: number;
   msg: string;
-}
+};
 
 const LoginMessage: React.FC<{
   content: string;
@@ -86,7 +86,7 @@ const Login: React.FC = () => {
         return;
       }
       // 如果失败去设置用户错误信息
-      setUserLoginState({code, msg});
+      setUserLoginState({ code, msg });
       return true;
     } catch (error) {
       // message.error('登录失败，请重试！');
@@ -117,16 +117,18 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          // logo={<img alt="logo" src="/logo.svg" />}
+          logo={<img alt="logo" src="/logo.svg" />}
           title="Rhino EEKit"
-          subTitle="轻量级边缘计算框架"
+          subTitle="轻量级边缘计算网关"
           // subTitle={intl.formatMessage({ id: 'pages.layouts.userLayout.title' })}
           initialValues={{
             autoLogin: true,
           }}
           onFinish={handleSubmit}
         >
-          {userLoginState && userLoginState?.code !== 200 && <LoginMessage content={'账户或密码错误，请检查'} />}
+          {userLoginState && userLoginState?.code !== 200 && (
+            <LoginMessage content={'账户或密码错误，请检查'} />
+          )}
           <>
             <ProFormText
               name="username"
@@ -180,6 +182,7 @@ const Login: React.FC = () => {
               style={{
                 float: 'right',
               }}
+              href="https://hootrhino.github.io/"
             >
               <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
             </a>
