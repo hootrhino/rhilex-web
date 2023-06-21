@@ -14,7 +14,7 @@ export const columns = [
         required: true,
         valueEnum: {
           GENERIC_SNMP: 'SNMP协议采集器',
-          USER_G776: '有人4G串口通信DTU',
+          USER_G776: '通用串口DTU',
           GENERIC_PROTOCOL: '自定义串口协议',
           GENERIC_MODBUS: '通用Modbus协议采集器',
         },
