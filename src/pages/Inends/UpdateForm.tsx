@@ -28,6 +28,28 @@ const UpdateForm = () => {
     config: [{ host: '127.0.0.1', port: 2582 }],
   });
 
+  const { run: newInends, loading: newLoading } = useRequest((data) => postInends(data), {
+    manual: true,
+    onSuccess: () => {
+      message.success('新建成功');
+      history.push('/inends/list');
+    },
+    onError: () => {
+      history.push('/inends/list');
+    },
+  });
+
+  const { run: updateInends, loading: updateLoading } = useRequest((data) => putInends(data), {
+    manual: true,
+    onSuccess: () => {
+      message.success('更新成功');
+      history.push('/inends/list');
+    },
+    onError: () => {
+      history.push('/inends/list');
+    },
+  });
+
   // 新建&编辑
   const onFinish = async (values: any) => {
     try {
@@ -36,17 +58,19 @@ const UpdateForm = () => {
         config: values?.config?.[0],
       };
       if (id) {
-        await putInends({ ...params, uuid: id });
-        message.success('更新成功');
+        // const res = await putInends({ ...params, uuid: id });
+        updateInends({ ...params, uuid: id });
+        // message.success('更新成功');
       } else {
-        await postInends(params);
-        message.success('新建成功');
+        newInends(params);
+        // await postInends(params);
+        // message.success('新建成功');
       }
 
-      history.push('/inends/list');
+      // history.push('/inends/list');
       return true;
     } catch (error) {
-      history.push('/inends/list');
+      // history.push('/inends/list');
       return false;
     }
   };
@@ -125,6 +149,7 @@ const UpdateForm = () => {
           });
         }
       }}
+      loading={newLoading || updateLoading}
     />
   );
 };
