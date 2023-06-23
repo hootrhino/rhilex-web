@@ -86,7 +86,7 @@ export const processColumns = (columns: any) => {
 
     return {
       ...omit(col, ['required']),
-      width: 'lg',
+      width: col?.width || 'lg',
       fieldProps: {
         placeholder: col?.valueType === 'select' ? `请选择${col?.title}` : `请输入${col?.title}`,
       },
