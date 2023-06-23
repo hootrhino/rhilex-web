@@ -47,7 +47,6 @@ const UpdateForm = () => {
       history.push('/app-stack/list');
       return true;
     } catch (error) {
-      history.push('/app-stack/list');
       return false;
     }
   };
