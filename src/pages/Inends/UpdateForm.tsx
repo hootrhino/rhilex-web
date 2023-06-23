@@ -5,6 +5,7 @@ import { history, useParams, useRequest } from 'umi';
 import { message } from '@/components/PopupHack';
 import SchemaForm from '@/components/SchemaForm';
 import { getInends, postInends, putInends } from '@/services/rulex/shuruziyuanguanli';
+import random from 'lodash/random';
 import { columns } from './columns';
 
 type Config = {
@@ -20,10 +21,33 @@ type InendsFormItem<T extends any> = {
 
 const UpdateForm = () => {
   const { id } = useParams();
+  const randomNumber = random(1000, 9999);
   const [initialValue, setInitialValue] = useState<InendsFormItem<Config[]>>({
     name: '',
     type: 'COAP',
     config: [{ host: '127.0.0.1', port: 2582 }],
+  });
+
+  const { run: newInends, loading: newLoading } = useRequest((data) => postInends(data), {
+    manual: true,
+    onSuccess: () => {
+      message.success('新建成功');
+      history.push('/inends/list');
+    },
+    onError: () => {
+      history.push('/inends/list');
+    },
+  });
+
+  const { run: updateInends, loading: updateLoading } = useRequest((data) => putInends(data), {
+    manual: true,
+    onSuccess: () => {
+      message.success('更新成功');
+      history.push('/inends/list');
+    },
+    onError: () => {
+      history.push('/inends/list');
+    },
   });
 
   // 新建&编辑
@@ -34,17 +58,19 @@ const UpdateForm = () => {
         config: values?.config?.[0],
       };
       if (id) {
-        await putInends({ ...params, uuid: id });
-        message.success('更新成功');
+        // const res = await putInends({ ...params, uuid: id });
+        updateInends({ ...params, uuid: id });
+        // message.success('更新成功');
       } else {
-        await postInends(params);
-        message.success('新建成功');
+        newInends(params);
+        // await postInends(params);
+        // message.success('新建成功');
       }
 
-      history.push('/inends/list');
+      // history.push('/inends/list');
       return true;
     } catch (error) {
-      history.push('/inends/list');
+      // history.push('/inends/list');
       return false;
     }
   };
@@ -70,31 +96,48 @@ const UpdateForm = () => {
       onFinish={onFinish}
       onValuesChange={(changedValue) => {
         if (changedValue?.type) {
-          let port = 2582;
+          let config: Config = {
+            port: 2582,
+          };
+
           switch (changedValue?.type) {
             case 'COAP':
-              port = 2582;
+              config = {
+                port: 2582,
+              };
 
               break;
             case 'GENERIC_IOT_HUB':
-              port = 1883;
+              config = {
+                port: 1883,
+                mode: 'DC',
+                productId: `eekit${randomNumber}`,
+                deviceName: `eekit${randomNumber}`,
+                clientId: `eekit${randomNumber}`,
+              };
 
               break;
             case 'RULEX_UDP':
-              port = 2583;
+              config = {
+                port: 2583,
+              };
 
               break;
             case 'HTTP':
-              port = 2584;
-
+              config = {
+                port: 2584,
+              };
               break;
             case 'NATS_SERVER':
-              port = 4222;
+              config = {
+                port: 4222,
+              };
 
               break;
             case 'GRPC':
-              port = 2585;
-
+              config = {
+                port: 2585,
+              };
               break;
             default:
               break;
@@ -102,10 +145,11 @@ const UpdateForm = () => {
           setInitialValue({
             ...initialValue,
             type: changedValue?.type,
-            config: [{ ...initialValue?.config?.[0], port }],
+            config: [{ ...initialValue?.config?.[0], ...config, host: '127.0.0.1' }],
           });
         }
       }}
+      loading={newLoading || updateLoading}
     />
   );
 };

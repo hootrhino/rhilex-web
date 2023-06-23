@@ -24,7 +24,7 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(
     const [isFullscreen, { enterFullscreen, exitFullscreen }] = useFullscreen(ref as any, {
       pageFullscreen: true,
     });
-    const [h, setHeight] = useState<number>(200);
+    const [h, setHeight] = useState<number>(500);
 
     // const handleFormat = (editor: Record<string, any>) => {
     //   editor

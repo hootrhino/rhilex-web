@@ -13,10 +13,10 @@ export const columns = [
         valueType: 'select',
         required: true,
         valueEnum: {
-          GENERIC_SNMP: 'SNMP协议采集器',
-          USER_G776: '有人4G串口通信DTU',
-          GENERIC_PROTOCOL: '自定义串口协议',
-          GENERIC_MODBUS: '通用Modbus协议采集器',
+          GENERIC_SNMP: '通用SNMP协议采集',
+          USER_G776: '通用串口DTU',
+          GENERIC_PROTOCOL: '通用串口协议',
+          GENERIC_MODBUS: '通用Modbus Master',
         },
       },
       {

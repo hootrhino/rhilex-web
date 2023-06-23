@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useModel, useRequest } from 'umi';
+import { useModel } from 'umi';
 
 import { RingProgress } from '@ant-design/charts';
 import { PageContainer, ProCard, ProTable, StatisticCard } from '@ant-design/pro-components';
@@ -12,7 +12,6 @@ import ImportIcon from '@/assets/dashboard/import.svg';
 import PluginIcon from '@/assets/dashboard/plugin.svg';
 import RuleIcon from '@/assets/dashboard/rule.svg';
 
-import { getSystem } from '@/services/rulex/xitongshuju';
 import { Tag } from 'antd';
 import './index.less';
 
@@ -35,13 +34,14 @@ type Pagination = {
 
 const Dashboard = () => {
   const { logs } = useModel('useWebsocket');
+  const { data } = useModel('useSystem');
   const [responsive, setResponsive] = useState(false);
   const [pagination, setPagination] = useState<Pagination>({ current: 1, pageSize: 10, total: 0 });
 
-  const { data } = useRequest(() => getSystem(), {
-    formatResult: (res) => res.data,
-    pollingInterval: 5000,
-  });
+  // const { data } = useRequest(() => getSystem(), {
+  //   formatResult: (res) => res.data,
+  //   pollingInterval: 5000,
+  // });
 
   const inCount = add(data?.statistic?.inSuccess || 0, data?.statistic?.inFailed || 0);
   const outCount = add(data?.statistic?.outSuccess || 0, data?.statistic?.outFailed || 0);

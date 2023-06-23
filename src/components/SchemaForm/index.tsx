@@ -22,6 +22,7 @@ type SchemaFormProps<T = any> = ProFormProps & {
   goBack: string;
   columns: T[];
   initialValue: T;
+  loading?: boolean;
 };
 
 export const toolTip = (url?: string) => (
@@ -108,6 +109,7 @@ const SchemaForm = ({
   columns,
   initialValue,
   goBack,
+  loading,
   onFinish,
   onValuesChange,
 }: SchemaFormProps) => {
@@ -174,6 +176,7 @@ const SchemaForm = ({
                       formRef.current?.setFieldsValue(initialValue);
                     }}
                     onSubmit={submit}
+                    loading={loading}
                   />
                 );
               },
