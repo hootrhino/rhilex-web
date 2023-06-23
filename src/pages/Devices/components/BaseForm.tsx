@@ -64,7 +64,6 @@ const BaseForm = () => {
       history.push('/device/list');
       return true;
     } catch (error) {
-      history.push('/device/list');
       return false;
     }
   };
