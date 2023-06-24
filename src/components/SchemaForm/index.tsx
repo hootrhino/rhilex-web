@@ -17,6 +17,8 @@ import omit from 'lodash/omit';
 import { useRequest } from 'umi';
 import FullScreenEditor from '../FullScreenEditor';
 
+import './index.less';
+
 type SchemaFormProps<T = any> = ProFormProps & {
   title?: string;
   goBack: string;
@@ -68,18 +70,6 @@ export const processColumns = (columns: any) => {
             min: 1,
             creatorButtonProps: { position: 'top' },
             creatorRecord: col?.initialValue,
-            itemRender: ({ listDom, action }: any, { record }: any) => (
-              <ProCard
-                bordered
-                extra={action}
-                title={record?.name}
-                style={{
-                  marginBlockEnd: 8,
-                }}
-              >
-                {listDom}
-              </ProCard>
-            ),
           },
         };
       }
