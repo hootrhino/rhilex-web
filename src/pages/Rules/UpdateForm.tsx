@@ -192,21 +192,21 @@ const UpdateForm = () => {
               name="actions"
               rules={[{ required: true, message: '请输入规则回调' }]}
             >
-              <FullScreenEditor defaultValue={defaultActions} ref={actionRef} />
+              <FullScreenEditor ref={actionRef} />
             </ProForm.Item>
             <ProForm.Item
               label="成功回调"
               name="success"
               rules={[{ required: true, message: '请输入成功回调' }]}
             >
-              <FullScreenEditor defaultValue={defaultSuccess} ref={successRef} />
+              <FullScreenEditor ref={successRef} />
             </ProForm.Item>
             <ProForm.Item
               label="失败回调"
               name="failed"
               rules={[{ required: true, message: '请输入失败回调' }]}
             >
-              <FullScreenEditor defaultValue={defaultFailed} ref={failRef} />
+              <FullScreenEditor ref={failRef} />
             </ProForm.Item>
             <ProFormTextArea label="备注信息" name="description" />
           </ProForm>
