@@ -1,5 +1,5 @@
 import { postLogout } from '@/services/rulex/yonghuguanli';
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { DownOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { setAlpha } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { history, useModel } from '@umijs/max';
@@ -20,13 +20,13 @@ const Name = () => {
 
   const nameClassName = useEmotionCss(({ token }) => {
     return {
-      width: '70px',
+      fontSize: '16px',
+      color: '#ffffff',
       height: '48px',
       overflow: 'hidden',
       lineHeight: '48px',
       whiteSpace: 'nowrap',
       textOverflow: 'ellipsis',
-      color: '#fff',
       [`@media only screen and (max-width: ${token.screenMD}px)`]: {
         display: 'none',
       },
@@ -49,7 +49,15 @@ const AvatarLogo = () => {
     };
   });
 
-  return <Avatar size="small" className={avatarClassName} src="/logo.svg" alt="avatar" />;
+  return (
+    <Avatar
+      size="small"
+      className={avatarClassName}
+      src={undefined}
+      icon={<UserOutlined style={{ color: '#ffffff' }} />}
+      alt="avatar"
+    />
+  );
 };
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
@@ -97,9 +105,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
           setInitialState((s) => ({ ...s, currentUser: undefined }));
         });
         loginOut();
-        return;
+        // return;
       }
-      history.push(`/account/${key}`);
     },
     [setInitialState],
   );
@@ -130,16 +137,6 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     ...(menu
       ? [
           {
-            key: 'center',
-            icon: <UserOutlined />,
-            label: '个人中心',
-          },
-          {
-            key: 'settings',
-            icon: <SettingOutlined />,
-            label: '个人设置',
-          },
-          {
             type: 'divider' as const,
           },
         ]
@@ -158,10 +155,14 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
         onClick: onMenuClick,
         items: menuItems,
       }}
+      overlayStyle={{
+        width: 120,
+      }}
     >
       <span className={actionClassName}>
         <AvatarLogo />
         <Name />
+        <DownOutlined style={{ color: '#ffffff', marginLeft: '8px' }} />
       </span>
     </HeaderDropdown>
   );

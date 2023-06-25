@@ -1,25 +1,13 @@
-import { useEmotionCss } from '@ant-design/use-emotion-css';
-
 import { GithubOutlined } from '@ant-design/icons';
 import React from 'react';
 import Avatar from './AvatarDropdown';
+import { Space } from 'antd';
 
 export type SiderTheme = 'light' | 'dark';
 
 const GlobalHeaderRight: React.FC = () => {
-  const className = useEmotionCss(() => {
-    return {
-      display: 'flex',
-      height: '48px',
-      marginLeft: 'auto',
-      overflow: 'hidden',
-      gap: 8,
-      alignItems: 'center',
-    };
-  });
-
   return (
-    <div className={className}>
+    <Space align="center">
       <a
         href="https://github.com/hootrhino/rulex"
         style={{ color: 'rgb(156 163 175)', fontSize: 24 }}
@@ -29,7 +17,7 @@ const GlobalHeaderRight: React.FC = () => {
         <GithubOutlined />
       </a>
       <Avatar />
-    </div>
+    </Space>
   );
 };
 export default GlobalHeaderRight;
