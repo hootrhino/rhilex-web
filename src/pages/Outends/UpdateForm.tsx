@@ -3,6 +3,7 @@ import SchemaForm from '@/components/SchemaForm';
 
 import { getOutends, postOutends, putOutends } from '@/services/rulex/shuchuziyuanguanli';
 
+import random from 'lodash/random';
 import { useEffect, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { columns } from './columns';
@@ -28,6 +29,7 @@ type UpdateFormItem<T = any> = {
 
 const UpdateForm = () => {
   const { id } = useParams();
+  const randomNumber = random(1000, 9999);
   const [initialValue, setValue] = useState<UpdateFormItem<Config[]>>({
     name: '',
     type: 'MONGO_SINGLE',
@@ -56,7 +58,6 @@ const UpdateForm = () => {
       history.push('/outends/list');
       return true;
     } catch (error) {
-      history.push('/outends/list');
       return false;
     }
   };
@@ -80,6 +81,30 @@ const UpdateForm = () => {
       columns={columns}
       initialValue={initialValue}
       onFinish={onFinish}
+      onValuesChange={(changedValue) => {
+        if (changedValue?.type === 'UDP_TARGET') {
+          setValue({
+            ...initialValue,
+            type: changedValue?.type,
+            config: [{ ...initialValue?.config?.[0], port: 2599, host: '127.0.0.1' }],
+          });
+        }
+        if (changedValue?.type === 'MQTT') {
+          setValue({
+            ...initialValue,
+            type: changedValue?.type,
+            config: [
+              {
+                ...initialValue?.config?.[0],
+                port: 1883,
+                host: '127.0.0.1',
+                clientId: `eekit${randomNumber}`,
+                pubTopic: `eekit${randomNumber}`,
+              },
+            ],
+          });
+        }
+      }}
     />
   );
 };

@@ -13,10 +13,10 @@ export const columns = [
         valueType: 'select',
         required: true,
         valueEnum: {
-          GENERIC_SNMP: 'SNMP协议采集器',
-          USER_G776: '有人4G串口通信DTU',
-          GENERIC_PROTOCOL: '自定义串口协议',
-          GENERIC_MODBUS: '通用Modbus协议采集器',
+          GENERIC_SNMP: '通用SNMP协议采集',
+          USER_G776: '通用串口DTU',
+          GENERIC_PROTOCOL: '通用串口协议',
+          GENERIC_MODBUS: '通用Modbus Master',
         },
       },
       {
@@ -722,23 +722,6 @@ export const columns = [
                       required: true,
                     },
                     {
-                      title: '权重系数',
-                      dataIndex: 'weight',
-                      valueType: 'digit',
-                      required: true,
-                    },
-                    {
-                      title: '初始值',
-                      dataIndex: 'initValue',
-                      valueType: 'digit',
-                      required: true,
-                    },
-                  ],
-                },
-                {
-                  valueType: 'group',
-                  columns: [
-                    {
                       title: 'Modbus 功能',
                       dataIndex: 'function',
                       valueType: 'select',
@@ -758,6 +741,7 @@ export const columns = [
                       title: '从设备 ID',
                       dataIndex: 'slaverId',
                       valueType: 'digit',
+                      width: 'xs',
                       required: true,
                       rules: [
                         {
@@ -776,17 +760,14 @@ export const columns = [
                       title: '起始地址',
                       dataIndex: 'address',
                       valueType: 'digit',
+                      width: 'xs',
                       required: true,
                     },
-                  ],
-                },
-                {
-                  valueType: 'group',
-                  columns: [
                     {
                       title: '读取数量',
                       dataIndex: 'quantity',
                       valueType: 'digit',
+                      width: 'xs',
                       required: true,
                       rules: [
                         {

@@ -17,11 +17,14 @@ import omit from 'lodash/omit';
 import { useRequest } from 'umi';
 import FullScreenEditor from '../FullScreenEditor';
 
+import './index.less';
+
 type SchemaFormProps<T = any> = ProFormProps & {
   title?: string;
   goBack: string;
   columns: T[];
   initialValue: T;
+  loading?: boolean;
 };
 
 export const toolTip = (url?: string) => (
@@ -67,18 +70,6 @@ export const processColumns = (columns: any) => {
             min: 1,
             creatorButtonProps: { position: 'top' },
             creatorRecord: col?.initialValue,
-            itemRender: ({ listDom, action }: any, { record }: any) => (
-              <ProCard
-                bordered
-                extra={action}
-                title={record?.name}
-                style={{
-                  marginBlockEnd: 8,
-                }}
-              >
-                {listDom}
-              </ProCard>
-            ),
           },
         };
       }
@@ -86,7 +77,7 @@ export const processColumns = (columns: any) => {
 
     return {
       ...omit(col, ['required']),
-      width: 'lg',
+      width: col?.width || 'lg',
       fieldProps: {
         placeholder: col?.valueType === 'select' ? `请选择${col?.title}` : `请输入${col?.title}`,
       },
@@ -108,6 +99,7 @@ const SchemaForm = ({
   columns,
   initialValue,
   goBack,
+  loading,
   onFinish,
   onValuesChange,
 }: SchemaFormProps) => {
@@ -174,6 +166,7 @@ const SchemaForm = ({
                       formRef.current?.setFieldsValue(initialValue);
                     }}
                     onSubmit={submit}
+                    loading={loading}
                   />
                 );
               },

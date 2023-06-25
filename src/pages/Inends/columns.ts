@@ -57,15 +57,25 @@ export const columns = [
                         required: true,
                       },
                       {
-                        title: '产品 ID',
-                        dataIndex: 'productId',
+                        title: '模式',
+                        dataIndex: 'mode',
+                        valueType: 'select',
                         required: true,
+                        valueEnum: {
+                          GW: '网关',
+                          DC: '直连',
+                        },
                       },
                     ],
                   },
                   {
                     valueType: 'group',
                     columns: [
+                      {
+                        title: '产品 ID',
+                        dataIndex: 'productId',
+                        required: true,
+                      },
                       {
                         title: '设备名',
                         dataIndex: 'deviceName',
@@ -76,16 +86,16 @@ export const columns = [
                         dataIndex: 'clientId',
                         required: true,
                       },
-                      {
-                        title: '用户名称',
-                        dataIndex: 'username',
-                        required: true,
-                      },
                     ],
                   },
                   {
                     valueType: 'group',
                     columns: [
+                      {
+                        title: '用户名称',
+                        dataIndex: 'username',
+                        required: true,
+                      },
                       {
                         title: '用户密码',
                         dataIndex: 'password',
