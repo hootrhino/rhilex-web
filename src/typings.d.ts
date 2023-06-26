@@ -12,9 +12,6 @@ declare module '*.bmp';
 declare module '*.tiff';
 declare module 'numeral';
 declare module '@antv/data-set';
-// declare module 'mockjs';
-// declare module 'react-fittext';
-declare module 'bizcharts-plugin-slider';
 declare module 'lua-format';
 
 declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
