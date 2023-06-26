@@ -7,10 +7,10 @@ import add from 'lodash/add';
 import { nanoid } from 'nanoid';
 import RcResizeObserver from 'rc-resize-observer';
 
-import ExportIcon from '@/assets/dashboard/export.svg';
-import ImportIcon from '@/assets/dashboard/import.svg';
-import PluginIcon from '@/assets/dashboard/plugin.svg';
-import RuleIcon from '@/assets/dashboard/rule.svg';
+import ExportIcon from '@/assets/fontIcons/export.svg';
+import ImportIcon from '@/assets/fontIcons/import.svg';
+import PluginIcon from '@/assets/fontIcons/plugin.svg';
+import RuleIcon from '@/assets/fontIcons/rule.svg';
 
 import { Tag } from 'antd';
 import './index.less';
