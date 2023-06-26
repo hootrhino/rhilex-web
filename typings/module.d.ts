@@ -10,8 +10,5 @@ declare module '*.jpeg';
 declare module '*.gif';
 declare module '*.bmp';
 declare module '*.tiff';
-declare module 'numeral';
 declare module '@antv/data-set';
 declare module 'lua-format';
-
-declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
