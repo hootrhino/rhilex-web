@@ -22,9 +22,9 @@ const Name = () => {
     return {
       fontSize: '16px',
       color: '#ffffff',
-      height: '48px',
+      height: '56px',
       overflow: 'hidden',
-      lineHeight: '48px',
+      lineHeight: '56px',
       whiteSpace: 'nowrap',
       textOverflow: 'ellipsis',
       [`@media only screen and (max-width: ${token.screenMD}px)`]: {
@@ -54,7 +54,7 @@ const AvatarLogo = () => {
       size="small"
       className={avatarClassName}
       src={undefined}
-      icon={<UserOutlined style={{ color: '#ffffff' }} />}
+      icon={<UserOutlined className="text-white" />}
       alt="avatar"
     />
   );
@@ -83,7 +83,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const actionClassName = useEmotionCss(({ token }) => {
     return {
       display: 'flex',
-      height: '48px',
+      height: '56px',
       marginLeft: 'auto',
       overflow: 'hidden',
       alignItems: 'center',
@@ -113,13 +113,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 
   const loading = (
     <span className={actionClassName}>
-      <Spin
-        size="small"
-        style={{
-          marginLeft: 8,
-          marginRight: 8,
-        }}
-      />
+      <Spin size="small" className="mx-[8px]" />
     </span>
   );
 
@@ -162,7 +156,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       <span className={actionClassName}>
         <AvatarLogo />
         <Name />
-        <DownOutlined style={{ color: '#ffffff', marginLeft: '8px' }} />
+        <DownOutlined className="text-white ml-[8px]" />
       </span>
     </HeaderDropdown>
   );

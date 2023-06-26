@@ -22,16 +22,13 @@ const Admin: React.FC = () => {
           type="success"
           showIcon
           banner
-          style={{
-            margin: -12,
-            marginBottom: 48,
-          }}
+          className="-m-3 mb-12"
         />
-        <Typography.Title level={2} style={{ textAlign: 'center' }}>
+        <Typography.Title level={2} className="text-center">
           <SmileTwoTone /> Ant Design Pro <HeartTwoTone twoToneColor="#eb2f96" /> You
         </Typography.Title>
       </Card>
-      <p style={{ textAlign: 'center', marginTop: 24 }}>
+      <p className="text-center mt-6">
         Want to add more pages? Please refer to{' '}
         <a href="https://pro.ant.design/docs/block-cn" target="_blank" rel="noopener noreferrer">
           use block

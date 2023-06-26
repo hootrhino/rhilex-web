@@ -72,15 +72,6 @@ const BaseForm = () => {
   const { run: getDetail } = useRequest(() => getDevices({ params: { uuid: id } }), {
     manual: true,
     onSuccess: ({ data }: any) => {
-      // const newConfig = Object.fromEntries(
-      //   Object.entries(data?.config || {}).map(([key, value]) => {
-      //     console.log(key, value);
-      //     const newValue = Array.isArray(value) ? value : isEmpty(value) ? [] : [value];
-      // return has(value, 'autoRequest')
-      //   ? [key, [{ ...(value as any), autoRequest: (value as any)?.autoRequest.toString() }]]
-      //   : [key, newValue];
-      //   }),
-      // );
       const newConfig = Object.fromEntries(
         Object.entries(data?.config || {}).map(([key, value]) => {
           let newValue;

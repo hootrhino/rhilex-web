@@ -35,11 +35,6 @@ const AI = () => {
       title: '模型路径',
       dataIndex: 'filepath',
     },
-    // {
-    //   title: '模型属性',
-    //   dataIndex: 'config',
-    // },
-
     {
       title: '描述',
       dataIndex: 'description',

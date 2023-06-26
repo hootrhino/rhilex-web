@@ -116,7 +116,7 @@ const SchemaForm = ({
       renderFormItem: (_: any, props: any) => (
         <Segmented
           block
-          style={{ width: 440 }}
+          className="w-[440px]"
           options={[
             { label: '是', value: 'true' },
             { label: '否', value: 'false' },
@@ -128,7 +128,7 @@ const SchemaForm = ({
     autoComplete: {
       renderFormItem: (_: any, props: any) => (
         <AutoComplete
-          style={{ width: 440 }}
+          className="w-[440px]"
           options={uartOptions}
           placeholder="请输入本地系统的串口路径"
           {...props?.fieldProps}

@@ -3,7 +3,7 @@ import { postLogin } from '@/services/rulex/yonghuguanli';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { FormattedMessage, Helmet, useIntl, useModel } from '@umijs/max';
+import { Helmet, useModel } from '@umijs/max';
 import { Alert } from 'antd';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
@@ -23,16 +23,7 @@ type LoginResult = {
 const LoginMessage: React.FC<{
   content: string;
 }> = ({ content }) => {
-  return (
-    <Alert
-      style={{
-        marginBottom: 24,
-      }}
-      message={content}
-      type="error"
-      showIcon
-    />
-  );
+  return <Alert className="mb-6" message={content} type="error" showIcon />;
 };
 
 const Login: React.FC = () => {
@@ -51,8 +42,6 @@ const Login: React.FC = () => {
       backgroundSize: '100% 100%',
     };
   });
-
-  const intl = useIntl();
 
   // const fetchUserInfo = async () => {
   //   const userInfo = await initialState?.fetchUserInfo?.();
@@ -99,21 +88,9 @@ const Login: React.FC = () => {
   return (
     <div className={containerClassName}>
       <Helmet>
-        <title>
-          {intl.formatMessage({
-            id: 'menu.login',
-            defaultMessage: '登录页',
-          })}
-          - {Settings.title}
-        </title>
+        <title>登录页 - {Settings.title}</title>
       </Helmet>
-      {/* <Lang /> */}
-      <div
-        style={{
-          flex: '1',
-          padding: '32px 0',
-        }}
-      >
+      <div className="flex-1 py-32">
         <LoginForm
           contentStyle={{
             minWidth: 280,
@@ -122,7 +99,6 @@ const Login: React.FC = () => {
           logo={<img alt="logo" src="/logo.svg" />}
           title="Rhino EEKit"
           subTitle="轻量级边缘计算网关"
-          // subTitle={intl.formatMessage({ id: 'pages.layouts.userLayout.title' })}
           initialValues={{
             autoLogin: true,
           }}
@@ -142,12 +118,7 @@ const Login: React.FC = () => {
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.username.required"
-                      defaultMessage="请输入用户名!"
-                    />
-                  ),
+                  message: '请输入用户名',
                 },
               ]}
             />
@@ -161,34 +132,23 @@ const Login: React.FC = () => {
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.password.required"
-                      defaultMessage="请输入密码！"
-                    />
-                  ),
+                  message: '请输入密码',
                 },
               ]}
             />
           </>
 
-          <div
-            style={{
-              marginBottom: 24,
-            }}
-          >
+          <div className="mb-6">
             <ProFormCheckbox noStyle name="autoLogin">
-              <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
+              自动登录
             </ProFormCheckbox>
             <a
-              style={{
-                float: 'right',
-              }}
+              className="float-right"
               href="https://hootrhino.github.io/"
               target="_blank"
               rel="noreferrer"
             >
-              <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
+              忘记密码
             </a>
           </div>
         </LoginForm>

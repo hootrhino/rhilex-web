@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
-    "outDir": "build/dist",
+    "baseUrl": ".",
     "module": "esnext",
     "target": "esnext",
-    "lib": ["esnext", "dom"],
-    "sourceMap": true,
-    "baseUrl": ".",
     "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "importHelpers": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "suppressImplicitAnyIndexErrors": true,
+    "ignoreDeprecations": "5.0",
     "noUnusedLocals": true,
     "allowJs": true,
     "skipLibCheck": true,
@@ -24,19 +24,5 @@
       "@@/*": ["./src/.umi/*"]
     }
   },
-  "include": [
-    "mock/**/*",
-    "src/**/*",
-    "tests/**/*",
-    "test/**/*",
-    "__test__/**/*",
-    "typings/**/*",
-    "config/**/*",
-    ".eslintrc.js",
-    ".stylelintrc.js",
-    ".prettierrc.js",
-    "jest.config.js",
-    "mock/*"
-  ],
-  "exclude": ["node_modules", "build", "dist", "scripts", "src/.umi/*", "webpack", "jest"]
+  "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.tsx"]
 }

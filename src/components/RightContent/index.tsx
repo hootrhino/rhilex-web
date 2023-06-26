@@ -1,20 +1,20 @@
 import { GithubOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
 import React from 'react';
 import Avatar from './AvatarDropdown';
-import { Space } from 'antd';
 
 export type SiderTheme = 'light' | 'dark';
 
 const GlobalHeaderRight: React.FC = () => {
   return (
-    <Space align="center">
+    <Space align="center" direction="horizontal">
       <a
         href="https://github.com/hootrhino/rulex"
-        style={{ color: 'rgb(156 163 175)', fontSize: 24 }}
+        className="text-white text-[24px] hover:text-gray-300"
         target="_blank"
         rel="noreferrer"
       >
-        <GithubOutlined />
+        <GithubOutlined size={24} />
       </a>
       <Avatar />
     </Space>

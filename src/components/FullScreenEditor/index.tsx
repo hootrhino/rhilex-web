@@ -12,6 +12,7 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import AceEditor from 'react-ace';
 import { Resizable } from 'react-resizable';
 
+import { cn } from '@/utils';
 import { Space, Tooltip } from 'antd';
 import '../../../node_modules/react-resizable/css/styles.css';
 import './index.less';
@@ -49,9 +50,9 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ..
         setHeight(size.height);
       }}
     >
-      <div className="editor-wrap" ref={ref} style={{ height: h, background: '#1a1d1f' }}>
-        <div className="editor-icon" style={{ color: '#fff', fontSize: 22, float: 'right' }}>
-          <Space align="center" size="middle" style={{ marginRight: 10 }}>
+      <div ref={ref} className={cn('editor-wrap', 'bg-[#1a1d1f]')} style={{ height: h }}>
+        <div className={cn('editor-icon', 'text-white text-[22px] float-right')}>
+          <Space align="center" size="middle" className="mr-[10px]">
             <Tooltip title={isFullscreen ? '退出全屏' : '全屏'}>
               {isFullscreen ? (
                 <FullscreenExitOutlined onClick={exitFullscreen} />
@@ -83,6 +84,7 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ..
           editorProps={{ $blockScrolling: true }}
           width="100%"
           style={{ height: 'calc(100% - 44px)' }}
+          // className='h-[calc(100%_-_44px)]'
           fontSize={16}
           showPrintMargin={false}
           highlightActiveLine={true}

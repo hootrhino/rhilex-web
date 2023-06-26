@@ -16,6 +16,7 @@ export default defineConfig({
   fastRefresh: true,
   model: {},
   initialState: {},
+  tailwindcss: {},
   title: defaultSettings.title as string,
   layout: defaultSettings,
   moment2dayjs: {

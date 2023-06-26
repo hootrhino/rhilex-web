@@ -13,7 +13,6 @@ import PluginIcon from '@/assets/fontIcons/plugin.svg';
 import RuleIcon from '@/assets/fontIcons/rule.svg';
 
 import { Tag } from 'antd';
-import './index.less';
 
 enum levelColor {
   fatal = 'error',
@@ -96,14 +95,13 @@ const Dashboard = () => {
             statistic={{
               title: 'CPU 使用',
               value: `${data?.hardWareInfo?.cpuPercent || 0}%`,
-              // description: <Statistic title="占比" value="61.5%" />,
             }}
             chart={
               <RingProgress
                 width={80}
                 height={80}
                 percent={(data?.hardWareInfo?.cpuPercent || 0) / 100}
-                color="#1890ff"
+                color="#1677ff"
                 statistic={{ title: false, content: false }}
               />
             }
@@ -113,7 +111,6 @@ const Dashboard = () => {
             statistic={{
               title: '磁盘使用',
               value: `${data?.hardWareInfo?.diskInfo || 0}%`,
-              // description: <Statistic title="占比" value="38.5%" />,
             }}
             chart={
               <RingProgress
@@ -133,36 +130,33 @@ const Dashboard = () => {
           setResponsive(offset.width < 596);
         }}
       >
-        <StatisticCard.Group
-          direction={responsive ? 'column' : 'row'}
-          style={{ marginBlockStart: 24 }}
-        >
+        <StatisticCard.Group direction={responsive ? 'column' : 'row'} className="mt-6">
           <StatisticCard
             statistic={{
               title: '入口总数',
               value: data?.sourceCount?.inends,
-              icon: <img src={ImportIcon} alt="入口总数" />,
+              icon: <img src={ImportIcon} alt="入口总数" className="w-[42px] h-[42px]" />,
             }}
           />
           <StatisticCard
             statistic={{
               title: '出口总数',
               value: data?.sourceCount?.outends,
-              icon: <img src={ExportIcon} alt="出口总数" />,
+              icon: <img src={ExportIcon} alt="出口总数" className="w-[42px] h-[42px]" />,
             }}
           />
           <StatisticCard
             statistic={{
               title: '规则总数',
               value: data?.sourceCount?.rules,
-              icon: <img src={RuleIcon} alt="规则总数" />,
+              icon: <img src={RuleIcon} alt="规则总数" className="w-[42px] h-[42px]" />,
             }}
           />
           <StatisticCard
             statistic={{
               title: '插件总数',
               value: data?.sourceCount?.plugins,
-              icon: <img src={PluginIcon} alt="插件总数" />,
+              icon: <img src={PluginIcon} alt="插件总数" className="w-[42px] h-[42px]" />,
             }}
           />
         </StatisticCard.Group>
@@ -173,10 +167,7 @@ const Dashboard = () => {
           setResponsive(offset.width < 596);
         }}
       >
-        <StatisticCard.Group
-          direction={responsive ? 'column' : 'row'}
-          style={{ marginBlockStart: 24 }}
-        >
+        <StatisticCard.Group direction={responsive ? 'column' : 'row'} className="mt-6">
           <StatisticCard
             statistic={{
               title: '输入 / 输出总数',
@@ -214,7 +205,7 @@ const Dashboard = () => {
           />
         </StatisticCard.Group>
       </RcResizeObserver>
-      <ProCard style={{ marginTop: 24 }}>
+      <ProCard className="mt-6">
         <ProTable
           rowKey={() => nanoid()}
           columns={columns}
