@@ -12,7 +12,7 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import AceEditor from 'react-ace';
 import { Resizable } from 'react-resizable';
 
-import { cn } from '@/utils';
+import { cn } from '@/utils/utils';
 import { Space, Tooltip } from 'antd';
 import '../../../node_modules/react-resizable/css/styles.css';
 import './index.less';

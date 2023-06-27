@@ -1,5 +1,7 @@
-﻿import type { RequestConfig } from '@umijs/max';
-import { message,notification } from '@/components/PopupHack';
+/* eslint-disable @typescript-eslint/dot-notation */
+import type { RequestConfig } from 'umi';
+
+import { message, notification } from '@/components/PopupHack';
 
 // 错误处理方案： 错误类型
 enum ErrorShowType {
@@ -9,6 +11,7 @@ enum ErrorShowType {
   NOTIFICATION = 3,
   REDIRECT = 9,
 }
+
 // 与后端约定的响应数据格式
 interface ResponseStructure {
   success: boolean;
@@ -60,13 +63,53 @@ const codeMessage = {
   511: '客户端需要进行身份验证',
 };
 
-/**
- * @name 错误处理
- * pro 自带的错误处理， 可以在这里做自己的改动
- * @doc https://umijs.org/docs/max/request#配置
- */
-export const errorConfig: RequestConfig = {
-  // 错误处理： umi@3 的错误处理方案。
+const TIME_OUT = 10 * 1000;
+
+const request: RequestConfig = {
+  timeout: TIME_OUT,
+  timeoutErrorMessage: '客户端请求超时',
+  validateStatus: () => true,
+  requestInterceptors: [
+    // 请求拦截器
+    (url, options) => {
+      // 添加缓存控制头
+      return {
+        url,
+        options: {
+          ...options,
+          headers: {
+            ...options.headers,
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            Pragma: 'no-cache',
+            Expires: '0',
+          },
+        },
+      };
+    },
+  ],
+  responseInterceptors: [
+    // 响应拦截器
+    (response) => {
+      // 拦截响应数据，进行个性化处理
+      const { data, status, config } = response;
+
+      const shouldThrowError =
+        !(data instanceof Promise) && ![200, 'ok'].includes(data['code'] || status);
+
+      if (shouldThrowError) {
+        const error: any = new Error();
+        const bizErrorInfo: BizErrorInfo = {
+          errorCode: data['code'] || status || -9999,
+          errorMessage: data['msg'] || codeMessage[status] || '请求错误，请重试',
+          errorShowType: config['errorShowType'],
+        };
+        error.name = 'BizError';
+        error.info = bizErrorInfo;
+        throw error;
+      }
+      return response;
+    },
+  ],
   errorConfig: {
     // 错误抛出
     errorThrower: (res) => {
@@ -116,52 +159,6 @@ export const errorConfig: RequestConfig = {
       }
     },
   },
-
-  // 请求拦截器
-  requestInterceptors: [
-    // (config: RequestOptions) => {
-    //   // 拦截请求配置，进行个性化处理。
-    //   const url = config?.url?.concat('?token = 123');
-    //   return { ...config, url };
-    // },
-    (url, options) => {
-      // 添加缓存控制头
-      return {
-        url,
-        options: {
-          ...options,
-          headers: {
-            ...options.headers,
-            'Cache-Control': 'no-cache, no-store, must-revalidate',
-            'Pragma': 'no-cache',
-            'Expires': '0',
-          },
-        },
-      };
-    },
-  ],
-
-  // 响应拦截器
-  responseInterceptors: [
-    (response) => {
-      // 拦截响应数据，进行个性化处理
-      const { data, status, config } = response;
-
-      const shouldThrowError =
-        !(data instanceof Promise) && ![200, 'ok'].includes(data['code'] || status);
-
-      if (shouldThrowError) {
-        const error: any = new Error();
-        const bizErrorInfo: BizErrorInfo = {
-          errorCode: data['code'] || status || -9999,
-          errorMessage: data['msg'] || codeMessage[status] || '请求错误，请重试',
-          errorShowType: config['errorShowType'],
-        };
-        error.name = 'BizError';
-        error.info = bizErrorInfo;
-        throw error;
-      }
-      return response;
-    },
-  ],
 };
+
+export default request;

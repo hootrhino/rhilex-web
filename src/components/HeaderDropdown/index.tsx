@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { cn } from '@/utils';
+import { cn } from '@/utils/utils';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
+import type { DropDownProps } from 'antd';
 import { Dropdown } from 'antd';
-import type { DropDownProps } from 'antd/es/dropdown';
 
 export type HeaderDropdownProps = {
   overlayClassName?: string;
