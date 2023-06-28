@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import { history, useParams } from 'umi';
 
 import {
+  FooterToolbar,
   PageContainer,
   ProCard,
   ProForm,
@@ -15,11 +16,11 @@ import {
 } from '@ant-design/pro-components';
 import { useModel, useRequest } from 'umi';
 
-import FormFooter from '@/components/FromFooter';
 import FullScreenEditor from '@/components/FullScreenEditor';
 import { message } from '@/components/PopupHack';
 import useGoBack from '@/hooks/useGoBack';
 import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanli';
+import { Button, Popconfirm } from 'antd';
 import omit from 'lodash/omit';
 
 export type FormItem = {
@@ -33,18 +34,20 @@ export type FormItem = {
   uuid?: string;
 };
 
-const defaultActions = `Actions = {
+const DefaultActions = `Actions = {
   function(data)
     --rulexlib:log(data)
     return true, data
   end
 }`;
-const defaultSuccess = `function Success()
+const DefaultSuccess = `function Success()
 --rulexlib:log("success")
 end`;
-const defaultFailed = `function Failed(error)
+const DefaultFailed = `function Failed(error)
   rulexlib:log(error)
 end`;
+
+const DefaultListUrl = '/rules/list';
 
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
@@ -79,25 +82,38 @@ const UpdateForm = () => {
     },
   });
 
-  // 新建&编辑
-  const onFinish = async (values: any) => {
+  // 新建
+  const { run: add, loading: addLoading } = useRequest((params) => postRules(params), {
+    manual: true,
+    onSuccess: () => {
+      message.success('新建成功');
+      history.push(DefaultListUrl);
+    },
+  });
+
+  // 编辑
+  const { run: update, loading: updateLoading } = useRequest((params) => putRules(params), {
+    manual: true,
+    onSuccess: () => {
+      message.success('更新成功');
+      history.push(DefaultListUrl);
+    },
+  });
+
+  const handleOnFinish = async (values: any) => {
     try {
-      let params = omit(values, ['sourceType']);
-      params = {
-        ...params,
-        fromSource: params?.fromSource ? [params?.fromSource] : [],
-        fromDevice: params?.fromDevice ? [params?.fromDevice] : [],
+      const params = {
+        ...omit(values, ['sourceType']),
+        fromSource: values?.fromSource ? [values?.fromSource] : [],
+        fromDevice: values?.fromDevice ? [values?.fromDevice] : [],
       };
 
       if (id) {
-        await putRules({ ...(params as FormItem), uuid: id });
-        message.success('更新成功');
+        update({ ...params, uuid: id });
       } else {
-        await postRules(params as FormItem);
-        message.success('新建成功');
+        add(params);
       }
 
-      history.push('/rules/list');
       return true;
     } catch (error) {
       return false;
@@ -109,9 +125,9 @@ const UpdateForm = () => {
       getDetail(id);
     } else {
       formRef.current?.setFieldsValue({
-        actions: defaultActions,
-        success: defaultSuccess,
-        failed: defaultFailed,
+        actions: DefaultActions,
+        success: DefaultSuccess,
+        failed: DefaultFailed,
         sourceType: 'fromSource',
       });
     }
@@ -126,17 +142,36 @@ const UpdateForm = () => {
     <>
       <PageContainer
         header={{ title: id ? '编辑规则' : '新建规则' }}
-        onBack={() => showModal({ url: '/rules/list' })}
+        onBack={() => showModal({ url: DefaultListUrl })}
       >
         <ProCard>
           <ProForm
             formRef={formRef}
             submitter={{
               render: ({ reset, submit }) => {
-                return <FormFooter onReset={reset} onSubmit={submit} />;
+                return (
+                  <FooterToolbar>
+                    <Popconfirm
+                      key="reset"
+                      title="重置可能会丢失数据，确定要重置吗？"
+                      onConfirm={reset}
+                    >
+                      <Button>重置</Button>
+                    </Popconfirm>
+
+                    <Button
+                      key="submit"
+                      type="primary"
+                      onClick={submit}
+                      loading={addLoading || updateLoading}
+                    >
+                      提交
+                    </Button>
+                  </FooterToolbar>
+                );
               },
             }}
-            onFinish={onFinish}
+            onFinish={handleOnFinish}
           >
             <ProFormText
               label="规则名称"

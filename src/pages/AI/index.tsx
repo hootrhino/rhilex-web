@@ -47,7 +47,6 @@ const AI = () => {
       <PageContainer>
         <ProTable
           rowKey="uuid"
-          // actionRef={actionRef}
           columns={columns}
           search={false}
           pagination={false}

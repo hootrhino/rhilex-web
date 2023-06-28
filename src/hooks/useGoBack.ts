@@ -1,6 +1,6 @@
-import { Modal } from 'antd';
+import { App } from 'antd';
 import { useState } from 'react';
-import {history} from 'umi';
+import { history } from 'umi';
 
 type ModalProps = {
   title?: string;
@@ -10,14 +10,19 @@ type ModalProps = {
 
 function useGoBack() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const { modal } = App.useApp();
 
-  function showModal({ title = '离开可能会丢失数据，确定要返回列表吗？', content, url }: ModalProps) {
-    Modal.confirm({
+  function showModal({
+    title = '离开可能会丢失数据，确定要返回列表吗？',
+    content,
+    url,
+  }: ModalProps) {
+    modal.confirm({
       title,
       content,
       onOk() {
         setIsModalVisible(false);
-        history.push(url)
+        history.push(url);
       },
       onCancel() {
         setIsModalVisible(false);

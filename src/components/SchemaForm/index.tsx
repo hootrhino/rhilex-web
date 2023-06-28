@@ -9,10 +9,10 @@ import {
   ProFormProps,
 } from '@ant-design/pro-components';
 
-import FormFooter from '@/components/FromFooter';
 import useGoBack from '@/hooks/useGoBack';
 import { getUarts } from '@/services/rulex/xitongshuju';
-import { AutoComplete, Segmented } from 'antd';
+import { FooterToolbar } from '@ant-design/pro-components';
+import { AutoComplete, Button, Popconfirm, Segmented } from 'antd';
 import omit from 'lodash/omit';
 import { useRequest } from 'umi';
 import FullScreenEditor from '../FullScreenEditor';
@@ -160,14 +160,22 @@ const SchemaForm = ({
             submitter={{
               render: ({ reset, submit }) => {
                 return (
-                  <FormFooter
-                    onReset={() => {
-                      reset();
-                      formRef.current?.setFieldsValue(initialValue);
-                    }}
-                    onSubmit={submit}
-                    loading={loading}
-                  />
+                  <FooterToolbar>
+                    <Popconfirm
+                      key="reset"
+                      title="重置可能会丢失数据，确定要重置吗？"
+                      onConfirm={() => {
+                        reset();
+                        formRef.current?.setFieldsValue(initialValue);
+                      }}
+                    >
+                      <Button>重置</Button>
+                    </Popconfirm>
+
+                    <Button key="submit" type="primary" onClick={submit} loading={loading}>
+                      提交
+                    </Button>
+                  </FooterToolbar>
                 );
               },
             }}

@@ -16,12 +16,31 @@ import SchemaForm from '@/components/SchemaForm';
 import { columns } from './columns';
 import { defaultValue } from './initialValue';
 
+const DefaultListUrl = '/device/list';
+
 const BaseForm = () => {
   const { id } = useParams();
   const [initialValue, setValue] = useState<any>(defaultValue);
 
-  // 新建&编辑
-  const onFinish = async (values: any) => {
+  // 新建
+  const { run: add, loading: addLoading } = useRequest((params) => postDevices(params), {
+    manual: true,
+    onSuccess: () => {
+      message.success('新建成功');
+      history.push(DefaultListUrl);
+    },
+  });
+
+  // 编辑
+  const { run: update, loading: updateLoading } = useRequest((params) => putDevices(params), {
+    manual: true,
+    onSuccess: () => {
+      message.success('更新成功');
+      history.push(DefaultListUrl);
+    },
+  });
+
+  const handleOnFinish = async (values: any) => {
     try {
       let params = cloneDeep(values);
       const deviceConfigFormat = new Object();
@@ -56,12 +75,10 @@ const BaseForm = () => {
       };
 
       if (id) {
-        await putDevices({ ...params, uuid: id });
+        update({ ...params, uuid: id });
       } else {
-        await postDevices(params);
+        add(params);
       }
-      message.success(id ? '更新成功' : '新建成功');
-      history.push('/device/list');
       return true;
     } catch (error) {
       return false;
@@ -103,10 +120,11 @@ const BaseForm = () => {
   return (
     <SchemaForm
       title={id ? '编辑设备' : '新建设备'}
-      goBack="/device/list"
+      loading={addLoading || updateLoading}
+      goBack={DefaultListUrl}
       columns={columns}
       initialValue={initialValue}
-      onFinish={async (values) => await onFinish(values)}
+      onFinish={handleOnFinish}
     />
   );
 };

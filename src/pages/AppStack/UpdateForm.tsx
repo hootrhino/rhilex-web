@@ -13,6 +13,8 @@ type InitValueType = {
   [key: string]: any;
 };
 
+const DefaultListUrl = '/app-stack/list';
+
 const UpdateForm = () => {
   const { id } = useParams();
   const [initialValue, setValue] = useState<InitValueType>({
@@ -33,18 +35,32 @@ const UpdateForm = () => {
     },
   });
 
-  // 新建 & 编辑
+  // 新建
+  const { run: add, loading: addLoading } = useRequest((params) => postApp(params), {
+    manual: true,
+    onSuccess: () => {
+      message.success('新建成功');
+      history.push(DefaultListUrl);
+    },
+  });
+
+  // 编辑
+  const { run: update, loading: updateLoading } = useRequest((params) => putApp(params), {
+    manual: true,
+    onSuccess: () => {
+      message.success('更新成功');
+      history.push(DefaultListUrl);
+    },
+  });
+
   const handleOnFinish = async (values: any) => {
     try {
       const params = { ...values, autoStart: values?.autoStart === 'true' ? true : false };
       if (id) {
-        await putApp({ ...params, uuid: id });
-        message.success('更新成功');
+        update({ ...params, uuid: id });
       } else {
-        await postApp(params);
-        message.success('新建成功');
+        add(params);
       }
-      history.push('/app-stack/list');
       return true;
     } catch (error) {
       return false;
@@ -60,7 +76,8 @@ const UpdateForm = () => {
   return (
     <SchemaForm
       title={id ? '更新应用' : '新建应用'}
-      goBack="/app-stack/list"
+      loading={addLoading || updateLoading}
+      goBack={DefaultListUrl}
       columns={id ? columns2 : columns1}
       initialValue={initialValue}
       onFinish={handleOnFinish}

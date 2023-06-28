@@ -21,12 +21,6 @@ const Plugins = () => {
       dataIndex: 'version',
       width: 80,
     },
-    // {
-    //   title: '主页',
-    //   dataIndex: 'homepage',
-    //   ellipsis: true,
-    //   renderText: (page) => <Link to={page}>{page}</Link>,
-    // },
     {
       title: '文档地址',
       dataIndex: 'helpLink',

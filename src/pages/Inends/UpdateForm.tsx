@@ -19,6 +19,8 @@ type InendsFormItem<T extends any> = {
   config: T;
 };
 
+const DefaultListUrl = '/inends/list';
+
 const UpdateForm = () => {
   const { id } = useParams();
   const randomNumber = random(1000, 9999);
@@ -28,14 +30,14 @@ const UpdateForm = () => {
     config: [{ host: '127.0.0.1', port: 2582 }],
   });
 
-  const { run: newInends, loading: newLoading } = useRequest((data) => postInends(data), {
+  const { run: addInends, loading: addLoading } = useRequest((data) => postInends(data), {
     manual: true,
     onSuccess: () => {
       message.success('新建成功');
-      history.push('/inends/list');
+      history.push(DefaultListUrl);
     },
     onError: () => {
-      history.push('/inends/list');
+      history.push(DefaultListUrl);
     },
   });
 
@@ -43,10 +45,10 @@ const UpdateForm = () => {
     manual: true,
     onSuccess: () => {
       message.success('更新成功');
-      history.push('/inends/list');
+      history.push(DefaultListUrl);
     },
     onError: () => {
-      history.push('/inends/list');
+      history.push(DefaultListUrl);
     },
   });
 
@@ -58,19 +60,13 @@ const UpdateForm = () => {
         config: values?.config?.[0],
       };
       if (id) {
-        // const res = await putInends({ ...params, uuid: id });
         updateInends({ ...params, uuid: id });
-        // message.success('更新成功');
       } else {
-        newInends(params);
-        // await postInends(params);
-        // message.success('新建成功');
+        addInends(params);
       }
 
-      // history.push('/inends/list');
       return true;
     } catch (error) {
-      // history.push('/inends/list');
       return false;
     }
   };
@@ -90,7 +86,8 @@ const UpdateForm = () => {
   return (
     <SchemaForm
       title={id ? '编辑资源' : '新建资源'}
-      goBack="/inends/list"
+      loading={addLoading || updateLoading}
+      goBack={DefaultListUrl}
       columns={columns}
       initialValue={initialValue}
       onFinish={onFinish}
@@ -149,7 +146,6 @@ const UpdateForm = () => {
           });
         }
       }}
-      loading={newLoading || updateLoading}
     />
   );
 };

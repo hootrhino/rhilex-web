@@ -27,6 +27,8 @@ type UpdateFormItem<T = any> = {
   uuid?: string;
 };
 
+const DefaultListUrl = '/outends/list';
+
 const UpdateForm = () => {
   const { id } = useParams();
   const randomNumber = random(1000, 9999);
@@ -42,31 +44,47 @@ const UpdateForm = () => {
     ],
   });
 
-  // 新建&编辑
-  const onFinish = async (values: any) => {
+  // 获取详情
+  const { run: getDetail } = useRequest(() => getOutends({ params: { uuid: id } }), {
+    manual: true,
+    onSuccess: (res: any) => setValue({ ...res, config: [res?.config] }),
+  });
+
+  // 新建
+  const { run: add, loading: addLoading } = useRequest((params) => postOutends(params), {
+    manual: true,
+    onSuccess: () => {
+      message.success('新建成功');
+      history.push(DefaultListUrl);
+    },
+  });
+
+  // 编辑
+  const { run: update, loading: updateLoading } = useRequest((params) => putOutends(params), {
+    manual: true,
+    onSuccess: () => {
+      message.success('更新成功');
+      history.push(DefaultListUrl);
+    },
+  });
+
+  const handleOnFinish = async (values: any) => {
     try {
       const params = {
         ...values,
         config: values?.config?.[0],
       };
       if (id) {
-        await putOutends({ ...params, uuid: id } as any);
+        update({ ...params, uuid: id } as any);
       } else {
-        await postOutends(params as any);
+        add(params as any);
       }
-      message.success(id ? '更新成功' : '新建成功');
-      history.push('/outends/list');
+
       return true;
     } catch (error) {
       return false;
     }
   };
-
-  // 获取详情
-  const { run: getDetail } = useRequest(() => getOutends({ params: { uuid: id } }), {
-    manual: true,
-    onSuccess: (res: any) => setValue({ ...res, config: [res?.config] }),
-  });
 
   useEffect(() => {
     if (id) {
@@ -77,10 +95,11 @@ const UpdateForm = () => {
   return (
     <SchemaForm
       title={id ? '编辑目标' : '新建目标'}
-      goBack="/outends/list"
+      loading={addLoading || updateLoading}
+      goBack={DefaultListUrl}
       columns={columns}
       initialValue={initialValue}
-      onFinish={onFinish}
+      onFinish={handleOnFinish}
       onValuesChange={(changedValue) => {
         if (changedValue?.type === 'UDP_TARGET') {
           setValue({
