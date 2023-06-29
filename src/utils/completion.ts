@@ -23,4 +23,11 @@ export const completions = [
     score: 100,
     meta: '模板2',
   },
+  {
+    name: 'MatchUInt',
+    value:
+      'local MatchHexTb = rulexlib:MatchUInt("k1:[0,1];k2:[2,3]", "0xFFFFFF")\n\tprint("MatchHexTb.k1=", MatchHexTb.k1)\n\tprint("MatchHexTb.k2=", MatchHexTb.k2)',
+    score: 100,
+    meta: '十六进制字符串匹配',
+  },
 ];

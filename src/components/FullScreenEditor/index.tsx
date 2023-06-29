@@ -14,7 +14,7 @@ import { Resizable } from 'react-resizable';
 
 import { completions } from '@/utils/completion';
 import { cn } from '@/utils/utils';
-import { Space, Tooltip } from 'antd';
+import { Divider, Space } from 'antd';
 import { useModel } from 'umi';
 import '../../../node_modules/react-resizable/css/styles.css';
 import './index.less';
@@ -83,16 +83,23 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ..
       }}
     >
       <div ref={ref} className={cn('editor-wrap', 'bg-[#1a1d1f]')} style={{ height: h }}>
-        <div className={cn('editor-icon', 'text-white text-[22px] float-right')}>
-          <Space align="center" size="middle" className="mr-[10px]">
-            <Tooltip title={isFullscreen ? '退出全屏' : '全屏'}>
+        <div className={cn('editor-icon', 'text-white text-[20px] float-right')}>
+          <Space
+            align="center"
+            size="middle"
+            className="mr-[10px]"
+            split={<Divider type="vertical" className="bg-white" />}
+          >
+            <Space align="center">
               {isFullscreen ? (
                 <FullscreenExitOutlined onClick={exitFullscreen} />
               ) : (
                 <FullscreenOutlined onClick={enterFullscreen} />
               )}
-            </Tooltip>
-            <Tooltip title="代码格式化">
+              <div className="text-[14px]">{isFullscreen ? '退出全屏' : '全屏'}</div>
+            </Space>
+
+            <Space align="center">
               <CodeOutlined
                 onClick={() => {
                   // const regex = /[^\S\r\n]+/g;
@@ -107,7 +114,8 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ..
                   editorRef.current?.editor?.setValue(formattedCode);
                 }}
               />
-            </Tooltip>
+              <div className="text-[14px]">代码格式化</div>
+            </Space>
           </Space>
         </div>
         <AceEditor
