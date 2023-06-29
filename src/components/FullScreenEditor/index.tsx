@@ -12,8 +12,10 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import AceEditor from 'react-ace';
 import { Resizable } from 'react-resizable';
 
+import { completions } from '@/utils/completion';
 import { cn } from '@/utils/utils';
 import { Space, Tooltip } from 'antd';
+import { useModel } from 'umi';
 import '../../../node_modules/react-resizable/css/styles.css';
 import './index.less';
 
@@ -21,13 +23,40 @@ type FullScreenEditorProps = {
   [key: string]: any;
 };
 
+type uuidItem = {
+  label: string;
+  value: string;
+};
+
 const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ...props }, ref) => {
-  const editorRef = useRef(null);
+  const editorRef = useRef<AceEditor>(null);
+  const { data } = useModel('useSource');
   const [code, setCode] = useState<string>('');
   const [isFullscreen, { enterFullscreen, exitFullscreen }] = useFullscreen(ref as any, {
     pageFullscreen: true,
   });
   const [h, setHeight] = useState<number>(500);
+
+  const myCompleters = [
+    {
+      getCompletions: function (
+        _editor: any,
+        _session: any,
+        _pos: any,
+        _prefix: any,
+        callback: any,
+      ) {
+        const uuidList = data?.map((item: uuidItem) => ({
+          name: item?.value,
+          value: `'${item?.value}'`,
+          score: 100,
+          meta: item?.label,
+        }));
+        console.log(data, uuidList);
+        callback(null, completions.concat(uuidList));
+      },
+    },
+  ];
 
   const Settings = {
     RenameVariables: false,
@@ -63,6 +92,9 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ..
             <Tooltip title="代码格式化">
               <CodeOutlined
                 onClick={() => {
+                  // const regex = /[^\S\r\n]+/g;
+                  // const clearSpace = code.replace(/[^\S\r\n]+/g, "");
+
                   const formatCode = luamin.Beautify(code, Settings);
                   let formattedCode = formatCode
                     .toString()
@@ -83,12 +115,14 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ..
           ref={editorRef}
           editorProps={{ $blockScrolling: true }}
           width="100%"
-          style={{ height: 'calc(100% - 44px)' }}
-          // className='h-[calc(100%_-_44px)]'
+          style={{ height: 'calc(100% - 44px)', fontFamily: 'monospace' }}
           fontSize={16}
           showPrintMargin={false}
           highlightActiveLine={true}
           enableSnippets={true}
+          onLoad={(editor) => {
+            editor.completers = [...editor.completers, ...myCompleters];
+          }}
           setOptions={{
             enableLiveAutocompletion: true,
             enableBasicAutocompletion: true,
