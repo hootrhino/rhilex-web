@@ -1,5 +1,5 @@
 import { postLogout } from '@/services/rulex/yonghuguanli';
-import { DownOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { setAlpha } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { history, useModel } from '@umijs/max';
@@ -42,7 +42,7 @@ const AvatarLogo = () => {
       marginRight: '8px',
       color: token.colorPrimary,
       verticalAlign: 'top',
-      background: setAlpha(token.colorBgContainer, 0.85),
+      background: setAlpha(token.colorBgContainer, 0.95),
       [`@media only screen and (max-width: ${token.screenMD}px)`]: {
         margin: 0,
       },
@@ -54,7 +54,7 @@ const AvatarLogo = () => {
       size="small"
       className={avatarClassName}
       src={undefined}
-      icon={<UserOutlined className="text-white" />}
+      icon={<UserOutlined className="text-black" />}
       alt="avatar"
     />
   );
@@ -156,7 +156,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       <span className={actionClassName}>
         <AvatarLogo />
         <Name />
-        <DownOutlined className="text-white ml-[8px]" />
+        {/* <DownOutlined className="text-white ml-[8px]" /> */}
       </span>
     </HeaderDropdown>
   );
