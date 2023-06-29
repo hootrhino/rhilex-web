@@ -37,11 +37,6 @@ const Dashboard = () => {
   const [responsive, setResponsive] = useState(false);
   const [pagination, setPagination] = useState<Pagination>({ current: 1, pageSize: 10, total: 0 });
 
-  // const { data } = useRequest(() => getSystem(), {
-  //   formatResult: (res) => res.data,
-  //   pollingInterval: 5000,
-  // });
-
   const inCount = add(data?.statistic?.inSuccess || 0, data?.statistic?.inFailed || 0);
   const outCount = add(data?.statistic?.outSuccess || 0, data?.statistic?.outFailed || 0);
 
@@ -208,6 +203,7 @@ const Dashboard = () => {
       <ProCard className="mt-6">
         <ProTable
           rowKey={() => nanoid()}
+          headerTitle="日志列表"
           columns={columns}
           dataSource={logs}
           search={false}
@@ -215,7 +211,7 @@ const Dashboard = () => {
             ...pagination,
             onChange: (current, pageSize) => setPagination({ ...pagination, current, pageSize }),
           }}
-          options={false}
+          options={{ search: true, reload: false, setting: false, density: false }}
         />
       </ProCard>
     </PageContainer>
