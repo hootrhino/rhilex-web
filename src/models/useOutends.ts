@@ -1,9 +1,8 @@
-import { getInends } from '@/services/rulex/shuruziyuanguanli';
+import { getOutends } from '@/services/rulex/shuchuziyuanguanli';
 import { useRequest } from 'umi';
 
-const useSource = () => {
-  const { data, run } = useRequest(() => getInends(), {
-    // manual: true,
+const useOutends = () => {
+  const { data, run } = useRequest(() => getOutends(), {
     formatResult: (res: any) =>
       res?.data?.map((item: Record<string, any>) => ({ label: item?.name, value: item?.uuid })),
   });
@@ -11,4 +10,4 @@ const useSource = () => {
   return { data, run };
 };
 
-export default useSource;
+export default useOutends;

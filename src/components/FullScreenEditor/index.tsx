@@ -8,7 +8,7 @@ import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/webpack-resolver';
 
 import luamin from 'lua-format';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import AceEditor from 'react-ace';
 import { Resizable } from 'react-resizable';
 
@@ -30,33 +30,36 @@ type uuidItem = {
 
 const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ...props }, ref) => {
   const editorRef = useRef<AceEditor>(null);
-  const { data } = useModel('useSource');
+  const { data: inends } = useModel('useSource');
+  const { data: outends } = useModel('useOutends');
   const [code, setCode] = useState<string>('');
   const [isFullscreen, { enterFullscreen, exitFullscreen }] = useFullscreen(ref as any, {
     pageFullscreen: true,
   });
   const [h, setHeight] = useState<number>(500);
 
-  const myCompleters = [
-    {
-      getCompletions: function (
-        _editor: any,
-        _session: any,
-        _pos: any,
-        _prefix: any,
-        callback: any,
-      ) {
-        const uuidList = data?.map((item: uuidItem) => ({
-          name: item?.value,
-          value: `'${item?.value}'`,
-          score: 100,
-          meta: item?.label,
-        }));
-        console.log(data, uuidList);
-        callback(null, completions.concat(uuidList));
+  const myCompleters = useMemo(() => {
+    return [
+      {
+        getCompletions: function (
+          _editor: any,
+          _session: any,
+          _pos: any,
+          _prefix: any,
+          callback: any,
+        ) {
+          const uuidList = [...(inends ?? []), ...(outends ?? [])]?.map((item: uuidItem) => ({
+            name: item?.value,
+            value: `'${item?.value}'`,
+            score: 100,
+            meta: item?.label,
+          }));
+
+          callback(null, [...completions, ...uuidList]);
+        },
       },
-    },
-  ];
+    ];
+  }, [inends, outends]);
 
   const Settings = {
     RenameVariables: false,

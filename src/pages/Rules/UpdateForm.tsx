@@ -57,7 +57,7 @@ const UpdateForm = () => {
   const successRef = useRef(null);
   const { showModal } = useGoBack();
 
-  const { data: sources, run: getSources } = useModel('useSource');
+  const { data: sources } = useModel('useSource');
   const { data: devices, run: getDevices } = useModel('useDevice');
 
   // 获取详情
@@ -134,7 +134,7 @@ const UpdateForm = () => {
   }, [id]);
 
   useEffect(() => {
-    getSources();
+    // getSources();
     getDevices();
   }, []);
 
