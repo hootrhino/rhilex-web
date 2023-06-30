@@ -190,13 +190,13 @@
       {
         path: '/app-stack/new',
         name: '新建',
-        component: './AppStack/UpdateForm',
+        component: './AppStack/components/Update',
         hideInMenu: true,
       },
       {
         path: '/app-stack/edit/:id',
         name: '编辑',
-        component: './AppStack/UpdateForm',
+        component: './AppStack/components/Update',
         hideInMenu: true,
       },
     ],

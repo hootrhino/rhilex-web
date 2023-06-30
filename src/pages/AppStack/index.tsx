@@ -4,8 +4,9 @@ import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/ico
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm, Tag } from 'antd';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { history } from 'umi';
+import Detail from './components/Detail';
 
 type TableItem = {
   uuid?: string;
@@ -20,6 +21,10 @@ type TableItem = {
 
 const AppStack = () => {
   const actionRef = useRef<ActionType>();
+  const [detailConfig, setConfig] = useState<{ uuid: string; open: boolean }>({
+    uuid: '',
+    open: false,
+  });
 
   // 删除
   const handleDelete = async (values: API.deleteAppParams) => {
@@ -65,7 +70,7 @@ const AppStack = () => {
       title: '是否自启',
       dataIndex: 'autoStart',
       renderText: (autoStart) => (
-        <Tag color={autoStart ? 'success' : 'error'}>{autoStart === true ? '是' : '否'}</Tag>
+        <Tag color={autoStart ? 'success' : 'error'}>{autoStart === true ? '开启' : '关闭'}</Tag>
       ),
     },
     {
@@ -88,11 +93,19 @@ const AppStack = () => {
     },
     {
       title: '操作',
-      width: 120,
+      width: 180,
       fixed: 'right',
       key: 'option',
       valueType: 'option',
       render: (_, { uuid, appState }) => [
+        <a
+          key="detail"
+          onClick={() => {
+            setConfig({ uuid: uuid || '', open: true });
+          }}
+        >
+          详情
+        </a>,
         <a
           key="start"
           onClick={() => handleScript({ uuid: uuid || '' }, appState === 1 ? 'stop' : 'start')}
@@ -116,33 +129,36 @@ const AppStack = () => {
   ];
 
   return (
-    <PageContainer>
-      <ProTable
-        rowKey="uuid"
-        actionRef={actionRef}
-        columns={columns}
-        search={false}
-        pagination={false}
-        request={async () => {
-          const res = await getApp({ uuid: '' });
+    <>
+      <PageContainer>
+        <ProTable
+          rowKey="uuid"
+          actionRef={actionRef}
+          columns={columns}
+          search={false}
+          pagination={false}
+          request={async () => {
+            const res = await getApp({ uuid: '' });
 
-          return Promise.resolve({
-            data: (res as any)?.data,
-            success: true,
-          });
-        }}
-        toolBarRender={() => [
-          <Button
-            key="new"
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={() => history.push('/app-stack/new')}
-          >
-            新建
-          </Button>,
-        ]}
-      />
-    </PageContainer>
+            return Promise.resolve({
+              data: (res as any)?.data,
+              success: true,
+            });
+          }}
+          toolBarRender={() => [
+            <Button
+              key="new"
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => history.push('/app-stack/new')}
+            >
+              新建
+            </Button>,
+          ]}
+        />
+      </PageContainer>
+      <Detail {...detailConfig} onClose={() => setConfig({ ...detailConfig, open: false })} />
+    </>
   );
 };
 
