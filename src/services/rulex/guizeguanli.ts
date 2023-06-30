@@ -85,23 +85,7 @@ export async function getRulesDetail(
   params: API.getRulesDetailParams,
   options?: { [key: string]: any },
 ) {
-  return request<{
-    code: number;
-    msg: string;
-    data: {
-      uuid?: string;
-      fromSource?: string[];
-      fromDevice?: string[];
-      name?: string;
-      type?: string;
-      status?: number;
-      expression?: string;
-      description?: string;
-      actions?: string;
-      success?: string;
-      failed?: string;
-    };
-  }>('/api/v1/rules/detail', {
+  return request<{ code: number; msg: string; data: Record<string, any> }>('/api/v1/rules/detail', {
     method: 'GET',
     params: {
       ...params,

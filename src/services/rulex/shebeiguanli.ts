@@ -98,3 +98,21 @@ export async function deleteDevices(
     ...(options || {}),
   });
 }
+
+/** 设备详情 设备列表 GET /api/v1/devices/detail */
+export async function getDevicesDetail(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getDevicesDetailParams,
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: Record<string, any> }>(
+    '/api/v1/devices/detail',
+    {
+      method: 'GET',
+      params: {
+        ...params,
+      },
+      ...(options || {}),
+    },
+  );
+}

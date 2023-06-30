@@ -2,15 +2,31 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 输出资源列表 输出资源列表 GET /api/v1/outends */
-export async function getOutends(options?: { [key: string]: any }) {
-  return request<{ type: string; name: string; description: string; config: Record<string, any> }>(
-    '/api/v1/outends',
-    {
-      method: 'GET',
-      ...(options || {}),
+/** 输出资源详情 输出资源列表 GET /api/v1/outends */
+export async function getOutends(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getOutendsParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code: number;
+    msg: string;
+    data?: {
+      uuid?: string;
+      name?: string;
+      type?: string;
+      autoRestart?: boolean;
+      description?: string;
+      state?: number;
+      config?: Record<string, any>;
+    };
+  }>('/api/v1/outends', {
+    method: 'GET',
+    params: {
+      ...params,
     },
-  );
+    ...(options || {}),
+  });
 }
 
 /** 更新输出资源 更新输出资源 PUT /api/v1/outends */

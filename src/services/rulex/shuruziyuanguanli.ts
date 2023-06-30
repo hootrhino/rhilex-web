@@ -82,3 +82,29 @@ export async function deleteInends(
     ...(options || {}),
   });
 }
+
+/** 输入资源详情 GET /api/v1/inends/detail */
+export async function getInendsDetail(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getInendsDetailParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code?: number;
+    msg?: string;
+    data?: {
+      uuid?: string;
+      state?: number;
+      type?: string;
+      name?: string;
+      description?: string;
+      config?: Record<string, any>;
+    };
+  }>('/api/v1/inends/detail', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}

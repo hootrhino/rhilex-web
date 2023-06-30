@@ -19,7 +19,23 @@ declare namespace API {
     uuid?: string;
   };
 
-  type getAppParams = {
+  type getAppDetailParams = {
+    uuid: string;
+  };
+
+  type getDevicesDetailParams = {
+    uuid: string;
+  };
+
+  type getInendsDetailParams = {
+    uuid: string;
+  };
+
+  type getOutendsParams = {
+    uuid: string;
+  };
+
+  type getPluginsDetailParams = {
     uuid: string;
   };
 

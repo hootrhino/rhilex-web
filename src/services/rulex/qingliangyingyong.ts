@@ -2,12 +2,8 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 应用详情 设备列表 GET /api/v1/app */
-export async function getApp(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getAppParams,
-  options?: { [key: string]: any },
-) {
+/** 应用列表 设备列表 GET /api/v1/app */
+export async function getApp(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
@@ -19,12 +15,9 @@ export async function getApp(
       appState?: number;
       filepath?: string;
       luaSource?: string;
-    };
+    }[];
   }>('/api/v1/app', {
     method: 'GET',
-    params: {
-      ...params,
-    },
     ...(options || {}),
   });
 }
@@ -79,6 +72,21 @@ export async function deleteApp(
 ) {
   return request<{ code: number; msg: string }>('/api/v1/app', {
     method: 'DELETE',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 应用详情 设备列表 GET /api/v1/app/detail */
+export async function getAppDetail(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getAppDetailParams,
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: Record<string, any> }>('/api/v1/app/detail', {
+    method: 'GET',
     params: {
       ...params,
     },
