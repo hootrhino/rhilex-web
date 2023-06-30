@@ -1523,24 +1523,13 @@
         "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852662-run"
       },
       "get": {
-        "summary": "输出资源详情",
+        "summary": "输出资源列表",
         "x-apifox-folder": "输出资源管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "输出资源列表",
         "tags": ["输出资源管理"],
-        "parameters": [
-          {
-            "name": "uuid",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "OUTe7db37b1ad4b456aba5e2963bde03fe3",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "成功",
@@ -1549,54 +1538,24 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
+                    "type": {
                       "type": "string"
                     },
-                    "data": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "config": {
                       "type": "object",
-                      "properties": {
-                        "uuid": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "string"
-                        },
-                        "autoRestart": {
-                          "type": "boolean"
-                        },
-                        "description": {
-                          "type": "string"
-                        },
-                        "state": {
-                          "type": "integer"
-                        },
-                        "config": {
-                          "type": "object",
-                          "properties": {},
-                          "x-apifox-orders": [],
-                          "x-apifox-ignore-properties": []
-                        }
-                      },
-                      "x-apifox-orders": [
-                        "uuid",
-                        "name",
-                        "type",
-                        "autoRestart",
-                        "description",
-                        "state",
-                        "config"
-                      ],
+                      "properties": {},
+                      "x-apifox-orders": [],
                       "x-apifox-ignore-properties": []
                     }
                   },
-                  "required": ["code", "msg"],
-                  "x-apifox-orders": ["code", "msg", "data"],
+                  "required": ["type", "name", "description", "config"],
+                  "x-apifox-orders": ["type", "name", "description", "config"],
                   "x-apifox-ignore-properties": []
                 },
                 "examples": {
@@ -1604,21 +1563,36 @@
                     "summary": "成功示例",
                     "value": {
                       "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "uuid": "OUTe7db37b1ad4b456aba5e2963bde03fe3",
-                        "state": 1,
-                        "type": "UDP_TARGET",
-                        "name": "UYDP1",
-                        "description": "",
-                        "config": {
-                          "collection": "rulex",
-                          "database": "rulexdb",
-                          "host": "127.0.0.1",
-                          "mongoUrl": "mongodb://root:root@127.0.0.1:27017/?connect=direct",
-                          "port": 2599
+                      "msg": "success",
+                      "data": [
+                        {
+                          "uuid": "OUT:617d514d82fb4ca1979c3f18ec4a9db6",
+                          "state": 0,
+                          "type": "MQTT",
+                          "name": "MQTT",
+                          "description": "MQTT",
+                          "config": {
+                            "port": 1883,
+                            "server": "127.0.0.1"
+                          }
+                        },
+                        {
+                          "uuid": "OUT:d847ad2a214f4abd9c9f0487c1afc4b7",
+                          "state": 1,
+                          "type": "MQTT",
+                          "name": "MQTT",
+                          "description": "MQTT",
+                          "config": {
+                            "clientId": "d021c10445c3142af979e4decdd22a797",
+                            "deviceName": "d021c10445c3142af979e4decdd22a797",
+                            "host": "127.0.0.1",
+                            "password": "da2b04e6b03c4aa587b3c43486e6ab2d",
+                            "port": 1883,
+                            "productId": "pe6a5a5889f2b449d97110965fa95e91f",
+                            "username": "d021c10445c3142af979e4decdd22a797"
+                          }
                         }
-                      }
+                      ]
                     }
                   }
                 }
@@ -1626,7 +1600,7 @@
             }
           }
         },
-        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-92112256-run"
+        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-30852663-run"
       }
     },
     "/api/v1/users": {
@@ -3247,6 +3221,91 @@
           }
         },
         "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-92093031-run"
+      }
+    },
+    "/api/v1/outends/detail": {
+      "get": {
+        "summary": "输出资源详情",
+        "x-apifox-folder": "输出资源管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "输出资源列表",
+        "tags": ["输出资源管理"],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "OUTe7db37b1ad4b456aba5e2963bde03fe3",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "autoRestart": {
+                          "type": "boolean"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "type": "integer"
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {},
+                          "x-apifox-orders": [],
+                          "x-apifox-ignore-properties": []
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "uuid",
+                        "name",
+                        "type",
+                        "autoRestart",
+                        "description",
+                        "state",
+                        "config"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": ["code", "msg"],
+                  "x-apifox-orders": ["code", "msg", "data"],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-92112256-run"
       }
     },
     "/api/v1/devices/detail": {

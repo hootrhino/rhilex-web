@@ -31,7 +31,7 @@ declare namespace API {
     uuid: string;
   };
 
-  type getOutendsParams = {
+  type getOutendsDetailParams = {
     uuid: string;
   };
 

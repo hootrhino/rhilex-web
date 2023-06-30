@@ -34,42 +34,13 @@
       {
         path: '/inends/new',
         name: '新建',
-        component: './Inends/UpdateForm',
+        component: './Inends/components/Update',
         hideInMenu: true,
       },
       {
         path: '/inends/edit/:id',
         name: '编辑',
-        component: './Inends/UpdateForm',
-        hideInMenu: true,
-      },
-    ],
-  },
-  {
-    path: '/rules',
-    name: '规则管理',
-    icon: 'profile',
-    routes: [
-      {
-        path: '/rules',
-        redirect: '/rules/list',
-      },
-      {
-        path: '/rules/list',
-        name: '规则列表',
-        component: './Rules',
-        hideInMenu: true,
-      },
-      {
-        path: '/rules/new',
-        name: '新建',
-        component: './Rules/components/Update',
-        hideInMenu: true,
-      },
-      {
-        path: '/rules/edit/:id',
-        name: '编辑',
-        component: './Rules/components/Update',
+        component: './Inends/components/Update',
         hideInMenu: true,
       },
     ],
@@ -92,13 +63,13 @@
       {
         path: '/outends/new',
         name: '新建',
-        component: './Outends/UpdateForm',
+        component: './Outends/components/Update',
         hideInMenu: true,
       },
       {
         path: '/outends/edit/:id',
         name: '编辑',
-        component: './Outends/UpdateForm',
+        component: './Outends/components/Update',
         hideInMenu: true,
       },
     ],
@@ -128,6 +99,35 @@
         path: '/device/edit/:id',
         name: '编辑',
         component: './Devices/components/BaseForm',
+        hideInMenu: true,
+      },
+    ],
+  },
+  {
+    path: '/rules',
+    name: '规则管理',
+    icon: 'profile',
+    routes: [
+      {
+        path: '/rules',
+        redirect: '/rules/list',
+      },
+      {
+        path: '/rules/list',
+        name: '规则列表',
+        component: './Rules',
+        hideInMenu: true,
+      },
+      {
+        path: '/rules/new',
+        name: '新建',
+        component: './Rules/components/Update',
+        hideInMenu: true,
+      },
+      {
+        path: '/rules/edit/:id',
+        name: '编辑',
+        component: './Rules/components/Update',
         hideInMenu: true,
       },
     ],

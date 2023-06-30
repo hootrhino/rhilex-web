@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { history } from 'umi';
 
@@ -9,6 +9,7 @@ import { Button, Popconfirm } from 'antd';
 
 import { message } from '@/components/PopupHack';
 import { deleteInends, getInends } from '@/services/rulex/shuruziyuanguanli';
+import Detail from './components/Detail';
 
 export type Item = {
   name: string;
@@ -21,6 +22,10 @@ export type Item = {
 
 const Sources = () => {
   const actionRef = useRef<ActionType>();
+  const [detailConfig, setConfig] = useState<{ uuid: string; open: boolean }>({
+    uuid: '',
+    open: false,
+  });
 
   // 删除
   const handleDelete = async (values: API.deleteInendsParams) => {
@@ -49,6 +54,14 @@ const Sources = () => {
     {
       title: '类型',
       dataIndex: 'type',
+      valueEnum: {
+        COAP: 'COAP 协议支持',
+        GENERIC_IOT_HUB: 'IoTHUB 平台支持',
+        RULEX_UDP: 'UUDP 协议支持',
+        HTTP: 'HTTP 协议支持',
+        NATS_SERVER: 'Nats 中间件支持',
+        GRPC: 'GRPC 协议支持',
+      },
     },
     {
       title: '状态',
@@ -72,13 +85,16 @@ const Sources = () => {
       fixed: 'right',
       key: 'option',
       valueType: 'option',
-      render: (_, record) => [
-        <a key="edit" onClick={() => history.push(`/inends/edit/${record.uuid}`)}>
+      render: (_, { uuid }) => [
+        <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
+          详情
+        </a>,
+        <a key="edit" onClick={() => history.push(`/inends/edit/${uuid}`)}>
           编辑
         </a>,
         <Popconfirm
           title="你确定要删除该资源?"
-          onConfirm={() => handleDelete({ uuid: record.uuid })}
+          onConfirm={() => handleDelete({ uuid })}
           okText="是"
           cancelText="否"
           key="delete"
@@ -90,33 +106,36 @@ const Sources = () => {
   ];
 
   return (
-    <PageContainer>
-      <ProTable
-        rowKey="uuid"
-        actionRef={actionRef}
-        columns={columns}
-        request={async () => {
-          const res = await getInends();
+    <>
+      <PageContainer>
+        <ProTable
+          rowKey="uuid"
+          actionRef={actionRef}
+          columns={columns}
+          request={async () => {
+            const res = await getInends();
 
-          return Promise.resolve({
-            data: (res as any)?.data,
-            success: true,
-          });
-        }}
-        search={false}
-        pagination={false}
-        toolBarRender={() => [
-          <Button
-            key="new"
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={() => history.push('/inends/new')}
-          >
-            新建
-          </Button>,
-        ]}
-      />
-    </PageContainer>
+            return Promise.resolve({
+              data: (res as any)?.data,
+              success: true,
+            });
+          }}
+          search={false}
+          pagination={false}
+          toolBarRender={() => [
+            <Button
+              key="new"
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => history.push('/inends/new')}
+            >
+              新建
+            </Button>,
+          ]}
+        />
+      </PageContainer>
+      <Detail {...detailConfig} onClose={() => setConfig({ ...detailConfig, open: false })} />
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
@@ -8,6 +8,7 @@ import { history } from 'umi';
 
 import { message } from '@/components/PopupHack';
 import { deleteOutends, getOutends } from '@/services/rulex/shuchuziyuanguanli';
+import Detail from './components/Detail';
 
 export type Item = {
   name: string;
@@ -20,6 +21,10 @@ export type Item = {
 
 const Targets = () => {
   const actionRef = useRef<ActionType>();
+  const [detailConfig, setConfig] = useState<{ uuid: string; open: boolean }>({
+    uuid: '',
+    open: false,
+  });
 
   // 删除
   const handleOnDelete = async (values: API.deleteOutendsParams) => {
@@ -48,8 +53,12 @@ const Targets = () => {
     {
       title: '类型',
       dataIndex: 'type',
+      valueEnum: {
+        MONGO_SINGLE: 'MongoDB',
+        MQTT: 'MQTT Broker',
+        UDP_TARGET: 'UDP Server',
+      },
     },
-
     {
       title: '状态',
       dataIndex: 'state',
@@ -61,7 +70,6 @@ const Targets = () => {
         3: { text: '停止', status: 'Default' },
       },
     },
-
     {
       title: '信息',
       dataIndex: 'description',
@@ -71,15 +79,18 @@ const Targets = () => {
       title: '操作',
       valueType: 'option',
       key: 'option',
-      width: 100,
+      width: 150,
       fixed: 'right',
-      render: (_, record) => [
-        <a key="edit" onClick={() => history.push(`/outends/edit/${record.uuid}`)}>
+      render: (_, { uuid }) => [
+        <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
+          详情
+        </a>,
+        <a key="edit" onClick={() => history.push(`/outends/edit/${uuid}`)}>
           编辑
         </a>,
         <Popconfirm
           title="确定要删除该目标？"
-          onConfirm={() => handleOnDelete({ uuid: record.uuid })}
+          onConfirm={() => handleOnDelete({ uuid })}
           key="delete"
         >
           <a>删除</a>
@@ -112,6 +123,7 @@ const Targets = () => {
           ]}
         />
       </PageContainer>
+      <Detail {...detailConfig} onClose={() => setConfig({ ...detailConfig, open: false })} />
     </>
   );
 };
