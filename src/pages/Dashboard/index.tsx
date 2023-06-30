@@ -12,16 +12,16 @@ import ImportIcon from '@/assets/fontIcons/import.svg';
 import PluginIcon from '@/assets/fontIcons/plugin.svg';
 import RuleIcon from '@/assets/fontIcons/rule.svg';
 
-import { Tag } from 'antd';
+// import { Tag } from 'antd';
 
-enum levelColor {
-  fatal = 'error',
-  error = 'error',
-  warn = 'warning',
-  warning = 'warning',
-  debug = 'default',
-  info = 'blue',
-}
+// enum levelColor {
+//   fatal = 'error',
+//   error = 'error',
+//   warn = 'warning',
+//   warning = 'warning',
+//   debug = 'default',
+//   info = 'blue',
+// }
 
 const { Divider } = StatisticCard;
 
@@ -32,7 +32,7 @@ type Pagination = {
 };
 
 const Dashboard = () => {
-  const { logs } = useModel('useWebsocket');
+  const { logs, handleOnsearch } = useModel('useWebsocket');
   const { data } = useModel('useSystem');
   const [responsive, setResponsive] = useState(false);
   const [pagination, setPagination] = useState<Pagination>({ current: 1, pageSize: 10, total: 0 });
@@ -50,8 +50,29 @@ const Dashboard = () => {
     {
       title: '等级',
       dataIndex: 'level',
-      renderText: (level: string) => <Tag color={levelColor[level]}>{level}</Tag>,
+      // renderText: (level: string) => <Tag color={levelColor[level]}>{level}</Tag>,
       width: 80,
+      filters: true,
+      onFilter: true,
+      valueEnum: {
+        fatal: { text: 'Fatal', status: 'Error' },
+        error: {
+          text: 'Error',
+          status: 'Error',
+        },
+        warn: {
+          text: 'Warn',
+          status: 'Warning',
+        },
+        debug: {
+          text: 'Debug',
+          status: 'Default',
+        },
+        info: {
+          text: 'Info',
+          status: 'Processing',
+        },
+      },
     },
     {
       title: '内容',
@@ -211,7 +232,20 @@ const Dashboard = () => {
             ...pagination,
             onChange: (current, pageSize) => setPagination({ ...pagination, current, pageSize }),
           }}
-          options={{ search: true, reload: false, setting: false, density: false }}
+          options={{
+            search: {
+              onSearch: (keyword: string) => {
+                handleOnsearch(keyword);
+                return true;
+              },
+              placeholder: '请输入内容进行搜索',
+              allowClear: true,
+            },
+            reload: false,
+            setting: false,
+            density: false,
+          }}
+          onChange={(_, filters) => handleOnsearch(undefined, filters)}
         />
       </ProCard>
     </PageContainer>

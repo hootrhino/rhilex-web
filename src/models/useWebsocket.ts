@@ -1,4 +1,5 @@
 import { useWebSocket } from 'ahooks';
+import { FilterValue } from 'antd/es/table/interface';
 import orderBy from 'lodash/orderBy';
 import slice from 'lodash/slice';
 import { useEffect, useState } from 'react';
@@ -26,6 +27,19 @@ const useWebsocket = () => {
     },
   });
 
+  const handleOnsearch = (keyword?: string, filters?: Record<string, FilterValue | null>) => {
+    let filteredLogs = logs;
+    if (keyword) {
+      filteredLogs = logs.filter((log) => {
+        return log.msg.includes(keyword);
+      });
+    }
+    if (filters) {
+      filteredLogs = logs.filter((log) => filters?.level?.includes(log?.level));
+    }
+    setLogs(filteredLogs);
+  };
+
   useEffect(() => {
     if (connected) {
       setTimeout(() => {
@@ -48,7 +62,7 @@ const useWebsocket = () => {
     }
   }, [sockUrl]);
 
-  return { logs };
+  return { logs, handleOnsearch };
 };
 
 export default useWebsocket;
