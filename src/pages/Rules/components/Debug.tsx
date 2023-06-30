@@ -11,11 +11,11 @@ import AceEditor from 'react-ace';
 import { useModel } from 'umi';
 
 type DebugProps = ModalFormProps & {
-  id: string;
+  uuid: string;
   onClose?: () => void;
 };
 
-const Debug = ({ id, onClose, ...props }: DebugProps) => {
+const Debug = ({ uuid, onClose, ...props }: DebugProps) => {
   const formRef = useRef<ProFormInstance>();
   const { logs } = useModel('useWebsocket');
 
@@ -39,9 +39,7 @@ const Debug = ({ id, onClose, ...props }: DebugProps) => {
         },
       }}
       onFinish={async () => {
-        const filterLogs = logs
-          ?.filter((log) => log?.logType === 'debugRule')
-          ?.filter((item) => item?.ruleId === id);
+        const filterLogs = logs?.filter((log) => log?.topic === `rule/test/${uuid}`);
         formRef.current?.setFieldsValue({ output: filterLogs.join('\n') });
 
         return false;

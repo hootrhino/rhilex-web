@@ -16,9 +16,16 @@ export type Item = {
 
 const Rules = () => {
   const actionRef = useRef<ActionType>();
-  const [openDetail, setOpenDetail] = useState<boolean>(false);
-  const [openDebug, setOpenDebug] = useState<boolean>(false);
-  const [uuid, setId] = useState<string>('');
+  const [detailConfig, setDetailConfig] = useState<{
+    open: boolean;
+    type: 'detail' | 'log';
+    uuid: string;
+  }>({ open: false, type: 'detail', uuid: '' });
+  const [debugConfig, setDebugConfig] = useState<{ open: boolean; uuid: string }>({
+    open: false,
+    uuid: '',
+  });
+  // const [uuid, setId] = useState<string>('');
 
   const { run: getSources } = useModel('useSource');
   const { run: getDevices } = useModel('useDevice');
@@ -65,19 +72,26 @@ const Rules = () => {
       title: '操作',
       valueType: 'option',
       key: 'option',
-      width: 180,
+      width: 200,
       fixed: 'right',
       render: (_, { uuid }) => [
-        <a key="debug" onClick={() => setOpenDebug(true)}>
+        <a key="debug" onClick={() => setDebugConfig({ open: true, uuid })}>
           测试
+        </a>,
+        <a
+          key="log"
+          onClick={() => {
+            setDetailConfig({ open: true, type: 'log', uuid });
+          }}
+        >
+          日志
         </a>,
         <a
           key="detail"
           onClick={() => {
             getSources();
             getDevices();
-            setId(uuid);
-            setOpenDetail(true);
+            setDetailConfig({ open: true, type: 'detail', uuid });
           }}
         >
           详情
@@ -120,12 +134,11 @@ const Rules = () => {
           ]}
         />
       </PageContainer>
-      <Detail id={uuid} open={openDetail} onClose={() => setOpenDetail(false)} />
+      <Detail onClose={() => setDetailConfig({ ...detailConfig, open: false })} {...detailConfig} />
       <Debug
-        id={uuid}
-        open={openDebug}
-        onOpenChange={(visible: boolean) => setOpenDebug(visible)}
-        onClose={() => setOpenDebug(false)}
+        onOpenChange={(visible: boolean) => setDebugConfig({ ...debugConfig, open: visible })}
+        onClose={() => setDebugConfig({ ...debugConfig, open: false })}
+        {...debugConfig}
       />
     </>
   );

@@ -1,11 +1,15 @@
+import LogTable from '@/components/LogTable';
+import { LogItem } from '@/models/useWebsocket';
 import { getRulesDetail } from '@/services/rulex/guizeguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps } from 'antd';
+import { useEffect, useState } from 'react';
 import { history, useModel } from 'umi';
 
 type DetailProps = DrawerProps & {
-  id: string;
+  uuid: string;
+  type: 'detail' | 'log';
 };
 
 type Option = {
@@ -13,9 +17,11 @@ type Option = {
   value: string;
 };
 
-const Detail = ({ open, id, ...props }: DetailProps) => {
+const Detail = ({ uuid, type, ...props }: DetailProps) => {
   const { data: sources } = useModel('useSource');
   const { data: devices } = useModel('useDevice');
+  const { logs } = useModel('useWebsocket');
+  const [data, setData] = useState<LogItem[]>([]);
 
   const columns: ProDescriptionsItemProps<Record<string, any>>[] = [
     {
@@ -68,34 +74,43 @@ const Detail = ({ open, id, ...props }: DetailProps) => {
     },
   ];
 
+  useEffect(() => {
+    if (type === 'log') {
+      const filterLogs = logs?.filter((log) => log?.topic === `rule/log/${uuid}`);
+      setData(filterLogs);
+    }
+  }, [type, logs]);
+
   return (
     <Drawer
-      title="规则详情"
+      title={type === 'detail' ? '规则详情' : '规则日志'}
       placement="right"
-      // onClose={() => setOpen(false)}
-      open={open}
-      width="40%"
+      width="50%"
       {...props}
     >
-      <ProDescriptions
-        column={1}
-        columns={columns}
-        labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
-        request={async () => {
-          const res = await getRulesDetail({ uuid: id });
+      {type === 'detail' ? (
+        <ProDescriptions
+          column={1}
+          columns={columns}
+          labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
+          request={async () => {
+            const res = await getRulesDetail({ uuid });
 
-          return Promise.resolve({
-            success: true,
-            data: {
-              ...res?.data,
-              sourceType:
-                res?.data?.fromDevice && res?.data?.fromDevice?.length > 0
-                  ? 'fromDevice'
-                  : 'fromSource',
-            },
-          });
-        }}
-      />
+            return Promise.resolve({
+              success: true,
+              data: {
+                ...res?.data,
+                sourceType:
+                  res?.data?.fromDevice && res?.data?.fromDevice?.length > 0
+                    ? 'fromDevice'
+                    : 'fromSource',
+              },
+            });
+          }}
+        />
+      ) : (
+        <LogTable dataSource={data} options={false} />
+      )}
     </Drawer>
   );
 };

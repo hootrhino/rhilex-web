@@ -21,9 +21,14 @@ type TableItem = {
 
 const AppStack = () => {
   const actionRef = useRef<ActionType>();
-  const [detailConfig, setConfig] = useState<{ uuid: string; open: boolean }>({
+  const [detailConfig, setConfig] = useState<{
+    uuid: string;
+    open: boolean;
+    type: 'detail' | 'log';
+  }>({
     uuid: '',
     open: false,
+    type: 'detail',
   });
 
   // 删除
@@ -61,14 +66,17 @@ const AppStack = () => {
       title: 'APP 名称',
       dataIndex: 'name',
       ellipsis: true,
+      width: 150,
     },
     {
       title: 'APP 版本',
       dataIndex: 'version',
+      width: 100,
     },
     {
       title: '是否自启',
       dataIndex: 'autoStart',
+      width: 100,
       renderText: (autoStart) => (
         <Tag color={autoStart ? 'success' : 'error'}>{autoStart === true ? '开启' : '关闭'}</Tag>
       ),
@@ -93,15 +101,23 @@ const AppStack = () => {
     },
     {
       title: '操作',
-      width: 180,
+      width: 200,
       fixed: 'right',
       key: 'option',
       valueType: 'option',
       render: (_, { uuid, appState }) => [
         <a
+          key="log"
+          onClick={() => {
+            setConfig({ uuid: uuid || '', open: true, type: 'log' });
+          }}
+        >
+          日志
+        </a>,
+        <a
           key="detail"
           onClick={() => {
-            setConfig({ uuid: uuid || '', open: true });
+            setConfig({ uuid: uuid || '', open: true, type: 'detail' });
           }}
         >
           详情

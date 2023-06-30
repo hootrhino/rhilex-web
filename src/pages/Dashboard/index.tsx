@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useModel } from 'umi';
 
 import { RingProgress } from '@ant-design/charts';
-import { PageContainer, ProCard, ProTable, StatisticCard } from '@ant-design/pro-components';
+import { PageContainer, ProCard, StatisticCard } from '@ant-design/pro-components';
+import { FilterValue } from 'antd/es/table/interface';
 import add from 'lodash/add';
-import { nanoid } from 'nanoid';
 import RcResizeObserver from 'rc-resize-observer';
 
 import ExportIcon from '@/assets/fontIcons/export.svg';
@@ -12,78 +12,36 @@ import ImportIcon from '@/assets/fontIcons/import.svg';
 import PluginIcon from '@/assets/fontIcons/plugin.svg';
 import RuleIcon from '@/assets/fontIcons/rule.svg';
 
-// import { Tag } from 'antd';
-
-// enum levelColor {
-//   fatal = 'error',
-//   error = 'error',
-//   warn = 'warning',
-//   warning = 'warning',
-//   debug = 'default',
-//   info = 'blue',
-// }
+import LogTable from '@/components/LogTable';
+import { LogItem } from '@/models/useWebsocket';
 
 const { Divider } = StatisticCard;
 
-type Pagination = {
-  current: number;
-  pageSize: number;
-  total: number;
-};
-
 const Dashboard = () => {
-  const { logs, handleOnsearch } = useModel('useWebsocket');
+  const { logs } = useModel('useWebsocket');
   const { data } = useModel('useSystem');
+  const [logData, setLogData] = useState<LogItem[]>([]);
   const [responsive, setResponsive] = useState(false);
-  const [pagination, setPagination] = useState<Pagination>({ current: 1, pageSize: 10, total: 0 });
 
   const inCount = add(data?.statistic?.inSuccess || 0, data?.statistic?.inFailed || 0);
   const outCount = add(data?.statistic?.outSuccess || 0, data?.statistic?.outFailed || 0);
 
-  const columns = [
-    {
-      title: '时间',
-      dataIndex: 'time',
-      valueType: 'dateTime',
-      width: 180,
-    },
-    {
-      title: '等级',
-      dataIndex: 'level',
-      // renderText: (level: string) => <Tag color={levelColor[level]}>{level}</Tag>,
-      width: 80,
-      filters: true,
-      onFilter: true,
-      valueEnum: {
-        fatal: { text: 'Fatal', status: 'Error' },
-        error: {
-          text: 'Error',
-          status: 'Error',
-        },
-        warn: {
-          text: 'Warn',
-          status: 'Warning',
-        },
-        debug: {
-          text: 'Debug',
-          status: 'Default',
-        },
-        info: {
-          text: 'Info',
-          status: 'Processing',
-        },
-      },
-    },
-    {
-      title: '内容',
-      dataIndex: 'msg',
-      ellipsis: true,
-    },
-  ];
+  const handleOnsearch = (keyword?: string, filters?: Record<string, FilterValue | null>) => {
+    let filteredLogs = logs;
+    if (keyword) {
+      filteredLogs = logs.filter((log) => {
+        return log.msg.includes(keyword);
+      });
+    }
+    if (filters) {
+      filteredLogs = logs.filter((log) => filters?.level?.includes(log?.level));
+    }
+    setLogData(filteredLogs);
+  };
 
   useEffect(() => {
-    setPagination({ ...pagination, total: logs?.length });
-  }, [logs?.length]);
+    setLogData(logs);
+  }, [logs]);
 
   return (
     <PageContainer>
@@ -222,16 +180,9 @@ const Dashboard = () => {
         </StatisticCard.Group>
       </RcResizeObserver>
       <ProCard className="mt-6">
-        <ProTable
-          rowKey={() => nanoid()}
-          headerTitle="日志列表"
-          columns={columns}
-          dataSource={logs}
-          search={false}
-          pagination={{
-            ...pagination,
-            onChange: (current, pageSize) => setPagination({ ...pagination, current, pageSize }),
-          }}
+        <LogTable
+          dataSource={logData}
+          filters={true}
           options={{
             search: {
               onSearch: (keyword: string) => {
@@ -245,7 +196,7 @@ const Dashboard = () => {
             setting: false,
             density: false,
           }}
-          onChange={(_, filters) => handleOnsearch(undefined, filters)}
+          onChange={(_, filters: any) => handleOnsearch(undefined, filters)}
         />
       </ProCard>
     </PageContainer>
