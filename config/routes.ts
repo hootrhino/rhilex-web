@@ -63,13 +63,13 @@
       {
         path: '/rules/new',
         name: '新建',
-        component: './Rules/UpdateForm',
+        component: './Rules/components/Update',
         hideInMenu: true,
       },
       {
         path: '/rules/edit/:id',
         name: '编辑',
-        component: './Rules/UpdateForm',
+        component: './Rules/components/Update',
         hideInMenu: true,
       },
     ],

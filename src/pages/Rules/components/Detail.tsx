@@ -1,0 +1,103 @@
+import { getRulesDetail } from '@/services/rulex/guizeguanli';
+import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
+import { ProDescriptions } from '@ant-design/pro-components';
+import { Drawer, DrawerProps } from 'antd';
+import { history, useModel } from 'umi';
+
+type DetailProps = DrawerProps & {
+  id: string;
+};
+
+type Option = {
+  label: string;
+  value: string;
+};
+
+const Detail = ({ open, id, ...props }: DetailProps) => {
+  const { data: sources } = useModel('useSource');
+  const { data: devices } = useModel('useDevice');
+
+  const columns: ProDescriptionsItemProps<Record<string, any>>[] = [
+    {
+      title: '规则名称',
+      dataIndex: 'name',
+      ellipsis: true,
+    },
+    {
+      title: '数据来源',
+      dataIndex: 'sourceType',
+      valueEnum: {
+        fromSource: '输入资源',
+        fromDevice: '设备',
+      },
+    },
+    {
+      title: '输入资源',
+      dataIndex: 'fromSource',
+      render: (_, { fromSource, fromDevice }) => {
+        let url = '';
+        let name: string = '';
+
+        if (fromSource?.length > 0) {
+          const current = sources?.find((item: Option) => item?.value === fromSource?.[0]);
+          name = current?.label || '';
+          url = '/inends';
+        } else {
+          const current = devices?.find((item: Option) => item?.value === fromDevice?.[0]);
+          name = current?.label || '';
+          url = '/device';
+        }
+
+        return <a onClick={() => history.push(url)}>{name}</a>;
+      },
+    },
+    {
+      title: '规则回调',
+      dataIndex: 'actions',
+      valueType: 'code',
+    },
+    {
+      title: '成功回调',
+      dataIndex: 'success',
+      valueType: 'code',
+    },
+    {
+      title: '失败回调',
+      dataIndex: 'failed',
+      valueType: 'code',
+    },
+  ];
+
+  return (
+    <Drawer
+      title="规则详情"
+      placement="right"
+      // onClose={() => setOpen(false)}
+      open={open}
+      width="40%"
+      {...props}
+    >
+      <ProDescriptions
+        column={1}
+        columns={columns}
+        labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
+        request={async () => {
+          const res = await getRulesDetail({ uuid: id });
+
+          return Promise.resolve({
+            success: true,
+            data: {
+              ...res?.data,
+              sourceType:
+                res?.data?.fromDevice && res?.data?.fromDevice?.length > 0
+                  ? 'fromDevice'
+                  : 'fromSource',
+            },
+          });
+        }}
+      />
+    </Drawer>
+  );
+};
+
+export default Detail;

@@ -1,37 +1,27 @@
+import { PlusOutlined } from '@ant-design/icons';
+import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
+import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 
-import { PlusOutlined } from '@ant-design/icons';
-import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
-import {
-  ActionType,
-  PageContainer,
-  ProColumns,
-  ProDescriptions,
-  ProTable,
-} from '@ant-design/pro-components';
-import { Button, Drawer, Popconfirm } from 'antd';
-
 import { message } from '@/components/PopupHack';
-import { deleteRules, getRules, getRulesDetail } from '@/services/rulex/guizeguanli';
+import { deleteRules, getRules } from '@/services/rulex/guizeguanli';
 import { history, useModel } from 'umi';
+import Debug from './components/Debug';
+import Detail from './components/Detail';
 
 export type Item = {
   uuid: string;
   [key: string]: any;
 };
 
-type Option = {
-  label: string;
-  value: string;
-};
-
 const Rules = () => {
   const actionRef = useRef<ActionType>();
-  const [open, setOpen] = useState<boolean>(false);
-  const [uuid, setId] = useState<string>();
+  const [openDetail, setOpenDetail] = useState<boolean>(false);
+  const [openDebug, setOpenDebug] = useState<boolean>(false);
+  const [uuid, setId] = useState<string>('');
 
-  const { data: sources, run: getSources } = useModel('useSource');
-  const { data: devices, run: getDevices } = useModel('useDevice');
+  const { run: getSources } = useModel('useSource');
+  const { run: getDevices } = useModel('useDevice');
 
   // 删除
   const handleOnDelete = async (value: API.deleteRulesParams) => {
@@ -75,16 +65,19 @@ const Rules = () => {
       title: '操作',
       valueType: 'option',
       key: 'option',
-      width: 150,
+      width: 180,
       fixed: 'right',
       render: (_, { uuid }) => [
+        <a key="debug" onClick={() => setOpenDebug(true)}>
+          测试
+        </a>,
         <a
           key="detail"
           onClick={() => {
             getSources();
             getDevices();
             setId(uuid);
-            setOpen(true);
+            setOpenDetail(true);
           }}
         >
           详情
@@ -100,57 +93,6 @@ const Rules = () => {
           <a>删除</a>
         </Popconfirm>,
       ],
-    },
-  ];
-
-  const detailColumns: ProDescriptionsItemProps<Record<string, any>>[] = [
-    {
-      title: '规则名称',
-      dataIndex: 'name',
-      ellipsis: true,
-    },
-    {
-      title: '数据来源',
-      dataIndex: 'sourceType',
-      valueEnum: {
-        fromSource: '输入资源',
-        fromDevice: '设备',
-      },
-    },
-    {
-      title: '输入资源',
-      dataIndex: 'fromSource',
-      render: (_, { fromSource, fromDevice }) => {
-        let url = '';
-        let name: string = '';
-
-        if (fromSource?.length > 0) {
-          const current = sources?.find((item: Option) => item?.value === fromSource?.[0]);
-          name = current?.label || '';
-          url = '/inends';
-        } else {
-          const current = devices?.find((item: Option) => item?.value === fromDevice?.[0]);
-          name = current?.label || '';
-          url = '/device';
-        }
-
-        return <a onClick={() => history.push(url)}>{name}</a>;
-      },
-    },
-    {
-      title: '规则回调',
-      dataIndex: 'actions',
-      valueType: 'code',
-    },
-    {
-      title: '成功回调',
-      dataIndex: 'success',
-      valueType: 'code',
-    },
-    {
-      title: '失败回调',
-      dataIndex: 'failed',
-      valueType: 'code',
     },
   ];
 
@@ -178,33 +120,13 @@ const Rules = () => {
           ]}
         />
       </PageContainer>
-      <Drawer
-        title="规则详情"
-        placement="right"
-        onClose={() => setOpen(false)}
-        open={open}
-        width="40%"
-      >
-        <ProDescriptions
-          column={1}
-          columns={detailColumns}
-          labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
-          request={async () => {
-            const res = await getRulesDetail({ uuid });
-
-            return Promise.resolve({
-              success: true,
-              data: {
-                ...res?.data,
-                sourceType:
-                  res?.data?.fromDevice && res?.data?.fromDevice?.length > 0
-                    ? 'fromDevice'
-                    : 'fromSource',
-              },
-            });
-          }}
-        />
-      </Drawer>
+      <Detail id={uuid} open={openDetail} onClose={() => setOpenDetail(false)} />
+      <Debug
+        id={uuid}
+        open={openDebug}
+        onOpenChange={(visible: boolean) => setOpenDebug(visible)}
+        onClose={() => setOpenDebug(false)}
+      />
     </>
   );
 };
