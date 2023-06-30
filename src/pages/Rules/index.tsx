@@ -25,7 +25,6 @@ const Rules = () => {
     open: false,
     uuid: '',
   });
-  // const [uuid, setId] = useState<string>('');
 
   const { run: getSources } = useModel('useSource');
   const { run: getDevices } = useModel('useDevice');

@@ -150,7 +150,7 @@
       {
         path: '/plugins/:id/detail',
         name: '客户端列表',
-        component: './Plugins/Detail',
+        component: './Plugins/components/Detail',
         hideInMenu: true,
       },
     ],

@@ -1,14 +1,17 @@
+import { useState } from 'react';
 import { history, Link } from 'umi';
-// import { useHistory } from '@umijs/hooks';
 
 import type { ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 
 import { getPlugins } from '@/services/rulex/chajianguanli';
+import Ping from './components/Ping';
 
 type Item = Record<string, any>;
 
 const Plugins = () => {
+  const [open, setOpen] = useState<boolean>(false);
+
   const columns: ProColumns<Item>[] = [
     {
       title: '插件名称',
@@ -51,8 +54,20 @@ const Plugins = () => {
       fixed: 'right',
       key: 'option',
       render: (_, { uuid }) => {
+        const ping = [
+          <a
+            key="ping"
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            测速
+          </a>,
+        ];
+
         return uuid === 'RULEX-MqttServer'
           ? [
+              ...ping,
               <a
                 key="detail"
                 onClick={() => {
@@ -62,28 +77,35 @@ const Plugins = () => {
                 详情
               </a>,
             ]
-          : '-';
+          : ping;
       },
     },
   ];
 
   return (
-    <PageContainer>
-      <ProTable
-        rowKey="uuid"
-        columns={columns}
-        request={async () => {
-          const res = await getPlugins();
+    <>
+      <PageContainer>
+        <ProTable
+          rowKey="uuid"
+          columns={columns}
+          request={async () => {
+            const res = await getPlugins();
 
-          return Promise.resolve({
-            data: (res as any)?.data,
-            success: true,
-          });
-        }}
-        search={false}
-        pagination={false}
+            return Promise.resolve({
+              data: (res as any)?.data,
+              success: true,
+            });
+          }}
+          search={false}
+          pagination={false}
+        />
+      </PageContainer>
+      <Ping
+        open={open}
+        onOpenChange={(visible: boolean) => setOpen(visible)}
+        onClose={() => setOpen(false)}
       />
-    </PageContainer>
+    </>
   );
 };
 

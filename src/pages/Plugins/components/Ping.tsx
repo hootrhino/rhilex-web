@@ -5,72 +5,51 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/mode-sh';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/webpack-resolver';
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 import { useRef } from 'react';
 import AceEditor from 'react-ace';
 import { useModel } from 'umi';
 
 type DebugProps = ModalFormProps & {
-  uuid: string;
   onClose?: () => void;
 };
 
-const Debug = ({ uuid, onClose, ...props }: DebugProps) => {
+const Ping = ({ onClose, ...props }: DebugProps) => {
   const formRef = useRef<ProFormInstance>();
   const { logs } = useModel('useWebsocket');
 
   return (
     <ModalForm
       formRef={formRef}
-      title="测试脚本"
+      title="网络测速"
       submitter={{
-        render: (props) => {
+        render: () => {
           return [
-            <Button key="close" onClick={onClose}>
+            <Button key="close" onClick={onClose} type="primary">
               关闭
-            </Button>,
-            <Button key="reset" onClick={props.reset}>
-              重置
-            </Button>,
-            <Button key="debug" type="primary" onClick={props.submit}>
-              测试
             </Button>,
           ];
         },
       }}
-      onFinish={async () => {
-        const filterLogs = logs?.filter((log) => log?.topic === `rule/test/${uuid}`);
-        formRef.current?.setFieldsValue({ output: filterLogs.join('\n') });
-
-        return false;
-      }}
       {...props}
     >
-      <ProForm.Item
-        name="input"
-        label="输入数据"
-        rules={[{ required: true, message: '请输入数据' }]}
-      >
-        <AceEditor
-          mode="sh"
-          theme="monokai"
-          editorProps={{ $blockScrolling: true }}
-          width="100%"
-          style={{ height: 200, fontFamily: 'monospace' }}
-          fontSize={16}
-          showPrintMargin={false}
-          highlightActiveLine={true}
-          enableSnippets={true}
-          setOptions={{
-            enableLiveAutocompletion: true,
-            enableBasicAutocompletion: true,
-            enableSnippets: true,
-            tabSize: 2,
+      <ProForm.Item name="ip" label="地址">
+        <Input.Search
+          placeholder="请输入地址"
+          allowClear
+          enterButton="测试"
+          size="large"
+          onSearch={(value) => {
+            console.log(value);
+            const filterLogs = logs?.filter(
+              (log) => log?.topic === 'plugin/ICMPSenderPing/ICMPSender',
+            );
+            formRef.current?.setFieldsValue({ output: filterLogs.join('\n') });
           }}
         />
       </ProForm.Item>
 
-      <ProForm.Item name="output" label="输出结果">
+      <ProForm.Item name="output" label="输出">
         <AceEditor
           mode="sh"
           theme="monokai"
@@ -94,4 +73,4 @@ const Debug = ({ uuid, onClose, ...props }: DebugProps) => {
   );
 };
 
-export default Debug;
+export default Ping;
