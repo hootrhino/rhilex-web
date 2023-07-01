@@ -1,3 +1,4 @@
+import { postPluginService } from '@/services/rulex/chajianguanli';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProForm } from '@ant-design/pro-components';
 import 'ace-builds/src-noconflict/ace';
@@ -8,15 +9,25 @@ import 'ace-builds/webpack-resolver';
 import { Button, Input } from 'antd';
 import { useRef } from 'react';
 import AceEditor from 'react-ace';
-import { useModel } from 'umi';
+import { useModel, useRequest } from 'umi';
 
 type DebugProps = ModalFormProps & {
+  uuid: string;
   onClose?: () => void;
 };
 
-const Ping = ({ onClose, ...props }: DebugProps) => {
+const Ping = ({ uuid, onClose, ...props }: DebugProps) => {
   const formRef = useRef<ProFormInstance>();
   const { logs } = useModel('useWebsocket');
+
+  // 测速
+  const { run } = useRequest((values) => postPluginService(values), {
+    manual: true,
+    onSuccess: () => {
+      const filterLogs = logs?.filter((log) => log?.topic === `plugin/ICMPSenderPing/${uuid}`);
+      formRef.current?.setFieldsValue({ output: filterLogs.join('\n') });
+    },
+  });
 
   return (
     <ModalForm
@@ -39,13 +50,7 @@ const Ping = ({ onClose, ...props }: DebugProps) => {
           allowClear
           enterButton="测试"
           size="large"
-          onSearch={(value) => {
-            console.log(value);
-            const filterLogs = logs?.filter(
-              (log) => log?.topic === 'plugin/ICMPSenderPing/ICMPSender',
-            );
-            formRef.current?.setFieldsValue({ output: filterLogs.join('\n') });
-          }}
+          onSearch={(value: string) => run({ uuid, name: 'ping', args: [value] })}
         />
       </ProForm.Item>
 

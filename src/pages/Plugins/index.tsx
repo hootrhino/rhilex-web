@@ -98,6 +98,7 @@ const Plugins = () => {
           }}
           search={false}
           pagination={false}
+          scroll={{ x: 1000 }}
         />
       </PageContainer>
       <Ping
