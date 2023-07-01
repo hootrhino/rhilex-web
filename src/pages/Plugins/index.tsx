@@ -10,7 +10,10 @@ import Ping from './components/Ping';
 type Item = Record<string, any>;
 
 const Plugins = () => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [pingConfig, setConfig] = useState<{ open: boolean; uuid: string }>({
+    open: false,
+    uuid: '',
+  });
 
   const columns: ProColumns<Item>[] = [
     {
@@ -58,7 +61,7 @@ const Plugins = () => {
           <a
             key="ping"
             onClick={() => {
-              setOpen(true);
+              setConfig({ open: true, uuid });
             }}
           >
             测速
@@ -102,9 +105,9 @@ const Plugins = () => {
         />
       </PageContainer>
       <Ping
-        open={open}
-        onOpenChange={(visible: boolean) => setOpen(visible)}
-        onClose={() => setOpen(false)}
+        {...pingConfig}
+        onOpenChange={(visible: boolean) => setConfig({ ...pingConfig, open: visible })}
+        onClose={() => setConfig({ ...pingConfig, open: false })}
       />
     </>
   );

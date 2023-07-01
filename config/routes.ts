@@ -92,13 +92,13 @@
       {
         path: '/device/new',
         name: '新建',
-        component: './Devices/components/BaseForm',
+        component: './Devices/components/Update',
         hideInMenu: true,
       },
       {
         path: '/device/edit/:id',
         name: '编辑',
-        component: './Devices/components/BaseForm',
+        component: './Devices/components/Update',
         hideInMenu: true,
       },
     ],
