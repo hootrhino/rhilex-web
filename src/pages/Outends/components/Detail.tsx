@@ -2,6 +2,7 @@ import { getOutendsDetail } from '@/services/rulex/shuchuziyuanguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps } from 'antd';
+import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
 
@@ -11,11 +12,6 @@ type DetailProps = DrawerProps & {
 
 const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]> = {
   COMMON: [
-    {
-      title: 'UUID',
-      dataIndex: 'uuid',
-      copyable: true,
-    },
     {
       title: '目标名称',
       dataIndex: 'name',
@@ -48,54 +44,54 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
   MONGO_SINGLE: [
     {
       title: 'MongoDB URL',
-      dataIndex: ['config', 'mongoUrl'],
+      dataIndex: 'mongoUrl',
       copyable: true,
     },
     {
       title: 'MongoDB 数据库',
-      dataIndex: ['config', 'database'],
+      dataIndex: 'database',
     },
     {
       title: 'MongoDB 集合',
-      dataIndex: ['config', 'collection'],
+      dataIndex: 'collection',
     },
   ],
   MQTT: [
     {
       title: '服务地址',
-      dataIndex: ['config', 'host'],
+      dataIndex: 'host',
       copyable: true,
     },
     {
       title: '服务端口',
-      dataIndex: ['config', 'port'],
+      dataIndex: 'port',
     },
     {
       title: '客户端 ID',
-      dataIndex: ['config', 'clientId'],
+      dataIndex: 'clientId',
     },
     {
       title: '连接账户',
-      dataIndex: ['config', 'username'],
+      dataIndex: 'username',
     },
     {
       title: '连接密码',
-      dataIndex: ['config', 'password'],
+      dataIndex: 'password',
     },
     {
       title: '上报 TOPIC',
-      dataIndex: ['config', 'pubTopic'],
+      dataIndex: 'pubTopic',
     },
   ],
   UDP_TARGET: [
     {
       title: '服务地址',
-      dataIndex: ['config', 'host'],
+      dataIndex: 'host',
       copyable: true,
     },
     {
       title: '服务端口',
-      dataIndex: ['config', 'port'],
+      dataIndex: 'port',
     },
   ],
 };
@@ -118,8 +114,8 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         column={1}
         columns={columnsMap['COMMON']}
         labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
-        title="通用信息"
-        dataSource={data}
+        title="基本信息"
+        dataSource={omit(data, 'config')}
         loading={loading}
       />
       <ProDescriptions
@@ -127,7 +123,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         columns={data?.type ? columnsMap[data?.type] : []}
         labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
         title="目标配置"
-        dataSource={data}
+        dataSource={data?.config}
         loading={loading}
       />
     </Drawer>

@@ -19,12 +19,15 @@ const { Divider } = StatisticCard;
 
 const Dashboard = () => {
   const { logs } = useModel('useWebsocket');
-  const { data } = useModel('useSystem');
+  const { dataSource } = useModel('useSystem');
   const [logData, setLogData] = useState<LogItem[]>([]);
   const [responsive, setResponsive] = useState(false);
 
-  const inCount = add(data?.statistic?.inSuccess || 0, data?.statistic?.inFailed || 0);
-  const outCount = add(data?.statistic?.outSuccess || 0, data?.statistic?.outFailed || 0);
+  const inCount = add(dataSource?.statistic?.inSuccess || 0, dataSource?.statistic?.inFailed || 0);
+  const outCount = add(
+    dataSource?.statistic?.outSuccess || 0,
+    dataSource?.statistic?.outFailed || 0,
+  );
 
   const handleOnsearch = (keyword?: string, filters?: Record<string, FilterValue | null>) => {
     let filteredLogs = logs;
@@ -55,26 +58,26 @@ const Dashboard = () => {
           <StatisticCard
             statistic={{
               title: '当前版本',
-              value: data?.hardWareInfo.version,
+              value: dataSource?.hardWareInfo.version,
             }}
           />
           <StatisticCard
             statistic={{
               title: '操作系统',
-              value: data?.hardWareInfo?.osArch,
+              value: dataSource?.hardWareInfo?.osArch,
             }}
           />
           <Divider type={responsive ? 'horizontal' : 'vertical'} />
           <StatisticCard
             statistic={{
               title: 'CPU 使用',
-              value: `${data?.hardWareInfo?.cpuPercent || 0}%`,
+              value: `${dataSource?.hardWareInfo?.cpuPercent || 0}%`,
             }}
             chart={
               <RingProgress
                 width={80}
                 height={80}
-                percent={(data?.hardWareInfo?.cpuPercent || 0) / 100}
+                percent={(dataSource?.hardWareInfo?.cpuPercent || 0) / 100}
                 color="#1677ff"
                 statistic={{ title: false, content: false }}
               />
@@ -84,13 +87,13 @@ const Dashboard = () => {
           <StatisticCard
             statistic={{
               title: '磁盘使用',
-              value: `${data?.hardWareInfo?.diskInfo || 0}%`,
+              value: `${dataSource?.hardWareInfo?.diskInfo || 0}%`,
             }}
             chart={
               <RingProgress
                 width={80}
                 height={80}
-                percent={(data?.hardWareInfo?.diskInfo || 0) / 100}
+                percent={(dataSource?.hardWareInfo?.diskInfo || 0) / 100}
                 statistic={{ title: false, content: false }}
               />
             }
@@ -108,28 +111,28 @@ const Dashboard = () => {
           <StatisticCard
             statistic={{
               title: '入口总数',
-              value: data?.sourceCount?.inends,
+              value: dataSource?.sourceCount?.inends,
               icon: <img src={ImportIcon} alt="入口总数" className="w-[42px] h-[42px]" />,
             }}
           />
           <StatisticCard
             statistic={{
               title: '出口总数',
-              value: data?.sourceCount?.outends,
+              value: dataSource?.sourceCount?.outends,
               icon: <img src={ExportIcon} alt="出口总数" className="w-[42px] h-[42px]" />,
             }}
           />
           <StatisticCard
             statistic={{
               title: '规则总数',
-              value: data?.sourceCount?.rules,
+              value: dataSource?.sourceCount?.rules,
               icon: <img src={RuleIcon} alt="规则总数" className="w-[42px] h-[42px]" />,
             }}
           />
           <StatisticCard
             statistic={{
               title: '插件总数',
-              value: data?.sourceCount?.plugins,
+              value: dataSource?.sourceCount?.plugins,
               icon: <img src={PluginIcon} alt="插件总数" className="w-[42px] h-[42px]" />,
             }}
           />
@@ -152,28 +155,28 @@ const Dashboard = () => {
           <StatisticCard
             statistic={{
               title: '输入成功',
-              value: data?.statistic?.inSuccess,
+              value: dataSource?.statistic?.inSuccess,
               status: 'success',
             }}
           />
           <StatisticCard
             statistic={{
               title: '输入失败',
-              value: data?.statistic?.inFailed,
+              value: dataSource?.statistic?.inFailed,
               status: 'error',
             }}
           />
           <StatisticCard
             statistic={{
               title: '输出成功',
-              value: data?.statistic?.outSuccess,
+              value: dataSource?.statistic?.outSuccess,
               status: 'success',
             }}
           />
           <StatisticCard
             statistic={{
               title: '输出失败',
-              value: data?.statistic?.outFailed,
+              value: dataSource?.statistic?.outFailed,
               status: 'error',
             }}
           />
@@ -196,7 +199,7 @@ const Dashboard = () => {
             setting: false,
             density: false,
           }}
-          onChange={(_, filters: any) => handleOnsearch(undefined, filters)}
+          onChange={(_: any, filters: any) => handleOnsearch(undefined, filters)}
         />
       </ProCard>
     </PageContainer>

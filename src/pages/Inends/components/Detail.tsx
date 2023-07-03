@@ -2,6 +2,7 @@ import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps } from 'antd';
+import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
 
@@ -11,11 +12,6 @@ type DetailProps = DrawerProps & {
 
 const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]> = {
   COMMON: [
-    {
-      title: 'UUID',
-      dataIndex: 'uuid',
-      copyable: true,
-    },
     {
       title: '资源名称',
       dataIndex: 'name',
@@ -51,16 +47,16 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
   GENERIC_IOT_HUB: [
     {
       title: '主机地址',
-      dataIndex: ['config', 'host'],
+      dataIndex: 'host',
       copyable: true,
     },
     {
       title: '服务端口',
-      dataIndex: ['config', 'port'],
+      dataIndex: 'port',
     },
     {
       title: '模式',
-      dataIndex: ['config', 'mode'],
+      dataIndex: 'mode',
       valueEnum: {
         GW: '网关',
         DC: '直连',
@@ -68,40 +64,40 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
     },
     {
       title: '产品 ID',
-      dataIndex: ['config', 'productId'],
+      dataIndex: 'productId',
       copyable: true,
     },
     {
       title: '设备名称',
-      dataIndex: ['config', 'deviceName'],
+      dataIndex: 'deviceName',
     },
     {
       title: '客户端 ID',
-      dataIndex: ['config', 'clientId'],
+      dataIndex: 'clientId',
     },
     {
       title: '用户名称',
-      dataIndex: ['config', 'username'],
+      dataIndex: 'username',
     },
     {
       title: '用户密码',
-      dataIndex: ['config', 'password'],
+      dataIndex: 'password',
       valueType: 'password',
     },
   ],
   DEFAULT_TYPE: [
     {
       title: '主机地址',
-      dataIndex: ['config', 'host'],
+      dataIndex: 'host',
       copyable: true,
     },
     {
       title: '服务端口',
-      dataIndex: ['config', 'port'],
+      dataIndex: 'port',
     },
     {
       title: '主题',
-      dataIndex: ['config', 'topic'],
+      dataIndex: 'topic',
     },
   ],
 };
@@ -124,8 +120,8 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         column={1}
         columns={columnsMap['COMMON']}
         labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
-        title="通用信息"
-        dataSource={data}
+        title="基本信息"
+        dataSource={omit(data, 'config')}
         loading={loading}
       />
       <ProDescriptions
@@ -137,7 +133,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         }
         labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
         title="设备配置"
-        dataSource={data}
+        dataSource={data?.config}
         loading={loading}
       />
     </Drawer>

@@ -1,13 +1,30 @@
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
-import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
+import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions, ProTable } from '@ant-design/pro-components';
 import { Drawer, DrawerProps, Tag } from 'antd';
 import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
 
 type DetailProps = DrawerProps & {
   uuid: string;
+};
+
+type EnhancedProDescriptionsProps = ProDescriptionsProps & {
+  show?: boolean;
+};
+
+const EnhancedProDescriptions = ({
+  labelStyle = { justifyContent: 'flex-end', minWidth: 130 },
+  loading = false,
+  column = 3,
+  show = true,
+  ...props
+}: EnhancedProDescriptionsProps) => {
+  return (
+    show && <ProDescriptions labelStyle={labelStyle} loading={loading} column={column} {...props} />
+  );
 };
 
 const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]> = {
@@ -257,52 +274,39 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
 
   return (
     <Drawer title="设备详情" placement="right" width="50%" {...props}>
-      <ProDescriptions
-        column={3}
-        columns={columnsMap['BASE']}
-        labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
+      <EnhancedProDescriptions
         title="基本信息"
-        dataSource={data}
+        dataSource={omit(data, 'config')}
+        columns={columnsMap['BASE']}
         loading={loading}
       />
-      <ProDescriptions
-        column={3}
-        columns={columnsMap['COMMON']}
-        labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
+      <EnhancedProDescriptions
         title="通用信息"
         dataSource={data?.config?.commonConfig}
+        columns={columnsMap['COMMON']}
         loading={loading}
       />
-      {!isEmpty(data?.config?.snmpConfig) && (
-        <ProDescriptions
-          column={3}
-          columns={columnsMap['SNMP']}
-          labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
-          title="SNMP 配置"
-          dataSource={data?.config?.snmpConfig}
-          loading={loading}
-        />
-      )}
-      {(!isEmpty(data?.config?.uartConfig) || !isEmpty(data?.config?.rtuConfig)) && (
-        <ProDescriptions
-          column={3}
-          columns={columnsMap['UART']}
-          labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
-          title={!isEmpty(data?.config?.uartConfig) ? '串口配置' : 'RTU 配置'}
-          dataSource={data?.config?.uartConfig || data?.config?.rtuConfig}
-          loading={loading}
-        />
-      )}
-      {!isEmpty(data?.config?.tcpConfig) && (
-        <ProDescriptions
-          column={3}
-          columns={columnsMap['TCP']}
-          labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
-          title="TCP 配置"
-          dataSource={data?.config?.tcpConfig}
-          loading={loading}
-        />
-      )}
+      <EnhancedProDescriptions
+        title="SNMP 配置"
+        dataSource={data?.config?.snmpConfig}
+        columns={columnsMap['SNMP']}
+        loading={loading}
+        show={!isEmpty(data?.config?.snmpConfig)}
+      />
+      <EnhancedProDescriptions
+        title={!isEmpty(data?.config?.uartConfig) ? '串口配置' : 'RTU 配置'}
+        dataSource={data?.config?.uartConfig || data?.config?.rtuConfig}
+        columns={columnsMap['UART']}
+        loading={loading}
+        show={!isEmpty(data?.config?.uartConfig)}
+      />
+      <EnhancedProDescriptions
+        title="TCP 配置"
+        dataSource={data?.config?.tcpConfig}
+        columns={columnsMap['TCP']}
+        loading={loading}
+        show={!isEmpty(data?.config?.tcpConfig)}
+      />
       {data?.config?.registers?.length > 0 && (
         <>
           <ProDescriptions title="寄存器配置" />

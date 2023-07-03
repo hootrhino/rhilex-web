@@ -18,8 +18,9 @@ type Option = {
 };
 
 const Detail = ({ uuid, type, ...props }: DetailProps) => {
-  const { data: sources } = useModel('useSource');
-  const { data: devices } = useModel('useDevice');
+  const { data: sources, setConfig: setSourceDetail } = useModel('useSource');
+  const { data: devices, setConfig: setDeviceDetail } = useModel('useDevice');
+
   const { logs } = useModel('useWebsocket');
   const [data, setData] = useState<LogItem[]>([]);
 
@@ -47,10 +48,12 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
         if (fromSource?.length > 0) {
           const current = sources?.find((item: Option) => item?.value === fromSource?.[0]);
           name = current?.label || '';
+          setSourceDetail({ open: true, uuid: current?.value });
           url = '/inends';
         } else {
           const current = devices?.find((item: Option) => item?.value === fromDevice?.[0]);
           name = current?.label || '';
+          setDeviceDetail({ open: true, uuid: current?.value });
           url = '/device';
         }
 

@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
-import { history } from 'umi';
+import { history, useModel } from 'umi';
 
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
@@ -22,10 +22,7 @@ export type Item = {
 
 const Sources = () => {
   const actionRef = useRef<ActionType>();
-  const [detailConfig, setConfig] = useState<{ uuid: string; open: boolean }>({
-    uuid: '',
-    open: false,
-  });
+  const { detailConfig, setConfig } = useModel('useSource');
 
   // 删除
   const handleDelete = async (values: API.deleteInendsParams) => {

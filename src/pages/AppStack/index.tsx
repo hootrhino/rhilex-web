@@ -71,12 +71,12 @@ const AppStack = () => {
     {
       title: 'APP 版本',
       dataIndex: 'version',
-      width: 100,
+      // width: 100,
     },
     {
       title: '是否自启',
       dataIndex: 'autoStart',
-      width: 100,
+      // width: 100,
       renderText: (autoStart) => (
         <Tag color={autoStart ? 'success' : 'error'}>{autoStart === true ? '开启' : '关闭'}</Tag>
       ),
@@ -84,7 +84,7 @@ const AppStack = () => {
     {
       title: 'APP 状态',
       dataIndex: 'appState',
-      width: 100,
+      // width: 100,
       renderText: (appState) => (
         <Tag
           icon={appState === 1 ? <SyncOutlined spin /> : <MinusCircleOutlined />}

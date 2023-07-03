@@ -1,4 +1,5 @@
 import { getSystem } from '@/services/rulex/xitongshuju';
+import { useMemo } from 'react';
 import { useRequest } from 'umi';
 
 const useSystem = () => {
@@ -7,7 +8,9 @@ const useSystem = () => {
     pollingInterval: 5000,
   });
 
-  return { data, run };
+  const dataSource = useMemo(() => data, [data]);
+
+  return { dataSource, run, data };
 };
 
 export default useSystem;
