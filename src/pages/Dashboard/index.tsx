@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useModel } from 'umi';
 
-import { RingProgress } from '@ant-design/charts';
+import { Progress, TinyArea } from '@ant-design/charts';
 import { PageContainer, ProCard, StatisticCard } from '@ant-design/pro-components';
 import { FilterValue } from 'antd/es/table/interface';
 import add from 'lodash/add';
@@ -19,7 +19,7 @@ const { Divider } = StatisticCard;
 
 const Dashboard = () => {
   const { logs } = useModel('useWebsocket');
-  const { dataSource } = useModel('useSystem');
+  const { dataSource, cpuData } = useModel('useSystem');
   const [logData, setLogData] = useState<LogItem[]>([]);
   const [responsive, setResponsive] = useState(false);
 
@@ -28,7 +28,7 @@ const Dashboard = () => {
     dataSource?.statistic?.outSuccess || 0,
     dataSource?.statistic?.outFailed || 0,
   );
-
+  console.log(cpuData);
   const handleOnsearch = (keyword?: string, filters?: Record<string, FilterValue | null>) => {
     let filteredLogs = logs;
     if (keyword) {
@@ -45,6 +45,28 @@ const Dashboard = () => {
   useEffect(() => {
     setLogData(logs);
   }, [logs]);
+
+  const config = {
+    width: 200,
+    height: 60,
+    data: cpuData,
+    xField: 'index',
+    yField: 'value',
+    smooth: true,
+    guideLine: [
+      {
+        type: 'mean',
+        text: {
+          position: 'start',
+          content: '平均值',
+          style: {
+            stroke: 'white',
+            lineWidth: 2,
+          },
+        },
+      },
+    ],
+  };
 
   return (
     <PageContainer>
@@ -71,33 +93,25 @@ const Dashboard = () => {
           <StatisticCard
             statistic={{
               title: 'CPU 使用',
-              value: `${dataSource?.hardWareInfo?.cpuPercent || 0}%`,
+              value: dataSource?.hardWareInfo?.cpuPercent || 0,
+              suffix: '%',
             }}
-            chart={
-              <RingProgress
-                width={80}
-                height={80}
-                percent={(dataSource?.hardWareInfo?.cpuPercent || 0) / 100}
-                color="#1677ff"
-                statistic={{ title: false, content: false }}
-              />
-            }
-            chartPlacement="left"
+            chart={<TinyArea {...config} />}
           />
           <StatisticCard
             statistic={{
               title: '磁盘使用',
-              value: `${dataSource?.hardWareInfo?.diskInfo || 0}%`,
+              value: dataSource?.hardWareInfo?.diskInfo || 0,
+              suffix: '%',
             }}
             chart={
-              <RingProgress
+              <Progress
                 width={80}
-                height={80}
+                height={20}
                 percent={(dataSource?.hardWareInfo?.diskInfo || 0) / 100}
-                statistic={{ title: false, content: false }}
+                className="mt-[30px]"
               />
             }
-            chartPlacement="left"
           />
         </StatisticCard.Group>
       </RcResizeObserver>
