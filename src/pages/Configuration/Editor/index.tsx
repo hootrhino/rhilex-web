@@ -12,10 +12,10 @@ const Editor = () => {
     if (containerRef.current) {
       const graph = new Graph({
         container: containerRef.current,
-        // width: '100vw',
-        // height: '100vh',
+        autoResize: true,
         background: {
-          color: '#F2F7FA',
+          // color: '#F2F7FA',
+          color: '#fff',
         },
         grid: {
           visible: true,
@@ -39,7 +39,7 @@ const Editor = () => {
         title: '流程图',
         target: graph,
         stencilGraphWidth: 200,
-        stencilGraphHeight: 180,
+        stencilGraphHeight: 0,
         collapsable: true,
         groups: [
           {
@@ -268,34 +268,40 @@ const Editor = () => {
       stencilRef.current = stencil;
       graphRef.current = graph;
     }
-  }, []);
+  }, [containerRef]);
 
   return (
-    <Row>
-      <Col span={3}>
-        <div
-          id="stencil"
-          ref={(el) => {
-            if (el && stencilRef.current) {
-              el.appendChild(stencilRef.current.container);
-            }
-          }}
-        />
-      </Col>
-      <Col span={18}>
-        <div ref={containerRef} style={{ width: 'calc(100vw - 400px)', height: '100vh' }} />
-      </Col>
-      <Col span={3}>
-        <div
-          id="stencil"
-          ref={(el) => {
-            if (el && stencilRef.current) {
-              el.appendChild(stencilRef.current.container);
-            }
-          }}
-        />
-      </Col>
-    </Row>
+    <>
+      <div className="h-[50px] bg-white w-full">toolbar</div>
+      <Row className="" style={{ height: 'calc(100vh - 50px)' }}>
+        <Col span={3}>
+          <div
+            id="stencil"
+            ref={(el) => {
+              if (el && stencilRef.current) {
+                el.appendChild(stencilRef.current.container);
+              }
+            }}
+          />
+        </Col>
+        <Col span={18}>
+          <div style={{ width: 'calc(100vw - 400px)', height: '100vh' }}>
+            <div ref={containerRef} />
+          </div>
+        </Col>
+        <Col span={3}>
+          <div
+            className="bg-red w-[200px] h-full"
+            // id="stencil"
+            // ref={(el) => {
+            //   if (el && stencilRef.current) {
+            //     el.appendChild(stencilRef.current.container);
+            //   }
+            // }}
+          />
+        </Col>
+      </Row>
+    </>
   );
 };
 

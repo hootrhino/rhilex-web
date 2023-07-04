@@ -219,9 +219,16 @@
     ],
   },
   {
+    path: '/config/editor',
+    name: '编辑器',
+    layout: false,
+    component: './Configuration/Editor',
+    target: '_blank',
+  },
+  {
     path: '/config',
     name: '组态管理',
-    icon: '',
+    icon: 'group',
     routes: [
       {
         path: '/config',
@@ -231,6 +238,7 @@
         path: '/config/editor',
         name: '编辑器',
         component: './Configuration/Editor',
+        target: '_blank',
       },
     ],
   },
