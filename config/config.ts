@@ -42,5 +42,5 @@ export default defineConfig({
     strategy: 'normal',
   },
   requestRecord: {},
-  favicons: ['/favicon.ico'],
+  favicons: ['/favicon1.png'],
 });
