@@ -219,6 +219,22 @@
     ],
   },
   {
+    path: '/config',
+    name: '组态管理',
+    icon: '',
+    routes: [
+      {
+        path: '/config',
+        redirect: '/config/editor',
+      },
+      {
+        path: '/config/editor',
+        name: '编辑器',
+        component: './Configuration/Editor',
+      },
+    ],
+  },
+  {
     path: '/',
     redirect: '/dashboard',
   },
