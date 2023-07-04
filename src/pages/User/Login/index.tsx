@@ -96,7 +96,7 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          logo={<img alt="logo" src="/logo.svg" />}
+          logo={<img alt="logo" src="/favicon.png" />}
           title="Rhino EEKit"
           subTitle="轻量级边缘计算网关"
           initialValues={{

@@ -16,7 +16,7 @@ const Settings: ProLayoutProps & {
   splitMenus: false,
   title: 'Rhino EEKit',
   pwa: false,
-  logo: '/logo.svg',
+  logo: '/logo.png',
   iconfontUrl: '',
   menu: { locale: false },
   token: {
