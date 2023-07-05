@@ -1,307 +1,232 @@
-import { Graph } from '@antv/x6';
-import { Stencil } from '@antv/x6-plugin-stencil';
-import { Col, Row } from 'antd';
-import { useEffect, useRef } from 'react';
+import { Flowchart, FormWrapper } from '@ant-design/flowchart';
+import { Input } from 'antd';
+import { useEffect, useState } from 'react';
+import './index.less';
 
-const Editor = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const graphRef = useRef<Graph>();
-  const stencilRef = useRef<Stencil>();
+const IndicatorNode = (props: any) => {
+  const { size = { width: 120, height: 50 }, data } = props;
+  const { width, height } = size;
+  const { label = '自定义节点', stroke = '#ccc', fill = '#fff', fontFill, fontSize } = data;
+
+  return (
+    <div
+      className="indicator-container"
+      style={{
+        position: 'relative',
+        display: 'block',
+        background: '#fff',
+        border: '1px solid #84b2e8',
+        borderRadius: '2px',
+        padding: '10px 12px',
+        overflow: 'hidden',
+        boxShadow: '0 1px 4px 0 rgba(0,0,0,0.20)',
+        width,
+        height,
+        borderColor: stroke,
+        backgroundColor: fill,
+        color: fontFill,
+        fontSize,
+      }}
+    >
+      <div style={{ color: fontFill }}>{label}</div>
+    </div>
+  );
+};
+
+const InputComponent = (props: any) => {
+  const { config, plugin = {} } = props;
+  const { placeholder, disabled } = config;
+  const { updateNode } = plugin;
+  const [label, setLabel] = useState(config?.label);
+
+  const onLabelChange = async (e: any) => {
+    setLabel(e.target.value);
+    updateNode({
+      label: e.target.value,
+    });
+  };
 
   useEffect(() => {
-    if (containerRef.current) {
-      const graph = new Graph({
-        container: containerRef.current,
-        autoResize: true,
-        background: {
-          // color: '#F2F7FA',
-          color: '#fff',
-        },
-        grid: {
-          visible: true,
-          type: 'doubleMesh',
-          args: [
-            {
-              color: '#eee', // 主网格线颜色
-              thickness: 1, // 主网格线宽度
-            },
-            {
-              color: '#ddd', // 次网格线颜色
-              thickness: 1, // 次网格线宽度
-              factor: 4, // 主次网格线间隔
-            },
-          ],
-        },
-      });
+    setLabel(config?.label);
+  }, [config]);
 
-      // #region 初始化 stencil
-      const stencil = new Stencil({
-        title: '流程图',
-        target: graph,
-        stencilGraphWidth: 200,
-        stencilGraphHeight: 0,
-        collapsable: true,
+  return (
+    <div style={{ padding: 12 }}>
+      <label>标签: </label>
+      <Input value={label} onChange={onLabelChange} placeholder={placeholder} disabled={disabled} />
+    </div>
+  );
+};
+
+const RenameService = (props: any) => {
+  return (
+    <FormWrapper {...props}>
+      {(config, plugin) => <InputComponent {...props} plugin={plugin} config={config} />}
+    </FormWrapper>
+  );
+};
+
+const CanvasService = (props: any) => {
+  console.log(props);
+  return (
+    <div className="flex justify-center pt-[60px] text-gray-400">
+      <span>未选中</span>
+    </div>
+  );
+};
+
+// 注册自定义 Form 组件
+export const controlMapService = (controlMap: Map<string, React.FC<any>>) => {
+  controlMap.set('rename-service', RenameService);
+  controlMap.set('canvas-service', CanvasService);
+  return controlMap;
+};
+
+// 自定义表单
+const formSchemaService = async (args: any) => {
+  const { targetType } = args;
+  const isGroup = args.targetData?.isGroup;
+  const nodeSchema = {
+    tabs: [
+      {
+        name: '设置',
         groups: [
           {
-            title: '基础流程图',
-            name: 'group1',
-          },
-          {
-            title: '系统设计图',
-            name: 'group2',
-            graphHeight: 250,
-            layoutOptions: {
-              rowHeight: 70,
-            },
-          },
-        ],
-        layoutOptions: {
-          columns: 2,
-          columnWidth: 80,
-          rowHeight: 55,
-        },
-      });
-
-      // #region 初始化图形
-      const ports = {
-        groups: {
-          top: {
-            position: 'top',
-            attrs: {
-              circle: {
-                r: 4,
-                magnet: true,
-                stroke: '#5F95FF',
-                strokeWidth: 1,
-                fill: '#fff',
-                style: {
-                  visibility: 'hidden',
-                },
-              },
-            },
-          },
-          right: {
-            position: 'right',
-            attrs: {
-              circle: {
-                r: 4,
-                magnet: true,
-                stroke: '#5F95FF',
-                strokeWidth: 1,
-                fill: '#fff',
-                style: {
-                  visibility: 'hidden',
-                },
-              },
-            },
-          },
-          bottom: {
-            position: 'bottom',
-            attrs: {
-              circle: {
-                r: 4,
-                magnet: true,
-                stroke: '#5F95FF',
-                strokeWidth: 1,
-                fill: '#fff',
-                style: {
-                  visibility: 'hidden',
-                },
-              },
-            },
-          },
-          left: {
-            position: 'left',
-            attrs: {
-              circle: {
-                r: 4,
-                magnet: true,
-                stroke: '#5F95FF',
-                strokeWidth: 1,
-                fill: '#fff',
-                style: {
-                  visibility: 'hidden',
-                },
-              },
-            },
-          },
-        },
-        items: [
-          {
-            group: 'top',
-          },
-          {
-            group: 'right',
-          },
-          {
-            group: 'bottom',
-          },
-          {
-            group: 'left',
-          },
-        ],
-      };
-
-      Graph.registerNode(
-        'custom-polygon',
-        {
-          inherit: 'polygon',
-          width: 66,
-          height: 36,
-          attrs: {
-            body: {
-              strokeWidth: 1,
-              stroke: '#5F95FF',
-              fill: '#EFF4FF',
-            },
-            text: {
-              fontSize: 12,
-              fill: '#262626',
-            },
-          },
-          ports: {
-            ...ports,
-            items: [
+            name: 'groupName',
+            controls: [
               {
-                group: 'top',
-              },
-              {
-                group: 'bottom',
+                label: '节点名',
+                name: '自定义form',
+                shape: 'rename-service',
+                placeholder: '节点名称',
               },
             ],
           },
-        },
-        true,
-      );
+        ],
+      },
+    ],
+  };
 
-      Graph.registerNode(
-        'custom-rect',
-        {
-          inherit: 'rect',
-          width: 66,
-          height: 36,
-          attrs: {
-            body: {
-              strokeWidth: 1,
-              stroke: '#5F95FF',
-              fill: '#EFF4FF',
-            },
-            text: {
-              fontSize: 12,
-              fill: '#262626',
-            },
-          },
-          ports: { ...ports },
-        },
-        true,
-      );
-      Graph.registerNode(
-        'custom-circle',
-        {
-          inherit: 'circle',
-          width: 45,
-          height: 45,
-          attrs: {
-            body: {
-              strokeWidth: 1,
-              stroke: '#5F95FF',
-              fill: '#EFF4FF',
-            },
-            text: {
-              fontSize: 12,
-              fill: '#262626',
-            },
-          },
-          ports: { ...ports },
-        },
-        true,
-      );
+  if (isGroup) {
+    // TODO
+  }
 
-      const r1 = graph.createNode({
-        shape: 'custom-rect',
-        label: '开始',
-        attrs: {
-          body: {
-            rx: 20,
-            ry: 26,
-          },
-        },
-      });
-      const r2 = graph.createNode({
-        shape: 'custom-rect',
-        label: '过程',
-      });
-      const r3 = graph.createNode({
-        shape: 'custom-rect',
-        attrs: {
-          body: {
-            rx: 6,
-            ry: 6,
-          },
-        },
-        label: '可选过程',
-      });
-      const r4 = graph.createNode({
-        shape: 'custom-polygon',
-        attrs: {
-          body: {
-            refPoints: '0,10 10,0 20,10 10,20',
-          },
-        },
-        label: '决策',
-      });
-      const r5 = graph.createNode({
-        shape: 'custom-polygon',
-        attrs: {
-          body: {
-            refPoints: '10,0 40,0 30,20 0,20',
-          },
-        },
-        label: '数据',
-      });
-      const r6 = graph.createNode({
-        shape: 'custom-circle',
-        label: '连接',
-      });
-      stencil.load([r1, r2, r3, r4, r5, r6], 'group1');
+  if (targetType === 'node') {
+    return nodeSchema;
+  }
 
-      stencilRef.current = stencil;
-      graphRef.current = graph;
-    }
-  }, [containerRef]);
+  if (targetType === 'edge') {
+    // TODO
+  }
 
+  return {
+    tabs: [
+      {
+        name: '设置',
+        groups: [
+          {
+            name: 'groupName',
+            controls: [
+              {
+                label: '',
+                name: 'canvas-service',
+                shape: 'canvas-service',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+};
+
+const Editor = () => {
   return (
-    <>
-      <div className="h-[50px] bg-white w-full">toolbar</div>
-      <Row className="" style={{ height: 'calc(100vh - 50px)' }}>
-        <Col span={3}>
-          <div
-            id="stencil"
-            ref={(el) => {
-              if (el && stencilRef.current) {
-                el.appendChild(stencilRef.current.container);
-              }
-            }}
-          />
-        </Col>
-        <Col span={18}>
-          <div style={{ width: 'calc(100vw - 400px)', height: '100vh' }}>
-            <div ref={containerRef} />
-          </div>
-        </Col>
-        <Col span={3}>
-          <div
-            className="bg-red w-[200px] h-full"
-            // id="stencil"
-            // ref={(el) => {
-            //   if (el && stencilRef.current) {
-            //     el.appendChild(stencilRef.current.container);
-            //   }
-            // }}
-          />
-        </Col>
-      </Row>
-    </>
+    <div style={{ height: '100vh', width: '100vw' }}>
+      <Flowchart
+        onSave={(d) => {
+          console.log(d);
+        }}
+        toolbarPanelProps={{
+          position: {
+            top: 0,
+            left: 0,
+            right: 0,
+          },
+        }}
+        scaleToolbarPanelProps={{
+          // 缩放控件
+          layout: 'horizontal',
+          position: {
+            right: 0,
+            top: -40,
+          },
+          style: {
+            width: 150,
+            height: 39,
+            left: 'auto',
+            background: 'transparent',
+          },
+        }}
+        canvasProps={{
+          // 主画布
+          position: {
+            top: 40,
+            left: 0,
+            right: 0,
+            bottom: 0,
+          },
+          config: {
+            // 网格线配置
+            rotating: true,
+            background: {
+              color: '#F5F5F5',
+            },
+            panning: true,
+            mousewheel: true,
+            grid: {
+              visible: true,
+              type: 'doubleMesh',
+              args: [
+                {
+                  color: '#eee', // 主网格线颜色
+                  thickness: 1, // 主网格线宽度
+                },
+                {
+                  color: '#ddd', // 次网格线颜色
+                  thickness: 1, // 次网格线宽度
+                  factor: 4, // 主次网格线间隔
+                },
+              ],
+            },
+          },
+        }}
+        nodePanelProps={{
+          // 节点面板配置
+          position: { width: 160, top: 40, bottom: 0, left: 0 },
+          registerNode: {
+            title: '基础控件',
+            nodes: [
+              {
+                component: IndicatorNode,
+                popover: () => <div>指标节点</div>,
+                name: 'custom-node-indicator',
+                width: 120,
+                height: 50,
+                label: '自定义节点',
+              },
+            ],
+          } as any,
+        }}
+        detailPanelProps={{
+          // Form 表单
+          position: { width: 200, top: 40, bottom: 0, right: 0 },
+          controlMapService,
+          formSchemaService,
+        }}
+        onConfigChange={(res) => console.log(res)}
+      />
+    </div>
   );
 };
 
