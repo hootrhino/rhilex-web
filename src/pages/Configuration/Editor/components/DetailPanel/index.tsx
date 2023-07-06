@@ -1,6 +1,7 @@
 import { FormWrapper } from '@ant-design/flowchart';
 import { Input } from 'antd';
 import { useEffect, useState } from 'react';
+import BgSetting from './BgSetting';
 
 type InputComponentProps = {
   config: any;
@@ -42,9 +43,10 @@ export const RenameService = (props: any) => {
 export const CanvasService = (props: any) => {
   console.log(props);
   return (
-    <div className="flex justify-center pt-[60px] text-gray-400">
-      <span>未选中</span>
-    </div>
+    <BgSetting onChange={(res) => console.log(res)} />
+    // <div className="flex justify-center pt-[60px] text-gray-400">
+    //   <span>未选中</span>
+    // </div>
   );
 };
 

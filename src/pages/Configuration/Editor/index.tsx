@@ -24,7 +24,7 @@ const Editor = () => {
         canvasProps={CANVAS}
         nodePanelProps={nodePanelConfig}
         detailPanelProps={{
-          position: { width: 200, top: 40, bottom: 0, right: 0 },
+          position: { width: 250, top: 40, bottom: 0, right: 0 },
           controlMapService,
           formSchemaService,
         }}
