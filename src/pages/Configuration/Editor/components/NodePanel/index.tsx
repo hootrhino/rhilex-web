@@ -1,3 +1,5 @@
+import { NodePanelProps } from '@ant-design/flowchart';
+
 const IndicatorNode = (props: any) => {
   const { size = { width: 120, height: 50 }, data } = props;
   const { width, height } = size;
@@ -28,4 +30,21 @@ const IndicatorNode = (props: any) => {
   );
 };
 
-export default IndicatorNode;
+export const nodePanelConfig: NodePanelProps = {
+  position: { width: 160, top: 40, bottom: 0, left: 0 },
+  registerNode: [
+    {
+      title: '基础控件',
+      nodes: [
+        {
+          component: IndicatorNode,
+          popover: () => <div>ttt</div>,
+          name: 'custom-node-indicator',
+          width: 120,
+          height: 50,
+          label: '自定义节点',
+        },
+      ],
+    } as any,
+  ],
+};

@@ -1,6 +1,31 @@
-import type { CanvasProps } from '@ant-design/flowchart';
+import type { CanvasProps, ScaleToolbarPanelProps, ToolbarPanelProps } from '@ant-design/flowchart';
 
-export const defaultCanvasProps: CanvasProps = {
+// 缩放控件
+export const SCALE_TOOLBAR_PANEL: ScaleToolbarPanelProps = {
+  layout: 'horizontal',
+  position: {
+    right: 0,
+    top: -40,
+  },
+  style: {
+    width: 150,
+    height: 39,
+    left: 'auto',
+    background: 'transparent',
+  },
+};
+
+// Toolbar
+export const TOOLBAR_PANEL: ToolbarPanelProps = {
+  position: {
+    top: 0,
+    left: 0,
+    right: 0,
+  },
+};
+
+// 画布
+export const CANVAS: CanvasProps = {
   // 主画布
   position: {
     top: 40,
