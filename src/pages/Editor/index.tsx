@@ -1,24 +1,15 @@
-import { Graph } from '@antv/x6';
-import { useEffect, useRef } from 'react';
+import Canvas from './Canvas';
+import DetailPanel from './DetailPanel';
+import NodePanel from './NodePanel';
+import ToolBar from './ToolBar';
 
 const Editor = () => {
-  const canvasRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const graph = new Graph({
-      container: canvasRef.current!,
-      autoResize: true,
-      background: {
-        color: '#AFBCCE',
-      },
-    });
-    graph.fromJSON({}); // TODO 渲染元素 data
-    graph.centerContent(); // 居中显示
-  }, []);
-
   return (
-    <div className="w-full h-full">
-      <div ref={canvasRef} className="h-[100vh]"></div>
+    <div className="w-full h-full relative">
+      <ToolBar />
+      <Canvas />
+      <NodePanel />
+      <DetailPanel />
     </div>
   );
 };
