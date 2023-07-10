@@ -2,14 +2,20 @@ import {
   BoldOutlined,
   CompressOutlined,
   DownOutlined,
+  FileDoneOutlined,
   FullscreenOutlined,
+  FundViewOutlined,
   GatewayOutlined,
   GroupOutlined,
   ItalicOutlined,
+  OneToOneOutlined,
+  QuestionCircleOutlined,
   RedoOutlined,
+  SaveOutlined,
   StrikethroughOutlined,
   UnderlineOutlined,
   UndoOutlined,
+  UngroupOutlined,
   VerticalAlignBottomOutlined,
   VerticalAlignTopOutlined,
   ZoomInOutlined,
@@ -33,6 +39,11 @@ const extraConfig = [
     name: 'zoomOut',
     tooltip: '缩小',
     icon: <ZoomOutOutlined />,
+  },
+  {
+    name: 'scaleToOne',
+    tooltip: '缩放到1:1',
+    icon: <OneToOneOutlined />,
   },
   {
     name: 'scaleToFit',
@@ -83,17 +94,17 @@ const ToolBar = () => {
         size="big"
         extra={
           <Space>
-            <Button size="small" key="preview">
+            <Button size="small" key="preview" icon={<FundViewOutlined />}>
               预览
             </Button>
-            <Button size="small" key="save">
+            <Button size="small" key="save" icon={<SaveOutlined />}>
               保存
             </Button>
-            <Button size="small" key="publish">
+            <Button size="small" key="publish" icon={<FileDoneOutlined />}>
               发布
             </Button>
             <Dropdown menu={menuProps}>
-              <Button size="small">
+              <Button size="small" icon={<QuestionCircleOutlined />}>
                 <Space>
                   帮助
                   <DownOutlined />
@@ -109,6 +120,7 @@ const ToolBar = () => {
           <Toolbar.Item name="backNode" tooltip="置后" icon={<VerticalAlignBottomOutlined />} />
           <Toolbar.Item name="multiSelect" tooltip="开启框选" icon={<GatewayOutlined />} />
           <Toolbar.Item name="group" tooltip="新建群组" icon={<GroupOutlined />} />
+          <Toolbar.Item name="unGroup" tooltip="取消群组" icon={<UngroupOutlined />} />
         </Toolbar.Group>
         <Toolbar.Group>
           {extraConfig?.map((item) => (
@@ -118,7 +130,7 @@ const ToolBar = () => {
 
         <Toolbar.Group>
           <Toolbar.Item name="undo" tooltip="撤销" icon={<UndoOutlined />} />
-          <Toolbar.Item name="redo" tooltip="恢复" icon={<RedoOutlined />} />
+          <Toolbar.Item name="redo" tooltip="重做" icon={<RedoOutlined />} />
         </Toolbar.Group>
         <Toolbar.Group>
           <Toolbar.Item name="bold" tooltip="粗体" icon={<BoldOutlined />} />

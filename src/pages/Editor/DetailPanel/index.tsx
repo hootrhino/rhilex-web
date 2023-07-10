@@ -14,8 +14,8 @@ const DetailPanel = ({ className }: NodePanelProps) => {
     <div
       className={cn(
         className,
-        'w-[250px] h-full bg-white absolute top-[40px] bottom-0 transition-all duration-500 border-l-1 border-[#ccc]',
-        { 'right-0': collapse, 'right-[-250px]': !collapse },
+        'w-[280px] h-full bg-white absolute top-[40px] bottom-0 transition-all duration-500 border-l-1 border-[#ccc]',
+        { 'right-0': collapse, 'right-[-280px]': !collapse },
       )}
     >
       <div
@@ -32,6 +32,9 @@ const DetailPanel = ({ className }: NodePanelProps) => {
         {collapse ? <DoubleRightOutlined /> : <DoubleLeftOutlined />}
       </div>
       <div>
+        <div className="flex items-center justify-center h-[40px] shadow-md">
+          <span>页面设置</span>
+        </div>
         <BgSetting />
       </div>
     </div>
