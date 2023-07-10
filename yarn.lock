@@ -1098,6 +1098,19 @@
     react-resize-detector "^7.0.0"
     ua-parser-js "^0.7.20"
 
+"@antv/x6-react-components@^2.0.8":
+  version "2.0.8"
+  resolved "https://registry.npmmirror.com/@antv/x6-react-components/-/x6-react-components-2.0.8.tgz#69768848dc0ca8bd5084c7ef6e63287e2c2196b0"
+  integrity sha512-oXtkUrD397v55joEWFj6DMvMJK/fc1UDCIyLniw2L8d00kAWY4Swt4RFjMgTOvv1biii6QaugvsVj4ebIp+rOg==
+  dependencies:
+    clamp "^1.0.1"
+    classnames "^2.2.6"
+    rc-dropdown "^3.0.0-alpha.0"
+    rc-util "^4.15.7"
+    react-color "2.19.3"
+    react-resize-detector "^7.0.0"
+    ua-parser-js "^0.7.20"
+
 "@antv/x6-react-shape@^1.4.5", "@antv/x6-react-shape@^1.5.2":
   version "1.6.4"
   resolved "https://registry.npmmirror.com/@antv/x6-react-shape/-/x6-react-shape-1.6.4.tgz#e7e9368ce6e0b896cc9882cb08f516406a955fb6"
@@ -13049,6 +13062,19 @@ react-color@2.17.3:
   dependencies:
     "@icons/material" "^0.2.4"
     lodash "^4.17.11"
+    material-colors "^1.2.1"
+    prop-types "^15.5.10"
+    reactcss "^1.2.0"
+    tinycolor2 "^1.4.1"
+
+react-color@2.19.3:
+  version "2.19.3"
+  resolved "https://registry.npmmirror.com/react-color/-/react-color-2.19.3.tgz#ec6c6b4568312a3c6a18420ab0472e146aa5683d"
+  integrity sha512-LEeGE/ZzNLIsFWa1TMe8y5VYqr7bibneWmvJwm1pCn/eNmrabWDh659JSPn9BuaMpEfU83WTOJfnCcjDZwNQTA==
+  dependencies:
+    "@icons/material" "^0.2.4"
+    lodash "^4.17.15"
+    lodash-es "^4.17.15"
     material-colors "^1.2.1"
     prop-types "^15.5.10"
     reactcss "^1.2.0"
