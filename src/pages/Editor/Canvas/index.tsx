@@ -1,10 +1,13 @@
 import { Graph } from '@antv/x6';
+
 import { useEffect, useRef } from 'react';
 import { useModel } from 'umi';
 
 const Canvas = () => {
   const canvasRef = useRef<any>(null);
-  const { bgSetting } = useModel('useEditor');
+  const {
+    config: { background, width, height, scale },
+  } = useModel('useEditor');
 
   const data = {
     nodes: [],
@@ -13,9 +16,11 @@ const Canvas = () => {
   useEffect(() => {
     const graph = new Graph({
       container: document.getElementById('canvas-container') || undefined,
-      background: bgSetting,
+      background: background,
       panning: true,
       grid: true,
+      width,
+      height,
       mousewheel: {
         enabled: true,
         modifiers: 'Ctrl',
@@ -25,20 +30,23 @@ const Canvas = () => {
     canvasRef.current = graph;
     graph.fromJSON(data); // TODO 渲染元素 data
     graph.centerContent(); // 居中显示
-    graph.zoom(-0.3);
   }, []);
 
   useEffect(() => {
-    canvasRef.current?.drawBackground(bgSetting);
-  }, [bgSetting]);
+    const w = (width || 0) * ((scale || 30) / 100);
+    const h = (height || 0) * ((scale || 30) / 100);
+
+    canvasRef.current?.resize(w, h);
+  }, [width, height, scale]);
+
+  useEffect(() => {
+    canvasRef.current?.drawBackground(background);
+  }, [background]);
 
   return (
-    <div
-      id="canvas-container"
-      ref={canvasRef}
-      className="w-full truncate"
-      style={{ height: 'calc(100vh - 40px)' }}
-    ></div>
+    <div className="flex justify-center items-center bg-[#F5F5F5] overflow-auto w-full h-[100vh]">
+      <div id="canvas-container" ref={canvasRef} />
+    </div>
   );
 };
 

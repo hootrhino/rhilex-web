@@ -1,9 +1,4 @@
-import {
-  POSITION_OPTION,
-  REPEAT_OPTION,
-  SIZE_OPTION,
-} from '@/pages/Configuration/Editor/constants';
-import { cn, getBase64, tryToJSON } from '@/utils/utils';
+import { cn, getBase64 } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Col,
@@ -20,9 +15,11 @@ import {
 } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useModel } from 'umi';
+import { POSITION_OPTION, REPEAT_OPTION, SIZE_OPTION } from './constants';
 
+import { Config, DEFAULT_CONFIG } from '@/models/useEditor';
 import '../index.less';
 
 const Item = ({ label, children, ...props }: any) => {
@@ -42,9 +39,10 @@ const uploadButton = (
 );
 
 const BackgroundSettings = () => {
-  const { bgSetting: setting, setBgSetting: setSetting } = useModel('useEditor');
-  const [checked, setCheck] = useState<string>('');
+  const { setConfig } = useModel('useEditor');
+  const [canvasConfig, setCanvasConfig] = useState<Config>(DEFAULT_CONFIG);
 
+  const [currentImg, setImg] = useState<UploadFile | undefined>(undefined);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
@@ -73,24 +71,64 @@ const BackgroundSettings = () => {
     setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
   };
 
+  const handleBgConfig = (changeSetting: { [key: string]: any }) => {
+    setCanvasConfig({
+      ...canvasConfig,
+      background: { ...canvasConfig.background, ...changeSetting },
+    });
+  };
+
+  useEffect(() => {
+    setConfig({ ...canvasConfig });
+  }, [canvasConfig]);
+
+  useEffect(() => {
+    if (currentImg?.uid) {
+      handleBgConfig({ image: currentImg?.url || undefined, color: canvasConfig.background.color });
+    } else {
+      handleBgConfig({ image: undefined, color: canvasConfig.background.color });
+    }
+  }, [currentImg]);
+
   return (
     <div className="p-[10px]">
       <div className="w-full">
         <Item label="屏幕大小">
           <Space>
-            <InputNumber size="small" min={1} max={100000} defaultValue={1920} />
-            <InputNumber size="small" min={1} max={100000} defaultValue={1080} />
+            <InputNumber
+              size="small"
+              min={1}
+              max={100000}
+              value={canvasConfig?.width}
+              onChange={(value) => setCanvasConfig({ ...canvasConfig, width: value as number })}
+            />
+            <InputNumber
+              size="small"
+              min={1}
+              max={100000}
+              value={canvasConfig?.height}
+              onChange={(value) => setCanvasConfig({ ...canvasConfig, height: value as number })}
+            />
           </Space>
+        </Item>
+        <Item label="缩放比例">
+          <Slider
+            value={canvasConfig?.scale}
+            onChange={(scale: number) => setCanvasConfig({ ...canvasConfig, scale })}
+          />
         </Item>
         <Item label="背景颜色">
           <ColorPicker
-            value={setting.color}
-            onChange={(value, hex) => setSetting({ ...setting, color: hex })}
+            value={canvasConfig?.background.color}
+            onChange={(value, hex) => {
+              handleBgConfig({ color: hex, image: undefined });
+              setImg(undefined);
+            }}
             className="w-[190px]"
           />
         </Item>
-        <Space align="start" className="mt-[10px]" size={14}>
-          <div className="mb-[10px]">背景图片</div>
+        <Space align="start" className="mt-[10px]" size={0}>
+          <div className="mb-[10px] w-[70px]">背景图片</div>
           <Upload
             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
             listType="picture-card"
@@ -109,20 +147,14 @@ const BackgroundSettings = () => {
               <div
                 key={file.uid}
                 onClick={() => {
-                  setCheck(file.uid === checked ? '' : file.uid);
-                  setSetting({
-                    ...setting,
-                    image: file.url,
-                    color: '#F5F5F5',
-                    repeat: 'no-repeat',
-                    position: tryToJSON('center'),
-                    size: tryToJSON('auto auto'),
-                  });
+                  setImg(file.uid === currentImg?.uid ? undefined : file);
                 }}
               >
                 <div
                   className={cn(
-                    checked === file.uid ? 'border-solid border-2 border-sky-500' : 'border-none',
+                    currentImg?.uid === file.uid
+                      ? 'border-solid border-2 border-sky-500'
+                      : 'border-none',
                   )}
                 >
                   {originNode}
@@ -145,36 +177,28 @@ const BackgroundSettings = () => {
         <Item label="重复方式">
           <Select
             className="w-full"
-            value={setting.repeat}
+            value={canvasConfig.background.repeat}
             options={REPEAT_OPTION}
-            onChange={(changedValue: string) => setSetting({ ...setting, repeat: changedValue })}
+            onChange={(changedValue: string) => handleBgConfig({ repeat: changedValue })}
+            disabled={!canvasConfig.background.image}
           />
         </Item>
-        {setting.repeat === 'watermark' && (
-          <Item label="水印角度">
-            <Slider
-              min={0}
-              max={360}
-              step={1}
-              value={setting.angle}
-              onChange={(changedValue: number) => setSetting({ ...setting, angle: changedValue })}
-            />
-          </Item>
-        )}
         <Item label="图片位置">
           <Select
             className="w-full"
-            value={setting.position}
+            value={canvasConfig.background.position}
             options={POSITION_OPTION}
-            onChange={(changedValue: string) => setSetting({ ...setting, position: changedValue })}
+            onChange={(changedValue: string) => handleBgConfig({ position: changedValue })}
+            disabled={!canvasConfig.background.image}
           />
         </Item>
         <Item label="图片大小">
           <Select
             className="w-full"
-            value={setting.size}
+            value={canvasConfig.background.size}
             options={SIZE_OPTION}
-            onChange={(changedValue: string) => setSetting({ ...setting, size: changedValue })}
+            onChange={(changedValue: string) => handleBgConfig({ size: changedValue })}
+            disabled={!canvasConfig.background.image}
           />
         </Item>
       </div>

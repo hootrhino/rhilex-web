@@ -14,14 +14,14 @@ const DetailPanel = ({ className }: NodePanelProps) => {
     <div
       className={cn(
         className,
-        'w-[280px] h-full bg-white absolute top-[40px] bottom-0 transition-all duration-500 border-l-1 border-[#ccc]',
-        { 'right-0': collapse, 'right-[-280px]': !collapse },
+        'w-[300px] h-full bg-white fixed top-0 transition-all duration-500 border-l-1 border-[#ccc]',
+        { 'right-0': collapse, 'right-[-300px]': !collapse },
       )}
     >
       <div
         onClick={() => setCollapse(!collapse)}
         className={cn(
-          'flex items-center justify-center absolute w-[24px] h-[24px] bg-white text-[#aaa] hover:text-[#2b84c0] text-center shadow-md top-[18px] border border-[#ccc]',
+          'flex items-center justify-center absolute w-[24px] h-[24px] bg-white text-[#aaa] hover:text-[#2b84c0] text-center shadow-md top-[60px] border border-[#ccc]',
           {
             'rounded-full left-[-12px]': collapse,
             'rounded-rl-none rounded-bl-[50%] rounded-tl-[50%] rounded-br-none left-[-20px]':
@@ -31,7 +31,7 @@ const DetailPanel = ({ className }: NodePanelProps) => {
       >
         {collapse ? <DoubleRightOutlined /> : <DoubleLeftOutlined />}
       </div>
-      <div>
+      <div className="mt-[40px]">
         <div className="flex items-center justify-center h-[40px] shadow-md">
           <span>页面设置</span>
         </div>

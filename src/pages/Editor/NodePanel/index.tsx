@@ -13,14 +13,14 @@ const NodePanel = ({ className }: NodePanelProps) => {
     <div
       className={cn(
         className,
-        'w-[200px] h-full bg-white absolute top-[40px] left-0 bottom-0 transition-all duration-500 border-r-1 border-[#ccc]',
+        'w-[200px] h-full bg-white fixed top-0 left-0 transition-all duration-500 border-r-1 border-[#ccc]',
         { 'left-0': collapse, 'left-[-200px]': !collapse },
       )}
     >
       <div
         onClick={() => setCollapse(!collapse)}
         className={cn(
-          'flex items-center justify-center absolute w-[24px] h-[24px] bg-white text-[#aaa] hover:text-[#2b84c0] text-center shadow-md top-[18px] border border-[#ccc]',
+          'flex items-center justify-center absolute w-[24px] h-[24px] bg-white text-[#aaa] hover:text-[#2b84c0] text-center shadow-md top-[60px] border border-[#ccc]',
           {
             'rounded-full right-[-12px]': collapse,
             'rounded-tl-none rounded-br-[50%] rounded-tr-[50%] rounded-bl-none right-[-20px]':

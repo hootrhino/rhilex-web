@@ -87,7 +87,7 @@ const ToolBar = () => {
   };
 
   return (
-    <div className="w-full h-[40px] bg-[#292f33] ">
+    <div className="w-full h-[40px] bg-[#292f33] fixed top-0 z-[99]">
       <Toolbar
         onClick={handleToolbarClick}
         hoverEffect={true}

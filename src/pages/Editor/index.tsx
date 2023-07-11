@@ -5,12 +5,12 @@ import ToolBar from './ToolBar';
 
 const Editor = () => {
   return (
-    <div className="w-full h-full relative truncate">
+    <>
       <ToolBar />
       <Canvas />
       <NodePanel />
       <DetailPanel />
-    </div>
+    </>
   );
 };
 
