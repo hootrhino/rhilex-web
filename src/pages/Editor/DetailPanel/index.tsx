@@ -31,7 +31,7 @@ const DetailPanel = ({ className }: NodePanelProps) => {
       >
         {collapse ? <DoubleRightOutlined /> : <DoubleLeftOutlined />}
       </div>
-      <div className="mt-[40px]">
+      <div className="mt-[40px] px-[5px]">
         <div className="flex items-center justify-center h-[40px] shadow-md">
           <span>页面设置</span>
         </div>

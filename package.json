@@ -49,6 +49,8 @@
     "@ant-design/pro-components": "^2.3.57",
     "@ant-design/use-emotion-css": "1.0.4",
     "@antv/x6": "^2.11.4",
+    "@antv/x6-plugin-dnd": "^2.0.5",
+    "@antv/x6-plugin-stencil": "^2.0.4",
     "@antv/x6-react-components": "^2.0.8",
     "@antv/xflow": "^1.0.55",
     "@umijs/route-utils": "^2.1.3",

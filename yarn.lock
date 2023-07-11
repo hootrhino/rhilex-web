@@ -1085,6 +1085,16 @@
   resolved "https://registry.npmmirror.com/@antv/x6-geometry/-/x6-geometry-2.0.5.tgz#c158317d74135bedd78c2fdeb76f9c7cfa0ef0aa"
   integrity sha512-MId6riEQkxphBpVeTcL4ZNXL4lScyvDEPLyIafvWMcWNTGK0jgkK7N20XSzqt8ltJb0mGUso5s56mrk8ysHu2A==
 
+"@antv/x6-plugin-dnd@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.npmmirror.com/@antv/x6-plugin-dnd/-/x6-plugin-dnd-2.0.5.tgz#48d67eee6ea7cb4817331ea5d0429f2e5b7fe58f"
+  integrity sha512-g8GGJS2XmM8C59juOBiFqaR/f8i8y8tqw9sJNwta7s1Phh3hwDd7o4kk36Kk5eTKkfZfnjEyWHMOqp/h+EDibQ==
+
+"@antv/x6-plugin-stencil@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.npmmirror.com/@antv/x6-plugin-stencil/-/x6-plugin-stencil-2.0.4.tgz#8e14748e2bb61d8b1a1bb16d9b0211b783e0d141"
+  integrity sha512-MoRgR2M67dc51L8o7zPmbt3UTZVTqKXreMo8T+7Tp6BllwcDYueoHNJA4k79FQs5ocnmSLmAMmjd72TRSUYp2Q==
+
 "@antv/x6-react-components@^1.1.13", "@antv/x6-react-components@^1.1.15":
   version "1.1.20"
   resolved "https://registry.npmmirror.com/@antv/x6-react-components/-/x6-react-components-1.1.20.tgz#aa925d71646542355f92d78f99362e80717960d2"

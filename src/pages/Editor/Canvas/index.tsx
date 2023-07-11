@@ -1,10 +1,9 @@
 import { Graph } from '@antv/x6';
 
-import { useEffect, useRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { useModel } from 'umi';
 
-const Canvas = () => {
-  const canvasRef = useRef<any>(null);
+const Canvas = forwardRef((props, ref) => {
   const {
     config: { background, width, height, scale },
   } = useModel('useEditor');
@@ -27,7 +26,8 @@ const Canvas = () => {
         maxScale: 4,
       },
     });
-    canvasRef.current = graph;
+
+    ref.current = graph;
     graph.fromJSON(data); // TODO 渲染元素 data
     graph.centerContent(); // 居中显示
   }, []);
@@ -36,18 +36,18 @@ const Canvas = () => {
     const w = (width || 0) * ((scale || 30) / 100);
     const h = (height || 0) * ((scale || 30) / 100);
 
-    canvasRef.current?.resize(w, h);
+    ref.current?.resize(w, h);
   }, [width, height, scale]);
 
   useEffect(() => {
-    canvasRef.current?.drawBackground(background);
+    ref.current?.drawBackground(background);
   }, [background]);
 
   return (
     <div className="flex justify-center items-center bg-[#F5F5F5] overflow-auto w-full h-[100vh]">
-      <div id="canvas-container" ref={canvasRef} />
+      <div id="canvas-container" ref={ref} />
     </div>
   );
-};
+});
 
 export default Canvas;
