@@ -1,81 +1,252 @@
 import { cn } from '@/utils/utils';
-import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
+
 import { Stencil } from '@antv/x6-plugin-stencil';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+
+import { Graph } from '@antv/x6';
 
 import './index.less';
 
-const commonAttrs = {
-  body: {
-    fill: '#fff',
-    stroke: '#8f8f8f',
-    strokeWidth: 1,
-  },
-};
+import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
+import { forwardRef, useEffect, useRef, useState } from 'react';
+import { ports } from './ports';
 
 const NodePanel = forwardRef((props, ref) => {
   const stencilRef = useRef<any>(null);
   const [collapse, setCollapse] = useState<boolean>(true);
 
-  useEffect(() => {
+  // 注册&创建节点
+  const handleOnNode = () => {
     const graph = ref.current;
-    const n1 = graph.createNode({
-      shape: 'rect',
-      x: 40,
-      y: 40,
-      width: 80,
-      height: 40,
-      label: 'rect',
-      attrs: commonAttrs,
+
+    Graph.registerNode(
+      'custom-rect',
+      {
+        inherit: 'rect',
+        width: 66,
+        height: 36,
+        attrs: {
+          body: {
+            strokeWidth: 1,
+            stroke: '#5F95FF',
+            fill: '#EFF4FF',
+          },
+          text: {
+            fontSize: 12,
+            fill: '#262626',
+          },
+        },
+        ports: { ...ports },
+      },
+      true,
+    );
+
+    Graph.registerNode(
+      'custom-polygon',
+      {
+        inherit: 'polygon',
+        width: 66,
+        height: 36,
+        attrs: {
+          body: {
+            strokeWidth: 1,
+            stroke: '#5F95FF',
+            fill: '#EFF4FF',
+          },
+          text: {
+            fontSize: 12,
+            fill: '#262626',
+          },
+        },
+        ports: {
+          ...ports,
+          items: [
+            {
+              group: 'top',
+            },
+            {
+              group: 'bottom',
+            },
+          ],
+        },
+      },
+      true,
+    );
+
+    Graph.registerNode(
+      'custom-circle',
+      {
+        inherit: 'circle',
+        width: 45,
+        height: 45,
+        attrs: {
+          body: {
+            strokeWidth: 1,
+            stroke: '#5F95FF',
+            fill: '#EFF4FF',
+          },
+          text: {
+            fontSize: 12,
+            fill: '#262626',
+          },
+        },
+        ports: { ...ports },
+      },
+      true,
+    );
+
+    Graph.registerNode(
+      'custom-image',
+      {
+        inherit: 'rect',
+        width: 52,
+        height: 52,
+        markup: [
+          {
+            tagName: 'rect',
+            selector: 'body',
+          },
+          {
+            tagName: 'image',
+          },
+          {
+            tagName: 'text',
+            selector: 'label',
+          },
+        ],
+        attrs: {
+          body: {
+            stroke: '#5F95FF',
+            fill: '#5F95FF',
+          },
+          image: {
+            width: 26,
+            height: 26,
+            refX: 13,
+            refY: 16,
+          },
+          label: {
+            refX: 3,
+            refY: 2,
+            textAnchor: 'left',
+            textVerticalAnchor: 'top',
+            fontSize: 12,
+            fill: '#fff',
+          },
+        },
+        ports: { ...ports },
+      },
+      true,
+    );
+
+    const r1 = graph.createNode({
+      shape: 'custom-rect',
+      label: '开始',
+      attrs: {
+        body: {
+          rx: 20,
+          ry: 26,
+        },
+      },
+    });
+    const r2 = graph.createNode({
+      shape: 'custom-rect',
+      label: '过程',
+    });
+    const r3 = graph.createNode({
+      shape: 'custom-rect',
+      attrs: {
+        body: {
+          rx: 6,
+          ry: 6,
+        },
+      },
+      label: '可选过程',
+    });
+    const r4 = graph.createNode({
+      shape: 'custom-polygon',
+      attrs: {
+        body: {
+          refPoints: '0,10 10,0 20,10 10,20',
+        },
+      },
+      label: '决策',
+    });
+    const r5 = graph.createNode({
+      shape: 'custom-polygon',
+      attrs: {
+        body: {
+          refPoints: '10,0 40,0 30,20 0,20',
+        },
+      },
+      label: '数据',
+    });
+    const r6 = graph.createNode({
+      shape: 'custom-circle',
+      label: '连接',
     });
 
-    const n2 = graph.createNode({
-      shape: 'circle',
-      x: 180,
-      y: 40,
-      width: 40,
-      height: 40,
-      label: 'circle',
-      attrs: commonAttrs,
-    });
+    const imageShapes = [
+      {
+        label: 'Client',
+        image: 'https://gw.alipayobjects.com/zos/bmw-prod/687b6cb9-4b97-42a6-96d0-34b3099133ac.svg',
+      },
+      {
+        label: 'Http',
+        image: 'https://gw.alipayobjects.com/zos/bmw-prod/dc1ced06-417d-466f-927b-b4a4d3265791.svg',
+      },
+      {
+        label: 'Api',
+        image: 'https://gw.alipayobjects.com/zos/bmw-prod/c55d7ae1-8d20-4585-bd8f-ca23653a4489.svg',
+      },
+      {
+        label: 'Sql',
+        image: 'https://gw.alipayobjects.com/zos/bmw-prod/6eb71764-18ed-4149-b868-53ad1542c405.svg',
+      },
+      {
+        label: 'Clound',
+        image: 'https://gw.alipayobjects.com/zos/bmw-prod/c36fe7cb-dc24-4854-aeb5-88d8dc36d52e.svg',
+      },
+      {
+        label: 'Mq',
+        image: 'https://gw.alipayobjects.com/zos/bmw-prod/2010ac9f-40e7-49d4-8c4a-4fcf2f83033b.svg',
+      },
+    ];
+    const imageNodes = imageShapes.map((item) =>
+      graph.createNode({
+        shape: 'custom-image',
+        label: item.label,
+        attrs: {
+          image: {
+            'xlink:href': item.image,
+          },
+        },
+      }),
+    );
 
-    const n3 = graph.createNode({
-      shape: 'ellipse',
-      x: 280,
-      y: 40,
-      width: 80,
-      height: 40,
-      label: 'ellipse',
-      attrs: commonAttrs,
-    });
+    return { r1, r2, r3, r4, r5, r6, imageNodes };
+  };
 
-    const n4 = graph.createNode({
-      shape: 'path',
-      x: 420,
-      y: 40,
-      width: 40,
-      height: 40,
-      // https://www.svgrepo.com/svg/13653/like
-      path: 'M24.85,10.126c2.018-4.783,6.628-8.125,11.99-8.125c7.223,0,12.425,6.179,13.079,13.543c0,0,0.353,1.828-0.424,5.119c-1.058,4.482-3.545,8.464-6.898,11.503L24.85,48L7.402,32.165c-3.353-3.038-5.84-7.021-6.898-11.503c-0.777-3.291-0.424-5.119-0.424-5.119C0.734,8.179,5.936,2,13.159,2C18.522,2,22.832,5.343,24.85,10.126z',
-      attrs: commonAttrs,
-      label: 'path',
-    });
+  const initiStencil = () => {
+    const graph = ref.current;
 
     const stencil = new Stencil({
       title: '组件列表',
-      target: ref,
-      stencilGraphWidth: 200,
-      stencilGraphHeight: 180,
-      search: true,
+      target: graph,
+      // stencilGraphWidth: 200,
+      // stencilGraphHeight: 180,
+      search(cell, keyword) {
+        return cell.shape.indexOf(keyword) !== -1;
+      },
       collapsable: true,
       placeholder: '搜索组件',
       groups: [
         {
-          title: '基础流程图',
+          title: '基础节点',
           name: 'group1',
+          graphHeight: 250,
         },
         {
-          title: '系统设计图',
+          title: '基础线条',
           name: 'group2',
           graphHeight: 250,
           layoutOptions: {
@@ -89,10 +260,17 @@ const NodePanel = forwardRef((props, ref) => {
         rowHeight: 55,
       },
     });
-    stencil.load([n1, n2], 'group1');
-    stencil.load([n3, n4], 'group2');
+
+    const { r1, r2, r3, r4, r5, r6, imageNodes } = handleOnNode();
+
+    stencil.load([r1, r2, r3, r4, r5, r6], 'group1');
+    stencil.load(imageNodes, 'group2');
 
     stencilRef.current?.appendChild(stencil.container);
+  };
+
+  useEffect(() => {
+    initiStencil();
   }, []);
 
   return (

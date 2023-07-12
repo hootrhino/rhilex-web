@@ -96,7 +96,6 @@ const BaseForm = () => {
 
           Object.values(value as any)?.forEach((item) => {
             if (typeof item === 'object') {
-              console.log(item);
               newValue = Object.values(value as any);
             }
           });

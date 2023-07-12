@@ -1,5 +1,6 @@
-import type { Graph } from '@antv/x6';
+import { Graph } from '@antv/x6';
 import { useRef } from 'react';
+
 import Canvas from './Canvas';
 import DetailPanel from './DetailPanel';
 import NodePanel from './NodePanel';

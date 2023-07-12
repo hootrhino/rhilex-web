@@ -1,35 +1,226 @@
-import { Graph } from '@antv/x6';
+import { Graph, Shape } from '@antv/x6';
 
+import { Clipboard } from '@antv/x6-plugin-clipboard';
+import { History } from '@antv/x6-plugin-history';
+import { Keyboard } from '@antv/x6-plugin-keyboard';
+import { Selection } from '@antv/x6-plugin-selection';
+import { Snapline } from '@antv/x6-plugin-snapline';
+import { Transform } from '@antv/x6-plugin-transform';
 import { forwardRef, useEffect } from 'react';
 import { useModel } from 'umi';
+import './index.less';
 
 const Canvas = forwardRef((props, ref) => {
   const {
     config: { background, width, height, scale },
   } = useModel('useEditor');
 
-  const data = {
-    nodes: [],
+  // 快捷键
+  const handleAddKeyboard = () => {
+    const graph = ref.current;
+    graph.bindKey(['meta+c', 'ctrl+c'], () => {
+      const cells = graph.getSelectedCells();
+      if (cells.length) {
+        graph.copy(cells);
+      }
+      return false;
+    });
+    graph.bindKey(['meta+x', 'ctrl+x'], () => {
+      const cells = graph.getSelectedCells();
+      if (cells.length) {
+        graph.cut(cells);
+      }
+      return false;
+    });
+    graph.bindKey(['meta+v', 'ctrl+v'], () => {
+      if (!graph.isClipboardEmpty()) {
+        const cells = graph.paste({ offset: 32 });
+        graph.cleanSelection();
+        graph.select(cells);
+      }
+      return false;
+    });
+
+    // undo redo
+    graph.bindKey(['meta+z', 'ctrl+z'], () => {
+      if (graph.canUndo()) {
+        graph.undo();
+      }
+      return false;
+    });
+    graph.bindKey(['meta+shift+z', 'ctrl+shift+z'], () => {
+      if (graph.canRedo()) {
+        graph.redo();
+      }
+      return false;
+    });
+
+    // select all
+    graph.bindKey(['meta+a', 'ctrl+a'], () => {
+      const nodes = graph.getNodes();
+      if (nodes) {
+        graph.select(nodes);
+      }
+    });
+
+    // delete
+    graph.bindKey('backspace', () => {
+      const cells = graph.getSelectedCells();
+      if (cells.length) {
+        graph.removeCells(cells);
+      }
+    });
+
+    // zoom
+    graph.bindKey(['ctrl+1', 'meta+1'], () => {
+      const zoom = graph.zoom();
+      if (zoom < 1.5) {
+        graph.zoom(0.1);
+      }
+    });
+    graph.bindKey(['ctrl+2', 'meta+2'], () => {
+      const zoom = graph.zoom();
+      if (zoom > 0.5) {
+        graph.zoom(-0.1);
+      }
+    });
   };
 
-  useEffect(() => {
+  // 事件-控制连接桩显示/隐藏
+  const handleAddEvent = () => {
+    const graph = ref.current;
+    const showPorts = (ports: NodeListOf<SVGElement>, show: boolean) => {
+      for (let i = 0, len = ports.length; i < len; i += 1) {
+        ports[i].style.visibility = show ? 'visible' : 'hidden';
+      }
+    };
+    graph.on('node:mouseenter', () => {
+      const container = document.getElementById('canvas-container')!;
+      const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
+      showPorts(ports, true);
+    });
+    graph.on('node:mouseleave', () => {
+      const container = document.getElementById('canvas-container')!;
+      const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
+      showPorts(ports, false);
+    });
+  };
+
+  const initiGraph = () => {
     const graph = new Graph({
       container: document.getElementById('canvas-container') || undefined,
       background: background,
       panning: true,
-      grid: true,
+      // grid: true,
       width,
       height,
       mousewheel: {
         enabled: true,
+        zoomAtMousePosition: true,
         modifiers: 'Ctrl',
+        minScale: 0.5,
         maxScale: 4,
+      },
+      connecting: {
+        router: 'manhattan',
+        connector: {
+          name: 'rounded',
+          args: {
+            radius: 8,
+          },
+        },
+        anchor: 'center',
+        connectionPoint: 'anchor',
+        allowBlank: false,
+        snap: {
+          radius: 20,
+        },
+        createEdge() {
+          return new Shape.Edge({
+            attrs: {
+              line: {
+                stroke: '#A2B1C3',
+                strokeWidth: 2,
+                targetMarker: {
+                  name: 'block',
+                  width: 12,
+                  height: 8,
+                },
+              },
+            },
+            zIndex: 0,
+          });
+        },
+        validateConnection({ targetMagnet }) {
+          return !!targetMagnet;
+        },
+      },
+      highlighting: {
+        magnetAdsorbed: {
+          name: 'stroke',
+          args: {
+            attrs: {
+              fill: '#5F95FF',
+              stroke: '#5F95FF',
+            },
+          },
+        },
       },
     });
 
+    graph
+      .use(new Snapline())
+      .use(
+        new Transform({
+          resizing: true,
+          rotating: true,
+        }),
+      )
+      .use(
+        new Selection({
+          rubberband: true,
+          showNodeSelectionBox: true,
+        }),
+      )
+      .use(new Keyboard())
+      .use(new Clipboard())
+      .use(new History());
+
+    // graph.bindKey(['meta+c', 'ctrl+c'], () => {
+    //   const cells = graph.getSelectedCells();
+    //   if (cells.length) {
+    //     graph.copy(cells);
+    //   }
+    //   return false;
+    // });
+    // graph.bindKey(['meta+x', 'ctrl+x'], () => {
+    //   const cells = graph.getSelectedCells();
+    //   if (cells.length) {
+    //     graph.cut(cells);
+    //   }
+    //   return false;
+    // });
+    // graph.bindKey(['meta+v', 'ctrl+v'], () => {
+    //   if (!graph.isClipboardEmpty()) {
+    //     const cells = graph.paste({ offset: 32 });
+    //     graph.cleanSelection();
+    //     graph.select(cells);
+    //   }
+    //   return false;
+    // });
+
+    // TODO 渲染元素 data
+    graph.fromJSON({ nodes: [] });
+    // 内容居中显示
+    graph.centerContent();
+
     ref.current = graph;
-    graph.fromJSON(data); // TODO 渲染元素 data
-    graph.centerContent(); // 居中显示
+  };
+
+  useEffect(() => {
+    initiGraph();
+    handleAddKeyboard();
+    handleAddEvent();
   }, []);
 
   useEffect(() => {
@@ -44,7 +235,7 @@ const Canvas = forwardRef((props, ref) => {
   }, [background]);
 
   return (
-    <div className="flex justify-center items-center bg-[#F5F5F5] overflow-auto w-full h-[100vh]">
+    <div className="flex justify-center items-center overflow-auto w-full h-[100vh]" id="canvas-bg">
       <div id="canvas-container" ref={ref} />
     </div>
   );
