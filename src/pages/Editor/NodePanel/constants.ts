@@ -1,5 +1,4 @@
 // 节点连接桩
-
 export const ports = {
   // 连接桩组定义
   groups: {
@@ -79,4 +78,13 @@ export const ports = {
       group: 'left',
     },
   ],
+};
+
+// 节点公共样式
+export const commonAttrs = {
+  body: {
+    stroke: '#A2B1C3',
+    fill: '#fff',
+    strokeWidth: 1,
+  },
 };

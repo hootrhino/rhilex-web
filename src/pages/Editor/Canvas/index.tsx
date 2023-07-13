@@ -111,15 +111,14 @@ const Canvas = forwardRef((props, ref) => {
       container: document.getElementById('canvas-container') || undefined,
       background: background,
       panning: true,
-      // grid: true,
       width,
       height,
       mousewheel: {
         enabled: true,
         zoomAtMousePosition: true,
-        modifiers: 'Ctrl',
+        modifiers: ['ctrl', 'meta'],
         minScale: 0.5,
-        maxScale: 4,
+        // maxScale: 4,
       },
       connecting: {
         router: 'manhattan',
@@ -132,9 +131,7 @@ const Canvas = forwardRef((props, ref) => {
         anchor: 'center',
         connectionPoint: 'anchor',
         allowBlank: false,
-        snap: {
-          radius: 20,
-        },
+        snap: true,
         createEdge() {
           return new Shape.Edge({
             attrs: {
@@ -186,29 +183,6 @@ const Canvas = forwardRef((props, ref) => {
       .use(new Clipboard())
       .use(new History());
 
-    // graph.bindKey(['meta+c', 'ctrl+c'], () => {
-    //   const cells = graph.getSelectedCells();
-    //   if (cells.length) {
-    //     graph.copy(cells);
-    //   }
-    //   return false;
-    // });
-    // graph.bindKey(['meta+x', 'ctrl+x'], () => {
-    //   const cells = graph.getSelectedCells();
-    //   if (cells.length) {
-    //     graph.cut(cells);
-    //   }
-    //   return false;
-    // });
-    // graph.bindKey(['meta+v', 'ctrl+v'], () => {
-    //   if (!graph.isClipboardEmpty()) {
-    //     const cells = graph.paste({ offset: 32 });
-    //     graph.cleanSelection();
-    //     graph.select(cells);
-    //   }
-    //   return false;
-    // });
-
     // TODO 渲染元素 data
     graph.fromJSON({ nodes: [] });
     // 内容居中显示
@@ -235,7 +209,10 @@ const Canvas = forwardRef((props, ref) => {
   }, [background]);
 
   return (
-    <div className="flex justify-center items-center overflow-auto w-full h-[100vh]" id="canvas-bg">
+    <div
+      className="relative flex justify-center items-center overflow-auto w-full h-[100vh]"
+      id="canvas-bg"
+    >
       <div id="canvas-container" ref={ref} />
     </div>
   );

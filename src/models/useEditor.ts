@@ -6,7 +6,7 @@ export const DEFAULT_HEIGHT = 1080;
 
 export const DEFAULT_CONFIG = {
   background: {
-    color: '#434343',
+    color: '#d9d9d9',
     repeat: 'no-repeat',
     size: 'auto auto',
     position: 'center',
