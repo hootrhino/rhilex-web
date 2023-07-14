@@ -1,19 +1,15 @@
 import {
-  BoldOutlined,
   CompressOutlined,
   DownOutlined,
   FileDoneOutlined,
+  FullscreenExitOutlined,
   FullscreenOutlined,
   FundViewOutlined,
-  GatewayOutlined,
   GroupOutlined,
-  ItalicOutlined,
   OneToOneOutlined,
   QuestionCircleOutlined,
   RedoOutlined,
   SaveOutlined,
-  StrikethroughOutlined,
-  UnderlineOutlined,
   UndoOutlined,
   UngroupOutlined,
   VerticalAlignBottomOutlined,
@@ -27,40 +23,59 @@ import '@antv/x6-react-components/es/toolbar/style/index.css';
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space } from 'antd';
 
+import { forwardRef, useState } from 'react';
 import './index.less';
 
-const extraConfig = [
-  {
-    name: 'zoomIn',
-    tooltip: '放大',
-    icon: <ZoomInOutlined />,
-  },
-  {
-    name: 'zoomOut',
-    tooltip: '缩小',
-    icon: <ZoomOutOutlined />,
-  },
-  {
-    name: 'scaleToOne',
-    tooltip: '缩放到1:1',
-    icon: <OneToOneOutlined />,
-  },
-  {
-    name: 'scaleToFit',
-    tooltip: '缩放到适应屏幕',
-    icon: <CompressOutlined />,
-  },
-  {
-    name: 'fullScreen',
-    tooltip: '全屏',
-    icon: <FullscreenOutlined />,
-  },
-];
+const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
+  const [isFullScreen, setFullScreen] = useState<boolean>(false);
 
-const ToolBar = () => {
-  // TODO
   const handleToolbarClick = (name: string, value?: any) => {
-    console.log(name, value);
+    const graph = ref.current;
+
+    switch (name) {
+      case 'undo':
+        graph.undo();
+        break;
+      case 'redo':
+        graph.redo();
+        break;
+      case 'zoomIn':
+        graph.zoom(0.1);
+        break;
+      case 'zoomOut':
+        graph.zoom(-0.1);
+        break;
+      case 'scaleToOne':
+        graph.zoomTo(1);
+        break;
+      case 'scaleToFit':
+        graph.zoomToFit();
+        break;
+      case 'fullScreen':
+        handleFullScreen.enter();
+        setFullScreen(true);
+        break;
+      case 'exitFullScreen':
+        handleFullScreen.exit();
+        setFullScreen(false);
+        break;
+      case 'frontNode':
+        // TODO
+        break;
+      case 'backNode':
+        // TODO
+        break;
+      case 'group':
+        // TODO
+        break;
+      case 'unGroup':
+        // TODO
+        break;
+      default:
+        break;
+    }
+
+    console.log(name, value, graph, handleFullScreen.active);
   };
 
   // TODO
@@ -118,29 +133,27 @@ const ToolBar = () => {
         <Toolbar.Group>
           <Toolbar.Item name="frontNode" tooltip="置前" icon={<VerticalAlignTopOutlined />} />
           <Toolbar.Item name="backNode" tooltip="置后" icon={<VerticalAlignBottomOutlined />} />
-          <Toolbar.Item name="multiSelect" tooltip="开启框选" icon={<GatewayOutlined />} />
           <Toolbar.Item name="group" tooltip="新建群组" icon={<GroupOutlined />} />
           <Toolbar.Item name="unGroup" tooltip="取消群组" icon={<UngroupOutlined />} />
         </Toolbar.Group>
-        <Toolbar.Group>
-          {extraConfig?.map((item) => (
-            <Toolbar.Item {...item} key={item.name} />
-          ))}
-        </Toolbar.Group>
-
         <Toolbar.Group>
           <Toolbar.Item name="undo" tooltip="撤销" icon={<UndoOutlined />} />
           <Toolbar.Item name="redo" tooltip="重做" icon={<RedoOutlined />} />
         </Toolbar.Group>
         <Toolbar.Group>
-          <Toolbar.Item name="bold" tooltip="粗体" icon={<BoldOutlined />} />
-          <Toolbar.Item name="italic" tooltip="斜体" icon={<ItalicOutlined />} />
-          <Toolbar.Item name="strikethrough" tooltip="删除线" icon={<StrikethroughOutlined />} />
-          <Toolbar.Item name="underline" tooltip="下划线" icon={<UnderlineOutlined />} />
+          <Toolbar.Item name="zoomIn" tooltip="放大" icon={<ZoomInOutlined />} />
+          <Toolbar.Item name="zoomOut" tooltip="缩小" icon={<ZoomOutOutlined />} />
+          <Toolbar.Item name="scaleToOne" tooltip="缩放到1:1" icon={<OneToOneOutlined />} />
+          <Toolbar.Item name="scaleToFit" tooltip="缩放到适应屏幕" icon={<CompressOutlined />} />
+          <Toolbar.Item
+            name={isFullScreen ? 'exitFullScreen' : 'fullScreen'}
+            tooltip={isFullScreen ? '退出全屏' : '全屏'}
+            icon={isFullScreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
+          />
         </Toolbar.Group>
       </Toolbar>
     </div>
   );
-};
+});
 
 export default ToolBar;
