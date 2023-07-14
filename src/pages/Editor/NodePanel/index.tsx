@@ -20,7 +20,7 @@ const NodePanel = forwardRef((props, ref) => {
     const stencil = new Stencil({
       title: '组件列表',
       target: graph,
-      // stencilGraphWidth: 200,
+      stencilGraphWidth: 220,
       // stencilGraphHeight: 180,
       search(cell, keyword) {
         return cell.shape.indexOf(keyword) !== -1;
@@ -44,8 +44,8 @@ const NodePanel = forwardRef((props, ref) => {
       ],
       layoutOptions: {
         columns: 4,
-        columnWidth: 45,
-        rowHeight: 35,
+        columnWidth: 55,
+        rowHeight: 40,
         resizeToFit: true,
       },
     });
