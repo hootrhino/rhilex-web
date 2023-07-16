@@ -27,10 +27,13 @@ export type Config = Omit<Graph.Options, 'background'> & {
 };
 
 const useEditor = () => {
+  // 画布属性设置
   const [config, setConfig] = useState<Config>(DEFAULT_CONFIG);
   const [selectedNode, setSelectedNode] = useState<Cell | undefined>(undefined);
 
-  return { config, setConfig, selectedNode, setSelectedNode };
+  const [isGroup, setGroup] = useState<boolean>(false);
+
+  return { config, setConfig, selectedNode, setSelectedNode, isGroup, setGroup };
 };
 
 export default useEditor;

@@ -8,6 +8,7 @@ import { Snapline } from '@antv/x6-plugin-snapline';
 import { Transform } from '@antv/x6-plugin-transform';
 import { forwardRef, useEffect } from 'react';
 import { useModel } from 'umi';
+
 import './index.less';
 
 const Canvas = forwardRef((props, ref) => {
@@ -112,6 +113,7 @@ const Canvas = forwardRef((props, ref) => {
       container: document.getElementById('canvas-container') || undefined,
       background: background,
       panning: true,
+      embedding: true,
       width,
       height,
       mousewheel: {
@@ -154,12 +156,23 @@ const Canvas = forwardRef((props, ref) => {
         },
       },
       highlighting: {
+        // 连线过程中，自动吸附到连接桩时被使用
         magnetAdsorbed: {
           name: 'stroke',
           args: {
             attrs: {
               fill: '#5F95FF',
               stroke: '#5F95FF',
+            },
+          },
+        },
+        // 拖动节点进行嵌入操作过程中，节点可以被嵌入时被使用
+        embedding: {
+          name: 'stroke',
+          args: {
+            padding: -1,
+            attrs: {
+              stroke: '#73d13d',
             },
           },
         },
@@ -194,7 +207,8 @@ const Canvas = forwardRef((props, ref) => {
     });
 
     // TODO 渲染元素 data
-    graph.fromJSON({ nodes: [] });
+    // graph.fromJSON(fromJsonData);
+
     // 内容居中显示
     graph.centerContent();
 

@@ -31,6 +31,104 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
   const [isFullScreen, setFullScreen] = useState<boolean>(false);
   const { selectedNode } = useModel('useEditor');
 
+  // TODO
+  const handleGroup = () => {
+    let ctrlPressed = false;
+    const hasParent = selectedNode?.getParent();
+    if (selectedNode !== undefined && hasParent === null) {
+      const pos = selectedNode?.getBBox();
+      const parent = ref.current.addNode({
+        shape: 'rect',
+        x: pos?.x - 50,
+        y: pos?.y - 50,
+        width: pos?.width + 100,
+        height: pos?.height + 100,
+        zIndex: 1,
+        label: 'Parent',
+        attrs: {
+          body: {
+            fill: '#fffbe6',
+            stroke: '#ffe7ba',
+          },
+          label: {
+            fontSize: 12,
+          },
+        },
+      });
+      selectedNode?.setParent(parent);
+      selectedNode?.setZIndex(10);
+      ref.current.on('node:change:position', ({ node, options }) => {
+        if (options.skipParentHandler || ctrlPressed) {
+          return;
+        }
+
+        const children = node.getChildren();
+        if (children && children.length) {
+          node.prop('originPosition', node.getPosition());
+        }
+
+        const parent = node.getParent();
+        if (parent && parent.isNode()) {
+          let originSize = parent.prop('originSize');
+          if (originSize === null) {
+            originSize = parent.getSize();
+            parent.prop('originSize', originSize);
+          }
+
+          let originPosition = parent.prop('originPosition');
+          if (originPosition === null) {
+            originPosition = parent.getPosition();
+            parent.prop('originPosition', originPosition);
+          }
+
+          let x = originPosition.x;
+          let y = originPosition.y;
+          let cornerX = originPosition.x + originSize.width;
+          let cornerY = originPosition.y + originSize.height;
+          let hasChange = false;
+
+          const children = parent.getChildren();
+          if (children) {
+            children.forEach((child) => {
+              const bbox = child.getBBox().inflate(20);
+              const corner = bbox.getCorner();
+
+              if (bbox.x < x) {
+                x = bbox.x;
+                hasChange = true;
+              }
+
+              if (bbox.y < y) {
+                y = bbox.y;
+                hasChange = true;
+              }
+
+              if (corner.x > cornerX) {
+                cornerX = corner.x;
+                hasChange = true;
+              }
+
+              if (corner.y > cornerY) {
+                cornerY = corner.y;
+                hasChange = true;
+              }
+            });
+          }
+
+          if (hasChange) {
+            parent.prop(
+              {
+                position: { x, y },
+                size: { width: cornerX - x, height: cornerY - y },
+              },
+              { skipParentHandler: true },
+            );
+          }
+        }
+      });
+    }
+  };
+
   const handleToolbarClick = (name: string) => {
     const graph = ref.current;
 
@@ -72,7 +170,7 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
         }
         break;
       case 'group':
-        // TODO
+        handleGroup();
         break;
       case 'unGroup':
         // TODO
@@ -81,7 +179,7 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
         break;
     }
   };
-
+  // console.log(selectedNode, selectedNode.getBBox())
   // TODO
   const handleMenuClick = () => {};
 
@@ -147,8 +245,18 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
             icon={<VerticalAlignBottomOutlined />}
             disabled={selectedNode === undefined}
           />
-          <Toolbar.Item name="group" tooltip="新建群组" icon={<GroupOutlined />} />
-          <Toolbar.Item name="unGroup" tooltip="取消群组" icon={<UngroupOutlined />} />
+          <Toolbar.Item
+            name="group"
+            tooltip="新建群组"
+            icon={<GroupOutlined />}
+            disabled={selectedNode === undefined}
+          />
+          <Toolbar.Item
+            name="unGroup"
+            tooltip="取消群组"
+            icon={<UngroupOutlined />}
+            disabled={selectedNode !== undefined}
+          />
         </Toolbar.Group>
         <Toolbar.Group>
           <Toolbar.Item name="undo" tooltip="撤销" icon={<UndoOutlined />} />
