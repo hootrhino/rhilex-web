@@ -13,7 +13,7 @@ const Editor = () => {
 
   return (
     <FullScreen handle={handle}>
-      <ToolBar ref={editorRef} handleFullScreen={handle} />
+      <ToolBar ref={editorRef} handleFullScreen={handle} selected />
       <Canvas ref={editorRef} />
       <NodePanel ref={editorRef} />
       <DetailPanel />

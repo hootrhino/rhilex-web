@@ -1,4 +1,4 @@
-import type { BackgroundManager, Graph } from '@antv/x6';
+import type { BackgroundManager, Cell, Graph } from '@antv/x6';
 import { useState } from 'react';
 
 export const DEFAULT_WIDTH = 1920;
@@ -28,8 +28,9 @@ export type Config = Omit<Graph.Options, 'background'> & {
 
 const useEditor = () => {
   const [config, setConfig] = useState<Config>(DEFAULT_CONFIG);
+  const [selectedNode, setSelectedNode] = useState<Cell | undefined>(undefined);
 
-  return { config, setConfig };
+  return { config, setConfig, selectedNode, setSelectedNode };
 };
 
 export default useEditor;

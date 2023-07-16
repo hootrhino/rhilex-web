@@ -23,13 +23,15 @@ import '@antv/x6-react-components/es/toolbar/style/index.css';
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space } from 'antd';
 
+import { useModel } from '@umijs/max';
 import { forwardRef, useState } from 'react';
 import './index.less';
 
 const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
   const [isFullScreen, setFullScreen] = useState<boolean>(false);
+  const { selectedNode } = useModel('useEditor');
 
-  const handleToolbarClick = (name: string, value?: any) => {
+  const handleToolbarClick = (name: string) => {
     const graph = ref.current;
 
     switch (name) {
@@ -60,10 +62,14 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
         setFullScreen(false);
         break;
       case 'frontNode':
-        // TODO
+        if (selectedNode !== undefined) {
+          selectedNode.toFront();
+        }
         break;
       case 'backNode':
-        // TODO
+        if (selectedNode !== undefined) {
+          selectedNode.toBack();
+        }
         break;
       case 'group':
         // TODO
@@ -74,8 +80,6 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
       default:
         break;
     }
-
-    console.log(name, value, graph, handleFullScreen.active);
   };
 
   // TODO
@@ -131,8 +135,18 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
         className="flex items-center h-full px-[10px]"
       >
         <Toolbar.Group>
-          <Toolbar.Item name="frontNode" tooltip="置前" icon={<VerticalAlignTopOutlined />} />
-          <Toolbar.Item name="backNode" tooltip="置后" icon={<VerticalAlignBottomOutlined />} />
+          <Toolbar.Item
+            name="frontNode"
+            tooltip="置前"
+            icon={<VerticalAlignTopOutlined />}
+            disabled={selectedNode === undefined}
+          />
+          <Toolbar.Item
+            name="backNode"
+            tooltip="置后"
+            icon={<VerticalAlignBottomOutlined />}
+            disabled={selectedNode === undefined}
+          />
           <Toolbar.Item name="group" tooltip="新建群组" icon={<GroupOutlined />} />
           <Toolbar.Item name="unGroup" tooltip="取消群组" icon={<UngroupOutlined />} />
         </Toolbar.Group>

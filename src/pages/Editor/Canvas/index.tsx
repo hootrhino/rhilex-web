@@ -13,6 +13,7 @@ import './index.less';
 const Canvas = forwardRef((props, ref) => {
   const {
     config: { background, width, height, scale },
+    setSelectedNode,
   } = useModel('useEditor');
 
   // 快捷键
@@ -106,7 +107,7 @@ const Canvas = forwardRef((props, ref) => {
     });
   };
 
-  const initiGraph = () => {
+  useEffect(() => {
     const graph = new Graph({
       container: document.getElementById('canvas-container') || undefined,
       background: background,
@@ -183,18 +184,29 @@ const Canvas = forwardRef((props, ref) => {
       .use(new Clipboard())
       .use(new History());
 
+    graph.on('selection:changed', ({ selected }) => {
+      if (selected.length > 0 && selected[0].isNode()) {
+        const node = selected[0];
+        setSelectedNode(node);
+      } else {
+        setSelectedNode(undefined);
+      }
+    });
+
     // TODO 渲染元素 data
     graph.fromJSON({ nodes: [] });
     // 内容居中显示
     graph.centerContent();
 
     ref.current = graph;
-  };
 
-  useEffect(() => {
-    initiGraph();
     handleAddKeyboard();
     handleAddEvent();
+
+    // 组件卸载时清理 Graph 实例
+    return () => {
+      graph.dispose();
+    };
   }, []);
 
   useEffect(() => {
