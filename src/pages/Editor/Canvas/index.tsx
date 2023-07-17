@@ -113,7 +113,6 @@ const Canvas = forwardRef((props, ref) => {
       container: document.getElementById('canvas-container') || undefined,
       background: background,
       panning: true,
-      embedding: true,
       width,
       height,
       mousewheel: {
@@ -123,6 +122,7 @@ const Canvas = forwardRef((props, ref) => {
         minScale: 0.5,
         // maxScale: 4,
       },
+      embedding: true,
       connecting: {
         router: 'manhattan',
         connector: {
@@ -189,7 +189,10 @@ const Canvas = forwardRef((props, ref) => {
       )
       .use(
         new Selection({
+          enabled: true,
+          multiple: true,
           rubberband: true,
+          movable: true,
           showNodeSelectionBox: true,
         }),
       )
@@ -199,8 +202,8 @@ const Canvas = forwardRef((props, ref) => {
 
     graph.on('selection:changed', ({ selected }) => {
       if (selected.length > 0 && selected[0].isNode()) {
-        const node = selected[0];
-        setSelectedNode(node);
+        const n = selected?.filter((item) => item.isNode());
+        setSelectedNode(n);
       } else {
         setSelectedNode(undefined);
       }

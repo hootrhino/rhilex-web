@@ -17,66 +17,100 @@ import {
   ZoomInOutlined,
   ZoomOutOutlined,
 } from '@ant-design/icons';
+import type { Dom } from '@antv/x6';
 import { Toolbar } from '@antv/x6-react-components';
-import '@antv/x6-react-components/es/menu/style/index.css';
-import '@antv/x6-react-components/es/toolbar/style/index.css';
+import { useModel } from '@umijs/max';
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space } from 'antd';
-
-import { useModel } from '@umijs/max';
+import { isNil } from 'lodash';
 import { forwardRef, useState } from 'react';
+
+import '@antv/x6-react-components/es/menu/style/index.css';
+import '@antv/x6-react-components/es/toolbar/style/index.css';
 import './index.less';
 
 const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
-  const [isFullScreen, setFullScreen] = useState<boolean>(false);
   const { selectedNode } = useModel('useEditor');
+  // 判断是否全屏
+  const [isFullScreen, setFullScreen] = useState<boolean>(false);
+  // 判断是否存在群组
+  const [disableGroup, setDisableGroup] = useState<boolean>(false);
+  // 禁止置前或置后操作
+  const disableFrontorBack =
+    selectedNode === undefined || (selectedNode && selectedNode?.length > 1);
 
-  // TODO
+  // 群组&解组
   const handleGroup = () => {
     let ctrlPressed = false;
-    const hasParent = selectedNode?.getParent();
-    if (selectedNode !== undefined && hasParent === null) {
-      const pos = selectedNode?.getBBox();
-      const parent = ref.current.addNode({
-        shape: 'rect',
-        x: pos?.x - 50,
-        y: pos?.y - 50,
-        width: pos?.width + 100,
-        height: pos?.height + 100,
-        zIndex: 1,
-        label: 'Parent',
-        attrs: {
-          body: {
-            fill: '#fffbe6',
-            stroke: '#ffe7ba',
-          },
-          label: {
-            fontSize: 12,
-          },
+    const embedPadding = 20;
+
+    const pos = selectedNode?.length > 0 && ref.current?.getCellsBBox(selectedNode);
+
+    const parent = ref.current.addNode({
+      shape: 'rect',
+      x: pos?.x - pos?.width / 2,
+      y: pos?.y - pos?.height / 2,
+      width: pos?.width * 2,
+      height: pos?.height * 2,
+      zIndex: 1,
+      attrs: {
+        body: {
+          fill: '#fffbe6',
+          stroke: '#ffe7ba',
         },
+        label: {
+          fontSize: 12,
+        },
+      },
+    });
+
+    if (!disableGroup) {
+      setDisableGroup(true);
+
+      selectedNode?.forEach((item) => {
+        parent.addChild(item);
+        item?.setZIndex(10);
       });
-      selectedNode?.setParent(parent);
-      selectedNode?.setZIndex(10);
+
+      ref.current.on('node:embedding', ({ e }: { e: Dom.MouseMoveEvent }) => {
+        ctrlPressed = e.metaKey || e.ctrlKey;
+      });
+
+      ref.current.on('node:embedded', () => {
+        ctrlPressed = false;
+      });
+
+      ref.current.on('node:change:size', ({ node, options }) => {
+        if (options.skipParentHandler) {
+          return;
+        }
+
+        const children = node.getChildren();
+        if (children && children?.length) {
+          node.prop('originSize', node.getSize());
+        }
+      });
+
       ref.current.on('node:change:position', ({ node, options }) => {
         if (options.skipParentHandler || ctrlPressed) {
           return;
         }
 
         const children = node.getChildren();
-        if (children && children.length) {
+        if (children && children?.length) {
           node.prop('originPosition', node.getPosition());
         }
 
-        const parent = node.getParent();
         if (parent && parent.isNode()) {
           let originSize = parent.prop('originSize');
-          if (originSize === null) {
+          if (isNil(originSize)) {
             originSize = parent.getSize();
             parent.prop('originSize', originSize);
           }
 
           let originPosition = parent.prop('originPosition');
-          if (originPosition === null) {
+
+          if (isNil(originPosition)) {
             originPosition = parent.getPosition();
             parent.prop('originPosition', originPosition);
           }
@@ -90,7 +124,7 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
           const children = parent.getChildren();
           if (children) {
             children.forEach((child) => {
-              const bbox = child.getBBox().inflate(20);
+              const bbox = child.getBBox().inflate(embedPadding);
               const corner = bbox.getCorner();
 
               if (bbox.x < x) {
@@ -126,6 +160,16 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
           }
         }
       });
+    } else {
+      // 解组
+      const selectedCells = ref.current?.getSelectedCells(); // 获取当前选中的节点
+      const children = selectedCells?.[0].getChildren();
+
+      ref.current?.removeCells(selectedCells);
+
+      ref.current?.resetCells(children);
+
+      setDisableGroup(false);
     }
   };
 
@@ -161,25 +205,25 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
         break;
       case 'frontNode':
         if (selectedNode !== undefined) {
-          selectedNode.toFront();
+          selectedNode?.[0].toFront();
         }
         break;
       case 'backNode':
         if (selectedNode !== undefined) {
-          selectedNode.toBack();
+          selectedNode?.[0].toBack();
         }
         break;
       case 'group':
         handleGroup();
         break;
       case 'unGroup':
-        // TODO
+        handleGroup();
         break;
       default:
         break;
     }
   };
-  // console.log(selectedNode, selectedNode.getBBox())
+
   // TODO
   const handleMenuClick = () => {};
 
@@ -237,25 +281,25 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
             name="frontNode"
             tooltip="置前"
             icon={<VerticalAlignTopOutlined />}
-            disabled={selectedNode === undefined}
+            disabled={disableFrontorBack}
           />
           <Toolbar.Item
             name="backNode"
             tooltip="置后"
             icon={<VerticalAlignBottomOutlined />}
-            disabled={selectedNode === undefined}
+            disabled={disableFrontorBack}
           />
           <Toolbar.Item
             name="group"
             tooltip="新建群组"
             icon={<GroupOutlined />}
-            disabled={selectedNode === undefined}
+            disabled={disableGroup}
           />
           <Toolbar.Item
             name="unGroup"
             tooltip="取消群组"
             icon={<UngroupOutlined />}
-            disabled={selectedNode !== undefined}
+            disabled={!disableGroup}
           />
         </Toolbar.Group>
         <Toolbar.Group>
