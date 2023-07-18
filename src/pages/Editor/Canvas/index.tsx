@@ -194,6 +194,7 @@ const Canvas = forwardRef((props, ref) => {
           rubberband: true,
           movable: true,
           showNodeSelectionBox: true,
+          pointerEvents: 'none',
         }),
       )
       .use(new Keyboard())

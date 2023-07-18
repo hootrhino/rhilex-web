@@ -23,7 +23,7 @@ import { useModel } from '@umijs/max';
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space } from 'antd';
 import { isNil } from 'lodash';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 import '@antv/x6-react-components/es/menu/style/index.css';
 import '@antv/x6-react-components/es/toolbar/style/index.css';
@@ -34,7 +34,8 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
   // 判断是否全屏
   const [isFullScreen, setFullScreen] = useState<boolean>(false);
   // 判断是否存在群组
-  const [disableGroup, setDisableGroup] = useState<boolean>(false);
+  const [disableGroup, setDisableGroup] = useState<boolean>(true);
+  const [disableUnGroup, setDisableUnGroup] = useState<boolean>(true);
   // 禁止置前或置后操作
   const disableFrontorBack =
     selectedNode === undefined || (selectedNode && selectedNode?.length > 1);
@@ -65,8 +66,6 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
     });
 
     if (!disableGroup) {
-      setDisableGroup(true);
-
       selectedNode?.forEach((item) => {
         parent.addChild(item);
         item?.setZIndex(10);
@@ -162,14 +161,11 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
       });
     } else {
       // 解组
-      const selectedCells = ref.current?.getSelectedCells(); // 获取当前选中的节点
-      const children = selectedCells?.[0].getChildren();
-
-      ref.current?.removeCells(selectedCells);
-
-      ref.current?.resetCells(children);
-
-      setDisableGroup(false);
+      const children = selectedNode?.[0].getChildren();
+      if (!disableUnGroup) {
+        ref.current?.removeCells(selectedNode);
+        ref.current?.resetCells(children);
+      }
     }
   };
 
@@ -215,9 +211,11 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
         break;
       case 'group':
         handleGroup();
+        setDisableGroup(true);
         break;
       case 'unGroup':
         handleGroup();
+        setDisableGroup(true);
         break;
       default:
         break;
@@ -246,6 +244,19 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
     items,
     onClick: handleMenuClick,
   };
+
+  useEffect(() => {
+    if (selectedNode && selectedNode?.length > 0) {
+      const group = selectedNode?.filter((item) => item.hasParent() || item.getChildCount() > 0);
+      const children = selectedNode?.filter((item) => item.getChildCount() > 0);
+
+      setDisableGroup(group?.length > 0 ? true : false);
+      setDisableUnGroup(children?.length > 0 ? false : true);
+    } else {
+      setDisableGroup(true);
+      setDisableUnGroup(true);
+    }
+  }, [selectedNode]);
 
   return (
     <div className="w-full h-[40px] bg-[#292f33] fixed top-0 z-[99]">
@@ -299,7 +310,7 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
             name="unGroup"
             tooltip="取消群组"
             icon={<UngroupOutlined />}
-            disabled={!disableGroup}
+            disabled={disableUnGroup}
           />
         </Toolbar.Group>
         <Toolbar.Group>
