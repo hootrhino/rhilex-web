@@ -19,7 +19,7 @@ const Canvas = forwardRef((props, ref) => {
 
   // 快捷键
   const handleAddKeyboard = () => {
-    const graph = ref.current;
+    const graph = (ref as any).current;
     graph.bindKey(['meta+c', 'ctrl+c'], () => {
       const cells = graph.getSelectedCells();
       if (cells.length) {
@@ -90,7 +90,7 @@ const Canvas = forwardRef((props, ref) => {
 
   // 事件-控制连接桩显示/隐藏
   const handleAddEvent = () => {
-    const graph = ref.current;
+    const graph = (ref as any).current;
     const showPorts = (ports: NodeListOf<SVGElement>, show: boolean) => {
       for (let i = 0, len = ports.length; i < len; i += 1) {
         ports[i].style.visibility = show ? 'visible' : 'hidden';
@@ -120,7 +120,6 @@ const Canvas = forwardRef((props, ref) => {
         zoomAtMousePosition: true,
         modifiers: ['ctrl', 'meta'],
         minScale: 0.5,
-        // maxScale: 4,
       },
       embedding: true,
       connecting: {
@@ -215,8 +214,9 @@ const Canvas = forwardRef((props, ref) => {
 
     // 内容居中显示
     graph.centerContent();
-
-    ref.current = graph;
+    if (ref) {
+      (ref as any).current = graph;
+    }
 
     handleAddKeyboard();
     handleAddEvent();
@@ -231,11 +231,11 @@ const Canvas = forwardRef((props, ref) => {
     const w = (width || 0) * ((scale || 30) / 100);
     const h = (height || 0) * ((scale || 30) / 100);
 
-    ref.current?.resize(w, h);
+    (ref as any).current?.resize(w, h);
   }, [width, height, scale]);
 
   useEffect(() => {
-    ref.current?.drawBackground(background);
+    (ref as any).current?.drawBackground(background);
   }, [background]);
 
   return (
@@ -243,7 +243,7 @@ const Canvas = forwardRef((props, ref) => {
       className="relative flex justify-center items-center overflow-auto w-full h-[100vh]"
       id="canvas-bg"
     >
-      <div id="canvas-container" ref={ref} />
+      <div id="canvas-container" ref={ref as any} />
     </div>
   );
 });

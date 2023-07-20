@@ -36,10 +36,6 @@ export const REPEAT_OPTION = [
     label: '水平垂直翻转',
     value: 'flipXY',
   },
-  // {
-  //   label: '水印',
-  //   value: 'watermark',
-  // },
 ];
 
 // 背景图片位置

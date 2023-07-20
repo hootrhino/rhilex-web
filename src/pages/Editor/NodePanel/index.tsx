@@ -15,13 +15,12 @@ const NodePanel = forwardRef((props, ref) => {
   const [collapse, setCollapse] = useState<boolean>(true);
 
   const initiStencil = () => {
-    const graph = ref.current;
+    const graph = (ref as any).current;
 
     const stencil = new Stencil({
       title: '组件列表',
       target: graph,
       stencilGraphWidth: 220,
-      // stencilGraphHeight: 180,
       search(cell, keyword) {
         return cell.shape.indexOf(keyword) !== -1;
       },
@@ -30,12 +29,12 @@ const NodePanel = forwardRef((props, ref) => {
       groups: [
         {
           title: '基础节点',
-          name: 'group1',
+          name: 'base-node',
           graphHeight: 250,
         },
         {
-          title: '基础线条',
-          name: 'group2',
+          title: '多媒体组件',
+          name: 'media-component',
           graphHeight: 250,
           layoutOptions: {
             rowHeight: 70,
@@ -58,8 +57,11 @@ const NodePanel = forwardRef((props, ref) => {
     // 创建基础节点
     const createBaseNode = baseNodes?.map((node) => graph.createNode({ shape: node.name }));
 
-    stencil.load([...createBaseNode], 'group1');
-    stencil.load([], 'group2');
+    // 创建多媒体组件
+    // TODO 静态文本（Label）、变量（动态）、流动块（管道）、视频（播放器）、告警（表格）、天气、图片、轮播图
+
+    stencil.load([...createBaseNode], 'base-node');
+    stencil.load([], 'media-component');
 
     stencilRef.current?.appendChild(stencil.container);
   };

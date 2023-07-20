@@ -31,10 +31,11 @@ import './index.less';
 
 const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
   const { selectedNode } = useModel('useEditor');
-  // 判断是否全屏
+  // 是否全屏
   const [isFullScreen, setFullScreen] = useState<boolean>(false);
-  // 判断是否存在群组
+  // 是否禁止操作群组
   const [disableGroup, setDisableGroup] = useState<boolean>(true);
+  // 是否禁止操作解组
   const [disableUnGroup, setDisableUnGroup] = useState<boolean>(true);
   // 禁止置前或置后操作
   const disableFrontorBack =
@@ -42,12 +43,13 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
 
   // 群组&解组
   const handleGroup = () => {
+    const graph = (ref as any).current;
     let ctrlPressed = false;
     const embedPadding = 20;
 
-    const pos = selectedNode?.length > 0 && ref.current?.getCellsBBox(selectedNode);
+    const pos = selectedNode && selectedNode?.length > 0 && graph?.getCellsBBox(selectedNode);
 
-    const parent = ref.current.addNode({
+    const parent = graph.addNode({
       shape: 'rect',
       x: pos?.x - pos?.width / 2,
       y: pos?.y - pos?.height / 2,
@@ -71,15 +73,15 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
         item?.setZIndex(10);
       });
 
-      ref.current.on('node:embedding', ({ e }: { e: Dom.MouseMoveEvent }) => {
+      graph.on('node:embedding', ({ e }: { e: Dom.MouseMoveEvent }) => {
         ctrlPressed = e.metaKey || e.ctrlKey;
       });
 
-      ref.current.on('node:embedded', () => {
+      graph.on('node:embedded', () => {
         ctrlPressed = false;
       });
 
-      ref.current.on('node:change:size', ({ node, options }) => {
+      graph.on('node:change:size', ({ node, options }: any) => {
         if (options.skipParentHandler) {
           return;
         }
@@ -90,7 +92,7 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
         }
       });
 
-      ref.current.on('node:change:position', ({ node, options }) => {
+      graph.on('node:change:position', ({ node, options }: any) => {
         if (options.skipParentHandler || ctrlPressed) {
           return;
         }
@@ -122,7 +124,7 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
 
           const children = parent.getChildren();
           if (children) {
-            children.forEach((child) => {
+            children.forEach((child: any) => {
               const bbox = child.getBBox().inflate(embedPadding);
               const corner = bbox.getCorner();
 
@@ -163,14 +165,14 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
       // 解组
       const children = selectedNode?.[0].getChildren();
       if (!disableUnGroup) {
-        ref.current?.removeCells(selectedNode);
-        ref.current?.resetCells(children);
+        graph?.removeCells(selectedNode);
+        graph?.resetCells(children);
       }
     }
   };
 
   const handleToolbarClick = (name: string) => {
-    const graph = ref.current;
+    const graph = (ref as any).current;
 
     switch (name) {
       case 'undo':
