@@ -9,7 +9,7 @@ import { Transform } from '@antv/x6-plugin-transform';
 import { forwardRef, useEffect } from 'react';
 import { useModel } from 'umi';
 
-import './index.less';
+import '../index.less';
 
 const Canvas = forwardRef((props, ref) => {
   const {
@@ -17,9 +17,11 @@ const Canvas = forwardRef((props, ref) => {
     setSelectedNode,
   } = useModel('useEditor');
 
-  // 快捷键
+  // 添加快捷键
   const handleAddKeyboard = () => {
     const graph = (ref as any).current;
+
+    // 复制
     graph.bindKey(['meta+c', 'ctrl+c'], () => {
       const cells = graph.getSelectedCells();
       if (cells.length) {
@@ -27,6 +29,8 @@ const Canvas = forwardRef((props, ref) => {
       }
       return false;
     });
+
+    // 剪切
     graph.bindKey(['meta+x', 'ctrl+x'], () => {
       const cells = graph.getSelectedCells();
       if (cells.length) {
@@ -34,6 +38,8 @@ const Canvas = forwardRef((props, ref) => {
       }
       return false;
     });
+
+    // 粘贴
     graph.bindKey(['meta+v', 'ctrl+v'], () => {
       if (!graph.isClipboardEmpty()) {
         const cells = graph.paste({ offset: 32 });
@@ -43,13 +49,15 @@ const Canvas = forwardRef((props, ref) => {
       return false;
     });
 
-    // undo redo
+    // 撤销
     graph.bindKey(['meta+z', 'ctrl+z'], () => {
       if (graph.canUndo()) {
         graph.undo();
       }
       return false;
     });
+
+    // 重做
     graph.bindKey(['meta+shift+z', 'ctrl+shift+z'], () => {
       if (graph.canRedo()) {
         graph.redo();
@@ -57,7 +65,7 @@ const Canvas = forwardRef((props, ref) => {
       return false;
     });
 
-    // select all
+    // 全选
     graph.bindKey(['meta+a', 'ctrl+a'], () => {
       const nodes = graph.getNodes();
       if (nodes) {
@@ -65,7 +73,7 @@ const Canvas = forwardRef((props, ref) => {
       }
     });
 
-    // delete
+    // 删除
     graph.bindKey('backspace', () => {
       const cells = graph.getSelectedCells();
       if (cells.length) {
@@ -73,44 +81,29 @@ const Canvas = forwardRef((props, ref) => {
       }
     });
 
-    // zoom
-    graph.bindKey(['ctrl+1', 'meta+1'], () => {
-      const zoom = graph.zoom();
-      if (zoom < 1.5) {
-        graph.zoom(0.1);
-      }
+    // 放大
+    graph.bindKey(['ctrl+shift+1', 'meta+shift+1'], () => {
+      graph.zoom(0.1);
     });
-    graph.bindKey(['ctrl+2', 'meta+2'], () => {
-      const zoom = graph.zoom();
-      if (zoom > 0.5) {
-        graph.zoom(-0.1);
-      }
+
+    // 缩小
+    graph.bindKey(['ctrl+shift+2', 'meta+shift+2'], () => {
+      graph.zoom(-0.1);
     });
   };
 
-  // 事件-控制连接桩显示/隐藏
-  const handleAddEvent = () => {
-    const graph = (ref as any).current;
-    const showPorts = (ports: NodeListOf<SVGElement>, show: boolean) => {
-      for (let i = 0, len = ports.length; i < len; i += 1) {
-        ports[i].style.visibility = show ? 'visible' : 'hidden';
-      }
-    };
-    graph.on('node:mouseenter', () => {
-      const container = document.getElementById('canvas-container')!;
-      const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
-      showPorts(ports, true);
-    });
-    graph.on('node:mouseleave', () => {
-      const container = document.getElementById('canvas-container')!;
-      const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
-      showPorts(ports, false);
-    });
+  // 控制连接桩显示/隐藏
+  const handlePortsHideAndShow = (ports: NodeListOf<SVGElement>, show: boolean) => {
+    for (let i = 0, len = ports.length; i < len; i += 1) {
+      ports[i].style.visibility = show ? 'visible' : 'hidden';
+    }
   };
 
   useEffect(() => {
+    const container = document.getElementById('canvas-container')!;
+
     const graph = new Graph({
-      container: document.getElementById('canvas-container') || undefined,
+      container: container,
       background: background,
       panning: true,
       width,
@@ -201,6 +194,12 @@ const Canvas = forwardRef((props, ref) => {
       .use(new Clipboard())
       .use(new History());
 
+    // TODO 渲染元素 data
+    // graph.fromJSON(fromJsonData);
+
+    // 内容居中显示
+    graph.centerContent();
+
     graph.on('selection:changed', ({ selected }) => {
       if (selected.length > 0 && selected[0].isNode()) {
         const n = selected?.filter((item) => item.isNode());
@@ -210,17 +209,22 @@ const Canvas = forwardRef((props, ref) => {
       }
     });
 
-    // TODO 渲染元素 data
-    // graph.fromJSON(fromJsonData);
-
-    // 内容居中显示
-    graph.centerContent();
+    // 将画布存到ref
     if (ref) {
       (ref as any).current = graph;
     }
 
+    graph.on('node:mouseenter', () => {
+      const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
+      handlePortsHideAndShow(ports, true);
+    });
+
+    graph.on('node:mouseleave', () => {
+      const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
+      handlePortsHideAndShow(ports, false);
+    });
+
     handleAddKeyboard();
-    handleAddEvent();
 
     // 组件卸载时清理 Graph 实例
     return () => {
@@ -229,6 +233,7 @@ const Canvas = forwardRef((props, ref) => {
   }, []);
 
   useEffect(() => {
+    // 更新画布尺寸
     const w = (width || 0) * ((scale || 30) / 100);
     const h = (height || 0) * ((scale || 30) / 100);
 
@@ -236,6 +241,7 @@ const Canvas = forwardRef((props, ref) => {
   }, [width, height, scale]);
 
   useEffect(() => {
+    // 更新画布背景
     (ref as any).current?.drawBackground(background);
   }, [background]);
 

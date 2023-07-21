@@ -27,7 +27,7 @@ import { forwardRef, useEffect, useState } from 'react';
 
 import '@antv/x6-react-components/es/menu/style/index.css';
 import '@antv/x6-react-components/es/toolbar/style/index.css';
-import './index.less';
+import '../index.less';
 
 const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
   const { selectedNode } = useModel('useEditor');

@@ -4,7 +4,7 @@ import { Stencil } from '@antv/x6-plugin-stencil';
 
 import { Graph } from '@antv/x6';
 
-import './index.less';
+import '../index.less';
 
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { forwardRef, useEffect, useRef, useState } from 'react';

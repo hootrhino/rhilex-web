@@ -1,0 +1,73 @@
+// Canvas 画布
+#canvas-bg {
+  background: #fafafa url(../../assets/images/grid.png) no-repeat center;
+}
+
+.x6-widget-selection-box {
+  border: none;
+  box-shadow: none;
+}
+
+.x6-widget-selection-inner {
+  border: 2px solid #3572f9;
+}
+
+.x6-widget-transform {
+  border: 2px solid #3572f9;
+}
+
+.x6-widget-transform-resize {
+  width: 8px;
+  height: 8px;
+  border-radius: 0;
+}
+
+// DetailPanel 右侧详情面板
+.ant-color-picker-trigger .ant-color-picker-color-block {
+  width: 97%;
+}
+
+.ant-upload-list-item-container {
+  width: 80px !important;
+  height: 80px !important;
+}
+
+.ant-upload.ant-upload-select {
+  width: 80px !important;
+  height: 80px !important;
+}
+
+// NodePanel 左侧节点面板
+.x6-widget-stencil {
+  margin-top: 40px;
+  background-color: transparent;
+
+  &-group {
+    &-content {
+      .x6-graph {
+        &-svg {
+          left: -10px;
+        }
+      }
+    }
+  }
+}
+
+// Toolbar 工具栏
+.x6-toolbar.x6-toolbar-hover-effect .x6-toolbar-item {
+  color: #f5f5f5;
+}
+
+.x6-toolbar-group::before {
+  background-color: #fff;
+}
+
+// 管道动画
+@keyframes ant-line {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 1000;
+  }
+}
