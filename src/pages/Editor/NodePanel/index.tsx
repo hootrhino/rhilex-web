@@ -8,7 +8,7 @@ import './index.less';
 
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { forwardRef, useEffect, useRef, useState } from 'react';
-import { baseNodes } from './Shapes';
+import { baseNodes } from '../Shapes/Nodes';
 
 const NodePanel = forwardRef((props, ref) => {
   const stencilRef = useRef<any>(null);
