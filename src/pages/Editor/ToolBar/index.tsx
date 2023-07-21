@@ -17,20 +17,24 @@ import {
   ZoomInOutlined,
   ZoomOutOutlined,
 } from '@ant-design/icons';
-import type { Dom } from '@antv/x6';
+import type { Cell, Dom } from '@antv/x6';
 import { Toolbar } from '@antv/x6-react-components';
 import { useModel } from '@umijs/max';
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space } from 'antd';
 import { isNil } from 'lodash';
-import { forwardRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import '@antv/x6-react-components/es/menu/style/index.css';
 import '@antv/x6-react-components/es/toolbar/style/index.css';
 import '../index.less';
 
-const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
-  const { selectedNode } = useModel('useEditor');
+const ToolBar = ({ handleFullScreen }: any) => {
+  const { graph } = useModel('useEditor');
+
+  // 已选择节点
+  const [selectedNode, setSelectedNode] = useState<Cell[] | undefined>(undefined);
+
   // 是否全屏
   const [isFullScreen, setFullScreen] = useState<boolean>(false);
   // 是否禁止操作群组
@@ -43,7 +47,6 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
 
   // 群组&解组
   const handleGroup = () => {
-    const graph = (ref as any).current;
     let ctrlPressed = false;
     const embedPadding = 20;
 
@@ -123,8 +126,9 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
           let hasChange = false;
 
           const children = parent.getChildren();
+
           if (children) {
-            children.forEach((child: any) => {
+            children?.forEach((child: any) => {
               const bbox = child.getBBox().inflate(embedPadding);
               const corner = bbox.getCorner();
 
@@ -164,6 +168,7 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
     } else {
       // 解组
       const children = selectedNode?.[0].getChildren();
+
       if (!disableUnGroup) {
         graph?.removeCells(selectedNode);
         graph?.resetCells(children);
@@ -172,8 +177,6 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
   };
 
   const handleToolbarClick = (name: string) => {
-    const graph = (ref as any).current;
-
     switch (name) {
       case 'undo':
         graph.undo();
@@ -260,6 +263,19 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
     }
   }, [selectedNode]);
 
+  useEffect(() => {
+    if (graph !== undefined) {
+      graph.on('selection:changed', ({ selected }: any) => {
+        if (selected.length > 0 && selected[0].isNode()) {
+          const n = selected?.filter((item: any) => item.isNode());
+          setSelectedNode(n);
+        } else {
+          setSelectedNode(undefined);
+        }
+      });
+    }
+  }, [graph]);
+
   return (
     <div className="w-full h-[40px] bg-[#292f33] fixed top-0 z-[99]">
       <Toolbar
@@ -333,6 +349,6 @@ const ToolBar = forwardRef<any, any>(({ handleFullScreen }, ref) => {
       </Toolbar>
     </div>
   );
-});
+};
 
 export default ToolBar;

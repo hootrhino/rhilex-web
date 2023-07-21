@@ -1,19 +1,18 @@
 import { cn } from '@/utils/utils';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
+import { useModel } from '@umijs/max';
 import { useState } from 'react';
 import BgSetting from './components/BgSetting';
 
-type NodePanelProps = {
-  className?: string;
-};
-
-const DetailPanel = ({ className }: NodePanelProps) => {
+const DetailPanel = () => {
   const [collapse, setCollapse] = useState<boolean>(true);
+  const { graph } = useModel('useEditor');
+
+  console.log(graph);
 
   return (
     <div
       className={cn(
-        className,
         'w-[300px] h-full bg-white fixed top-0 transition-all duration-500 border-l-1 border-[#ccc]',
         { 'right-0': collapse, 'right-[-300px]': !collapse },
       )}

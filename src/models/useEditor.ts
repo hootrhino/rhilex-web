@@ -1,4 +1,4 @@
-import type { BackgroundManager, Cell, Graph } from '@antv/x6';
+import { BackgroundManager, Graph } from '@antv/x6';
 import { useState } from 'react';
 
 export const DEFAULT_WIDTH = 1920;
@@ -27,13 +27,15 @@ export type Config = Omit<Graph.Options, 'background'> & {
 };
 
 const useEditor = () => {
+  // 画布对象
+  const [graph, setGraph] = useState<any>(undefined);
+
   // 画布属性设置
   const [config, setConfig] = useState<Config>(DEFAULT_CONFIG);
-  const [selectedNode, setSelectedNode] = useState<Cell[] | undefined>(undefined);
+  // // 已选择节点
+  // const [selectedNode, setSelectedNode] = useState<Cell[] | undefined>(undefined);
 
-  const [isGroup, setGroup] = useState<boolean>(false);
-
-  return { config, setConfig, selectedNode, setSelectedNode, isGroup, setGroup };
+  return { config, setConfig, graph, setGraph };
 };
 
 export default useEditor;

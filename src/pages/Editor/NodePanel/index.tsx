@@ -7,16 +7,16 @@ import { Graph } from '@antv/x6';
 import '../index.less';
 
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { useModel } from '@umijs/max';
+import { useEffect, useRef, useState } from 'react';
 import { baseNodes } from '../Shapes/Nodes';
 
-const NodePanel = forwardRef((props, ref) => {
+const NodePanel = () => {
   const stencilRef = useRef<any>(null);
   const [collapse, setCollapse] = useState<boolean>(true);
+  const { graph } = useModel('useEditor');
 
   const initiStencil = () => {
-    const graph = (ref as any).current;
-
     const stencil = new Stencil({
       title: '组件列表',
       target: graph,
@@ -58,7 +58,7 @@ const NodePanel = forwardRef((props, ref) => {
     const createBaseNode = baseNodes?.map((node) => graph.createNode({ shape: node.name }));
 
     // 创建多媒体组件
-    // TODO 静态文本（Label）、变量（动态）、流动块（管道）、视频（播放器）、告警（表格）、天气、图片、轮播图
+    // TODO 静态文本（Label）、变量（动态）、视频（播放器）、告警（表格）、天气、图片、轮播图
 
     stencil.load([...createBaseNode], 'base-node');
     stencil.load([], 'media-component');
@@ -67,8 +67,10 @@ const NodePanel = forwardRef((props, ref) => {
   };
 
   useEffect(() => {
-    initiStencil();
-  }, []);
+    if (graph !== undefined) {
+      initiStencil();
+    }
+  }, [graph]);
 
   return (
     <div
@@ -90,9 +92,9 @@ const NodePanel = forwardRef((props, ref) => {
       >
         {collapse ? <DoubleLeftOutlined /> : <DoubleRightOutlined />}
       </div>
-      <div ref={stencilRef} id="nodePanel" />
+      <div id="nodePanel" ref={stencilRef} />
     </div>
   );
-});
+};
 
 export default NodePanel;
