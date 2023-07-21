@@ -136,6 +136,21 @@ const Canvas = () => {
       const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
       handlePortsHideAndShow(ports, false);
     });
+
+    // graph.on('edge:mouseenter', ({edge}: any) => {
+    //   edge.attr('line/stroke', '#1677ff')
+    // });
+
+    // graph.on('edge:mouseleave', ({edge}: any) => {
+    //   edge.attr('line/stroke', '#8f8f8f')
+    // });
+
+    // TODO hover边改变颜色 离开则恢复默认颜色
+    graph.on('cell:selected', ({ cell }: any) => {
+      if (cell.shape === 'edge') {
+        cell.attr('line/stroke', '#1677ff');
+      }
+    });
   };
 
   useEffect(() => {
@@ -154,29 +169,27 @@ const Canvas = () => {
         minScale: 0.5,
       },
       embedding: true,
+      // 设置边连线规则
       connecting: {
+        // 智能正交路由，由水平或垂直的正交线段组成，并自动避开路径上的其他节点（障碍）。
         router: 'manhattan',
-        connector: {
-          name: 'rounded',
-          args: {
-            radius: 8,
-          },
-        },
         anchor: 'center',
         connectionPoint: 'anchor',
         allowBlank: false,
-        snap: true,
+        highlight: true,
+        snap: {
+          radius: 20,
+        },
+        connector: {
+          name: 'rounded',
+          args: {},
+        },
         createEdge() {
           return new Shape.Edge({
             attrs: {
               line: {
-                stroke: '#A2B1C3',
-                strokeWidth: 2,
-                targetMarker: {
-                  name: 'block',
-                  width: 12,
-                  height: 8,
-                },
+                stroke: '#8f8f8f',
+                strokeWidth: 1,
               },
             },
             tools: ['edge-editor'],

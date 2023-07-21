@@ -1,14 +1,52 @@
 import { cn } from '@/utils/utils';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
-import { useState } from 'react';
-import BgSetting from './components/BgSetting';
+import { useEffect, useState } from 'react';
+import CanvasSetting from './CanvasSetting';
+import EdgeSetting from './EdgeSeting';
+import NodeSetting from './NodeSeting';
+
+type DetailType = 'node' | 'edge' | 'canvas';
+
+const title = {
+  node: '节点设置',
+  edge: '边设置',
+  canvas: '页面设置',
+};
 
 const DetailPanel = () => {
-  const [collapse, setCollapse] = useState<boolean>(true);
   const { graph } = useModel('useEditor');
+  const [collapse, setCollapse] = useState<boolean>(true);
+  const [type, setType] = useState<DetailType>('canvas');
 
-  console.log(graph);
+  // 监听画布空白区域
+  const handleOnCanvas = () => {
+    graph.on('blank:click', () => {
+      setType('canvas');
+    });
+  };
+
+  // 监听节点
+  const handleOnNode = () => {
+    graph.on('node:click', () => {
+      setType('node');
+    });
+  };
+
+  // 监听边
+  const handleOnEdge = () => {
+    graph.on('edge:click', () => {
+      setType('edge');
+    });
+  };
+
+  useEffect(() => {
+    if (graph !== undefined) {
+      handleOnCanvas();
+      handleOnNode();
+      handleOnEdge();
+    }
+  }, [graph]);
 
   return (
     <div
@@ -32,9 +70,11 @@ const DetailPanel = () => {
       </div>
       <div className="mt-[40px] px-[5px]">
         <div className="flex items-center justify-center h-[40px] shadow-md">
-          <span>页面设置</span>
+          <span>{title[type]}</span>
         </div>
-        <BgSetting />
+        {type === 'canvas' && <CanvasSetting />}
+        {type === 'node' && <NodeSetting />}
+        {type === 'edge' && <EdgeSetting />}
       </div>
     </div>
   );

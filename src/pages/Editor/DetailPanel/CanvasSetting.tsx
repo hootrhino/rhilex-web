@@ -20,7 +20,7 @@ import { useModel } from 'umi';
 import { POSITION_OPTION, REPEAT_OPTION, SIZE_OPTION } from './constants';
 
 import { Config, DEFAULT_CONFIG } from '@/models/useEditor';
-import '../../index.less';
+import '../index.less';
 
 const Item = ({ label, children, ...props }: any) => {
   return (
@@ -38,7 +38,7 @@ const uploadButton = (
   </Space>
 );
 
-const BackgroundSettings = () => {
+const CanvasSetting = () => {
   const { setConfig } = useModel('useEditor');
   const [canvasConfig, setCanvasConfig] = useState<Config>(DEFAULT_CONFIG);
 
@@ -205,4 +205,4 @@ const BackgroundSettings = () => {
     </div>
   );
 };
-export default BackgroundSettings;
+export default CanvasSetting;
