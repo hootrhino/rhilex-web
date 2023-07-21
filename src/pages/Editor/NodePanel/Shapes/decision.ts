@@ -9,6 +9,7 @@ export const decisionNode = {
     overwrite: true,
     width: 120,
     height: 90,
+    tools: ['node-editor'],
     attrs: {
       body: {
         ...commonAttrs.body,

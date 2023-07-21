@@ -13,6 +13,7 @@ export const manualOperationNode = {
     overwrite: true,
     width: 100,
     height: 60,
+    tools: ['node-editor'],
     attrs: {
       body: {
         ...commonAttrs.body,

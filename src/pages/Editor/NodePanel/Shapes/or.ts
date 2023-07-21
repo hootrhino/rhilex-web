@@ -7,6 +7,7 @@ export const orNode = {
     overwrite: true,
     width: 60,
     height: 60,
+    tools: ['node-editor'],
     markup: [
       {
         tagName: 'ellipse',

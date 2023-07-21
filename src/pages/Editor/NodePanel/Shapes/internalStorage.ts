@@ -8,6 +8,7 @@ export const internalStorageNode = {
     overwrite: true,
     width: 80,
     height: 80,
+    tools: ['node-editor'],
     markup: [
       {
         tagName: 'rect',

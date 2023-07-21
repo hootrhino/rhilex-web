@@ -10,6 +10,7 @@ export const collateNode = {
     overwrite: true,
     width: 100,
     height: 100,
+    tools: ['node-editor'],
     attrs: {
       body: {
         ...commonAttrs.body,

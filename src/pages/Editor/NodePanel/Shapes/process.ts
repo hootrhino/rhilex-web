@@ -9,6 +9,7 @@ export const processNode = {
     overwrite: true,
     width: 100,
     height: 70,
+    tools: ['node-editor'],
     attrs: {
       ...commonAttrs,
     },

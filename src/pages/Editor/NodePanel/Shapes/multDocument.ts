@@ -8,6 +8,7 @@ export const multDocumentNode = {
     overwrite: true,
     width: 80,
     height: 56,
+    tools: ['node-editor'],
     markup: [
       {
         tagName: 'rect',

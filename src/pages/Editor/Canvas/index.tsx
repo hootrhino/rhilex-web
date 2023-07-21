@@ -147,6 +147,7 @@ const Canvas = forwardRef((props, ref) => {
                 },
               },
             },
+            tools: ['edge-editor'],
             zIndex: 0,
           });
         },

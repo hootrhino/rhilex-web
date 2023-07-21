@@ -7,6 +7,7 @@ export const onPageNode = {
     overwrite: true,
     width: 60,
     height: 60,
+    tools: ['node-editor'],
     attrs: {
       body: {
         ...commonAttrs.body,
