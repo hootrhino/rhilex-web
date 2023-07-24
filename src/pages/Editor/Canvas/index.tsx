@@ -1,4 +1,4 @@
-import { Graph, Shape } from '@antv/x6';
+import { Cell, Edge, Graph, Shape } from '@antv/x6';
 
 import { Clipboard } from '@antv/x6-plugin-clipboard';
 import { History } from '@antv/x6-plugin-history';
@@ -6,20 +6,36 @@ import { Keyboard } from '@antv/x6-plugin-keyboard';
 import { Selection } from '@antv/x6-plugin-selection';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { Transform } from '@antv/x6-plugin-transform';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useModel } from 'umi';
+
+import { isNil } from 'lodash';
+import type { FullScreenHandle } from 'react-full-screen';
+import DetailPanel from '../DetailPanel';
+
+import { DEFAULT_EDGE_CONFIG } from '@/models/useEditor';
+import NodePanel from '../NodePanel';
+import ToolBar from '../ToolBar';
 
 import '../index.less';
 
-const Canvas = () => {
+type CanvasProps = {
+  handleFullScreen: FullScreenHandle;
+};
+
+const Canvas = ({ handleFullScreen }: CanvasProps) => {
+  const graphRef = useRef<any>(null);
+
   const {
     config: { background, width, height, scale },
-    setGraph,
-    graph,
+    edgeConfig,
+    setDetailFormType,
   } = useModel('useEditor');
 
   // 使用插件
   const handleOnPlugins = () => {
+    const graph = graphRef.current;
+
     graph
       .use(new Snapline())
       .use(
@@ -45,6 +61,8 @@ const Canvas = () => {
 
   // 添加快捷键
   const handleAddKeyboard = () => {
+    const graph = graphRef.current;
+
     // 复制
     graph?.bindKey(['meta+c', 'ctrl+c'], () => {
       const cells = graph.getSelectedCells();
@@ -125,6 +143,7 @@ const Canvas = () => {
 
   // 监听画布事件
   const handleOnEvents = () => {
+    const graph = graphRef.current;
     const container = document.getElementById('canvas-container')!;
 
     graph.on('node:mouseenter', () => {
@@ -137,19 +156,32 @@ const Canvas = () => {
       handlePortsHideAndShow(ports, false);
     });
 
-    // graph.on('edge:mouseenter', ({edge}: any) => {
-    //   edge.attr('line/stroke', '#1677ff')
-    // });
+    graph.on('node:click', () => {
+      setDetailFormType('node');
+    });
 
-    // graph.on('edge:mouseleave', ({edge}: any) => {
-    //   edge.attr('line/stroke', '#8f8f8f')
-    // });
+    graph.on('edge:selected', ({ edge }: any) => {
+      const edges = graph.getEdges();
+      edges?.forEach((item: Edge) => {
+        if (item?.id === edge?.id) {
+          edge.attr('line/stroke', '#1677ff');
+        } else {
+          item.attr('line/stroke', edgeConfig.line.stroke);
+        }
+      });
+    });
 
-    // TODO hover边改变颜色 离开则恢复默认颜色
-    graph.on('cell:selected', ({ cell }: any) => {
-      if (cell.shape === 'edge') {
-        cell.attr('line/stroke', '#1677ff');
-      }
+    graph.on('edge:click', () => {
+      setDetailFormType('edge');
+    });
+
+    // 监听画布空白区域
+    graph.on('blank:click', () => {
+      const edges = graph.getEdges();
+      edges?.forEach((item: Edge) => {
+        item.attr('line/stroke', '#8f8f8f');
+      });
+      setDetailFormType('canvas');
     });
   };
 
@@ -188,9 +220,11 @@ const Canvas = () => {
           return new Shape.Edge({
             attrs: {
               line: {
-                stroke: '#8f8f8f',
-                strokeWidth: 1,
+                ...DEFAULT_EDGE_CONFIG.line,
               },
+            },
+            label: {
+              ...DEFAULT_EDGE_CONFIG.text
             },
             tools: ['edge-editor'],
             zIndex: 0,
@@ -229,8 +263,9 @@ const Canvas = () => {
 
     // 内容居中显示
     initGraph.centerContent();
-    setGraph(initGraph);
-
+    if (!graphRef.current) {
+      graphRef.current = initGraph;
+    }
     // 组件卸载时清理 Graph 实例
     return () => {
       initGraph.dispose();
@@ -238,25 +273,33 @@ const Canvas = () => {
   }, []);
 
   useEffect(() => {
-    if (graph !== undefined) {
+    if (!isNil(graphRef.current)) {
       handleOnPlugins();
       handleAddKeyboard();
       handleOnEvents();
     }
-  }, [graph]);
+  }, [graphRef.current]);
 
   useEffect(() => {
     // 更新画布尺寸
     const w = (width || 0) * ((scale || 30) / 100);
     const h = (height || 0) * ((scale || 30) / 100);
 
-    graph?.resize(w, h);
-  }, [width, height, scale, graph]);
+    graphRef.current?.resize(w, h);
+  }, [width, height, scale, graphRef.current]);
 
   useEffect(() => {
     // 更新画布背景
-    graph?.drawBackground(background);
-  }, [background, graph]);
+    graphRef.current?.drawBackground(background);
+  }, [background, graphRef.current]);
+
+  useEffect(() => {
+    graphRef.current?.getSelectedCells()?.forEach((cell: Cell) => {
+      if (cell.isEdge()) {
+        cell.attr({ line: edgeConfig.line});
+      }
+    });
+  }, [edgeConfig]);
 
   return (
     <div
@@ -264,6 +307,9 @@ const Canvas = () => {
       id="canvas-bg"
     >
       <div id="canvas-container" />
+      <ToolBar handleFullScreen={handleFullScreen} ref={graphRef} />
+      <NodePanel ref={graphRef} />
+      <DetailPanel ref={graphRef} />
     </div>
   );
 };

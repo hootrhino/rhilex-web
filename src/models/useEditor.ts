@@ -16,6 +16,38 @@ export const DEFAULT_CONFIG = {
   scale: 50,
 };
 
+export const DEFAULT_EDGE_CONFIG = {
+  line: {
+    stroke: '#8f8f8f',
+    strokeWidth: 1,
+    // sourceMarker: null,
+    // targetMarker: 'classic',
+  },
+  text: {
+    fill: '#000',
+    fontSize: 14,
+  },
+  lineType: 'solid',
+  arrowType: 'forward',
+  move: 'false',
+}
+
+export type EdgeConfig = {
+  line: {
+    stroke: string;
+    strokeWidth: number;
+    [key: string]: any;
+  },
+  text: {
+    fill: string;
+    fontSize: number;
+    [key: string]: any;
+  },
+  lineType: 'solid' | 'dotted'| 'pipeline',
+  arrowType: 'forward' | 'reverse' | 'two-way' | 'none',
+  move?: string;
+}
+
 type Background = Omit<BackgroundManager.Options, 'position' | 'size'> & {
   position: string;
   size: string;
@@ -26,16 +58,18 @@ export type Config = Omit<Graph.Options, 'background'> & {
   scale: number;
 };
 
-const useEditor = () => {
-  // 画布对象
-  const [graph, setGraph] = useState<any>(undefined);
+type DetailType = 'node' | 'edge' | 'canvas';
 
+const useEditor = () => {
   // 画布属性设置
   const [config, setConfig] = useState<Config>(DEFAULT_CONFIG);
-  // // 已选择节点
-  // const [selectedNode, setSelectedNode] = useState<Cell[] | undefined>(undefined);
 
-  return { config, setConfig, graph, setGraph };
+  // 边样式
+  const [edgeConfig, setEdgeConfig] = useState<EdgeConfig>(DEFAULT_EDGE_CONFIG);
+
+  const [detailFormType, setDetailFormType] = useState<DetailType>('canvas');
+
+  return { config, setConfig, edgeConfig, setEdgeConfig, detailFormType, setDetailFormType };
 };
 
 export default useEditor;

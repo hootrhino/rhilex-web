@@ -1,12 +1,10 @@
 import { cn } from '@/utils/utils';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
-import { useEffect, useState } from 'react';
+import { forwardRef, useState } from 'react';
 import CanvasSetting from './CanvasSetting';
 import EdgeSetting from './EdgeSeting';
 import NodeSetting from './NodeSeting';
-
-type DetailType = 'node' | 'edge' | 'canvas';
 
 const title = {
   node: '节点设置',
@@ -14,39 +12,9 @@ const title = {
   canvas: '页面设置',
 };
 
-const DetailPanel = () => {
-  const { graph } = useModel('useEditor');
+const DetailPanel = forwardRef((props, ref) => {
   const [collapse, setCollapse] = useState<boolean>(true);
-  const [type, setType] = useState<DetailType>('canvas');
-
-  // 监听画布空白区域
-  const handleOnCanvas = () => {
-    graph.on('blank:click', () => {
-      setType('canvas');
-    });
-  };
-
-  // 监听节点
-  const handleOnNode = () => {
-    graph.on('node:click', () => {
-      setType('node');
-    });
-  };
-
-  // 监听边
-  const handleOnEdge = () => {
-    graph.on('edge:click', () => {
-      setType('edge');
-    });
-  };
-
-  useEffect(() => {
-    if (graph !== undefined) {
-      handleOnCanvas();
-      handleOnNode();
-      handleOnEdge();
-    }
-  }, [graph]);
+  const { detailFormType } = useModel('useEditor');
 
   return (
     <div
@@ -70,14 +38,14 @@ const DetailPanel = () => {
       </div>
       <div className="mt-[40px] px-[5px]">
         <div className="flex items-center justify-center h-[40px] shadow-md">
-          <span>{title[type]}</span>
+          <span>{title[detailFormType]}</span>
         </div>
-        {type === 'canvas' && <CanvasSetting />}
-        {type === 'node' && <NodeSetting />}
-        {type === 'edge' && <EdgeSetting />}
+        {detailFormType === 'canvas' && <CanvasSetting />}
+        {detailFormType === 'node' && <NodeSetting />}
+        {detailFormType === 'edge' && <EdgeSetting />}
       </div>
     </div>
   );
-};
+});
 
 export default DetailPanel;

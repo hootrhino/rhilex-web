@@ -7,16 +7,17 @@ import { Graph } from '@antv/x6';
 import '../index.less';
 
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
-import { useModel } from '@umijs/max';
-import { useEffect, useRef, useState } from 'react';
+import { isNil } from 'lodash';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { baseNodes } from '../Shapes/Nodes';
 
-const NodePanel = () => {
+const NodePanel = forwardRef((props, ref) => {
   const stencilRef = useRef<any>(null);
   const [collapse, setCollapse] = useState<boolean>(true);
-  const { graph } = useModel('useEditor');
 
   const initiStencil = () => {
+    const graph = (ref as any).current;
+
     const stencil = new Stencil({
       title: '组件列表',
       target: graph,
@@ -67,10 +68,10 @@ const NodePanel = () => {
   };
 
   useEffect(() => {
-    if (graph !== undefined) {
+    if (!isNil((ref as any).current)) {
       initiStencil();
     }
-  }, [graph]);
+  }, [(ref as any).current]);
 
   return (
     <div
@@ -95,6 +96,6 @@ const NodePanel = () => {
       <div id="nodePanel" ref={stencilRef} />
     </div>
   );
-};
+});
 
 export default NodePanel;

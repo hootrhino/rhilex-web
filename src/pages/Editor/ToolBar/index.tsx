@@ -19,19 +19,21 @@ import {
 } from '@ant-design/icons';
 import type { Cell, Dom } from '@antv/x6';
 import { Toolbar } from '@antv/x6-react-components';
-import { useModel } from '@umijs/max';
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space } from 'antd';
 import { isNil } from 'lodash';
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 import '@antv/x6-react-components/es/menu/style/index.css';
 import '@antv/x6-react-components/es/toolbar/style/index.css';
+import type { FullScreenHandle } from 'react-full-screen';
 import '../index.less';
 
-const ToolBar = ({ handleFullScreen }: any) => {
-  const { graph } = useModel('useEditor');
+type ToolBarProps = {
+  handleFullScreen: FullScreenHandle;
+};
 
+const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
   // 已选择节点
   const [selectedNode, setSelectedNode] = useState<Cell[] | undefined>(undefined);
 
@@ -47,6 +49,8 @@ const ToolBar = ({ handleFullScreen }: any) => {
 
   // 群组&解组
   const handleGroup = () => {
+    const graph = (ref as any).current;
+
     let ctrlPressed = false;
     const embedPadding = 20;
 
@@ -177,6 +181,8 @@ const ToolBar = ({ handleFullScreen }: any) => {
   };
 
   const handleToolbarClick = (name: string) => {
+    const graph = (ref as any).current;
+
     switch (name) {
       case 'undo':
         graph.undo();
@@ -264,7 +270,9 @@ const ToolBar = ({ handleFullScreen }: any) => {
   }, [selectedNode]);
 
   useEffect(() => {
-    if (graph !== undefined) {
+    const graph = (ref as any).current;
+
+    if (!isNil(graph)) {
       graph.on('selection:changed', ({ selected }: any) => {
         if (selected.length > 0 && selected[0].isNode()) {
           const n = selected?.filter((item: any) => item.isNode());
@@ -274,7 +282,7 @@ const ToolBar = ({ handleFullScreen }: any) => {
         }
       });
     }
-  }, [graph]);
+  }, [(ref as any).current]);
 
   return (
     <div className="w-full h-[40px] bg-[#292f33] fixed top-0 z-[99]">
@@ -349,6 +357,6 @@ const ToolBar = ({ handleFullScreen }: any) => {
       </Toolbar>
     </div>
   );
-};
+});
 
 export default ToolBar;
