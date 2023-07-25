@@ -23,9 +23,10 @@ export const DEFAULT_EDGE_CONFIG = {
     // sourceMarker: null,
     // targetMarker: 'classic',
   },
-  text: {
+  label: {
     fill: '#000',
     fontSize: 14,
+    bodyFill: '#fff',
   },
   pipeline: {
     strokeBg: '#999',
@@ -43,9 +44,10 @@ export type EdgeConfig = {
     strokeWidth: number;
     [key: string]: any;
   };
-  text: {
+  label: {
     fill: string;
     fontSize: number;
+    bodyFill: string;
     [key: string]: any;
   };
   pipeline: {

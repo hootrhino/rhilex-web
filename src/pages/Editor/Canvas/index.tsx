@@ -241,9 +241,6 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
                 ...DEFAULT_EDGE_CONFIG.line,
               },
             },
-            label: {
-              ...DEFAULT_EDGE_CONFIG.text,
-            },
             tools: ['edge-editor'],
             zIndex: 0,
           });
@@ -322,8 +319,12 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
                 ...item?.attrs,
                 label: {
                   ...item?.attrs?.label,
-                  fill: edgeConfig.text.fill,
-                  fontSize: edgeConfig.text.fontSize,
+                  fill: edgeConfig.label.fill,
+                  fontSize: edgeConfig.label.fontSize,
+                },
+                body: {
+                  ...item?.attrs?.body,
+                  fill: edgeConfig.label.bodyFill,
                 },
               },
             };
@@ -331,7 +332,6 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
             return item;
           }
         });
-        cell.setLabels(labels);
 
         if (edgeConfig.lineType === 'pipeline') {
           cell.prop({
@@ -364,6 +364,7 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
                 strokeDasharray: '10,20',
               },
             },
+            labels,
           });
         } else {
           cell.prop({
@@ -376,6 +377,7 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
                 stroke: 'transparent',
               },
             },
+            labels,
           });
           cell.removeMarkup();
         }

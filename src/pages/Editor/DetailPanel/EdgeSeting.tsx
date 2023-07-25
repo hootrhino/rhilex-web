@@ -24,7 +24,6 @@ const EdgeSetting = () => {
     let arrowType = edgeConfig.arrowType;
     let lineType = edgeConfig.lineType;
     let move = edgeConfig.move;
-    let fontSize = edgeConfig.text.fontSize;
 
     switch (changeValues?.lineType) {
       case 'dotted':
@@ -111,10 +110,6 @@ const EdgeSetting = () => {
         break;
     }
 
-    if (changeValues?.text?.fontSize) {
-      fontSize = changeValues?.text?.fontSize;
-    }
-
     if (changeValues?.line?.strokeWidth) {
       line = {
         ...line,
@@ -125,9 +120,10 @@ const EdgeSetting = () => {
     setEdgeConfig({
       ...edgeConfig,
       line,
-      text: {
-        ...edgeConfig.text,
-        fontSize,
+      label: {
+        ...edgeConfig.label,
+        fontSize: changeValues?.label?.fontSize || edgeConfig.label.fontSize,
+        bodyFill: changeValues?.label?.bodyFill || edgeConfig.label.bodyFill,
       },
       pipeline: changeValues?.pipeline || edgeConfig.pipeline,
       arrowType,
@@ -259,22 +255,37 @@ const EdgeSetting = () => {
       </ProFormDependency>
 
       <Divider />
-      <ProForm.Item label="标签颜色" name={['text', 'fill']}>
+      <ProForm.Item label="标签颜色" name={['label', 'fill']}>
         <ColorPicker
           className="w-full"
           format="hex"
           onChange={(value) => {
             setEdgeConfig({
               ...edgeConfig,
-              text: {
-                ...edgeConfig.text,
+              label: {
+                ...edgeConfig.label,
                 fill: value.toHexString(),
               },
             });
           }}
         />
       </ProForm.Item>
-      <ProFormDigit label="标签字号" name={['text', 'fontSize']} />
+      <ProForm.Item label="标签背景" name={['label', 'bodyFill']}>
+        <ColorPicker
+          className="w-full"
+          format="hex"
+          onChange={(value) => {
+            setEdgeConfig({
+              ...edgeConfig,
+              label: {
+                ...edgeConfig.label,
+                bodyFill: value.toHexString(),
+              },
+            });
+          }}
+        />
+      </ProForm.Item>
+      <ProFormDigit label="标签字号" name={['label', 'fontSize']} />
     </ProForm>
   );
 };
