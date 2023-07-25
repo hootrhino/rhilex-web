@@ -27,26 +27,36 @@ export const DEFAULT_EDGE_CONFIG = {
     fill: '#000',
     fontSize: 14,
   },
+  pipeline: {
+    strokeBg: '#999',
+    blockBg: '#73d13d',
+    type: 'forward',
+  },
   lineType: 'solid',
   arrowType: 'forward',
   move: 'false',
-}
+};
 
 export type EdgeConfig = {
   line: {
     stroke: string;
     strokeWidth: number;
     [key: string]: any;
-  },
+  };
   text: {
     fill: string;
     fontSize: number;
     [key: string]: any;
-  },
-  lineType: 'solid' | 'dotted'| 'pipeline',
-  arrowType: 'forward' | 'reverse' | 'two-way' | 'none',
+  };
+  pipeline: {
+    strokeBg: string;
+    blockBg: string;
+    type: 'forward' | 'reverse';
+  };
+  lineType: 'solid' | 'dotted' | 'pipeline';
+  arrowType: 'forward' | 'reverse' | 'two-way' | 'none';
   move?: string;
-}
+};
 
 type Background = Omit<BackgroundManager.Options, 'position' | 'size'> & {
   position: string;
@@ -65,7 +75,7 @@ const useEditor = () => {
   const [config, setConfig] = useState<Config>(DEFAULT_CONFIG);
 
   // 边样式
-  const [edgeConfig, setEdgeConfig] = useState<EdgeConfig>(DEFAULT_EDGE_CONFIG);
+  const [edgeConfig, setEdgeConfig] = useState<EdgeConfig>(DEFAULT_EDGE_CONFIG as EdgeConfig);
 
   const [detailFormType, setDetailFormType] = useState<DetailType>('canvas');
 

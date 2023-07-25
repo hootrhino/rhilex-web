@@ -1,4 +1,4 @@
-import { Cell, Edge, Graph, Shape } from '@antv/x6';
+import { Cell, Graph, Shape } from '@antv/x6';
 
 import { Clipboard } from '@antv/x6-plugin-clipboard';
 import { History } from '@antv/x6-plugin-history';
@@ -25,6 +25,7 @@ type CanvasProps = {
 
 const Canvas = ({ handleFullScreen }: CanvasProps) => {
   const graphRef = useRef<any>(null);
+  let currentEdgeView: any = null;
 
   const {
     config: { background, width, height, scale },
@@ -156,31 +157,48 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
       handlePortsHideAndShow(ports, false);
     });
 
-    graph.on('node:click', () => {
+    graph.on('node:click', ({}) => {
+      if (currentEdgeView) {
+        currentEdgeView.unhighlight();
+        currentEdgeView = null;
+      }
       setDetailFormType('node');
     });
 
     graph.on('edge:selected', ({ edge }: any) => {
-      const edges = graph.getEdges();
-      edges?.forEach((item: Edge) => {
-        if (item?.id === edge?.id) {
-          edge.attr('line/stroke', '#1677ff');
-        } else {
-          item.attr('line/stroke', edgeConfig.line.stroke);
+      const view = graph.findViewByCell(edge);
+
+      if (view && currentEdgeView !== view) {
+        if (currentEdgeView) {
+          currentEdgeView.unhighlight();
         }
-      });
+        view.highlight();
+        currentEdgeView = view;
+      }
+
+      setDetailFormType('edge');
     });
 
-    graph.on('edge:click', () => {
-      setDetailFormType('edge');
+    graph.on('edge:mouseenter', ({ edge }: any) => {
+      const view = graph.findViewByCell(edge);
+      if (view && currentEdgeView !== view) {
+        view.highlight();
+      }
+    });
+
+    graph.on('edge:mouseleave', ({ edge }: any) => {
+      const view = graph.findViewByCell(edge);
+      if (view && currentEdgeView !== view) {
+        view.unhighlight();
+      }
     });
 
     // 监听画布空白区域
     graph.on('blank:click', () => {
-      const edges = graph.getEdges();
-      edges?.forEach((item: Edge) => {
-        item.attr('line/stroke', '#8f8f8f');
-      });
+      if (currentEdgeView) {
+        currentEdgeView.unhighlight();
+        currentEdgeView = null;
+      }
       setDetailFormType('canvas');
     });
   };
@@ -224,7 +242,7 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
               },
             },
             label: {
-              ...DEFAULT_EDGE_CONFIG.text
+              ...DEFAULT_EDGE_CONFIG.text,
             },
             tools: ['edge-editor'],
             zIndex: 0,
@@ -251,7 +269,7 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
           args: {
             padding: -1,
             attrs: {
-              stroke: '#73d13d',
+              stroke: '#5F95FF',
             },
           },
         },
@@ -296,7 +314,71 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
   useEffect(() => {
     graphRef.current?.getSelectedCells()?.forEach((cell: Cell) => {
       if (cell.isEdge()) {
-        cell.attr({ line: edgeConfig.line});
+        const labels = cell.getLabels()?.map((item) => {
+          if (item?.attrs?.label) {
+            return {
+              ...item,
+              attrs: {
+                ...item?.attrs,
+                label: {
+                  ...item?.attrs?.label,
+                  fill: edgeConfig.text.fill,
+                  fontSize: edgeConfig.text.fontSize,
+                },
+              },
+            };
+          } else {
+            return item;
+          }
+        });
+        cell.setLabels(labels);
+
+        if (edgeConfig.lineType === 'pipeline') {
+          cell.prop({
+            markup: [
+              {
+                tagName: 'path',
+                selector: 'wrap',
+                groupSelector: 'lines',
+              },
+              {
+                tagName: 'path',
+                selector: 'line',
+                groupSelector: 'lines',
+              },
+            ],
+            attrs: {
+              lines: {
+                connection: true,
+                fill: 'none',
+                style: {
+                  animation: `${edgeConfig.pipeline.type}-line 15s linear infinite`,
+                },
+                stroke: edgeConfig.pipeline.strokeBg,
+              },
+              line: {
+                ...edgeConfig.line,
+                strokeWidth: 8,
+                strokeDashoffset: 20,
+                stroke: edgeConfig.pipeline.blockBg,
+                strokeDasharray: '10,20',
+              },
+            },
+          });
+        } else {
+          cell.prop({
+            attrs: {
+              line: edgeConfig.line,
+              lines: {
+                style: {
+                  animation: '',
+                },
+                stroke: 'transparent',
+              },
+            },
+          });
+          cell.removeMarkup();
+        }
       }
     });
   }, [edgeConfig]);

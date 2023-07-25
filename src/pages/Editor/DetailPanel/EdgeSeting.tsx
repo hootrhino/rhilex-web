@@ -20,56 +20,94 @@ const EdgeSetting = () => {
   const formRef = useRef<ProFormInstance>();
 
   const handleOnValuesChange = (changeValues: EdgeConfig) => {
-    const line = { ...edgeConfig?.line };
+    let line = { ...edgeConfig?.line };
     let arrowType = edgeConfig.arrowType;
+    let lineType = edgeConfig.lineType;
     let move = edgeConfig.move;
     let fontSize = edgeConfig.text.fontSize;
-    let strokeWidth = edgeConfig.line.strokeWidth;
 
     switch (changeValues?.lineType) {
       case 'dotted':
-        line.strokeDasharray = 5;
+        line = {
+          ...line,
+          strokeDasharray: 5,
+        };
+
+        lineType = 'dotted';
         break;
       case 'solid':
-        line.strokeDasharray = null;
+        line = {
+          ...line,
+          strokeDasharray: null,
+        };
+
+        lineType = 'solid';
+        break;
+      case 'pipeline':
+        lineType = 'pipeline';
+      default:
         break;
     }
 
     switch (changeValues?.move) {
       case 'true':
         move = 'true';
-        line.style = {
-          animation: 'dotted-line 30s infinite linear',
+        line = {
+          ...line,
+          style: {
+            ...line.style,
+            animation: 'dotted-line 30s infinite linear',
+          },
         };
         break;
       case 'false':
         move = 'false';
-        line.style = {
-          animation: false,
+        line = {
+          ...line,
+          style: {
+            ...line.style,
+            animation: false,
+          },
         };
+        break;
+      default:
         break;
     }
 
     switch (changeValues?.arrowType) {
       case 'forward':
         arrowType = 'forward';
-        line.targetMarker = 'classic';
-        line.sourceMarker = '';
+        line = {
+          ...line,
+          targetMarker: 'classic',
+          sourceMarker: '',
+        };
         break;
       case 'reverse':
         arrowType = 'reverse';
-        line.targetMarker = '';
-        line.sourceMarker = 'classic';
+        line = {
+          ...line,
+          targetMarker: '',
+          sourceMarker: 'classic',
+        };
         break;
       case 'two-way':
         arrowType = 'forward';
-        line.targetMarker = 'classic';
-        line.sourceMarker = 'classic';
+        line = {
+          ...line,
+          targetMarker: 'classic',
+          sourceMarker: 'classic',
+        };
         break;
       case 'none':
         arrowType = 'none';
-        line.targetMarker = '';
-        line.sourceMarker = '';
+        line = {
+          ...line,
+          targetMarker: '',
+          sourceMarker: '',
+        };
+        break;
+      default:
         break;
     }
 
@@ -78,20 +116,22 @@ const EdgeSetting = () => {
     }
 
     if (changeValues?.line?.strokeWidth) {
-      strokeWidth = changeValues?.line?.strokeWidth;
+      line = {
+        ...line,
+        strokeWidth: changeValues?.line?.strokeWidth,
+      };
     }
 
     setEdgeConfig({
       ...edgeConfig,
-      line: {
-        ...line,
-        strokeWidth
-      },
+      line,
       text: {
         ...edgeConfig.text,
         fontSize,
       },
+      pipeline: changeValues?.pipeline || edgeConfig.pipeline,
       arrowType,
+      lineType,
       move,
     });
   };
@@ -149,22 +189,75 @@ const EdgeSetting = () => {
           { label: '无', value: 'none' },
         ]}
       />
-      <ProForm.Item label="线条颜色" name={['line', 'stroke']}>
-        <ColorPicker
-          className="w-full"
-          format="hex"
-          onChange={(value) => {
-            setEdgeConfig({
-              ...edgeConfig,
-              line: {
-                ...edgeConfig.line,
-                stroke: value.toHexString(),
-              },
-            });
-          }}
-        />
-      </ProForm.Item>
-      <ProFormDigit label="线条宽度" name={['line', 'strokeWidth']} />
+      <ProFormDependency name={['lineType']}>
+        {({ lineType }) => {
+          if (lineType === 'pipeline') {
+            return (
+              <>
+                <ProForm.Item label="管道背景" name={['pipeline', 'strokeBg']}>
+                  <ColorPicker
+                    className="w-full"
+                    format="hex"
+                    onChange={(value) => {
+                      setEdgeConfig({
+                        ...edgeConfig,
+                        pipeline: {
+                          ...edgeConfig.pipeline,
+                          strokeBg: value.toHexString(),
+                        },
+                      });
+                    }}
+                  />
+                </ProForm.Item>
+                <ProForm.Item label="流动颜色" name={['pipeline', 'blockBg']}>
+                  <ColorPicker
+                    className="w-full"
+                    format="hex"
+                    onChange={(value) => {
+                      setEdgeConfig({
+                        ...edgeConfig,
+                        pipeline: {
+                          ...edgeConfig.pipeline,
+                          blockBg: value.toHexString(),
+                        },
+                      });
+                    }}
+                  />
+                </ProForm.Item>
+                <ProFormSelect
+                  label="流动方向"
+                  name={['pipeline', 'type']}
+                  options={[
+                    { label: '正向', value: 'forward' },
+                    { label: '逆向', value: 'reverse' },
+                  ]}
+                />
+              </>
+            );
+          }
+          return (
+            <>
+              <ProForm.Item label="线条颜色" name={['line', 'stroke']}>
+                <ColorPicker
+                  className="w-full"
+                  format="hex"
+                  onChange={(value) => {
+                    setEdgeConfig({
+                      ...edgeConfig,
+                      line: {
+                        ...edgeConfig.line,
+                        stroke: value.toHexString(),
+                      },
+                    });
+                  }}
+                />
+              </ProForm.Item>
+              <ProFormDigit label="线条宽度" name={['line', 'strokeWidth']} />
+            </>
+          );
+        }}
+      </ProFormDependency>
+
       <Divider />
       <ProForm.Item label="标签颜色" name={['text', 'fill']}>
         <ColorPicker

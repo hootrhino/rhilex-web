@@ -1,8 +1,5 @@
 export const pipeline = {
-  source: { x: 320, y: 100 },
-  target: { x: 380, y: 260 },
-  vertices: [{ x: 320, y: 200 }],
-  connector: { name: 'rounded' },
+  inherit: 'edge',
   markup: [
     {
       tagName: 'path',
@@ -11,7 +8,7 @@ export const pipeline = {
     },
     {
       tagName: 'path',
-      selector: 'line1',
+      selector: 'line',
       groupSelector: 'lines',
     },
   ],
@@ -25,7 +22,7 @@ export const pipeline = {
       },
       stroke: '#999',
     },
-    line1: {
+    line: {
       strokeWidth: 8,
       strokeDashoffset: 20,
       stroke: '#73d13d',
