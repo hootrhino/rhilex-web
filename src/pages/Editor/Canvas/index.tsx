@@ -1,4 +1,4 @@
-import { Cell, Graph, Shape } from '@antv/x6';
+import { Cell, Edge, Graph, Shape } from '@antv/x6';
 
 import { Clipboard } from '@antv/x6-plugin-clipboard';
 import { History } from '@antv/x6-plugin-history';
@@ -13,7 +13,6 @@ import { isNil } from 'lodash';
 import type { FullScreenHandle } from 'react-full-screen';
 import DetailPanel from '../DetailPanel';
 
-import { DEFAULT_EDGE_CONFIG } from '@/models/useEditor';
 import NodePanel from '../NodePanel';
 import ToolBar from '../ToolBar';
 
@@ -29,7 +28,8 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
 
   const {
     config: { background, width, height, scale },
-    edgeConfig,
+    edgeData,
+    edgeFormData,
     setDetailFormType,
   } = useModel('useEditor');
 
@@ -203,6 +203,50 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
     });
   };
 
+  // 更新边配置
+  const handleUpdateEdge = () => {
+    const selectCells = graphRef.current?.getSelectedCells();
+
+    selectCells?.forEach((cell: Cell) => {
+      if (cell.isEdge()) {
+        const labels = cell.getLabels()?.map((item: Edge.Label) => {
+
+          const pos = item?.position || {};
+          if (item?.attrs?.label) {
+            return {
+              ...item,
+              attrs: {
+                ...item?.attrs,
+                label: {
+                  ...item?.attrs?.label,
+                  ...edgeData?.labels[0]?.attrs.label
+                },
+                body: {
+                  ...item?.attrs?.body,
+                  ...edgeData?.labels[0]?.attrs.body
+                },
+              },
+              position: {
+                ...pos,
+                ...edgeData?.labels[0]?.position
+              }
+            };
+          } else {
+            return item;
+          }
+        });
+
+
+        cell.prop({...edgeData, labels});
+
+        if (edgeFormData.lineType !== 'pipeline') {
+          cell.removeMarkup();
+        }
+      }
+    });
+  }
+
+
   useEffect(() => {
     const container = document.getElementById('canvas-container')!;
 
@@ -238,7 +282,8 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
           return new Shape.Edge({
             attrs: {
               line: {
-                ...DEFAULT_EDGE_CONFIG.line,
+                stroke: '#8f8f8f',
+                strokeWidth: 1,
               },
             },
             tools: ['edge-editor'],
@@ -309,81 +354,8 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
   }, [background, graphRef.current]);
 
   useEffect(() => {
-    graphRef.current?.getSelectedCells()?.forEach((cell: Cell) => {
-      if (cell.isEdge()) {
-        const labels = cell.getLabels()?.map((item) => {
-          if (item?.attrs?.label) {
-            return {
-              ...item,
-              attrs: {
-                ...item?.attrs,
-                label: {
-                  ...item?.attrs?.label,
-                  fill: edgeConfig.label.fill,
-                  fontSize: edgeConfig.label.fontSize,
-                },
-                body: {
-                  ...item?.attrs?.body,
-                  fill: edgeConfig.label.bodyFill,
-                },
-              },
-            };
-          } else {
-            return item;
-          }
-        });
-
-        if (edgeConfig.lineType === 'pipeline') {
-          cell.prop({
-            markup: [
-              {
-                tagName: 'path',
-                selector: 'wrap',
-                groupSelector: 'lines',
-              },
-              {
-                tagName: 'path',
-                selector: 'line',
-                groupSelector: 'lines',
-              },
-            ],
-            attrs: {
-              lines: {
-                connection: true,
-                fill: 'none',
-                style: {
-                  animation: `${edgeConfig.pipeline.type}-line 15s linear infinite`,
-                },
-                stroke: edgeConfig.pipeline.strokeBg,
-              },
-              line: {
-                ...edgeConfig.line,
-                strokeWidth: 8,
-                strokeDashoffset: 20,
-                stroke: edgeConfig.pipeline.blockBg,
-                strokeDasharray: '10,20',
-              },
-            },
-            labels,
-          });
-        } else {
-          cell.prop({
-            attrs: {
-              line: edgeConfig.line,
-              lines: {
-                style: {
-                  animation: '',
-                },
-                stroke: 'transparent',
-              },
-            },
-            labels,
-          });
-          cell.removeMarkup();
-        }
-      }
-    });
-  }, [edgeConfig]);
+    handleUpdateEdge();
+  }, [edgeData]);
 
   return (
     <div

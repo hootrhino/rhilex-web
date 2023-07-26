@@ -1,4 +1,4 @@
-import type { EdgeConfig } from '@/models/useEditor';
+import type { EdgeForm } from '@/models/useEditor';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
   ProForm,
@@ -8,7 +8,8 @@ import {
 } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { ColorPicker, Divider } from 'antd';
-import { useRef } from 'react';
+import { omit } from 'lodash';
+import { useEffect, useRef } from 'react';
 
 const formItemLayout = {
   labelCol: { span: 6 },
@@ -16,121 +17,201 @@ const formItemLayout = {
 };
 
 const EdgeSetting = () => {
-  const { edgeConfig, setEdgeConfig } = useModel('useEditor');
+  const { edgeFormData, setEdgeForm, setEdgeData } = useModel('useEditor');
   const formRef = useRef<ProFormInstance>();
 
-  const handleOnValuesChange = (changeValues: EdgeConfig) => {
-    let line = { ...edgeConfig?.line };
-    let arrowType = edgeConfig.arrowType;
-    let lineType = edgeConfig.lineType;
-    let move = edgeConfig.move;
-
-    switch (changeValues?.lineType) {
-      case 'dotted':
-        line = {
-          ...line,
-          strokeDasharray: 5,
-        };
-
-        lineType = 'dotted';
-        break;
-      case 'solid':
-        line = {
-          ...line,
-          strokeDasharray: null,
-        };
-
-        lineType = 'solid';
-        break;
-      case 'pipeline':
-        lineType = 'pipeline';
-      default:
-        break;
+  const handleOnValuesChange = (changeValues: EdgeForm) => {
+    let newData = {
+      ...edgeFormData,
     }
 
-    switch (changeValues?.move) {
-      case 'true':
-        move = 'true';
-        line = {
-          ...line,
-          style: {
-            ...line.style,
-            animation: 'dotted-line 30s infinite linear',
-          },
-        };
-        break;
-      case 'false':
-        move = 'false';
-        line = {
-          ...line,
-          style: {
-            ...line.style,
-            animation: false,
-          },
-        };
-        break;
-      default:
-        break;
+    if (changeValues?.lineType) {
+      newData = {
+        ...newData,
+        lineType: changeValues?.lineType,
+      }
+    }
+    if (changeValues?.arrowType) {
+      newData = {
+        ...newData,
+        arrowType: changeValues?.arrowType,
+      }
     }
 
-    switch (changeValues?.arrowType) {
-      case 'forward':
-        arrowType = 'forward';
-        line = {
-          ...line,
-          targetMarker: 'classic',
-          sourceMarker: '',
-        };
-        break;
-      case 'reverse':
-        arrowType = 'reverse';
-        line = {
-          ...line,
-          targetMarker: '',
-          sourceMarker: 'classic',
-        };
-        break;
-      case 'two-way':
-        arrowType = 'forward';
-        line = {
-          ...line,
-          targetMarker: 'classic',
-          sourceMarker: 'classic',
-        };
-        break;
-      case 'none':
-        arrowType = 'none';
-        line = {
-          ...line,
-          targetMarker: '',
-          sourceMarker: '',
-        };
-        break;
-      default:
-        break;
+    if (changeValues?.line) {
+      newData = {
+        ...newData,
+        line: {
+          ...newData.line,
+          ...changeValues?.line
+        }
+      }
     }
 
-    if (changeValues?.line?.strokeWidth) {
-      line = {
-        ...line,
-        strokeWidth: changeValues?.line?.strokeWidth,
-      };
+    if (changeValues?.pipeline) {
+      newData = {
+        ...newData,
+        pipeline: {
+          ...newData.pipeline,
+          ...changeValues?.pipeline
+        }
+      }
     }
 
-    setEdgeConfig({
-      ...edgeConfig,
-      line,
-      label: {
-        ...edgeConfig.label,
-        fontSize: changeValues?.label?.fontSize || edgeConfig.label.fontSize,
-        bodyFill: changeValues?.label?.bodyFill || edgeConfig.label.bodyFill,
-      },
-      pipeline: changeValues?.pipeline || edgeConfig.pipeline,
-      arrowType,
-      lineType,
-      move,
-    });
+    if (changeValues?.label) {
+      newData = {
+        ...newData,
+        label: {
+          ...newData.label,
+          ...changeValues?.label
+        }
+      }
+    }
+
+    setEdgeForm(newData);
   };
+
+  const handleOnUpdate = () => {
+    let config = {
+      markup: [{}],
+      attrs: {
+        line: {
+          ...omit(edgeFormData.line, 'move'),
+          strokeDasharray: 0,
+          targetMarker: 'classic',
+          sourceMarker: '',
+          style: {
+            animation: '',
+          },
+        },
+        lines: {
+          connection: true,
+          fill: 'none',
+          style: {
+            animation: '',
+          },
+          stroke: 'transparent',
+        },
+      },
+      labels: [{
+        attrs: {
+          label: {
+            fill: edgeFormData?.label.fill,
+            fontSize: edgeFormData?.label.fontSize,
+          },
+          body: {
+            fill: edgeFormData?.label.bodyFill,
+          },
+        },
+        position: {
+          offset: edgeFormData?.label.offset
+        }
+      }]
+    }
+
+    if (edgeFormData.lineType === 'pipeline') {
+      config = {
+        ...config,
+        markup: [
+          {
+            tagName: 'path',
+            selector: 'wrap',
+            groupSelector: 'lines',
+          },
+          {
+            tagName: 'path',
+            selector: 'line',
+            groupSelector: 'lines',
+          },
+        ],
+        attrs: {
+          lines: {
+            ...config.attrs.lines,
+            connection: true,
+            fill: 'none',
+            style: {
+              animation: '',
+            },
+            stroke: edgeFormData.pipeline.bg,
+          },
+          line: {
+            ...config.attrs.line,
+            strokeWidth: 8,
+            strokeDashoffset: 20,
+            stroke: edgeFormData.pipeline.fill,
+            strokeDasharray: '10,20',
+            style: {
+              animation: `${edgeFormData.pipeline.type}-line 15s linear infinite`,
+            },
+          },
+        },
+      }
+    }
+
+    if (edgeFormData?.lineType === 'dotted') {
+      config = {
+        ...config,
+        attrs: {
+          ...config?.attrs,
+          line: {
+            ...config?.attrs?.line,
+            strokeDasharray: 5,
+            style: {
+              ...config?.attrs?.line?.style,
+              animation: edgeFormData?.line?.move === 'true' ? 'dotted-line 30s infinite linear' : '',
+            }
+          }
+        }
+      }
+    }
+
+    if (edgeFormData.arrowType === 'reverse') {
+      config = {
+        ...config,
+        attrs: {
+          ...config.attrs,
+          line: {
+            ...config.attrs.line,
+            targetMarker: '',
+            sourceMarker: 'classic',
+          }
+        }
+      }
+    }
+    if (edgeFormData.arrowType === 'both') {
+      config = {
+        ...config,
+        attrs: {
+          ...config.attrs,
+          line: {
+            ...config.attrs.line,
+            targetMarker: 'classic',
+            sourceMarker: 'classic',
+          }
+        }
+      }
+    }
+    if (edgeFormData.arrowType === 'none') {
+      config = {
+        ...config,
+        attrs: {
+          ...config.attrs,
+          line: {
+            ...config.attrs.line,
+            targetMarker: '',
+            sourceMarker: '',
+          }
+        }
+      }
+    }
+
+    setEdgeData({...config})
+  }
+
+  useEffect(() => {
+    handleOnUpdate();
+    formRef.current?.setFieldsValue({...edgeFormData});
+  }, [edgeFormData]);
 
   return (
     <ProForm
@@ -139,7 +220,6 @@ const EdgeSetting = () => {
       layout="horizontal"
       submitter={false}
       className="px-[10px] py-[20px]"
-      initialValues={edgeConfig}
       onValuesChange={handleOnValuesChange}
     >
       <ProFormSelect
@@ -167,7 +247,7 @@ const EdgeSetting = () => {
                   },
                 ]}
                 width="md"
-                name="move"
+                name={['line', 'move']}
                 label="线条流动"
               />
             );
@@ -181,7 +261,7 @@ const EdgeSetting = () => {
         options={[
           { label: '正向', value: 'forward' },
           { label: '逆向', value: 'reverse' },
-          { label: '双向', value: 'two-way' },
+          { label: '双向', value: 'both' },
           { label: '无', value: 'none' },
         ]}
       />
@@ -190,31 +270,31 @@ const EdgeSetting = () => {
           if (lineType === 'pipeline') {
             return (
               <>
-                <ProForm.Item label="管道背景" name={['pipeline', 'strokeBg']}>
+                <ProForm.Item label="管道背景" name={['pipeline', 'bg']}>
                   <ColorPicker
                     className="w-full"
                     format="hex"
                     onChange={(value) => {
-                      setEdgeConfig({
-                        ...edgeConfig,
+                      setEdgeForm({
+                        ...edgeFormData,
                         pipeline: {
-                          ...edgeConfig.pipeline,
-                          strokeBg: value.toHexString(),
+                          ...edgeFormData.pipeline,
+                          bg: value.toHexString(),
                         },
                       });
                     }}
                   />
                 </ProForm.Item>
-                <ProForm.Item label="流动颜色" name={['pipeline', 'blockBg']}>
+                <ProForm.Item label="流动颜色" name={['pipeline', 'fill']}>
                   <ColorPicker
                     className="w-full"
                     format="hex"
                     onChange={(value) => {
-                      setEdgeConfig({
-                        ...edgeConfig,
+                      setEdgeForm({
+                        ...edgeFormData,
                         pipeline: {
-                          ...edgeConfig.pipeline,
-                          blockBg: value.toHexString(),
+                          ...edgeFormData.pipeline,
+                          fill: value.toHexString(),
                         },
                       });
                     }}
@@ -238,10 +318,10 @@ const EdgeSetting = () => {
                   className="w-full"
                   format="hex"
                   onChange={(value) => {
-                    setEdgeConfig({
-                      ...edgeConfig,
+                    setEdgeForm({
+                      ...edgeFormData,
                       line: {
-                        ...edgeConfig.line,
+                        ...edgeFormData.line,
                         stroke: value.toHexString(),
                       },
                     });
@@ -260,10 +340,10 @@ const EdgeSetting = () => {
           className="w-full"
           format="hex"
           onChange={(value) => {
-            setEdgeConfig({
-              ...edgeConfig,
+            setEdgeForm({
+              ...edgeFormData,
               label: {
-                ...edgeConfig.label,
+                ...edgeFormData.label,
                 fill: value.toHexString(),
               },
             });
@@ -275,10 +355,10 @@ const EdgeSetting = () => {
           className="w-full"
           format="hex"
           onChange={(value) => {
-            setEdgeConfig({
-              ...edgeConfig,
+            setEdgeForm({
+              ...edgeFormData,
               label: {
-                ...edgeConfig.label,
+                ...edgeFormData.label,
                 bodyFill: value.toHexString(),
               },
             });
@@ -286,6 +366,7 @@ const EdgeSetting = () => {
         />
       </ProForm.Item>
       <ProFormDigit label="标签字号" name={['label', 'fontSize']} />
+      <ProFormDigit label="标签偏移" name={['label', 'offset']} />
     </ProForm>
   );
 };
