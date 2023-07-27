@@ -28,8 +28,9 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
   const {
     canvasData: { background, width, height, scale },
     edgeData,
+    nodeFormData,
     edgeFormData,
-    setDetailFormType,
+    setNodeForm,
   } = useModel('useEditor');
 
   // 使用插件
@@ -150,12 +151,14 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
       handlePortsHideAndShow(false);
     });
 
-    graph.on('node:click', ({}) => {
+    graph.on('node:click', ({ node }) => {
+      const nodeProps = node.getProp();
+
       if (currentEdgeView) {
         currentEdgeView.unhighlight();
         currentEdgeView = null;
       }
-      setDetailFormType('node');
+      setNodeForm({ ...nodeProps });
     });
 
     graph.on('edge:selected', ({ edge }: any) => {
@@ -168,8 +171,6 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
         view.highlight();
         currentEdgeView = view;
       }
-
-      setDetailFormType('edge');
     });
 
     graph.on('edge:mouseenter', ({ edge }: any) => {
@@ -192,7 +193,6 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
         currentEdgeView.unhighlight();
         currentEdgeView = null;
       }
-      setDetailFormType('canvas');
     });
   };
 
@@ -345,6 +345,18 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
   useEffect(() => {
     handleUpdateEdge();
   }, [edgeData]);
+
+  useEffect(() => {
+    const selectedCells = graphRef.current?.getSelectedCells();
+
+    selectedCells?.forEach((cell: Cell) => {
+      if (cell.isNode()) {
+        if (cell?.id === nodeFormData?.id) {
+          cell.prop(nodeFormData);
+        }
+      }
+    });
+  }, [nodeFormData]);
 
   useEffect(() => {
     if (graphRef.current) {

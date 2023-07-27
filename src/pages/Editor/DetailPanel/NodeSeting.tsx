@@ -1,5 +1,89 @@
+import type { NodeForm } from '@/models/useEditor';
+import { detailFormItemLayout } from '@/utils/constant';
+import type { ProFormInstance } from '@ant-design/pro-components';
+import { ProForm, ProFormDigit } from '@ant-design/pro-components';
+import { useModel } from '@umijs/max';
+import { ColorPicker, Divider, InputNumber, Space } from 'antd';
+import { useEffect, useRef } from 'react';
+
 const NodeSetting = () => {
-  return <div>this is node setting</div>;
+  const formRef = useRef<ProFormInstance>();
+  const { nodeFormData, setNodeForm } = useModel('useEditor');
+
+  const handleOnValuesChange = (changeValues: NodeForm) => {
+    setNodeForm({
+      ...nodeFormData,
+      position: { ...nodeFormData?.position, ...changeValues?.position },
+      size: { ...nodeFormData?.size, ...changeValues?.size },
+      attrs: { ...nodeFormData?.attrs, ...changeValues?.attrs },
+    });
+  };
+
+  useEffect(() => {
+    formRef.current?.setFieldsValue({ ...nodeFormData });
+  }, [nodeFormData]);
+
+  return (
+    <ProForm
+      {...detailFormItemLayout}
+      formRef={formRef}
+      layout="horizontal"
+      submitter={false}
+      className="px-[10px] py-[20px]"
+      onValuesChange={handleOnValuesChange}
+    >
+      <ProForm.Item label="节点位置" className="mb-0">
+        <Space>
+          <ProForm.Item name={['position', 'x']}>
+            <InputNumber placeholder="请输入X坐标" addonAfter="X" />
+          </ProForm.Item>
+          <ProForm.Item name={['position', 'y']}>
+            <InputNumber placeholder="请输入Y坐标" addonAfter="Y" />
+          </ProForm.Item>
+        </Space>
+      </ProForm.Item>
+      <ProForm.Item label="节点尺寸" className="mb-0">
+        <Space>
+          <ProForm.Item name={['size', 'width']}>
+            <InputNumber placeholder="请输入宽度" addonAfter="W" />
+          </ProForm.Item>
+          <ProForm.Item name={['size', 'height']}>
+            <InputNumber placeholder="请输入高度" addonAfter="H" />
+          </ProForm.Item>
+        </Space>
+      </ProForm.Item>
+      <ProForm.Item
+        label="填充颜色"
+        name={['attrs', 'body', 'fill']}
+        transform={(value) => ({
+          attrs: { body: { fill: typeof value === 'string' ? value : value?.toHexString() } },
+        })}
+      >
+        <ColorPicker className="w-full" format="hex" />
+      </ProForm.Item>
+      <ProForm.Item
+        label="边框颜色"
+        name={['attrs', 'body', 'stroke']}
+        transform={(value) => ({
+          attrs: { body: { stroke: typeof value === 'string' ? value : value?.toHexString() } },
+        })}
+      >
+        <ColorPicker className="w-full" format="hex" />
+      </ProForm.Item>
+      <ProFormDigit label="边框宽度" name={['attrs', 'body', 'strokeWidth']} />
+      <Divider />
+      <ProForm.Item
+        label="标签颜色"
+        name={['attrs', 'text', 'fill']}
+        transform={(value) => ({
+          attrs: { label: { fill: typeof value === 'string' ? value : value?.toHexString() } },
+        })}
+      >
+        <ColorPicker className="w-full" format="hex" />
+      </ProForm.Item>
+      <ProFormDigit label="标签字号" name={['attrs', 'text', 'fontSize']} />
+    </ProForm>
+  );
 };
 
 export default NodeSetting;

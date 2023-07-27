@@ -1,5 +1,5 @@
 import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from '@/utils/constant';
-import { BackgroundManager, Edge, Graph } from '@antv/x6';
+import { BackgroundManager, Edge, Graph, Node } from '@antv/x6';
 import { useState } from 'react';
 
 export enum LineTypeOption {
@@ -14,8 +14,6 @@ export enum ArrowTypeOption {
   Both = 'both',
   None = 'none',
 }
-
-export type DetailType = 'node' | 'edge' | 'canvas';
 
 export type EdgeForm = {
   lineType: LineTypeOption;
@@ -47,6 +45,10 @@ type Background = Omit<BackgroundManager.Options, 'position' | 'size'> & {
 export type CanvasForm = Omit<Graph.Options, 'background'> & {
   background: Background;
   scale: number;
+};
+
+export type NodeForm = {
+  [key: string]: any;
 };
 
 export const DEFAULT_CANVAS_FORM_DATA = {
@@ -82,26 +84,31 @@ export const DEFAULT_EDGE_FORM_DATA = {
   },
 };
 
+export const DEFAULT_NODE_FORM_DATA = {};
+
 const useEditor = () => {
   // 画布属性设置
   const [canvasData, setCanvasData] = useState<CanvasForm>(DEFAULT_CANVAS_FORM_DATA);
 
-  // 边Edge表单
+  // 边 Edge 表单数据
   const [edgeFormData, setEdgeForm] = useState<EdgeForm>(DEFAULT_EDGE_FORM_DATA);
   const [edgeData, setEdgeData] = useState<Edge.Metadata>();
 
-  // 右侧详情面板显示类型
-  const [detailFormType, setDetailFormType] = useState<DetailType>('canvas');
+  // 节点 Node 表单数据
+  const [nodeFormData, setNodeForm] = useState<NodeForm>(DEFAULT_NODE_FORM_DATA);
+  const [nodeData, setNodeData] = useState<Node.Metadata>();
 
   return {
     canvasData,
     setCanvasData,
-    detailFormType,
-    setDetailFormType,
     edgeFormData,
     setEdgeForm,
     edgeData,
     setEdgeData,
+    nodeFormData,
+    setNodeForm,
+    nodeData,
+    setNodeData,
   };
 };
 

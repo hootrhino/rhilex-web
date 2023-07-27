@@ -1,6 +1,6 @@
 import { cn, getBase64 } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
-import { ColorPicker, message, Modal, Space, Upload } from 'antd';
+import { ColorPicker, InputNumber, message, Modal, Space, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { useEffect, useRef, useState } from 'react';
@@ -10,7 +10,7 @@ import { POSITION_OPTION, REPEAT_OPTION, SIZE_OPTION } from './constants';
 import type { CanvasForm } from '@/models/useEditor';
 import { detailFormItemLayout } from '@/utils/constant';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { ProForm, ProFormDigit, ProFormSelect, ProFormSlider } from '@ant-design/pro-components';
+import { ProForm, ProFormSelect, ProFormSlider } from '@ant-design/pro-components';
 import '../index.less';
 
 const CanvasSetting = () => {
@@ -63,8 +63,8 @@ const CanvasSetting = () => {
         bg = {
           ...bg,
           color: changedValue?.background?.color,
-          image: ''
-        }
+          image: '',
+        };
       }
 
       newData = {
@@ -93,8 +93,12 @@ const CanvasSetting = () => {
     >
       <ProForm.Item label="屏幕大小" className="mb-0">
         <Space>
-          <ProFormDigit name="width" min={1} max={100000} placeholder="请输入宽度" />
-          <ProFormDigit name="height" min={1} max={100000} placeholder="请输入高度" />
+          <ProForm.Item name="width">
+            <InputNumber min={1024} max={7680} placeholder="请输入宽度" addonAfter="W" />
+          </ProForm.Item>
+          <ProForm.Item name="height">
+            <InputNumber min={768} max={4320} placeholder="请输入高度" addonAfter="H" />
+          </ProForm.Item>
         </Space>
       </ProForm.Item>
       <ProFormSlider label="缩放比例" name="scale" />

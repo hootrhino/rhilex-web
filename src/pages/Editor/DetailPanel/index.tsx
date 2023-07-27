@@ -1,10 +1,13 @@
 import { cn } from '@/utils/utils';
+import { Graph } from '@ant-design/charts';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
-import { useModel } from '@umijs/max';
-import { forwardRef, useState } from 'react';
+import { isNil } from 'lodash';
+import { forwardRef, useEffect, useState } from 'react';
 import CanvasSetting from './CanvasSetting';
 import EdgeSetting from './EdgeSeting';
 import NodeSetting from './NodeSeting';
+
+type DetailFormType = 'node' | 'edge' | 'canvas';
 
 const title = {
   node: '节点设置',
@@ -14,7 +17,29 @@ const title = {
 
 const DetailPanel = forwardRef((props, ref) => {
   const [collapse, setCollapse] = useState<boolean>(true);
-  const { detailFormType } = useModel('useEditor');
+  const [type, setFormType] = useState<DetailFormType>('canvas');
+
+  const handleOnChangeType = (graph: Graph) => {
+    graph.on('node:click', ({}) => {
+      setFormType('node');
+    });
+
+    graph.on('edge:click', ({}) => {
+      setFormType('edge');
+    });
+
+    graph.on('blank:click', () => {
+      setFormType('canvas');
+    });
+  };
+
+  useEffect(() => {
+    const graph = (ref as any)?.current;
+
+    if (!isNil(graph)) {
+      handleOnChangeType(graph);
+    }
+  }, [(ref as any)?.current]);
 
   return (
     <div
@@ -38,11 +63,11 @@ const DetailPanel = forwardRef((props, ref) => {
       </div>
       <div className="mt-[40px] px-[5px]">
         <div className="flex items-center justify-center h-[40px] shadow-md">
-          <span>{title[detailFormType]}</span>
+          <span>{title[type]}</span>
         </div>
-        {detailFormType === 'canvas' && <CanvasSetting />}
-        {detailFormType === 'node' && <NodeSetting />}
-        {detailFormType === 'edge' && <EdgeSetting />}
+        {type === 'canvas' && <CanvasSetting />}
+        {type === 'node' && <NodeSetting />}
+        {type === 'edge' && <EdgeSetting />}
       </div>
     </div>
   );
