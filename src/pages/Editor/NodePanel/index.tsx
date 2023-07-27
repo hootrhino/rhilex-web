@@ -56,7 +56,7 @@ const NodePanel = forwardRef((props, ref) => {
     );
 
     // 创建基础节点
-    const createBaseNode = baseNodes?.map((node) => graph.createNode({ shape: node.name }));
+    const createBaseNode = baseNodes?.map((node) => graph?.createNode({ shape: node.name }));
 
     // 创建多媒体组件
     // TODO 静态文本（Label）、变量（动态）、视频（播放器）、告警（表格）、天气、图片、轮播图

@@ -6,11 +6,9 @@ import { Keyboard } from '@antv/x6-plugin-keyboard';
 import { Selection } from '@antv/x6-plugin-selection';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { Transform } from '@antv/x6-plugin-transform';
-import { useEffect, useRef } from 'react';
-import { useModel } from 'umi';
-
-import { isNil } from 'lodash';
+import { useEffect, useRef, useState } from 'react';
 import type { FullScreenHandle } from 'react-full-screen';
+import { useModel } from 'umi';
 import DetailPanel from '../DetailPanel';
 
 import NodePanel from '../NodePanel';
@@ -25,18 +23,17 @@ type CanvasProps = {
 const Canvas = ({ handleFullScreen }: CanvasProps) => {
   const graphRef = useRef<any>(null);
   let currentEdgeView: any = null;
+  const [shouldRenderNodePanel, setShouldRenderNodePanel] = useState(false);
 
   const {
-    config: { background, width, height, scale },
+    canvasData: { background, width, height, scale },
     edgeData,
     edgeFormData,
     setDetailFormType,
   } = useModel('useEditor');
 
   // 使用插件
-  const handleOnPlugins = () => {
-    const graph = graphRef.current;
-
+  const handleOnPlugins = (graph: Graph) => {
     graph
       .use(new Snapline())
       .use(
@@ -61,9 +58,7 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
   };
 
   // 添加快捷键
-  const handleAddKeyboard = () => {
-    const graph = graphRef.current;
-
+  const handleAddKeyboard = (graph: Graph) => {
     // 复制
     graph?.bindKey(['meta+c', 'ctrl+c'], () => {
       const cells = graph.getSelectedCells();
@@ -136,25 +131,23 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
   };
 
   // 控制连接桩显示/隐藏
-  const handlePortsHideAndShow = (ports: NodeListOf<SVGElement>, show: boolean) => {
+  const handlePortsHideAndShow = (show: boolean) => {
+    const container = document.getElementById('canvas-container')!;
+    const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
+
     for (let i = 0, len = ports.length; i < len; i += 1) {
       ports[i].style.visibility = show ? 'visible' : 'hidden';
     }
   };
 
   // 监听画布事件
-  const handleOnEvents = () => {
-    const graph = graphRef.current;
-    const container = document.getElementById('canvas-container')!;
-
+  const handleOnEvents = (graph: Graph) => {
     graph.on('node:mouseenter', () => {
-      const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
-      handlePortsHideAndShow(ports, true);
+      handlePortsHideAndShow(true);
     });
 
     graph.on('node:mouseleave', () => {
-      const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
-      handlePortsHideAndShow(ports, false);
+      handlePortsHideAndShow(false);
     });
 
     graph.on('node:click', ({}) => {
@@ -210,7 +203,6 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
     selectCells?.forEach((cell: Cell) => {
       if (cell.isEdge()) {
         const labels = cell.getLabels()?.map((item: Edge.Label) => {
-
           const pos = item?.position || {};
           if (item?.attrs?.label) {
             return {
@@ -219,38 +211,35 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
                 ...item?.attrs,
                 label: {
                   ...item?.attrs?.label,
-                  ...edgeData?.labels[0]?.attrs.label
+                  ...edgeData?.labels[0]?.attrs.label,
                 },
                 body: {
                   ...item?.attrs?.body,
-                  ...edgeData?.labels[0]?.attrs.body
+                  ...edgeData?.labels[0]?.attrs.body,
                 },
               },
               position: {
                 ...pos,
-                ...edgeData?.labels[0]?.position
-              }
+                ...edgeData?.labels[0]?.position,
+              },
             };
           } else {
             return item;
           }
         });
 
-
-        cell.prop({...edgeData, labels});
+        cell.prop({ ...edgeData, labels });
 
         if (edgeFormData.lineType !== 'pipeline') {
           cell.removeMarkup();
         }
       }
     });
-  }
+  };
 
-
-  useEffect(() => {
+  const handleInitGraph = () => {
     const container = document.getElementById('canvas-container')!;
-
-    const initGraph = new Graph({
+    const graph = new Graph({
       container: container,
       background: background,
       panning: true,
@@ -318,14 +307,22 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
       },
     });
 
-    // TODO 渲染元素 data
-    // graph.fromJSON(fromJsonData);
+    handleOnPlugins(graph);
+    handleAddKeyboard(graph);
+    handleOnEvents(graph);
 
     // 内容居中显示
-    initGraph.centerContent();
-    if (!graphRef.current) {
-      graphRef.current = initGraph;
-    }
+    graph.centerContent();
+    // TODO 渲染元素 data
+    // graph.fromJSON(fromJsonData);
+    graphRef.current = graph;
+
+    return graph;
+  };
+
+  useEffect(() => {
+    const initGraph = handleInitGraph();
+
     // 组件卸载时清理 Graph 实例
     return () => {
       initGraph.dispose();
@@ -333,29 +330,27 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
   }, []);
 
   useEffect(() => {
-    if (!isNil(graphRef.current)) {
-      handleOnPlugins();
-      handleAddKeyboard();
-      handleOnEvents();
-    }
-  }, [graphRef.current]);
-
-  useEffect(() => {
     // 更新画布尺寸
     const w = (width || 0) * ((scale || 30) / 100);
     const h = (height || 0) * ((scale || 30) / 100);
 
     graphRef.current?.resize(w, h);
-  }, [width, height, scale, graphRef.current]);
+  }, [width, height, scale]);
 
   useEffect(() => {
     // 更新画布背景
     graphRef.current?.drawBackground(background);
-  }, [background, graphRef.current]);
+  }, [background]);
 
   useEffect(() => {
     handleUpdateEdge();
   }, [edgeData]);
+
+  useEffect(() => {
+    if (graphRef.current) {
+      setShouldRenderNodePanel(true);
+    }
+  }, [graphRef]);
 
   return (
     <div
@@ -364,7 +359,7 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
     >
       <div id="canvas-container" />
       <ToolBar handleFullScreen={handleFullScreen} ref={graphRef} />
-      <NodePanel ref={graphRef} />
+      {shouldRenderNodePanel && <NodePanel ref={graphRef} />}
       <DetailPanel ref={graphRef} />
     </div>
   );

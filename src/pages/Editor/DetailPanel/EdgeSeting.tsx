@@ -1,4 +1,5 @@
 import type { EdgeForm } from '@/models/useEditor';
+import { detailFormItemLayout } from '@/utils/constant';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
   ProForm,
@@ -11,11 +12,6 @@ import { ColorPicker, Divider } from 'antd';
 import { omit } from 'lodash';
 import { useEffect, useRef } from 'react';
 
-const formItemLayout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 18 },
-};
-
 const EdgeSetting = () => {
   const { edgeFormData, setEdgeForm, setEdgeData } = useModel('useEditor');
   const formRef = useRef<ProFormInstance>();
@@ -23,19 +19,19 @@ const EdgeSetting = () => {
   const handleOnValuesChange = (changeValues: EdgeForm) => {
     let newData = {
       ...edgeFormData,
-    }
+    };
 
     if (changeValues?.lineType) {
       newData = {
         ...newData,
         lineType: changeValues?.lineType,
-      }
+      };
     }
     if (changeValues?.arrowType) {
       newData = {
         ...newData,
         arrowType: changeValues?.arrowType,
-      }
+      };
     }
 
     if (changeValues?.line) {
@@ -43,9 +39,9 @@ const EdgeSetting = () => {
         ...newData,
         line: {
           ...newData.line,
-          ...changeValues?.line
-        }
-      }
+          ...changeValues?.line,
+        },
+      };
     }
 
     if (changeValues?.pipeline) {
@@ -53,9 +49,9 @@ const EdgeSetting = () => {
         ...newData,
         pipeline: {
           ...newData.pipeline,
-          ...changeValues?.pipeline
-        }
-      }
+          ...changeValues?.pipeline,
+        },
+      };
     }
 
     if (changeValues?.label) {
@@ -63,9 +59,9 @@ const EdgeSetting = () => {
         ...newData,
         label: {
           ...newData.label,
-          ...changeValues?.label
-        }
-      }
+          ...changeValues?.label,
+        },
+      };
     }
 
     setEdgeForm(newData);
@@ -93,21 +89,23 @@ const EdgeSetting = () => {
           stroke: 'transparent',
         },
       },
-      labels: [{
-        attrs: {
-          label: {
-            fill: edgeFormData?.label.fill,
-            fontSize: edgeFormData?.label.fontSize,
+      labels: [
+        {
+          attrs: {
+            label: {
+              fill: edgeFormData?.label.fill,
+              fontSize: edgeFormData?.label.fontSize,
+            },
+            body: {
+              fill: edgeFormData?.label.bodyFill,
+            },
           },
-          body: {
-            fill: edgeFormData?.label.bodyFill,
+          position: {
+            offset: edgeFormData?.label.offset,
           },
         },
-        position: {
-          offset: edgeFormData?.label.offset
-        }
-      }]
-    }
+      ],
+    };
 
     if (edgeFormData.lineType === 'pipeline') {
       config = {
@@ -143,9 +141,9 @@ const EdgeSetting = () => {
             style: {
               animation: `${edgeFormData.pipeline.type}-line 15s linear infinite`,
             },
-          },
+          } as any,
         },
-      }
+      };
     }
 
     if (edgeFormData?.lineType === 'dotted') {
@@ -158,11 +156,12 @@ const EdgeSetting = () => {
             strokeDasharray: 5,
             style: {
               ...config?.attrs?.line?.style,
-              animation: edgeFormData?.line?.move === 'true' ? 'dotted-line 30s infinite linear' : '',
-            }
-          }
-        }
-      }
+              animation:
+                edgeFormData?.line?.move === 'true' ? 'dotted-line 30s infinite linear' : '',
+            },
+          },
+        },
+      };
     }
 
     if (edgeFormData.arrowType === 'reverse') {
@@ -174,9 +173,9 @@ const EdgeSetting = () => {
             ...config.attrs.line,
             targetMarker: '',
             sourceMarker: 'classic',
-          }
-        }
-      }
+          },
+        },
+      };
     }
     if (edgeFormData.arrowType === 'both') {
       config = {
@@ -187,9 +186,9 @@ const EdgeSetting = () => {
             ...config.attrs.line,
             targetMarker: 'classic',
             sourceMarker: 'classic',
-          }
-        }
-      }
+          },
+        },
+      };
     }
     if (edgeFormData.arrowType === 'none') {
       config = {
@@ -200,22 +199,22 @@ const EdgeSetting = () => {
             ...config.attrs.line,
             targetMarker: '',
             sourceMarker: '',
-          }
-        }
-      }
+          },
+        },
+      };
     }
 
-    setEdgeData({...config})
-  }
+    setEdgeData({ ...config });
+  };
 
   useEffect(() => {
     handleOnUpdate();
-    formRef.current?.setFieldsValue({...edgeFormData});
+    formRef.current?.setFieldsValue({ ...edgeFormData });
   }, [edgeFormData]);
 
   return (
     <ProForm
-      {...formItemLayout}
+      {...detailFormItemLayout}
       formRef={formRef}
       layout="horizontal"
       submitter={false}
@@ -270,34 +269,28 @@ const EdgeSetting = () => {
           if (lineType === 'pipeline') {
             return (
               <>
-                <ProForm.Item label="管道背景" name={['pipeline', 'bg']}>
+                <ProForm.Item
+                  label="管道背景"
+                  name={['pipeline', 'bg']}
+                  transform={(value) => ({
+                    pipeline: { bg: typeof value === 'string' ? value : value?.toHexString() },
+                  })}
+                >
                   <ColorPicker
                     className="w-full"
                     format="hex"
-                    onChange={(value) => {
-                      setEdgeForm({
-                        ...edgeFormData,
-                        pipeline: {
-                          ...edgeFormData.pipeline,
-                          bg: value.toHexString(),
-                        },
-                      });
-                    }}
                   />
                 </ProForm.Item>
-                <ProForm.Item label="流动颜色" name={['pipeline', 'fill']}>
+                <ProForm.Item
+                  label="流动颜色"
+                  name={['pipeline', 'fill']}
+                  transform={(value) => ({
+                    pipeline: { fill: typeof value === 'string' ? value : value?.toHexString() },
+                  })}
+                >
                   <ColorPicker
                     className="w-full"
                     format="hex"
-                    onChange={(value) => {
-                      setEdgeForm({
-                        ...edgeFormData,
-                        pipeline: {
-                          ...edgeFormData.pipeline,
-                          fill: value.toHexString(),
-                        },
-                      });
-                    }}
                   />
                 </ProForm.Item>
                 <ProFormSelect
@@ -313,19 +306,16 @@ const EdgeSetting = () => {
           }
           return (
             <>
-              <ProForm.Item label="线条颜色" name={['line', 'stroke']}>
+              <ProForm.Item
+                label="线条颜色"
+                name={['line', 'stroke']}
+                transform={(value) => ({
+                  line: { stroke: typeof value === 'string' ? value : value?.toHexString() },
+                })}
+              >
                 <ColorPicker
                   className="w-full"
                   format="hex"
-                  onChange={(value) => {
-                    setEdgeForm({
-                      ...edgeFormData,
-                      line: {
-                        ...edgeFormData.line,
-                        stroke: value.toHexString(),
-                      },
-                    });
-                  }}
                 />
               </ProForm.Item>
               <ProFormDigit label="线条宽度" name={['line', 'strokeWidth']} />
@@ -335,34 +325,28 @@ const EdgeSetting = () => {
       </ProFormDependency>
 
       <Divider />
-      <ProForm.Item label="标签颜色" name={['label', 'fill']}>
+      <ProForm.Item
+        label="标签颜色"
+        name={['label', 'fill']}
+        transform={(value) => ({
+          label: { fill: typeof value === 'string' ? value : value?.toHexString() },
+        })}
+      >
         <ColorPicker
           className="w-full"
           format="hex"
-          onChange={(value) => {
-            setEdgeForm({
-              ...edgeFormData,
-              label: {
-                ...edgeFormData.label,
-                fill: value.toHexString(),
-              },
-            });
-          }}
         />
       </ProForm.Item>
-      <ProForm.Item label="标签背景" name={['label', 'bodyFill']}>
+      <ProForm.Item
+        label="标签背景"
+        name={['label', 'bodyFill']}
+        transform={(value) => ({
+          label: { bodyFill: typeof value === 'string' ? value : value?.toHexString() },
+        })}
+      >
         <ColorPicker
           className="w-full"
           format="hex"
-          onChange={(value) => {
-            setEdgeForm({
-              ...edgeFormData,
-              label: {
-                ...edgeFormData.label,
-                bodyFill: value.toHexString(),
-              },
-            });
-          }}
         />
       </ProForm.Item>
       <ProFormDigit label="标签字号" name={['label', 'fontSize']} />
