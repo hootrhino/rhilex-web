@@ -1,7 +1,7 @@
 import type { NodeForm } from '@/models/useEditor';
 import { detailFormItemLayout } from '@/utils/constant';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { ProForm, ProFormDigit } from '@ant-design/pro-components';
+import { ProForm, ProFormDigit, ProFormSwitch } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { ColorPicker, Divider, InputNumber, Space } from 'antd';
 import { useEffect, useRef } from 'react';
@@ -11,8 +11,10 @@ const NodeSetting = () => {
   const { nodeFormData, setNodeForm } = useModel('useEditor');
 
   const handleOnValuesChange = (changeValues: NodeForm) => {
+    console.log(changeValues);
     setNodeForm({
       ...nodeFormData,
+      visible: changeValues?.visible,
       position: { ...nodeFormData?.position, ...changeValues?.position },
       size: { ...nodeFormData?.size, ...changeValues?.size },
       attrs: { ...nodeFormData?.attrs, ...changeValues?.attrs },
@@ -71,6 +73,7 @@ const NodeSetting = () => {
         <ColorPicker className="w-full" format="hex" />
       </ProForm.Item>
       <ProFormDigit label="边框宽度" name={['attrs', 'body', 'strokeWidth']} />
+      <ProFormSwitch checkedChildren="是" unCheckedChildren="否" label="是否可见" name="visible" />
       <Divider />
       <ProForm.Item
         label="标签颜色"
