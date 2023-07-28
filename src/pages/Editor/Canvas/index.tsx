@@ -14,6 +14,7 @@ import DetailPanel from '../DetailPanel';
 import NodePanel from '../NodePanel';
 import ToolBar from '../ToolBar';
 
+import { omit } from 'lodash';
 import '../index.less';
 
 type CanvasProps = {
@@ -158,7 +159,7 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
         currentEdgeView.unhighlight();
         currentEdgeView = null;
       }
-      setNodeForm({ ...nodeProps });
+      setNodeForm({ ...nodeProps, rotate: false });
     });
 
     graph.on('edge:selected', ({ edge }: any) => {
@@ -347,12 +348,25 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
   }, [edgeData]);
 
   useEffect(() => {
-    const selectedCells = graphRef.current?.getSelectedCells();
+    const graph = graphRef.current;
+
+    const selectedCells = graph?.getSelectedCells();
 
     selectedCells?.forEach((cell: Cell) => {
       if (cell.isNode()) {
         if (cell?.id === nodeFormData?.id) {
-          cell.prop(nodeFormData);
+          if (nodeFormData?.rotate) {
+            const view = graph.findViewByCell(cell);
+            if (view) {
+              // TODO 添加自动旋转动画
+              cell.transition('angle', 360, {
+                duration: 1000,
+                timing: 'linear',
+              });
+            }
+            console.log(view);
+          }
+          cell.prop({ ...omit(nodeFormData, 'rotate') });
         }
       }
     });

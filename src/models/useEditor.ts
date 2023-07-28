@@ -47,7 +47,8 @@ export type CanvasForm = Omit<Graph.Options, 'background'> & {
   scale: number;
 };
 
-export type NodeForm = {
+export type NodeForm = Node.Metadata & {
+  rotate?: boolean;
   [key: string]: any;
 };
 

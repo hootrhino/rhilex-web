@@ -11,12 +11,16 @@ const NodeSetting = () => {
   const { nodeFormData, setNodeForm } = useModel('useEditor');
 
   const handleOnValuesChange = (changeValues: NodeForm) => {
-    console.log(changeValues);
     setNodeForm({
       ...nodeFormData,
       visible: changeValues?.visible,
-      position: { ...nodeFormData?.position, ...changeValues?.position },
-      size: { ...nodeFormData?.size, ...changeValues?.size },
+      angle: changeValues?.angle,
+      rotate: changeValues?.rotate,
+      position: { ...nodeFormData?.position, ...changeValues?.position } as {
+        x: number;
+        y: number;
+      },
+      size: { ...nodeFormData?.size, ...changeValues?.size } as { width: number; height: number },
       attrs: { ...nodeFormData?.attrs, ...changeValues?.attrs },
     });
   };
@@ -54,6 +58,9 @@ const NodeSetting = () => {
           </ProForm.Item>
         </Space>
       </ProForm.Item>
+      <ProForm.Item label="旋转角度" name="angle">
+        <InputNumber placeholder="请输入旋转角度" addonAfter="度" />
+      </ProForm.Item>
       <ProForm.Item
         label="填充颜色"
         name={['attrs', 'body', 'fill']}
@@ -74,6 +81,7 @@ const NodeSetting = () => {
       </ProForm.Item>
       <ProFormDigit label="边框宽度" name={['attrs', 'body', 'strokeWidth']} />
       <ProFormSwitch checkedChildren="是" unCheckedChildren="否" label="是否可见" name="visible" />
+      <ProFormSwitch checkedChildren="是" unCheckedChildren="否" label="自动旋转" name="rotate" />
       <Divider />
       <ProForm.Item
         label="标签颜色"
