@@ -69,6 +69,10 @@ const NodePanel = forwardRef((props, ref) => {
           return graph.createNode({
             shape: 'video-react-node',
           });
+        } else if (node.shape === 'table-image') {
+          return graph.createNode({
+            shape: 'table-react-node',
+          });
         } else {
           return node;
         }

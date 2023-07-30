@@ -1,5 +1,6 @@
 import CarouselNode from './Carousel';
 import ImageNode from './Image';
+import TableNode from './Table';
 import TextNode from './Text';
 import VideoNode from './Video';
 
@@ -27,5 +28,11 @@ export const reactNodes = [
     width: 320,
     height: 180,
     component: VideoNode,
+  },
+  {
+    shape: 'table-react-node',
+    width: 320,
+    height: 180,
+    component: TableNode,
   },
 ];
