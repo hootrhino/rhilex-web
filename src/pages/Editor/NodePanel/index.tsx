@@ -7,9 +7,12 @@ import { Graph } from '@antv/x6';
 import '../index.less';
 
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
+import { register } from '@antv/x6-react-shape';
 import { isNil } from 'lodash';
 import { forwardRef, useEffect, useRef, useState } from 'react';
+import { imageNodes } from '../Shapes/ImageNodes';
 import { baseNodes } from '../Shapes/Nodes';
+import { reactNodes } from '../Shapes/ReactNodes';
 
 const NodePanel = forwardRef((props, ref) => {
   const stencilRef = useRef<any>(null);
@@ -48,21 +51,55 @@ const NodePanel = forwardRef((props, ref) => {
         rowHeight: 40,
         resizeToFit: true,
       },
+      getDragNode: (node) => {
+        console.log(node, node.shape);
+        if (node.shape === 'carousel-image') {
+          return graph.createNode({
+            shape: 'carousel-react-node',
+          });
+        } else if (node.shape === 'custom-image') {
+          return graph.createNode({
+            shape: 'image-react-node',
+          });
+        } else if (node.shape === 'text-image') {
+          return graph.createNode({
+            shape: 'text-react-node',
+          });
+        } else if (node.shape === 'video-image') {
+          return graph.createNode({
+            shape: 'video-react-node',
+          });
+        } else {
+          return node;
+        }
+      },
+      getDropNode: (node) => {
+        const { width, height } = node.size();
+
+        return node.clone().size(width * 2, height * 2);
+      },
     });
 
-    // 注册节点
+    // 注册基础节点
     baseNodes?.forEach((node: { name: string; config: any }) =>
       Graph.registerNode(node.name, node.config, true),
     );
 
+    // 注册图片节点
+    imageNodes?.forEach((node: { name: string; config: any }) =>
+      Graph.registerNode(node.name, node.config, true),
+    );
+    // 注册React节点
+    reactNodes?.forEach((node) => register(node));
+
     // 创建基础节点
     const createBaseNode = baseNodes?.map((node) => graph?.createNode({ shape: node.name }));
 
-    // 创建多媒体组件
-    // TODO 静态文本（Label）、变量（动态）、视频（播放器）、告警（表格）、天气、图片、轮播图
+    // 创建图片节点
+    const createImageNode = imageNodes?.map((node) => graph?.createNode({ shape: node.name }));
 
     stencil.load([...createBaseNode], 'base-node');
-    stencil.load([], 'media-component');
+    stencil.load([...createImageNode], 'media-component');
 
     stencilRef.current?.appendChild(stencil.container);
   };
