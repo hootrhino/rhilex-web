@@ -16,4 +16,7 @@ import { weather } from './weather';
 // text 静态 动态文本
 import { text } from './text';
 
-export const imageNodes = [carousel, video, image, text, table, weather];
+// iframe
+import { iframe } from './iframe';
+
+export const imageNodes = [carousel, video, image, text, table, weather, iframe];
