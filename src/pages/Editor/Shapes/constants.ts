@@ -80,11 +80,14 @@ export const ports = {
   ],
 };
 
+export const DEFAULT_STROKE = '#8c8c8c';
+export const DEFAULT_FILL = '#fff';
+
 // 节点公共样式
 export const commonAttrs = {
   body: {
-    stroke: '#A2B1C3',
-    fill: '#fff',
+    stroke: DEFAULT_STROKE,
+    fill: DEFAULT_FILL,
     strokeWidth: 1,
   },
 };

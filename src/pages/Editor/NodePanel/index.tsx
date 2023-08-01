@@ -44,6 +44,14 @@ const NodePanel = forwardRef((props, ref) => {
             rowHeight: 70,
           },
         },
+        {
+          title: '图表',
+          name: 'chart',
+          graphHeight: 250,
+          layoutOptions: {
+            rowHeight: 70,
+          },
+        },
       ],
       layoutOptions: {
         columns: 4,
@@ -52,7 +60,6 @@ const NodePanel = forwardRef((props, ref) => {
         resizeToFit: true,
       },
       getDragNode: (node) => {
-        console.log(node, node.shape);
         if (node.shape === 'carousel-image') {
           return graph.createNode({
             shape: 'carousel-react-node',
@@ -74,7 +81,7 @@ const NodePanel = forwardRef((props, ref) => {
             shape: 'table-react-node',
           });
         } else {
-          return node;
+          return node.clone();
         }
       },
       getDropNode: (node) => {
@@ -104,6 +111,7 @@ const NodePanel = forwardRef((props, ref) => {
 
     stencil.load([...createBaseNode], 'base-node');
     stencil.load([...createImageNode], 'media-component');
+    stencil.load([], 'chart');
 
     stencilRef.current?.appendChild(stencil.container);
   };

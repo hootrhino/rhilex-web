@@ -1,5 +1,5 @@
 import { NumberExt } from '@antv/x6';
-import { commonAttrs, ports } from '../constants';
+import { commonAttrs, DEFAULT_STROKE, ports } from '../constants';
 
 export const internalStorageNode = {
   name: 'internal-storage-node',
@@ -37,7 +37,7 @@ export const internalStorageNode = {
         round: 8,
       },
       line: {
-        stroke: '#A2B1C3',
+        stroke: DEFAULT_STROKE,
         strokeWidth: 1,
       },
       h: {

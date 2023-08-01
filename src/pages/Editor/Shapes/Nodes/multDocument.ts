@@ -1,5 +1,5 @@
 import { Path } from '@antv/x6';
-import { ports } from '../constants';
+import { commonAttrs, ports } from '../constants';
 
 export const multDocumentNode = {
   name: 'mult-document-node',
@@ -36,9 +36,7 @@ export const multDocumentNode = {
     ],
     attrs: {
       body: {
-        fill: '#fff',
-        stroke: '#A2B1C3',
-        strokeWidth: 1,
+        ...commonAttrs.body,
       },
       top: {
         ridge: 0.25,

@@ -3,7 +3,7 @@
 import { Path } from '@antv/x6';
 import { commonAttrs, ports } from '../constants';
 
-export const extractNode = {
+const extractNode = {
   name: 'extract-node',
   config: {
     inherit: 'path',
@@ -43,3 +43,5 @@ export const extractNode = {
     },
   },
 };
+
+export default extractNode;

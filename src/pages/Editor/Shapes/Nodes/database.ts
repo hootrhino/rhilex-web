@@ -1,5 +1,5 @@
 import { Path } from '@antv/x6';
-import { commonAttrs, ports } from '../constants';
+import { commonAttrs, DEFAULT_FILL, ports } from '../constants';
 
 export const databaseNode = {
   name: 'database-node',
@@ -34,7 +34,7 @@ export const databaseNode = {
         ...commonAttrs.body,
       },
       bin: {
-        fill: '#fff',
+        fill: DEFAULT_FILL,
         binPath: '',
       },
       top: {

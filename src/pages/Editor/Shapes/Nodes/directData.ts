@@ -1,5 +1,5 @@
 import { Path } from '@antv/x6';
-import { ports } from '../constants';
+import { DEFAULT_FILL, DEFAULT_STROKE, ports } from '../constants';
 
 export const directDataNode = {
   name: 'direct-data-node',
@@ -31,11 +31,11 @@ export const directDataNode = {
     ],
     attrs: {
       body: {
-        stroke: '#A2B1C3',
+        stroke: DEFAULT_STROKE,
         strokeWidth: 1,
       },
       bin: {
-        fill: '#fff',
+        fill: DEFAULT_FILL,
         binPath: '',
       },
       arc: {

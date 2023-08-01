@@ -9,7 +9,7 @@ import { displayNode } from './display';
 import { documentNode } from './document';
 import { manualInputNode } from './manualInput';
 // 倒三角形
-import { extractNode } from './extract';
+import extractNode from './extract';
 // 正三角形
 import { internalStorageNode } from './internalStorage';
 import { mergeNode } from './merge';

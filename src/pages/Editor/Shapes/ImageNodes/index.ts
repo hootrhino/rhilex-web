@@ -19,4 +19,7 @@ import { text } from './text';
 // iframe
 import { iframe } from './iframe';
 
-export const imageNodes = [carousel, video, image, text, table, weather, iframe];
+// 时间
+import { time } from './time';
+
+export const imageNodes = [carousel, video, image, text, table, weather, iframe, time];

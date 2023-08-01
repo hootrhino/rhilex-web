@@ -1,4 +1,4 @@
-import { commonAttrs, ports } from '../constants';
+import { commonAttrs, DEFAULT_STROKE, ports } from '../constants';
 
 export const orNode = {
   name: 'or-node',
@@ -37,7 +37,7 @@ export const orNode = {
         refRy: '50%',
       },
       line: {
-        stroke: '#A2B1C3',
+        stroke: DEFAULT_STROKE,
         strokeWidth: 1,
       },
       h: {
