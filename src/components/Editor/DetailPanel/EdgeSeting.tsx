@@ -276,10 +276,7 @@ const EdgeSetting = () => {
                     pipeline: { bg: typeof value === 'string' ? value : value?.toHexString() },
                   })}
                 >
-                  <ColorPicker
-                    className="w-full"
-                    format="hex"
-                  />
+                  <ColorPicker className="w-full" format="hex" />
                 </ProForm.Item>
                 <ProForm.Item
                   label="流动颜色"
@@ -288,10 +285,7 @@ const EdgeSetting = () => {
                     pipeline: { fill: typeof value === 'string' ? value : value?.toHexString() },
                   })}
                 >
-                  <ColorPicker
-                    className="w-full"
-                    format="hex"
-                  />
+                  <ColorPicker className="w-full" format="hex" />
                 </ProForm.Item>
                 <ProFormSelect
                   label="流动方向"
@@ -313,10 +307,7 @@ const EdgeSetting = () => {
                   line: { stroke: typeof value === 'string' ? value : value?.toHexString() },
                 })}
               >
-                <ColorPicker
-                  className="w-full"
-                  format="hex"
-                />
+                <ColorPicker className="w-full" format="hex" />
               </ProForm.Item>
               <ProFormDigit label="线条宽度" name={['line', 'strokeWidth']} />
             </>
@@ -332,10 +323,7 @@ const EdgeSetting = () => {
           label: { fill: typeof value === 'string' ? value : value?.toHexString() },
         })}
       >
-        <ColorPicker
-          className="w-full"
-          format="hex"
-        />
+        <ColorPicker className="w-full" format="hex" />
       </ProForm.Item>
       <ProForm.Item
         label="标签背景"
@@ -344,10 +332,7 @@ const EdgeSetting = () => {
           label: { bodyFill: typeof value === 'string' ? value : value?.toHexString() },
         })}
       >
-        <ColorPicker
-          className="w-full"
-          format="hex"
-        />
+        <ColorPicker className="w-full" format="hex" />
       </ProForm.Item>
       <ProFormDigit label="标签字号" name={['label', 'fontSize']} />
       <ProFormDigit label="标签偏移" name={['label', 'offset']} />

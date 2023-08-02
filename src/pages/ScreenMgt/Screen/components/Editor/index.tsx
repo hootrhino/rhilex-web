@@ -1,5 +1,7 @@
+import Editor from '@/components/Editor';
+
 const ScreenEditor = () => {
-  return <div>this is Screen Editor page</div>;
+  return <Editor />;
 };
 
 export default ScreenEditor;
