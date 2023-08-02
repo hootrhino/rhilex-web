@@ -1,6 +1,5 @@
 import {
   CompressOutlined,
-  DownOutlined,
   FileDoneOutlined,
   FullscreenExitOutlined,
   FullscreenOutlined,
@@ -9,7 +8,6 @@ import {
   OneToOneOutlined,
   QuestionCircleOutlined,
   RedoOutlined,
-  SaveOutlined,
   UndoOutlined,
   UngroupOutlined,
   VerticalAlignBottomOutlined,
@@ -24,6 +22,7 @@ import { Button, Dropdown, Space } from 'antd';
 import { isNil } from 'lodash';
 import { forwardRef, useEffect, useState } from 'react';
 
+import { cn } from '@/utils/utils';
 import '@antv/x6-react-components/es/menu/style/index.css';
 import '@antv/x6-react-components/es/toolbar/style/index.css';
 import type { FullScreenHandle } from 'react-full-screen';
@@ -285,30 +284,42 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
   }, [(ref as any).current]);
 
   return (
-    <div className="w-full h-[40px] bg-[#292f33] fixed top-0 z-[99]">
+    <div className={cn('toolbar-container', 'w-full h-[40px] bg-[#1f1f1f] fixed top-0 z-[99]')}>
       <Toolbar
         onClick={handleToolbarClick}
         hoverEffect={true}
         size="big"
         extra={
           <Space>
-            <Button size="small" key="preview" icon={<FundViewOutlined />}>
-              预览
-            </Button>
-            <Button size="small" key="save" icon={<SaveOutlined />}>
-              保存
-            </Button>
-            <Button size="small" key="publish" icon={<FileDoneOutlined />}>
-              发布
-            </Button>
             <Dropdown menu={menuProps}>
-              <Button size="small" icon={<QuestionCircleOutlined />}>
-                <Space>
-                  帮助
-                  <DownOutlined />
-                </Space>
+              <Button
+                size="small"
+                icon={<QuestionCircleOutlined />}
+                className="bg-[#474747] border-none text-[#dbdbdb]"
+              >
+                帮助
               </Button>
             </Dropdown>
+            <Button
+              size="small"
+              key="preview"
+              icon={<FundViewOutlined />}
+              className="bg-[#474747] border-none text-[#dbdbdb]"
+            >
+              预览
+            </Button>
+            {/* <Button size="small" key="save" icon={<SaveOutlined />}>
+              保存
+            </Button> */}
+            <Button
+              type="primary"
+              size="small"
+              key="publish"
+              icon={<FileDoneOutlined />}
+              className="border-none"
+            >
+              发布
+            </Button>
           </Space>
         }
         className="flex items-center h-full px-[10px]"

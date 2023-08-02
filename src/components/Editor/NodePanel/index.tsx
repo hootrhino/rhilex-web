@@ -125,14 +125,15 @@ const NodePanel = forwardRef((props, ref) => {
   return (
     <div
       className={cn(
-        'w-[220px] h-full bg-white fixed top-0 left-0 transition-all duration-500 border-r-1 border-[#ccc]',
+        '',
+        'w-[220px] h-full bg-[#1A1A1A] fixed top-0 left-0 transition-all duration-500 border-r-1 border-black',
         { 'left-0': collapse, 'left-[-220px]': !collapse },
       )}
     >
       <div
         onClick={() => setCollapse(!collapse)}
         className={cn(
-          'flex items-center justify-center absolute w-[24px] h-[24px] bg-white text-[#aaa] hover:text-[#2b84c0] text-center shadow-md top-[60px] border border-[#ccc] z-[99]',
+          'flex items-center justify-center absolute w-[24px] h-[24px] bg-[#474747] text-[#adadad] hover:bg-[#565656] text-center shadow-md top-[60px] border border-black z-[99]',
           {
             'rounded-full right-[-12px]': collapse,
             'rounded-tl-none rounded-br-[50%] rounded-tr-[50%] rounded-bl-none right-[-20px]':
@@ -142,7 +143,7 @@ const NodePanel = forwardRef((props, ref) => {
       >
         {collapse ? <DoubleLeftOutlined /> : <DoubleRightOutlined />}
       </div>
-      <div id="nodePanel" ref={stencilRef} />
+      {/* <div id="nodePanel" ref={stencilRef} /> */}
     </div>
   );
 });

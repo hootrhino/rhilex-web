@@ -54,7 +54,7 @@ export type NodeForm = Node.Metadata & {
 
 export const DEFAULT_CANVAS_FORM_DATA = {
   background: {
-    color: '#d9d9d9',
+    color: '#262626',
     repeat: 'no-repeat',
     size: 'auto auto',
     position: 'center',
