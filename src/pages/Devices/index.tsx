@@ -80,7 +80,7 @@ const Devices = () => {
       key: 'option',
       valueType: 'option',
       render: (_, { uuid }) => [
-        <a key="edit" onClick={() => setConfig({ open: true, uuid })}>
+        <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
           详情
         </a>,
         <a key="edit" onClick={() => history.push(`/device/edit/${uuid}`)}>

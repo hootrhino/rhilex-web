@@ -1,22 +1,74 @@
-import { cn } from '@/utils/utils';
+import { cn, IconFont } from '@/utils/utils';
 
 import { Stencil } from '@antv/x6-plugin-stencil';
 
 import { Graph } from '@antv/x6';
 
-import '../index.less';
+import './index.less';
 
-import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
+import {
+  BarChartOutlined,
+  CloseOutlined,
+  EyeOutlined,
+  LineChartOutlined,
+  QuestionCircleOutlined,
+  RedoOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
 import { register } from '@antv/x6-react-shape';
+import { Space, Tooltip, Tree } from 'antd';
+import type { DataNode } from 'antd/es/tree';
 import { isNil } from 'lodash';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { imageNodes } from '../Shapes/ImageNodes';
 import { baseNodes } from '../Shapes/Nodes';
 import { reactNodes } from '../Shapes/ReactNodes';
 
+const panelItems = [
+  { name: '图层', icon: 'icon-layers', key: 'layers' },
+  { name: '组件库', icon: 'icon-components', key: 'components' },
+  { name: '设计库', icon: 'icon-material', key: 'material' },
+];
+
 const NodePanel = forwardRef((props, ref) => {
   const stencilRef = useRef<any>(null);
-  const [collapse, setCollapse] = useState<boolean>(true);
+  const [collapse, setCollapse] = useState<boolean>(false);
+  const [activeItem, setActiveItem] = useState<string>('layers');
+  const [activeLayer, setActiveLayer] = useState<string>('');
+
+  const treeData: DataNode[] = [
+    {
+      title: '图表组',
+      key: '0-0',
+      icon: <BarChartOutlined />,
+      children: [
+        {
+          title: (
+            <div className="inline w-full">
+              <span className="pr-[70px]">折线图</span>
+              <Tooltip title="隐藏" color="#1F6AFF">
+                <EyeOutlined className={cn(activeLayer === '0-0-0' ? 'inline' : 'hidden')} />
+              </Tooltip>
+            </div>
+          ),
+          key: '0-0-0',
+          icon: <LineChartOutlined />,
+        },
+        {
+          title: (
+            <div className="inline w-full">
+              <span className="pr-[70px]">柱状图</span>
+              <Tooltip title="隐藏" color="#1F6AFF">
+                <EyeOutlined className={cn(activeLayer === '0-0-1' ? 'inline' : 'hidden')} />
+              </Tooltip>
+            </div>
+          ),
+          key: '0-0-1',
+          icon: <BarChartOutlined />,
+        },
+      ],
+    },
+  ];
 
   const initiStencil = () => {
     const graph = (ref as any).current;
@@ -116,6 +168,12 @@ const NodePanel = forwardRef((props, ref) => {
     stencilRef.current?.appendChild(stencil.container);
   };
 
+  const getDetailTitle = () => {
+    const currentPanelItem = panelItems?.find((item) => item?.key === activeItem);
+
+    return currentPanelItem?.name || '帮助';
+  };
+
   useEffect(() => {
     if (!isNil((ref as any).current)) {
       initiStencil();
@@ -123,28 +181,126 @@ const NodePanel = forwardRef((props, ref) => {
   }, [(ref as any).current]);
 
   return (
-    <div
-      className={cn(
-        '',
-        'w-[220px] h-full bg-[#1A1A1A] fixed top-0 left-0 transition-all duration-500 border-r-1 border-black',
-        { 'left-0': collapse, 'left-[-220px]': !collapse },
-      )}
-    >
+    <>
       <div
-        onClick={() => setCollapse(!collapse)}
         className={cn(
-          'flex items-center justify-center absolute w-[24px] h-[24px] bg-[#474747] text-[#adadad] hover:bg-[#565656] text-center shadow-md top-[60px] border border-black z-[99]',
-          {
-            'rounded-full right-[-12px]': collapse,
-            'rounded-tl-none rounded-br-[50%] rounded-tr-[50%] rounded-bl-none right-[-20px]':
-              !collapse,
-          },
+          'left-panel-fixed',
+          'flex flex-col fixed left-0 w-[64px] h-full bg-[#1A1A1A] text-center overflow-hidden py-[10px] px-[4px] cursor-pointer',
         )}
       >
-        {collapse ? <DoubleLeftOutlined /> : <DoubleRightOutlined />}
+        <div className="h-full mt-[60px]">
+          {panelItems?.map((item) => (
+            <Space
+              className={cn(
+                'left-panel-fixed-item',
+                activeItem === item.key ? 'text-[#F7F7F7]' : 'text-[#7a7a7a]',
+              )}
+              direction="vertical"
+              size={2}
+              key={item?.key}
+              onClick={() => {
+                setActiveItem(item?.key);
+                setCollapse(false);
+              }}
+            >
+              <IconFont type={activeItem === item.key ? `${item?.icon}-active` : item?.icon} />
+              <span className="text-[12px]">{item?.name}</span>
+            </Space>
+          ))}
+        </div>
+        <Space
+          className={cn(
+            'left-panel-fixed-help',
+            activeItem === 'help' ? 'text-[#F7F7F7]' : 'text-[#7a7a7a]',
+          )}
+          direction="vertical"
+          size={2}
+          key="help"
+          onClick={() => {
+            setActiveItem('help');
+            setCollapse(false);
+          }}
+        >
+          <QuestionCircleOutlined
+            style={activeItem === 'help' ? { color: '#1F6AFF' } : { color: '#ADADAD' }}
+          />
+          <span className="text-[12px]">帮助</span>
+        </Space>
       </div>
-      {/* <div id="nodePanel" ref={stencilRef} /> */}
-    </div>
+      <div
+        className={cn(
+          'left-panel-detail',
+          'absolute bg-[#1a1a1a] w-[242px] h-full left-[64px] block overflow-hidden',
+          collapse ? 'hidden' : 'block',
+        )}
+      >
+        <div
+          className={cn(
+            'left-panel-detail-header',
+            'flex items-center justify-between h-[56px] px-[16px] overflow-hidden mt-[60px] text-[#dbdbdb]',
+          )}
+        >
+          <span>{getDetailTitle()}</span>
+          <div className="text-[#adadad] cursor-pointer">
+            <Tooltip title="刷新" color="#1F6AFF">
+              <RedoOutlined />
+            </Tooltip>
+            <Tooltip title="搜索" color="#1F6AFF">
+              <SearchOutlined className="ml-[10px]" />
+            </Tooltip>
+            <CloseOutlined
+              className="ml-[10px]"
+              onClick={() => {
+                setCollapse(true);
+                setActiveItem('');
+              }}
+            />
+          </div>
+        </div>
+        <div
+          className={cn(
+            'left-panel-detail-content',
+            'flex items-center flex-col text-[#dbdbdb] text-[12px] min-h-[780px]',
+          )}
+        >
+          <div className="w-full h-full p-[10px]">
+            <Tree
+              showIcon
+              showLine
+              blockNode
+              defaultExpandAll
+              treeData={treeData}
+              onSelect={(selectedKeys) => {
+                setActiveLayer((selectedKeys as string[])?.[0] || '');
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </>
+
+    // <div
+    //   className={cn(
+    //     '',
+    //     'w-[220px] h-full bg-[#1A1A1A] fixed top-0 left-0 transition-all duration-500 border-r-1 border-black',
+    //     { 'left-0': collapse, 'left-[-220px]': !collapse },
+    //   )}
+    // >
+    //   <div
+    //     onClick={() => setCollapse(!collapse)}
+    //     className={cn(
+    //       'flex items-center justify-center absolute w-[24px] h-[24px] bg-[#474747] text-[#adadad] hover:bg-[#565656] text-center shadow-md top-[60px] border border-black z-[99]',
+    //       {
+    //         'rounded-full right-[-12px]': collapse,
+    //         'rounded-tl-none rounded-br-[50%] rounded-tr-[50%] rounded-bl-none right-[-20px]':
+    //           !collapse,
+    //       },
+    //     )}
+    //   >
+    //     {collapse ? <DoubleLeftOutlined /> : <DoubleRightOutlined />}
+    //   </div>
+    //   <div id="nodePanel" ref={stencilRef} />
+    // </div>
   );
 });
 

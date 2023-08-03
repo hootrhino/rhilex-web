@@ -4,7 +4,6 @@ import {
   FullscreenOutlined,
   GroupOutlined,
   OneToOneOutlined,
-  QuestionCircleOutlined,
   RedoOutlined,
   UndoOutlined,
   UngroupOutlined,
@@ -15,8 +14,8 @@ import {
 } from '@ant-design/icons';
 import type { Cell, Dom } from '@antv/x6';
 import { Toolbar } from '@antv/x6-react-components';
-import type { MenuProps } from 'antd';
-import { Button, Dropdown, Space, Tooltip } from 'antd';
+// import type { MenuProps } from 'antd';
+import { Button, Space, Tooltip } from 'antd';
 import { isNil } from 'lodash';
 import { forwardRef, useEffect, useState } from 'react';
 
@@ -231,27 +230,27 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
   };
 
   // TODO
-  const handleMenuClick = () => {};
+  // const handleMenuClick = () => {};
 
-  const items: MenuProps['items'] = [
-    {
-      label: '说明文档',
-      key: 'doc',
-    },
-    {
-      label: '操作指引',
-      key: 'guide',
-    },
-    {
-      label: '视频教程',
-      key: 'video',
-    },
-  ];
+  // const items: MenuProps['items'] = [
+  //   {
+  //     label: '说明文档',
+  //     key: 'doc',
+  //   },
+  //   {
+  //     label: '操作指引',
+  //     key: 'guide',
+  //   },
+  //   {
+  //     label: '视频教程',
+  //     key: 'video',
+  //   },
+  // ];
 
-  const menuProps = {
-    items,
-    onClick: handleMenuClick,
-  };
+  // const menuProps = {
+  //   items,
+  //   onClick: handleMenuClick,
+  // };
 
   useEffect(() => {
     if (selectedNode && selectedNode?.length > 0) {
@@ -298,7 +297,7 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
               />
             </Tooltip>
 
-            <Dropdown menu={menuProps}>
+            {/* <Dropdown menu={menuProps}>
               <Button
                 size="small"
                 icon={<QuestionCircleOutlined />}
@@ -306,7 +305,7 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
               >
                 帮助
               </Button>
-            </Dropdown>
+            </Dropdown> */}
             <Button
               size="small"
               key="preview"
