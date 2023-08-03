@@ -1,9 +1,7 @@
 import {
   CompressOutlined,
-  FileDoneOutlined,
   FullscreenExitOutlined,
   FullscreenOutlined,
-  FundViewOutlined,
   GroupOutlined,
   OneToOneOutlined,
   QuestionCircleOutlined,
@@ -18,11 +16,11 @@ import {
 import type { Cell, Dom } from '@antv/x6';
 import { Toolbar } from '@antv/x6-react-components';
 import type { MenuProps } from 'antd';
-import { Button, Dropdown, Space } from 'antd';
+import { Button, Dropdown, Space, Tooltip } from 'antd';
 import { isNil } from 'lodash';
 import { forwardRef, useEffect, useState } from 'react';
 
-import { cn } from '@/utils/utils';
+import { cn, IconFont } from '@/utils/utils';
 import '@antv/x6-react-components/es/menu/style/index.css';
 import '@antv/x6-react-components/es/toolbar/style/index.css';
 import type { FullScreenHandle } from 'react-full-screen';
@@ -284,13 +282,22 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
   }, [(ref as any).current]);
 
   return (
-    <div className={cn('toolbar-container', 'w-full h-[40px] bg-[#1f1f1f] fixed top-0 z-[99]')}>
+    <div className={cn('toolbar-container', 'w-full h-[60px] bg-[#1f1f1f] fixed top-0 z-[99]')}>
       <Toolbar
         onClick={handleToolbarClick}
         hoverEffect={true}
         size="big"
         extra={
           <Space>
+            <Tooltip title="关闭右侧面板" color="#1F6AFF">
+              <Button
+                size="small"
+                key="control-right-panel"
+                icon={<IconFont type="icon-right-panel" />}
+                className="bg-[#474747] border-none text-[#dbdbdb]"
+              />
+            </Tooltip>
+
             <Dropdown menu={menuProps}>
               <Button
                 size="small"
@@ -303,7 +310,7 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
             <Button
               size="small"
               key="preview"
-              icon={<FundViewOutlined />}
+              icon={<IconFont type="icon-preview" />}
               className="bg-[#474747] border-none text-[#dbdbdb]"
             >
               预览
@@ -315,7 +322,7 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
               type="primary"
               size="small"
               key="publish"
-              icon={<FileDoneOutlined />}
+              icon={<IconFont type="icon-publish" />}
               className="border-none"
             >
               发布
@@ -324,6 +331,10 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
         }
         className="flex items-center h-full px-[10px]"
       >
+        <Space className="mr-[50px]">
+          <img alt="logo" src="/logo.png" className="h-[28px] w-[45px]" />
+          <div className="text-white w-[120px] truncate">大屏名称大屏名称大屏名称大屏名称</div>
+        </Space>
         <Toolbar.Group>
           <Toolbar.Item
             name="frontNode"

@@ -70,17 +70,44 @@
     background: #565656;
     border: none;
   }
-}
 
-.x6-toolbar.x6-toolbar-hover-effect .x6-toolbar-item {
-  color: #adadad;
-}
+  .ant-btn.ant-btn-sm {
+    border-radius: 4px;
+  }
 
-.x6-toolbar-group::before {
-  background-color: #474747;
+  .x6-toolbar.x6-toolbar-hover-effect.x6-toolbar-big {
+    height: 60px;
+  }
 
-  &:hover {
-    background-color: #565656;
+  .x6-toolbar.x6-toolbar-big .x6-toolbar-item {
+    border-radius: 4px;
+  }
+
+  .x6-toolbar.x6-toolbar-hover-effect .x6-toolbar-item {
+    color: #adadad;
+  }
+
+  .x6-toolbar.x6-toolbar-hover-effect .x6-toolbar-item:hover {
+    color: #adadad;
+    background-color: rgba(256, 256, 256, 0.08);
+  }
+
+  .x6-toolbar.x6-toolbar-hover-effect .x6-toolbar-item-disabled.x6-toolbar-item:hover {
+    background-color: transparent;
+  }
+
+  .x6-toolbar-item x6-toolbar-item-disabled {
+    &:hover {
+      background-color: none;
+    }
+  }
+
+  .x6-toolbar-group::before {
+    background-color: #474747;
+
+    &:hover {
+      background-color: #565656;
+    }
   }
 }
 

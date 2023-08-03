@@ -1,3 +1,4 @@
+import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -21,3 +22,7 @@ export const getBase64 = (file: RcFile): Promise<string> =>
     reader.onload = () => resolve(reader.result as string);
     reader.onerror = (error) => reject(error);
   });
+
+export const IconFont = createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/c/font_4195235_e1w1oqb7fgc.js', // 在 iconfont.cn 上生成
+});
