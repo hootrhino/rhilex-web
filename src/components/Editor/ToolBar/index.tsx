@@ -14,7 +14,6 @@ import {
 } from '@ant-design/icons';
 import type { Cell, Dom } from '@antv/x6';
 import { Toolbar } from '@antv/x6-react-components';
-// import type { MenuProps } from 'antd';
 import { Button, Space, Tooltip } from 'antd';
 import { isNil } from 'lodash';
 import { forwardRef, useEffect, useState } from 'react';
@@ -23,7 +22,7 @@ import { cn, IconFont } from '@/utils/utils';
 import '@antv/x6-react-components/es/menu/style/index.css';
 import '@antv/x6-react-components/es/toolbar/style/index.css';
 import type { FullScreenHandle } from 'react-full-screen';
-import '../index.less';
+import './index.less';
 
 type ToolBarProps = {
   handleFullScreen: FullScreenHandle;
@@ -229,29 +228,6 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
     }
   };
 
-  // TODO
-  // const handleMenuClick = () => {};
-
-  // const items: MenuProps['items'] = [
-  //   {
-  //     label: '说明文档',
-  //     key: 'doc',
-  //   },
-  //   {
-  //     label: '操作指引',
-  //     key: 'guide',
-  //   },
-  //   {
-  //     label: '视频教程',
-  //     key: 'video',
-  //   },
-  // ];
-
-  // const menuProps = {
-  //   items,
-  //   onClick: handleMenuClick,
-  // };
-
   useEffect(() => {
     if (selectedNode && selectedNode?.length > 0) {
       const group = selectedNode?.filter((item) => item.hasParent() || item.getChildCount() > 0);
@@ -296,16 +272,6 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
                 className="bg-[#474747] border-none text-[#dbdbdb]"
               />
             </Tooltip>
-
-            {/* <Dropdown menu={menuProps}>
-              <Button
-                size="small"
-                icon={<QuestionCircleOutlined />}
-                className="bg-[#474747] border-none text-[#dbdbdb]"
-              >
-                帮助
-              </Button>
-            </Dropdown> */}
             <Button
               size="small"
               key="preview"
@@ -314,9 +280,6 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
             >
               预览
             </Button>
-            {/* <Button size="small" key="save" icon={<SaveOutlined />}>
-              保存
-            </Button> */}
             <Button
               type="primary"
               size="small"

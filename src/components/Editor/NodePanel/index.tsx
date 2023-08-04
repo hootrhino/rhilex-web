@@ -185,10 +185,10 @@ const NodePanel = forwardRef((props, ref) => {
       <div
         className={cn(
           'left-panel-fixed',
-          'flex flex-col fixed left-0 w-[64px] h-full bg-[#1A1A1A] text-center overflow-hidden py-[10px] px-[4px] cursor-pointer',
+          'flex flex-col fixed left-0 bottom-0 w-[64px] bg-[#1A1A1A] text-center overflow-hidden py-[10px] px-[4px] cursor-pointer',
         )}
       >
-        <div className="h-full mt-[60px]">
+        <div className="h-full">
           {panelItems?.map((item) => (
             <Space
               className={cn(
@@ -230,14 +230,14 @@ const NodePanel = forwardRef((props, ref) => {
       <div
         className={cn(
           'left-panel-detail',
-          'absolute bg-[#1a1a1a] w-[242px] h-full left-[64px] block overflow-hidden',
+          'absolute bg-[#1a1a1a] w-[242px] left-[64px] bottom-0 block overflow-hidden',
           collapse ? 'hidden' : 'block',
         )}
       >
         <div
           className={cn(
             'left-panel-detail-header',
-            'flex items-center justify-between h-[56px] px-[16px] overflow-hidden mt-[60px] text-[#dbdbdb]',
+            'flex items-center justify-between h-[56px] px-[16px] overflow-hidden text-[#dbdbdb]',
           )}
         >
           <span>{getDetailTitle()}</span>
