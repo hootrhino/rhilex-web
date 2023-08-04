@@ -98,6 +98,10 @@ const useEditor = () => {
   // 节点 Node 表单数据
   const [nodeFormData, setNodeForm] = useState<NodeForm>(DEFAULT_NODE_FORM_DATA);
   const [nodeData, setNodeData] = useState<Node.Metadata>();
+  const [collapseLeftPanel, setCollapseLeftPanel] = useState<boolean>(false);
+
+  // 右侧面板
+  const [collapseRightPanel, setCollapseRightPanel] = useState<boolean>(false);
 
   return {
     canvasData,
@@ -110,6 +114,10 @@ const useEditor = () => {
     setNodeForm,
     nodeData,
     setNodeData,
+    collapseLeftPanel,
+    setCollapseLeftPanel,
+    collapseRightPanel,
+    setCollapseRightPanel
   };
 };
 

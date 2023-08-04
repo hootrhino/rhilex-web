@@ -16,6 +16,8 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 import { register } from '@antv/x6-react-shape';
+import Ruler from '@scena/ruler';
+import { useModel } from '@umijs/max';
 import { Space, Tooltip, Tree } from 'antd';
 import type { DataNode } from 'antd/es/tree';
 import { isNil } from 'lodash';
@@ -32,9 +34,15 @@ const panelItems = [
 
 const NodePanel = forwardRef((props, ref) => {
   const stencilRef = useRef<any>(null);
-  const [collapse, setCollapse] = useState<boolean>(false);
+  const { collapseLeftPanel: collapse, setCollapseLeftPanel: setCollapse } = useModel('useEditor');
+  // const [collapse, setCollapse] = useState<boolean>(false);
   const [activeItem, setActiveItem] = useState<string>('layers');
   const [activeLayer, setActiveLayer] = useState<string>('');
+
+  const handleOnCloseDetailPanel = () => {
+    setCollapse(true);
+    setActiveItem('');
+  };
 
   const treeData: DataNode[] = [
     {
@@ -180,6 +188,32 @@ const NodePanel = forwardRef((props, ref) => {
     }
   }, [(ref as any).current]);
 
+  useEffect(() => {
+    const container = document.getElementById('ruler-vertical')!;
+
+    new Ruler(container, {
+      type: 'vertical',
+      width: 20,
+      unit: 100,
+      font: '8px',
+      longLineSize: 5,
+      shortLineSize: 5,
+      mainLineSize: '60%',
+      backgroundColor: '#292929',
+      textColor: '#464646',
+      lineColor: '#787878',
+      textOffset: [-10, 0],
+      textAlign: 'right',
+      direction: 'start',
+      range: [-1100, 2200],
+      useResizeObserver: true,
+    });
+
+    // return () => {
+    //   verticalRuler?.destroy();
+    // }
+  }, []);
+
   return (
     <>
       <div
@@ -199,8 +233,13 @@ const NodePanel = forwardRef((props, ref) => {
               size={2}
               key={item?.key}
               onClick={() => {
-                setActiveItem(item?.key);
-                setCollapse(false);
+                console.log(item.key, activeItem);
+                if (item?.key === activeItem) {
+                  handleOnCloseDetailPanel();
+                } else {
+                  setActiveItem(item?.key);
+                  setCollapse(false);
+                }
               }}
             >
               <IconFont type={activeItem === item.key ? `${item?.icon}-active` : item?.icon} />
@@ -248,13 +287,7 @@ const NodePanel = forwardRef((props, ref) => {
             <Tooltip title="搜索" color="#1F6AFF">
               <SearchOutlined className="ml-[10px]" />
             </Tooltip>
-            <CloseOutlined
-              className="ml-[10px]"
-              onClick={() => {
-                setCollapse(true);
-                setActiveItem('');
-              }}
-            />
+            <CloseOutlined className="ml-[10px]" onClick={handleOnCloseDetailPanel} />
           </div>
         </div>
         <div
@@ -276,6 +309,15 @@ const NodePanel = forwardRef((props, ref) => {
             />
           </div>
         </div>
+      </div>
+      <div
+        className={cn(
+          'canvas-ruler-vertical',
+          'absolute bottom-0 h-full',
+          collapse ? 'left-[64px]' : 'left-[306px]',
+        )}
+      >
+        <div id="ruler-vertical" className="h-full" />
       </div>
     </>
 

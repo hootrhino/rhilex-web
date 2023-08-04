@@ -7,6 +7,7 @@ import { forwardRef } from 'react';
 // import EdgeSetting from './EdgeSeting';
 // import NodeSetting from './NodeSeting';
 import './index.less';
+import { useModel } from '@umijs/max';
 // type DetailFormType = 'node' | 'edge' | 'canvas';
 
 // const title = {
@@ -16,6 +17,7 @@ import './index.less';
 // };
 
 const DetailPanel = forwardRef((props, ref) => {
+  const { collapseRightPanel } = useModel('useEditor');
   // const [collapse, setCollapse] = useState<boolean>(true);
   // const [type, setFormType] = useState<DetailFormType>('canvas');
 
@@ -42,7 +44,7 @@ const DetailPanel = forwardRef((props, ref) => {
   // }, [(ref as any)?.current]);
 
   return (
-    <div className={cn('right-panel', 'absolute right-0 bottom-0 w-[332px] bg-[#1A1A1A]')}>
+    <div className={cn('right-panel', 'absolute right-0 bottom-0 w-[332px] bg-[#1A1A1A]', collapseRightPanel ? 'hidden' : 'block')}>
       <div className='h-full w-full'>
         <div className={cn('right-panel-tabs', 'flex justify-center items-center h-[40px] text-[#dbdbdb]')}>页面设置</div>
         <div className=''>content</div>

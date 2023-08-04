@@ -15,6 +15,10 @@ import NodePanel from '../NodePanel';
 import ToolBar from '../ToolBar';
 
 import { omit } from 'lodash';
+
+import { cn, IconFont } from '@/utils/utils';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { Slider, Space } from 'antd';
 import '../index.less';
 
 type CanvasProps = {
@@ -25,6 +29,7 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
   const graphRef = useRef<any>(null);
   let currentEdgeView: any = null;
   const [shouldRenderNodePanel, setShouldRenderNodePanel] = useState(false);
+  const [canvasSize, setCanvasSize] = useState<number>(36);
 
   const {
     canvasData: { background, width, height, scale },
@@ -32,7 +37,12 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
     nodeFormData,
     edgeFormData,
     setNodeForm,
+    collapseLeftPanel,
   } = useModel('useEditor');
+
+  const handleOnSlider = (value: number) => {
+    setCanvasSize(value);
+  };
 
   // 使用插件
   const handleOnPlugins = (graph: Graph) => {
@@ -387,6 +397,28 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
       <ToolBar handleFullScreen={handleFullScreen} ref={graphRef} />
       {shouldRenderNodePanel && <NodePanel ref={graphRef} />}
       <DetailPanel ref={graphRef} />
+      <div
+        className={cn(
+          'flex justify-center items-center absolute bottom-0 left-0 right-0 w-full h-[48px] bg-[#1A1A1A]',
+        )}
+      >
+        <div className={cn('absolute', collapseLeftPanel ? 'left-[64px]' : 'left-[306px]')}>
+          <Space align="center" className="px-[10px]">
+            <IconFont type="icon-map-switch" className="mr-[12px]" />
+            <MinusOutlined style={{ color: '#dbdbdb', paddingBottom: 7 }} />
+            <Slider
+              min={30}
+              max={300}
+              onChange={handleOnSlider}
+              value={canvasSize}
+              className="w-[180px]"
+              railStyle={{ background: '#5C5C5C', height: 2 }}
+              trackStyle={{ background: '#dbdbdb', height: 2 }}
+            />
+            <PlusOutlined style={{ color: '#dbdbdb', paddingBottom: 7 }} />
+          </Space>
+        </div>
+      </div>
     </div>
   );
 };

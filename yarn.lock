@@ -2733,6 +2733,11 @@
   dependencies:
     lodash "^4.11.1"
 
+"@daybrush/utils@^1.11.0", "@daybrush/utils@^1.13.0":
+  version "1.13.0"
+  resolved "https://registry.npmmirror.com/@daybrush/utils/-/utils-1.13.0.tgz#ea70a60864130da476406fdd1d465e3068aea0ff"
+  integrity sha512-ALK12C6SQNNHw1enXK+UO8bdyQ+jaWNQ1Af7Z3FNxeAwjYhQT7do+TRE4RASAJ3ObaS2+TJ7TXR3oz2Gzbw0PQ==
+
 "@dnd-kit/accessibility@^3.0.0":
   version "3.0.1"
   resolved "https://registry.npmjs.org/@dnd-kit/accessibility/-/accessibility-3.0.1.tgz#3ccbefdfca595b0a23a5dc57d3de96bc6935641c"
@@ -2763,6 +2768,11 @@
   integrity sha512-OOXqISfvBw/1REtkSK2N3Fi2EQiLMlWUlqnOK/UpOISqBZPWpE6TqL+jcPtMOkE8TqYGiURvRdPSI9hltNUjEA==
   dependencies:
     tslib "^2.0.0"
+
+"@egjs/list-differ@^1.0.0":
+  version "1.0.1"
+  resolved "https://registry.npmmirror.com/@egjs/list-differ/-/list-differ-1.0.1.tgz#5772b0f8b87973bb67827f6c7d7df8d7f64a22eb"
+  integrity sha512-OTFTDQcWS+1ZREOdCWuk5hCBgYO4OsD30lXcOCyVOAjXMhgL5rBRDnt/otb6Nz8CzU0L/igdcaQBDLWc4t9gvg==
 
 "@emotion/babel-plugin@^11.11.0":
   version "11.11.0"
@@ -3662,6 +3672,22 @@
   version "1.6.3"
   resolved "https://registry.npmmirror.com/@remix-run/router/-/router-1.6.3.tgz#8205baf6e17ef93be35bf62c37d2d594e9be0dad"
   integrity sha512-EXJysQ7J3veRECd0kZFQwYYd5sJMcq2O/m60zu1W2l3oVQ9xtub8jTOtYRE0+M2iomyG/W3Ps7+vp2kna0C27Q==
+
+"@scena/react-ruler@~0.19.0":
+  version "0.19.0"
+  resolved "https://registry.npmmirror.com/@scena/react-ruler/-/react-ruler-0.19.0.tgz#7e94a3b016e9c3e0bd105455f0939832c80def0e"
+  integrity sha512-2OEOjLMOptDxdSuEqID2JAljQuYoeoV09MnLjiBeyzJxoUcVjzyBCPwkMbHRKj2Z3WrwztJAFBF+y6yNNM5Lcw==
+  dependencies:
+    "@daybrush/utils" "^1.11.0"
+    framework-utils "^1.1.0"
+
+"@scena/ruler@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.npmmirror.com/@scena/ruler/-/ruler-0.20.0.tgz#bbfc0e9338e0debe33bca225e660f5e3966a81fc"
+  integrity sha512-KVrIwU0EvNJK1833yX7Qg8h/DvSZ04S6aR012UtuWqLaD/+T80HfN5b4IEs0rtoJ26FvvfMigVnOAmyHqc1S6g==
+  dependencies:
+    croact "^1.0.3"
+    croact-ruler "~0.18.0"
 
 "@sinclair/typebox@^0.25.16":
   version "0.25.24"
@@ -6619,6 +6645,21 @@ create-require@^1.1.0:
   resolved "https://registry.npmmirror.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
 
+croact-ruler@~0.18.0:
+  version "0.18.0"
+  resolved "https://registry.npmmirror.com/croact-ruler/-/croact-ruler-0.18.0.tgz#50850341f6574fe24b26cc32db34fc1c19f5cdc8"
+  integrity sha512-FZtYH1n3Mpv7VX24y26lAMOVqem+/qRG4a7nBy9pwDeh9Q8UycOQqAdmWxNC1CNh1Pw1k4K28/gRQOyo4r1Zag==
+  dependencies:
+    "@scena/react-ruler" "~0.19.0"
+
+croact@^1.0.3:
+  version "1.0.4"
+  resolved "https://registry.npmmirror.com/croact/-/croact-1.0.4.tgz#9bce583e13ee61dbbfc70781318c1421210e28b0"
+  integrity sha512-9GhvyzTY/IVUrMQ2iz/mzgZ8+NcjczmIo/t4FkC1CU0CEcau6v6VsEih4jkTa4ZmRgYTF0qXEZLObCzdDFplpw==
+  dependencies:
+    "@daybrush/utils" "^1.13.0"
+    "@egjs/list-differ" "^1.0.0"
+
 cross-env@^7.0.3:
   version "7.0.3"
   resolved "https://registry.npmmirror.com/cross-env/-/cross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"
@@ -8468,6 +8509,11 @@ fraction.js@^4.2.0:
   version "4.2.0"
   resolved "https://registry.npmjs.org/fraction.js/-/fraction.js-4.2.0.tgz#448e5109a313a3527f5a3ab2119ec4cf0e0e2950"
   integrity sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==
+
+framework-utils@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmmirror.com/framework-utils/-/framework-utils-1.1.0.tgz#a3b528bce838dfd623148847dc92371b09d0da2d"
+  integrity sha512-KAfqli5PwpFJ8o3psRNs8svpMGyCSAe8nmGcjQ0zZBWN2H6dZDnq+ABp3N3hdUmFeMrLtjOCTXD4yplUJIWceg==
 
 fresh@0.5.2:
   version "0.5.2"
