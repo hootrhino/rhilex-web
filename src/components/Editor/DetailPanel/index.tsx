@@ -44,7 +44,7 @@ const DetailPanel = forwardRef((props, ref) => {
   // }, [(ref as any)?.current]);
 
   return (
-    <div className={cn('right-panel', 'absolute right-0 bottom-0 w-[332px] bg-[#1A1A1A]', collapseRightPanel ? 'hidden' : 'block')}>
+    <div className={cn('right-panel', 'fixed right-0 bottom-0 w-[332px] bg-[#1A1A1A]', collapseRightPanel ? 'hidden' : 'block')}>
       <div className='h-full w-full'>
         <div className={cn('right-panel-tabs', 'flex justify-center items-center h-[40px] text-[#dbdbdb]')}>页面设置</div>
         <div className=''>content</div>

@@ -6,6 +6,8 @@ import { Keyboard } from '@antv/x6-plugin-keyboard';
 import { Selection } from '@antv/x6-plugin-selection';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { Transform } from '@antv/x6-plugin-transform';
+import { MiniMap } from '@antv/x6-plugin-minimap'
+import { Scroller } from '@antv/x6-plugin-scroller'
 import { useEffect, useRef, useState } from 'react';
 import type { FullScreenHandle } from 'react-full-screen';
 import { useModel } from 'umi';
@@ -20,6 +22,7 @@ import { cn, IconFont } from '@/utils/utils';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Slider, Space } from 'antd';
 import '../index.less';
+import { SimpleNodeView } from './simple-view';
 
 type CanvasProps = {
   handleFullScreen: FullScreenHandle;
@@ -46,6 +49,8 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
 
   // 使用插件
   const handleOnPlugins = (graph: Graph) => {
+    const minimapContainer = document.getElementById('canvas-minimap')!;
+
     graph
       .use(new Snapline())
       .use(
@@ -62,6 +67,34 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
           movable: true,
           showNodeSelectionBox: true,
           pointerEvents: 'none',
+        }),
+      )
+      .use(new Scroller({
+        enabled: true,
+        pageVisible: true,
+        pageBreak: false,
+        pannable: true,
+      }))
+      .use(
+        new MiniMap({
+          container: minimapContainer,
+          width: 200,
+          height: 120,
+          padding: 10,
+          graphOptions: {
+            createCellView(cell) {
+              // 可以返回三种类型数据
+              // 1. null: 不渲染
+              // 2. undefined: 使用 X6 默认渲染方式
+              // 3. CellView: 自定义渲染
+              if (cell.isEdge()) {
+                return null
+              }
+              if (cell.isNode()) {
+                return SimpleNodeView
+              }
+            },
+          },
         }),
       )
       .use(new Keyboard())
@@ -252,10 +285,17 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
     const container = document.getElementById('canvas-container')!;
     const graph = new Graph({
       container: container,
-      background: background,
+      // grid: {
+      //   visible: true,
+      // },
+      background: {
+        color: '#262626',
+      },
+      width: 1920,
+      height: 1080,
       panning: true,
-      width,
-      height,
+      // width: '100%',
+      // height: '100%',
       mousewheel: {
         enabled: true,
         zoomAtMousePosition: true,
@@ -318,6 +358,23 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
       },
     });
 
+    graph.addNode({
+      x: 40,
+      y: 40,
+      width: 100,
+      height: 40,
+      label: 'Hello',
+      attrs: {
+        body: {
+          stroke: '#8f8f8f',
+          strokeWidth: 1,
+          fill: '#fff',
+          rx: 6,
+          ry: 6,
+        },
+      },
+    })
+
     handleOnPlugins(graph);
     handleAddKeyboard(graph);
     handleOnEvents(graph);
@@ -340,18 +397,18 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
     };
   }, []);
 
-  useEffect(() => {
-    // 更新画布尺寸
-    const w = (width || 0) * ((scale || 30) / 100);
-    const h = (height || 0) * ((scale || 30) / 100);
+  // useEffect(() => {
+  //   // 更新画布尺寸
+  //   const w = (width || 0) * ((scale || 30) / 100);
+  //   const h = (height || 0) * ((scale || 30) / 100);
 
-    graphRef.current?.resize(w, h);
-  }, [width, height, scale]);
+  //   graphRef.current?.resize(w, h);
+  // }, [width, height, scale]);
 
-  useEffect(() => {
-    // 更新画布背景
-    graphRef.current?.drawBackground(background);
-  }, [background]);
+  // useEffect(() => {
+  //   // 更新画布背景
+  //   graphRef.current?.drawBackground(background);
+  // }, [background]);
 
   useEffect(() => {
     handleUpdateEdge();
@@ -389,17 +446,15 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
   }, [graphRef]);
 
   return (
-    <div
-      className="relative flex justify-center items-center overflow-auto w-full h-[100vh]"
-      id="canvas-bg"
-    >
-      <div id="canvas-container" />
+    <>
+      <div id="canvas-container" className='bg-[#262626]'/>
+      <div id='canvas-minimap' className={cn('fixed bottom-[60px]', collapseLeftPanel ? 'left-[100px]' : 'left-[342px]')}></div>
       <ToolBar handleFullScreen={handleFullScreen} ref={graphRef} />
       {shouldRenderNodePanel && <NodePanel ref={graphRef} />}
       <DetailPanel ref={graphRef} />
       <div
         className={cn(
-          'flex justify-center items-center absolute bottom-0 left-0 right-0 w-full h-[48px] bg-[#1A1A1A]',
+          'flex justify-center items-center fixed bottom-0 left-0 right-0 w-full h-[48px] bg-[#1A1A1A]',
         )}
       >
         <div className={cn('absolute', collapseLeftPanel ? 'left-[64px]' : 'left-[306px]')}>
@@ -419,7 +474,7 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
           </Space>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -207,6 +207,8 @@ const NodePanel = forwardRef((props, ref) => {
       direction: 'start',
       range: [-1100, 2200],
       useResizeObserver: true,
+      markColor: '#FA832E',
+      marks: [200, 400]
     });
 
     // return () => {
@@ -269,7 +271,7 @@ const NodePanel = forwardRef((props, ref) => {
       <div
         className={cn(
           'left-panel-detail',
-          'absolute bg-[#1a1a1a] w-[242px] left-[64px] bottom-0 block overflow-hidden',
+          'fixed bg-[#1a1a1a] w-[242px] left-[64px] bottom-0 block overflow-hidden',
           collapse ? 'hidden' : 'block',
         )}
       >
@@ -313,7 +315,7 @@ const NodePanel = forwardRef((props, ref) => {
       <div
         className={cn(
           'canvas-ruler-vertical',
-          'absolute bottom-0 h-full',
+          'fixed bottom-0 h-full',
           collapse ? 'left-[64px]' : 'left-[306px]',
         )}
       >

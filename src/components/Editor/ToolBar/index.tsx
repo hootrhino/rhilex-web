@@ -266,7 +266,7 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
   useEffect(() => {
     const container = document.getElementById('ruler-horizontal')!;
 
-    new Ruler(container, {
+   new Ruler(container, {
       type: 'horizontal',
       height: 20,
       unit: 100,
@@ -280,12 +280,16 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
       textOffset: [0, 10],
       range: [-2400, 4200],
       useResizeObserver: true,
+      markColor: '#FA832E',
+      marks: [200, 900]
     });
 
     // return () => {
     //   horizontalRuler?.destroy();
     // }
   }, []);
+
+
 
   return (
     <div className={cn('toolbar-container', 'w-full h-[60px] bg-[#1f1f1f] fixed top-0 z-[99]')}>
