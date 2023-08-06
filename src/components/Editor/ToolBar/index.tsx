@@ -33,8 +33,7 @@ type ToolBarProps = {
 };
 
 const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
-  const { collapseLeftPanel,collapseRightPanel,
-    setCollapseRightPanel } = useModel('useEditor');
+  const { collapseLeftPanel, collapseRightPanel, setCollapseRightPanel } = useModel('useEditor');
 
   // 已选择节点
   const [selectedNode, setSelectedNode] = useState<Cell[] | undefined>(undefined);
@@ -266,10 +265,10 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
   useEffect(() => {
     const container = document.getElementById('ruler-horizontal')!;
 
-   new Ruler(container, {
+    new Ruler(container, {
       type: 'horizontal',
       height: 20,
-      unit: 100,
+      unit: 200,
       font: '8px',
       longLineSize: 5,
       shortLineSize: 5,
@@ -278,18 +277,21 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
       textColor: '#464646',
       lineColor: '#787878',
       textOffset: [0, 10],
-      range: [-2400, 4200],
+      range: [-4000, 4800],
       useResizeObserver: true,
       markColor: '#FA832E',
-      marks: [200, 900]
+      marks: [0, 1920],
+      defaultScrollPos: -700,
+      zoom: 0.5,
+      selectedRanges: [[0, 1920]],
+      selectedBackgroundColor: '#27303F',
+      selectedRangesTextColor: '#3A73E1',
     });
 
     // return () => {
     //   horizontalRuler?.destroy();
     // }
   }, []);
-
-
 
   return (
     <div className={cn('toolbar-container', 'w-full h-[60px] bg-[#1f1f1f] fixed top-0 z-[99]')}>
@@ -378,8 +380,8 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
       <div
         className={cn(
           'canvas-ruler-horizontal',
-          'absolute top-[60px] w-full',
-          collapseLeftPanel ? 'left-[84px]' : 'left-[326px]',
+          'absolute top-[60px] w-full left-[84px]',
+          // collapseLeftPanel ? 'left-[84px]' : 'left-[326px]',
         )}
       >
         <div id="ruler-horizontal" className="w-full" />
@@ -390,7 +392,7 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
           collapseLeftPanel ? 'left-[64px]' : 'left-[306px]',
         )}
       >
-        <EyeInvisibleOutlined style={{color: '#adadad'}}/>
+        <EyeInvisibleOutlined style={{ color: '#adadad' }} />
       </div>
     </div>
   );

@@ -32,14 +32,13 @@ const panelItems = [
   { name: '设计库', icon: 'icon-material', key: 'material' },
 ];
 
-const NodePanel = forwardRef((props, ref) => {
+const LeftPanel = forwardRef((props, ref) => {
   const stencilRef = useRef<any>(null);
   const { collapseLeftPanel: collapse, setCollapseLeftPanel: setCollapse } = useModel('useEditor');
-  // const [collapse, setCollapse] = useState<boolean>(false);
   const [activeItem, setActiveItem] = useState<string>('layers');
   const [activeLayer, setActiveLayer] = useState<string>('');
 
-  const handleOnCloseDetailPanel = () => {
+  const handleOnCloseRightPanel = () => {
     setCollapse(true);
     setActiveItem('');
   };
@@ -185,6 +184,7 @@ const NodePanel = forwardRef((props, ref) => {
   useEffect(() => {
     if (!isNil((ref as any).current)) {
       initiStencil();
+      ref?.current.setScrollbarPosition(1430, 830);
     }
   }, [(ref as any).current]);
 
@@ -194,7 +194,7 @@ const NodePanel = forwardRef((props, ref) => {
     new Ruler(container, {
       type: 'vertical',
       width: 20,
-      unit: 100,
+      unit: 200,
       font: '8px',
       longLineSize: 5,
       shortLineSize: 5,
@@ -205,15 +205,16 @@ const NodePanel = forwardRef((props, ref) => {
       textOffset: [-10, 0],
       textAlign: 'right',
       direction: 'start',
-      range: [-1100, 2200],
+      range: [-1500, 2400],
       useResizeObserver: true,
       markColor: '#FA832E',
-      marks: [200, 400]
+      marks: [0, 1080],
+      zoom: 0.5,
+      defaultScrollPos: -400,
+      selectedRanges: [[0, 1080]],
+      selectedBackgroundColor: '#27303F',
+      selectedRangesTextColor: '#3A73E1',
     });
-
-    // return () => {
-    //   verticalRuler?.destroy();
-    // }
   }, []);
 
   return (
@@ -237,7 +238,7 @@ const NodePanel = forwardRef((props, ref) => {
               onClick={() => {
                 console.log(item.key, activeItem);
                 if (item?.key === activeItem) {
-                  handleOnCloseDetailPanel();
+                  handleOnCloseRightPanel();
                 } else {
                   setActiveItem(item?.key);
                   setCollapse(false);
@@ -289,7 +290,7 @@ const NodePanel = forwardRef((props, ref) => {
             <Tooltip title="搜索" color="#1F6AFF">
               <SearchOutlined className="ml-[10px]" />
             </Tooltip>
-            <CloseOutlined className="ml-[10px]" onClick={handleOnCloseDetailPanel} />
+            <CloseOutlined className="ml-[10px]" onClick={handleOnCloseRightPanel} />
           </div>
         </div>
         <div
@@ -348,4 +349,4 @@ const NodePanel = forwardRef((props, ref) => {
   );
 });
 
-export default NodePanel;
+export default LeftPanel;

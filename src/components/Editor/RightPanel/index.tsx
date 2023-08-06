@@ -16,7 +16,7 @@ import { useModel } from '@umijs/max';
 //   canvas: '页面设置',
 // };
 
-const DetailPanel = forwardRef((props, ref) => {
+const RightPanel = forwardRef((props, ref) => {
   const { collapseRightPanel } = useModel('useEditor');
   // const [collapse, setCollapse] = useState<boolean>(true);
   // const [type, setFormType] = useState<DetailFormType>('canvas');
@@ -81,4 +81,4 @@ const DetailPanel = forwardRef((props, ref) => {
   );
 });
 
-export default DetailPanel;
+export default RightPanel;

@@ -3,36 +3,30 @@ import { Cell, Edge, Graph, Shape } from '@antv/x6';
 import { Clipboard } from '@antv/x6-plugin-clipboard';
 import { History } from '@antv/x6-plugin-history';
 import { Keyboard } from '@antv/x6-plugin-keyboard';
+import { MiniMap as MiniMapPlugin } from '@antv/x6-plugin-minimap';
+import { Scroller } from '@antv/x6-plugin-scroller';
 import { Selection } from '@antv/x6-plugin-selection';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { Transform } from '@antv/x6-plugin-transform';
-import { MiniMap } from '@antv/x6-plugin-minimap'
-import { Scroller } from '@antv/x6-plugin-scroller'
 import { useEffect, useRef, useState } from 'react';
-import type { FullScreenHandle } from 'react-full-screen';
 import { useModel } from 'umi';
-import DetailPanel from '../DetailPanel';
+import RightPanel from '../RightPanel';
 
-import NodePanel from '../NodePanel';
+import MiniMap from '../MiniMap';
+import LeftPanel from '../LeftPanel';
 import ToolBar from '../ToolBar';
 
 import { omit } from 'lodash';
-
-import { cn, IconFont } from '@/utils/utils';
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Slider, Space } from 'antd';
-import '../index.less';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
+import Footer from '../Footer';
+import './index.less';
 import { SimpleNodeView } from './simple-view';
 
-type CanvasProps = {
-  handleFullScreen: FullScreenHandle;
-};
-
-const Canvas = ({ handleFullScreen }: CanvasProps) => {
+const Canvas = () => {
+  const handle = useFullScreenHandle();
   const graphRef = useRef<any>(null);
   let currentEdgeView: any = null;
   const [shouldRenderNodePanel, setShouldRenderNodePanel] = useState(false);
-  const [canvasSize, setCanvasSize] = useState<number>(36);
 
   const {
     canvasData: { background, width, height, scale },
@@ -40,12 +34,7 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
     nodeFormData,
     edgeFormData,
     setNodeForm,
-    collapseLeftPanel,
   } = useModel('useEditor');
-
-  const handleOnSlider = (value: number) => {
-    setCanvasSize(value);
-  };
 
   // 使用插件
   const handleOnPlugins = (graph: Graph) => {
@@ -69,18 +58,22 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
           pointerEvents: 'none',
         }),
       )
-      .use(new Scroller({
-        enabled: true,
-        pageVisible: true,
-        pageBreak: false,
-        pannable: true,
-      }))
       .use(
-        new MiniMap({
+        new Scroller({
+          enabled: true,
+          pageVisible: false,
+          pageBreak: false,
+          pannable: true,
+          autoResize: true,
+          height: 1500,
+          width: 3000,
+        }),
+      )
+      .use(
+        new MiniMapPlugin({
           container: minimapContainer,
           width: 200,
           height: 120,
-          padding: 10,
           graphOptions: {
             createCellView(cell) {
               // 可以返回三种类型数据
@@ -88,10 +81,10 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
               // 2. undefined: 使用 X6 默认渲染方式
               // 3. CellView: 自定义渲染
               if (cell.isEdge()) {
-                return null
+                return null;
               }
               if (cell.isNode()) {
-                return SimpleNodeView
+                return SimpleNodeView;
               }
             },
           },
@@ -285,17 +278,12 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
     const container = document.getElementById('canvas-container')!;
     const graph = new Graph({
       container: container,
-      // grid: {
-      //   visible: true,
-      // },
       background: {
         color: '#262626',
       },
       width: 1920,
       height: 1080,
       panning: true,
-      // width: '100%',
-      // height: '100%',
       mousewheel: {
         enabled: true,
         zoomAtMousePosition: true,
@@ -373,14 +361,14 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
           ry: 6,
         },
       },
-    })
+    });
 
     handleOnPlugins(graph);
     handleAddKeyboard(graph);
     handleOnEvents(graph);
-
     // 内容居中显示
     graph.centerContent();
+
     // TODO 渲染元素 data
     // graph.fromJSON(fromJsonData);
     graphRef.current = graph;
@@ -446,35 +434,14 @@ const Canvas = ({ handleFullScreen }: CanvasProps) => {
   }, [graphRef]);
 
   return (
-    <>
-      <div id="canvas-container" className='bg-[#262626]'/>
-      <div id='canvas-minimap' className={cn('fixed bottom-[60px]', collapseLeftPanel ? 'left-[100px]' : 'left-[342px]')}></div>
-      <ToolBar handleFullScreen={handleFullScreen} ref={graphRef} />
-      {shouldRenderNodePanel && <NodePanel ref={graphRef} />}
-      <DetailPanel ref={graphRef} />
-      <div
-        className={cn(
-          'flex justify-center items-center fixed bottom-0 left-0 right-0 w-full h-[48px] bg-[#1A1A1A]',
-        )}
-      >
-        <div className={cn('absolute', collapseLeftPanel ? 'left-[64px]' : 'left-[306px]')}>
-          <Space align="center" className="px-[10px]">
-            <IconFont type="icon-map-switch" className="mr-[12px]" />
-            <MinusOutlined style={{ color: '#dbdbdb', paddingBottom: 7 }} />
-            <Slider
-              min={30}
-              max={300}
-              onChange={handleOnSlider}
-              value={canvasSize}
-              className="w-[180px]"
-              railStyle={{ background: '#5C5C5C', height: 2 }}
-              trackStyle={{ background: '#dbdbdb', height: 2 }}
-            />
-            <PlusOutlined style={{ color: '#dbdbdb', paddingBottom: 7 }} />
-          </Space>
-        </div>
-      </div>
-    </>
+    <FullScreen handle={handle}>
+      <div id="canvas-container" className="bg-[#262626]" />
+      <MiniMap id="canvas-minimap" />
+      <ToolBar handleFullScreen={handle} ref={graphRef} />
+      {shouldRenderNodePanel && <LeftPanel ref={graphRef} />}
+      <RightPanel ref={graphRef} />
+      <Footer />
+    </FullScreen>
   );
 };
 
