@@ -1,6 +1,5 @@
 import {
   CompressOutlined,
-  EyeInvisibleOutlined,
   FullscreenExitOutlined,
   FullscreenOutlined,
   GroupOutlined,
@@ -22,7 +21,7 @@ import { forwardRef, useEffect, useState } from 'react';
 import { cn, IconFont } from '@/utils/utils';
 import '@antv/x6-react-components/es/menu/style/index.css';
 import '@antv/x6-react-components/es/toolbar/style/index.css';
-import Ruler from '@scena/ruler';
+
 import type { FullScreenHandle } from 'react-full-screen';
 
 import { useModel } from '@umijs/max';
@@ -33,7 +32,7 @@ type ToolBarProps = {
 };
 
 const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
-  const { collapseLeftPanel, collapseRightPanel, setCollapseRightPanel } = useModel('useEditor');
+  const { collapseRightPanel, setCollapseRightPanel } = useModel('useEditor');
 
   // 已选择节点
   const [selectedNode, setSelectedNode] = useState<Cell[] | undefined>(undefined);
@@ -262,37 +261,6 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
     }
   }, [(ref as any).current]);
 
-  useEffect(() => {
-    const container = document.getElementById('ruler-horizontal')!;
-
-    new Ruler(container, {
-      type: 'horizontal',
-      height: 20,
-      unit: 200,
-      font: '8px',
-      longLineSize: 5,
-      shortLineSize: 5,
-      mainLineSize: '60%',
-      backgroundColor: '#292929',
-      textColor: '#464646',
-      lineColor: '#787878',
-      textOffset: [0, 10],
-      range: [-4000, 4800],
-      useResizeObserver: true,
-      markColor: '#FA832E',
-      marks: [0, 1920],
-      defaultScrollPos: -700,
-      zoom: 0.5,
-      selectedRanges: [[0, 1920]],
-      selectedBackgroundColor: '#27303F',
-      selectedRangesTextColor: '#3A73E1',
-    });
-
-    // return () => {
-    //   horizontalRuler?.destroy();
-    // }
-  }, []);
-
   return (
     <div className={cn('toolbar-container', 'w-full h-[60px] bg-[#1f1f1f] fixed top-0 z-[99]')}>
       <Toolbar
@@ -377,23 +345,6 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
           />
         </Toolbar.Group>
       </Toolbar>
-      <div
-        className={cn(
-          'canvas-ruler-horizontal',
-          'absolute top-[60px] w-full left-[84px]',
-          // collapseLeftPanel ? 'left-[84px]' : 'left-[326px]',
-        )}
-      >
-        <div id="ruler-horizontal" className="w-full" />
-      </div>
-      <div
-        className={cn(
-          'flex justify-center items-center absolute w-[20px] h-[20px] bg-[#292929]',
-          collapseLeftPanel ? 'left-[64px]' : 'left-[306px]',
-        )}
-      >
-        <EyeInvisibleOutlined style={{ color: '#adadad' }} />
-      </div>
     </div>
   );
 });

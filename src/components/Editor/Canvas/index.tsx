@@ -12,13 +12,15 @@ import { useEffect, useRef, useState } from 'react';
 import { useModel } from 'umi';
 import RightPanel from '../RightPanel';
 
-import MiniMap from '../MiniMap';
 import LeftPanel from '../LeftPanel';
+import MiniMap from '../MiniMap';
 import ToolBar from '../ToolBar';
 
 import { omit } from 'lodash';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import Footer from '../Footer';
+import HorizontalRuler from '../HorizontalRuler';
+import VerticalRuler from '../VerticalRuler';
 import './index.less';
 import { SimpleNodeView } from './simple-view';
 
@@ -436,10 +438,12 @@ const Canvas = () => {
   return (
     <FullScreen handle={handle}>
       <div id="canvas-container" className="bg-[#262626]" />
-      <MiniMap id="canvas-minimap" />
       <ToolBar handleFullScreen={handle} ref={graphRef} />
+      <HorizontalRuler />
+      <VerticalRuler />
       {shouldRenderNodePanel && <LeftPanel ref={graphRef} />}
       <RightPanel ref={graphRef} />
+      <MiniMap id="canvas-minimap" />
       <Footer />
     </FullScreen>
   );
