@@ -57,7 +57,7 @@ const Plugins = () => {
       fixed: 'right',
       key: 'option',
       render: (_, { uuid }) => {
-        if (uuid === ' ICMPSender') {
+        if (uuid === 'ICMPSender') {
           return (
             <a
               key="ping"
