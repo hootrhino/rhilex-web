@@ -7,7 +7,7 @@ import 'ace-builds/src-noconflict/mode-sh';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/webpack-resolver';
 import { Button, Input } from 'antd';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import AceEditor from 'react-ace';
 import { useModel, useRequest } from 'umi';
 
@@ -19,13 +19,15 @@ type DebugProps = ModalFormProps & {
 const Ping = ({ uuid, onClose, ...props }: DebugProps) => {
   const formRef = useRef<ProFormInstance>();
   const { logs } = useModel('useWebsocket');
+  const [loading, setLoading] = useState<boolean>(false);
 
   // 测速
   const { run } = useRequest((values) => postPluginService(values), {
     manual: true,
     onSuccess: () => {
-      const filterLogs = logs?.filter((log) => log?.topic === `plugin/ICMPSenderPing/${uuid}`);
+      const filterLogs = logs?.filter((log) => log?.topic === `plugin/ICMPSenderPing/${uuid}`)?.map(item => item?.msg);
       formRef.current?.setFieldsValue({ output: filterLogs?.length > 0 ? filterLogs?.join('\n') : '' });
+      setLoading(false);
     },
   });
 
@@ -50,7 +52,15 @@ const Ping = ({ uuid, onClose, ...props }: DebugProps) => {
           allowClear
           enterButton="测试"
           size="large"
-          onSearch={(value: string) => run({ uuid, name: 'ping', args: [value] })}
+          onSearch={(value: string) => {
+            setLoading(true);
+            formRef.current?.setFieldsValue({ output: `PING ${value}...` });
+            setTimeout(() => {
+              run({ uuid, name: 'ping', args: [value] })
+            }, 2000)
+
+          }}
+          loading={loading}
         />
       </ProForm.Item>
 
