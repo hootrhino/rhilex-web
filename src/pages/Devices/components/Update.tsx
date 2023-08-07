@@ -44,6 +44,8 @@ const BaseForm = () => {
     try {
       let params = cloneDeep(values);
       const deviceConfigFormat = new Object();
+      let uartConfig = params?.config?.uartConfig?.[0];
+      let hostConfig = params?.config?.hostConfig?.[0];
 
       params?.config?.deviceConfig?.forEach((item: any) => {
         deviceConfigFormat[item?.name] = {
@@ -53,6 +55,26 @@ const BaseForm = () => {
           timeSlice: [3, 4].includes(item?.type) ? item?.timeSlice : 0,
         };
       });
+
+      if (params?.type === 'GENERIC_PROTOCOL') {
+        const transport = params?.config?.commonConfig?.[0]?.transport;
+
+        if (transport === 'rs485rawserial') {
+          uartConfig = {
+            ...params?.config?.uartConfig?.[0],
+          };
+          hostConfig = {
+            ...defaultValue?.config?.hostConfig?.[0],
+          };
+        } else {
+          uartConfig = {
+            ...defaultValue?.config?.uartConfig?.[0],
+          };
+          hostConfig = {
+            ...params?.config?.hostConfig?.[0],
+          };
+        }
+      }
 
       params = {
         ...params,
@@ -64,7 +86,8 @@ const BaseForm = () => {
           },
           snmpConfig: params?.config?.snmpConfig?.[0],
           deviceConfig: deviceConfigFormat,
-          uartConfig: params?.config?.uartConfig?.[0],
+          uartConfig,
+          hostConfig,
           rtuConfig: params?.config?.rtuConfig?.[0],
           tcpConfig: params?.config?.tcpConfig?.[0],
           registers: params?.config?.registers?.map((item: Record<string, any>) => ({

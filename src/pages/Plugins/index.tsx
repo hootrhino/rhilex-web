@@ -57,30 +57,31 @@ const Plugins = () => {
       fixed: 'right',
       key: 'option',
       render: (_, { uuid }) => {
-        const ping = [
-          <a
-            key="ping"
-            onClick={() => {
-              setConfig({ open: true, uuid });
-            }}
-          >
-            测速
-          </a>,
-        ];
-
-        return uuid === 'RULEX-MqttServer'
-          ? [
-              ...ping,
-              <a
-                key="detail"
-                onClick={() => {
-                  history.push(`/plugins/${uuid}/detail`);
-                }}
-              >
-                详情
-              </a>,
-            ]
-          : ping;
+        if (uuid === ' ICMPSender') {
+          return (
+            <a
+              key="ping"
+              onClick={() => {
+                setConfig({ open: true, uuid });
+              }}
+            >
+              测速
+            </a>
+          );
+        } else if (uuid === 'RULEX-MqttServer') {
+          return (
+            <a
+              key="detail"
+              onClick={() => {
+                history.push(`/plugins/${uuid}/detail`);
+              }}
+            >
+              详情
+            </a>
+          );
+        } else {
+          return '-';
+        }
       },
     },
   ];

@@ -73,5 +73,12 @@ export const defaultValue = {
         quantity: 1,
       },
     ],
+    hostConfig: [
+      {
+        port: 3399,
+        host: '127.0.0.1',
+        timeout: 3000,
+      },
+    ],
   },
 };
