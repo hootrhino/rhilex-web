@@ -25,7 +25,7 @@ const Ping = ({ uuid, onClose, ...props }: DebugProps) => {
     manual: true,
     onSuccess: () => {
       const filterLogs = logs?.filter((log) => log?.topic === `plugin/ICMPSenderPing/${uuid}`);
-      formRef.current?.setFieldsValue({ output: filterLogs.join('\n') });
+      formRef.current?.setFieldsValue({ output: filterLogs });
     },
   });
 

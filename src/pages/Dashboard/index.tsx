@@ -28,7 +28,7 @@ const Dashboard = () => {
     dataSource?.statistic?.outSuccess || 0,
     dataSource?.statistic?.outFailed || 0,
   );
-  console.log(cpuData);
+
   const handleOnsearch = (keyword?: string, filters?: Record<string, FilterValue | null>) => {
     let filteredLogs = logs;
     if (keyword) {
