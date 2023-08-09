@@ -67,12 +67,10 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
       title: '超时时间（毫秒）',
       dataIndex: 'timeout',
     },
-
     {
       title: '重试次数',
       dataIndex: 'retryTime',
     },
-
     {
       title: '协议分隔符',
       dataIndex: 'separator',
@@ -230,6 +228,20 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
       dataIndex: 'port',
     },
   ],
+  HOST: [
+    {
+      title: '超时时间（毫秒）',
+      dataIndex: 'timeout',
+    },
+    {
+      title: '服务地址',
+      dataIndex: 'host',
+    },
+    {
+      title: '服务端口',
+      dataIndex: 'port',
+    },
+  ],
   REGISTERS: [
     {
       title: '数据标签',
@@ -306,6 +318,13 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         columns={columnsMap['TCP']}
         loading={loading}
         show={!isEmpty(data?.config?.tcpConfig)}
+      />
+      <EnhancedProDescriptions
+        title="TCP 配置"
+        dataSource={data?.config?.hostConfig}
+        columns={columnsMap['HOST']}
+        loading={loading}
+        show={!isEmpty(data?.config?.hostConfig)}
       />
       {data?.config?.registers?.length > 0 && (
         <>
