@@ -68,7 +68,7 @@ export const columns = [
                       valueType: 'select',
                       required: true,
                       hideInForm: type !== 'GENERIC_PROTOCOL',
-                      valueEnum: { rs485rawserial: '自定义串口', rawtcp: '自定义TCP' },
+                      valueEnum: { rs485rawserial: '自定义串口', rawserial: '自定义TCP' },
                     },
                     {
                       title: '重试次数',

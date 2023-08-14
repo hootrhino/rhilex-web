@@ -1,7 +1,7 @@
 import { message } from '@/components/PopupHack';
 
 import SchemaForm from '@/components/SchemaForm';
-import { getApp, postApp, putApp } from '@/services/rulex/qingliangyingyong';
+import { getAppDetail, postApp, putApp } from '@/services/rulex/qingliangyingyong';
 import { useEffect, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { columns1, columns2 } from './columns';
@@ -27,7 +27,7 @@ const UpdateForm = () => {
   });
 
   // 获取详情
-  const { run: getDetail } = useRequest(() => getApp({ uuid: id || '' }), {
+  const { run: getDetail } = useRequest(() => getAppDetail({ uuid: id || '' }), {
     manual: true,
     formatResult: (res) => res?.data,
     onSuccess: (data) => {
