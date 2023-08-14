@@ -9,7 +9,7 @@ import has from 'lodash/has';
 import isEmpty from 'lodash/isEmpty';
 
 import { message } from '@/components/PopupHack';
-import { getDevices, postDevices, putDevices } from '@/services/rulex/shebeiguanli';
+import { getDevicesDetail, postDevices, putDevices } from '@/services/rulex/shebeiguanli';
 
 import SchemaForm from '@/components/SchemaForm';
 
@@ -109,7 +109,7 @@ const BaseForm = () => {
   };
 
   // 获取详情
-  const { run: getDetail } = useRequest(() => getDevices({ params: { uuid: id } }), {
+  const { run: getDetail } = useRequest(() => getDevicesDetail({ uuid: id || '' }), {
     manual: true,
     onSuccess: ({ data }: any) => {
       const newConfig = Object.fromEntries(
