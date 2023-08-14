@@ -8,7 +8,7 @@ export const defaultValue = {
         timeout: 3000,
         autoRequest: 'false',
         separator: 'LF',
-        transport: 'rs485rawserial',
+        transport: 'rawserial',
         mode: 'RTU',
       },
     ],

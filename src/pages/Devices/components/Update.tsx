@@ -59,7 +59,7 @@ const BaseForm = () => {
       if (params?.type === 'GENERIC_PROTOCOL') {
         const transport = params?.config?.commonConfig?.[0]?.transport;
 
-        if (transport === 'rs485rawserial') {
+        if (transport === 'rawserial') {
           uartConfig = {
             ...params?.config?.uartConfig?.[0],
           };

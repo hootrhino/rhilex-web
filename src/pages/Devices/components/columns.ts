@@ -68,7 +68,7 @@ export const columns = [
                       valueType: 'select',
                       required: true,
                       hideInForm: type !== 'GENERIC_PROTOCOL',
-                      valueEnum: { rs485rawserial: '自定义串口', rawserial: '自定义TCP' },
+                      valueEnum: { rawserial: '自定义串口', rawtcp: '自定义TCP' },
                     },
                     {
                       title: '重试次数',
@@ -366,7 +366,7 @@ export const columns = [
           columns: ({ config }: any) => {
             const transport = config?.commonConfig[0]?.transport;
 
-            if (transport === 'rs485rawserial') {
+            if (transport === 'rawserial') {
               return [
                 {
                   title: '串口配置',
