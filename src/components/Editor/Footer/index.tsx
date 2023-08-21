@@ -2,17 +2,16 @@ import { cn, IconFont } from '@/utils/utils';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 import { Select, Slider, Space } from 'antd';
-import { useState } from 'react';
 
 import './index.less';
 
-const Footer = () => {
-  const { collapseLeftPanel } = useModel('useEditor');
-  const [canvasSize, setCanvasSize] = useState<number>(36);
+type FooterProps = {
+  value: number;
+  onChange: (val: number) => void;
+};
 
-  const handleOnSlider = (value: number) => {
-    setCanvasSize(value);
-  };
+const Footer = ({ value, onChange }: FooterProps) => {
+  const { collapseLeftPanel } = useModel('useEditor');
 
   return (
     <div
@@ -28,24 +27,25 @@ const Footer = () => {
           <Slider
             min={30}
             max={300}
-            onChange={handleOnSlider}
-            value={canvasSize}
+            onChange={onChange}
+            value={value}
             className="w-[180px]"
             railStyle={{ background: '#5C5C5C', height: 2 }}
             trackStyle={{ background: '#dbdbdb', height: 2 }}
           />
           <PlusOutlined style={{ color: '#dbdbdb', paddingBottom: 7 }} />
           <Select
-            defaultValue="50%"
+            value={`${value.toString()}%`}
             bordered={false}
             dropdownStyle={{ background: '#333', color: '#dbdbdb' }}
+            onSelect={(selectValue: string) => onChange(Number(selectValue))}
             options={[
-              { value: '50%', label: '50%' },
-              { value: '100%', label: '100%' },
-              { value: '150%', label: '150%' },
-              { value: '200%', label: '200%' },
-              { value: '250%', label: '250%' },
-              { value: '300%', label: '300%' },
+              { value: '50', label: '50%' },
+              { value: '100', label: '100%' },
+              { value: '150', label: '150%' },
+              { value: '200', label: '200%' },
+              { value: '250', label: '250%' },
+              { value: '300', label: '300%' },
             ]}
           />
         </Space>

@@ -5,8 +5,8 @@
 // import { Keyboard } from '@antv/x6-plugin-keyboard';
 // import { Selection } from '@antv/x6-plugin-selection';
 // import { Snapline } from '@antv/x6-plugin-snapline';
-// import { Transform } from '@antv/x6-plugin-transform';
-import { useEffect, useRef } from 'react';
+import { Transform } from '@antv/x6-plugin-transform';
+import { useEffect, useRef, useState } from 'react';
 import { useModel } from 'umi';
 import RightPanel from '../RightPanel';
 
@@ -17,6 +17,7 @@ import { cn } from '@/utils/utils';
 import { EyeInvisibleOutlined } from '@ant-design/icons';
 import Guides from '@scena/react-guides';
 // import { omit } from 'lodash';
+import { Graph } from '@antv/x6';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import InfiniteViewer from 'react-infinite-viewer';
 import Footer from '../Footer';
@@ -30,9 +31,20 @@ const Canvas = () => {
   const horizontalGuidesRef = useRef<Guides>(null);
   const verticalGuidesRef = useRef<Guides>(null);
 
-  const { verticalZoom, horizontalZoom, verticalUnit, horizontalUnit, horizontalGuidelines, verticalGuidelines, setVerticalGuidelines, setHorizontalGuidelines } = useModel('useGuide');
+  const [shouldRender, setShouldRender] = useState<boolean>(false);
+  const [canvasSize, setCanvasSize] = useState<number>(36);
+
+  const {
+    verticalZoom,
+    horizontalZoom,
+    verticalUnit,
+    horizontalUnit,
+    horizontalGuidelines,
+    verticalGuidelines,
+    setVerticalGuidelines,
+    setHorizontalGuidelines,
+  } = useModel('useGuide');
   // let currentEdgeView: any = null;
-  // const [shouldRenderNodePanel, setShouldRenderNodePanel] = useState(false);
 
   const {
     // canvasData: { background, width, height, scale },
@@ -44,63 +56,29 @@ const Canvas = () => {
   } = useModel('useEditor');
 
   // 使用插件
-  // const handleOnPlugins = (graph: Graph) => {
-  //   const minimapContainer = document.getElementById('canvas-minimap')!;
-
-  //   graph
-  //     .use(new Snapline())
-  //     .use(
-  //       new Transform({
-  //         resizing: true,
-  //         rotating: true,
-  //       }),
-  //     )
-  //     .use(
-  //       new Selection({
-  //         enabled: true,
-  //         multiple: true,
-  //         rubberband: true,
-  //         movable: true,
-  //         showNodeSelectionBox: true,
-  //         pointerEvents: 'none',
-  //       }),
-  //     )
-  //     // .use(
-  //     //   new Scroller({
-  //     //     enabled: true,
-  //     //     pageVisible: false,
-  //     //     pageBreak: false,
-  //     //     pannable: true,
-  //     //     autoResize: true,
-  //     //     height: 1500,
-  //     //     width: 3000,
-  //     //   }),
-  //     // )
-  //     // .use(
-  //     //   new MiniMapPlugin({
-  //     //     container: minimapContainer,
-  //     //     width: 200,
-  //     //     height: 120,
-  //     //     graphOptions: {
-  //     //       createCellView(cell) {
-  //     //         // 可以返回三种类型数据
-  //     //         // 1. null: 不渲染
-  //     //         // 2. undefined: 使用 X6 默认渲染方式
-  //     //         // 3. CellView: 自定义渲染
-  //     //         if (cell.isEdge()) {
-  //     //           return null;
-  //     //         }
-  //     //         if (cell.isNode()) {
-  //     //           return SimpleNodeView;
-  //     //         }
-  //     //       },
-  //     //     },
-  //     //   }),
-  //     // )
-  //     .use(new Keyboard())
-  //     .use(new Clipboard())
-  //     .use(new History());
-  // };
+  const handleOnPlugins = (graph: Graph) => {
+    graph
+      // .use(new Snapline())
+      .use(
+        new Transform({
+          resizing: true,
+          rotating: true,
+        }),
+      );
+    // .use(
+    //   new Selection({
+    //     enabled: true,
+    //     multiple: true,
+    //     rubberband: true,
+    //     movable: true,
+    //     showNodeSelectionBox: true,
+    //     pointerEvents: 'none',
+    //   }),
+    // )
+    // .use(new Keyboard())
+    // .use(new Clipboard())
+    // .use(new History());
+  };
 
   // // 添加快捷键
   // const handleAddKeyboard = (graph: Graph) => {
@@ -281,116 +259,99 @@ const Canvas = () => {
   //   });
   // };
 
-  // const handleInitGraph = () => {
-  //   const container = document.getElementById('canvas-container')!;
-  //   const graph = new Graph({
-  //     container: container,
-  //     background: {
-  //       color: '#262626',
-  //     },
-  //     width: 1920,
-  //     height: 1080,
-  //     // panning: true,
-  //     // mousewheel: {
-  //     //   enabled: true,
-  //     //   zoomAtMousePosition: true,
-  //     //   modifiers: ['ctrl', 'meta'],
-  //     //   minScale: 0.5,
-  //     // },
-  //     embedding: true,
-  //     // 设置边连线规则
-  //     connecting: {
-  //       // 智能正交路由，由水平或垂直的正交线段组成，并自动避开路径上的其他节点（障碍）。
-  //       router: 'manhattan',
-  //       anchor: 'center',
-  //       connectionPoint: 'anchor',
-  //       allowBlank: false,
-  //       highlight: true,
-  //       snap: {
-  //         radius: 20,
-  //       },
-  //       connector: {
-  //         name: 'rounded',
-  //         args: {},
-  //       },
-  //       createEdge() {
-  //         return new Shape.Edge({
-  //           attrs: {
-  //             line: {
-  //               stroke: '#8f8f8f',
-  //               strokeWidth: 1,
-  //             },
-  //           },
-  //           tools: ['edge-editor'],
-  //           zIndex: 0,
-  //         });
-  //       },
-  //       validateConnection({ targetMagnet }) {
-  //         return !!targetMagnet;
-  //       },
-  //     },
-  //     highlighting: {
-  //       // 连线过程中，自动吸附到连接桩时被使用
-  //       magnetAdsorbed: {
-  //         name: 'stroke',
-  //         args: {
-  //           attrs: {
-  //             fill: '#5F95FF',
-  //             stroke: '#5F95FF',
-  //           },
-  //         },
-  //       },
-  //       // 拖动节点进行嵌入操作过程中，节点可以被嵌入时被使用
-  //       embedding: {
-  //         name: 'stroke',
-  //         args: {
-  //           padding: -1,
-  //           attrs: {
-  //             stroke: '#5F95FF',
-  //           },
-  //         },
-  //       },
-  //     },
-  //   });
+  const handleInitGraph = () => {
+    const container = document.getElementById('canvas-container')!;
+    const graph = new Graph({
+      container: container,
+      background: {
+        color: '#262626',
+      },
+      width: 1920,
+      height: 1080,
+      // panning: true,
+      // mousewheel: {
+      //   enabled: true,
+      //   zoomAtMousePosition: true,
+      //   modifiers: ['ctrl', 'meta'],
+      //   minScale: 0.5,
+      // },
+      embedding: true,
+      // 设置边连线规则
+      // connecting: {
+      //   // 智能正交路由，由水平或垂直的正交线段组成，并自动避开路径上的其他节点（障碍）。
+      //   router: 'manhattan',
+      //   anchor: 'center',
+      //   connectionPoint: 'anchor',
+      //   allowBlank: false,
+      //   highlight: true,
+      //   snap: {
+      //     radius: 20,
+      //   },
+      //   connector: {
+      //     name: 'rounded',
+      //     args: {},
+      //   },
+      //   createEdge() {
+      //     return new Shape.Edge({
+      //       attrs: {
+      //         line: {
+      //           stroke: '#8f8f8f',
+      //           strokeWidth: 1,
+      //         },
+      //       },
+      //       tools: ['edge-editor'],
+      //       zIndex: 0,
+      //     });
+      //   },
+      //   validateConnection({ targetMagnet }) {
+      //     return !!targetMagnet;
+      //   },
+      // },
+      // highlighting: {
+      //   // 连线过程中，自动吸附到连接桩时被使用
+      //   magnetAdsorbed: {
+      //     name: 'stroke',
+      //     args: {
+      //       attrs: {
+      //         fill: '#5F95FF',
+      //         stroke: '#5F95FF',
+      //       },
+      //     },
+      //   },
+      //   // 拖动节点进行嵌入操作过程中，节点可以被嵌入时被使用
+      //   embedding: {
+      //     name: 'stroke',
+      //     args: {
+      //       padding: -1,
+      //       attrs: {
+      //         stroke: '#5F95FF',
+      //       },
+      //     },
+      //   },
+      // },
+    });
 
-  //   // graph.addNode({
-  //   //   x: 40,
-  //   //   y: 40,
-  //   //   width: 100,
-  //   //   height: 40,
-  //   //   label: 'Hello',
-  //   //   attrs: {
-  //   //     body: {
-  //   //       stroke: '#8f8f8f',
-  //   //       strokeWidth: 1,
-  //   //       fill: '#fff',
-  //   //       rx: 6,
-  //   //       ry: 6,
-  //   //     },
-  //   //   },
-  //   // });
+    handleOnPlugins(graph);
+    //   handleAddKeyboard(graph);
+    //   handleOnEvents(graph);
+    //   // 内容居中显示
+    //   graph.centerContent();
 
-  //   handleOnPlugins(graph);
-  //   handleAddKeyboard(graph);
-  //   handleOnEvents(graph);
-  //   // 内容居中显示
-  //   graph.centerContent();
+    //   // TODO 渲染元素 data
+    //   // graph.fromJSON(fromJsonData);
+    graphRef.current = graph;
 
-  //   // TODO 渲染元素 data
-  //   // graph.fromJSON(fromJsonData);
-  //   graphRef.current = graph;
+    return graph;
+  };
 
-  //   return graph;
-  // };
+  useEffect(() => {
+    const initGraph = handleInitGraph();
 
-  // useEffect(() => {
-  //   const initGraph = handleInitGraph();
-
-  //   // 组件卸载时清理 Graph 实例
-  //   return () => {
-  //     initGraph.dispose();
-  //   };
-  // }, []);
+    // 组件卸载时清理 Graph 实例
+    return () => {
+      initGraph.dispose();
+    };
+  }, []);
 
   // useEffect(() => {
   //   // 更新画布尺寸
@@ -434,11 +395,15 @@ const Canvas = () => {
   //   });
   // }, [nodeFormData]);
 
-  // useEffect(() => {
-  //   if (graphRef.current) {
-  //     setShouldRenderNodePanel(true);
-  //   }
-  // }, [graphRef]);
+  useEffect(() => {
+    graphRef.current?.scale(canvasSize / 100);
+  }, [canvasSize]);
+
+  useEffect(() => {
+    if (graphRef.current) {
+      setShouldRender(true);
+    }
+  }, [graphRef]);
 
   useEffect(() => {
     requestAnimationFrame(() => {
@@ -448,12 +413,10 @@ const Canvas = () => {
 
   return (
     <FullScreen handle={handle}>
-      {/* <div id="canvas-container" className="bg-[#262626]" /> */}
-      <div className={cn('editor-wrapper', '')}>
+      <div className={cn('editor-wrapper')}>
         <ToolBar handleFullScreen={handle} ref={graphRef} />
         <LeftPanel ref={graphRef} />
-        {/* {shouldRenderNodePanel && <LeftPanel ref={graphRef} />} */}
-        <div className={cn('editor-content', 'relative bg-[#f5f5f5] w-full h-full transform-gpu')}>
+        <div className={cn('editor-content', 'relative w-full h-full transform-gpu')}>
           <div
             className={cn(
               'absolute flex justify-center items-center top-[60px] w-[20px] h-[20px] bg-[#292929] z-[100]',
@@ -468,20 +431,26 @@ const Canvas = () => {
               'absolute w-[calc(100%-84px)] h-[20px] top-[60px] left-[84px] z-10 -translate-z-1',
             )}
           >
-            <Guides
-              ref={horizontalGuidesRef}
-              type="horizontal"
-              textOffset={[0, 10]}
-              snapThreshold={5}
-              zoom={horizontalZoom}
-              guidesZoom={verticalZoom}
-              unit={horizontalUnit}
-              marks={verticalGuidelines}
-              displayDragPos={true}
-              onChangeGuides={({ guides }) => {
-                setHorizontalGuidelines(guides);
-              }}
-            />
+            {shouldRender && (
+              <Guides
+                ref={horizontalGuidesRef}
+                type="horizontal"
+                textOffset={[0, 10]}
+                snapThreshold={5}
+                zoom={horizontalZoom}
+                guidesZoom={verticalZoom}
+                unit={horizontalUnit}
+                marks={verticalGuidelines}
+                displayDragPos={true}
+                guideStyle={{ background: '#1677ff' }}
+                dragGuideStyle={{ background: '#1677ff' }}
+                guidePosStyle={{ color: '#1677ff' }}
+                markColor="#1677ff"
+                onChangeGuides={({ guides }) => {
+                  setHorizontalGuidelines(guides);
+                }}
+              />
+            )}
           </div>
           <div
             className={cn(
@@ -502,8 +471,11 @@ const Canvas = () => {
               unit={verticalUnit}
               marks={horizontalGuidelines}
               displayDragPos={true}
+              guideStyle={{ background: '#1677ff' }}
+              dragGuideStyle={{ background: '#1677ff' }}
+              guidePosStyle={{ color: '#1677ff' }}
+              markColor="#1677ff"
               onChangeGuides={({ guides }) => {
-                console.log(guides);
                 setVerticalGuidelines(guides);
               }}
             />
@@ -514,7 +486,7 @@ const Canvas = () => {
             useAutoZoom={true}
             useMouseDrag={true}
             useWheelScroll={true}
-            onScroll={e => {
+            onScroll={(e) => {
               horizontalGuidesRef.current?.scroll(e.scrollLeft, horizontalZoom);
               horizontalGuidesRef.current?.scrollGuides(e.scrollTop, horizontalZoom);
 
@@ -522,15 +494,12 @@ const Canvas = () => {
               verticalGuidesRef.current?.scrollGuides(e.scrollLeft, verticalZoom);
             }}
           >
-            <div className={cn('viewport', 'bg-[red] w-[400px] h-[600px]')}>111</div>
+            <div id="canvas-container" />
           </InfiniteViewer>
-
         </div>
         <RightPanel ref={graphRef} />
-        <Footer />
+        <Footer value={canvasSize} onChange={(changeValue: number) => setCanvasSize(changeValue)} />
       </div>
-
-      {/* <MiniMap id="canvas-minimap" /> */}
     </FullScreen>
   );
 };
