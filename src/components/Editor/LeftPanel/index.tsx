@@ -1,8 +1,8 @@
 import { cn, IconFont } from '@/utils/utils';
 
-import { Stencil } from '@antv/x6-plugin-stencil';
+// import { Stencil } from '@antv/x6-plugin-stencil';
 
-import { Graph } from '@antv/x6';
+// import { Graph } from '@antv/x6';
 
 import './index.less';
 
@@ -15,15 +15,14 @@ import {
   RedoOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { register } from '@antv/x6-react-shape';
+// import { register } from '@antv/x6-react-shape';
 import { useModel } from '@umijs/max';
 import { Space, Tooltip, Tree } from 'antd';
 import type { DataNode } from 'antd/es/tree';
-import { isNil } from 'lodash';
-import { forwardRef, useEffect, useRef, useState } from 'react';
-import { imageNodes } from '../Shapes/ImageNodes';
-import { baseNodes } from '../Shapes/Nodes';
-import { reactNodes } from '../Shapes/ReactNodes';
+import { forwardRef, useState } from 'react';
+// import { imageNodes } from '../Shapes/ImageNodes';
+// import { baseNodes } from '../Shapes/Nodes';
+// import { reactNodes } from '../Shapes/ReactNodes';
 
 const panelItems = [
   { name: '图层', icon: 'icon-layers', key: 'layers' },
@@ -32,7 +31,7 @@ const panelItems = [
 ];
 
 const LeftPanel = forwardRef((props, ref) => {
-  const stencilRef = useRef<any>(null);
+  // const stencilRef = useRef<any>(null);
   const { collapseLeftPanel: collapse, setCollapseLeftPanel: setCollapse } = useModel('useEditor');
   const [activeItem, setActiveItem] = useState<string>('layers');
   const [activeLayer, setActiveLayer] = useState<string>('');
@@ -76,103 +75,103 @@ const LeftPanel = forwardRef((props, ref) => {
     },
   ];
 
-  const initiStencil = () => {
-    const graph = (ref as any).current;
+  // const initiStencil = () => {
+  //   const graph = (ref as any).current;
 
-    const stencil = new Stencil({
-      title: '组件列表',
-      target: graph,
-      stencilGraphWidth: 220,
-      search(cell, keyword) {
-        return cell.shape.indexOf(keyword) !== -1;
-      },
-      collapsable: true,
-      placeholder: '搜索组件',
-      groups: [
-        {
-          title: '基础节点',
-          name: 'base-node',
-          graphHeight: 250,
-        },
-        {
-          title: '多媒体组件',
-          name: 'media-component',
-          graphHeight: 250,
-          layoutOptions: {
-            rowHeight: 70,
-          },
-        },
-        {
-          title: '图表',
-          name: 'chart',
-          graphHeight: 250,
-          layoutOptions: {
-            rowHeight: 70,
-          },
-        },
-      ],
-      layoutOptions: {
-        columns: 4,
-        columnWidth: 55,
-        rowHeight: 40,
-        resizeToFit: true,
-      },
-      getDragNode: (node) => {
-        if (node.shape === 'carousel-image') {
-          return graph.createNode({
-            shape: 'carousel-react-node',
-          });
-        } else if (node.shape === 'custom-image') {
-          return graph.createNode({
-            shape: 'image-react-node',
-          });
-        } else if (node.shape === 'text-image') {
-          return graph.createNode({
-            shape: 'text-react-node',
-          });
-        } else if (node.shape === 'video-image') {
-          return graph.createNode({
-            shape: 'video-react-node',
-          });
-        } else if (node.shape === 'table-image') {
-          return graph.createNode({
-            shape: 'table-react-node',
-          });
-        } else {
-          return node.clone();
-        }
-      },
-      getDropNode: (node) => {
-        const { width, height } = node.size();
+  //   const stencil = new Stencil({
+  //     title: '组件列表',
+  //     target: graph,
+  //     stencilGraphWidth: 220,
+  //     search(cell, keyword) {
+  //       return cell.shape.indexOf(keyword) !== -1;
+  //     },
+  //     collapsable: true,
+  //     placeholder: '搜索组件',
+  //     groups: [
+  //       {
+  //         title: '基础节点',
+  //         name: 'base-node',
+  //         graphHeight: 250,
+  //       },
+  //       {
+  //         title: '多媒体组件',
+  //         name: 'media-component',
+  //         graphHeight: 250,
+  //         layoutOptions: {
+  //           rowHeight: 70,
+  //         },
+  //       },
+  //       {
+  //         title: '图表',
+  //         name: 'chart',
+  //         graphHeight: 250,
+  //         layoutOptions: {
+  //           rowHeight: 70,
+  //         },
+  //       },
+  //     ],
+  //     layoutOptions: {
+  //       columns: 4,
+  //       columnWidth: 55,
+  //       rowHeight: 40,
+  //       resizeToFit: true,
+  //     },
+  //     getDragNode: (node) => {
+  //       if (node.shape === 'carousel-image') {
+  //         return graph.createNode({
+  //           shape: 'carousel-react-node',
+  //         });
+  //       } else if (node.shape === 'custom-image') {
+  //         return graph.createNode({
+  //           shape: 'image-react-node',
+  //         });
+  //       } else if (node.shape === 'text-image') {
+  //         return graph.createNode({
+  //           shape: 'text-react-node',
+  //         });
+  //       } else if (node.shape === 'video-image') {
+  //         return graph.createNode({
+  //           shape: 'video-react-node',
+  //         });
+  //       } else if (node.shape === 'table-image') {
+  //         return graph.createNode({
+  //           shape: 'table-react-node',
+  //         });
+  //       } else {
+  //         return node.clone();
+  //       }
+  //     },
+  //     getDropNode: (node) => {
+  //       const { width, height } = node.size();
 
-        return node.clone().size(width * 2, height * 2);
-      },
-    });
+  //       return node.clone().size(width * 2, height * 2);
+  //     },
+  //   });
 
-    // 注册基础节点
-    baseNodes?.forEach((node: { name: string; config: any }) =>
-      Graph.registerNode(node.name, node.config, true),
-    );
+  //   // 注册基础节点
+  //   baseNodes?.forEach((node: { name: string; config: any }) =>
+  //     Graph.registerNode(node.name, node.config, true),
+  //   );
 
-    // 注册图片节点
-    imageNodes?.forEach((node: { name: string; config: any }) =>
-      Graph.registerNode(node.name, node.config, true),
-    );
-    // 注册React节点
-    reactNodes?.forEach((node) => register(node));
+  //   // 注册图片节点
+  //   imageNodes?.forEach((node: { name: string; config: any }) =>
+  //     Graph.registerNode(node.name, node.config, true),
+  //   );
+  //   // 注册React节点
+  //   reactNodes?.forEach((node) => register(node));
 
-    // 创建基础节点
-    const createBaseNode = baseNodes?.map((node) => graph?.createNode({ shape: node.name }));
+  //   // 创建基础节点
+  //   const createBaseNode = baseNodes?.map((node) => graph?.createNode({ shape: node.name }));
 
-    // 创建图片节点
-    const createImageNode = imageNodes?.map((node) => graph?.createNode({ shape: node.name }));
+  //   // 创建图片节点
+  //   const createImageNode = imageNodes?.map((node) => graph?.createNode({ shape: node.name }));
 
-    stencil.load([...createBaseNode], 'base-node');
-    stencil.load([...createImageNode], 'media-component');
-    stencil.load([], 'chart');
+  //   stencil.load([...createBaseNode], 'base-node');
+  //   stencil.load([...createImageNode], 'media-component');
+  //   stencil.load([], 'chart');
 
-    stencilRef.current?.appendChild(stencil.container);
-  };
+  //   stencilRef.current?.appendChild(stencil.container);
+  // };
 
   const getDetailTitle = () => {
     const currentPanelItem = panelItems?.find((item) => item?.key === activeItem);
@@ -180,11 +179,11 @@ const LeftPanel = forwardRef((props, ref) => {
     return currentPanelItem?.name || '帮助';
   };
 
-  useEffect(() => {
-    if (!isNil((ref as any).current)) {
-      initiStencil();
-    }
-  }, [(ref as any).current]);
+  // useEffect(() => {
+  //   if (!isNil((ref as any).current)) {
+  //     initiStencil();
+  //   }
+  // }, [(ref as any).current]);
 
   return (
     <>
@@ -205,7 +204,6 @@ const LeftPanel = forwardRef((props, ref) => {
               size={2}
               key={item?.key}
               onClick={() => {
-                console.log(item.key, activeItem);
                 if (item?.key === activeItem) {
                   handleOnCloseRightPanel();
                 } else {
