@@ -1107,16 +1107,6 @@
   dependencies:
     mousetrap "^1.6.5"
 
-"@antv/x6-plugin-minimap@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.npmmirror.com/@antv/x6-plugin-minimap/-/x6-plugin-minimap-2.0.5.tgz#bd4699408715b4709e77e83edf14ceb0e767b1f6"
-  integrity sha512-6L+W80AvoEZG4cwRxgPxvYLeKhqkBJEt4hTnZ2NWWcvBx02F9RJKRZVEEUemqE12mKUv4HT6WtbQV0QIfkTEMw==
-
-"@antv/x6-plugin-scroller@^2.0.10":
-  version "2.0.10"
-  resolved "https://registry.npmmirror.com/@antv/x6-plugin-scroller/-/x6-plugin-scroller-2.0.10.tgz#bdd39d3530e469bbe72c5feca3b6787512232a3d"
-  integrity sha512-CrC5zCbtPe7LJEKK8ucLcDN+9lMtTJNApFmFObAiR/y2LO1QFCHz8GGLVeNOZaIEmJbR/Z/etpJkvc1LE7WhTg==
-
 "@antv/x6-plugin-selection@^2.1.7":
   version "2.1.7"
   resolved "https://registry.npmmirror.com/@antv/x6-plugin-selection/-/x6-plugin-selection-2.1.7.tgz#8964041d595b732bec5883a1f77757bededec594"

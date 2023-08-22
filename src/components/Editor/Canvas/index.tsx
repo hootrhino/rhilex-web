@@ -4,8 +4,8 @@
 // import { History } from '@antv/x6-plugin-history';
 // import { Keyboard } from '@antv/x6-plugin-keyboard';
 // import { Selection } from '@antv/x6-plugin-selection';
-// import { Snapline } from '@antv/x6-plugin-snapline';
-import { Transform } from '@antv/x6-plugin-transform';
+import { Snapline } from '@antv/x6-plugin-snapline';
+// import { Transform } from '@antv/x6-plugin-transform';
 import { useEffect, useRef, useState } from 'react';
 import { useModel } from 'umi';
 import RightPanel from '../RightPanel';
@@ -16,12 +16,12 @@ import ToolBar from '../ToolBar';
 import { cn } from '@/utils/utils';
 import { EyeInvisibleOutlined } from '@ant-design/icons';
 import Guides from '@scena/react-guides';
-// import { omit } from 'lodash';
 import { Graph } from '@antv/x6';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import InfiniteViewer from 'react-infinite-viewer';
 import Footer from '../Footer';
 import './index.less';
+import { DEFAULT_GUIDE_CONFIG } from '@/models/useGuide';
 
 const Canvas = () => {
   const handle = useFullScreenHandle();
@@ -58,13 +58,13 @@ const Canvas = () => {
   // 使用插件
   const handleOnPlugins = (graph: Graph) => {
     graph
-      // .use(new Snapline())
-      .use(
-        new Transform({
-          resizing: true,
-          rotating: true,
-        }),
-      );
+      .use(new Snapline())
+      // .use(
+      //   new Transform({
+      //     resizing: true,
+      //     rotating: true,
+      //   }),
+      // );
     // .use(
     //   new Selection({
     //     enabled: true,
@@ -268,13 +268,6 @@ const Canvas = () => {
       },
       width: 1920,
       height: 1080,
-      // panning: true,
-      // mousewheel: {
-      //   enabled: true,
-      //   zoomAtMousePosition: true,
-      //   modifiers: ['ctrl', 'meta'],
-      //   minScale: 0.5,
-      // },
       embedding: true,
       // 设置边连线规则
       // connecting: {
@@ -334,8 +327,6 @@ const Canvas = () => {
     handleOnPlugins(graph);
     //   handleAddKeyboard(graph);
     //   handleOnEvents(graph);
-    //   // 内容居中显示
-    //   graph.centerContent();
 
     //   // TODO 渲染元素 data
     //   // graph.fromJSON(fromJsonData);
@@ -353,13 +344,13 @@ const Canvas = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   // 更新画布尺寸
-  //   const w = (width || 0) * ((scale || 30) / 100);
-  //   const h = (height || 0) * ((scale || 30) / 100);
+  useEffect(() => {
+    // 更新画布缩放
+    const w = 1920 * (canvasSize / 100);
+    const h = 1080 * (canvasSize / 100);
 
-  //   graphRef.current?.resize(w, h);
-  // }, [width, height, scale]);
+    graphRef.current?.resize(w, h);
+  }, [canvasSize]);
 
   // useEffect(() => {
   //   // 更新画布背景
@@ -396,10 +387,6 @@ const Canvas = () => {
   // }, [nodeFormData]);
 
   useEffect(() => {
-    graphRef.current?.scale(canvasSize / 100);
-  }, [canvasSize]);
-
-  useEffect(() => {
     if (graphRef.current) {
       setShouldRender(true);
     }
@@ -433,19 +420,14 @@ const Canvas = () => {
           >
             {shouldRender && (
               <Guides
+              {...DEFAULT_GUIDE_CONFIG}
                 ref={horizontalGuidesRef}
                 type="horizontal"
                 textOffset={[0, 10]}
-                snapThreshold={5}
                 zoom={horizontalZoom}
                 guidesZoom={verticalZoom}
                 unit={horizontalUnit}
                 marks={verticalGuidelines}
-                displayDragPos={true}
-                guideStyle={{ background: '#1677ff' }}
-                dragGuideStyle={{ background: '#1677ff' }}
-                guidePosStyle={{ color: '#1677ff' }}
-                markColor="#1677ff"
                 onChangeGuides={({ guides }) => {
                   setHorizontalGuidelines(guides);
                 }}
@@ -460,21 +442,16 @@ const Canvas = () => {
             )}
           >
             <Guides
+            {...DEFAULT_GUIDE_CONFIG}
               ref={verticalGuidesRef}
               type="vertical"
               textOffset={[-10, 0]}
               textAlign="right"
               direction="start"
-              snapThreshold={5}
               zoom={verticalZoom}
               guidesZoom={horizontalZoom}
               unit={verticalUnit}
               marks={horizontalGuidelines}
-              displayDragPos={true}
-              guideStyle={{ background: '#1677ff' }}
-              dragGuideStyle={{ background: '#1677ff' }}
-              guidePosStyle={{ color: '#1677ff' }}
-              markColor="#1677ff"
               onChangeGuides={({ guides }) => {
                 setVerticalGuidelines(guides);
               }}

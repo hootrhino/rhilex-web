@@ -2,17 +2,26 @@ import { useState } from 'react';
 
 export const DEFAULT_GUIDE_CONFIG = {
   useResizeObserver: true,
-  // displayDragPos: true,
-  // displayGuidePos: true,
+  displayDragPos: true,
   longLineSize: 5,
   shortLineSize: 5,
+  snapThreshold: 5,
   mainLineSize: '60%',
   font: '8px',
-  // textColor: '#464646',
+  textColor: '#464646',
   lineColor: '#787878',
   selectedBackgroundColor: '#27303F',
   selectedRangesTextColor: '#3A73E1',
   markColor: '#FA832E',
+  guideStyle: {
+    background: '#FA832E'
+  },
+  dragGuideStyle: {
+    background: '#FA832E'
+  },
+  guidePosStyle: {
+    color: '#FA832E'
+  }
 }
 
 const useGuide = () => {
