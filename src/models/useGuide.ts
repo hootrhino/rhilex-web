@@ -8,8 +8,9 @@ export const DEFAULT_GUIDE_CONFIG = {
   snapThreshold: 5,
   mainLineSize: '60%',
   font: '8px',
-  textColor: '#464646',
+  textColor: '#474747',
   lineColor: '#787878',
+  backgroundColor: '#292929',
   selectedBackgroundColor: '#27303F',
   selectedRangesTextColor: '#3A73E1',
   markColor: '#FA832E',
@@ -24,14 +25,17 @@ export const DEFAULT_GUIDE_CONFIG = {
   }
 }
 
-const useGuide = () => {
-  const [horizontalZoom, setHorizontalZoom] = useState<number>(1);
-  const [horizontalGuidelines, setHorizontalGuidelines] = useState<number[]>([]);
-  const [horizontalUnit, setHorizontalUnit] = useState<number>(100);
+const DEFAULT_UNIT = 0.3;
+const DEFAULT_ZOOM = 300;
 
-  const [verticalZoom, setVerticalZoom] = useState<number>(1);
+const useGuide = () => {
+  const [horizontalZoom, setHorizontalZoom] = useState<number>(DEFAULT_UNIT);
+  const [horizontalGuidelines, setHorizontalGuidelines] = useState<number[]>([]);
+  const [horizontalUnit, setHorizontalUnit] = useState<number>(DEFAULT_ZOOM);
+
+  const [verticalZoom, setVerticalZoom] = useState<number>(DEFAULT_UNIT);
   const [verticalGuidelines, setVerticalGuidelines] = useState<number[]>([]);
-  const [verticalUnit, setVerticalUnit] = useState<number>(100);
+  const [verticalUnit, setVerticalUnit] = useState<number>(DEFAULT_ZOOM);
 
   return {
     horizontalZoom,

@@ -22,6 +22,7 @@ import InfiniteViewer from 'react-infinite-viewer';
 import Footer from '../Footer';
 import './index.less';
 import { DEFAULT_GUIDE_CONFIG } from '@/models/useGuide';
+import { inRange } from 'lodash';
 
 const Canvas = () => {
   const handle = useFullScreenHandle();
@@ -32,7 +33,7 @@ const Canvas = () => {
   const verticalGuidesRef = useRef<Guides>(null);
 
   const [shouldRender, setShouldRender] = useState<boolean>(false);
-  const [canvasSize, setCanvasSize] = useState<number>(36);
+  const [canvasSize, setCanvasSize] = useState<number>(30);
 
   const {
     verticalZoom,
@@ -43,6 +44,10 @@ const Canvas = () => {
     verticalGuidelines,
     setVerticalGuidelines,
     setHorizontalGuidelines,
+    setHorizontalZoom,
+    setHorizontalUnit,
+    setVerticalZoom,
+    setVerticalUnit
   } = useModel('useGuide');
   // let currentEdgeView: any = null;
 
@@ -344,14 +349,6 @@ const Canvas = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // 更新画布缩放
-    const w = 1920 * (canvasSize / 100);
-    const h = 1080 * (canvasSize / 100);
-
-    graphRef.current?.resize(w, h);
-  }, [canvasSize]);
-
   // useEffect(() => {
   //   // 更新画布背景
   //   graphRef.current?.drawBackground(background);
@@ -385,6 +382,52 @@ const Canvas = () => {
   //     }
   //   });
   // }, [nodeFormData]);
+
+  const handleClearGuideLine = () => {
+    setHorizontalGuidelines([]);
+    setVerticalGuidelines([]);
+    horizontalGuidesRef.current?.loadGuides([]);
+    verticalGuidesRef.current?.loadGuides([]);
+  }
+
+  const getGuideConfig = () => {
+    let unit = horizontalUnit;
+    let guideZoom = horizontalZoom;
+
+    if (inRange(canvasSize, 0, 35)) {
+      unit = 300;
+      guideZoom = 0.3;
+    } else if (inRange(canvasSize, 35, 55)) {
+      unit = 200;
+      guideZoom = 0.35;
+    } else if (inRange(canvasSize, 55, 100)) {
+      unit = 100;
+      guideZoom = 0.55;
+    } else if (inRange(canvasSize, 100, 125)) {
+      unit = 80;
+      guideZoom = 1;
+    } else if (inRange(canvasSize, 125, 170)) {
+      unit = 60;
+      guideZoom = 1.25;
+    } else {
+      unit = 40;
+      guideZoom = 1.5;
+    }
+
+    setHorizontalUnit(unit);
+    setVerticalUnit(unit);
+    setHorizontalZoom(guideZoom);
+    setVerticalZoom(guideZoom);
+
+  }
+
+  useEffect(() => {
+    const zoom = canvasSize / 100;
+    getGuideConfig();
+    handleClearGuideLine();
+
+    viewerRef.current?.setZoom(zoom);
+  }, [canvasSize]);
 
   useEffect(() => {
     if (graphRef.current) {
@@ -459,16 +502,18 @@ const Canvas = () => {
           </div>
           <InfiniteViewer
             ref={viewerRef}
-            className={cn('viewer', 'relative w-full h-[100vh]')}
+            className='relative w-full h-[100vh]'
             useAutoZoom={true}
             useMouseDrag={true}
             useWheelScroll={true}
             onScroll={(e) => {
-              horizontalGuidesRef.current?.scroll(e.scrollLeft, horizontalZoom);
-              horizontalGuidesRef.current?.scrollGuides(e.scrollTop, horizontalZoom);
+              const viewZoom = viewerRef.current?.getZoom();
 
-              verticalGuidesRef.current?.scroll(e.scrollTop, verticalZoom);
-              verticalGuidesRef.current?.scrollGuides(e.scrollLeft, verticalZoom);
+              horizontalGuidesRef.current?.scroll(e.scrollLeft, viewZoom);
+              horizontalGuidesRef.current?.scrollGuides(e.scrollTop, viewZoom);
+
+              verticalGuidesRef.current?.scroll(e.scrollTop, viewZoom);
+              verticalGuidesRef.current?.scrollGuides(e.scrollLeft, viewZoom);
             }}
           >
             <div id="canvas-container" />

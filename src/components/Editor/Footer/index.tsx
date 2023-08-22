@@ -23,7 +23,7 @@ const Footer = ({ value, onChange }: FooterProps) => {
       <div className={cn('absolute', collapseLeftPanel ? 'left-[64px]' : 'left-[306px]')}>
         <Space align="center" className="px-[10px]">
           <IconFont type="icon-map-switch" className="mr-[12px]" />
-          <MinusOutlined style={{ color: '#dbdbdb', paddingBottom: 7 }} />
+          <MinusOutlined style={{ color: '#dbdbdb', paddingBottom: 7 }} onClick={() => onChange(value - 1)} />
           <Slider
             min={30}
             max={300}
@@ -33,7 +33,7 @@ const Footer = ({ value, onChange }: FooterProps) => {
             railStyle={{ background: '#5C5C5C', height: 2 }}
             trackStyle={{ background: '#dbdbdb', height: 2 }}
           />
-          <PlusOutlined style={{ color: '#dbdbdb', paddingBottom: 7 }} />
+          <PlusOutlined style={{ color: '#dbdbdb', paddingBottom: 7 }}onClick={() => onChange(value + 1)}  />
           <Select
             value={`${value.toString()}%`}
             bordered={false}
