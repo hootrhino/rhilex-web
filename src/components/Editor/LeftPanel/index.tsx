@@ -203,7 +203,7 @@ const LeftPanel = forwardRef((props, ref) => {
       <div
         className={cn(
           'left-panel-detail',
-          'fixed bg-[#1a1a1a] w-[242px] left-[64px] bottom-0 block overflow-hidden',
+          'fixed bg-[#1a1a1a] w-[300px] left-[64px] bottom-0 block overflow-hidden',
           collapse ? 'hidden' : 'block',
         )}
       >

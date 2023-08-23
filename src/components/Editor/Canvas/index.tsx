@@ -450,7 +450,7 @@ const Canvas = () => {
           <div
             className={cn(
               'absolute flex justify-center items-center top-[60px] w-[20px] h-[20px] bg-[#292929] z-[100]',
-              collapseLeftPanel ? 'left-[64px]' : 'left-[306px]',
+              collapseLeftPanel ? 'left-[64px]' : 'left-[364px]',
             )}
           >
             <EyeInvisibleOutlined style={{ color: '#adadad' }} />
@@ -459,6 +459,7 @@ const Canvas = () => {
             className={cn(
               'horizonal',
               'absolute w-[calc(100%-84px)] h-[20px] top-[60px] left-[84px] z-10 -translate-z-1',
+              collapseLeftPanel ? 'left-[84px]' : 'left-[384px]',
             )}
           >
             {shouldRender && (
@@ -481,7 +482,7 @@ const Canvas = () => {
             className={cn(
               'vertical',
               'absolute h-[calc(100vh-80px)] top-[80px] w-[20px] left-[64px] -translate-z-1 z-10',
-              collapseLeftPanel ? 'left-[64px]' : 'left-[306px]',
+              collapseLeftPanel ? 'left-[64px]' : 'left-[364px]',
             )}
           >
             <Guides
