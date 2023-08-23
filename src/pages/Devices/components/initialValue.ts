@@ -71,6 +71,7 @@ export const defaultValue = {
         slaverId: 1,
         address: 0,
         quantity: 1,
+        function: 3
       },
     ],
     hostConfig: [
