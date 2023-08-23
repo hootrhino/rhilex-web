@@ -7,19 +7,18 @@ import { cn, IconFont } from '@/utils/utils';
 import './index.less';
 
 import {
-  BarChartOutlined,
   CloseOutlined,
-  EyeOutlined,
-  LineChartOutlined,
   QuestionCircleOutlined,
   RedoOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
 // import { register } from '@antv/x6-react-shape';
 import { useModel } from '@umijs/max';
-import { Space, Tooltip, Tree } from 'antd';
-import type { DataNode } from 'antd/es/tree';
+import { Space, Tooltip } from 'antd';
+
 import { forwardRef, useState } from 'react';
+import Layers from './Layers';
+import Charts from './Charts';
 // import { imageNodes } from '../Shapes/ImageNodes';
 // import { baseNodes } from '../Shapes/Nodes';
 // import { reactNodes } from '../Shapes/ReactNodes';
@@ -27,53 +26,18 @@ import { forwardRef, useState } from 'react';
 const panelItems = [
   { name: '图层', icon: 'icon-layers', key: 'layers' },
   { name: '组件库', icon: 'icon-components', key: 'components' },
-  { name: '设计库', icon: 'icon-material', key: 'material' },
+  { name: '设计库', icon: 'icon-folder-star', key: 'material' },
 ];
 
 const LeftPanel = forwardRef((props, ref) => {
   // const stencilRef = useRef<any>(null);
   const { collapseLeftPanel: collapse, setCollapseLeftPanel: setCollapse } = useModel('useEditor');
   const [activeItem, setActiveItem] = useState<string>('layers');
-  const [activeLayer, setActiveLayer] = useState<string>('');
 
   const handleOnCloseRightPanel = () => {
     setCollapse(true);
     setActiveItem('');
   };
-
-  const treeData: DataNode[] = [
-    {
-      title: '图表组',
-      key: '0-0',
-      icon: <BarChartOutlined />,
-      children: [
-        {
-          title: (
-            <div className="inline w-full">
-              <span className="pr-[70px]">折线图</span>
-              <Tooltip title="隐藏" color="#1F6AFF">
-                <EyeOutlined className={cn(activeLayer === '0-0-0' ? 'inline' : 'hidden')} />
-              </Tooltip>
-            </div>
-          ),
-          key: '0-0-0',
-          icon: <LineChartOutlined />,
-        },
-        {
-          title: (
-            <div className="inline w-full">
-              <span className="pr-[70px]">柱状图</span>
-              <Tooltip title="隐藏" color="#1F6AFF">
-                <EyeOutlined className={cn(activeLayer === '0-0-1' ? 'inline' : 'hidden')} />
-              </Tooltip>
-            </div>
-          ),
-          key: '0-0-1',
-          icon: <BarChartOutlined />,
-        },
-      ],
-    },
-  ];
 
   // const initiStencil = () => {
   //   const graph = (ref as any).current;
@@ -263,47 +227,14 @@ const LeftPanel = forwardRef((props, ref) => {
         <div
           className={cn(
             'left-panel-detail-content',
-            'flex items-center flex-col text-[#dbdbdb] text-[12px] min-h-[780px]',
+            'flex items-center flex-col text-[#dbdbdb] text-[12px] h-[calc(100%-56px)]',
           )}
         >
-          <div className="w-full h-full p-[10px]">
-            <Tree
-              showIcon
-              showLine
-              blockNode
-              defaultExpandAll
-              treeData={treeData}
-              onSelect={(selectedKeys) => {
-                setActiveLayer((selectedKeys as string[])?.[0] || '');
-              }}
-            />
-          </div>
+          {activeItem === 'layers' && <Layers />}
+          {activeItem === 'components' && <Charts  />}
         </div>
       </div>
     </>
-
-    // <div
-    //   className={cn(
-    //     '',
-    //     'w-[220px] h-full bg-[#1A1A1A] fixed top-0 left-0 transition-all duration-500 border-r-1 border-black',
-    //     { 'left-0': collapse, 'left-[-220px]': !collapse },
-    //   )}
-    // >
-    //   <div
-    //     onClick={() => setCollapse(!collapse)}
-    //     className={cn(
-    //       'flex items-center justify-center absolute w-[24px] h-[24px] bg-[#474747] text-[#adadad] hover:bg-[#565656] text-center shadow-md top-[60px] border border-black z-[99]',
-    //       {
-    //         'rounded-full right-[-12px]': collapse,
-    //         'rounded-tl-none rounded-br-[50%] rounded-tr-[50%] rounded-bl-none right-[-20px]':
-    //           !collapse,
-    //       },
-    //     )}
-    //   >
-    //     {collapse ? <DoubleLeftOutlined /> : <DoubleRightOutlined />}
-    //   </div>
-    //   <div id="nodePanel" ref={stencilRef} />
-    // </div>
   );
 });
 

@@ -49,6 +49,43 @@
       }
     }
   }
+
+  .tab-wrapper {
+    svg {
+      // width: 16px;
+      // height: 16px;
+      font-size: 16px;
+      z-index: 1;
+    }
+    .test {
+      &::before {
+        background-color: #1a1a1a;
+      width: 40px;
+      height: 48px;
+      position: absolute;
+      display: block;
+      left: 4px;
+      border-radius: 4px 0 0 4px;
+        transform: translateY(5%);
+        content: '';
+      }
+
+     // z-index: -1;
+      // &::before {
+
+      //   top: 0;
+      //   // height: 90%;
+      //   left: 4px;
+      //   display: block;
+      //   // width: calc(100% - 4px);
+
+      //   background-color: #1a1a1a;
+      //   border-radius: 4px 0 0 4px;
+      //   transform: translateY(5%);
+      //   content: '';
+      // }
+    }
+  }
 }
 
 .x6-widget-stencil {
