@@ -1,5 +1,5 @@
 import chartsImg from '../Images';
-const { interval, bar } = chartsImg;
+const { interval, bar, line, area, pie, point, radar, other } = chartsImg;
 
 export const tabList = [
   {
@@ -59,26 +59,58 @@ export const chartsList = [
   },
   {
     group: 'other',
-    children: [],
+    children: [
+      {
+        key: 'other1',
+        title: '水波图',
+        image: other.other1,
+      },
+      {
+        key: 'other2',
+        title: '旭日图',
+        image: other.other2,
+      },
+      {
+        key: 'other3',
+        title: '漏斗图',
+        image: other.other3,
+      },
+      {
+        key: 'other4',
+        title: '热力图',
+        image: other.other4,
+      },
+      {
+        key: 'other5',
+        title: '子弹图',
+        image: other.other5,
+      },
+    ],
   },
   {
     group: 'interval',
     children: [
       {
         key: 'interval1',
-        title: '柱状图1',
+        title: '区间柱状图',
         image: interval.interval1,
       },
       {
         key: 'interval2',
-        title: '柱状图2',
+        title: '柱状图',
         image: interval.interval2,
       },
       {
         key: 'interval3',
-        title: '柱状图3',
+        title: '瀑布图',
         image: interval.interval3,
       },
+      {
+        key: 'radial1',
+        title: '玉钰图',
+        image: interval.interval4,
+      },
+      // TODO 添加折线柱状图
     ],
   },
   {
@@ -86,14 +118,82 @@ export const chartsList = [
     children: [
       {
         key: 'bar1',
-        title: '条形图1',
+        title: '百分比条形图',
         image: bar.bar1,
       },
+    ],
+  },
+  {
+    group: 'line',
+    children: [
       {
-        key: 'bar2',
-        title: '条形图2',
-        image: bar.bar2,
+        key: 'line1',
+        title: '折线图',
+        image: line.line1,
       },
     ],
+  },
+  {
+    group: 'area',
+    children: [
+      {
+        key: 'area1',
+        title: '区域图',
+        image: area.area1,
+      },
+    ],
+  },
+  {
+    group: 'pie',
+    children: [
+      {
+        key: 'pie1',
+        title: '饼图',
+        image: pie.pie1,
+      },
+      {
+        key: 'pie2',
+        title: '进度环图',
+        image: pie.pie2,
+      },
+      {
+        key: 'pie3',
+        title: '分类玫瑰图',
+        image: pie.pie3,
+      },
+    ],
+  },
+  {
+    group: 'point',
+    children: [
+      {
+        key: 'point1',
+        title: '基本散点图',
+        image: point.point1,
+      },
+      {
+        key: 'point2',
+        title: '气泡图',
+        image: point.point2,
+      },
+    ],
+  },
+  {
+    group: 'radar',
+    children: [
+      {
+        key: 'radar1',
+        title: '雷达图',
+        image: radar.radar1,
+      },
+    ],
+  },
+  {
+    group: 'relation',
+    children: [],
+  },
+  {
+    group: 'other',
+    children: [],
   },
 ];

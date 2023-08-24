@@ -4,12 +4,6 @@ import area from './Area';
 // 条形图
 import bar from './Bar';
 
-// 热力图
-import cell from './Cell';
-
-// 漏斗图
-import funnel from './Funnel';
-
 // 柱状图
 import interval from './Interval';
 
@@ -25,28 +19,22 @@ import point from './Point';
 // 雷达图
 import radar from './Radar';
 
-// 珏玉图
-import radial from './Radial';
-
-// 玫瑰图
-import rose from './Rose';
-
 // 信息
 import text from './Text';
+
+// 其他
+import other from './Other';
 
 const chartsImg = {
   area,
   bar,
   point,
-  cell,
-  funnel,
   interval,
   line,
   pie,
   radar,
-  radial,
-  rose,
   text,
+  other
 };
 
 export default chartsImg;
