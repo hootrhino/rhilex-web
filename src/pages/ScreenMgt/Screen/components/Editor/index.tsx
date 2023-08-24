@@ -1,4 +1,4 @@
-import Editor from '@/components/Editor';
+import Editor from '@/pages/Editor';
 
 const ScreenEditor = () => {
   return <Editor />;
