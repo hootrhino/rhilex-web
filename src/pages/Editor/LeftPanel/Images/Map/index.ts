@@ -1,4 +1,4 @@
-import map1 from './map1.png';
+import map1 from './map1.jpg';
 
 const map = {
   map1,

@@ -1,5 +1,6 @@
 import chartsImg from './Images';
-const { interval, bar, line, area, pie, point, radar, other } = chartsImg;
+const { interval, bar, line, area, pie, point, radar, other, map, text, table, widget, media } =
+  chartsImg;
 
 export const tabList = [
   {
@@ -69,21 +70,25 @@ export const chartsList = [
         key: 'other2',
         title: '旭日图',
         image: other.other2,
+        disabled: true
       },
       {
         key: 'other3',
         title: '漏斗图',
         image: other.other3,
+        disabled: true
       },
       {
         key: 'other4',
         title: '热力图',
         image: other.other4,
+        disabled: true
       },
       {
         key: 'other5',
         title: '子弹图',
         image: other.other5,
+        disabled: true
       },
     ],
   },
@@ -109,6 +114,7 @@ export const chartsList = [
         key: 'radial1',
         title: '玉钰图',
         image: interval.interval4,
+        disabled: true
       },
     ],
   },
@@ -155,11 +161,11 @@ export const chartsList = [
         title: '进度环图',
         image: pie.pie2,
       },
-      {
-        key: 'pie3',
-        title: '分类玫瑰图',
-        image: pie.pie3,
-      },
+      // {
+      //   key: 'pie3',
+      //   title: '分类玫瑰图',
+      //   image: pie.pie3,
+      // },
     ],
   },
   {
@@ -184,6 +190,7 @@ export const chartsList = [
         key: 'radar1',
         title: '雷达图',
         image: radar.radar1,
+        disabled: true
       },
     ],
   },
@@ -194,6 +201,108 @@ export const chartsList = [
   {
     group: 'other',
     children: [],
+  },
+];
+
+export const mapList = [
+  {
+    key: 'map1',
+    title: '基础平面地图',
+    image: map.map1,
+    disabled: true
+  },
+];
+
+export const textList = [
+  {
+    key: 'text1',
+    title: '词云',
+    image: text.text1,
+  },
+  {
+    key: 'text2',
+    title: '跑马灯',
+    image: text.text2,
+  },
+  {
+    key: 'text3',
+    title: '通用标题',
+    image: text.text3,
+  },
+  {
+    key: 'text4',
+    title: '倒计时',
+    image: text.text4,
+  },
+  {
+    key: 'text5',
+    title: '多行文本',
+    image: text.text5,
+  },
+  {
+    key: 'text6',
+    title: '时间器',
+    image: text.text6,
+  },
+];
+
+export const tableList = [
+  {
+    key: 'table1',
+    title: '进度条表格',
+    image: table.table1,
+  },
+  {
+    key: 'table2',
+    title: '轮播列表',
+    image: table.table2,
+  },
+];
+
+export const widgetList = [
+  {
+    key: 'widget1',
+    title: '开关',
+    image: widget.widget1,
+    disabled: true
+  },
+  {
+    key: 'widget2',
+    title: 'iframe',
+    image: widget.widget2,
+  },
+];
+
+export const mediaList = [
+  {
+    key: 'media1',
+    title: '单张图片',
+    image: media.media1,
+  },
+  {
+    key: 'media2',
+    title: '视频',
+    image: media.media2,
+  },
+  {
+    key: 'media3',
+    title: '轮播图',
+    image: media.media3,
+  },
+  {
+    key: 'media4',
+    title: '装饰线条',
+    image: media.media4,
+  },
+  {
+    key: 'media5',
+    title: '箭头描绘',
+    image: media.media5,
+  },
+  {
+    key: 'media6',
+    title: '基础图形',
+    image: media.media6,
   },
 ];
 

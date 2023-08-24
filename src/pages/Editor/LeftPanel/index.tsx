@@ -18,7 +18,7 @@ import { Space, Tooltip } from 'antd';
 
 import { forwardRef, useState } from 'react';
 import Layers from './Layers';
-import Charts from './Charts';
+import ComponentLibrary from './ComponentLibrary';
 import { panelItems } from './constant';
 // import { imageNodes } from '../Shapes/ImageNodes';
 // import { baseNodes } from '../Shapes/Nodes';
@@ -226,7 +226,7 @@ const LeftPanel = forwardRef((props, ref) => {
           )}
         >
           {activeItem === 'layers' && <Layers />}
-          {activeItem === 'components' && <Charts  />}
+          {activeItem === 'components' && <ComponentLibrary  />}
         </div>
       </div>
     </>
