@@ -25,6 +25,18 @@ import text from './Text';
 // 其他
 import other from './Other';
 
+// 地图
+import map from './Map';
+
+// 表格
+import table from './Table';
+
+// 控件
+import widget from './Widget';
+
+// 媒体
+import media from './Media';
+
 const chartsImg = {
   area,
   bar,
@@ -34,7 +46,11 @@ const chartsImg = {
   pie,
   radar,
   text,
-  other
+  other,
+  map,
+  table,
+  widget,
+  media
 };
 
 export default chartsImg;

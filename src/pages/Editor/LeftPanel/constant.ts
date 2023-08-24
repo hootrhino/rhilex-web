@@ -28,15 +28,15 @@ export const tabList = [
     name: '控件',
   },
   {
-    key: 'multimedia',
+    key: 'media',
     icon: 'icon-multimedia',
     name: '媒体',
   },
-  {
-    key: 'other',
-    icon: 'icon-other',
-    name: '其他',
-  },
+  // {
+  //   key: 'other',
+  //   icon: 'icon-other',
+  //   name: '其他',
+  // },
 ];
 
 export const chartsTypeList = [
