@@ -28,7 +28,7 @@ const Charts = ({}) => {
   }, [activeType]);
 
   return (
-    <div className="w-[calc(100%-40px)] flex flex-1">
+    <div className="w-full flex flex-1">
       <div className="flex flex-col py-[12px] ml-[8px] items-center">
         {chartsTypeList?.map((item) => (
           <div
