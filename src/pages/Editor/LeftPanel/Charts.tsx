@@ -1,7 +1,8 @@
 import { cn, IconFont } from '@/utils/utils';
 import { Tooltip } from 'antd';
 import { useState } from 'react';
-import pointImg2 from '@/assets/images/point/point2.png';
+import chartsImg from './Images';
+// import pointImg2 from '@/assets/images/point/point2.png';
 
 import './index.less';
 
@@ -101,7 +102,7 @@ const Charts = () => {
           <ul className="p-[10px]">
             <li className='bg-[#242424] mb-[12px] rounded-[4px] cursor-pointer'>
               <div className='h-[24px] text-[12px] w-full px-[8px] overflow-hidden leading-[24px] text-[#7a7a7a]'>气泡图</div>
-              <div className='pt-0 pb-[4px] px-[8px] w-full h-[94px]'><img src={pointImg2} alt="气泡图" className='w-full h-full object-cover cursor-pointer' /></div>
+              <div className='pt-0 pb-[4px] px-[8px] w-full h-[94px]'><img src={chartsImg.point.point2} alt="气泡图" className='w-full h-full object-cover cursor-pointer' /></div>
             </li>
           </ul>
 
