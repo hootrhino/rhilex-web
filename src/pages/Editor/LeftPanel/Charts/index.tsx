@@ -1,7 +1,7 @@
 import { cn, IconFont } from '@/utils/utils';
 import { Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
-import { chartsList, chartsTypeList, tabList } from './constant';
+import { chartsList, chartsTypeList, tabList } from '../constant';
 
 import '../index.less';
 
@@ -69,7 +69,7 @@ const Charts = () => {
           ))}
         </div>
 
-        <ul className="p-[10px]">
+        <ul className='charts-wrapper'>
           {charts?.map((chart) => (
             <li className="bg-[#242424] mb-[12px] rounded-[4px] cursor-pointer" key={chart.key}>
               <div className="h-[24px] text-[12px] w-full px-[8px] overflow-hidden leading-[24px] text-[#7a7a7a]">

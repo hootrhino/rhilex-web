@@ -20,7 +20,7 @@ const Footer = ({ value, onChange }: FooterProps) => {
         'flex justify-center items-center fixed bottom-0 left-0 right-0 w-full h-[48px] bg-[#1A1A1A]',
       )}
     >
-      <div className={cn('absolute', collapseLeftPanel ? 'left-[64px]' : 'left-[306px]')}>
+      <div className={cn('absolute', collapseLeftPanel ? 'left-[64px]' : 'left-[364px]')}>
         <Space align="center" className="px-[10px]">
           <IconFont type="icon-map-switch" className="mr-[12px]" />
           <MinusOutlined style={{ color: '#dbdbdb', paddingBottom: 7 }} onClick={() => onChange(value - 1)} />

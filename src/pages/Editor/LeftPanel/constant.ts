@@ -1,4 +1,4 @@
-import chartsImg from '../Images';
+import chartsImg from './Images';
 const { interval, bar, line, area, pie, point, radar, other } = chartsImg;
 
 export const tabList = [
@@ -46,9 +46,9 @@ export const chartsTypeList = [
   { key: 'line', value: '折线图' },
   { key: 'area', value: '区域图' },
   { key: 'pie', value: '饼环图' },
-  { key: 'scatterplot', value: '散点图' },
+  { key: 'point', value: '散点图' },
   { key: 'radar', value: '雷达图' },
-  { key: 'relation', value: '关系图' },
+  // { key: 'relation', value: '关系图' },
   { key: 'other', value: '其他' },
 ];
 
@@ -110,7 +110,6 @@ export const chartsList = [
         title: '玉钰图',
         image: interval.interval4,
       },
-      // TODO 添加折线柱状图
     ],
   },
   {
@@ -196,4 +195,10 @@ export const chartsList = [
     group: 'other',
     children: [],
   },
+];
+
+export const panelItems = [
+  { name: '图层', icon: 'icon-layers', key: 'layers' },
+  { name: '组件库', icon: 'icon-components', key: 'components' },
+  { name: '设计库', icon: 'icon-folder-star', key: 'material' },
 ];

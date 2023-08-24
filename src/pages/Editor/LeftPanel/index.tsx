@@ -19,15 +19,10 @@ import { Space, Tooltip } from 'antd';
 import { forwardRef, useState } from 'react';
 import Layers from './Layers';
 import Charts from './Charts';
+import { panelItems } from './constant';
 // import { imageNodes } from '../Shapes/ImageNodes';
 // import { baseNodes } from '../Shapes/Nodes';
 // import { reactNodes } from '../Shapes/ReactNodes';
-
-const panelItems = [
-  { name: '图层', icon: 'icon-layers', key: 'layers' },
-  { name: '组件库', icon: 'icon-components', key: 'components' },
-  { name: '设计库', icon: 'icon-folder-star', key: 'material' },
-];
 
 const LeftPanel = forwardRef((props, ref) => {
   // const stencilRef = useRef<any>(null);
@@ -210,7 +205,7 @@ const LeftPanel = forwardRef((props, ref) => {
         <div
           className={cn(
             'left-panel-detail-header',
-            'flex items-center justify-between h-[56px] px-[16px] overflow-hidden text-[#dbdbdb]',
+            'flex items-center justify-between h-[56px] px-[16px] overflow-hidden text-[#dbdbdb] text-[12px]',
           )}
         >
           <span>{getDetailTitle()}</span>
