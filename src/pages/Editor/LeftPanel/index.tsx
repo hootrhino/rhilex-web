@@ -8,7 +8,6 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 import { Dnd } from '@antv/x6-plugin-dnd';
-import type { ReactShapeConfig } from '@antv/x6-react-shape';
 import { register } from '@antv/x6-react-shape';
 import { useModel } from '@umijs/max';
 import { Space, Tooltip } from 'antd';
@@ -18,6 +17,7 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import ComponentLibrary from './ComponentLibrary';
 import { panelItems } from './constant';
 import Layers from './Layers';
+import shapes from './Shapes';
 
 const LeftPanel = forwardRef((props, ref) => {
   const dndContainerRef = useRef<any>(null);
@@ -29,61 +29,16 @@ const LeftPanel = forwardRef((props, ref) => {
     setActiveItem('');
   };
 
-  //     getDragNode: (node) => {
-  //       if (node.shape === 'carousel-image') {
-  //         return graph.createNode({
-  //           shape: 'carousel-react-node',
-  //         });
-  //       } else if (node.shape === 'custom-image') {
-  //         return graph.createNode({
-  //           shape: 'image-react-node',
-  //         });
-  //       } else if (node.shape === 'text-image') {
-  //         return graph.createNode({
-  //           shape: 'text-react-node',
-  //         });
-  //       } else if (node.shape === 'video-image') {
-  //         return graph.createNode({
-  //           shape: 'video-react-node',
-  //         });
-  //       } else if (node.shape === 'table-image') {
-  //         return graph.createNode({
-  //           shape: 'table-react-node',
-  //         });
-  //       } else {
-  //         return node.clone();
-  //       }
-  //     },
-
   const getDetailTitle = () => {
     const currentPanelItem = panelItems?.find((item) => item?.key === activeItem);
 
     return currentPanelItem?.name || '帮助';
   };
 
-  const handleRegisterNode = (nodes: ReactShapeConfig[]) => {
-    nodes?.forEach((node) => register(node));
-  };
-
-  const handleCreateNode = () => {
+  const handleAddNode = (shape: string) => {
     const graph = (ref as any).current;
 
-    const node = graph.createNode({
-      width: 100,
-      height: 40,
-      label: 'Rect',
-      attrs: {
-        body: {
-          stroke: '#8f8f8f',
-          strokeWidth: 1,
-          fill: '#fff',
-          rx: 6,
-          ry: 6,
-        },
-      },
-    });
-
-    return node;
+    graph.addNode({ shape });
   };
 
   useEffect(() => {
@@ -95,17 +50,14 @@ const LeftPanel = forwardRef((props, ref) => {
       const dnd = new Dnd({
         target: graph,
         dndContainer: dndContainer,
-        getDragNode(sourceNode, options) {
-          console.log(sourceNode, options);
-
-          return sourceNode.clone();
-        },
         getDropNode(node) {
           const { width, height } = node.size();
 
-          return node.clone().size(width * 3, height * 3)
+          return node.clone().size(width * 3, height * 3);
         },
       });
+
+      shapes?.forEach((shape) => register(shape));
 
       dndContainerRef.current = dnd;
     }
@@ -193,14 +145,7 @@ const LeftPanel = forwardRef((props, ref) => {
           )}
         >
           {activeItem === 'layers' && <Layers />}
-          {activeItem === 'components' && (
-            <ComponentLibrary
-              ref={dndContainerRef}
-              id="dndContainer"
-              registerNode={handleRegisterNode}
-              createNode={handleCreateNode}
-            />
-          )}
+          {activeItem === 'components' && <ComponentLibrary addNode={handleAddNode} />}
         </div>
       </div>
     </>
