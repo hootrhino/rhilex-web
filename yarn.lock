@@ -1117,11 +1117,6 @@
   resolved "https://registry.npmmirror.com/@antv/x6-plugin-snapline/-/x6-plugin-snapline-2.1.7.tgz#1b4e3be0a281ba324117b7ac7b9b8c39e484cce2"
   integrity sha512-AsysoCb9vES0U2USNhEpYuO/W8I0aYfkhlbee5Kt4NYiMfQfZKQyqW/YjDVaS2pm38C1NKu1LdPVk/BBr4CasA==
 
-"@antv/x6-plugin-stencil@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.npmmirror.com/@antv/x6-plugin-stencil/-/x6-plugin-stencil-2.0.4.tgz#8e14748e2bb61d8b1a1bb16d9b0211b783e0d141"
-  integrity sha512-MoRgR2M67dc51L8o7zPmbt3UTZVTqKXreMo8T+7Tp6BllwcDYueoHNJA4k79FQs5ocnmSLmAMmjd72TRSUYp2Q==
-
 "@antv/x6-plugin-transform@^2.1.7":
   version "2.1.7"
   resolved "https://registry.npmmirror.com/@antv/x6-plugin-transform/-/x6-plugin-transform-2.1.7.tgz#37583b5283fbc0c4884f96e9689d2146837e042d"
@@ -1175,10 +1170,10 @@
     mousetrap "^1.6.5"
     utility-types "^3.10.0"
 
-"@antv/x6@^2.11.4":
-  version "2.11.4"
-  resolved "https://registry.npmmirror.com/@antv/x6/-/x6-2.11.4.tgz#27a70b0bf711256aa717231263c565242741b811"
-  integrity sha512-Q8pvKvgdi7Q++ACcLjLTk4Y/tr1pkpPQzRImcm+mvwaFGctUX+vgm8VWROu58ahQPaFoynrpbHEmYS8f4nGY7w==
+"@antv/x6@^2.13.1":
+  version "2.13.1"
+  resolved "https://registry.npmmirror.com/@antv/x6/-/x6-2.13.1.tgz#c344eb797edc0e437ab1bed599099a8bd68a4ada"
+  integrity sha512-aAj3SlOi4KhBhpoiX4WCsJ61glztSmZy6Vb0aWZTFZXErfp1sUjTmrThJeTG6IQZbXW+7GcGjFGI04roOa05Bg==
   dependencies:
     "@antv/x6-common" "^2.0.13"
     "@antv/x6-geometry" "^2.0.5"

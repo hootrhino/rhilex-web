@@ -35,10 +35,12 @@ const LeftPanel = forwardRef((props, ref) => {
     return currentPanelItem?.name || '帮助';
   };
 
-  const handleAddNode = (shape: string) => {
+  const handleAddNode = (shape: string, e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     const graph = (ref as any).current;
 
-    graph.addNode({ shape });
+    const node = graph.createNode({ shape });
+
+    dndContainerRef.current?.start(node, e.nativeEvent);
   };
 
   useEffect(() => {

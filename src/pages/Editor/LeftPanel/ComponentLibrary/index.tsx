@@ -17,7 +17,7 @@ import ComponentItem from './Item';
 import '../index.less';
 
 type ComponentLibraryProps = {
-  addNode: (shape: string) => void;
+  addNode: (shape: string, e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
 };
 
 const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
@@ -58,7 +58,7 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
     const target = e.currentTarget;
     const type = target.getAttribute('dataType') as string;
 
-    addNode(type);
+    addNode(type, e);
   };
 
   useEffect(() => {

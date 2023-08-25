@@ -3,9 +3,9 @@
 // import { Clipboard } from '@antv/x6-plugin-clipboard';
 // import { History } from '@antv/x6-plugin-history';
 // import { Keyboard } from '@antv/x6-plugin-keyboard';
-// import { Selection } from '@antv/x6-plugin-selection';
+import { Selection } from '@antv/x6-plugin-selection';
 import { Snapline } from '@antv/x6-plugin-snapline';
-// import { Transform } from '@antv/x6-plugin-transform';
+import { Transform } from '@antv/x6-plugin-transform';
 import { useEffect, useRef, useState } from 'react';
 import { useModel } from 'umi';
 import RightPanel from '../RightPanel';
@@ -63,23 +63,27 @@ const Canvas = () => {
   // 使用插件
   const handleOnPlugins = (graph: Graph) => {
     graph
-      .use(new Snapline())
-      // .use(
-      //   new Transform({
-      //     resizing: true,
-      //     rotating: true,
-      //   }),
-      // );
-    // .use(
-    //   new Selection({
-    //     enabled: true,
-    //     multiple: true,
-    //     rubberband: true,
-    //     movable: true,
-    //     showNodeSelectionBox: true,
-    //     pointerEvents: 'none',
-    //   }),
-    // )
+      .use(new Snapline({
+        enabled: true
+      }))
+      .use(
+        new Transform({
+          resizing: {
+            enabled: true
+          },
+          rotating: {
+            enabled: true
+          },
+        }),
+      )
+    .use(
+      new Selection({
+        enabled: true,
+        rubberband: true,
+        showNodeSelectionBox: true,
+        pointerEvents: 'none',
+      }),
+    )
     // .use(new Keyboard())
     // .use(new Clipboard())
     // .use(new History());
@@ -158,70 +162,70 @@ const Canvas = () => {
   //   });
   // };
 
-  // // 控制连接桩显示/隐藏
-  // const handlePortsHideAndShow = (show: boolean) => {
-  //   const container = document.getElementById('canvas-container')!;
-  //   const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
+  // 控制连接桩显示/隐藏
+  const handlePortsHideAndShow = (show: boolean) => {
+    const container = document.getElementById('canvas-container')!;
+    const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
 
-  //   for (let i = 0, len = ports.length; i < len; i += 1) {
-  //     ports[i].style.visibility = show ? 'visible' : 'hidden';
-  //   }
-  // };
+    for (let i = 0, len = ports.length; i < len; i += 1) {
+      ports[i].style.visibility = show ? 'visible' : 'hidden';
+    }
+  };
 
-  // // 监听画布事件
-  // const handleOnEvents = (graph: Graph) => {
-  //   graph.on('node:mouseenter', () => {
-  //     handlePortsHideAndShow(true);
-  //   });
+  // 监听画布事件
+  const handleOnEvents = (graph: Graph) => {
+    graph.on('node:mouseenter', () => {
+      handlePortsHideAndShow(true);
+    });
 
-  //   graph.on('node:mouseleave', () => {
-  //     handlePortsHideAndShow(false);
-  //   });
+    graph.on('node:mouseleave', () => {
+      handlePortsHideAndShow(false);
+    });
 
-  //   graph.on('node:click', ({ node }) => {
-  //     const nodeProps = node.getProp();
+    // graph.on('node:click', ({ node }) => {
+    //   const nodeProps = node.getProp();
 
-  //     if (currentEdgeView) {
-  //       currentEdgeView.unhighlight();
-  //       currentEdgeView = null;
-  //     }
-  //     setNodeForm({ ...nodeProps, rotate: false });
-  //   });
+    //   if (currentEdgeView) {
+    //     currentEdgeView.unhighlight();
+    //     currentEdgeView = null;
+    //   }
+    //   setNodeForm({ ...nodeProps, rotate: false });
+    // });
 
-  //   graph.on('edge:selected', ({ edge }: any) => {
-  //     const view = graph.findViewByCell(edge);
+    // graph.on('edge:selected', ({ edge }: any) => {
+    //   const view = graph.findViewByCell(edge);
 
-  //     if (view && currentEdgeView !== view) {
-  //       if (currentEdgeView) {
-  //         currentEdgeView.unhighlight();
-  //       }
-  //       view.highlight();
-  //       currentEdgeView = view;
-  //     }
-  //   });
+    //   if (view && currentEdgeView !== view) {
+    //     if (currentEdgeView) {
+    //       currentEdgeView.unhighlight();
+    //     }
+    //     view.highlight();
+    //     currentEdgeView = view;
+    //   }
+    // });
 
-  //   graph.on('edge:mouseenter', ({ edge }: any) => {
-  //     const view = graph.findViewByCell(edge);
-  //     if (view && currentEdgeView !== view) {
-  //       view.highlight();
-  //     }
-  //   });
+    // graph.on('edge:mouseenter', ({ edge }: any) => {
+    //   const view = graph.findViewByCell(edge);
+    //   if (view && currentEdgeView !== view) {
+    //     view.highlight();
+    //   }
+    // });
 
-  //   graph.on('edge:mouseleave', ({ edge }: any) => {
-  //     const view = graph.findViewByCell(edge);
-  //     if (view && currentEdgeView !== view) {
-  //       view.unhighlight();
-  //     }
-  //   });
+    // graph.on('edge:mouseleave', ({ edge }: any) => {
+    //   const view = graph.findViewByCell(edge);
+    //   if (view && currentEdgeView !== view) {
+    //     view.unhighlight();
+    //   }
+    // });
 
-  //   // 监听画布空白区域
-  //   graph.on('blank:click', () => {
-  //     if (currentEdgeView) {
-  //       currentEdgeView.unhighlight();
-  //       currentEdgeView = null;
-  //     }
-  //   });
-  // };
+    // // 监听画布空白区域
+    // graph.on('blank:click', () => {
+    //   if (currentEdgeView) {
+    //     currentEdgeView.unhighlight();
+    //     currentEdgeView = null;
+    //   }
+    // });
+  };
 
   // // 更新边配置
   // const handleUpdateEdge = () => {
@@ -274,64 +278,11 @@ const Canvas = () => {
       width: 1920,
       height: 1080,
       embedding: true,
-      // 设置边连线规则
-      // connecting: {
-      //   // 智能正交路由，由水平或垂直的正交线段组成，并自动避开路径上的其他节点（障碍）。
-      //   router: 'manhattan',
-      //   anchor: 'center',
-      //   connectionPoint: 'anchor',
-      //   allowBlank: false,
-      //   highlight: true,
-      //   snap: {
-      //     radius: 20,
-      //   },
-      //   connector: {
-      //     name: 'rounded',
-      //     args: {},
-      //   },
-      //   createEdge() {
-      //     return new Shape.Edge({
-      //       attrs: {
-      //         line: {
-      //           stroke: '#8f8f8f',
-      //           strokeWidth: 1,
-      //         },
-      //       },
-      //       tools: ['edge-editor'],
-      //       zIndex: 0,
-      //     });
-      //   },
-      //   validateConnection({ targetMagnet }) {
-      //     return !!targetMagnet;
-      //   },
-      // },
-      // highlighting: {
-      //   // 连线过程中，自动吸附到连接桩时被使用
-      //   magnetAdsorbed: {
-      //     name: 'stroke',
-      //     args: {
-      //       attrs: {
-      //         fill: '#5F95FF',
-      //         stroke: '#5F95FF',
-      //       },
-      //     },
-      //   },
-      //   // 拖动节点进行嵌入操作过程中，节点可以被嵌入时被使用
-      //   embedding: {
-      //     name: 'stroke',
-      //     args: {
-      //       padding: -1,
-      //       attrs: {
-      //         stroke: '#5F95FF',
-      //       },
-      //     },
-      //   },
-      // },
     });
 
     handleOnPlugins(graph);
     //   handleAddKeyboard(graph);
-    //   handleOnEvents(graph);
+    handleOnEvents(graph);
 
     //   // TODO 渲染元素 data
     //   // graph.fromJSON(fromJsonData);
@@ -348,40 +299,6 @@ const Canvas = () => {
       initGraph.dispose();
     };
   }, []);
-
-  // useEffect(() => {
-  //   // 更新画布背景
-  //   graphRef.current?.drawBackground(background);
-  // }, [background]);
-
-  // useEffect(() => {
-  //   handleUpdateEdge();
-  // }, [edgeData]);
-
-  // useEffect(() => {
-  //   const graph = graphRef.current;
-
-  //   const selectedCells = graph?.getSelectedCells();
-
-  //   selectedCells?.forEach((cell: Cell) => {
-  //     if (cell.isNode()) {
-  //       if (cell?.id === nodeFormData?.id) {
-  //         if (nodeFormData?.rotate) {
-  //           const view = graph.findViewByCell(cell);
-  //           if (view) {
-  //             // TODO 添加自动旋转动画
-  //             cell.transition('angle', 360, {
-  //               duration: 1000,
-  //               timing: 'linear',
-  //             });
-  //           }
-  //           console.log(view);
-  //         }
-  //         cell.prop({ ...omit(nodeFormData, 'rotate') });
-  //       }
-  //     }
-  //   });
-  // }, [nodeFormData]);
 
   const handleClearGuideLine = () => {
     setHorizontalGuidelines([]);
