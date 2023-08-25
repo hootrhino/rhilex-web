@@ -8,13 +8,13 @@ export type Data = {
   disabled?: boolean;
 };
 
-type ItemProps = {
+type ItemProps = React.LiHTMLAttributes<any> & {
   data: Data;
 };
 
-const Item = ({ data }: ItemProps) => {
+const Item = ({ data, ...props }: ItemProps) => {
   return (
-    <li className="bg-[#242424] mb-[12px] rounded-[4px] cursor-pointer" key={data.key}>
+    <li className="bg-[#242424] mb-[12px] rounded-[4px] cursor-pointer" key={data.key} {...props}>
       <div className="h-[24px] text-[12px] w-full px-[8px] overflow-hidden leading-[24px] text-[#7a7a7a]">
         {data.title}
       </div>

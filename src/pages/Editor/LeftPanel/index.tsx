@@ -1,9 +1,4 @@
 import { cn, IconFont } from '@/utils/utils';
-
-// import { Stencil } from '@antv/x6-plugin-stencil';
-
-// import { Graph } from '@antv/x6';
-
 import './index.less';
 
 import {
@@ -12,20 +7,20 @@ import {
   RedoOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-// import { register } from '@antv/x6-react-shape';
+import { Dnd } from '@antv/x6-plugin-dnd';
+import type { ReactShapeConfig } from '@antv/x6-react-shape';
+import { register } from '@antv/x6-react-shape';
 import { useModel } from '@umijs/max';
 import { Space, Tooltip } from 'antd';
 
-import { forwardRef, useState } from 'react';
-import Layers from './Layers';
+import isNil from 'lodash/isNil';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import ComponentLibrary from './ComponentLibrary';
 import { panelItems } from './constant';
-// import { imageNodes } from '../Shapes/ImageNodes';
-// import { baseNodes } from '../Shapes/Nodes';
-// import { reactNodes } from '../Shapes/ReactNodes';
+import Layers from './Layers';
 
 const LeftPanel = forwardRef((props, ref) => {
-  // const stencilRef = useRef<any>(null);
+  const dndContainerRef = useRef<any>(null);
   const { collapseLeftPanel: collapse, setCollapseLeftPanel: setCollapse } = useModel('useEditor');
   const [activeItem, setActiveItem] = useState<string>('layers');
 
@@ -34,47 +29,6 @@ const LeftPanel = forwardRef((props, ref) => {
     setActiveItem('');
   };
 
-  // const initiStencil = () => {
-  //   const graph = (ref as any).current;
-
-  //   const stencil = new Stencil({
-  //     title: '组件列表',
-  //     target: graph,
-  //     stencilGraphWidth: 220,
-  //     search(cell, keyword) {
-  //       return cell.shape.indexOf(keyword) !== -1;
-  //     },
-  //     collapsable: true,
-  //     placeholder: '搜索组件',
-  //     groups: [
-  //       {
-  //         title: '基础节点',
-  //         name: 'base-node',
-  //         graphHeight: 250,
-  //       },
-  //       {
-  //         title: '多媒体组件',
-  //         name: 'media-component',
-  //         graphHeight: 250,
-  //         layoutOptions: {
-  //           rowHeight: 70,
-  //         },
-  //       },
-  //       {
-  //         title: '图表',
-  //         name: 'chart',
-  //         graphHeight: 250,
-  //         layoutOptions: {
-  //           rowHeight: 70,
-  //         },
-  //       },
-  //     ],
-  //     layoutOptions: {
-  //       columns: 4,
-  //       columnWidth: 55,
-  //       rowHeight: 40,
-  //       resizeToFit: true,
-  //     },
   //     getDragNode: (node) => {
   //       if (node.shape === 'carousel-image') {
   //         return graph.createNode({
@@ -100,37 +54,6 @@ const LeftPanel = forwardRef((props, ref) => {
   //         return node.clone();
   //       }
   //     },
-  //     getDropNode: (node) => {
-  //       const { width, height } = node.size();
-
-  //       return node.clone().size(width * 2, height * 2);
-  //     },
-  //   });
-
-  //   // 注册基础节点
-  //   baseNodes?.forEach((node: { name: string; config: any }) =>
-  //     Graph.registerNode(node.name, node.config, true),
-  //   );
-
-  //   // 注册图片节点
-  //   imageNodes?.forEach((node: { name: string; config: any }) =>
-  //     Graph.registerNode(node.name, node.config, true),
-  //   );
-  //   // 注册React节点
-  //   reactNodes?.forEach((node) => register(node));
-
-  //   // 创建基础节点
-  //   const createBaseNode = baseNodes?.map((node) => graph?.createNode({ shape: node.name }));
-
-  //   // 创建图片节点
-  //   const createImageNode = imageNodes?.map((node) => graph?.createNode({ shape: node.name }));
-
-  //   stencil.load([...createBaseNode], 'base-node');
-  //   stencil.load([...createImageNode], 'media-component');
-  //   stencil.load([], 'chart');
-
-  //   stencilRef.current?.appendChild(stencil.container);
-  // };
 
   const getDetailTitle = () => {
     const currentPanelItem = panelItems?.find((item) => item?.key === activeItem);
@@ -138,11 +61,55 @@ const LeftPanel = forwardRef((props, ref) => {
     return currentPanelItem?.name || '帮助';
   };
 
-  // useEffect(() => {
-  //   if (!isNil((ref as any).current)) {
-  //     initiStencil();
-  //   }
-  // }, [(ref as any).current]);
+  const handleRegisterNode = (nodes: ReactShapeConfig[]) => {
+    nodes?.forEach((node) => register(node));
+  };
+
+  const handleCreateNode = () => {
+    const graph = (ref as any).current;
+
+    const node = graph.createNode({
+      width: 100,
+      height: 40,
+      label: 'Rect',
+      attrs: {
+        body: {
+          stroke: '#8f8f8f',
+          strokeWidth: 1,
+          fill: '#fff',
+          rx: 6,
+          ry: 6,
+        },
+      },
+    });
+
+    return node;
+  };
+
+  useEffect(() => {
+    const graph = (ref as any).current;
+
+    if (!isNil(graph)) {
+      const dndContainer = document.getElementById('dndContainer')!;
+
+      const dnd = new Dnd({
+        target: graph,
+        dndContainer: dndContainer,
+        getDragNode(sourceNode, options) {
+          console.log(sourceNode, options);
+
+          return sourceNode.clone();
+        },
+        getDropNode(node) {
+          const { width, height } = node.size();
+
+          return node.clone().size(width * 3, height * 3)
+        },
+      });
+
+      dndContainerRef.current = dnd;
+    }
+  }, [(ref as any).current]);
 
   return (
     <>
@@ -226,7 +193,14 @@ const LeftPanel = forwardRef((props, ref) => {
           )}
         >
           {activeItem === 'layers' && <Layers />}
-          {activeItem === 'components' && <ComponentLibrary  />}
+          {activeItem === 'components' && (
+            <ComponentLibrary
+              ref={dndContainerRef}
+              id="dndContainer"
+              registerNode={handleRegisterNode}
+              createNode={handleCreateNode}
+            />
+          )}
         </div>
       </div>
     </>
