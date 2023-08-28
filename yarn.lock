@@ -128,7 +128,7 @@
     rc-util "^5.27.0"
     stylis "^4.0.13"
 
-"@ant-design/flowchart@^1.0.2", "@ant-design/flowchart@^1.2.2":
+"@ant-design/flowchart@^1.0.2":
   version "1.2.2"
   resolved "https://registry.npmmirror.com/@ant-design/flowchart/-/flowchart-1.2.2.tgz#9d3c024a813bc6b5cc2156d96d5bf395975143e3"
   integrity sha512-bzHZ81qqHjWIrXcCMInDB6eMTzbswaVCOAdUTCQJ+B45aybkVsU9LMCKquyOwRM7U7PWNfPC9S/lAlx2i2BvBQ==
@@ -1212,7 +1212,7 @@
   dependencies:
     toposort "^2.0.2"
 
-"@antv/xflow@^1.0.53", "@antv/xflow@^1.0.55":
+"@antv/xflow@^1.0.53":
   version "1.0.55"
   resolved "https://registry.npmmirror.com/@antv/xflow/-/xflow-1.0.55.tgz#4f37876046c6a1fed4ed9a242234bb5cce4be887"
   integrity sha512-1LRFZsDZDVuRwEYD0xFt7SGCbHducgXQ4GgPOzmaCMA5FMbQfZVpXhsOG4o/a9X+gKfYdpOELCLqpz7iykyArQ==
@@ -13272,11 +13272,6 @@ react-fast-compare@^3.0.1, react-fast-compare@^3.2.0:
   resolved "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.2.tgz#929a97a532304ce9fee4bcae44234f1ce2c21d49"
   integrity sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==
 
-react-fast-marquee@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.npmmirror.com/react-fast-marquee/-/react-fast-marquee-1.6.0.tgz#3749a9d0f522234e1e3ab776f105cd0accd76a4a"
-  integrity sha512-jtuwT9SNjrqxnE7lGZ8mTL1I8Q4+9G4aBta2p+y2Pa3SjR17QROblwrLICyM8rbjQFHgHawTHcaH9HvoVO2NOA==
-
 react-full-screen@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmmirror.com/react-full-screen/-/react-full-screen-1.1.1.tgz#b707d56891015a71c503a65dbab3086d75be97d7"
@@ -13284,7 +13279,7 @@ react-full-screen@^1.1.1:
   dependencies:
     fscreen "^1.0.2"
 
-react-helmet-async@1.3.0, react-helmet-async@^1.3.0:
+react-helmet-async@1.3.0:
   version "1.3.0"
   resolved "https://registry.npmmirror.com/react-helmet-async/-/react-helmet-async-1.3.0.tgz#7bd5bf8c5c69ea9f02f6083f14ce33ef545c222e"
   integrity sha512-9jZ57/dAn9t3q6hneQS0wukqC2ENOBgMNVEhb/ZG9ZSxUetzVIw4iAmEU38IaVg3QGYauQPhSeUTuIUtFglWpg==
@@ -15087,11 +15082,6 @@ svgo@^2.8.0:
     csso "^4.2.0"
     picocolors "^1.0.0"
     stable "^0.1.8"
-
-swagger-ui-dist@^4.14.2:
-  version "4.19.1"
-  resolved "https://registry.npmjs.org/swagger-ui-dist/-/swagger-ui-dist-4.19.1.tgz#c6d53ba0961a006c6b6b4323ba700e87f31da856"
-  integrity sha512-n/gFn+R7G/BXWwl5UZLw6F1YgWOlf3zkwGlsPhTMhNtAAolBGKg0JS5b2RKt5NI6/hSopVaSrki2wTIMUDDy2w==
 
 swagger-ui-dist@^4.18.1:
   version "4.19.0"
