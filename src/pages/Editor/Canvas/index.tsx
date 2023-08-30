@@ -20,6 +20,8 @@ import { inRange } from 'lodash';
 
 import './index.less';
 import { Dnd } from '@antv/x6-plugin-dnd';
+import { register } from '@antv/x6-react-shape';
+import VideoNode from '../LeftPanel/Shapes/Media/Video';
 
 const Canvas = () => {
   const handle = useFullScreenHandle();
@@ -71,6 +73,7 @@ const Canvas = () => {
         rubberband: true,
         showNodeSelectionBox: true,
         pointerEvents: 'none',
+        modifiers: ['alt']
       }),
     )
   };
@@ -98,8 +101,23 @@ const Canvas = () => {
 
         return node.clone().size(width * 3, height * 3);
       },
+      getDragNode(sourceNode) {
+        const shape = sourceNode.shape;
+        console.log(shape);
+        if (shape === 'media2') {
+          return graph.addNode({shape, width: 200, height: 200})
+        }
+
+        return sourceNode.clone();
+      }
     });
 
+    graph.on('graph:mouseenter', () => {
+      setMouseDrag(false)
+    })
+    graph.on('graph:mouseleave', () => {
+      setMouseDrag(true)
+    })
     handleOnPlugins(graph);
     graphRef.current = graph;
     dndRef.current = dnd;
@@ -148,10 +166,11 @@ const Canvas = () => {
     const graph = graphRef.current;
     const dnd = dndRef.current;
 
+    const target = e.currentTarget //获取目标对象
+    const type = target.getAttribute('datatype');
+
     const node = graph.createNode({
-      shape: 'rect',
-      width: 100,
-      height: 40,
+      shape: type,
     })
 
     dnd.start(node, e.nativeEvent)
@@ -177,6 +196,14 @@ const Canvas = () => {
     requestAnimationFrame(() => {
       viewerRef.current?.scrollCenter();
     });
+
+    register({
+      shape: 'media2',
+      width: 100,
+      height: 100,
+      zIndex: 1,
+      component: VideoNode,
+    })
 
     // 组件卸载时清理 Graph 实例
     return () => {
@@ -260,7 +287,7 @@ const Canvas = () => {
               verticalGuidesRef.current?.scrollGuides(e.scrollLeft, viewZoom);
             }}
           >
-            <div id="canvas-container" onMouseEnter={() => setMouseDrag(false)} onMouseLeave={() => setMouseDrag(true)}/>
+            <div id="canvas-container" />
           </InfiniteViewer>
         </div>
         <RightPanel ref={graphRef} />
