@@ -1,8 +1,3 @@
-// import { Cell, Edge, Graph, Shape } from '@antv/x6';
-
-// import { Clipboard } from '@antv/x6-plugin-clipboard';
-// import { History } from '@antv/x6-plugin-history';
-// import { Keyboard } from '@antv/x6-plugin-keyboard';
 import { Selection } from '@antv/x6-plugin-selection';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { Transform } from '@antv/x6-plugin-transform';
@@ -20,20 +15,24 @@ import { Graph } from '@antv/x6';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import InfiniteViewer from 'react-infinite-viewer';
 import Footer from '../Footer';
-import './index.less';
 import { DEFAULT_GUIDE_CONFIG } from '@/models/useGuide';
 import { inRange } from 'lodash';
+
+import './index.less';
+import { Dnd } from '@antv/x6-plugin-dnd';
 
 const Canvas = () => {
   const handle = useFullScreenHandle();
 
   const graphRef = useRef<any>(null);
+  const dndRef = useRef<any>(null);
   const viewerRef = useRef<InfiniteViewer>(null);
   const horizontalGuidesRef = useRef<Guides>(null);
   const verticalGuidesRef = useRef<Guides>(null);
 
   const [shouldRender, setShouldRender] = useState<boolean>(false);
   const [canvasSize, setCanvasSize] = useState<number>(30);
+  const [canMouseDrag, setMouseDrag] = useState<boolean>(true);
 
   const {
     verticalZoom,
@@ -49,14 +48,8 @@ const Canvas = () => {
     setVerticalZoom,
     setVerticalUnit
   } = useModel('useGuide');
-  // let currentEdgeView: any = null;
 
   const {
-    // canvasData: { background, width, height, scale },
-    // edgeData,
-    // nodeFormData,
-    // edgeFormData,
-    // setNodeForm,
     collapseLeftPanel,
   } = useModel('useEditor');
 
@@ -68,12 +61,8 @@ const Canvas = () => {
       }))
       .use(
         new Transform({
-          resizing: {
-            enabled: true
-          },
-          rotating: {
-            enabled: true
-          },
+          resizing: true,
+          rotating: true,
         }),
       )
     .use(
@@ -84,221 +73,39 @@ const Canvas = () => {
         pointerEvents: 'none',
       }),
     )
-    // .use(new Keyboard())
-    // .use(new Clipboard())
-    // .use(new History());
   };
-
-  // // 添加快捷键
-  // const handleAddKeyboard = (graph: Graph) => {
-  //   // 复制
-  //   graph?.bindKey(['meta+c', 'ctrl+c'], () => {
-  //     const cells = graph.getSelectedCells();
-  //     if (cells.length) {
-  //       graph.copy(cells);
-  //     }
-  //     return false;
-  //   });
-
-  //   // 剪切
-  //   graph?.bindKey(['meta+x', 'ctrl+x'], () => {
-  //     const cells = graph.getSelectedCells();
-  //     if (cells.length) {
-  //       graph.cut(cells);
-  //     }
-  //     return false;
-  //   });
-
-  //   // 粘贴
-  //   graph?.bindKey(['meta+v', 'ctrl+v'], () => {
-  //     if (!graph.isClipboardEmpty()) {
-  //       const cells = graph.paste({ offset: 32 });
-  //       graph.cleanSelection();
-  //       graph.select(cells);
-  //     }
-  //     return false;
-  //   });
-
-  //   // 撤销
-  //   graph?.bindKey(['meta+z', 'ctrl+z'], () => {
-  //     if (graph.canUndo()) {
-  //       graph.undo();
-  //     }
-  //     return false;
-  //   });
-
-  //   // 重做
-  //   graph?.bindKey(['meta+shift+z', 'ctrl+shift+z'], () => {
-  //     if (graph.canRedo()) {
-  //       graph.redo();
-  //     }
-  //     return false;
-  //   });
-
-  //   // 全选
-  //   graph?.bindKey(['meta+a', 'ctrl+a'], () => {
-  //     const nodes = graph.getNodes();
-  //     if (nodes) {
-  //       graph.select(nodes);
-  //     }
-  //   });
-
-  //   // 删除
-  //   graph?.bindKey('backspace', () => {
-  //     const cells = graph.getSelectedCells();
-  //     if (cells.length) {
-  //       graph.removeCells(cells);
-  //     }
-  //   });
-
-  //   // 放大
-  //   graph?.bindKey(['ctrl+shift+1', 'meta+shift+1'], () => {
-  //     graph.zoom(0.1);
-  //   });
-
-  //   // 缩小
-  //   graph?.bindKey(['ctrl+shift+2', 'meta+shift+2'], () => {
-  //     graph.zoom(-0.1);
-  //   });
-  // };
-
-  // 控制连接桩显示/隐藏
-  const handlePortsHideAndShow = (show: boolean) => {
-    const container = document.getElementById('canvas-container')!;
-    const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
-
-    for (let i = 0, len = ports.length; i < len; i += 1) {
-      ports[i].style.visibility = show ? 'visible' : 'hidden';
-    }
-  };
-
-  // 监听画布事件
-  const handleOnEvents = (graph: Graph) => {
-    graph.on('node:mouseenter', () => {
-      handlePortsHideAndShow(true);
-    });
-
-    graph.on('node:mouseleave', () => {
-      handlePortsHideAndShow(false);
-    });
-
-    // graph.on('node:click', ({ node }) => {
-    //   const nodeProps = node.getProp();
-
-    //   if (currentEdgeView) {
-    //     currentEdgeView.unhighlight();
-    //     currentEdgeView = null;
-    //   }
-    //   setNodeForm({ ...nodeProps, rotate: false });
-    // });
-
-    // graph.on('edge:selected', ({ edge }: any) => {
-    //   const view = graph.findViewByCell(edge);
-
-    //   if (view && currentEdgeView !== view) {
-    //     if (currentEdgeView) {
-    //       currentEdgeView.unhighlight();
-    //     }
-    //     view.highlight();
-    //     currentEdgeView = view;
-    //   }
-    // });
-
-    // graph.on('edge:mouseenter', ({ edge }: any) => {
-    //   const view = graph.findViewByCell(edge);
-    //   if (view && currentEdgeView !== view) {
-    //     view.highlight();
-    //   }
-    // });
-
-    // graph.on('edge:mouseleave', ({ edge }: any) => {
-    //   const view = graph.findViewByCell(edge);
-    //   if (view && currentEdgeView !== view) {
-    //     view.unhighlight();
-    //   }
-    // });
-
-    // // 监听画布空白区域
-    // graph.on('blank:click', () => {
-    //   if (currentEdgeView) {
-    //     currentEdgeView.unhighlight();
-    //     currentEdgeView = null;
-    //   }
-    // });
-  };
-
-  // // 更新边配置
-  // const handleUpdateEdge = () => {
-  //   const selectCells = graphRef.current?.getSelectedCells();
-
-  //   selectCells?.forEach((cell: Cell) => {
-  //     if (cell.isEdge()) {
-  //       const labels = cell.getLabels()?.map((item: Edge.Label) => {
-  //         const pos = item?.position || {};
-  //         if (item?.attrs?.label) {
-  //           return {
-  //             ...item,
-  //             attrs: {
-  //               ...item?.attrs,
-  //               label: {
-  //                 ...item?.attrs?.label,
-  //                 ...edgeData?.labels[0]?.attrs.label,
-  //               },
-  //               body: {
-  //                 ...item?.attrs?.body,
-  //                 ...edgeData?.labels[0]?.attrs.body,
-  //               },
-  //             },
-  //             position: {
-  //               ...pos,
-  //               ...edgeData?.labels[0]?.position,
-  //             },
-  //           };
-  //         } else {
-  //           return item;
-  //         }
-  //       });
-
-  //       cell.prop({ ...edgeData, labels });
-
-  //       if (edgeFormData.lineType !== 'pipeline') {
-  //         cell.removeMarkup();
-  //       }
-  //     }
-  //   });
-  // };
 
   const handleInitGraph = () => {
-    const container = document.getElementById('canvas-container')!;
+    const graphContainer = document.getElementById('canvas-container')!;
+    const dndContainer = document.getElementById('dnd-container')!;
+
     const graph = new Graph({
-      container: container,
+      container: graphContainer,
       background: {
         color: '#262626',
       },
       width: 1920,
       height: 1080,
-      embedding: true,
+      // embedding: true,
+    });
+
+    const dnd = new Dnd({
+      target: graph,
+      dndContainer,
+      scaled: false,
+      getDropNode(node) {
+        const { width, height } = node.size();
+
+        return node.clone().size(width * 3, height * 3);
+      },
     });
 
     handleOnPlugins(graph);
-    //   handleAddKeyboard(graph);
-    handleOnEvents(graph);
-
-    //   // TODO 渲染元素 data
-    //   // graph.fromJSON(fromJsonData);
     graphRef.current = graph;
+    dndRef.current = dnd;
 
     return graph;
   };
-
-  useEffect(() => {
-    const initGraph = handleInitGraph();
-
-    // 组件卸载时清理 Graph 实例
-    return () => {
-      initGraph.dispose();
-    };
-  }, []);
 
   const handleClearGuideLine = () => {
     setHorizontalGuidelines([]);
@@ -335,7 +142,19 @@ const Canvas = () => {
     setVerticalUnit(unit);
     setHorizontalZoom(guideZoom);
     setVerticalZoom(guideZoom);
+  }
 
+  const handleAddNode = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    const graph = graphRef.current;
+    const dnd = dndRef.current;
+
+    const node = graph.createNode({
+      shape: 'rect',
+      width: 100,
+      height: 40,
+    })
+
+    dnd.start(node, e.nativeEvent)
   }
 
   useEffect(() => {
@@ -353,16 +172,23 @@ const Canvas = () => {
   }, [graphRef]);
 
   useEffect(() => {
+    const initGraph = handleInitGraph();
+
     requestAnimationFrame(() => {
       viewerRef.current?.scrollCenter();
     });
+
+    // 组件卸载时清理 Graph 实例
+    return () => {
+      initGraph.dispose();
+    };
   }, []);
 
   return (
     <FullScreen handle={handle}>
       <div className={cn('editor-wrapper')}>
         <ToolBar handleFullScreen={handle} ref={graphRef} />
-        <LeftPanel ref={graphRef} />
+        <LeftPanel ref={dndRef} id="dnd-container" addNode={handleAddNode} />
         <div className={cn('editor-content', 'relative w-full h-full transform-gpu')}>
           <div
             className={cn(
@@ -422,7 +248,7 @@ const Canvas = () => {
             ref={viewerRef}
             className='relative w-full h-[100vh]'
             useAutoZoom={true}
-            useMouseDrag={true}
+            useMouseDrag={canMouseDrag}
             useWheelScroll={true}
             onScroll={(e) => {
               const viewZoom = viewerRef.current?.getZoom();
@@ -434,7 +260,7 @@ const Canvas = () => {
               verticalGuidesRef.current?.scrollGuides(e.scrollLeft, viewZoom);
             }}
           >
-            <div id="canvas-container" />
+            <div id="canvas-container" onMouseEnter={() => setMouseDrag(false)} onMouseLeave={() => setMouseDrag(true)}/>
           </InfiniteViewer>
         </div>
         <RightPanel ref={graphRef} />

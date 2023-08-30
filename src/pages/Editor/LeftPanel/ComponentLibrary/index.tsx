@@ -17,7 +17,7 @@ import ComponentItem from './Item';
 import '../index.less';
 
 type ComponentLibraryProps = {
-  addNode: (shape: string, e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
+  addNode: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
 };
 
 const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
@@ -52,13 +52,6 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
     }
 
     setData(dataSource);
-  };
-
-  const handleStartDrag = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-    const target = e.currentTarget;
-    const type = target.getAttribute('dataType') as string;
-
-    addNode(type, e);
   };
 
   useEffect(() => {
@@ -124,7 +117,7 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
               <ComponentItem
                 data={chart}
                 key={chart.key}
-                onMouseDown={handleStartDrag}
+                onMouseDown={addNode}
                 datatype={chart.key}
               />
             ))}
@@ -136,7 +129,7 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
             <ComponentItem
               data={item}
               key={item.key}
-              onMouseDown={handleStartDrag}
+              onMouseDown={addNode}
               datatype={item.key}
             />
           ))}

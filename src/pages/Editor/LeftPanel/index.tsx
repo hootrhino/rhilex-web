@@ -7,20 +7,16 @@ import {
   RedoOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { Dnd } from '@antv/x6-plugin-dnd';
-import { register } from '@antv/x6-react-shape';
 import { useModel } from '@umijs/max';
 import { Space, Tooltip } from 'antd';
-
-import isNil from 'lodash/isNil';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useState } from 'react';
 import ComponentLibrary from './ComponentLibrary';
 import { panelItems } from './constant';
 import Layers from './Layers';
-import shapes from './Shapes';
 
-const LeftPanel = forwardRef((props, ref) => {
-  const dndContainerRef = useRef<any>(null);
+type LeftPanelProps = React.HTMLAttributes<HTMLDivElement>;
+
+const LeftPanel = forwardRef<LeftPanelProps, any>(({addNode, ...props}, ref) => {
   const { collapseLeftPanel: collapse, setCollapseLeftPanel: setCollapse } = useModel('useEditor');
   const [activeItem, setActiveItem] = useState<string>('layers');
 
@@ -35,36 +31,6 @@ const LeftPanel = forwardRef((props, ref) => {
     return currentPanelItem?.name || '帮助';
   };
 
-  const handleAddNode = (shape: string, e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-    const graph = (ref as any).current;
-
-    const node = graph.createNode({ shape });
-
-    dndContainerRef.current?.start(node, e.nativeEvent);
-  };
-
-  useEffect(() => {
-    const graph = (ref as any).current;
-
-    if (!isNil(graph)) {
-      const dndContainer = document.getElementById('dndContainer')!;
-
-      const dnd = new Dnd({
-        target: graph,
-        dndContainer: dndContainer,
-        getDropNode(node) {
-          const { width, height } = node.size();
-
-          return node.clone().size(width * 3, height * 3);
-        },
-      });
-
-      shapes?.forEach((shape) => register(shape));
-
-      dndContainerRef.current = dnd;
-    }
-  }, [(ref as any).current]);
-
   return (
     <>
       <div
@@ -72,6 +38,7 @@ const LeftPanel = forwardRef((props, ref) => {
           'left-panel-fixed',
           'flex flex-col fixed left-0 bottom-0 w-[64px] bg-[#1A1A1A] text-center overflow-hidden py-[10px] px-[4px] cursor-pointer',
         )}
+        {...props}
       >
         <div className="h-full">
           {panelItems?.map((item) => (
@@ -147,7 +114,7 @@ const LeftPanel = forwardRef((props, ref) => {
           )}
         >
           {activeItem === 'layers' && <Layers />}
-          {activeItem === 'components' && <ComponentLibrary addNode={handleAddNode} />}
+          {activeItem === 'components' && <ComponentLibrary addNode={addNode} />}
         </div>
       </div>
     </>
