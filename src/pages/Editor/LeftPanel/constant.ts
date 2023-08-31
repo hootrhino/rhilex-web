@@ -198,10 +198,6 @@ export const chartsList = [
     group: 'relation',
     children: [],
   },
-  {
-    group: 'other',
-    children: [],
-  },
 ];
 
 export const mapList = [

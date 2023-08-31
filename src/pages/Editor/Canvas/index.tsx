@@ -21,7 +21,8 @@ import { inRange } from 'lodash';
 import './index.less';
 import { Dnd } from '@antv/x6-plugin-dnd';
 import { register } from '@antv/x6-react-shape';
-import VideoNode from '../LeftPanel/Shapes/Media/Video';
+
+import shapes from '../Shapes/ReactNodes';
 
 const Canvas = () => {
   const handle = useFullScreenHandle();
@@ -32,7 +33,7 @@ const Canvas = () => {
   const horizontalGuidesRef = useRef<Guides>(null);
   const verticalGuidesRef = useRef<Guides>(null);
 
-  const [shouldRender, setShouldRender] = useState<boolean>(false);
+  // const [shouldRender, setShouldRender] = useState<boolean>(false);
   const [canvasSize, setCanvasSize] = useState<number>(30);
   const [canMouseDrag, setMouseDrag] = useState<boolean>(true);
 
@@ -73,7 +74,7 @@ const Canvas = () => {
         rubberband: true,
         showNodeSelectionBox: true,
         pointerEvents: 'none',
-        modifiers: ['alt']
+        // modifiers: ['alt']
       }),
     )
   };
@@ -184,11 +185,11 @@ const Canvas = () => {
     viewerRef.current?.setZoom(zoom);
   }, [canvasSize]);
 
-  useEffect(() => {
-    if (graphRef.current) {
-      setShouldRender(true);
-    }
-  }, [graphRef]);
+  // useEffect(() => {
+  //   if (graphRef.current) {
+  //     setShouldRender(true);
+  //   }
+  // }, [graphRef]);
 
   useEffect(() => {
     const initGraph = handleInitGraph();
@@ -197,13 +198,15 @@ const Canvas = () => {
       viewerRef.current?.scrollCenter();
     });
 
-    register({
-      shape: 'media2',
-      width: 100,
-      height: 100,
-      zIndex: 1,
-      component: VideoNode,
-    })
+    // 注册 React 节点
+    shapes?.forEach(item => register(item));
+    // register({
+    //   shape: 'media2',
+    //   width: 100,
+    //   height: 100,
+    //   zIndex: 1,
+    //   component: VideoNode,
+    // })
 
     // 组件卸载时清理 Graph 实例
     return () => {
@@ -232,8 +235,7 @@ const Canvas = () => {
               collapseLeftPanel ? 'left-[84px]' : 'left-[384px]',
             )}
           >
-            {shouldRender && (
-              <Guides
+            <Guides
               {...DEFAULT_GUIDE_CONFIG}
                 ref={horizontalGuidesRef}
                 type="horizontal"
@@ -246,7 +248,6 @@ const Canvas = () => {
                   setHorizontalGuidelines(guides);
                 }}
               />
-            )}
           </div>
           <div
             className={cn(

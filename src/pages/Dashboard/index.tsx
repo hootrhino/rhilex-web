@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useModel } from 'umi';
 
-import { Progress, TinyArea } from '@ant-design/charts';
+import { Progress, TinyArea } from '@ant-design/plots';
 import { PageContainer, ProCard, StatisticCard } from '@ant-design/pro-components';
 import { FilterValue } from 'antd/es/table/interface';
 import add from 'lodash/add';
