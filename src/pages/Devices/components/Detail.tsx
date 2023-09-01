@@ -83,7 +83,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: '重试次数',
         dataIndex: 'retryTime',
-        hideInDescriptions: deviceType === 'GENERIC_PROTOCOL',
+        hideInDescriptions: deviceType !== 'GENERIC_PROTOCOL',
       },
       {
         title: '协议分隔符',
