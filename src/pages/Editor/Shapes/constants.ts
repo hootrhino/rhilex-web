@@ -91,3 +91,8 @@ export const commonAttrs = {
     strokeWidth: 1,
   },
 };
+
+export const chartConfig = {
+  width: 200,
+  height: 100,
+};

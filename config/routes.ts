@@ -222,7 +222,6 @@
     path: '/screen-mgt',
     name: '大屏管理',
     icon: 'group',
-    // hideInMenu: true,
     routes: [
       {
         path: '/screen-mgt',
@@ -240,13 +239,13 @@
       // },
     ],
   },
-  // {
-  //   path: '/screen-mgt/screen/new',
-  //   name: '新建大屏',
-  //   component: './ScreenMgt/Screen/components/Editor',
-  //   hideInMenu: true,
-  //   layout: false,
-  // },
+  {
+    path: '/screen-mgt/screen/new',
+    name: '新建大屏',
+    component: './ScreenMgt/Screen/components/Editor',
+    hideInMenu: true,
+    layout: false,
+  },
   // {
   //   path: '/screen-mgt/screen/update',
   //   name: '编辑大屏',

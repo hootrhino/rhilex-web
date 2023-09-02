@@ -1,26 +1,9 @@
-import Area1 from './Area/Area1';
-import VideoNode from './Media/Video';
-import Other1 from './Other/Other1';
+import { areas } from './Area';
+import { bars } from './Bar';
+import { intervals } from './Interval';
+import { medias } from './Media';
+import { others } from './Other';
 
-const shapes = [
-  {
-    shape: 'media2',
-    width: 100,
-    height: 100,
-    component: VideoNode,
-  },
-  {
-    shape: 'area1',
-    width: 100,
-    height: 100,
-    component: Area1,
-  },
-  {
-    shape: 'other1',
-    width: 100,
-    height: 100,
-    component: Other1,
-  }
-];
+const shapes = [...intervals, ...medias, ...areas, ...others, ...bars];
 
 export default shapes;
