@@ -112,7 +112,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
           }}
         />
       ) : (
-        <LogTable dataSource={data} options={false} />
+        <LogTable dataSource={data} options={false} type="detail" />
       )}
     </Drawer>
   );

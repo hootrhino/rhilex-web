@@ -200,6 +200,7 @@ const Dashboard = () => {
         <LogTable
           dataSource={logData}
           filters={true}
+          type="home"
           options={{
             search: {
               onSearch: (keyword: string) => {

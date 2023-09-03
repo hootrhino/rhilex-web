@@ -10,6 +10,7 @@ export type Pagination = {
 
 type LogTableProps = ProTableProps & {
   filters?: boolean;
+  type?: 'home' | 'detail';
 };
 
 import { Tag } from 'antd';
@@ -24,7 +25,7 @@ enum levelColor {
   info = 'blue',
 }
 
-const LogTable = ({ dataSource, filters = false, ...props }: LogTableProps) => {
+const LogTable = ({ dataSource, filters = false, type = 'home', ...props }: LogTableProps) => {
   const [pagination, setPagination] = useState<Pagination>({ current: 1, pageSize: 10, total: 0 });
 
   const columns = [
@@ -41,6 +42,7 @@ const LogTable = ({ dataSource, filters = false, ...props }: LogTableProps) => {
       width: 80,
       filters,
       onFilter: filters,
+      hideInTable: type !== 'home',
       valueEnum: {
         fatal: { text: 'Fatal', status: 'Error' },
         error: {
