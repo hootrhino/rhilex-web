@@ -2,62 +2,59 @@ import { postPluginService } from '@/services/rulex/chajianguanli';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm } from '@ant-design/pro-components';
 
+import { LogItem } from '@/models/useWebsocket';
 import { Button, Space } from 'antd';
 import omit from 'lodash/omit';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useModel, useRequest } from 'umi';
 import Ping from './Ping';
 import Scanner from './Scanner';
 
-type DebugProps = ModalFormProps & {
+type ConfigProps = ModalFormProps & {
   uuid: string;
   type: 'PING' | 'SCANNER';
-  onClose?: () => void;
+  onClose: () => void;
 };
 
-const ConfigModal = ({ uuid, type, onClose, ...props }: DebugProps) => {
+const Config = ({ uuid, type, onClose, ...props }: ConfigProps) => {
   const formRef = useRef<ProFormInstance>();
-  const { logs } = useModel('useWebsocket');
+  const { currentLog } = useModel('useWebsocket');
   const { dataSource } = useModel('useSystem');
+  const [logData, setData] = useState<LogItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [scanType, setType] = useState<'start' | 'stop'>('start');
 
   const isWindows = dataSource?.hardWareInfo?.osArch?.includes('windows');
 
-  const getOutput = (topic: string) => {
-    const filterLogs = logs?.filter((log) => log?.topic === topic)?.map((item) => item?.msg);
-    return filterLogs?.length > 0 ? filterLogs?.join('\n') : '';
-  };
-
   const { run } = useRequest((values) => postPluginService({ ...values, uuid }), {
     manual: true,
     onSuccess: () => {
-      let outputData;
-
       if (type === 'PING') {
-        outputData = getOutput(`plugin/ICMPSenderPing/${uuid}`);
         setLoading(false);
       } else if (type === 'SCANNER' && scanType === 'start') {
-        outputData = getOutput(`plugin/ModbusScanner/${uuid}`);
         setLoading(false);
         setDisabled(true);
       } else {
-        outputData = '';
         setDisabled(false);
       }
-
-      formRef.current?.setFieldsValue({
-        output: outputData,
-      });
     },
   });
 
-  // 测速
-  const handleOnSearch = (value: string) => {
-    formRef.current?.setFieldsValue({ output: `PING ${value}...` });
+  const handleOnLoading = (ip?: string) => {
+    setData([]);
     setTimeout(() => {
-      run({ name: 'ping', args: [value] });
+      formRef.current?.setFieldsValue({
+        output: type === 'PING' ? `PING ${ip}...` : `SCANNING...`,
+      });
+    }, 200);
+  };
+
+  // 测速
+  const handleOnSearch = (ip: string) => {
+    handleOnLoading(ip);
+    setTimeout(() => {
+      run({ name: 'ping', args: [ip] });
     }, 2000);
   };
 
@@ -76,7 +73,7 @@ const ConfigModal = ({ uuid, type, onClose, ...props }: DebugProps) => {
     };
     setLoading(true);
     setType('start');
-    formRef.current?.setFieldsValue({ output: `SCANNING...` });
+    handleOnLoading();
     setTimeout(() => {
       run(params);
     }, 2000);
@@ -119,12 +116,38 @@ const ConfigModal = ({ uuid, type, onClose, ...props }: DebugProps) => {
     }
   };
 
+  useEffect(() => {
+    const topic =
+      type === 'PING' ? `plugin/ICMPSenderPing/${uuid}` : `plugin/ModbusScanner/${uuid}`;
+    const filterLogs = logData
+      ?.filter((log) => log?.topic === topic)
+      ?.map((item: LogItem) => item?.msg);
+
+    formRef.current?.setFieldsValue({
+      output: filterLogs?.length > 0 ? filterLogs?.join('\n') : '',
+    });
+  }, [logData, type]);
+
+  useEffect(() => {
+    if (currentLog !== undefined) {
+      setData(logData.concat(currentLog));
+    }
+  }, [currentLog]);
+
   return (
     <ModalForm
       formRef={formRef}
       title={type === 'PING' ? '网络测速' : 'Modbus 扫描仪'}
       submitter={{
         render: renderSubmitter,
+      }}
+      modalProps={{
+        destroyOnClose: true,
+        afterClose: () => {
+          setDisabled(false);
+          setLoading(false);
+          setData([]);
+        },
       }}
       initialValues={{
         timeout: 3000,
@@ -145,4 +168,4 @@ const ConfigModal = ({ uuid, type, onClose, ...props }: DebugProps) => {
   );
 };
 
-export default ConfigModal;
+export default Config;

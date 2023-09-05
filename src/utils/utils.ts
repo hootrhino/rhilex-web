@@ -26,3 +26,10 @@ export const getBase64 = (file: RcFile): Promise<string> =>
 export const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4195235_c1794a89v3r.js', // 在 iconfont.cn 上生成
 });
+
+// 校验IPv4
+export const validateIPv4 = (ip: string) => {
+  const pattern =
+    /^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/;
+  return pattern.test(ip);
+};
