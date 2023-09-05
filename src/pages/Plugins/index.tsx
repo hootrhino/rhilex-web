@@ -5,7 +5,7 @@ import type { ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 
 import { getPlugins } from '@/services/rulex/chajianguanli';
-import ConfigModal from './components/ConfigModal';
+import ConfigModal from './components/Config';
 
 type Item = Record<string, any>;
 

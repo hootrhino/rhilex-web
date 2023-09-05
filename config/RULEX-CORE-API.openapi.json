@@ -2977,10 +2977,33 @@
                     "type": "string"
                   },
                   "args": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
+                    "oneOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {},
+                        "x-apifox-ignore-properties": [],
+                        "x-apifox-orders": []
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {},
+                          "x-apifox-orders": [],
+                          "x-apifox-ignore-properties": []
+                        }
+                      },
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "boolean"
+                      }
+                    ]
                   }
                 },
                 "required": ["uuid", "name", "args"],
@@ -3005,44 +3028,38 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "remote": {
-                            "type": "string"
-                          },
-                          "listener": {
-                            "type": "string"
-                          },
-                          "username": {
-                            "type": "string"
-                          },
-                          "cleanSession": {
-                            "type": "boolean"
+                      "oneOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {},
+                          "x-apifox-ignore-properties": [],
+                          "x-apifox-orders": []
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {},
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": []
                           }
                         },
-                        "x-apifox-orders": ["id", "remote", "listener", "username", "cleanSession"],
-                        "x-apifox-ignore-properties": []
-                      }
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        }
+                      ]
                     }
                   },
                   "required": ["code", "msg", "data"],
                   "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": ["kick out success"]
-                    }
-                  }
                 }
               }
             }
