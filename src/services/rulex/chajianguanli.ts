@@ -7,20 +7,14 @@ export async function postPluginService(
   body: {
     uuid: string;
     name: string;
-    args: string[];
+    args: string | Record<string, any> | Record<string, any>[] | number | boolean;
   },
   options?: { [key: string]: any },
 ) {
   return request<{
     code: number;
     msg: string;
-    data: {
-      id?: string;
-      remote?: string;
-      listener?: string;
-      username?: string;
-      cleanSession?: boolean;
-    }[];
+    data: string | Record<string, any> | Record<string, any>[] | number | boolean;
   }>('/api/v1/plugin/service', {
     method: 'POST',
     headers: {

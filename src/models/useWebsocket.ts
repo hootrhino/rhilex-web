@@ -11,6 +11,7 @@ export type LogItem = {
 
 const useWebsocket = () => {
   const [logs, setLogs] = useState<LogItem[]>([]);
+  const [currentLog, setLog] = useState<LogItem>();
   const [connected, setConnected] = useState(false);
   const [sockUrl, setUrl] = useState<string>('');
 
@@ -22,6 +23,7 @@ const useWebsocket = () => {
         newLog = orderBy(newLog, 'time', 'desc');
         newLog = slice(newLog, 0, 100);
         setLogs(newLog);
+        setLog(JSON.parse(data));
       }
     },
     onClose: () => {
@@ -36,8 +38,8 @@ const useWebsocket = () => {
     if (connected) {
       setTimeout(() => {
         if (readyState === WebSocket.OPEN) {
+          sendMessage?.('WsTerminal');
         }
-        sendMessage?.('WsTerminal');
       }, 2000);
     }
   }, [connected, sendMessage]);
@@ -45,6 +47,7 @@ const useWebsocket = () => {
   useEffect(() => {
     if (window?.location?.hostname) {
       setUrl(`ws://${window?.location?.hostname}:2580/ws`);
+      // setUrl(`ws://106.15.225.172:5000/ws`)
     }
   }, [window?.location?.hostname]);
 
@@ -54,7 +57,7 @@ const useWebsocket = () => {
     }
   }, [sockUrl]);
 
-  return { logs };
+  return { logs, currentLog };
 };
 
 export default useWebsocket;

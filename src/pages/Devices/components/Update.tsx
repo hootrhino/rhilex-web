@@ -13,6 +13,7 @@ import { getDevicesDetail, postDevices, putDevices } from '@/services/rulex/sheb
 
 import SchemaForm from '@/components/SchemaForm';
 
+import { useModel } from '@umijs/max';
 import { columns } from './columns';
 import { defaultValue } from './initialValue';
 
@@ -20,7 +21,8 @@ const DefaultListUrl = '/device/list';
 
 const BaseForm = () => {
   const { id } = useParams();
-  const [initialValue, setValue] = useState<any>(defaultValue);
+  const { dataSource } = useModel('useSystem');
+  const [initialValue, setValue] = useState<any>();
 
   // 新建
   const { run: add, loading: addLoading } = useRequest((params) => postDevices(params), {
@@ -64,11 +66,11 @@ const BaseForm = () => {
             ...params?.config?.uartConfig?.[0],
           };
           hostConfig = {
-            ...defaultValue?.config?.hostConfig?.[0],
+            ...initialValue?.config?.hostConfig?.[0],
           };
         } else {
           uartConfig = {
-            ...defaultValue?.config?.uartConfig?.[0],
+            ...initialValue?.config?.uartConfig?.[0],
           };
           hostConfig = {
             ...params?.config?.hostConfig?.[0],
@@ -136,6 +138,9 @@ const BaseForm = () => {
   useEffect(() => {
     if (id) {
       getDetail();
+    } else {
+      const defaultData = defaultValue(dataSource?.hardWareInfo?.osArch);
+      setValue(defaultData);
     }
   }, [id]);
 
