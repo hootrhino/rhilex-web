@@ -33,6 +33,8 @@ type ToolBarProps = {
 
 const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
   const { collapseRightPanel, setCollapseRightPanel } = useModel('useEditor');
+  const [canUndo, setCanUndo] = useState<boolean>(true);
+  const [canRedo, setCanRedo] = useState<boolean>(true);
 
   // 已选择节点
   const [selectedNode, setSelectedNode] = useState<Cell[] | undefined>(undefined);
@@ -183,6 +185,8 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
   const handleToolbarClick = (name: string) => {
     const graph = (ref as any).current;
 
+    setCanRedo(!graph.canRedo());
+    setCanUndo(!graph.canUndo());
     switch (name) {
       case 'undo':
         graph.undo();
@@ -258,6 +262,8 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
           setSelectedNode(undefined);
         }
       });
+      setCanRedo(!graph.canRedo());
+      setCanUndo(!graph.canUndo());
     }
   }, [(ref as any).current]);
 
@@ -330,8 +336,8 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
           />
         </Toolbar.Group>
         <Toolbar.Group>
-          <Toolbar.Item name="undo" tooltip="撤销" icon={<UndoOutlined />} />
-          <Toolbar.Item name="redo" tooltip="重做" icon={<RedoOutlined />} />
+          <Toolbar.Item name="undo" tooltip="撤销" icon={<UndoOutlined />} disabled={canUndo} />
+          <Toolbar.Item name="redo" tooltip="重做" icon={<RedoOutlined />} disabled={canRedo} />
         </Toolbar.Group>
         <Toolbar.Group>
           <Toolbar.Item name="zoomIn" tooltip="放大" icon={<ZoomInOutlined />} />
