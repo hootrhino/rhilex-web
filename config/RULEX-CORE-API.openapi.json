@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "RULEX-CORE-API",
+    "title": "rulex&eekit-restful-api",
     "description": "RULEX 核心关键API接口",
     "version": "1.0.0"
   },
@@ -1192,45 +1192,6 @@
                   "required": ["code", "msg", "data"],
                   "x-apifox-orders": ["code", "msg", "data"],
                   "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "hardWareInfo": {
-                          "allocMem": 14,
-                          "cpuPercent": 6.25,
-                          "diskInfo": 0,
-                          "ip": ["10.55.23.96", "192.168.250.1", "172.17.0.1"],
-                          "osArch": "linux-amd64",
-                          "startedTime": "2023-05-10 15:24:08",
-                          "systemMem": 31,
-                          "totalMem": 18,
-                          "version": "v0.4.4-hotfix",
-                          "wsUrl": [
-                            "ws://10.55.23.96:2580/ws",
-                            "ws://192.168.250.1:2580/ws",
-                            "ws://172.17.0.1:2580/ws"
-                          ]
-                        },
-                        "sourceCount": {
-                          "inends": 0,
-                          "outends": 0,
-                          "plugins": 1,
-                          "rules": 0
-                        },
-                        "statistic": {
-                          "inSuccess": 0,
-                          "outSuccess": 0,
-                          "inFailed": 0,
-                          "outFailed": 0
-                        }
-                      }
-                    }
-                  }
                 }
               }
             }
@@ -2870,7 +2831,7 @@
         "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-75327197-run"
       }
     },
-    "/api/v1/uarts": {
+    "/api/v1/os/uarts": {
       "get": {
         "summary": "串口列表",
         "x-apifox-folder": "系统数据",
@@ -2889,16 +2850,6 @@
                   "properties": {},
                   "x-apifox-ignore-properties": [],
                   "x-apifox-orders": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": ["/dev/ttyS0", "/dev/ttyUSB1"]
-                    }
-                  }
                 }
               }
             }
@@ -3413,6 +3364,87 @@
           }
         },
         "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-92118901-run"
+      }
+    },
+    "/api/v1/os/netInterfaces": {
+      "get": {
+        "summary": "网卡列表",
+        "x-apifox-folder": "系统数据",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["系统数据"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-108402211-run"
+      }
+    },
+    "/api/v1/os/osRelease": {
+      "get": {
+        "summary": "系统发行",
+        "x-apifox-folder": "系统数据",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["系统数据"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-108402402-run"
+      }
+    },
+    "/api/v1/os/startedAt": {
+      "get": {
+        "summary": "开机时间",
+        "x-apifox-folder": "系统数据",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["系统数据"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-108402521-run"
       }
     }
   },
