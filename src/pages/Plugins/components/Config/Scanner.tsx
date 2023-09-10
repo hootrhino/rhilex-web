@@ -1,4 +1,4 @@
-import { getUarts } from '@/services/rulex/xitongshuju';
+import { getOsUarts } from '@/services/rulex/xitongshuju';
 import { ProForm, ProFormDigit, ProFormSelect } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import 'ace-builds/src-noconflict/ace';
@@ -11,7 +11,7 @@ import AceEditor from 'react-ace';
 
 const Scanner = () => {
   // 获取串口配置
-  const { data: uartOptions } = useRequest(() => getUarts(), {
+  const { data: uartOptions } = useRequest(() => getOsUarts(), {
     formatResult: (res) => res?.data?.map((item: string) => ({ value: item })),
   });
 

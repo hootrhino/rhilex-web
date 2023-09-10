@@ -13,7 +13,11 @@ import PluginIcon from '@/assets/fontIcons/plugin.svg';
 import RuleIcon from '@/assets/fontIcons/rule.svg';
 
 import LogTable from '@/components/LogTable';
+import { modal } from '@/components/PopupHack';
 import { LogItem } from '@/models/useWebsocket';
+import { getOsOsRelease } from '@/services/rulex/xitongshuju';
+import { useRequest } from '@umijs/max';
+import { Descriptions } from 'antd';
 
 const { Divider } = StatisticCard;
 
@@ -40,6 +44,31 @@ const Dashboard = () => {
       filteredLogs = logs.filter((log) => filters?.level?.includes(log?.level));
     }
     setLogData(filteredLogs);
+  };
+
+  // 获取系统详情
+  const { data: osDetail } = useRequest(() => getOsOsRelease({}), {
+    formatResult: (res) => res?.data,
+  });
+
+  // 展示系统详情
+  const detailConfig = {
+    title: '系统详情',
+    width: 700,
+    content: (
+      <Descriptions
+        className="w-[500px]"
+        column={1}
+        labelStyle={{ justifyContent: 'flex-end', minWidth: 180, marginRight: 15 }}
+      >
+        {osDetail &&
+          Object.keys(osDetail)?.map((item) => (
+            <Descriptions.Item label={item} key={item}>
+              {osDetail[item]}
+            </Descriptions.Item>
+          ))}
+      </Descriptions>
+    ),
   };
 
   useEffect(() => {
@@ -82,12 +111,14 @@ const Dashboard = () => {
               title: '当前版本',
               value: dataSource?.hardWareInfo.version,
             }}
+            extra={<a className="invisible">详情</a>}
           />
           <StatisticCard
             statistic={{
               title: '操作系统',
               value: dataSource?.hardWareInfo?.osArch,
             }}
+            extra={<a onClick={() => modal.info(detailConfig)}>详情</a>}
           />
           <Divider type={responsive ? 'horizontal' : 'vertical'} />
           <StatisticCard
