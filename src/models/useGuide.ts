@@ -15,27 +15,27 @@ export const DEFAULT_GUIDE_CONFIG = {
   selectedRangesTextColor: '#3A73E1',
   markColor: '#FA832E',
   guideStyle: {
-    background: '#FA832E'
+    background: '#FA832E',
   },
   dragGuideStyle: {
-    background: '#FA832E'
+    background: '#FA832E',
   },
   guidePosStyle: {
-    color: '#FA832E'
-  }
-}
+    color: '#FA832E',
+  },
+};
 
-const DEFAULT_UNIT = 0.3;
-const DEFAULT_ZOOM = 300;
+const DEFAULT_UNIT = 300;
+const DEFAULT_ZOOM = 0.3;
 
 const useGuide = () => {
-  const [horizontalZoom, setHorizontalZoom] = useState<number>(DEFAULT_UNIT);
+  const [horizontalZoom, setHorizontalZoom] = useState<number>(DEFAULT_ZOOM);
   const [horizontalGuidelines, setHorizontalGuidelines] = useState<number[]>([]);
-  const [horizontalUnit, setHorizontalUnit] = useState<number>(DEFAULT_ZOOM);
+  const [horizontalUnit, setHorizontalUnit] = useState<number>(DEFAULT_UNIT);
 
-  const [verticalZoom, setVerticalZoom] = useState<number>(DEFAULT_UNIT);
+  const [verticalZoom, setVerticalZoom] = useState<number>(DEFAULT_ZOOM);
   const [verticalGuidelines, setVerticalGuidelines] = useState<number[]>([]);
-  const [verticalUnit, setVerticalUnit] = useState<number>(DEFAULT_ZOOM);
+  const [verticalUnit, setVerticalUnit] = useState<number>(DEFAULT_UNIT);
 
   return {
     horizontalZoom,
@@ -46,8 +46,10 @@ const useGuide = () => {
     setHorizontalGuidelines,
     verticalGuidelines,
     setVerticalGuidelines,
-    horizontalUnit, setHorizontalUnit,
-    verticalUnit, setVerticalUnit
+    horizontalUnit,
+    setHorizontalUnit,
+    verticalUnit,
+    setVerticalUnit,
   };
 };
 

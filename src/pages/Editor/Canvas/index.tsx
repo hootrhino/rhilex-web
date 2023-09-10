@@ -17,7 +17,9 @@ import { ExclamationCircleFilled, EyeInvisibleOutlined } from '@ant-design/icons
 import { Graph } from '@antv/x6';
 import Guides from '@scena/react-guides';
 import inRange from 'lodash/inRange';
+import round from 'lodash/round';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
+import type { OnScroll } from 'react-infinite-viewer';
 import InfiniteViewer from 'react-infinite-viewer';
 import Footer from '../Footer';
 
@@ -36,8 +38,11 @@ const Canvas = () => {
   const viewerRef = useRef<InfiniteViewer>(null);
   const horizontalGuidesRef = useRef<Guides>(null);
   const verticalGuidesRef = useRef<Guides>(null);
+
+  const { collapseLeftPanel } = useModel('useEditor');
   const [canvasSize, setCanvasSize] = useState<number>(30);
   const [canMouseDrag, setMouseDrag] = useState<boolean>(true);
+  const [offset, setOffset] = useState<number>(0);
 
   const {
     verticalZoom,
@@ -53,8 +58,6 @@ const Canvas = () => {
     setVerticalZoom,
     setVerticalUnit,
   } = useModel('useGuide');
-
-  const { collapseLeftPanel } = useModel('useEditor');
 
   // 使用插件
   const handleOnPlugins = (graph: Graph) => {
@@ -192,9 +195,26 @@ const Canvas = () => {
         return node.clone().size(width * 3, height * 3);
       },
     });
+
     dndRef.current = dnd;
   };
 
+  // 往画布添加组件
+  const handleAddNode = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    const graph = graphRef.current;
+    const dnd = dndRef.current;
+
+    const target = e.currentTarget; //获取目标对象
+    const type = target.getAttribute('datatype');
+
+    const node = graph.createNode({
+      shape: type,
+    });
+
+    dnd.start(node, e.nativeEvent);
+  };
+
+  // 初始化画布
   const handleInitGraph = () => {
     const graphContainer = document.getElementById('canvas-container')!;
 
@@ -222,6 +242,17 @@ const Canvas = () => {
     setVerticalGuidelines([]);
     horizontalGuidesRef.current?.loadGuides([]);
     verticalGuidesRef.current?.loadGuides([]);
+  };
+
+  const handleOnScroll = (e: OnScroll) => {
+    const viewZoom = viewerRef.current?.getZoom();
+    const verticalScrollLeft = collapseLeftPanel ? e.scrollLeft - offset : e.scrollLeft;
+
+    horizontalGuidesRef.current?.scroll(e.scrollLeft, viewZoom);
+    horizontalGuidesRef.current?.scrollGuides(e.scrollTop, viewZoom);
+
+    verticalGuidesRef.current?.scroll(e.scrollTop, viewZoom);
+    verticalGuidesRef.current?.scrollGuides(verticalScrollLeft, viewZoom);
   };
 
   const getGuideConfig = () => {
@@ -254,20 +285,6 @@ const Canvas = () => {
     setVerticalZoom(guideZoom);
   };
 
-  const handleAddNode = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-    const graph = graphRef.current;
-    const dnd = dndRef.current;
-
-    const target = e.currentTarget; //获取目标对象
-    const type = target.getAttribute('datatype');
-
-    const node = graph.createNode({
-      shape: type,
-    });
-
-    dnd.start(node, e.nativeEvent);
-  };
-
   useEffect(() => {
     const zoom = canvasSize / 100;
     getGuideConfig();
@@ -275,6 +292,21 @@ const Canvas = () => {
 
     viewerRef.current?.setZoom(zoom);
   }, [canvasSize]);
+
+  useEffect(() => {
+    setOffset(round(300 / horizontalZoom, 2));
+  }, [horizontalZoom]);
+
+  useEffect(() => {
+    const viewZoom = viewerRef.current?.getZoom();
+    const pos = verticalGuidesRef.current?.getGuideScrollPos();
+
+    if (collapseLeftPanel) {
+      verticalGuidesRef.current?.scrollGuides(Number(pos) - offset, viewZoom);
+    } else {
+      verticalGuidesRef.current?.scrollGuides(Number(pos) + offset, viewZoom);
+    }
+  }, [collapseLeftPanel]);
 
   useEffect(() => {
     const initGraph = handleInitGraph();
@@ -310,7 +342,6 @@ const Canvas = () => {
             className={cn(
               'horizonal',
               'absolute w-[calc(100%-84px)] h-[20px] top-[60px] left-[84px] z-10 -translate-z-1',
-              collapseLeftPanel ? 'left-[84px]' : 'left-[384px]',
             )}
           >
             <Guides
@@ -346,7 +377,11 @@ const Canvas = () => {
               unit={verticalUnit}
               marks={horizontalGuidelines}
               onChangeGuides={({ guides }) => {
-                setVerticalGuidelines(guides);
+                let newGuides = [...guides];
+                if (!collapseLeftPanel) {
+                  newGuides = guides?.map((item) => Number(item) + offset);
+                }
+                setVerticalGuidelines(newGuides);
               }}
             />
           </div>
@@ -356,15 +391,7 @@ const Canvas = () => {
             useAutoZoom={true}
             useMouseDrag={canMouseDrag}
             useWheelScroll={true}
-            onScroll={(e) => {
-              const viewZoom = viewerRef.current?.getZoom();
-
-              horizontalGuidesRef.current?.scroll(e.scrollLeft, viewZoom);
-              horizontalGuidesRef.current?.scrollGuides(e.scrollTop, viewZoom);
-
-              verticalGuidesRef.current?.scroll(e.scrollTop, viewZoom);
-              verticalGuidesRef.current?.scrollGuides(e.scrollLeft, viewZoom);
-            }}
+            onScroll={handleOnScroll}
           >
             <div id="canvas-container" />
           </InfiniteViewer>
