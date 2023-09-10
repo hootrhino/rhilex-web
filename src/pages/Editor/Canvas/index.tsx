@@ -1,3 +1,6 @@
+import { Clipboard } from '@antv/x6-plugin-clipboard';
+import { History } from '@antv/x6-plugin-history';
+import { Keyboard } from '@antv/x6-plugin-keyboard';
 import { Selection } from '@antv/x6-plugin-selection';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { Transform } from '@antv/x6-plugin-transform';
@@ -8,20 +11,23 @@ import RightPanel from '../RightPanel';
 import LeftPanel from '../LeftPanel';
 import ToolBar from '../ToolBar';
 
+import { DEFAULT_GUIDE_CONFIG } from '@/models/useGuide';
 import { cn } from '@/utils/utils';
-import { EyeInvisibleOutlined } from '@ant-design/icons';
-import Guides from '@scena/react-guides';
+import { ExclamationCircleFilled, EyeInvisibleOutlined } from '@ant-design/icons';
 import { Graph } from '@antv/x6';
+import Guides from '@scena/react-guides';
+import inRange from 'lodash/inRange';
+import round from 'lodash/round';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
+import type { OnScroll } from 'react-infinite-viewer';
 import InfiniteViewer from 'react-infinite-viewer';
 import Footer from '../Footer';
-import { DEFAULT_GUIDE_CONFIG } from '@/models/useGuide';
-import { inRange } from 'lodash';
 
-import './index.less';
 import { Dnd } from '@antv/x6-plugin-dnd';
 import { register } from '@antv/x6-react-shape';
+import './index.less';
 
+import { Modal } from 'antd';
 import shapes from '../Shapes/ReactNodes';
 
 const Canvas = () => {
@@ -33,9 +39,10 @@ const Canvas = () => {
   const horizontalGuidesRef = useRef<Guides>(null);
   const verticalGuidesRef = useRef<Guides>(null);
 
-  // const [shouldRender, setShouldRender] = useState<boolean>(false);
+  const { collapseLeftPanel } = useModel('useEditor');
   const [canvasSize, setCanvasSize] = useState<number>(30);
   const [canMouseDrag, setMouseDrag] = useState<boolean>(true);
+  const [offset, setOffset] = useState<number>(0);
 
   const {
     verticalZoom,
@@ -49,39 +56,167 @@ const Canvas = () => {
     setHorizontalZoom,
     setHorizontalUnit,
     setVerticalZoom,
-    setVerticalUnit
+    setVerticalUnit,
   } = useModel('useGuide');
-
-  const {
-    collapseLeftPanel,
-  } = useModel('useEditor');
 
   // 使用插件
   const handleOnPlugins = (graph: Graph) => {
     graph
-      .use(new Snapline({
-        enabled: true
-      }))
+      .use(
+        new Snapline({
+          enabled: true,
+        }),
+      )
       .use(
         new Transform({
           resizing: true,
           rotating: true,
         }),
       )
-    .use(
-      new Selection({
-        enabled: true,
-        rubberband: true,
-        showNodeSelectionBox: true,
-        pointerEvents: 'none',
-        // modifiers: ['alt']
-      }),
-    )
+      .use(
+        new Selection({
+          enabled: true,
+          rubberband: true,
+          showNodeSelectionBox: true,
+          pointerEvents: 'none',
+          // modifiers: ['alt']
+        }),
+      )
+      .use(
+        new Keyboard({
+          enabled: true,
+        }),
+      )
+      .use(
+        new Clipboard({
+          enabled: true,
+        }),
+      )
+      .use(
+        new History({
+          enabled: true,
+        }),
+      );
   };
 
+  // 使用快捷键
+  const handleOnBindKey = (graph: Graph) => {
+    // 复制
+    graph.bindKey(['meta+c', 'ctrl+c'], () => {
+      const cells = graph.getSelectedCells();
+      if (cells.length) {
+        graph.copy(cells);
+      }
+      return false;
+    });
+
+    // 剪切
+    graph.bindKey(['meta+x', 'ctrl+x'], () => {
+      const cells = graph.getSelectedCells();
+      if (cells.length) {
+        graph.cut(cells);
+      }
+      return false;
+    });
+
+    // 粘贴
+    graph.bindKey(['meta+v', 'ctrl+v'], () => {
+      if (!graph.isClipboardEmpty()) {
+        const cells = graph.paste({ offset: 32 });
+        graph.cleanSelection();
+        graph.select(cells);
+      }
+      return false;
+    });
+
+    // 撤销
+    graph.bindKey(['meta+z', 'ctrl+z'], () => {
+      if (graph.canUndo()) {
+        graph.undo();
+      }
+      return false;
+    });
+
+    // 重做
+    graph.bindKey(['meta+shift+z', 'ctrl+shift+z'], () => {
+      if (graph.canRedo()) {
+        graph.redo();
+      }
+      return false;
+    });
+
+    // 全选
+    graph.bindKey(['meta+a', 'ctrl+a'], () => {
+      const nodes = graph.getNodes();
+      if (nodes) {
+        graph.select(nodes);
+      }
+    });
+
+    // 删除
+    graph.bindKey('backspace', () => {
+      const cells = graph.getSelectedCells();
+      if (cells.length) {
+        Modal.confirm({
+          title: '确定要删除该组件吗？',
+          icon: <ExclamationCircleFilled />,
+          okType: 'danger',
+          onOk() {
+            graph.removeCells(cells);
+          },
+          // bodyStyle: {background: '#262626'}
+        });
+      }
+    });
+  };
+
+  // 使用事件
+  const handleOnEvent = (graph: Graph) => {
+    graph.on('graph:mouseenter', () => {
+      setMouseDrag(false);
+    });
+    graph.on('graph:mouseleave', () => {
+      setMouseDrag(true);
+    });
+  };
+
+  // 使用DND拖拽
+  const handleOnDnd = (graph: Graph) => {
+    const dndContainer = document.getElementById('dnd-container')!;
+
+    // 注册拖拽
+    const dnd = new Dnd({
+      target: graph,
+      dndContainer,
+      scaled: false,
+      getDropNode(node) {
+        const { width, height } = node.size();
+
+        return node.clone().size(width * 3, height * 3);
+      },
+    });
+
+    dndRef.current = dnd;
+  };
+
+  // 往画布添加组件
+  const handleAddNode = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    const graph = graphRef.current;
+    const dnd = dndRef.current;
+
+    const target = e.currentTarget; //获取目标对象
+    const type = target.getAttribute('datatype');
+
+    const node = graph.createNode({
+      shape: type,
+    });
+
+    dnd.start(node, e.nativeEvent);
+  };
+
+  // 初始化画布
   const handleInitGraph = () => {
     const graphContainer = document.getElementById('canvas-container')!;
-    const dndContainer = document.getElementById('dnd-container')!;
 
     const graph = new Graph({
       container: graphContainer,
@@ -93,35 +228,11 @@ const Canvas = () => {
       // embedding: true,
     });
 
-    const dnd = new Dnd({
-      target: graph,
-      dndContainer,
-      scaled: false,
-      getDropNode(node) {
-        const { width, height } = node.size();
-
-        return node.clone().size(width * 3, height * 3);
-      },
-      getDragNode(sourceNode) {
-        const shape = sourceNode.shape;
-        console.log(shape);
-        if (shape === 'media2') {
-          return graph.addNode({shape, width: 200, height: 200})
-        }
-
-        return sourceNode.clone();
-      }
-    });
-
-    graph.on('graph:mouseenter', () => {
-      setMouseDrag(false)
-    })
-    graph.on('graph:mouseleave', () => {
-      setMouseDrag(true)
-    })
+    handleOnEvent(graph);
     handleOnPlugins(graph);
+    handleOnBindKey(graph);
+    handleOnDnd(graph);
     graphRef.current = graph;
-    dndRef.current = dnd;
 
     return graph;
   };
@@ -131,7 +242,18 @@ const Canvas = () => {
     setVerticalGuidelines([]);
     horizontalGuidesRef.current?.loadGuides([]);
     verticalGuidesRef.current?.loadGuides([]);
-  }
+  };
+
+  const handleOnScroll = (e: OnScroll) => {
+    const viewZoom = viewerRef.current?.getZoom();
+    const verticalScrollLeft = collapseLeftPanel ? e.scrollLeft - offset : e.scrollLeft;
+
+    horizontalGuidesRef.current?.scroll(e.scrollLeft, viewZoom);
+    horizontalGuidesRef.current?.scrollGuides(e.scrollTop, viewZoom);
+
+    verticalGuidesRef.current?.scroll(e.scrollTop, viewZoom);
+    verticalGuidesRef.current?.scrollGuides(verticalScrollLeft, viewZoom);
+  };
 
   const getGuideConfig = () => {
     let unit = horizontalUnit;
@@ -161,21 +283,7 @@ const Canvas = () => {
     setVerticalUnit(unit);
     setHorizontalZoom(guideZoom);
     setVerticalZoom(guideZoom);
-  }
-
-  const handleAddNode = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-    const graph = graphRef.current;
-    const dnd = dndRef.current;
-
-    const target = e.currentTarget //获取目标对象
-    const type = target.getAttribute('datatype');
-
-    const node = graph.createNode({
-      shape: type,
-    })
-
-    dnd.start(node, e.nativeEvent)
-  }
+  };
 
   useEffect(() => {
     const zoom = canvasSize / 100;
@@ -185,11 +293,20 @@ const Canvas = () => {
     viewerRef.current?.setZoom(zoom);
   }, [canvasSize]);
 
-  // useEffect(() => {
-  //   if (graphRef.current) {
-  //     setShouldRender(true);
-  //   }
-  // }, [graphRef]);
+  useEffect(() => {
+    setOffset(round(300 / horizontalZoom, 2));
+  }, [horizontalZoom]);
+
+  useEffect(() => {
+    const viewZoom = viewerRef.current?.getZoom();
+    const pos = verticalGuidesRef.current?.getGuideScrollPos();
+
+    if (collapseLeftPanel) {
+      verticalGuidesRef.current?.scrollGuides(Number(pos) - offset, viewZoom);
+    } else {
+      verticalGuidesRef.current?.scrollGuides(Number(pos) + offset, viewZoom);
+    }
+  }, [collapseLeftPanel]);
 
   useEffect(() => {
     const initGraph = handleInitGraph();
@@ -199,14 +316,7 @@ const Canvas = () => {
     });
 
     // 注册 React 节点
-    shapes?.forEach(item => register(item));
-    // register({
-    //   shape: 'media2',
-    //   width: 100,
-    //   height: 100,
-    //   zIndex: 1,
-    //   component: VideoNode,
-    // })
+    shapes?.forEach((item) => register(item));
 
     // 组件卸载时清理 Graph 实例
     return () => {
@@ -232,22 +342,21 @@ const Canvas = () => {
             className={cn(
               'horizonal',
               'absolute w-[calc(100%-84px)] h-[20px] top-[60px] left-[84px] z-10 -translate-z-1',
-              collapseLeftPanel ? 'left-[84px]' : 'left-[384px]',
             )}
           >
             <Guides
               {...DEFAULT_GUIDE_CONFIG}
-                ref={horizontalGuidesRef}
-                type="horizontal"
-                textOffset={[0, 10]}
-                zoom={horizontalZoom}
-                guidesZoom={verticalZoom}
-                unit={horizontalUnit}
-                marks={verticalGuidelines}
-                onChangeGuides={({ guides }) => {
-                  setHorizontalGuidelines(guides);
-                }}
-              />
+              ref={horizontalGuidesRef}
+              type="horizontal"
+              textOffset={[0, 10]}
+              zoom={horizontalZoom}
+              guidesZoom={verticalZoom}
+              unit={horizontalUnit}
+              marks={verticalGuidelines}
+              onChangeGuides={({ guides }) => {
+                setHorizontalGuidelines(guides);
+              }}
+            />
           </div>
           <div
             className={cn(
@@ -257,7 +366,7 @@ const Canvas = () => {
             )}
           >
             <Guides
-            {...DEFAULT_GUIDE_CONFIG}
+              {...DEFAULT_GUIDE_CONFIG}
               ref={verticalGuidesRef}
               type="vertical"
               textOffset={[-10, 0]}
@@ -268,25 +377,21 @@ const Canvas = () => {
               unit={verticalUnit}
               marks={horizontalGuidelines}
               onChangeGuides={({ guides }) => {
-                setVerticalGuidelines(guides);
+                let newGuides = [...guides];
+                if (!collapseLeftPanel) {
+                  newGuides = guides?.map((item) => Number(item) + offset);
+                }
+                setVerticalGuidelines(newGuides);
               }}
             />
           </div>
           <InfiniteViewer
             ref={viewerRef}
-            className='relative w-full h-[100vh]'
+            className="relative w-full h-[100vh]"
             useAutoZoom={true}
             useMouseDrag={canMouseDrag}
             useWheelScroll={true}
-            onScroll={(e) => {
-              const viewZoom = viewerRef.current?.getZoom();
-
-              horizontalGuidesRef.current?.scroll(e.scrollLeft, viewZoom);
-              horizontalGuidesRef.current?.scrollGuides(e.scrollTop, viewZoom);
-
-              verticalGuidesRef.current?.scroll(e.scrollTop, viewZoom);
-              verticalGuidesRef.current?.scrollGuides(e.scrollLeft, viewZoom);
-            }}
+            onScroll={handleOnScroll}
           >
             <div id="canvas-container" />
           </InfiniteViewer>

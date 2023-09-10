@@ -222,7 +222,6 @@
     path: '/screen-mgt',
     name: '大屏管理',
     icon: 'group',
-    // hideInMenu: true,
     routes: [
       {
         path: '/screen-mgt',

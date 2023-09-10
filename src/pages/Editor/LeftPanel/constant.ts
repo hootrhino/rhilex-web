@@ -70,25 +70,22 @@ export const chartsList = [
         key: 'other2',
         title: '旭日图',
         image: other.other2,
-        disabled: true
       },
       {
         key: 'other3',
         title: '漏斗图',
         image: other.other3,
-        disabled: true
+        disabled: true,
       },
       {
         key: 'other4',
         title: '热力图',
         image: other.other4,
-        disabled: true
       },
       {
         key: 'other5',
         title: '子弹图',
         image: other.other5,
-        disabled: true
       },
     ],
   },
@@ -111,10 +108,10 @@ export const chartsList = [
         image: interval.interval3,
       },
       {
-        key: 'radial1',
+        key: 'interval4',
         title: '玉钰图',
         image: interval.interval4,
-        disabled: true
+        // disabled: true
       },
     ],
   },
@@ -145,6 +142,7 @@ export const chartsList = [
         key: 'area1',
         title: '区域图',
         image: area.area1,
+        disabled: true,
       },
     ],
   },
@@ -180,6 +178,7 @@ export const chartsList = [
         key: 'point2',
         title: '气泡图',
         image: point.point2,
+        disabled: true,
       },
     ],
   },
@@ -190,7 +189,6 @@ export const chartsList = [
         key: 'radar1',
         title: '雷达图',
         image: radar.radar1,
-        disabled: true
       },
     ],
   },
@@ -205,7 +203,7 @@ export const mapList = [
     key: 'map1',
     title: '基础平面地图',
     image: map.map1,
-    disabled: true
+    disabled: true,
   },
 ];
 
@@ -260,7 +258,7 @@ export const widgetList = [
     key: 'widget1',
     title: '开关',
     image: widget.widget1,
-    disabled: true
+    disabled: true,
   },
   {
     key: 'widget2',
