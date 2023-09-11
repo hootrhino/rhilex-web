@@ -12,7 +12,11 @@ import AceEditor from 'react-ace';
 const Scanner = () => {
   // 获取串口配置
   const { data: uartOptions } = useRequest(() => getOsUarts(), {
-    formatResult: (res) => res?.data?.map((item: string) => ({ value: item })),
+    formatResult: (res) =>
+      res?.data?.map((item: { port: string; alias: string }) => ({
+        value: item.port,
+        label: item.alias,
+      })),
   });
 
   return (
