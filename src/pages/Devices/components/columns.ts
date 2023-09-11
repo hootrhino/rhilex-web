@@ -650,12 +650,20 @@ export const columns = [
                     {
                       title: '数据标签',
                       dataIndex: 'tag',
+                      width: 'md',
+                      required: true,
+                    },
+                    {
+                      title: '数据别名',
+                      dataIndex: 'alias',
+                      width: 'md',
                       required: true,
                     },
                     {
                       title: 'Modbus 功能',
                       dataIndex: 'function',
                       valueType: 'select',
+                      width: 'md',
                       required: true,
                       valueEnum: new Map([
                         [1, '01 读线圈状态'],

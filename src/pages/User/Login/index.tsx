@@ -1,3 +1,4 @@
+import loginBg from '@/assets/images/loginBg.png';
 import { message } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -37,8 +38,7 @@ const Login: React.FC = () => {
       flexDirection: 'column',
       height: '100vh',
       overflow: 'auto',
-      backgroundImage:
-        "url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')",
+      backgroundImage: `url(${loginBg})`,
       backgroundSize: '100% 100%',
     };
   });

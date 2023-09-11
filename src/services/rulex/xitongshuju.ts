@@ -26,16 +26,8 @@ export async function getOsStartedAt(options?: { [key: string]: any }) {
   });
 }
 
-/** 串口列表 GET /api/v1/os/uarts */
-export async function getOsUarts(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/v1/os/uarts', {
-    method: 'GET',
-    ...(options || {}),
-  });
-}
-
-/** 系统参数 获取首页dashboard数据 GET /api/v1/system */
-export async function getSystem(options?: { [key: string]: any }) {
+/** 系统参数 获取首页dashboard数据 GET /api/v1/os/system */
+export async function getOsSystem(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
@@ -45,17 +37,31 @@ export async function getSystem(options?: { [key: string]: any }) {
         cpuPercent?: number;
         diskInfo?: number;
         osArch?: string;
+        osDist?: string;
         startedTime?: string;
         systemMem?: number;
         totalMem?: number;
         version?: string;
-        ip?: string[];
-        wsUrl?: string[];
       };
-      sourceCount: { inends?: number; outends?: number; plugins?: number; rules?: number };
+      sourceCount: {
+        apps?: number;
+        devices?: number;
+        inends?: number;
+        outends?: number;
+        plugins?: number;
+        rules?: number;
+      };
       statistic: { inSuccess?: number; outSuccess?: number; inFailed?: number; outFailed?: number };
     };
-  }>('/api/v1/system', {
+  }>('/api/v1/os/system', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 串口列表 GET /api/v1/os/uarts */
+export async function getOsUarts(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/os/uarts', {
     method: 'GET',
     ...(options || {}),
   });
