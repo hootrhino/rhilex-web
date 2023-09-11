@@ -7,6 +7,8 @@ import { FilterValue } from 'antd/es/table/interface';
 import add from 'lodash/add';
 import RcResizeObserver from 'rc-resize-observer';
 
+import AppIcon from '@/assets/fontIcons/app.svg';
+import DeviceIcon from '@/assets/fontIcons/device.svg';
 import ExportIcon from '@/assets/fontIcons/export.svg';
 import ImportIcon from '@/assets/fontIcons/import.svg';
 import PluginIcon from '@/assets/fontIcons/plugin.svg';
@@ -148,6 +150,20 @@ const Dashboard = () => {
               title: '插件总数',
               value: dataSource?.sourceCount?.plugins,
               icon: <img src={PluginIcon} alt="插件总数" className="w-[42px] h-[42px]" />,
+            }}
+          />
+          <StatisticCard
+            statistic={{
+              title: '应用总数',
+              value: dataSource?.sourceCount?.apps,
+              icon: <img src={AppIcon} alt="应用总数" className="w-[42px] h-[42px]" />,
+            }}
+          />
+          <StatisticCard
+            statistic={{
+              title: '设备总数',
+              value: dataSource?.sourceCount?.devices,
+              icon: <img src={DeviceIcon} alt="设备总数" className="w-[42px] h-[42px]" />,
             }}
           />
         </StatisticCard.Group>
