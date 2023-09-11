@@ -265,6 +265,10 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         dataIndex: 'tag',
       },
       {
+        title: '数据别名',
+        dataIndex: 'alias',
+      },
+      {
         title: 'Modbus 功能',
         dataIndex: 'function',
         valueEnum: new Map([
