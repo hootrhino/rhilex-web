@@ -10,7 +10,7 @@ import {
 } from '@ant-design/pro-components';
 
 import useGoBack from '@/hooks/useGoBack';
-import { getUarts } from '@/services/rulex/xitongshuju';
+import { getOsUarts } from '@/services/rulex/xitongshuju';
 import { FooterToolbar } from '@ant-design/pro-components';
 import { AutoComplete, Button, Popconfirm, Segmented } from 'antd';
 import omit from 'lodash/omit';
@@ -107,7 +107,7 @@ const SchemaForm = ({
   const editorRef = useRef(null);
   const { showModal } = useGoBack();
 
-  const { data: uartOptions } = useRequest(() => getUarts(), {
+  const { data: uartOptions } = useRequest(() => getOsUarts(), {
     formatResult: (res) => res?.data?.map((item: string) => ({ value: item })),
   });
 
