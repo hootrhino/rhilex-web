@@ -1,8 +1,95 @@
 import chartsImg from './Images';
-const { interval, bar, line, area, pie, point, radar, other, map, text, table, widget, media } =
-  chartsImg;
+const {
+  interval,
+  bar,
+  line,
+  area,
+  pie,
+  point,
+  radar,
+  other,
+  map,
+  text,
+  table,
+  widget,
+  media,
+  template,
+} = chartsImg;
 
-export const tabList = [
+// 设计库
+export const MaterialTabList = [
+  {
+    key: 'temp',
+    icon: 'icon-temp',
+    name: '大屏模板',
+  },
+  {
+    key: 'map',
+    icon: 'icon-map',
+    name: '地图',
+  },
+  {
+    key: 'dataPanel',
+    icon: 'icon-data-panel',
+    name: '数据面板',
+  },
+  {
+    key: 'title',
+    icon: 'icon-title',
+    name: '标题',
+  },
+  {
+    key: 'norm',
+    icon: 'icon-norm',
+    name: '设计规范',
+  },
+  {
+    key: 'sucai',
+    icon: 'icon-sucai',
+    name: '素材',
+  },
+];
+
+export const MaterialData = [
+  {
+    key: 'temp1',
+    image: template.template1,
+    disabled: true,
+  },
+  {
+    key: 'temp2',
+    image: template.template2,
+    disabled: true,
+  },
+  {
+    key: 'temp3',
+    image: template.template3,
+    disabled: true,
+  },
+  {
+    key: 'temp4',
+    image: template.template4,
+    disabled: true,
+  },
+  {
+    key: 'temp5',
+    image: template.template5,
+    disabled: true,
+  },
+  {
+    key: 'temp6',
+    image: template.template6,
+    disabled: true,
+  },
+  {
+    key: 'temp7',
+    image: template.template7,
+    disabled: true,
+  },
+];
+
+// 组件库
+export const ComponentTabList = [
   {
     key: 'charts',
     icon: 'icon-charts',

@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import {
   chartsList,
   chartsTypeList,
+  ComponentTabList,
   mapList,
   mediaList,
   tableList,
-  tabList,
   textList,
   widgetList,
 } from '../constant';
@@ -78,18 +78,18 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
           'flex flex-col justify-satrt bg-[#0F0F0F] w-[40px] items-center relative',
         )}
       >
-        {tabList?.map((tab) => (
+        {ComponentTabList?.map((tab) => (
           <div
             key={tab.key}
             className={cn(
               'h-[48px] px-[4px] flex justify-center items-center',
-              activeTab === tab.key && 'test',
+              activeTab === tab.key && 'active-tab',
             )}
             onClick={() => setTab(tab.key)}
           >
             <Tooltip title={tab.name} placement="left" color="#4281ff">
               <div className="w-[20px] h-[20px] flex justify-center items-center hover:bg-[#1a1a1a] cursor-pointer">
-                <IconFont type={tab.icon} />
+                <IconFont type={activeTab === tab.key ? `${tab.icon}-active` : tab.icon} />
               </div>
             </Tooltip>
           </div>
@@ -126,12 +126,7 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
       ) : (
         <ul className={cn('charts-wrapper', 'custom-scrollbar', 'p-[18px] w-full')}>
           {data?.map((item) => (
-            <ComponentItem
-              data={item}
-              key={item.key}
-              onMouseDown={addNode}
-              datatype={item.key}
-            />
+            <ComponentItem data={item} key={item.key} onMouseDown={addNode} datatype={item.key} />
           ))}
         </ul>
       )}

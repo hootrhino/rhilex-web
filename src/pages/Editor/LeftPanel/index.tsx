@@ -13,6 +13,7 @@ import { forwardRef, useState } from 'react';
 import ComponentLibrary from './ComponentLibrary';
 import { panelItems } from './constant';
 import Layers from './Layers';
+import Material from './Material';
 
 type LeftPanelProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -115,6 +116,7 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({addNode, ...props}, ref) => 
         >
           {activeItem === 'layers' && <Layers />}
           {activeItem === 'components' && <ComponentLibrary addNode={addNode} />}
+          {activeItem === 'material' && <Material  />}
         </div>
       </div>
     </>

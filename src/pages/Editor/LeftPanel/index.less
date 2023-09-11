@@ -1,9 +1,9 @@
 .left-panel-fixed {
   z-index: 99;
   height: calc(100vh - 60px);
+  font-size: 12px;
   border-right: 1px solid #000;
   box-shadow: inset -1px 0 0 0 rgba(61, 61, 61, 0.6);
-  font-size: 12px;
 
   &-item,
   &-help {
@@ -53,18 +53,35 @@
 
   .tab-wrapper {
     svg {
-      font-size: 16px;
       z-index: 1;
+      font-size: 16px;
     }
-    .test {
+    .active-tab {
       &::before {
+        position: absolute;
+        left: 4px;
+        display: block;
+        width: 40px;
+        height: 48px;
         background-color: #1a1a1a;
-      width: 40px;
-      height: 48px;
-      position: absolute;
-      display: block;
-      left: 4px;
-      border-radius: 4px 0 0 4px;
+        border-radius: 4px 0 0 4px;
+        transform: translateY(5%);
+        content: '';
+      }
+    }
+    .active-tab2 {
+      background-color: transparent;
+      .title {
+        z-index: 99;
+      }
+      &::before {
+        position: absolute;
+        left: 4px;
+        display: block;
+        width: 67px;
+        height: 64.8px;
+        background-color: #1a1a1a;
+        border-radius: 4px 0 0 4px;
         transform: translateY(5%);
         content: '';
       }
@@ -72,8 +89,8 @@
   }
 
   .charts-wrapper {
-    overflow-y: overlay;
     height: calc(100vh - 117px);
+    overflow-y: overlay;
   }
 
   .custom-scrollbar {

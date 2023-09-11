@@ -37,6 +37,9 @@ import widget from './Widget';
 // 媒体
 import media from './Media';
 
+// 模板
+import template from './Template';
+
 const chartsImg = {
   area,
   bar,
@@ -50,7 +53,8 @@ const chartsImg = {
   map,
   table,
   widget,
-  media
+  media,
+  template
 };
 
 export default chartsImg;
