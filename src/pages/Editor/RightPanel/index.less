@@ -4,23 +4,68 @@
   padding-left: 1px;
   border-left: 1px solid #000;
   box-shadow: inset 1px 0 0 0 rgba(61, 61, 61, 0.6);
-  // transition: all 3s ease-out;
 
   &-tabs {
     border-bottom: 1px solid #333;
   }
 }
 
-.ant-color-picker-trigger .ant-color-picker-color-block {
-  width: 97%;
+.common-input {
 }
 
-.ant-upload-list-item-container {
-  width: 80px !important;
-  height: 80px !important;
+.canvas-input {
+  background-color: #333;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: border 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #333;
+    border-color: #333;
+  }
+
+  .ant-input-number-group-addon {
+    padding: 0 3px;
+    color: #7a7a7a;
+    font-size: 12px;
+    border: none;
+  }
+  .ant-input-number-input {
+    color: #dbdbdb;
+  }
+  .ant-input-number-handler {
+    border: none;
+    .ant-input-number-handler-down-inner,
+    .ant-input-number-handler-up-inner {
+      color: #7a7a7a;
+    }
+    &:hover {
+      .ant-input-number-handler-down-inner,
+      .ant-input-number-handler-up-inner {
+        color: #fff;
+      }
+    }
+    &-wrap {
+      background: #434343;
+    }
+  }
 }
 
-.ant-upload.ant-upload-select {
-  width: 80px !important;
-  height: 80px !important;
+// 侧面滑出动画
+.slide-enter {
+  transform: translateX(100%);
+}
+
+.slide-enter-active {
+  transform: translateX(0);
+  transition: transform 300ms;
+}
+
+.slide-exit {
+  transform: translateX(0);
+}
+
+.slide-exit-active {
+  transform: translateX(100%);
+  transition: transform 300ms;
 }

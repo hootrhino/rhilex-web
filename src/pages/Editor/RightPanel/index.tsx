@@ -1,83 +1,54 @@
 import { cn } from '@/utils/utils';
-// import { Graph } from '@ant-design/charts';
-// import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
-// import { isNil } from 'lodash';
-import { forwardRef } from 'react';
-// import CanvasSetting from './CanvasSetting';
-// import EdgeSetting from './EdgeSeting';
-// import NodeSetting from './NodeSeting';
-import './index.less';
+import { Graph } from '@antv/x6';
 import { useModel } from '@umijs/max';
-// type DetailFormType = 'node' | 'edge' | 'canvas';
+import isNil from 'lodash/isNil';
+import { forwardRef, useEffect, useRef, useState } from 'react';
+import { CSSTransition } from 'react-transition-group';
+import CanvasSetting from './CanvasSetting';
+import './index.less';
+import NodeSetting from './NodeSetting';
 
-// const title = {
-//   node: '节点设置',
-//   edge: '边设置',
-//   canvas: '页面设置',
-// };
+type DetailFormType = 'node' | 'canvas';
 
 const RightPanel = forwardRef((props, ref) => {
-  const { collapseRightPanel } = useModel('useEditor');
-  // const [collapse, setCollapse] = useState<boolean>(true);
-  // const [type, setFormType] = useState<DetailFormType>('canvas');
+  const nodeRef = useRef(null);
+  const { collapseRightPanel, setCollapseRightPanel } = useModel('useEditor');
+  const [type, setFormType] = useState<DetailFormType>('canvas');
 
-  // const handleOnChangeType = (graph: Graph) => {
-  //   graph.on('node:click', ({}) => {
-  //     setFormType('node');
-  //   });
+  const handleOnChangeType = (graph: Graph) => {
+    graph.on('node:click', ({}) => {
+      setFormType('node');
+    });
 
-  //   graph.on('edge:click', ({}) => {
-  //     setFormType('edge');
-  //   });
+    graph.on('blank:click', () => {
+      setFormType('canvas');
+    });
+  };
 
-  //   graph.on('blank:click', () => {
-  //     setFormType('canvas');
-  //   });
-  // };
+  useEffect(() => {
+    const graph = (ref as any)?.current;
 
-  // useEffect(() => {
-  //   const graph = (ref as any)?.current;
+    if (!isNil(graph)) {
+      handleOnChangeType(graph);
+    }
+  }, [(ref as any)?.current]);
 
-  //   if (!isNil(graph)) {
-  //     handleOnChangeType(graph);
-  //   }
-  // }, [(ref as any)?.current]);
+  useEffect(() => {
+    setCollapseRightPanel(false);
+  }, []);
 
   return (
-    <div className={cn('right-panel', 'fixed right-0 bottom-0 w-[332px] bg-[#1A1A1A]', collapseRightPanel ? 'hidden' : 'block')}>
-      <div className='h-full w-full'>
-        <div className={cn('right-panel-tabs', 'flex justify-center items-center h-[40px] text-[#dbdbdb]')}>页面设置</div>
-        <div className=''>content</div>
+    <CSSTransition
+      nodeRef={nodeRef}
+      in={!collapseRightPanel}
+      timeout={200}
+      classNames="slide"
+      unmountOnExit
+    >
+      <div className={cn('right-panel', 'fixed right-0 bottom-0  bg-[#1A1A1A]')} ref={nodeRef}>
+        {type === 'canvas' ? <CanvasSetting /> : <NodeSetting />}
       </div>
-    </div>
-    // <div
-    //   className={cn(
-    //     'w-[300px] h-full bg-white fixed top-0 transition-all duration-500 border-l-1 border-[#ccc]',
-    //     { 'right-0': collapse, 'right-[-300px]': !collapse },
-    //   )}
-    // >
-    //   <div
-    //     onClick={() => setCollapse(!collapse)}
-    //     className={cn(
-    //       'flex items-center justify-center absolute w-[24px] h-[24px] bg-white text-[#aaa] hover:text-[#2b84c0] text-center shadow-md top-[60px] border border-[#ccc]',
-    //       {
-    //         'rounded-full left-[-12px]': collapse,
-    //         'rounded-rl-none rounded-bl-[50%] rounded-tl-[50%] rounded-br-none left-[-20px]':
-    //           !collapse,
-    //       },
-    //     )}
-    //   >
-    //     {collapse ? <DoubleRightOutlined /> : <DoubleLeftOutlined />}
-    //   </div>
-    //   <div className="mt-[40px] px-[5px]">
-    //     <div className="flex items-center justify-center h-[40px] shadow-md">
-    //       <span>{title[type]}</span>
-    //     </div>
-    //     {type === 'canvas' && <CanvasSetting />}
-    //     {type === 'node' && <NodeSetting />}
-    //     {type === 'edge' && <EdgeSetting />}
-    //   </div>
-    // </div>
+    </CSSTransition>
   );
 });
 

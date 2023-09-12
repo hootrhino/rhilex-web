@@ -101,7 +101,7 @@ const useEditor = () => {
   const [collapseLeftPanel, setCollapseLeftPanel] = useState<boolean>(false);
 
   // 右侧面板
-  const [collapseRightPanel, setCollapseRightPanel] = useState<boolean>(false);
+  const [collapseRightPanel, setCollapseRightPanel] = useState<boolean>(true);
 
   return {
     canvasData,
@@ -117,7 +117,7 @@ const useEditor = () => {
     collapseLeftPanel,
     setCollapseLeftPanel,
     collapseRightPanel,
-    setCollapseRightPanel
+    setCollapseRightPanel,
   };
 };
 
