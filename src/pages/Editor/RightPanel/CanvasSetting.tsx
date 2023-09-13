@@ -1,10 +1,46 @@
-import { cn } from '@/utils/utils';
+import { cn, IconFont } from '@/utils/utils';
 
-import { Input, InputNumber, Slider, Space } from 'antd';
+import { Col, ColorPicker, InputNumber, Row, Slider, Space, Tooltip } from 'antd';
+import { useState } from 'react';
 import FormItem from './FormItem';
 import './index.less';
 
+const ZoomTypeList = [
+  {
+    icon: 'icon-fit-width',
+    tooltip: '等比宽度铺满可滚动',
+    key: 'fitWidth',
+  },
+  {
+    icon: 'icon-fit-height',
+    tooltip: '等比高度铺满居中',
+    key: 'fitHeight',
+  },
+  {
+    icon: 'icon-bg-full-screen',
+    tooltip: '全屏铺满',
+    key: 'fullScreen',
+  },
+  {
+    icon: 'icon-scroll',
+    tooltip: '等比高度铺满可滚动',
+    key: 'scroll',
+  },
+  {
+    icon: 'icon-center',
+    tooltip: '居中',
+    key: 'center',
+  },
+  {
+    icon: 'icon-disabled',
+    tooltip: '不缩放',
+    key: 'none',
+  },
+];
+
 const CanvasSetting = () => {
+  const [zoomType, setZoomType] = useState<string>('fitWidth');
+
   return (
     <div className="h-full w-[332px]">
       <div
@@ -58,14 +94,49 @@ const CanvasSetting = () => {
           </Space>
         </FormItem>
         <FormItem label="背景" className="mb-[10px]">
-          <Input />
+          <ColorPicker
+            value="#262626"
+            size="small"
+            showText
+            className={cn(
+              'canvas-color-picker',
+              'w-full bg-[#333] border-[#333] justify-start hover:border-transparent hover:bg-[#434343]',
+            )}
+          />
         </FormItem>
         <FormItem label="缩放方式" className="mb-[10px]">
-          <Input />
+          <div className="w-full h-[30px] bg-[#333] flex items-center justify-around">
+            {ZoomTypeList.map((item) => (
+              <Tooltip key={item.key} title={item.tooltip}>
+                <IconFont
+                  type={item.icon}
+                  className={
+                    item.key === zoomType
+                      ? 'bg-[#5C5C5C] h-[20px] px-[4px]'
+                      : 'bg-transparent h-[20px] px-[4px]'
+                  }
+                  onClick={() => setZoomType(item.key)}
+                />
+              </Tooltip>
+            ))}
+          </div>
         </FormItem>
         <FormItem label="缩略图" className="mb-[10px]">
-          <Input />
+          <Space align="center">
+            <div className="w-[88px] h-[24px] leading-[24px] bg-[#333] border-[#333] text-[#adadad] text-[12px] text-center cursor-pointer hover:bg-[#434343]">
+              截取封面
+            </div>
+            <div className="w-[88px] h-[24px] leading-[24px] bg-[#333] border-[#333] text-[#adadad] text-[12px] text-center cursor-pointer hover:bg-[#434343]">
+              上传封面
+            </div>
+          </Space>
         </FormItem>
+        <Row>
+          <Col span={16} offset={8}>
+            <div className="w-full h-[90px] bg-[#333]"></div>
+            <span className="text-[#7A7A7A] text-[12px]">*封面缩略图</span>
+          </Col>
+        </Row>
       </div>
     </div>
   );
