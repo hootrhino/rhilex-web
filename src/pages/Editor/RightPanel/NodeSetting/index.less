@@ -1,12 +1,11 @@
 .node-setting-tab {
   .ant-tabs-nav {
     height: 40px;
-    color: #7a7a7a;
     background-color: #0f0f0f;
 
     .ant-tabs-tab {
       margin: 0;
-      padding: 10px 28px;
+      padding: 10px 31px;
       &-active {
         background-color: #1a1a1a;
       }
@@ -21,4 +20,46 @@
       border: none;
     }
   }
+}
+
+.node-setting-tab-lg {
+  .ant-tabs-nav {
+    .ant-tabs-tab {
+      padding: 10px 42px;
+    }
+  }
+}
+
+.data-form-title {
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+}
+
+.data-form-wrapper {
+  .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(
+      .ant-pagination-size-changer
+    ):hover
+    .ant-select-selector {
+    border-color: #1f6aff;
+  }
+  .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(
+      .ant-pagination-size-changer
+    ):active
+    .ant-select-selector {
+    border-color: #1f6aff;
+  }
+}
+
+// 滚动条
+.cm-scroller::-webkit-scrollbar {
+  width: 2px;
+}
+
+.cm-scroller::-webkit-scrollbar-thumb {
+  background: #5e5e5e;
+  border-radius: 20px;
+}
+
+.cm-scroller::-webkit-scrollbar-track {
+  background: transparent;
 }

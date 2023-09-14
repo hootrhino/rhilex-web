@@ -27,7 +27,7 @@ const NodeSetting = () => {
       children: <DataSource />,
     },
     {
-      label: getLabel('高级', 'advanced', 'icon-widget'),
+      label: getLabel('高级', 'advanced', 'icon-advance-setting'),
       key: 'advanced',
       disabled: true,
       children: <CommonStyle />,
@@ -35,16 +35,18 @@ const NodeSetting = () => {
   ];
 
   return (
-    <div className="h-full w-[332px]">
+    <div className={cn('h-full', activeTab === 'dataSource' ? 'w-[400px]' : 'w-[332px]')}>
       <ConfigProvider
         theme={{
           components: {
             Tabs: {
               cardGutter: 0,
+              itemColor: '#7a7a7a',
               itemActiveColor: '#DBDBDB',
               itemSelectedColor: '#DBDBDB',
               itemHoverColor: '#7A7A7A',
               inkBarColor: 'transparent',
+              fontSize: 12
             },
           },
         }}
@@ -54,7 +56,7 @@ const NodeSetting = () => {
           destroyInactiveTabPane={true}
           size="small"
           items={items}
-          className={cn('node-setting-tab')}
+          className={cn('node-setting-tab', activeTab === 'dataSource' && 'node-setting-tab-lg')}
           onChange={(activeKey) => setActiveTab(activeKey)}
         />
       </ConfigProvider>

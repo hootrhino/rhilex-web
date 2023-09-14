@@ -1,5 +1,70 @@
+import { cn, IconFont } from '@/utils/utils';
+import { FileTextOutlined } from '@ant-design/icons';
+import { json } from '@codemirror/lang-json';
+import CodeMirror from '@uiw/react-codemirror';
+import { ConfigProvider, Form, Select, Space, Tooltip } from 'antd';
+import { useState } from 'react';
+
+type OptionType = {
+  value: string;
+  label: string;
+};
+
+const DEFAULT_OPTION = [{ label: '静态数据', value: 'static' }];
 const DataSource = () => {
-  return <div>数据源内容</div>;
+  const [typeOption, setOption] = useState<OptionType[]>(DEFAULT_OPTION);
+
+  return (
+    <div className={cn('data-form-wrapper', '')}>
+      <ConfigProvider
+        theme={{
+          components: {
+            Form: {
+              labelColor: '#ADADAD',
+              labelFontSize: 12,
+            },
+            Select: {
+              selectorBg: '#333',
+              colorBorder: '#333',
+              optionSelectedBg: '#434343',
+              optionFontSize: 12,
+              fontSize: 12,
+              borderRadius: 4,
+            },
+          },
+        }}
+      >
+        <div className="pt-[10px] pb-[12px] pl-[32px] text-[16px] text-[#F7F7F7]">
+          <span>水波图</span>
+          <Tooltip title="查看文档" color="#1F6AFF">
+            <FileTextOutlined style={{ fontSize: 14, paddingLeft: 5, cursor: 'pointer' }} />
+          </Tooltip>
+        </div>
+        <div
+          className={cn(
+            'data-form-title',
+            'text-[#F7F7F7] bg-[#242424] h-[32px] leading-[32px] mb-[20px]',
+          )}
+        >
+          <Space align="center" className="px-[12px]">
+            <IconFont type="icon-number1" />
+            <span className="pr-[5px]">设置数据源</span>
+            <IconFont type="icon-check-circle-fill" />
+          </Space>
+        </div>
+        <div className="bg-[#0f0f0f] m-[12px]">
+          <Form layout="vertical" initialValues={{ type: 'static', code: '' }} className="p-[12px]">
+            <Form.Item label="数据源类型" name="type" className="mb-[12px]">
+              <Select options={typeOption} dropdownStyle={{ backgroundColor: '#333' }} />
+            </Form.Item>
+            <Form.Item label="可视化编辑" name="code">
+              <CodeMirror height="400px" theme="dark" extensions={[json()]} />
+            </Form.Item>
+          </Form>
+        </div>
+      </ConfigProvider>
+    </div>
+  );
 };
 
 export default DataSource;

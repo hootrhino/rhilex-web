@@ -8,7 +8,7 @@ import CanvasSetting from './CanvasSetting';
 import './index.less';
 import NodeSetting from './NodeSetting';
 
-type DetailFormType = 'node' | 'canvas';
+export type DetailFormType = 'node' | 'canvas';
 
 const RightPanel = forwardRef((props, ref) => {
   const nodeRef = useRef(null);
