@@ -1,0 +1,42 @@
+.editor-input {
+  background-color: #333;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: border 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #434343;
+    border-color: transparent;
+  }
+
+  .ant-input-number-group-addon {
+    padding: 0 3px;
+    color: #7a7a7a;
+    font-size: 12px;
+    border: none;
+  }
+
+  .ant-input-number-input {
+    color: #dbdbdb;
+  }
+
+  .ant-input-number-handler {
+    border: none;
+
+    .ant-input-number-handler-down-inner,
+    .ant-input-number-handler-up-inner {
+      color: #7a7a7a;
+    }
+
+    &:hover {
+      .ant-input-number-handler-down-inner,
+      .ant-input-number-handler-up-inner {
+        color: #fff;
+      }
+    }
+
+    &-wrap {
+      background: #434343;
+    }
+  }
+}

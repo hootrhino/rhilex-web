@@ -1,9 +1,10 @@
 import { cn, IconFont } from '@/utils/utils';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
-import { Select, Slider, Space } from 'antd';
+import { Space } from 'antd';
 
-import './index.less';
+import Select from '@/components/Select';
+import Slider from '@/components/Slider';
 
 type FooterProps = {
   value: number;
@@ -14,30 +15,22 @@ const Footer = ({ value, onChange }: FooterProps) => {
   const { collapseLeftPanel } = useModel('useEditor');
 
   return (
-    <div
-      className={cn(
-        'footer-container',
-        'flex justify-center items-center fixed bottom-0 left-0 right-0 w-full h-[48px] bg-[#1A1A1A]',
-      )}
-    >
+    <div className="flex justify-center items-center fixed bottom-0 left-0 right-0 w-full h-[48px] bg-[#1A1A1A]">
       <div className={cn('absolute', collapseLeftPanel ? 'left-[64px]' : 'left-[364px]')}>
         <Space align="center" className="px-[10px]">
           <IconFont type="icon-map-switch" className="mr-[12px]" />
-          <MinusOutlined style={{ color: '#dbdbdb', paddingBottom: 7 }} onClick={() => onChange(value - 1)} />
-          <Slider
-            min={30}
-            max={300}
-            onChange={onChange}
-            value={value}
-            className="w-[180px]"
-            railStyle={{ background: '#5C5C5C', height: 2 }}
-            trackStyle={{ background: '#dbdbdb', height: 2 }}
+          <MinusOutlined
+            style={{ color: '#dbdbdb', paddingBottom: 7 }}
+            onClick={() => onChange(value - 1)}
           />
-          <PlusOutlined style={{ color: '#dbdbdb', paddingBottom: 7 }}onClick={() => onChange(value + 1)}  />
+          <Slider min={30} max={300} onChange={onChange} value={value} className="w-[180px]" />
+          <PlusOutlined
+            style={{ color: '#dbdbdb', paddingBottom: 7 }}
+            onClick={() => onChange(value + 1)}
+          />
           <Select
             value={`${value.toString()}%`}
             bordered={false}
-            dropdownStyle={{ background: '#333', color: '#dbdbdb' }}
             onSelect={(selectValue: string) => onChange(Number(selectValue))}
             options={[
               { value: '50', label: '50%' },
