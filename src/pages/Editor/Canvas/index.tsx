@@ -27,8 +27,9 @@ import { Dnd } from '@antv/x6-plugin-dnd';
 import { register } from '@antv/x6-react-shape';
 import './index.less';
 
-import { Modal } from 'antd';
+// import { Modal } from 'antd';
 import shapes from '../Shapes/ReactNodes';
+import { modal } from '@/components/PopupHack';
 
 const Canvas = () => {
   const handle = useFullScreenHandle();
@@ -156,15 +157,16 @@ const Canvas = () => {
     // 删除
     graph.bindKey('backspace', () => {
       const cells = graph.getSelectedCells();
+      console.log(cells);
       if (cells.length) {
-        Modal.confirm({
-          title: '确定要删除该组件吗？',
+        modal.confirm({
+          title: <div className='text-[#DBDBDB]'>删除组件</div>,
+          content: <div className='text-[#ADADAD]'>是否删除组件</div>,
           icon: <ExclamationCircleFilled />,
-          okType: 'danger',
           onOk() {
             graph.removeCells(cells);
           },
-          // bodyStyle: {background: '#262626'}
+          bodyStyle: {background: '#242424'}
         });
       }
     });

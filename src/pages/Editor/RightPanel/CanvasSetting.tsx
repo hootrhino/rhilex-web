@@ -63,23 +63,22 @@ const CanvasSetting = () => {
         <FormItem label="不透明度" className="mb-[10px]">
           <Space align="center">
             <Slider min={0} max={1} className="w-[100px]" defaultValue={1} step={0.1} />
-
-            <InputNumber min={0} max={1} className={cn('w-[65px]')} defaultValue={1} />
+            <InputNumber min={0} max={1} className="w-[65px]" defaultValue={1} />
           </Space>
         </FormItem>
         <FormItem label="背景" className="mb-[10px]">
           <ColorPicker
             value="#262626"
-            size="small"
+            size="middle"
             showText
             className={cn(
               'canvas-color-picker',
-              'w-full bg-[#333] border-[#333] justify-start hover:border-transparent hover:bg-[#434343]',
+              'w-full h-[30px] bg-[#333] border-[#333] justify-start rounded-[4px] hover:border-transparent hover:bg-[#434343]',
             )}
           />
         </FormItem>
         <FormItem label="缩放方式" className="mb-[10px]">
-          <div className="w-full h-[30px] bg-[#333] flex items-center justify-around">
+          <div className="w-full h-[30px] bg-[#333] flex items-center justify-around rounded-[4px]">
             {ZoomTypeList.map((item) => (
               <Tooltip key={item.key} title={item.tooltip} color="#1F6AFF">
                 <IconFont
@@ -97,10 +96,10 @@ const CanvasSetting = () => {
         </FormItem>
         <FormItem label="缩略图" className="mb-[10px]">
           <Space align="center">
-            <div className="w-[88px] h-[24px] leading-[24px] bg-[#333] border-[#333] text-[#adadad] text-[12px] text-center cursor-pointer hover:bg-[#434343]">
+            <div className="w-[88px] h-[24px] leading-[24px] bg-[#333] border-[#333] text-[#adadad] text-[12px] text-center cursor-pointer rounded-[4px] hover:bg-[#434343]">
               截取封面
             </div>
-            <div className="w-[88px] h-[24px] leading-[24px] bg-[#333] border-[#333] text-[#adadad] text-[12px] text-center cursor-pointer hover:bg-[#434343]">
+            <div className="w-[88px] h-[24px] leading-[24px] bg-[#333] border-[#333] text-[#adadad] text-[12px] text-center cursor-pointer rounded-[4px] hover:bg-[#434343]">
               上传封面
             </div>
           </Space>

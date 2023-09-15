@@ -28,7 +28,7 @@ const DataSource = () => {
     >
       <div className="pt-[10px] pb-[12px] pl-[32px] text-[16px] text-[#F7F7F7]">
         <span>水波图</span>
-        <Tooltip title="查看文档" color="#1F6AFF">
+        <Tooltip title="查看组件文档" color="#1F6AFF">
           <FileTextOutlined style={{ fontSize: 14, paddingLeft: 5, cursor: 'pointer' }} />
         </Tooltip>
       </div>
