@@ -4,15 +4,16 @@ import { Col, Row } from 'antd';
 type FormItemProps = {
   label: string;
   children: React.ReactNode;
+  span?: number;
 } & RowProps;
 
-const FormItem = ({ label, children, ...props }: FormItemProps) => {
+const FormItem = ({ label, span = 8, children, ...props }: FormItemProps) => {
   return (
-    <Row justify="space-around" align="middle" {...props}>
-      <Col span={8} className="text-[#DBDBDB] text-[12px]">
+    <Row justify="space-around" align={props?.align || 'middle'}{...props}>
+      <Col span={span} className="text-[#DBDBDB] text-[12px]">
         {label}
       </Col>
-      <Col span={16}>{children}</Col>
+      <Col span={24 - span}>{children}</Col>
     </Row>
   );
 };

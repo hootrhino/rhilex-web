@@ -3,7 +3,7 @@ import { ConfigProvider, Segmented } from 'antd';
 
 import './index.less';
 
-const EditorSegmented = (props: Omit<SegmentedProps, 'ref'>) => {
+const EditorSegmented = ({className, ...props}: Omit<SegmentedProps, 'ref'>) => {
   return (
     <ConfigProvider
       theme={{
@@ -17,7 +17,7 @@ const EditorSegmented = (props: Omit<SegmentedProps, 'ref'>) => {
         },
       }}
     >
-      <Segmented size="small" {...props} />
+      <Segmented size="small" className={className} {...props} />
     </ConfigProvider>
   );
 };

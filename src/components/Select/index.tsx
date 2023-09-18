@@ -2,8 +2,9 @@ import type { SelectProps } from 'antd';
 import { ConfigProvider, Select } from 'antd';
 
 import './index.less';
+import { cn } from '@/utils/utils';
 
-const EditorSelect = (props: SelectProps) => {
+const EditorSelect = ({className,...props}: SelectProps) => {
   return (
     <ConfigProvider
       theme={{
@@ -20,7 +21,7 @@ const EditorSelect = (props: SelectProps) => {
         },
       }}
     >
-      <Select dropdownStyle={{ backgroundColor: '#333' }} {...props} />
+      <Select dropdownStyle={{ backgroundColor: '#333' }} className={cn('w-full', className)} {...props} />
     </ConfigProvider>
   );
 };
