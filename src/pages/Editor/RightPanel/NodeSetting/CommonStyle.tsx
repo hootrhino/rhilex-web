@@ -11,7 +11,7 @@ import { FileTextOutlined } from '@ant-design/icons';
 import { Space, Tooltip } from 'antd';
 import type { SegmentedValue } from 'antd/es/segmented';
 import { useEffect, useState } from 'react';
-import { colorOptions } from '../constants';
+import { colorOptions, nodeTitle } from '../constants';
 import FormItem from '../FormItem';
 import charts from '../images';
 
@@ -32,7 +32,7 @@ const CommonStyle = ({ shape }: CommonStyleProps) => {
     <div className="">
       <div className="flex items-center justify-between pt-[10px] pb-[12px] pl-[32px] pr-[24px]">
         <div className="text-[16px] text-[#F7F7F7]">
-          <span>水波图</span>
+          <span>{nodeTitle[shape]}</span>
           <Tooltip title="查看组件文档" color="#1F6AFF">
             <FileTextOutlined style={{ fontSize: 14, paddingLeft: 5, cursor: 'pointer' }} />
           </Tooltip>
