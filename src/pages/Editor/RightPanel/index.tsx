@@ -14,9 +14,11 @@ const RightPanel = forwardRef((props, ref) => {
   const nodeRef = useRef(null);
   const { collapseRightPanel, setCollapseRightPanel } = useModel('useEditor');
   const [type, setFormType] = useState<DetailFormType>('canvas');
+  const [nodeShape, setShape] = useState<string>('');
 
   const handleOnChangeType = (graph: Graph) => {
-    graph.on('node:click', ({}) => {
+    graph.on('node:click', ({ node }) => {
+      setShape(node.shape);
       setFormType('node');
     });
 
@@ -46,7 +48,7 @@ const RightPanel = forwardRef((props, ref) => {
       unmountOnExit
     >
       <div className={cn('right-panel', 'fixed right-0 bottom-0  bg-[#1A1A1A]')} ref={nodeRef}>
-        {type === 'canvas' ? <CanvasSetting /> : <NodeSetting />}
+        {type === 'canvas' ? <CanvasSetting /> : <NodeSetting shape={nodeShape} />}
       </div>
     </CSSTransition>
   );

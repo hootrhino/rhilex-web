@@ -5,7 +5,11 @@ import CommonStyle from './CommonStyle';
 import DataSource from './DataSource';
 import './index.less';
 
-const NodeSetting = () => {
+type NodeSettingProps = {
+  shape: string;
+};
+
+const NodeSetting = ({ shape }: NodeSettingProps) => {
   const [activeTab, setActiveTab] = useState<string>('commonStyle');
 
   const getLabel = (label: string, key: string, icon: string) => (
@@ -19,7 +23,7 @@ const NodeSetting = () => {
     {
       label: getLabel('样式', 'commonStyle', 'icon-style-setting'),
       key: 'commonStyle',
-      children: <CommonStyle />,
+      children: <CommonStyle shape={shape} />,
     },
     {
       label: getLabel('数据源', 'dataSource', 'icon-data-setting'),
@@ -30,7 +34,7 @@ const NodeSetting = () => {
       label: getLabel('高级', 'advanced', 'icon-advance-setting'),
       key: 'advanced',
       disabled: true,
-      children: <CommonStyle />,
+      children: <div>advance setting</div>,
     },
   ];
 
@@ -46,7 +50,7 @@ const NodeSetting = () => {
               itemSelectedColor: '#DBDBDB',
               itemHoverColor: '#7A7A7A',
               inkBarColor: 'transparent',
-              fontSize: 12
+              fontSize: 12,
             },
           },
         }}

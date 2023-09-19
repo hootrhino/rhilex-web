@@ -1,6 +1,8 @@
 import Collapse from '@/components/Collapse';
 import ColorOption from '@/components/ColorOption';
 import InputNumber from '@/components/InputNumber';
+import type { StyleItem } from '@/components/QuickStyleBox';
+import QuickStyleBox from '@/components/QuickStyleBox';
 import Segmented from '@/components/Segmented';
 import Select from '@/components/Select';
 import Slider from '@/components/Slider';
@@ -8,13 +10,23 @@ import { cn, IconFont } from '@/utils/utils';
 import { FileTextOutlined } from '@ant-design/icons';
 import { Space, Tooltip } from 'antd';
 import type { SegmentedValue } from 'antd/es/segmented';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { colorOptions } from '../constants';
 import FormItem from '../FormItem';
+import charts from '../images';
 
-const CommonStyle = () => {
+type CommonStyleProps = {
+  shape: string;
+};
+
+const CommonStyle = ({ shape }: CommonStyleProps) => {
   const [fontTheme, setTheme] = useState<SegmentedValue>('light');
   const [fontSize, setSize] = useState<SegmentedValue>('');
+  const [styleOptions, setOptions] = useState<StyleItem[]>([]);
+
+  useEffect(() => {
+    setOptions(charts[shape]);
+  }, [shape]);
 
   return (
     <div className="">
@@ -45,20 +57,27 @@ const CommonStyle = () => {
         </Space>
       </Space>
       <Space align="center" className="py-[6px] pl-[32px] pr-[24px]">
-        <div className="text-[#DBDBDB] w-[56px]">不透明度</div>
-        <Slider min={0} max={1} className="w-[130px]" defaultValue={1} step={0.1} />
-        <InputNumber min={0} max={1} className="w-[65px]" defaultValue={1} padding={3} />
+        <FormItem label="不透明度" span={6}>
+          <Space>
+            <Slider min={0} max={1} className="w-[130px]" defaultValue={1} step={0.1} />
+            <InputNumber min={0} max={1} className="w-[65px]" defaultValue={1} padding={3} />
+          </Space>
+        </FormItem>
       </Space>
-      <Collapse
-        items={[
-          {
-            key: '1',
-            label: '快速样式',
-            children: <p>111</p>,
-          },
-        ]}
-        className="collapse-wrapper"
-      />
+      {styleOptions?.length > 0 && (
+        <Collapse
+          defaultActiveKey="quickStyle"
+          items={[
+            {
+              key: 'quickStyle',
+              label: '快速样式',
+              children: <QuickStyleBox options={styleOptions} className="pl-[32px]" />,
+            },
+          ]}
+          className="collapse-wrapper"
+        />
+      )}
+
       <div className={cn('chart-setting-wrapper', 'pl-[32px] pr-[24px]')}>
         <FormItem label="图表颜色" span={6} className="mt-[16px] mb-[12px]">
           <Select
