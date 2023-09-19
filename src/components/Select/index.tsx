@@ -4,7 +4,12 @@ import { ConfigProvider, Select } from 'antd';
 import './index.less';
 import { cn } from '@/utils/utils';
 
-const EditorSelect = ({className,...props}: SelectProps) => {
+type EditorSelectProps = SelectProps & {
+  paddingY?: number;
+  optionHeight?: number;
+}
+
+const EditorSelect = ({paddingY, optionHeight = 32, className,...props}: EditorSelectProps) => {
   return (
     <ConfigProvider
       theme={{
@@ -17,11 +22,13 @@ const EditorSelect = ({className,...props}: SelectProps) => {
             optionFontSize: 12,
             fontSize: 12,
             borderRadius: 4,
+            optionPadding: paddingY ? `${paddingY}px 12px` : '5px 12px',
+            optionHeight: optionHeight,
           },
         },
       }}
     >
-      <Select dropdownStyle={{ backgroundColor: '#333' }} className={cn('w-full', className)} {...props} />
+      <Select dropdownStyle={{ backgroundColor: '#333' }} className={cn('w-full h-full', className)} {...props} />
     </ConfigProvider>
   );
 };

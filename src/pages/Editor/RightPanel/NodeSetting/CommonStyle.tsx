@@ -7,85 +7,15 @@ import Slider from '@/components/Slider';
 import { cn, IconFont } from '@/utils/utils';
 import { FileTextOutlined } from '@ant-design/icons';
 import { Space, Tooltip } from 'antd';
+import type { SegmentedValue } from 'antd/es/segmented';
+import { useState } from 'react';
+import { colorOptions } from '../constants';
 import FormItem from '../FormItem';
 
-const colorOptions = [
-  {
-    label: (
-      <ColorOption
-        colors={['#85A5FF', '#597EF7', '#2F54EB', '#1D39C4', '#10239E', '#061178', '#030852']}
-      />
-    ),
-    value: '1',
-  },
-  {
-    label: (
-      <ColorOption
-
-        colors={['#5CDBD3', '#36CFC9', '#13C2C2', '#08979C', '#006D75', '#00474F', '#002329']}
-      />
-    ),
-    value: '2',
-  },
-  {
-    label: (
-      <ColorOption
-        colors={['#B37FEB', '#9254DE', '#722ED1', '#531DAB', '#391085', '#22075E', '#120338']}
-      />
-    ),
-    value: '3',
-  },
-  {
-    label: (
-      <ColorOption
-        colors={['#FFC069', '#FFA940', '#FA8C16', '#D46B08', '#AD4E00', '#873800', '#612500']}
-      />
-    ),
-    value: '4',
-  },
-  {
-    label: (
-      <ColorOption
-        colors={['#D4D2C5', '#76745D', '#A2B986', '#7E8949', '#506542', '#719077', '#8F918C']}
-      />
-    ),
-    value: '5',
-  },
-  {
-    label: (
-      <ColorOption
-        colors={['#A53A4C', '#AB9E8E', '#D7BA94', '#A2394B', '#AEA190', '#363439', '#F5D5C0']}
-      />
-    ),
-    value: '6',
-  },
-  {
-    label: (
-      <ColorOption
-        colors={['#D6E7EE', '#95C7D8', '#0187BA', '#014478', '#588998', '#53B6C3', '#031A44']}
-      />
-    ),
-    value: '7',
-  },
-  {
-    label: (
-      <ColorOption
-        colors={['#3B8282', '#F3634A', '#D1C0B2', '#326D8E', '#ED303C', '#FE9D59', '#FBD18A']}
-      />
-    ),
-    value: '8',
-  },
-  {
-    label: (
-      <ColorOption
-        colors={['#1C81FF', '#4FB656', '#F96801', '#3DFCD9', '#FBE947', '#1DCFFF', '#725CFA']}
-      />
-    ),
-    value: '9',
-  },
-];
-
 const CommonStyle = () => {
+  const [fontTheme, setTheme] = useState<SegmentedValue>('light');
+  const [fontSize, setSize] = useState<SegmentedValue>('');
+
   return (
     <div className="">
       <div className="flex items-center justify-between pt-[10px] pb-[12px] pl-[32px] pr-[24px]">
@@ -131,7 +61,13 @@ const CommonStyle = () => {
       />
       <div className={cn('chart-setting-wrapper', 'pl-[32px] pr-[24px]')}>
         <FormItem label="图表颜色" span={6} className="mt-[16px] mb-[12px]">
-          <Select options={colorOptions} />
+          <Select
+            optionHeight={16}
+            options={colorOptions?.map((item) => ({
+              label: <ColorOption colors={item.colors} />,
+              value: item.value,
+            }))}
+          />
         </FormItem>
         <FormItem label="图表文字" span={6} align="top">
           <Space align="start" className="mb-[12px]">
@@ -164,51 +100,65 @@ const CommonStyle = () => {
           <Space align="start" className="mb-[6px]">
             <Space direction="vertical">
               <Segmented
+                block
+                className="w-[100px]"
+                value={fontSize}
                 options={[
                   {
                     label: (
                       <Tooltip title="更大" color="#4281ff">
-                        111
+                        <IconFont
+                          type={fontSize === 'up' ? 'icon-font-up-active' : 'icon-font-up'}
+                        />
                       </Tooltip>
                     ),
-                    value: 'bigger',
+                    value: 'up',
                   },
                   {
                     label: (
                       <Tooltip title="更小" color="#4281ff">
-                        222
+                        <IconFont
+                          type={fontSize === 'down' ? 'icon-font-down-active' : 'icon-font-down'}
+                        />
                       </Tooltip>
                     ),
-                    value: 'smaller',
+                    value: 'down',
                   },
                 ]}
-                className="w-[100px]"
-                block
+                onChange={(value) => setSize(value)}
               />
               <div className="text-[#7A7A7A] text-[12px] mt-[-5px]">字号</div>
             </Space>
             <Space direction="vertical">
               <Segmented
+                block
+                value={fontTheme}
+                className="w-[100px]"
                 options={[
                   {
                     label: (
                       <Tooltip title="暗色" color="#4281ff">
-                        111
+                        <IconFont
+                          type={fontTheme === 'dark' ? 'icon-font-dark-active' : 'icon-font-dark'}
+                        />
                       </Tooltip>
                     ),
-                    value: 'bigger',
+                    value: 'dark',
                   },
                   {
                     label: (
                       <Tooltip title="亮色" color="#4281ff">
-                        222
+                        <IconFont
+                          type={
+                            fontTheme === 'light' ? 'icon-font-light-active' : 'icon-font-light'
+                          }
+                        />
                       </Tooltip>
                     ),
-                    value: 'smaller',
+                    value: 'light',
                   },
                 ]}
-                className="w-[100px]"
-                block
+                onChange={(value) => setTheme(value)}
               />
               <div className="text-[#7A7A7A] text-[12px] mt-[-5px]">颜色</div>
             </Space>
