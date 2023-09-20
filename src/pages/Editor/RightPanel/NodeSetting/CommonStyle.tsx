@@ -1,11 +1,9 @@
-import Collapse from '@/components/Collapse';
-import ColorOption from '@/components/ColorOption';
-import InputNumber from '@/components/InputNumber';
-import type { StyleItem } from '@/components/QuickStyleBox';
-import QuickStyleBox from '@/components/QuickStyleBox';
-import Segmented from '@/components/Segmented';
-import Select from '@/components/Select';
-import Slider from '@/components/Slider';
+import Collapse from '@/pages/Editor/components/Collapse';
+import ColorOption from '@/pages/Editor/components/ColorOption';
+import InputNumber from '@/pages/Editor/components/InputNumber';
+import Segmented from '@/pages/Editor/components/Segmented';
+import Select from '@/pages/Editor/components/Select';
+import Slider from '@/pages/Editor/components/Slider';
 import { cn, IconFont } from '@/utils/utils';
 import { FileTextOutlined } from '@ant-design/icons';
 import { Space, Tooltip } from 'antd';
@@ -17,6 +15,11 @@ import charts from '../images';
 
 type CommonStyleProps = {
   shape: string;
+};
+
+type StyleItem = {
+  key: string;
+  value: string;
 };
 
 const fontWeightOptions = [
@@ -42,6 +45,7 @@ const CommonStyle = ({ shape }: CommonStyleProps) => {
   const [fontTheme, setTheme] = useState<SegmentedValue>('light');
   const [fontSize, setSize] = useState<SegmentedValue>('');
   const [styleOptions, setOptions] = useState<StyleItem[]>([]);
+  const [activeStyle, setStyle] = useState<string>('');
 
   const fontThemeOptions = [
     {
@@ -81,6 +85,66 @@ const CommonStyle = ({ shape }: CommonStyleProps) => {
     },
   ];
 
+  const quickStyleOptions = [
+    {
+      key: 'quickStyle',
+      label: '快速样式',
+      children: (
+        <div className="relative">
+          <div className="flex flex-wrap pl-[32px]">
+            {styleOptions?.map((item) => (
+              <>
+                <div
+                  key={item.key}
+                  className="w-[86px] h-[47px] bg-[#242424] mr-[9px] mb-[8px] hover:bg-[#363636]"
+                  onClick={() => setStyle(item.key)}
+                >
+                  <img src={item.value} className="w-full h-full object-cover" />
+                </div>
+                <div
+                  className={cn(
+                    'quick-style-detail-wrapper',
+                    'absolute right-[350px] top-[-130px] w-[322px] bg-[#333]',
+                    activeStyle === item.key ? 'block' : 'hidden',
+                  )}
+                >
+                  <div className="py-[16px] px-[20px]">
+                    <div className="text-[#F7F7F7] text-[16px] mb-[12px]">
+                      {nodeTitle[shape]}快速样式
+                    </div>
+                    <div className="text-[#ADADAD] text-[12px] my-[6px]">
+                      使用默认数据绘制的组件样式如下
+                    </div>
+                    <img src={item.value} className="w-full h-[158px] object-cover" />
+                    <div className="text-[#ADADAD] text-[12px] my-[6px]">
+                      是否新增一个以默认数据渲染的组件？
+                    </div>
+                    <Space align="center" className="flex justify-end mt-[24px]">
+                      <div
+                        className="flex items-center h-[28px] leading-[28px] px-[12px] bg-[#474747] text-[#dbdbdb] text-[12px] rounded-[4px] cursor-pointer hover:bg-[#565656]"
+                        onClick={() => setStyle('')}
+                      >
+                        取消
+                      </div>
+                      <div
+                        className="flex items-center h-[28px] leading-[28px] px-[12px] bg-[#1f6aff] text-[#fff] text-[12px] rounded-[4px] cursor-pointer hover:bg-[#4281ff]"
+                        onClick={() => {
+                          // TODO
+                        }}
+                      >
+                        试一试
+                      </div>
+                    </Space>
+                  </div>
+                </div>
+              </>
+            ))}
+          </div>
+        </div>
+      ),
+    },
+  ];
+
   useEffect(() => {
     setOptions(charts[shape]);
   }, [shape]);
@@ -96,11 +160,13 @@ const CommonStyle = ({ shape }: CommonStyleProps) => {
         </div>
         <Segmented options={['基础', '全量']} defaultValue="基础" />
       </div>
+
       <Space align="center" className="py-[6px] pl-[32px] pr-[24px]">
         <InputNumber addonBefore="X" padding={3} />
         <InputNumber addonBefore="Y" padding={3} />
         <InputNumber addonBefore="Z" padding={3} defaultValue={0} />
       </Space>
+
       <Space align="center" className="py-[6px] pl-[32px] pr-[24px]">
         <InputNumber addonBefore="W" padding={3} />
         <InputNumber addonBefore="H" padding={3} />
@@ -113,6 +179,7 @@ const CommonStyle = ({ shape }: CommonStyleProps) => {
           </div>
         </Space>
       </Space>
+
       <Space align="center" className="py-[6px] pl-[32px] pr-[24px]">
         <FormItem label="不透明度" span={6}>
           <Space>
@@ -121,21 +188,16 @@ const CommonStyle = ({ shape }: CommonStyleProps) => {
           </Space>
         </FormItem>
       </Space>
+
       {styleOptions?.length > 0 && (
         <Collapse
           defaultActiveKey="quickStyle"
-          items={[
-            {
-              key: 'quickStyle',
-              label: '快速样式',
-              children: <QuickStyleBox options={styleOptions} className="pl-[32px]" />,
-            },
-          ]}
+          items={quickStyleOptions}
           className="collapse-wrapper"
         />
       )}
 
-      <div className={cn('chart-setting-wrapper', 'pl-[32px] pr-[24px]')}>
+      <div className={cn('chart-setting-wrapper', 'pl-[32px] pr-[24px] pt-[1px]')}>
         <FormItem label="图表颜色" span={6} className="mt-[16px] mb-[12px]">
           <Select
             optionHeight={16}
@@ -145,6 +207,7 @@ const CommonStyle = ({ shape }: CommonStyleProps) => {
             }))}
           />
         </FormItem>
+
         <FormItem label="图表文字" span={6} align="top">
           <Space align="start" className="mb-[12px]">
             <Space direction="vertical">
@@ -179,6 +242,7 @@ const CommonStyle = ({ shape }: CommonStyleProps) => {
             </Space>
           </Space>
         </FormItem>
+
         <FormItem label="图表信息" span={6} className="mt-[6px]">
           <Segmented
             block

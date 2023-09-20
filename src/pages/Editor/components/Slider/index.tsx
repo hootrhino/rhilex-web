@@ -22,7 +22,7 @@ const EditorSlider = (props: SliderSingleProps) => {
         },
       }}
     >
-      <Slider {...props} />
+      <Slider tooltip={{ open: false }} {...props} />
     </ConfigProvider>
   );
 };

@@ -28,8 +28,8 @@ import { register } from '@antv/x6-react-shape';
 import './index.less';
 
 // import { Modal } from 'antd';
-import shapes from '../Shapes/ReactNodes';
 import { modal } from '@/components/PopupHack';
+import shapes from '../Shapes/ReactNodes';
 
 const Canvas = () => {
   const handle = useFullScreenHandle();
@@ -147,7 +147,7 @@ const Canvas = () => {
     });
 
     // 全选
-    graph.bindKey(['meta+a', 'ctrl+a'], () => {
+    graph.bindKey(['meta+shift+a', 'ctrl+shift+a'], () => {
       const nodes = graph.getNodes();
       if (nodes) {
         graph.select(nodes);
@@ -160,13 +160,13 @@ const Canvas = () => {
       console.log(cells);
       if (cells.length) {
         modal.confirm({
-          title: <div className='text-[#DBDBDB]'>删除组件</div>,
-          content: <div className='text-[#ADADAD]'>是否删除组件</div>,
+          title: <div className="text-[#DBDBDB]">删除组件</div>,
+          content: <div className="text-[#ADADAD]">是否删除组件</div>,
           icon: <ExclamationCircleFilled />,
           onOk() {
             graph.removeCells(cells);
           },
-          bodyStyle: {background: '#242424'}
+          bodyStyle: { background: '#242424' },
         });
       }
     });

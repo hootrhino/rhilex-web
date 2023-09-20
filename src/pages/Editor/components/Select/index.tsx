@@ -1,15 +1,15 @@
 import type { SelectProps } from 'antd';
 import { ConfigProvider, Select } from 'antd';
 
-import './index.less';
 import { cn } from '@/utils/utils';
+import './index.less';
 
 type EditorSelectProps = SelectProps & {
   paddingY?: number;
   optionHeight?: number;
-}
+};
 
-const EditorSelect = ({paddingY, optionHeight = 32, className,...props}: EditorSelectProps) => {
+const EditorSelect = ({ paddingY, optionHeight = 32, className, ...props }: EditorSelectProps) => {
   return (
     <ConfigProvider
       theme={{
@@ -28,7 +28,11 @@ const EditorSelect = ({paddingY, optionHeight = 32, className,...props}: EditorS
         },
       }}
     >
-      <Select dropdownStyle={{ backgroundColor: '#333' }} className={cn('w-full h-full', className)} {...props} />
+      <Select
+        dropdownStyle={{ backgroundColor: '#333' }}
+        className={cn('w-full h-full', className)}
+        {...props}
+      />
     </ConfigProvider>
   );
 };

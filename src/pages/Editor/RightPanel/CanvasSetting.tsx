@@ -1,7 +1,7 @@
 import { cn, IconFont } from '@/utils/utils';
 
-import InputNumber from '@/components/InputNumber';
-import Slider from '@/components/Slider';
+import InputNumber from '@/pages/Editor/components/InputNumber';
+import Slider from '@/pages/Editor/components/Slider';
 import { Col, ColorPicker, Row, Space, Tooltip } from 'antd';
 import { useState } from 'react';
 import FormItem from './FormItem';
@@ -56,14 +56,14 @@ const CanvasSetting = () => {
       <div className="pl-[32px] pr-[24px] pt-[16px]">
         <FormItem label="尺寸" className="mb-[10px]">
           <Space>
-            <InputNumber defaultValue={1920} min={0} addonBefore="W" />
-            <InputNumber defaultValue={1080} min={0} addonBefore="H" />
+            <InputNumber defaultValue={1920} min={0} addonBefore="W" padding={3} />
+            <InputNumber defaultValue={1080} min={0} addonBefore="H" padding={3} />
           </Space>
         </FormItem>
         <FormItem label="不透明度" className="mb-[10px]">
           <Space align="center">
             <Slider min={0} max={1} className="w-[100px]" defaultValue={1} step={0.1} />
-            <InputNumber min={0} max={1} className="w-[65px]" defaultValue={1} />
+            <InputNumber min={0} max={1} className="w-[65px]" defaultValue={1} padding={3} />
           </Space>
         </FormItem>
         <FormItem label="背景" className="mb-[10px]">

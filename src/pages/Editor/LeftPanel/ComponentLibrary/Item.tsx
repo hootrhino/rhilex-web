@@ -14,7 +14,11 @@ type ItemProps = React.LiHTMLAttributes<any> & {
 
 const Item = ({ data, ...props }: ItemProps) => {
   return (
-    <li className="bg-[#242424] mb-[12px] rounded-[4px] cursor-pointer" key={data.key} {...props}>
+    <li
+      className="bg-[#242424] mb-[12px] rounded-[4px] cursor-pointer hover:bg-[#363636]"
+      key={data.key}
+      {...props}
+    >
       <div className="h-[24px] text-[12px] w-full px-[8px] overflow-hidden leading-[24px] text-[#7a7a7a]">
         {data.title}
       </div>
