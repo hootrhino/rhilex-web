@@ -19,10 +19,67 @@ type CommonStyleProps = {
   shape: string;
 };
 
+const fontWeightOptions = [
+  { label: '超细体', value: '200' },
+  { label: '细体', value: '300' },
+  { label: '常规体', value: '400' },
+  { label: '中等', value: '500' },
+  { label: '粗体', value: '700' },
+  { label: '黑体', value: '900' },
+];
+
+const fontFamilyOptions = [
+  { label: '阿里巴巴普惠体', value: 'AlibabaPuHuiTi' },
+  { label: '钉钉进步体', value: 'DingTalk JinBuTi ' },
+  { label: '微软雅黑', value: 'Microsoft YaHei' },
+  { label: '黑体', value: 'SimHei' },
+  { label: '苹方', value: 'PingFangSC' },
+  { label: 'Arial', value: 'Arial' },
+  { label: 'Helvetica', value: 'Helvetica' },
+];
+
 const CommonStyle = ({ shape }: CommonStyleProps) => {
   const [fontTheme, setTheme] = useState<SegmentedValue>('light');
   const [fontSize, setSize] = useState<SegmentedValue>('');
   const [styleOptions, setOptions] = useState<StyleItem[]>([]);
+
+  const fontThemeOptions = [
+    {
+      label: (
+        <Tooltip title="暗色" color="#4281ff">
+          <IconFont type={fontTheme === 'dark' ? 'icon-font-dark-active' : 'icon-font-dark'} />
+        </Tooltip>
+      ),
+      value: 'dark',
+    },
+    {
+      label: (
+        <Tooltip title="亮色" color="#4281ff">
+          <IconFont type={fontTheme === 'light' ? 'icon-font-light-active' : 'icon-font-light'} />
+        </Tooltip>
+      ),
+      value: 'light',
+    },
+  ];
+
+  const fontSizeOptions = [
+    {
+      label: (
+        <Tooltip title="更大" color="#4281ff">
+          <IconFont type={fontSize === 'up' ? 'icon-font-up-active' : 'icon-font-up'} />
+        </Tooltip>
+      ),
+      value: 'up',
+    },
+    {
+      label: (
+        <Tooltip title="更小" color="#4281ff">
+          <IconFont type={fontSize === 'down' ? 'icon-font-down-active' : 'icon-font-down'} />
+        </Tooltip>
+      ),
+      value: 'down',
+    },
+  ];
 
   useEffect(() => {
     setOptions(charts[shape]);
@@ -91,28 +148,11 @@ const CommonStyle = ({ shape }: CommonStyleProps) => {
         <FormItem label="图表文字" span={6} align="top">
           <Space align="start" className="mb-[12px]">
             <Space direction="vertical">
-              <Select
-                className="w-[100px]"
-                options={[
-                  { label: '微软雅黑', value: '1' },
-                  { label: '黑体', value: '2' },
-                  { label: 'Arial', value: '3' },
-                ]}
-              />
+              <Select className="w-[100px]" options={fontFamilyOptions} />
               <div className="text-[#7A7A7A] text-[12px] mt-[-5px]">字体</div>
             </Space>
             <Space direction="vertical">
-              <Select
-                className="w-[100px]"
-                options={[
-                  { label: '超细体', value: '1' },
-                  { label: '细体', value: '2' },
-                  { label: '常规体', value: '3' },
-                  { label: '中等', value: '4' },
-                  { label: '粗体', value: '5' },
-                  { label: '黑体', value: '6' },
-                ]}
-              />
+              <Select className="w-[100px]" options={fontWeightOptions} />
               <div className="text-[#7A7A7A] text-[12px] mt-[-5px]">粗细</div>
             </Space>
           </Space>
@@ -122,28 +162,7 @@ const CommonStyle = ({ shape }: CommonStyleProps) => {
                 block
                 className="w-[100px]"
                 value={fontSize}
-                options={[
-                  {
-                    label: (
-                      <Tooltip title="更大" color="#4281ff">
-                        <IconFont
-                          type={fontSize === 'up' ? 'icon-font-up-active' : 'icon-font-up'}
-                        />
-                      </Tooltip>
-                    ),
-                    value: 'up',
-                  },
-                  {
-                    label: (
-                      <Tooltip title="更小" color="#4281ff">
-                        <IconFont
-                          type={fontSize === 'down' ? 'icon-font-down-active' : 'icon-font-down'}
-                        />
-                      </Tooltip>
-                    ),
-                    value: 'down',
-                  },
-                ]}
+                options={fontSizeOptions}
                 onChange={(value) => setSize(value)}
               />
               <div className="text-[#7A7A7A] text-[12px] mt-[-5px]">字号</div>
@@ -153,30 +172,7 @@ const CommonStyle = ({ shape }: CommonStyleProps) => {
                 block
                 value={fontTheme}
                 className="w-[100px]"
-                options={[
-                  {
-                    label: (
-                      <Tooltip title="暗色" color="#4281ff">
-                        <IconFont
-                          type={fontTheme === 'dark' ? 'icon-font-dark-active' : 'icon-font-dark'}
-                        />
-                      </Tooltip>
-                    ),
-                    value: 'dark',
-                  },
-                  {
-                    label: (
-                      <Tooltip title="亮色" color="#4281ff">
-                        <IconFont
-                          type={
-                            fontTheme === 'light' ? 'icon-font-light-active' : 'icon-font-light'
-                          }
-                        />
-                      </Tooltip>
-                    ),
-                    value: 'light',
-                  },
-                ]}
+                options={fontThemeOptions}
                 onChange={(value) => setTheme(value)}
               />
               <div className="text-[#7A7A7A] text-[12px] mt-[-5px]">颜色</div>
