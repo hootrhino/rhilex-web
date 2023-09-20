@@ -37,7 +37,7 @@ type ScreenItem = {
 const groupData = [
   {
     key: 'other',
-    name: '未分组未分组未分组未分组',
+    name: '默认分组',
   },
 ];
 
