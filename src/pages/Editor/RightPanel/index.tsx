@@ -7,6 +7,7 @@ import { CSSTransition } from 'react-transition-group';
 import CanvasSetting from './CanvasSetting';
 import './index.less';
 import NodeSetting from './NodeSetting';
+import { chartsList } from '../LeftPanel/constant';
 
 export type DetailFormType = 'node' | 'canvas';
 
@@ -18,6 +19,7 @@ const RightPanel = forwardRef((props, ref) => {
 
   const handleOnChangeType = (graph: Graph) => {
     graph.on('node:click', ({ node }) => {
+      console.log(chartsList, node.shape);
       setShape(node.shape);
       setFormType('node');
     });

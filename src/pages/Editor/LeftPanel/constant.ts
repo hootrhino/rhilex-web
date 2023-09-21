@@ -1,4 +1,4 @@
-import chartsImg from './Images';
+import chartsImg from '../Images';
 const {
   interval,
   bar,
@@ -52,38 +52,45 @@ export const MaterialTabList = [
 
 export const MaterialData = [
   {
+    ...template.template1,
     key: 'temp1',
-    image: template.template1,
+    // image: template.template1,
     disabled: true,
   },
   {
+    ...template.template2,
     key: 'temp2',
-    image: template.template2,
+    // image: template.template2,
     disabled: true,
   },
   {
+    ...template.template3,
     key: 'temp3',
-    image: template.template3,
+    // image: template.template3,
     disabled: true,
   },
   {
+    ...template.template4,
     key: 'temp4',
-    image: template.template4,
+    // image: template.template4,
     disabled: true,
   },
   {
+    ...template.template5,
     key: 'temp5',
-    image: template.template5,
+    // image: template.template5,
     disabled: true,
   },
   {
+    ...template.template6,
     key: 'temp6',
-    image: template.template6,
+    // image: template.template6,
     disabled: true,
   },
   {
+    ...template.template7,
     key: 'temp7',
-    image: template.template7,
+    // image: template.template7,
     disabled: true,
   },
 ];
@@ -149,30 +156,35 @@ export const chartsList = [
     group: 'other',
     children: [
       {
+        ...other.other1,
         key: 'other1',
         title: '水波图',
-        image: other.other1,
+        // image: other.other1,
       },
       {
+        ...other.other2,
         key: 'other2',
         title: '旭日图',
-        image: other.other2,
+        // image: other.other2,
       },
       {
+        ...other.other3,
         key: 'other3',
         title: '漏斗图',
-        image: other.other3,
+        // image: other.other3,
         disabled: true,
       },
       {
+        ...other.other4,
         key: 'other4',
         title: '热力图',
-        image: other.other4,
+        // image: other.other4,
       },
       {
+        ...other.other5,
         key: 'other5',
         title: '子弹图',
-        image: other.other5,
+        // image: other.other5,
       },
     ],
   },
@@ -180,25 +192,28 @@ export const chartsList = [
     group: 'interval',
     children: [
       {
+        ...interval.interval1,
         key: 'interval1',
         title: '区间柱状图',
-        image: interval.interval1,
+        // image: interval.interval1,
       },
       {
+        ...interval.interval2,
         key: 'interval2',
         title: '柱状图',
-        image: interval.interval2,
+        // image: interval.interval2,
       },
       {
+        ...interval.interval3,
         key: 'interval3',
         title: '瀑布图',
-        image: interval.interval3,
+        // image: interval.interval3,
       },
       {
+        ...interval.interval4,
         key: 'interval4',
         title: '玉钰图',
-        image: interval.interval4,
-        // disabled: true
+        // image: interval.interval4,
       },
     ],
   },
@@ -206,9 +221,10 @@ export const chartsList = [
     group: 'bar',
     children: [
       {
+        ...bar.bar1,
         key: 'bar1',
         title: '百分比条形图',
-        image: bar.bar1,
+        // image: bar.bar1,
       },
     ],
   },
@@ -216,9 +232,10 @@ export const chartsList = [
     group: 'line',
     children: [
       {
+        ...line.line1,
         key: 'line1',
         title: '折线图',
-        image: line.line1,
+        // image: line.line1,
       },
     ],
   },
@@ -226,9 +243,10 @@ export const chartsList = [
     group: 'area',
     children: [
       {
+        ...area.area1,
         key: 'area1',
         title: '区域图',
-        image: area.area1,
+        // image: area.area1,
         disabled: true,
       },
     ],
@@ -237,14 +255,16 @@ export const chartsList = [
     group: 'pie',
     children: [
       {
+        ...pie.pie1,
         key: 'pie1',
         title: '饼图',
-        image: pie.pie1,
+        // image: pie.pie1,
       },
       {
+        ...pie.pie2,
         key: 'pie2',
         title: '进度环图',
-        image: pie.pie2,
+        // image: pie.pie2,
       },
       // {
       //   key: 'pie3',
@@ -257,14 +277,16 @@ export const chartsList = [
     group: 'point',
     children: [
       {
+        ...point.point1,
         key: 'point1',
         title: '基本散点图',
-        image: point.point1,
+        // image: point.point1,
       },
       {
+        ...point.point2,
         key: 'point2',
         title: '气泡图',
-        image: point.point2,
+        // image: point.point2,
         disabled: true,
       },
     ],
@@ -273,9 +295,10 @@ export const chartsList = [
     group: 'radar',
     children: [
       {
+        ...radar.radar1,
         key: 'radar1',
         title: '雷达图',
-        image: radar.radar1,
+        // image: radar.radar1,
       },
     ],
   },
@@ -287,103 +310,120 @@ export const chartsList = [
 
 export const mapList = [
   {
+    ...map.map1,
     key: 'map1',
     title: '基础平面地图',
-    image: map.map1,
+    // image: map.map1,
     disabled: true,
   },
 ];
 
 export const textList = [
   {
+    ...text.text1,
     key: 'text1',
     title: '词云',
-    image: text.text1,
+    // image: text.text1,
   },
   {
+    ...text.text2,
     key: 'text2',
     title: '跑马灯',
-    image: text.text2,
+    // image: text.text2,
   },
   {
+    ...text.text3,
     key: 'text3',
     title: '通用标题',
-    image: text.text3,
+    // image: text.text3,
   },
   {
+    ...text.text4,
     key: 'text4',
     title: '倒计时',
-    image: text.text4,
+    // image: text.text4,
   },
   {
+    ...text.text5,
     key: 'text5',
     title: '多行文本',
-    image: text.text5,
+    // image: text.text5,
   },
   {
+    ...text.text6,
     key: 'text6',
     title: '时间器',
-    image: text.text6,
+    // image: text.text6,
   },
 ];
 
 export const tableList = [
   {
+    ...table.table1,
     key: 'table1',
     title: '进度条表格',
-    image: table.table1,
+    // image: table.table1,
   },
   {
+    ...table.table2,
     key: 'table2',
     title: '轮播列表',
-    image: table.table2,
+    // image: table.table2,
   },
 ];
 
 export const widgetList = [
   {
+    ...widget.widget1,
     key: 'widget1',
     title: '开关',
-    image: widget.widget1,
+    // image: widget.widget1,
     disabled: true,
   },
   {
+    ...widget.widget2,
     key: 'widget2',
     title: 'iframe',
-    image: widget.widget2,
+    // image: widget.widget2,
   },
 ];
 
 export const mediaList = [
   {
+    ...media.media1,
     key: 'media1',
     title: '单张图片',
-    image: media.media1,
+    // image: media.media1,
   },
   {
+    ...media.media2,
     key: 'media2',
     title: '视频',
-    image: media.media2,
+    // image: media.media2,
   },
   {
+    ...media.media3,
     key: 'media3',
     title: '轮播图',
-    image: media.media3,
+    // image: media.media3,
   },
   {
+    ...media.media4,
     key: 'media4',
     title: '装饰线条',
-    image: media.media4,
+    // image: media.media4,
   },
   {
+    ...media.media5,
     key: 'media5',
     title: '箭头描绘',
-    image: media.media5,
+    // image: media.media5,
   },
   {
+    ...media.media6,
     key: 'media6',
     title: '基础图形',
-    image: media.media6,
+    // image: media.media6,
   },
 ];
 

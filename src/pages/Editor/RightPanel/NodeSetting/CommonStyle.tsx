@@ -8,18 +8,18 @@ import { cn, IconFont } from '@/utils/utils';
 import { FileTextOutlined } from '@ant-design/icons';
 import { Space, Tooltip } from 'antd';
 import type { SegmentedValue } from 'antd/es/segmented';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { colorOptions, nodeTitle } from '../constants';
 import FormItem from '../FormItem';
-import charts from '../images';
-
-type CommonStyleProps = {
-  shape: string;
-};
 
 type StyleItem = {
   key: string;
   value: string;
+};
+
+type CommonStyleProps = {
+  shape: string;
+  styleOptions: StyleItem[];
 };
 
 const fontWeightOptions = [
@@ -41,10 +41,10 @@ const fontFamilyOptions = [
   { label: 'Helvetica', value: 'Helvetica' },
 ];
 
-const CommonStyle = ({ shape }: CommonStyleProps) => {
+const CommonStyle = ({ shape, styleOptions }: CommonStyleProps) => {
   const [fontTheme, setTheme] = useState<SegmentedValue>('light');
   const [fontSize, setSize] = useState<SegmentedValue>('');
-  const [styleOptions, setOptions] = useState<StyleItem[]>([]);
+  // const [styleOptions, setOptions] = useState<StyleItem[]>([]);
   const [activeStyle, setStyle] = useState<string>('');
 
   const fontThemeOptions = [
@@ -145,9 +145,9 @@ const CommonStyle = ({ shape }: CommonStyleProps) => {
     },
   ];
 
-  useEffect(() => {
-    setOptions(charts[shape]);
-  }, [shape]);
+  // useEffect(() => {
+  //   setOptions(charts[shape]);
+  // }, [shape]);
 
   return (
     <div className="">

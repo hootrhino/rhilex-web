@@ -23,7 +23,7 @@ const NodeSetting = ({ shape }: NodeSettingProps) => {
     {
       label: getLabel('样式', 'commonStyle', 'icon-style-setting'),
       key: 'commonStyle',
-      children: <CommonStyle shape={shape} />,
+      children: <CommonStyle shape={shape} styleOptions={[]} />,
     },
     {
       label: getLabel('数据源', 'dataSource', 'icon-data-setting'),
