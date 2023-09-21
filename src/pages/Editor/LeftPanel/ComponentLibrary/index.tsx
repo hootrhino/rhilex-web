@@ -11,16 +11,17 @@ import {
   textList,
   widgetList,
 } from '../constant';
-import type { Data } from './Item';
+import type { Data, QuickStyleConfig } from './Item';
 import ComponentItem from './Item';
 
 import '../index.less';
 
 type ComponentLibraryProps = {
   addNode: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
+  handleQuickStyle?: (value: QuickStyleConfig) => void;
 };
 
-const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
+const ComponentLibrary = ({ addNode, handleQuickStyle }: ComponentLibraryProps) => {
   const [activeTab, setTab] = useState<string>('charts');
   const [activeType, setType] = useState<string>('all');
   const [data, setData] = useState<Data[]>([]);
@@ -96,7 +97,7 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
         ))}
       </div>
       {activeTab === 'charts' ? (
-        <div className="w-full flex flex-1">
+        <div className="relative w-full flex flex-1">
           <div className="flex flex-col py-[12px] ml-[8px] items-center">
             {chartsTypeList?.map((item) => (
               <div
@@ -119,6 +120,7 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
                 key={chart.key}
                 onMouseDown={addNode}
                 datatype={chart.key}
+                handleQuickStyle={handleQuickStyle}
               />
             ))}
           </ul>

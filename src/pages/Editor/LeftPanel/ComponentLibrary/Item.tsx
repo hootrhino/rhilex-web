@@ -1,5 +1,7 @@
 import { IconFont } from '@/utils/utils';
 import { Tooltip } from 'antd';
+import { useState } from 'react';
+import './index.less';
 
 export type Data = {
   title: string;
@@ -8,14 +10,21 @@ export type Data = {
   disabled?: boolean;
 };
 
+export type QuickStyleConfig = {
+  open: boolean; title: string;
+}
+
 type ItemProps = React.LiHTMLAttributes<any> & {
   data: Data;
+  handleQuickStyle?: (value: QuickStyleConfig) => void;
 };
 
-const Item = ({ data, ...props }: ItemProps) => {
+const Item = ({ data, handleQuickStyle, ...props }: ItemProps) => {
+  const [iconType, setIconType] = useState<string>('icon-quick-style');
+
   return (
     <li
-      className="bg-[#242424] mb-[12px] rounded-[4px] cursor-pointer hover:bg-[#363636]"
+      className="bg-[#242424] mb-[12px] rounded-[4px] cursor-pointer hover:bg-[#363636] relative"
       key={data.key}
       {...props}
     >
@@ -40,6 +49,21 @@ const Item = ({ data, ...props }: ItemProps) => {
           </span>
         )}
       </div>
+      <Tooltip title="快速样式" color="#4281ff">
+        <div
+          className="quick-style-wrapper"
+          onMouseEnter={() => {
+            setIconType('icon-quick-style-active');
+            handleQuickStyle!({open: data?.disabled ? false : true, title: data.title});
+          }}
+          onMouseLeave={() => {
+            setIconType('icon-quick-style');
+            handleQuickStyle!({open: false, title: data.title});
+          }}
+        >
+          <IconFont type={iconType} className="pl-[5px]" />
+        </div>
+      </Tooltip>
     </li>
   );
 };

@@ -14,12 +14,14 @@ import ComponentLibrary from './ComponentLibrary';
 import { panelItems } from './constant';
 import Layers from './Layers';
 import Material from './Material';
+import { QuickStyleConfig } from './ComponentLibrary/Item';
 
 type LeftPanelProps = React.HTMLAttributes<HTMLDivElement>;
 
-const LeftPanel = forwardRef<LeftPanelProps, any>(({addNode, ...props}, ref) => {
+const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) => {
   const { collapseLeftPanel: collapse, setCollapseLeftPanel: setCollapse } = useModel('useEditor');
   const [activeItem, setActiveItem] = useState<string>('layers');
+  const [quickStyleConfig, setQuickStyleConfig] = useState<QuickStyleConfig>({open: false, title: ''});
 
   const handleOnCloseRightPanel = () => {
     setCollapse(true);
@@ -115,8 +117,21 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({addNode, ...props}, ref) => 
           )}
         >
           {activeItem === 'layers' && <Layers />}
-          {activeItem === 'components' && <ComponentLibrary addNode={addNode} />}
-          {activeItem === 'material' && <Material  />}
+          {activeItem === 'components' && <ComponentLibrary addNode={addNode} handleQuickStyle={setQuickStyleConfig}/>}
+          {activeItem === 'material' && <Material />}
+        </div>
+      </div>
+      <div className={cn('left-panel-fixed-quick-style', quickStyleConfig.open ? 'block' : 'hidden')}>
+        <div
+          className={cn(
+            'left-panel-detail-header',
+            'flex items-center justify-between h-[56px] px-[16px] overflow-hidden text-[#ADADAD] text-[12px]',
+          )}
+        >
+          {quickStyleConfig.title}快速样式
+        </div>
+        <div className="w-[166px] h-[93px] bg-[#242424] my-[12px] mr-[8px] ml-[12px] rounded-[4px] hover:bg-[#363636]">
+          图片
         </div>
       </div>
     </>
