@@ -27,9 +27,9 @@ import { Dnd } from '@antv/x6-plugin-dnd';
 import { register } from '@antv/x6-react-shape';
 import './index.less';
 
-// import { Modal } from 'antd';
 import { modal } from '@/components/PopupHack';
 import shapes from '../Shapes/ReactNodes';
+import { chartsList } from '../LeftPanel/constant';
 
 const Canvas = () => {
   const handle = useFullScreenHandle();
@@ -40,7 +40,6 @@ const Canvas = () => {
   const horizontalGuidesRef = useRef<Guides>(null);
   const verticalGuidesRef = useRef<Guides>(null);
 
-  const { collapseLeftPanel } = useModel('useEditor');
   const [canvasSize, setCanvasSize] = useState<number>(30);
   const [canMouseDrag, setMouseDrag] = useState<boolean>(true);
   const [offset, setOffset] = useState<number>(0);
@@ -59,6 +58,8 @@ const Canvas = () => {
     setVerticalZoom,
     setVerticalUnit,
   } = useModel('useGuide');
+
+  const { collapseLeftPanel, setDetailFormType, setActiveNodeShape, setQuickStyle } = useModel('useEditor');
 
   // 使用插件
   const handleOnPlugins = (graph: Graph) => {
@@ -177,8 +178,28 @@ const Canvas = () => {
     graph.on('graph:mouseenter', () => {
       setMouseDrag(false);
     });
+
     graph.on('graph:mouseleave', () => {
       setMouseDrag(true);
+    });
+
+    graph.on('node:click', ({ node }) => {
+      chartsList?.forEach(chart => {
+        if (node.shape.includes(chart.group)) {
+          chart.children?.forEach(child => {
+            if (child.key === node.shape) {
+              setQuickStyle(child.children);
+            }
+          })
+        }
+      })
+
+      setActiveNodeShape(node.shape);
+      setDetailFormType('node');
+    });
+
+    graph.on('blank:click', () => {
+      setDetailFormType('canvas');
     });
   };
 

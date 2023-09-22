@@ -1,41 +1,14 @@
 import { cn } from '@/utils/utils';
-import { Graph } from '@antv/x6';
 import { useModel } from '@umijs/max';
-import isNil from 'lodash/isNil';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import CanvasSetting from './CanvasSetting';
 import './index.less';
 import NodeSetting from './NodeSetting';
-import { chartsList } from '../LeftPanel/constant';
-
-export type DetailFormType = 'node' | 'canvas';
 
 const RightPanel = forwardRef((props, ref) => {
   const nodeRef = useRef(null);
-  const { collapseRightPanel, setCollapseRightPanel } = useModel('useEditor');
-  const [type, setFormType] = useState<DetailFormType>('canvas');
-  const [nodeShape, setShape] = useState<string>('');
-
-  const handleOnChangeType = (graph: Graph) => {
-    graph.on('node:click', ({ node }) => {
-      console.log(chartsList, node.shape);
-      setShape(node.shape);
-      setFormType('node');
-    });
-
-    graph.on('blank:click', () => {
-      setFormType('canvas');
-    });
-  };
-
-  useEffect(() => {
-    const graph = (ref as any)?.current;
-
-    if (!isNil(graph)) {
-      handleOnChangeType(graph);
-    }
-  }, [(ref as any)?.current]);
+  const { collapseRightPanel, setCollapseRightPanel, detailFormType } = useModel('useEditor');
 
   useEffect(() => {
     setCollapseRightPanel(false);
@@ -50,7 +23,7 @@ const RightPanel = forwardRef((props, ref) => {
       unmountOnExit
     >
       <div className={cn('right-panel', 'fixed right-0 bottom-0  bg-[#1A1A1A]')} ref={nodeRef}>
-        {type === 'canvas' ? <CanvasSetting /> : <NodeSetting shape={nodeShape} />}
+        {detailFormType === 'canvas' ? <CanvasSetting /> : <NodeSetting />}
       </div>
     </CSSTransition>
   );

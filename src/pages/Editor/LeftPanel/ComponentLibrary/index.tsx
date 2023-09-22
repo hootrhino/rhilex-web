@@ -11,17 +11,16 @@ import {
   textList,
   widgetList,
 } from '../constant';
-import type { Data, QuickStyleConfig } from './Item';
+import type { Data } from './Item';
 import ComponentItem from './Item';
 
 import '../index.less';
 
 type ComponentLibraryProps = {
   addNode: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
-  handleQuickStyle?: (value: QuickStyleConfig) => void;
 };
 
-const ComponentLibrary = ({ addNode, handleQuickStyle }: ComponentLibraryProps) => {
+const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
   const [activeTab, setTab] = useState<string>('charts');
   const [activeType, setType] = useState<string>('all');
   const [data, setData] = useState<Data[]>([]);
@@ -120,7 +119,6 @@ const ComponentLibrary = ({ addNode, handleQuickStyle }: ComponentLibraryProps) 
                 key={chart.key}
                 onMouseDown={addNode}
                 datatype={chart.key}
-                handleQuickStyle={handleQuickStyle}
               />
             ))}
           </ul>

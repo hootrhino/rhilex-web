@@ -2,6 +2,8 @@ import { IconFont } from '@/utils/utils';
 import { Tooltip } from 'antd';
 import { useState } from 'react';
 import './index.less';
+import { useModel } from '@umijs/max';
+import { chartsList } from '../constant';
 
 export type Data = {
   title: string;
@@ -10,16 +12,12 @@ export type Data = {
   disabled?: boolean;
 };
 
-export type QuickStyleConfig = {
-  open: boolean; title: string;
-}
-
 type ItemProps = React.LiHTMLAttributes<any> & {
   data: Data;
-  handleQuickStyle?: (value: QuickStyleConfig) => void;
 };
 
-const Item = ({ data, handleQuickStyle, ...props }: ItemProps) => {
+const Item = ({ data, ...props }: ItemProps) => {
+  const { setQuickStyleConfig,setQuickStyle } = useModel('useEditor');
   const [iconType, setIconType] = useState<string>('icon-quick-style');
 
   return (
@@ -53,12 +51,23 @@ const Item = ({ data, handleQuickStyle, ...props }: ItemProps) => {
         <div
           className="quick-style-wrapper"
           onMouseEnter={() => {
+            chartsList?.forEach(chart => {
+              if (data.key.includes(chart.group)) {
+                chart.children?.forEach(child => {
+                  if (child.key === data.key) {
+                    setQuickStyle(child.children);
+                  }
+                })
+              }
+            })
+
             setIconType('icon-quick-style-active');
-            handleQuickStyle!({open: data?.disabled ? false : true, title: data.title});
+            setQuickStyleConfig!({open: data?.disabled ? false : true, title: data.title});
           }}
           onMouseLeave={() => {
+            // setQuickStyle([]);
             setIconType('icon-quick-style');
-            handleQuickStyle!({open: false, title: data.title});
+            // setQuickStyleConfig!({open: false, title: data.title});
           }}
         >
           <IconFont type={iconType} className="pl-[5px]" />

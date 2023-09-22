@@ -6,10 +6,10 @@ import DataSource from './DataSource';
 import './index.less';
 
 type NodeSettingProps = {
-  shape: string;
+  // shape: string;
 };
 
-const NodeSetting = ({ shape }: NodeSettingProps) => {
+const NodeSetting = ({  }: NodeSettingProps) => {
   const [activeTab, setActiveTab] = useState<string>('commonStyle');
 
   const getLabel = (label: string, key: string, icon: string) => (
@@ -23,7 +23,7 @@ const NodeSetting = ({ shape }: NodeSettingProps) => {
     {
       label: getLabel('样式', 'commonStyle', 'icon-style-setting'),
       key: 'commonStyle',
-      children: <CommonStyle shape={shape} styleOptions={[]} />,
+      children: <CommonStyle />,
     },
     {
       label: getLabel('数据源', 'dataSource', 'icon-data-setting'),

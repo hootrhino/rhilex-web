@@ -14,14 +14,12 @@ import ComponentLibrary from './ComponentLibrary';
 import { panelItems } from './constant';
 import Layers from './Layers';
 import Material from './Material';
-import { QuickStyleConfig } from './ComponentLibrary/Item';
 
 type LeftPanelProps = React.HTMLAttributes<HTMLDivElement>;
 
 const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) => {
-  const { collapseLeftPanel: collapse, setCollapseLeftPanel: setCollapse } = useModel('useEditor');
+  const { collapseLeftPanel: collapse, setCollapseLeftPanel: setCollapse,quickStyleConfig, activeNodeQuickStyle } = useModel('useEditor');
   const [activeItem, setActiveItem] = useState<string>('layers');
-  const [quickStyleConfig, setQuickStyleConfig] = useState<QuickStyleConfig>({open: false, title: ''});
 
   const handleOnCloseRightPanel = () => {
     setCollapse(true);
@@ -117,7 +115,7 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
           )}
         >
           {activeItem === 'layers' && <Layers />}
-          {activeItem === 'components' && <ComponentLibrary addNode={addNode} handleQuickStyle={setQuickStyleConfig}/>}
+          {activeItem === 'components' && <ComponentLibrary addNode={addNode} />}
           {activeItem === 'material' && <Material />}
         </div>
       </div>
@@ -130,9 +128,10 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
         >
           {quickStyleConfig.title}快速样式
         </div>
-        <div className="w-[166px] h-[93px] bg-[#242424] my-[12px] mr-[8px] ml-[12px] rounded-[4px] hover:bg-[#363636]">
-          图片
-        </div>
+        {activeNodeQuickStyle?.map(item => <div key={item.key} className="w-[166px] h-[93px] bg-[#242424] my-[12px] mr-[8px] ml-[12px] rounded-[4px] hover:bg-[#363636]">
+        <img src={item.value} className='w-full h-full object-contain' />
+        </div>)}
+
       </div>
     </>
   );

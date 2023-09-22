@@ -11,16 +11,7 @@ import type { SegmentedValue } from 'antd/es/segmented';
 import { useState } from 'react';
 import { colorOptions, nodeTitle } from '../constants';
 import FormItem from '../FormItem';
-
-type StyleItem = {
-  key: string;
-  value: string;
-};
-
-type CommonStyleProps = {
-  shape: string;
-  styleOptions: StyleItem[];
-};
+import { useModel } from '@umijs/max';
 
 const fontWeightOptions = [
   { label: '超细体', value: '200' },
@@ -41,10 +32,10 @@ const fontFamilyOptions = [
   { label: 'Helvetica', value: 'Helvetica' },
 ];
 
-const CommonStyle = ({ shape, styleOptions }: CommonStyleProps) => {
+const CommonStyle = () => {
+  const { activeNodeShape, activeNodeQuickStyle } = useModel('useEditor');
   const [fontTheme, setTheme] = useState<SegmentedValue>('light');
   const [fontSize, setSize] = useState<SegmentedValue>('');
-  // const [styleOptions, setOptions] = useState<StyleItem[]>([]);
   const [activeStyle, setStyle] = useState<string>('');
 
   const fontThemeOptions = [
@@ -92,7 +83,7 @@ const CommonStyle = ({ shape, styleOptions }: CommonStyleProps) => {
       children: (
         <div className="relative">
           <div className="flex flex-wrap pl-[32px]">
-            {styleOptions?.map((item) => (
+            {activeNodeQuickStyle?.map((item) => (
               <>
                 <div
                   key={item.key}
@@ -110,7 +101,7 @@ const CommonStyle = ({ shape, styleOptions }: CommonStyleProps) => {
                 >
                   <div className="py-[16px] px-[20px]">
                     <div className="text-[#F7F7F7] text-[16px] mb-[12px]">
-                      {nodeTitle[shape]}快速样式
+                      {nodeTitle[activeNodeShape]}快速样式
                     </div>
                     <div className="text-[#ADADAD] text-[12px] my-[6px]">
                       使用默认数据绘制的组件样式如下
@@ -145,15 +136,11 @@ const CommonStyle = ({ shape, styleOptions }: CommonStyleProps) => {
     },
   ];
 
-  // useEffect(() => {
-  //   setOptions(charts[shape]);
-  // }, [shape]);
-
   return (
     <div className="">
       <div className="flex items-center justify-between pt-[10px] pb-[12px] pl-[32px] pr-[24px]">
         <div className="text-[16px] text-[#F7F7F7]">
-          <span>{nodeTitle[shape]}</span>
+          <span>{nodeTitle[activeNodeShape]}</span>
           <Tooltip title="查看组件文档" color="#1F6AFF">
             <FileTextOutlined style={{ fontSize: 14, paddingLeft: 5, cursor: 'pointer' }} />
           </Tooltip>
@@ -189,7 +176,7 @@ const CommonStyle = ({ shape, styleOptions }: CommonStyleProps) => {
         </FormItem>
       </Space>
 
-      {styleOptions?.length > 0 && (
+      {activeNodeQuickStyle?.length > 0 && (
         <Collapse
           defaultActiveKey="quickStyle"
           items={quickStyleOptions}
