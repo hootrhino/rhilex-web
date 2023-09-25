@@ -4,30 +4,15 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  overscroll-behavior: none;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
     'Noto Color Emoji';
+  overscroll-behavior: none;
 }
 
-.colorWeak {
-  filter: invert(80%);
-}
-
-.ant-layout {
-  min-height: 100vh;
-}
-.ant-pro-sider.ant-layout-sider.ant-pro-sider-fixed {
-  left: unset;
-}
-
-.ant-badge-status {
-  width: 100%;
-}
-
-.ant-segmented .ant-segmented-item-selected {
-  color: #fff;
-  background-color: #1890ff;
+#root {
+  --panel-shadow-outer-color: #000;
+  --panel-shadow-inner-color: rgba(61, 61, 61, 0.6);
 }
 
 .ant-pro-form-login-header {
@@ -44,30 +29,62 @@ canvas {
   display: block;
 }
 
-body {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 ul,
 ol {
   list-style: none;
 }
 
-@media (max-width: 768px) {
-  .ant-table {
-    width: 100%;
-    overflow-x: auto;
-    &-thead > tr,
-    &-tbody > tr {
-      > th,
-      > td {
-        white-space: pre;
-        > span {
-          display: block;
-        }
-      }
-    }
+// 滚动条
+.editor-scrollbar {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #5e5e5e;
+    border-radius: 40px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
   }
 }
+
+// box-shadow inner
+.editor-box-shadow-1 {
+  box-shadow: inset -1px 0 0 0 var(--panel-shadow-inner-color);
+}
+
+.editor-box-shadow-2 {
+  box-shadow: inset 1px 0 0 0 var(--panel-shadow-inner-color);
+}
+
+.editor-box-shadow-3 {
+  box-shadow: inset 0 -1px 0 0 var(--panel-shadow-inner-color);
+}
+
+.editor-box-shadow-4 {
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.4);
+}
+
+.editor-box-shadow-5 {
+  box-shadow: inset 0 1px 0 0 var(--panel-shadow-inner-color);
+}
+
+// box-shadow outer
+.editor-shadow-outer-t {
+  border-top: 1px solid var(--panel-shadow-outer-color);
+}
+
+.editor-shadow-outer-b {
+  border-bottom: 1px solid var(--panel-shadow-outer-color);
+}
+
+.editor-shadow-outer-r {
+  border-right: 1px solid var(--panel-shadow-outer-color);
+}
+
+.editor-shadow-outer-l {
+  border-left: 1px solid var(--panel-shadow-outer-color);
+}
+

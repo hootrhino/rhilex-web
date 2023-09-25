@@ -58,8 +58,7 @@ const Footer = ({ value, onChange }: FooterProps) => {
 
   return (
     <div
-      className="flex justify-center items-center fixed bottom-0 left-0 right-0 w-full h-[48px] bg-[#1A1A1A] pt-[1px]"
-      style={{ borderTop: '1px solid #000', boxShadow: 'inset 0 1px 0 0 rgba(61, 61, 61, 0.6)' }}
+      className={cn('editor-shadow-outer-t','editor-box-shadow-5', 'flex justify-center items-center fixed bottom-0 left-0 right-0 w-full h-[48px] bg-[#1A1A1A] pt-[1px]')}
     >
       <Space
         align="center"

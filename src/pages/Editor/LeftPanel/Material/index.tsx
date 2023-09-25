@@ -41,7 +41,7 @@ const Material = () => {
         ))}
       </div>
       {activeTab === 'temp' && (
-        <ul className={cn('charts-wrapper', 'custom-scrollbar', 'p-[12px] w-full')}>
+        <ul className={cn('charts-wrapper', 'editor-scrollbar', 'p-[12px] w-full')}>
           {MaterialData?.map((item) => (
             <li className="bg-[#242424] mb-[12px] rounded-[4px] cursor-pointer" key={item.key}>
               <div className="pt-0 pb-[4px] w-full h-[115px] relative">

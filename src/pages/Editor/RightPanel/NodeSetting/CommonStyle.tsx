@@ -95,6 +95,7 @@ const CommonStyle = () => {
                 <div
                   className={cn(
                     'quick-style-detail-wrapper',
+                    'editor-box-shadow-4',
                     'absolute right-[350px] top-[-130px] w-[322px] bg-[#333]',
                     activeStyle === item.key ? 'block' : 'hidden',
                   )}
@@ -184,7 +185,7 @@ const CommonStyle = () => {
         />
       )}
 
-      <div className={cn('chart-setting-wrapper', 'pl-[32px] pr-[24px] pt-[1px]')}>
+      <div className={cn('editor-shadow-outer-t', 'editor-box-shadow-5', 'pl-[32px] pr-[24px] pt-[1px]')}>
         <FormItem label="图表颜色" span={6} className="mt-[16px] mb-[12px]">
           <Select
             optionHeight={16}

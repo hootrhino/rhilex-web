@@ -95,8 +95,9 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
           </div>
         ))}
       </div>
-      {activeTab === 'charts' ? (
-        <div className="relative w-full flex flex-1">
+
+      <div className={cn(activeTab === 'charts' ? 'relative w-full flex flex-1' : 'w-full')}>
+        {activeTab === 'charts' && (
           <div className="flex flex-col py-[12px] ml-[8px] items-center">
             {chartsTypeList?.map((item) => (
               <div
@@ -111,25 +112,25 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
               </div>
             ))}
           </div>
+        )}
 
-          <ul className={cn('charts-wrapper', 'custom-scrollbar', 'p-[12px]')}>
-            {data?.map((chart) => (
-              <ComponentItem
-                data={chart}
-                key={chart.key}
-                onMouseDown={addNode}
-                datatype={chart.key}
-              />
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <ul className={cn('charts-wrapper', 'custom-scrollbar', 'p-[18px] w-full')}>
-          {data?.map((item) => (
-            <ComponentItem data={item} key={item.key} onMouseDown={addNode} datatype={item.key} />
+        <ul
+          className={cn(
+            'charts-wrapper',
+            'editor-scrollbar',
+            activeTab === 'charts' ? 'p-[12px]' : 'p-[18px] w-full',
+          )}
+        >
+          {data?.map((chart) => (
+            <ComponentItem
+              data={chart}
+              key={chart.key}
+              onMouseDown={addNode}
+              datatype={chart.key}
+            />
           ))}
         </ul>
-      )}
+      </div>
     </div>
   );
 };

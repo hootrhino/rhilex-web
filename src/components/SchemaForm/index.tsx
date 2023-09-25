@@ -12,7 +12,7 @@ import {
 import useGoBack from '@/hooks/useGoBack';
 import { getUarts } from '@/services/rulex/xitongshuju';
 import { FooterToolbar } from '@ant-design/pro-components';
-import { AutoComplete, Button, Popconfirm, Segmented } from 'antd';
+import { AutoComplete, Button, ConfigProvider, Popconfirm, Segmented } from 'antd';
 import omit from 'lodash/omit';
 import { useRequest } from 'umi';
 import FullScreenEditor from '../FullScreenEditor';
@@ -114,15 +114,26 @@ const SchemaForm = ({
   const customizeValueType = {
     segmented: {
       renderFormItem: (_: any, props: any) => (
-        <Segmented
-          block
-          className="w-[440px]"
-          options={[
-            { label: '是', value: 'true' },
-            { label: '否', value: 'false' },
-          ]}
-          {...props?.fieldProps}
-        />
+        <ConfigProvider
+          theme={{
+            components: {
+              Segmented: {
+                itemSelectedColor: '#fff',
+                itemSelectedBg: '#1890ff',
+              },
+            },
+          }}
+        >
+          <Segmented
+            block
+            className="w-[440px]"
+            options={[
+              { label: '是', value: 'true' },
+              { label: '否', value: 'false' },
+            ]}
+            {...props?.fieldProps}
+          />
+        </ConfigProvider>
       ),
     },
     autoComplete: {

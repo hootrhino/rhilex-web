@@ -1,15 +1,16 @@
 import { IconFont } from '@/utils/utils';
+import { useModel } from '@umijs/max';
 import { Tooltip } from 'antd';
 import { useState } from 'react';
-import './index.less';
-import { useModel } from '@umijs/max';
 import { chartsList } from '../constant';
+import './index.less';
 
 export type Data = {
   title: string;
   image: any;
   key: string;
   disabled?: boolean;
+  hasQuickStyle?: boolean;
 };
 
 type ItemProps = React.LiHTMLAttributes<any> & {
@@ -17,7 +18,7 @@ type ItemProps = React.LiHTMLAttributes<any> & {
 };
 
 const Item = ({ data, ...props }: ItemProps) => {
-  const { setQuickStyleConfig,setQuickStyle } = useModel('useEditor');
+  const { setQuickStyleConfig, setQuickStyle } = useModel('useEditor');
   const [iconType, setIconType] = useState<string>('icon-quick-style');
 
   return (
@@ -47,32 +48,32 @@ const Item = ({ data, ...props }: ItemProps) => {
           </span>
         )}
       </div>
-      <Tooltip title="快速样式" color="#4281ff">
-        <div
-          className="quick-style-wrapper"
-          onMouseEnter={() => {
-            chartsList?.forEach(chart => {
-              if (data.key.includes(chart.group)) {
-                chart.children?.forEach(child => {
-                  if (child.key === data.key) {
-                    setQuickStyle(child.children);
-                  }
-                })
-              }
-            })
+      {data?.hasQuickStyle && (
+        <Tooltip title="快速样式" color="#4281ff">
+          <div
+            className="quick-style-wrapper"
+            onMouseEnter={() => {
+              chartsList?.forEach((chart) => {
+                if (data.key.includes(chart.group)) {
+                  chart.children?.forEach((child) => {
+                    if (child.key === data.key) {
+                      setQuickStyle(child.children);
+                    }
+                  });
+                }
+              });
 
-            setIconType('icon-quick-style-active');
-            setQuickStyleConfig!({open: data?.disabled ? false : true, title: data.title});
-          }}
-          onMouseLeave={() => {
-            // setQuickStyle([]);
-            setIconType('icon-quick-style');
-            // setQuickStyleConfig!({open: false, title: data.title});
-          }}
-        >
-          <IconFont type={iconType} className="pl-[5px]" />
-        </div>
-      </Tooltip>
+              setIconType('icon-quick-style-active');
+              setQuickStyleConfig!({ open: true, title: data.title });
+            }}
+            onMouseLeave={() => {
+              setIconType('icon-quick-style');
+            }}
+          >
+            <IconFont type={iconType} className="pl-[5px]" />
+          </div>
+        </Tooltip>
+      )}
     </li>
   );
 };

@@ -268,7 +268,7 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
   }, [(ref as any).current]);
 
   return (
-    <div className={cn('toolbar-container', 'w-full h-[60px] bg-[#1f1f1f] fixed top-0 z-[99]')}>
+    <div className={cn('toolbar-container', 'editor-shadow-outer-b','editor-box-shadow-3', 'w-full h-[60px] bg-[#1f1f1f] fixed top-0 z-[99] pb-[1px]')}>
       <Toolbar
         onClick={handleToolbarClick}
         hoverEffect={true}
