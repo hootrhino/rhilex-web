@@ -2,7 +2,7 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import type { CollapseProps } from 'antd';
 import { Collapse, ConfigProvider } from 'antd';
 
-const EditorCollapse = (props: CollapseProps) => {
+const EditorCollapse = ({headerPadding = '0px 0px 0px 0px', ...props}: CollapseProps & {headerPadding?: string}) => {
   return (
     <ConfigProvider
       theme={{
@@ -11,7 +11,7 @@ const EditorCollapse = (props: CollapseProps) => {
             contentBg: '#1A1A1A',
             contentPadding: 0,
             headerBg: '#1A1A1A',
-            headerPadding: 0,
+            headerPadding: headerPadding,
           },
         },
       }}

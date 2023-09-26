@@ -15,6 +15,7 @@ import ComponentLibrary from './ComponentLibrary';
 import { panelItems } from './constant';
 import Layers from './Layers';
 import Material from './Material';
+import Help from './Help';
 
 type LeftPanelProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -38,6 +39,13 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
 
     return currentPanelItem?.name || '帮助';
   };
+
+  const detailContent = {
+    'layers': <Layers  />,
+    'material': <Material />,
+    'components': <ComponentLibrary addNode={addNode} />,
+    'help': <Help  />
+  }
 
   return (
     <>
@@ -125,9 +133,7 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
               'flex items-center flex-col text-[#dbdbdb] text-base h-[calc(100%-56px)]',
             )}
           >
-            {activeItem === 'layers' && <Layers />}
-            {activeItem === 'components' && <ComponentLibrary addNode={addNode} />}
-            {activeItem === 'material' && <Material />}
+            {detailContent[activeItem]}
           </div>
         </div>
       )}

@@ -10,6 +10,7 @@ module.exports = {
       primary: '#1f6aFF',
       baseColor: '#adadad',
       dividerColor: '#333',
+      highlight3: '#dbdbdb'
     },
     backgroundColor: {
       primary: '#1f6aFF',

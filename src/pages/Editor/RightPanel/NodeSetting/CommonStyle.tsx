@@ -184,6 +184,7 @@ const CommonStyle = () => {
           defaultActiveKey="quickStyle"
           items={quickStyleOptions}
           className={cn('editor-divider-t')}
+          headerPadding='0 24px 0 32px'
         />
       )}
 
