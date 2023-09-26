@@ -58,7 +58,11 @@ const Footer = ({ value, onChange }: FooterProps) => {
 
   return (
     <div
-      className={cn('editor-shadow-outer-t','editor-box-shadow-5', 'flex justify-center items-center fixed bottom-0 left-0 right-0 w-full h-[48px] bg-[#1A1A1A] pt-[1px]')}
+      className={cn(
+        'editor-shadow-outer-t',
+        'editor-box-shadow-5',
+        'flex justify-center items-center fixed bottom-0 left-0 right-0 w-full h-[48px] bg-panelBg pt-[1px]',
+      )}
     >
       <Space
         align="center"
@@ -112,7 +116,7 @@ const Footer = ({ value, onChange }: FooterProps) => {
         <Tooltip
           placement="top"
           title={
-            <div className="px-[12px] py-[7px] text-[#adadad] rounded-[4px] text-[12px]">
+            <div className="px-[12px] py-[7px] text-baseColor rounded-[4px] text-base">
               {shortcutOptions.map((item) => (
                 <div className="w-[180px] flex items-center justify-between m-[4px]" key={item.key}>
                   <span>{item.title}</span>

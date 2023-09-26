@@ -14,7 +14,7 @@ import {
 } from '@ant-design/icons';
 import type { Cell, Dom } from '@antv/x6';
 import { Toolbar } from '@antv/x6-react-components';
-import { Button, Space, Tooltip } from 'antd';
+import { Button, Space } from 'antd';
 import { isNil } from 'lodash';
 import { forwardRef, useEffect, useState } from 'react';
 
@@ -25,6 +25,7 @@ import '@antv/x6-react-components/es/toolbar/style/index.css';
 import type { FullScreenHandle } from 'react-full-screen';
 
 import { useModel } from '@umijs/max';
+import Tooltip from '../components/Tooltip';
 import './index.less';
 
 type ToolBarProps = {
@@ -268,14 +269,21 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
   }, [(ref as any).current]);
 
   return (
-    <div className={cn('toolbar-container', 'editor-shadow-outer-b','editor-box-shadow-3', 'w-full h-[60px] bg-[#1f1f1f] fixed top-0 z-[99] pb-[1px]')}>
+    <div
+      className={cn(
+        'toolbar-container',
+        'editor-shadow-outer-b',
+        'editor-box-shadow-3',
+        'w-full h-[60px] bg-[#1f1f1f] fixed top-0 z-[99] pb-[1px]',
+      )}
+    >
       <Toolbar
         onClick={handleToolbarClick}
         hoverEffect={true}
         size="big"
         extra={
           <Space>
-            <Tooltip title="关闭右侧面板" color="#1F6AFF">
+            <Tooltip title="关闭右侧面板">
               <Button
                 size="small"
                 key="control-right-panel"
@@ -307,7 +315,7 @@ const ToolBar = forwardRef<ToolBarProps, any>(({ handleFullScreen }, ref) => {
       >
         <Space className="mr-[50px]">
           <img alt="logo" src="/logo.png" className="h-[28px] w-[45px]" />
-          <div className="text-white w-[120px] truncate">大屏名称大屏名称大屏名称大屏名称</div>
+          <div className="text-[#fff] w-[120px] truncate">大屏名称大屏名称大屏名称大屏名称</div>
         </Space>
         <Toolbar.Group>
           <Toolbar.Item

@@ -1,14 +1,34 @@
-.right-panel-tabs {
-  border-bottom: 1px solid #333;
+.node-setting-tab {
+  .ant-tabs-nav {
+    height: 40px;
+    background-color: #0f0f0f;
+
+    .ant-tabs-tab {
+      margin: 0;
+      padding: 10px 31px;
+
+      &-active {
+        background-color: var(--panel-bg);
+      }
+      &-disabled {
+        color: #7a7a7a;
+      }
+      .anticon {
+        margin-right: 0;
+      }
+    }
+
+    &::before {
+      border: none;
+    }
+  }
 }
 
-.canvas-color-picker {
-  .ant-color-picker-trigger-text {
-    color: #adadad;
-  }
-  .ant-color-picker-color-block {
-    width: 16px;
-    height: 16px;
+.node-setting-tab-lg {
+  .ant-tabs-nav {
+    .ant-tabs-tab {
+      padding: 10px 42px;
+    }
   }
 }
 

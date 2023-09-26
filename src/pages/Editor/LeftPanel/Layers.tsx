@@ -1,8 +1,9 @@
 import { cn } from '@/utils/utils';
 import { BarChartOutlined, EyeOutlined, LineChartOutlined } from '@ant-design/icons';
-import { Tooltip, Tree } from 'antd';
+import { Tree } from 'antd';
 import type { DataNode } from 'antd/es/tree';
 import { useState } from 'react';
+import Tooltip from '../components/Tooltip';
 
 const Layers = () => {
   const [activeLayer, setActiveLayer] = useState<string>('');
@@ -17,7 +18,7 @@ const Layers = () => {
           title: (
             <div className="inline w-full">
               <span className="pr-[70px]">折线图</span>
-              <Tooltip title="隐藏" color="#1F6AFF">
+              <Tooltip title="隐藏">
                 <EyeOutlined className={cn(activeLayer === '0-0-0' ? 'inline' : 'hidden')} />
               </Tooltip>
             </div>
@@ -29,7 +30,7 @@ const Layers = () => {
           title: (
             <div className="inline w-full">
               <span className="pr-[70px]">柱状图</span>
-              <Tooltip title="隐藏" color="#1F6AFF">
+              <Tooltip title="隐藏">
                 <EyeOutlined className={cn(activeLayer === '0-0-1' ? 'inline' : 'hidden')} />
               </Tooltip>
             </div>

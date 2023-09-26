@@ -9,8 +9,8 @@ type FormItemProps = {
 
 const FormItem = ({ label, span = 8, children, ...props }: FormItemProps) => {
   return (
-    <Row justify="space-around" align={props?.align || 'middle'}{...props}>
-      <Col span={span} className="text-[#DBDBDB] text-[12px]">
+    <Row justify="space-around" align={props?.align || 'middle'} {...props}>
+      <Col span={span} className="text-[#DBDBDB] text-base">
         {label}
       </Col>
       <Col span={24 - span}>{children}</Col>

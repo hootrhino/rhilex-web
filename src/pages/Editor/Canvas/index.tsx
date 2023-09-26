@@ -28,8 +28,8 @@ import { register } from '@antv/x6-react-shape';
 import './index.less';
 
 import { modal } from '@/components/PopupHack';
-import shapes from '../Shapes/ReactNodes';
 import { chartsList } from '../LeftPanel/constant';
+import shapes from '../Shapes/ReactNodes';
 
 const Canvas = () => {
   const handle = useFullScreenHandle();
@@ -59,7 +59,8 @@ const Canvas = () => {
     setVerticalUnit,
   } = useModel('useGuide');
 
-  const { collapseLeftPanel, setDetailFormType, setActiveNodeShape, setQuickStyle } = useModel('useEditor');
+  const { collapseLeftPanel, setDetailFormType, setActiveNodeShape, setQuickStyle } =
+    useModel('useEditor');
 
   // 使用插件
   const handleOnPlugins = (graph: Graph) => {
@@ -161,8 +162,8 @@ const Canvas = () => {
       console.log(cells);
       if (cells.length) {
         modal.confirm({
-          title: <div className="text-[#DBDBDB]">删除组件</div>,
-          content: <div className="text-[#ADADAD]">是否删除组件</div>,
+          title: <div className="text-baseColor">删除组件</div>,
+          content: <div className="text-baseColor">是否删除组件</div>,
           icon: <ExclamationCircleFilled />,
           onOk() {
             graph.removeCells(cells);
@@ -184,15 +185,15 @@ const Canvas = () => {
     });
 
     graph.on('node:click', ({ node }) => {
-      chartsList?.forEach(chart => {
+      chartsList?.forEach((chart) => {
         if (node.shape.includes(chart.group)) {
-          chart.children?.forEach(child => {
+          chart.children?.forEach((child) => {
             if (child.key === node.shape) {
               setQuickStyle(child.children);
             }
-          })
+          });
         }
-      })
+      });
 
       setActiveNodeShape(node.shape);
       setDetailFormType('node');

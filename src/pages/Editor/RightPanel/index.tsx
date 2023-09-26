@@ -22,7 +22,15 @@ const RightPanel = forwardRef((props, ref) => {
       classNames="slide"
       unmountOnExit
     >
-      <div className={cn('right-panel','editor-shadow-outer-l', 'editor-box-shadow-2', 'fixed right-0 bottom-0 bg-[#1A1A1A] pl-[1px] z-[98] h-[calc(100%-60px)]')} ref={nodeRef}>
+      <div
+        className={cn(
+          'right-panel',
+          'editor-shadow-outer-l',
+          'editor-box-shadow-2',
+          'fixed right-0 bottom-0 bg-panelBg pl-[1px] z-[98] h-[calc(100%-60px)]',
+        )}
+        ref={nodeRef}
+      >
         {detailFormType === 'canvas' ? <CanvasSetting /> : <NodeSetting />}
       </div>
     </CSSTransition>

@@ -3,13 +3,13 @@ import { ConfigProvider, Space, Tabs } from 'antd';
 import { useState } from 'react';
 import CommonStyle from './CommonStyle';
 import DataSource from './DataSource';
-import './index.less';
+// import './index.less';
 
 type NodeSettingProps = {
   // shape: string;
 };
 
-const NodeSetting = ({  }: NodeSettingProps) => {
+const NodeSetting = ({}: NodeSettingProps) => {
   const [activeTab, setActiveTab] = useState<string>('commonStyle');
 
   const getLabel = (label: string, key: string, icon: string) => (

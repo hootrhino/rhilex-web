@@ -1,10 +1,14 @@
 import { cn, IconFont } from '@/utils/utils';
 
+import ColorPickerInput from '@/pages/Editor/components/ColorPickerInput';
+import FormItem from '@/pages/Editor/components/FormItem';
 import InputNumber from '@/pages/Editor/components/InputNumber';
 import Slider from '@/pages/Editor/components/Slider';
-import { Col, ColorPicker, Row, Space, Tooltip } from 'antd';
+import Tooltip from '@/pages/Editor/components/Tooltip';
+
+import { Col, Row, Space } from 'antd';
 import { useState } from 'react';
-import FormItem from './FormItem';
+
 import './index.less';
 
 const ZoomTypeList = [
@@ -47,8 +51,8 @@ const CanvasSetting = () => {
     <div className="h-full w-[332px]">
       <div
         className={cn(
-          'right-panel-tabs',
-          'flex justify-center items-center h-[40px] text-[#dbdbdb] text-[12px]',
+          'editor-divider-b',
+          'flex justify-center items-center h-[40px] text-[#dbdbdb] text-base',
         )}
       >
         页面设置
@@ -67,20 +71,12 @@ const CanvasSetting = () => {
           </Space>
         </FormItem>
         <FormItem label="背景" className="mb-[10px]">
-          <ColorPicker
-            value="#262626"
-            size="middle"
-            showText
-            className={cn(
-              'canvas-color-picker',
-              'w-full h-[30px] bg-[#333] border-[#333] justify-start rounded-[4px] hover:border-transparent hover:bg-[#434343]',
-            )}
-          />
+          <ColorPickerInput value="#262626" />
         </FormItem>
         <FormItem label="缩放方式" className="mb-[10px]">
-          <div className="w-full h-[30px] bg-[#333] flex items-center justify-around rounded-[4px]">
+          <div className="w-full h-[30px] bg-inputBg flex items-center justify-around rounded-[4px]">
             {ZoomTypeList.map((item) => (
-              <Tooltip key={item.key} title={item.tooltip} color="#1F6AFF">
+              <Tooltip key={item.key} title={item.tooltip}>
                 <IconFont
                   type={item.icon}
                   className={
@@ -96,18 +92,18 @@ const CanvasSetting = () => {
         </FormItem>
         <FormItem label="缩略图" className="mb-[10px]">
           <Space align="center">
-            <div className="w-[88px] h-[24px] leading-[24px] bg-[#333] border-[#333] text-[#adadad] text-[12px] text-center cursor-pointer rounded-[4px] hover:bg-[#434343]">
+            <div className="w-[88px] h-[24px] leading-[24px] bg-inputBg border-[#333] text-baseColor text-base text-center cursor-pointer rounded-[4px] hover:bg-[#434343]">
               截取封面
             </div>
-            <div className="w-[88px] h-[24px] leading-[24px] bg-[#333] border-[#333] text-[#adadad] text-[12px] text-center cursor-pointer rounded-[4px] hover:bg-[#434343]">
+            <div className="w-[88px] h-[24px] leading-[24px] bg-inputBg border-[#333] text-baseColor text-base text-center cursor-pointer rounded-[4px] hover:bg-[#434343]">
               上传封面
             </div>
           </Space>
         </FormItem>
         <Row>
           <Col span={16} offset={8}>
-            <div className="w-full h-[90px] bg-[#333]"></div>
-            <span className="text-[#7A7A7A] text-[12px]">*封面缩略图</span>
+            <div className="w-full h-[90px] bg-inputBg"></div>
+            <span className="text-[#7A7A7A] text-base">*封面缩略图</span>
           </Col>
         </Row>
       </div>

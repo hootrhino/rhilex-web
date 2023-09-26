@@ -3,18 +3,11 @@ import { cn, IconFont } from '@/utils/utils';
 import { FileTextOutlined } from '@ant-design/icons';
 import { json } from '@codemirror/lang-json';
 import CodeMirror from '@uiw/react-codemirror';
-import { ConfigProvider, Form, Space, Tooltip } from 'antd';
-// import { useState } from 'react';
-
-// type OptionType = {
-//   value: string;
-//   label: string;
-// };
+import { ConfigProvider, Form, Space } from 'antd';
+import Tooltip from '../../components/Tooltip';
 
 const DEFAULT_OPTION = [{ label: '静态数据', value: 'static' }];
 const DataSource = () => {
-  // const [typeOption, setOption] = useState<OptionType[]>(DEFAULT_OPTION);
-
   return (
     <ConfigProvider
       theme={{
@@ -28,13 +21,14 @@ const DataSource = () => {
     >
       <div className="pt-[10px] pb-[12px] pl-[32px] text-[16px] text-[#F7F7F7]">
         <span>水波图</span>
-        <Tooltip title="查看组件文档" color="#1F6AFF">
+        <Tooltip title="查看组件文档">
           <FileTextOutlined style={{ fontSize: 14, paddingLeft: 5, cursor: 'pointer' }} />
         </Tooltip>
       </div>
       <div
         className={cn(
-          'data-form-title',
+          'editor-divider-t',
+          'editor-divider-b',
           'text-[#F7F7F7] bg-[#242424] h-[32px] leading-[32px] mb-[20px]',
         )}
       >

@@ -11,8 +11,41 @@ body,
 }
 
 #root {
+  --text-base: 12px;
+
+  --panel-card-bg: #242424;
+  --panel-card-hover: #363636;
+  --panel-card-click: #2d2d2d;
+  --panel-bg: #1a1a1a;
+  --panel-hover: #2c2c2c;
+  --panel-click: #232323;
+  --panel-divider-color: #333;
   --panel-shadow-outer-color: #000;
   --panel-shadow-inner-color: rgba(61, 61, 61, 0.6);
+
+  --primary-color: #1f6aff;
+  --primary-color-hover: #4281ff;
+  --primary-color-active: #0d52db;
+
+  --editor-icon: #adadad;
+  --icon-weak: #7a7a7a;
+  --icon-hover: #dbdbdb;
+  --icon-selected: #f7f7f7;
+  --icon-highlight: var(--primary-color);
+
+  --text-color-highlight-1: #fff;
+  --text-color-highlight-2: #f7f7f7;
+  --text-color-highlight-3: #dbdbdb;
+  --text-color-disabled: #525252;
+  --text-color: #adadad;
+
+  --success-color: #29a64e;
+  --success-color-hover: #219644;
+  --success-color-light: #eafff0;
+
+  --badge-color: #eb2f2f;
+  --badge-color-hover: #d12a2a;
+  --badge-color-light: #ffecec;
 }
 
 .ant-pro-form-login-header {
@@ -42,7 +75,7 @@ ol {
 
   &::-webkit-scrollbar-thumb {
     background: #5e5e5e;
-    border-radius: 40px;
+    border-radius: 50px;
   }
 
   &::-webkit-scrollbar-track {
@@ -88,3 +121,20 @@ ol {
   border-left: 1px solid var(--panel-shadow-outer-color);
 }
 
+// divide
+.editor-divider-l {
+  border-left: 1px solid var(--panel-divider-color);
+}
+
+.editor-divider-b {
+  border-bottom: 1px solid var(--panel-divider-color);
+}
+
+.editor-divider-t {
+  border-top: 1px solid var(--panel-divider-color);
+}
+
+// border
+.box-border-thin {
+  border: 0.5px solid #141414;
+}

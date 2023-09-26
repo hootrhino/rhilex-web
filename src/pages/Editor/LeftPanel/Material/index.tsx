@@ -7,10 +7,10 @@ const Material = () => {
   const [activeTab, setTab] = useState<string>('temp');
 
   return (
-    <div className="flex flex-1 h-full w-full bg-[#1A1A1A]">
+    <div className="flex flex-1 h-full w-full bg-panelBg">
       <div
         className={cn(
-          'tab-wrapper',
+          'left-panel-tab-wrapper',
           'flex flex-col justify-satrt bg-[#0F0F0F] w-[75px] items-center relative',
         )}
       >
@@ -18,7 +18,7 @@ const Material = () => {
           <div key={tab.key} className="h-[72px] pt-[7px]">
             <div
               className={cn(
-                'h-[50px] px-[4px] flex justify-center flex-col items-center hover:bg-[#1A1A1A]',
+                'h-[50px] px-[4px] flex justify-center flex-col items-center hover:bg-panelBg',
                 activeTab === tab.key && 'active-tab2',
                 tab.key === 'temp' ? 'cursor-pointer' : 'cursor-not-allowed',
               )}
@@ -31,7 +31,7 @@ const Material = () => {
                 className={cn(
                   'title',
                   'truncate w-[48px] text-center',
-                  activeTab === tab.key ? 'text-[#dbdbdb]' : 'text-[#ADADAD]',
+                  activeTab === tab.key ? 'text-[#dbdbdb]' : 'text-baseColor',
                 )}
               >
                 {tab.name}
@@ -41,7 +41,13 @@ const Material = () => {
         ))}
       </div>
       {activeTab === 'temp' && (
-        <ul className={cn('charts-wrapper', 'editor-scrollbar', 'p-[12px] w-full')}>
+        <ul
+          className={cn(
+            'h-[calc(100%-60px)] overflow-y-auto',
+            'editor-scrollbar',
+            'p-[12px] w-full',
+          )}
+        >
           {MaterialData?.map((item) => (
             <li className="bg-[#242424] mb-[12px] rounded-[4px] cursor-pointer" key={item.key}>
               <div className="pt-0 pb-[4px] w-full h-[115px] relative">

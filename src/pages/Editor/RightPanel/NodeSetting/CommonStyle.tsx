@@ -1,17 +1,18 @@
 import Collapse from '@/pages/Editor/components/Collapse';
 import ColorOption from '@/pages/Editor/components/ColorOption';
+import FormItem from '@/pages/Editor/components/FormItem';
 import InputNumber from '@/pages/Editor/components/InputNumber';
 import Segmented from '@/pages/Editor/components/Segmented';
 import Select from '@/pages/Editor/components/Select';
 import Slider from '@/pages/Editor/components/Slider';
 import { cn, IconFont } from '@/utils/utils';
 import { FileTextOutlined } from '@ant-design/icons';
-import { Space, Tooltip } from 'antd';
+import { useModel } from '@umijs/max';
+import { Space } from 'antd';
 import type { SegmentedValue } from 'antd/es/segmented';
 import { useState } from 'react';
+import Tooltip from '../../components/Tooltip';
 import { colorOptions, nodeTitle } from '../constants';
-import FormItem from '../FormItem';
-import { useModel } from '@umijs/max';
 
 const fontWeightOptions = [
   { label: '超细体', value: '200' },
@@ -41,7 +42,7 @@ const CommonStyle = () => {
   const fontThemeOptions = [
     {
       label: (
-        <Tooltip title="暗色" color="#4281ff">
+        <Tooltip title="暗色">
           <IconFont type={fontTheme === 'dark' ? 'icon-font-dark-active' : 'icon-font-dark'} />
         </Tooltip>
       ),
@@ -49,7 +50,7 @@ const CommonStyle = () => {
     },
     {
       label: (
-        <Tooltip title="亮色" color="#4281ff">
+        <Tooltip title="亮色">
           <IconFont type={fontTheme === 'light' ? 'icon-font-light-active' : 'icon-font-light'} />
         </Tooltip>
       ),
@@ -60,7 +61,7 @@ const CommonStyle = () => {
   const fontSizeOptions = [
     {
       label: (
-        <Tooltip title="更大" color="#4281ff">
+        <Tooltip title="更大">
           <IconFont type={fontSize === 'up' ? 'icon-font-up-active' : 'icon-font-up'} />
         </Tooltip>
       ),
@@ -68,7 +69,7 @@ const CommonStyle = () => {
     },
     {
       label: (
-        <Tooltip title="更小" color="#4281ff">
+        <Tooltip title="更小">
           <IconFont type={fontSize === 'down' ? 'icon-font-down-active' : 'icon-font-down'} />
         </Tooltip>
       ),
@@ -92,43 +93,44 @@ const CommonStyle = () => {
                 >
                   <img src={item.value} className="w-full h-full object-cover" />
                 </div>
-                <div
-                  className={cn(
-                    'quick-style-detail-wrapper',
-                    'editor-box-shadow-4',
-                    'absolute right-[350px] top-[-130px] w-[322px] bg-[#333]',
-                    activeStyle === item.key ? 'block' : 'hidden',
-                  )}
-                >
-                  <div className="py-[16px] px-[20px]">
-                    <div className="text-[#F7F7F7] text-[16px] mb-[12px]">
-                      {nodeTitle[activeNodeShape]}快速样式
-                    </div>
-                    <div className="text-[#ADADAD] text-[12px] my-[6px]">
-                      使用默认数据绘制的组件样式如下
-                    </div>
-                    <img src={item.value} className="w-full h-[158px] object-cover" />
-                    <div className="text-[#ADADAD] text-[12px] my-[6px]">
-                      是否新增一个以默认数据渲染的组件？
-                    </div>
-                    <Space align="center" className="flex justify-end mt-[24px]">
-                      <div
-                        className="flex items-center h-[28px] leading-[28px] px-[12px] bg-[#474747] text-[#dbdbdb] text-[12px] rounded-[4px] cursor-pointer hover:bg-[#565656]"
-                        onClick={() => setStyle('')}
-                      >
-                        取消
+                {activeStyle === item.key && (
+                  <div
+                    className={cn(
+                      'box-border-thin',
+                      'editor-box-shadow-4',
+                      'absolute right-[350px] top-[-130px] w-[322px] bg-inputBg rounded-[4px]',
+                    )}
+                  >
+                    <div className="py-[16px] px-[20px]">
+                      <div className="text-[#F7F7F7] text-[16px] mb-[12px]">
+                        {nodeTitle[activeNodeShape]}快速样式
                       </div>
-                      <div
-                        className="flex items-center h-[28px] leading-[28px] px-[12px] bg-[#1f6aff] text-[#fff] text-[12px] rounded-[4px] cursor-pointer hover:bg-[#4281ff]"
-                        onClick={() => {
-                          // TODO
-                        }}
-                      >
-                        试一试
+                      <div className="text-baseColor text-base my-[6px]">
+                        使用默认数据绘制的组件样式如下
                       </div>
-                    </Space>
+                      <img src={item.value} className="w-full h-[158px] object-cover" />
+                      <div className="text-baseColor text-base my-[6px]">
+                        是否新增一个以默认数据渲染的组件？
+                      </div>
+                      <Space align="center" className="flex justify-end mt-[24px]">
+                        <div
+                          className="flex items-center h-[28px] leading-[28px] px-[12px] bg-[#474747] text-[#dbdbdb] text-base rounded-[4px] cursor-pointer hover:bg-[#565656]"
+                          onClick={() => setStyle('')}
+                        >
+                          取消
+                        </div>
+                        <div
+                          className="flex items-center h-[28px] leading-[28px] px-[12px] bg-primary text-[#fff] text-base rounded-[4px] cursor-pointer hover:bg-[#4281ff]"
+                          onClick={() => {
+                            // TODO
+                          }}
+                        >
+                          试一试
+                        </div>
+                      </Space>
+                    </div>
                   </div>
-                </div>
+                )}
               </>
             ))}
           </div>
@@ -142,7 +144,7 @@ const CommonStyle = () => {
       <div className="flex items-center justify-between pt-[10px] pb-[12px] pl-[32px] pr-[24px]">
         <div className="text-[16px] text-[#F7F7F7]">
           <span>{nodeTitle[activeNodeShape]}</span>
-          <Tooltip title="查看组件文档" color="#1F6AFF">
+          <Tooltip title="查看组件文档">
             <FileTextOutlined style={{ fontSize: 14, paddingLeft: 5, cursor: 'pointer' }} />
           </Tooltip>
         </div>
@@ -159,10 +161,10 @@ const CommonStyle = () => {
         <InputNumber addonBefore="W" padding={3} />
         <InputNumber addonBefore="H" padding={3} />
         <Space align="center">
-          <div className="w-[37px] h-[28px] bg-[#333] rounded-[4px] flex items-center justify-center cursor-pointer hover:bg-[#434343]">
+          <div className="w-[37px] h-[28px] bg-inputBg rounded-[4px] flex items-center justify-center cursor-pointer hover:bg-[#434343]">
             <IconFont type="icon-flip-v" />
           </div>
-          <div className="w-[37px] h-[28px] bg-[#333] rounded-[4px] flex items-center justify-center cursor-pointer hover:bg-[#434343]">
+          <div className="w-[37px] h-[28px] bg-inputBg rounded-[4px] flex items-center justify-center cursor-pointer hover:bg-[#434343]">
             <IconFont type="icon-flip-h" />
           </div>
         </Space>
@@ -181,11 +183,17 @@ const CommonStyle = () => {
         <Collapse
           defaultActiveKey="quickStyle"
           items={quickStyleOptions}
-          className="collapse-wrapper"
+          className={cn('editor-divider-t')}
         />
       )}
 
-      <div className={cn('editor-shadow-outer-t', 'editor-box-shadow-5', 'pl-[32px] pr-[24px] pt-[1px]')}>
+      <div
+        className={cn(
+          'editor-shadow-outer-t',
+          'editor-box-shadow-5',
+          'pl-[32px] pr-[24px] pt-[1px]',
+        )}
+      >
         <FormItem label="图表颜色" span={6} className="mt-[16px] mb-[12px]">
           <Select
             optionHeight={16}
@@ -200,11 +208,11 @@ const CommonStyle = () => {
           <Space align="start" className="mb-[12px]">
             <Space direction="vertical">
               <Select className="w-[100px]" options={fontFamilyOptions} />
-              <div className="text-[#7A7A7A] text-[12px] mt-[-5px]">字体</div>
+              <div className="text-[#7A7A7A] text-base mt-[-5px]">字体</div>
             </Space>
             <Space direction="vertical">
               <Select className="w-[100px]" options={fontWeightOptions} />
-              <div className="text-[#7A7A7A] text-[12px] mt-[-5px]">粗细</div>
+              <div className="text-[#7A7A7A] text-base mt-[-5px]">粗细</div>
             </Space>
           </Space>
           <Space align="start" className="mb-[6px]">
@@ -216,7 +224,7 @@ const CommonStyle = () => {
                 options={fontSizeOptions}
                 onChange={(value) => setSize(value)}
               />
-              <div className="text-[#7A7A7A] text-[12px] mt-[-5px]">字号</div>
+              <div className="text-[#7A7A7A] text-base mt-[-5px]">字号</div>
             </Space>
             <Space direction="vertical">
               <Segmented
@@ -226,7 +234,7 @@ const CommonStyle = () => {
                 options={fontThemeOptions}
                 onChange={(value) => setTheme(value)}
               />
-              <div className="text-[#7A7A7A] text-[12px] mt-[-5px]">颜色</div>
+              <div className="text-[#7A7A7A] text-base mt-[-5px]">颜色</div>
             </Space>
           </Space>
         </FormItem>

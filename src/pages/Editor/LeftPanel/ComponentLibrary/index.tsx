@@ -71,10 +71,10 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
   }, [activeType]);
 
   return (
-    <div className="flex flex-1 h-full w-full bg-[#1A1A1A]">
+    <div className="flex flex-1 h-full w-full bg-panelBg">
       <div
         className={cn(
-          'tab-wrapper',
+          'left-panel-tab-wrapper',
           'flex flex-col justify-satrt bg-[#0F0F0F] w-[40px] items-center relative',
         )}
       >
@@ -88,7 +88,7 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
             onClick={() => setTab(tab.key)}
           >
             <Tooltip title={tab.name} placement="left" color="#4281ff">
-              <div className="w-[20px] h-[20px] flex justify-center items-center hover:bg-[#1a1a1a] cursor-pointer">
+              <div className="w-[20px] h-[20px] flex justify-center items-center hover:bg-panelBg cursor-pointer">
                 <IconFont type={activeTab === tab.key ? `${tab.icon}-active` : tab.icon} />
               </div>
             </Tooltip>
@@ -98,12 +98,12 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
 
       <div className={cn(activeTab === 'charts' ? 'relative w-full flex flex-1' : 'w-full')}>
         {activeTab === 'charts' && (
-          <div className="flex flex-col py-[12px] ml-[8px] items-center">
+          <div className="flex flex-col pb-[12px] pt-[2px] ml-[8px] items-center w-[52px] flex-none">
             {chartsTypeList?.map((item) => (
               <div
                 key={item.key}
                 className={cn(
-                  'w-[50px] my-[10px] text-center rounded-[4px] p-[4px] bg-transparent text-[#7A7A7A] truncate cursor-pointer',
+                  'w-full my-[10px] text-center rounded-[4px] p-[4px] bg-transparent text-[#7A7A7A] truncate cursor-pointer hover:bg-[#333]',
                   activeType === item.key && 'bg-[#333] text-[#DBDBDB]',
                 )}
                 onClick={() => setType(item.key)}
@@ -116,9 +116,9 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
 
         <ul
           className={cn(
-            'charts-wrapper',
+            'h-full overflow-y-auto w-full',
             'editor-scrollbar',
-            activeTab === 'charts' ? 'p-[12px]' : 'p-[18px] w-full',
+            activeTab === 'charts' ? 'py-[12px] px-[8px]' : 'p-[16px]',
           )}
         >
           {data?.map((chart) => (

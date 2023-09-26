@@ -2,8 +2,6 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import type { CollapseProps } from 'antd';
 import { Collapse, ConfigProvider } from 'antd';
 
-import './index.less';
-
 const EditorCollapse = (props: CollapseProps) => {
   return (
     <ConfigProvider
