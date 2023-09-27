@@ -1,21 +1,15 @@
+import Tooltip from '@/pages/Editor/components/Tooltip';
 import { cn, IconFont } from '@/utils/utils';
-import './index.less';
-
-import {
-  CloseOutlined,
-  QuestionCircleOutlined,
-  RedoOutlined,
-  SearchOutlined,
-} from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 import { Space } from 'antd';
-import { forwardRef, useState } from 'react';
-import Tooltip from '../components/Tooltip';
+import { forwardRef, useEffect, useState } from 'react';
 import ComponentLibrary from './ComponentLibrary';
 import { panelItems } from './constant';
+import Help from './Help';
 import Layers from './Layers';
 import Material from './Material';
-import Help from './Help';
+
+import './index.less';
 
 type LeftPanelProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -28,6 +22,15 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
     setQuickStyleConfig,
   } = useModel('useEditor');
   const [activeItem, setActiveItem] = useState<string>('layers');
+  const [reloadIcon, setReloadIcon] = useState<string>('icon-reload');
+  const [layersDocIcon, setLayersDocIcon] = useState<string>('icon-doc-fill');
+
+  const detailContent = {
+    layers: <Layers />,
+    material: <Material />,
+    components: <ComponentLibrary addNode={addNode} />,
+    help: <Help />,
+  };
 
   const handleOnCloseRightPanel = () => {
     setCollapse(true);
@@ -37,15 +40,30 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
   const getDetailTitle = () => {
     const currentPanelItem = panelItems?.find((item) => item?.key === activeItem);
 
-    return currentPanelItem?.name || '帮助';
+    if (activeItem === 'layers') {
+      return (
+        <Tooltip title="查看帮助文档" placement="right">
+          {currentPanelItem?.name}
+          <IconFont
+            type={layersDocIcon}
+            className="ml-[4px] cursor-pointer"
+            onMouseEnter={() => setLayersDocIcon('icon-doc-fill-active')}
+            onMouseLeave={() => setLayersDocIcon('icon-doc-fill')}
+          />
+        </Tooltip>
+      );
+    } else {
+      return currentPanelItem?.name || '帮助';
+    }
   };
 
-  const detailContent = {
-    'layers': <Layers  />,
-    'material': <Material />,
-    'components': <ComponentLibrary addNode={addNode} />,
-    'help': <Help  />
-  }
+  useEffect(() => {
+    if (activeItem === 'layers') {
+      setReloadIcon('icon-reload-disabled');
+    } else {
+      setReloadIcon('icon-reload');
+    }
+  }, [activeItem]);
 
   return (
     <>
@@ -85,7 +103,7 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
         <Space
           className={cn(
             'left-panel-item',
-            'w-full min-h-[40px] my-[8px] py-[4px] bg-transparent rounded-[4px] hover:bg-[#2c2c2c]',
+            'w-full min-h-[40px] my-[8px] py-[8px] bg-transparent rounded-[4px] hover:bg-[#2c2c2c]',
             activeItem === 'help' ? 'text-[#F7F7F7]' : 'text-[#7a7a7a]',
           )}
           direction="vertical"
@@ -96,9 +114,7 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
             setCollapse(false);
           }}
         >
-          <QuestionCircleOutlined
-            style={activeItem === 'help' ? { color: '#1F6AFF' } : { color: '#ADADAD' }}
-          />
+          <IconFont type={activeItem === 'help' ? 'icon-question-active' : 'icon-question'} />
           <span className="text-base">帮助</span>
         </Space>
       </div>
@@ -118,13 +134,31 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
           >
             <span>{getDetailTitle()}</span>
             <div className="text-baseColor cursor-pointer">
-              <Tooltip title="刷新">
-                <RedoOutlined />
-              </Tooltip>
-              <Tooltip title="搜索">
-                <SearchOutlined className="ml-[10px]" />
-              </Tooltip>
-              <CloseOutlined className="ml-[10px]" onClick={handleOnCloseRightPanel} />
+              {activeItem !== 'help' && (
+                <>
+                  <Tooltip title="刷新" disabled={activeItem === 'layers'}>
+                    <IconFont
+                      disabled={activeItem === 'layers'}
+                      type={reloadIcon}
+                      onMouseEnter={() =>
+                        activeItem !== 'layers' && setReloadIcon('icon-reload-active')
+                      }
+                      onMouseLeave={() => activeItem !== 'layers' && setReloadIcon('icon-reload')}
+                    />
+                  </Tooltip>
+                  {activeItem !== 'layers' && <Tooltip title="搜索">
+                    <IconFont type="icon-search" className="ml-[10px]" />
+                  </Tooltip>}
+
+                  {['layers', 'components'].includes(activeItem) && (
+                    <Tooltip title="固定">
+                      <IconFont type="icon-pin" className="ml-[10px]" />
+                    </Tooltip>
+                  )}
+                </>
+              )}
+
+              <IconFont type="icon-close" className="ml-[10px]" onClick={handleOnCloseRightPanel} />
             </div>
           </div>
           <div
