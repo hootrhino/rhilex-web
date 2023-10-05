@@ -10,6 +10,7 @@ import Layers from './Layers';
 import Material from './Material';
 
 import './index.less';
+import Icon from '../components/Icon';
 
 type LeftPanelProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -23,7 +24,6 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
   } = useModel('useEditor');
   const [activeItem, setActiveItem] = useState<string>('layers');
   const [reloadIcon, setReloadIcon] = useState<string>('icon-reload');
-  const [layersDocIcon, setLayersDocIcon] = useState<string>('icon-doc-fill');
 
   const detailContent = {
     layers: <Layers />,
@@ -44,11 +44,9 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
       return (
         <Tooltip title="查看帮助文档" placement="right">
           {currentPanelItem?.name}
-          <IconFont
-            type={layersDocIcon}
-            className="ml-[4px] cursor-pointer"
-            onMouseEnter={() => setLayersDocIcon('icon-doc-fill-active')}
-            onMouseLeave={() => setLayersDocIcon('icon-doc-fill')}
+          <Icon
+            type='doc-fill'
+            className="ml-[4px]"
           />
         </Tooltip>
       );
@@ -137,7 +135,7 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
               {activeItem !== 'help' && (
                 <>
                   <Tooltip title="刷新" disabled={activeItem === 'layers'}>
-                    <IconFont
+                  <IconFont
                       disabled={activeItem === 'layers'}
                       type={reloadIcon}
                       onMouseEnter={() =>
@@ -147,18 +145,18 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
                     />
                   </Tooltip>
                   {activeItem !== 'layers' && <Tooltip title="搜索">
-                    <IconFont type="icon-search" className="ml-[10px]" />
+                    <Icon type="search" className="ml-[10px]" />
                   </Tooltip>}
 
                   {['layers', 'components'].includes(activeItem) && (
                     <Tooltip title="固定">
-                      <IconFont type="icon-pin" className="ml-[10px]" />
+                      <Icon type="pin" className="ml-[10px]" />
                     </Tooltip>
                   )}
                 </>
               )}
 
-              <IconFont type="icon-close" className="ml-[10px]" onClick={handleOnCloseRightPanel} />
+              <Icon type="close" className="ml-[10px]" onClick={handleOnCloseRightPanel} />
             </div>
           </div>
           <div

@@ -2,7 +2,12 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import type { CollapseProps } from 'antd';
 import { Collapse, ConfigProvider } from 'antd';
 
-const EditorCollapse = ({headerPadding = '0px 0px 0px 0px', ...props}: CollapseProps & {headerPadding?: string}) => {
+type EditorCollapseProps = CollapseProps & {
+  headerPadding?: string;
+  headerMarginRight?: number;
+}
+
+const EditorCollapse = ({headerPadding = '0px 0px 0px 0px', headerMarginRight = 0, ...props}: EditorCollapseProps) => {
   return (
     <ConfigProvider
       theme={{
@@ -19,7 +24,7 @@ const EditorCollapse = ({headerPadding = '0px 0px 0px 0px', ...props}: CollapseP
       <Collapse
         bordered={false}
         expandIconPosition="end"
-        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} style={{marginRight: headerMarginRight}} />}
         {...props}
       />
     </ConfigProvider>

@@ -192,7 +192,7 @@ const Screen = () => {
               <div
                 key={item?.key}
                 className={cn(
-                  'min-w-[240px] w-[22.8%] h-max border-transparent hover:border-blue-500 border-solid border-2 mr-[2%] mb-[24px] rounded bg-[#ededed]',
+                  'min-w-[240px] w-[22.8%] h-max mr-[2%] mb-[24px] rounded bg-[#ededed]',
                 )}
               >
                 <Image

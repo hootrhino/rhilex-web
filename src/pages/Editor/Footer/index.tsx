@@ -5,6 +5,7 @@ import { Space, Tooltip } from 'antd';
 import Select from '@/pages/Editor/components/Select';
 import Slider from '@/pages/Editor/components/Slider';
 import { useEffect, useState } from 'react';
+import Icon from '../components/Icon';
 
 type FooterProps = {
   value: number;
@@ -68,7 +69,7 @@ const Footer = ({ value, onChange }: FooterProps) => {
         align="center"
         className={cn('absolute px-[10px]', collapseLeftPanel ? 'left-[64px]' : 'left-[364px]')}
       >
-        <IconFont type="icon-map-switch" className="mr-[12px] cursor-pointer" />
+        <Icon type="map-switch" className="mr-[12px]" />
         <div className="flex items-center justify-center">
           <div
             onClick={() => !minDisabled && onChange(value - 1)}
@@ -128,7 +129,7 @@ const Footer = ({ value, onChange }: FooterProps) => {
           arrow={false}
           color="#333"
         >
-          <IconFont type="icon-keyboard" className="cursor-pointer" />
+          <Icon type="keyboard" />
         </Tooltip>
       </Space>
     </div>

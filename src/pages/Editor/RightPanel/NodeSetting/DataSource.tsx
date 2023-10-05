@@ -1,13 +1,17 @@
 import Select from '@/pages/Editor/components/Select';
 import { cn, IconFont } from '@/utils/utils';
-import { FileTextOutlined } from '@ant-design/icons';
 import { json } from '@codemirror/lang-json';
 import CodeMirror from '@uiw/react-codemirror';
 import { ConfigProvider, Form, Space } from 'antd';
 import Tooltip from '../../components/Tooltip';
+import { nodeTitle } from '../../constants';
+import { useModel } from '@umijs/max';
+import Icon from '../../components/Icon';
 
 const DEFAULT_OPTION = [{ label: '静态数据', value: 'static' }];
 const DataSource = () => {
+  const { activeNodeShape } = useModel('useEditor');
+
   return (
     <ConfigProvider
       theme={{
@@ -19,11 +23,11 @@ const DataSource = () => {
         },
       }}
     >
-      <div className="pt-[10px] pb-[12px] pl-[32px] text-[16px] text-[#F7F7F7]">
-        <span>水波图</span>
-        <Tooltip title="查看组件文档">
-          <FileTextOutlined style={{ fontSize: 14, paddingLeft: 5, cursor: 'pointer' }} />
-        </Tooltip>
+      <div className="pt-[10px] pb-[12px] pl-[32px] text-[14px] text-[#F7F7F7]">
+      <span>{nodeTitle[activeNodeShape]}</span>
+          <Tooltip title="查看组件文档">
+            <Icon type='doc' className='pl-[5px] text-[14px]'/>
+          </Tooltip>
       </div>
       <div
         className={cn(

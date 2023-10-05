@@ -12,8 +12,7 @@ import LeftPanel from '../LeftPanel';
 import ToolBar from '../ToolBar';
 
 import { DEFAULT_GUIDE_CONFIG } from '@/models/useGuide';
-import { cn } from '@/utils/utils';
-import { ExclamationCircleFilled, EyeInvisibleOutlined } from '@ant-design/icons';
+import { cn, IconFont } from '@/utils/utils';
 import { Graph } from '@antv/x6';
 import Guides from '@scena/react-guides';
 import inRange from 'lodash/inRange';
@@ -27,9 +26,11 @@ import { Dnd } from '@antv/x6-plugin-dnd';
 import { register } from '@antv/x6-react-shape';
 import './index.less';
 
-import { modal } from '@/components/PopupHack';
+import ConfirmModal from '../components/ConfirmModal';
+import { nodeTitle } from '../constants';
 import { chartsList } from '../LeftPanel/constant';
 import shapes from '../Shapes/ReactNodes';
+import Icon from '../components/Icon';
 
 const Canvas = () => {
   const handle = useFullScreenHandle();
@@ -43,6 +44,11 @@ const Canvas = () => {
   const [canvasSize, setCanvasSize] = useState<number>(30);
   const [canMouseDrag, setMouseDrag] = useState<boolean>(true);
   const [offset, setOffset] = useState<number>(0);
+
+  const [modalConfig, setModalConfig] = useState<{ open: boolean; content: string }>({
+    open: false,
+    content: '',
+  });
 
   const {
     verticalZoom,
@@ -159,17 +165,10 @@ const Canvas = () => {
     // 删除
     graph.bindKey('backspace', () => {
       const cells = graph.getSelectedCells();
-      console.log(cells);
+
       if (cells.length) {
-        modal.confirm({
-          title: <div className="text-baseColor">删除组件</div>,
-          content: <div className="text-baseColor">是否删除组件</div>,
-          icon: <ExclamationCircleFilled />,
-          onOk() {
-            graph.removeCells(cells);
-          },
-          bodyStyle: { background: '#242424' },
-        });
+        const selectedShape = cells?.[0]?.shape;
+        setModalConfig({ open: true, content: nodeTitle[selectedShape] });
       }
     });
   };
@@ -360,7 +359,7 @@ const Canvas = () => {
               collapseLeftPanel ? 'left-[64px]' : 'left-[364px]',
             )}
           >
-            <EyeInvisibleOutlined style={{ color: '#adadad' }} />
+            <Icon type='eye' />
           </div>
           <div
             className={cn(
@@ -422,6 +421,16 @@ const Canvas = () => {
         </div>
         <RightPanel ref={graphRef} />
         <Footer value={canvasSize} onChange={(changeValue: number) => setCanvasSize(changeValue)} />
+        <ConfirmModal
+          {...modalConfig}
+          onCancel={() => setModalConfig({ open: false, content: '' })}
+          onOk={() => {
+            const graph = graphRef.current;
+            const cells = graph?.getSelectedCells();
+            graph.removeCells(cells);
+            setModalConfig({ open: false, content: '' });
+          }}
+        />
       </div>
     </FullScreen>
   );

@@ -6,13 +6,13 @@ import Segmented from '@/pages/Editor/components/Segmented';
 import Select from '@/pages/Editor/components/Select';
 import Slider from '@/pages/Editor/components/Slider';
 import { cn, IconFont } from '@/utils/utils';
-import { FileTextOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 import { Space } from 'antd';
 import type { SegmentedValue } from 'antd/es/segmented';
 import { useState } from 'react';
 import Tooltip from '../../components/Tooltip';
-import { colorOptions, nodeTitle } from '../constants';
+import { nodeTitle } from '../../constants';
+import { colorOptions } from './constants';
 
 const fontWeightOptions = [
   { label: '超细体', value: '200' },
@@ -142,10 +142,10 @@ const CommonStyle = () => {
   return (
     <div className="">
       <div className="flex items-center justify-between pt-[10px] pb-[12px] pl-[32px] pr-[24px]">
-        <div className="text-[16px] text-[#F7F7F7]">
+        <div className="text-[14px] text-[#F7F7F7]">
           <span>{nodeTitle[activeNodeShape]}</span>
           <Tooltip title="查看组件文档">
-            <FileTextOutlined style={{ fontSize: 14, paddingLeft: 5, cursor: 'pointer' }} />
+            <IconFont type='icon-doc' className='pl-[5px] cursor-pointer text-[14px]'/>
           </Tooltip>
         </div>
         <Segmented options={['基础', '全量']} defaultValue="基础" />
@@ -184,7 +184,7 @@ const CommonStyle = () => {
           defaultActiveKey="quickStyle"
           items={quickStyleOptions}
           className={cn('editor-divider-t')}
-          headerPadding='0 24px 0 32px'
+          headerPadding="0 24px 0 32px"
         />
       )}
 
