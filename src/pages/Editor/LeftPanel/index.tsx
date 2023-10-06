@@ -160,10 +160,7 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
             </div>
           </div>
           <div
-            className={cn(
-              'editor-tree-wrapper',
-              'flex items-center flex-col text-[#dbdbdb] text-base h-[calc(100%-56px)]',
-            )}
+            className='flex items-center flex-col text-[#dbdbdb] text-base h-[calc(100%-56px)]'
           >
             {detailContent[activeItem]}
           </div>

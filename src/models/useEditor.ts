@@ -39,12 +39,22 @@ export type EdgeForm = {
 export type QuickStyleItem = {
   key: string;
   value: string;
-}
+};
 
 export type QuickStyleConfig = {
   open: boolean;
   title: string;
+};
+
+type LayersBaseItem = {
+  title: string;
+  id: string;
+  icon: string;
 }
+
+export type Layers = LayersBaseItem & {
+  children?: LayersBaseItem[];
+};
 
 // 右侧详情面板
 export type DetailFormType = 'node' | 'canvas';
@@ -77,6 +87,7 @@ const useEditor = () => {
 
   // 左侧面板
   const [collapseLeftPanel, setCollapseLeftPanel] = useState<boolean>(false);
+  const [layers, setLayers] = useState<Layers[]>([]);
 
   // 右侧详情面板
   const [collapseRightPanel, setCollapseRightPanel] = useState<boolean>(true);
@@ -85,7 +96,10 @@ const useEditor = () => {
   // 节点 Node
   const [activeNodeShape, setActiveNodeShape] = useState<string>('');
   const [activeNodeQuickStyle, setQuickStyle] = useState<QuickStyleItem[]>([]);
-  const [quickStyleConfig, setQuickStyleConfig] = useState<QuickStyleConfig>({open: false, title: ''});
+  const [quickStyleConfig, setQuickStyleConfig] = useState<QuickStyleConfig>({
+    open: false,
+    title: '',
+  });
 
   return {
     edgeFormData,
@@ -100,8 +114,12 @@ const useEditor = () => {
     setDetailFormType,
     activeNodeShape,
     setActiveNodeShape,
-    activeNodeQuickStyle, setQuickStyle,
-    quickStyleConfig, setQuickStyleConfig
+    activeNodeQuickStyle,
+    setQuickStyle,
+    quickStyleConfig,
+    setQuickStyleConfig,
+    layers,
+    setLayers,
   };
 };
 

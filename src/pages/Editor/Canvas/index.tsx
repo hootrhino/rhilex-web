@@ -12,7 +12,7 @@ import LeftPanel from '../LeftPanel';
 import ToolBar from '../ToolBar';
 
 import { DEFAULT_GUIDE_CONFIG } from '@/models/useGuide';
-import { cn, IconFont } from '@/utils/utils';
+import { cn } from '@/utils/utils';
 import { Graph } from '@antv/x6';
 import Guides from '@scena/react-guides';
 import inRange from 'lodash/inRange';
@@ -27,10 +27,10 @@ import { register } from '@antv/x6-react-shape';
 import './index.less';
 
 import ConfirmModal from '../components/ConfirmModal';
+import Icon from '../components/Icon';
 import { nodeTitle } from '../constants';
 import { chartsList } from '../LeftPanel/constant';
 import shapes from '../Shapes/ReactNodes';
-import Icon from '../components/Icon';
 
 const Canvas = () => {
   const handle = useFullScreenHandle();
@@ -65,8 +65,14 @@ const Canvas = () => {
     setVerticalUnit,
   } = useModel('useGuide');
 
-  const { collapseLeftPanel, setDetailFormType, setActiveNodeShape, setQuickStyle } =
-    useModel('useEditor');
+  const {
+    collapseLeftPanel,
+    layers,
+    setDetailFormType,
+    setActiveNodeShape,
+    setQuickStyle,
+    setLayers,
+  } = useModel('useEditor');
 
   // 使用插件
   const handleOnPlugins = (graph: Graph) => {
@@ -234,6 +240,8 @@ const Canvas = () => {
       shape: type,
     });
 
+    setLayers([{ title: nodeTitle[type || ''], id: node.id, icon: 'icon-charts' }, ...layers]);
+
     dnd.start(node, e.nativeEvent);
   };
 
@@ -359,7 +367,7 @@ const Canvas = () => {
               collapseLeftPanel ? 'left-[64px]' : 'left-[364px]',
             )}
           >
-            <Icon type='eye' />
+            <Icon type="eye" />
           </div>
           <div
             className={cn(
@@ -422,7 +430,8 @@ const Canvas = () => {
         <RightPanel ref={graphRef} />
         <Footer value={canvasSize} onChange={(changeValue: number) => setCanvasSize(changeValue)} />
         <ConfirmModal
-          {...modalConfig}
+          title="删除组件"
+          open={modalConfig.open}
           onCancel={() => setModalConfig({ open: false, content: '' })}
           onOk={() => {
             const graph = graphRef.current;
@@ -430,7 +439,9 @@ const Canvas = () => {
             graph.removeCells(cells);
             setModalConfig({ open: false, content: '' });
           }}
-        />
+        >
+          <div className="text-[#ADADAD]">是否删除组件: {modalConfig.content}</div>
+        </ConfirmModal>
       </div>
     </FullScreen>
   );

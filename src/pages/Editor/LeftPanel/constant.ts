@@ -54,43 +54,36 @@ export const MaterialData = [
   {
     ...template.template1,
     key: 'temp1',
-    // image: template.template1,
     disabled: true,
   },
   {
     ...template.template2,
     key: 'temp2',
-    // image: template.template2,
     disabled: true,
   },
   {
     ...template.template3,
     key: 'temp3',
-    // image: template.template3,
     disabled: true,
   },
   {
     ...template.template4,
     key: 'temp4',
-    // image: template.template4,
     disabled: true,
   },
   {
     ...template.template5,
     key: 'temp5',
-    // image: template.template5,
     disabled: true,
   },
   {
     ...template.template6,
     key: 'temp6',
-    // image: template.template6,
     disabled: true,
   },
   {
     ...template.template7,
     key: 'temp7',
-    // image: template.template7,
     disabled: true,
   },
 ];

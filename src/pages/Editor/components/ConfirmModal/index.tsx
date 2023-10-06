@@ -2,18 +2,9 @@ import { IconFont } from '@/utils/utils';
 import type { ModalProps } from 'antd';
 import { ConfigProvider, Modal } from 'antd';
 
-type ConfirmModalProps = ModalProps & {
-  content?: string;
-};
+type ConfirmModalProps = ModalProps;
 
-const ConfirmModal = ({
-  title,
-  children,
-  onCancel,
-  onOk,
-  content,
-  ...props
-}: ConfirmModalProps) => {
+const ConfirmModal = ({ title, children, onCancel, onOk, ...props }: ConfirmModalProps) => {
   return (
     <ConfigProvider
       theme={{
@@ -27,7 +18,7 @@ const ConfirmModal = ({
       }}
     >
       <Modal
-        title={title ? title : '删除组件'}
+        title={title}
         onCancel={onCancel}
         onOk={onOk}
         footer={
@@ -51,7 +42,7 @@ const ConfirmModal = ({
         closeIcon={<IconFont type="icon-close" />}
         {...props}
       >
-        {children ? children : <div className="text-[#ADADAD]">是否删除组件: {content}</div>}
+        {children}
       </Modal>
     </ConfigProvider>
   );
