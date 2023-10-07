@@ -246,13 +246,13 @@
     hideInMenu: true,
     layout: false,
   },
-  // {
-  //   path: '/screen-mgt/screen/update',
-  //   name: '编辑大屏',
-  //   component: './ScreenMgt/Screen/components/Editor',
-  //   hideInMenu: true,
-  //   layout: false,
-  // },
+  {
+    path: '/screen-mgt/screen/edit/:id',
+    name: '编辑大屏',
+    component: './ScreenMgt/Screen/components/Editor',
+    hideInMenu: true,
+    layout: false,
+  },
   {
     path: '/',
     redirect: '/dashboard',
