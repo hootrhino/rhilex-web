@@ -1,4 +1,4 @@
-import { cn } from '@/utils/utils';
+import { cn, IconFont } from '@/utils/utils';
 import {
   EditOutlined,
   EyeOutlined,
@@ -11,13 +11,13 @@ import { Badge, Button, Dropdown, Image, Space } from 'antd';
 
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { useRef, useState } from 'react';
-import screenImg1 from '../../images/screen1.png';
-import screenImg2 from '../../images/screen2.png';
-import screenImg3 from '../../images/screen3.png';
-import screenImg4 from '../../images/screen4.png';
-import screenImg5 from '../../images/screen5.png';
 import type { MenuInfo } from 'rc-menu/lib/interface';
+import { useRef, useState } from 'react';
+import defaultImg from './images/default.png';
+import screenImg2 from './images/screen2.png';
+import screenImg3 from './images/screen3.png';
+import screenImg4 from './images/screen4.png';
+import screenImg5 from './images/screen5.png';
 
 type ScreenItem = {
   key: string;
@@ -30,12 +30,14 @@ type GroupDetailProps = React.HTMLAttributes<HTMLDivElement> & {
   activeKey: string;
 };
 
+type EditType = 'new' | 'rename' | 'moveToGroup';
+
 const screenData = {
   other: [
     {
       key: 'screen1',
       name: '陕西省货运指数大屏',
-      img: screenImg1,
+      img: defaultImg,
       status: '已发布',
     },
     {
@@ -84,8 +86,30 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
   const formRef = useRef<ProFormInstance>();
   const [open, setOpen] = useState<boolean>(false);
   const [preview, setPreview] = useState<boolean>(false);
-  const [actionType, setType] = useState<'edit' | 'preview'>('preview');
   const [previewKey, setKey] = useState<string>('');
+  const [actionType, setType] = useState<'edit' | 'preview'>('preview');
+
+  const [editType, setEditType] = useState<EditType>('new');
+
+  const getModalTitle = () => {
+    let title = '创建大屏';
+    switch (editType) {
+      case 'new':
+        title = '创建大屏';
+        break;
+      case 'rename':
+        title = '重命名';
+        break;
+      case 'moveToGroup':
+        title = '移动到项目分组';
+        break;
+
+      default:
+        break;
+    }
+
+    return title;
+  };
 
   // TODO 创建大屏
   const handleOnCreate = async (values: { name: string; group: string }) => {
@@ -96,10 +120,16 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
     return true;
   };
 
-  const handleOnMenu = (info: MenuInfo) => {
+  const handleOnMenu = (info: MenuInfo, key: string) => {
     // TODO menu
+    console.log(key);
+    if (['rename', 'moveToGroup'].includes(info.key)) {
+      // 重命名
+      setOpen(true);
+      setEditType(info.key as EditType);
+    }
     console.log(info);
-  }
+  };
 
   return (
     <>
@@ -128,13 +158,7 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
                 mask: (
                   <Space align="center">
                     <Button
-                      type="primary"
-                      icon={<EditOutlined />}
-                      onClick={() => {setType('edit');window.open(`/screen-mgt/screen/edit/${item.key}`, '_blank');}}
-                    >
-                      编辑
-                    </Button>
-                    <Button
+                      size="small"
                       icon={<EyeOutlined />}
                       onClick={() => {
                         setType('preview');
@@ -142,6 +166,31 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
                       }}
                     >
                       预览
+                    </Button>
+                    <Button
+                      size="small"
+                      type="primary"
+                      icon={<EditOutlined />}
+                      onClick={() => {
+                        setType('edit');
+                        window.open(`/screen-mgt/screen/edit/${item.key}`, '_blank');
+                      }}
+                    >
+                      编辑
+                    </Button>
+                    <Button
+                      size="small"
+                      type="primary"
+                      icon={
+                        <IconFont
+                          type="icon-publish"
+                          onClick={() => {
+                            // TODO 发布
+                          }}
+                        />
+                      }
+                    >
+                      发布
                     </Button>
                   </Space>
                 ),
@@ -152,13 +201,16 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
                 <FundProjectionScreenOutlined />
                 <p className="w-[120px] truncate p-0 m-0">{item?.name}</p>
               </Space>
-              <Space className="pr-[5px]">
+              <Space className="px-[5px]">
                 <Badge
                   status={item?.status === '未发布' ? 'warning' : 'success'}
                   text={item?.status}
                   className="whitespace-nowrap"
                 />
-                <Dropdown menu={{ items, onClick: handleOnMenu }} trigger={['click']}>
+                <Dropdown
+                  menu={{ items, onClick: (info) => handleOnMenu(info, item.key) }}
+                  trigger={['click']}
+                >
                   <MoreOutlined style={{ color: '#1677FF' }} />
                 </Dropdown>
               </Space>
@@ -168,21 +220,33 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
       </div>
       <ModalForm
         formRef={formRef}
-        title="创建大屏"
+        title={getModalTitle()}
         open={open}
         onOpenChange={(visible) => setOpen(visible)}
         onFinish={handleOnCreate}
         layout="horizontal"
         width="30%"
+        modalProps={{ maskClosable: false }}
       >
-        <ProFormText width="md" name="name" label="大屏名称" placeholder="请输入大屏名称" />
-        <ProFormSelect
-          width="md"
-          name="group"
-          label="项目分组"
-          placeholder="请选择项目分组"
-          options={[{ label: '未分组', value: 'other' }]}
-        />
+        {['new', 'rename'].includes(editType) && (
+          <ProFormText
+            width="md"
+            name="name"
+            label={editType === 'new' ? '大屏名称' : '请输入新的大屏名称'}
+            placeholder={editType === 'new' ? '请输入大屏名称' : '请输入新的大屏名称'}
+            rules={[{ required: true, message: '大屏名称不能为空' }]}
+          />
+        )}
+        {['new', 'moveToGroup'].includes(editType) && (
+          <ProFormSelect
+            width="md"
+            name="group"
+            label={editType === 'new' ? '项目分组' : '请选择目标项目分组'}
+            placeholder={editType === 'new' ? '请选择项目分组' : '请选择目标项目分组'}
+            options={[{ label: '未分组', value: 'other' }]}
+            rules={[{ required: true, message: '项目分组不能为空' }]}
+          />
+        )}
       </ModalForm>
     </>
   );

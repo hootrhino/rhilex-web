@@ -1,8 +1,8 @@
 import { forwardRef, useState } from 'react';
 
 import { cn, IconFont } from '@/utils/utils';
-import '@antv/x6-react-components/es/menu/style/index.css';
-import '@antv/x6-react-components/es/toolbar/style/index.css';
+// import '@antv/x6-react-components/es/menu/style/index.css';
+// import '@antv/x6-react-components/es/toolbar/style/index.css';
 
 import type { FullScreenHandle } from 'react-full-screen';
 
