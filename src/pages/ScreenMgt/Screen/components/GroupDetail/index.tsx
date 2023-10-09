@@ -28,6 +28,7 @@ type ScreenItem = {
 
 type GroupDetailProps = React.HTMLAttributes<HTMLDivElement> & {
   activeKey: string;
+  data: ScreenItem[];
 };
 
 type EditType = 'new' | 'rename' | 'moveToGroup';

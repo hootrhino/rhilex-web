@@ -7,6 +7,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type deleteGroupParams = {
+    uuid: string;
+  };
+
   type deleteInendsParams = {
     uuid?: string;
   };
@@ -23,8 +27,51 @@ declare namespace API {
     uuid: string;
   };
 
+  type getCrontaskPageParams = {
+    /** 当前页，从1开始 */
+    current: number;
+    /** 每页个数 */
+    size?: number;
+  };
+
+  type getCrontaskResultsPageParams = {
+    /** 当前页，从1开始 */
+    current: number;
+    /** 每页个数 */
+    size: number;
+    /** 任务id */
+    taskId?: number;
+  };
+
+  type getCrontaskStartParams = {
+    /** 任务id */
+    id: number;
+  };
+
+  type getCrontaskStopParams = {
+    /** 任务id */
+    id?: number;
+  };
+
+  type getCrontaskTerminateRunningTaskParams = {
+    /** 当前页，从1开始 */
+    current: number;
+    /** 每页个数 */
+    size: number;
+    /** 任务id */
+    taskId?: number;
+  };
+
   type getDevicesDetailParams = {
     uuid: string;
+  };
+
+  type getGroupDetailParams = {
+    uuid: string;
+  };
+
+  type getGroupVisualsParams = {
+    uuid?: string;
   };
 
   type getInendsDetailParams = {

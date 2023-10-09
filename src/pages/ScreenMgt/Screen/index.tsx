@@ -1,4 +1,12 @@
 import { message, modal } from '@/components/PopupHack';
+import {
+  deleteGroup,
+  getGroupDetail,
+  getGroupList,
+  getGroupVisuals,
+  postGroupCreate,
+  putGroupUpdate,
+} from '@/services/rulex/fenzuguanli';
 import { DeleteOutlined, EditOutlined, FolderOpenOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -8,56 +16,95 @@ import {
   ProFormText,
   ProList,
 } from '@ant-design/pro-components';
+import { useRequest } from '@umijs/max';
 import { Button, Space, Tooltip } from 'antd';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import GroupDetail from './components/GroupDetail';
 import './index.less';
 
 type GroupItem = {
-  key: string;
+  uuid: string;
   name: string;
+  [key: string]: any;
 };
 
-const groupData = [
-  {
-    key: 'other',
-    name: '未分组',
-  },
-];
+type GroupConfig = {
+  open: boolean;
+  type: 'new' | 'edit';
+  title: string;
+};
 
 const Screen = () => {
   const groupFormRef = useRef<ProFormInstance>();
-  const [activeGroup, setActiveGroup] = useState<string>('other');
-  const [open, setOpen] = useState<boolean>(false);
-  const [groupDetail, setGroupDetail] = useState<GroupItem>();
+  const [activeGroup, setActiveGroup] = useState<string>('ROOT');
+  const [groupConfig, setConfig] = useState<GroupConfig>({
+    open: false,
+    type: 'new',
+    title: '新建项目分组',
+  });
 
-  const getGroupName = (key: string) => {
-    const group = groupData.find((group) => group.key === key);
+  // 获取分组列表
+  const { data, run } = useRequest(() => getGroupList({}));
 
-    return group?.name;
-  };
+  // 获取分组详情
+  const { data: detail, run: getDetail } = useRequest(
+    (params: API.getGroupDetailParams) => getGroupDetail(params),
+    {
+      manual: true,
+    },
+  );
 
-  // TODO 获取分组列表
-  // TODO 获取分组详情
+  // 查询分组下的元素
+  const { data: groupItems, run: getGroupItems } = useRequest(
+    (params: API.getGroupVisualsParams) => getGroupVisuals(params),
+    {
+      manual: true,
+    },
+  );
+
   // 删除分组
-  const handleOnRemoveGroup = (removeItem: GroupItem) => {
+  const handleOnRemoveGroup = (params: GroupItem) => {
     modal.confirm({
-      title: `确定要删除${removeItem.name}分组吗？`,
-      content: '项目分组中包含0个数据看板，删除后将被移入未分组中，请谨慎处理。',
-      onOk: () => {
-        // TODO 删除分组
+      title: `确定要删除${params.name}分组吗？`,
+      content: `项目分组中包含 ${groupItems.length} 个数据看板，删除后将被移入未分组中，请谨慎处理。`,
+      onOk: async () => {
+        await deleteGroup({ uuid: params.key });
         message.success('成功删除该项目分组');
       },
     });
   };
 
   // 创建&编辑分组
-  const handleOnGroup = async (values: { group: string }) => {
-    // TODO 创建&编辑分组
-    console.log(values);
-    message.success('项目分组创建成功');
+  const handleOnGroup = async (values: { name: string }) => {
+    if (groupConfig.type === 'new') {
+      await postGroupCreate({ ...values, type: 'VISUAL' });
+      message.success('项目分组创建成功');
+    } else {
+      await putGroupUpdate({ ...values, uuid: detail?.uuid || '', type: detail?.type || 'VISUAL' });
+      message.success('项目分组创建成功');
+    }
+
+    run();
     return true;
   };
+
+  const getGroupName = (key: string) => {
+    const group = data?.find((group) => group.uuid === key);
+
+    return group?.name;
+  };
+
+  useEffect(() => {
+    getGroupItems({ uuid: activeGroup });
+  }, [activeGroup]);
+
+  useEffect(() => {
+    if (detail) {
+      groupFormRef.current?.setFieldsValue({ name: detail.name });
+    } else {
+      groupFormRef.current?.setFieldsValue({ name: '' });
+    }
+  }, [detail]);
 
   return (
     <PageContainer>
@@ -73,9 +120,7 @@ const Screen = () => {
               type="primary"
               icon={<PlusOutlined />}
               onClick={() => {
-                setOpen(true);
-                setGroupDetail(undefined);
-                groupFormRef.current?.setFieldsValue({ group: '' });
+                setConfig({ open: true, title: '新建项目分组', type: 'new' });
               }}
             >
               新建
@@ -89,14 +134,14 @@ const Screen = () => {
             onRow={(record: GroupItem) => {
               return {
                 onClick: () => {
-                  setActiveGroup(record.key);
+                  setActiveGroup(record.uuid);
                 },
               };
             }}
-            rowKey="key"
+            rowKey="uuid"
             headerTitle={false}
-            dataSource={groupData}
-            rowClassName={(item: GroupItem) => (item?.key === activeGroup ? 'active-group' : '')}
+            dataSource={data}
+            rowClassName={(item: GroupItem) => (item?.uuid === activeGroup ? 'active-group' : '')}
             metas={{
               title: {
                 dataIndex: 'name',
@@ -114,9 +159,8 @@ const Screen = () => {
                       <a
                         key="edit"
                         onClick={() => {
-                          setOpen(true);
-                          setGroupDetail(entity);
-                          groupFormRef.current?.setFieldsValue({ group: entity.name });
+                          setConfig({ open: true, title: '编辑项目分组', type: 'edit' });
+                          getDetail({ uuid: entity.uuid });
                         }}
                       >
                         <EditOutlined />
@@ -134,19 +178,20 @@ const Screen = () => {
           />
         </ProCard>
         <ProCard title={getGroupName(activeGroup)}>
-          <GroupDetail activeKey={activeGroup} />
+          <GroupDetail activeKey={activeGroup} data={[]} />
         </ProCard>
       </ProCard>
       <ModalForm
         formRef={groupFormRef}
-        title={groupDetail ? '编辑项目分组' : '新建项目分组'}
-        open={open}
-        onOpenChange={(visible) => setOpen(visible)}
+        title={groupConfig.title}
+        open={groupConfig.open}
+        onOpenChange={(visible) => setConfig({ ...groupConfig, open: visible })}
+        modalProps={{ destroyOnClose: true }}
         onFinish={handleOnGroup}
         layout="horizontal"
         width="30%"
       >
-        <ProFormText width="md" name="group" label="分组名称" placeholder="请输入分组名称" />
+        <ProFormText width="md" name="name" label="分组名称" placeholder="请输入分组名称" />
       </ModalForm>
     </PageContainer>
   );
