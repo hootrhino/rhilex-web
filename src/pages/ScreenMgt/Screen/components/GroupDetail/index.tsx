@@ -9,64 +9,77 @@ import {
 import type { MenuProps } from 'antd';
 import { Badge, Button, Dropdown, Image, Space } from 'antd';
 
+import { deleteVisual, postVisualCreate, putVisualCreate } from '@/services/rulex/dapingguanli';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useRef, useState } from 'react';
+import { GroupItem } from '../..';
 import defaultImg from './images/default.png';
-import screenImg2 from './images/screen2.png';
-import screenImg3 from './images/screen3.png';
-import screenImg4 from './images/screen4.png';
-import screenImg5 from './images/screen5.png';
+// import screenImg2 from './images/screen2.png';
+// import screenImg3 from './images/screen3.png';
+// import screenImg4 from './images/screen4.png';
+// import screenImg5 from './images/screen5.png';
+import { message } from '@/components/PopupHack';
+import { useRequest } from '@umijs/max';
 
 type ScreenItem = {
-  key: string;
+  uuid: string;
   name: string;
-  img?: string;
-  status?: string;
+  thumbnail: string;
+  status: string;
 };
 
 type GroupDetailProps = React.HTMLAttributes<HTMLDivElement> & {
-  activeKey: string;
-  data: ScreenItem[];
+  list: ScreenItem[];
+  group: GroupItem[];
+  reload: () => void;
 };
 
 type EditType = 'new' | 'rename' | 'moveToGroup';
 
-const screenData = {
-  other: [
-    {
-      key: 'screen1',
-      name: '陕西省货运指数大屏',
-      img: defaultImg,
-      status: '已发布',
-    },
-    {
-      key: 'screen2',
-      name: '工业设备资产状态监控',
-      img: screenImg2,
-      status: '未发布',
-    },
-    {
-      key: 'screen3',
-      name: '2021年五一假期全国旅游市场观测',
-      img: screenImg3,
-      status: '已发布',
-    },
-    {
-      key: 'screen4',
-      name: '智能工厂监控',
-      img: screenImg4,
-      status: '未发布',
-    },
-    {
-      key: 'screen5',
-      name: '地区新能源业务展示大屏',
-      img: screenImg5,
-      status: '未发布',
-    },
-  ],
+type Update = {
+  gid: string;
+  name: string;
+  type: string;
+  content: string;
+  thumbnail: string;
 };
+
+// const screenData = {
+//   other: [
+//     {
+//       key: 'screen1',
+//       name: '陕西省货运指数大屏',
+//       img: defaultImg,
+//       status: '已发布',
+//     },
+//     {
+//       key: 'screen2',
+//       name: '工业设备资产状态监控',
+//       img: screenImg2,
+//       status: '未发布',
+//     },
+//     {
+//       key: 'screen3',
+//       name: '2021年五一假期全国旅游市场观测',
+//       img: screenImg3,
+//       status: '已发布',
+//     },
+//     {
+//       key: 'screen4',
+//       name: '智能工厂监控',
+//       img: screenImg4,
+//       status: '未发布',
+//     },
+//     {
+//       key: 'screen5',
+//       name: '地区新能源业务展示大屏',
+//       img: screenImg5,
+//       status: '未发布',
+//     },
+//   ],
+// };
 
 const items: MenuProps['items'] = [
   {
@@ -83,7 +96,7 @@ const items: MenuProps['items'] = [
   },
 ];
 
-const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
+const GroupDetail = ({ group, reload, list, ...props }: GroupDetailProps) => {
   const formRef = useRef<ProFormInstance>();
   const [open, setOpen] = useState<boolean>(false);
   const [preview, setPreview] = useState<boolean>(false);
@@ -112,23 +125,52 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
     return title;
   };
 
-  // TODO 创建大屏
-  const handleOnCreate = async (values: { name: string; group: string }) => {
-    console.log(values);
-    // TODO 跳转编辑页面
-    const id = '1111';
-    window.open(`/screen-mgt/screen/edit/${id}`, '_blank');
-    return true;
+  // 创建大屏
+  const { run: create } = useRequest((params: Update) => postVisualCreate(params), {
+    manual: true,
+    onSuccess: (data) => {
+      setOpen(false);
+      reload();
+      window.open(`/screen-mgt/screen/edit/${data?.uuid}`, '_blank');
+    },
+  });
+
+  // 更新大屏
+  const { run: update } = useRequest(
+    (params: Update & { uuid: string }) => putVisualCreate(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('更新成功');
+      },
+    },
+  );
+
+  const handleOnFinish = async (values: { name: string; gid: string }) => {
+    if (editType === 'new') {
+      create({ ...values, type: 'BUILDIN', content: '', thumbnail: '' });
+    } else {
+      update({ ...values, type: 'BUILDIN', content: '', uuid: '', thumbnail: '' });
+    }
   };
 
+  // 删除
+  const { run: remove } = useRequest((uuid: string) => deleteVisual({ uuid }), {
+    manual: true,
+    onSuccess: () => {
+      message.success('删除成功');
+    },
+  });
+
   const handleOnMenu = (info: MenuInfo, key: string) => {
-    // TODO menu
-    console.log(key);
     if (['rename', 'moveToGroup'].includes(info.key)) {
       // 重命名
       setOpen(true);
-      setEditType(info.key as EditType);
+    } else {
+      // 删除
+      remove(key);
     }
+    setEditType(info.key as EditType);
     console.log(info);
   };
 
@@ -142,9 +184,9 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
             </Button>
           </div>
         </div>
-        {screenData[activeKey]?.map((item: ScreenItem) => (
+        {list?.map((item: ScreenItem) => (
           <div
-            key={item?.key}
+            key={item?.uuid}
             className={cn(
               'min-w-[240px] w-[22.8%] h-max mr-[2%] mb-[24px] rounded bg-[#ededed] border border-solid border-[#e6e6e6] hover:border-[#1f6aff]',
             )}
@@ -152,9 +194,9 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
             <Image
               width="100%"
               alt="缩略图"
-              src={item?.img}
+              src={item?.thumbnail ? item?.thumbnail : defaultImg}
               preview={{
-                visible: actionType === 'preview' && preview && previewKey === item?.key,
+                visible: actionType === 'preview' && preview && previewKey === item?.uuid,
                 onVisibleChange: (value) => setPreview(value),
                 mask: (
                   <Space align="center">
@@ -163,7 +205,7 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
                       icon={<EyeOutlined />}
                       onClick={() => {
                         setType('preview');
-                        setKey(item?.key);
+                        setKey(item?.uuid);
                       }}
                     >
                       预览
@@ -174,7 +216,7 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
                       icon={<EditOutlined />}
                       onClick={() => {
                         setType('edit');
-                        window.open(`/screen-mgt/screen/edit/${item.key}`, '_blank');
+                        window.open(`/screen-mgt/screen/edit/${item.uuid}`, '_blank');
                       }}
                     >
                       编辑
@@ -209,7 +251,7 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
                   className="whitespace-nowrap"
                 />
                 <Dropdown
-                  menu={{ items, onClick: (info) => handleOnMenu(info, item.key) }}
+                  menu={{ items, onClick: (info) => handleOnMenu(info, item.uuid) }}
                   trigger={['click']}
                 >
                   <MoreOutlined style={{ color: '#1677FF' }} />
@@ -224,7 +266,7 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
         title={getModalTitle()}
         open={open}
         onOpenChange={(visible) => setOpen(visible)}
-        onFinish={handleOnCreate}
+        onFinish={handleOnFinish}
         layout="horizontal"
         width="30%"
         modalProps={{ maskClosable: false }}
@@ -241,10 +283,10 @@ const GroupDetail = ({ activeKey, ...props }: GroupDetailProps) => {
         {['new', 'moveToGroup'].includes(editType) && (
           <ProFormSelect
             width="md"
-            name="group"
+            name="gid"
             label={editType === 'new' ? '项目分组' : '请选择目标项目分组'}
             placeholder={editType === 'new' ? '请选择项目分组' : '请选择目标项目分组'}
-            options={[{ label: '未分组', value: 'other' }]}
+            options={group?.map((item) => ({ label: item?.name, value: item.uuid }))}
             rules={[{ required: true, message: '项目分组不能为空' }]}
           />
         )}

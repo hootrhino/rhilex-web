@@ -23,6 +23,10 @@ declare namespace API {
     uuid?: string;
   };
 
+  type deleteVisualParams = {
+    uuid: string;
+  };
+
   type getAppDetailParams = {
     uuid: string;
   };
@@ -94,6 +98,10 @@ declare namespace API {
     uuid?: string;
   };
 
+  type getVisualDetailParams = {
+    uuid: string;
+  };
+
   type putAppStartParams = {
     uuid: string;
   };
@@ -105,6 +113,10 @@ declare namespace API {
   type putLogsRemoteParams = {
     /** on:开启；off: 关闭 */
     action?: string;
+  };
+
+  type putVisualPublishParams = {
+    uuid: string;
   };
 
   type wangguanziyuan = {

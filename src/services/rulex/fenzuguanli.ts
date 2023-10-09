@@ -66,7 +66,7 @@ export async function getGroupList(options?: { [key: string]: any }) {
   });
 }
 
-/** 分组取消加入 POST /api/v1/group/unbind */
+/** 把某个子项移除分组 POST /api/v1/group/unbind */
 export async function postGroupUnbind(
   body: {
     gid: string;
@@ -103,7 +103,7 @@ export async function putGroupUpdate(
   });
 }
 
-/** 查看分组下元素 GET /api/v1/group/visuals */
+/** 查看分组下子项 GET /api/v1/group/visuals */
 export async function getGroupVisuals(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getGroupVisualsParams,

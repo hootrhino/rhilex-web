@@ -4400,7 +4400,7 @@
     },
     "/api/v1/group/visuals": {
       "get": {
-        "summary": "查看分组下元素",
+        "summary": "查看分组下子项",
         "x-apifox-folder": "分组管理",
         "x-apifox-status": "developing",
         "deprecated": false,
@@ -4440,7 +4440,7 @@
     },
     "/api/v1/group/unbind": {
       "post": {
-        "summary": "分组取消加入",
+        "summary": "把某个子项移除分组",
         "x-apifox-folder": "分组管理",
         "x-apifox-status": "developing",
         "deprecated": false,
@@ -5817,19 +5817,24 @@
                   },
                   "content": {
                     "type": "string"
+                  },
+                  "thumbnail": {
+                    "type": "string"
                   }
                 },
                 "required": [
                   "gid",
                   "name",
                   "type",
-                  "content"
+                  "content",
+                  "thumbnail"
                 ],
                 "x-apifox-orders": [
                   "gid",
                   "name",
                   "type",
-                  "content"
+                  "content",
+                  "thumbnail"
                 ],
                 "x-apifox-ignore-properties": []
               }
@@ -5851,10 +5856,19 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "uuid"
+                      ],
+                      "x-apifox-orders": [
+                        "uuid"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -5902,19 +5916,24 @@
                   },
                   "content": {
                     "type": "string"
+                  },
+                  "thumbnail": {
+                    "type": "string"
                   }
                 },
                 "required": [
                   "uuid",
                   "name",
                   "type",
-                  "content"
+                  "content",
+                  "thumbnail"
                 ],
                 "x-apifox-orders": [
                   "uuid",
                   "name",
                   "type",
-                  "content"
+                  "content",
+                  "thumbnail"
                 ],
                 "x-apifox-ignore-properties": []
               }
@@ -5936,10 +5955,19 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "uuid"
+                      ],
+                      "x-apifox-orders": [
+                        "uuid"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -5971,7 +5999,18 @@
         "tags": [
           "大屏管理"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "112233454",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "成功",
@@ -6018,7 +6057,7 @@
         "x-apifox-folder": "大屏管理",
         "x-apifox-status": "developing",
         "deprecated": false,
-        "description": "",
+        "description": "大屏列表是展示所有的大屏，没有分组",
         "tags": [
           "大屏管理"
         ],
@@ -6061,6 +6100,154 @@
           }
         },
         "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-115154909-run"
+      }
+    },
+    "/api/v1/visual/publish": {
+      "put": {
+        "summary": "发布大屏",
+        "x-apifox-folder": "大屏管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "大屏管理"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "VISUALV4IUKX",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "thumbnail": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "name",
+                  "type",
+                  "content",
+                  "thumbnail",
+                  "status"
+                ],
+                "x-apifox-orders": [
+                  "uuid",
+                  "name",
+                  "type",
+                  "content",
+                  "thumbnail",
+                  "status"
+                ],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-115236241-run"
+      }
+    },
+    "/api/v1/visual/detail": {
+      "get": {
+        "summary": "大屏详情",
+        "x-apifox-folder": "大屏管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "大屏管理"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "VISUALV4IUKX",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-115240200-run"
       }
     }
   },

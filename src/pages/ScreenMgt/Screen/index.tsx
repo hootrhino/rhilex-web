@@ -22,9 +22,10 @@ import { useEffect, useRef, useState } from 'react';
 import GroupDetail from './components/GroupDetail';
 import './index.less';
 
-type GroupItem = {
+export type GroupItem = {
   uuid: string;
   name: string;
+  type: string;
   [key: string]: any;
 };
 
@@ -55,12 +56,13 @@ const Screen = () => {
   );
 
   // 查询分组下的元素
-  const { data: groupItems, run: getGroupItems } = useRequest(
-    (params: API.getGroupVisualsParams) => getGroupVisuals(params),
-    {
-      manual: true,
-    },
-  );
+  const {
+    data: groupItems,
+    run: getGroupItems,
+    refresh,
+  } = useRequest((params: API.getGroupVisualsParams) => getGroupVisuals(params), {
+    manual: true,
+  });
 
   // 删除分组
   const handleOnRemoveGroup = (params: GroupItem) => {
@@ -178,7 +180,7 @@ const Screen = () => {
           />
         </ProCard>
         <ProCard title={getGroupName(activeGroup)}>
-          <GroupDetail activeKey={activeGroup} data={[]} />
+          <GroupDetail list={groupItems} group={data as GroupItem[]} reload={refresh} />
         </ProCard>
       </ProCard>
       <ModalForm
