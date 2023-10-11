@@ -1,40 +1,34 @@
+import { DEFAULT_GUIDE_CONFIG } from '@/models/useGuide';
+import { cn } from '@/utils/utils';
+import { Graph } from '@antv/x6';
 import { Clipboard } from '@antv/x6-plugin-clipboard';
+import { Dnd } from '@antv/x6-plugin-dnd';
 import { History } from '@antv/x6-plugin-history';
 import { Keyboard } from '@antv/x6-plugin-keyboard';
 import { Selection } from '@antv/x6-plugin-selection';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { Transform } from '@antv/x6-plugin-transform';
-import { useEffect, useRef, useState } from 'react';
-import { useModel } from 'umi';
-import RightPanel from '../RightPanel';
-
-import LeftPanel from '../LeftPanel';
-import ToolBar from '../ToolBar';
-
-import { DEFAULT_GUIDE_CONFIG } from '@/models/useGuide';
-import { cn } from '@/utils/utils';
-import { Graph } from '@antv/x6';
+import { register } from '@antv/x6-react-shape';
 import Guides from '@scena/react-guides';
 import inRange from 'lodash/inRange';
 import round from 'lodash/round';
-import { FullScreen, useFullScreenHandle } from 'react-full-screen';
+import { useEffect, useRef, useState } from 'react';
 import type { OnScroll } from 'react-infinite-viewer';
 import InfiniteViewer from 'react-infinite-viewer';
-import Footer from '../Footer';
-
-import { Dnd } from '@antv/x6-plugin-dnd';
-import { register } from '@antv/x6-react-shape';
-import './index.less';
-
+import { useModel } from 'umi';
 import ConfirmModal from '../components/ConfirmModal';
 import Icon from '../components/Icon';
 import { nodeTitle } from '../constants';
+import Footer from '../Footer';
+import LeftPanel from '../LeftPanel';
 import { chartsList } from '../LeftPanel/constant';
+import RightPanel from '../RightPanel';
 import shapes from '../Shapes/ReactNodes';
+import ToolBar from '../ToolBar';
+
+import './index.less';
 
 const Canvas = () => {
-  const handle = useFullScreenHandle();
-
   const graphRef = useRef<any>(null);
   const dndRef = useRef<any>(null);
   const viewerRef = useRef<InfiniteViewer>(null);
@@ -356,94 +350,92 @@ const Canvas = () => {
   }, []);
 
   return (
-    <FullScreen handle={handle}>
-      <div className={cn('editor-wrapper')}>
-        <ToolBar handleFullScreen={handle} ref={graphRef} />
-        <LeftPanel ref={dndRef} id="dnd-container" addNode={handleAddNode} />
-        <div className={cn('editor-content', 'relative w-full h-full transform-gpu')}>
-          <div
-            className={cn(
-              'absolute flex justify-center items-center top-[60px] w-[20px] h-[20px] bg-[#292929] z-[100]',
-              collapseLeftPanel ? 'left-[64px]' : 'left-[364px]',
-            )}
-          >
-            <Icon type="eye" />
-          </div>
-          <div
-            className={cn(
-              'horizonal',
-              'absolute w-[calc(100%-84px)] h-[20px] top-[60px] left-[84px] z-10 -translate-z-1',
-            )}
-          >
-            <Guides
-              {...DEFAULT_GUIDE_CONFIG}
-              ref={horizontalGuidesRef}
-              type="horizontal"
-              textOffset={[0, 10]}
-              zoom={horizontalZoom}
-              guidesZoom={verticalZoom}
-              unit={horizontalUnit}
-              marks={verticalGuidelines}
-              onChangeGuides={({ guides }) => {
-                setHorizontalGuidelines(guides);
-              }}
-            />
-          </div>
-          <div
-            className={cn(
-              'vertical',
-              'absolute h-[calc(100vh-80px)] top-[80px] w-[20px] left-[64px] -translate-z-1 z-10',
-              collapseLeftPanel ? 'left-[64px]' : 'left-[364px]',
-            )}
-          >
-            <Guides
-              {...DEFAULT_GUIDE_CONFIG}
-              ref={verticalGuidesRef}
-              type="vertical"
-              textOffset={[-10, 0]}
-              textAlign="right"
-              direction="start"
-              zoom={verticalZoom}
-              guidesZoom={horizontalZoom}
-              unit={verticalUnit}
-              marks={horizontalGuidelines}
-              onChangeGuides={({ guides }) => {
-                let newGuides = [...guides];
-                if (!collapseLeftPanel) {
-                  newGuides = guides?.map((item) => Number(item) + offset);
-                }
-                setVerticalGuidelines(newGuides);
-              }}
-            />
-          </div>
-          <InfiniteViewer
-            ref={viewerRef}
-            className="relative w-full h-[100vh]"
-            useAutoZoom={true}
-            useMouseDrag={canMouseDrag}
-            useWheelScroll={true}
-            onScroll={handleOnScroll}
-          >
-            <div id="canvas-container" />
-          </InfiniteViewer>
-        </div>
-        <RightPanel ref={graphRef} />
-        <Footer value={canvasSize} onChange={(changeValue: number) => setCanvasSize(changeValue)} />
-        <ConfirmModal
-          title="删除组件"
-          open={modalConfig.open}
-          onCancel={() => setModalConfig({ open: false, content: '' })}
-          onOk={() => {
-            const graph = graphRef.current;
-            const cells = graph?.getSelectedCells();
-            graph.removeCells(cells);
-            setModalConfig({ open: false, content: '' });
-          }}
+    <div className={cn('editor-wrapper')}>
+      <ToolBar />
+      <LeftPanel ref={dndRef} id="dnd-container" addNode={handleAddNode} />
+      <div className={cn('editor-content', 'relative w-full h-full transform-gpu')}>
+        <div
+          className={cn(
+            'absolute flex justify-center items-center top-[60px] w-[20px] h-[20px] bg-[#292929] z-[100]',
+            collapseLeftPanel ? 'left-[64px]' : 'left-[364px]',
+          )}
         >
-          <div className="text-[#ADADAD]">是否删除组件: {modalConfig.content}</div>
-        </ConfirmModal>
+          <Icon type="eye" />
+        </div>
+        <div
+          className={cn(
+            'horizonal',
+            'absolute w-[calc(100%-84px)] h-[20px] top-[60px] left-[84px] z-10 -translate-z-1',
+          )}
+        >
+          <Guides
+            {...DEFAULT_GUIDE_CONFIG}
+            ref={horizontalGuidesRef}
+            type="horizontal"
+            textOffset={[0, 10]}
+            zoom={horizontalZoom}
+            guidesZoom={verticalZoom}
+            unit={horizontalUnit}
+            marks={verticalGuidelines}
+            onChangeGuides={({ guides }) => {
+              setHorizontalGuidelines(guides);
+            }}
+          />
+        </div>
+        <div
+          className={cn(
+            'vertical',
+            'absolute h-[calc(100vh-80px)] top-[80px] w-[20px] left-[64px] -translate-z-1 z-10',
+            collapseLeftPanel ? 'left-[64px]' : 'left-[364px]',
+          )}
+        >
+          <Guides
+            {...DEFAULT_GUIDE_CONFIG}
+            ref={verticalGuidesRef}
+            type="vertical"
+            textOffset={[-10, 0]}
+            textAlign="right"
+            direction="start"
+            zoom={verticalZoom}
+            guidesZoom={horizontalZoom}
+            unit={verticalUnit}
+            marks={horizontalGuidelines}
+            onChangeGuides={({ guides }) => {
+              let newGuides = [...guides];
+              if (!collapseLeftPanel) {
+                newGuides = guides?.map((item) => Number(item) + offset);
+              }
+              setVerticalGuidelines(newGuides);
+            }}
+          />
+        </div>
+        <InfiniteViewer
+          ref={viewerRef}
+          className="relative w-full h-[100vh]"
+          useAutoZoom={true}
+          useMouseDrag={canMouseDrag}
+          useWheelScroll={true}
+          onScroll={handleOnScroll}
+        >
+          <div id="canvas-container" />
+        </InfiniteViewer>
       </div>
-    </FullScreen>
+      <RightPanel ref={graphRef} />
+      <Footer value={canvasSize} onChange={(changeValue: number) => setCanvasSize(changeValue)} />
+      <ConfirmModal
+        title="删除组件"
+        open={modalConfig.open}
+        onCancel={() => setModalConfig({ open: false, content: '' })}
+        onOk={() => {
+          const graph = graphRef.current;
+          const cells = graph?.getSelectedCells();
+          graph.removeCells(cells);
+          setModalConfig({ open: false, content: '' });
+        }}
+      >
+        <div className="text-[#ADADAD]">是否删除组件: {modalConfig.content}</div>
+      </ConfirmModal>
+    </div>
   );
 };
 

@@ -239,15 +239,15 @@
       // },
     ],
   },
+  // {
+  //   path: '/screen-mgt/screen/new',
+  //   name: '新建大屏',
+  //   component: './ScreenMgt/Screen/components/Editor',
+  //   hideInMenu: true,
+  //   layout: false,
+  // },
   {
-    path: '/screen-mgt/screen/new',
-    name: '新建大屏',
-    component: './ScreenMgt/Screen/components/Editor',
-    hideInMenu: true,
-    layout: false,
-  },
-  {
-    path: '/screen-mgt/screen/edit/:id',
+    path: '/screen-mgt/screen/edit/:uuid',
     name: '编辑大屏',
     component: './ScreenMgt/Screen/components/Editor',
     hideInMenu: true,

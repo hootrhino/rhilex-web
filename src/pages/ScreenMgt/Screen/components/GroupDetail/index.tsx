@@ -9,19 +9,15 @@ import {
 import type { MenuProps } from 'antd';
 import { Badge, Button, Dropdown, Image, Space } from 'antd';
 
-import { deleteVisual, postVisualCreate, putVisualCreate } from '@/services/rulex/dapingguanli';
+import { message } from '@/components/PopupHack';
+import { deleteVisual, postVisualCreate, putVisualUpdate } from '@/services/rulex/dapingguanli';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
+import { useModel, useRequest } from '@umijs/max';
 import type { MenuInfo } from 'rc-menu/lib/interface';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { GroupItem } from '../..';
 import defaultImg from './images/default.png';
-// import screenImg2 from './images/screen2.png';
-// import screenImg3 from './images/screen3.png';
-// import screenImg4 from './images/screen4.png';
-// import screenImg5 from './images/screen5.png';
-import { message } from '@/components/PopupHack';
-import { useRequest } from '@umijs/max';
 
 type ScreenItem = {
   uuid: string;
@@ -33,53 +29,19 @@ type ScreenItem = {
 type GroupDetailProps = React.HTMLAttributes<HTMLDivElement> & {
   list: ScreenItem[];
   group: GroupItem[];
+  activeGroup: string;
   reload: () => void;
 };
 
 type EditType = 'new' | 'rename' | 'moveToGroup';
 
-type Update = {
+export type Update = {
   gid: string;
   name: string;
   type: string;
   content: string;
   thumbnail: string;
 };
-
-// const screenData = {
-//   other: [
-//     {
-//       key: 'screen1',
-//       name: '陕西省货运指数大屏',
-//       img: defaultImg,
-//       status: '已发布',
-//     },
-//     {
-//       key: 'screen2',
-//       name: '工业设备资产状态监控',
-//       img: screenImg2,
-//       status: '未发布',
-//     },
-//     {
-//       key: 'screen3',
-//       name: '2021年五一假期全国旅游市场观测',
-//       img: screenImg3,
-//       status: '已发布',
-//     },
-//     {
-//       key: 'screen4',
-//       name: '智能工厂监控',
-//       img: screenImg4,
-//       status: '未发布',
-//     },
-//     {
-//       key: 'screen5',
-//       name: '地区新能源业务展示大屏',
-//       img: screenImg5,
-//       status: '未发布',
-//     },
-//   ],
-// };
 
 const items: MenuProps['items'] = [
   {
@@ -96,8 +58,10 @@ const items: MenuProps['items'] = [
   },
 ];
 
-const GroupDetail = ({ group, reload, list, ...props }: GroupDetailProps) => {
+const GroupDetail = ({ group, reload, list, activeGroup, ...props }: GroupDetailProps) => {
   const formRef = useRef<ProFormInstance>();
+  const { detail, getDetail } = useModel('useEditor');
+
   const [open, setOpen] = useState<boolean>(false);
   const [preview, setPreview] = useState<boolean>(false);
   const [previewKey, setKey] = useState<string>('');
@@ -125,23 +89,28 @@ const GroupDetail = ({ group, reload, list, ...props }: GroupDetailProps) => {
     return title;
   };
 
+  const handleOnReset = (text: string) => {
+    setOpen(false);
+    reload();
+    message.success(text);
+  };
+
   // 创建大屏
   const { run: create } = useRequest((params: Update) => postVisualCreate(params), {
     manual: true,
     onSuccess: (data) => {
-      setOpen(false);
-      reload();
+      handleOnReset('创建成功');
       window.open(`/screen-mgt/screen/edit/${data?.uuid}`, '_blank');
     },
   });
 
   // 更新大屏
   const { run: update } = useRequest(
-    (params: Update & { uuid: string }) => putVisualCreate(params),
+    (params: Update & { uuid: string }) => putVisualUpdate(params),
     {
       manual: true,
       onSuccess: () => {
-        message.success('更新成功');
+        handleOnReset('更新成功');
       },
     },
   );
@@ -150,36 +119,50 @@ const GroupDetail = ({ group, reload, list, ...props }: GroupDetailProps) => {
     if (editType === 'new') {
       create({ ...values, type: 'BUILDIN', content: '', thumbnail: '' });
     } else {
-      update({ ...values, type: 'BUILDIN', content: '', uuid: '', thumbnail: '' });
+      update({ ...detail, ...values });
     }
   };
 
   // 删除
-  const { run: remove } = useRequest((uuid: string) => deleteVisual({ uuid }), {
+  const { run: remove } = useRequest((params: API.deleteVisualParams) => deleteVisual(params), {
     manual: true,
     onSuccess: () => {
-      message.success('删除成功');
+      handleOnReset('删除成功');
     },
   });
 
   const handleOnMenu = (info: MenuInfo, key: string) => {
     if (['rename', 'moveToGroup'].includes(info.key)) {
-      // 重命名
+      // 重命名&移动分组
+      getDetail({ uuid: key });
       setOpen(true);
     } else {
       // 删除
-      remove(key);
+      remove({ uuid: key });
     }
     setEditType(info.key as EditType);
-    console.log(info);
   };
+
+  useEffect(() => {
+    if (detail) {
+      formRef.current?.setFieldsValue({ name: detail.name, gid: detail.gid });
+    }
+  }, [detail]);
 
   return (
     <>
       <div className="flex flex-wrap items-center" {...props}>
         <div className="min-w-[240px] w-[22.8%] mr-[2%] mb-[24px] h-max rounded">
           <div className="flex justify-center items-center py-[27%] border border-solid border-[#e6e6e6]">
-            <Button type="primary" icon={<PlusOutlined />} onClick={() => setOpen(true)}>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => {
+                setOpen(true);
+                setEditType('new');
+                formRef.current?.setFieldsValue({ name: '', gid: activeGroup });
+              }}
+            >
               创建大屏
             </Button>
           </div>
@@ -188,13 +171,14 @@ const GroupDetail = ({ group, reload, list, ...props }: GroupDetailProps) => {
           <div
             key={item?.uuid}
             className={cn(
-              'min-w-[240px] w-[22.8%] h-max mr-[2%] mb-[24px] rounded bg-[#ededed] border border-solid border-[#e6e6e6] hover:border-[#1f6aff]',
+              'min-w-[240px] w-[22.8%] min-h-[168px] h-max mr-[2%] mb-[24px] rounded bg-[#ededed] border border-solid border-[#e6e6e6] hover:border-[#1f6aff]',
             )}
           >
             <Image
               width="100%"
               alt="缩略图"
               src={item?.thumbnail ? item?.thumbnail : defaultImg}
+              style={{ minHeight: 134 }}
               preview={{
                 visible: actionType === 'preview' && preview && previewKey === item?.uuid,
                 onVisibleChange: (value) => setPreview(value),
@@ -216,6 +200,7 @@ const GroupDetail = ({ group, reload, list, ...props }: GroupDetailProps) => {
                       icon={<EditOutlined />}
                       onClick={() => {
                         setType('edit');
+                        // getDetail({ uuid: item.uuid });
                         window.open(`/screen-mgt/screen/edit/${item.uuid}`, '_blank');
                       }}
                     >
@@ -246,8 +231,8 @@ const GroupDetail = ({ group, reload, list, ...props }: GroupDetailProps) => {
               </Space>
               <Space className="px-[5px]">
                 <Badge
-                  status={item?.status === '未发布' ? 'warning' : 'success'}
-                  text={item?.status}
+                  status={item?.status ? 'success' : 'warning'}
+                  text={item?.status ? '已发布' : '未发布'}
                   className="whitespace-nowrap"
                 />
                 <Dropdown
@@ -270,6 +255,7 @@ const GroupDetail = ({ group, reload, list, ...props }: GroupDetailProps) => {
         layout="horizontal"
         width="30%"
         modalProps={{ maskClosable: false }}
+        initialValues={{ name: '', gid: activeGroup }}
       >
         {['new', 'rename'].includes(editType) && (
           <ProFormText

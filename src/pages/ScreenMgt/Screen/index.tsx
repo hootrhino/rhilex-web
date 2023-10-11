@@ -1,9 +1,8 @@
 import { message, modal } from '@/components/PopupHack';
+import { getVisualGroup, getVisualListByGroup } from '@/services/rulex/dapingguanli';
 import {
   deleteGroup,
   getGroupDetail,
-  getGroupList,
-  getGroupVisuals,
   postGroupCreate,
   putGroupUpdate,
 } from '@/services/rulex/fenzuguanli';
@@ -35,9 +34,11 @@ type GroupConfig = {
   title: string;
 };
 
+const DEFAULT_TYPE = 'VISUAL';
+
 const Screen = () => {
   const groupFormRef = useRef<ProFormInstance>();
-  const [activeGroup, setActiveGroup] = useState<string>('ROOT');
+  const [activeGroup, setActiveGroup] = useState<string>('VROOT');
   const [groupConfig, setConfig] = useState<GroupConfig>({
     open: false,
     type: 'new',
@@ -45,7 +46,7 @@ const Screen = () => {
   });
 
   // 获取分组列表
-  const { data, run } = useRequest(() => getGroupList({}));
+  const { data, run } = useRequest(() => getVisualGroup({}));
 
   // 获取分组详情
   const { data: detail, run: getDetail } = useRequest(
@@ -55,43 +56,60 @@ const Screen = () => {
     },
   );
 
-  // 查询分组下的元素
+  // 大屏列表
   const {
     data: groupItems,
     run: getGroupItems,
     refresh,
-  } = useRequest((params: API.getGroupVisualsParams) => getGroupVisuals(params), {
+  } = useRequest((params: API.getVisualListByGroupParams) => getVisualListByGroup(params), {
     manual: true,
   });
 
-  // 删除分组
-  const handleOnRemoveGroup = (params: GroupItem) => {
-    modal.confirm({
-      title: `确定要删除${params.name}分组吗？`,
-      content: `项目分组中包含 ${groupItems.length} 个数据看板，删除后将被移入未分组中，请谨慎处理。`,
-      onOk: async () => {
-        await deleteGroup({ uuid: params.key });
-        message.success('成功删除该项目分组');
+  // 创建分组
+  const { run: create } = useRequest(
+    (name: string) => postGroupCreate({ type: DEFAULT_TYPE, name }),
+    {
+      manual: true,
+      onSuccess: (data: any) => {
+        setActiveGroup(data?.gid);
+        run();
+        message.success('项目分组创建成功');
       },
+    },
+  );
+
+  // 更新分组
+  const { run: update } = useRequest(
+    (name: string) => putGroupUpdate({ type: DEFAULT_TYPE, uuid: detail?.uuid || '', name }),
+    {
+      manual: true,
+      onSuccess: () => {
+        run();
+        message.success('项目分组更新成功');
+      },
+    },
+  );
+
+  // 删除分组
+  const { run: remove } = useRequest((params: API.deleteGroupParams) => deleteGroup(params), {
+    manual: true,
+    onSuccess: () => {
+      run();
+      message.success('成功删除该项目分组');
+    },
+  });
+
+  const handleOnRemoveGroup = ({ name, uuid }: GroupItem) => {
+    modal.confirm({
+      title: `确定要删除${name}吗？`,
+      width: 600,
+      content: `项目分组中包含 ${groupItems?.length} 个数据看板，删除后将被移入未分组中，请谨慎处理。`,
+      onOk: () => remove({ uuid: uuid }),
     });
   };
 
-  // 创建&编辑分组
-  const handleOnGroup = async (values: { name: string }) => {
-    if (groupConfig.type === 'new') {
-      await postGroupCreate({ ...values, type: 'VISUAL' });
-      message.success('项目分组创建成功');
-    } else {
-      await putGroupUpdate({ ...values, uuid: detail?.uuid || '', type: detail?.type || 'VISUAL' });
-      message.success('项目分组创建成功');
-    }
-
-    run();
-    return true;
-  };
-
   const getGroupName = (key: string) => {
-    const group = data?.find((group) => group.uuid === key);
+    const group = data?.find((group: any) => group.uuid === key);
 
     return group?.name;
   };
@@ -179,8 +197,14 @@ const Screen = () => {
             }}
           />
         </ProCard>
+
         <ProCard title={getGroupName(activeGroup)}>
-          <GroupDetail list={groupItems} group={data as GroupItem[]} reload={refresh} />
+          <GroupDetail
+            list={groupItems}
+            group={data as GroupItem[]}
+            activeGroup={activeGroup}
+            reload={refresh}
+          />
         </ProCard>
       </ProCard>
       <ModalForm
@@ -189,7 +213,9 @@ const Screen = () => {
         open={groupConfig.open}
         onOpenChange={(visible) => setConfig({ ...groupConfig, open: visible })}
         modalProps={{ destroyOnClose: true }}
-        onFinish={handleOnGroup}
+        onFinish={async (values) =>
+          groupConfig.type === 'new' ? create(values.name) : update(values.name)
+        }
         layout="horizontal"
         width="30%"
       >

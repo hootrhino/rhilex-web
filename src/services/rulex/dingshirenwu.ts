@@ -2,7 +2,7 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** /api/v1/crontask/create POST /api/v1/crontask/create */
+/** 新建任务 POST /api/v1/crontask/create */
 export async function postCrontaskCreate(
   body: {
     name: string;
@@ -25,7 +25,7 @@ export async function postCrontaskCreate(
   });
 }
 
-/** /api/v1/crontask/delete DELETE /api/v1/crontask/delete */
+/** 删除任务 DELETE /api/v1/crontask/delete */
 export async function deleteCrontask__openAPI__delete(
   body: {
     id: number;
@@ -65,7 +65,7 @@ export async function deleteCrontask__openAPI__delete(
   });
 }
 
-/** /api/v1/crontask/listRunningTask 当前正在运行的任务（是指正在运行的任务，不是指start了的任务） GET /api/v1/crontask/listRunningTask */
+/** 正在运行任务列表 当前正在运行的任务（是指正在运行的任务，不是指start了的任务） GET /api/v1/crontask/listRunningTask */
 export async function getCrontaskListRunningTask(options?: { [key: string]: any }) {
   return request<{
     code: number;
@@ -91,7 +91,7 @@ export async function getCrontaskListRunningTask(options?: { [key: string]: any 
   });
 }
 
-/** /api/v1/crontask/page 分页获取已创建的定时任务 GET /api/v1/crontask/page */
+/** 任务列表 分页获取已创建的定时任务 GET /api/v1/crontask/page */
 export async function getCrontaskPage(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getCrontaskPageParams,
@@ -129,7 +129,7 @@ export async function getCrontaskPage(
   });
 }
 
-/** /api/v1/crontask/results/page 按时间倒序返回定时任务执行记录 GET /api/v1/crontask/results/page */
+/** 执行结果列表 按时间倒序返回定时任务执行记录 GET /api/v1/crontask/results/page */
 export async function getCrontaskResultsPage(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getCrontaskResultsPageParams,
@@ -192,7 +192,7 @@ export async function getCrontaskStop(
   });
 }
 
-/** /api/v1/crontask/terminateRunningTask 强行终止指定的正在运行的任务 GET /api/v1/crontask/terminateRunningTask */
+/** 已经停止任务列表 强行终止指定的正在运行的任务 GET /api/v1/crontask/terminateRunningTask */
 export async function getCrontaskTerminateRunningTask(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getCrontaskTerminateRunningTaskParams,
@@ -225,7 +225,7 @@ export async function getCrontaskTerminateRunningTask(
   });
 }
 
-/** /api/v1/crontask/update 更新任务信息 PUT /api/v1/crontask/update */
+/** 更新任务 更新任务信息 PUT /api/v1/crontask/update */
 export async function putCrontaskUpdate(
   body: {
     id: number;

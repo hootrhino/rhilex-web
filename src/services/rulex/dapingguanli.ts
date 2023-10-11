@@ -17,27 +17,6 @@ export async function deleteVisual(
   });
 }
 
-/** 更新大屏 PUT /api/v1/visual/create */
-export async function putVisualCreate(
-  body: {
-    uuid: string;
-    name: string;
-    type: string;
-    content: string;
-    thumbnail: string;
-  },
-  options?: { [key: string]: any },
-) {
-  return request<{ code: number; msg: string; data: { uuid?: string } }>('/api/v1/visual/create', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
-    ...(options || {}),
-  });
-}
-
 /** 新建大屏 POST /api/v1/visual/create */
 export async function postVisualCreate(
   body: {
@@ -74,10 +53,25 @@ export async function getVisualDetail(
   });
 }
 
-/** 大屏列表 大屏列表是展示所有的大屏，没有分组 GET /api/v1/visual/list */
-export async function getVisualList(options?: { [key: string]: any }) {
-  return request<{ code: number; msg: string; data: string[] }>('/api/v1/visual/list', {
+/** 大屏分组 GET /api/v1/visual/group */
+export async function getVisualGroup(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/visual/group', {
     method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 大屏列表 GET /api/v1/visual/listByGroup */
+export async function getVisualListByGroup(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getVisualListByGroupParams,
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/api/v1/visual/listByGroup', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }
@@ -103,6 +97,27 @@ export async function putVisualPublish(
     },
     params: {
       ...params,
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 更新大屏 PUT /api/v1/visual/update */
+export async function putVisualUpdate(
+  body: {
+    gid: string;
+    uuid: string;
+    name: string;
+    type: string;
+    content: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: { uuid?: string } }>('/api/v1/visual/update', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
     },
     data: body,
     ...(options || {}),

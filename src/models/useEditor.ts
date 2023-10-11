@@ -1,4 +1,6 @@
+import { getVisualDetail } from '@/services/rulex/dapingguanli';
 import { Edge } from '@antv/x6';
+import { useRequest } from '@umijs/max';
 import { useState } from 'react';
 
 export enum LineTypeOption {
@@ -101,6 +103,14 @@ const useEditor = () => {
     title: '',
   });
 
+  // 大屏详情
+  const { data: detail, run: getDetail } = useRequest(
+    (params: API.getVisualDetailParams) => getVisualDetail(params),
+    {
+      manual: true,
+    },
+  );
+
   return {
     edgeFormData,
     setEdgeForm,
@@ -120,6 +130,8 @@ const useEditor = () => {
     setQuickStyleConfig,
     layers,
     setLayers,
+    detail,
+    getDetail
   };
 };
 

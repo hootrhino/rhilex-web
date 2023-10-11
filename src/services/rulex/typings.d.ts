@@ -74,10 +74,6 @@ declare namespace API {
     uuid: string;
   };
 
-  type getGroupVisualsParams = {
-    uuid?: string;
-  };
-
   type getInendsDetailParams = {
     uuid: string;
   };
@@ -99,6 +95,10 @@ declare namespace API {
   };
 
   type getVisualDetailParams = {
+    uuid: string;
+  };
+
+  type getVisualListByGroupParams = {
     uuid: string;
   };
 
