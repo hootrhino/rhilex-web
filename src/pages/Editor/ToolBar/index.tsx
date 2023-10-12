@@ -128,17 +128,16 @@ const ToolBar = ({ refresh }: ToolBarProps) => {
                   />
                 </div>
               </Tooltip>
-              <Tooltip title="生成快照">
+              {/* <Tooltip title="生成快照">
                 <div
                   className="flex justify-center items-center bg-[#474747] w-[66px] h-[24px] mr-[12px] rounded-[4px] cursor-pointer hover:bg-[#565656]"
                   onClick={() => {
-                    // TODO 生成快照
                   }}
                 >
                   <IconFont type="icon-snapshot" className="text-[14px]" />
                   <span className="pl-[5px] text-base text-[#dbdbdb]">快照</span>
                 </div>
-              </Tooltip>
+              </Tooltip> */}
               <div
                 className="flex justify-center items-center bg-[#474747] w-[66px] h-[24px] mr-[12px] rounded-[4px] cursor-pointer hover:bg-[#565656]"
                 onClick={() => {
