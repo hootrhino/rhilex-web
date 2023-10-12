@@ -238,7 +238,6 @@ export const chartsList = [
         ...area.area1,
         key: 'area1',
         title: '区域图',
-        disabled: true,
         hasQuickStyle: false,
       },
     ],
