@@ -1,83 +1,43 @@
-// 背景图片重复方式
-export const REPEAT_OPTION = [
+// 背景缩放方式
+export const ZoomTypeList = [
   {
-    label: '不重复',
-    value: 'no-repeat',
+    icon: 'icon-fit-width',
+    tooltip: '等比宽度铺满可滚动',
+    key: 'fitWidth',
   },
   {
-    label: '重复',
-    value: 'repeat',
+    icon: 'icon-fit-height',
+    tooltip: '等比高度铺满居中',
+    key: 'fitHeight',
   },
   {
-    label: '水平重复',
-    value: 'repeat-x',
+    icon: 'icon-bg-full-screen',
+    tooltip: '全屏铺满',
+    key: 'fullScreen',
   },
   {
-    label: '垂直重复',
-    value: 'repeat-y',
+    icon: 'icon-scroll',
+    tooltip: '等比高度铺满可滚动',
+    key: 'scroll',
   },
   {
-    label: '平铺',
-    value: 'round',
+    icon: 'icon-center',
+    tooltip: '居中',
+    key: 'center',
   },
   {
-    label: '间隔',
-    value: 'space',
-  },
-  {
-    label: '水平翻转',
-    value: 'flipX',
-  },
-  {
-    label: '垂直翻转',
-    value: 'flipY',
-  },
-  {
-    label: '水平垂直翻转',
-    value: 'flipXY',
+    icon: 'icon-disabled',
+    tooltip: '不缩放',
+    key: 'none',
   },
 ];
 
-// 背景图片位置
-export const POSITION_OPTION = [
-  {
-    label: '居中',
-    value: 'center',
-  },
-  {
-    label: '左对齐',
-    value: 'left',
-  },
-  {
-    label: '右对齐',
-    value: 'right',
-  },
-  {
-    label: '顶部对齐',
-    value: 'top',
-  },
-  {
-    label: '底部对齐',
-    value: 'bottom',
-  },
-];
-
-// 背景图片尺寸
-export const SIZE_OPTION = [
-  {
-    label: '自适应',
-    value: 'auto auto',
-  },
-  {
-    label: 'cover',
-    value: 'cover',
-  },
-  {
-    label: 'contain',
-    value: 'contain',
-  },
-  {
-    label: '拉伸至全屏',
-    value: '100% 100%',
-  },
-];
+// 画布设置默认值
+export const DEFAULT_CONFIG = {
+  zoomType: 'fitWidth',
+  thumbnail: '',
+  width: 1920,
+  height: 1080,
+  opacity: 1,
+  color: '#262626',
+};
