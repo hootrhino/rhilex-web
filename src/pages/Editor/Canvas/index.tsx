@@ -262,6 +262,12 @@ const Canvas = () => {
     return graph;
   };
 
+  // 刷新画布
+  const handleOnRefresh = () => {
+    const allCells = graphRef.current?.getCells();
+    graphRef.current?.resetCells(allCells);
+  };
+
   const handleClearGuideLine = () => {
     setHorizontalGuidelines([]);
     setVerticalGuidelines([]);
@@ -351,7 +357,7 @@ const Canvas = () => {
 
   return (
     <div className={cn('editor-wrapper')}>
-      <ToolBar />
+      <ToolBar refresh={handleOnRefresh} />
       <LeftPanel ref={dndRef} id="dnd-container" addNode={handleAddNode} />
       <div className={cn('editor-content', 'relative w-full h-full transform-gpu')}>
         <div

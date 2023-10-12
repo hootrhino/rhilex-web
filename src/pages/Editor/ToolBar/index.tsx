@@ -11,7 +11,11 @@ import ConfirmModal from '../components/ConfirmModal';
 import Tooltip from '../components/Tooltip';
 import './index.less';
 
-const ToolBar = () => {
+type ToolBarProps = {
+  refresh: () => void;
+};
+
+const ToolBar = ({ refresh }: ToolBarProps) => {
   const {
     collapseRightPanel,
     setCollapseRightPanel,
@@ -106,7 +110,9 @@ const ToolBar = () => {
                 <div
                   className="flex justify-center items-center bg-[#474747] w-[24px] h-[24px] ml-[12px] rounded-[4px] cursor-pointer hover:bg-[#565656]"
                   onClick={() => {
-                    // TODO 刷新画布
+                    refresh();
+
+                    console.log('reload');
                   }}
                 >
                   <IconFont type="icon-reload-active" />
