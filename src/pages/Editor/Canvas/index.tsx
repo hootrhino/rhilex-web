@@ -356,7 +356,7 @@ const Canvas = () => {
   }, []);
 
   return (
-    <div className={cn('editor-wrapper')}>
+    <div className='editor-wrapper'>
       <ToolBar refresh={handleOnRefresh} />
       <LeftPanel ref={dndRef} id="dnd-container" addNode={handleAddNode} />
       <div className={cn('editor-content', 'relative w-full h-full transform-gpu')}>

@@ -2,7 +2,6 @@ import type { SelectProps } from 'antd';
 import { ConfigProvider, Select } from 'antd';
 
 import { cn } from '@/utils/utils';
-import './index.less';
 
 type EditorSelectProps = SelectProps & {
   paddingY?: number;
@@ -30,7 +29,7 @@ const EditorSelect = ({ paddingY, optionHeight = 32, className, ...props }: Edit
     >
       <Select
         rootClassName="editor-select"
-        popupClassName="editor-dropdown"
+        dropdownStyle={{background: '#333'}}
         className={cn('w-full h-full', className)}
         {...props}
       />
