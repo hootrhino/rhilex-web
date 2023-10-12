@@ -29,7 +29,8 @@ const EditorSelect = ({ paddingY, optionHeight = 32, className, ...props }: Edit
       }}
     >
       <Select
-        dropdownStyle={{ backgroundColor: '#333' }}
+        rootClassName="editor-select"
+        popupClassName="editor-dropdown"
         className={cn('w-full h-full', className)}
         {...props}
       />

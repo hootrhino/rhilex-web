@@ -1,28 +1,32 @@
-.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(
+.editor-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(
     .ant-pagination-size-changer
   ):hover
   .ant-select-selector {
   border-color: var(--primary-color);
 }
 
-.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(
+.editor-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(
     .ant-pagination-size-changer
   ):active
   .ant-select-selector {
   border-color: var(--primary-color);
 }
 
-.ant-select-selection-item {
+.editor-select .ant-select-selection-item {
   display: flex;
   align-items: center;
   color: #dbdbdb;
 }
 
-.ant-select .ant-select-arrow {
+.editor-select .ant-select-arrow {
   color: #dbdbdb;
 }
 
-.ant-select-dropdown .ant-select-item {
+.editor-dropdown {
+  background-color: #333;
+}
+
+.editor-dropdown .ant-select-item {
   color: #dbdbdb;
 
   &:hover {
@@ -30,7 +34,7 @@
   }
 }
 
-.ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+.editor-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
   color: #dbdbdb;
   font-weight: 400;
   background-color: transparent;
@@ -40,11 +44,11 @@
   color: #dbdbdb;
 }
 
-.ant-select-dropdown .ant-select-item {
+.editor-dropdown .ant-select-item {
   color: #dbdbdb;
 }
 
-.ant-select-dropdown .ant-select-item-option {
+.editor-dropdown .ant-select-item-option {
   display: flex;
   align-items: center;
 }
