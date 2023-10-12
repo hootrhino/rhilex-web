@@ -2,18 +2,28 @@ import { cn, IconFont } from '@/utils/utils';
 import { useEffect, useState } from 'react';
 
 import { message } from '@/components/PopupHack';
+import type { GroupItem } from '@/pages/ScreenMgt/Screen';
 import { Update } from '@/pages/ScreenMgt/Screen/components/GroupDetail';
 import { putVisualUpdate } from '@/services/rulex/dapingguanli';
-import { useModel, useParams, useRequest } from '@umijs/max';
+import { history, useModel, useParams, useRequest } from '@umijs/max';
 import { Input } from 'antd';
 import ConfirmModal from '../components/ConfirmModal';
 import Tooltip from '../components/Tooltip';
 import './index.less';
 
 const ToolBar = () => {
-  const { collapseRightPanel, setCollapseRightPanel, detail, getDetail } = useModel('useEditor');
+  const {
+    collapseRightPanel,
+    setCollapseRightPanel,
+    detail,
+    getDetail,
+    groupList,
+    getGroupList,
+    setActiveGroup,
+  } = useModel('useEditor');
   const [open, setOpen] = useState<boolean>(false);
   const [name, setName] = useState<string>('');
+  const [groupName, setGroupName] = useState<string>('');
   const { uuid } = useParams();
 
   const { run: update } = useRequest(
@@ -24,7 +34,6 @@ const ToolBar = () => {
         if (uuid) {
           getDetail({ uuid });
         }
-
         message.success('更新成功');
       },
     },
@@ -37,10 +46,17 @@ const ToolBar = () => {
   }, [uuid]);
 
   useEffect(() => {
-    if (detail?.name) {
+    if (detail) {
+      const group = groupList?.find((item: GroupItem) => item?.uuid === detail.gid);
+
+      setGroupName(group?.name);
       setName(detail.name);
     }
   }, [detail]);
+
+  useEffect(() => {
+    getGroupList();
+  }, []);
 
   return (
     <>
@@ -64,9 +80,21 @@ const ToolBar = () => {
                   {detail?.name}
                 </div>
                 <div className="text-[#7a7a7a] text-base truncate max-w-[160px]">
-                  <span className="cursor-pointer hover:underline">默认工作空间</span> /{' '}
-                  <span className="cursor-pointer hover:underline">
-                    测试分组测试分组测试分组测试分组测试分组
+                  <span
+                    className="cursor-pointer hover:underline"
+                    onClick={() => history.push('/screen-mgt/screen/list')}
+                  >
+                    默认工作空间
+                  </span>{' '}
+                  /{' '}
+                  <span
+                    className="cursor-pointer hover:underline"
+                    onClick={() => {
+                      history.push('/screen-mgt/screen/list');
+                      setActiveGroup(detail.gid);
+                    }}
+                  >
+                    {groupName}
                   </span>
                 </div>
               </div>

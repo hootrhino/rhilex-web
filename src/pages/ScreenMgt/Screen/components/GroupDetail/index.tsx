@@ -16,7 +16,7 @@ import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-component
 import { useModel, useRequest } from '@umijs/max';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useEffect, useRef, useState } from 'react';
-import { GroupItem } from '../..';
+import type { GroupItem } from '../..';
 import defaultImg from './images/default.png';
 
 type ScreenItem = {
@@ -28,7 +28,6 @@ type ScreenItem = {
 
 type GroupDetailProps = React.HTMLAttributes<HTMLDivElement> & {
   list: ScreenItem[];
-  group: GroupItem[];
   activeGroup: string;
   reload: () => void;
 };
@@ -58,9 +57,9 @@ const items: MenuProps['items'] = [
   },
 ];
 
-const GroupDetail = ({ group, reload, list, activeGroup, ...props }: GroupDetailProps) => {
+const GroupDetail = ({ reload, list, activeGroup, ...props }: GroupDetailProps) => {
   const formRef = useRef<ProFormInstance>();
-  const { detail, getDetail } = useModel('useEditor');
+  const { detail, getDetail, groupList } = useModel('useEditor');
 
   const [open, setOpen] = useState<boolean>(false);
   const [preview, setPreview] = useState<boolean>(false);
@@ -272,7 +271,7 @@ const GroupDetail = ({ group, reload, list, activeGroup, ...props }: GroupDetail
             name="gid"
             label={editType === 'new' ? '项目分组' : '请选择目标项目分组'}
             placeholder={editType === 'new' ? '请选择项目分组' : '请选择目标项目分组'}
-            options={group?.map((item) => ({ label: item?.name, value: item.uuid }))}
+            options={groupList?.map((item: GroupItem) => ({ label: item?.name, value: item.uuid }))}
             rules={[{ required: true, message: '项目分组不能为空' }]}
           />
         )}

@@ -1,5 +1,5 @@
 import { message, modal } from '@/components/PopupHack';
-import { getVisualGroup, getVisualListByGroup } from '@/services/rulex/dapingguanli';
+import { getVisualListByGroup } from '@/services/rulex/dapingguanli';
 import {
   deleteGroup,
   getGroupDetail,
@@ -15,7 +15,7 @@ import {
   ProFormText,
   ProList,
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useModel, useRequest } from '@umijs/max';
 import { Button, Space, Tooltip } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import GroupDetail from './components/GroupDetail';
@@ -38,15 +38,12 @@ const DEFAULT_TYPE = 'VISUAL';
 
 const Screen = () => {
   const groupFormRef = useRef<ProFormInstance>();
-  const [activeGroup, setActiveGroup] = useState<string>('VROOT');
+  const { groupList, getGroupList, activeGroup, setActiveGroup } = useModel('useEditor');
   const [groupConfig, setConfig] = useState<GroupConfig>({
     open: false,
     type: 'new',
     title: '新建项目分组',
   });
-
-  // 获取分组列表
-  const { data, run } = useRequest(() => getVisualGroup({}));
 
   // 获取分组详情
   const { data: detail, run: getDetail } = useRequest(
@@ -72,7 +69,7 @@ const Screen = () => {
       manual: true,
       onSuccess: (data: any) => {
         setActiveGroup(data?.gid);
-        run();
+        getGroupList();
         message.success('项目分组创建成功');
       },
     },
@@ -84,7 +81,7 @@ const Screen = () => {
     {
       manual: true,
       onSuccess: () => {
-        run();
+        getGroupList();
         message.success('项目分组更新成功');
       },
     },
@@ -94,7 +91,7 @@ const Screen = () => {
   const { run: remove } = useRequest((params: API.deleteGroupParams) => deleteGroup(params), {
     manual: true,
     onSuccess: () => {
-      run();
+      getGroupList();
       message.success('成功删除该项目分组');
     },
   });
@@ -109,7 +106,7 @@ const Screen = () => {
   };
 
   const getGroupName = (key: string) => {
-    const group = data?.find((group: any) => group.uuid === key);
+    const group = groupList?.find((group: any) => group.uuid === key);
 
     return group?.name;
   };
@@ -125,6 +122,10 @@ const Screen = () => {
       groupFormRef.current?.setFieldsValue({ name: '' });
     }
   }, [detail]);
+
+  useEffect(() => {
+    getGroupList();
+  }, []);
 
   return (
     <PageContainer>
@@ -160,7 +161,7 @@ const Screen = () => {
             }}
             rowKey="uuid"
             headerTitle={false}
-            dataSource={data}
+            dataSource={groupList}
             rowClassName={(item: GroupItem) => (item?.uuid === activeGroup ? 'active-group' : '')}
             metas={{
               title: {
@@ -199,12 +200,7 @@ const Screen = () => {
         </ProCard>
 
         <ProCard title={getGroupName(activeGroup)}>
-          <GroupDetail
-            list={groupItems}
-            group={data as GroupItem[]}
-            activeGroup={activeGroup}
-            reload={refresh}
-          />
+          <GroupDetail list={groupItems} activeGroup={activeGroup} reload={refresh} />
         </ProCard>
       </ProCard>
       <ModalForm
