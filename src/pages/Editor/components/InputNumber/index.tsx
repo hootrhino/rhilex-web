@@ -1,8 +1,6 @@
 import type { InputNumberProps } from 'antd';
 import { ConfigProvider, InputNumber } from 'antd';
 
-import './index.less';
-
 const EditorInputNumber = ({ padding = 4, ...props }: InputNumberProps & { padding?: number }) => {
   return (
     <ConfigProvider

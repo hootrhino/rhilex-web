@@ -131,3 +131,84 @@
     border-color: var(--primary-color);
   }
 }
+
+// segmented
+.editor-segmented {
+  padding: 0;
+  color: #7a7a7a;
+  font-size: var(--text-base);
+  background-color: #333;
+
+  .ant-segmented-item {
+    margin: 4px;
+  }
+
+  .ant-segmented-item-selected {
+    margin: 4px;
+    color: #f7f7f7;
+    background: #5c5c5c;
+  }
+}
+
+// inputNumber
+.editor-input {
+  background-color: #333;
+  border-radius: 4px;
+  transition: border 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #434343;
+    border-color: transparent;
+  }
+
+  .ant-input-number-group-addon {
+    padding: 0 3px;
+    color: #7a7a7a;
+    font-size: var(--text-base);
+    border: none;
+  }
+
+  .ant-input-number-input {
+    color: #dbdbdb;
+  }
+
+  .ant-input-number-handler {
+    border: none;
+
+    .ant-input-number-handler-down-inner,
+    .ant-input-number-handler-up-inner {
+      color: #7a7a7a;
+    }
+
+    &:hover {
+      .ant-input-number-handler-down-inner,
+      .ant-input-number-handler-up-inner {
+        color: #fff;
+      }
+    }
+
+    &-wrap {
+      background: #434343;
+    }
+  }
+}
+
+// slider
+.editor-slider {
+  .ant-slider-handle::after {
+    border-radius: 2px !important;
+    box-shadow: none;
+  }
+
+  .ant-slider-handle:active::after {
+    box-shadow: none !important;
+  }
+
+  .ant-slider-handle:hover::after {
+    box-shadow: none !important;
+  }
+
+  .ant-slider-handle:focus::after {
+    box-shadow: none !important;
+  }
+}

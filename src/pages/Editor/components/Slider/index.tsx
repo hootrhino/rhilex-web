@@ -1,8 +1,6 @@
 import type { SliderSingleProps } from 'antd';
 import { ConfigProvider, Slider } from 'antd';
 
-import './index.less';
-
 const EditorSlider = (props: SliderSingleProps) => {
   return (
     <ConfigProvider
@@ -22,7 +20,7 @@ const EditorSlider = (props: SliderSingleProps) => {
         },
       }}
     >
-      <Slider tooltip={{ open: false }} {...props} />
+      <Slider tooltip={{ open: false }} rootClassName="editor-slider" {...props} />
     </ConfigProvider>
   );
 };

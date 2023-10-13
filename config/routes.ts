@@ -232,20 +232,8 @@
         name: '大屏列表',
         component: './ScreenMgt/Screen',
       },
-      // {
-      //   path: '/screen-mgt/data/list',
-      //   name: '数据管理',
-      //   component: './ScreenMgt/Data',
-      // },
     ],
   },
-  // {
-  //   path: '/screen-mgt/screen/new',
-  //   name: '新建大屏',
-  //   component: './ScreenMgt/Screen/components/Editor',
-  //   hideInMenu: true,
-  //   layout: false,
-  // },
   {
     path: '/screen-mgt/screen/edit/:uuid',
     name: '编辑大屏',

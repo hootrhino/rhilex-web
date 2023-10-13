@@ -1,8 +1,6 @@
 import type { SegmentedProps } from 'antd';
 import { ConfigProvider, Segmented } from 'antd';
 
-import './index.less';
-
 const EditorSegmented = ({ className, ...props }: Omit<SegmentedProps, 'ref'>) => {
   return (
     <ConfigProvider
@@ -17,7 +15,7 @@ const EditorSegmented = ({ className, ...props }: Omit<SegmentedProps, 'ref'>) =
         },
       }}
     >
-      <Segmented size="small" className={className} {...props} />
+      <Segmented size="small" className={className} rootClassName="editor-segmented" {...props} />
     </ConfigProvider>
   );
 };
