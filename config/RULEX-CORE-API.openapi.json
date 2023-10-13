@@ -6301,6 +6301,87 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-115799099-run",
         "security": []
       }
+    },
+    "/api/v1/os/netInterfaces": {
+      "get": {
+        "summary": "网卡列表",
+        "x-apifox-folder": "系统数据",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["系统数据"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-108402211-run"
+      }
+    },
+    "/api/v1/os/osRelease": {
+      "get": {
+        "summary": "系统发行",
+        "x-apifox-folder": "系统数据",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["系统数据"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-108402402-run"
+      }
+    },
+    "/api/v1/os/startedAt": {
+      "get": {
+        "summary": "开机时间",
+        "x-apifox-folder": "系统数据",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["系统数据"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox'": "https://www.apifox.cn/web/project/1341241/apis/api-108402521-run"
+      }
     }
   },
   "components": {

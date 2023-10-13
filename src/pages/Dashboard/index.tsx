@@ -7,13 +7,19 @@ import { FilterValue } from 'antd/es/table/interface';
 import add from 'lodash/add';
 import RcResizeObserver from 'rc-resize-observer';
 
+import AppIcon from '@/assets/fontIcons/app.svg';
+import DeviceIcon from '@/assets/fontIcons/device.svg';
 import ExportIcon from '@/assets/fontIcons/export.svg';
 import ImportIcon from '@/assets/fontIcons/import.svg';
 import PluginIcon from '@/assets/fontIcons/plugin.svg';
 import RuleIcon from '@/assets/fontIcons/rule.svg';
 
 import LogTable from '@/components/LogTable';
+import { modal } from '@/components/PopupHack';
 import { LogItem } from '@/models/useWebsocket';
+import { getOsOsRelease } from '@/services/rulex/xitongshuju';
+import { useRequest } from '@umijs/max';
+import { Descriptions } from 'antd';
 
 const { Divider } = StatisticCard;
 
@@ -40,6 +46,31 @@ const Dashboard = () => {
       filteredLogs = logs.filter((log) => filters?.level?.includes(log?.level));
     }
     setLogData(filteredLogs);
+  };
+
+  // 获取系统详情
+  const { data: osDetail } = useRequest(() => getOsOsRelease({}), {
+    formatResult: (res) => res?.data,
+  });
+
+  // 展示系统详情
+  const detailConfig = {
+    title: '系统详情',
+    width: 700,
+    content: (
+      <Descriptions
+        className="w-[500px]"
+        column={1}
+        labelStyle={{ justifyContent: 'flex-end', minWidth: 180, marginRight: 15 }}
+      >
+        {osDetail &&
+          Object.keys(osDetail)?.map((item) => (
+            <Descriptions.Item label={item} key={item}>
+              {osDetail[item]}
+            </Descriptions.Item>
+          ))}
+      </Descriptions>
+    ),
   };
 
   useEffect(() => {
@@ -82,12 +113,14 @@ const Dashboard = () => {
               title: '当前版本',
               value: dataSource?.hardWareInfo.version,
             }}
+            extra={<a className="invisible">详情</a>}
           />
           <StatisticCard
             statistic={{
               title: '操作系统',
               value: dataSource?.hardWareInfo?.osArch,
             }}
+            extra={<a onClick={() => modal.info(detailConfig)}>详情</a>}
           />
           <Divider type={responsive ? 'horizontal' : 'vertical'} />
           <StatisticCard
@@ -148,6 +181,20 @@ const Dashboard = () => {
               title: '插件总数',
               value: dataSource?.sourceCount?.plugins,
               icon: <img src={PluginIcon} alt="插件总数" className="w-[42px] h-[42px]" />,
+            }}
+          />
+          <StatisticCard
+            statistic={{
+              title: '应用总数',
+              value: dataSource?.sourceCount?.apps,
+              icon: <img src={AppIcon} alt="应用总数" className="w-[42px] h-[42px]" />,
+            }}
+          />
+          <StatisticCard
+            statistic={{
+              title: '设备总数',
+              value: dataSource?.sourceCount?.devices,
+              icon: <img src={DeviceIcon} alt="设备总数" className="w-[42px] h-[42px]" />,
             }}
           />
         </StatisticCard.Group>

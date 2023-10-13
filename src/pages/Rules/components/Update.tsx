@@ -35,7 +35,7 @@ export type FormItem = {
 
 const DefaultActions = `Actions = {
   function(data)
-    --rulexlib:log(data)
+    -- rulexlib:Debug(data)
     return true, data
   end
 }`;
