@@ -6,36 +6,69 @@ import InputNumber from '@/pages/Editor/components/InputNumber';
 import Slider from '@/pages/Editor/components/Slider';
 import Tooltip from '@/pages/Editor/components/Tooltip';
 
-import { Col, Image, Row, Space } from 'antd';
-import { useState } from 'react';
+import { Col, Image, Row, Space, Upload } from 'antd';
 
-import { DEFAULT_CONFIG, ZoomTypeList } from './constants';
-
-type CanvasConfig = {
-  zoomType: string;
-  thumbnail?: string;
-  width: number;
-  height: number;
-  opacity: number;
-  color: string;
-};
+import { message } from '@/components/PopupHack';
+import { CanvasBgColor } from '@/models/useEditor';
+import { postVisualThumbnail, putVisualUpdate } from '@/services/rulex/dapingguanli';
+import { DEFAULT_HEIGHT, DEFAULT_WIDTH, fallback } from '@/utils/constant';
+import { useModel, useRequest } from '@umijs/max';
+import type { RcFile } from 'antd/es/upload';
+import { startsWith } from 'lodash';
+import { useEffect, useState } from 'react';
+import { ZoomTypeList } from './constants';
+import { Update } from '@/pages/ScreenMgt/Screen/components/GroupDetail';
 
 const CanvasSetting = () => {
-  const [canvasConfig, setConfig] = useState<CanvasConfig>(DEFAULT_CONFIG);
+  const { canvasConfig, setConfig, detail } = useModel('useEditor');
+  const [width, setWidth] = useState<number>(DEFAULT_WIDTH);
+  const [height, setHeight] = useState<number>(DEFAULT_HEIGHT);
 
-  // 截取封面
-  const handleOnCapture = async () => {
-    // TODO 截取封面
-  };
-
-  // 上传封面
-  const handleOnUpload = () => {
-    // TODO 上传封面
-  };
-
-  const handleOnChange = (key: string, value: number | string) => {
+  const handleOnChange = (key: string, value: number | string | CanvasBgColor) => {
     setConfig({ ...canvasConfig, [key]: value });
   };
+
+  // 更新大屏缩略图
+  const { run: update } = useRequest(
+    (params: Update & { uuid: string }) => putVisualUpdate(params),
+    {
+      manual: true,
+    },
+  );
+
+  // TODO 截取封面
+
+  // 上传封面
+  const { run: upload } = useRequest((file) => postVisualThumbnail({}, file), {
+    manual: true,
+    onSuccess: (res) => {
+      const env = process.env.NODE_ENV;
+      const host = env === 'development' ? '106.15.225.172' : window?.location?.hostname;
+
+      if (res?.url) {
+        const imageUrl = `http://${host}:2580/api/v1/visual/thumbnail?fileName=${res?.url}`;
+        handleOnChange('thumbnail', imageUrl);
+        update({...detail, thumbnail: imageUrl});
+      }
+    },
+  });
+
+  const handleOnBeforeUpload = (file: RcFile) => {
+    const isImage = startsWith(file.type, 'image/');
+    if (!isImage) {
+      message.error('仅支持图片格式文件，请检查上传文件格式');
+    }
+
+    return isImage || Upload.LIST_IGNORE;
+  };
+
+ useEffect(() => {
+  console.log(detail);
+  if (detail?.thumbnail) {
+    console.log({...CanvasSetting, thumbnail: detail?.thumbnail});
+   // setConfig({...CanvasSetting, thumbnail: detail?.thumbnail})
+  }
+ }, [detail])
 
   return (
     <div className="h-full w-[332px]">
@@ -55,14 +88,16 @@ const CanvasSetting = () => {
               min={0}
               addonBefore="W"
               padding={3}
-              onChange={(value) => handleOnChange('width', Number(value))}
+              onChange={(value) => setWidth(Number(value))}
+              onBlur={() => handleOnChange('width', width)}
             />
             <InputNumber
               value={canvasConfig.height}
               min={0}
               addonBefore="H"
               padding={3}
-              onChange={(value) => handleOnChange('height', Number(value))}
+              onChange={(value) => setHeight(Number(value))}
+              onBlur={() => handleOnChange('height', height)}
             />
           </Space>
         </FormItem>
@@ -74,7 +109,9 @@ const CanvasSetting = () => {
               className="w-[100px]"
               value={canvasConfig.opacity}
               step={0.1}
-              onChange={(value) => handleOnChange('opacity', value)}
+              onChange={(value) => {
+                handleOnChange('opacity', value);
+              }}
             />
             <InputNumber
               min={0}
@@ -89,8 +126,10 @@ const CanvasSetting = () => {
         </FormItem>
         <FormItem label="背景" className="mb-[10px]">
           <ColorPickerInput
-            value={canvasConfig.color}
-            onChange={(_, hex) => handleOnChange('color', hex)}
+            value={`rgb(${canvasConfig?.color?.r},${canvasConfig?.color?.g}, ${canvasConfig?.color?.b})`}
+            onChange={(value) => {
+              handleOnChange('color', value.toRgb() as CanvasBgColor);
+            }}
           />
         </FormItem>
         <FormItem label="缩放方式" className="mb-[10px]">
@@ -112,18 +151,25 @@ const CanvasSetting = () => {
         </FormItem>
         <FormItem label="缩略图" className="mb-[10px]">
           <Space align="center">
-            <div
-              className="w-[88px] h-[24px] leading-[24px] bg-inputBg border-[#333] text-baseColor text-base text-center cursor-pointer rounded-[4px] hover:bg-[#434343]"
-              onClick={handleOnCapture}
-            >
+            <div className="w-[88px] h-[24px] leading-[24px] bg-[#333] text-[#7a7a7a] text-base text-center cursor-not-allowed rounded-[4px]">
               截取封面
             </div>
-            <div
-              className="w-[88px] h-[24px] leading-[24px] bg-inputBg border-[#333] text-baseColor text-base text-center cursor-pointer rounded-[4px] hover:bg-[#434343]"
-              onClick={handleOnUpload}
+            <Upload
+              accept="image/*"
+              maxCount={1}
+              showUploadList={false}
+              beforeUpload={handleOnBeforeUpload}
+              onChange={({ file }) => {
+                if (file?.status === 'done') {
+                  const blob = new Blob([file.originFileObj], { type: file.type });
+                  upload(blob);
+                }
+              }}
             >
-              上传封面
-            </div>
+              <div className="w-[88px] h-[24px] leading-[24px] bg-[#474747] text-[#dbdbdb] text-base text-center cursor-pointer rounded-[4px] hover:bg-[#565656]">
+                上传封面
+              </div>
+            </Upload>
           </Space>
         </FormItem>
         <Row>
@@ -134,7 +180,7 @@ const CanvasSetting = () => {
                   width="100%"
                   height="100%"
                   src={canvasConfig?.thumbnail}
-                  fallback="data:image/png;base64,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"
+                  fallback={fallback}
                 />
               )}
             </div>

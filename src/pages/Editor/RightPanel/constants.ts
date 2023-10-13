@@ -31,13 +31,3 @@ export const ZoomTypeList = [
     key: 'none',
   },
 ];
-
-// 画布设置默认值
-export const DEFAULT_CONFIG = {
-  zoomType: 'fitWidth',
-  thumbnail: '',
-  width: 1920,
-  height: 1080,
-  opacity: 1,
-  color: '#262626',
-};

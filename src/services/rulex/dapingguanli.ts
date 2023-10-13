@@ -103,6 +103,36 @@ export async function putVisualPublish(
   });
 }
 
+/** 上传图片 POST /api/v1/visual/thumbnail */
+export async function postVisualThumbnail(body: {}, file?: File, options?: { [key: string]: any }) {
+  const formData = new FormData();
+
+  if (file) {
+    formData.append('file', file);
+  }
+
+  Object.keys(body).forEach((ele) => {
+    const item = (body as any)[ele];
+
+    if (item !== undefined && item !== null) {
+      formData.append(
+        ele,
+        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
+      );
+    }
+  });
+
+  return request<{ code: number; msg: string; data: { url?: string } }>(
+    '/api/v1/visual/thumbnail',
+    {
+      method: 'POST',
+      data: formData,
+      requestType: 'form',
+      ...(options || {}),
+    },
+  );
+}
+
 /** 更新大屏 PUT /api/v1/visual/update */
 export async function putVisualUpdate(
   body: {

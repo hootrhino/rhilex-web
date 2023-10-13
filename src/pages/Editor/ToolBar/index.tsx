@@ -43,11 +43,11 @@ const ToolBar = ({ refresh }: ToolBarProps) => {
     },
   );
 
-  useEffect(() => {
-    if (uuid) {
-      getDetail({ uuid });
-    }
-  }, [uuid]);
+  // useEffect(() => {
+  //   if (uuid) {
+  //     getDetail({ uuid });
+  //   }
+  // }, [uuid]);
 
   useEffect(() => {
     if (detail) {

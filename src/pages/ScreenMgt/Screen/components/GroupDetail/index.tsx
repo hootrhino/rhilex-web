@@ -199,7 +199,6 @@ const GroupDetail = ({ reload, list, activeGroup, ...props }: GroupDetailProps) 
                       icon={<EditOutlined />}
                       onClick={() => {
                         setType('edit');
-                        // getDetail({ uuid: item.uuid });
                         window.open(`/screen-mgt/screen/edit/${item.uuid}`, '_blank');
                       }}
                     >

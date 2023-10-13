@@ -62,6 +62,7 @@ const Canvas = () => {
   const {
     collapseLeftPanel,
     layers,
+    canvasConfig,
     setDetailFormType,
     setActiveNodeShape,
     setQuickStyle,
@@ -239,18 +240,25 @@ const Canvas = () => {
     dnd.start(node, e.nativeEvent);
   };
 
+  // 刷新画布
+  const handleOnRefresh = () => {
+    const allCells = graphRef.current?.getCells();
+    graphRef.current?.resetCells(allCells);
+  };
+
   // 初始化画布
   const handleInitGraph = () => {
     const graphContainer = document.getElementById('canvas-container')!;
+    const { r, g, b } = canvasConfig.color;
+    const a = canvasConfig.opacity;
 
     const graph = new Graph({
       container: graphContainer,
       background: {
-        color: '#262626',
+        color: `rgba(${r},${g},${b},${a})`,
       },
-      width: 1920,
-      height: 1080,
-      // embedding: true,
+      width: canvasConfig.width,
+      height: canvasConfig.height,
     });
 
     handleOnEvent(graph);
@@ -260,12 +268,6 @@ const Canvas = () => {
     graphRef.current = graph;
 
     return graph;
-  };
-
-  // 刷新画布
-  const handleOnRefresh = () => {
-    const allCells = graphRef.current?.getCells();
-    graphRef.current?.resetCells(allCells);
   };
 
   const handleClearGuideLine = () => {
@@ -340,6 +342,18 @@ const Canvas = () => {
   }, [collapseLeftPanel]);
 
   useEffect(() => {
+    if (graphRef.current === null) return;
+    const { r, g, b } = canvasConfig.color;
+    const a = canvasConfig.opacity;
+
+    graphRef.current?.drawBackground({ color: `rgba(${r},${g},${b},${a})` });
+  }, [canvasConfig.color, canvasConfig.opacity]);
+
+  useEffect(() => {
+    graphRef.current?.resize(canvasConfig.width, canvasConfig.height);
+  }, [canvasConfig.width, canvasConfig.height]);
+
+  useEffect(() => {
     const initGraph = handleInitGraph();
 
     requestAnimationFrame(() => {
@@ -356,7 +370,7 @@ const Canvas = () => {
   }, []);
 
   return (
-    <div className='editor-wrapper'>
+    <div className="editor-wrapper">
       <ToolBar refresh={handleOnRefresh} />
       <LeftPanel ref={dndRef} id="dnd-container" addNode={handleAddNode} />
       <div className={cn('editor-content', 'relative w-full h-full transform-gpu')}>

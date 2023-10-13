@@ -1,4 +1,5 @@
 import { getVisualDetail, getVisualGroup } from '@/services/rulex/dapingguanli';
+import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from '@/utils/constant';
 import { Edge } from '@antv/x6';
 import { useRequest } from '@umijs/max';
 import { useState } from 'react';
@@ -58,6 +59,22 @@ export type Layers = LayersBaseItem & {
   children?: LayersBaseItem[];
 };
 
+export type CanvasBgColor = {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+};
+
+export type CanvasConfig = {
+  zoomType: string;
+  thumbnail?: string;
+  width: number;
+  height: number;
+  opacity: number;
+  color: CanvasBgColor;
+};
+
 // 右侧详情面板
 export type DetailFormType = 'node' | 'canvas';
 
@@ -82,6 +99,16 @@ export const DEFAULT_EDGE_FORM_DATA = {
   },
 };
 
+// 画布设置默认值
+export const DEFAULT_CONFIG = {
+  zoomType: 'none',
+  thumbnail: '',
+  width: DEFAULT_WIDTH,
+  height: DEFAULT_HEIGHT,
+  opacity: 1,
+  color: { r: 38, g: 38, b: 38, a: 1 },
+};
+
 const useEditor = () => {
   // 边 Edge 表单数据
   const [edgeFormData, setEdgeForm] = useState<EdgeForm>(DEFAULT_EDGE_FORM_DATA);
@@ -94,6 +121,7 @@ const useEditor = () => {
   // 右侧详情面板
   const [collapseRightPanel, setCollapseRightPanel] = useState<boolean>(true);
   const [detailFormType, setDetailFormType] = useState<DetailFormType>('canvas');
+  const [canvasConfig, setConfig] = useState<CanvasConfig>(DEFAULT_CONFIG);
 
   // 节点 Node
   const [activeNodeShape, setActiveNodeShape] = useState<string>('');
@@ -144,6 +172,8 @@ const useEditor = () => {
     getGroupList,
     activeGroup,
     setActiveGroup,
+    canvasConfig,
+    setConfig,
   };
 };
 
