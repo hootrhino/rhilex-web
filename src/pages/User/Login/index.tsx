@@ -4,8 +4,6 @@ import { postLogin } from '@/services/rulex/yonghuguanli';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { Helmet, useModel } from '@umijs/max';
-import { Alert } from 'antd';
-import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import { history } from 'umi';
 import Settings from '../../../../config/defaultSettings';
@@ -15,48 +13,33 @@ export type CurrentUser = {
   password: string;
 };
 
-type LoginResult = {
-  code: number;
-  msg: string;
-};
-
-const LoginMessage: React.FC<{
-  content: string;
-}> = ({ content }) => {
-  return <Alert className="mb-6" message={content} type="error" showIcon />;
-};
-
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<LoginResult>();
   const { setInitialState } = useModel('@@initialState');
   const { run: getOsSystem } = useModel('useSystem');
 
   const handleSubmit = async (values: CurrentUser) => {
     try {
       // 登录
-      const { code, msg } = await postLogin(values);
+      const { data } = await postLogin(values);
 
-      if (code === 200) {
-        message.success('登录成功！');
-        // await fetchUserInfo();
-        flushSync(() => {
-          setInitialState((s) => ({
-            ...s,
-            currentUser: values,
-          }));
-        });
-        // 请求 Dashboard
-        getOsSystem();
-        const urlParams = new URL(window.location.href).searchParams;
+      flushSync(() => {
+        setInitialState((s) => ({
+          ...s,
+          currentUser: values,
+        }));
+      });
 
-        history.push(urlParams.get('redirect') || '/');
-        return;
-      }
-      // 如果失败去设置用户错误信息
-      setUserLoginState({ code, msg });
+      message.success('登录成功！');
+
+      localStorage.setItem('accessToken', data);
+      const urlParams = new URL(window.location.href).searchParams;
+      history.push(urlParams.get('redirect') || '/');
+
+      // 请求 Dashboard
+      getOsSystem();
+
       return true;
     } catch (error) {
-      // message.error('登录失败，请重试！');
       return false;
     }
   };
@@ -83,9 +66,6 @@ const Login: React.FC = () => {
           }}
           onFinish={handleSubmit}
         >
-          {userLoginState && userLoginState?.code !== 200 && (
-            <LoginMessage content={'账户或密码错误，请检查'} />
-          )}
           <>
             <ProFormText
               name="username"
@@ -132,7 +112,6 @@ const Login: React.FC = () => {
           </div>
         </LoginForm>
       </div>
-      {/* <Footer /> */}
     </div>
   );
 };

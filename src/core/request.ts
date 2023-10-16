@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/dot-notation */
-import type { RequestConfig } from 'umi';
-
 import { message, notification } from '@/components/PopupHack';
+import { LOGIN_PATH } from '@/utils/constant';
+import { history } from '@umijs/max';
+import type { RequestConfig } from 'umi';
 
 // 错误处理方案： 错误类型
 enum ErrorShowType {
@@ -91,6 +92,7 @@ const request: RequestConfig = {
     // 响应拦截器
     (response) => {
       // 拦截响应数据，进行个性化处理
+      const accessToken = localStorage.getItem('accessToken');
       const { data, status, config } = response;
 
       const shouldThrowError =
@@ -106,6 +108,10 @@ const request: RequestConfig = {
         error.name = 'BizError';
         error.info = bizErrorInfo;
         throw error;
+      }
+
+      if (!accessToken) {
+        history.push(LOGIN_PATH);
       }
       return response;
     },

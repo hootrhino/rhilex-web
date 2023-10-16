@@ -30,7 +30,6 @@ export default defineConfig({
     },
   },
   request: {},
-  access: {},
   headScripts: [
     // 解决首次加载时白屏的问题
     { src: '/loading.js', async: true },
