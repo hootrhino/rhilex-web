@@ -30,7 +30,7 @@ const LoginMessage: React.FC<{
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<LoginResult>();
   const { setInitialState } = useModel('@@initialState');
-  const { run: getSystem } = useModel('useSystem');
+  const { run: getOsSystem } = useModel('useSystem');
 
   const containerClassName = useEmotionCss(() => {
     return {
@@ -70,7 +70,7 @@ const Login: React.FC = () => {
           }));
         });
         // 请求 Dashboard
-        getSystem();
+        getOsSystem();
         const urlParams = new URL(window.location.href).searchParams;
 
         history.push(urlParams.get('redirect') || '/');

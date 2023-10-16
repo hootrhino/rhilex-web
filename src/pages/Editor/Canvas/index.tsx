@@ -1,48 +1,48 @@
+import { DEFAULT_GUIDE_CONFIG } from '@/models/useGuide';
+import { cn } from '@/utils/utils';
+import { Graph } from '@antv/x6';
 import { Clipboard } from '@antv/x6-plugin-clipboard';
+import { Dnd } from '@antv/x6-plugin-dnd';
 import { History } from '@antv/x6-plugin-history';
 import { Keyboard } from '@antv/x6-plugin-keyboard';
 import { Selection } from '@antv/x6-plugin-selection';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { Transform } from '@antv/x6-plugin-transform';
-import { useEffect, useRef, useState } from 'react';
-import { useModel } from 'umi';
-import RightPanel from '../RightPanel';
-
-import LeftPanel from '../LeftPanel';
-import ToolBar from '../ToolBar';
-
-import { DEFAULT_GUIDE_CONFIG } from '@/models/useGuide';
-import { cn } from '@/utils/utils';
-import { ExclamationCircleFilled, EyeInvisibleOutlined } from '@ant-design/icons';
-import { Graph } from '@antv/x6';
+import { register } from '@antv/x6-react-shape';
 import Guides from '@scena/react-guides';
 import inRange from 'lodash/inRange';
 import round from 'lodash/round';
-import { FullScreen, useFullScreenHandle } from 'react-full-screen';
+import { useEffect, useRef, useState } from 'react';
 import type { OnScroll } from 'react-infinite-viewer';
 import InfiniteViewer from 'react-infinite-viewer';
+import { useModel } from 'umi';
+import ConfirmModal from '../components/ConfirmModal';
+import Icon from '../components/Icon';
+import { nodeTitle } from '../constants';
 import Footer from '../Footer';
+import LeftPanel from '../LeftPanel';
+import { chartsList } from '../LeftPanel/constant';
+import RightPanel from '../RightPanel';
+import shapes from '../Shapes/ReactNodes';
+import ToolBar from '../ToolBar';
 
-import { Dnd } from '@antv/x6-plugin-dnd';
-import { register } from '@antv/x6-react-shape';
 import './index.less';
 
-import { Modal } from 'antd';
-import shapes from '../Shapes/ReactNodes';
-
 const Canvas = () => {
-  const handle = useFullScreenHandle();
-
   const graphRef = useRef<any>(null);
   const dndRef = useRef<any>(null);
   const viewerRef = useRef<InfiniteViewer>(null);
   const horizontalGuidesRef = useRef<Guides>(null);
   const verticalGuidesRef = useRef<Guides>(null);
 
-  const { collapseLeftPanel } = useModel('useEditor');
   const [canvasSize, setCanvasSize] = useState<number>(30);
   const [canMouseDrag, setMouseDrag] = useState<boolean>(true);
   const [offset, setOffset] = useState<number>(0);
+
+  const [modalConfig, setModalConfig] = useState<{ open: boolean; content: string }>({
+    open: false,
+    content: '',
+  });
 
   const {
     verticalZoom,
@@ -58,6 +58,16 @@ const Canvas = () => {
     setVerticalZoom,
     setVerticalUnit,
   } = useModel('useGuide');
+
+  const {
+    collapseLeftPanel,
+    layers,
+    canvasConfig,
+    setDetailFormType,
+    setActiveNodeShape,
+    setQuickStyle,
+    setLayers,
+  } = useModel('useEditor');
 
   // 使用插件
   const handleOnPlugins = (graph: Graph) => {
@@ -146,7 +156,7 @@ const Canvas = () => {
     });
 
     // 全选
-    graph.bindKey(['meta+a', 'ctrl+a'], () => {
+    graph.bindKey(['meta+shift+a', 'ctrl+shift+a'], () => {
       const nodes = graph.getNodes();
       if (nodes) {
         graph.select(nodes);
@@ -156,16 +166,10 @@ const Canvas = () => {
     // 删除
     graph.bindKey('backspace', () => {
       const cells = graph.getSelectedCells();
+
       if (cells.length) {
-        Modal.confirm({
-          title: '确定要删除该组件吗？',
-          icon: <ExclamationCircleFilled />,
-          okType: 'danger',
-          onOk() {
-            graph.removeCells(cells);
-          },
-          // bodyStyle: {background: '#262626'}
-        });
+        const selectedShape = cells?.[0]?.shape;
+        setModalConfig({ open: true, content: nodeTitle[selectedShape] });
       }
     });
   };
@@ -175,8 +179,28 @@ const Canvas = () => {
     graph.on('graph:mouseenter', () => {
       setMouseDrag(false);
     });
+
     graph.on('graph:mouseleave', () => {
       setMouseDrag(true);
+    });
+
+    graph.on('node:click', ({ node }) => {
+      chartsList?.forEach((chart) => {
+        if (node.shape.includes(chart.group)) {
+          chart.children?.forEach((child) => {
+            if (child.key === node.shape) {
+              setQuickStyle(child.children);
+            }
+          });
+        }
+      });
+
+      setActiveNodeShape(node.shape);
+      setDetailFormType('node');
+    });
+
+    graph.on('blank:click', () => {
+      setDetailFormType('canvas');
     });
   };
 
@@ -211,21 +235,30 @@ const Canvas = () => {
       shape: type,
     });
 
+    setLayers([{ title: nodeTitle[type || ''], id: node.id, icon: 'icon-charts' }, ...layers]);
+
     dnd.start(node, e.nativeEvent);
+  };
+
+  // 刷新画布
+  const handleOnRefresh = () => {
+    const allCells = graphRef.current?.getCells();
+    graphRef.current?.resetCells(allCells);
   };
 
   // 初始化画布
   const handleInitGraph = () => {
     const graphContainer = document.getElementById('canvas-container')!;
+    const { r, g, b } = canvasConfig.color;
+    const a = canvasConfig.opacity;
 
     const graph = new Graph({
       container: graphContainer,
       background: {
-        color: '#262626',
+        color: `rgba(${r},${g},${b},${a})`,
       },
-      width: 1920,
-      height: 1080,
-      // embedding: true,
+      width: canvasConfig.width,
+      height: canvasConfig.height,
     });
 
     handleOnEvent(graph);
@@ -309,6 +342,18 @@ const Canvas = () => {
   }, [collapseLeftPanel]);
 
   useEffect(() => {
+    if (graphRef.current === null) return;
+    const { r, g, b } = canvasConfig.color;
+    const a = canvasConfig.opacity;
+
+    graphRef.current?.drawBackground({ color: `rgba(${r},${g},${b},${a})` });
+  }, [canvasConfig.color, canvasConfig.opacity]);
+
+  useEffect(() => {
+    graphRef.current?.resize(canvasConfig.width, canvasConfig.height);
+  }, [canvasConfig.width, canvasConfig.height]);
+
+  useEffect(() => {
     const initGraph = handleInitGraph();
 
     requestAnimationFrame(() => {
@@ -325,81 +370,92 @@ const Canvas = () => {
   }, []);
 
   return (
-    <FullScreen handle={handle}>
-      <div className={cn('editor-wrapper')}>
-        <ToolBar handleFullScreen={handle} ref={graphRef} />
-        <LeftPanel ref={dndRef} id="dnd-container" addNode={handleAddNode} />
-        <div className={cn('editor-content', 'relative w-full h-full transform-gpu')}>
-          <div
-            className={cn(
-              'absolute flex justify-center items-center top-[60px] w-[20px] h-[20px] bg-[#292929] z-[100]',
-              collapseLeftPanel ? 'left-[64px]' : 'left-[364px]',
-            )}
-          >
-            <EyeInvisibleOutlined style={{ color: '#adadad' }} />
-          </div>
-          <div
-            className={cn(
-              'horizonal',
-              'absolute w-[calc(100%-84px)] h-[20px] top-[60px] left-[84px] z-10 -translate-z-1',
-            )}
-          >
-            <Guides
-              {...DEFAULT_GUIDE_CONFIG}
-              ref={horizontalGuidesRef}
-              type="horizontal"
-              textOffset={[0, 10]}
-              zoom={horizontalZoom}
-              guidesZoom={verticalZoom}
-              unit={horizontalUnit}
-              marks={verticalGuidelines}
-              onChangeGuides={({ guides }) => {
-                setHorizontalGuidelines(guides);
-              }}
-            />
-          </div>
-          <div
-            className={cn(
-              'vertical',
-              'absolute h-[calc(100vh-80px)] top-[80px] w-[20px] left-[64px] -translate-z-1 z-10',
-              collapseLeftPanel ? 'left-[64px]' : 'left-[364px]',
-            )}
-          >
-            <Guides
-              {...DEFAULT_GUIDE_CONFIG}
-              ref={verticalGuidesRef}
-              type="vertical"
-              textOffset={[-10, 0]}
-              textAlign="right"
-              direction="start"
-              zoom={verticalZoom}
-              guidesZoom={horizontalZoom}
-              unit={verticalUnit}
-              marks={horizontalGuidelines}
-              onChangeGuides={({ guides }) => {
-                let newGuides = [...guides];
-                if (!collapseLeftPanel) {
-                  newGuides = guides?.map((item) => Number(item) + offset);
-                }
-                setVerticalGuidelines(newGuides);
-              }}
-            />
-          </div>
-          <InfiniteViewer
-            ref={viewerRef}
-            className="relative w-full h-[100vh]"
-            useAutoZoom={true}
-            useMouseDrag={canMouseDrag}
-            useWheelScroll={true}
-            onScroll={handleOnScroll}
-          >
-            <div id="canvas-container" />
-          </InfiniteViewer>
+    <div className="editor-wrapper">
+      <ToolBar refresh={handleOnRefresh} />
+      <LeftPanel ref={dndRef} id="dnd-container" addNode={handleAddNode} />
+      <div className={cn('editor-content', 'relative w-full h-full transform-gpu')}>
+        <div
+          className={cn(
+            'absolute flex justify-center items-center top-[60px] w-[20px] h-[20px] bg-[#292929] z-[100]',
+            collapseLeftPanel ? 'left-[64px]' : 'left-[364px]',
+          )}
+        >
+          <Icon type="eye" />
         </div>
-        <RightPanel ref={graphRef} />
-        <Footer value={canvasSize} onChange={(changeValue: number) => setCanvasSize(changeValue)} />
+        <div
+          className={cn(
+            'horizonal',
+            'absolute w-[calc(100%-84px)] h-[20px] top-[60px] left-[84px] z-10 -translate-z-1',
+          )}
+        >
+          <Guides
+            {...DEFAULT_GUIDE_CONFIG}
+            ref={horizontalGuidesRef}
+            type="horizontal"
+            textOffset={[0, 10]}
+            zoom={horizontalZoom}
+            guidesZoom={verticalZoom}
+            unit={horizontalUnit}
+            marks={verticalGuidelines}
+            onChangeGuides={({ guides }) => {
+              setHorizontalGuidelines(guides);
+            }}
+          />
+        </div>
+        <div
+          className={cn(
+            'vertical',
+            'absolute h-[calc(100vh-80px)] top-[80px] w-[20px] left-[64px] -translate-z-1 z-10',
+            collapseLeftPanel ? 'left-[64px]' : 'left-[364px]',
+          )}
+        >
+          <Guides
+            {...DEFAULT_GUIDE_CONFIG}
+            ref={verticalGuidesRef}
+            type="vertical"
+            textOffset={[-10, 0]}
+            textAlign="right"
+            direction="start"
+            zoom={verticalZoom}
+            guidesZoom={horizontalZoom}
+            unit={verticalUnit}
+            marks={horizontalGuidelines}
+            onChangeGuides={({ guides }) => {
+              let newGuides = [...guides];
+              if (!collapseLeftPanel) {
+                newGuides = guides?.map((item) => Number(item) + offset);
+              }
+              setVerticalGuidelines(newGuides);
+            }}
+          />
+        </div>
+        <InfiniteViewer
+          ref={viewerRef}
+          className="relative w-full h-[100vh]"
+          useAutoZoom={true}
+          useMouseDrag={canMouseDrag}
+          useWheelScroll={true}
+          onScroll={handleOnScroll}
+        >
+          <div id="canvas-container" />
+        </InfiniteViewer>
       </div>
-    </FullScreen>
+      <RightPanel ref={graphRef} />
+      <Footer value={canvasSize} onChange={(changeValue: number) => setCanvasSize(changeValue)} />
+      <ConfirmModal
+        title="删除组件"
+        open={modalConfig.open}
+        onCancel={() => setModalConfig({ open: false, content: '' })}
+        onOk={() => {
+          const graph = graphRef.current;
+          const cells = graph?.getSelectedCells();
+          graph.removeCells(cells);
+          setModalConfig({ open: false, content: '' });
+        }}
+      >
+        <div className="text-[#ADADAD]">是否删除组件: {modalConfig.content}</div>
+      </ConfirmModal>
+    </div>
   );
 };
 

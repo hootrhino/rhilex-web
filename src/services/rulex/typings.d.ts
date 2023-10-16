@@ -7,6 +7,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type deleteGroupParams = {
+    uuid: string;
+  };
+
   type deleteInendsParams = {
     uuid?: string;
   };
@@ -19,11 +23,54 @@ declare namespace API {
     uuid?: string;
   };
 
+  type deleteVisualParams = {
+    uuid: string;
+  };
+
   type getAppDetailParams = {
     uuid: string;
   };
 
+  type getCrontaskPageParams = {
+    /** 当前页，从1开始 */
+    current: number;
+    /** 每页个数 */
+    size?: number;
+  };
+
+  type getCrontaskResultsPageParams = {
+    /** 当前页，从1开始 */
+    current: number;
+    /** 每页个数 */
+    size: number;
+    /** 任务id */
+    taskId?: number;
+  };
+
+  type getCrontaskStartParams = {
+    /** 任务id */
+    id: number;
+  };
+
+  type getCrontaskStopParams = {
+    /** 任务id */
+    id?: number;
+  };
+
+  type getCrontaskTerminateRunningTaskParams = {
+    /** 当前页，从1开始 */
+    current: number;
+    /** 每页个数 */
+    size: number;
+    /** 任务id */
+    taskId?: number;
+  };
+
   type getDevicesDetailParams = {
+    uuid: string;
+  };
+
+  type getGroupDetailParams = {
     uuid: string;
   };
 
@@ -47,6 +94,14 @@ declare namespace API {
     uuid?: string;
   };
 
+  type getVisualDetailParams = {
+    uuid: string;
+  };
+
+  type getVisualListByGroupParams = {
+    uuid: string;
+  };
+
   type putAppStartParams = {
     uuid: string;
   };
@@ -58,6 +113,10 @@ declare namespace API {
   type putLogsRemoteParams = {
     /** on:开启；off: 关闭 */
     action?: string;
+  };
+
+  type putVisualPublishParams = {
+    uuid: string;
   };
 
   type wangguanziyuan = {

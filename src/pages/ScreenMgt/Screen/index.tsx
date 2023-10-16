@@ -1,111 +1,131 @@
+import { message, modal } from '@/components/PopupHack';
+import { getVisualListByGroup } from '@/services/rulex/dapingguanli';
 import {
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-  FolderOpenOutlined,
-  FundProjectionScreenOutlined,
-  MoreOutlined,
-  PlusOutlined,
-} from '@ant-design/icons';
-import { PageContainer, ProCard, ProList } from '@ant-design/pro-components';
-import type { MenuProps } from 'antd';
-import { Badge, Button, Dropdown, Image, Space, Tooltip } from 'antd';
-import { useState } from 'react';
-
-import { cn } from '@/utils/utils';
-import screenImg1 from './images/screen1.png';
-import screenImg2 from './images/screen2.png';
-import screenImg3 from './images/screen3.png';
-import screenImg4 from './images/screen4.png';
-import screenImg5 from './images/screen5.png';
-
-import { modal } from '@/components/PopupHack';
+  deleteGroup,
+  getGroupDetail,
+  postGroupCreate,
+  putGroupUpdate,
+} from '@/services/rulex/fenzuguanli';
+import { DeleteOutlined, EditOutlined, FolderOpenOutlined, PlusOutlined } from '@ant-design/icons';
+import type { ProFormInstance } from '@ant-design/pro-components';
+import {
+  ModalForm,
+  PageContainer,
+  ProCard,
+  ProFormText,
+  ProList,
+} from '@ant-design/pro-components';
+import { useModel, useRequest } from '@umijs/max';
+import { Button, Space, Tooltip } from 'antd';
+import { useEffect, useRef, useState } from 'react';
+import GroupDetail from './components/GroupDetail';
 import './index.less';
 
-type GroupItem = {
-  key: string;
+export type GroupItem = {
+  uuid: string;
   name: string;
+  type: string;
+  [key: string]: any;
 };
 
-type ScreenItem = {
-  key: string;
-  name: string;
-  img?: string;
-  status?: string;
+type GroupConfig = {
+  open: boolean;
+  type: 'new' | 'edit';
+  title: string;
 };
 
-const groupData = [
-  {
-    key: 'other',
-    name: '默认分组',
-  },
-];
-
-const screenData = {
-  other: [
-    {
-      key: 'screen1',
-      name: '陕西省货运指数大屏',
-      img: screenImg1,
-      status: '已发布',
-    },
-    {
-      key: 'screen2',
-      name: '工业设备资产状态监控',
-      img: screenImg2,
-      status: '未发布',
-    },
-    {
-      key: 'screen3',
-      name: '2021年五一假期全国旅游市场观测',
-      img: screenImg3,
-      status: '已发布',
-    },
-    {
-      key: 'screen4',
-      name: '智能工厂监控',
-      img: screenImg4,
-      status: '未发布',
-    },
-    {
-      key: 'screen5',
-      name: '地区新能源业务展示大屏',
-      img: screenImg5,
-      status: '未发布',
-    },
-  ],
-};
-
-const items: MenuProps['items'] = [
-  {
-    label: <a href="https://www.antgroup.com">1st menu item</a>,
-    key: '0',
-  },
-  {
-    label: <a href="https://www.aliyun.com">2nd menu item</a>,
-    key: '1',
-  },
-  {
-    type: 'divider',
-  },
-  {
-    label: '3rd menu item',
-    key: '3',
-  },
-];
+const DEFAULT_TYPE = 'VISUAL';
 
 const Screen = () => {
-  const [actionGroup, setActionGroup] = useState<string>('other');
-  const [preview, setPreview] = useState<boolean>(false);
-  const [actionType, setType] = useState<'edit' | 'preview'>('preview');
-  const [previewKey, setKey] = useState<string>('');
+  const groupFormRef = useRef<ProFormInstance>();
+  const { groupList, getGroupList, activeGroup, setActiveGroup } = useModel('useEditor');
+  const [groupConfig, setConfig] = useState<GroupConfig>({
+    open: false,
+    type: 'new',
+    title: '新建项目分组',
+  });
 
-  // 创建大屏
-  const handleOnNew = () => {
-    modal.info({
-      content: '大屏编辑器正在开发中，敬请期待！',
+  // 获取分组详情
+  const { data: detail, run: getDetail } = useRequest(
+    (params: API.getGroupDetailParams) => getGroupDetail(params),
+    {
+      manual: true,
+    },
+  );
+
+  // 大屏列表
+  const {
+    data: groupItems,
+    run: getGroupItems,
+    refresh,
+  } = useRequest((params: API.getVisualListByGroupParams) => getVisualListByGroup(params), {
+    manual: true,
+  });
+
+  // 创建分组
+  const { run: create } = useRequest(
+    (name: string) => postGroupCreate({ type: DEFAULT_TYPE, name }),
+    {
+      manual: true,
+      onSuccess: (data: any) => {
+        setActiveGroup(data?.gid);
+        getGroupList();
+        message.success('项目分组创建成功');
+      },
+    },
+  );
+
+  // 更新分组
+  const { run: update } = useRequest(
+    (name: string) => putGroupUpdate({ type: DEFAULT_TYPE, uuid: detail?.uuid || '', name }),
+    {
+      manual: true,
+      onSuccess: () => {
+        getGroupList();
+        message.success('项目分组更新成功');
+      },
+    },
+  );
+
+  // 删除分组
+  const { run: remove } = useRequest((params: API.deleteGroupParams) => deleteGroup(params), {
+    manual: true,
+    onSuccess: () => {
+      getGroupList();
+      message.success('成功删除该项目分组');
+    },
+  });
+
+  const handleOnRemoveGroup = ({ name, uuid }: GroupItem) => {
+    modal.confirm({
+      title: `确定要删除${name}吗？`,
+      width: 600,
+      content: `项目分组中包含 ${groupItems?.length} 个数据看板，删除后将被移入未分组中，请谨慎处理。`,
+      onOk: () => remove({ uuid: uuid }),
     });
   };
+
+  const getGroupName = (key: string) => {
+    const group = groupList?.find((group: any) => group.uuid === key);
+
+    return group?.name;
+  };
+
+  useEffect(() => {
+    getGroupItems({ uuid: activeGroup });
+  }, [activeGroup]);
+
+  useEffect(() => {
+    if (detail) {
+      groupFormRef.current?.setFieldsValue({ name: detail.name });
+    } else {
+      groupFormRef.current?.setFieldsValue({ name: '' });
+    }
+  }, [detail]);
+
+  useEffect(() => {
+    getGroupList();
+  }, []);
 
   return (
     <PageContainer>
@@ -120,7 +140,9 @@ const Screen = () => {
               key="add"
               type="primary"
               icon={<PlusOutlined />}
-              className="cursor-not-allowed"
+              onClick={() => {
+                setConfig({ open: true, title: '新建项目分组', type: 'new' });
+              }}
             >
               新建
             </Button>
@@ -132,18 +154,15 @@ const Screen = () => {
             toolBarRender={false}
             onRow={(record: GroupItem) => {
               return {
-                onMouseEnter: () => {
-                  console.log(record);
-                },
                 onClick: () => {
-                  setActionGroup(record.key);
+                  setActiveGroup(record.uuid);
                 },
               };
             }}
-            rowKey="key"
+            rowKey="uuid"
             headerTitle={false}
-            dataSource={groupData}
-            rowClassName={(item: GroupItem) => (item?.key === actionGroup ? 'active-group' : '')}
+            dataSource={groupList}
+            rowClassName={(item: GroupItem) => (item?.uuid === activeGroup ? 'active-group' : '')}
             metas={{
               title: {
                 dataIndex: 'name',
@@ -155,15 +174,21 @@ const Screen = () => {
                 render: () => <FolderOpenOutlined className="pl-[10px]" />,
               },
               actions: {
-                render: () => (
+                render: (dom, entity) => (
                   <Space size="middle">
                     <Tooltip title="重命名分组">
-                      <a key="edit" className="cursor-not-allowed">
+                      <a
+                        key="edit"
+                        onClick={() => {
+                          setConfig({ open: true, title: '编辑项目分组', type: 'edit' });
+                          getDetail({ uuid: entity.uuid });
+                        }}
+                      >
                         <EditOutlined />
                       </a>
                     </Tooltip>
                     <Tooltip title="删除分组">
-                      <a key="delete" className="cursor-not-allowed">
+                      <a key="delete" onClick={() => handleOnRemoveGroup(entity)}>
                         <DeleteOutlined />
                       </a>
                     </Tooltip>
@@ -173,79 +198,25 @@ const Screen = () => {
             }}
           />
         </ProCard>
-        <ProCard>
-          <div className="flex flex-wrap items-center">
-            <div className="min-w-[240px] w-[22.8%] mr-[2%] mb-[24px] h-max rounded">
-              <div
-                className="flex justify-center items-center py-[27%]"
-                style={{ border: '1px solid #e6e6e6' }}
-              >
-                <Button type="primary" icon={<PlusOutlined />} onClick={handleOnNew}>
-                  {/* <Link to="/screen-mgt/screen/new" target="_blank">
-                    创建大屏
-                  </Link> */}
-                  创建大屏
-                </Button>
-              </div>
-            </div>
-            {screenData[actionGroup]?.map((item: ScreenItem) => (
-              <div
-                key={item?.key}
-                className={cn(
-                  'min-w-[240px] w-[22.8%] h-max border-transparent hover:border-blue-500 border-solid border-2 mr-[2%] mb-[24px] rounded bg-[#ededed]',
-                )}
-              >
-                <Image
-                  width="100%"
-                  alt="缩略图"
-                  src={item?.img}
-                  preview={{
-                    visible: actionType === 'preview' && preview && previewKey === item?.key,
-                    onVisibleChange: (value) => setPreview(value),
-                    mask: (
-                      <Space align="center">
-                        <Button
-                          type="primary"
-                          icon={<EditOutlined />}
-                          className="cursor-not-allowed"
-                          // onClick={() => setType('edit')}
-                        >
-                          编辑
-                        </Button>
-                        <Button
-                          icon={<EyeOutlined />}
-                          onClick={() => {
-                            setType('preview');
-                            setKey(item?.key);
-                          }}
-                        >
-                          预览
-                        </Button>
-                      </Space>
-                    ),
-                  }}
-                />
-                <div className="flex justify-between h-[32px]">
-                  <Space className="pl-[5px]">
-                    <FundProjectionScreenOutlined />
-                    <p className="w-[150px] truncate p-0 m-0">{item?.name}</p>
-                  </Space>
-                  <Space className="pr-[5px]">
-                    <Badge
-                      status={item?.status === '未发布' ? 'warning' : 'success'}
-                      text={item?.status}
-                      className="whitespace-nowrap"
-                    />
-                    <Dropdown menu={{ items }} trigger={['click']} disabled>
-                      <MoreOutlined style={{ color: '#1677FF', cursor: 'not-allowed' }} />
-                    </Dropdown>
-                  </Space>
-                </div>
-              </div>
-            ))}
-          </div>
+
+        <ProCard title={getGroupName(activeGroup)}>
+          <GroupDetail list={groupItems} activeGroup={activeGroup} reload={refresh} />
         </ProCard>
       </ProCard>
+      <ModalForm
+        formRef={groupFormRef}
+        title={groupConfig.title}
+        open={groupConfig.open}
+        onOpenChange={(visible) => setConfig({ ...groupConfig, open: visible })}
+        modalProps={{ destroyOnClose: true }}
+        onFinish={async (values) =>
+          groupConfig.type === 'new' ? create(values.name) : update(values.name)
+        }
+        layout="horizontal"
+        width="30%"
+      >
+        <ProFormText width="md" name="name" label="分组名称" placeholder="请输入分组名称" />
+      </ModalForm>
     </PageContainer>
   );
 };

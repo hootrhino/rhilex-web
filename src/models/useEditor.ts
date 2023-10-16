@@ -1,5 +1,7 @@
+import { getVisualDetail, getVisualGroup } from '@/services/rulex/dapingguanli';
 import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from '@/utils/constant';
-import { BackgroundManager, Edge, Graph, Node } from '@antv/x6';
+import { Edge } from '@antv/x6';
+import { useRequest } from '@umijs/max';
 import { useState } from 'react';
 
 export enum LineTypeOption {
@@ -37,32 +39,44 @@ export type EdgeForm = {
   };
 };
 
-type Background = Omit<BackgroundManager.Options, 'position' | 'size'> & {
-  position: string;
-  size: string;
+export type QuickStyleItem = {
+  key: string;
+  value: string;
 };
 
-export type CanvasForm = Omit<Graph.Options, 'background'> & {
-  background: Background;
-  scale: number;
+export type QuickStyleConfig = {
+  open: boolean;
+  title: string;
 };
 
-export type NodeForm = Node.Metadata & {
-  rotate?: boolean;
-  [key: string]: any;
+type LayersBaseItem = {
+  title: string;
+  id: string;
+  icon: string;
 };
 
-export const DEFAULT_CANVAS_FORM_DATA = {
-  background: {
-    color: '#262626',
-    repeat: 'no-repeat',
-    size: 'auto auto',
-    position: 'center',
-  },
-  width: DEFAULT_WIDTH,
-  height: DEFAULT_HEIGHT,
-  scale: 50,
+export type Layers = LayersBaseItem & {
+  children?: LayersBaseItem[];
 };
+
+export type CanvasBgColor = {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+};
+
+export type CanvasConfig = {
+  zoomType: string;
+  thumbnail?: string;
+  width: number;
+  height: number;
+  opacity: number;
+  color: CanvasBgColor;
+};
+
+// 右侧详情面板
+export type DetailFormType = 'node' | 'canvas';
 
 export const DEFAULT_EDGE_FORM_DATA = {
   lineType: LineTypeOption.Solid,
@@ -85,39 +99,81 @@ export const DEFAULT_EDGE_FORM_DATA = {
   },
 };
 
-export const DEFAULT_NODE_FORM_DATA = {};
+// 画布设置默认值
+export const DEFAULT_CONFIG = {
+  zoomType: 'none',
+  thumbnail: '',
+  width: DEFAULT_WIDTH,
+  height: DEFAULT_HEIGHT,
+  opacity: 1,
+  color: { r: 38, g: 38, b: 38, a: 1 },
+};
 
 const useEditor = () => {
-  // 画布属性设置
-  const [canvasData, setCanvasData] = useState<CanvasForm>(DEFAULT_CANVAS_FORM_DATA);
-
   // 边 Edge 表单数据
   const [edgeFormData, setEdgeForm] = useState<EdgeForm>(DEFAULT_EDGE_FORM_DATA);
   const [edgeData, setEdgeData] = useState<Edge.Metadata>();
 
-  // 节点 Node 表单数据
-  const [nodeFormData, setNodeForm] = useState<NodeForm>(DEFAULT_NODE_FORM_DATA);
-  const [nodeData, setNodeData] = useState<Node.Metadata>();
+  // 左侧面板
   const [collapseLeftPanel, setCollapseLeftPanel] = useState<boolean>(false);
+  const [layers, setLayers] = useState<Layers[]>([]);
 
-  // 右侧面板
-  const [collapseRightPanel, setCollapseRightPanel] = useState<boolean>(false);
+  // 右侧详情面板
+  const [collapseRightPanel, setCollapseRightPanel] = useState<boolean>(true);
+  const [detailFormType, setDetailFormType] = useState<DetailFormType>('canvas');
+  const [canvasConfig, setConfig] = useState<CanvasConfig>(DEFAULT_CONFIG);
+
+  // 节点 Node
+  const [activeNodeShape, setActiveNodeShape] = useState<string>('');
+  const [activeNodeQuickStyle, setQuickStyle] = useState<QuickStyleItem[]>([]);
+  const [quickStyleConfig, setQuickStyleConfig] = useState<QuickStyleConfig>({
+    open: false,
+    title: '',
+  });
+
+  // 大屏分组
+  const [activeGroup, setActiveGroup] = useState<string>('VROOT');
+
+  // 大屏详情
+  const { data: detail, run: getDetail } = useRequest(
+    (params: API.getVisualDetailParams) => getVisualDetail(params),
+    {
+      manual: true,
+    },
+  );
+
+  // 大屏分组列表
+  const { data: groupList, run: getGroupList } = useRequest(() => getVisualGroup({}), {
+    manual: true,
+  });
 
   return {
-    canvasData,
-    setCanvasData,
     edgeFormData,
     setEdgeForm,
     edgeData,
     setEdgeData,
-    nodeFormData,
-    setNodeForm,
-    nodeData,
-    setNodeData,
     collapseLeftPanel,
     setCollapseLeftPanel,
     collapseRightPanel,
-    setCollapseRightPanel
+    setCollapseRightPanel,
+    detailFormType,
+    setDetailFormType,
+    activeNodeShape,
+    setActiveNodeShape,
+    activeNodeQuickStyle,
+    setQuickStyle,
+    quickStyleConfig,
+    setQuickStyleConfig,
+    layers,
+    setLayers,
+    detail,
+    getDetail,
+    groupList,
+    getGroupList,
+    activeGroup,
+    setActiveGroup,
+    canvasConfig,
+    setConfig,
   };
 };
 

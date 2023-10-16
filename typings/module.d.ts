@@ -12,3 +12,4 @@ declare module '*.bmp';
 declare module '*.tiff';
 declare module '@antv/data-set';
 declare module 'lua-format';
+declare module 'react-transition-group';

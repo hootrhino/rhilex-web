@@ -1,24 +1,36 @@
+import Tooltip from '@/pages/Editor/components/Tooltip';
 import { cn, IconFont } from '@/utils/utils';
-import './index.less';
-
-import {
-  CloseOutlined,
-  QuestionCircleOutlined,
-  RedoOutlined,
-  SearchOutlined,
-} from '@ant-design/icons';
 import { useModel } from '@umijs/max';
-import { Space, Tooltip } from 'antd';
-import { forwardRef, useState } from 'react';
+import { Space } from 'antd';
+import { forwardRef, useEffect, useState } from 'react';
 import ComponentLibrary from './ComponentLibrary';
 import { panelItems } from './constant';
+import Help from './Help';
 import Layers from './Layers';
+import Material from './Material';
+
+import './index.less';
+import Icon from '../components/Icon';
 
 type LeftPanelProps = React.HTMLAttributes<HTMLDivElement>;
 
-const LeftPanel = forwardRef<LeftPanelProps, any>(({addNode, ...props}, ref) => {
-  const { collapseLeftPanel: collapse, setCollapseLeftPanel: setCollapse } = useModel('useEditor');
+const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) => {
+  const {
+    collapseLeftPanel: collapse,
+    setCollapseLeftPanel: setCollapse,
+    quickStyleConfig,
+    activeNodeQuickStyle,
+    setQuickStyleConfig,
+  } = useModel('useEditor');
   const [activeItem, setActiveItem] = useState<string>('layers');
+  const [reloadIcon, setReloadIcon] = useState<string>('icon-reload');
+
+  const detailContent = {
+    layers: <Layers />,
+    material: <Material />,
+    components: <ComponentLibrary addNode={addNode} />,
+    help: <Help />,
+  };
 
   const handleOnCloseRightPanel = () => {
     setCollapse(true);
@@ -28,15 +40,36 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({addNode, ...props}, ref) => 
   const getDetailTitle = () => {
     const currentPanelItem = panelItems?.find((item) => item?.key === activeItem);
 
-    return currentPanelItem?.name || '帮助';
+    if (activeItem === 'layers') {
+      return (
+        <Tooltip title="查看帮助文档" placement="right">
+          {currentPanelItem?.name}
+          <Icon
+            type='doc-fill'
+            className="ml-[4px]"
+          />
+        </Tooltip>
+      );
+    } else {
+      return currentPanelItem?.name || '帮助';
+    }
   };
+
+  useEffect(() => {
+    if (activeItem === 'layers') {
+      setReloadIcon('icon-reload-disabled');
+    } else {
+      setReloadIcon('icon-reload');
+    }
+  }, [activeItem]);
 
   return (
     <>
       <div
         className={cn(
-          'left-panel-fixed',
-          'flex flex-col fixed left-0 bottom-0 w-[64px] bg-[#1A1A1A] text-center overflow-hidden py-[10px] px-[4px] cursor-pointer',
+          'editor-shadow-outer-r',
+          'editor-box-shadow-1',
+          'flex flex-col fixed left-0 bottom-0 w-[64px] h-[calc(100%-60px)] bg-panelBg text-center overflow-hidden py-[10px] px-[4px] cursor-pointer z-[98] text-base',
         )}
         {...props}
       >
@@ -44,7 +77,8 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({addNode, ...props}, ref) => 
           {panelItems?.map((item) => (
             <Space
               className={cn(
-                'left-panel-fixed-item',
+                'left-panel-item',
+                'w-full min-h-[40px] my-[8px] py-[4px] bg-transparent rounded-[4px] hover:bg-[#2c2c2c]',
                 activeItem === item.key ? 'text-[#F7F7F7]' : 'text-[#7a7a7a]',
               )}
               direction="vertical"
@@ -60,13 +94,14 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({addNode, ...props}, ref) => 
               }}
             >
               <IconFont type={activeItem === item.key ? `${item?.icon}-active` : item?.icon} />
-              <span className="text-[12px]">{item?.name}</span>
+              <span className="text-base">{item?.name}</span>
             </Space>
           ))}
         </div>
         <Space
           className={cn(
-            'left-panel-fixed-help',
+            'left-panel-item',
+            'w-full min-h-[40px] my-[8px] py-[8px] bg-transparent rounded-[4px] hover:bg-[#2c2c2c]',
             activeItem === 'help' ? 'text-[#F7F7F7]' : 'text-[#7a7a7a]',
           )}
           direction="vertical"
@@ -77,46 +112,98 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({addNode, ...props}, ref) => 
             setCollapse(false);
           }}
         >
-          <QuestionCircleOutlined
-            style={activeItem === 'help' ? { color: '#1F6AFF' } : { color: '#ADADAD' }}
-          />
-          <span className="text-[12px]">帮助</span>
+          <IconFont type={activeItem === 'help' ? 'icon-question-active' : 'icon-question'} />
+          <span className="text-base">帮助</span>
         </Space>
       </div>
-      <div
-        className={cn(
-          'left-panel-detail',
-          'fixed bg-[#1a1a1a] w-[300px] left-[64px] bottom-0 block overflow-hidden',
-          collapse ? 'hidden' : 'block',
-        )}
-      >
+      {!collapse && (
         <div
           className={cn(
-            'left-panel-detail-header',
-            'flex items-center justify-between h-[56px] px-[16px] overflow-hidden text-[#dbdbdb] text-[12px]',
+            'editor-shadow-outer-r',
+            'editor-box-shadow-1',
+            'fixed bg-panelBg w-[300px] left-[64px] bottom-0 overflow-hidden z-[98] h-[calc(100%-60px)] pr-[1px]',
           )}
         >
-          <span>{getDetailTitle()}</span>
-          <div className="text-[#adadad] cursor-pointer">
-            <Tooltip title="刷新" color="#1F6AFF">
-              <RedoOutlined />
-            </Tooltip>
-            <Tooltip title="搜索" color="#1F6AFF">
-              <SearchOutlined className="ml-[10px]" />
-            </Tooltip>
-            <CloseOutlined className="ml-[10px]" onClick={handleOnCloseRightPanel} />
+          <div
+            className={cn(
+              'editor-divider-b',
+              'flex items-center justify-between h-[56px] px-[16px] overflow-hidden text-[#dbdbdb] text-base',
+            )}
+          >
+            <span>{getDetailTitle()}</span>
+            <div className="text-baseColor cursor-pointer">
+              {activeItem !== 'help' && (
+                <>
+                  <Tooltip title="刷新" disabled={activeItem === 'layers'}>
+                  <IconFont
+                      disabled={activeItem === 'layers'}
+                      type={reloadIcon}
+                      onMouseEnter={() =>
+                        activeItem !== 'layers' && setReloadIcon('icon-reload-active')
+                      }
+                      onMouseLeave={() => activeItem !== 'layers' && setReloadIcon('icon-reload')}
+                    />
+                  </Tooltip>
+                  {activeItem !== 'layers' && <Tooltip title="搜索">
+                    <Icon type="search" className="ml-[10px]" />
+                  </Tooltip>}
+
+                  {['layers', 'components'].includes(activeItem) && (
+                    <Tooltip title="固定">
+                      <Icon type="pin" className="ml-[10px]" />
+                    </Tooltip>
+                  )}
+                </>
+              )}
+
+              <Icon type="close" className="ml-[10px]" onClick={handleOnCloseRightPanel} />
+            </div>
+          </div>
+          <div
+            className='flex items-center flex-col text-[#dbdbdb] text-base h-[calc(100%-56px)]'
+          >
+            {detailContent[activeItem]}
           </div>
         </div>
+      )}
+
+      {quickStyleConfig.open && (
         <div
           className={cn(
-            'left-panel-detail-content',
-            'flex items-center flex-col text-[#dbdbdb] text-[12px] h-[calc(100%-56px)]',
+            'absolute top-[60px] left-[362px] z-[98] w-[190px] h-[calc(100%-60px)] pr-[1px] overflow-hidden bg-panelBg',
+            'editor-shadow-outer-r',
+            'editor-box-shadow-1',
+            'editor-divider-l',
           )}
+          onMouseLeave={() => {
+            setQuickStyleConfig!({ open: false, title: '' });
+          }}
         >
-          {activeItem === 'layers' && <Layers />}
-          {activeItem === 'components' && <ComponentLibrary addNode={addNode} />}
+          <div
+            className={cn(
+              'editor-divider-b',
+              'flex items-center justify-between h-[56px] px-[16px] text-baseColor text-base',
+            )}
+          >
+            {quickStyleConfig.title}快速样式
+          </div>
+          <div
+            className={cn(
+              'h-[calc(100%-60px)] overflow-y-auto overflow-x-hidden',
+              'editor-scrollbar',
+            )}
+          >
+            {activeNodeQuickStyle?.map((item) => (
+              <div
+                key={item.key}
+                className="w-[166px] h-[93px] bg-[#242424] my-[12px] mr-[8px] ml-[12px] rounded-[4px] hover:bg-[#363636]"
+              >
+                <img src={item.value} className="w-full h-full object-contain" />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 });

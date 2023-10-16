@@ -1,13 +1,214 @@
-.ant-slider .ant-slider-handle::after {
-  background: #dbdbdb;
-  border-radius: 2px;
-  box-shadow: none;
+// tree
+.ant-tree {
+  background-color: transparent;
+
+  .ant-tree-treenode {
+    position: relative;
+    margin: 2px 0;
+    padding: 0;
+    color: #adadad;
+    background-color: transparent;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: #2c2c2c;
+
+      .show-actions {
+        opacity: 1;
+      }
+    }
+  }
+
+  .ant-tree-treenode-selected {
+    color: #fff;
+    background-color: #1f6aff;
+
+    &:hover {
+      background-color: #1f6aff;
+    }
+  }
+
+  .ant-tree-node-content-wrapper {
+    display: flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0;
+    border-radius: 4px;
+  }
+
+  .ant-tree-node-content-wrapper.ant-tree-node-selected {
+    color: #fff;
+    background-color: transparent;
+  }
 }
 
-.ant-slider .ant-slider-handle:active::after {
-  box-shadow: none !important;
+// collapse
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+  align-items: center;
+  height: 44px;
+  color: var(--text-color);
+  font-size: var(--text-base);
 }
 
-.ant-slider .ant-slider-handle:hover::after {
-  box-shadow: none !important;
+// popover
+.ant-popover {
+  .ant-popover-title {
+    padding-top: 10px;
+    border-bottom: none;
+  }
+
+  .ant-popover-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #333;
+    border: 0.5px solid #141414;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.4);
+  }
+}
+
+// select
+.editor-select {
+  .ant-color-picker-trigger-text {
+    color: var(--text-color);
+  }
+
+  .ant-color-picker-color-block {
+    width: 16px;
+    height: 16px;
+  }
+
+  .ant-select-dropdown {
+    background-color: #333;
+  }
+
+  .ant-select-item {
+    color: #dbdbdb;
+
+    &:hover {
+      background-color: #434343;
+    }
+  }
+
+  .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    color: #dbdbdb;
+    font-weight: 400;
+    background-color: transparent;
+  }
+
+  .ant-select-single.ant-select-open .ant-select-selection-item {
+    color: #dbdbdb;
+  }
+
+  .ant-select-item-option {
+    display: flex;
+    align-items: center;
+  }
+
+  .ant-select-selection-item {
+    display: flex;
+    align-items: center;
+    color: #dbdbdb;
+  }
+
+  .ant-select-arrow {
+    color: #dbdbdb;
+  }
+
+  &:not(.ant-select-disabled):not(.ant-select-customize-input):not(
+      .ant-pagination-size-changer
+    ):hover
+    .ant-select-selector {
+    border-color: var(--primary-color);
+  }
+
+  &:not(.ant-select-disabled):not(.ant-select-customize-input):not(
+      .ant-pagination-size-changer
+    ):active
+    .ant-select-selector {
+    border-color: var(--primary-color);
+  }
+}
+
+// segmented
+.editor-segmented {
+  padding: 0;
+  color: #7a7a7a;
+  font-size: var(--text-base);
+  background-color: #333;
+
+  .ant-segmented-item {
+    margin: 4px;
+  }
+
+  .ant-segmented-item-selected {
+    margin: 4px;
+    color: #f7f7f7;
+    background: #5c5c5c;
+  }
+}
+
+// inputNumber
+.editor-input {
+  background-color: #333;
+  border-radius: 4px;
+  transition: border 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #434343;
+    border-color: transparent;
+  }
+
+  .ant-input-number-group-addon {
+    padding: 0 3px;
+    color: #7a7a7a;
+    font-size: var(--text-base);
+    border: none;
+  }
+
+  .ant-input-number-input {
+    color: #dbdbdb;
+  }
+
+  .ant-input-number-handler {
+    border: none;
+
+    .ant-input-number-handler-down-inner,
+    .ant-input-number-handler-up-inner {
+      color: #7a7a7a;
+    }
+
+    &:hover {
+      .ant-input-number-handler-down-inner,
+      .ant-input-number-handler-up-inner {
+        color: #fff;
+      }
+    }
+
+    &-wrap {
+      background: #434343;
+    }
+  }
+}
+
+// slider
+.editor-slider {
+  .ant-slider-handle::after {
+    border-radius: 2px !important;
+    box-shadow: none;
+  }
+
+  .ant-slider-handle:active::after {
+    box-shadow: none !important;
+  }
+
+  .ant-slider-handle:hover::after {
+    box-shadow: none !important;
+  }
+
+  .ant-slider-handle:focus::after {
+    box-shadow: none !important;
+  }
 }
