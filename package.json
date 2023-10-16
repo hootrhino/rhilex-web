@@ -46,7 +46,6 @@
     "@ant-design/icons": "^5.0.1",
     "@ant-design/plots": "^1.2.5",
     "@ant-design/pro-components": "^2.3.57",
-    "@ant-design/use-emotion-css": "1.0.4",
     "@antv/x6": "^2.13.1",
     "@antv/x6-plugin-clipboard": "^2.1.6",
     "@antv/x6-plugin-dnd": "^2.0.6",

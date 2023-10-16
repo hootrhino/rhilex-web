@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { cn } from '@/utils/utils';
-import { useEmotionCss } from '@ant-design/use-emotion-css';
 import type { DropDownProps } from 'antd';
 import { Dropdown } from 'antd';
 
@@ -11,14 +10,7 @@ export type HeaderDropdownProps = {
 } & Omit<DropDownProps, 'overlay'>;
 
 const HeaderDropdown: React.FC<HeaderDropdownProps> = ({ overlayClassName: cls, ...restProps }) => {
-  const className = useEmotionCss(({ token }) => {
-    return {
-      [`@media screen and (max-width: ${token.screenXS})`]: {
-        width: '100%',
-      },
-    };
-  });
-  return <Dropdown overlayClassName={cn(className, cls)} {...restProps} />;
+  return <Dropdown overlayClassName={cn('xs:w-full', cls)} {...restProps} />;
 };
 
 export default HeaderDropdown;

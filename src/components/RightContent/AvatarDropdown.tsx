@@ -1,7 +1,6 @@
 import { postLogout } from '@/services/rulex/yonghuguanli';
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
-import { setAlpha } from '@ant-design/pro-components';
-import { useEmotionCss } from '@ant-design/use-emotion-css';
+import { cn } from '@/utils/utils';
+import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { history, useModel } from '@umijs/max';
 import { Avatar, Spin } from 'antd';
 import { stringify } from 'querystring';
@@ -18,49 +17,31 @@ const Name = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
 
-  const nameClassName = useEmotionCss(({ token }) => {
-    return {
-      fontSize: '16px',
-      color: '#ffffff',
-      height: '56px',
-      overflow: 'hidden',
-      lineHeight: '56px',
-      whiteSpace: 'nowrap',
-      textOverflow: 'ellipsis',
-      [`@media only screen and (max-width: ${token.screenMD}px)`]: {
-        display: 'none',
-      },
-    };
-  });
-
-  return <span className={`${nameClassName} anticon`}>{currentUser?.username}</span>;
+  return (
+    <span
+      className={cn(
+        'text-[16px] text-[#fff] h-[56px] overflow-hidden leading-[56px] whitespace-nowrap text-ellipsis md:hidden',
+        'anticon',
+      )}
+    >
+      {currentUser?.username}
+    </span>
+  );
 };
 
 const AvatarLogo = () => {
-  const avatarClassName = useEmotionCss(({ token }) => {
-    return {
-      marginRight: '8px',
-      color: token.colorPrimary,
-      verticalAlign: 'top',
-      background: setAlpha(token.colorBgContainer, 0.95),
-      [`@media only screen and (max-width: ${token.screenMD}px)`]: {
-        margin: 0,
-      },
-    };
-  });
-
   return (
     <Avatar
       size="small"
-      className={avatarClassName}
+      className="mr-[8px] text-[#1e1e1e] align-top bg-[#fff] bg-opacity-95 md:m-0"
       src={undefined}
-      icon={<UserOutlined className="text-black" />}
+      icon={<UserOutlined />}
       alt="avatar"
     />
   );
 };
 
-const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
+const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
   /**
    * 退出登录，并且将当前的 url 保存
    */
@@ -80,21 +61,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       });
     }
   };
-  const actionClassName = useEmotionCss(({ token }) => {
-    return {
-      display: 'flex',
-      height: '56px',
-      marginLeft: 'auto',
-      overflow: 'hidden',
-      alignItems: 'center',
-      padding: '0 8px',
-      cursor: 'pointer',
-      borderRadius: token.borderRadius,
-      '&:hover': {
-        backgroundColor: token.colorBgTextHover,
-      },
-    };
-  });
+
   const { initialState, setInitialState } = useModel('@@initialState');
 
   const onMenuClick = useCallback(
@@ -112,7 +79,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   );
 
   const loading = (
-    <span className={actionClassName}>
+    <span className="flex items-center h-[56px] ml-auto px-[8px] cursor-pointer rounded-[2px] hover:bg-gray-900/6">
       <Spin size="small" className="mx-[8px]" />
     </span>
   );
@@ -128,13 +95,14 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   }
 
   const menuItems = [
-    ...(menu
-      ? [
-          {
-            type: 'divider' as const,
-          },
-        ]
-      : []),
+    {
+      key: 'user',
+      icon: <SettingOutlined />,
+      label: '个人设置',
+    },
+    {
+      type: 'divider' as const,
+    },
     {
       key: 'logout',
       icon: <LogoutOutlined />,
@@ -153,10 +121,9 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
         width: 120,
       }}
     >
-      <span className={actionClassName}>
+      <span className="flex items-center h-[56px] ml-auto px-[8px] cursor-pointer rounded-[2px] hover:bg-gray-900/6">
         <AvatarLogo />
         <Name />
-        {/* <DownOutlined className="text-white ml-[8px]" /> */}
       </span>
     </HeaderDropdown>
   );

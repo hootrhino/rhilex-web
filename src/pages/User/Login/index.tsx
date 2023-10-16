@@ -3,7 +3,6 @@ import { message } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
-import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { Helmet, useModel } from '@umijs/max';
 import { Alert } from 'antd';
 import React, { useState } from 'react';
@@ -31,29 +30,6 @@ const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<LoginResult>();
   const { setInitialState } = useModel('@@initialState');
   const { run: getOsSystem } = useModel('useSystem');
-
-  const containerClassName = useEmotionCss(() => {
-    return {
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100vh',
-      overflow: 'auto',
-      backgroundImage: `url(${loginBg})`,
-      backgroundSize: '100% 100%',
-    };
-  });
-
-  // const fetchUserInfo = async () => {
-  //   const userInfo = await initialState?.fetchUserInfo?.();
-  //   if (userInfo) {
-  //     flushSync(() => {
-  //       setInitialState((s) => ({
-  //         ...s,
-  //         currentUser: userInfo,
-  //       }));
-  //     });
-  //   }
-  // };
 
   const handleSubmit = async (values: CurrentUser) => {
     try {
@@ -86,7 +62,10 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className={containerClassName}>
+    <div
+      className="flex flex-col h-full overflow-auto"
+      style={{ backgroundImage: `url(${loginBg})`, backgroundSize: '100% 100%' }}
+    >
       <Helmet>
         <title>登录页 - {Settings.title}</title>
       </Helmet>

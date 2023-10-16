@@ -17,6 +17,10 @@ module.exports = {
       panelBg: '#1a1a1a',
       inputBg: '#333',
     },
+    screens: {
+      'xs': {'max': '480px'},
+      'md': {'max': '768px'},
+    }
   },
   plugins: [],
   corePlugins: {
