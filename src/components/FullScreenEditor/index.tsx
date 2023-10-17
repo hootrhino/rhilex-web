@@ -10,13 +10,11 @@ import 'ace-builds/webpack-resolver';
 import luamin from 'lua-format';
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import AceEditor from 'react-ace';
-import { Resizable } from 'react-resizable';
 
 import { completions } from '@/utils/completion';
 import { cn } from '@/utils/utils';
 import { Divider, Space } from 'antd';
 import { useModel } from 'umi';
-import '../../../node_modules/react-resizable/css/styles.css';
 import './index.less';
 
 type FullScreenEditorProps = {
@@ -36,7 +34,6 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ..
   const [isFullscreen, { enterFullscreen, exitFullscreen }] = useFullscreen(ref as any, {
     pageFullscreen: true,
   });
-  const [h, setHeight] = useState<number>(500);
 
   const myCompleters = useMemo(() => {
     return [
@@ -74,15 +71,7 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ..
   }, [props?.value]);
 
   return (
-    <Resizable
-      minConstraints={[200, 200]}
-      height={h}
-      axis="y"
-      onResize={(event, { size }) => {
-        setHeight(size.height);
-      }}
-    >
-      <div ref={ref} className={cn('editor-wrap', 'bg-[#1a1d1f]')} style={{ height: h }}>
+      <div ref={ref} className={cn('editor-wrap', 'bg-[#1a1d1f]')} style={{ height: 500 }}>
         <div className={cn('editor-icon', 'text-white text-[20px] float-right')}>
           <Space
             align="center"
@@ -102,9 +91,6 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ..
             <Space align="center">
               <CodeOutlined
                 onClick={() => {
-                  // const regex = /[^\S\r\n]+/g;
-                  // const clearSpace = code.replace(/[^\S\r\n]+/g, "");
-
                   const formatCode = luamin.Beautify(code, Settings);
                   let formattedCode = formatCode
                     .toString()
@@ -144,7 +130,7 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ..
           {...props}
         />
       </div>
-    </Resizable>
+
   );
 });
 

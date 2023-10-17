@@ -19,10 +19,6 @@ export default defineConfig({
   tailwindcss: {},
   title: defaultSettings.title as string,
   layout: defaultSettings,
-  moment2dayjs: {
-    preset: 'antd',
-    plugins: ['duration'],
-  },
   antd: {
     configProvider: {
       theme: { token: theme },

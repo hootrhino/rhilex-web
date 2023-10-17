@@ -57,6 +57,7 @@ const Dashboard = () => {
   const detailConfig = {
     title: '系统详情',
     width: 700,
+    autoFocusButton: null,
     content: (
       <Descriptions
         className="w-[500px]"

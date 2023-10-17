@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { history, useParams } from 'umi';
-
-import { useRequest } from 'ahooks';
+import { history, useParams, useRequest } from 'umi';
 
 import cloneDeep from 'lodash/cloneDeep';
 import has from 'lodash/has';

@@ -1,6 +1,5 @@
 import type { ProTableProps } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { nanoid } from 'nanoid';
 
 export type Pagination = {
   current: number;
@@ -76,7 +75,7 @@ const LogTable = ({ dataSource, filters = false, type = 'home', ...props }: LogT
 
   return (
     <ProTable
-      rowKey={() => nanoid()}
+      rowKey='ts'
       headerTitle="日志列表"
       columns={columns}
       dataSource={dataSource}
