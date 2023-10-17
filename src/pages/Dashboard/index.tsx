@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useModel } from 'umi';
 
 import { Progress, TinyArea } from '@ant-design/plots';
 import { PageContainer, ProCard, StatisticCard } from '@ant-design/pro-components';
-import { FilterValue } from 'antd/es/table/interface';
 import add from 'lodash/add';
 import RcResizeObserver from 'rc-resize-observer';
 
@@ -16,7 +15,6 @@ import RuleIcon from '@/assets/fontIcons/rule.svg';
 
 import LogTable from '@/components/LogTable';
 import { modal } from '@/components/PopupHack';
-import { LogItem } from '@/models/useWebsocket';
 import { getOsOsRelease } from '@/services/rulex/xitongshuju';
 import { useRequest } from '@umijs/max';
 import { Descriptions } from 'antd';
@@ -24,9 +22,7 @@ import { Descriptions } from 'antd';
 const { Divider } = StatisticCard;
 
 const Dashboard = () => {
-  const { logs } = useModel('useWebsocket');
   const { dataSource, cpuData } = useModel('useSystem');
-  const [logData, setLogData] = useState<LogItem[]>([]);
   const [responsive, setResponsive] = useState(false);
 
   const inCount = add(dataSource?.statistic?.inSuccess || 0, dataSource?.statistic?.inFailed || 0);
@@ -34,19 +30,6 @@ const Dashboard = () => {
     dataSource?.statistic?.outSuccess || 0,
     dataSource?.statistic?.outFailed || 0,
   );
-
-  const handleOnsearch = (keyword?: string, filters?: Record<string, FilterValue | null>) => {
-    let filteredLogs = logs;
-    if (keyword) {
-      filteredLogs = logs.filter((log) => {
-        return log.msg.includes(keyword);
-      });
-    }
-    if (filters) {
-      filteredLogs = logs.filter((log) => filters?.level?.includes(log?.level));
-    }
-    setLogData(filteredLogs);
-  };
 
   // 获取系统详情
   const { data: osDetail } = useRequest(() => getOsOsRelease({}), {
@@ -73,10 +56,6 @@ const Dashboard = () => {
       </Descriptions>
     ),
   };
-
-  useEffect(() => {
-    setLogData(logs);
-  }, [logs]);
 
   const config = {
     width: 200,
@@ -245,25 +224,7 @@ const Dashboard = () => {
         </StatisticCard.Group>
       </RcResizeObserver>
       <ProCard className="mt-6">
-        <LogTable
-          dataSource={logData}
-          filters={true}
-          type="home"
-          options={{
-            search: {
-              onSearch: (keyword: string) => {
-                handleOnsearch(keyword);
-                return true;
-              },
-              placeholder: '请输入内容进行搜索',
-              allowClear: true,
-            },
-            reload: false,
-            setting: false,
-            density: false,
-          }}
-          onChange={(_: any, filters: any) => handleOnsearch(undefined, filters)}
-        />
+        <LogTable filters={true} options={true} />
       </ProCard>
     </PageContainer>
   );

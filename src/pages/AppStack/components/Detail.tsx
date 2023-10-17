@@ -1,12 +1,10 @@
 import LogTable from '@/components/LogTable';
-import { LogItem } from '@/models/useWebsocket';
+// import { LogItem } from '@/models/useWebsocket';
 import { getAppDetail } from '@/services/rulex/qingliangyingyong';
 import { MinusCircleOutlined, SyncOutlined } from '@ant-design/icons';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps, Tag } from 'antd';
-import { useEffect, useState } from 'react';
-import { useModel } from 'umi';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -14,9 +12,6 @@ type DetailProps = DrawerProps & {
 };
 
 const Detail = ({ uuid, type, ...props }: DetailProps) => {
-  const { logs } = useModel('useWebsocket');
-  const [data, setData] = useState<LogItem[]>([]);
-
   const columns: ProDescriptionsItemProps<Record<string, any>>[] = [
     {
       title: 'APP 名称',
@@ -65,13 +60,6 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     },
   ];
 
-  useEffect(() => {
-    if (type === 'log') {
-      const filterLogs = logs?.filter((log) => log?.topic === `app/console/${uuid}`);
-      setData(filterLogs);
-    }
-  }, [type, logs]);
-
   return (
     <Drawer
       title={type === 'detail' ? '轻量应用详情' : '轻量应用日志'}
@@ -96,7 +84,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
           }}
         />
       ) : (
-        <LogTable dataSource={data} options={false} type="detail" />
+        <LogTable topic={`app/console/${uuid}`} />
       )}
     </Drawer>
   );

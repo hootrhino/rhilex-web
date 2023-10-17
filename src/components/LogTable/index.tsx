@@ -1,5 +1,7 @@
 import type { ProTableProps } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
+import { useModel } from '@umijs/max';
+import type { FilterValue } from 'antd/es/table/interface';
 
 export type Pagination = {
   current: number;
@@ -8,10 +10,11 @@ export type Pagination = {
 };
 
 type LogTableProps = ProTableProps & {
+  topic?: string;
   filters?: boolean;
-  type?: 'home' | 'detail';
 };
 
+import { LogItem } from '@/models/useWebsocket';
 import { Tag } from 'antd';
 import { useEffect, useState } from 'react';
 
@@ -24,7 +27,9 @@ enum levelColor {
   info = 'blue',
 }
 
-const LogTable = ({ dataSource, filters = false, type = 'home', ...props }: LogTableProps) => {
+const LogTable = ({ filters = false, topic, options, ...props }: LogTableProps) => {
+  const { logs } = useModel('useWebsocket');
+  const [dataSource, setData] = useState<LogItem[]>([]);
   const [pagination, setPagination] = useState<Pagination>({ current: 1, pageSize: 10, total: 0 });
 
   const columns = [
@@ -41,7 +46,7 @@ const LogTable = ({ dataSource, filters = false, type = 'home', ...props }: LogT
       width: 80,
       filters,
       onFilter: filters,
-      hideInTable: type !== 'home',
+      hideInTable: topic,
       valueEnum: {
         fatal: { text: 'Fatal', status: 'Error' },
         error: {
@@ -69,13 +74,43 @@ const LogTable = ({ dataSource, filters = false, type = 'home', ...props }: LogT
     },
   ];
 
+  const handleOnsearch = (keyword?: string, filters?: Record<string, FilterValue | null>) => {
+    let filteredLogs = [...dataSource];
+
+    if (keyword) {
+      filteredLogs = logs.filter((log) => {
+        return log.msg.includes(keyword);
+      });
+    }
+    if (filters) {
+      filteredLogs = logs.filter((log) => filters?.level?.includes(log?.level));
+    }
+
+    setData(filteredLogs);
+  };
+
   useEffect(() => {
-    setPagination({ ...pagination, total: dataSource?.length });
-  }, [dataSource]);
+    let filterLogs = [...logs];
+
+    if (topic) {
+      filterLogs = logs?.filter((log) => log?.topic === topic);
+    }
+
+    filterLogs = filterLogs.slice(
+      (pagination.current - 1) * pagination.pageSize,
+      pagination.current * pagination.pageSize,
+    );
+
+    setData(filterLogs);
+  }, [pagination, logs, topic]);
+
+  useEffect(() => {
+    setPagination({ ...pagination, total: logs?.length });
+  }, [logs]);
 
   return (
     <ProTable
-      rowKey='ts'
+      rowKey="ts"
       headerTitle="日志列表"
       columns={columns}
       dataSource={dataSource}
@@ -84,6 +119,24 @@ const LogTable = ({ dataSource, filters = false, type = 'home', ...props }: LogT
         ...pagination,
         onChange: (current, pageSize) => setPagination({ ...pagination, current, pageSize }),
       }}
+      options={
+        options
+          ? {
+              search: {
+                onSearch: (keyword: string) => {
+                  handleOnsearch(keyword);
+                  return true;
+                },
+                placeholder: '请输入内容进行搜索',
+                allowClear: true,
+              },
+              reload: false,
+              setting: false,
+              density: false,
+            }
+          : false
+      }
+      onChange={(_: any, filters: any) => handleOnsearch(undefined, filters)}
       {...props}
     />
   );

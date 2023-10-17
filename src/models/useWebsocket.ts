@@ -12,50 +12,38 @@ export type LogItem = {
 const useWebsocket = () => {
   const [logs, setLogs] = useState<LogItem[]>([]);
   const [currentLog, setLog] = useState<LogItem>();
-  const [connected, setConnected] = useState(false);
   const [sockUrl, setUrl] = useState<string>('');
 
-  const { sendMessage, readyState, connect } = useWebSocket(sockUrl, {
-    manual: true,
+  const { sendMessage, readyState } = useWebSocket(sockUrl, {
+    reconnectInterval: 1000,
     onMessage: ({ data }) => {
+      let newLog: any = [];
+
       if (data && data !== 'Connected') {
-        let newLog = [...logs, JSON.parse(data)];
+        newLog = [...newLog, data];
+        newLog = newLog?.map((item: string) => item && JSON.parse(item));
+        newLog = [...logs, ...newLog];
+
         newLog = orderBy(newLog, 'time', 'desc');
         newLog = slice(newLog, 0, 100);
         setLogs(newLog);
         setLog(JSON.parse(data));
       }
     },
-    onClose: () => {
-      setConnected(false);
-    },
-    onOpen: () => {
-      setConnected(true);
-    },
   });
 
   useEffect(() => {
-    if (connected) {
-      setTimeout(() => {
-        if (readyState === WebSocket.OPEN) {
-          sendMessage?.('WsTerminal');
-        }
-      }, 2000);
+    if (readyState === WebSocket.OPEN) {
+      sendMessage?.('WsTerminal');
     }
-  }, [connected, sendMessage]);
+  }, [sendMessage, readyState, sockUrl]);
 
   useEffect(() => {
     if (window?.location?.hostname) {
       setUrl(`ws://${window?.location?.hostname}:2580/ws`);
-      // setUrl(`ws://106.15.225.172:5000/ws`)
+     // setUrl(`ws://106.15.225.172:2580/ws`)
     }
   }, [window?.location?.hostname]);
-
-  useEffect(() => {
-    if (sockUrl) {
-      connect!();
-    }
-  }, [sockUrl]);
 
   return { logs, currentLog };
 };
