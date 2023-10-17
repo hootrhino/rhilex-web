@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { history, Link } from 'umi';
+import { history } from 'umi';
 
 import type { ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
@@ -78,7 +78,7 @@ const Plugins = () => {
       dataIndex: 'helpLink',
       ellipsis: true,
       width: 250,
-      renderText: (address) => <Link to={address}>{address}</Link>,
+      renderText: (address) => <a href={address} target='_blank' rel="noreferrer">{address}</a>,
     },
     {
       title: '作者',
