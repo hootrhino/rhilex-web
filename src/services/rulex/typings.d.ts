@@ -8,7 +8,7 @@ declare namespace API {
   };
 
   type deleteGoodsParams = {
-    uuid?: string;
+    uuid: string;
   };
 
   type deleteGroupParams = {

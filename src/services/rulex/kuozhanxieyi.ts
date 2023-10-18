@@ -2,25 +2,6 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 扩展列表 GET /api/v1/dataCenter/goods/list */
-export async function getDataCenterGoodsList(options?: { [key: string]: any }) {
-  return request<{
-    code: number;
-    msg: string;
-    data: {
-      running?: boolean;
-      uuid?: string;
-      local_path?: string;
-      net_addr?: string;
-      description?: string;
-      args?: string[];
-    }[];
-  }>('/api/v1/dataCenter/goods/list', {
-    method: 'GET',
-    ...(options || {}),
-  });
-}
-
 /** 删除进程 DELETE /api/v1/goods/ */
 export async function deleteGoods(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
@@ -39,19 +20,34 @@ export async function deleteGoods(
 /** 新建扩展 POST /api/v1/goods/create */
 export async function postGoodsCreate(
   body: {
-    local_path: string;
     net_addr: string;
-    description: string;
-    args: string[];
+    args: string;
+    description?: string;
   },
+  file?: File,
   options?: { [key: string]: any },
 ) {
+  const formData = new FormData();
+
+  if (file) {
+    formData.append('file', file);
+  }
+
+  Object.keys(body).forEach((ele) => {
+    const item = (body as any)[ele];
+
+    if (item !== undefined && item !== null) {
+      formData.append(
+        ele,
+        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
+      );
+    }
+  });
+
   return request<Record<string, any>>('/api/v1/goods/create', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
+    data: formData,
+    requestType: 'form',
     ...(options || {}),
   });
 }
@@ -82,29 +78,36 @@ export async function getGoodsDetail(
   });
 }
 
-/** 更新扩展 PUT /api/v1/goods/update */
-export async function putGoodsUpdate(
-  body: {
-    uuid: string;
-    local_path: string;
-    net_addr: string;
-    description: string;
-    args: string[];
-  },
-  options?: { [key: string]: any },
-) {
-  return request<Record<string, any>>('/api/v1/goods/update', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
+/** 扩展列表 GET /api/v1/goods/list */
+export async function getGoodsList(options?: { [key: string]: any }) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      running?: boolean;
+      uuid?: string;
+      local_path?: string;
+      net_addr?: string;
+      description?: string;
+      args?: string[];
+    }[];
+  }>('/api/v1/goods/list', {
+    method: 'GET',
     ...(options || {}),
   });
 }
 
-/** 文件上传 POST /api/v1/goods/upload */
-export async function postGoodsUpload(body: {}, file?: File, options?: { [key: string]: any }) {
+/** 更新扩展 PUT /api/v1/goods/update */
+export async function putGoodsUpdate(
+  body: {
+    uuid: string;
+    net_addr: string;
+    args: string;
+    description?: string;
+  },
+  file?: File,
+  options?: { [key: string]: any },
+) {
   const formData = new FormData();
 
   if (file) {
@@ -122,8 +125,8 @@ export async function postGoodsUpload(body: {}, file?: File, options?: { [key: s
     }
   });
 
-  return request<{ code: number; msg: string; data: { url?: string } }>('/api/v1/goods/upload', {
-    method: 'POST',
+  return request<Record<string, any>>('/api/v1/goods/update', {
+    method: 'PUT',
     data: formData,
     requestType: 'form',
     ...(options || {}),

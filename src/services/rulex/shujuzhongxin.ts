@@ -72,7 +72,20 @@ export async function getDataCenterSchemaDetail(
 
 /** 仓库列表 GET /api/v1/dataCenter/schema/list */
 export async function getDataCenterSchemaList(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/v1/dataCenter/schema/list', {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      uuid?: string;
+      name?: string;
+      local_path?: string;
+      net_addr?: string;
+      create_ts?: number;
+      size?: number;
+      store_path?: string;
+      description?: string;
+    }[];
+  }>('/api/v1/dataCenter/schema/list', {
     method: 'GET',
     ...(options || {}),
   });

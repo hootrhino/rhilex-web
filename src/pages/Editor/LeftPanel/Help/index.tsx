@@ -95,6 +95,7 @@ const HelpDetail = () => {
                 </div>
               }
               arrow={false}
+              rootClassName='editor-popover'
             >
               <IconFont type="icon-export" />
               <span className="ml-[4px]">微信答疑群</span>

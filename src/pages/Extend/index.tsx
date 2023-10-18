@@ -1,8 +1,8 @@
 import { message } from '@/components/PopupHack';
 import {
   deleteGoods,
-  getDataCenterGoodsList,
   getGoodsDetail,
+  getGoodsList,
   postGoodsCreate,
   putGoodsUpdate,
 } from '@/services/rulex/kuozhanxieyi';
@@ -34,8 +34,8 @@ type Item = {
 type FormParams = {
   net_addr: string;
   args: string[];
-  local_path: string;
-  description: string;
+  description?: string;
+  file: File;
 };
 
 const baseColumns = [
@@ -58,10 +58,13 @@ const baseColumns = [
   {
     title: '参数',
     dataIndex: 'args',
+    ellipsis: true,
+    renderText: (args: string[]) => args?.join(','),
   },
   {
     title: '运行状态',
     dataIndex: 'running',
+    width: 100,
     valueEnum: {
       false: { text: '停止', status: 'Error' },
       true: { text: '运行中', status: 'Processing' },
@@ -71,6 +74,7 @@ const baseColumns = [
     title: '备注信息',
     dataIndex: 'description',
     ellipsis: true,
+    renderText: (description: string) => description || '-'
   },
 ];
 
@@ -84,18 +88,20 @@ const ExtendedProtocol = () => {
   const [initialValue, setInitialValue] = useState<Item>(defaultValue);
 
   // 新建&编辑
-  const handleOnFinish = async (values: FormParams) => {
+  const handleOnFinish = async ({ file, ...params }: FormParams) => {
     try {
+      const blob = new Blob([(file as any).originFileObj]);
       if (initialValue?.uuid) {
-        // TODO 更新
-        await putGoodsUpdate({ ...values, uuid: initialValue?.uuid });
+        await putGoodsUpdate({ ...params, uuid: initialValue?.uuid } as any, blob as File);
         message.success('更新成功');
       } else {
-        // TODO 新建
-        await postGoodsCreate(values);
+        await postGoodsCreate(params as any, blob as File);
         message.success('新建成功');
       }
-      console.log(values);
+
+      actionRef.current?.reload();
+      setInitialValue(defaultValue);
+
       return true;
     } catch (error) {
       return false;
@@ -103,18 +109,19 @@ const ExtendedProtocol = () => {
   };
 
   // 删除
-  const { run: remove } = useRequest((params) => deleteGoods(params), {
+  const { run: remove } = useRequest((params: API.deleteGoodsParams) => deleteGoods(params), {
     manual: true,
     onSuccess: () => {
       message.success('删除成功');
+      actionRef.current?.reload();
     },
   });
 
   // 详情
-  const { run: getDetail } = useRequest((params) => getGoodsDetail(params), {
+  const { run: getDetail } = useRequest((params: API.getGoodsDetailParams) => getGoodsDetail(params), {
     manual: true,
-    onSuccess: (res: any) => {
-      setInitialValue(res?.data);
+    onSuccess: (data: any) => {
+      setInitialValue(data);
     },
   });
 
@@ -124,12 +131,13 @@ const ExtendedProtocol = () => {
       title: '操作',
       valueType: 'option',
       key: 'option',
-      width: 200,
+      width: 150,
       fixed: 'right',
       render: (_, { uuid }) => [
         <a
           key="detail"
           onClick={() => {
+            if (!uuid) return;
             setOpenDetail(true);
             getDetail({ uuid });
           }}
@@ -139,13 +147,14 @@ const ExtendedProtocol = () => {
         <a
           key="edit"
           onClick={() => {
+            if (!uuid) return;
             setOpen(true);
             getDetail({ uuid });
           }}
         >
           编辑
         </a>,
-        <Popconfirm title="确定要删除该扩展协议？" onConfirm={() => remove({ uuid })} key="remove">
+        <Popconfirm title="确定要删除该扩展协议？" onConfirm={() => uuid && remove({ uuid })} key="remove">
           <a>删除</a>
         </Popconfirm>,
       ],
@@ -164,7 +173,7 @@ const ExtendedProtocol = () => {
           actionRef={actionRef}
           columns={columns}
           request={async () => {
-            const { data } = await getDataCenterGoodsList();
+            const { data } = await getGoodsList();
 
             return Promise.resolve({
               data: data as Item[],
@@ -215,7 +224,7 @@ const ExtendedProtocol = () => {
           rules={[{ required: true, message: '请输入协议参数' }]}
         />
         <ProFormUploadDragger
-          name="local_path"
+          name="file"
           label="可执行包"
           max={1}
           description=""
@@ -223,8 +232,18 @@ const ExtendedProtocol = () => {
         />
         <ProFormText name="description" label="备注信息" placeholder="请输入备注信息" />
       </ModalForm>
-      <Modal open={openDetail}>
-        <ProDescriptions title="扩展协议详情" dataSource={initialValue} columns={baseColumns} column={1} />
+      <Modal open={openDetail} width='40%' footer={<Button key='close' type='primary' onClick={() => setOpenDetail(false)}>关闭</Button>} maskClosable={false} onCancel={() => setOpenDetail(false)}>
+        <ProDescriptions
+          title="扩展协议详情"
+          dataSource={initialValue}
+          columns={baseColumns.filter(col => col.dataIndex !== 'args')}
+          column={1}
+          labelStyle={{width: 120, justifyContent: 'end', paddingRight: 10}}
+        >
+          <ProDescriptions.Item label='协议参数'>
+            {initialValue.args}
+          </ProDescriptions.Item>
+        </ProDescriptions>
       </Modal>
     </>
   );

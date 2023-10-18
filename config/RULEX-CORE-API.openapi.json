@@ -6416,9 +6416,89 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "uuid": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "local_path": {
+                            "type": "string"
+                          },
+                          "net_addr": {
+                            "type": "string"
+                          },
+                          "create_ts": {
+                            "type": "integer"
+                          },
+                          "size": {
+                            "type": "integer"
+                          },
+                          "store_path": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          }
+                        },
+                        "x-apifox-orders": [
+                          "uuid",
+                          "name",
+                          "local_path",
+                          "net_addr",
+                          "create_ts",
+                          "size",
+                          "store_path",
+                          "description"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "uuid": "GOODSLEVR8Y",
+                          "name": "",
+                          "local_path": "test/script/_temp/trailer-demo-app/app1.exe",
+                          "net_addr": "127.0.0.1:7700",
+                          "create_ts": 0,
+                          "size": 0,
+                          "store_path": "",
+                          "description": "trailer-demo-app1"
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -6787,7 +6867,7 @@
         "security": []
       }
     },
-    "/api/v1/dataCenter/goods/list": {
+    "/api/v1/goods/list": {
       "get": {
         "summary": "扩展列表",
         "x-apifox-folder": "扩展协议",
@@ -7043,259 +7123,6 @@
         "security": []
       }
     },
-    "/api/v1/goods/create": {
-      "post": {
-        "summary": "新建扩展",
-        "x-apifox-folder": "扩展协议",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "扩展协议"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "local_path": {
-                    "type": "string"
-                  },
-                  "net_addr": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "args": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "required": [
-                  "local_path",
-                  "net_addr",
-                  "description",
-                  "args"
-                ],
-                "x-apifox-orders": [
-                  "local_path",
-                  "net_addr",
-                  "description",
-                  "args"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "local_path": "test/script/_temp/trailer-demo-app/app1.exe",
-                "net_addr": "127.0.0.1:7700",
-                "description": "trailer-demo-app1",
-                "args": [
-                  "port",
-                  "7700"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117670565-run",
-        "security": []
-      }
-    },
-    "/api/v1/goods/update": {
-      "put": {
-        "summary": "更新扩展",
-        "x-apifox-folder": "扩展协议",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "扩展协议"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "uuid": {
-                    "type": "string"
-                  },
-                  "local_path": {
-                    "type": "string"
-                  },
-                  "net_addr": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "args": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "required": [
-                  "uuid",
-                  "local_path",
-                  "net_addr",
-                  "description",
-                  "args"
-                ],
-                "x-apifox-orders": [
-                  "uuid",
-                  "local_path",
-                  "net_addr",
-                  "description",
-                  "args"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "uuid": "GOODS2F2US5",
-                "local_path": "test/script/_temp/trailer-demo-app/app1.exe",
-                "net_addr": "127.0.0.1:7798",
-                "description": "trailer-demo-app1-111",
-                "args": [
-                  "arg1",
-                  "arg2"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117670568-run",
-        "security": []
-      }
-    },
-    "/api/v1/goods/upload": {
-      "post": {
-        "summary": "文件上传",
-        "x-apifox-folder": "扩展协议",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "扩展协议"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                },
-                "required": [
-                  "file"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "url": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "url"
-                      ],
-                      "x-apifox-orders": [
-                        "url"
-                      ],
-                      "x-apifox-ignore-properties": []
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "url": "goods_1697610276155095_.exe"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117670570-run",
-        "security": []
-      }
-    },
     "/api/v1/goods/": {
       "delete": {
         "summary": "删除进程",
@@ -7311,7 +7138,7 @@
             "name": "uuid",
             "in": "query",
             "description": "",
-            "required": false,
+            "required": true,
             "example": "ABCDEF",
             "schema": {
               "type": "string"
@@ -7368,6 +7195,128 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117671106-run",
         "security": []
       }
+    },
+    "/api/v1/goods/create": {
+      "post": {
+        "summary": "新建扩展",
+        "x-apifox-folder": "扩展协议",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "扩展协议"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "net_addr": {
+                    "type": "string"
+                  },
+                  "args": {
+                    "type": "string"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "net_addr",
+                  "args",
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117765977-run",
+        "security": []
+      }
+    },
+    "/api/v1/goods/update": {
+      "put": {
+        "summary": "更新扩展",
+        "x-apifox-folder": "扩展协议",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "扩展协议"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "net_addr": {
+                    "type": "string"
+                  },
+                  "args": {
+                    "type": "string"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "net_addr",
+                  "args",
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117766853-run",
+        "security": []
+      }
     }
   },
   "components": {
@@ -7409,5 +7358,10 @@
     },
     "securitySchemes": {}
   },
-  "servers": []
+  "servers": [
+    {
+      "url": "http://106.15.225.172:2580",
+      "description": "阿里云"
+    }
+  ]
 }
