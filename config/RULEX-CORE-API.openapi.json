@@ -47,6 +47,12 @@
     },
     {
       "name": "定时任务"
+    },
+    {
+      "name": "扩展协议"
+    },
+    {
+      "name": "数据中心"
     }
   ],
   "paths": {
@@ -6389,6 +6395,977 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-116561632-run",
+        "security": []
+      }
+    },
+    "/api/v1/dataCenter/schema/list": {
+      "get": {
+        "summary": "仓库列表",
+        "x-apifox-folder": "数据中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据中心"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117664325-run",
+        "security": []
+      }
+    },
+    "/api/v1/dataCenter/schema/define": {
+      "get": {
+        "summary": "仓库结构",
+        "x-apifox-folder": "数据中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据中心"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "GOODSLEVR8Y",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "columns": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "name",
+                              "type",
+                              "description"
+                            ],
+                            "x-apifox-orders": [
+                              "name",
+                              "type",
+                              "description"
+                            ],
+                            "x-apifox-ignore-properties": []
+                          }
+                        }
+                      },
+                      "required": [
+                        "uuid",
+                        "columns"
+                      ],
+                      "x-apifox-orders": [
+                        "uuid",
+                        "columns"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "uuid": "GOODSLEVR8Y",
+                        "columns": [
+                          {
+                            "name": "temp",
+                            "type": "NUMBER",
+                            "description": "温度"
+                          },
+                          {
+                            "name": "humi",
+                            "type": "NUMBER",
+                            "description": "湿度"
+                          },
+                          {
+                            "name": "co2",
+                            "type": "NUMBER",
+                            "description": "二氧化碳"
+                          },
+                          {
+                            "name": "weather",
+                            "type": "STRING",
+                            "description": "天气"
+                          },
+                          {
+                            "name": "isOk",
+                            "type": "BOOL",
+                            "description": "你还好吗"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117664331-run",
+        "security": []
+      }
+    },
+    "/api/v1/dataCenter/schema/detail": {
+      "get": {
+        "summary": "仓库详情",
+        "x-apifox-folder": "数据中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据中心"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "GOODSLEVR8Y",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "local_path": {
+                          "type": "string"
+                        },
+                        "net_addr": {
+                          "type": "string"
+                        },
+                        "create_ts": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "number"
+                        },
+                        "store_path": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "uuid",
+                        "name",
+                        "local_path",
+                        "net_addr",
+                        "create_ts",
+                        "size",
+                        "store_path",
+                        "description"
+                      ],
+                      "x-apifox-orders": [
+                        "uuid",
+                        "name",
+                        "local_path",
+                        "net_addr",
+                        "create_ts",
+                        "size",
+                        "store_path",
+                        "description"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "uuid": "1122334455",
+                        "name": "Test RPC",
+                        "local_path": "/root/app1",
+                        "net_addr": "127.0.0.1:4567",
+                        "create_ts": 1697610371,
+                        "size": 12.34,
+                        "store_path": "/root/data/test.db",
+                        "description": "An simply demo"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117664333-run",
+        "security": []
+      }
+    },
+    "/api/v1/dataCenter/schema/delete": {
+      "post": {
+        "summary": "仓库查询",
+        "x-apifox-folder": "数据中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据中心"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "query": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "query"
+                ],
+                "x-apifox-orders": [
+                  "uuid",
+                  "query"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "uuid": "GOODSLEVR8Y",
+                "query": "SELECT * FROM GOODS2F2US5"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117664334-run",
+        "security": []
+      }
+    },
+    "/api/v1/dataCenter/goods/list": {
+      "get": {
+        "summary": "扩展列表",
+        "x-apifox-folder": "扩展协议",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "扩展协议"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "running": {
+                            "type": "boolean"
+                          },
+                          "uuid": {
+                            "type": "string"
+                          },
+                          "local_path": {
+                            "type": "string"
+                          },
+                          "net_addr": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "args": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "running",
+                          "uuid",
+                          "local_path",
+                          "net_addr",
+                          "description",
+                          "args"
+                        ],
+                        "x-apifox-orders": [
+                          "running",
+                          "uuid",
+                          "local_path",
+                          "net_addr",
+                          "description",
+                          "args"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "running": true,
+                          "uuid": "GOODSLEVR8Y",
+                          "local_path": "test/script/_temp/trailer-demo-app/app1.exe",
+                          "net_addr": "127.0.0.1:7700",
+                          "description": "trailer-demo-app1",
+                          "args": [
+                            "port",
+                            "7700"
+                          ]
+                        },
+                        {
+                          "running": false,
+                          "uuid": "GOODSJ2FGEU",
+                          "local_path": "test/script/_temp/trailer-demo-app/app1.exe",
+                          "net_addr": "127.0.0.1:7700",
+                          "description": "trailer-demo-app1",
+                          "args": [
+                            "port",
+                            "7700"
+                          ]
+                        },
+                        {
+                          "running": false,
+                          "uuid": "GOODSSUJKUV",
+                          "local_path": "test/script/_temp/trailer-demo-app/app1.exe",
+                          "net_addr": "127.0.0.1:7700",
+                          "description": "trailer-demo-app1",
+                          "args": [
+                            "port",
+                            "7700"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117670367-run",
+        "security": []
+      }
+    },
+    "/api/v1/goods/detail": {
+      "get": {
+        "summary": "扩展详情",
+        "x-apifox-folder": "扩展协议",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "扩展协议"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "GOODSLEVR8Y",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "running": {
+                          "type": "boolean"
+                        },
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "local_path": {
+                          "type": "string"
+                        },
+                        "net_addr": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "args": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "running",
+                        "uuid",
+                        "local_path",
+                        "net_addr",
+                        "description",
+                        "args"
+                      ],
+                      "x-apifox-orders": [
+                        "running",
+                        "uuid",
+                        "local_path",
+                        "net_addr",
+                        "description",
+                        "args"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "running": true,
+                        "uuid": "GOODSLEVR8Y",
+                        "local_path": "test/script/_temp/trailer-demo-app/app1.exe",
+                        "net_addr": "127.0.0.1:7700",
+                        "description": "trailer-demo-app1",
+                        "args": [
+                          "port",
+                          "7700"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117670536-run",
+        "security": []
+      }
+    },
+    "/api/v1/goods/create": {
+      "post": {
+        "summary": "新建扩展",
+        "x-apifox-folder": "扩展协议",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "扩展协议"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "local_path": {
+                    "type": "string"
+                  },
+                  "net_addr": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "args": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "local_path",
+                  "net_addr",
+                  "description",
+                  "args"
+                ],
+                "x-apifox-orders": [
+                  "local_path",
+                  "net_addr",
+                  "description",
+                  "args"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "local_path": "test/script/_temp/trailer-demo-app/app1.exe",
+                "net_addr": "127.0.0.1:7700",
+                "description": "trailer-demo-app1",
+                "args": [
+                  "port",
+                  "7700"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117670565-run",
+        "security": []
+      }
+    },
+    "/api/v1/goods/update": {
+      "put": {
+        "summary": "更新扩展",
+        "x-apifox-folder": "扩展协议",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "扩展协议"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "local_path": {
+                    "type": "string"
+                  },
+                  "net_addr": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "args": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "local_path",
+                  "net_addr",
+                  "description",
+                  "args"
+                ],
+                "x-apifox-orders": [
+                  "uuid",
+                  "local_path",
+                  "net_addr",
+                  "description",
+                  "args"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "uuid": "GOODS2F2US5",
+                "local_path": "test/script/_temp/trailer-demo-app/app1.exe",
+                "net_addr": "127.0.0.1:7798",
+                "description": "trailer-demo-app1-111",
+                "args": [
+                  "arg1",
+                  "arg2"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117670568-run",
+        "security": []
+      }
+    },
+    "/api/v1/goods/upload": {
+      "post": {
+        "summary": "文件上传",
+        "x-apifox-folder": "扩展协议",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "扩展协议"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "url"
+                      ],
+                      "x-apifox-orders": [
+                        "url"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "url": "goods_1697610276155095_.exe"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117670570-run",
+        "security": []
+      }
+    },
+    "/api/v1/goods/": {
+      "delete": {
+        "summary": "删除进程",
+        "x-apifox-folder": "扩展协议",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "扩展协议"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "ABCDEF",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117671106-run",
         "security": []
       }
     }

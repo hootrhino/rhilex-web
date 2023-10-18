@@ -1,6 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 
@@ -128,8 +128,13 @@ const Rules = () => {
           search={false}
           pagination={false}
           toolBarRender={() => [
-            <Button type="primary" key="primary" onClick={() => history.push('/rules/new')}>
-              <PlusOutlined /> 新建
+            <Button
+              type="primary"
+              key="new"
+              onClick={() => history.push('/rules/new')}
+              icon={<PlusOutlined />}
+            >
+              新建
             </Button>,
           ]}
         />

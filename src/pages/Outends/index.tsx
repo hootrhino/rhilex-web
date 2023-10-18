@@ -117,8 +117,13 @@ const Targets = () => {
           search={false}
           pagination={false}
           toolBarRender={() => [
-            <Button type="primary" key="primary" onClick={() => history.push('/outends/new')}>
-              <PlusOutlined /> 新建
+            <Button
+              type="primary"
+              key="new"
+              onClick={() => history.push('/outends/new')}
+              icon={<PlusOutlined />}
+            >
+              新建
             </Button>,
           ]}
         />

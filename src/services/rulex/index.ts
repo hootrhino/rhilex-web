@@ -8,11 +8,13 @@ import * as dapingguanli from './dapingguanli';
 import * as dingshirenwu from './dingshirenwu';
 import * as fenzuguanli from './fenzuguanli';
 import * as guizeguanli from './guizeguanli';
+import * as kuozhanxieyi from './kuozhanxieyi';
 import * as qingliangyingyong from './qingliangyingyong';
 import * as qudongguanli from './qudongguanli';
 import * as rizhiguanli from './rizhiguanli';
 import * as shebeiguanli from './shebeiguanli';
 import * as shuchuziyuanguanli from './shuchuziyuanguanli';
+import * as shujuzhongxin from './shujuzhongxin';
 import * as shuruziyuanguanli from './shuruziyuanguanli';
 import * as xitongshuju from './xitongshuju';
 import * as yonghuguanli from './yonghuguanli';
@@ -31,4 +33,6 @@ export default {
   fenzuguanli,
   dingshirenwu,
   dapingguanli,
+  shujuzhongxin,
+  kuozhanxieyi,
 };

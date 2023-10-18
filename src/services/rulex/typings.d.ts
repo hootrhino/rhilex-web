@@ -7,6 +7,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type deleteGoodsParams = {
+    uuid?: string;
+  };
+
   type deleteGroupParams = {
     uuid: string;
   };
@@ -66,7 +70,19 @@ declare namespace API {
     taskId?: number;
   };
 
+  type getDataCenterSchemaDefineParams = {
+    uuid: string;
+  };
+
+  type getDataCenterSchemaDetailParams = {
+    uuid: string;
+  };
+
   type getDevicesDetailParams = {
+    uuid: string;
+  };
+
+  type getGoodsDetailParams = {
     uuid: string;
   };
 
