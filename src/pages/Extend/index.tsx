@@ -1,3 +1,4 @@
+import LogTable from '@/components/LogTable';
 import { message } from '@/components/PopupHack';
 import {
   deleteGoods,
@@ -74,7 +75,7 @@ const baseColumns = [
     title: '备注信息',
     dataIndex: 'description',
     ellipsis: true,
-    renderText: (description: string) => description || '-'
+    renderText: (description: string) => description || '-',
   },
 ];
 
@@ -84,7 +85,11 @@ const ExtendedProtocol = () => {
   const actionRef = useRef<ActionType>();
   const formRef = useRef<ProFormInstance>();
   const [open, setOpen] = useState<boolean>(false);
-  const [openDetail, setOpenDetail] = useState<boolean>(false);
+  const [detailConfig, setDetailConfig] = useState<{
+    open: boolean;
+    type: 'detail' | 'log';
+    uuid?: string;
+  }>({ open: false, type: 'detail' });
   const [initialValue, setInitialValue] = useState<Item>(defaultValue);
 
   // 新建&编辑
@@ -118,12 +123,15 @@ const ExtendedProtocol = () => {
   });
 
   // 详情
-  const { run: getDetail } = useRequest((params: API.getGoodsDetailParams) => getGoodsDetail(params), {
-    manual: true,
-    onSuccess: (data: any) => {
-      setInitialValue(data);
+  const { run: getDetail } = useRequest(
+    (params: API.getGoodsDetailParams) => getGoodsDetail(params),
+    {
+      manual: true,
+      onSuccess: (data: any) => {
+        setInitialValue(data);
+      },
     },
-  });
+  );
 
   const columns: ProColumns<Item>[] = [
     ...baseColumns,
@@ -131,14 +139,23 @@ const ExtendedProtocol = () => {
       title: '操作',
       valueType: 'option',
       key: 'option',
-      width: 150,
+      width: 180,
       fixed: 'right',
       render: (_, { uuid }) => [
+        <a
+          key="log"
+          onClick={() => {
+            if (!uuid) return;
+            setDetailConfig({ open: true, type: 'log', uuid });
+          }}
+        >
+          日志
+        </a>,
         <a
           key="detail"
           onClick={() => {
             if (!uuid) return;
-            setOpenDetail(true);
+            setDetailConfig({ open: true, type: 'detail' });
             getDetail({ uuid });
           }}
         >
@@ -154,7 +171,11 @@ const ExtendedProtocol = () => {
         >
           编辑
         </a>,
-        <Popconfirm title="确定要删除该扩展协议？" onConfirm={() => uuid && remove({ uuid })} key="remove">
+        <Popconfirm
+          title="确定要删除该扩展协议？"
+          onConfirm={() => uuid && remove({ uuid })}
+          key="remove"
+        >
           <a>删除</a>
         </Popconfirm>,
       ],
@@ -232,18 +253,34 @@ const ExtendedProtocol = () => {
         />
         <ProFormText name="description" label="备注信息" placeholder="请输入备注信息" />
       </ModalForm>
-      <Modal open={openDetail} width='40%' footer={<Button key='close' type='primary' onClick={() => setOpenDetail(false)}>关闭</Button>} maskClosable={false} onCancel={() => setOpenDetail(false)}>
-        <ProDescriptions
-          title="扩展协议详情"
-          dataSource={initialValue}
-          columns={baseColumns.filter(col => col.dataIndex !== 'args')}
-          column={1}
-          labelStyle={{width: 120, justifyContent: 'end', paddingRight: 10}}
-        >
-          <ProDescriptions.Item label='协议参数'>
-            {initialValue.args}
-          </ProDescriptions.Item>
-        </ProDescriptions>
+      <Modal
+        title={detailConfig.type === 'detail' ? '扩展协议详情' : '扩展协议日志详情'}
+        open={detailConfig.open}
+        width="40%"
+        footer={
+          <Button
+            key="close"
+            type="primary"
+            onClick={() => setDetailConfig({ open: false, type: 'detail', uuid: '' })}
+          >
+            关闭
+          </Button>
+        }
+        maskClosable={false}
+        onCancel={() => setDetailConfig({ open: false, type: 'detail', uuid: '' })}
+      >
+        {detailConfig.type === 'detail' ? (
+          <ProDescriptions
+            dataSource={initialValue}
+            columns={baseColumns.filter((col) => col.dataIndex !== 'args')}
+            column={1}
+            labelStyle={{ width: 120, justifyContent: 'end', paddingRight: 10 }}
+          >
+            <ProDescriptions.Item label="协议参数">{initialValue.args}</ProDescriptions.Item>
+          </ProDescriptions>
+        ) : (
+          <LogTable topic={`goods/console/${detailConfig?.uuid}`}/>
+        )}
       </Modal>
     </>
   );
