@@ -133,6 +133,23 @@
     ],
   },
   {
+    path: '/extend',
+    name: '扩展协议',
+    icon: 'cluster',
+    routes: [
+      {
+        path: '/extend',
+        redirect: '/extend/list',
+      },
+      {
+        path: '/extend/list',
+        name: '扩展协议列表',
+        component: './Extend',
+        hideInMenu: true,
+      },
+    ],
+  },
+  {
     path: '/plugins',
     name: '插件管理',
     icon: 'control',
