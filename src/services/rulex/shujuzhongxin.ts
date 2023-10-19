@@ -2,6 +2,24 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
+/** 仓库查询 POST /api/v1/dataCenter/data/query */
+export async function postDataCenterDataQuery(
+  body: {
+    uuid: string;
+    query: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/dataCenter/data/query', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 仓库结构 GET /api/v1/dataCenter/schema/define */
 export async function getDataCenterSchemaDefine(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
@@ -19,27 +37,6 @@ export async function getDataCenterSchemaDefine(
     },
     ...(options || {}),
   });
-}
-
-/** 仓库查询 POST /api/v1/dataCenter/schema/delete */
-export async function postDataCenterSchema__openAPI__delete(
-  body: {
-    uuid: string;
-    query: string;
-  },
-  options?: { [key: string]: any },
-) {
-  return request<{ code: number; msg: string; data: string[] }>(
-    '/api/v1/dataCenter/schema/delete',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: body,
-      ...(options || {}),
-    },
-  );
 }
 
 /** 仓库详情 GET /api/v1/dataCenter/schema/detail */

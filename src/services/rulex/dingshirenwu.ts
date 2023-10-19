@@ -192,7 +192,7 @@ export async function getCrontaskStop(
   });
 }
 
-/** 已经停止任务列表 强行终止指定的正在运行的任务 GET /api/v1/crontask/terminateRunningTask */
+/** 停止正在运行的任务 强行终止指定的正在运行的任务 GET /api/v1/crontask/terminateRunningTask */
 export async function getCrontaskTerminateRunningTask(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getCrontaskTerminateRunningTaskParams,

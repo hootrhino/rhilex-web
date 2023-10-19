@@ -97,6 +97,36 @@ export async function getGoodsList(options?: { [key: string]: any }) {
   });
 }
 
+/** 启动进程 PUT /api/v1/goods/start */
+export async function putGoodsStart(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putGoodsStartParams,
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/goods/start', {
+    method: 'PUT',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 停止进程 PUT /api/v1/goods/stop */
+export async function putGoodsStop(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putGoodsStopParams,
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/goods/stop', {
+    method: 'PUT',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 更新扩展 PUT /api/v1/goods/update */
 export async function putGoodsUpdate(
   body: {

@@ -104,6 +104,7 @@ const Layers = () => {
           onSelect={(_, { node }) => {
             setActiveLayer(node.key as string);
           }}
+          rootClassName='editor-tree'
         />
       </div>
     </div>

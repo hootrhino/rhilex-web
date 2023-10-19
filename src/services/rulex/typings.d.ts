@@ -126,6 +126,14 @@ declare namespace API {
     uuid: string;
   };
 
+  type putGoodsStartParams = {
+    uuid: string;
+  };
+
+  type putGoodsStopParams = {
+    uuid: string;
+  };
+
   type putLogsRemoteParams = {
     /** on:开启；off: 关闭 */
     action?: string;

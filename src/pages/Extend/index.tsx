@@ -18,7 +18,7 @@ import {
   ProFormUploadDragger,
   ProTable,
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { history, useRequest } from '@umijs/max';
 import { Button, Modal, Popconfirm } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
@@ -139,9 +139,15 @@ const ExtendedProtocol = () => {
       title: '操作',
       valueType: 'option',
       key: 'option',
-      width: 180,
+      width: 220,
       fixed: 'right',
       render: (_, { uuid }) => [
+        <a
+          key="log"
+          onClick={() => history.push(`/extend/data-center/${uuid}`)}
+        >
+          数据中心
+        </a>,
         <a
           key="log"
           onClick={() => {
