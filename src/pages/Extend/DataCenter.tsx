@@ -1,7 +1,7 @@
 import { getDataCenterSchemaDefine, postDataCenterDataQuery } from '@/services/rulex/shujuzhongxin';
 import { PlayCircleOutlined, TableOutlined } from '@ant-design/icons';
 import { useParams, useRequest } from '@umijs/max';
-import { Button } from 'antd';
+import { Button, Card } from 'antd';
 import type { DataNode } from 'antd/es/tree';
 import { Resizable } from 're-resizable';
 import { useEffect, useState } from 'react';
@@ -110,7 +110,7 @@ const DataCenter = () => {
 
   return (
     <div className="w-full h-[840px] flex flex-col overflow-hidden">
-      <div className="flex justify-between w-full h-full min-h-[1px] bg-[#21222C]">
+      <div className="flex justify-between w-full h-full min-h-[1px]">
         <Resizable
           size={{ height: '100%', width }}
           minWidth={1}
@@ -118,12 +118,15 @@ const DataCenter = () => {
           onResizeStop={(e, direction, ref, d) => {
             setWidth(width + d.width);
           }}
-          className="bg-[#282A36] mr-[10px]"
+          className="mr-[10px]"
         >
-          <div
+          <Card title="Table" className={cn('w-full h-full overflow-y-auto', 'data-center-scrollbar')}>
+          <TreeTable treeData={treeData} expandedKeys={[uuid as Key, 'columns']} />
+          </Card>
+          {/* <div
             className={cn(
               'header-outline',
-              'text-[#F8F8F2] bg-[#21222C] w-full h-[40px] leading-[40px]',
+              'text-[#000] bg-[#fff] w-full h-[40px] leading-[40px]',
             )}
           >
             <span className="px-[12px]">Table</span>
@@ -132,9 +135,19 @@ const DataCenter = () => {
             className={cn('w-full h-[calc(100%-40px)] overflow-y-auto', 'data-center-scrollbar')}
           >
             <TreeTable treeData={treeData} expandedKeys={[uuid as Key, 'columns']} />
-          </div>
+          </div> */}
         </Resizable>
-        <div className="bg-[#282A36] w-full h-full min-w-[1px]">
+        <Card extra={<Button
+              // size="small"
+              type="primary"
+              icon={<PlayCircleOutlined />}
+              onClick={() => getSheets()}
+            >
+              Run
+            </Button>} title='查询编辑器' className="w-full h-full min-w-[1px]">
+        <SQLEditor value={code} onChange={(value) => setCode(value)} />
+        </Card>
+        {/* <div className="bg-[#282A36] w-full h-full min-w-[1px]">
           <div
             className={cn(
               'header-outline',
@@ -152,7 +165,7 @@ const DataCenter = () => {
             </Button>
           </div>
           <SQLEditor value={code} onChange={(value) => setCode(value)} />
-        </div>
+        </div> */}
       </div>
 
       <Resizable
@@ -162,9 +175,12 @@ const DataCenter = () => {
         }}
         minHeight={10}
         maxHeight="100%"
-        className="flex flex-col bg-[#282A36] relative"
+        className="flex flex-col relative mt-[12px]"
       >
-        <div
+        <Card title='Sheet' className='h-full'>
+        <Sheets columns={tableHeader} dataSource={tableBody} reload={refresh} scrollY={scrollY} />
+        </Card>
+        {/* <div
           className={cn(
             'header-outline',
             'text-[#F8F8F2] bg-[#21222C] w-full h-[40px] leading-[40px]',
@@ -172,12 +188,15 @@ const DataCenter = () => {
         >
           <span className="px-[12px]">Sheet</span>
         </div>
-        <Sheets columns={tableHeader} dataSource={tableBody} reload={refresh} scrollY={scrollY} />
+        <Sheets columns={tableHeader} dataSource={tableBody} reload={refresh} scrollY={scrollY} /> */}
+
         <Logs
           collapse={logCollapse}
           onChange={() => setCollapse(!logCollapse)}
           logHeight={logHeight}
         />
+
+
       </Resizable>
     </div>
   );
