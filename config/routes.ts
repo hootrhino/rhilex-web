@@ -150,7 +150,7 @@
       {
         path: '/extend/data-center/:id',
         name: '数据中心',
-        component: './Extend/components/DataCenter',
+        component: './Extend/DataCenter',
         hideInMenu: true,
       },
     ],

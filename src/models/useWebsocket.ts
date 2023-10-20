@@ -4,7 +4,7 @@ import slice from 'lodash/slice';
 import { useEffect, useState } from 'react';
 
 export type LogItem = {
-  level: string;
+  time: number;
   msg: string;
   [key: string]: any;
 };

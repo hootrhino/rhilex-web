@@ -1,13 +1,16 @@
 import { getDataCenterSchemaDefine, postDataCenterDataQuery } from '@/services/rulex/shujuzhongxin';
 import { PlayCircleOutlined, TableOutlined } from '@ant-design/icons';
 import { useParams, useRequest } from '@umijs/max';
-import { Button, ConfigProvider, Table, Tree } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import { Button } from 'antd';
 import type { DataNode } from 'antd/es/tree';
 import { Resizable } from 're-resizable';
 import { useEffect, useState } from 'react';
-import SQLEditor from './Editor';
+import SQLEditor from './components/SQLEditor';
 
+import { cn } from '@/utils/utils';
+import Logs from './components/Logs';
+import Sheets from './components/Sheets';
+import TreeTable from './components/TreeTable';
 import './index.less';
 
 export type Key = string | number;
@@ -15,11 +18,14 @@ export type Key = string | number;
 const DataCenter = () => {
   const { id: uuid } = useParams();
 
-  const [height, setHeight] = useState<number>(500);
+  const [height, setHeight] = useState<number>(600);
   const [width, setWidth] = useState<number>(300);
   const [treeData, setData] = useState<DataNode[]>([]);
   const [code, setCode] = useState<string>('');
-  const [tableHeader, setHeader] = useState<ColumnsType<Record<string, any>>>([]);
+  const [tableHeader, setHeader] = useState<any>([]);
+  const [logCollapse, setCollapse] = useState<boolean>(true);
+  const [logHeight, setLogHeight] = useState<number>(100);
+  const [scrollY, setScrollY] = useState<number>(330);
 
   // 获取结构
   const { run: getTreeData } = useRequest(() => getDataCenterSchemaDefine({ uuid: uuid || '' }), {
@@ -38,7 +44,10 @@ const DataCenter = () => {
                 key: col.name,
                 title: (
                   <div className="flex justify-between">
-                    <span>{col.name}</span>
+                    <div>
+                      <span>{col.name}</span>
+                      {col?.description && <span className="pl-[5px]">({col?.description})</span>}
+                    </div>
                     <span className="text-[#ff79c6] italic text-[12px] pr-[10px]">{col.type}</span>
                   </div>
                 ),
@@ -54,28 +63,47 @@ const DataCenter = () => {
   });
 
   // run
-  const { run: getSheets, data: tableBody } = useRequest(
-    () => postDataCenterDataQuery({ uuid: uuid || '', query: code }),
-    {
-      manual: true,
-      onSuccess: (res) => {
-        const header = Object.keys(res?.[0]);
+  const {
+    run: getSheets,
+    data: tableBody,
+    refresh,
+  } = useRequest(() => postDataCenterDataQuery({ uuid: uuid || '', query: code }), {
+    manual: true,
+    onSuccess: (res) => {
+      const header = Object.keys(res?.[0]);
 
-        const columns = header?.map((item) => ({
-          title: item,
-          dataIndex: item,
-          render: (record: any) => (typeof record === 'boolean' ? record.toString() : record),
-        }));
-        setHeader(columns);
-      },
+      const columns = header?.map((item) => ({
+        title: item,
+        dataIndex: item,
+        render: (record: any) => (typeof record === 'boolean' ? record.toString() : record),
+      }));
+      setHeader(columns);
     },
-  );
+  });
 
   useEffect(() => {
     if (uuid) {
       getTreeData();
     }
   }, [uuid]);
+
+  useEffect(() => {
+    if (logCollapse) {
+      setScrollY(height - 270);
+      setLogHeight(100);
+    } else {
+      if (height < 350) {
+        setLogHeight(height);
+      } else if (height < 500) {
+        setScrollY(height - 100);
+      } else {
+        setLogHeight(350);
+        setScrollY(height - 350 - 180);
+        console.log(height);
+      }
+      // setScrollY(height - 350 - 180);
+    }
+  }, [height, logCollapse]);
 
   return (
     <div className="w-full h-[840px] flex flex-col overflow-hidden">
@@ -89,34 +117,27 @@ const DataCenter = () => {
           }}
           className="bg-[#282A36] mr-[10px]"
         >
-          <div className="text-[#F8F8F2] bg-[#21222C] w-full h-[40px] leading-[40px]">
+          <div
+            className={cn(
+              'header-outline',
+              'text-[#F8F8F2] bg-[#21222C] w-full h-[40px] leading-[40px]',
+            )}
+          >
             <span className="px-[12px]">Table</span>
           </div>
-          <div className="w-full h-[calc(100%-40px)]">
-            <ConfigProvider
-              theme={{
-                components: {
-                  Tree: {
-                    nodeHoverBg: '#44475A',
-                    nodeSelectedBg: '#282A36',
-                  },
-                },
-              }}
-            >
-              <Tree
-                showLine
-                showIcon
-                blockNode
-                expandedKeys={[uuid as Key, 'columns']}
-                switcherIcon={null}
-                treeData={treeData}
-                className="bg-[#282A36] text-[#F8F8F2]"
-              />
-            </ConfigProvider>
+          <div
+            className={cn('w-full h-[calc(100%-40px)] overflow-y-auto', 'data-center-scrollbar')}
+          >
+            <TreeTable treeData={treeData} expandedKeys={[uuid as Key, 'columns']} />
           </div>
         </Resizable>
         <div className="bg-[#282A36] w-full h-full min-w-[1px]">
-          <div className="text-[#F8F8F2] bg-[#21222C] w-full h-[40px] flex justify-start items-center">
+          <div
+            className={cn(
+              'header-outline',
+              'text-[#F8F8F2] bg-[#21222C] w-full h-[40px] flex justify-start items-center',
+            )}
+          >
             <span className="px-[12px]">SQL</span>
             <Button
               size="small"
@@ -136,42 +157,24 @@ const DataCenter = () => {
         onResizeStop={(e, direction, ref, d) => {
           setHeight(height + d.height);
         }}
-        minHeight={1}
+        minHeight={10}
         maxHeight="100%"
-        className="flex flex-col bg-[#282A36]"
+        className="flex flex-col bg-[#282A36] relative"
       >
         <div
-          className="text-[#F8F8F2] bg-[#21222C] w-full h-[40px] leading-[40px]"
-          style={{
-            boxShadow: 'rgb(25, 26, 33) 0px 6px 6px -6px',
-            borderBottom: '1px solid rgb(25, 26, 33)',
-            zIndex: 5,
-          }}
+          className={cn(
+            'header-outline',
+            'text-[#F8F8F2] bg-[#21222C] w-full h-[40px] leading-[40px]',
+          )}
         >
           <span className="px-[12px]">Sheet</span>
         </div>
-        <ConfigProvider
-          theme={{
-            components: {
-              Table: {
-                headerBg: '#21222c',
-                headerColor: '#f1fa8c',
-                headerSplitColor: '#cac30f',
-                borderColor: '#44475a',
-              },
-            },
-          }}
-        >
-          {tableBody && tableBody?.length > 0 && (
-            <Table
-              size="small"
-              columns={tableHeader}
-              dataSource={tableBody as any}
-              pagination={false}
-              rootClassName="data-center-table"
-            />
-          )}
-        </ConfigProvider>
+        <Sheets columns={tableHeader} dataSource={tableBody} reload={refresh} scrollY={scrollY} />
+        <Logs
+          collapse={logCollapse}
+          onChange={() => setCollapse(!logCollapse)}
+          logHeight={logHeight}
+        />
       </Resizable>
     </div>
   );

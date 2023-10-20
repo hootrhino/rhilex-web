@@ -9,7 +9,7 @@ export type Pagination = {
   total: number;
 };
 
-type LogTableProps = ProTableProps & {
+type LogTableProps = ProTableProps<any, any, any> & {
   topic?: string;
   filters?: boolean;
 };
@@ -112,7 +112,7 @@ const LogTable = ({ filters = false, topic, options, ...props }: LogTableProps) 
     <ProTable
       rowKey="ts"
       headerTitle="日志列表"
-      columns={columns}
+      columns={columns as any}
       dataSource={dataSource}
       search={false}
       pagination={{

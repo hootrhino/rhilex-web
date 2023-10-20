@@ -1,4 +1,3 @@
-import LogTable from '@/components/LogTable';
 import { message } from '@/components/PopupHack';
 import {
   deleteGoods,
@@ -7,7 +6,7 @@ import {
   postGoodsCreate,
   putGoodsUpdate,
 } from '@/services/rulex/kuozhanxieyi';
-import { PlusOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -19,7 +18,7 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import { history, useRequest } from '@umijs/max';
-import { Button, Modal, Popconfirm } from 'antd';
+import { Button, Modal, Popconfirm, Tag } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
 type Item = {
@@ -66,10 +65,14 @@ const baseColumns = [
     title: '运行状态',
     dataIndex: 'running',
     width: 100,
-    valueEnum: {
-      false: { text: '停止', status: 'Error' },
-      true: { text: '运行中', status: 'Processing' },
-    },
+    renderText: (running: boolean) => (
+      <Tag
+        icon={running ? <SyncOutlined spin /> : <MinusCircleOutlined />}
+        color={running ? 'processing' : 'default'}
+      >
+        {running ? '运行中' : '停止'}
+      </Tag>
+    ),
   },
   {
     title: '备注信息',
@@ -85,11 +88,7 @@ const ExtendedProtocol = () => {
   const actionRef = useRef<ActionType>();
   const formRef = useRef<ProFormInstance>();
   const [open, setOpen] = useState<boolean>(false);
-  const [detailConfig, setDetailConfig] = useState<{
-    open: boolean;
-    type: 'detail' | 'log';
-    uuid?: string;
-  }>({ open: false, type: 'detail' });
+  const [detailOpen, setDetailOpen] = useState<boolean>(false);
   const [initialValue, setInitialValue] = useState<Item>(defaultValue);
 
   // 新建&编辑
@@ -142,26 +141,14 @@ const ExtendedProtocol = () => {
       width: 220,
       fixed: 'right',
       render: (_, { uuid }) => [
-        <a
-          key="log"
-          onClick={() => history.push(`/extend/data-center/${uuid}`)}
-        >
+        <a key="log" onClick={() => history.push(`/extend/data-center/${uuid}`)}>
           数据中心
-        </a>,
-        <a
-          key="log"
-          onClick={() => {
-            if (!uuid) return;
-            setDetailConfig({ open: true, type: 'log', uuid });
-          }}
-        >
-          日志
         </a>,
         <a
           key="detail"
           onClick={() => {
             if (!uuid) return;
-            setDetailConfig({ open: true, type: 'detail' });
+            setDetailOpen(true);
             getDetail({ uuid });
           }}
         >
@@ -260,33 +247,25 @@ const ExtendedProtocol = () => {
         <ProFormText name="description" label="备注信息" placeholder="请输入备注信息" />
       </ModalForm>
       <Modal
-        title={detailConfig.type === 'detail' ? '扩展协议详情' : '扩展协议日志详情'}
-        open={detailConfig.open}
+        title="扩展协议详情"
+        open={detailOpen}
         width="40%"
         footer={
-          <Button
-            key="close"
-            type="primary"
-            onClick={() => setDetailConfig({ open: false, type: 'detail', uuid: '' })}
-          >
+          <Button key="close" type="primary" onClick={() => setDetailOpen(false)}>
             关闭
           </Button>
         }
         maskClosable={false}
-        onCancel={() => setDetailConfig({ open: false, type: 'detail', uuid: '' })}
+        onCancel={() => setDetailOpen(false)}
       >
-        {detailConfig.type === 'detail' ? (
-          <ProDescriptions
-            dataSource={initialValue}
-            columns={baseColumns.filter((col) => col.dataIndex !== 'args')}
-            column={1}
-            labelStyle={{ width: 120, justifyContent: 'end', paddingRight: 10 }}
-          >
-            <ProDescriptions.Item label="协议参数">{initialValue.args}</ProDescriptions.Item>
-          </ProDescriptions>
-        ) : (
-          <LogTable topic={`goods/console/${detailConfig?.uuid}`}/>
-        )}
+        <ProDescriptions
+          dataSource={initialValue}
+          columns={baseColumns.filter((col) => col.dataIndex !== 'args')}
+          column={1}
+          labelStyle={{ width: 120, justifyContent: 'end', paddingRight: 10 }}
+        >
+          <ProDescriptions.Item label="协议参数">{initialValue.args}</ProDescriptions.Item>
+        </ProDescriptions>
       </Modal>
     </>
   );
