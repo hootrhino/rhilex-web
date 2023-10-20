@@ -4,6 +4,8 @@ import {
   getGoodsDetail,
   getGoodsList,
   postGoodsCreate,
+  putGoodsStart,
+  putGoodsStop,
   putGoodsUpdate,
 } from '@/services/rulex/kuozhanxieyi';
 import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
@@ -121,6 +123,24 @@ const ExtendedProtocol = () => {
     },
   });
 
+  // 启动
+  const { run: start } = useRequest((params: API.putGoodsStartParams) => putGoodsStart(params), {
+    manual: true,
+    onSuccess: () => {
+      message.success('启动成功');
+      actionRef.current?.reload();
+    },
+  });
+
+  // 停止
+  const { run: stop } = useRequest((params: API.putGoodsStopParams) => putGoodsStop(params), {
+    manual: true,
+    onSuccess: () => {
+      message.success('停止成功');
+      actionRef.current?.reload();
+    },
+  });
+
   // 详情
   const { run: getDetail } = useRequest(
     (params: API.getGoodsDetailParams) => getGoodsDetail(params),
@@ -140,7 +160,7 @@ const ExtendedProtocol = () => {
       key: 'option',
       width: 220,
       fixed: 'right',
-      render: (_, { uuid }) => [
+      render: (_, { uuid, running }) => [
         <a key="log" onClick={() => history.push(`/extend/data-center/${uuid}`)}>
           数据中心
         </a>,
@@ -153,6 +173,19 @@ const ExtendedProtocol = () => {
           }}
         >
           详情
+        </a>,
+        <a
+          key="run"
+          onClick={() => {
+            if (!uuid) return;
+            if (running) {
+              stop({ uuid });
+            } else {
+              start({ uuid });
+            }
+          }}
+        >
+          {running ? '停止' : '启动'}
         </a>,
         <a
           key="edit"

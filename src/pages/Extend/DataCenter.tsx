@@ -141,7 +141,7 @@ const DataCenter = () => {
               'text-[#F8F8F2] bg-[#21222C] w-full h-[40px] flex justify-start items-center',
             )}
           >
-            <span className="px-[12px]">SQL</span>
+            <span className="px-[12px]">查询编辑器</span>
             <Button
               size="small"
               type="primary"
