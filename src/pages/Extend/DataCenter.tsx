@@ -90,7 +90,12 @@ const DataCenter = () => {
   useEffect(() => {
     if (logCollapse) {
       setScrollY(height - 270);
-      setLogHeight(100);
+
+      if (height < 100) {
+        setLogHeight(height);
+      } else {
+        setLogHeight(100);
+      }
     } else {
       if (height < 350) {
         setLogHeight(height);
@@ -99,9 +104,7 @@ const DataCenter = () => {
       } else {
         setLogHeight(350);
         setScrollY(height - 350 - 180);
-        console.log(height);
       }
-      // setScrollY(height - 350 - 180);
     }
   }, [height, logCollapse]);
 
