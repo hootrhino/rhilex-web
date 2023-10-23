@@ -6,6 +6,7 @@ import NetworkConfig from './components/Network';
 import TimeConfig from './components/Time';
 import UserConfig from './components/User';
 import WIFIConfig from './components/Wifi';
+import SiteConfig from './components/Site';
 
 const System = () => {
   const [activeKey, setActiveKey] = useState<string>('network');
@@ -47,6 +48,11 @@ const System = () => {
               label: '固件配置',
               key: 'firmware',
               children: <FirmwareConfig />,
+            },
+            {
+              label: '站点配置',
+              key: 'site',
+              children: <SiteConfig  />,
             },
           ],
           onChange: (key) => {
