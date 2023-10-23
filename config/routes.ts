@@ -181,7 +181,7 @@
   {
     path: '/drives',
     name: '驱动管理',
-    icon: 'setting',
+    icon: 'cloudServer',
     routes: [
       {
         path: '/drives',
@@ -224,22 +224,28 @@
       },
     ],
   },
+  // {
+  //   path: '/ai',
+  //   name: `A${'\xa0'}I${'\xa0\xa0\xa0'}能力`,
+  //   icon: 'reddit',
+  //   routes: [
+  //     {
+  //       path: '/ai',
+  //       redirect: '/ai/list',
+  //     },
+  //     {
+  //       path: '/ai/list',
+  //       name: 'AI 能力列表',
+  //       component: './AI',
+  //       hideInMenu: true,
+  //     },
+  //   ],
+  // },
   {
-    path: '/ai',
-    name: `A${'\xa0'}I${'\xa0\xa0\xa0'}能力`,
-    icon: 'reddit',
-    routes: [
-      {
-        path: '/ai',
-        redirect: '/ai/list',
-      },
-      {
-        path: '/ai/list',
-        name: 'AI 能力列表',
-        component: './AI',
-        hideInMenu: true,
-      },
-    ],
+    path: '/system-mgt',
+    name: '系统管理',
+    icon: 'setting',
+    component: './System',
   },
   {
     path: '/screen-mgt',
