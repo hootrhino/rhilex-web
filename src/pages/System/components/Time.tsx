@@ -5,7 +5,7 @@ import {
   ProFormSelect,
   ProFormSwitch,
 } from '@ant-design/pro-components';
-import { Space } from 'antd';
+import { Button, Space } from 'antd';
 import { useRef } from 'react';
 
 const TimeConfig = () => {
@@ -30,7 +30,12 @@ const TimeConfig = () => {
         labelCol={{ span: 2 }}
         initialValues={{ zone: 'Asia/Shanghai' }}
         submitter={{
-          render: (props, dom) => <Space className="flex justify-end">{dom}</Space>,
+          render: (props, dom) => (
+            <Space className="flex justify-end">
+              {dom}
+              <Button type="primary">立即同步NTP</Button>
+            </Space>
+          ),
         }}
       >
         <ProFormSelect
