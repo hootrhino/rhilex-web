@@ -133,6 +133,23 @@
     ],
   },
   {
+    path: '/data-center',
+    name: '数据中心',
+    icon: 'database',
+    routes: [
+      {
+        path: '/data-center',
+        redirect: '/data-center/list',
+      },
+      {
+        path: '/data-center/list',
+        name: '数据中心列表',
+        component: './DataCenter',
+        hideInMenu: true,
+      },
+    ],
+  },
+  {
     path: '/extend',
     name: '扩展协议',
     icon: 'cluster',
