@@ -4,7 +4,11 @@ import { request } from '@umijs/max';
 
 /** 网卡列表 GET /api/v1/os/netInterfaces */
 export async function getOsNetInterfaces(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/v1/os/netInterfaces', {
+  return request<{
+    code: number;
+    msg: string;
+    data: { name?: string; addr?: string; mac?: string }[];
+  }>('/api/v1/os/netInterfaces', {
     method: 'GET',
     ...(options || {}),
   });
@@ -61,8 +65,11 @@ export async function getOsSystem(options?: { [key: string]: any }) {
 
 /** 串口列表 GET /api/v1/os/uarts */
 export async function getOsUarts(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/v1/os/uarts', {
-    method: 'GET',
-    ...(options || {}),
-  });
+  return request<{ code: number; msg: string; data: { alias?: string; port?: string }[] }>(
+    '/api/v1/os/uarts',
+    {
+      method: 'GET',
+      ...(options || {}),
+    },
+  );
 }

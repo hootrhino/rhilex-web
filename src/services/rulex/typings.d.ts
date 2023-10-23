@@ -142,11 +142,4 @@ declare namespace API {
   type putVisualPublishParams = {
     uuid: string;
   };
-
-  type wangguanziyuan = {
-    type: string;
-    name: string;
-    description: string;
-    config: Record<string, any>;
-  };
 }

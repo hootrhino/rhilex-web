@@ -62,12 +62,22 @@ export async function getGoodsDetail(
     code: number;
     msg: string;
     data: {
-      running?: boolean;
       uuid?: string;
+      pid?: number;
+      running?: boolean;
+      autoStart?: boolean;
+      goodsType?: string;
+      executeType?: string;
       local_path?: string;
       net_addr?: string;
       description?: string;
       args?: string[];
+      processDetail: {
+        ImageName?: string;
+        PID?: string;
+        SessionName?: string;
+        SessionNum?: string;
+      };
     };
   }>('/api/v1/goods/detail', {
     method: 'GET',
@@ -84,12 +94,17 @@ export async function getGoodsList(options?: { [key: string]: any }) {
     code: number;
     msg: string;
     data: {
-      running?: boolean;
       uuid?: string;
+      pid?: number;
+      running?: boolean;
+      autoStart?: boolean;
+      goodsType?: string;
+      executeType?: string;
       local_path?: string;
       net_addr?: string;
       description?: string;
       args?: string[];
+      processDetail?: any;
     }[];
   }>('/api/v1/goods/list', {
     method: 'GET',

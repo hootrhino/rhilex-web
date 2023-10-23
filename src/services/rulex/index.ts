@@ -2,22 +2,29 @@
 /* eslint-disable */
 // API 更新时间：
 // API 唯一标识：
-import * as AInengli from './AInengli';
-import * as chajianguanli from './chajianguanli';
-import * as dapingguanli from './dapingguanli';
-import * as dingshirenwu from './dingshirenwu';
-import * as fenzuguanli from './fenzuguanli';
-import * as guizeguanli from './guizeguanli';
-import * as kuozhanxieyi from './kuozhanxieyi';
-import * as qingliangyingyong from './qingliangyingyong';
-import * as qudongguanli from './qudongguanli';
-import * as rizhiguanli from './rizhiguanli';
-import * as shebeiguanli from './shebeiguanli';
-import * as shuchuziyuanguanli from './shuchuziyuanguanli';
-import * as shujuzhongxin from './shujuzhongxin';
-import * as shuruziyuanguanli from './shuruziyuanguanli';
-import * as xitongshuju from './xitongshuju';
-import * as yonghuguanli from './yonghuguanli';
+import * as shebeiguanli from './shebeiguanli'
+import * as yonghuguanli from './yonghuguanli'
+import * as rizhiguanli from './rizhiguanli'
+import * as qudongguanli from './qudongguanli'
+import * as guizeguanli from './guizeguanli'
+import * as xitongshuju from './xitongshuju'
+import * as shuchuziyuanguanli from './shuchuziyuanguanli'
+import * as shuruziyuanguanli from './shuruziyuanguanli'
+import * as chajianguanli from './chajianguanli'
+import * as qingliangyingyong from './qingliangyingyong'
+import * as AInengli from './AInengli'
+import * as fenzuguanli from './fenzuguanli'
+import * as dingshirenwu from './dingshirenwu'
+import * as dapingguanli from './dapingguanli'
+import * as shujuzhongxin from './shujuzhongxin'
+import * as kuozhanxieyi from './kuozhanxieyi'
+import * as wangluopeizhi from './wangluopeizhi'
+import * as gujiancaozuo from './gujiancaozuo'
+import * as shijianpeizhi from './shijianpeizhi'
+import * as WIFIpeizhi from './WIFIpeizhi'
+import * as luyoushezhi from './luyoushezhi'
+import * as 4Gshezhi from './4Gshezhi'
+import * as zhandianpeizhi from './zhandianpeizhi'
 export default {
   shebeiguanli,
   yonghuguanli,
@@ -35,4 +42,11 @@ export default {
   dapingguanli,
   shujuzhongxin,
   kuozhanxieyi,
-};
+  wangluopeizhi,
+  gujiancaozuo,
+  shijianpeizhi,
+  WIFIpeizhi,
+  luyoushezhi,
+  4Gshezhi,
+  zhandianpeizhi,
+  }

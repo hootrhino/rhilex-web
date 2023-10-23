@@ -1,0 +1,62 @@
+// @ts-ignore
+/* eslint-disable */
+import { request } from '@umijs/max';
+
+/** 重启系统 POST /api/v1/firmware/reboot */
+export async function postFirmwareReboot(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/firmware/reboot', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+/** 重启固件 POST /api/v1/firmware/restartRulex */
+export async function postFirmwareRestartRulex(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/firmware/restartRulex', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+/** 立即更新 POST /api/v1/firmware/upgrade */
+export async function postFirmwareUpgrade(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/firmware/upgrade', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+/** 上传最新版 POST /api/v1/firmware/upload */
+export async function postFirmwareUpload(body: {}, file?: File, options?: { [key: string]: any }) {
+  const formData = new FormData();
+
+  if (file) {
+    formData.append('file', file);
+  }
+
+  Object.keys(body).forEach((ele) => {
+    const item = (body as any)[ele];
+
+    if (item !== undefined && item !== null) {
+      formData.append(
+        ele,
+        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
+      );
+    }
+  });
+
+  return request<Record<string, any>>('/api/v1/firmware/upload', {
+    method: 'POST',
+    data: formData,
+    requestType: 'form',
+    ...(options || {}),
+  });
+}
+
+/** 查看密钥 GET /api/v1/firmware/vendorKey */
+export async function getFirmwareVendorKey(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/firmware/vendorKey', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
