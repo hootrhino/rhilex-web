@@ -1,7 +1,7 @@
 const UserConfig = () => {
   return (
     <>
-      <div className="text-[20px] mb-[12px] font-medium">用户配置</div>
+      <div className="text-[20px] mb-[24px] font-medium">用户配置</div>
     </>
   );
 };
