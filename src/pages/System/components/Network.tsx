@@ -1,3 +1,4 @@
+import { getSettingsEth } from '@/services/rulex/wangluopeizhi';
 import { validateGateway, validateIPv4, validateMask } from '@/utils/utils';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
@@ -8,6 +9,7 @@ import {
   ProFormSwitch,
   ProFormText,
 } from '@ant-design/pro-components';
+import { useRequest } from '@umijs/max';
 import { Space, Tooltip } from 'antd';
 import { useRef } from 'react';
 
@@ -15,6 +17,9 @@ const NetworkConfig = () => {
   const formRef = useRef<ProFormInstance>();
 
   // TODO 详情
+  const {data: detail} = useRequest(() => getSettingsEth());
+
+  console.log(detail);
 
   // TODO 更新
   const handleOnFinish = async (values) => {
@@ -34,23 +39,23 @@ const NetworkConfig = () => {
         onFinish={handleOnFinish}
         layout="horizontal"
         labelCol={{ span: 2 }}
-        initialValues={{ network: 'ETH1', ip: '192.168.199.1', mask: '255.255.255.0', gateway: '192.168.199.1' }}
+        initialValues={{ interface: 'eth0', address: '192.168.199.1', mask: '255.255.255.0', gateway: '192.168.199.1' }}
         submitter={{
           render: (props, dom) => <Space className="flex justify-end">{dom}</Space>,
         }}
       >
         <ProFormSelect
           options={[
-            { label: 'ETH0', value: 'ETH0' },
-            { label: 'ETH1', value: 'ETH1' },
+            { label: 'ETH0', value: 'eth0' },
+            { label: 'ETH1', value: 'eth1' },
           ]}
-          name="network"
+          name="interface"
           label="网卡选择"
           width="xl"
           placeholder="请选择网卡"
         />
         <ProFormText
-          name="ip"
+          name="address"
           label="IP 地址"
           width="xl"
           placeholder="请输入 IP 地址"
@@ -126,7 +131,7 @@ const NetworkConfig = () => {
         />
 
         <ProFormList
-          name="users"
+          name="dnsList"
           label="DNS服务器"
           min={1}
           initialValue={[
@@ -150,10 +155,10 @@ const NetworkConfig = () => {
             ];
           }}
         >
-          <ProFormText name="dns" width="xl" placeholder="请输入DNS服务器" />
+          <ProFormText name='dns' width="xl" placeholder="请输入DNS服务器" />
         </ProFormList>
         <ProFormSwitch
-          name="switch"
+          name="dhcp_enabled"
           label="开启DHCP"
           checkedChildren="开启"
           unCheckedChildren="关闭"
