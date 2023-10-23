@@ -10,13 +10,8 @@ type SheetsProps = ProTableProps<any, any, any> & {
 
 const Sheets = ({ dataSource, columns, reload, scrollY, ...props }: SheetsProps) => {
   return (
-    <ConfigProvider
-      theme={{
-        algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
-        components: { Table: { headerBg: '#21222c', rowHoverBg: '#323342' } },
-      }}
-    >
-      {dataSource && dataSource?.length > 0 && (
+<>
+{dataSource && dataSource?.length > 0 && (
         <ProTable
           search={false}
           dataSource={dataSource}
@@ -29,7 +24,9 @@ const Sheets = ({ dataSource, columns, reload, scrollY, ...props }: SheetsProps)
           {...props}
         />
       )}
-    </ConfigProvider>
+</>
+
+
   );
 };
 

@@ -7,8 +7,8 @@ const TreeTable = ({ treeData, expandedKeys }: TreeProps) => {
       theme={{
         components: {
           Tree: {
-            nodeHoverBg: '#44475A',
-            nodeSelectedBg: '#282A36',
+            // nodeHoverBg: '#44475A',
+            // nodeSelectedBg: '#282A36',
           },
         },
       }}
@@ -20,7 +20,7 @@ const TreeTable = ({ treeData, expandedKeys }: TreeProps) => {
         expandedKeys={expandedKeys}
         switcherIcon={null}
         treeData={treeData}
-        className="bg-[#282A36] text-[#F8F8F2]"
+        // className="bg-[#282A36] text-[#F8F8F2]"
       />
     </ConfigProvider>
   );
