@@ -8,7 +8,7 @@ import {
   ProFormSwitch,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Tooltip } from 'antd';
+import { Space, Tooltip } from 'antd';
 import { useRef } from 'react';
 
 const NetworkConfig = () => {
@@ -35,6 +35,9 @@ const NetworkConfig = () => {
         layout="horizontal"
         labelCol={{ span: 2 }}
         initialValues={{ network: 'ETH1', ip: '192.168.199.1', mask: '255.255.255.0', gateway: '192.168.199.1' }}
+        submitter={{
+          render: (props, dom) => <Space className="flex justify-end">{dom}</Space>,
+        }}
       >
         <ProFormSelect
           options={[
