@@ -100,7 +100,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
           }}
         />
       ) : (
-        <LogTable topic={`rule/log/${uuid}`} />
+        <LogTable topic={`rule/log/${uuid}`} options={false} />
       )}
     </Drawer>
   );

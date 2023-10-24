@@ -111,7 +111,6 @@ const LogTable = ({ filters = false, topic, options, ...props }: LogTableProps) 
   return (
     <ProTable
       rowKey="ts"
-      headerTitle="日志列表"
       columns={columns as any}
       dataSource={dataSource}
       search={false}
@@ -120,8 +119,8 @@ const LogTable = ({ filters = false, topic, options, ...props }: LogTableProps) 
         onChange: (current, pageSize) => setPagination({ ...pagination, current, pageSize }),
       }}
       options={
-        options
-          ? {
+        options === false
+          ? false : {
               search: {
                 onSearch: (keyword: string) => {
                   handleOnsearch(keyword);
@@ -134,7 +133,6 @@ const LogTable = ({ filters = false, topic, options, ...props }: LogTableProps) 
               setting: false,
               density: false,
             }
-          : false
       }
       onChange={(_: any, filters: any) => handleOnsearch(undefined, filters)}
       {...props}

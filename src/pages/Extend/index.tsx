@@ -315,7 +315,7 @@ const ExtendedProtocol = () => {
             <ProDescriptions.Item label="协议参数">{initialValue.args}</ProDescriptions.Item>
           </ProDescriptions>
         ) : (
-          <LogTable topic={`goods/console/${detailConfig?.uuid}`} />
+          <LogTable topic={`goods/console/${detailConfig?.uuid}`} options={false} headerTitle={undefined} />
         )}
       </Modal>
     </>

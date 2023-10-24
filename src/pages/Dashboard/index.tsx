@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useModel } from 'umi';
 
-import { Progress, TinyArea } from '@ant-design/plots';
 import { PageContainer, ProCard, StatisticCard } from '@ant-design/pro-components';
 import add from 'lodash/add';
 import RcResizeObserver from 'rc-resize-observer';
@@ -12,10 +11,11 @@ import ExportIcon from '@/assets/fontIcons/export.svg';
 import ImportIcon from '@/assets/fontIcons/import.svg';
 import PluginIcon from '@/assets/fontIcons/plugin.svg';
 import RuleIcon from '@/assets/fontIcons/rule.svg';
-
 import LogTable from '@/components/LogTable';
 import { modal } from '@/components/PopupHack';
 import { getOsOsRelease } from '@/services/rulex/xitongshuju';
+import { ExperimentOutlined } from '@ant-design/icons';
+import { Progress, TinyArea } from '@ant-design/plots';
 import { useRequest } from '@umijs/max';
 import { Descriptions } from 'antd';
 
@@ -80,7 +80,7 @@ const Dashboard = () => {
   };
 
   return (
-    <PageContainer>
+    <PageContainer className="overflow-x-hidden">
       <RcResizeObserver
         key="resize-observer1"
         onResize={(offset) => {
@@ -177,6 +177,13 @@ const Dashboard = () => {
               icon: <img src={DeviceIcon} alt="设备总数" className="w-[42px] h-[42px]" />,
             }}
           />
+          <StatisticCard
+            statistic={{
+              title: '扩展协议总数',
+              value: 0,
+              icon: <ExperimentOutlined style={{ fontSize: 42, color: '#1875F0' }} />,
+            }}
+          />
         </StatisticCard.Group>
       </RcResizeObserver>
       <RcResizeObserver
@@ -224,7 +231,7 @@ const Dashboard = () => {
         </StatisticCard.Group>
       </RcResizeObserver>
       <ProCard className="mt-6">
-        <LogTable filters={true} options={true} />
+        <LogTable filters={true} headerTitle="日志列表" />
       </ProCard>
     </PageContainer>
   );

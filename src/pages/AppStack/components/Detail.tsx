@@ -84,7 +84,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
           }}
         />
       ) : (
-        <LogTable topic={`app/console/${uuid}`} />
+        <LogTable topic={`app/console/${uuid}`} options={false} />
       )}
     </Drawer>
   );
