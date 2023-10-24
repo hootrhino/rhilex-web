@@ -11,7 +11,6 @@ import {
   ProFormRadio,
   ProFormSelect,
   ProFormText,
-  ProFormTextArea,
 } from '@ant-design/pro-components';
 import { useModel, useRequest } from 'umi';
 
@@ -19,8 +18,9 @@ import FullScreenEditor from '@/components/FullScreenEditor';
 import { message } from '@/components/PopupHack';
 import useGoBack from '@/hooks/useGoBack';
 import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanli';
-import { Button, Popconfirm } from 'antd';
+import { Button, Popconfirm, Space } from 'antd';
 import omit from 'lodash/omit';
+import { CodeOutlined } from '@ant-design/icons';
 
 export type FormItem = {
   actions: string;
@@ -172,6 +172,7 @@ const UpdateForm = () => {
             }}
             onFinish={handleOnFinish}
           >
+            <ProForm.Group>
             <ProFormText
               label="规则名称"
               name="name"
@@ -181,6 +182,7 @@ const UpdateForm = () => {
                   message: '规则名称为必填项',
                 },
               ]}
+              width='xl'
             />
             <ProFormRadio.Group
               name="sourceType"
@@ -195,7 +197,11 @@ const UpdateForm = () => {
                   value: 'fromDevice',
                 },
               ]}
+              width='xl'
             />
+
+            </ProForm.Group>
+            <ProForm.Group>
             <ProFormDependency name={['sourceType']}>
               {({ sourceType }) => {
                 if (sourceType === 'fromSource') {
@@ -206,6 +212,7 @@ const UpdateForm = () => {
                       options={sources}
                       placeholder="请选择数据源"
                       rules={[{ required: true, message: '请选择数据源' }]}
+                      width='xl'
                     />
                   );
                 } else {
@@ -216,19 +223,24 @@ const UpdateForm = () => {
                       options={devices}
                       placeholder="请选择数据源"
                       rules={[{ required: true, message: '请选择数据源' }]}
+                      width='xl'
                     />
                   );
                 }
               }}
             </ProFormDependency>
+            <ProFormText label="备注信息" name="description" width='xl'/>
+            </ProForm.Group>
+
             <ProForm.Item
-              label="规则回调"
+              label={<Space><span>规则回调</span><div className='w-[100px] h-full bg-[#18f] text-[#fff]'><CodeOutlined className='pr-[8px]' /><span>代码格式化</span></div></Space>}
               name="actions"
               rules={[{ required: true, message: '请输入规则回调' }]}
+              // tooltip='从左至右分别是规则回调/成功回调/失败回调'
             >
-              <FullScreenEditor ref={actionRef} />
+              <FullScreenEditor />
             </ProForm.Item>
-            <ProForm.Item
+            {/* <ProForm.Item
               label="成功回调"
               name="success"
               rules={[{ required: true, message: '请输入成功回调' }]}
@@ -241,8 +253,8 @@ const UpdateForm = () => {
               rules={[{ required: true, message: '请输入失败回调' }]}
             >
               <FullScreenEditor ref={failRef} />
-            </ProForm.Item>
-            <ProFormTextArea label="备注信息" name="description" />
+            </ProForm.Item> */}
+
           </ProForm>
         </ProCard>
       </PageContainer>
