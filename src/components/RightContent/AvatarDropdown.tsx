@@ -1,4 +1,3 @@
-import { postLogout } from '@/services/rulex/yonghuguanli';
 import { cn } from '@/utils/utils';
 import {
   ExclamationCircleOutlined,
@@ -8,7 +7,6 @@ import {
 } from '@ant-design/icons';
 import { history, useModel } from '@umijs/max';
 import { App, Avatar, Spin } from 'antd';
-import { stringify } from 'querystring';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import React, { useCallback } from 'react';
 import HeaderDropdown from '../HeaderDropdown';
@@ -18,7 +16,9 @@ export type GlobalHeaderRightProps = {
 };
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const { setActiveKey } = useModel('useSetting');
+  const { logout } = useModel('useUser');
+  const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
 
   const { modal } = App.useApp();
@@ -30,31 +30,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
       title: '提示',
       icon: <ExclamationCircleOutlined />,
       content: '确定要退出登录吗?',
-      onOk() {
-        if (initialState) {
-          postLogout()
-            .then(() => {
-              setInitialState({ ...initialState, currentUser: undefined });
-              localStorage.setItem('accessToken', '');
-              const { search, pathname } = window.location;
-              const urlParams = new URL(window.location.href).searchParams;
-              /** 此方法会跳转到 redirect 参数所在的位置 */
-              const redirect = urlParams.get('redirect');
-              // Note: There may be security issues, please note
-              if (window.location.pathname !== '/user/login' && !redirect) {
-                history.replace({
-                  pathname: '/user/login',
-                  search: stringify({
-                    redirect: pathname + search,
-                  }),
-                });
-              }
-            })
-            .catch(() => {});
-        }
-      },
+      onOk: logout,
     });
-    await postLogout();
   };
 
   const onMenuClick = useCallback(
@@ -64,7 +41,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
         loginOut();
       }
       if (key === 'user') {
-        // TODO 用户设置
+        history.push('/system-mgt');
+        setActiveKey('user');
       }
     },
     [loginOut],

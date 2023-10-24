@@ -1,15 +1,15 @@
 import { PageContainer, ProCard } from '@ant-design/pro-components';
-import { useState } from 'react';
+import { useModel } from '@umijs/max';
 import FourGConfig from './components/4G';
 import FirmwareConfig from './components/Firmware';
 import NetworkConfig from './components/Network';
+import SiteConfig from './components/Site';
 import TimeConfig from './components/Time';
 import UserConfig from './components/User';
 import WIFIConfig from './components/Wifi';
-import SiteConfig from './components/Site';
 
 const System = () => {
-  const [activeKey, setActiveKey] = useState<string>('network');
+  const { activeKey, setActiveKey } = useModel('useSetting');
 
   return (
     <PageContainer>
@@ -52,7 +52,7 @@ const System = () => {
             {
               label: '站点配置',
               key: 'site',
-              children: <SiteConfig  />,
+              children: <SiteConfig />,
             },
           ],
           onChange: (key) => {
