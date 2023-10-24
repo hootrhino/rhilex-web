@@ -22,12 +22,18 @@ const FirmwareConfig = () => {
   // 上传固件
   const { run: uploadFile } = useRequest((params) => postFirmwareUpload({}, params), {
     manual: true,
-    onSuccess: () => message.success('上传成功'),
+    onSuccess: () => {
+      // TODO 后端会返回保存路径
+      message.success(`上传成功，固件保存在xx路径下面`);
+      setTimeout(() => formRef.current?.setFieldsValue({ upload: [] }), 500)
+    },
   });
 
   const { run: upgrade } = useRequest(() => postFirmwareUpgrade(), {
     manual: true,
-    onSuccess: () => message.success('升级成功'),
+    onSuccess: () => {
+      message.success('升级成功');
+    },
   });
 
   return (
