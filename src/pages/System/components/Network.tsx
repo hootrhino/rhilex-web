@@ -178,7 +178,7 @@ const NetworkConfig = () => {
         <ProFormList
           actionRef={actionRef}
           name="dnsList"
-          label="DNS服务器"
+          label="DNS 服务器"
           min={1}
           creatorButtonProps={false}
           creatorRecord={{
@@ -197,13 +197,13 @@ const NetworkConfig = () => {
           <ProFormText
             name="dns"
             width="xl"
-            placeholder="请输入DNS服务器"
-            rules={[{ required: true, message: '请输入DNS服务器' }]}
+            placeholder="请输入 DNS 服务器"
+            rules={[{ required: true, message: '请输入 DNS 服务器' }]}
           />
         </ProFormList>
         <ProFormSwitch
           name="dhcp_enabled"
-          label="开启DHCP"
+          label="开启 DHCP"
           checkedChildren="开启"
           unCheckedChildren="关闭"
           rules={[{ required: true }]}
