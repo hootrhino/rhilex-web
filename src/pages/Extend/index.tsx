@@ -1,3 +1,4 @@
+import LogTable from '@/components/LogTable';
 import { message } from '@/components/PopupHack';
 import {
   deleteGoods,
@@ -19,7 +20,7 @@ import {
   ProFormUploadDragger,
   ProTable,
 } from '@ant-design/pro-components';
-import { history, useRequest } from '@umijs/max';
+import { useRequest } from '@umijs/max';
 import { Button, Modal, Popconfirm, Tag } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
@@ -90,7 +91,10 @@ const ExtendedProtocol = () => {
   const actionRef = useRef<ActionType>();
   const formRef = useRef<ProFormInstance>();
   const [open, setOpen] = useState<boolean>(false);
-  const [detailOpen, setDetailOpen] = useState<boolean>(false);
+  const [detailConfig, setDetailConfig] = useState<{ type: 'detail' | 'log'; open: boolean; uuid?: string }>({
+    type: 'detail',
+    open: false,
+  });
   const [initialValue, setInitialValue] = useState<Item>(defaultValue);
 
   // 新建&编辑
@@ -158,17 +162,23 @@ const ExtendedProtocol = () => {
       title: '操作',
       valueType: 'option',
       key: 'option',
-      width: 220,
+      width: 200,
       fixed: 'right',
       render: (_, { uuid, running }) => [
-        <a key="log" onClick={() => history.push(`/extend/data-center/${uuid}`)}>
-          数据中心
+        <a
+          key="log"
+          onClick={() => {
+            if (!uuid) return;
+            setDetailConfig({ type: 'log', open: true, uuid });
+          }}
+        >
+          日志
         </a>,
         <a
           key="detail"
           onClick={() => {
             if (!uuid) return;
-            setDetailOpen(true);
+            setDetailConfig({ type: 'detail', open: true });
             getDetail({ uuid });
           }}
         >
@@ -280,25 +290,33 @@ const ExtendedProtocol = () => {
         <ProFormText name="description" label="备注信息" placeholder="请输入备注信息" />
       </ModalForm>
       <Modal
-        title="扩展协议详情"
-        open={detailOpen}
+        title={`扩展协议${detailConfig.type === 'detail' ? '详情' : '日志'}`}
+        open={detailConfig.open}
         width="40%"
         footer={
-          <Button key="close" type="primary" onClick={() => setDetailOpen(false)}>
+          <Button
+            key="close"
+            type="primary"
+            onClick={() => setDetailConfig({ type: 'detail', open: false, uuid: '' })}
+          >
             关闭
           </Button>
         }
         maskClosable={false}
-        onCancel={() => setDetailOpen(false)}
+        onCancel={() => setDetailConfig({ type: 'detail', open: false, uuid: '' })}
       >
-        <ProDescriptions
-          dataSource={initialValue}
-          columns={baseColumns.filter((col) => col.dataIndex !== 'args')}
-          column={1}
-          labelStyle={{ width: 120, justifyContent: 'end', paddingRight: 10 }}
-        >
-          <ProDescriptions.Item label="协议参数">{initialValue.args}</ProDescriptions.Item>
-        </ProDescriptions>
+        {detailConfig.type === 'detail' ? (
+          <ProDescriptions
+            dataSource={initialValue}
+            columns={baseColumns.filter((col) => col.dataIndex !== 'args')}
+            column={1}
+            labelStyle={{ width: 120, justifyContent: 'end', paddingRight: 10 }}
+          >
+            <ProDescriptions.Item label="协议参数">{initialValue.args}</ProDescriptions.Item>
+          </ProDescriptions>
+        ) : (
+          <LogTable topic={`goods/console/${detailConfig?.uuid}`} />
+        )}
       </Modal>
     </>
   );

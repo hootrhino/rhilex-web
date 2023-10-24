@@ -75,7 +75,7 @@ const Detail = () => {
           const { data } = await postPluginService({ uuid: uuid || '', name: 'clients', args: [] });
 
           return Promise.resolve({
-            data,
+            data: data as Item[],
             success: true,
           });
         }}

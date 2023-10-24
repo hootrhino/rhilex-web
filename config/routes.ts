@@ -147,30 +147,19 @@
         component: './DataCenter',
         hideInMenu: true,
       },
+      {
+        path: '/data-center/:uuid',
+        name: '数据中心详情',
+        component: './DataCenter/Detail',
+        hideInMenu: true,
+      },
     ],
   },
   {
     path: '/extend',
     name: '扩展协议',
     icon: 'cluster',
-    routes: [
-      {
-        path: '/extend',
-        redirect: '/extend/list',
-      },
-      {
-        path: '/extend/list',
-        name: '扩展协议列表',
-        component: './Extend',
-        hideInMenu: true,
-      },
-      {
-        path: '/extend/data-center/:id',
-        name: '数据中心',
-        component: './Extend/DataCenter',
-        hideInMenu: true,
-      },
-    ],
+    component: './Extend',
   },
   {
     path: '/plugins',
@@ -199,18 +188,7 @@
     path: '/drives',
     name: '驱动管理',
     icon: 'cloudServer',
-    routes: [
-      {
-        path: '/drives',
-        redirect: '/drives/list',
-      },
-      {
-        path: '/drives/list',
-        name: '驱动列表',
-        component: './Drives',
-        hideInMenu: true,
-      },
-    ],
+    component: './Drives',
   },
   {
     path: '/app-stack',
