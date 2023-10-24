@@ -62,7 +62,7 @@ const NetworkConfig = () => {
         dns: dnsList?.map((item: { dns: string }) => item.dns),
       };
       await postSettingsEth(params as UpdateParams);
-      message.success('修改成功');
+      message.success('更新成功');
 
       return true;
     } catch (error) {
