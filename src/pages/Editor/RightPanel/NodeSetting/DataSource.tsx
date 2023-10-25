@@ -1,6 +1,6 @@
 import Select from '@/pages/Editor/components/Select';
 import { cn, IconFont } from '@/utils/utils';
-import { json } from '@codemirror/lang-json';
+import { langs } from '@uiw/codemirror-extensions-langs';
 import CodeMirror from '@uiw/react-codemirror';
 import { ConfigProvider, Form, Space } from 'antd';
 import Tooltip from '../../components/Tooltip';
@@ -48,7 +48,7 @@ const DataSource = () => {
             <Select options={DEFAULT_OPTION} />
           </Form.Item>
           <Form.Item label="可视化编辑" name="code">
-            <CodeMirror height="400px" theme="dark" extensions={[json()]} />
+            <CodeMirror height="400px" theme="dark" extensions={[langs.json()]} />
           </Form.Item>
         </Form>
       </div>

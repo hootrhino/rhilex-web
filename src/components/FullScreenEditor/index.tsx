@@ -27,9 +27,9 @@ type uuidItem = {
 };
 
 const DefaultActions = `Actions = {
-  function(data)
-    -- rulexlib:Debug(data)
-    return true, data
+  function(args)
+    -- rulexlib:Debug(args)
+    return true, args
   end
 }`;
 const DefaultSuccess = `function Success()

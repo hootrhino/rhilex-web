@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { history, useParams } from 'umi';
 
 import {
@@ -14,13 +14,14 @@ import {
 } from '@ant-design/pro-components';
 import { useModel, useRequest } from 'umi';
 
-import FullScreenEditor from '@/components/FullScreenEditor';
+// import FullScreenEditor from '@/components/FullScreenEditor';
 import { message } from '@/components/PopupHack';
 import useGoBack from '@/hooks/useGoBack';
 import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanli';
 import { Button, Popconfirm, Space } from 'antd';
 import omit from 'lodash/omit';
 import { CodeOutlined } from '@ant-design/icons';
+import CodeEditor from '@/components/CodeEditor';
 
 export type FormItem = {
   actions: string;
@@ -34,9 +35,9 @@ export type FormItem = {
 };
 
 const DefaultActions = `Actions = {
-  function(data)
-    -- rulexlib:Debug(data)
-    return true, data
+  function(args)
+    -- rulexlib:Debug(args)
+    return true, args
   end
 }`;
 const DefaultSuccess = `function Success()
@@ -51,13 +52,20 @@ const DefaultListUrl = '/rules/list';
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
-  const failRef = useRef(null);
-  const actionRef = useRef(null);
-  const successRef = useRef(null);
+  // const failRef = useRef(null);
+  // const actionRef = useRef(null);
+  // const successRef = useRef(null);
   const { showModal } = useGoBack();
 
   const { data: sources } = useModel('useSource');
   const { data: devices, run: getDevices } = useModel('useDevice');
+
+  const [code, setCode] = useState(DefaultActions);
+
+  const handleOnChange = useCallback((val: string) => {
+    console.log('val:', val);
+    setCode(val);
+  }, []);
 
   // 获取详情
   const { run: getDetail } = useRequest((uuid: string) => getRulesDetail({ uuid: uuid || '' }), {
@@ -233,12 +241,13 @@ const UpdateForm = () => {
             </ProForm.Group>
 
             <ProForm.Item
-              label={<Space><span>规则回调</span><div className='w-[100px] h-full bg-[#18f] text-[#fff]'><CodeOutlined className='pr-[8px]' /><span>代码格式化</span></div></Space>}
+              label={<Space><span>规则回调</span><div className='flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]'><CodeOutlined className='pr-[8px]' /><span>代码格式化</span></div></Space>}
               name="actions"
               rules={[{ required: true, message: '请输入规则回调' }]}
               // tooltip='从左至右分别是规则回调/成功回调/失败回调'
             >
-              <FullScreenEditor />
+              <CodeEditor value={code} onChange={handleOnChange}  />
+              {/* <FullScreenEditor /> */}
             </ProForm.Item>
             {/* <ProForm.Item
               label="成功回调"
