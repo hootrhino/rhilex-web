@@ -210,20 +210,20 @@ const timeTpl = `function(args)
   return true, args
 end`;
 
-const matchUIntTpl = `local MatchHexTb = rulexlib:MatchUInt("k1:[0,1];k2:[2,3]", "0xFFFFFF")
-  print("MatchHexTb.k1=", MatchHexTb.k1)
-  print("MatchHexTb.k2=", MatchHexTb.k2)
-`;
+// const matchUIntTpl = `local MatchHexTb = rulexlib:MatchUInt("k1:[0,1];k2:[2,3]", "0xFFFFFF")
+//   print("MatchHexTb.k1=", MatchHexTb.k1)
+//   print("MatchHexTb.k2=", MatchHexTb.k2)
+// `;
 
 export const luaSnippets = [
-  {
-    template: matchUIntTpl,
-    completion: {
-      label: 'MatchUInt',
-      detail: '十六进制字符串匹配',
-      type: 'class',
-    },
-  },
+  // {
+  //   template: matchUIntTpl,
+  //   completion: {
+  //     label: 'MatchUInt',
+  //     detail: '十六进制字符串匹配',
+  //     type: 'class',
+  //   },
+  // },
   {
     template: mqttTpl,
     completion: {

@@ -78,6 +78,7 @@ const LuaEditor = (props: ReactCodeMirrorProps) => {
           defaultKeymap: true,
           lintKeymap: true,
           completionKeymap: true,
+          tabSize: 2
         }),
         autocompletion({ override: [myCompletions as any] }),
       ]}

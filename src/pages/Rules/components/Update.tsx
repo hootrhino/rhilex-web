@@ -15,13 +15,14 @@ import {
 import { useModel, useRequest } from 'umi';
 
 // import FullScreenEditor from '@/components/FullScreenEditor';
+import LuaEditor from '@/components/LuaEditor';
 import { message } from '@/components/PopupHack';
 import useGoBack from '@/hooks/useGoBack';
 import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanli';
+import { CodeOutlined } from '@ant-design/icons';
 import { Button, Popconfirm, Space } from 'antd';
 import omit from 'lodash/omit';
-import { CodeOutlined } from '@ant-design/icons';
-import LuaEditor from '@/components/LuaEditor';
+import luamin from 'lua-format';
 
 export type FormItem = {
   actions: string;
@@ -35,10 +36,10 @@ export type FormItem = {
 };
 
 const DefaultActions = `Actions = {
-  function(args)
-    -- rulexlib:Debug(args)
-    return true, args
-  end
+    function(args)
+      -- rulexlib:Debug(args)
+      return true, args
+    end
 }`;
 const DefaultSuccess = `function Success()
 --rulexlib:log("success")
@@ -180,72 +181,98 @@ const UpdateForm = () => {
             onFinish={handleOnFinish}
           >
             <ProForm.Group>
-            <ProFormText
-              label="规则名称"
-              name="name"
-              rules={[
-                {
-                  required: true,
-                  message: '规则名称为必填项',
-                },
-              ]}
-              width='xl'
-            />
-            <ProFormRadio.Group
-              name="sourceType"
-              label="数据来源"
-              options={[
-                {
-                  label: '输入资源',
-                  value: 'fromSource',
-                },
-                {
-                  label: '设备',
-                  value: 'fromDevice',
-                },
-              ]}
-              width='xl'
-            />
-
+              <ProFormText
+                label="规则名称"
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: '规则名称为必填项',
+                  },
+                ]}
+                width="xl"
+              />
+              <ProFormRadio.Group
+                name="sourceType"
+                label="数据来源"
+                options={[
+                  {
+                    label: '输入资源',
+                    value: 'fromSource',
+                  },
+                  {
+                    label: '设备',
+                    value: 'fromDevice',
+                  },
+                ]}
+                width="xl"
+              />
             </ProForm.Group>
             <ProForm.Group>
-            <ProFormDependency name={['sourceType']}>
-              {({ sourceType }) => {
-                if (sourceType === 'fromSource') {
-                  return (
-                    <ProFormSelect
-                      label="输入资源"
-                      name="fromSource"
-                      options={sources}
-                      placeholder="请选择数据源"
-                      rules={[{ required: true, message: '请选择数据源' }]}
-                      width='xl'
-                    />
-                  );
-                } else {
-                  return (
-                    <ProFormSelect
-                      label="输入资源"
-                      name="fromDevice"
-                      options={devices}
-                      placeholder="请选择数据源"
-                      rules={[{ required: true, message: '请选择数据源' }]}
-                      width='xl'
-                    />
-                  );
-                }
-              }}
-            </ProFormDependency>
-            <ProFormText label="备注信息" name="description" width='xl'/>
+              <ProFormDependency name={['sourceType']}>
+                {({ sourceType }) => {
+                  if (sourceType === 'fromSource') {
+                    return (
+                      <ProFormSelect
+                        label="输入资源"
+                        name="fromSource"
+                        options={sources}
+                        placeholder="请选择数据源"
+                        rules={[{ required: true, message: '请选择数据源' }]}
+                        width="xl"
+                      />
+                    );
+                  } else {
+                    return (
+                      <ProFormSelect
+                        label="输入资源"
+                        name="fromDevice"
+                        options={devices}
+                        placeholder="请选择数据源"
+                        rules={[{ required: true, message: '请选择数据源' }]}
+                        width="xl"
+                      />
+                    );
+                  }
+                }}
+              </ProFormDependency>
+              <ProFormText label="备注信息" name="description" width="xl" />
             </ProForm.Group>
 
             <ProForm.Item
-              label={<Space><span>规则回调</span><div className='flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]'><CodeOutlined className='pr-[8px]' /><span>代码格式化</span></div></Space>}
+              label={
+                <Space>
+                  <span>规则回调</span>
+                  <div
+                    className="flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]"
+                    onClick={() => {
+                      const formatCode = luamin.Beautify(code, {
+                        RenameVariables: false,
+                        RenameGlobals: false,
+                        SolveMath: true,
+                      });
+                      let formattedCode = formatCode
+                        .toString()
+                        .replace(
+                          /--discord\.gg\/boronide, code generated using luamin\.js™\n?/g,
+                          '',
+                        );
+
+                      formattedCode = formattedCode.replace(/^\s*\n/gm, '');
+                      setCode(formattedCode);
+                      // actionRef.current?.editor?.setValue(formattedCode);
+                    }}
+                  >
+                    <CodeOutlined className="pr-[8px]" />
+                    <span>代码格式化</span>
+                  </div>
+                </Space>
+              }
               name="actions"
               rules={[{ required: true, message: '请输入规则回调' }]}
               // tooltip='从左至右分别是规则回调/成功回调/失败回调'
             >
-              <LuaEditor value={code} onChange={handleOnChange} key='action' />
+              <LuaEditor value={code} onChange={handleOnChange} key="action" />
               {/* <FullScreenEditor /> */}
             </ProForm.Item>
             {/* <ProForm.Item
@@ -262,7 +289,6 @@ const UpdateForm = () => {
             >
               <FullScreenEditor ref={failRef} />
             </ProForm.Item> */}
-
           </ProForm>
         </ProCard>
       </PageContainer>
