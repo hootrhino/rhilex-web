@@ -21,7 +21,7 @@ import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanl
 import { Button, Popconfirm, Space } from 'antd';
 import omit from 'lodash/omit';
 import { CodeOutlined } from '@ant-design/icons';
-import CodeEditor from '@/components/CodeEditor';
+import LuaEditor from '@/components/LuaEditor';
 
 export type FormItem = {
   actions: string;
@@ -63,7 +63,6 @@ const UpdateForm = () => {
   const [code, setCode] = useState(DefaultActions);
 
   const handleOnChange = useCallback((val: string) => {
-    console.log('val:', val);
     setCode(val);
   }, []);
 
@@ -246,7 +245,7 @@ const UpdateForm = () => {
               rules={[{ required: true, message: '请输入规则回调' }]}
               // tooltip='从左至右分别是规则回调/成功回调/失败回调'
             >
-              <CodeEditor value={code} onChange={handleOnChange}  />
+              <LuaEditor value={code} onChange={handleOnChange} key='action' />
               {/* <FullScreenEditor /> */}
             </ProForm.Item>
             {/* <ProForm.Item

@@ -11,18 +11,7 @@ type Options = {
   label: string;
 };
 
-// type Completion = {
-//   lable: string;
-//   detail?: string;
-//   [key: string]: any;
-// }
-
-// type Snippet = {
-//   template: string;
-//   completion: Completion;
-// }
-
-const CodeEditor = (props: ReactCodeMirrorProps) => {
+const LuaEditor = (props: ReactCodeMirrorProps) => {
   const { data: inends } = useModel('useSource');
   const { data: outends } = useModel('useOutends');
 
@@ -33,9 +22,10 @@ const CodeEditor = (props: ReactCodeMirrorProps) => {
 
   const myCompletions = (context: CompletionContext) => {
     const word = context.matchBefore(/\w*/);
-    // if (!word) return;
+
     if (!word || word.from === word.to || word.text.trim().length <= 0) return null;
     const queryData = fuzzySearch(word.text);
+
     // 内置 keyword
     const buildInKeyword = queryData?.map((item) => ({ label: ` ${item}`, type: 'keyword' }));
 
@@ -90,11 +80,10 @@ const CodeEditor = (props: ReactCodeMirrorProps) => {
           completionKeymap: true,
         }),
         autocompletion({ override: [myCompletions as any] }),
-        langs.lua().data.of({ autocompletion: [snippetCompletion('djdjjd', { label: 'mysn' })] }),
       ]}
       {...props}
     />
   );
 };
 
-export default CodeEditor;
+export default LuaEditor;
