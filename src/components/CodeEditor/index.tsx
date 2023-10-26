@@ -1,15 +1,26 @@
-import { autocompletion, CompletionContext } from '@codemirror/autocomplete';
+import { autocompletion, CompletionContext, snippetCompletion } from '@codemirror/autocomplete';
 import { langs } from '@uiw/codemirror-extensions-langs';
 import { atomone } from '@uiw/codemirror-theme-atomone';
 import type { ReactCodeMirrorProps } from '@uiw/react-codemirror';
 import CodeMirror, { basicSetup } from '@uiw/react-codemirror';
 import { useModel } from '@umijs/max';
-import { luaCustomFuncs, luaGlobFuncs, luaKeywords } from './constant';
+import { luaGlobFuncs, luaKeywords, luaSnippets } from './constant';
 
 type Options = {
   value: string;
   label: string;
 };
+
+// type Completion = {
+//   lable: string;
+//   detail?: string;
+//   [key: string]: any;
+// }
+
+// type Snippet = {
+//   template: string;
+//   completion: Completion;
+// }
 
 const CodeEditor = (props: ReactCodeMirrorProps) => {
   const { data: inends } = useModel('useSource');
@@ -22,7 +33,8 @@ const CodeEditor = (props: ReactCodeMirrorProps) => {
 
   const myCompletions = (context: CompletionContext) => {
     const word = context.matchBefore(/\w*/);
-    if (!word) return;
+    // if (!word) return;
+    if (!word || word.from === word.to || word.text.trim().length <= 0) return null;
     const queryData = fuzzySearch(word.text);
     // 内置 keyword
     const buildInKeyword = queryData?.map((item) => ({ label: ` ${item}`, type: 'keyword' }));
@@ -31,15 +43,22 @@ const CodeEditor = (props: ReactCodeMirrorProps) => {
     const inendsOptions = inends?.map((item: Options) => ({
       label: ` ${item?.value}`,
       type: 'text',
-      detail: `输入资源 ${item?.label}`,
+      detail: `UUID 参数来自资源管理`,
+      apply: item.value,
     }));
 
     // 输出资源 UUID
     const outendsOptions = outends?.map((item: Options) => ({
       label: ` ${item?.value}`,
       type: 'text',
-      detail: `输出资源 ${item?.label}`,
+      detail: `UUID 参数来自目标管理`,
+      apply: item.value,
     }));
+
+    // 内置模板
+    const snippetOptions = luaSnippets.map((snippet: any) =>
+      snippetCompletion(snippet.template, snippet.completion),
+    );
 
     return {
       from: word.from,
@@ -48,7 +67,7 @@ const CodeEditor = (props: ReactCodeMirrorProps) => {
         ...inendsOptions,
         ...outendsOptions,
         ...luaGlobFuncs,
-        ...luaCustomFuncs,
+        ...snippetOptions,
       ],
     };
   };
@@ -71,6 +90,7 @@ const CodeEditor = (props: ReactCodeMirrorProps) => {
           completionKeymap: true,
         }),
         autocompletion({ override: [myCompletions as any] }),
+        langs.lua().data.of({ autocompletion: [snippetCompletion('djdjjd', { label: 'mysn' })] }),
       ]}
       {...props}
     />
