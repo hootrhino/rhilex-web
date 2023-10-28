@@ -11,16 +11,17 @@ import {
   ProFormRadio,
   ProFormSelect,
   ProFormText,
-  ProFormTextArea,
 } from '@ant-design/pro-components';
 import { useModel, useRequest } from 'umi';
 
-import FullScreenEditor from '@/components/FullScreenEditor';
+import LuaEditor from '@/components/LuaEditor';
 import { message } from '@/components/PopupHack';
 import useGoBack from '@/hooks/useGoBack';
 import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanli';
+import { CodeOutlined } from '@ant-design/icons';
 import { Button, Popconfirm } from 'antd';
 import omit from 'lodash/omit';
+import luamin from 'lua-format';
 
 export type FormItem = {
   actions: string;
@@ -34,10 +35,10 @@ export type FormItem = {
 };
 
 const DefaultActions = `Actions = {
-  function(data)
-    -- rulexlib:Debug(data)
-    return true, data
-  end
+    function(args)
+      -- rulexlib:Debug(args)
+      return true, args
+    end
 }`;
 const DefaultSuccess = `function Success()
 --rulexlib:log("success")
@@ -51,9 +52,7 @@ const DefaultListUrl = '/rules/list';
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
-  const failRef = useRef(null);
-  const actionRef = useRef(null);
-  const successRef = useRef(null);
+
   const { showModal } = useGoBack();
 
   const { data: sources } = useModel('useSource');
@@ -114,9 +113,25 @@ const UpdateForm = () => {
       }
 
       return true;
-    } catch (error) {
+    } catch (err) {
+      message.error(err as any);
       return false;
     }
+  };
+
+  const handleOnFormatCode = (type: 'actions' | 'success' | 'failed') => {
+    const code = formRef.current?.getFieldValue(type);
+    const formatCode = luamin.Beautify(code[type], {
+      RenameVariables: false,
+      RenameGlobals: false,
+      SolveMath: true,
+    });
+    let formattedCode = formatCode
+      .toString()
+      .replace(/--discord\.gg\/boronide, code generated using luamin\.js™\n?/g, '');
+
+    formattedCode = formattedCode.replace(/^\s*\n/gm, '');
+    formRef.current?.setFieldsValue({ [type]: formattedCode });
   };
 
   useEffect(() => {
@@ -172,77 +187,150 @@ const UpdateForm = () => {
             }}
             onFinish={handleOnFinish}
           >
-            <ProFormText
-              label="规则名称"
-              name="name"
-              rules={[
-                {
-                  required: true,
-                  message: '规则名称为必填项',
-                },
-              ]}
-            />
-            <ProFormRadio.Group
-              name="sourceType"
-              label="数据来源"
-              options={[
-                {
-                  label: '输入资源',
-                  value: 'fromSource',
-                },
-                {
-                  label: '设备',
-                  value: 'fromDevice',
-                },
-              ]}
-            />
-            <ProFormDependency name={['sourceType']}>
-              {({ sourceType }) => {
-                if (sourceType === 'fromSource') {
-                  return (
-                    <ProFormSelect
-                      label="输入资源"
-                      name="fromSource"
-                      options={sources}
-                      placeholder="请选择数据源"
-                      rules={[{ required: true, message: '请选择数据源' }]}
-                    />
-                  );
-                } else {
-                  return (
-                    <ProFormSelect
-                      label="输入资源"
-                      name="fromDevice"
-                      options={devices}
-                      placeholder="请选择数据源"
-                      rules={[{ required: true, message: '请选择数据源' }]}
-                    />
-                  );
-                }
-              }}
-            </ProFormDependency>
-            <ProForm.Item
-              label="规则回调"
-              name="actions"
-              rules={[{ required: true, message: '请输入规则回调' }]}
+            <ProForm.Group>
+              <ProFormText
+                label="规则名称"
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: '规则名称为必填项',
+                  },
+                ]}
+                width="xl"
+              />
+              <ProFormRadio.Group
+                name="sourceType"
+                label="数据来源"
+                options={[
+                  {
+                    label: '输入资源',
+                    value: 'fromSource',
+                  },
+                  {
+                    label: '设备',
+                    value: 'fromDevice',
+                  },
+                ]}
+                width="xl"
+              />
+            </ProForm.Group>
+            <ProForm.Group>
+              <ProFormDependency name={['sourceType']}>
+                {({ sourceType }) => {
+                  if (sourceType === 'fromSource') {
+                    return (
+                      <ProFormSelect
+                        label="输入资源"
+                        name="fromSource"
+                        options={sources}
+                        placeholder="请选择数据源"
+                        rules={[{ required: true, message: '请选择数据源' }]}
+                        width="xl"
+                      />
+                    );
+                  } else {
+                    return (
+                      <ProFormSelect
+                        label="输入资源"
+                        name="fromDevice"
+                        options={devices}
+                        placeholder="请选择数据源"
+                        rules={[{ required: true, message: '请选择数据源' }]}
+                        width="xl"
+                      />
+                    );
+                  }
+                }}
+              </ProFormDependency>
+              <ProFormText label="备注信息" name="description" width="xl" />
+            </ProForm.Group>
+            <ProCard
+              title="规则回调"
+              collapsible
+              extra={
+                <div
+                  className="flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOnFormatCode('actions');
+                  }}
+                >
+                  <CodeOutlined className="pr-[8px]" />
+                  <span>代码格式化</span>
+                </div>
+              }
             >
-              <FullScreenEditor ref={actionRef} />
-            </ProForm.Item>
-            <ProForm.Item
-              label="成功回调"
-              name="success"
-              rules={[{ required: true, message: '请输入成功回调' }]}
+              <ProForm.Item
+                label={false}
+                name="actions"
+                rules={[{ required: true, message: '请输入规则回调' }]}
+              >
+                <LuaEditor
+                  // value={code.actions}
+                  // onChange={(value) => setCode({ ...code, actions: value })}
+                  key="action"
+                />
+              </ProForm.Item>
+            </ProCard>
+            <ProCard
+              title="成功回调"
+              collapsible
+              defaultCollapsed
+              extra={
+                <div
+                  className="flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOnFormatCode('success');
+                  }}
+                >
+                  <CodeOutlined className="pr-[8px]" />
+                  <span>代码格式化</span>
+                </div>
+              }
             >
-              <FullScreenEditor ref={successRef} />
-            </ProForm.Item>
-            <ProForm.Item
-              label="失败回调"
-              name="failed"
-              rules={[{ required: true, message: '请输入失败回调' }]}
+              <ProForm.Item
+                label={false}
+                name="success"
+                rules={[{ required: true, message: '请输入成功回调' }]}
+              >
+                <LuaEditor
+                  // value={code.success}
+                  // onChange={(value) => setCode({ ...code, success: value })}
+                  key="success"
+                />
+              </ProForm.Item>
+            </ProCard>
+            <ProCard
+              title="失败回调"
+              collapsible
+              defaultCollapsed
+              extra={
+                <div
+                  className="flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOnFormatCode('failed');
+                  }}
+                >
+                  <CodeOutlined className="pr-[8px]" />
+                  <span>代码格式化</span>
+                </div>
+              }
             >
-              <FullScreenEditor ref={failRef} />
-            </ProForm.Item>
-            <ProFormTextArea label="备注信息" name="description" />
+              <ProForm.Item
+                label={false}
+                name="failed"
+                rules={[{ required: true, message: '请输入失败回调' }]}
+              >
+                <LuaEditor
+                  // value={code.failed}
+                  // onChange={(value) => setCode({ ...code, failed: value })}
+                  key="failed"
+                />
+              </ProForm.Item>
+            </ProCard>
           </ProForm>
         </ProCard>
       </PageContainer>

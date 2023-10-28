@@ -9,7 +9,7 @@ import 'ace-builds/webpack-resolver';
 
 import luamin from 'lua-format';
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
-import AceEditor from 'react-ace';
+import {split as SplitEditor} from 'react-ace';
 
 import { completions } from '@/utils/completion';
 import { cn } from '@/utils/utils';
@@ -26,8 +26,21 @@ type uuidItem = {
   value: string;
 };
 
+const DefaultActions = `Actions = {
+  function(args)
+    -- rulexlib:Debug(args)
+    return true, args
+  end
+}`;
+const DefaultSuccess = `function Success()
+--rulexlib:log("success")
+end`;
+const DefaultFailed = `function Failed(error)
+  rulexlib:log(error)
+end`;
+
 const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ...props }, ref) => {
-  const editorRef = useRef<AceEditor>(null);
+  const editorRef = useRef(null);
   const { data: inends } = useModel('useSource');
   const { data: outends } = useModel('useOutends');
   const [code, setCode] = useState<string>('');
@@ -72,7 +85,7 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ..
 
   return (
       <div ref={ref} className={cn('editor-wrap', 'bg-[#1a1d1f]')} style={{ height: 500 }}>
-        <div className={cn('editor-icon', 'text-white text-[20px] float-right')}>
+        {/* <div className={cn('editor-icon', 'text-white text-[20px] float-right')}>
           <Space
             align="center"
             size="middle"
@@ -103,13 +116,17 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ..
               <div className="text-[14px]">代码格式化</div>
             </Space>
           </Space>
-        </div>
-        <AceEditor
+        </div> */}
+        <SplitEditor
+        name='sss'
+        splits={3}
+        orientation='beside'
           mode="lua"
           theme="monokai"
-          value={code}
-          onChange={(value) => setCode(value)}
-          ref={editorRef}
+          value={[DefaultActions, DefaultSuccess, DefaultFailed]}
+          // value={code}
+          // onChange={(value) => setCode(value)}
+          // ref={editorRef}
           editorProps={{ $blockScrolling: true }}
           width="100%"
           style={{ height: 'calc(100% - 44px)' }}
@@ -117,17 +134,17 @@ const FullScreenEditor = forwardRef<HTMLDivElement, FullScreenEditorProps>(({ ..
           showPrintMargin={false}
           highlightActiveLine={true}
           enableSnippets={true}
-          onLoad={(editor) => {
-            editor.completers = [...editor.completers, ...myCompleters];
-          }}
+          // onLoad={(editor) => {
+          //   editor.completers = [...editor.completers, ...myCompleters];
+          // }}
           setOptions={{
             enableLiveAutocompletion: true,
             enableBasicAutocompletion: true,
             enableSnippets: true,
             tabSize: 2,
           }}
-          annotations={[{ row: 0, column: 2, type: 'error', text: 'Some error.' }]} // 错误，警告
-          {...props}
+         // annotations={[{ row: 0, column: 2, type: 'error', text: 'Some error.' }]} // 错误，警告
+          // {...props}
         />
       </div>
 
