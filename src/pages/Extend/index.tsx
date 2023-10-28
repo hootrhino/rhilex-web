@@ -9,6 +9,7 @@ import {
   putGoodsStop,
   putGoodsUpdate,
 } from '@/services/rulex/kuozhanxieyi';
+import { IconFont } from '@/utils/utils';
 import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -49,6 +50,14 @@ const baseColumns = [
     copyable: true,
   },
   {
+    title: '扩展类型',
+    dataIndex: 'goodsType',
+    renderText: (goodsType: string) => {
+      const isLocal = goodsType === 'LOCAL';
+      return <Tag color={isLocal ? 'green' : 'purple'}>{isLocal ? '内部' : '外部'}</Tag>;
+    },
+  },
+  {
     title: '本地路径',
     dataIndex: 'local_path',
     ellipsis: true,
@@ -63,6 +72,27 @@ const baseColumns = [
     dataIndex: 'args',
     ellipsis: true,
     renderText: (args: string[]) => args?.join(','),
+  },
+  {
+    title: '执行类型',
+    dataIndex: 'executeType',
+    renderText: (executeType: string) => {
+      let iconType = 'unknown';
+      const defaultType = ['JAVA', 'ELF', 'PYTHON', 'EXE', 'NODEJS', 'LUA'];
+
+      if (defaultType.includes(executeType)) {
+        iconType = executeType.toLocaleLowerCase();
+      } else {
+        iconType = 'unknown';
+      }
+
+      return (
+        <div className="flex justify-start items-center">
+          <IconFont type={`icon-${iconType}`} style={{ fontSize: 22, paddingRight: 5 }} />
+          <span>{executeType}</span>
+        </div>
+      );
+    },
   },
   {
     title: '运行状态',
@@ -91,7 +121,11 @@ const ExtendedProtocol = () => {
   const actionRef = useRef<ActionType>();
   const formRef = useRef<ProFormInstance>();
   const [open, setOpen] = useState<boolean>(false);
-  const [detailConfig, setDetailConfig] = useState<{ type: 'detail' | 'log'; open: boolean; uuid?: string }>({
+  const [detailConfig, setDetailConfig] = useState<{
+    type: 'detail' | 'log';
+    open: boolean;
+    uuid?: string;
+  }>({
     type: 'detail',
     open: false,
   });
@@ -315,7 +349,11 @@ const ExtendedProtocol = () => {
             <ProDescriptions.Item label="协议参数">{initialValue.args}</ProDescriptions.Item>
           </ProDescriptions>
         ) : (
-          <LogTable topic={`goods/console/${detailConfig?.uuid}`} options={false} headerTitle={undefined} />
+          <LogTable
+            topic={`goods/console/${detailConfig?.uuid}`}
+            options={false}
+            headerTitle={undefined}
+          />
         )}
       </Modal>
     </>
