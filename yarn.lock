@@ -2362,7 +2362,7 @@
   dependencies:
     "@codemirror/language" "^6.0.0"
 
-"@codemirror/lint@^6.0.0":
+"@codemirror/lint@^6.0.0", "@codemirror/lint@^6.4.2":
   version "6.4.2"
   resolved "https://registry.npmmirror.com/@codemirror/lint/-/lint-6.4.2.tgz#c13be5320bde9707efdc94e8bcd3c698abae0b92"
   integrity sha512-wzRkluWb1ptPKdzlsrbwwjYCPLgzU6N88YBAmlZi8WFyuiEduSd05MnJYNogzyc8rPK7pj6m95ptUApc8sHKVA==
@@ -3842,6 +3842,11 @@
   version "4.14.195"
   resolved "https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.195.tgz#bafc975b252eb6cea78882ce8a7b6bf22a6de632"
   integrity sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==
+
+"@types/luaparse@^0.2.11":
+  version "0.2.11"
+  resolved "https://registry.npmmirror.com/@types/luaparse/-/luaparse-0.2.11.tgz#a28be25a4143848aef33af7ab9b09b1918ce36aa"
+  integrity sha512-jQqnk8wv+TfJv9KEFkehOPguiwE4wdKJgUJVKRWO1c5TaC7YPhEc/gJlhZPjdx6fkf0gCkl1vDO9cz17t5L1/g==
 
 "@types/mdast@^3.0.0":
   version "3.0.11"
@@ -9817,6 +9822,11 @@ lua-format@^1.4.1:
   version "1.4.1"
   resolved "https://registry.npmmirror.com/lua-format/-/lua-format-1.4.1.tgz#bea6690c16b5b5894d07fd04c1cf26be166109cf"
   integrity sha512-+szXHscQq0y88HvWvRqou31sZxmpHeaqpXFBwqGmOLLN7QUh3oSKEPDkWubglK/M0Kn6N8Op+gzvFXeo5MEBsw==
+
+luaparse@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.npmmirror.com/luaparse/-/luaparse-0.3.1.tgz#0899fe5ff5ad3ccd3166632027d150b91291b330"
+  integrity sha512-b21h2bFEbtGXmVqguHogbyrMAA0wOHyp9u/rx+w6Yc9pW1t9YjhGUsp87lYcp7pFRqSWN/PhFkrdIqKEUzRjjQ==
 
 make-dir@^2.1.0:
   version "2.1.0"

@@ -1,9 +1,11 @@
 import { autocompletion, CompletionContext, snippetCompletion } from '@codemirror/autocomplete';
+import { linter, lintGutter, lintKeymap } from '@codemirror/lint';
 import { langs } from '@uiw/codemirror-extensions-langs';
 import { atomone } from '@uiw/codemirror-theme-atomone';
 import type { ReactCodeMirrorProps } from '@uiw/react-codemirror';
-import CodeMirror, { basicSetup } from '@uiw/react-codemirror';
+import CodeMirror, { basicSetup, keymap } from '@uiw/react-codemirror';
 import { useModel } from '@umijs/max';
+import luaparse from 'luaparse';
 import { luaGlobFuncs, luaKeywords, luaSnippets } from './constant';
 
 type Options = {
@@ -62,6 +64,26 @@ const LuaEditor = (props: ReactCodeMirrorProps) => {
     };
   };
 
+  // 错误提示
+  const luaLinter = linter((view) => {
+    const diagnostics = [];
+
+    try {
+      luaparse.parse(view.state.doc?.toString());
+    } catch (e: any) {
+      const from = e.index || 0;
+      const to = from;
+      diagnostics.push({
+        from,
+        to,
+        message: e.message,
+        severity: 'error',
+      });
+    }
+
+    return diagnostics;
+  });
+
   return (
     <CodeMirror
       minHeight="400px"
@@ -78,9 +100,14 @@ const LuaEditor = (props: ReactCodeMirrorProps) => {
           defaultKeymap: true,
           lintKeymap: true,
           completionKeymap: true,
-          tabSize: 2
+          tabSize: 2,
+          lineNumbers: true,
+          syntaxHighlighting: true,
         }),
         autocompletion({ override: [myCompletions as any] }),
+        lintGutter(),
+        keymap.of(lintKeymap),
+        luaLinter,
       ]}
       {...props}
     />

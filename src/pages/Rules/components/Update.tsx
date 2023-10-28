@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { history, useParams } from 'umi';
 
 import {
@@ -14,13 +14,12 @@ import {
 } from '@ant-design/pro-components';
 import { useModel, useRequest } from 'umi';
 
-// import FullScreenEditor from '@/components/FullScreenEditor';
 import LuaEditor from '@/components/LuaEditor';
 import { message } from '@/components/PopupHack';
 import useGoBack from '@/hooks/useGoBack';
 import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanli';
 import { CodeOutlined } from '@ant-design/icons';
-import { Button, Popconfirm, Space } from 'antd';
+import { Button, Popconfirm } from 'antd';
 import omit from 'lodash/omit';
 import luamin from 'lua-format';
 
@@ -53,19 +52,11 @@ const DefaultListUrl = '/rules/list';
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
-  // const failRef = useRef(null);
-  // const actionRef = useRef(null);
-  // const successRef = useRef(null);
+
   const { showModal } = useGoBack();
 
   const { data: sources } = useModel('useSource');
   const { data: devices, run: getDevices } = useModel('useDevice');
-
-  const [code, setCode] = useState(DefaultActions);
-
-  const handleOnChange = useCallback((val: string) => {
-    setCode(val);
-  }, []);
 
   // 获取详情
   const { run: getDetail } = useRequest((uuid: string) => getRulesDetail({ uuid: uuid || '' }), {
@@ -122,9 +113,25 @@ const UpdateForm = () => {
       }
 
       return true;
-    } catch (error) {
+    } catch (err) {
+      message.error(err as any);
       return false;
     }
+  };
+
+  const handleOnFormatCode = (type: 'actions' | 'success' | 'failed') => {
+    const code = formRef.current?.getFieldValue(type);
+    const formatCode = luamin.Beautify(code[type], {
+      RenameVariables: false,
+      RenameGlobals: false,
+      SolveMath: true,
+    });
+    let formattedCode = formatCode
+      .toString()
+      .replace(/--discord\.gg\/boronide, code generated using luamin\.js™\n?/g, '');
+
+    formattedCode = formattedCode.replace(/^\s*\n/gm, '');
+    formRef.current?.setFieldsValue({ [type]: formattedCode });
   };
 
   useEffect(() => {
@@ -238,57 +245,92 @@ const UpdateForm = () => {
               </ProFormDependency>
               <ProFormText label="备注信息" name="description" width="xl" />
             </ProForm.Group>
-
-            <ProForm.Item
-              label={
-                <Space>
-                  <span>规则回调</span>
-                  <div
-                    className="flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]"
-                    onClick={() => {
-                      const formatCode = luamin.Beautify(code, {
-                        RenameVariables: false,
-                        RenameGlobals: false,
-                        SolveMath: true,
-                      });
-                      let formattedCode = formatCode
-                        .toString()
-                        .replace(
-                          /--discord\.gg\/boronide, code generated using luamin\.js™\n?/g,
-                          '',
-                        );
-
-                      formattedCode = formattedCode.replace(/^\s*\n/gm, '');
-                      setCode(formattedCode);
-                      // actionRef.current?.editor?.setValue(formattedCode);
-                    }}
-                  >
-                    <CodeOutlined className="pr-[8px]" />
-                    <span>代码格式化</span>
-                  </div>
-                </Space>
+            <ProCard
+              title="规则回调"
+              collapsible
+              extra={
+                <div
+                  className="flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOnFormatCode('actions');
+                  }}
+                >
+                  <CodeOutlined className="pr-[8px]" />
+                  <span>代码格式化</span>
+                </div>
               }
-              name="actions"
-              rules={[{ required: true, message: '请输入规则回调' }]}
-              // tooltip='从左至右分别是规则回调/成功回调/失败回调'
             >
-              <LuaEditor value={code} onChange={handleOnChange} key="action" />
-              {/* <FullScreenEditor /> */}
-            </ProForm.Item>
-            {/* <ProForm.Item
-              label="成功回调"
-              name="success"
-              rules={[{ required: true, message: '请输入成功回调' }]}
+              <ProForm.Item
+                label={false}
+                name="actions"
+                rules={[{ required: true, message: '请输入规则回调' }]}
+              >
+                <LuaEditor
+                  // value={code.actions}
+                  // onChange={(value) => setCode({ ...code, actions: value })}
+                  key="action"
+                />
+              </ProForm.Item>
+            </ProCard>
+            <ProCard
+              title="成功回调"
+              collapsible
+              defaultCollapsed
+              extra={
+                <div
+                  className="flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOnFormatCode('success');
+                  }}
+                >
+                  <CodeOutlined className="pr-[8px]" />
+                  <span>代码格式化</span>
+                </div>
+              }
             >
-              <FullScreenEditor ref={successRef} />
-            </ProForm.Item>
-            <ProForm.Item
-              label="失败回调"
-              name="failed"
-              rules={[{ required: true, message: '请输入失败回调' }]}
+              <ProForm.Item
+                label={false}
+                name="success"
+                rules={[{ required: true, message: '请输入成功回调' }]}
+              >
+                <LuaEditor
+                  // value={code.success}
+                  // onChange={(value) => setCode({ ...code, success: value })}
+                  key="success"
+                />
+              </ProForm.Item>
+            </ProCard>
+            <ProCard
+              title="失败回调"
+              collapsible
+              defaultCollapsed
+              extra={
+                <div
+                  className="flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOnFormatCode('failed');
+                  }}
+                >
+                  <CodeOutlined className="pr-[8px]" />
+                  <span>代码格式化</span>
+                </div>
+              }
             >
-              <FullScreenEditor ref={failRef} />
-            </ProForm.Item> */}
+              <ProForm.Item
+                label={false}
+                name="failed"
+                rules={[{ required: true, message: '请输入失败回调' }]}
+              >
+                <LuaEditor
+                  // value={code.failed}
+                  // onChange={(value) => setCode({ ...code, failed: value })}
+                  key="failed"
+                />
+              </ProForm.Item>
+            </ProCard>
           </ProForm>
         </ProCard>
       </PageContainer>

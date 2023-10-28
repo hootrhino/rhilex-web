@@ -1,6 +1,6 @@
 export const defaultValue = (os: string | undefined) => {
   const isWindows = os?.includes('windows');
-  console.log(isWindows);
+
   return {
     type: 'GENERIC_SNMP',
     config: {
