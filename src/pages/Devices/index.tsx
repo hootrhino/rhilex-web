@@ -8,6 +8,7 @@ import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 
 import { message } from '@/components/PopupHack';
+import { DefaultRules } from '@/models/useRules';
 import { deleteDevices, getDevices } from '@/services/rulex/shebeiguanli';
 import Detail from './components/Detail';
 
@@ -23,6 +24,7 @@ export type Item = {
 const Devices = () => {
   const actionRef = useRef<ActionType>();
   const { detailConfig, setConfig } = useModel('useDevice');
+  const { setInitialValues } = useModel('useRules');
 
   // 删除
   const handleDelete = async (value: API.deleteDevicesParams) => {
@@ -75,11 +77,20 @@ const Devices = () => {
     },
     {
       title: '操作',
-      width: 120,
+      width: 180,
       fixed: 'right',
       key: 'option',
       valueType: 'option',
       render: (_, { uuid }) => [
+        <a
+          key="rule"
+          onClick={() => {
+            setInitialValues({ ...DefaultRules, fromDevice: uuid, sourceType: 'fromDevice' });
+            history.push('/rules/new');
+          }}
+        >
+          规则配置
+        </a>,
         <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
           详情
         </a>,

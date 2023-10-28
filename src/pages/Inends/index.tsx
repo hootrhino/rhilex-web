@@ -10,6 +10,7 @@ import { Button, Popconfirm } from 'antd';
 import { message } from '@/components/PopupHack';
 import { deleteInends, getInends } from '@/services/rulex/shuruziyuanguanli';
 import Detail from './components/Detail';
+import { DefaultRules } from '@/models/useRules';
 
 export type Item = {
   name: string;
@@ -23,6 +24,7 @@ export type Item = {
 const Sources = () => {
   const actionRef = useRef<ActionType>();
   const { detailConfig, setConfig } = useModel('useSource');
+  const { setInitialValues } = useModel('useRules');
 
   // 删除
   const handleDelete = async (values: API.deleteInendsParams) => {
@@ -78,11 +80,17 @@ const Sources = () => {
     },
     {
       title: '操作',
-      width: 120,
+      width: 180,
       fixed: 'right',
       key: 'option',
       valueType: 'option',
       render: (_, { uuid }) => [
+        <a key="rules" onClick={() => {
+          setInitialValues({ ...DefaultRules, fromSource: uuid, sourceType: 'fromSource' });
+          history.push('/rules/new');
+        }}>
+          规则配置
+        </a>,
         <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
           详情
         </a>,

@@ -34,19 +34,6 @@ export type FormItem = {
   uuid?: string;
 };
 
-const DefaultActions = `Actions = {
-    function(args)
-      -- rulexlib:Debug(args)
-      return true, args
-    end
-}`;
-const DefaultSuccess = `function Success()
---rulexlib:log("success")
-end`;
-const DefaultFailed = `function Failed(error)
-  rulexlib:log(error)
-end`;
-
 const DefaultListUrl = '/rules/list';
 
 const UpdateForm = () => {
@@ -57,6 +44,7 @@ const UpdateForm = () => {
 
   const { data: sources } = useModel('useSource');
   const { data: devices, run: getDevices } = useModel('useDevice');
+  const { initialValues } = useModel('useRules');
 
   // 获取详情
   const { run: getDetail } = useRequest((uuid: string) => getRulesDetail({ uuid: uuid || '' }), {
@@ -139,13 +127,10 @@ const UpdateForm = () => {
       getDetail(id);
     } else {
       formRef.current?.setFieldsValue({
-        actions: DefaultActions,
-        success: DefaultSuccess,
-        failed: DefaultFailed,
-        sourceType: 'fromSource',
+        ...initialValues,
       });
     }
-  }, [id]);
+  }, [id, initialValues]);
 
   useEffect(() => {
     // getSources();
@@ -213,6 +198,7 @@ const UpdateForm = () => {
                   },
                 ]}
                 width="xl"
+                disabled={!!initialValues?.fromDevice || !!initialValues?.fromSource}
               />
             </ProForm.Group>
             <ProForm.Group>
@@ -227,6 +213,7 @@ const UpdateForm = () => {
                         placeholder="请选择数据源"
                         rules={[{ required: true, message: '请选择数据源' }]}
                         width="xl"
+                        disabled={!!initialValues?.fromSource}
                       />
                     );
                   } else {
@@ -235,6 +222,7 @@ const UpdateForm = () => {
                         label="输入资源"
                         name="fromDevice"
                         options={devices}
+                        disabled={!!initialValues?.fromDevice}
                         placeholder="请选择数据源"
                         rules={[{ required: true, message: '请选择数据源' }]}
                         width="xl"

@@ -5,6 +5,7 @@ import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 
 import { message } from '@/components/PopupHack';
+import { DefaultRules } from '@/models/useRules';
 import { deleteRules, getRules } from '@/services/rulex/guizeguanli';
 import { history, useModel } from 'umi';
 import Debug from './components/Debug';
@@ -29,6 +30,7 @@ const Rules = () => {
 
   const { run: getSources } = useModel('useSource');
   const { run: getDevices } = useModel('useDevice');
+  const { setInitialValues } = useModel('useRules');
 
   // 删除
   const handleOnDelete = async (value: API.deleteRulesParams) => {
@@ -131,7 +133,10 @@ const Rules = () => {
             <Button
               type="primary"
               key="new"
-              onClick={() => history.push('/rules/new')}
+              onClick={() => {
+                setInitialValues(DefaultRules);
+                history.push('/rules/new');
+              }}
               icon={<PlusOutlined />}
             >
               新建
