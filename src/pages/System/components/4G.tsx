@@ -3,24 +3,25 @@ import { get4gInfo, postSettings4gRestart } from '@/services/rulex/4Gshezhi';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button, Progress, Space } from 'antd';
+import { Button, Progress } from 'antd';
 import { useRef } from 'react';
 
 const FourGConfig = () => {
   const formRef = useRef<ProFormInstance>();
 
-  // TODO 详情
+  // 详情
   useRequest(() => get4gInfo(), {
     onSuccess: (data) => {
-      // TODO 返回参数不明确
-      console.log(data);
+      formRef.current?.setFieldsValue({ ...data });
     },
   });
 
   // 重启4G
-  const { run: restart } = useRequest(() => postSettings4gRestart(), {
+  const { run: restart, loading } = useRequest(() => postSettings4gRestart(), {
     manual: true,
-    onSuccess: () => message.success('重启成功'),
+    onSuccess: () => {
+      message.success('重启成功');
+    },
   });
 
   return (
@@ -33,17 +34,15 @@ const FourGConfig = () => {
         initialValues={{ zone: 'Asia/Shanghai' }}
         submitter={{
           render: () => (
-            <Space>
-              <Button type="primary" onClick={restart}>
-                重启 4G 网卡
-              </Button>
-            </Space>
+            <Button type="primary" onClick={restart} loading={loading}>
+              重启 4G 网卡
+            </Button>
           ),
         }}
       >
-        <ProFormText name="" label="运营商" placeholder="请输入运营商" disabled />
-        <ProFormText name="" label="ICCID" placeholder="请输入ICCID" disabled />
-        <ProForm.Item name="" label="信号强度">
+        <ProFormText name="cops" label="运营商" placeholder="请输入运营商" disabled />
+        <ProFormText name="iccid" label="ICCID" placeholder="请输入ICCID" disabled />
+        <ProForm.Item name="csq" label="信号强度">
           <Progress steps={10} percent={30} size={20} />
         </ProForm.Item>
       </ProForm>

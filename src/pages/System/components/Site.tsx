@@ -1,22 +1,37 @@
-import { getSiteDetail } from '@/services/rulex/zhandianpeizhi';
+import { getSiteDetail, putSiteUpdate } from '@/services/rulex/zhandianpeizhi';
+import { getBase64 } from '@/utils/utils';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormText, ProFormUploadButton } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { message, Space, Upload } from 'antd';
+import type { UploadFile } from 'antd';
+import { message, Upload } from 'antd';
+import type { RcFile } from 'antd/es/upload';
 import { startsWith } from 'lodash';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+
+type SiteForm = {
+  appName: string;
+  logo: RcFile[];
+};
 
 const SiteConfig = () => {
   const formRef = useRef<ProFormInstance>();
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
-  // TODO 详情接口字段名跟更新接口字段名不一致
-  useRequest(() => getSiteDetail(), {
-    onSuccess: (data) => console.log(data),
+  const { data: detail } = useRequest(() => getSiteDetail(), {
+    onSuccess: (data) => {
+      formRef.current?.setFieldsValue({ appName: data?.appName });
+      setFileList([{ thumbUrl: data?.logo, status: 'done', name: 'appLogo', uid: 'logo' }]);
+    },
   });
 
-  const handleOnFinish = async (values) => {
-    console.log(values);
+  const handleOnFinish = async (values: SiteForm) => {
     try {
+      const file = values.logo?.[0] as UploadFile;
+      const logo = await getBase64(file?.originFileObj as RcFile);
+
+      await putSiteUpdate({ appName: values?.appName, siteName: detail?.siteName, logo });
+      message.success('更新成功');
       return true;
     } catch (error) {
       return false;
@@ -31,31 +46,42 @@ const SiteConfig = () => {
         onFinish={handleOnFinish}
         layout="horizontal"
         labelCol={{ span: 2 }}
+        onValuesChange={(changedValue) => console.log(changedValue)}
         submitter={{
-          render: (props, dom) => <Space className="flex justify-end">{dom}</Space>,
+          render: (props, dom) => dom,
         }}
       >
         <ProFormText
-          name="siteName"
+          name="appName"
           label="系统名称"
           placeholder="请输入系统名称"
           width="xl"
           rules={[{ required: true, message: '请输入系统名称' }]}
         />
+
         <ProFormUploadButton
           label="系统 Logo"
           name="logo"
-          max={1}
           accept="image/*"
           fieldProps={{
+            maxCount: 1,
+            listType: 'picture-card',
+            isImageUrl: () => true,
+            fileList,
             beforeUpload: (file) => {
               const isImage = startsWith(file.type, 'image/');
               if (!isImage) {
                 message.error('仅支持图片格式文件，请检查上传文件格式');
               }
 
-              return isImage || Upload.LIST_IGNORE;
+              const isLt30KB = file.size / 1024 <= 30; // 将文件大小转换为KB
+              if (!isLt30KB) {
+                message.error(`文件大小不能超过 30 KB`);
+              }
+
+              return (isImage && isLt30KB) || Upload.LIST_IGNORE;
             },
+            onChange: (info) => setFileList(info.fileList),
           }}
           rules={[{ required: true, message: '请上传系统 Logo' }]}
         />

@@ -1,6 +1,6 @@
 import { message } from '@/components/PopupHack';
 import { getSettingsEth, postSettingsEth } from '@/services/rulex/wangluopeizhi';
-import { validateGateway, validateIPv4 } from '@/utils/utils';
+import { validateGateway, validateIPv4, validateMask } from '@/utils/utils';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import type { FormListActionType, ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -79,10 +79,12 @@ const NetworkConfig = () => {
         layout="horizontal"
         labelCol={{ span: 2 }}
         onValuesChange={(changedValue) => {
-          console.log(changedValue);
           if (changedValue?.interface && detail) {
             formRef.current?.setFieldsValue({ ...detail[changedValue?.interface] });
           }
+        }}
+        submitter={{
+          render: (props, dom) => dom,
         }}
       >
         <ProFormSelect
@@ -129,23 +131,23 @@ const NetworkConfig = () => {
           placeholder="请输入子网掩码"
           rules={[
             { required: true, message: '请输入子网掩码' },
-            // () => ({
-            //   validator(_, value) {
-            //     if (!value) {
-            //       return Promise.resolve();
-            //     } else {
-            //       try {
-            //         if (!validateMask(value)) {
-            //           return Promise.reject(new Error('子网掩码格式不正确，请检查'));
-            //         } else {
-            //           return Promise.resolve();
-            //         }
-            //       } catch (error) {
-            //         return Promise.reject(new Error('子网掩码格式不正确，请检查'));
-            //       }
-            //     }
-            //   },
-            // }),
+            () => ({
+              validator(_, value) {
+                if (!value) {
+                  return Promise.resolve();
+                } else {
+                  try {
+                    if (!validateMask(value)) {
+                      return Promise.reject(new Error('子网掩码格式不正确，请检查'));
+                    } else {
+                      return Promise.resolve();
+                    }
+                  } catch (error) {
+                    return Promise.reject(new Error('子网掩码格式不正确，请检查'));
+                  }
+                }
+              },
+            }),
           ]}
         />
         <ProFormText

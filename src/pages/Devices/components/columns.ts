@@ -642,6 +642,7 @@ export const columns = [
                 slaverId: 1,
                 address: 0,
                 quantity: 1,
+                function: 3,
               },
               columns: [
                 {

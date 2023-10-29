@@ -1,5 +1,6 @@
 import { message } from '@/components/PopupHack';
 import { getSettingsTime, postSettingsTime, putSettingsNtp } from '@/services/rulex/shijianpeizhi';
+import { SyncOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
   ProForm,
@@ -20,8 +21,8 @@ type UpdateParams = {
 const TimeConfig = () => {
   const formRef = useRef<ProFormInstance>();
 
-  // TODO 详情
-  const { run: getWifiList } = useRequest(() => getSettingsTime(), {
+  // 详情
+  useRequest(() => getSettingsTime(), {
     onSuccess: (data) => {
       if (!data) {
         formRef.current?.setFieldsValue({
@@ -29,15 +30,13 @@ const TimeConfig = () => {
           enableNtp: false,
         });
       } else {
-        // TODO getSettingsTime 返回数据格式不正确
-        console.log(data);
-        // formRef.current?.setFieldsValue({ ...omit(data['eth0'], 'dns'), dnsList });
+        formRef.current?.setFieldsValue({ ...data });
       }
     },
   });
 
   // 立即更新NTP时间
-  const { run: updateNtp } = useRequest(() => putSettingsNtp(), {
+  const { run: updateNtp, loading } = useRequest(() => putSettingsNtp(), {
     manual: true,
     onSuccess: () => {
       message.success('NTP 时间更新成功');
@@ -66,10 +65,7 @@ const TimeConfig = () => {
           render: (props, dom) => (
             <Space>
               {dom}
-              <Button type="primary" onClick={getWifiList}>
-                扫描 WIFI
-              </Button>
-              <Button type="primary" onClick={updateNtp}>
+              <Button type="primary" onClick={updateNtp} icon={<SyncOutlined />} loading={loading}>
                 立即同步 NTP
               </Button>
             </Space>

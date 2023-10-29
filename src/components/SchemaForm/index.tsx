@@ -15,8 +15,8 @@ import { FooterToolbar } from '@ant-design/pro-components';
 import { AutoComplete, Button, ConfigProvider, Popconfirm, Segmented } from 'antd';
 import omit from 'lodash/omit';
 import { useRequest } from 'umi';
-import FullScreenEditor from '../FullScreenEditor';
 
+import LuaEditor from '../LuaEditor';
 import './index.less';
 
 type SchemaFormProps<T = any> = ProFormProps & {
@@ -104,12 +104,12 @@ const SchemaForm = ({
   onValuesChange,
 }: SchemaFormProps) => {
   const formRef = useRef<ProFormInstance>();
-  const editorRef = useRef(null);
+  // const editorRef = useRef(null);
   const { showModal } = useGoBack();
 
   const { data: uartOptions } = useRequest(() => getOsUarts(), {
     formatResult: (res) =>
-      res?.data?.map((item: { port: string; alias: string }) => ({
+      res?.data?.map((item) => ({
         value: item.port,
         label: item.alias,
       })),
@@ -152,7 +152,7 @@ const SchemaForm = ({
     },
     luaCode: {
       renderFormItem: (_: any, props: any) => (
-        <FullScreenEditor ref={editorRef} {...props?.fieldProps} />
+        <LuaEditor {...props?.fieldProps} className="w-full" />
       ),
     },
   };

@@ -111,7 +111,7 @@ const BaseForm = () => {
   // 获取详情
   const { run: getDetail } = useRequest(() => getDevicesDetail({ uuid: id || '' }), {
     manual: true,
-    onSuccess: ({ data }: any) => {
+    onSuccess: (data: any) => {
       const newConfig = Object.fromEntries(
         Object.entries(data?.config || {}).map(([key, value]) => {
           let newValue;

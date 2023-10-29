@@ -33,3 +33,11 @@ export async function postSettingsWifi(
     ...(options || {}),
   });
 }
+
+/** 扫描WIFI GET /api/v1/settings/wifi/scan */
+export async function getSettingsWifiScan(options?: { [key: string]: any }) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/settings/wifi/scan', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}

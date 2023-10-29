@@ -7,29 +7,27 @@ import {
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormTextArea, ProFormUploadButton } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button, Space, Upload } from 'antd';
+import { Button, Upload } from 'antd';
 import { startsWith } from 'lodash';
 import { useRef } from 'react';
 
 const FirmwareConfig = () => {
   const formRef = useRef<ProFormInstance>();
 
-  // TODO 没有返回值
   useRequest(() => getFirmwareVendorKey(), {
-    onSuccess: (data) => console.log(data),
+    onSuccess: (data: string) => formRef.current?.setFieldsValue({ vendorKey: data }),
   });
 
   // 上传固件
   const { run: uploadFile } = useRequest((params) => postFirmwareUpload({}, params), {
     manual: true,
-    onSuccess: () => {
-      // TODO 后端会返回保存路径
-      message.success(`上传成功，固件保存在xx路径下面`);
-      setTimeout(() => formRef.current?.setFieldsValue({ upload: [] }), 500)
+    onSuccess: (data: string) => {
+      message.success(`上传成功，固件保存在${data}路径下面`);
+      setTimeout(() => formRef.current?.setFieldsValue({ upload: [] }), 500);
     },
   });
 
-  const { run: upgrade } = useRequest(() => postFirmwareUpgrade(), {
+  const { run: upgrade, loading } = useRequest(() => postFirmwareUpgrade(), {
     manual: true,
     onSuccess: () => {
       message.success('升级成功');
@@ -45,11 +43,9 @@ const FirmwareConfig = () => {
         labelCol={{ span: 2 }}
         submitter={{
           render: () => (
-            <Space>
-              <Button type="primary" onClick={upgrade}>
-                确定升级
-              </Button>
-            </Space>
+            <Button type="primary" onClick={upgrade} loading={loading}>
+              确定升级
+            </Button>
           ),
         }}
         onValuesChange={(changedValue) => {

@@ -1,9 +1,14 @@
 import { message } from '@/components/PopupHack';
-import { getSettingsWifi, postSettingsWifi } from '@/services/rulex/WIFIpeizhi';
+import {
+  getSettingsWifi,
+  getSettingsWifiScan,
+  postSettingsWifi,
+} from '@/services/rulex/WIFIpeizhi';
+import { WifiOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { AutoComplete } from 'antd';
+import { AutoComplete, Button, Space } from 'antd';
 import { useRef } from 'react';
 
 type UpdateForm = {
@@ -19,12 +24,18 @@ type UpdateParams = UpdateForm & {
 const WIFIConfig = () => {
   const formRef = useRef<ProFormInstance>();
 
-  // TODO 获取SSID列表
+  // 扫描 wifi
+  const {
+    data: wifiList,
+    run: GetWifiList,
+    loading,
+  } = useRequest(() => getSettingsWifiScan(), {
+    onSuccess: () => message.success('扫描完成'),
+  });
 
   // 详情
   const { data: detail } = useRequest(() => getSettingsWifi(), {
     onSuccess: (data) => {
-      console.log(data);
       if (!data) {
         formRef.current?.setFieldsValue({
           security: 'WPA-PSK',
@@ -59,10 +70,25 @@ const WIFIConfig = () => {
         onFinish={handleOnFinish}
         layout="horizontal"
         labelCol={{ span: 2 }}
+        submitter={{
+          render: (props, dom) => (
+            <Space>
+              {dom}
+              <Button
+                icon={<WifiOutlined />}
+                type="primary"
+                onClick={GetWifiList}
+                loading={loading}
+              >
+                扫描 WIFI
+              </Button>
+            </Space>
+          ),
+        }}
       >
         <ProForm.Item name="ssid" label="SSID" rules={[{ required: true, message: '请输入 SSID' }]}>
           <AutoComplete
-            options={[]}
+            options={wifiList?.map((item) => ({ label: item, value: item }))}
             style={{ width: 550 }}
             // onSelect={onSelect}
             // onSearch={(text) => setOptions(getPanelValue(text))}

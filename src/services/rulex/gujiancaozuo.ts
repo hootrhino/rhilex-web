@@ -45,7 +45,7 @@ export async function postFirmwareUpload(body: {}, file?: File, options?: { [key
     }
   });
 
-  return request<Record<string, any>>('/api/v1/firmware/upload', {
+  return request<{ code: number; msg: string; data: string }>('/api/v1/firmware/upload', {
     method: 'POST',
     data: formData,
     requestType: 'form',
@@ -55,7 +55,7 @@ export async function postFirmwareUpload(body: {}, file?: File, options?: { [key
 
 /** 查看密钥 GET /api/v1/firmware/vendorKey */
 export async function getFirmwareVendorKey(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/v1/firmware/vendorKey', {
+  return request<{ code: number; msg: string; data: string }>('/api/v1/firmware/vendorKey', {
     method: 'GET',
     ...(options || {}),
   });

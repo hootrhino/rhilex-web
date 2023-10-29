@@ -17,7 +17,7 @@ export async function getSiteDetail(options?: { [key: string]: any }) {
 /** 更新最新站点配置 PUT /api/v1/site/update */
 export async function putSiteUpdate(
   body: {
-    sitename: string;
+    siteName: string;
     logo: string;
     appName: string;
   },
