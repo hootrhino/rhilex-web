@@ -4309,6 +4309,20 @@
   dependencies:
     "@uiw/codemirror-themes" "4.21.20"
 
+"@uiw/codemirror-theme-bbedit@^4.21.20":
+  version "4.21.20"
+  resolved "https://registry.npmmirror.com/@uiw/codemirror-theme-bbedit/-/codemirror-theme-bbedit-4.21.20.tgz#b658c7e8420cfc1c55b4716715ff2140ff2e3f52"
+  integrity sha512-XRi7YK00bmojfqgKJesVvUxjTGvWP1fwpFyYsmVJImrXHAXvPKAEStR4fIwjQxo4rUWyPl996uzqkcTvIegPlQ==
+  dependencies:
+    "@uiw/codemirror-themes" "4.21.20"
+
+"@uiw/codemirror-theme-monokai@^4.21.20":
+  version "4.21.20"
+  resolved "https://registry.npmmirror.com/@uiw/codemirror-theme-monokai/-/codemirror-theme-monokai-4.21.20.tgz#5711cd67a58de71ed10e6817db80401a235a46d6"
+  integrity sha512-fNsb8i6qXp5KoZZ8kjxCebzZg+Ldo5B2jwypqzFPv9deALnRt04vGBk5HF8GR6nny4SHL165ymbjkYG0zHj5SA==
+  dependencies:
+    "@uiw/codemirror-themes" "4.21.20"
+
 "@uiw/codemirror-themes@4.21.20":
   version "4.21.20"
   resolved "https://registry.npmmirror.com/@uiw/codemirror-themes/-/codemirror-themes-4.21.20.tgz#d7770af97a9240fb49b50e2f10e31080eac73972"
@@ -4898,11 +4912,6 @@ accepts@~1.3.8:
   dependencies:
     mime-types "~2.1.34"
     negotiator "0.6.3"
-
-ace-builds@^1.23.0, ace-builds@^1.4.14:
-  version "1.23.0"
-  resolved "https://registry.npmmirror.com/ace-builds/-/ace-builds-1.23.0.tgz#971bba11ba99cefaa38cf9443d7e9a68ddb3a400"
-  integrity sha512-PKRuQaQkjIhg1zeqJPW1QFtJO2fx13Nlv7N/VLhQS/kIQ/2aGAgWvYVcE9X64gbSiLzPdY3jcxv5wJJpLj1gLw==
 
 acorn-jsx@^5.3.1, acorn-jsx@^5.3.2:
   version "5.3.2"
@@ -6814,11 +6823,6 @@ didyoumean@^1.2.2:
   version "1.2.2"
   resolved "https://registry.npmmirror.com/didyoumean/-/didyoumean-1.2.2.tgz#989346ffe9e839b4555ecf5666edea0d3e8ad037"
   integrity sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==
-
-diff-match-patch@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.npmmirror.com/diff-match-patch/-/diff-match-patch-1.0.5.tgz#abb584d5f10cd1196dfc55aa03701592ae3f7b37"
-  integrity sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==
 
 diff@^4.0.1:
   version "4.0.2"
@@ -9706,11 +9710,6 @@ lodash.groupby@^4.6.0:
   resolved "https://registry.npmmirror.com/lodash.groupby/-/lodash.groupby-4.6.0.tgz#0b08a1dcf68397c397855c3239783832df7403d1"
   integrity sha512-5dcWxm23+VAoz+awKmBaiBvzox8+RqMgFhi7UvX9DHZr2HdxHXM/Wrf8cfKpsW37RNrvtPn6hSwNqurSILbmJw==
 
-lodash.isequal@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.npmmirror.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
-  integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
-
 lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
@@ -12442,17 +12441,6 @@ re-resizable@^6.9.11:
   version "6.9.11"
   resolved "https://registry.npmmirror.com/re-resizable/-/re-resizable-6.9.11.tgz#f356e27877f12d926d076ab9ad9ff0b95912b475"
   integrity sha512-a3hiLWck/NkmyLvGWUuvkAmN1VhwAz4yOhS6FdMTaxCUVN9joIWkT11wsO68coG/iEYuwn+p/7qAmfQzRhiPLQ==
-
-react-ace@^10.1.0:
-  version "10.1.0"
-  resolved "https://registry.npmmirror.com/react-ace/-/react-ace-10.1.0.tgz#d348eac2b16475231779070b6cd16768deed565f"
-  integrity sha512-VkvUjZNhdYTuKOKQpMIZi7uzZZVgzCjM7cLYu6F64V0mejY8a2XTyPUIMszC6A4trbeMIHbK5fYFcT/wkP/8VA==
-  dependencies:
-    ace-builds "^1.4.14"
-    diff-match-patch "^1.0.5"
-    lodash.get "^4.4.2"
-    lodash.isequal "^4.5.0"
-    prop-types "^15.7.2"
 
 react-content-loader@^5.0.4:
   version "5.1.4"

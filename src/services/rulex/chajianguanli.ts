@@ -27,7 +27,20 @@ export async function postPluginService(
 
 /** 插件列表 GET /api/v1/plugins */
 export async function getPlugins(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/v1/plugins', {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      uuid?: string;
+      name?: string;
+      version?: string;
+      homepage?: string;
+      helpLink?: string;
+      author?: string;
+      email?: string;
+      license?: string;
+    }[];
+  }>('/api/v1/plugins', {
     method: 'GET',
     ...(options || {}),
   });

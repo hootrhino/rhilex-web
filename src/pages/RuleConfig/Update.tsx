@@ -1,6 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { history, useParams } from 'umi';
 
+import { message } from '@/components/PopupHack';
+import useGoBack from '@/hooks/useGoBack';
+import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanli';
 import {
   FooterToolbar,
   PageContainer,
@@ -12,16 +15,11 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useModel, useRequest } from 'umi';
-
-import LuaEditor from '@/components/LuaEditor';
-import { message } from '@/components/PopupHack';
-import useGoBack from '@/hooks/useGoBack';
-import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanli';
-import { CodeOutlined } from '@ant-design/icons';
 import { Button, Popconfirm } from 'antd';
 import omit from 'lodash/omit';
-import luamin from 'lua-format';
+import { useModel, useRequest } from 'umi';
+import { RuleType } from '.';
+import ProCodeEditor from './ProCodeEditor';
 
 export type FormItem = {
   actions: string;
@@ -34,17 +32,35 @@ export type FormItem = {
   uuid?: string;
 };
 
-const DefaultListUrl = '/rules/list';
+type UpdateFormProps = {
+  type: RuleType;
+  typeId: string;
+};
 
-const UpdateForm = () => {
+const DefaultActions = `Actions = {
+  function(args)
+    -- rulexlib:Debug(args)
+    return true, args
+  end
+}`;
+
+const DefaultSuccess = `function Success()
+--rulexlib:log("success")
+end`;
+
+const DefaultFailed = `function Failed(error)
+rulexlib:log(error)
+end`;
+
+const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
   const formRef = useRef<ProFormInstance>();
-  const { id } = useParams();
+  const { ruleId } = useParams();
+  const DefaultListUrl = `/${type}/${typeId}/rule`;
 
   const { showModal } = useGoBack();
 
   const { data: sources } = useModel('useSource');
   const { data: devices, run: getDevices } = useModel('useDevice');
-  const { initialValues } = useModel('useRules');
 
   // 获取详情
   const { run: getDetail } = useRequest((uuid: string) => getRulesDetail({ uuid: uuid || '' }), {
@@ -94,8 +110,8 @@ const UpdateForm = () => {
         fromDevice: values?.fromDevice ? [values?.fromDevice] : [],
       };
 
-      if (id) {
-        update({ ...params, uuid: id });
+      if (ruleId) {
+        update({ ...params, uuid: ruleId });
       } else {
         add(params);
       }
@@ -107,30 +123,23 @@ const UpdateForm = () => {
     }
   };
 
-  const handleOnFormatCode = (type: 'actions' | 'success' | 'failed') => {
-    const code = formRef.current?.getFieldValue(type);
-    const formatCode = luamin.Beautify(code[type], {
-      RenameVariables: false,
-      RenameGlobals: false,
-      SolveMath: true,
-    });
-    let formattedCode = formatCode
-      .toString()
-      .replace(/--discord\.gg\/boronide, code generated using luamin\.js™\n?/g, '');
-
-    formattedCode = formattedCode.replace(/^\s*\n/gm, '');
-    formRef.current?.setFieldsValue({ [type]: formattedCode });
-  };
-
   useEffect(() => {
-    if (id) {
-      getDetail(id);
+    if (ruleId) {
+      getDetail(ruleId);
     } else {
+      const isInends = type === 'inends';
+
       formRef.current?.setFieldsValue({
-        ...initialValues,
+        actions: DefaultActions,
+        success: DefaultSuccess,
+        failed: DefaultFailed,
+        sourceType: isInends ? 'fromSource' : 'fromDevice',
+        name: '',
+        fromSource: isInends ? typeId : '',
+        fromDevice: !isInends ? typeId : '',
       });
     }
-  }, [id, initialValues]);
+  }, [ruleId, typeId, type]);
 
   useEffect(() => {
     // getSources();
@@ -140,7 +149,7 @@ const UpdateForm = () => {
   return (
     <>
       <PageContainer
-        header={{ title: id ? '编辑规则' : '新建规则' }}
+        header={{ title: ruleId ? '编辑规则' : '新建规则' }}
         onBack={() => showModal({ url: DefaultListUrl })}
       >
         <ProCard>
@@ -198,7 +207,7 @@ const UpdateForm = () => {
                   },
                 ]}
                 width="xl"
-                disabled={!!initialValues?.fromDevice || !!initialValues?.fromSource}
+                disabled
               />
             </ProForm.Group>
             <ProForm.Group>
@@ -213,7 +222,7 @@ const UpdateForm = () => {
                         placeholder="请选择数据源"
                         rules={[{ required: true, message: '请选择数据源' }]}
                         width="xl"
-                        disabled={!!initialValues?.fromSource}
+                        disabled
                       />
                     );
                   } else {
@@ -222,7 +231,7 @@ const UpdateForm = () => {
                         label="输入资源"
                         name="fromDevice"
                         options={devices}
-                        disabled={!!initialValues?.fromDevice}
+                        disabled
                         placeholder="请选择数据源"
                         rules={[{ required: true, message: '请选择数据源' }]}
                         width="xl"
@@ -233,92 +242,26 @@ const UpdateForm = () => {
               </ProFormDependency>
               <ProFormText label="备注信息" name="description" width="xl" />
             </ProForm.Group>
-            <ProCard
-              title="规则回调"
-              collapsible
-              extra={
-                <div
-                  className="flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleOnFormatCode('actions');
-                  }}
-                >
-                  <CodeOutlined className="pr-[8px]" />
-                  <span>代码格式化</span>
-                </div>
-              }
-            >
-              <ProForm.Item
-                label={false}
-                name="actions"
-                rules={[{ required: true, message: '请输入规则回调' }]}
-              >
-                <LuaEditor
-                  // value={code.actions}
-                  // onChange={(value) => setCode({ ...code, actions: value })}
-                  key="action"
-                />
-              </ProForm.Item>
-            </ProCard>
-            <ProCard
-              title="成功回调"
-              collapsible
+            <ProCodeEditor
+              label="规则回调"
+              name="actions"
+              ref={formRef}
+              rules={[{ required: true, message: '请输入规则回调' }]}
+            />
+            <ProCodeEditor
+              label="成功回调"
+              name="success"
+              ref={formRef}
+              rules={[{ required: true, message: '请输入成功回调' }]}
               defaultCollapsed
-              extra={
-                <div
-                  className="flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleOnFormatCode('success');
-                  }}
-                >
-                  <CodeOutlined className="pr-[8px]" />
-                  <span>代码格式化</span>
-                </div>
-              }
-            >
-              <ProForm.Item
-                label={false}
-                name="success"
-                rules={[{ required: true, message: '请输入成功回调' }]}
-              >
-                <LuaEditor
-                  // value={code.success}
-                  // onChange={(value) => setCode({ ...code, success: value })}
-                  key="success"
-                />
-              </ProForm.Item>
-            </ProCard>
-            <ProCard
-              title="失败回调"
-              collapsible
+            />
+            <ProCodeEditor
+              label="失败回调"
+              name="failed"
+              ref={formRef}
+              rules={[{ required: true, message: '请输入失败回调' }]}
               defaultCollapsed
-              extra={
-                <div
-                  className="flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleOnFormatCode('failed');
-                  }}
-                >
-                  <CodeOutlined className="pr-[8px]" />
-                  <span>代码格式化</span>
-                </div>
-              }
-            >
-              <ProForm.Item
-                label={false}
-                name="failed"
-                rules={[{ required: true, message: '请输入失败回调' }]}
-              >
-                <LuaEditor
-                  // value={code.failed}
-                  // onChange={(value) => setCode({ ...code, failed: value })}
-                  key="failed"
-                />
-              </ProForm.Item>
-            </ProCard>
+            />
           </ProForm>
         </ProCard>
       </PageContainer>

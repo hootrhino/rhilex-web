@@ -99,6 +99,21 @@ export async function deleteDevices(
   });
 }
 
+/** 根据设备ID查规则列表 GET /api/v1/devices/byDevice */
+export async function getDevicesByDevice(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getDevicesByDeviceParams,
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/api/v1/devices/byDevice', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 设备详情 设备列表 GET /api/v1/devices/detail */
 export async function getDevicesDetail(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)

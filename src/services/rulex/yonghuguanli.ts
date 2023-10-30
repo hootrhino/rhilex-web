@@ -48,7 +48,7 @@ export async function postUsers(
   },
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: string }>('/api/v1/users', {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
-import { history, useModel } from 'umi';
+import { history } from 'umi';
 
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
@@ -9,8 +9,8 @@ import { Button, Popconfirm } from 'antd';
 
 import { message } from '@/components/PopupHack';
 import { deleteInends, getInends } from '@/services/rulex/shuruziyuanguanli';
+import { useRequest } from '@umijs/max';
 import Detail from './components/Detail';
-import { DefaultRules } from '@/models/useRules';
 
 export type Item = {
   name: string;
@@ -23,20 +23,19 @@ export type Item = {
 
 const Sources = () => {
   const actionRef = useRef<ActionType>();
-  const { detailConfig, setConfig } = useModel('useSource');
-  const { setInitialValues } = useModel('useRules');
+  const [detailConfig, setConfig] = useState<{ uuid: string; open: boolean }>({
+    uuid: '',
+    open: false,
+  });
 
   // 删除
-  const handleDelete = async (values: API.deleteInendsParams) => {
-    try {
-      await deleteInends(values);
+  const { run: remove } = useRequest((params: API.deleteInendsParams) => deleteInends(params), {
+    manual: true,
+    onSuccess: () => {
       actionRef.current?.reload();
       message.success('删除成功');
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
+    },
+  });
 
   const columns: ProColumns<Item>[] = [
     {
@@ -85,10 +84,7 @@ const Sources = () => {
       key: 'option',
       valueType: 'option',
       render: (_, { uuid }) => [
-        <a key="rules" onClick={() => {
-          setInitialValues({ ...DefaultRules, fromSource: uuid, sourceType: 'fromSource' });
-          history.push('/rules/new');
-        }}>
+        <a key="rules" onClick={() => history.push(`/inends/${uuid}/rule`)}>
           规则配置
         </a>,
         <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
@@ -99,7 +95,7 @@ const Sources = () => {
         </a>,
         <Popconfirm
           title="你确定要删除该资源?"
-          onConfirm={() => handleDelete({ uuid })}
+          onConfirm={() => remove({ uuid })}
           okText="是"
           cancelText="否"
           key="delete"

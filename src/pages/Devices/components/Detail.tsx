@@ -112,129 +112,129 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         },
       },
     ],
-    SNMP: [
-      {
-        title: '主机地址',
-        dataIndex: 'target',
-        copyable: true,
-      },
-      {
-        title: '主机端口',
-        dataIndex: 'port',
-      },
-      {
-        title: '通信形式',
-        dataIndex: 'transport',
-        valueEnum: { tcp: 'TCP', udp: 'UDP' },
-      },
-      {
-        title: 'Community',
-        dataIndex: 'community',
-      },
-      {
-        title: '安全模式',
-        dataIndex: 'securityModel',
-        valueEnum: new Map([
-          [0, '不认证'],
-          [3, 'V3 认证'],
-        ]),
-      },
-      {
-        title: '用户名',
-        dataIndex: 'username',
-      },
-      {
-        title: '消息选项',
-        dataIndex: 'snmpV3MsgFlags',
-        valueEnum: new Map([
-          [0, 'NoAuthNoPriv'],
-          [1, 'AuthNoPriv'],
-          [2, 'AuthPriv'],
-          [3, 'Reportable'],
-        ]),
-      },
-      {
-        title: 'SNMP 认证协议',
-        dataIndex: 'snmpV3AuthProtocol',
-        valueEnum: new Map([
-          [1, 'NoAuth'],
-          [2, 'MD5'],
-          [3, 'SHA'],
-          [4, 'SHA224'],
-          [5, 'SHA256'],
-          [6, 'SHA384'],
-          [7, 'SHA512'],
-        ]),
-      },
-      {
-        title: 'SNMP 认证密钥',
-        dataIndex: 'authenticationPassphrase',
-      },
-      {
-        title: '私有认证协议',
-        dataIndex: 'privacyProtocol',
-        valueEnum: new Map([
-          [1, 'NoPriv'],
-          [2, 'DES'],
-          [3, 'AES'],
-          [4, 'AES192'],
-          [5, 'AES256'],
-          [6, 'AES192C'],
-          [7, 'AES256C'],
-        ]),
-      },
-      {
-        title: '私有认证协议密钥',
-        dataIndex: 'privacyPassphrase',
-      },
-    ],
-    UART: [
-      {
-        title: '超时时间（毫秒',
-        dataIndex: 'timeout',
-      },
-      {
-        title: '波特率',
-        dataIndex: 'baudRate',
-        valueEnum: new Map([
-          [4800, '4800'],
-          [9600, '9600'],
-          [115200, '115200'],
-        ]),
-      },
-      {
-        title: '数据位',
-        dataIndex: 'dataBits',
-        valueEnum: new Map([
-          [1, '1'],
-          [2, '2'],
-          [3, '3'],
-          [4, '4'],
-          [5, '5'],
-          [6, '6'],
-          [7, '7'],
-          [8, '8'],
-        ]),
-      },
-      {
-        title: '奇偶校验',
-        dataIndex: 'parity',
-        valueEnum: { E: '奇校验', O: '偶校验', N: '不校验' },
-      },
-      {
-        title: '停止位',
-        dataIndex: 'stopBits',
-        valueEnum: new Map([
-          [1, '1'],
-          [1.5, '1.5'],
-          [2, '2'],
-        ]),
-      },
-      {
-        title: '串口路径',
-        dataIndex: 'uart',
-      },
-    ],
+    // SNMP: [
+    //   {
+    //     title: '主机地址',
+    //     dataIndex: 'target',
+    //     copyable: true,
+    //   },
+    //   {
+    //     title: '主机端口',
+    //     dataIndex: 'port',
+    //   },
+    //   {
+    //     title: '通信形式',
+    //     dataIndex: 'transport',
+    //     valueEnum: { tcp: 'TCP', udp: 'UDP' },
+    //   },
+    //   {
+    //     title: 'Community',
+    //     dataIndex: 'community',
+    //   },
+    //   {
+    //     title: '安全模式',
+    //     dataIndex: 'securityModel',
+    //     valueEnum: new Map([
+    //       [0, '不认证'],
+    //       [3, 'V3 认证'],
+    //     ]),
+    //   },
+    //   {
+    //     title: '用户名',
+    //     dataIndex: 'username',
+    //   },
+    //   {
+    //     title: '消息选项',
+    //     dataIndex: 'snmpV3MsgFlags',
+    //     valueEnum: new Map([
+    //       [0, 'NoAuthNoPriv'],
+    //       [1, 'AuthNoPriv'],
+    //       [2, 'AuthPriv'],
+    //       [3, 'Reportable'],
+    //     ]),
+    //   },
+    //   {
+    //     title: 'SNMP 认证协议',
+    //     dataIndex: 'snmpV3AuthProtocol',
+    //     valueEnum: new Map([
+    //       [1, 'NoAuth'],
+    //       [2, 'MD5'],
+    //       [3, 'SHA'],
+    //       [4, 'SHA224'],
+    //       [5, 'SHA256'],
+    //       [6, 'SHA384'],
+    //       [7, 'SHA512'],
+    //     ]),
+    //   },
+    //   {
+    //     title: 'SNMP 认证密钥',
+    //     dataIndex: 'authenticationPassphrase',
+    //   },
+    //   {
+    //     title: '私有认证协议',
+    //     dataIndex: 'privacyProtocol',
+    //     valueEnum: new Map([
+    //       [1, 'NoPriv'],
+    //       [2, 'DES'],
+    //       [3, 'AES'],
+    //       [4, 'AES192'],
+    //       [5, 'AES256'],
+    //       [6, 'AES192C'],
+    //       [7, 'AES256C'],
+    //     ]),
+    //   },
+    //   {
+    //     title: '私有认证协议密钥',
+    //     dataIndex: 'privacyPassphrase',
+    //   },
+    // ],
+    // UART: [
+    //   {
+    //     title: '超时时间（毫秒',
+    //     dataIndex: 'timeout',
+    //   },
+    //   {
+    //     title: '波特率',
+    //     dataIndex: 'baudRate',
+    //     valueEnum: new Map([
+    //       [4800, '4800'],
+    //       [9600, '9600'],
+    //       [115200, '115200'],
+    //     ]),
+    //   },
+    //   {
+    //     title: '数据位',
+    //     dataIndex: 'dataBits',
+    //     valueEnum: new Map([
+    //       [1, '1'],
+    //       [2, '2'],
+    //       [3, '3'],
+    //       [4, '4'],
+    //       [5, '5'],
+    //       [6, '6'],
+    //       [7, '7'],
+    //       [8, '8'],
+    //     ]),
+    //   },
+    //   {
+    //     title: '奇偶校验',
+    //     dataIndex: 'parity',
+    //     valueEnum: { E: '奇校验', O: '偶校验', N: '不校验' },
+    //   },
+    //   {
+    //     title: '停止位',
+    //     dataIndex: 'stopBits',
+    //     valueEnum: new Map([
+    //       [1, '1'],
+    //       [1.5, '1.5'],
+    //       [2, '2'],
+    //     ]),
+    //   },
+    //   {
+    //     title: '串口路径',
+    //     dataIndex: 'uart',
+    //   },
+    // ],
     TCP: [
       {
         title: '服务地址',
@@ -313,7 +313,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         columns={columnsMap['COMMON']}
         loading={loading}
       />
-      <EnhancedProDescriptions
+      {/* <EnhancedProDescriptions
         title="SNMP 配置"
         dataSource={data?.config?.snmpConfig}
         columns={columnsMap['SNMP']}
@@ -329,7 +329,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
           deviceType === 'USER_G776' ||
           (deviceType === 'GENERIC_PROTOCOL' && transport === 'rawserial')
         }
-      />
+      /> */}
       <EnhancedProDescriptions
         title="RTU 配置"
         dataSource={data?.config?.rtuConfig}

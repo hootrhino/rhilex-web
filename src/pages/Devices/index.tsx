@@ -1,15 +1,12 @@
-import { useRef } from 'react';
-
-import { history, useModel } from 'umi';
-
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
+import { useRef, useState } from 'react';
 
 import { message } from '@/components/PopupHack';
-import { DefaultRules } from '@/models/useRules';
 import { deleteDevices, getDevices } from '@/services/rulex/shebeiguanli';
+import { history, useRequest } from '@umijs/max';
 import Detail from './components/Detail';
 
 export type Item = {
@@ -23,20 +20,19 @@ export type Item = {
 
 const Devices = () => {
   const actionRef = useRef<ActionType>();
-  const { detailConfig, setConfig } = useModel('useDevice');
-  const { setInitialValues } = useModel('useRules');
+  const [detailConfig, setConfig] = useState<{ uuid: string; open: boolean }>({
+    uuid: '',
+    open: false,
+  });
 
   // 删除
-  const handleDelete = async (value: API.deleteDevicesParams) => {
-    try {
-      await deleteDevices(value);
+  const { run: remove } = useRequest((params: API.deleteDevicesParams) => deleteDevices(params), {
+    manual: true,
+    onSuccess: () => {
       actionRef.current?.reload();
       message.success('删除成功');
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
+    },
+  });
 
   const columns: ProColumns<Item>[] = [
     {
@@ -82,13 +78,7 @@ const Devices = () => {
       key: 'option',
       valueType: 'option',
       render: (_, { uuid }) => [
-        <a
-          key="rule"
-          onClick={() => {
-            setInitialValues({ ...DefaultRules, fromDevice: uuid, sourceType: 'fromDevice' });
-            history.push('/rules/new');
-          }}
-        >
+        <a key="rule" onClick={() => history.push(`/device/${uuid}/rule`)}>
           规则配置
         </a>,
         <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
@@ -99,7 +89,7 @@ const Devices = () => {
         </a>,
         <Popconfirm
           title="你确定要删除该设备?"
-          onConfirm={() => handleDelete({ uuid })}
+          onConfirm={() => remove({ uuid })}
           okText="是"
           cancelText="否"
           key="delete"

@@ -5,18 +5,28 @@ import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 
 import { message } from '@/components/PopupHack';
-import { DefaultRules } from '@/models/useRules';
-import { deleteRules, getRules } from '@/services/rulex/guizeguanli';
-import { history, useModel } from 'umi';
-import Debug from './components/Debug';
-import Detail from './components/Detail';
+import { deleteRules } from '@/services/rulex/guizeguanli';
+import { history, useModel, useRequest } from '@umijs/max';
+import Debug from './Debug';
+import Detail from './Detail';
 
 export type Item = {
   uuid: string;
+  name: string;
+  status: number;
+  description?: string;
   [key: string]: any;
 };
 
-const Rules = () => {
+export type RuleType = 'device' | 'inends';
+
+type RuleConfigProps = {
+  dataSource: Item[];
+  type: RuleType;
+  typeId: string;
+};
+
+const RuleConfig = ({ dataSource, type, typeId }: RuleConfigProps) => {
   const actionRef = useRef<ActionType>();
   const [detailConfig, setDetailConfig] = useState<{
     open: boolean;
@@ -30,19 +40,15 @@ const Rules = () => {
 
   const { run: getSources } = useModel('useSource');
   const { run: getDevices } = useModel('useDevice');
-  const { setInitialValues } = useModel('useRules');
 
   // 删除
-  const handleOnDelete = async (value: API.deleteRulesParams) => {
-    try {
-      await deleteRules(value);
+  const { run: remove } = useRequest((params: API.deleteRulesParams) => deleteRules(params), {
+    manual: true,
+    onSuccess: () => {
       actionRef?.current?.reload();
       message.success('删除成功');
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
+    },
+  });
 
   const columns: ProColumns<Item>[] = [
     {
@@ -80,12 +86,7 @@ const Rules = () => {
         <a key="debug" onClick={() => setDebugConfig({ open: true, uuid })}>
           测试
         </a>,
-        <a
-          key="log"
-          onClick={() => {
-            setDetailConfig({ open: true, type: 'log', uuid });
-          }}
-        >
+        <a key="log" onClick={() => setDetailConfig({ open: true, type: 'log', uuid })}>
           日志
         </a>,
         <a
@@ -98,14 +99,10 @@ const Rules = () => {
         >
           详情
         </a>,
-        <a key="edit" onClick={() => history.push(`/rules/edit/${uuid}`)}>
+        <a key="edit" onClick={() => history.push(`/${type}/${typeId}/rule/edit/${uuid}`)}>
           编辑
         </a>,
-        <Popconfirm
-          title="确定要删除该规则？"
-          onConfirm={() => handleOnDelete({ uuid })}
-          key="delete"
-        >
+        <Popconfirm title="确定要删除该规则？" onConfirm={() => remove({ uuid })} key="remove">
           <a>删除</a>
         </Popconfirm>,
       ],
@@ -119,24 +116,14 @@ const Rules = () => {
           rowKey="uuid"
           actionRef={actionRef}
           columns={columns}
-          request={async () => {
-            const res = await getRules({});
-
-            return Promise.resolve({
-              data: (res as any)?.data,
-              success: true,
-            });
-          }}
+          dataSource={dataSource}
           search={false}
           pagination={false}
           toolBarRender={() => [
             <Button
               type="primary"
               key="new"
-              onClick={() => {
-                setInitialValues(DefaultRules);
-                history.push('/rules/new');
-              }}
+              onClick={() => history.push(`/${type}/${typeId}/rule/new`)}
               icon={<PlusOutlined />}
             >
               新建
@@ -154,4 +141,4 @@ const Rules = () => {
   );
 };
 
-export default Rules;
+export default RuleConfig;

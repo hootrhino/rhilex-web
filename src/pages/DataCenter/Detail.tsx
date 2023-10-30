@@ -12,14 +12,9 @@ import './index.less';
 
 import type { LogItem } from '@/models/useWebsocket';
 import { ProTable } from '@ant-design/pro-components';
-
-import 'ace-builds/src-noconflict/ace';
-import 'ace-builds/src-noconflict/ext-language_tools';
-import 'ace-builds/src-noconflict/mode-mysql';
-import 'ace-builds/src-noconflict/theme-xcode';
-import 'ace-builds/webpack-resolver';
-
-import AceEditor from 'react-ace';
+import { sql } from '@codemirror/lang-sql';
+import { bbedit } from '@uiw/codemirror-theme-bbedit';
+import CodeMirror from '@uiw/react-codemirror';
 
 export type Key = string | number;
 
@@ -142,24 +137,12 @@ const DataCenter = () => {
           className="w-full h-full min-w-[1px] ml-[12px]"
           bodyStyle={{ height: 'calc(100% - 56px)', padding: '6px 0 0 0', overflowY: 'auto' }}
         >
-          <AceEditor
+          <CodeMirror
             value={code}
+            extensions={[sql()]}
             onChange={(value) => setCode(value)}
-            mode="mysql"
-            theme="xcode"
-            editorProps={{ $blockScrolling: true }}
-            width="100%"
             height="100%"
-            fontSize={16}
-            showPrintMargin={false}
-            highlightActiveLine={true}
-            enableSnippets={true}
-            setOptions={{
-              enableLiveAutocompletion: true,
-              enableBasicAutocompletion: true,
-              enableSnippets: true,
-              tabSize: 2,
-            }}
+            theme={bbedit}
           />
         </Card>
       </div>
@@ -226,16 +209,6 @@ const DataCenter = () => {
               </List.Item>
             )}
           />
-          {/* {logData?.map((item) => (
-            <div
-              key={item.ts}
-              className="flex justify-start items-center text-[#bbb] h-[40px]"
-              style={{ borderBottom: '1px solid #21222c' }}
-            >
-              <span className="pr-[10px]">[{dayjs(item?.time).format('YYYY-MM-DD HH:mm:ss')}]</span>
-              <span className="truncate">{item?.msg}</span>
-            </div>
-          ))} */}
         </Card>
       </Resizable>
     </div>

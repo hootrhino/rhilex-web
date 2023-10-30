@@ -24,7 +24,7 @@ export async function getOsOsRelease(options?: { [key: string]: any }) {
 
 /** 开机时间 GET /api/v1/os/startedAt */
 export async function getOsStartedAt(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/v1/os/startedAt', {
+  return request<{ code: number; msg: string; data: string }>('/api/v1/os/startedAt', {
     method: 'GET',
     ...(options || {}),
   });
@@ -37,19 +37,19 @@ export async function getOsSystem(options?: { [key: string]: any }) {
     msg: string;
     data: {
       hardWareInfo: {
-        allocMem?: number;
         cpuPercent?: number;
         diskInfo?: number;
+        memPercent?: number;
         osArch?: string;
         osDist?: string;
-        startedTime?: string;
-        systemMem?: number;
-        totalMem?: number;
+        osUpTime?: string;
+        startedAt?: string;
         version?: string;
       };
       sourceCount: {
         apps?: number;
         devices?: number;
+        goods?: number;
         inends?: number;
         outends?: number;
         plugins?: number;

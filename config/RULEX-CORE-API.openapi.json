@@ -1257,13 +1257,13 @@
                         "hardWareInfo": {
                           "type": "object",
                           "properties": {
-                            "allocMem": {
-                              "type": "integer"
-                            },
                             "cpuPercent": {
-                              "type": "integer"
+                              "type": "number"
                             },
                             "diskInfo": {
+                              "type": "number"
+                            },
+                            "memPercent": {
                               "type": "number"
                             },
                             "osArch": {
@@ -1272,42 +1272,37 @@
                             "osDist": {
                               "type": "string"
                             },
-                            "startedTime": {
+                            "osUpTime": {
                               "type": "string"
                             },
-                            "systemMem": {
-                              "type": "integer"
-                            },
-                            "totalMem": {
-                              "type": "integer"
+                            "startedAt": {
+                              "type": "string"
                             },
                             "version": {
                               "type": "string"
                             }
                           },
                           "required": [
-                            "allocMem",
                             "cpuPercent",
                             "diskInfo",
+                            "memPercent",
                             "osArch",
                             "osDist",
-                            "startedTime",
-                            "systemMem",
-                            "totalMem",
+                            "osUpTime",
+                            "startedAt",
                             "version"
                           ],
+                          "x-apifox-ignore-properties": [],
                           "x-apifox-orders": [
-                            "allocMem",
                             "cpuPercent",
                             "diskInfo",
+                            "memPercent",
                             "osArch",
                             "osDist",
-                            "startedTime",
-                            "systemMem",
-                            "totalMem",
+                            "osUpTime",
+                            "startedAt",
                             "version"
-                          ],
-                          "x-apifox-ignore-properties": []
+                          ]
                         },
                         "sourceCount": {
                           "type": "object",
@@ -1316,6 +1311,9 @@
                               "type": "integer"
                             },
                             "devices": {
+                              "type": "integer"
+                            },
+                            "goods": {
                               "type": "integer"
                             },
                             "inends": {
@@ -1334,20 +1332,22 @@
                           "required": [
                             "apps",
                             "devices",
+                            "goods",
                             "inends",
                             "outends",
                             "plugins",
                             "rules"
                           ],
+                          "x-apifox-ignore-properties": [],
                           "x-apifox-orders": [
                             "apps",
                             "devices",
+                            "goods",
                             "inends",
                             "outends",
                             "plugins",
                             "rules"
-                          ],
-                          "x-apifox-ignore-properties": []
+                          ]
                         },
                         "statistic": {
                           "type": "object",
@@ -1371,13 +1371,13 @@
                             "inFailed",
                             "outFailed"
                           ],
+                          "x-apifox-ignore-properties": [],
                           "x-apifox-orders": [
                             "inSuccess",
                             "outSuccess",
                             "inFailed",
                             "outFailed"
-                          ],
-                          "x-apifox-ignore-properties": []
+                          ]
                         }
                       },
                       "required": [
@@ -1385,12 +1385,12 @@
                         "sourceCount",
                         "statistic"
                       ],
+                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "hardWareInfo",
                         "sourceCount",
                         "statistic"
-                      ],
-                      "x-apifox-ignore-properties": []
+                      ]
                     }
                   },
                   "required": [
@@ -1398,12 +1398,12 @@
                     "msg",
                     "data"
                   ],
+                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ],
-                  "x-apifox-ignore-properties": []
+                  ]
                 },
                 "examples": {
                   "1": {
@@ -1426,6 +1426,74 @@
                         "sourceCount": {
                           "apps": 0,
                           "devices": 0,
+                          "inends": 0,
+                          "outends": 0,
+                          "plugins": 7,
+                          "rules": 0
+                        },
+                        "statistic": {
+                          "inSuccess": 0,
+                          "outSuccess": 0,
+                          "inFailed": 0,
+                          "outFailed": 0
+                        }
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "hardWareInfo": {
+                          "cpuPercent": 6.54,
+                          "diskInfo": 79.34,
+                          "memPercent": 96.75,
+                          "osArch": "deepin-amd64",
+                          "osDist": "deepin",
+                          "osUpTime": "0 days 22 hours 52 minutes",
+                          "startedAt": "2023-10-30 11:32:36",
+                          "version": "v0.6.3"
+                        },
+                        "sourceCount": {
+                          "apps": 0,
+                          "devices": 0,
+                          "goods": 0,
+                          "inends": 0,
+                          "outends": 0,
+                          "plugins": 7,
+                          "rules": 0
+                        },
+                        "statistic": {
+                          "inSuccess": 0,
+                          "outSuccess": 0,
+                          "inFailed": 0,
+                          "outFailed": 0
+                        }
+                      }
+                    }
+                  },
+                  "3": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "hardWareInfo": {
+                          "cpuPercent": 5.71,
+                          "diskInfo": 79.5,
+                          "memPercent": 96.9,
+                          "osArch": "deepin-amd64",
+                          "osDist": "deepin",
+                          "osUpTime": "0 days 23 hours 3 minutes",
+                          "startedAt": "2023-10-30 11:46:00",
+                          "version": "v0.6.3"
+                        },
+                        "sourceCount": {
+                          "apps": 0,
+                          "devices": 0,
+                          "goods": 0,
                           "inends": 0,
                           "outends": 0,
                           "plugins": 7,
@@ -2003,7 +2071,10 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   },
                   "required": [
@@ -2011,12 +2082,12 @@
                     "msg",
                     "data"
                   ],
+                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ],
-                  "x-apifox-ignore-properties": []
+                  ]
                 },
                 "examples": {
                   "1": {
@@ -2645,9 +2716,78 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {},
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "uuid": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "version": {
+                            "type": "string"
+                          },
+                          "homepage": {
+                            "type": "string"
+                          },
+                          "helpLink": {
+                            "type": "string"
+                          },
+                          "author": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "license": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "uuid",
+                          "name",
+                          "version",
+                          "homepage",
+                          "helpLink",
+                          "author",
+                          "email",
+                          "license"
+                        ],
+                        "x-apifox-ignore-properties": [],
+                        "x-apifox-orders": [
+                          "uuid",
+                          "name",
+                          "version",
+                          "homepage",
+                          "helpLink",
+                          "author",
+                          "email",
+                          "license"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
                   "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
                 },
                 "examples": {
                   "1": {
@@ -2665,6 +2805,85 @@
                           "name": "Generic ModBus TCP Driver",
                           "type": "TCP",
                           "description": "Generic ModBus TCP Driver"
+                        }
+                      ]
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "uuid": "NWT_DISCOVER",
+                          "name": "NetDiscover",
+                          "version": "v0.0.1",
+                          "homepage": "https://hootrhino.github.io",
+                          "helpLink": "https://hootrhino.github.io",
+                          "author": "wwhai",
+                          "email": "cnwwhai@gmail.com",
+                          "license": "MIT"
+                        },
+                        {
+                          "uuid": "MODBUS_SCANNER",
+                          "name": "Modbus Device Scanner",
+                          "version": "v0.0.1",
+                          "homepage": "https://hootrhino.github.io",
+                          "helpLink": "https://hootrhino.github.io",
+                          "author": "wwhai",
+                          "email": "cnwwhai@gmail.com",
+                          "license": "MIT"
+                        },
+                        {
+                          "uuid": "MODBUS_CRC_CALCULATOR",
+                          "name": "Modbus CRC Calculator",
+                          "version": "v0.0.1",
+                          "homepage": "https://hootrhino.github.io",
+                          "helpLink": "https://hootrhino.github.io",
+                          "author": "wwhai",
+                          "email": "cnwwhai@gmail.com",
+                          "license": "MIT"
+                        },
+                        {
+                          "uuid": "HTTP-API-SERVER",
+                          "name": "RULEX HTTP RESTFul Api Server",
+                          "version": "v1.0.0",
+                          "homepage": "https://hootrhino.github.io",
+                          "helpLink": "https://hootrhino.github.io",
+                          "author": "wwhai",
+                          "email": "cnwwhai@gmail.com",
+                          "license": "MIT"
+                        },
+                        {
+                          "uuid": "RULEX-MqttServer",
+                          "name": "Light Weight MqttServer",
+                          "version": "v2.0.0",
+                          "homepage": "https://github.com/lion-brave",
+                          "helpLink": "https://github.com/lion-brave",
+                          "author": "liyong",
+                          "email": "liyong@gmail.com",
+                          "license": "MIT"
+                        },
+                        {
+                          "uuid": "USB_EVENT_MONITOR",
+                          "name": "USB Hot Plugin Monitor",
+                          "version": "v0.0.1",
+                          "homepage": "https://hootrhino.github.io",
+                          "helpLink": "https://hootrhino.github.io",
+                          "author": "wwhai",
+                          "email": "cnwwhai@gmail.com",
+                          "license": "MIT"
+                        },
+                        {
+                          "uuid": "ICMPSender",
+                          "name": "ICMP Sender",
+                          "version": "v1.0.0",
+                          "homepage": "https://hootrhino.github.io",
+                          "helpLink": "https://hootrhino.github.io",
+                          "author": "wwhai",
+                          "email": "cnwwhai@gmail.com",
+                          "license": "MIT"
                         }
                       ]
                     }
@@ -4127,6 +4346,25 @@
                   "properties": {},
                   "x-apifox-ignore-properties": [],
                   "x-apifox-orders": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "BUG_REPORT_URL": "https://bbs.deepin.org/",
+                        "HOME_URL": "https://www.deepin.org/",
+                        "ID": "Deepin",
+                        "NAME": "Deepin",
+                        "PRETTY_NAME": "Deepin 20.9",
+                        "VERSION": "20.9",
+                        "VERSION_CODENAME": "apricot",
+                        "VERSION_ID": "20.9"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -4154,9 +4392,38 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {},
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
                   "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": "2023-10-30 11:32:36"
+                    }
+                  }
                 }
               }
             }
@@ -8967,6 +9234,88 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-120452209-run",
+        "security": []
+      }
+    },
+    "/api/v1/devices/byDevice": {
+      "get": {
+        "summary": "根据设备ID查规则列表",
+        "x-apifox-folder": "设备管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "设备管理"
+        ],
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "12345678",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-120573113-run",
+        "security": []
+      }
+    },
+    "/api/v1/rules/byInend": {
+      "get": {
+        "summary": "根据输入ID查资源列表",
+        "x-apifox-folder": "输入资源管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "输入资源管理"
+        ],
+        "parameters": [
+          {
+            "name": "inendId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "12345678",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-120575304-run",
         "security": []
       }
     }

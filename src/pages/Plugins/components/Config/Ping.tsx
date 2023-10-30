@@ -1,13 +1,10 @@
 import { validateIPv4 } from '@/utils/utils';
 import { ProForm } from '@ant-design/pro-components';
-import 'ace-builds/src-noconflict/ace';
-import 'ace-builds/src-noconflict/ext-language_tools';
-import 'ace-builds/src-noconflict/mode-sh';
-import 'ace-builds/src-noconflict/theme-monokai';
-import 'ace-builds/webpack-resolver';
+import { langs } from '@uiw/codemirror-extensions-langs';
+import { monokai } from '@uiw/codemirror-theme-monokai';
+import CodeMirror from '@uiw/react-codemirror';
 import { Button, Input } from 'antd';
 import { useState } from 'react';
-import AceEditor from 'react-ace';
 
 type PingProps = {
   loading: boolean;
@@ -65,24 +62,7 @@ const Ping = ({ loading, onLoading, onSearch }: PingProps) => {
         />
       </ProForm.Item>
       <ProForm.Item name="output" label="输出">
-        <AceEditor
-          mode="sh"
-          theme="monokai"
-          readOnly={true}
-          editorProps={{ $blockScrolling: true }}
-          width="100%"
-          style={{ height: 200, fontFamily: 'monospace' }}
-          fontSize={16}
-          showPrintMargin={false}
-          highlightActiveLine={true}
-          enableSnippets={true}
-          setOptions={{
-            enableLiveAutocompletion: true,
-            enableBasicAutocompletion: true,
-            enableSnippets: true,
-            tabSize: 2,
-          }}
-        />
+        <CodeMirror extensions={[langs.shell()]} height="200px" theme={monokai} readOnly autoFocus={false} />
       </ProForm.Item>
     </>
   );
