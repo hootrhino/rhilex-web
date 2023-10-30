@@ -78,10 +78,6 @@ declare namespace API {
     uuid: string;
   };
 
-  type getDevicesByDeviceParams = {
-    deviceId: string;
-  };
-
   type getDevicesDetailParams = {
     uuid: string;
   };
@@ -104,6 +100,10 @@ declare namespace API {
 
   type getPluginsDetailParams = {
     uuid: string;
+  };
+
+  type getRulesByDeviceParams = {
+    deviceId: string;
   };
 
   type getRulesByInendParams = {

@@ -24,16 +24,16 @@ export const defaultValue = (os: string | undefined) => {
       //     community: 'public',
       //   },
       // ],
-      // uartConfig: [
-      //   {
-      //     timeout: 3000,
-      //     baudRate: 9600,
-      //     dataBits: 8,
-      //     stopBits: 1,
-      //     parity: 'N',
-      //     uart: isWindows ? 'COM1' : '/dev/ttyS1',
-      //   },
-      // ],
+      uartConfig: [
+        {
+          timeout: 3000,
+          baudRate: 9600,
+          dataBits: 8,
+          stopBits: 1,
+          parity: 'N',
+          uart: isWindows ? 'COM1' : '/dev/ttyS1',
+        },
+      ],
       deviceConfig: [
         {
           type: 1,

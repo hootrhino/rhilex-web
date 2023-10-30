@@ -1,4 +1,4 @@
-import { getDevicesByDevice } from '@/services/rulex/shebeiguanli';
+import { getRulesByDevice } from '@/services/rulex/shebeiguanli';
 import { useParams, useRequest } from '@umijs/max';
 import { useEffect } from 'react';
 import RuleConfig from '../../RuleConfig';
@@ -7,7 +7,7 @@ const RuleConfigList = () => {
   const { deviceId } = useParams();
 
   const { data, run: getRuleList } = useRequest(
-    (params: API.getDevicesByDeviceParams) => getDevicesByDevice(params),
+    (params: API.getRulesByDeviceParams) => getRulesByDevice(params),
     {
       manual: true,
     },

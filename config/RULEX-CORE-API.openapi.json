@@ -9237,7 +9237,7 @@
         "security": []
       }
     },
-    "/api/v1/devices/byDevice": {
+    "/api/v1/rules/byDevice": {
       "get": {
         "summary": "根据设备ID查规则列表",
         "x-apifox-folder": "设备管理",
@@ -9269,6 +9269,32 @@
                   "properties": {},
                   "x-apifox-ignore-properties": [],
                   "x-apifox-orders": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "uuid": "RULEJUOCKW",
+                          "fromSource": [],
+                          "fromDevice": [
+                            "DEVICEWPOPRD"
+                          ],
+                          "name": "日志打印",
+                          "type": "lua",
+                          "status": 1,
+                          "expression": "",
+                          "description": "",
+                          "actions": "Actions = {\n\tfunction(data)\n\t\tlocal dataT, err = json:J2T(data)\n\t\tif (err ~= nil) then\n\t\t\tstdlib:Debug('parse json error:' .. err)\n\t\t\treturn true, data\n\t\tend\n\t\tfor key, value in pairs(dataT) do\n\t\t\tlocal MatchHexS = hex:MatchUInt(\"hum:[0,1];temp:[2,3]\", value['value'])\n\t\t\tlocal ts = time:Time()\n\t\t\tlocal Json = json:T2J(\n                {\n\t\t\t\ttag = key,\n\t\t\t\tts = ts,\n\t\t\t\thum = math:TFloat(MatchHexS['hum'] * 0.1, 2),\n\t\t\t\ttemp = math:TFloat(MatchHexS['temp'] * 0.1, 2),\n\t\t\t})\n\t\t\tstdlib:Debug(Json)\n\t\tend\n\t\treturn true, data\n\tend\n}",
+                          "success": "function Success()\n--rulexlib:log(\"success\")\nend",
+                          "failed": "function Failed(error)\nrulexlib:log(error)\nend"
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -9316,6 +9342,185 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-120575304-run",
+        "security": []
+      }
+    },
+    "/api/v1/4g/apn": {
+      "post": {
+        "summary": "设置APN参数",
+        "x-apifox-folder": "系统配置/4G设置",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/4G设置"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "senceId": {
+                    "type": "integer"
+                  },
+                  "ptytpe": {
+                    "type": "integer"
+                  },
+                  "auth": {
+                    "type": "integer"
+                  },
+                  "cdmapwd": {
+                    "type": "integer"
+                  },
+                  "apn": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "senceId",
+                  "ptytpe",
+                  "auth",
+                  "cdmapwd",
+                  "apn",
+                  "username",
+                  "password"
+                ],
+                "x-apifox-orders": [
+                  "senceId",
+                  "ptytpe",
+                  "auth",
+                  "cdmapwd",
+                  "apn",
+                  "username",
+                  "password"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "senceId": 1,
+                "ptytpe": 2,
+                "auth": 3,
+                "cdmapwd": 4,
+                "apn": "example_apn",
+                "username": "example_username",
+                "password": "example_password"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-120625180-run",
+        "security": []
+      },
+      "get": {
+        "summary": "获取APN参数",
+        "x-apifox-folder": "系统配置/4G设置",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/4G设置"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "senceId": {
+                      "type": "integer"
+                    },
+                    "ptytpe": {
+                      "type": "integer"
+                    },
+                    "auth": {
+                      "type": "integer"
+                    },
+                    "cdmapwd": {
+                      "type": "integer"
+                    },
+                    "apn": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "senceId",
+                    "ptytpe",
+                    "auth",
+                    "cdmapwd",
+                    "apn",
+                    "username",
+                    "password"
+                  ],
+                  "x-apifox-orders": [
+                    "senceId",
+                    "ptytpe",
+                    "auth",
+                    "cdmapwd",
+                    "apn",
+                    "username",
+                    "password"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "senceId": 1,
+                      "ptytpe": 2,
+                      "auth": 3,
+                      "cdmapwd": 4,
+                      "apn": "example_apn",
+                      "username": "example_username",
+                      "password": "example_password"
+                    }
+                  },
+                  "2": {
+                    "summary": "异常示例",
+                    "value": {
+                      "code": 4001,
+                      "msg": "open /dev/ttyUSB1: no such file or directory",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-120628289-run",
         "security": []
       }
     }
