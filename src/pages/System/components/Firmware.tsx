@@ -4,6 +4,7 @@ import {
   postFirmwareUpgrade,
   postFirmwareUpload,
 } from '@/services/rulex/gujiancaozuo';
+import { CloudUploadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormTextArea, ProFormUploadButton } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
@@ -43,7 +44,7 @@ const FirmwareConfig = () => {
         labelCol={{ span: 2 }}
         submitter={{
           render: () => (
-            <Button type="primary" onClick={upgrade} loading={loading}>
+            <Button type="primary" onClick={upgrade} loading={loading} icon={<CloudUploadOutlined />}>
               确定升级
             </Button>
           ),
