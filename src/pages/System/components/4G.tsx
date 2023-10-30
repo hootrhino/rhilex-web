@@ -5,12 +5,13 @@ import { ProForm, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Progress } from 'antd';
 import { useRef } from 'react';
+import { green } from '@ant-design/colors';
 
 const FourGConfig = () => {
   const formRef = useRef<ProFormInstance>();
 
   // 详情
-  useRequest(() => get4gInfo(), {
+  const {data: detail} = useRequest(() => get4gInfo(), {
     onSuccess: (data) => {
       formRef.current?.setFieldsValue({ ...data });
     },
@@ -31,7 +32,7 @@ const FourGConfig = () => {
         formRef={formRef}
         layout="horizontal"
         labelCol={{ span: 2 }}
-        initialValues={{ zone: 'Asia/Shanghai' }}
+        initialValues={{ zone: 'Asia/Shanghai', csq: 29 }}
         submitter={{
           render: () => (
             <Button type="primary" onClick={restart} loading={loading}>
@@ -40,10 +41,10 @@ const FourGConfig = () => {
           ),
         }}
       >
-        <ProFormText name="cops" label="运营商" placeholder="请输入运营商" disabled />
-        <ProFormText name="iccid" label="ICCID" placeholder="请输入ICCID" disabled />
+        <ProFormText name="cops" label="运营商" placeholder='' disabled />
+        <ProFormText name="iccid" label="ICCID" placeholder='' disabled />
         <ProForm.Item name="csq" label="信号强度">
-          <Progress steps={10} percent={30} size={20} />
+          <Progress steps={10} size={20} percent={detail?.csq || 0} strokeColor={green[6]} />
         </ProForm.Item>
       </ProForm>
     </>
