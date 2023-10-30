@@ -13,9 +13,9 @@ export const columns = [
         valueType: 'select',
         required: true,
         valueEnum: {
-          GENERIC_SNMP: '通用SNMP协议采集',
-          USER_G776: '通用串口DTU',
-          GENERIC_PROTOCOL: '自定义协议',
+          // GENERIC_SNMP: '通用SNMP协议采集',
+          // USER_G776: '通用串口DTU',
+          GENERIC_PROTOCOL: '通用时间片中断串口协议',
           GENERIC_MODBUS: '通用Modbus Master',
         },
       },
@@ -56,12 +56,12 @@ export const columns = [
                       valueType: 'segmented',
                       hideInForm: type === 'GENERIC_PROTOCOL',
                     },
-                    {
-                      title: '数据标签',
-                      dataIndex: 'tag',
-                      required: true,
-                      hideInForm: type !== 'USER_G776',
-                    },
+                    // {
+                    //   title: '数据标签',
+                    //   dataIndex: 'tag',
+                    //   required: true,
+                    //   hideInForm: type !== 'USER_G776',
+                    // },
                     {
                       title: '通信形式',
                       dataIndex: 'transport',
@@ -89,16 +89,16 @@ export const columns = [
                 {
                   valueType: 'group',
                   columns: [
-                    {
-                      title: '协议分隔符',
-                      dataIndex: 'separator',
-                      valueType: 'select',
-                      hideInForm: type !== 'USER_G776',
-                      valueEnum: {
-                        LF: 'LF',
-                        CRLF: 'CRLF',
-                      },
-                    },
+                    // {
+                    //   title: '协议分隔符',
+                    //   dataIndex: 'separator',
+                    //   valueType: 'select',
+                    //   hideInForm: type !== 'USER_G776',
+                    //   valueEnum: {
+                    //     LF: 'LF',
+                    //     CRLF: 'CRLF',
+                    //   },
+                    // },
                     {
                       title: '工作模式',
                       dataIndex: 'mode',
@@ -116,249 +116,249 @@ export const columns = [
             },
           ],
         },
-        {
-          title: 'SNMP 配置',
-          valueType: 'group',
-          hideInForm: type !== 'GENERIC_SNMP',
-          columns: [
-            {
-              valueType: 'formList',
-              dataIndex: ['config', 'snmpConfig'],
-              mode: 'single',
-              columns: [
-                {
-                  valueType: 'group',
-                  columns: [
-                    {
-                      title: '主机地址',
-                      dataIndex: 'target',
-                      required: true,
-                      tooltip: true,
-                    },
-                    {
-                      title: '主机端口',
-                      dataIndex: 'port',
-                      valueType: 'digit',
-                      required: true,
-                      tooltip: true,
-                    },
-                    {
-                      title: '通信形式',
-                      dataIndex: 'transport',
-                      valueType: 'select',
-                      required: true,
-                      tooltip: true,
-                      valueEnum: { tcp: 'TCP', udp: 'UDP' },
-                    },
-                  ],
-                },
-                {
-                  valueType: 'group',
-                  columns: [
-                    {
-                      title: 'Community',
-                      dataIndex: 'community',
-                      required: true,
-                      tooltip: true,
-                    },
-                    {
-                      title: '安全模式',
-                      dataIndex: 'securityModel',
-                      valueType: 'select',
-                      required: true,
-                      tooltip: true,
-                      valueEnum: new Map([
-                        [0, '不认证'],
-                        [3, 'V3 认证'],
-                      ]),
-                    },
-                    {
-                      valueType: 'dependency',
-                      name: ['securityModel'],
-                      columns: ({ securityModel }: any) => {
-                        if (securityModel === 3) {
-                          return [
-                            {
-                              title: '用户名',
-                              dataIndex: 'username',
-                              required: true,
-                              tooltip: true,
-                            },
-                          ];
-                        } else {
-                          return [];
-                        }
-                      },
-                    },
-                  ],
-                },
-                {
-                  valueType: 'dependency',
-                  name: ['securityModel'],
-                  columns: ({ securityModel }: any) =>
-                    securityModel === 3
-                      ? [
-                          {
-                            valueType: 'group',
-                            columns: [
-                              {
-                                title: '消息选项',
-                                dataIndex: 'snmpV3MsgFlags',
-                                valueType: 'select',
-                                required: true,
-                                tooltip: true,
-                                valueEnum: new Map([
-                                  [0, 'NoAuthNoPriv'],
-                                  [1, 'AuthNoPriv'],
-                                  [2, 'AuthPriv'],
-                                  [3, 'Reportable'],
-                                ]),
-                              },
-                              {
-                                title: 'SNMP 认证协议',
-                                dataIndex: 'snmpV3AuthProtocol',
-                                valueType: 'select',
-                                required: true,
-                                tooltip: true,
-                                valueEnum: new Map([
-                                  [1, 'NoAuth'],
-                                  [2, 'MD5'],
-                                  [3, 'SHA'],
-                                  [4, 'SHA224'],
-                                  [5, 'SHA256'],
-                                  [6, 'SHA384'],
-                                  [7, 'SHA512'],
-                                ]),
-                              },
-                              {
-                                title: 'SNMP 认证密钥',
-                                dataIndex: 'authenticationPassphrase',
-                                required: true,
-                                tooltip: true,
-                              },
-                            ],
-                          },
-                          {
-                            valueType: 'group',
-                            columns: [
-                              {
-                                title: '私有认证协议',
-                                dataIndex: 'privacyProtocol',
-                                valueType: 'select',
-                                required: true,
-                                tooltip: true,
-                                valueEnum: new Map([
-                                  [1, 'NoPriv'],
-                                  [2, 'DES'],
-                                  [3, 'AES'],
-                                  [4, 'AES192'],
-                                  [5, 'AES256'],
-                                  [6, 'AES192C'],
-                                  [7, 'AES256C'],
-                                ]),
-                              },
-                              {
-                                title: '私有认证协议密钥',
-                                dataIndex: 'privacyPassphrase',
-                                required: true,
-                                tooltip: true,
-                              },
-                            ],
-                          },
-                        ]
-                      : [],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          title: '串口配置',
-          valueType: 'group',
-          hideInForm: !['USER_G776'].includes(type),
-          columns: [
-            {
-              valueType: 'formList',
-              dataIndex: ['config', 'uartConfig'],
-              mode: 'single',
-              columns: [
-                {
-                  valueType: 'group',
-                  columns: [
-                    {
-                      title: '超时时间（毫秒）',
-                      dataIndex: 'timeout',
-                      valueType: 'digit',
-                      required: true,
-                      tooltip: true,
-                    },
-                    {
-                      title: '波特率',
-                      dataIndex: 'baudRate',
-                      valueType: 'select',
-                      required: true,
-                      tooltip: true,
-                      valueEnum: new Map([
-                        [4800, '4800'],
-                        [9600, '9600'],
-                        [115200, '115200'],
-                      ]),
-                    },
-                    {
-                      title: '数据位',
-                      dataIndex: 'dataBits',
-                      valueType: 'select',
-                      required: true,
-                      tooltip: true,
-                      valueEnum: new Map([
-                        [1, '1'],
-                        [2, '2'],
-                        [3, '3'],
-                        [4, '4'],
-                        [5, '5'],
-                        [6, '6'],
-                        [7, '7'],
-                        [8, '8'],
-                      ]),
-                    },
-                  ],
-                },
-                {
-                  valueType: 'group',
-                  columns: [
-                    {
-                      title: '奇偶校验',
-                      dataIndex: 'parity',
-                      valueType: 'select',
-                      required: true,
-                      tooltip: true,
-                      valueEnum: { E: '奇校验', O: '偶校验', N: '不校验' },
-                    },
-                    {
-                      title: '停止位',
-                      dataIndex: 'stopBits',
-                      valueType: 'select',
-                      required: true,
-                      tooltip: true,
-                      valueEnum: new Map([
-                        [1, '1'],
-                        [1.5, '1.5'],
-                        [2, '2'],
-                      ]),
-                    },
-                    {
-                      title: '串口路径',
-                      dataIndex: 'uart',
-                      valueType: 'autoComplete',
-                      required: true,
-                      tooltip: true,
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
+        // {
+        //   title: 'SNMP 配置',
+        //   valueType: 'group',
+        //   hideInForm: type !== 'GENERIC_SNMP',
+        //   columns: [
+        //     {
+        //       valueType: 'formList',
+        //       dataIndex: ['config', 'snmpConfig'],
+        //       mode: 'single',
+        //       columns: [
+        //         {
+        //           valueType: 'group',
+        //           columns: [
+        //             {
+        //               title: '主机地址',
+        //               dataIndex: 'target',
+        //               required: true,
+        //               tooltip: true,
+        //             },
+        //             {
+        //               title: '主机端口',
+        //               dataIndex: 'port',
+        //               valueType: 'digit',
+        //               required: true,
+        //               tooltip: true,
+        //             },
+        //             {
+        //               title: '通信形式',
+        //               dataIndex: 'transport',
+        //               valueType: 'select',
+        //               required: true,
+        //               tooltip: true,
+        //               valueEnum: { tcp: 'TCP', udp: 'UDP' },
+        //             },
+        //           ],
+        //         },
+        //         {
+        //           valueType: 'group',
+        //           columns: [
+        //             {
+        //               title: 'Community',
+        //               dataIndex: 'community',
+        //               required: true,
+        //               tooltip: true,
+        //             },
+        //             {
+        //               title: '安全模式',
+        //               dataIndex: 'securityModel',
+        //               valueType: 'select',
+        //               required: true,
+        //               tooltip: true,
+        //               valueEnum: new Map([
+        //                 [0, '不认证'],
+        //                 [3, 'V3 认证'],
+        //               ]),
+        //             },
+        //             {
+        //               valueType: 'dependency',
+        //               name: ['securityModel'],
+        //               columns: ({ securityModel }: any) => {
+        //                 if (securityModel === 3) {
+        //                   return [
+        //                     {
+        //                       title: '用户名',
+        //                       dataIndex: 'username',
+        //                       required: true,
+        //                       tooltip: true,
+        //                     },
+        //                   ];
+        //                 } else {
+        //                   return [];
+        //                 }
+        //               },
+        //             },
+        //           ],
+        //         },
+        //         {
+        //           valueType: 'dependency',
+        //           name: ['securityModel'],
+        //           columns: ({ securityModel }: any) =>
+        //             securityModel === 3
+        //               ? [
+        //                   {
+        //                     valueType: 'group',
+        //                     columns: [
+        //                       {
+        //                         title: '消息选项',
+        //                         dataIndex: 'snmpV3MsgFlags',
+        //                         valueType: 'select',
+        //                         required: true,
+        //                         tooltip: true,
+        //                         valueEnum: new Map([
+        //                           [0, 'NoAuthNoPriv'],
+        //                           [1, 'AuthNoPriv'],
+        //                           [2, 'AuthPriv'],
+        //                           [3, 'Reportable'],
+        //                         ]),
+        //                       },
+        //                       {
+        //                         title: 'SNMP 认证协议',
+        //                         dataIndex: 'snmpV3AuthProtocol',
+        //                         valueType: 'select',
+        //                         required: true,
+        //                         tooltip: true,
+        //                         valueEnum: new Map([
+        //                           [1, 'NoAuth'],
+        //                           [2, 'MD5'],
+        //                           [3, 'SHA'],
+        //                           [4, 'SHA224'],
+        //                           [5, 'SHA256'],
+        //                           [6, 'SHA384'],
+        //                           [7, 'SHA512'],
+        //                         ]),
+        //                       },
+        //                       {
+        //                         title: 'SNMP 认证密钥',
+        //                         dataIndex: 'authenticationPassphrase',
+        //                         required: true,
+        //                         tooltip: true,
+        //                       },
+        //                     ],
+        //                   },
+        //                   {
+        //                     valueType: 'group',
+        //                     columns: [
+        //                       {
+        //                         title: '私有认证协议',
+        //                         dataIndex: 'privacyProtocol',
+        //                         valueType: 'select',
+        //                         required: true,
+        //                         tooltip: true,
+        //                         valueEnum: new Map([
+        //                           [1, 'NoPriv'],
+        //                           [2, 'DES'],
+        //                           [3, 'AES'],
+        //                           [4, 'AES192'],
+        //                           [5, 'AES256'],
+        //                           [6, 'AES192C'],
+        //                           [7, 'AES256C'],
+        //                         ]),
+        //                       },
+        //                       {
+        //                         title: '私有认证协议密钥',
+        //                         dataIndex: 'privacyPassphrase',
+        //                         required: true,
+        //                         tooltip: true,
+        //                       },
+        //                     ],
+        //                   },
+        //                 ]
+        //               : [],
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // },
+        // {
+        //   title: '串口配置',
+        //   valueType: 'group',
+        //   hideInForm: !['USER_G776'].includes(type),
+        //   columns: [
+        //     {
+        //       valueType: 'formList',
+        //       dataIndex: ['config', 'uartConfig'],
+        //       mode: 'single',
+        //       columns: [
+        //         {
+        //           valueType: 'group',
+        //           columns: [
+        //             {
+        //               title: '超时时间（毫秒）',
+        //               dataIndex: 'timeout',
+        //               valueType: 'digit',
+        //               required: true,
+        //               tooltip: true,
+        //             },
+        //             {
+        //               title: '波特率',
+        //               dataIndex: 'baudRate',
+        //               valueType: 'select',
+        //               required: true,
+        //               tooltip: true,
+        //               valueEnum: new Map([
+        //                 [4800, '4800'],
+        //                 [9600, '9600'],
+        //                 [115200, '115200'],
+        //               ]),
+        //             },
+        //             {
+        //               title: '数据位',
+        //               dataIndex: 'dataBits',
+        //               valueType: 'select',
+        //               required: true,
+        //               tooltip: true,
+        //               valueEnum: new Map([
+        //                 [1, '1'],
+        //                 [2, '2'],
+        //                 [3, '3'],
+        //                 [4, '4'],
+        //                 [5, '5'],
+        //                 [6, '6'],
+        //                 [7, '7'],
+        //                 [8, '8'],
+        //               ]),
+        //             },
+        //           ],
+        //         },
+        //         {
+        //           valueType: 'group',
+        //           columns: [
+        //             {
+        //               title: '奇偶校验',
+        //               dataIndex: 'parity',
+        //               valueType: 'select',
+        //               required: true,
+        //               tooltip: true,
+        //               valueEnum: { E: '奇校验', O: '偶校验', N: '不校验' },
+        //             },
+        //             {
+        //               title: '停止位',
+        //               dataIndex: 'stopBits',
+        //               valueType: 'select',
+        //               required: true,
+        //               tooltip: true,
+        //               valueEnum: new Map([
+        //                 [1, '1'],
+        //                 [1.5, '1.5'],
+        //                 [2, '2'],
+        //               ]),
+        //             },
+        //             {
+        //               title: '串口路径',
+        //               dataIndex: 'uart',
+        //               valueType: 'autoComplete',
+        //               required: true,
+        //               tooltip: true,
+        //             },
+        //           ],
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // },
         {
           valueType: 'dependency',
           name: ['config', 'commonConfig', 'transport'],

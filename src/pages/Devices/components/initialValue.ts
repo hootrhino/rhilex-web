@@ -2,7 +2,7 @@ export const defaultValue = (os: string | undefined) => {
   const isWindows = os?.includes('windows');
 
   return {
-    type: 'GENERIC_SNMP',
+    type: 'GENERIC_PROTOCOL',
     config: {
       commonConfig: [
         {
@@ -10,30 +10,30 @@ export const defaultValue = (os: string | undefined) => {
           retryTime: 5,
           timeout: 3000,
           autoRequest: 'false',
-          separator: 'LF',
+          // separator: 'LF',
           transport: 'rawserial',
           mode: 'RTU',
         },
       ],
-      snmpConfig: [
-        {
-          port: 161,
-          securityModel: 0,
-          target: '127.0.0.1',
-          transport: 'udp',
-          community: 'public',
-        },
-      ],
-      uartConfig: [
-        {
-          timeout: 3000,
-          baudRate: 9600,
-          dataBits: 8,
-          stopBits: 1,
-          parity: 'N',
-          uart: isWindows ? 'COM1' : '/dev/ttyS1',
-        },
-      ],
+      // snmpConfig: [
+      //   {
+      //     port: 161,
+      //     securityModel: 0,
+      //     target: '127.0.0.1',
+      //     transport: 'udp',
+      //     community: 'public',
+      //   },
+      // ],
+      // uartConfig: [
+      //   {
+      //     timeout: 3000,
+      //     baudRate: 9600,
+      //     dataBits: 8,
+      //     stopBits: 1,
+      //     parity: 'N',
+      //     uart: isWindows ? 'COM1' : '/dev/ttyS1',
+      //   },
+      // ],
       deviceConfig: [
         {
           type: 1,
