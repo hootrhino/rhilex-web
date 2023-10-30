@@ -115,7 +115,7 @@ const baseColumns = [
   },
 ];
 
-const defaultValue = { net_addr: '', description: '', args: [], local_path: '', running: false };
+const defaultValue = { net_addr: '127.0.0.1:8080', description: '', args: ['-arg1=hello -arg2=rulex'], local_path: '', running: false };
 
 const ExtendedProtocol = () => {
   const actionRef = useRef<ActionType>();
@@ -301,6 +301,7 @@ const ExtendedProtocol = () => {
           maskClosable: false,
         }}
         onFinish={handleOnFinish}
+        initialValues={defaultValue}
       >
         <ProFormText
           name="net_addr"
