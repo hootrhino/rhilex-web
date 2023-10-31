@@ -64,7 +64,7 @@ const codeMessage = {
   511: '客户端需要进行身份验证',
 };
 
-const TIME_OUT = 10 * 1000;
+const TIME_OUT = 10 * 3500;
 
 const request: RequestConfig = {
   timeout: TIME_OUT,
