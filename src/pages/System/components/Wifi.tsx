@@ -99,6 +99,7 @@ const WIFIConfig = () => {
           name="password"
           label="密码"
           width="xl"
+          allowClear
           placeholder="请输入密码"
           rules={[{ required: true, message: '请输入密码' }]}
         />

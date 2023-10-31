@@ -6,6 +6,7 @@ import RightContent from '@/components/RightContent';
 import { LOGIN_PATH } from '@/utils/constant';
 
 const layout: RunTimeLayoutConfig = ({ initialState }) => {
+
   return {
     siderWidth: 208,
     rightContentRender: () => <RightContent />,

@@ -75,7 +75,13 @@ const APNConfig = () => {
         />
         <ProFormText name="apn" label="APN 名称" placeholder="请输入 APN 名称" width="xl" />
         <ProFormText name="username" label="用户名" placeholder="请输入用户名" width="xl" />
-        <ProFormText.Password name="password" label="密码" placeholder="请输入密码" width="xl" />
+        <ProFormText.Password
+          name="password"
+          label="密码"
+          placeholder="请输入密码"
+          width="xl"
+          allowClear
+        />
         <ProFormSelect
           name="auth"
           label="APN 鉴权"

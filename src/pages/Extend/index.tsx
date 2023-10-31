@@ -101,7 +101,7 @@ const baseColumns = [
     renderText: (running: boolean) => (
       <Tag
         icon={running ? <SyncOutlined spin /> : <MinusCircleOutlined />}
-        color={running ? 'processing' : 'default'}
+        color={running ? 'processing' : 'error'}
       >
         {running ? '运行中' : '停止'}
       </Tag>

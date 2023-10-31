@@ -14,7 +14,7 @@ export type CurrentUser = {
 };
 
 const Login: React.FC = () => {
-  const { setInitialState } = useModel('@@initialState');
+  const { setInitialState, initialState } = useModel('@@initialState');
   const { run: getOsSystem } = useModel('useSystem');
 
   const handleSubmit = async (values: CurrentUser) => {
@@ -50,7 +50,7 @@ const Login: React.FC = () => {
       style={{ backgroundImage: `url(${loginBg})`, backgroundSize: '100% 100%' }}
     >
       <Helmet>
-        <title>登录页 - {Settings.title}</title>
+        <title>登录页 - {initialState?.settings?.title || Settings.title}</title>
       </Helmet>
       <div className="flex-1 py-32">
         <LoginForm
@@ -82,6 +82,7 @@ const Login: React.FC = () => {
               ]}
             />
             <ProFormText.Password
+              allowClear
               name="password"
               fieldProps={{
                 size: 'large',

@@ -35,7 +35,10 @@ const UserConfig = () => {
   };
 
   useEffect(() => {
-    formRef.current?.setFieldsValue({ ...initialState?.currentUser });
+    formRef.current?.setFieldsValue({
+      username: initialState?.currentUser?.username,
+      password: initialState?.currentUser?.password,
+    });
   }, [initialState]);
 
   return (
@@ -69,6 +72,7 @@ const UserConfig = () => {
           label="密码"
           placeholder="请输入密码"
           width="xl"
+          allowClear
           rules={[{ required: true, message: '请输入密码' }]}
         />
       </ProForm>

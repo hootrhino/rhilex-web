@@ -1,13 +1,13 @@
-import { getSiteDetail, putSiteUpdate } from '@/services/rulex/zhandianpeizhi';
+import { putSiteUpdate } from '@/services/rulex/zhandianpeizhi';
 import { getBase64 } from '@/utils/utils';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormText, ProFormUploadButton } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useModel } from '@umijs/max';
 import type { UploadFile } from 'antd';
 import { Image, message, Modal, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { startsWith } from 'lodash';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type SiteForm = {
   appName: string;
@@ -18,26 +18,27 @@ const SiteConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-
-  const { data: detail } = useRequest(() => getSiteDetail(), {
-    onSuccess: (data) => {
-      formRef.current?.setFieldsValue({ appName: data?.appName });
-      setFileList([{ thumbUrl: data?.logo, status: 'done', name: 'appLogo', uid: 'logo' }]);
-    },
-  });
+  const { siteDetail } = useModel('useSetting');
 
   const handleOnFinish = async (values: SiteForm) => {
     try {
       const file = values.logo?.[0] as UploadFile;
       const logo = await getBase64(file?.originFileObj as RcFile);
 
-      await putSiteUpdate({ appName: values?.appName, siteName: detail?.siteName || '', logo });
+      await putSiteUpdate({ appName: values?.appName, siteName: siteDetail?.siteName || '', logo });
       message.success('更新成功');
       return true;
     } catch (error) {
       return false;
     }
   };
+
+  useEffect(() => {
+    if (siteDetail) {
+      formRef.current?.setFieldsValue({ appName: siteDetail?.appName });
+      setFileList([{ thumbUrl: siteDetail?.logo, status: 'done', name: 'App Logo', uid: 'logo' }]);
+    }
+  }, [siteDetail]);
 
   return (
     <>
@@ -69,6 +70,7 @@ const SiteConfig = () => {
             listType: 'picture-card',
             isImageUrl: () => true,
             fileList,
+            className: 'upload-logo',
             beforeUpload: (file) => {
               const isImage = startsWith(file.type, 'image/');
               if (!isImage) {
