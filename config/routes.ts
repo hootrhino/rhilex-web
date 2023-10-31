@@ -19,7 +19,8 @@
   {
     path: '/device',
     name: '设备管理',
-    icon: 'fundProjectionScreen',
+    icon: 'group',
+    hideChildrenInMenu: true,
     routes: [
       {
         path: '/device',
@@ -29,56 +30,39 @@
         path: '/device/list',
         name: '设备列表',
         component: './Devices',
-        hideInMenu: true,
       },
       {
         path: '/device/new',
         name: '新建设备',
         component: './Devices/components/Update',
-        hideInMenu: true,
       },
       {
         path: '/device/edit/:id',
         name: '编辑设备',
         component: './Devices/components/Update',
-        hideInMenu: true,
       },
       {
         path: '/device/:deviceId/rule',
         name: '规则配置',
         component: './Devices/RuleConfig',
-        hideInMenu: true,
       },
       {
         path: '/device/:deviceId/rule/new',
         name: '新增规则配置',
         component: './Devices/RuleConfig/Update',
-        hideInMenu: true,
       },
       {
         path: '/device/:deviceId/rule/edit/:ruleId',
         name: '编辑规则配置',
         component: './Devices/RuleConfig/Update',
-        hideInMenu: true,
       },
     ],
   },
   {
     path: '/screen-mgt',
     name: '数据大屏',
-    icon: 'group',
-    routes: [
-      {
-        path: '/screen-mgt',
-        redirect: '/screen-mgt/list',
-      },
-      {
-        path: '/screen-mgt/list',
-        name: '大屏列表',
-        component: './ScreenMgt',
-        hideInMenu: true,
-      },
-    ],
+    icon: 'fundProjectionScreen',
+    component: './ScreenMgt',
   },
   {
     path: '/screen-mgt/edit/:uuid',
@@ -91,6 +75,7 @@
     path: '/inends',
     name: '南向资源',
     icon: 'medicineBox',
+    hideChildrenInMenu: true,
     routes: [
       {
         path: '/inends',
@@ -100,37 +85,31 @@
         path: '/inends/list',
         name: '资源列表',
         component: './Inends',
-        hideInMenu: true,
       },
       {
         path: '/inends/new',
         name: '新建资源',
         component: './Inends/components/Update',
-        hideInMenu: true,
       },
       {
         path: '/inends/edit/:id',
         name: '编辑资源',
         component: './Inends/components/Update',
-        hideInMenu: true,
       },
       {
         path: '/inends/:inendId/rule',
         name: '规则配置',
         component: './Inends/RuleConfig',
-        hideInMenu: true,
       },
       {
         path: '/inends/:inendId/rule/new',
         name: '新增规则配置',
         component: './Inends/RuleConfig/Update',
-        hideInMenu: true,
       },
       {
         path: '/inends/:inendId/rule/edit/:ruleId',
         name: '编辑规则配置',
         component: './Inends/RuleConfig/Update',
-        hideInMenu: true,
       },
     ],
   },
@@ -138,6 +117,7 @@
     path: '/outends',
     name: '北向资源',
     icon: 'api',
+    hideChildrenInMenu: true,
     routes: [
       {
         path: '/outends',
@@ -147,19 +127,16 @@
         path: '/outends/list',
         name: '资源列表',
         component: './Outends',
-        hideInMenu: true,
       },
       {
         path: '/outends/new',
         name: '新建资源',
         component: './Outends/components/Update',
-        hideInMenu: true,
       },
       {
         path: '/outends/edit/:id',
         name: '编辑资源',
         component: './Outends/components/Update',
-        hideInMenu: true,
       },
     ],
   },
@@ -167,6 +144,7 @@
     path: '/app-stack',
     name: '轻量应用',
     icon: 'appstoreAdd',
+    hideChildrenInMenu: true,
     routes: [
       {
         path: '/app-stack',
@@ -176,19 +154,16 @@
         path: '/app-stack/list',
         name: '应用列表',
         component: './AppStack',
-        hideInMenu: true,
       },
       {
         path: '/app-stack/new',
         name: '新建应用',
         component: './AppStack/components/Update',
-        hideInMenu: true,
       },
       {
         path: '/app-stack/edit/:id',
         name: '编辑应用',
         component: './AppStack/components/Update',
-        hideInMenu: true,
       },
     ],
   },
@@ -196,6 +171,7 @@
     path: '/data-center',
     name: '数据中心',
     icon: 'database',
+    hideChildrenInMenu: true,
     routes: [
       {
         path: '/data-center',
@@ -205,13 +181,11 @@
         path: '/data-center/list',
         name: '数据列表',
         component: './DataCenter',
-        hideInMenu: true,
       },
       {
         path: '/data-center/:uuid',
         name: '数据详情',
         component: './DataCenter/Detail',
-        hideInMenu: true,
       },
     ],
   },
@@ -225,6 +199,7 @@
     path: '/plugins',
     name: '插件管理',
     icon: 'control',
+    hideChildrenInMenu: true,
     routes: [
       {
         path: '/plugins',
@@ -234,13 +209,11 @@
         path: '/plugins/list',
         name: '插件列表',
         component: './Plugins',
-        hideInMenu: true,
       },
       {
         path: '/plugins/:id/detail',
         name: '客户端列表',
         component: './Plugins/components/Detail',
-        hideInMenu: true,
       },
     ],
   },

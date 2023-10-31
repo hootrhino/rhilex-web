@@ -136,7 +136,7 @@ const Screen = () => {
           colSpan="270px"
           extra={
             <Button
-              size="small"
+              // size="small"
               key="add"
               type="primary"
               icon={<PlusOutlined />}
