@@ -17,7 +17,7 @@ import type { RcFile } from 'antd/es/upload';
 import { startsWith } from 'lodash';
 import { useEffect, useState } from 'react';
 import { ZoomTypeList } from './constants';
-import { Update } from '@/pages/ScreenMgt/Screen/components/GroupDetail';
+import { Update } from '@/pages/ScreenMgt/components/GroupDetail';
 
 const CanvasSetting = () => {
   const { canvasConfig, setConfig, detail } = useModel('useEditor');

@@ -70,20 +70,20 @@
     routes: [
       {
         path: '/screen-mgt',
-        redirect: '/screen-mgt/screen/list',
+        redirect: '/screen-mgt/list',
       },
       {
-        path: '/screen-mgt/screen/list',
+        path: '/screen-mgt/list',
         name: '大屏列表',
-        component: './ScreenMgt/Screen',
+        component: './ScreenMgt',
         hideInMenu: true,
       },
     ],
   },
   {
-    path: '/screen-mgt/screen/edit/:uuid',
+    path: '/screen-mgt/edit/:uuid',
     name: '编辑大屏',
-    component: './ScreenMgt/Screen/components/Editor',
+    component: './ScreenMgt/components/Editor',
     hideInMenu: true,
     layout: false,
   },

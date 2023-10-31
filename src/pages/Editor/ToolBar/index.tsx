@@ -2,8 +2,8 @@ import { cn, IconFont } from '@/utils/utils';
 import { useEffect, useState } from 'react';
 
 import { message } from '@/components/PopupHack';
-import type { GroupItem } from '@/pages/ScreenMgt/Screen';
-import { Update } from '@/pages/ScreenMgt/Screen/components/GroupDetail';
+import type { GroupItem } from '@/pages/ScreenMgt';
+import { Update } from '@/pages/ScreenMgt/components/GroupDetail';
 import { putVisualUpdate } from '@/services/rulex/dapingguanli';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
 import { Input } from 'antd';
@@ -86,7 +86,7 @@ const ToolBar = ({ refresh }: ToolBarProps) => {
                 <div className="text-[#7a7a7a] text-base truncate max-w-[160px]">
                   <span
                     className="cursor-pointer hover:underline"
-                    onClick={() => history.push('/screen-mgt/screen/list')}
+                    onClick={() => history.push('/screen-mgt/list')}
                   >
                     默认工作空间
                   </span>{' '}
@@ -94,7 +94,7 @@ const ToolBar = ({ refresh }: ToolBarProps) => {
                   <span
                     className="cursor-pointer hover:underline"
                     onClick={() => {
-                      history.push('/screen-mgt/screen/list');
+                      history.push('/screen-mgt/list');
                       setActiveGroup(detail.gid);
                     }}
                   >

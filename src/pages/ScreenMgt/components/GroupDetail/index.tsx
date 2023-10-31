@@ -99,7 +99,7 @@ const GroupDetail = ({ reload, list, activeGroup, ...props }: GroupDetailProps) 
     manual: true,
     onSuccess: (data) => {
       handleOnReset('创建成功');
-      window.open(`/screen-mgt/screen/edit/${data?.uuid}`, '_blank');
+      window.open(`/screen-mgt/edit/${data?.uuid}`, '_blank');
     },
   });
 
@@ -199,7 +199,7 @@ const GroupDetail = ({ reload, list, activeGroup, ...props }: GroupDetailProps) 
                       icon={<EditOutlined />}
                       onClick={() => {
                         setType('edit');
-                        window.open(`/screen-mgt/screen/edit/${item.uuid}`, '_blank');
+                        window.open(`/screen-mgt/edit/${item.uuid}`, '_blank');
                       }}
                     >
                       编辑
