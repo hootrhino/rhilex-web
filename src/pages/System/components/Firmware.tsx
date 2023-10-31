@@ -59,7 +59,7 @@ const FirmwareConfig = () => {
           }
         }}
       >
-        <ProFormTextArea name="vendorKey" label="一机一密" placeholder="请输入一机一密" disabled />
+        <ProFormTextArea name="vendorKey" label="一机一密" placeholder="请输入一机一密" disabled width="xl" />
         <ProFormUploadButton
           label="固件上传"
           name="upload"
@@ -75,6 +75,7 @@ const FirmwareConfig = () => {
               return isImage || Upload.LIST_IGNORE;
             },
           }}
+          width="xl"
         />
       </ProForm>
     </>

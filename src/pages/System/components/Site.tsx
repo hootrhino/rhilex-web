@@ -30,7 +30,7 @@ const SiteConfig = () => {
       const file = values.logo?.[0] as UploadFile;
       const logo = await getBase64(file?.originFileObj as RcFile);
 
-      await putSiteUpdate({ appName: values?.appName, siteName: detail?.siteName, logo });
+      await putSiteUpdate({ appName: values?.appName, siteName: detail?.siteName || '', logo });
       message.success('更新成功');
       return true;
     } catch (error) {

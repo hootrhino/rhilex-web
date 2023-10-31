@@ -61,8 +61,8 @@ const FourGConfig = () => {
           ),
         }}
       >
-        <ProFormText name="cops" label="运营商" placeholder="" disabled />
-        <ProFormText name="iccid" label="ICCID" placeholder="" disabled />
+        <ProFormText name="cops" label="运营商" placeholder="" disabled width="xl" />
+        <ProFormText name="iccid" label="ICCID" placeholder="" disabled width="xl" />
         <ProForm.Item name="csq" label="信号强度">
           <Progress steps={10} size={20} percent={detail?.csq || 0} strokeColor={green[6]} />
         </ProForm.Item>

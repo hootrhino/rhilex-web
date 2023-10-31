@@ -8,6 +8,7 @@ import SiteConfig from './components/Site';
 import TimeConfig from './components/Time';
 import UserConfig from './components/User';
 import WIFIConfig from './components/Wifi';
+import APNConfig from './components/Apn';
 
 const System = () => {
   const { activeKey, setActiveKey } = useModel('useSetting');
@@ -40,6 +41,11 @@ const System = () => {
           label: '固件配置',
           key: 'firmware',
           children: <FirmwareConfig />,
+        },
+        {
+          label: 'APN配置',
+          key: 'apn',
+          children: <APNConfig />,
         },
       ];
 
