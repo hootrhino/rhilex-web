@@ -4,7 +4,7 @@ import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormText, ProFormUploadButton } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import type { UploadFile } from 'antd';
-import { message, Upload } from 'antd';
+import { Image, message, Modal, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { startsWith } from 'lodash';
 import { useRef, useState } from 'react';
@@ -17,6 +17,7 @@ type SiteForm = {
 const SiteConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [open, setOpen] = useState<boolean>(false);
 
   const { data: detail } = useRequest(() => getSiteDetail(), {
     onSuccess: (data) => {
@@ -74,18 +75,34 @@ const SiteConfig = () => {
                 message.error('仅支持图片格式文件，请检查上传文件格式');
               }
 
-              const isLt30KB = file.size / 1024 <= 30; // 将文件大小转换为KB
+              const isLt30KB = file.size / 1024 <= 100; // 将文件大小转换为KB
               if (!isLt30KB) {
-                message.error(`文件大小不能超过 30 KB`);
+                message.error(`文件大小不能超过 100 KB`);
               }
 
               return (isImage && isLt30KB) || Upload.LIST_IGNORE;
             },
             onChange: (info) => setFileList(info.fileList),
+            onPreview: (file) => {
+              if (file?.thumbUrl) {
+                setOpen(true);
+              }
+            },
           }}
           rules={[{ required: true, message: '请上传系统 Logo' }]}
         />
       </ProForm>
+      <Modal
+        open={open}
+        footer={false}
+        title={fileList[0]?.name || '系统 LOGO'}
+        width="40%"
+        onCancel={() => setOpen(false)}
+      >
+        <div className="w-full h-full flex justify-center items-center">
+          <Image src={fileList[0]?.thumbUrl} className="w-full" preview={false} />
+        </div>
+      </Modal>
     </>
   );
 };
