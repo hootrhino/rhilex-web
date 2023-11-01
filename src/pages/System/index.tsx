@@ -2,13 +2,14 @@ import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { useEffect } from 'react';
 import FourGConfig from './components/4G';
+import APNConfig from './components/Apn';
+import DataBackupConfig from './components/DataBackup';
 import FirmwareConfig from './components/Firmware';
 import NetworkConfig from './components/Network';
 import SiteConfig from './components/Site';
 import TimeConfig from './components/Time';
 import UserConfig from './components/User';
 import WIFIConfig from './components/Wifi';
-import APNConfig from './components/Apn';
 
 const System = () => {
   const { activeKey, setActiveKey } = useModel('useSetting');
@@ -41,6 +42,11 @@ const System = () => {
           label: '固件配置',
           key: 'firmware',
           children: <FirmwareConfig />,
+        },
+        {
+          label: '数据备份',
+          key: 'backup',
+          children: <DataBackupConfig />,
         },
         {
           label: 'APN配置',
