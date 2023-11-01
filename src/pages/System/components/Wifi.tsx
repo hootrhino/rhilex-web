@@ -10,6 +10,7 @@ import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components'
 import { useRequest } from '@umijs/max';
 import { AutoComplete, Button, Space } from 'antd';
 import { useRef } from 'react';
+import Title from './TItle';
 
 type UpdateForm = {
   ssid: string;
@@ -64,7 +65,7 @@ const WIFIConfig = () => {
 
   return (
     <>
-      <div className="text-[20px] mb-[24px] font-medium">WIFI配置</div>
+      <Title name='WIFI 配置' />
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}

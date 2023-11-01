@@ -6,6 +6,7 @@ import APNConfig from './components/Apn';
 import DataBackupConfig from './components/DataBackup';
 import FirmwareConfig from './components/Firmware';
 import NetworkConfig from './components/Network';
+import RoutingConfig from './components/Routing';
 import SiteConfig from './components/Site';
 import TimeConfig from './components/Time';
 import UserConfig from './components/User';
@@ -34,9 +35,14 @@ const System = () => {
           children: <TimeConfig />,
         },
         {
-          label: '4G 配置',
+          label: <div>4G&nbsp;&nbsp;配置</div>,
           key: '4g',
           children: <FourGConfig />,
+        },
+        {
+          label: '路由设置',
+          key: 'routing',
+          children: <RoutingConfig />,
         },
         {
           label: '固件配置',

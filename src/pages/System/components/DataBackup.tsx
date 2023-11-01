@@ -2,11 +2,12 @@ import { DownloadOutlined } from '@ant-design/icons';
 import { ProForm, ProFormUploadButton } from '@ant-design/pro-components';
 import { Button, message, Upload } from 'antd';
 import { endsWith, startsWith } from 'lodash';
+import Title from './TItle';
 
 const DataBackupConfig = () => {
   return (
     <>
-      <div className="text-[20px] mb-[24px] font-medium">数据备份</div>
+      <Title name='数据备份' />
       <ProForm
         // formRef={formRef}
         layout="horizontal"

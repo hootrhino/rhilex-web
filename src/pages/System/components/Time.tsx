@@ -11,6 +11,7 @@ import {
 import { useRequest } from '@umijs/max';
 import { Button, Space } from 'antd';
 import { useRef } from 'react';
+import Title from './TItle';
 
 type UpdateParams = {
   sysTime: string;
@@ -55,7 +56,7 @@ const TimeConfig = () => {
 
   return (
     <>
-      <div className="text-[20px] mb-[24px] font-medium">时间配置</div>
+      <Title name='时间配置' />
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}

@@ -14,6 +14,7 @@ import { useRequest } from '@umijs/max';
 import { Tooltip } from 'antd';
 import { omit } from 'lodash';
 import { useRef } from 'react';
+import Title from './TItle';
 
 type DnsListItem = {
   dns: string;
@@ -72,7 +73,7 @@ const NetworkConfig = () => {
 
   return (
     <>
-      <div className="text-[20px] mb-[24px] font-medium">网卡配置</div>
+      <Title name='网卡配置' />
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}

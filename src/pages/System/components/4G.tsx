@@ -7,6 +7,7 @@ import { ProForm, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Progress, Space } from 'antd';
 import { useRef } from 'react';
+import Title from './TItle';
 
 const FourGConfig = () => {
   const formRef = useRef<ProFormInstance>();
@@ -32,7 +33,7 @@ const FourGConfig = () => {
 
   return (
     <>
-      <div className="text-[20px] mb-[24px] font-medium">4G 配置</div>
+    <Title name='4G 配置' />
       <ProForm
         formRef={formRef}
         layout="horizontal"

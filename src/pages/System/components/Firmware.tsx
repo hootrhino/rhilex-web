@@ -11,6 +11,7 @@ import { useRequest } from '@umijs/max';
 import { Button, Upload } from 'antd';
 import { startsWith } from 'lodash';
 import { useRef } from 'react';
+import Title from './TItle';
 
 const FirmwareConfig = () => {
   const formRef = useRef<ProFormInstance>();
@@ -37,7 +38,7 @@ const FirmwareConfig = () => {
 
   return (
     <>
-      <div className="text-[20px] mb-[24px] font-medium">固件升级</div>
+      <Title name='固件升级' />
       <ProForm
         formRef={formRef}
         layout="horizontal"

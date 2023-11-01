@@ -4,6 +4,7 @@ import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { useEffect, useRef } from 'react';
+import Title from './TItle';
 
 type UpdateParams = {
   senceId: number;
@@ -45,7 +46,7 @@ const APNConfig = () => {
 
   return (
     <>
-      <div className="text-[20px] mb-[24px] font-medium">APN 配置</div>
+      <Title name='APN 配置' />
       <ProForm
         formRef={formRef}
         layout="horizontal"

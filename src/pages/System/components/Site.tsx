@@ -8,6 +8,7 @@ import { Image, message, Modal, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { startsWith } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
+import Title from './TItle';
 
 type SiteForm = {
   appName: string;
@@ -42,7 +43,7 @@ const SiteConfig = () => {
 
   return (
     <>
-      <div className="text-[20px] mb-[24px] font-medium">站点配置</div>
+      <Title name='站点配置' />
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}

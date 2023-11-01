@@ -5,6 +5,7 @@ import { ProForm, ProFormText } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { Button, Space } from 'antd';
 import { useEffect, useRef } from 'react';
+import Title from './TItle';
 
 type UpdateParams = {
   username: string;
@@ -43,7 +44,7 @@ const UserConfig = () => {
 
   return (
     <>
-      <div className="text-[20px] mb-[24px] font-medium">用户配置</div>
+      <Title name='用户配置' />
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
