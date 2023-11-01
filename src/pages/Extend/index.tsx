@@ -9,7 +9,7 @@ import {
   putGoodsStop,
   putGoodsUpdate,
 } from '@/services/rulex/kuozhanxieyi';
-import { IconFont } from '@/utils/utils';
+import { IconFont, getBlob } from '@/utils/utils';
 import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -24,6 +24,7 @@ import {
 import { useRequest } from '@umijs/max';
 import { Button, Modal, Popconfirm, Tag } from 'antd';
 import { useEffect, useRef, useState } from 'react';
+import type { UploadFile } from 'antd/es/upload';
 
 type ExtendItem = {
   uuid?: string;
@@ -39,7 +40,7 @@ type FormParams = {
   net_addr: string;
   args: string[];
   description?: string;
-  file: File;
+  file: UploadFile;
 };
 
 const baseColumns = [
@@ -143,12 +144,13 @@ const ExtendedProtocol = () => {
   // 新建&编辑
   const handleOnFinish = async ({ file, ...params }: FormParams) => {
     try {
-      const blob = new Blob([(file as any).originFileObj]);
+      const blobFile = getBlob(file as UploadFile);
+
       if (initialValue?.uuid) {
-        await putGoodsUpdate({ ...params, uuid: initialValue?.uuid } as any, blob as File);
+        await putGoodsUpdate({ ...params, uuid: initialValue?.uuid } as any, blobFile as File);
         message.success('更新成功');
       } else {
-        await postGoodsCreate(params as any, blob as File);
+        await postGoodsCreate(params as any, blobFile as File);
         message.success('新建成功');
       }
 

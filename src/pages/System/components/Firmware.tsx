@@ -12,6 +12,7 @@ import { Button, Upload } from 'antd';
 import { startsWith } from 'lodash';
 import { useRef } from 'react';
 import Title from './TItle';
+import { getBlob } from '@/utils/utils';
 
 const FirmwareConfig = () => {
   const formRef = useRef<ProFormInstance>();
@@ -54,8 +55,9 @@ const FirmwareConfig = () => {
           if (changedValue?.upload) {
             const file = changedValue?.upload?.[0];
             if (file?.status === 'done') {
-              const blob = new Blob([file.originFileObj], { type: file.type });
-              uploadFile(blob);
+              const blobFile = getBlob(file);
+
+              uploadFile(blobFile);
             }
           }
         }}

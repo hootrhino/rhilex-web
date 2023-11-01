@@ -1,5 +1,5 @@
 import { createFromIconfontCN } from '@ant-design/icons';
-import type { RcFile } from 'antd/es/upload';
+import type { RcFile, UploadFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -14,6 +14,12 @@ export const tryToJSON = (val: string) => {
     return val;
   }
 };
+
+export const getBlob = (file: UploadFile) => {
+  const blobFile = new Blob([file.originFileObj as RcFile], { type: file.type });
+  console.log(blobFile, file);
+  return blobFile;
+}
 
 export const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
