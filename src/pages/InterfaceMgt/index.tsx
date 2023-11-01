@@ -2,6 +2,12 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Popconfirm } from 'antd';
 import { useRef } from 'react';
+import {
+  baudRateEnum,
+  dataBitsEnum,
+  parityEnum,
+  stopBitsEnum,
+} from '../Devices/components/columns';
 
 type InterfaceItem = {
   uuid: string;
@@ -34,39 +40,22 @@ const Interface = () => {
     {
       title: '波特率',
       dataIndex: 'baudRate',
-      valueEnum: new Map([
-        [4800, '4800'],
-        [9600, '9600'],
-        [115200, '115200'],
-      ]),
+      valueEnum: baudRateEnum,
     },
     {
       title: '数据位',
       dataIndex: 'dataBits',
-      valueEnum: new Map([
-        [1, '1'],
-        [2, '2'],
-        [3, '3'],
-        [4, '4'],
-        [5, '5'],
-        [6, '6'],
-        [7, '7'],
-        [8, '8'],
-      ]),
+      valueEnum: dataBitsEnum,
     },
     {
       title: '奇偶校验',
       dataIndex: 'parity',
-      valueEnum: { E: '奇校验', O: '偶校验', N: '不校验' },
+      valueEnum: parityEnum,
     },
     {
       title: '停止位',
       dataIndex: 'stopBits',
-      valueEnum: new Map([
-        [1, '1'],
-        [1.5, '1.5'],
-        [2, '2'],
-      ]),
+      valueEnum: stopBitsEnum,
     },
     {
       title: '串口路径',

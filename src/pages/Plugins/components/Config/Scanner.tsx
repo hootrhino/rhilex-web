@@ -1,3 +1,9 @@
+import {
+  baudRateEnum,
+  dataBitsEnum,
+  parityEnum,
+  stopBitsEnum,
+} from '@/pages/Devices/components/columns';
 import { getOsUarts } from '@/services/rulex/xitongshuju';
 import { ProForm, ProFormDigit, ProFormSelect } from '@ant-design/pro-components';
 import { langs } from '@uiw/codemirror-extensions-langs';
@@ -30,7 +36,7 @@ const Scanner = () => {
           label="波特率"
           name="baudRate"
           width="sm"
-          options={['4800', '9600', '115200']}
+          valueEnum={baudRateEnum}
           placeholder="请选择波特率"
           rules={[{ required: true, message: '请选择波特率' }]}
         />
@@ -38,7 +44,7 @@ const Scanner = () => {
           label="数据位"
           name="dataBits"
           width="sm"
-          options={['1', '2', '3', '4', '5', '6', '7', '8']}
+          valueEnum={dataBitsEnum}
           placeholder="请选择数据位"
           rules={[{ required: true, message: '请选择数据位' }]}
         />
@@ -48,11 +54,7 @@ const Scanner = () => {
           label="奇偶校验"
           name="parity"
           width="sm"
-          options={[
-            { label: '奇校验', value: 'E' },
-            { label: '偶校验', value: 'O' },
-            { label: '不校验', value: 'N' },
-          ]}
+          valueEnum={parityEnum}
           placeholder="请选择奇偶校验"
           rules={[{ required: true, message: '请选择奇偶校验' }]}
         />
@@ -60,7 +62,7 @@ const Scanner = () => {
           label="停止位"
           name="stopBits"
           width="sm"
-          options={['1', '1.5', '2']}
+          valueEnum={stopBitsEnum}
           placeholder="请选择停止位"
           rules={[{ required: true, message: '请选择停止位' }]}
         />
@@ -78,7 +80,13 @@ const Scanner = () => {
         </ProForm.Item>
       </ProForm.Group>
       <ProForm.Item name="output" label="扫描结果">
-        <CodeMirror extensions={[langs.shell()]} height="200px" theme={monokai} readOnly autoFocus={false} />
+        <CodeMirror
+          extensions={[langs.shell()]}
+          height="200px"
+          theme={monokai}
+          readOnly
+          autoFocus={false}
+        />
       </ProForm.Item>
     </>
   );

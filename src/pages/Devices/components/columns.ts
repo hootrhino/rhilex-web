@@ -1,3 +1,46 @@
+export const baudRateEnum = new Map([
+  [4800, '4800'],
+  [9600, '9600'],
+  [115200, '115200'],
+]);
+
+export const dataBitsEnum = new Map([
+  [1, '1'],
+  [2, '2'],
+  [3, '3'],
+  [4, '4'],
+  [5, '5'],
+  [6, '6'],
+  [7, '7'],
+  [8, '8'],
+]);
+
+export const parityEnum = { E: '奇校验', O: '偶校验', N: '不校验' };
+
+export const stopBitsEnum = new Map([
+  [1, '1'],
+  [1.5, '1.5'],
+  [2, '2'],
+]);
+
+export const transportEnum = { rawserial: '自定义串口', rawtcp: '自定义TCP' };
+
+export const modeEnum = {
+  RTU: 'RTU',
+  TCP: 'TCP',
+};
+
+export const funcEnum = new Map([
+  [1, '01 读线圈状态'],
+  [2, '02 读离散输入状态'],
+  [3, '03 读保持寄存器'],
+  [4, '04 读输入寄存器'],
+  // [5, '05 写单个线圈'],
+  // [6, '06 写单个保持寄存器'],
+  // [15, '15 写多个线圈'],
+  // [16, '16 写多个保持寄存器'],
+]);
+
 export const columns = [
   {
     valueType: 'group',
@@ -68,7 +111,7 @@ export const columns = [
                       valueType: 'select',
                       required: true,
                       hideInForm: type !== 'GENERIC_PROTOCOL',
-                      valueEnum: { rawserial: '自定义串口', rawtcp: '自定义TCP' },
+                      valueEnum: transportEnum,
                     },
                     {
                       title: '重试次数',
@@ -105,11 +148,27 @@ export const columns = [
                       valueType: 'select',
                       required: true,
                       hideInForm: type !== 'GENERIC_MODBUS',
-                      valueEnum: {
-                        RTU: 'RTU',
-                        TCP: 'TCP',
-                      },
+                      valueEnum: modeEnum,
                     },
+                    // {
+                    //   valueType: 'dependency',
+                    //   name: ['mode'],
+                    //   columns: ({ mode }: any) => {
+                    //     if (type === 'GENERIC_MODBUS' && mode === 'RTU') {
+                    //       return [
+                    //         {
+                    //           title: 'RTU 配置',
+                    //           dataIndex: 'rtuConfig',
+                    //           valueType: 'select',
+                    //           required: true,
+                    //           hideInForm: type !== 'GENERIC_MODBUS',
+                    //         },
+                    //       ];
+                    //     } else {
+                    //       return [];
+                    //     }
+                    //   },
+                    // },
                   ],
                 },
               ],
@@ -393,11 +452,7 @@ export const columns = [
                               valueType: 'select',
                               required: true,
                               tooltip: true,
-                              valueEnum: new Map([
-                                [4800, '4800'],
-                                [9600, '9600'],
-                                [115200, '115200'],
-                              ]),
+                              valueEnum: baudRateEnum,
                             },
                             {
                               title: '数据位',
@@ -405,16 +460,7 @@ export const columns = [
                               valueType: 'select',
                               required: true,
                               tooltip: true,
-                              valueEnum: new Map([
-                                [1, '1'],
-                                [2, '2'],
-                                [3, '3'],
-                                [4, '4'],
-                                [5, '5'],
-                                [6, '6'],
-                                [7, '7'],
-                                [8, '8'],
-                              ]),
+                              valueEnum: dataBitsEnum,
                             },
                           ],
                         },
@@ -427,7 +473,7 @@ export const columns = [
                               valueType: 'select',
                               required: true,
                               tooltip: true,
-                              valueEnum: { E: '奇校验', O: '偶校验', N: '不校验' },
+                              valueEnum: parityEnum,
                             },
                             {
                               title: '停止位',
@@ -435,11 +481,7 @@ export const columns = [
                               valueType: 'select',
                               required: true,
                               tooltip: true,
-                              valueEnum: new Map([
-                                [1, '1'],
-                                [1.5, '1.5'],
-                                [2, '2'],
-                              ]),
+                              valueEnum: stopBitsEnum,
                             },
                             {
                               title: '串口路径',
@@ -530,11 +572,7 @@ export const columns = [
                               valueType: 'select',
                               required: true,
                               tooltip: true,
-                              valueEnum: new Map([
-                                [4800, '4800'],
-                                [9600, '9600'],
-                                [115200, '115200'],
-                              ]),
+                              valueEnum: baudRateEnum,
                             },
                             {
                               title: '数据位',
@@ -542,16 +580,7 @@ export const columns = [
                               valueType: 'select',
                               required: true,
                               tooltip: true,
-                              valueEnum: new Map([
-                                [1, '1'],
-                                [2, '2'],
-                                [3, '3'],
-                                [4, '4'],
-                                [5, '5'],
-                                [6, '6'],
-                                [7, '7'],
-                                [8, '8'],
-                              ]),
+                              valueEnum: dataBitsEnum,
                             },
                           ],
                         },
@@ -564,7 +593,7 @@ export const columns = [
                               valueType: 'select',
                               required: true,
                               tooltip: true,
-                              valueEnum: { E: '奇校验', O: '偶校验', N: '不校验' },
+                              valueEnum: parityEnum,
                             },
                             {
                               title: '停止位',
@@ -572,11 +601,7 @@ export const columns = [
                               valueType: 'select',
                               required: true,
                               tooltip: true,
-                              valueEnum: new Map([
-                                [1, '1'],
-                                [1.5, '1.5'],
-                                [2, '2'],
-                              ]),
+                              valueEnum: stopBitsEnum,
                             },
                             {
                               title: '串口路径',
@@ -666,16 +691,7 @@ export const columns = [
                       valueType: 'select',
                       width: 'md',
                       required: true,
-                      valueEnum: new Map([
-                        [1, '01 读线圈状态'],
-                        [2, '02 读离散输入状态'],
-                        [3, '03 读保持寄存器'],
-                        [4, '04 读输入寄存器'],
-                        // [5, '05 写单个线圈'],
-                        // [6, '06 写单个保持寄存器'],
-                        // [15, '15 写多个线圈'],
-                        // [16, '16 写多个保持寄存器'],
-                      ]),
+                      valueEnum: funcEnum,
                     },
                     {
                       title: '从设备 ID',
