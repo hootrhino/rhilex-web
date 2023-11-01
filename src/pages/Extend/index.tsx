@@ -52,6 +52,7 @@ const baseColumns = [
   {
     title: '扩展类型',
     dataIndex: 'goodsType',
+    width: 80,
     renderText: (goodsType: string) => {
       const isLocal = goodsType === 'LOCAL';
       return <Tag color={isLocal ? 'green' : 'purple'}>{isLocal ? '内部' : '外部'}</Tag>;
@@ -76,6 +77,7 @@ const baseColumns = [
   {
     title: '执行类型',
     dataIndex: 'executeType',
+    width: 100,
     renderText: (executeType: string) => {
       let iconType = 'unknown';
       const defaultType = ['JAVA', 'ELF', 'PYTHON', 'EXE', 'NODEJS', 'LUA'];

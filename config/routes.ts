@@ -217,6 +217,12 @@
       },
     ],
   },
+  {
+    path: '/interface',
+    name: '接口管理',
+    icon: 'control',
+    component: './InterfaceMgt'
+  },
   // {
   //   path: '/ai',
   //   name: `A${'\xa0'}I${'\xa0\xa0\xa0'}能力`,
