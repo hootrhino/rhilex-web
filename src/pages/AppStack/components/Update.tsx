@@ -4,13 +4,11 @@ import SchemaForm from '@/components/SchemaForm';
 import { getAppDetail, postApp, putApp } from '@/services/rulex/qingliangyingyong';
 import { useEffect, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
+import { AppStackItem } from '..';
 import { columns1, columns2 } from './columns';
 
-type InitValueType = {
-  name: string;
-  version: string;
-  type: string;
-  [key: string]: any;
+type InitValueType = Omit<AppStackItem, 'autoStart'> & {
+  autoStart: string;
 };
 
 const DefaultListUrl = '/app-stack/list';

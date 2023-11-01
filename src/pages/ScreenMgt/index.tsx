@@ -19,7 +19,6 @@ import { useModel, useRequest } from '@umijs/max';
 import { Button, Space, Tooltip } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import GroupDetail from './components/GroupDetail';
-import './index.less';
 
 export type GroupItem = {
   uuid: string;
@@ -188,7 +187,7 @@ const Screen = () => {
                       </a>
                     </Tooltip>
                     <Tooltip title="删除分组">
-                      <a key="delete" onClick={() => handleOnRemoveGroup(entity)}>
+                      <a key="remove" onClick={() => handleOnRemoveGroup(entity)}>
                         <DeleteOutlined />
                       </a>
                     </Tooltip>

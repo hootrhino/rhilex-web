@@ -106,7 +106,7 @@ const Devices = () => {
         <a key="rule" onClick={() => history.push(`/device/${uuid}/rule`)}>
           规则配置
         </a>,
-        <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
+        <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
           详情
         </a>,
         <a key="edit" onClick={() => history.push(`/device/edit/${uuid}`)}>
@@ -117,7 +117,7 @@ const Devices = () => {
           onConfirm={() => remove({ uuid })}
           okText="是"
           cancelText="否"
-          key="delete"
+          key="remove"
         >
           <a>删除</a>
         </Popconfirm>,

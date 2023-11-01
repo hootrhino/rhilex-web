@@ -1,10 +1,10 @@
 import LogTable from '@/components/LogTable';
-// import { LogItem } from '@/models/useWebsocket';
 import { getAppDetail } from '@/services/rulex/qingliangyingyong';
 import { MinusCircleOutlined, SyncOutlined } from '@ant-design/icons';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps, Tag } from 'antd';
+import { AppStackItem } from '..';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -12,7 +12,7 @@ type DetailProps = DrawerProps & {
 };
 
 const Detail = ({ uuid, type, ...props }: DetailProps) => {
-  const columns: ProDescriptionsItemProps<Record<string, any>>[] = [
+  const columns: ProDescriptionsItemProps<AppStackItem>[] = [
     {
       title: 'APP 名称',
       dataIndex: 'name',

@@ -4,28 +4,39 @@ import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { message } from '@/components/PopupHack';
 import { postPluginService } from '@/services/rulex/chajianguanli';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { useRequest } from '@umijs/max';
 import { Tag } from 'antd';
 import { useRef } from 'react';
 import { useParams } from 'umi';
 
-type Item = Record<string, any>;
+type DetailItem = {
+  id: string;
+  username: string;
+  remote: string;
+  cleanSession: boolean;
+  [key: string]: any;
+};
+
+type OffLineParams = {
+  uuid: string;
+  name: string;
+  args: string[];
+};
 
 const Detail = () => {
   const { id: uuid } = useParams();
   const actionRef = useRef<ActionType>();
 
-  const handleOffLine = async (ids: string[]) => {
-    try {
-      await postPluginService({ uuid: uuid || '', name: 'kickout', args: ids });
+  // 下线
+  const { run: OffLine } = useRequest((params: OffLineParams) => postPluginService(params), {
+    manual: true,
+    onSuccess: () => {
       message.success('下线成功');
       actionRef.current?.reload();
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
+    },
+  });
 
-  const columns: ProColumns<Item>[] = [
+  const columns: ProColumns<DetailItem>[] = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -58,7 +69,7 @@ const Detail = () => {
       fixed: 'right',
       key: 'option',
       render: (_, { id }) => [
-        <a key="offline" onClick={() => handleOffLine([id])}>
+        <a key="offline" onClick={() => OffLine({ uuid: uuid || '', name: 'kickout', args: [id] })}>
           下线
         </a>,
       ],
@@ -75,7 +86,7 @@ const Detail = () => {
           const { data } = await postPluginService({ uuid: uuid || '', name: 'clients', args: [] });
 
           return Promise.resolve({
-            data: data as Item[],
+            data: data as DetailItem[],
             success: true,
           });
         }}

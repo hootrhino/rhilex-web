@@ -91,7 +91,7 @@ const Targets = () => {
         <Popconfirm
           title="确定要删除该目标？"
           onConfirm={() => handleOnDelete({ uuid })}
-          key="delete"
+          key="remove"
         >
           <a>删除</a>
         </Popconfirm>,

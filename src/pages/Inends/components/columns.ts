@@ -1,3 +1,24 @@
+export const typeEnum = {
+  COAP: 'COAP 协议支持',
+  GENERIC_IOT_HUB: 'IoTHUB 平台支持',
+  RULEX_UDP: 'UUDP 协议支持',
+  HTTP: 'HTTP 协议支持',
+  NATS_SERVER: 'Nats 中间件支持',
+  GRPC: 'GRPC 协议支持',
+};
+
+export const modeEnum = {
+  GW: '网关',
+  DC: '直连',
+};
+
+export const stateEnum = {
+  0: { text: '故障', status: 'Error' },
+  1: { text: '启用', status: 'Success' },
+  2: { text: '暂停', status: 'Default' },
+  3: { text: '停止', status: 'Default' },
+};
+
 export const columns = [
   {
     valueType: 'group',
@@ -12,14 +33,7 @@ export const columns = [
         dataIndex: 'type',
         valueType: 'select',
         required: true,
-        valueEnum: {
-          COAP: 'COAP 协议支持',
-          GENERIC_IOT_HUB: 'IoTHUB 平台支持',
-          RULEX_UDP: 'UUDP 协议支持',
-          HTTP: 'HTTP 协议支持',
-          NATS_SERVER: 'Nats 中间件支持',
-          GRPC: 'GRPC 协议支持',
-        },
+        valueEnum: typeEnum,
       },
       {
         title: '备注信息',
@@ -61,10 +75,7 @@ export const columns = [
                         dataIndex: 'mode',
                         valueType: 'select',
                         required: true,
-                        valueEnum: {
-                          GW: '网关',
-                          DC: '直连',
-                        },
+                        valueEnum: modeEnum,
                       },
                     ],
                   },

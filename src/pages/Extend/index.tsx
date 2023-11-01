@@ -25,7 +25,7 @@ import { useRequest } from '@umijs/max';
 import { Button, Modal, Popconfirm, Tag } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
-type Item = {
+type ExtendItem = {
   uuid?: string;
   running: boolean;
   net_addr: string;
@@ -117,11 +117,18 @@ const baseColumns = [
   },
 ];
 
-const defaultValue = { net_addr: '127.0.0.1:8080', description: '', args: ['-arg1=hello -arg2=rulex'], local_path: '', running: false };
+const defaultValue = {
+  net_addr: '127.0.0.1:8080',
+  description: '',
+  args: ['-arg1=hello -arg2=rulex'],
+  local_path: '',
+  running: false,
+};
 
 const ExtendedProtocol = () => {
   const actionRef = useRef<ActionType>();
   const formRef = useRef<ProFormInstance>();
+
   const [open, setOpen] = useState<boolean>(false);
   const [detailConfig, setDetailConfig] = useState<{
     type: 'detail' | 'log';
@@ -131,7 +138,7 @@ const ExtendedProtocol = () => {
     type: 'detail',
     open: false,
   });
-  const [initialValue, setInitialValue] = useState<Item>(defaultValue);
+  const [initialValue, setInitialValue] = useState<ExtendItem>(defaultValue);
 
   // 新建&编辑
   const handleOnFinish = async ({ file, ...params }: FormParams) => {
@@ -186,13 +193,11 @@ const ExtendedProtocol = () => {
     (params: API.getGoodsDetailParams) => getGoodsDetail(params),
     {
       manual: true,
-      onSuccess: (data: any) => {
-        setInitialValue(data);
-      },
+      onSuccess: (data) => setInitialValue(data as ExtendItem),
     },
   );
 
-  const columns: ProColumns<Item>[] = [
+  const columns: ProColumns<ExtendItem>[] = [
     ...baseColumns,
     {
       title: '操作',
@@ -269,7 +274,7 @@ const ExtendedProtocol = () => {
             const { data } = await getGoodsList();
 
             return Promise.resolve({
-              data: data as Item[],
+              data: data as ExtendItem[],
               success: true,
             });
           }}

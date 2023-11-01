@@ -86,11 +86,11 @@ const Interface = () => {
           编辑
         </a>,
         <Popconfirm
-          title="确定要删除该目标？"
+          title="确定要删除该接口？"
           onConfirm={() => {
             // TODO 删除
           }}
-          key="delete"
+          key="remove"
         >
           <a>删除</a>
         </Popconfirm>,

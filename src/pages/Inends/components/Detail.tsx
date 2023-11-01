@@ -5,6 +5,7 @@ import { Drawer, DrawerProps } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
+import { modeEnum, stateEnum, typeEnum } from './columns';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -20,24 +21,12 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
       title: '资源类型',
       dataIndex: 'type',
       valueType: 'select',
-      valueEnum: {
-        COAP: 'COAP 协议支持',
-        GENERIC_IOT_HUB: 'IoTHUB 平台支持',
-        RULEX_UDP: 'UUDP 协议支持',
-        HTTP: 'HTTP 协议支持',
-        NATS_SERVER: 'Nats 中间件支持',
-        GRPC: 'GRPC 协议支持',
-      },
+      valueEnum: typeEnum,
     },
     {
       title: '资源状态',
       dataIndex: 'state',
-      valueEnum: {
-        0: { text: '故障', status: 'Error' },
-        1: { text: '启用', status: 'Success' },
-        2: { text: '暂停', status: 'Default' },
-        3: { text: '停止', status: 'Default' },
-      },
+      valueEnum: stateEnum,
     },
     {
       title: '备注信息',
@@ -57,10 +46,7 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
     {
       title: '模式',
       dataIndex: 'mode',
-      valueEnum: {
-        GW: '网关',
-        DC: '直连',
-      },
+      valueEnum: modeEnum,
     },
     {
       title: '产品 ID',

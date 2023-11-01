@@ -4,11 +4,12 @@ import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/ico
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm, Tag } from 'antd';
 
+import { useRequest } from '@umijs/max';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
 import Detail from './components/Detail';
 
-type TableItem = {
+export type AppStackItem = {
   uuid?: string;
   name?: string;
   version?: string;
@@ -32,36 +33,33 @@ const AppStack = () => {
   });
 
   // 删除
-  const handleDelete = async (values: API.deleteAppParams) => {
-    try {
-      await deleteApp(values);
+  const { run: remove } = useRequest((params: API.deleteAppParams) => deleteApp(params), {
+    manual: true,
+    onSuccess: () => {
       message.success('删除成功');
       actionRef.current?.reload();
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
+    },
+  });
 
   // 启动
-  const handleScript = async (values: API.putAppStartParams, type: 'start' | 'stop') => {
-    try {
-      if (type === 'start') {
-        await putAppStart(values);
-        message.success('启动成功');
-      } else {
-        await putAppStop(values);
-        message.success('停止成功');
-      }
-
+  const { run: start } = useRequest((params: API.putAppStartParams) => putAppStart(params), {
+    manual: true,
+    onSuccess: () => {
+      message.success('启动成功');
       actionRef.current?.reload();
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
+    },
+  });
 
-  const columns: ProColumns<TableItem>[] = [
+  // 停止
+  const { run: stop } = useRequest((params: API.putAppStopParams) => putAppStop(params), {
+    manual: true,
+    onSuccess: () => {
+      message.success('停止成功');
+      actionRef.current?.reload();
+    },
+  });
+
+  const columns: ProColumns<AppStackItem>[] = [
     {
       title: 'APP 名称',
       dataIndex: 'name',
@@ -71,12 +69,10 @@ const AppStack = () => {
     {
       title: 'APP 版本',
       dataIndex: 'version',
-      // width: 100,
     },
     {
       title: '是否自启',
       dataIndex: 'autoStart',
-      // width: 100,
       renderText: (autoStart) => (
         <Tag color={autoStart ? 'success' : 'error'}>{autoStart === true ? '开启' : '关闭'}</Tag>
       ),
@@ -84,7 +80,6 @@ const AppStack = () => {
     {
       title: 'APP 状态',
       dataIndex: 'appState',
-      // width: 100,
       renderText: (appState) => (
         <Tag
           icon={appState === 1 ? <SyncOutlined spin /> : <MinusCircleOutlined />}
@@ -124,7 +119,15 @@ const AppStack = () => {
         </a>,
         <a
           key="start"
-          onClick={() => handleScript({ uuid: uuid || '' }, appState === 1 ? 'stop' : 'start')}
+          onClick={() => {
+            if (!uuid) return;
+
+            if (appState === 1) {
+              stop({ uuid });
+            } else {
+              start({ uuid });
+            }
+          }}
         >
           {appState === 1 ? '停止' : '启动'}
         </a>,
@@ -133,10 +136,10 @@ const AppStack = () => {
         </a>,
         <Popconfirm
           title="你确定要删除该应用?"
-          onConfirm={() => handleDelete({ uuid: uuid || '' })}
+          onConfirm={() => uuid && remove({ uuid })}
           okText="是"
           cancelText="否"
-          key="delete"
+          key="remove"
         >
           <a>删除</a>
         </Popconfirm>,
@@ -154,10 +157,10 @@ const AppStack = () => {
           search={false}
           pagination={false}
           request={async () => {
-            const res = await getApp({ uuid: '' });
+            const { data } = await getApp();
 
             return Promise.resolve({
-              data: (res as any)?.data,
+              data,
               success: true,
             });
           }}

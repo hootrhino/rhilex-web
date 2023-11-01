@@ -10,9 +10,10 @@ import { Button, Popconfirm } from 'antd';
 import { message } from '@/components/PopupHack';
 import { deleteInends, getInends } from '@/services/rulex/shuruziyuanguanli';
 import { useRequest } from '@umijs/max';
+import { stateEnum, typeEnum } from './components/columns';
 import Detail from './components/Detail';
 
-export type Item = {
+export type InendsItem = {
   name: string;
   type: string;
   state: number;
@@ -21,7 +22,7 @@ export type Item = {
   uuid: string;
 };
 
-const Sources = () => {
+const Inends = () => {
   const actionRef = useRef<ActionType>();
   const [detailConfig, setConfig] = useState<{ uuid: string; open: boolean }>({
     uuid: '',
@@ -37,7 +38,7 @@ const Sources = () => {
     },
   });
 
-  const columns: ProColumns<Item>[] = [
+  const columns: ProColumns<InendsItem>[] = [
     {
       title: 'UUID',
       dataIndex: 'uuid',
@@ -52,25 +53,13 @@ const Sources = () => {
     {
       title: '类型',
       dataIndex: 'type',
-      valueEnum: {
-        COAP: 'COAP 协议支持',
-        GENERIC_IOT_HUB: 'IoTHUB 平台支持',
-        RULEX_UDP: 'UUDP 协议支持',
-        HTTP: 'HTTP 协议支持',
-        NATS_SERVER: 'Nats 中间件支持',
-        GRPC: 'GRPC 协议支持',
-      },
+      valueEnum: typeEnum,
     },
     {
       title: '状态',
       dataIndex: 'state',
       width: 100,
-      valueEnum: {
-        0: { text: '故障', status: 'Error' },
-        1: { text: '启用', status: 'Success' },
-        2: { text: '暂停', status: 'Default' },
-        3: { text: '停止', status: 'Default' },
-      },
+      valueEnum: stateEnum,
     },
     {
       title: '信息',
@@ -98,7 +87,7 @@ const Sources = () => {
           onConfirm={() => remove({ uuid })}
           okText="是"
           cancelText="否"
-          key="delete"
+          key="remove"
         >
           <a>删除</a>
         </Popconfirm>,
@@ -140,4 +129,4 @@ const Sources = () => {
   );
 };
 
-export default Sources;
+export default Inends;

@@ -7,7 +7,12 @@ import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { getPlugins } from '@/services/rulex/chajianguanli';
 import ConfigModal from './components/Config';
 
-type Item = Record<string, any>;
+export type PluginItem = {
+  name: string;
+  version: string;
+  helpLink: string;
+  [key: string]: any;
+};
 
 type Config = {
   open: boolean;
@@ -61,7 +66,7 @@ const Plugins = () => {
     }
   };
 
-  const columns: ProColumns<Item>[] = [
+  const columns: ProColumns<PluginItem>[] = [
     {
       title: '插件名称',
       dataIndex: 'name',
@@ -78,7 +83,11 @@ const Plugins = () => {
       dataIndex: 'helpLink',
       ellipsis: true,
       width: 250,
-      renderText: (address) => <a href={address} target='_blank' rel="noreferrer">{address}</a>,
+      renderText: (address) => (
+        <a href={address} target="_blank" rel="noreferrer">
+          {address}
+        </a>
+      ),
     },
     {
       title: '作者',

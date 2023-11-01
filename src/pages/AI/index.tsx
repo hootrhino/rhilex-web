@@ -5,7 +5,7 @@ import { PageContainer, ProColumns, ProTable } from '@ant-design/pro-components'
 import { Button, Descriptions } from 'antd';
 import isEmpty from 'lodash/isEmpty';
 
-type TableItem = {
+type AIItem = {
   uuid: string;
   name: string;
   type: string;
@@ -15,7 +15,7 @@ type TableItem = {
 };
 
 const AI = () => {
-  const columns: ProColumns<TableItem>[] = [
+  const columns: ProColumns<AIItem>[] = [
     {
       title: 'UUID',
       dataIndex: 'uuid',
@@ -51,10 +51,10 @@ const AI = () => {
           search={false}
           pagination={false}
           request={async () => {
-            const res = await getAibase({});
+            const { data } = await getAibase({});
 
             return Promise.resolve({
-              data: (res as any)?.data,
+              data,
               success: true,
             });
           }}
