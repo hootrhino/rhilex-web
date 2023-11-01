@@ -1,8 +1,6 @@
+import ShellEditor from '@/components/ShellEditor';
 import { validateIPv4 } from '@/utils/utils';
 import { ProForm } from '@ant-design/pro-components';
-import { langs } from '@uiw/codemirror-extensions-langs';
-import { monokai } from '@uiw/codemirror-theme-monokai';
-import CodeMirror from '@uiw/react-codemirror';
 import { Button, Input } from 'antd';
 import { useState } from 'react';
 
@@ -62,7 +60,7 @@ const Ping = ({ loading, onLoading, onSearch }: PingProps) => {
         />
       </ProForm.Item>
       <ProForm.Item name="output" label="输出">
-        <CodeMirror extensions={[langs.shell()]} height="200px" theme={monokai} readOnly autoFocus={false} />
+        <ShellEditor readOnly />
       </ProForm.Item>
     </>
   );

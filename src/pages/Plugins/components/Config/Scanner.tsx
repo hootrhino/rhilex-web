@@ -1,3 +1,4 @@
+import ShellEditor from '@/components/ShellEditor';
 import {
   baudRateEnum,
   dataBitsEnum,
@@ -6,9 +7,6 @@ import {
 } from '@/pages/Devices/components/columns';
 import { getOsUarts } from '@/services/rulex/xitongshuju';
 import { ProForm, ProFormDigit, ProFormSelect } from '@ant-design/pro-components';
-import { langs } from '@uiw/codemirror-extensions-langs';
-import { monokai } from '@uiw/codemirror-theme-monokai';
-import CodeMirror from '@uiw/react-codemirror';
 import { useRequest } from '@umijs/max';
 import { AutoComplete } from 'antd';
 
@@ -80,13 +78,7 @@ const Scanner = () => {
         </ProForm.Item>
       </ProForm.Group>
       <ProForm.Item name="output" label="扫描结果">
-        <CodeMirror
-          extensions={[langs.shell()]}
-          height="200px"
-          theme={monokai}
-          readOnly
-          autoFocus={false}
-        />
+        <ShellEditor readOnly />
       </ProForm.Item>
     </>
   );
