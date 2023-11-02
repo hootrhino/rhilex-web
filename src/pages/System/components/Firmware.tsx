@@ -6,7 +6,7 @@ import {
 } from '@/services/rulex/gujiancaozuo';
 import { CloudUploadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { ProForm, ProFormTextArea, ProFormUploadButton } from '@ant-design/pro-components';
+import { ProForm, ProFormTextArea, ProFormUploadDragger } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Upload } from 'antd';
 import { startsWith } from 'lodash';
@@ -62,13 +62,15 @@ const FirmwareConfig = () => {
           }
         }}
       >
-        <ProFormTextArea name="vendorKey" label="一机一密" placeholder="请输入一机一密" disabled width="xl" />
-        <ProFormUploadButton
+        <ProFormTextArea name="vendorKey" label="一机一密" placeholder="" disabled width="xl" />
+        <ProFormUploadDragger
           label="固件上传"
           name="upload"
           max={1}
           accept="application/zip"
+          description='仅支持zip格式文件'
           fieldProps={{
+            style: {width: 550},
             beforeUpload: (file) => {
               const isImage = startsWith(file.type, 'application/zip');
               if (!isImage) {

@@ -16,10 +16,10 @@ export const tryToJSON = (val: string) => {
 };
 
 export const getBlob = (file: UploadFile) => {
-  const blobFile = new Blob([file.originFileObj as RcFile], { type: file.type });
-  console.log(blobFile, file);
+  const blobFile = new Blob([file?.originFileObj as RcFile], { type: file.type });
+
   return blobFile;
-}
+};
 
 export const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -34,16 +34,19 @@ export const IconFont = createFromIconfontCN({
 });
 
 // 校验IPv4
+export const IpPattern =
+  /^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/;
+
 export const validateIPv4 = (ip: string) => {
-  const pattern =
-    /^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/;
-  return pattern.test(ip);
+  return IpPattern.test(ip);
 };
 
 // 子网掩码
+export const MaskPattern =
+  /^(?:\d{1,2}|1\d{2}|2[0-4]\d|25[0-5])(?:\.(?:\d{1,2}|1\d{2}|2[0-4]\d|25[0-5])){3}$/;
+
 export const validateMask = (ip: string) => {
-  const pattern = /^(?:\d{1,2}|1\d{2}|2[0-4]\d|25[0-5])(?:\.(?:\d{1,2}|1\d{2}|2[0-4]\d|25[0-5])){3}$/;
-  return pattern.test(ip);
+  return MaskPattern.test(ip);
 };
 
 // 网关
