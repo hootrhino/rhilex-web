@@ -77,6 +77,12 @@
     },
     {
       "name": "系统配置/站点配置"
+    },
+    {
+      "name": "系统配置/路由配置"
+    },
+    {
+      "name": "系统配置/数据备份"
     }
   ],
   "paths": {
@@ -8612,13 +8618,178 @@
     },
     "/api/v1/softRouter/dhcp": {
       "post": {
-        "summary": "DHCP设置",
-        "x-apifox-folder": "系统配置/路由设置",
+        "summary": "DHCP配置更新",
+        "x-apifox-folder": "系统配置/路由配置",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "系统配置/路由设置"
+          "系统配置/路由配置"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "iface": {
+                    "type": "string"
+                  },
+                  "ip": {
+                    "type": "string"
+                  },
+                  "gateway": {
+                    "type": "string"
+                  },
+                  "network": {
+                    "type": "string"
+                  },
+                  "netmask": {
+                    "type": "string"
+                  },
+                  "ip_pool_begin": {
+                    "type": "string"
+                  },
+                  "ip_pool_end": {
+                    "type": "string"
+                  },
+                  "iface_from": {
+                    "type": "string"
+                  },
+                  "iface_to": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "iface",
+                  "ip",
+                  "gateway",
+                  "network",
+                  "netmask",
+                  "ip_pool_begin",
+                  "ip_pool_end",
+                  "iface_from",
+                  "iface_to"
+                ],
+                "x-apifox-orders": [
+                  "iface",
+                  "ip",
+                  "gateway",
+                  "network",
+                  "netmask",
+                  "ip_pool_begin",
+                  "ip_pool_end",
+                  "iface_from",
+                  "iface_to"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "iface": "eth1",
+                "ip": "192.168.64.100",
+                "gateway": "192.168.64.100",
+                "network": "",
+                "netmask": "255.255.255.0",
+                "ip_pool_begin": "192.168.64.100",
+                "ip_pool_end": "192.168.64.150",
+                "iface_from": "eth1",
+                "iface_to": "usb0"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "iface": {
+                      "type": "string"
+                    },
+                    "ip": {
+                      "type": "string"
+                    },
+                    "gateway": {
+                      "type": "string"
+                    },
+                    "network": {
+                      "type": "string"
+                    },
+                    "netmask": {
+                      "type": "string"
+                    },
+                    "ip_pool_begin": {
+                      "type": "string"
+                    },
+                    "ip_pool_end": {
+                      "type": "string"
+                    },
+                    "iface_from": {
+                      "type": "string"
+                    },
+                    "iface_to": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "iface",
+                    "ip",
+                    "gateway",
+                    "network",
+                    "netmask",
+                    "ip_pool_begin",
+                    "ip_pool_end",
+                    "iface_from",
+                    "iface_to"
+                  ],
+                  "x-apifox-orders": [
+                    "iface",
+                    "ip",
+                    "gateway",
+                    "network",
+                    "netmask",
+                    "ip_pool_begin",
+                    "ip_pool_end",
+                    "iface_from",
+                    "iface_to"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "iface": "eth1",
+                      "ip": "192.168.64.100",
+                      "gateway": "192.168.64.100",
+                      "network": "",
+                      "netmask": "255.255.255.0",
+                      "ip_pool_begin": "192.168.64.100",
+                      "ip_pool_end": "192.168.64.150",
+                      "iface_from": "eth1",
+                      "iface_to": "usb0"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-121500308-run",
+        "security": []
+      },
+      "get": {
+        "summary": "DHCP配置查看",
+        "x-apifox-folder": "系统配置/路由配置",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/路由配置"
         ],
         "parameters": [],
         "responses": {
@@ -8628,15 +8799,106 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {},
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "iface": {
+                          "type": "string"
+                        },
+                        "ip": {
+                          "type": "string"
+                        },
+                        "gateway": {
+                          "type": "string"
+                        },
+                        "network": {
+                          "type": "string"
+                        },
+                        "netmask": {
+                          "type": "string"
+                        },
+                        "ip_pool_begin": {
+                          "type": "string"
+                        },
+                        "ip_pool_end": {
+                          "type": "string"
+                        },
+                        "iface_from": {
+                          "type": "string"
+                        },
+                        "iface_to": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "iface",
+                        "ip",
+                        "gateway",
+                        "network",
+                        "netmask",
+                        "ip_pool_begin",
+                        "ip_pool_end",
+                        "iface_from",
+                        "iface_to"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "iface",
+                        "ip",
+                        "gateway",
+                        "network",
+                        "netmask",
+                        "ip_pool_begin",
+                        "ip_pool_end",
+                        "iface_from",
+                        "iface_to"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
                   "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "iface": "eth1",
+                        "ip": "192.168.64.100",
+                        "gateway": "192.168.64.100",
+                        "network": "",
+                        "netmask": "255.255.255.0",
+                        "ip_pool_begin": "192.168.64.100",
+                        "ip_pool_end": "192.168.64.150",
+                        "iface_from": "eth1",
+                        "iface_to": "usb0"
+                      }
+                    }
+                  }
                 }
               }
             }
           }
         },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-118598438-run",
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-121500306-run",
         "security": []
       }
     },
@@ -9521,6 +9783,298 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-120628289-run",
+        "security": []
+      }
+    },
+    "/api/v1/softRouter/dhcp/clients": {
+      "get": {
+        "summary": "DHCP客户端列表",
+        "x-apifox-folder": "系统配置/路由配置",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/路由配置"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "mac_address": {
+                            "type": "string"
+                          },
+                          "ip_address": {
+                            "type": "string"
+                          },
+                          "hostname": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "mac_address",
+                          "ip_address",
+                          "hostname"
+                        ],
+                        "x-apifox-ignore-properties": [],
+                        "x-apifox-orders": [
+                          "mac_address",
+                          "ip_address",
+                          "hostname"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "mac_address": "a8:a1:59:2e:a2:d9",
+                          "ip_address": "192.168.1.175",
+                          "hostname": "rulex-h1"
+                        },
+                        {
+                          "mac_address": "a8:a1:59:2e:a2:d9",
+                          "ip_address": "192.168.1.176",
+                          "hostname": "rulex-h2"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-121500382-run",
+        "security": []
+      }
+    },
+    "/api/v1/backup": {
+      "get": {
+        "summary": "备份数据",
+        "x-apifox-folder": "系统配置/数据备份",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/数据备份"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-121510623-run",
+        "security": []
+      },
+      "post": {
+        "summary": "上传备份",
+        "x-apifox-folder": "系统配置/数据备份",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/数据备份"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "example": "file:///home/wangwenhai/workspace/rulex/Dockerfile",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "url"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "url"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "url": "backup_1698852833975395.sql"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-121510625-run",
+        "security": []
+      }
+    },
+    "/api/v1/site/logo": {
+      "post": {
+        "summary": "上传logo",
+        "x-apifox-folder": "系统配置/站点配置",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/站点配置"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "example": "file:///home/wangwenhai/Pictures/卡通.png",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-121510749-run",
+        "security": []
+      },
+      "get": {
+        "summary": "获取Logo",
+        "x-apifox-folder": "系统配置/站点配置",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/站点配置"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-121510794-run",
         "security": []
       }
     }
