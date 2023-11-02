@@ -84,7 +84,7 @@ const DataBackupConfig = () => {
 
               return isSql || Upload.LIST_IGNORE;
             }}
-            style={{width: 700}}
+            style={{maxWidth: 700}}
           >
             <p className="ant-upload-drag-icon">
               <InboxOutlined />

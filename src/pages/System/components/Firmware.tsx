@@ -70,7 +70,7 @@ const FirmwareConfig = () => {
           accept="application/zip"
           description='仅支持zip格式文件'
           fieldProps={{
-            style: {width: 550},
+            style: {maxWidth: 550},
             beforeUpload: (file) => {
               const isImage = startsWith(file.type, 'application/zip');
               if (!isImage) {
