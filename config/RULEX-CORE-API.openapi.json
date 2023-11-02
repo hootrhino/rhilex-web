@@ -70,9 +70,6 @@
       "name": "系统配置/时间配置"
     },
     {
-      "name": "系统配置/路由设置"
-    },
-    {
       "name": "系统配置/固件操作"
     },
     {
@@ -8905,13 +8902,11 @@
     "/api/v1/softRouter/dhcpClients": {
       "get": {
         "summary": "DHCP参数获取",
-        "x-apifox-folder": "系统配置/路由设置",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "系统配置/路由设置"
-        ],
+        "tags": [],
         "parameters": [],
         "responses": {
           "200": {
@@ -9639,10 +9634,10 @@
                   "apn": {
                     "type": "string"
                   },
-                  "username": {
+                  "apn_username": {
                     "type": "string"
                   },
-                  "password": {
+                  "apn_password": {
                     "type": "string"
                   }
                 },
@@ -9652,8 +9647,8 @@
                   "auth",
                   "cdmapwd",
                   "apn",
-                  "username",
-                  "password"
+                  "apn_username",
+                  "apn_password"
                 ],
                 "x-apifox-orders": [
                   "senceId",
@@ -9661,8 +9656,8 @@
                   "auth",
                   "cdmapwd",
                   "apn",
-                  "username",
-                  "password"
+                  "apn_username",
+                  "apn_password"
                 ],
                 "x-apifox-ignore-properties": []
               },
@@ -9729,10 +9724,10 @@
                     "apn": {
                       "type": "string"
                     },
-                    "username": {
+                    "apn_username": {
                       "type": "string"
                     },
-                    "password": {
+                    "apn_password": {
                       "type": "string"
                     }
                   },
@@ -9742,8 +9737,8 @@
                     "auth",
                     "cdmapwd",
                     "apn",
-                    "username",
-                    "password"
+                    "apn_username",
+                    "apn_password"
                   ],
                   "x-apifox-orders": [
                     "senceId",
@@ -9751,8 +9746,8 @@
                     "auth",
                     "cdmapwd",
                     "apn",
-                    "username",
-                    "password"
+                    "apn_username",
+                    "apn_password"
                   ],
                   "x-apifox-ignore-properties": []
                 },
@@ -9896,12 +9891,34 @@
           "200": {
             "description": "成功",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {},
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
                   "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
                 }
               }
             }

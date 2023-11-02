@@ -4,7 +4,7 @@ import { request } from '@umijs/max';
 
 /** 备份数据 GET /api/v1/backup */
 export async function getBackup(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/v1/backup', {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/backup', {
     method: 'GET',
     ...(options || {}),
   });

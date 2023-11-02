@@ -10,8 +10,8 @@ export async function get4gApn(options?: { [key: string]: any }) {
     auth: number;
     cdmapwd: number;
     apn: string;
-    username: string;
-    password: string;
+    apn_username: string;
+    apn_password: string;
   }>('/api/v1/4g/apn', {
     method: 'GET',
     ...(options || {}),
@@ -26,8 +26,8 @@ export async function post4gApn(
     auth: number;
     cdmapwd: number;
     apn: string;
-    username: string;
-    password: string;
+    apn_username: string;
+    apn_password: string;
   },
   options?: { [key: string]: any },
 ) {

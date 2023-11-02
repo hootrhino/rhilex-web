@@ -23,7 +23,6 @@ import * as gujiancaozuo from './gujiancaozuo'
 import * as shijianpeizhi from './shijianpeizhi'
 import * as WIFIpeizhi from './WIFIpeizhi'
 import * as luyoupeizhi from './luyoupeizhi'
-import * as luyoushezhi from './luyoushezhi'
 import * as 4Gshezhi from './4Gshezhi'
 import * as zhandianpeizhi from './zhandianpeizhi'
 import * as shujubeifen from './shujubeifen'
@@ -49,7 +48,6 @@ export default {
   shijianpeizhi,
   WIFIpeizhi,
   luyoupeizhi,
-  luyoushezhi,
   4Gshezhi,
   zhandianpeizhi,
   shujubeifen,

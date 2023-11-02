@@ -12,8 +12,8 @@ type UpdateParams = {
   auth: number;
   cdmapwd: number;
   apn: string;
-  username: string;
-  password: string;
+  apn_username: string;
+  apn_password: string;
 };
 
 const APNConfig = () => {
@@ -40,13 +40,15 @@ const APNConfig = () => {
         ptytpe: 1,
         auth: 0,
         cdmapwd: 0,
+        apn_username: '',
+        apn_password: '',
       });
     }
   }, [detail]);
 
   return (
     <>
-      <Title name='APN 配置' />
+      <Title name="APN 配置" />
       <ProForm
         formRef={formRef}
         layout="horizontal"
@@ -75,9 +77,9 @@ const APNConfig = () => {
           width="xl"
         />
         <ProFormText name="apn" label="APN 名称" placeholder="请输入 APN 名称" width="xl" />
-        <ProFormText name="username" label="用户名" placeholder="请输入用户名" width="xl" />
+        <ProFormText name="apn_username" label="用户名" placeholder="请输入用户名" width="xl" />
         <ProFormText.Password
-          name="password"
+          name="apn_password"
           label="密码"
           placeholder="请输入密码"
           width="xl"
