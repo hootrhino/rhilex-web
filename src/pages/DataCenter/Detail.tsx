@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 
 import { cn } from '@/utils/utils';
 import dayjs from 'dayjs';
-import './index.less';
 
 import type { LogItem } from '@/models/useWebsocket';
 import { ProTable } from '@ant-design/pro-components';
@@ -73,7 +72,7 @@ const DataCenter = () => {
   // run
   const {
     run: getSheets,
-    data: tableBody,
+    data: sheetData,
     refresh,
   } = useRequest(() => postDataCenterDataQuery({ uuid: uuid || '', query: code }), {
     manual: true,
@@ -161,14 +160,14 @@ const DataCenter = () => {
         className="mt-[12px]"
       >
         <Card title="Sheet" className="h-full">
-          {tableBody && tableBody?.length > 0 && (
+          {sheetData && sheetData?.length > 0 && (
             <ProTable
               search={false}
-              dataSource={tableBody as any}
+              dataSource={sheetData as any}
               columns={columns}
               className="data-center-sheets"
               tableClassName={cn('data-center-scrollbar')}
-              // scroll={{ y: scrollY }}
+              scroll={{ y: height - 220, x: 2000 }}
               pagination={false}
               options={{ density: true, setting: true, reload: () => refresh() }}
             />
@@ -195,11 +194,14 @@ const DataCenter = () => {
             </Space>
           }
           className="h-full"
+          bodyStyle={{ padding: '0 24px 24px 24px' }}
         >
           <List
             header={false}
             footer={false}
             dataSource={logData}
+            size="small"
+            style={{ maxHeight: logHeight - 56, overflowY: 'auto' }}
             renderItem={(item) => (
               <List.Item>
                 <Typography.Text mark>
