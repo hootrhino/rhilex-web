@@ -40,15 +40,15 @@ const APNConfig = () => {
         ptytpe: 1,
         auth: 0,
         cdmapwd: 0,
-        apn_username: '',
-        apn_password: '',
+        apn_username: undefined,
+        apn_password: undefined,
       });
     }
   }, [detail]);
 
   return (
     <>
-      <Title name="APN 配置" />
+    <Title name="APN 配置" tips='该配置项属于高级网络功能，配置不当会造成设备断网，请谨慎操作'/>
       <ProForm
         formRef={formRef}
         layout="horizontal"
