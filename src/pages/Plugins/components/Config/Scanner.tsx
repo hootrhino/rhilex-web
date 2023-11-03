@@ -1,4 +1,4 @@
-import ShellEditor from '@/components/ShellEditor';
+import CodeEditor from '@/components/CodeEditor';
 import {
   baudRateEnum,
   dataBitsEnum,
@@ -78,7 +78,7 @@ const Scanner = () => {
         </ProForm.Item>
       </ProForm.Group>
       <ProForm.Item name="output" label="扫描结果">
-        <ShellEditor readOnly />
+        <CodeEditor readOnly />
       </ProForm.Item>
     </>
   );

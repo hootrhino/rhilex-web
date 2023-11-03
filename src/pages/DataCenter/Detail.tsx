@@ -11,9 +11,7 @@ import dayjs from 'dayjs';
 
 import type { LogItem } from '@/models/useWebsocket';
 import { ProTable } from '@ant-design/pro-components';
-import { sql } from '@codemirror/lang-sql';
-import { bbedit } from '@uiw/codemirror-theme-bbedit';
-import CodeMirror from '@uiw/react-codemirror';
+import CodeEditor from '@/components/CodeEditor';
 
 export type Key = string | number;
 
@@ -136,13 +134,14 @@ const DataCenter = () => {
           className="w-full h-full min-w-[1px] ml-[12px]"
           bodyStyle={{ height: 'calc(100% - 56px)', padding: '6px 0 0 0', overflowY: 'auto' }}
         >
-          <CodeMirror
+          <CodeEditor mode='sql' theme='light'  value={code} onChange={(value) => setCode(value)} height="100%"/>
+          {/* <CodeMirror
             value={code}
             extensions={[sql()]}
             onChange={(value) => setCode(value)}
             height="100%"
             theme={bbedit}
-          />
+          /> */}
         </Card>
       </div>
 

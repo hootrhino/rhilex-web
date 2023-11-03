@@ -1,4 +1,4 @@
-import ShellEditor from '@/components/ShellEditor';
+import CodeEditor from '@/components/CodeEditor';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProForm } from '@ant-design/pro-components';
 import { Button } from 'antd';
@@ -46,11 +46,11 @@ const Debug = ({ uuid, onClose, ...props }: DebugProps) => {
         label="输入数据"
         rules={[{ required: true, message: '请输入数据' }]}
       >
-        <ShellEditor autoFocus />
+        <CodeEditor autoFocus />
       </ProForm.Item>
 
       <ProForm.Item name="output" label="输出结果">
-        <ShellEditor readOnly />
+        <CodeEditor readOnly  />
       </ProForm.Item>
     </ModalForm>
   );

@@ -1,4 +1,4 @@
-import ShellEditor from '@/components/ShellEditor';
+import CodeEditor from '@/components/CodeEditor';
 import { validateIPv4 } from '@/utils/utils';
 import { ProForm } from '@ant-design/pro-components';
 import { Button, Input } from 'antd';
@@ -60,7 +60,7 @@ const Ping = ({ loading, onLoading, onSearch }: PingProps) => {
         />
       </ProForm.Item>
       <ProForm.Item name="output" label="输出">
-        <ShellEditor readOnly />
+        <CodeEditor readOnly />
       </ProForm.Item>
     </>
   );
