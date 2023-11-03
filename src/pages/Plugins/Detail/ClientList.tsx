@@ -1,0 +1,86 @@
+import type { PluginConfig, PluginParams } from '@/models/usePlugin';
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import type { ProColumns } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
+import { useModel } from '@umijs/max';
+import { Tag } from 'antd';
+import { omit } from 'lodash';
+import { useEffect } from 'react';
+
+type DetailItem = {
+  id: string;
+  username: string;
+  remote: string;
+  cleanSession: boolean;
+  [key: string]: any;
+};
+
+const ClientList = () => {
+  const { data, run, setDetailConfig, detailConfig } = useModel('usePlugin');
+
+  const columns: ProColumns<DetailItem>[] = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      ellipsis: true,
+    },
+    {
+      title: '用户名',
+      dataIndex: 'username',
+    },
+    {
+      title: '客户端地址',
+      dataIndex: 'remote',
+    },
+    {
+      title: 'Clean Session',
+      dataIndex: 'cleanSession',
+      renderText: (cleanSession) => (
+        <Tag
+          icon={cleanSession ? <CheckCircleOutlined /> : <CloseCircleOutlined />}
+          color={cleanSession ? 'success' : 'error'}
+        >
+          {cleanSession === true ? 'true' : 'false'}
+        </Tag>
+      ),
+    },
+    {
+      title: '操作',
+      valueType: 'option',
+      width: 80,
+      fixed: 'right',
+      key: 'option',
+      render: (_, { id }) => [
+        <a
+          key="offline"
+          onClick={() => {
+            const params = { uuid: detailConfig.uuid, name: 'kickout', args: [id] };
+            run(params);
+            setDetailConfig({ ...params, title: '', open: false } as PluginConfig);
+          }}
+        >
+          下线
+        </a>,
+      ],
+    },
+  ];
+
+  useEffect(() => {
+    if (detailConfig.uuid) {
+      const params = omit(detailConfig, ['title', 'open']);
+      run(params as PluginParams);
+    }
+  }, [detailConfig]);
+
+  return (
+    <ProTable
+      rowKey="id"
+      columns={columns}
+      dataSource={data as any}
+      search={false}
+      pagination={false}
+    />
+  );
+};
+
+export default ClientList;

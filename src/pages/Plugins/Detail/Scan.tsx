@@ -1,3 +1,5 @@
+import { ProForm, ProFormDigit, ProFormSelect } from '@ant-design/pro-components';
+
 import CodeEditor from '@/components/CodeEditor';
 import {
   baudRateEnum,
@@ -6,11 +8,10 @@ import {
   stopBitsEnum,
 } from '@/pages/Devices/components/columns';
 import { getOsUarts } from '@/services/rulex/xitongshuju';
-import { ProForm, ProFormDigit, ProFormSelect } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
 import { AutoComplete } from 'antd';
+import { useRequest } from 'umi';
 
-const Scanner = () => {
+const Scan = () => {
   // 获取串口配置
   const { data: uartOptions } = useRequest(() => getOsUarts(), {
     formatResult: (res) =>
@@ -84,4 +85,4 @@ const Scanner = () => {
   );
 };
 
-export default Scanner;
+export default Scan;

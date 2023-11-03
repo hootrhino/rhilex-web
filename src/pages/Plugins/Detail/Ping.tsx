@@ -3,15 +3,23 @@ import { validateIPv4 } from '@/utils/utils';
 import { ProForm } from '@ant-design/pro-components';
 import { Button, Input } from 'antd';
 import { useState } from 'react';
+import { useModel } from 'umi';
 
 type PingProps = {
-  loading: boolean;
-  onLoading: (value: boolean) => void;
-  onSearch: (value: string) => void;
+  onLoading: (value: string) => void;
 };
 
-const Ping = ({ loading, onLoading, onSearch }: PingProps) => {
+const Ping = ({ onLoading }: PingProps) => {
+  const { run, detailConfig, loading, setLoading } = useModel('usePlugin');
   const [disabled, setDisabled] = useState<boolean>(true);
+
+  // 测速
+  const handleOnSearch = (ip: string) => {
+    onLoading(`PING ${ip}...`);
+    setTimeout(() => {
+      run({ name: 'ping', args: [ip], uuid: detailConfig.uuid });
+    }, 2000);
+  };
 
   return (
     <>
@@ -49,13 +57,8 @@ const Ping = ({ loading, onLoading, onSearch }: PingProps) => {
           }
           size="large"
           onSearch={(value: string) => {
-            onLoading(true);
-            onSearch(value);
-          }}
-          onChange={(e) => {
-            if (!e.target.value) {
-              console.log(e.target.value);
-            }
+            setLoading(true);
+            handleOnSearch(value);
           }}
         />
       </ProForm.Item>

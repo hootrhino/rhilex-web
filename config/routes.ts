@@ -210,11 +210,6 @@
         name: '插件列表',
         component: './Plugins',
       },
-      {
-        path: '/plugins/:id/detail',
-        name: '客户端列表',
-        component: './Plugins/components/Detail',
-      },
     ],
   },
   {

@@ -1,11 +1,10 @@
-import { useState } from 'react';
-import { history } from 'umi';
-
 import type { ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 
 import { getPlugins } from '@/services/rulex/chajianguanli';
-import ConfigModal from './components/Config';
+import { useModel } from '@umijs/max';
+import { Space } from 'antd';
+import Detail from './Detail';
 
 export type PluginItem = {
   name: string;
@@ -14,18 +13,8 @@ export type PluginItem = {
   [key: string]: any;
 };
 
-type Config = {
-  open: boolean;
-  uuid: string;
-  type: 'PING' | 'SCANNER';
-};
-
 const Plugins = () => {
-  const [config, setConfig] = useState<Config>({
-    open: false,
-    uuid: '',
-    type: 'PING',
-  });
+  const { setDetailConfig, run } = useModel('usePlugin');
 
   const handleOption = (uuid: string) => {
     if (uuid === 'ICMPSender') {
@@ -33,7 +22,7 @@ const Plugins = () => {
         <a
           key="ping"
           onClick={() => {
-            setConfig({ open: true, uuid, type: 'PING' });
+            setDetailConfig({ open: true, uuid, name: 'ping', title: '网络测速' });
           }}
         >
           测速
@@ -44,7 +33,7 @@ const Plugins = () => {
         <a
           key="detail"
           onClick={() => {
-            history.push(`/plugins/${uuid}/detail`);
+            setDetailConfig({ open: true, uuid, name: 'clients', title: '客户端列表', args: [] });
           }}
         >
           详情
@@ -55,11 +44,34 @@ const Plugins = () => {
         <a
           key="config"
           onClick={() => {
-            setConfig({ open: true, uuid, type: 'SCANNER' });
+            setDetailConfig({ open: true, uuid, name: 'scan', title: 'Modbus 扫描仪' });
           }}
         >
           配置
         </a>
+      );
+    } else if (uuid === 'WEB_TTYD_TERMINAL') {
+      return (
+        <Space>
+          <a
+            key="start"
+            onClick={() => {
+              run({ uuid, name: 'start', args: '' });
+              setDetailConfig({ open: false, uuid, name: 'start', title: '终端', args: '' });
+            }}
+          >
+            启动
+          </a>
+          <a
+            key="stop"
+            onClick={() => {
+              run({ uuid, name: 'stop', args: '' });
+              setDetailConfig({ open: false, uuid, name: 'stop', title: '', args: '' });
+            }}
+          >
+            停止
+          </a>
+        </Space>
       );
     } else {
       return '-';
@@ -134,11 +146,7 @@ const Plugins = () => {
           scroll={{ x: 1000 }}
         />
       </PageContainer>
-      <ConfigModal
-        {...config}
-        onOpenChange={(visible: boolean) => setConfig({ ...config, open: visible })}
-        onClose={() => setConfig({ ...config, open: false })}
-      />
+      <Detail />
     </>
   );
 };
