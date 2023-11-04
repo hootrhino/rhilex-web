@@ -30,7 +30,7 @@ export async function postDevices(
     name: string;
     type: string;
     gid: string;
-    config: { host?: string; port?: number };
+    config: Record<string, any>;
     description: string;
   },
   options?: { [key: string]: any },
@@ -66,16 +66,25 @@ export async function getDevicesDetail(
   params: API.getDevicesDetailParams,
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: Record<string, any> }>(
-    '/api/v1/devices/detail',
-    {
-      method: 'GET',
-      params: {
-        ...params,
-      },
-      ...(options || {}),
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      uuid?: string;
+      gid?: string;
+      name?: string;
+      type?: string;
+      state?: number;
+      config?: Record<string, any>;
+      description?: string;
+    };
+  }>('/api/v1/devices/detail', {
+    method: 'GET',
+    params: {
+      ...params,
     },
-  );
+    ...(options || {}),
+  });
 }
 
 /** 获取设备的分组列表 GET /api/v1/devices/group */
@@ -103,10 +112,10 @@ export async function getDevicesListByGroup(
       uuid?: string;
       name?: string;
       type?: string;
-      autoRestart?: boolean;
+      actionScript?: string;
       description?: string;
       state?: number;
-      config: { host?: string; port?: number };
+      config?: Record<string, any>;
     }[];
   }>('/api/v1/devices/listByGroup', {
     method: 'GET',

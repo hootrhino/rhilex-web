@@ -111,22 +111,8 @@
                   },
                   "config": {
                     "type": "object",
-                    "properties": {
-                      "host": {
-                        "type": "string"
-                      },
-                      "port": {
-                        "type": "integer"
-                      }
-                    },
-                    "required": [
-                      "host",
-                      "port"
-                    ],
-                    "x-apifox-orders": [
-                      "host",
-                      "port"
-                    ],
+                    "properties": {},
+                    "x-apifox-orders": [],
                     "x-apifox-ignore-properties": []
                   },
                   "description": {
@@ -473,8 +459,8 @@
                           "type": {
                             "type": "string"
                           },
-                          "autoRestart": {
-                            "type": "boolean"
+                          "actionScript": {
+                            "type": "string"
                           },
                           "description": {
                             "type": "string"
@@ -484,35 +470,21 @@
                           },
                           "config": {
                             "type": "object",
-                            "properties": {
-                              "host": {
-                                "type": "string"
-                              },
-                              "port": {
-                                "type": "integer"
-                              }
-                            },
-                            "required": [
-                              "host",
-                              "port"
-                            ],
-                            "x-apifox-ignore-properties": [],
-                            "x-apifox-orders": [
-                              "host",
-                              "port"
-                            ]
+                            "properties": {},
+                            "x-apifox-orders": [],
+                            "x-apifox-ignore-properties": []
                           }
                         },
-                        "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
                           "uuid",
                           "name",
                           "type",
-                          "autoRestart",
+                          "actionScript",
                           "description",
                           "state",
                           "config"
-                        ]
+                        ],
+                        "x-apifox-ignore-properties": []
                       }
                     }
                   },
@@ -521,12 +493,12 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
                 },
                 "examples": {
                   "1": {
@@ -542,29 +514,7 @@
                           "actionScript": "",
                           "description": "GENERIC_MODBUS",
                           "state": 0,
-                          "config": {
-                            "config": {
-                              "baudRate": 4800,
-                              "dataBits": 8,
-                              "ip": "127.0.0.1",
-                              "parity": "N",
-                              "port": 502,
-                              "stopBits": 1,
-                              "uart": "COM5"
-                            },
-                            "frequency": 5,
-                            "mode": "TCP",
-                            "registers": [
-                              {
-                                "address": 0,
-                                "function": 3,
-                                "quantity": 2,
-                                "slaverId": 1,
-                                "tag": "d1"
-                              }
-                            ],
-                            "timeout": 10
-                          }
+                          "config": {}
                         }
                       ]
                     }
@@ -586,6 +536,27 @@
                             "host": "0.0.0.0",
                             "port": 6005
                           }
+                        }
+                      ]
+                    }
+                  },
+                  "3": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "uuid": "DEVICEV7XKMT",
+                          "gid": "DROOT",
+                          "name": "GENERIC_AIS",
+                          "type": "GENERIC_AIS",
+                          "state": 1,
+                          "config": {
+                            "host": "0.0.0.0",
+                            "port": 6005
+                          },
+                          "description": "GENERIC_AIS"
                         }
                       ]
                     }
@@ -4165,9 +4136,51 @@
                     },
                     "data": {
                       "type": "object",
-                      "properties": {},
-                      "x-apifox-ignore-properties": [],
-                      "x-apifox-orders": []
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "gid": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "type": "integer"
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {},
+                          "x-apifox-orders": [],
+                          "x-apifox-ignore-properties": []
+                        },
+                        "description": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "uuid",
+                        "gid",
+                        "name",
+                        "type",
+                        "state",
+                        "config",
+                        "description"
+                      ],
+                      "x-apifox-orders": [
+                        "uuid",
+                        "gid",
+                        "name",
+                        "type",
+                        "state",
+                        "config",
+                        "description"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -4181,6 +4194,24 @@
                     "data"
                   ],
                   "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "uuid": "DEVICEZXTBZQ",
+                        "gid": "DROOT",
+                        "name": "GENERIC_AIS",
+                        "type": "GENERIC_AIS",
+                        "state": 1,
+                        "config": {},
+                        "description": "GENERIC_AIS"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -8590,320 +8621,6 @@
         "security": []
       }
     },
-    "/api/v1/softRouter/dhcp": {
-      "post": {
-        "summary": "DHCP配置更新",
-        "x-apifox-folder": "系统配置/路由配置",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "系统配置/路由配置"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "iface": {
-                    "type": "string"
-                  },
-                  "ip": {
-                    "type": "string"
-                  },
-                  "gateway": {
-                    "type": "string"
-                  },
-                  "network": {
-                    "type": "string"
-                  },
-                  "netmask": {
-                    "type": "string"
-                  },
-                  "ip_pool_begin": {
-                    "type": "string"
-                  },
-                  "ip_pool_end": {
-                    "type": "string"
-                  },
-                  "iface_from": {
-                    "type": "string"
-                  },
-                  "iface_to": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "iface",
-                  "ip",
-                  "gateway",
-                  "network",
-                  "netmask",
-                  "ip_pool_begin",
-                  "ip_pool_end",
-                  "iface_from",
-                  "iface_to"
-                ],
-                "x-apifox-orders": [
-                  "iface",
-                  "ip",
-                  "gateway",
-                  "network",
-                  "netmask",
-                  "ip_pool_begin",
-                  "ip_pool_end",
-                  "iface_from",
-                  "iface_to"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "iface": "eth1",
-                "ip": "192.168.64.100",
-                "gateway": "192.168.64.100",
-                "network": "",
-                "netmask": "255.255.255.0",
-                "ip_pool_begin": "192.168.64.100",
-                "ip_pool_end": "192.168.64.150",
-                "iface_from": "eth1",
-                "iface_to": "usb0"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "iface": {
-                      "type": "string"
-                    },
-                    "ip": {
-                      "type": "string"
-                    },
-                    "gateway": {
-                      "type": "string"
-                    },
-                    "network": {
-                      "type": "string"
-                    },
-                    "netmask": {
-                      "type": "string"
-                    },
-                    "ip_pool_begin": {
-                      "type": "string"
-                    },
-                    "ip_pool_end": {
-                      "type": "string"
-                    },
-                    "iface_from": {
-                      "type": "string"
-                    },
-                    "iface_to": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "iface",
-                    "ip",
-                    "gateway",
-                    "network",
-                    "netmask",
-                    "ip_pool_begin",
-                    "ip_pool_end",
-                    "iface_from",
-                    "iface_to"
-                  ],
-                  "x-apifox-orders": [
-                    "iface",
-                    "ip",
-                    "gateway",
-                    "network",
-                    "netmask",
-                    "ip_pool_begin",
-                    "ip_pool_end",
-                    "iface_from",
-                    "iface_to"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "iface": "eth1",
-                      "ip": "192.168.64.100",
-                      "gateway": "192.168.64.100",
-                      "network": "",
-                      "netmask": "255.255.255.0",
-                      "ip_pool_begin": "192.168.64.100",
-                      "ip_pool_end": "192.168.64.150",
-                      "iface_from": "eth1",
-                      "iface_to": "usb0"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-121500308-run",
-        "security": []
-      },
-      "get": {
-        "summary": "DHCP配置查看",
-        "x-apifox-folder": "系统配置/路由配置",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "系统配置/路由配置"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "iface": {
-                          "type": "string"
-                        },
-                        "ip": {
-                          "type": "string"
-                        },
-                        "gateway": {
-                          "type": "string"
-                        },
-                        "network": {
-                          "type": "string"
-                        },
-                        "netmask": {
-                          "type": "string"
-                        },
-                        "ip_pool_begin": {
-                          "type": "string"
-                        },
-                        "ip_pool_end": {
-                          "type": "string"
-                        },
-                        "iface_from": {
-                          "type": "string"
-                        },
-                        "iface_to": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "iface",
-                        "ip",
-                        "gateway",
-                        "network",
-                        "netmask",
-                        "ip_pool_begin",
-                        "ip_pool_end",
-                        "iface_from",
-                        "iface_to"
-                      ],
-                      "x-apifox-ignore-properties": [],
-                      "x-apifox-orders": [
-                        "iface",
-                        "ip",
-                        "gateway",
-                        "network",
-                        "netmask",
-                        "ip_pool_begin",
-                        "ip_pool_end",
-                        "iface_from",
-                        "iface_to"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "iface": "eth1",
-                        "ip": "192.168.64.100",
-                        "gateway": "192.168.64.100",
-                        "network": "",
-                        "netmask": "255.255.255.0",
-                        "ip_pool_begin": "192.168.64.100",
-                        "ip_pool_end": "192.168.64.150",
-                        "iface_from": "eth1",
-                        "iface_to": "usb0"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-121500306-run",
-        "security": []
-      }
-    },
-    "/api/v1/softRouter/dhcpClients": {
-      "get": {
-        "summary": "DHCP参数获取",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-118598440-run",
-        "security": []
-      }
-    },
     "/api/v1/4g/info": {
       "get": {
         "summary": "4G参数获取",
@@ -9758,6 +9475,292 @@
         "security": []
       }
     },
+    "/api/v1/softRouter/dhcp": {
+      "get": {
+        "summary": "DHCP配置查看",
+        "x-apifox-folder": "系统配置/路由配置",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/路由配置"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "iface": {
+                          "type": "string"
+                        },
+                        "ip": {
+                          "type": "string"
+                        },
+                        "gateway": {
+                          "type": "string"
+                        },
+                        "network": {
+                          "type": "string"
+                        },
+                        "netmask": {
+                          "type": "string"
+                        },
+                        "ip_pool_begin": {
+                          "type": "string"
+                        },
+                        "ip_pool_end": {
+                          "type": "string"
+                        },
+                        "iface_from": {
+                          "type": "string"
+                        },
+                        "iface_to": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "iface",
+                        "ip",
+                        "gateway",
+                        "network",
+                        "netmask",
+                        "ip_pool_begin",
+                        "ip_pool_end",
+                        "iface_from",
+                        "iface_to"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "iface",
+                        "ip",
+                        "gateway",
+                        "network",
+                        "netmask",
+                        "ip_pool_begin",
+                        "ip_pool_end",
+                        "iface_from",
+                        "iface_to"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "iface": "eth1",
+                        "ip": "192.168.64.100",
+                        "gateway": "192.168.64.100",
+                        "network": "",
+                        "netmask": "255.255.255.0",
+                        "ip_pool_begin": "192.168.64.100",
+                        "ip_pool_end": "192.168.64.150",
+                        "iface_from": "eth1",
+                        "iface_to": "usb0"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-121500306-run",
+        "security": []
+      },
+      "post": {
+        "summary": "DHCP配置更新",
+        "x-apifox-folder": "系统配置/路由配置",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/路由配置"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "iface": {
+                    "type": "string"
+                  },
+                  "ip": {
+                    "type": "string"
+                  },
+                  "gateway": {
+                    "type": "string"
+                  },
+                  "network": {
+                    "type": "string"
+                  },
+                  "netmask": {
+                    "type": "string"
+                  },
+                  "ip_pool_begin": {
+                    "type": "string"
+                  },
+                  "ip_pool_end": {
+                    "type": "string"
+                  },
+                  "iface_from": {
+                    "type": "string"
+                  },
+                  "iface_to": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "iface",
+                  "ip",
+                  "gateway",
+                  "network",
+                  "netmask",
+                  "ip_pool_begin",
+                  "ip_pool_end",
+                  "iface_from",
+                  "iface_to"
+                ],
+                "x-apifox-orders": [
+                  "iface",
+                  "ip",
+                  "gateway",
+                  "network",
+                  "netmask",
+                  "ip_pool_begin",
+                  "ip_pool_end",
+                  "iface_from",
+                  "iface_to"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "iface": "eth1",
+                "ip": "192.168.64.100",
+                "gateway": "192.168.64.100",
+                "network": "",
+                "netmask": "255.255.255.0",
+                "ip_pool_begin": "192.168.64.100",
+                "ip_pool_end": "192.168.64.150",
+                "iface_from": "eth1",
+                "iface_to": "usb0"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "iface": {
+                      "type": "string"
+                    },
+                    "ip": {
+                      "type": "string"
+                    },
+                    "gateway": {
+                      "type": "string"
+                    },
+                    "network": {
+                      "type": "string"
+                    },
+                    "netmask": {
+                      "type": "string"
+                    },
+                    "ip_pool_begin": {
+                      "type": "string"
+                    },
+                    "ip_pool_end": {
+                      "type": "string"
+                    },
+                    "iface_from": {
+                      "type": "string"
+                    },
+                    "iface_to": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "iface",
+                    "ip",
+                    "gateway",
+                    "network",
+                    "netmask",
+                    "ip_pool_begin",
+                    "ip_pool_end",
+                    "iface_from",
+                    "iface_to"
+                  ],
+                  "x-apifox-orders": [
+                    "iface",
+                    "ip",
+                    "gateway",
+                    "network",
+                    "netmask",
+                    "ip_pool_begin",
+                    "ip_pool_end",
+                    "iface_from",
+                    "iface_to"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "iface": "eth1",
+                      "ip": "192.168.64.100",
+                      "gateway": "192.168.64.100",
+                      "network": "",
+                      "netmask": "255.255.255.0",
+                      "ip_pool_begin": "192.168.64.100",
+                      "ip_pool_end": "192.168.64.150",
+                      "iface_from": "eth1",
+                      "iface_to": "usb0"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-121500308-run",
+        "security": []
+      }
+    },
     "/api/v1/softRouter/dhcp/clients": {
       "get": {
         "summary": "DHCP客户端列表",
@@ -9868,34 +9871,12 @@
           "200": {
             "description": "成功",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
                 }
               }
             }

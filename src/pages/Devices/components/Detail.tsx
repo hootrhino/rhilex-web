@@ -1,10 +1,10 @@
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions, ProTable } from '@ant-design/pro-components';
+import { useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
-import { useRequest } from 'umi';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -27,9 +27,9 @@ const EnhancedProDescriptions = ({
 };
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
+  const {groupList} = useModel('useDevice')
   const { data, run, loading } = useRequest(() => getDevicesDetail({ uuid }), {
     manual: true,
-    formatResult: (res) => res?.data,
   });
 
   const deviceType = data?.type;
@@ -52,6 +52,16 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
           GENERIC_PROTOCOL: '通用串口协议',
           GENERIC_MODBUS: '通用Modbus Master',
         },
+      },
+      {
+        title: '设备分组',
+        dataIndex: 'gid',
+        renderText: value => {
+          const group = groupList?.find(item => item?.uuid === value);
+
+          return group?.name;
+        }
+
       },
       {
         title: '备注信息',
