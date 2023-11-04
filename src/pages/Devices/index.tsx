@@ -9,11 +9,12 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import { Button, Popconfirm, Space, Tooltip } from 'antd';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { message } from '@/components/PopupHack';
-import { deleteDevices, getDevices } from '@/services/rulex/shebeiguanli';
-import { history, useRequest } from '@umijs/max';
+import type { DeviceGroupItem } from '@/models/useGroup';
+import { deleteDevices } from '@/services/rulex/shebeiguanli';
+import { history, useModel, useRequest } from '@umijs/max';
 import Detail from './components/Detail';
 
 export type DeviceItem = {
@@ -25,30 +26,76 @@ export type DeviceItem = {
   [key: string]: any;
 };
 
-type DeviceGroupItem = {
+type GroupConfig = {
+  type: string;
+  open: boolean;
+  title: string;
+};
+
+type DeviceConfig = {
+  uuid: string;
+  open: boolean;
+};
+
+type GroupFormParams = {
   name: string;
-  uuid?: string;
+};
+
+const defaultGroupConfig = {
+  type: 'new',
+  open: false,
+  title: '新建设备分组',
+};
+
+const defaultDeviceConfig = {
+  uuid: '',
+  open: false,
 };
 
 const Devices = () => {
   const actionRef = useRef<ActionType>();
   const groupFormRef = useRef<ProFormInstance>();
-  const [activeGroup, setActiveGroup] = useState<string>('');
-  const [groupConfig, setGroupConfig] = useState<{
-    type: 'new' | 'edit';
-    open: boolean;
-    title: string;
-  }>({
-    type: 'new',
-    open: false,
-    title: '新建设备分组',
-  });
-  const [detailConfig, setDeviceConfig] = useState<{ uuid: string; open: boolean }>({
-    uuid: '',
-    open: false,
-  });
 
-  // TODO 获取分组列表
+  const { run: getDeviceList, data: deviceList, groupList, getGroupList } = useModel('useDevice');
+  const {
+    remove: removeGroup,
+    create: createGroup,
+    update: updateGroup,
+    getDetail: getGroupDetail,
+    detail: groupDetail,
+    activeGroupKey,
+    setActiveGroupKey,
+  } = useModel('useGroup');
+  const [activeGroupName, setActiveGroupName] = useState<string>('默认分组');
+  const [groupConfig, setGroupConfig] = useState<GroupConfig>(defaultGroupConfig);
+  const [detailConfig, setDeviceConfig] = useState<DeviceConfig>(defaultDeviceConfig);
+
+  // 新增编辑设备分组
+  const handleOnFinish = async ({ name }: GroupFormParams) => {
+    try {
+      const type = 'DEVICE';
+
+      if (groupConfig.type === 'new') {
+        // 新增
+        createGroup({ name, type }).then((value: any) => {
+          getGroupList().then((groups) => {
+            const activeGroup = groups?.find((group) => group.uuid === value?.gid);
+            setActiveGroupName(activeGroup?.name || '');
+          });
+          setActiveGroupKey(value?.gid);
+        });
+      } else {
+        // 编辑
+        if (!groupDetail?.uuid) return;
+        updateGroup({ uuid: groupDetail?.uuid, type: groupDetail?.type || type, name }).then(() =>
+          getGroupList(),
+        );
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
 
   // 删除设备
   const { run: remove } = useRequest((params: API.deleteDevicesParams) => deleteDevices(params), {
@@ -125,6 +172,17 @@ const Devices = () => {
     },
   ];
 
+  useEffect(() => {
+    if (activeGroupKey) {
+      getDeviceList({ uuid: activeGroupKey });
+    }
+  }, [activeGroupKey]);
+
+  useEffect(() => {
+    if (!groupDetail) return;
+    groupFormRef.current?.setFieldsValue({ name: groupDetail.name });
+  }, [groupDetail]);
+
   return (
     <>
       <PageContainer>
@@ -135,7 +193,6 @@ const Devices = () => {
             colSpan="270px"
             extra={
               <Button
-                //size="small"
                 key="add"
                 type="primary"
                 icon={<PlusOutlined />}
@@ -155,15 +212,16 @@ const Devices = () => {
                 return {
                   onClick: () => {
                     if (!record?.uuid) return;
-                    setActiveGroup(record?.uuid);
+                    setActiveGroupKey(record?.uuid);
+                    setActiveGroupName(record?.name || '');
                   },
                 };
               }}
               rowKey="uuid"
               headerTitle={false}
-              dataSource={[]}
+              dataSource={groupList}
               rowClassName={(item: DeviceGroupItem) =>
-                item?.uuid === activeGroup ? 'active-group' : ''
+                item?.uuid === activeGroupKey ? 'active-group' : ''
               }
               metas={{
                 title: {
@@ -176,50 +234,52 @@ const Devices = () => {
                   render: () => <FolderOpenOutlined className="pl-[10px]" />,
                 },
                 actions: {
-                  render: (dom, entity) => (
-                    <Space size="middle">
-                      <Tooltip title="重命名分组">
-                        <a
-                          key="edit"
-                          onClick={() => {
-                            setGroupConfig({ open: true, title: '编辑设备分组', type: 'edit' });
-                            // TODO 获取详情
-                            // getDetail({ uuid: entity.uuid });
-                          }}
-                        >
-                          <EditOutlined />
-                        </a>
-                      </Tooltip>
-                      <Tooltip title="删除分组">
-                        <a
-                          key="remove"
-                          onClick={() => {
-                            // TODO 删除分组
-                            console.log(entity);
-                          }}
-                        >
-                          <DeleteOutlined />
-                        </a>
-                      </Tooltip>
-                    </Space>
-                  ),
+                  render: (dom, entity) =>
+                    entity.uuid === 'DROOT' ? null : (
+                      <Space size="middle">
+                        <Tooltip title="重命名分组">
+                          <a
+                            key="edit"
+                            onClick={() => {
+                              setGroupConfig({ open: true, title: '编辑设备分组', type: 'edit' });
+                              if (entity?.uuid) {
+                                getGroupDetail({ uuid: entity.uuid });
+                              }
+                            }}
+                          >
+                            <EditOutlined />
+                          </a>
+                        </Tooltip>
+                        <Tooltip title="删除分组">
+                          <Popconfirm
+                            title="确定删除该分组吗"
+                            onConfirm={() => {
+                              if (!entity.uuid) return;
+                              removeGroup({ uuid: entity.uuid }).then(() =>
+                                getGroupList().then(() => {
+                                  setActiveGroupKey('DROOT');
+                                  setActiveGroupName('默认分组');
+                                }),
+                              );
+                            }}
+                          >
+                            <a key="remove">
+                              <DeleteOutlined key="remove" />
+                            </a>
+                          </Popconfirm>
+                        </Tooltip>
+                      </Space>
+                    ),
                 },
               }}
             />
           </ProCard>
-          <ProCard title="分组名称">
+          <ProCard title={activeGroupName}>
             <ProTable
               rowKey="uuid"
               actionRef={actionRef}
               columns={columns}
-              request={async () => {
-                const res = await getDevices();
-
-                return Promise.resolve({
-                  data: (res as any)?.data,
-                  success: true,
-                });
-              }}
+              dataSource={deviceList}
               search={false}
               pagination={false}
               toolBarRender={() => [
@@ -242,12 +302,8 @@ const Devices = () => {
         title={groupConfig.title}
         open={groupConfig.open}
         onOpenChange={(visible) => setGroupConfig({ ...groupConfig, open: visible })}
-        modalProps={{ destroyOnClose: true }}
-        onFinish={async (values) => {
-          // TODO 新增编辑
-          // groupConfig.type === 'new' ? create(values.name) : update(values.name)
-          console.log(values);
-        }}
+        modalProps={{ destroyOnClose: true, maskClosable: false }}
+        onFinish={handleOnFinish}
         layout="horizontal"
         width="30%"
       >

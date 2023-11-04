@@ -82,6 +82,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type getDevicesListByGroupParams = {
+    uuid: string;
+  };
+
   type getGoodsDetailParams = {
     uuid: string;
   };

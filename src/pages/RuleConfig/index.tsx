@@ -39,7 +39,7 @@ const RuleConfig = ({ dataSource, type, typeId }: RuleConfigProps) => {
   });
 
   const { run: getSources } = useModel('useSource');
-  const { run: getDevices } = useModel('useDevice');
+  // const { data: deviceList } = useModel('useDevice');
 
   // 删除
   const { run: remove } = useRequest((params: API.deleteRulesParams) => deleteRules(params), {
@@ -93,7 +93,7 @@ const RuleConfig = ({ dataSource, type, typeId }: RuleConfigProps) => {
           key="detail"
           onClick={() => {
             getSources();
-            getDevices();
+            // getDevices();
             setDetailConfig({ open: true, type: 'detail', uuid });
           }}
         >

@@ -63,6 +63,12 @@ export const columns = [
         },
       },
       {
+        title: '设备分组',
+        dataIndex: 'gid',
+        valueType: 'groupSelect',
+        required: true,
+      },
+      {
         title: '备注信息',
         dataIndex: 'description',
       },

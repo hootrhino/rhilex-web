@@ -1,14 +1,16 @@
-import { getDevices } from '@/services/rulex/shebeiguanli';
+import { getDevicesGroup, getDevicesListByGroup } from '@/services/rulex/shebeiguanli';
 import { useRequest } from 'umi';
 
 const useDevice = () => {
-  const { data, run } = useRequest(() => getDevices(), {
-    manual: true,
-    formatResult: (res) =>
-      res?.data?.map((item: Record<string, any>) => ({ label: item?.name, value: item?.uuid })),
-  });
+  // 设备分组列表
+  const { data: groupList, run: getGroupList } = useRequest(() => getDevicesGroup());
 
-  return { data, run };
+  // 设备列表
+  const { data, run } = useRequest((params: API.getDevicesListByGroupParams) =>
+    getDevicesListByGroup(params),
+  );
+
+  return { data, run, groupList, getGroupList };
 };
 
 export default useDevice;

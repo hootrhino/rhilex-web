@@ -3,6 +3,7 @@ import { getRulesDetail } from '@/services/rulex/guizeguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps } from 'antd';
+import { useEffect } from 'react';
 import { useModel } from 'umi';
 
 type DetailProps = DrawerProps & {
@@ -17,7 +18,8 @@ type Option = {
 
 const Detail = ({ uuid, type, ...props }: DetailProps) => {
   const { data: sources } = useModel('useSource');
-  const { data: devices } = useModel('useDevice');
+  const { data: devices, run: getDeviceList } = useModel('useDevice');
+  const {activeGroupKey} = useModel('useGroup');
 
   const getFromSourceName = (fromSource: string[], fromDevice: string[]) => {
     let name: string = '';
@@ -26,8 +28,8 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       const current = sources?.find((item: Option) => item?.value === fromSource?.[0]);
       name = current?.label || '';
     } else {
-      const current = devices?.find((item: Option) => item?.value === fromDevice?.[0]);
-      name = current?.label || '';
+      const current = devices?.find((item) => item?.uuid === fromDevice?.[0]);
+      name = current?.name || '';
     }
 
     return name;
@@ -68,6 +70,10 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       valueType: 'code',
     },
   ];
+
+  useEffect(() => {
+    getDeviceList({uuid: activeGroupKey})
+  }, [activeGroupKey])
 
   return (
     <Drawer

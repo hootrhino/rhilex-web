@@ -1,8 +1,7 @@
-export const defaultValue = (os: string | undefined) => {
-  const isWindows = os?.includes('windows');
-
+export const defaultValue = (isWindows: boolean, activeGroupKey: string) => {
   return {
     type: 'GENERIC_PROTOCOL',
+    gid: activeGroupKey,
     config: {
       commonConfig: [
         {

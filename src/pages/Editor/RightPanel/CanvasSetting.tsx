@@ -63,7 +63,7 @@ const CanvasSetting = () => {
   };
 
  useEffect(() => {
-  console.log(detail);
+
   if (detail?.thumbnail) {
     console.log({...CanvasSetting, thumbnail: detail?.thumbnail});
    // setConfig({...CanvasSetting, thumbnail: detail?.thumbnail})

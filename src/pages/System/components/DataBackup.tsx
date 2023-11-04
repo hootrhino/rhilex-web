@@ -30,19 +30,7 @@ const DataBackupConfig = () => {
   const { run: backup } = useRequest(() => getBackup(), {
     manual: true,
     onSuccess: () => {
-
-    // const fileName = 'backup.sql';
-
-    // const blob = new Blob([data], { type: 'application/sql' });
-    // const url = URL.createObjectURL(blob);
-    // console.log(data, blob);
-    // const link = document.createElement('a');
-    // link.href = url;
-    // link.download = fileName;
-    // link.click();
-
-    // URL.revokeObjectURL(url);
-    message.success('下载成功');
+      message.success('下载成功');
     },
   });
 

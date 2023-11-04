@@ -60,7 +60,8 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
   const { showModal } = useGoBack();
 
   const { data: sources } = useModel('useSource');
-  const { data: devices, run: getDevices } = useModel('useDevice');
+  const { data: devices, run: getDeviceList } = useModel('useDevice');
+  const {activeGroupKey} = useModel('useGroup');
 
   // 获取详情
   const { run: getDetail } = useRequest((uuid: string) => getRulesDetail({ uuid: uuid || '' }), {
@@ -142,9 +143,8 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
   }, [ruleId, typeId, type]);
 
   useEffect(() => {
-    // getSources();
-    getDevices();
-  }, []);
+    getDeviceList({uuid: activeGroupKey})
+  }, [activeGroupKey])
 
   return (
     <>
@@ -230,7 +230,7 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
                       <ProFormSelect
                         label="输入资源"
                         name="fromDevice"
-                        options={devices}
+                        options={devices?.map(device => ({label: device.name, value: device.uuid}))}
                         disabled
                         placeholder="请选择数据源"
                         rules={[{ required: true, message: '请选择数据源' }]}

@@ -7,17 +7,19 @@ import {
   ProConfigProvider,
   ProFormInstance,
   ProFormProps,
+  ProFormSelect,
 } from '@ant-design/pro-components';
 
 import useGoBack from '@/hooks/useGoBack';
 import { getOsUarts } from '@/services/rulex/xitongshuju';
 import { FooterToolbar } from '@ant-design/pro-components';
-import { AutoComplete, Button, ConfigProvider, Popconfirm, Segmented } from 'antd';
+import { AutoComplete, Button, ConfigProvider, Popconfirm, Segmented, Select } from 'antd';
 import omit from 'lodash/omit';
 import { useRequest } from 'umi';
 
 import LuaEditor from '../LuaEditor';
 import './index.less';
+import { useModel } from '@umijs/max';
 
 type SchemaFormProps<T = any> = ProFormProps & {
   title?: string;
@@ -104,8 +106,8 @@ const SchemaForm = ({
   onValuesChange,
 }: SchemaFormProps) => {
   const formRef = useRef<ProFormInstance>();
-  // const editorRef = useRef(null);
   const { showModal } = useGoBack();
+  const {groupList} = useModel('useDevice');
 
   const { data: uartOptions } = useRequest(() => getOsUarts(), {
     formatResult: (res) =>
@@ -155,6 +157,11 @@ const SchemaForm = ({
         <LuaEditor {...props?.fieldProps} className="w-full" />
       ),
     },
+    groupSelect: {
+      renderFormItem: (_: any, props: any) => (
+        <ProFormSelect width='lg' options={groupList?.map(group => ({label: group.name, value: group.uuid}))} {...props?.fieldProps} />
+      ),
+    }
   };
 
   useEffect(() => {

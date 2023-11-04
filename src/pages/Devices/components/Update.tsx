@@ -19,7 +19,8 @@ const DefaultListUrl = '/device/list';
 
 const BaseForm = () => {
   const { id } = useParams();
-  const { dataSource } = useModel('useSystem');
+  const { isWindows } = useModel('useSystem');
+  const { activeGroupKey } = useModel('useGroup');
   const [initialValue, setValue] = useState<any>();
 
   // 新建
@@ -137,7 +138,7 @@ const BaseForm = () => {
     if (id) {
       getDetail();
     } else {
-      const defaultData = defaultValue(dataSource?.hardWareInfo?.osArch);
+      const defaultData = defaultValue(isWindows, activeGroupKey);
       setValue(defaultData);
     }
   }, [id]);
