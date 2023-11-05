@@ -94,6 +94,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type getHwifaceDetailParams = {
+    uuid: string;
+  };
+
   type getInendsDetailParams = {
     uuid: string;
   };

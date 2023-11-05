@@ -80,6 +80,9 @@
     },
     {
       "name": "系统配置/数据备份"
+    },
+    {
+      "name": "接口管理"
     }
   ],
   "paths": {
@@ -10140,6 +10143,375 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-122119428-run",
+        "security": []
+      }
+    },
+    "/api/v1/hwiface/list": {
+      "get": {
+        "summary": "接口列表",
+        "x-apifox-folder": "接口管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "接口管理"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "uuid": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "alias": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "uuid",
+                          "name",
+                          "type",
+                          "alias",
+                          "description"
+                        ],
+                        "x-apifox-ignore-properties": [],
+                        "x-apifox-orders": [
+                          "uuid",
+                          "name",
+                          "type",
+                          "alias",
+                          "description"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "uuid": "/dev/ttyS1",
+                          "name": "/dev/ttyS1",
+                          "type": "UART",
+                          "alias": "RS4851(A1B1)",
+                          "description": "RS4851号串口"
+                        },
+                        {
+                          "uuid": "/dev/ttyS2",
+                          "name": "/dev/ttyS2",
+                          "type": "UART",
+                          "alias": "RS4851(A2B2)",
+                          "description": "RS4852号串口"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-122283450-run",
+        "security": []
+      }
+    },
+    "/api/v1/hwiface/detail": {
+      "get": {
+        "summary": "接口详情",
+        "x-apifox-folder": "接口管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "接口管理"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "/dev/ttyS1",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "alias": {
+                          "type": "string"
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {
+                            "timeout": {
+                              "type": "integer"
+                            },
+                            "uart": {
+                              "type": "string"
+                            },
+                            "baudRate": {
+                              "type": "integer"
+                            },
+                            "dataBits": {
+                              "type": "integer"
+                            },
+                            "parity": {
+                              "type": "string"
+                            },
+                            "stopBits": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "timeout",
+                            "uart",
+                            "baudRate",
+                            "dataBits",
+                            "parity",
+                            "stopBits"
+                          ],
+                          "x-apifox-ignore-properties": [],
+                          "x-apifox-orders": [
+                            "timeout",
+                            "uart",
+                            "baudRate",
+                            "dataBits",
+                            "parity",
+                            "stopBits"
+                          ]
+                        },
+                        "description": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "uuid",
+                        "name",
+                        "type",
+                        "alias",
+                        "config",
+                        "description"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "uuid",
+                        "name",
+                        "type",
+                        "alias",
+                        "config",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "uuid": "/dev/ttyS1",
+                        "name": "/dev/ttyS1",
+                        "type": "UART",
+                        "alias": "RS4851(A1B1)",
+                        "config": {
+                          "timeout": 3000,
+                          "uart": "/dev/ttyS1",
+                          "baudRate": 9600,
+                          "dataBits": 8,
+                          "parity": "N",
+                          "stopBits": 1
+                        },
+                        "description": "RS4851号串口"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-122284370-run",
+        "security": []
+      }
+    },
+    "/api/v1/hwiface/update": {
+      "post": {
+        "summary": "更新配置",
+        "x-apifox-folder": "接口管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "接口管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "config": {
+                    "type": "object",
+                    "properties": {},
+                    "x-apifox-orders": [],
+                    "x-apifox-ignore-properties": []
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "config"
+                ],
+                "x-apifox-orders": [
+                  "uuid",
+                  "config"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "uuid": "/dev/ttyS1",
+                "config": {
+                  "timeout": 3000,
+                  "uart": "/dev/ttyS1",
+                  "baudRate": 9600,
+                  "dataBits": 8,
+                  "parity": "N",
+                  "stopBits": 1
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-122284806-run",
         "security": []
       }
     }

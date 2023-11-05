@@ -179,7 +179,6 @@ const SchemaForm = ({
             formRef={formRef}
             columns={processColumns(columns)}
             onFinish={onFinish}
-          className='testtttt'
             submitter={{
               render: ({ reset, submit }) => {
                 return (
