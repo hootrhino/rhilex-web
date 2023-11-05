@@ -1,3 +1,4 @@
+import StateTag from '@/components/StateTag';
 import { getOutendsDetail } from '@/services/rulex/shuchuziyuanguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
@@ -29,12 +30,7 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
     {
       title: '目标状态',
       dataIndex: 'state',
-      valueEnum: {
-        0: { text: '故障', status: 'Error' },
-        1: { text: '启用', status: 'Success' },
-        2: { text: '暂停', status: 'Default' },
-        3: { text: '停止', status: 'Default' },
-      },
+      renderText: state => <StateTag state={state} />
     },
     {
       title: '备注信息',

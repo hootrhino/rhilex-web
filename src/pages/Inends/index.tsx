@@ -10,8 +10,9 @@ import { Button, Popconfirm } from 'antd';
 import { message } from '@/components/PopupHack';
 import { deleteInends, getInends } from '@/services/rulex/shuruziyuanguanli';
 import { useRequest } from '@umijs/max';
-import { stateEnum, typeEnum } from './components/columns';
+import { typeEnum } from './components/columns';
 import Detail from './components/Detail';
+import StateTag from '@/components/StateTag';
 
 export type InendsItem = {
   name: string;
@@ -59,7 +60,7 @@ const Inends = () => {
       title: '状态',
       dataIndex: 'state',
       width: 100,
-      valueEnum: stateEnum,
+      renderText: state => <StateTag state={state} />
     },
     {
       title: '信息',

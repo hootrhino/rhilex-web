@@ -106,8 +106,8 @@ const WIFIConfig = () => {
         />
         <ProFormSelect
           options={[
-            { label: 'WPA-PSK', value: 'WPA-PSK' },
-            { label: 'WPA2-PSK', value: 'WPA2-PSK' },
+            { label: 'wpa-psk', value: 'wpa-psk' },
+            { label: 'wpa2-psk', value: 'wpa2-psk' },
           ]}
           name="security"
           label="加密方式"

@@ -34,32 +34,8 @@ const Interface = () => {
       dataIndex: 'type',
     },
     {
-      title: '超时时间（毫秒）',
-      dataIndex: 'timeout',
-    },
-    {
-      title: '波特率',
-      dataIndex: 'baudRate',
-      valueEnum: baudRateEnum,
-    },
-    {
-      title: '数据位',
-      dataIndex: 'dataBits',
-      valueEnum: dataBitsEnum,
-    },
-    {
-      title: '奇偶校验',
-      dataIndex: 'parity',
-      valueEnum: parityEnum,
-    },
-    {
-      title: '停止位',
-      dataIndex: 'stopBits',
-      valueEnum: stopBitsEnum,
-    },
-    {
-      title: '串口路径',
-      dataIndex: 'uart',
+      title: '描述',
+      dataIndex: 'description',
     },
     {
       title: '操作',
@@ -85,15 +61,6 @@ const Interface = () => {
         >
           编辑
         </a>,
-        <Popconfirm
-          title="确定要删除该接口？"
-          onConfirm={() => {
-            // TODO 删除
-          }}
-          key="remove"
-        >
-          <a>删除</a>
-        </Popconfirm>,
       ],
     },
   ];

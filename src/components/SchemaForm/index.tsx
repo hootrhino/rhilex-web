@@ -31,11 +31,11 @@ type SchemaFormProps<T = any> = ProFormProps & {
 
 export const toolTip = (url?: string) => (
   <a
-    href={url ? url : 'https://github.com/i4de/rulex/blob/master/device/custom_protocol_device.md'}
+    href={url ? url : 'http://www.hootrhino.com/'}
     target="_blank"
     rel="noreferrer"
   >
-    详细戳这里
+    前往官方文档主页查看更多帮助信息
   </a>
 );
 
@@ -179,6 +179,7 @@ const SchemaForm = ({
             formRef={formRef}
             columns={processColumns(columns)}
             onFinish={onFinish}
+          className='testtttt'
             submitter={{
               render: ({ reset, submit }) => {
                 return (

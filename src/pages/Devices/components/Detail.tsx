@@ -5,6 +5,7 @@ import { useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
+import { typeEnum } from './columns';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -317,7 +318,9 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         columns={columnsMap['BASE']}
         loading={loading}
       />
-      <EnhancedProDescriptions
+      {deviceType && Object.keys(typeEnum).includes(deviceType) && (
+        <>
+         <EnhancedProDescriptions
         title="通用信息"
         dataSource={data?.config?.commonConfig}
         columns={columnsMap['COMMON']}
@@ -375,6 +378,9 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
           />
         </>
       )}
+        </>
+      )}
+
     </Drawer>
   );
 };

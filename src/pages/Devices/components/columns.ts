@@ -41,6 +41,13 @@ export const funcEnum = new Map([
   // [16, '16 写多个保持寄存器'],
 ]);
 
+export const typeEnum = {
+  // GENERIC_SNMP: '通用SNMP协议采集',
+  // USER_G776: '通用串口DTU',
+  GENERIC_PROTOCOL: '通用时间片中断串口协议',
+  GENERIC_MODBUS: '通用Modbus Master',
+};
+
 export const columns = [
   {
     valueType: 'group',
@@ -55,12 +62,7 @@ export const columns = [
         dataIndex: 'type',
         valueType: 'select',
         required: true,
-        valueEnum: {
-          // GENERIC_SNMP: '通用SNMP协议采集',
-          // USER_G776: '通用串口DTU',
-          GENERIC_PROTOCOL: '通用时间片中断串口协议',
-          GENERIC_MODBUS: '通用Modbus Master',
-        },
+        valueEnum: typeEnum,
       },
       {
         title: '设备分组',

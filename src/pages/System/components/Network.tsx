@@ -90,8 +90,8 @@ const NetworkConfig = () => {
       >
         <ProFormSelect
           options={[
-            { label: 'ETH0', value: 'eth0' },
-            { label: 'ETH1', value: 'eth1' },
+            { label: 'eth0', value: 'eth0' },
+            { label: 'eth1', value: 'eth1' },
           ]}
           name="interface"
           label="网卡选择"

@@ -1,4 +1,12 @@
-import { DeleteOutlined, EditOutlined, FolderOpenOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  FolderOpenOutlined,
+  MinusCircleOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
 import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -8,7 +16,7 @@ import {
   ProList,
   ProTable,
 } from '@ant-design/pro-components';
-import { Button, Popconfirm, Space, Tooltip } from 'antd';
+import { Button, Popconfirm, Space, Tag, Tooltip } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
 import { message } from '@/components/PopupHack';
@@ -70,6 +78,13 @@ const Devices = () => {
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(defaultGroupConfig);
   const [detailConfig, setDeviceConfig] = useState<DeviceConfig>(defaultDeviceConfig);
 
+  const handleOnUpdateGroupName = (id: string) => {
+    getGroupList().then((groups) => {
+      const activeGroup = groups?.find((group) => group.uuid === id);
+      setActiveGroupName(activeGroup?.name || '');
+    });
+  };
+
   // 新增编辑设备分组
   const handleOnFinish = async ({ name }: GroupFormParams) => {
     try {
@@ -78,17 +93,14 @@ const Devices = () => {
       if (groupConfig.type === 'new') {
         // 新增
         createGroup({ name, type }).then((value: any) => {
-          getGroupList().then((groups) => {
-            const activeGroup = groups?.find((group) => group.uuid === value?.gid);
-            setActiveGroupName(activeGroup?.name || '');
-          });
+          handleOnUpdateGroupName(value?.gid);
           setActiveGroupKey(value?.gid);
         });
       } else {
         // 编辑
         if (!groupDetail?.uuid) return;
-        updateGroup({ uuid: groupDetail?.uuid, type: groupDetail?.type || type, name }).then(() =>
-          getGroupList(),
+        updateGroup({ uuid: groupDetail?.uuid, type: groupDetail?.type || type, name }).then(
+          () => groupDetail.uuid && handleOnUpdateGroupName(groupDetail.uuid),
         );
       }
       return true;
@@ -105,6 +117,20 @@ const Devices = () => {
       message.success('删除成功');
     },
   });
+
+  const renderState = (state: number) => {
+    const valueEnum = {
+      0: { text: '停止', color: 'default', icon: <MinusCircleOutlined /> },
+      1: { text: '启用', color: 'success', icon: <CheckCircleOutlined /> },
+      2: { text: '故障', color: 'error', icon: <CloseCircleOutlined /> },
+    };
+
+    return (
+      <Tag icon={valueEnum[state].icon} color={valueEnum[state].color}>
+        {valueEnum[state].text}
+      </Tag>
+    );
+  };
 
   const columns: ProColumns<DeviceItem>[] = [
     {
@@ -137,6 +163,7 @@ const Devices = () => {
         1: { text: '启用', status: 'Success' },
         2: { text: '故障', status: 'Error' },
       },
+      renderText: (state) => renderState(state),
     },
     {
       title: '信息',

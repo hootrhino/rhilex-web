@@ -9,6 +9,7 @@ import { history } from 'umi';
 import { message } from '@/components/PopupHack';
 import { deleteOutends, getOutends } from '@/services/rulex/shuchuziyuanguanli';
 import Detail from './components/Detail';
+import StateTag from '@/components/StateTag';
 
 export type Item = {
   name: string;
@@ -63,12 +64,7 @@ const Targets = () => {
       title: '状态',
       dataIndex: 'state',
       width: 100,
-      valueEnum: {
-        0: { text: '故障', status: 'Error' },
-        1: { text: '启用', status: 'Success' },
-        2: { text: '暂停', status: 'Default' },
-        3: { text: '停止', status: 'Default' },
-      },
+      renderText: state => <StateTag state={state} />
     },
     {
       title: '信息',

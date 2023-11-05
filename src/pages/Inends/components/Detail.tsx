@@ -5,7 +5,8 @@ import { Drawer, DrawerProps } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
-import { modeEnum, stateEnum, typeEnum } from './columns';
+import { modeEnum, typeEnum } from './columns';
+import StateTag from '../../../components/StateTag';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -26,7 +27,7 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
     {
       title: '资源状态',
       dataIndex: 'state',
-      valueEnum: stateEnum,
+     renderText: state => <StateTag state={state} />
     },
     {
       title: '备注信息',
