@@ -12,8 +12,17 @@ import { getDevicesDetail, postDevices, putDevices } from '@/services/rulex/sheb
 import SchemaForm from '@/components/SchemaForm';
 
 import { useModel } from '@umijs/max';
+import omit from 'lodash/omit';
 import { columns } from './columns';
-import { defaultValue } from './initialValue';
+import {
+  defaultAisConfig,
+  defaultHostConfig,
+  defaultModbusConfig,
+  defaultProtocolCommonConfig,
+  defaultRegistersConfig,
+  defaultTcpConfig,
+  defaultValue,
+} from './initialValue';
 
 const DefaultListUrl = '/device/list';
 
@@ -41,33 +50,15 @@ const BaseForm = () => {
   });
 
   const handleOnFinish = async (values: any) => {
+    console.log(values);
     try {
       let params = cloneDeep(values);
-      const deviceConfigFormat = new Object();
-      let hostConfig = params?.config?.hostConfig?.[0];
 
-      params?.config?.deviceConfig?.forEach((item: any) => {
-        deviceConfigFormat[item?.name] = {
-          ...item,
-          autoRequest: item?.autoRequest === 'true' ? true : false,
-          autoRequestGap: 0,
-          timeSlice: [3, 4].includes(item?.type) ? item?.timeSlice : 0,
-        };
-      });
-
-      if (params?.type === 'GENERIC_PROTOCOL') {
-        const transport = params?.config?.commonConfig?.[0]?.transport;
-
-        if (transport === 'rawserial') {
-          hostConfig = {
-            ...initialValue?.config?.hostConfig?.[0],
-          };
-        } else {
-          hostConfig = {
-            ...params?.config?.hostConfig?.[0],
-          };
-        }
-      }
+      const transport = params?.config?.commonConfig?.[0]?.transport;
+      let hostConfig =
+        transport === 'rawserial'
+          ? initialValue?.config?.hostConfig?.[0]
+          : params?.config?.hostConfig?.[0];
 
       params = {
         ...params,
@@ -77,7 +68,6 @@ const BaseForm = () => {
             ...params?.config?.commonConfig?.[0],
             autoRequest: params?.config?.commonConfig?.[0]?.autoRequest === 'true' ? true : false,
           },
-          deviceConfig: deviceConfigFormat,
           hostConfig,
           tcpConfig: params?.config?.tcpConfig?.[0],
           registers: params?.config?.registers?.map((item: Record<string, any>) => ({
@@ -86,7 +76,7 @@ const BaseForm = () => {
           })),
         },
       };
-
+      console.log(params);
       if (id) {
         update({ ...params, uuid: id });
       } else {
@@ -99,11 +89,11 @@ const BaseForm = () => {
   };
 
   // 获取详情
-  const { run: getDetail } = useRequest(() => getDevicesDetail({ uuid: id || '' }), {
+  const { run: getDetail, data: detail } = useRequest(() => getDevicesDetail({ uuid: id || '' }), {
     manual: true,
     onSuccess: (data: any) => {
       const newConfig = Object.fromEntries(
-        Object.entries(data?.config || {}).map(([key, value]) => {
+        Object.entries(omit(data?.config, ['port', 'host']) || {}).map(([key, value]) => {
           let newValue;
           newValue = Array.isArray(value) ? value : isEmpty(value) ? [] : [value];
 
@@ -119,7 +109,10 @@ const BaseForm = () => {
         }),
       );
 
-      setValue({ ...data, config: newConfig });
+      setValue({
+        ...data,
+        config: { ...newConfig, port: data?.config?.port, host: data?.config?.host },
+      });
     },
   });
 
@@ -141,6 +134,67 @@ const BaseForm = () => {
       columns={columns}
       initialValue={initialValue}
       onFinish={handleOnFinish}
+      onValuesChange={(changedValue) => {
+        let newData: any = { ...defaultValue };
+
+        if (changedValue?.type === 'GENERIC_PROTOCOL') {
+          newData = {
+            config: {
+              commonConfig: defaultProtocolCommonConfig,
+            },
+          };
+        }
+        if (changedValue?.config?.commonConfig) {
+          const changedConfig = changedValue?.config?.commonConfig?.[0];
+
+          if (changedConfig?.transport === 'rawtcp') {
+            newData = {
+              config: {
+                commonConfig: [{ ...defaultProtocolCommonConfig?.[0], transport: 'rawtcp' }],
+                hostConfig: defaultHostConfig,
+              },
+            };
+          }
+          if (changedConfig?.mode === 'TCP') {
+            newData = {
+              config: {
+                commonConfig: [
+                  {
+                    ...defaultModbusConfig?.[0],
+                    mode: 'TCP',
+                  },
+                ],
+                tcpConfig: defaultTcpConfig,
+                registers: defaultRegistersConfig,
+              },
+            };
+          }
+        }
+
+        if (changedValue?.type === 'GENERIC_MODBUS') {
+          newData = {
+            config: {
+              commonConfig: defaultModbusConfig,
+              registers: defaultRegistersConfig,
+            },
+          };
+        }
+        if (changedValue?.type === 'GENERIC_AIS') {
+          newData = {
+            config: defaultAisConfig,
+          };
+        }
+        if (changedValue?.type === detail?.type) {
+          newData = {
+            config: {
+              ...newData?.config,
+              ...detail?.config,
+            },
+          };
+          console.log(newData, detail);
+        }
+        setValue(newData);
+      }}
     />
   );
 };

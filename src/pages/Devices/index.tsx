@@ -7,7 +7,7 @@ import {
   MinusCircleOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
-import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components';
+import type { ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
   PageContainer,
@@ -61,7 +61,6 @@ const defaultDeviceConfig = {
 };
 
 const Devices = () => {
-  const actionRef = useRef<ActionType>();
   const groupFormRef = useRef<ProFormInstance>();
 
   const { run: getDeviceList, data: deviceList, groupList, getGroupList } = useModel('useDevice');
@@ -113,7 +112,7 @@ const Devices = () => {
   const { run: remove } = useRequest((params: API.deleteDevicesParams) => deleteDevices(params), {
     manual: true,
     onSuccess: () => {
-      actionRef.current?.reload();
+      getDeviceList({ uuid: activeGroupKey });
       message.success('删除成功');
     },
   });
@@ -304,7 +303,6 @@ const Devices = () => {
           <ProCard title={activeGroupName}>
             <ProTable
               rowKey="uuid"
-              actionRef={actionRef}
               columns={columns}
               dataSource={deviceList}
               search={false}
