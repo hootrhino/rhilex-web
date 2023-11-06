@@ -186,11 +186,6 @@ export const columns = [
                       valueType: 'formList',
                       dataIndex: ['config', 'hostConfig'],
                       mode: 'single',
-                      initialValue: {
-                        port: 3399,
-                        host: '127.0.0.1',
-                        timeout: 3000,
-                      },
                       columns: [
                         {
                           valueType: 'group',
@@ -325,14 +320,6 @@ export const columns = [
                       valueType: 'formList',
                       dataIndex: ['config', 'registers'],
                       mode: 'multiple',
-                      initialValue: {
-                        weight: 1,
-                        initValue: 0,
-                        slaverId: 1,
-                        address: 0,
-                        quantity: 1,
-                        function: 3,
-                      },
                       columns: [
                         {
                           valueType: 'group',
