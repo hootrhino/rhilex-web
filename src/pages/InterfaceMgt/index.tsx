@@ -11,9 +11,9 @@ import {
   ProFormText,
   ProTable,
 } from '@ant-design/pro-components';
-import { useModel, useRequest } from '@umijs/max';
+import { useRequest } from '@umijs/max';
 import { AutoComplete, Card } from 'antd';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   baudRateEnum,
   dataBitsEnum,
@@ -48,21 +48,7 @@ type UpdateParams = {
 const Interface = () => {
   const actionRef = useRef<ActionType>();
   const formRef = useRef<ProFormInstance>();
-  const { isWindows } = useModel('useSystem');
   const [open, setOpen] = useState<boolean>(false);
-
-  const defaultInitialValues = {
-    config: [
-      {
-        timeout: 3000,
-        baudRate: '9600',
-        dataBits: '8',
-        stopBits: '1',
-        parity: 'N',
-        uart: isWindows ? 'COM1' : '/dev/ttyS1',
-      },
-    ],
-  };
 
   // 获取串口配置
   const { data: uartOptions } = useRequest(() => getOsUarts(), {
@@ -78,6 +64,11 @@ const Interface = () => {
     (params: API.getHwifaceDetailParams) => getHwifaceDetail(params),
     {
       manual: true,
+      onSuccess: (data) => {
+        console.log(data);
+        setOpen(true);
+        formRef.current?.setFieldsValue({ ...data, config: [data?.config] });
+      },
     },
   );
 
@@ -105,9 +96,15 @@ const Interface = () => {
     {
       title: '接口类型',
       dataIndex: 'type',
-      valueEnum: {
-        UART: '串口',
-      },
+      valueType: 'select',
+    fieldProps: {
+      options: [
+        {
+          label: '串口',
+          value: 'UART',
+        },
+      ],
+    },
     },
     {
       title: '别名',
@@ -128,7 +125,8 @@ const Interface = () => {
           key="detail"
           onClick={() => {
             if (!uuid) return;
-            getDetail({ uuid }).then(() => setOpen(true));
+            getDetail({ uuid });
+            setOpen(true);
           }}
         >
           详情
@@ -139,14 +137,6 @@ const Interface = () => {
       ],
     },
   ];
-
-  useEffect(() => {
-    if (detail) {
-      formRef.current?.setFieldsValue({ ...detail, config: [detail?.config] });
-    } else {
-      formRef.current?.setFieldsValue({ ...defaultInitialValues });
-    }
-  }, [detail]);
 
   return (
     <>
@@ -183,12 +173,13 @@ const Interface = () => {
             width="sm"
             disabled
           />
-          <ProFormText
+          <ProFormSelect
             name="type"
             label="接口类型"
             placeholder="请选择接口类型"
             width="sm"
             disabled
+            options={[{label: '串口', value: 'UART'}]}
           />
           <ProFormText name="alias" label="别名" placeholder="请输入别名" width="sm" disabled />
         </ProForm.Group>
