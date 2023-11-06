@@ -4,6 +4,7 @@ import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-co
 import {
   ModalForm,
   PageContainer,
+  ProDescriptions,
   ProForm,
   ProFormDigit,
   ProFormList,
@@ -12,14 +13,15 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { AutoComplete, Card } from 'antd';
+import { AutoComplete, Button, Card, Descriptions, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
 import {
   baudRateEnum,
   dataBitsEnum,
   parityEnum,
   stopBitsEnum,
-} from '../Devices/components/columns';
+} from './constant';
+import { typeOptions } from './constant';
 
 type InterfaceItem = {
   uuid?: string;
@@ -27,6 +29,7 @@ type InterfaceItem = {
   type?: string;
   alias?: string;
   description?: string;
+  config?: Record<string, any>;
 };
 
 type InterfaceFormParams = InterfaceItem & {
@@ -49,6 +52,10 @@ const Interface = () => {
   const actionRef = useRef<ActionType>();
   const formRef = useRef<ProFormInstance>();
   const [open, setOpen] = useState<boolean>(false);
+  const [detailConfig, setDetailConfig] = useState<{ open: boolean; uuid: string }>({
+    open: false,
+    uuid: '',
+  });
 
   // 获取串口配置
   const { data: uartOptions } = useRequest(() => getOsUarts(), {
@@ -65,8 +72,6 @@ const Interface = () => {
     {
       manual: true,
       onSuccess: (data) => {
-        console.log(data);
-        setOpen(true);
         formRef.current?.setFieldsValue({ ...data, config: [data?.config] });
       },
     },
@@ -79,7 +84,7 @@ const Interface = () => {
         uuid: detail?.uuid || '',
         config: config?.[0],
       };
-
+      message.success('更新成功');
       await postHwifaceUpdate(params);
       actionRef.current?.reload();
       return true;
@@ -97,18 +102,33 @@ const Interface = () => {
       title: '接口类型',
       dataIndex: 'type',
       valueType: 'select',
-    fieldProps: {
-      options: [
-        {
-          label: '串口',
-          value: 'UART',
-        },
-      ],
-    },
+      fieldProps: {
+        options: typeOptions,
+      },
     },
     {
       title: '别名',
       dataIndex: 'alias',
+    },
+    {
+      title: '接口配置',
+      dataIndex: 'config',
+      valueType: 'formList',
+      hideInTable: true,
+      renderText: (config) => {
+        return (
+          <Card bodyStyle={{ padding: '16px 18px' }}>
+            <Descriptions column={1} labelStyle={{ width: 130, justifyContent: 'flex-end' }}>
+              <Descriptions.Item label="超时时间（毫秒）">{config?.timeout}</Descriptions.Item>
+              <Descriptions.Item label="波特率">{config?.baudRate}</Descriptions.Item>
+              <Descriptions.Item label="数据位">{config?.dataBits}</Descriptions.Item>
+              <Descriptions.Item label="奇偶校验">{parityEnum[config?.parity]}</Descriptions.Item>
+              <Descriptions.Item label="停止位">{config?.stopBits}</Descriptions.Item>
+              <Descriptions.Item label="串口路径">{config?.uart}</Descriptions.Item>
+            </Descriptions>
+          </Card>
+        );
+      },
     },
     {
       title: '备注',
@@ -120,18 +140,26 @@ const Interface = () => {
       key: 'option',
       width: 120,
       fixed: 'right',
+      hideInDescriptions: true,
       render: (_, { uuid }) => [
         <a
           key="detail"
           onClick={() => {
             if (!uuid) return;
             getDetail({ uuid });
-            setOpen(true);
+            setDetailConfig({ open: true, uuid });
           }}
         >
           详情
         </a>,
-        <a key="edit" onClick={() => setOpen(true)}>
+        <a
+          key="edit"
+          onClick={() => {
+            if (!uuid) return;
+            getDetail({ uuid });
+            setOpen(true);
+          }}
+        >
           编辑
         </a>,
       ],
@@ -179,7 +207,7 @@ const Interface = () => {
             placeholder="请选择接口类型"
             width="sm"
             disabled
-            options={[{label: '串口', value: 'UART'}]}
+            options={typeOptions}
           />
           <ProFormText name="alias" label="别名" placeholder="请输入别名" width="sm" disabled />
         </ProForm.Group>
@@ -253,6 +281,23 @@ const Interface = () => {
         </ProFormList>
         <ProFormText name="description" label="备注" placeholder="请输入备注" disabled />
       </ModalForm>
+      <Modal
+        title="接口详情"
+        open={detailConfig.open}
+        onCancel={() => setDetailConfig({ open: false, uuid: '' })}
+        footer={
+          <Button type="primary" onClick={() => setDetailConfig({ open: false, uuid: '' })}>
+            关闭
+          </Button>
+        }
+      >
+        <ProDescriptions
+          column={1}
+          columns={columns as any}
+          dataSource={detail}
+          labelStyle={{ width: 80, justifyContent: 'flex-end' }}
+        />
+      </Modal>
     </>
   );
 };
