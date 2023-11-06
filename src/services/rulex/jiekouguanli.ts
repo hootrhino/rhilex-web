@@ -17,13 +17,15 @@ export async function getHwifaceDetail(
       type?: string;
       alias?: string;
       config: {
-        timeout?: number;
-        uart?: string;
-        baudRate?: number;
-        dataBits?: number;
-        parity?: string;
-        stopBits?: number;
+        Timeout?: number;
+        Uart?: string;
+        BaudRate?: number;
+        DataBits?: number;
+        Parity?: string;
+        StopBits?: number;
       };
+      busy?: boolean;
+      occupyBy: { uuid?: string; type?: string };
       description?: string;
     };
   }>('/api/v1/hwiface/detail', {

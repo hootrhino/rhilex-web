@@ -13,13 +13,13 @@ import {
 import useGoBack from '@/hooks/useGoBack';
 import { getOsUarts } from '@/services/rulex/xitongshuju';
 import { FooterToolbar } from '@ant-design/pro-components';
-import { AutoComplete, Button, ConfigProvider, Popconfirm, Segmented, Select } from 'antd';
+import { AutoComplete, Button, ConfigProvider, Popconfirm, Segmented, Space } from 'antd';
 import omit from 'lodash/omit';
 import { useRequest } from 'umi';
 
+import { useModel } from '@umijs/max';
 import LuaEditor from '../LuaEditor';
 import './index.less';
-import { useModel } from '@umijs/max';
 
 type SchemaFormProps<T = any> = ProFormProps & {
   title?: string;
@@ -30,11 +30,7 @@ type SchemaFormProps<T = any> = ProFormProps & {
 };
 
 export const toolTip = (url?: string) => (
-  <a
-    href={url ? url : 'http://www.hootrhino.com/'}
-    target="_blank"
-    rel="noreferrer"
-  >
+  <a href={url ? url : 'http://www.hootrhino.com/'} target="_blank" rel="noreferrer">
     前往官方文档主页查看更多帮助信息
   </a>
 );
@@ -79,7 +75,7 @@ export const processColumns = (columns: any) => {
 
     return {
       ...omit(col, ['required']),
-      width: col?.width || 'lg',
+      width: col?.width || 'md',
       fieldProps: {
         placeholder: col?.valueType === 'select' ? `请选择${col?.title}` : `请输入${col?.title}`,
       },
@@ -107,7 +103,8 @@ const SchemaForm = ({
 }: SchemaFormProps) => {
   const formRef = useRef<ProFormInstance>();
   const { showModal } = useGoBack();
-  const {groupList} = useModel('useDevice');
+  const { groupList } = useModel('useDevice');
+  const { data: portList, run: getPort } = useModel('usePort');
 
   const { data: uartOptions } = useRequest(() => getOsUarts(), {
     formatResult: (res) =>
@@ -132,7 +129,7 @@ const SchemaForm = ({
         >
           <Segmented
             block
-            className="w-[440px]"
+            className="w-[328px]"
             options={[
               { label: '是', value: 'true' },
               { label: '否', value: 'false' },
@@ -159,9 +156,30 @@ const SchemaForm = ({
     },
     groupSelect: {
       renderFormItem: (_: any, props: any) => (
-        <ProFormSelect width='lg' options={groupList?.map(group => ({label: group.name, value: group.uuid}))} {...props?.fieldProps} />
+        <ProFormSelect
+          width="md"
+          options={groupList?.map((group) => ({ label: group.name, value: group.uuid }))}
+          {...props?.fieldProps}
+        />
       ),
-    }
+    },
+    portSelect: {
+      renderFormItem: (_: any, props: any) => (
+        <ProFormSelect
+          width="md"
+          options={portList?.map((item) => ({
+            label: (
+              <Space>
+                <span>{item?.name}</span>
+                <span className="text-[12px] text-[#000000A6]">{item?.alias}</span>
+              </Space>
+            ),
+            value: item.uuid,
+          }))}
+          {...props?.fieldProps}
+        />
+      ),
+    },
   };
 
   useEffect(() => {
@@ -169,6 +187,10 @@ const SchemaForm = ({
       ...initialValue,
     });
   }, [initialValue]);
+
+  useEffect(() => {
+    getPort();
+  }, []);
 
   return (
     <PageContainer header={{ title: title || '' }} onBack={() => showModal({ url: goBack })}>

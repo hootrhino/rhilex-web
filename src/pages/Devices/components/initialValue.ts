@@ -1,36 +1,18 @@
-export const defaultValue = (isWindows: boolean, activeGroupKey: string) => {
+export const defaultValue = ( activeGroupKey: string) => {
   return {
     type: 'GENERIC_PROTOCOL',
     gid: activeGroupKey,
     config: {
+      host: '127.0.0.1',
+      port: 6005,
       commonConfig: [
         {
           frequency: 3000,
           retryTime: 5,
           timeout: 3000,
           autoRequest: 'false',
-          // separator: 'LF',
           transport: 'rawserial',
           mode: 'RTU',
-        },
-      ],
-      // snmpConfig: [
-      //   {
-      //     port: 161,
-      //     securityModel: 0,
-      //     target: '127.0.0.1',
-      //     transport: 'udp',
-      //     community: 'public',
-      //   },
-      // ],
-      uartConfig: [
-        {
-          timeout: 3000,
-          baudRate: 9600,
-          dataBits: 8,
-          stopBits: 1,
-          parity: 'N',
-          uart: isWindows ? 'COM1' : '/dev/ttyS1',
         },
       ],
       deviceConfig: [
@@ -48,16 +30,6 @@ export const defaultValue = (isWindows: boolean, activeGroupKey: string) => {
           autoRequest: 'false',
           onCheckError: 'IGNORE',
           checkAlgorithm: 'NONECHECK',
-        },
-      ],
-      rtuConfig: [
-        {
-          timeout: 3000,
-          baudRate: 9600,
-          dataBits: 8,
-          parity: 'N',
-          stopBits: 1,
-          uart: isWindows ? 'COM1' : '/dev/ttyS1',
         },
       ],
       tcpConfig: [

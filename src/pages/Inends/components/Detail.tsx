@@ -30,7 +30,7 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
      renderText: state => <StateTag state={state} />
     },
     {
-      title: '备注信息',
+      title: '备注',
       dataIndex: 'description',
     },
   ],

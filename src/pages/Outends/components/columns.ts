@@ -19,7 +19,7 @@ export const columns = [
         },
       },
       {
-        title: '备注信息',
+        title: '备注',
         dataIndex: 'description',
       },
     ],

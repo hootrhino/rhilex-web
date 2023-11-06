@@ -36,7 +36,7 @@ export const columns = [
         valueEnum: typeEnum,
       },
       {
-        title: '备注信息',
+        title: '备注',
         dataIndex: 'description',
       },
     ],

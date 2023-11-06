@@ -240,7 +240,7 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
                   }
                 }}
               </ProFormDependency>
-              <ProFormText label="备注信息" name="description" width="xl" />
+              <ProFormText label="备注" name="description" width="xl" />
             </ProForm.Group>
             <ProCodeEditor
               label="规则回调"

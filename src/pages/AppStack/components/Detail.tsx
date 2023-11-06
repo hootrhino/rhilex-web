@@ -55,7 +55,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       valueType: 'code',
     },
     {
-      title: '备注信息',
+      title: '备注',
       dataIndex: 'description',
     },
   ];

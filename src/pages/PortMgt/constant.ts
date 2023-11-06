@@ -1,7 +1,7 @@
 // 接口类型
 export const typeOptions = [
   {
-    label: '串口',
+    label: '系统串口',
     value: 'UART',
   },
 ];

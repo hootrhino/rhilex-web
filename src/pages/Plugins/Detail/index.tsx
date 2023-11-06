@@ -41,9 +41,9 @@ const Detail = () => {
 
     formValues = {
       ...omit(formValues, ['output']),
-      baudRate: Number(formValues.baudRate),
-      dataBits: Number(formValues.dataBits),
-      stopBits: Number(formValues.stopBits),
+      // baudRate: Number(formValues.baudRate),
+      // dataBits: Number(formValues.dataBits),
+      // stopBits: Number(formValues.stopBits),
     };
     const params = {
       uuid: detailConfig.uuid,
@@ -134,18 +134,18 @@ const Detail = () => {
         onCancel: handleOnClose,
       }}
       onOpenChange={(visible) => setDetailConfig({ ...detailConfig, open: visible })}
-      initialValues={
-        detailConfig.name === 'scan'
-          ? {
-              timeout: 3000,
-              baudRate: '9600',
-              dataBits: '8',
-              stopBits: '1',
-              parity: 'N',
-              uart: isWindows ? 'COM1' : '/dev/ttyS1',
-            }
-          : {}
-      }
+      // initialValues={
+      //   detailConfig.name === 'scan'
+      //     ? {
+      //         timeout: 3000,
+      //         baudRate: '9600',
+      //         dataBits: '8',
+      //         stopBits: '1',
+      //         parity: 'N',
+      //         uart: isWindows ? 'COM1' : '/dev/ttyS1',
+      //       }
+      //     : {}
+      // }
     >
       {detailConfig.name === 'ping' && <Ping onLoading={handleOnLoading} />}
       {detailConfig.name === 'scan' && <Scan />}

@@ -213,10 +213,10 @@
     ],
   },
   {
-    path: '/interface',
+    path: '/port',
     name: '接口管理',
     icon: 'control',
-    component: './InterfaceMgt'
+    component: './PortMgt'
   },
   // {
   //   path: '/ai',

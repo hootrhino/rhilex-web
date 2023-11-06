@@ -111,7 +111,7 @@ const baseColumns = [
     ),
   },
   {
-    title: '备注信息',
+    title: '备注',
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => description || '-',
@@ -331,7 +331,7 @@ const ExtendedProtocol = () => {
           description=""
           rules={[{ required: true, message: '请上传可执行包' }]}
         />
-        <ProFormText name="description" label="备注信息" placeholder="请输入备注信息" />
+        <ProFormText name="description" label="备注" placeholder="请输入备注" />
       </ModalForm>
       <Modal
         title={`扩展协议${detailConfig.type === 'detail' ? '详情' : '日志'}`}

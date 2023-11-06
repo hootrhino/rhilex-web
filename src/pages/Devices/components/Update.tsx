@@ -19,7 +19,6 @@ const DefaultListUrl = '/device/list';
 
 const BaseForm = () => {
   const { id } = useParams();
-  const { isWindows } = useModel('useSystem');
   const { activeGroupKey } = useModel('useGroup');
   const [initialValue, setValue] = useState<any>();
 
@@ -45,7 +44,6 @@ const BaseForm = () => {
     try {
       let params = cloneDeep(values);
       const deviceConfigFormat = new Object();
-      let uartConfig = params?.config?.uartConfig?.[0];
       let hostConfig = params?.config?.hostConfig?.[0];
 
       params?.config?.deviceConfig?.forEach((item: any) => {
@@ -61,16 +59,10 @@ const BaseForm = () => {
         const transport = params?.config?.commonConfig?.[0]?.transport;
 
         if (transport === 'rawserial') {
-          uartConfig = {
-            ...params?.config?.uartConfig?.[0],
-          };
           hostConfig = {
             ...initialValue?.config?.hostConfig?.[0],
           };
         } else {
-          uartConfig = {
-            ...initialValue?.config?.uartConfig?.[0],
-          };
           hostConfig = {
             ...params?.config?.hostConfig?.[0],
           };
@@ -85,11 +77,8 @@ const BaseForm = () => {
             ...params?.config?.commonConfig?.[0],
             autoRequest: params?.config?.commonConfig?.[0]?.autoRequest === 'true' ? true : false,
           },
-          snmpConfig: params?.config?.snmpConfig?.[0],
           deviceConfig: deviceConfigFormat,
-          uartConfig,
           hostConfig,
-          rtuConfig: params?.config?.rtuConfig?.[0],
           tcpConfig: params?.config?.tcpConfig?.[0],
           registers: params?.config?.registers?.map((item: Record<string, any>) => ({
             ...item,
@@ -138,7 +127,8 @@ const BaseForm = () => {
     if (id) {
       getDetail();
     } else {
-      const defaultData = defaultValue(isWindows, activeGroupKey);
+      const defaultData = defaultValue(activeGroupKey);
+
       setValue(defaultData);
     }
   }, [id]);

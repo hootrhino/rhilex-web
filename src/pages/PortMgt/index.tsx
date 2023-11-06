@@ -13,7 +13,7 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { AutoComplete, Button, Card, Descriptions, message, Modal } from 'antd';
+import { AutoComplete, Button, Card, Descriptions, message, Modal, Tag } from 'antd';
 import { useRef, useState } from 'react';
 import {
   baudRateEnum,
@@ -99,6 +99,10 @@ const Interface = () => {
       dataIndex: 'name',
     },
     {
+      title: '别名',
+      dataIndex: 'alias',
+    },
+    {
       title: '接口类型',
       dataIndex: 'type',
       valueType: 'select',
@@ -107,8 +111,26 @@ const Interface = () => {
       },
     },
     {
-      title: '别名',
-      dataIndex: 'alias',
+      title: '状态',
+      dataIndex: 'busy',
+      valueEnum: {
+        true: {
+          text: '占用',
+          status: 'warning'
+        },
+        false: {
+          text: '空闲',
+          status: 'success'
+        }
+      }
+    },
+    {
+      title: '占用设备',
+      dataIndex: 'occupyBy',
+      renderText: occupyBy => {
+        console.log(occupyBy);
+        return occupyBy?.uuid
+      }
     },
     {
       title: '接口配置',

@@ -63,7 +63,7 @@ const Inends = () => {
       renderText: state => <StateTag state={state} />
     },
     {
-      title: '信息',
+      title: '备注',
       dataIndex: 'description',
       ellipsis: true,
     },

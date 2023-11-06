@@ -3693,33 +3693,7 @@
                     "type": "string"
                   },
                   "args": {
-                    "oneOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {},
-                        "x-apifox-ignore-properties": [],
-                        "x-apifox-orders": []
-                      },
-                      {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {},
-                          "x-apifox-orders": [],
-                          "x-apifox-ignore-properties": []
-                        }
-                      },
-                      {
-                        "type": "number"
-                      },
-                      {
-                        "type": "boolean"
-                      }
-                    ]
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -3733,6 +3707,11 @@
                   "args"
                 ],
                 "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "uuid": "WEB_TTYD_TERMINAL",
+                "name": "",
+                "args": ""
               }
             }
           }
@@ -3752,33 +3731,10 @@
                       "type": "string"
                     },
                     "data": {
-                      "oneOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "properties": {},
-                          "x-apifox-ignore-properties": [],
-                          "x-apifox-orders": []
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {},
-                            "x-apifox-ignore-properties": [],
-                            "x-apifox-orders": []
-                          }
-                        },
-                        {
-                          "type": "number"
-                        },
-                        {
-                          "type": "boolean"
-                        }
-                      ]
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   },
                   "required": [
@@ -3792,6 +3748,16 @@
                     "data"
                   ],
                   "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
                 }
               }
             }
@@ -8933,9 +8899,41 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "操作成功",
+                      "data": []
+                    }
+                  }
                 }
               }
             }
@@ -8963,9 +8961,41 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "操作成功",
+                      "data": []
+                    }
+                  }
                 }
               }
             }
@@ -10309,41 +10339,64 @@
                         "config": {
                           "type": "object",
                           "properties": {
-                            "timeout": {
+                            "Timeout": {
                               "type": "integer"
                             },
-                            "uart": {
+                            "Uart": {
                               "type": "string"
                             },
-                            "baudRate": {
+                            "BaudRate": {
                               "type": "integer"
                             },
-                            "dataBits": {
+                            "DataBits": {
                               "type": "integer"
                             },
-                            "parity": {
+                            "Parity": {
                               "type": "string"
                             },
-                            "stopBits": {
+                            "StopBits": {
                               "type": "integer"
                             }
                           },
                           "required": [
-                            "timeout",
-                            "uart",
-                            "baudRate",
-                            "dataBits",
-                            "parity",
-                            "stopBits"
+                            "Timeout",
+                            "Uart",
+                            "BaudRate",
+                            "DataBits",
+                            "Parity",
+                            "StopBits"
                           ],
                           "x-apifox-ignore-properties": [],
                           "x-apifox-orders": [
-                            "timeout",
-                            "uart",
-                            "baudRate",
-                            "dataBits",
-                            "parity",
-                            "stopBits"
+                            "Timeout",
+                            "Uart",
+                            "BaudRate",
+                            "DataBits",
+                            "Parity",
+                            "StopBits"
+                          ]
+                        },
+                        "busy": {
+                          "type": "boolean"
+                        },
+                        "occupyBy": {
+                          "type": "object",
+                          "properties": {
+                            "uuid": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "uuid",
+                            "type"
+                          ],
+                          "x-apifox-ignore-properties": [],
+                          "x-apifox-orders": [
+                            "uuid",
+                            "type"
                           ]
                         },
                         "description": {
@@ -10356,6 +10409,8 @@
                         "type",
                         "alias",
                         "config",
+                        "busy",
+                        "occupyBy",
                         "description"
                       ],
                       "x-apifox-ignore-properties": [],
@@ -10365,6 +10420,8 @@
                         "type",
                         "alias",
                         "config",
+                        "busy",
+                        "occupyBy",
                         "description"
                       ]
                     }
@@ -10393,12 +10450,17 @@
                         "type": "UART",
                         "alias": "RS4851(A1B1)",
                         "config": {
-                          "timeout": 3000,
-                          "uart": "/dev/ttyS1",
-                          "baudRate": 9600,
-                          "dataBits": 8,
-                          "parity": "N",
-                          "stopBits": 1
+                          "Timeout": 3000,
+                          "Uart": "/dev/ttyS1",
+                          "BaudRate": 9600,
+                          "DataBits": 8,
+                          "Parity": "N",
+                          "StopBits": 1
+                        },
+                        "busy": false,
+                        "occupyBy": {
+                          "uuid": "",
+                          "type": ""
                         },
                         "description": "RS4851号串口"
                       }
@@ -10512,6 +10574,68 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-122284806-run",
+        "security": []
+      }
+    },
+    "/api/v1/firmware/recoverNew": {
+      "post": {
+        "summary": "恢复出厂",
+        "x-apifox-folder": "系统配置/固件操作",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/固件操作"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "操作成功",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-122519188-run",
         "security": []
       }
     }

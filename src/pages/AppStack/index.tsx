@@ -90,7 +90,7 @@ const AppStack = () => {
       ),
     },
     {
-      title: '描述信息',
+      title: '备注',
       dataIndex: 'description',
       ellipsis: true,
     },

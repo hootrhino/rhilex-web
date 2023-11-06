@@ -166,7 +166,7 @@ const Devices = () => {
       renderText: (state) => renderState(state),
     },
     {
-      title: '信息',
+      title: '备注',
       dataIndex: 'description',
       ellipsis: true,
     },

@@ -7,15 +7,11 @@ export async function postPluginService(
   body: {
     uuid: string;
     name: string;
-    args: string | Record<string, any> | Record<string, any>[] | number | boolean;
+    args: string;
   },
   options?: { [key: string]: any },
 ) {
-  return request<{
-    code: number;
-    msg: string;
-    data: string | Record<string, any> | Record<string, any>[] | number | boolean;
-  }>('/api/v1/plugin/service', {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/plugin/service', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -5,7 +5,7 @@ import { useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
-import { typeEnum } from './columns';
+import { funcEnum, modeEnum, typeEnum } from './columns';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -28,8 +28,9 @@ const EnhancedProDescriptions = ({
 };
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
-  const {groupList} = useModel('useDevice')
-  const { data, run, loading } = useRequest(() => getDevicesDetail({ uuid }), {
+  const { groupList } = useModel('useDevice');
+  const {run: getPort, data: portList} = useModel('usePort');
+  const { data, run: getDetail, loading } = useRequest(() => getDevicesDetail({ uuid }), {
     manual: true,
   });
 
@@ -47,25 +48,19 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: '设备类型',
         dataIndex: 'type',
-        valueEnum: {
-          GENERIC_SNMP: '通用SNMP协议采集',
-          USER_G776: '通用串口DTU',
-          GENERIC_PROTOCOL: '通用串口协议',
-          GENERIC_MODBUS: '通用Modbus Master',
-        },
+        valueEnum: typeEnum
       },
       {
         title: '设备分组',
         dataIndex: 'gid',
-        renderText: value => {
-          const group = groupList?.find(item => item?.uuid === value);
+        renderText: (value) => {
+          const group = groupList?.find((item) => item?.uuid === value);
 
           return group?.name;
-        }
-
+        },
       },
       {
-        title: '备注信息',
+        title: '备注',
         dataIndex: 'description',
       },
     ],
@@ -75,12 +70,6 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         dataIndex: 'frequency',
         hideInDescriptions: deviceType === 'GENERIC_PROTOCOL',
       },
-      {
-        title: '数据标签',
-        dataIndex: 'tag',
-        hideInDescriptions: deviceType !== 'USER_G776',
-      },
-
       {
         title: '通信形式',
         dataIndex: 'transport',
@@ -97,15 +86,6 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         hideInDescriptions: deviceType !== 'GENERIC_PROTOCOL',
       },
       {
-        title: '协议分隔符',
-        dataIndex: 'separator',
-        hideInDescriptions: deviceType !== 'USER_G776',
-        valueEnum: {
-          LF: 'LF',
-          CRLF: 'CRLF',
-        },
-      },
-      {
         title: '是否启动轮询',
         dataIndex: 'autoRequest',
         hideInDescriptions: deviceType === 'GENERIC_PROTOCOL',
@@ -117,133 +97,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         title: '工作模式',
         dataIndex: 'mode',
         hideInDescriptions: deviceType !== 'GENERIC_MODBUS',
-        valueEnum: {
-          RTU: 'RTU',
-          TCP: 'TCP',
-        },
-      },
-    ],
-    // SNMP: [
-    //   {
-    //     title: '主机地址',
-    //     dataIndex: 'target',
-    //     copyable: true,
-    //   },
-    //   {
-    //     title: '主机端口',
-    //     dataIndex: 'port',
-    //   },
-    //   {
-    //     title: '通信形式',
-    //     dataIndex: 'transport',
-    //     valueEnum: { tcp: 'TCP', udp: 'UDP' },
-    //   },
-    //   {
-    //     title: 'Community',
-    //     dataIndex: 'community',
-    //   },
-    //   {
-    //     title: '安全模式',
-    //     dataIndex: 'securityModel',
-    //     valueEnum: new Map([
-    //       [0, '不认证'],
-    //       [3, 'V3 认证'],
-    //     ]),
-    //   },
-    //   {
-    //     title: '用户名',
-    //     dataIndex: 'username',
-    //   },
-    //   {
-    //     title: '消息选项',
-    //     dataIndex: 'snmpV3MsgFlags',
-    //     valueEnum: new Map([
-    //       [0, 'NoAuthNoPriv'],
-    //       [1, 'AuthNoPriv'],
-    //       [2, 'AuthPriv'],
-    //       [3, 'Reportable'],
-    //     ]),
-    //   },
-    //   {
-    //     title: 'SNMP 认证协议',
-    //     dataIndex: 'snmpV3AuthProtocol',
-    //     valueEnum: new Map([
-    //       [1, 'NoAuth'],
-    //       [2, 'MD5'],
-    //       [3, 'SHA'],
-    //       [4, 'SHA224'],
-    //       [5, 'SHA256'],
-    //       [6, 'SHA384'],
-    //       [7, 'SHA512'],
-    //     ]),
-    //   },
-    //   {
-    //     title: 'SNMP 认证密钥',
-    //     dataIndex: 'authenticationPassphrase',
-    //   },
-    //   {
-    //     title: '私有认证协议',
-    //     dataIndex: 'privacyProtocol',
-    //     valueEnum: new Map([
-    //       [1, 'NoPriv'],
-    //       [2, 'DES'],
-    //       [3, 'AES'],
-    //       [4, 'AES192'],
-    //       [5, 'AES256'],
-    //       [6, 'AES192C'],
-    //       [7, 'AES256C'],
-    //     ]),
-    //   },
-    //   {
-    //     title: '私有认证协议密钥',
-    //     dataIndex: 'privacyPassphrase',
-    //   },
-    // ],
-    UART: [
-      {
-        title: '超时时间（毫秒',
-        dataIndex: 'timeout',
-      },
-      {
-        title: '波特率',
-        dataIndex: 'baudRate',
-        valueEnum: new Map([
-          [4800, '4800'],
-          [9600, '9600'],
-          [115200, '115200'],
-        ]),
-      },
-      {
-        title: '数据位',
-        dataIndex: 'dataBits',
-        valueEnum: new Map([
-          [1, '1'],
-          [2, '2'],
-          [3, '3'],
-          [4, '4'],
-          [5, '5'],
-          [6, '6'],
-          [7, '7'],
-          [8, '8'],
-        ]),
-      },
-      {
-        title: '奇偶校验',
-        dataIndex: 'parity',
-        valueEnum: { E: '奇校验', O: '偶校验', N: '不校验' },
-      },
-      {
-        title: '停止位',
-        dataIndex: 'stopBits',
-        valueEnum: new Map([
-          [1, '1'],
-          [1.5, '1.5'],
-          [2, '2'],
-        ]),
-      },
-      {
-        title: '串口路径',
-        dataIndex: 'uart',
+        valueEnum: modeEnum,
       },
     ],
     TCP: [
@@ -282,12 +136,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: 'Modbus 功能',
         dataIndex: 'function',
-        valueEnum: new Map([
-          [1, '01 读线圈状态'],
-          [2, '02 读离散输入状态'],
-          [3, '03 读保持寄存器'],
-          [4, '04 读输入寄存器'],
-        ]),
+        valueEnum: funcEnum,
       },
       {
         title: '从设备 ID',
@@ -304,9 +153,16 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     ],
   };
 
+  const getPortName = () => {
+    const port = portList?.find(item => item?.uuid === data?.config?.portUuid);
+
+    return port ? port.name : '-';
+  }
+
   useEffect(() => {
     if (uuid) {
-      run();
+      getDetail();
+      getPort();
     }
   }, [uuid]);
 
@@ -320,67 +176,51 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       />
       {deviceType && Object.keys(typeEnum).includes(deviceType) && (
         <>
-         <EnhancedProDescriptions
-        title="通用信息"
-        dataSource={data?.config?.commonConfig}
-        columns={columnsMap['COMMON']}
-        loading={loading}
-      />
-      {/* <EnhancedProDescriptions
-        title="SNMP 配置"
-        dataSource={data?.config?.snmpConfig}
-        columns={columnsMap['SNMP']}
-        loading={loading}
-        show={deviceType === 'GENERIC_SNMP'}
-      />
-      <EnhancedProDescriptions
-        title="串口配置"
-        dataSource={data?.config?.uartConfig}
-        columns={columnsMap['UART']}
-        loading={loading}
-        show={
-          deviceType === 'USER_G776' ||
-          (deviceType === 'GENERIC_PROTOCOL' && transport === 'rawserial')
-        }
-      /> */}
-      <EnhancedProDescriptions
-        title="RTU 配置"
-        dataSource={data?.config?.rtuConfig}
-        columns={columnsMap['UART']}
-        loading={loading}
-        show={deviceType === 'GENERIC_MODBUS' && mode === 'RTU'}
-      />
-      <EnhancedProDescriptions
-        title="TCP 配置"
-        dataSource={data?.config?.tcpConfig}
-        columns={columnsMap['TCP']}
-        loading={loading}
-        show={deviceType === 'GENERIC_MODBUS' && mode === 'TCP'}
-      />
-      <EnhancedProDescriptions
-        title="TCP 配置"
-        dataSource={data?.config?.hostConfig}
-        columns={columnsMap['HOST']}
-        loading={loading}
-        show={deviceType === 'GENERIC_PROTOCOL' && transport === 'rawtcp'}
-      />
-      {deviceType === 'GENERIC_MODBUS' && data?.config?.registers?.length > 0 && (
-        <>
-          <ProDescriptions title="寄存器配置" />
-          <ProTable
-            rowKey="id"
-            columns={columnsMap['REGISTERS']}
-            dataSource={data?.config?.registers}
-            search={false}
-            pagination={false}
-            options={false}
+          <EnhancedProDescriptions
+            title="通用信息"
+            dataSource={data?.config?.commonConfig}
+            columns={columnsMap['COMMON']}
             loading={loading}
           />
+          <ProDescriptions
+            column={1}
+            title="串口配置"
+            labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
+          >
+            <ProDescriptions.Item label="系统串口">
+              <a href='/port'>{getPortName()}</a>
+            </ProDescriptions.Item>
+          </ProDescriptions>
+          <EnhancedProDescriptions
+            title="TCP 配置"
+            dataSource={data?.config?.tcpConfig}
+            columns={columnsMap['TCP']}
+            loading={loading}
+            show={deviceType === 'GENERIC_MODBUS' && mode === 'TCP'}
+          />
+          <EnhancedProDescriptions
+            title="TCP 配置"
+            dataSource={data?.config?.hostConfig}
+            columns={columnsMap['HOST']}
+            loading={loading}
+            show={deviceType === 'GENERIC_PROTOCOL' && transport === 'rawtcp'}
+          />
+          {deviceType === 'GENERIC_MODBUS' && data?.config?.registers?.length > 0 && (
+            <>
+              <ProDescriptions title="寄存器配置" />
+              <ProTable
+                rowKey="id"
+                columns={columnsMap['REGISTERS']}
+                dataSource={data?.config?.registers}
+                search={false}
+                pagination={false}
+                options={false}
+                loading={loading}
+              />
+            </>
+          )}
         </>
       )}
-        </>
-      )}
-
     </Drawer>
   );
 };
