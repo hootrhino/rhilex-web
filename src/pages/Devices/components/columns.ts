@@ -1,9 +1,6 @@
-// 通信形式
-export const transportEnum = { rawserial: '自定义串口', rawtcp: '自定义TCP' };
-
 // 模式
 export const modeEnum = {
-  RTU: 'RTU',
+  UART: 'UART',
   TCP: 'TCP',
 };
 
@@ -21,11 +18,9 @@ export const funcEnum = new Map([
 
 // 设备类型
 export const typeEnum = {
-  // GENERIC_SNMP: '通用SNMP协议采集',
-  // USER_G776: '通用串口DTU',
   GENERIC_PROTOCOL: '通用时间片中断串口协议',
   GENERIC_MODBUS: '通用 Modbus Master',
-  GENERIC_AIS: '通用船舶AIS数据解析器',
+  GENERIC_AIS_RECEIVER: '通用船舶 AIS 数据解析器',
 };
 
 // 协议分隔符
@@ -102,306 +97,204 @@ export const columns = [
     valueType: 'dependency',
     name: ['type'],
     columns: ({ type }: any) => {
-      if (type === 'GENERIC_AIS') {
-        // 通用船舶AIS数据解析器
-        return [
-          {
-            title: '配置',
-            valueType: 'group',
-            columns: [
+      if (!['GENERIC_AIS_RECEIVER', 'GENERIC_PROTOCOL', 'GENERIC_MODBUS'].includes(type)) return [];
+
+      return [
+        {
+          title: '通用配置',
+          valueType: 'group',
+          columns: [
+            {
+              valueType: 'formList',
+              dataIndex: ['config', 'commonConfig'],
+              mode: 'single',
+              columns: [
+                {
+                  valueType: 'group',
+                  columns: [
+                    {
+                      title: '重试次数',
+                      dataIndex: 'retryTime',
+                      valueType: 'digit',
+                      required: true,
+                      hideInForm: type !== 'GENERIC_PROTOCOL',
+                    },
+                    {
+                      title: '采集频率（毫秒）',
+                      dataIndex: 'frequency',
+                      valueType: 'digit',
+                      required: true,
+                      hideInForm: type !== 'GENERIC_MODBUS',
+                    },
+                    {
+                      title: '是否启动轮询',
+                      dataIndex: 'autoRequest',
+                      valueType: 'segmented',
+                      hideInForm: type !== 'GENERIC_MODBUS',
+                    },
+                    {
+                      title: '是否解析 AIS 报文',
+                      dataIndex: 'parseAis',
+                      valueType: 'segmented',
+                      hideInForm: type !== 'GENERIC_AIS_RECEIVER',
+                    },
+                    {
+                      title: '工作模式',
+                      dataIndex: 'mode',
+                      valueType: 'select',
+                      required: true,
+                      valueEnum: modeEnum,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          valueType: 'dependency',
+          name: ['config', 'commonConfig'],
+          columns: ({ config }: any) => {
+            const deviceMode = config?.commonConfig[0]?.mode;
+
+            return [
               {
-                title: '服务地址',
-                dataIndex: ['config', 'host'],
-                required: true,
-              },
-              {
-                title: '服务端口',
-                dataIndex: ['config', 'port'],
-                valueType: 'digit',
-                required: true,
-              },
-            ],
-          },
-        ];
-      } else if (type === 'GENERIC_PROTOCOL') {
-        // 通用时间片中断串口协议
-        return [
-          {
-            title: '通用配置',
-            valueType: 'group',
-            columns: [
-              {
-                valueType: 'formList',
-                dataIndex: ['config', 'commonConfig'],
-                mode: 'single',
+                title: '串口配置',
+                valueType: 'group',
+                hideInForm: deviceMode !== 'UART',
                 columns: [
                   {
-                    valueType: 'group',
+                    title: '系统串口',
+                    dataIndex: ['config', 'portUuid'],
+                    valueType: 'portSelect',
+                    required: true,
+                  },
+                ],
+              },
+              {
+                title: 'TCP 配置',
+                valueType: 'group',
+                hideInForm: deviceMode !== 'TCP',
+                columns: [
+                  {
+                    valueType: 'formList',
+                    dataIndex: ['config', 'hostConfig'],
+                    mode: 'single',
                     columns: [
                       {
-                        title: '通信形式',
-                        dataIndex: 'transport',
-                        valueType: 'select',
-                        required: true,
-                        valueEnum: transportEnum,
-                      },
-                      {
-                        title: '重试次数',
-                        dataIndex: 'retryTime',
-                        valueType: 'digit',
-                        required: true,
+                        valueType: 'group',
+                        columns: [
+                          {
+                            title: '超时时间（毫秒）',
+                            dataIndex: 'timeout',
+                            valueType: 'digit',
+                            required: true,
+                          },
+                          {
+                            title: '服务地址',
+                            dataIndex: 'host',
+                            required: true,
+                          },
+                          {
+                            title: '服务端口',
+                            dataIndex: 'port',
+                            valueType: 'digit',
+                            required: true,
+                          },
+                        ],
                       },
                     ],
                   },
                 ],
               },
-            ],
+            ];
           },
-          {
-            valueType: 'dependency',
-            name: ['config', 'commonConfig', 'transport'],
-            columns: ({ config }: any) => {
-              const transport = config?.commonConfig[0]?.transport;
-
-              return [
+        },
+        {
+          title: '寄存器配置',
+          valueType: 'group',
+          hideInForm: type !== 'GENERIC_MODBUS',
+          columns: [
+            {
+              valueType: 'formList',
+              dataIndex: ['config', 'registers'],
+              mode: 'multiple',
+              columns: [
                 {
-                  title: '串口配置',
                   valueType: 'group',
-                  hideInForm: transport !== 'rawserial',
                   columns: [
                     {
-                      title: '系统串口',
-                      dataIndex: ['config', 'portUuid'],
-                      valueType: 'portSelect',
+                      title: '数据标签',
+                      dataIndex: 'tag',
+                      width: 'md',
                       required: true,
                     },
-                  ],
-                },
-                {
-                  title: 'TCP 配置',
-                  valueType: 'group',
-                  hideInForm: transport !== 'rawtcp',
-                  columns: [
                     {
-                      valueType: 'formList',
-                      dataIndex: ['config', 'hostConfig'],
-                      mode: 'single',
-                      columns: [
-                        {
-                          valueType: 'group',
-                          columns: [
-                            {
-                              title: '超时时间（毫秒）',
-                              dataIndex: 'timeout',
-                              valueType: 'digit',
-                              required: true,
-                            },
-                            {
-                              title: '服务地址',
-                              dataIndex: 'host',
-                              required: true,
-                            },
-                            {
-                              title: '服务端口',
-                              dataIndex: 'port',
-                              valueType: 'digit',
-                              required: true,
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ];
-            },
-          },
-        ];
-      } else if (type === 'GENERIC_MODBUS') {
-        // 通用 Modbus Master
-        return [
-          {
-            title: '通用配置',
-            valueType: 'group',
-            columns: [
-              {
-                valueType: 'formList',
-                dataIndex: ['config', 'commonConfig'],
-                mode: 'single',
-                columns: [
-                  {
-                    valueType: 'group',
-                    columns: [
-                      {
-                        title: '采集频率（毫秒）',
-                        dataIndex: 'frequency',
-                        valueType: 'digit',
-                        required: true,
-                      },
-                      {
-                        title: '是否启动轮询',
-                        dataIndex: 'autoRequest',
-                        valueType: 'segmented',
-                      },
-                      {
-                        title: '超时时间（毫秒）',
-                        dataIndex: 'timeout',
-                        valueType: 'digit',
-                        required: true,
-                      },
-                      {
-                        title: '工作模式',
-                        dataIndex: 'mode',
-                        valueType: 'select',
-                        required: true,
-                        valueEnum: modeEnum,
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            valueType: 'dependency',
-            name: ['config', 'commonConfig', 'mode'],
-            columns: ({ config }: any) => {
-              const deviceMode = config?.commonConfig[0]?.mode;
-
-              return [
-                {
-                  title: '串口配置',
-                  valueType: 'group',
-                  hideInForm: deviceMode !== 'RTU',
-                  columns: [
-                    {
-                      title: '系统串口',
-                      dataIndex: ['config', 'portUuid'],
-                      valueType: 'portSelect',
+                      title: '数据别名',
+                      dataIndex: 'alias',
+                      width: 'md',
                       required: true,
                     },
-                  ],
-                },
-                {
-                  title: 'TCP 配置',
-                  valueType: 'group',
-                  hideInForm: deviceMode !== 'TCP',
-                  columns: [
                     {
-                      valueType: 'formList',
-                      dataIndex: ['config', 'tcpConfig'],
-                      mode: 'single',
-                      columns: [
+                      title: 'Modbus 功能',
+                      dataIndex: 'function',
+                      valueType: 'select',
+                      width: 'md',
+                      required: true,
+                      valueEnum: funcEnum,
+                    },
+                    {
+                      title: '从设备 ID',
+                      dataIndex: 'slaverId',
+                      valueType: 'digit',
+                      width: 'xs',
+                      required: true,
+                      rules: [
                         {
-                          valueType: 'group',
-                          columns: [
-                            {
-                              title: '服务地址',
-                              dataIndex: 'host',
-                              required: true,
-                            },
-                            {
-                              title: '服务端口',
-                              dataIndex: 'port',
-                              valueType: 'digit',
-                              required: true,
-                            },
-                          ],
+                          max: 255,
+                          type: 'integer',
+                          message: '从设备 ID 在 1-255 之间',
+                        },
+                        {
+                          min: 1,
+                          type: 'integer',
+                          message: '从设备 ID 在 1-255 之间',
+                        },
+                      ],
+                    },
+                    {
+                      title: '起始地址',
+                      dataIndex: 'address',
+                      valueType: 'digit',
+                      width: 'xs',
+                      required: true,
+                    },
+                    {
+                      title: '读取数量',
+                      dataIndex: 'quantity',
+                      valueType: 'digit',
+                      width: 'xs',
+                      required: true,
+                      rules: [
+                        {
+                          min: 1,
+                          type: 'integer',
+                          message: '读取数量在 1-255 之间',
+                        },
+                        {
+                          max: 255,
+                          type: 'integer',
+                          message: '读取数量在 1-255 之间',
                         },
                       ],
                     },
                   ],
                 },
-                {
-                  title: '寄存器配置',
-                  valueType: 'group',
-                  columns: [
-                    {
-                      valueType: 'formList',
-                      dataIndex: ['config', 'registers'],
-                      mode: 'multiple',
-                      columns: [
-                        {
-                          valueType: 'group',
-                          columns: [
-                            {
-                              title: '数据标签',
-                              dataIndex: 'tag',
-                              width: 'md',
-                              required: true,
-                            },
-                            {
-                              title: '数据别名',
-                              dataIndex: 'alias',
-                              width: 'md',
-                              required: true,
-                            },
-                            {
-                              title: 'Modbus 功能',
-                              dataIndex: 'function',
-                              valueType: 'select',
-                              width: 'md',
-                              required: true,
-                              valueEnum: funcEnum,
-                            },
-                            {
-                              title: '从设备 ID',
-                              dataIndex: 'slaverId',
-                              valueType: 'digit',
-                              width: 'xs',
-                              required: true,
-                              rules: [
-                                {
-                                  max: 255,
-                                  type: 'integer',
-                                  message: '从设备 ID 在 1-255 之间',
-                                },
-                                {
-                                  min: 1,
-                                  type: 'integer',
-                                  message: '从设备 ID 在 1-255 之间',
-                                },
-                              ],
-                            },
-                            {
-                              title: '起始地址',
-                              dataIndex: 'address',
-                              valueType: 'digit',
-                              width: 'xs',
-                              required: true,
-                            },
-                            {
-                              title: '读取数量',
-                              dataIndex: 'quantity',
-                              valueType: 'digit',
-                              width: 'xs',
-                              required: true,
-                              rules: [
-                                {
-                                  min: 1,
-                                  type: 'integer',
-                                  message: '读取数量在 1-255 之间',
-                                },
-                                {
-                                  max: 255,
-                                  type: 'integer',
-                                  message: '读取数量在 1-255 之间',
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ];
+              ],
             },
-          },
-        ];
-      } else {
-        return [];
-      }
+          ],
+        },
+      ];
     },
   },
 ];

@@ -1,4 +1,8 @@
-import { getDevicesGroup, getDevicesListByGroup } from '@/services/rulex/shebeiguanli';
+import {
+  getDevicesDetail,
+  getDevicesGroup,
+  getDevicesListByGroup,
+} from '@/services/rulex/shebeiguanli';
 import { useRequest } from 'umi';
 
 const useDevice = () => {
@@ -10,7 +14,16 @@ const useDevice = () => {
     getDevicesListByGroup(params),
   );
 
-  return { data, run, groupList, getGroupList };
+  // 设备详情
+  const {
+    data: detail,
+    run: getDetail,
+    loading: detailLoading,
+  } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
+    manual: true,
+  });
+
+  return { data, detail, run, groupList, getGroupList, getDetail, detailLoading };
 };
 
 export default useDevice;

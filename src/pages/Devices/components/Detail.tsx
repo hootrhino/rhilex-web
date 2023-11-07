@@ -1,11 +1,11 @@
-import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
-import { ProDescriptions, ProTable } from '@ant-design/pro-components';
-import { useModel, useRequest } from '@umijs/max';
+import { ProDescriptions, ProSkeleton, ProTable } from '@ant-design/pro-components';
+import { useModel } from '@umijs/max';
 import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { funcEnum, modeEnum, typeEnum } from './columns';
+import StateTag from '@/components/StateTag';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -19,24 +19,17 @@ const EnhancedProDescriptions = ({
   labelStyle = { justifyContent: 'flex-end', minWidth: 130 },
   loading = false,
   column = 3,
-  show = true,
   ...props
 }: EnhancedProDescriptionsProps) => {
-  return (
-    show && <ProDescriptions labelStyle={labelStyle} loading={loading} column={column} {...props} />
-  );
+  return <ProDescriptions labelStyle={labelStyle} loading={loading} column={column} {...props} />;
 };
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
-  const { groupList } = useModel('useDevice');
-  const {run: getPort, data: portList} = useModel('usePort');
-  const { data, run: getDetail, loading } = useRequest(() => getDevicesDetail({ uuid }), {
-    manual: true,
-  });
+  const { groupList, detailLoading, detail, getDetail } = useModel('useDevice');
+  const { run: getPort, data: portList } = useModel('usePort');
 
-  const deviceType = data?.type;
-  const mode = data?.config?.commonConfig?.mode;
-  const transport = data?.config?.commonConfig?.transport;
+  const deviceType = detail?.type;
+  const mode = detail?.config?.commonConfig?.mode;
 
   const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]> = {
     BASE: [
@@ -48,7 +41,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: '设备类型',
         dataIndex: 'type',
-        valueEnum: typeEnum
+        valueEnum: typeEnum,
       },
       {
         title: '设备分组',
@@ -60,54 +53,46 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         },
       },
       {
+        title: '设备状态',
+        dataIndex: 'state',
+        renderText: state => <StateTag state={state} />
+      },
+      {
         title: '备注',
         dataIndex: 'description',
       },
     ],
     COMMON: [
       {
-        title: '采集频率（毫秒）',
-        dataIndex: 'frequency',
-        hideInDescriptions: deviceType === 'GENERIC_PROTOCOL',
-      },
-      {
-        title: '通信形式',
-        dataIndex: 'transport',
-        hideInDescriptions: deviceType !== 'GENERIC_PROTOCOL',
-      },
-      {
-        title: '超时时间（毫秒）',
-        dataIndex: 'timeout',
-        hideInDescriptions: deviceType !== 'GENERIC_MODBUS',
-      },
-      {
         title: '重试次数',
         dataIndex: 'retryTime',
         hideInDescriptions: deviceType !== 'GENERIC_PROTOCOL',
       },
       {
+        title: '采集频率（毫秒）',
+        dataIndex: 'frequency',
+        hideInDescriptions: deviceType !== 'GENERIC_MODBUS',
+      },
+      {
         title: '是否启动轮询',
         dataIndex: 'autoRequest',
-        hideInDescriptions: deviceType === 'GENERIC_PROTOCOL',
+        hideInDescriptions: deviceType !== 'GENERIC_MODBUS',
         renderText: (autoRequest) => (
           <Tag color={autoRequest ? 'success' : 'error'}>{autoRequest ? '开启' : '关闭'}</Tag>
         ),
       },
       {
+        title: '是否解析 AIS 报文',
+        dataIndex: 'parseAis',
+        hideInDescriptions: deviceType !== 'GENERIC_AIS_RECEIVER',
+        renderText: (parseAis) => (
+          <Tag color={parseAis ? 'process' : 'default'}>{parseAis ? '解析' : '不解析'}</Tag>
+        ),
+      },
+      {
         title: '工作模式',
         dataIndex: 'mode',
-        hideInDescriptions: deviceType !== 'GENERIC_MODBUS',
         valueEnum: modeEnum,
-      },
-    ],
-    TCP: [
-      {
-        title: '服务地址',
-        dataIndex: 'host',
-      },
-      {
-        title: '服务端口',
-        dataIndex: 'port',
       },
     ],
     HOST: [
@@ -154,70 +139,70 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
   };
 
   const getPortName = () => {
-    const port = portList?.find(item => item?.uuid === data?.config?.portUuid);
+    const port = portList?.find((item) => item?.uuid === detail?.config?.portUuid);
 
     return port ? port.name : '-';
-  }
+  };
 
   useEffect(() => {
     if (uuid) {
-      getDetail();
+      getDetail({ uuid });
       getPort();
     }
   }, [uuid]);
 
   return (
     <Drawer title="设备详情" placement="right" width="50%" {...props}>
-      <EnhancedProDescriptions
-        title="基本信息"
-        dataSource={omit(data, 'config')}
-        columns={columnsMap['BASE']}
-        loading={loading}
-      />
-      {deviceType && Object.keys(typeEnum).includes(deviceType) && (
+      {detailLoading ? (
+        <ProSkeleton type="descriptions" />
+      ) : (
         <>
           <EnhancedProDescriptions
-            title="通用信息"
-            dataSource={data?.config?.commonConfig}
-            columns={columnsMap['COMMON']}
-            loading={loading}
+            title="基本信息"
+            dataSource={omit(detail, 'config')}
+            columns={columnsMap['BASE']}
+            loading={detailLoading}
           />
-          <ProDescriptions
-            column={1}
-            title="串口配置"
-            labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
-          >
-            <ProDescriptions.Item label="系统串口">
-              <a href='/port'>{getPortName()}</a>
-            </ProDescriptions.Item>
-          </ProDescriptions>
-          <EnhancedProDescriptions
-            title="TCP 配置"
-            dataSource={data?.config?.tcpConfig}
-            columns={columnsMap['TCP']}
-            loading={loading}
-            show={deviceType === 'GENERIC_MODBUS' && mode === 'TCP'}
-          />
-          <EnhancedProDescriptions
-            title="TCP 配置"
-            dataSource={data?.config?.hostConfig}
-            columns={columnsMap['HOST']}
-            loading={loading}
-            show={deviceType === 'GENERIC_PROTOCOL' && transport === 'rawtcp'}
-          />
-          {deviceType === 'GENERIC_MODBUS' && data?.config?.registers?.length > 0 && (
+          {deviceType && Object.keys(typeEnum).includes(deviceType) && (
             <>
-              <ProDescriptions title="寄存器配置" />
-              <ProTable
-                rowKey="id"
-                columns={columnsMap['REGISTERS']}
-                dataSource={data?.config?.registers}
-                search={false}
-                pagination={false}
-                options={false}
-                loading={loading}
+            <EnhancedProDescriptions
+              title="通用信息"
+              dataSource={detail?.config?.commonConfig}
+              columns={columnsMap['COMMON']}
+            />
+            {mode === 'UART' && (
+              <ProDescriptions
+                column={1}
+                title="串口配置"
+                labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
+              >
+                <ProDescriptions.Item label="系统串口">
+                  <a href="/port">{getPortName()}</a>
+                </ProDescriptions.Item>
+              </ProDescriptions>
+            )}
+
+            {mode === 'TCP' && (
+              <EnhancedProDescriptions
+                title="TCP 配置"
+                dataSource={detail?.config?.hostConfig}
+                columns={columnsMap['HOST']}
               />
-            </>
+            )}
+            {deviceType === 'GENERIC_MODBUS' && detail?.config?.registers?.length > 0 && (
+              <>
+                <ProDescriptions title="寄存器配置" />
+                <ProTable
+                  rowKey="id"
+                  columns={columnsMap['REGISTERS']}
+                  dataSource={detail?.config?.registers}
+                  search={false}
+                  pagination={false}
+                  options={false}
+                />
+              </>
+            )}
+          </>
           )}
         </>
       )}

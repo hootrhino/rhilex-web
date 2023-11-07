@@ -1,12 +1,4 @@
-import {
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-  DeleteOutlined,
-  EditOutlined,
-  FolderOpenOutlined,
-  MinusCircleOutlined,
-  PlusOutlined,
-} from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, FolderOpenOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -16,13 +8,15 @@ import {
   ProList,
   ProTable,
 } from '@ant-design/pro-components';
-import { Button, Popconfirm, Space, Tag, Tooltip } from 'antd';
+import { Button, Popconfirm, Space, Tooltip } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
 import { message } from '@/components/PopupHack';
+import StateTag from '@/components/StateTag';
 import type { DeviceGroupItem } from '@/models/useGroup';
 import { deleteDevices } from '@/services/rulex/shebeiguanli';
 import { history, useModel, useRequest } from '@umijs/max';
+import { typeEnum } from './components/columns';
 import Detail from './components/Detail';
 
 export type DeviceItem = {
@@ -117,20 +111,6 @@ const Devices = () => {
     },
   });
 
-  const renderState = (state: number) => {
-    const valueEnum = {
-      0: { text: '停止', color: 'default', icon: <MinusCircleOutlined /> },
-      1: { text: '启用', color: 'success', icon: <CheckCircleOutlined /> },
-      2: { text: '故障', color: 'error', icon: <CloseCircleOutlined /> },
-    };
-
-    return (
-      <Tag icon={valueEnum[state].icon} color={valueEnum[state].color}>
-        {valueEnum[state].text}
-      </Tag>
-    );
-  };
-
   const columns: ProColumns<DeviceItem>[] = [
     {
       title: 'UUID',
@@ -146,23 +126,13 @@ const Devices = () => {
     {
       title: '类型',
       dataIndex: 'type',
-      valueEnum: {
-        GENERIC_SNMP: '通用SNMP协议采集',
-        USER_G776: '通用串口DTU',
-        GENERIC_PROTOCOL: '通用串口协议',
-        GENERIC_MODBUS: '通用Modbus Master',
-      },
+      valueEnum: typeEnum,
     },
     {
       title: '状态',
       dataIndex: 'state',
       width: 120,
-      valueEnum: {
-        0: { text: '停止', status: 'Default' },
-        1: { text: '启用', status: 'Success' },
-        2: { text: '故障', status: 'Error' },
-      },
-      renderText: (state) => renderState(state),
+      renderText: (state) => <StateTag state={state} />,
     },
     {
       title: '备注',
@@ -304,7 +274,7 @@ const Devices = () => {
             <ProTable
               rowKey="uuid"
               columns={columns}
-              dataSource={deviceList}
+              dataSource={deviceList as DeviceItem[]}
               search={false}
               pagination={false}
               toolBarRender={() => [
