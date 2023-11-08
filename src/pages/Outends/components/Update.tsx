@@ -1,53 +1,51 @@
 import { message } from '@/components/PopupHack';
 import SchemaForm from '@/components/SchemaForm';
 
-import { getOutends, postOutends, putOutends } from '@/services/rulex/shuchuziyuanguanli';
+import { getOutendsDetail, postOutends, putOutends } from '@/services/rulex/shuchuziyuanguanli';
 
+import { ProSkeleton } from '@ant-design/pro-components';
+import { pick } from 'lodash';
 import random from 'lodash/random';
 import { useEffect, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { columns } from './columns';
+import { defaultMongoConfig, defaultMqttConfig, defaultUdpConfig } from './initialValue';
 
-type Config = {
-  host?: string;
-  port?: number;
-  clientId?: string;
-  username?: string;
-  password?: string;
-  productId?: string;
-  deviceName?: string;
-  [key: string]: any;
-};
+// type Config = {
+//   host?: string;
+//   port?: number;
+//   clientId?: string;
+//   username?: string;
+//   password?: string;
+//   productId?: string;
+//   deviceName?: string;
+//   timeout?: number;
+//   [key: string]: any;
+// };
 
-type UpdateFormItem<T = any> = {
-  type: string;
-  name: string;
-  description?: string;
-  config?: T;
-  uuid?: string;
-};
+// type UpdateFormItem<T = any> = {
+//   type: string;
+//   name: string;
+//   description?: string;
+//   config?: T;
+//   uuid?: string;
+// };
 
 const DefaultListUrl = '/outends/list';
 
 const UpdateForm = () => {
   const { id } = useParams();
   const randomNumber = random(1000, 9999);
-  const [initialValue, setValue] = useState<UpdateFormItem<Config[]>>({
-    name: '',
-    type: 'MONGO_SINGLE',
-    config: [
-      {
-        mongoUrl: 'mongodb://root:root@127.0.0.1:27017/?connect=direct',
-        database: 'rulexdb',
-        collection: 'rulex',
-      },
-    ],
-  });
+  const [initialValue, setValue] = useState<any>();
+  const [formLoading, setLoading] = useState<boolean>(true);
 
   // 获取详情
-  const { run: getDetail } = useRequest(() => getOutends({ params: { uuid: id } }), {
+  const {
+    run: getDetail,
+    data: detail,
+    loading: detailLoading,
+  } = useRequest((params: API.getOutendsDetailParams) => getOutendsDetail(params), {
     manual: true,
-    onSuccess: (res: any) => setValue({ ...res, config: [res?.config] }),
   });
 
   // 新建
@@ -68,12 +66,37 @@ const UpdateForm = () => {
     },
   });
 
-  const handleOnFinish = async (values: any) => {
+  const handleOnFinish = async ({ config, ...values }: any) => {
     try {
-      const params = {
+      let params = {
         ...values,
-        config: values?.config?.[0],
       };
+
+      if (values?.type === 'MONGO_SINGLE') {
+        params = {
+          ...params,
+          config: {
+            ...pick(config?.[0], ['mongoUrl', 'database', 'collection']),
+          },
+        };
+      }
+      if (values?.type === 'MQTT') {
+        params = {
+          ...params,
+          config: {
+            ...pick(config?.[0], ['port', 'host', 'clientId', 'pubTopic', 'username', 'password']),
+          },
+        };
+      }
+      if (values?.type === 'UDP_TARGET') {
+        params = {
+          ...params,
+          config: {
+            ...pick(config?.[0], ['port', 'host', 'timeout']),
+          },
+        };
+      }
+
       if (id) {
         update({ ...params, uuid: id } as any);
       } else {
@@ -87,12 +110,38 @@ const UpdateForm = () => {
   };
 
   useEffect(() => {
+    if (detail) {
+      setValue({
+        ...detail,
+        config: [
+          {
+            ...detail?.config,
+          },
+        ],
+      });
+    } else {
+      setValue({
+        type: 'MONGO_SINGLE',
+        config: defaultMongoConfig,
+      });
+    }
+  }, [detail]);
+
+  useEffect(() => {
     if (id) {
-      getDetail();
+      getDetail({ uuid: id });
     }
   }, [id]);
 
-  return (
+  useEffect(() => {
+    if (!detailLoading) {
+      setLoading(false);
+    }
+  }, [detailLoading]);
+
+  return formLoading ? (
+    <ProSkeleton />
+  ) : (
     <SchemaForm
       title={id ? '编辑目标' : '新建目标'}
       loading={addLoading || updateLoading}
@@ -103,24 +152,17 @@ const UpdateForm = () => {
       onValuesChange={(changedValue) => {
         if (changedValue?.type === 'UDP_TARGET') {
           setValue({
-            ...initialValue,
-            type: changedValue?.type,
-            config: [{ ...initialValue?.config?.[0], port: 2599, host: '127.0.0.1' }],
+            config: detail?.type === 'UDP_TARGET' ? [detail?.config] : defaultUdpConfig,
           });
         }
         if (changedValue?.type === 'MQTT') {
           setValue({
-            ...initialValue,
-            type: changedValue?.type,
-            config: [
-              {
-                ...initialValue?.config?.[0],
-                port: 1883,
-                host: '127.0.0.1',
-                clientId: `eekit${randomNumber}`,
-                pubTopic: `eekit${randomNumber}`,
-              },
-            ],
+            config: detail?.type === 'MQTT' ? [detail?.config] : defaultMqttConfig(randomNumber),
+          });
+        }
+        if (changedValue?.type === 'MONGO_SINGLE') {
+          setValue({
+            config: detail?.type === 'MONGO_SINGLE' ? [detail?.config] : defaultMongoConfig,
           });
         }
       }}
