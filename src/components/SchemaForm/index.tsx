@@ -11,11 +11,9 @@ import {
 } from '@ant-design/pro-components';
 
 import useGoBack from '@/hooks/useGoBack';
-import { getOsUarts } from '@/services/rulex/xitongshuju';
 import { FooterToolbar } from '@ant-design/pro-components';
-import { AutoComplete, Button, ConfigProvider, Popconfirm, Segmented, Space } from 'antd';
+import { Button, ConfigProvider, Popconfirm, Segmented, Space } from 'antd';
 import omit from 'lodash/omit';
-import { useRequest } from 'umi';
 
 import { useModel } from '@umijs/max';
 import LuaEditor from '../LuaEditor';
@@ -106,14 +104,6 @@ const SchemaForm = ({
   const { groupList } = useModel('useDevice');
   const { data: portList, run: getPort } = useModel('usePort');
 
-  const { data: uartOptions } = useRequest(() => getOsUarts(), {
-    formatResult: (res) =>
-      res?.data?.map((item) => ({
-        value: item.port,
-        label: item.alias,
-      })),
-  });
-
   const customizeValueType = {
     segmented: {
       renderFormItem: (_: any, props: any) => (
@@ -137,16 +127,6 @@ const SchemaForm = ({
             {...props?.fieldProps}
           />
         </ConfigProvider>
-      ),
-    },
-    autoComplete: {
-      renderFormItem: (_: any, props: any) => (
-        <AutoComplete
-          className="w-[440px]"
-          options={uartOptions}
-          placeholder="请输入本地系统的串口路径"
-          {...props?.fieldProps}
-        />
       ),
     },
     luaCode: {

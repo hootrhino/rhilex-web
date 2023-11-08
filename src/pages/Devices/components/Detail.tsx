@@ -1,11 +1,11 @@
+import StateTag from '@/components/StateTag';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions, ProSkeleton, ProTable } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
+import { history, useModel } from '@umijs/max';
 import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { funcEnum, modeEnum, typeEnum } from './columns';
-import StateTag from '@/components/StateTag';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -25,8 +25,13 @@ const EnhancedProDescriptions = ({
 };
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
-  const { groupList, detailLoading, detail, getDetail } = useModel('useDevice');
-  const { run: getPort, data: portList } = useModel('usePort');
+  const { groupList, detailLoading, detail, getDetail: getDeviceDetail } = useModel('useDevice');
+  const {
+    run: getPort,
+    data: portList,
+    setDetailConfig,
+    getDetail: getPortDetail,
+  } = useModel('usePort');
 
   const deviceType = detail?.type;
   const mode = detail?.config?.commonConfig?.mode;
@@ -55,7 +60,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: '设备状态',
         dataIndex: 'state',
-        renderText: state => <StateTag state={state} />
+        renderText: (state) => <StateTag state={state} />,
       },
       {
         title: '备注',
@@ -146,7 +151,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
 
   useEffect(() => {
     if (uuid) {
-      getDetail({ uuid });
+      getDeviceDetail({ uuid });
       getPort();
     }
   }, [uuid]);
@@ -165,44 +170,53 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
           />
           {deviceType && Object.keys(typeEnum).includes(deviceType) && (
             <>
-            <EnhancedProDescriptions
-              title="通用信息"
-              dataSource={detail?.config?.commonConfig}
-              columns={columnsMap['COMMON']}
-            />
-            {mode === 'UART' && (
-              <ProDescriptions
-                column={1}
-                title="串口配置"
-                labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
-              >
-                <ProDescriptions.Item label="系统串口">
-                  <a href="/port">{getPortName()}</a>
-                </ProDescriptions.Item>
-              </ProDescriptions>
-            )}
-
-            {mode === 'TCP' && (
               <EnhancedProDescriptions
-                title="TCP 配置"
-                dataSource={detail?.config?.hostConfig}
-                columns={columnsMap['HOST']}
+                title="通用信息"
+                dataSource={detail?.config?.commonConfig}
+                columns={columnsMap['COMMON']}
               />
-            )}
-            {deviceType === 'GENERIC_MODBUS' && detail?.config?.registers?.length > 0 && (
-              <>
-                <ProDescriptions title="寄存器配置" />
-                <ProTable
-                  rowKey="id"
-                  columns={columnsMap['REGISTERS']}
-                  dataSource={detail?.config?.registers}
-                  search={false}
-                  pagination={false}
-                  options={false}
+              {mode === 'UART' && (
+                <ProDescriptions
+                  column={1}
+                  title="串口配置"
+                  labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
+                >
+                  <ProDescriptions.Item label="系统串口">
+                    <a
+                      onClick={() => {
+                        const portId = detail?.config?.portUuid;
+                        history.push('/port');
+                        setDetailConfig({ open: true, uuid: portId });
+                        getPortDetail({ uuid: portId });
+                      }}
+                    >
+                      {getPortName()}
+                    </a>
+                  </ProDescriptions.Item>
+                </ProDescriptions>
+              )}
+
+              {mode === 'TCP' && (
+                <EnhancedProDescriptions
+                  title="TCP 配置"
+                  dataSource={detail?.config?.hostConfig}
+                  columns={columnsMap['HOST']}
                 />
-              </>
-            )}
-          </>
+              )}
+              {deviceType === 'GENERIC_MODBUS' && detail?.config?.registers?.length > 0 && (
+                <>
+                  <ProDescriptions title="寄存器配置" />
+                  <ProTable
+                    rowKey="id"
+                    columns={columnsMap['REGISTERS']}
+                    dataSource={detail?.config?.registers}
+                    search={false}
+                    pagination={false}
+                    options={false}
+                  />
+                </>
+              )}
+            </>
           )}
         </>
       )}

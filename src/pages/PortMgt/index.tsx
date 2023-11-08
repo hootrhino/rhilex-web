@@ -1,4 +1,4 @@
-import { getHwifaceDetail, getHwifaceList, postHwifaceUpdate } from '@/services/rulex/jiekouguanli';
+import { getHwifaceList, postHwifaceUpdate } from '@/services/rulex/jiekouguanli';
 import { getOsUarts } from '@/services/rulex/xitongshuju';
 import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -12,16 +12,10 @@ import {
   ProFormText,
   ProTable,
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
-import { AutoComplete, Button, Card, Descriptions, message, Modal, Tag } from 'antd';
-import { useRef, useState } from 'react';
-import {
-  baudRateEnum,
-  dataBitsEnum,
-  parityEnum,
-  stopBitsEnum,
-} from './constant';
-import { typeOptions } from './constant';
+import { useModel, useRequest } from '@umijs/max';
+import { AutoComplete, Button, Card, Descriptions, message, Modal } from 'antd';
+import { useEffect, useRef, useState } from 'react';
+import { baudRateEnum, dataBitsEnum, parityEnum, stopBitsEnum, typeOptions } from './constant';
 
 type InterfaceItem = {
   uuid?: string;
@@ -52,10 +46,7 @@ const Interface = () => {
   const actionRef = useRef<ActionType>();
   const formRef = useRef<ProFormInstance>();
   const [open, setOpen] = useState<boolean>(false);
-  const [detailConfig, setDetailConfig] = useState<{ open: boolean; uuid: string }>({
-    open: false,
-    uuid: '',
-  });
+  const { detailConfig, setDetailConfig, detail, getDetail } = useModel('usePort');
 
   // 获取串口配置
   const { data: uartOptions } = useRequest(() => getOsUarts(), {
@@ -65,17 +56,6 @@ const Interface = () => {
         label: item.alias,
       })),
   });
-
-  // 详情
-  const { run: getDetail, data: detail } = useRequest(
-    (params: API.getHwifaceDetailParams) => getHwifaceDetail(params),
-    {
-      manual: true,
-      onSuccess: (data) => {
-        formRef.current?.setFieldsValue({ ...data, config: [data?.config] });
-      },
-    },
-  );
 
   // 更新接口配置
   const handleOnFinish = async ({ config }: InterfaceFormParams) => {
@@ -116,21 +96,20 @@ const Interface = () => {
       valueEnum: {
         true: {
           text: '占用',
-          status: 'warning'
+          status: 'warning',
         },
         false: {
           text: '空闲',
-          status: 'success'
-        }
-      }
+          status: 'success',
+        },
+      },
     },
     {
       title: '占用设备',
       dataIndex: 'occupyBy',
-      renderText: occupyBy => {
-        console.log(occupyBy);
-        return occupyBy?.uuid
-      }
+      renderText: (occupyBy) => {
+        return occupyBy?.uuid;
+      },
     },
     {
       title: '接口配置',
@@ -187,6 +166,12 @@ const Interface = () => {
       ],
     },
   ];
+
+  useEffect(() => {
+    if (detail) {
+      formRef.current?.setFieldsValue({ ...detail, config: [detail?.config] });
+    }
+  }, [detail]);
 
   return (
     <>
@@ -307,6 +292,7 @@ const Interface = () => {
         title="接口详情"
         open={detailConfig.open}
         onCancel={() => setDetailConfig({ open: false, uuid: '' })}
+        maskClosable={false}
         footer={
           <Button type="primary" onClick={() => setDetailConfig({ open: false, uuid: '' })}>
             关闭
