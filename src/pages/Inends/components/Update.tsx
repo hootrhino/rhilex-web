@@ -4,31 +4,35 @@ import { history, useParams, useRequest } from 'umi';
 
 import { message } from '@/components/PopupHack';
 import SchemaForm from '@/components/SchemaForm';
-import { getInends, postInends, putInends } from '@/services/rulex/shuruziyuanguanli';
+import { getInendsDetail, postInends, putInends } from '@/services/rulex/shuruziyuanguanli';
 import random from 'lodash/random';
 import { columns } from './columns';
+import {
+  defaultCoapConfig,
+  defaultGrpcConfig,
+  defaultHttpConfig,
+  defaultIothubConfig,
+  defaultNatsConfig,
+  defaultUdpConfig,
+} from './initialValue';
 
-type Config = {
-  host?: string;
-  port?: number;
-  [key: string]: any;
-};
-type InendsFormItem<T extends any> = {
-  name: string;
-  type: string;
-  config: T;
-};
+// type Config = {
+//   host?: string;
+//   port?: number;
+//   [key: string]: any;
+// };
+// type InendsFormItem<T extends any> = {
+//   name: string;
+//   type: string;
+//   config: T;
+// };
 
 const DefaultListUrl = '/inends/list';
 
 const UpdateForm = () => {
   const { id } = useParams();
   const randomNumber = random(1000, 9999);
-  const [initialValue, setInitialValue] = useState<InendsFormItem<Config[]>>({
-    name: '',
-    type: 'COAP',
-    config: [{ host: '127.0.0.1', port: 2582 }],
-  });
+  const [initialValue, setInitialValue] = useState<any>();
 
   const { run: addInends, loading: addLoading } = useRequest((data) => postInends(data), {
     manual: true,
@@ -72,14 +76,24 @@ const UpdateForm = () => {
   };
 
   // 获取详情
-  const { run: getDetail } = useRequest(() => getInends({ params: { uuid: id } }), {
-    manual: true,
-    onSuccess: (res: any) => setInitialValue({ ...res, config: [res?.config] }),
-  });
+  const { run: getDetail, data: detail } = useRequest(
+    (params: API.getInendsDetailParams) => getInendsDetail(params),
+    {
+      manual: true,
+    },
+  );
+
+  useEffect(() => {
+    if (detail) {
+      setInitialValue({ ...detail, config: [detail?.config] });
+    } else {
+      setInitialValue({ type: 'COAP', config: defaultCoapConfig });
+    }
+  }, [detail]);
 
   useEffect(() => {
     if (id) {
-      getDetail();
+      getDetail({ uuid: id });
     }
   }, [id]);
 
@@ -92,59 +106,39 @@ const UpdateForm = () => {
       initialValue={initialValue}
       onFinish={onFinish}
       onValuesChange={(changedValue) => {
-        if (changedValue?.type) {
-          let config: Config = {
-            port: 2582,
-          };
+        if (!changedValue?.type) return;
 
-          switch (changedValue?.type) {
-            case 'COAP':
-              config = {
-                port: 2582,
-              };
+        let config;
 
-              break;
-            case 'GENERIC_IOT_HUB':
-              config = {
-                port: 1883,
-                mode: 'DC',
-                productId: `eekit${randomNumber}`,
-                deviceName: `eekit${randomNumber}`,
-                clientId: `eekit${randomNumber}`,
-              };
+        switch (changedValue?.type) {
+          case 'COAP':
+            config = defaultCoapConfig;
 
-              break;
-            case 'RULEX_UDP':
-              config = {
-                port: 2583,
-              };
+            break;
+          case 'GENERIC_IOT_HUB':
+            config = defaultIothubConfig(randomNumber);
 
-              break;
-            case 'HTTP':
-              config = {
-                port: 2584,
-              };
-              break;
-            case 'NATS_SERVER':
-              config = {
-                port: 4222,
-              };
+            break;
+          case 'RULEX_UDP':
+            config = defaultUdpConfig;
 
-              break;
-            case 'GRPC':
-              config = {
-                port: 2585,
-              };
-              break;
-            default:
-              break;
-          }
-          setInitialValue({
-            ...initialValue,
-            type: changedValue?.type,
-            config: [{ ...initialValue?.config?.[0], ...config, host: '127.0.0.1' }],
-          });
+            break;
+          case 'HTTP':
+            config = defaultHttpConfig;
+            break;
+          case 'NATS_SERVER':
+            config = defaultNatsConfig;
+
+            break;
+          case 'GRPC':
+            config = defaultGrpcConfig;
+            break;
+          default:
+            config = defaultCoapConfig;
+            break;
         }
+
+        setInitialValue({ config });
       }}
     />
   );

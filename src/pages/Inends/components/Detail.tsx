@@ -5,88 +5,11 @@ import { Drawer, DrawerProps } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
-import { modeEnum, typeEnum } from './columns';
 import StateTag from '../../../components/StateTag';
+import { modeEnum, typeEnum } from './columns';
 
 type DetailProps = DrawerProps & {
   uuid: string;
-};
-
-const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]> = {
-  COMMON: [
-    {
-      title: '资源名称',
-      dataIndex: 'name',
-    },
-    {
-      title: '资源类型',
-      dataIndex: 'type',
-      valueType: 'select',
-      valueEnum: typeEnum,
-    },
-    {
-      title: '资源状态',
-      dataIndex: 'state',
-     renderText: state => <StateTag state={state} />
-    },
-    {
-      title: '备注',
-      dataIndex: 'description',
-    },
-  ],
-  GENERIC_IOT_HUB: [
-    {
-      title: '主机地址',
-      dataIndex: 'host',
-      copyable: true,
-    },
-    {
-      title: '服务端口',
-      dataIndex: 'port',
-    },
-    {
-      title: '模式',
-      dataIndex: 'mode',
-      valueEnum: modeEnum,
-    },
-    {
-      title: '产品 ID',
-      dataIndex: 'productId',
-      copyable: true,
-    },
-    {
-      title: '设备名称',
-      dataIndex: 'deviceName',
-    },
-    {
-      title: '客户端 ID',
-      dataIndex: 'clientId',
-    },
-    {
-      title: '用户名称',
-      dataIndex: 'username',
-    },
-    {
-      title: '用户密码',
-      dataIndex: 'password',
-      valueType: 'password',
-    },
-  ],
-  DEFAULT_TYPE: [
-    {
-      title: '主机地址',
-      dataIndex: 'host',
-      copyable: true,
-    },
-    {
-      title: '服务端口',
-      dataIndex: 'port',
-    },
-    {
-      title: '主题',
-      dataIndex: 'topic',
-    },
-  ],
 };
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
@@ -95,6 +18,84 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     formatResult: (res) => res?.data,
   });
 
+  const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]> = {
+    COMMON: [
+      {
+        title: '资源名称',
+        dataIndex: 'name',
+      },
+      {
+        title: '资源类型',
+        dataIndex: 'type',
+        valueType: 'select',
+        valueEnum: typeEnum,
+      },
+      {
+        title: '资源状态',
+        dataIndex: 'state',
+        renderText: (state) => <StateTag state={state} />,
+      },
+      {
+        title: '备注',
+        dataIndex: 'description',
+      },
+    ],
+    GENERIC_IOT_HUB: [
+      {
+        title: '主机地址',
+        dataIndex: 'host',
+        copyable: true,
+      },
+      {
+        title: '服务端口',
+        dataIndex: 'port',
+      },
+      {
+        title: '模式',
+        dataIndex: 'mode',
+        valueEnum: modeEnum,
+      },
+      {
+        title: '产品 ID',
+        dataIndex: 'productId',
+        copyable: true,
+      },
+      {
+        title: '设备名称',
+        dataIndex: 'deviceName',
+      },
+      {
+        title: '客户端 ID',
+        dataIndex: 'clientId',
+      },
+      {
+        title: '用户名称',
+        dataIndex: 'username',
+      },
+      {
+        title: '用户密码',
+        dataIndex: 'password',
+        valueType: 'password',
+      },
+    ],
+    DEFAULT_TYPE: [
+      {
+        title: '主机地址',
+        dataIndex: 'host',
+        copyable: true,
+        hideInDescriptions: data?.type !== 'NATS_SERVER',
+      },
+      {
+        title: '服务端口',
+        dataIndex: 'port',
+      },
+      {
+        title: '主题',
+        dataIndex: 'topic',
+      },
+    ],
+  };
+
   useEffect(() => {
     if (uuid) {
       run();
@@ -102,7 +103,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
   }, [uuid]);
 
   return (
-    <Drawer title="资源详情" placement="right" width="40%" {...props}>
+    <Drawer title="资源详情" placement="right" width="30%" {...props}>
       <ProDescriptions
         column={1}
         columns={columnsMap['COMMON']}
@@ -111,18 +112,16 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         dataSource={omit(data, 'config')}
         loading={loading}
       />
-      <ProDescriptions
-        column={1}
-        columns={
-          data?.type
-            ? columnsMap[data?.type === 'GENERIC_IOT_HUB' ? data?.type : 'DEFAULT_TYPE']
-            : []
-        }
-        labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
-        title="设备配置"
-        dataSource={data?.config}
-        loading={loading}
-      />
+      {data?.type && Object.keys(typeEnum).includes(data?.type) && (
+        <ProDescriptions
+          column={1}
+          columns={columnsMap[data?.type === 'GENERIC_IOT_HUB' ? data?.type : 'DEFAULT_TYPE']}
+          labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
+          title="资源配置"
+          dataSource={data?.config}
+          loading={loading}
+        />
+      )}
     </Drawer>
   );
 };

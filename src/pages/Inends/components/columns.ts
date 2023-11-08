@@ -12,13 +12,6 @@ export const modeEnum = {
   DC: '直连',
 };
 
-export const stateEnum = {
-  0: { text: '故障', status: 'Error' },
-  1: { text: '启用', status: 'Success' },
-  2: { text: '暂停', status: 'Default' },
-  3: { text: '停止', status: 'Default' },
-};
-
 export const columns = [
   {
     valueType: 'group',
@@ -45,83 +38,6 @@ export const columns = [
     valueType: 'dependency',
     name: ['type'],
     columns: ({ type }: any) => {
-      if (type === 'GENERIC_IOT_HUB') {
-        return [
-          {
-            title: '资源配置',
-            valueType: 'group',
-            columns: [
-              {
-                valueType: 'formList',
-                dataIndex: ['config'],
-                mode: 'single',
-                columns: [
-                  {
-                    valueType: 'group',
-                    columns: [
-                      {
-                        title: '主机地址',
-                        dataIndex: 'host',
-                        required: true,
-                      },
-                      {
-                        title: '服务端口',
-                        dataIndex: 'port',
-                        valueType: 'digit',
-                        required: true,
-                      },
-                      {
-                        title: '模式',
-                        dataIndex: 'mode',
-                        valueType: 'select',
-                        required: true,
-                        valueEnum: modeEnum,
-                      },
-                    ],
-                  },
-                  {
-                    valueType: 'group',
-                    columns: [
-                      {
-                        title: '产品 ID',
-                        dataIndex: 'productId',
-                        required: true,
-                      },
-                      {
-                        title: '设备名',
-                        dataIndex: 'deviceName',
-                        required: true,
-                      },
-                      {
-                        title: '客户端 ID',
-                        dataIndex: 'clientId',
-                        required: true,
-                      },
-                    ],
-                  },
-                  {
-                    valueType: 'group',
-                    columns: [
-                      {
-                        title: '用户名称',
-                        dataIndex: 'username',
-                        required: true,
-                      },
-                      {
-                        title: '用户密码',
-                        dataIndex: 'password',
-                        valueType: 'password',
-                        required: true,
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        ];
-      }
-
       return [
         {
           title: '资源配置',
@@ -131,6 +47,7 @@ export const columns = [
               valueType: 'formList',
               dataIndex: ['config'],
               mode: 'single',
+              hideInForm: type === 'GENERIC_IOT_HUB',
               columns: [
                 {
                   valueType: 'group',
@@ -151,6 +68,68 @@ export const columns = [
                       dataIndex: 'topic',
                       required: true,
                       hideInForm: type !== 'NATS_SERVER',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              valueType: 'formList',
+              dataIndex: ['config'],
+              mode: 'single',
+              hideInForm: type !== 'GENERIC_IOT_HUB',
+              columns: [
+                {
+                  valueType: 'group',
+                  columns: [
+                    {
+                      title: '主机地址',
+                      dataIndex: 'host',
+                      required: true,
+                    },
+                    {
+                      title: '服务端口',
+                      dataIndex: 'port',
+                      valueType: 'digit',
+                      required: true,
+                    },
+                    {
+                      title: '模式',
+                      dataIndex: 'mode',
+                      valueType: 'select',
+                      required: true,
+                      valueEnum: modeEnum,
+                    },
+                    {
+                      title: '产品 ID',
+                      dataIndex: 'productId',
+                      required: true,
+                    },
+                  ],
+                },
+                {
+                  valueType: 'group',
+                  columns: [
+                    {
+                      title: '设备名',
+                      dataIndex: 'deviceName',
+                      required: true,
+                    },
+                    {
+                      title: '客户端 ID',
+                      dataIndex: 'clientId',
+                      required: true,
+                    },
+                    {
+                      title: '用户名称',
+                      dataIndex: 'username',
+                      required: true,
+                    },
+                    {
+                      title: '用户密码',
+                      dataIndex: 'password',
+                      valueType: 'password',
+                      required: true,
                     },
                   ],
                 },
