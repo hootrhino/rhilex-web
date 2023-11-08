@@ -50,11 +50,6 @@ const System = () => {
           children: <FirmwareConfig />,
         },
         {
-          label: '数据备份',
-          key: 'backup',
-          children: <DataBackupConfig />,
-        },
-        {
           label: 'APN配置',
           key: 'apn',
           children: <APNConfig />,
@@ -63,7 +58,7 @@ const System = () => {
 
   useEffect(() => {
     if (isWindows) {
-      setActiveKey('user');
+      setActiveKey('backup');
     }
   }, [isWindows]);
 
@@ -76,6 +71,11 @@ const System = () => {
           style: { minHeight: 700 },
           items: [
             ...DefaultConfig,
+            {
+              label: '数据备份',
+              key: 'backup',
+              children: <DataBackupConfig />,
+            },
             {
               label: '用户配置',
               key: 'user',
