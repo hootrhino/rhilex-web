@@ -108,7 +108,7 @@ const Interface = () => {
       title: '占用设备',
       dataIndex: 'occupyBy',
       renderText: (occupyBy) => {
-        return occupyBy?.uuid;
+        return occupyBy?.name;
       },
     },
     {

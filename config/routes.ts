@@ -32,27 +32,27 @@
         component: './Devices',
       },
       {
-        path: '/device/new',
+        path: '/device/:groupId/new',
         name: '新建设备',
         component: './Devices/components/Update',
       },
       {
-        path: '/device/edit/:id',
+        path: '/device/:groupId/edit/:deviceId',
         name: '编辑设备',
         component: './Devices/components/Update',
       },
       {
-        path: '/device/:deviceId/rule',
+        path: '/device/:groupId/:deviceId/rule',
         name: '规则配置',
         component: './Devices/RuleConfig',
       },
       {
-        path: '/device/:deviceId/rule/new',
+        path: '/device/:groupId/:deviceId/rule/new',
         name: '新增规则配置',
         component: './Devices/RuleConfig/Update',
       },
       {
-        path: '/device/:deviceId/rule/edit/:ruleId',
+        path: '/device/:groupId/:deviceId/rule/edit/:ruleId',
         name: '编辑规则配置',
         component: './Devices/RuleConfig/Update',
       },

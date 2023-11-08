@@ -1,12 +1,12 @@
-import { autocompletion, CompletionContext, snippetCompletion } from '@codemirror/autocomplete';
+import { autocompletion, CompletionContext } from '@codemirror/autocomplete';
 import { linter, lintGutter, lintKeymap } from '@codemirror/lint';
 import { langs } from '@uiw/codemirror-extensions-langs';
-import { atomone } from '@uiw/codemirror-theme-atomone';
+import { darcula } from '@uiw/codemirror-theme-darcula';
 import type { ReactCodeMirrorProps } from '@uiw/react-codemirror';
 import CodeMirror, { basicSetup, keymap } from '@uiw/react-codemirror';
 import { useModel } from '@umijs/max';
 import luaparse from 'luaparse';
-import { luaGlobFuncs, luaKeywords, luaSnippets } from './constant';
+import { luaGlobFuncs, luaKeywords } from './constant';
 
 type Options = {
   value: string;
@@ -47,11 +47,6 @@ const LuaEditor = (props: ReactCodeMirrorProps) => {
       apply: item.value,
     }));
 
-    // 内置模板
-    const snippetOptions = luaSnippets.map((snippet: any) =>
-      snippetCompletion(snippet.template, snippet.completion),
-    );
-
     return {
       from: word.from,
       options: [
@@ -59,7 +54,6 @@ const LuaEditor = (props: ReactCodeMirrorProps) => {
         ...inendsOptions,
         ...outendsOptions,
         ...luaGlobFuncs,
-        ...snippetOptions,
       ],
     };
   };
@@ -87,8 +81,9 @@ const LuaEditor = (props: ReactCodeMirrorProps) => {
   return (
     <CodeMirror
       minHeight="400px"
-      theme={atomone}
+      theme={darcula}
       autoFocus
+      // style={{fontSize: 16}}
       extensions={[
         langs.lua(),
         basicSetup({

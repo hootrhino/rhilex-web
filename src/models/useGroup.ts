@@ -6,7 +6,6 @@ import {
   putGroupUpdate,
 } from '@/services/rulex/fenzuguanli';
 import { useRequest } from '@umijs/max';
-import { useState } from 'react';
 
 type createGroupParams = {
   name: string;
@@ -25,8 +24,6 @@ export type DeviceGroupItem = {
 };
 
 const useGroup = () => {
-  const [activeGroupKey, setActiveGroupKey] = useState<string>('DROOT');
-
   // 分组详情
   const { run: getDetail, data: detail } = useRequest(
     (params: API.getGroupDetailParams) => getGroupDetail(params),
@@ -59,7 +56,6 @@ const useGroup = () => {
     remove,
     create,
     update,
-    activeGroupKey, setActiveGroupKey
   };
 };
 

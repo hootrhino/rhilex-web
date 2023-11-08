@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { history, useParams } from 'umi';
 
+import { luaGlobFuncs } from '@/components/LuaEditor/constant';
 import { message } from '@/components/PopupHack';
 import useGoBack from '@/hooks/useGoBack';
 import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanli';
@@ -9,13 +10,11 @@ import {
   PageContainer,
   ProCard,
   ProForm,
-  ProFormDependency,
   ProFormInstance,
-  ProFormRadio,
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button, Popconfirm } from 'antd';
+import { Button, Popconfirm, Space, Tooltip, Typography } from 'antd';
 import omit from 'lodash/omit';
 import { useModel, useRequest } from 'umi';
 import { RuleType } from '.';
@@ -54,34 +53,20 @@ end`;
 
 const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
   const formRef = useRef<ProFormInstance>();
-  const { ruleId } = useParams();
-  const DefaultListUrl = `/${type}/${typeId}/rule`;
+  const { ruleId, groupId } = useParams();
+  const DefaultListUrl = groupId ? `/${type}/${groupId}/${typeId}/rule` : `/${type}/${typeId}/rule`;
 
   const { showModal } = useGoBack();
 
-  const { data: sources } = useModel('useSource');
+  const { data: sources, run: getSourceList } = useModel('useSource');
   const { data: devices, run: getDeviceList } = useModel('useDevice');
-  const {activeGroupKey} = useModel('useGroup');
 
   // 获取详情
   const { run: getDetail } = useRequest((uuid: string) => getRulesDetail({ uuid: uuid || '' }), {
     manual: true,
     formatResult: (res) => res?.data,
     onSuccess: (data) => {
-      let params = {};
-
-      if (data?.fromDevice?.length > 0) {
-        params = {
-          sourceType: 'fromDevice',
-          fromDevice: data?.fromDevice?.[0],
-        };
-      } else {
-        params = {
-          sourceType: 'fromSource',
-          fromSource: data?.fromSource?.[0],
-        };
-      }
-      formRef.current?.setFieldsValue({ ...data, ...params });
+      formRef.current?.setFieldsValue({ ...data });
     },
   });
 
@@ -124,27 +109,76 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
     }
   };
 
+  const getSourceIdList = () => {
+    console.log(sources);
+    let data = type === 'inends' ? sources : devices;
+
+    const options = data?.map((item) => ({
+      label: (
+        <Typography.Paragraph
+          copyable={{ text: item?.uuid }}
+          style={{ marginBottom: 0, display: 'flex', justifyContent: 'space-between' }}
+        >
+          <Space>
+            <span>{item?.name || item?.label}</span>
+            <span className="text-[12px] text-[#000000A6]">{item?.uuid || item?.value}</span>
+          </Space>
+        </Typography.Paragraph>
+      ),
+      value: item?.uuid,
+    }));
+    return options;
+  };
+
+  const getTemplateOptions = () => {
+    const options = luaGlobFuncs?.map((item) => ({
+      label: (
+        <Tooltip
+          placement="right"
+          arrow={false}
+          title={<pre>{item.apply}</pre>}
+          overlayInnerStyle={{ width: 400 }}
+        >
+          <Typography.Paragraph
+            copyable={{ text: item.apply }}
+            style={{ marginBottom: 0, display: 'flex', justifyContent: 'space-between' }}
+          >
+            <Space>
+              <span>{item.detail}</span>
+              <span className="text-[12px] text-[#000000A6]">{item.label}</span>
+            </Space>
+          </Typography.Paragraph>
+        </Tooltip>
+      ),
+      value: item?.apply,
+    }));
+
+    return options;
+  };
+
   useEffect(() => {
     if (ruleId) {
       getDetail(ruleId);
     } else {
-      const isInends = type === 'inends';
-
       formRef.current?.setFieldsValue({
         actions: DefaultActions,
         success: DefaultSuccess,
         failed: DefaultFailed,
-        sourceType: isInends ? 'fromSource' : 'fromDevice',
         name: '',
-        fromSource: isInends ? typeId : '',
-        fromDevice: !isInends ? typeId : '',
       });
     }
   }, [ruleId, typeId, type]);
 
   useEffect(() => {
-    getDeviceList({uuid: activeGroupKey})
-  }, [activeGroupKey])
+    if (!groupId) return;
+    getDeviceList({ uuid: groupId });
+  }, [groupId]);
+
+  useEffect(() => {
+    if (type === 'inends') {
+      getSourceList();
+    }
+  }, []);
 
   return (
     <>
@@ -191,56 +225,21 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
                     message: '规则名称为必填项',
                   },
                 ]}
-                width="xl"
+                width="md"
               />
-              <ProFormRadio.Group
-                name="sourceType"
+              <ProFormSelect
                 label="数据来源"
-                options={[
-                  {
-                    label: '输入资源',
-                    value: 'fromSource',
-                  },
-                  {
-                    label: '设备',
-                    value: 'fromDevice',
-                  },
-                ]}
-                width="xl"
-                disabled
+                name="sourceId"
+                options={getSourceIdList()}
+                width="md"
               />
-            </ProForm.Group>
-            <ProForm.Group>
-              <ProFormDependency name={['sourceType']}>
-                {({ sourceType }) => {
-                  if (sourceType === 'fromSource') {
-                    return (
-                      <ProFormSelect
-                        label="输入资源"
-                        name="fromSource"
-                        options={sources}
-                        placeholder="请选择数据源"
-                        rules={[{ required: true, message: '请选择数据源' }]}
-                        width="xl"
-                        disabled
-                      />
-                    );
-                  } else {
-                    return (
-                      <ProFormSelect
-                        label="输入资源"
-                        name="fromDevice"
-                        options={devices?.map(device => ({label: device.name, value: device.uuid}))}
-                        disabled
-                        placeholder="请选择数据源"
-                        rules={[{ required: true, message: '请选择数据源' }]}
-                        width="xl"
-                      />
-                    );
-                  }
-                }}
-              </ProFormDependency>
-              <ProFormText label="备注" name="description" width="xl" />
+              <ProFormSelect
+                label="快捷模板"
+                name="template"
+                options={getTemplateOptions()}
+                width="md"
+              />
+              <ProFormText label="备注" name="description" width="md" />
             </ProForm.Group>
             <ProCodeEditor
               label="规则回调"

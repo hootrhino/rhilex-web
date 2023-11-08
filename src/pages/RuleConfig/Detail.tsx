@@ -2,6 +2,7 @@ import LogTable from '@/components/LogTable';
 import { getRulesDetail } from '@/services/rulex/guizeguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
+import { useParams } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import { useModel } from 'umi';
@@ -17,9 +18,9 @@ type Option = {
 };
 
 const Detail = ({ uuid, type, ...props }: DetailProps) => {
+  const { groupId } = useParams();
   const { data: sources } = useModel('useSource');
   const { data: devices, run: getDeviceList } = useModel('useDevice');
-  const {activeGroupKey} = useModel('useGroup');
 
   const getFromSourceName = (fromSource: string[], fromDevice: string[]) => {
     let name: string = '';
@@ -72,8 +73,9 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
   ];
 
   useEffect(() => {
-    getDeviceList({uuid: activeGroupKey})
-  }, [activeGroupKey])
+    if (!groupId) return;
+    getDeviceList({ uuid: groupId });
+  }, [groupId]);
 
   return (
     <Drawer

@@ -64,12 +64,11 @@ const Devices = () => {
     update: updateGroup,
     getDetail: getGroupDetail,
     detail: groupDetail,
-    activeGroupKey,
-    setActiveGroupKey,
   } = useModel('useGroup');
 
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(defaultGroupConfig);
   const [detailConfig, setDeviceConfig] = useState<DeviceConfig>(defaultDeviceConfig);
+  const [activeGroupKey, setActiveGroupKey] = useState<string>('DROOT');
 
   const getGroupName = (key: string) => {
     const group = groupList?.find((group: any) => group.uuid === key);
@@ -144,14 +143,14 @@ const Devices = () => {
       fixed: 'right',
       key: 'option',
       valueType: 'option',
-      render: (_, { uuid }) => [
-        <a key="rule" onClick={() => history.push(`/device/${uuid}/rule`)}>
+      render: (_, { uuid, gid }) => [
+        <a key="rule" onClick={() => history.push(`/device/${gid}/${uuid}/rule`)}>
           规则配置
         </a>,
         <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
           详情
         </a>,
-        <a key="edit" onClick={() => history.push(`/device/edit/${uuid}`)}>
+        <a key="edit" onClick={() => history.push(`/device/${gid}/edit/${uuid}`)}>
           编辑
         </a>,
         <Popconfirm
@@ -279,7 +278,7 @@ const Devices = () => {
                   key="new"
                   type="primary"
                   icon={<PlusOutlined />}
-                  onClick={() => history.push('/device/new')}
+                  onClick={() => history.push(`/device/${activeGroupKey}/new`)}
                 >
                   新建
                 </Button>,

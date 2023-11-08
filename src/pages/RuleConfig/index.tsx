@@ -6,7 +6,7 @@ import { useRef, useState } from 'react';
 
 import { message } from '@/components/PopupHack';
 import { deleteRules } from '@/services/rulex/guizeguanli';
-import { history, useModel, useRequest } from '@umijs/max';
+import { history, useModel, useParams, useRequest } from '@umijs/max';
 import Debug from './Debug';
 import Detail from './Detail';
 
@@ -27,6 +27,7 @@ type RuleConfigProps = {
 };
 
 const RuleConfig = ({ dataSource, type, typeId }: RuleConfigProps) => {
+  const { groupId } = useParams();
   const actionRef = useRef<ActionType>();
   const [detailConfig, setDetailConfig] = useState<{
     open: boolean;
@@ -49,6 +50,19 @@ const RuleConfig = ({ dataSource, type, typeId }: RuleConfigProps) => {
       message.success('删除成功');
     },
   });
+
+  const getUrl = (mode: 'new' | 'edit', uuid?: string) => {
+    let url = '';
+    if (mode === 'new') {
+      url = groupId ? `/${type}/${groupId}/${typeId}/rule/new` : `/${type}/${typeId}/rule/new`;
+    } else {
+      url = groupId
+        ? `/${type}/${groupId}/${typeId}/rule/edit/${uuid}`
+        : `/${type}/${typeId}/rule/edit/${uuid}`;
+    }
+
+    return url;
+  };
 
   const columns: ProColumns<Item>[] = [
     {
@@ -99,7 +113,12 @@ const RuleConfig = ({ dataSource, type, typeId }: RuleConfigProps) => {
         >
           详情
         </a>,
-        <a key="edit" onClick={() => history.push(`/${type}/${typeId}/rule/edit/${uuid}`)}>
+        <a
+          key="edit"
+          onClick={() => {
+            history.push(getUrl('edit', uuid));
+          }}
+        >
           编辑
         </a>,
         <Popconfirm title="确定要删除该规则？" onConfirm={() => remove({ uuid })} key="remove">
@@ -123,7 +142,9 @@ const RuleConfig = ({ dataSource, type, typeId }: RuleConfigProps) => {
             <Button
               type="primary"
               key="new"
-              onClick={() => history.push(`/${type}/${typeId}/rule/new`)}
+              onClick={() => {
+                history.push(getUrl('new'));
+              }}
               icon={<PlusOutlined />}
             >
               新建

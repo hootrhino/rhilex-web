@@ -18,6 +18,7 @@ const RuleConfigList = () => {
       getRuleList({ deviceId });
     }
   }, [deviceId]);
+
   return <RuleConfig dataSource={data} type="device" typeId={deviceId || ''} />;
 };
 

@@ -17,8 +17,7 @@ import { defaultHostConfig, defaultValue } from './initialValue';
 const DefaultListUrl = '/device/list';
 
 const BaseForm = () => {
-  const { id } = useParams();
-  const { activeGroupKey } = useModel('useGroup');
+  const { deviceId, groupId } = useParams();
   const { detail, getDetail, detailLoading } = useModel('useDevice');
   const [initialValue, setValue] = useState<any>();
   const [formLoading, setLoading] = useState<boolean>(true);
@@ -102,8 +101,8 @@ const BaseForm = () => {
         }
       }
 
-      if (id) {
-        update({ ...params, uuid: id });
+      if (deviceId) {
+        update({ ...params, uuid: deviceId });
       } else {
         add(params);
       }
@@ -155,20 +154,20 @@ const BaseForm = () => {
   };
 
   useEffect(() => {
-    if (id && detail) {
+    if (deviceId && detail) {
       const newData = handleOnUpdateValue(detail);
       setValue(newData);
     } else {
-      const defaultData = defaultValue(activeGroupKey);
+      const defaultData = defaultValue(groupId || '');
       setValue(defaultData);
     }
   }, [detail]);
 
   useEffect(() => {
-    if (id) {
-      getDetail({ uuid: id });
+    if (deviceId) {
+      getDetail({ uuid: deviceId });
     }
-  }, [id]);
+  }, [deviceId]);
 
   useEffect(() => {
     if (!detailLoading) {
@@ -180,7 +179,7 @@ const BaseForm = () => {
     <ProSkeleton />
   ) : (
     <SchemaForm
-      title={id ? '编辑设备' : '新建设备'}
+      title={deviceId ? '编辑设备' : '新建设备'}
       loading={addLoading || updateLoading}
       goBack={DefaultListUrl}
       columns={columns}

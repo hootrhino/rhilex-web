@@ -18,6 +18,7 @@ const RuleConfigList = () => {
       getRuleList({ inendId });
     }
   }, [inendId]);
+
   return <RuleConfig dataSource={data} type="inends" typeId={inendId || ''} />;
 };
 
