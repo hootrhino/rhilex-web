@@ -1,11 +1,5 @@
-import { message, modal } from '@/components/PopupHack';
+import { modal } from '@/components/PopupHack';
 import { getVisualListByGroup } from '@/services/rulex/dapingguanli';
-import {
-  deleteGroup,
-  getGroupDetail,
-  postGroupCreate,
-  putGroupUpdate,
-} from '@/services/rulex/fenzuguanli';
 import { DeleteOutlined, EditOutlined, FolderOpenOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -29,28 +23,25 @@ export type GroupItem = {
 
 type GroupConfig = {
   open: boolean;
-  type: 'new' | 'edit';
+  type: string;
   title: string;
 };
 
 const DEFAULT_TYPE = 'VISUAL';
 
+const defaultCofig = { open: false, type: 'new', title: '新建项目分组' };
+
 const Screen = () => {
   const groupFormRef = useRef<ProFormInstance>();
   const { groupList, getGroupList, activeGroup, setActiveGroup } = useModel('useEditor');
-  const [groupConfig, setConfig] = useState<GroupConfig>({
-    open: false,
-    type: 'new',
-    title: '新建项目分组',
-  });
-
-  // 获取分组详情
-  const { data: detail, run: getDetail } = useRequest(
-    (params: API.getGroupDetailParams) => getGroupDetail(params),
-    {
-      manual: true,
-    },
-  );
+  const {
+    remove: removeGroup,
+    create: createGroup,
+    update: updateGroup,
+    getDetail: getGroupDetail,
+    detail: groupDetail,
+  } = useModel('useGroup');
+  const [groupConfig, setConfig] = useState<GroupConfig>(defaultCofig);
 
   // 大屏列表
   const {
@@ -61,46 +52,17 @@ const Screen = () => {
     manual: true,
   });
 
-  // 创建分组
-  const { run: create } = useRequest(
-    (name: string) => postGroupCreate({ type: DEFAULT_TYPE, name }),
-    {
-      manual: true,
-      onSuccess: (data: any) => {
-        setActiveGroup(data?.gid);
-        getGroupList();
-        message.success('项目分组创建成功');
-      },
-    },
-  );
-
-  // 更新分组
-  const { run: update } = useRequest(
-    (name: string) => putGroupUpdate({ type: DEFAULT_TYPE, uuid: detail?.uuid || '', name }),
-    {
-      manual: true,
-      onSuccess: () => {
-        getGroupList();
-        message.success('项目分组更新成功');
-      },
-    },
-  );
-
-  // 删除分组
-  const { run: remove } = useRequest((params: API.deleteGroupParams) => deleteGroup(params), {
-    manual: true,
-    onSuccess: () => {
-      getGroupList();
-      message.success('成功删除该项目分组');
-    },
-  });
-
   const handleOnRemoveGroup = ({ name, uuid }: GroupItem) => {
     modal.confirm({
       title: `确定要删除${name}吗？`,
       width: 600,
-      content: `项目分组中包含 ${groupItems?.length} 个数据看板，删除后将被移入未分组中，请谨慎处理。`,
-      onOk: () => remove({ uuid: uuid }),
+      content: `项目分组中包含 ${groupItems?.length} 个数据看板，删除后将被移入默认分组中，请谨慎处理。`,
+      onOk: () =>
+        removeGroup({ uuid: uuid }).then(() =>
+          getGroupList().then(() => {
+            setActiveGroup('VROOT');
+          }),
+        ),
     });
   };
 
@@ -115,12 +77,12 @@ const Screen = () => {
   }, [activeGroup]);
 
   useEffect(() => {
-    if (detail) {
-      groupFormRef.current?.setFieldsValue({ name: detail.name });
+    if (groupDetail) {
+      groupFormRef.current?.setFieldsValue({ name: groupDetail.name });
     } else {
       groupFormRef.current?.setFieldsValue({ name: '' });
     }
-  }, [detail]);
+  }, [groupDetail]);
 
   useEffect(() => {
     getGroupList();
@@ -135,7 +97,6 @@ const Screen = () => {
           colSpan="270px"
           extra={
             <Button
-              // size="small"
               key="add"
               type="primary"
               icon={<PlusOutlined />}
@@ -173,26 +134,27 @@ const Screen = () => {
                 render: () => <FolderOpenOutlined className="pl-[10px]" />,
               },
               actions: {
-                render: (dom, entity) => (
-                  <Space size="middle">
-                    <Tooltip title="重命名分组">
-                      <a
-                        key="edit"
-                        onClick={() => {
-                          setConfig({ open: true, title: '编辑项目分组', type: 'edit' });
-                          getDetail({ uuid: entity.uuid });
-                        }}
-                      >
-                        <EditOutlined />
-                      </a>
-                    </Tooltip>
-                    <Tooltip title="删除分组">
-                      <a key="remove" onClick={() => handleOnRemoveGroup(entity)}>
-                        <DeleteOutlined />
-                      </a>
-                    </Tooltip>
-                  </Space>
-                ),
+                render: (dom, entity) =>
+                  entity?.uuid === 'VROOT' ? null : (
+                    <Space size="middle">
+                      <Tooltip title="重命名分组">
+                        <a
+                          key="edit"
+                          onClick={() => {
+                            setConfig({ open: true, title: '编辑项目分组', type: 'edit' });
+                            getGroupDetail({ uuid: entity.uuid });
+                          }}
+                        >
+                          <EditOutlined />
+                        </a>
+                      </Tooltip>
+                      <Tooltip title="删除分组">
+                        <a key="remove" onClick={() => handleOnRemoveGroup(entity)}>
+                          <DeleteOutlined />
+                        </a>
+                      </Tooltip>
+                    </Space>
+                  ),
               },
             }}
           />
@@ -208,9 +170,24 @@ const Screen = () => {
         open={groupConfig.open}
         onOpenChange={(visible) => setConfig({ ...groupConfig, open: visible })}
         modalProps={{ destroyOnClose: true }}
-        onFinish={async (values) =>
-          groupConfig.type === 'new' ? create(values.name) : update(values.name)
-        }
+        onFinish={async (values) => {
+          if (groupConfig.type === 'new') {
+            createGroup({ type: DEFAULT_TYPE, name: values?.name }).then((value: any) => {
+              setActiveGroup(value?.gid);
+              setConfig(defaultCofig);
+              getGroupList();
+            });
+          } else {
+            updateGroup({
+              type: DEFAULT_TYPE,
+              uuid: groupDetail?.uuid || '',
+              name: values.name,
+            }).then(() => {
+              setConfig(defaultCofig);
+              getGroupList();
+            });
+          }
+        }}
         layout="horizontal"
         width="30%"
       >

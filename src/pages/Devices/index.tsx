@@ -67,15 +67,14 @@ const Devices = () => {
     activeGroupKey,
     setActiveGroupKey,
   } = useModel('useGroup');
-  const [activeGroupName, setActiveGroupName] = useState<string>('默认分组');
+
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(defaultGroupConfig);
   const [detailConfig, setDeviceConfig] = useState<DeviceConfig>(defaultDeviceConfig);
 
-  const handleOnUpdateGroupName = (id: string) => {
-    getGroupList().then((groups) => {
-      const activeGroup = groups?.find((group) => group.uuid === id);
-      setActiveGroupName(activeGroup?.name || '');
-    });
+  const getGroupName = (key: string) => {
+    const group = groupList?.find((group: any) => group.uuid === key);
+
+    return group?.name || '';
   };
 
   // 新增编辑设备分组
@@ -86,14 +85,14 @@ const Devices = () => {
       if (groupConfig.type === 'new') {
         // 新增
         createGroup({ name, type }).then((value: any) => {
-          handleOnUpdateGroupName(value?.gid);
           setActiveGroupKey(value?.gid);
+          getGroupList();
         });
       } else {
         // 编辑
         if (!groupDetail?.uuid) return;
-        updateGroup({ uuid: groupDetail?.uuid, type: groupDetail?.type || type, name }).then(
-          () => groupDetail.uuid && handleOnUpdateGroupName(groupDetail.uuid),
+        updateGroup({ uuid: groupDetail?.uuid, type: groupDetail?.type || type, name }).then(() =>
+          getGroupList(),
         );
       }
       return true;
@@ -132,7 +131,7 @@ const Devices = () => {
       title: '状态',
       dataIndex: 'state',
       width: 120,
-      renderText: (state) => <StateTag state={state} />,
+      renderText: (state) => (state ? <StateTag state={state} /> : '-'),
     },
     {
       title: '备注',
@@ -209,7 +208,6 @@ const Devices = () => {
                   onClick: () => {
                     if (!record?.uuid) return;
                     setActiveGroupKey(record?.uuid);
-                    setActiveGroupName(record?.name || '');
                   },
                 };
               }}
@@ -254,7 +252,6 @@ const Devices = () => {
                               removeGroup({ uuid: entity.uuid }).then(() =>
                                 getGroupList().then(() => {
                                   setActiveGroupKey('DROOT');
-                                  setActiveGroupName('默认分组');
                                 }),
                               );
                             }}
@@ -270,7 +267,7 @@ const Devices = () => {
               }}
             />
           </ProCard>
-          <ProCard title={activeGroupName}>
+          <ProCard title={getGroupName(activeGroupKey)}>
             <ProTable
               rowKey="uuid"
               columns={columns}

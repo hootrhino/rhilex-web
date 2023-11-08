@@ -1,11 +1,16 @@
-import { CheckCircleOutlined, CloseCircleOutlined, MinusCircleOutlined, ClockCircleOutlined } from "@ant-design/icons";
-import { Tag } from "antd";
+import {
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  CloseCircleOutlined,
+  MinusCircleOutlined,
+} from '@ant-design/icons';
+import { Tag } from 'antd';
 
 type StateTagProps = {
   state: number;
-}
+};
 
-const StateTag = ({state}: StateTagProps) => {
+const StateTag = ({ state }: StateTagProps) => {
   const valueEnum = {
     0: { text: '故障', color: 'error', icon: <CloseCircleOutlined /> },
     1: { text: '启用', color: 'success', icon: <CheckCircleOutlined /> },
@@ -15,9 +20,9 @@ const StateTag = ({state}: StateTagProps) => {
 
   return (
     <Tag icon={valueEnum[state]?.icon} color={valueEnum[state]?.color}>
-    {valueEnum[state]?.text}
-  </Tag>
-  )
-}
+      {valueEnum[state]?.text}
+    </Tag>
+  );
+};
 
 export default StateTag;
