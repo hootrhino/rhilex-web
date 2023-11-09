@@ -31,7 +31,7 @@ const ProCodeEditor = forwardRef(
 
     return (
       <ProCard
-        title={label}
+        title={<>{props?.required && <span className='text-[#ff4d4f] pr-[4px]'>*</span>}<span>{label}</span></>}
         collapsible
         defaultCollapsed={defaultCollapsed}
         extra={
@@ -46,10 +46,11 @@ const ProCodeEditor = forwardRef(
             <span>代码格式化</span>
           </div>
         }
-        headStyle={{ paddingLeft: 0 }}
+        className='editor-card'
+        headStyle={{ paddingLeft: 0, paddingTop: 0 }}
         bodyStyle={{ paddingLeft: 0, paddingBottom: 0 }}
       >
-        <ProForm.Item {...props} name={name} label={false}>
+        <ProForm.Item {...props} name={name} label={false} rules={[{ required: true, message: `请输入${label}` }]}>
           <LuaEditor key={name} />
         </ProForm.Item>
       </ProCard>

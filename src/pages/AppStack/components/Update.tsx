@@ -1,36 +1,42 @@
 import { message } from '@/components/PopupHack';
 
-import SchemaForm from '@/components/SchemaForm';
+import ProCodeEditor from '@/components/ProCodeEditor';
+import useGoBack from '@/hooks/useGoBack';
 import { getAppDetail, postApp, putApp } from '@/services/rulex/qingliangyingyong';
-import { useEffect, useState } from 'react';
+import type { ProFormInstance } from '@ant-design/pro-components';
+import {
+  FooterToolbar,
+  PageContainer,
+  ProCard,
+  ProForm,
+  ProFormDependency,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-components';
+import { Button, ConfigProvider, Popconfirm, Segmented } from 'antd';
+import { useEffect, useRef } from 'react';
 import { history, useParams, useRequest } from 'umi';
-import { AppStackItem } from '..';
-import { columns1, columns2 } from './columns';
-
-type InitValueType = Omit<AppStackItem, 'autoStart'> & {
-  autoStart: string;
-};
 
 const DefaultListUrl = '/app-stack/list';
 
+const defaultValue = {
+  name: '',
+  version: '1.0.0',
+  type: 'lua',
+  autoStart: 'true',
+  luaSource: '',
+  description: '',
+};
+
 const UpdateForm = () => {
   const { id } = useParams();
-  const [initialValue, setValue] = useState<InitValueType>({
-    name: '',
-    version: '1.0.0',
-    type: 'lua',
-    autoStart: 'true',
-    luaSource: '',
-    description: '',
-  });
+  const { showModal } = useGoBack();
+  const formRef = useRef<ProFormInstance>();
 
   // 获取详情
-  const { run: getDetail } = useRequest(() => getAppDetail({ uuid: id || '' }), {
+  const { run: getDetail, data: detail } = useRequest(() => getAppDetail({ uuid: id || '' }), {
     manual: true,
     formatResult: (res) => res?.data,
-    onSuccess: (data) => {
-      setValue({ ...data, autoStart: data?.autoStart.toString() });
-    },
   });
 
   // 新建
@@ -66,20 +72,116 @@ const UpdateForm = () => {
   };
 
   useEffect(() => {
+    if (detail) {
+      formRef.current?.setFieldsValue({ ...detail, autoStart: detail?.autoStart.toString() });
+    } else {
+      formRef.current?.setFieldsValue(defaultValue);
+    }
+  }, [detail]);
+
+  useEffect(() => {
     if (id) {
       getDetail();
     }
   }, [id]);
 
   return (
-    <SchemaForm
-      title={id ? '更新应用' : '新建应用'}
-      loading={addLoading || updateLoading}
-      goBack={DefaultListUrl}
-      columns={id ? columns2 : columns1}
-      initialValue={initialValue}
-      onFinish={handleOnFinish}
-    />
+    <PageContainer
+      header={{ title: id ? '更新应用' : '新建应用' }}
+      onBack={() => showModal({ url: DefaultListUrl })}
+    >
+      <ProCard>
+        <ProForm
+          formRef={formRef}
+          onFinish={handleOnFinish}
+          submitter={{
+            render: ({ reset, submit }) => {
+              return (
+                <FooterToolbar>
+                  <Popconfirm
+                    key="reset"
+                    title="重置可能会丢失数据，确定要重置吗？"
+                    onConfirm={() => {
+                      reset();
+                      formRef.current?.setFieldsValue(
+                        id
+                          ? { ...defaultValue, ...detail, autoStart: detail?.autoStart.toString() }
+                          : defaultValue,
+                      );
+                    }}
+                  >
+                    <Button>重置</Button>
+                  </Popconfirm>
+
+                  <Button
+                    key="submit"
+                    type="primary"
+                    onClick={submit}
+                    loading={addLoading || updateLoading}
+                  >
+                    提交
+                  </Button>
+                </FooterToolbar>
+              );
+            },
+          }}
+        >
+          <ProForm.Group>
+            <ProFormText
+              label="APP 名称"
+              name="name"
+              width="md"
+              rules={[{ required: true, message: '请输入 APP 名称' }]}
+            />
+            <ProFormText
+              label="APP 版本"
+              name="version"
+              width="md"
+              rules={[{ required: true, message: '请输入 APP 版本' }]}
+            />
+            <ProForm.Item label="是否自启" name="autoStart" required>
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Segmented: {
+                      itemSelectedColor: '#fff',
+                      itemSelectedBg: '#1890ff',
+                    },
+                  },
+                }}
+              >
+                <Segmented
+                  block
+                  className="w-[328px]"
+                  options={[
+                    { label: '是', value: 'true' },
+                    { label: '否', value: 'false' },
+                  ]}
+                />
+              </ConfigProvider>
+            </ProForm.Item>
+            <ProFormSelect
+              label="脚本类型"
+              name="type"
+              options={[{ label: 'LUA 脚本', value: 'lua' }]}
+              width="md"
+              rules={[{ required: true, message: '请选择脚本类型' }]}
+            />
+          </ProForm.Group>
+          <ProForm.Group>
+            <ProFormText label="备注" name="description" width="md" />
+          </ProForm.Group>
+          <ProFormDependency name={['type']}>
+            {({ type }) => {
+              if (type !== 'lua') return;
+              return (
+                id && <ProCodeEditor label="Lua 源码" name="luaSource" ref={formRef} required />
+              );
+            }}
+          </ProFormDependency>
+        </ProForm>
+      </ProCard>
+    </PageContainer>
   );
 };
 

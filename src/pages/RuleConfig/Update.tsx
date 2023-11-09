@@ -10,15 +10,15 @@ import {
   PageContainer,
   ProCard,
   ProForm,
-  ProFormInstance,
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
+import type {  ProFormInstance } from '@ant-design/pro-components';
 import { Button, Popconfirm, Space, Tooltip, Typography } from 'antd';
 import omit from 'lodash/omit';
 import { useModel, useRequest } from 'umi';
 import { RuleType } from '.';
-import ProCodeEditor from './ProCodeEditor';
+import ProCodeEditor from '@/components/ProCodeEditor';
 
 export type FormItem = {
   actions: string;
@@ -113,7 +113,7 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
     console.log(sources);
     let data = type === 'inends' ? sources : devices;
 
-    const options = data?.map((item) => ({
+    const options = data?.map((item: any) => ({
       label: (
         <Typography.Paragraph
           copyable={{ text: item?.uuid }}
@@ -245,20 +245,20 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
               label="规则回调"
               name="actions"
               ref={formRef}
-              rules={[{ required: true, message: '请输入规则回调' }]}
+              required
             />
             <ProCodeEditor
               label="成功回调"
               name="success"
               ref={formRef}
-              rules={[{ required: true, message: '请输入成功回调' }]}
+              required
               defaultCollapsed
             />
             <ProCodeEditor
               label="失败回调"
               name="failed"
               ref={formRef}
-              rules={[{ required: true, message: '请输入失败回调' }]}
+              required
               defaultCollapsed
             />
           </ProForm>

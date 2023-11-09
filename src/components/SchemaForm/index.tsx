@@ -5,10 +5,10 @@ import {
   PageContainer,
   ProCard,
   ProConfigProvider,
-  ProFormInstance,
   ProFormProps,
   ProFormSelect,
 } from '@ant-design/pro-components';
+import type {  ProFormInstance} from '@ant-design/pro-components';
 
 import useGoBack from '@/hooks/useGoBack';
 import { FooterToolbar } from '@ant-design/pro-components';
@@ -16,8 +16,8 @@ import { Button, ConfigProvider, Popconfirm, Segmented, Space } from 'antd';
 import omit from 'lodash/omit';
 
 import { useModel } from '@umijs/max';
-import LuaEditor from '../LuaEditor';
 import './index.less';
+import ProCodeEditor from '../ProCodeEditor';
 
 type SchemaFormProps<T = any> = ProFormProps & {
   title?: string;
@@ -130,9 +130,10 @@ const SchemaForm = ({
       ),
     },
     luaCode: {
-      renderFormItem: (_: any, props: any) => (
-        <LuaEditor {...props?.fieldProps} className="w-full" />
-      ),
+      renderFormItem: (_: any, props: any) => {
+        return (
+        <ProCodeEditor {...props?.fieldProps} label='Lua 源码' className="w-full" />
+      )},
     },
     groupSelect: {
       renderFormItem: (_: any, props: any) => (
