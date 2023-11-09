@@ -57,6 +57,11 @@ if err1 ~= nil then
   stdlib:Log(err)
 end
 `;
+const dataToScreen = `local err1 = data:ToScreen('uuid', arg)
+if err1 ~= nil then
+  stdlib:Log(err)
+end
+`;
 
 // stdlib 函数
 const stdlibDebug = `stdlib:Debug('字符串会被输出到 Websocket 日志')`;
@@ -74,6 +79,13 @@ const timeSleep = `local ts = time:Sleep(时间单位是毫秒)`;
 const kvSet = `kv:Set("K", "value")`;
 const kvGet = `local value = kv:Get("K")`;
 const kvDel = `kv:Del("K")`;
+
+// localdb 函数
+const localdbQuery = `local Table = localdb:Query('select * from db1')
+for i, v in ipairs(Table) do
+  stdlib:Log(err)
+end`;
+const localdbExecute = `local error = localdb:Query('insert into tb1')`;
 
 // json 函数
 const jsonT2J = `local Value = json:T2J(LuaTable)`;
@@ -104,6 +116,36 @@ if err ~= nil then
     stdlib:Log(err)
 end`;
 
+// rhinopi 函数
+const rhinopiDO1Set = `local err1 = rhinopi:DO1Set(0)
+if err ~= nil then
+    stdlib:Log(err)
+end`;
+const rhinopiDO1Get = `local err1 = rhinopi:DO1Get(0)
+if err ~= nil then
+    stdlib:Log(err)
+end`;
+const rhinopiDO2Set = `local err1 = rhinopi:DO2Set(0)
+if err ~= nil then
+    stdlib:Log(err)
+end`;
+const rhinopiDO2Get = `local err1 = rhinopi:DO2Get(0)
+if err ~= nil then
+    stdlib:Log(err)
+end`;
+const rhinopiDI1Get = `local err1 = rhinopi:DI1Get(0)
+if err ~= nil then
+    stdlib:Log(err)
+end`;
+const rhinopiDI2Get = `local err1 = rhinopi:DI2Get(0)
+if err ~= nil then
+    stdlib:Log(err)
+end`;
+const rhinopiDI3Get = `local err1 = rhinopi:DI3Get(0)
+if err ~= nil then
+    stdlib:Log(err)
+end`;
+
 export const luaGlobFuncs = [
   { label: 'data:ToHttp', apply: dataToHttp, type: 'function', detail: '数据推送到 HTTP 服务' },
   { label: 'data:ToMqtt', apply: dataToMqtt, type: 'function', detail: '数据推送到 MQTT 服务' },
@@ -116,6 +158,7 @@ export const luaGlobFuncs = [
   },
   { label: 'data:ToMongo', apply: dataToMongo, type: 'function', detail: '数据推送到 Mongodb' },
   { label: 'data:ToNats', apply: dataToNats, type: 'function', detail: '数据推送到 Nats' },
+  { label: 'data:ToScreen', apply: dataToScreen, type: 'function', detail: '数据推送到大屏' },
   { label: 'stdlib:Debug', apply: stdlibDebug, type: 'function', detail: '打印日志' },
   { label: 'stdlib:Throw', apply: stdlibThrow, type: 'function', detail: '抛出异常' },
   { label: 'time:Time', apply: timeTime, type: 'function', detail: '当前时间' },
@@ -127,6 +170,18 @@ export const luaGlobFuncs = [
   { label: 'kv:Set', apply: kvSet, type: 'function', detail: '全局缓存设置值' },
   { label: 'kv:Get', apply: kvGet, type: 'function', detail: '全局缓存取值' },
   { label: 'kv:Del', apply: kvDel, type: 'function', detail: '全局缓存删除值' },
+  {
+    label: 'localdb:Query',
+    apply: localdbQuery,
+    type: 'function',
+    detail: '本地数据库查询(有返回值)',
+  },
+  {
+    label: 'localdb:Execute',
+    apply: localdbExecute,
+    type: 'function',
+    detail: '本地数据库执行(无返回值)',
+  },
   { label: 'json:T2J', apply: jsonT2J, type: 'function', detail: 'LuaTable 转 JSON 字符串' },
   { label: 'json:J2T', apply: jsonJ2T, type: 'function', detail: 'JSON 字符串转 LuaTable' },
   { label: 'math:TFloat', apply: mathTFloat, type: 'function', detail: '截取浮点数' },
@@ -135,4 +190,11 @@ export const luaGlobFuncs = [
   { label: 'device:Write', apply: deviceWrite, type: 'function', detail: '向设备写入数据' },
   { label: 'device:Read', apply: deviceRead, type: 'function', detail: '从设备读取数据' },
   { label: 'device:Ctrl', apply: deviceCtrl, type: 'function', detail: '向设备发送控制指令' },
+  { label: 'rhinopi:DO1Set', apply: rhinopiDO1Set, type: 'function', detail: '设置 DO1 的值' },
+  { label: 'rhinopi:DO1Get', apply: rhinopiDO1Get, type: 'function', detail: '获取 DO1 的值' },
+  { label: 'rhinopi:DO2Set', apply: rhinopiDO2Set, type: 'function', detail: '设置 DO2 的值' },
+  { label: 'rhinopi:DO2Get', apply: rhinopiDO2Get, type: 'function', detail: '获取 DO2 的值' },
+  { label: 'rhinopi:DI1Get', apply: rhinopiDI1Get, type: 'function', detail: '获取 DI1 的值' },
+  { label: 'rhinopi:DI2Get', apply: rhinopiDI2Get, type: 'function', detail: '获取 DI2 的值' },
+  { label: 'rhinopi:DI3Get', apply: rhinopiDI3Get, type: 'function', detail: '获取 DI3 的值' },
 ];
