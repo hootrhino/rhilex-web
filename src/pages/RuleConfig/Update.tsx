@@ -110,7 +110,6 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
   };
 
   const getSourceIdList = () => {
-    console.log(sources);
     let data = type === 'inends' ? sources : devices;
 
     const options = data?.map((item: any) => ({

@@ -1,7 +1,7 @@
 import { autocompletion, CompletionContext } from '@codemirror/autocomplete';
 import { linter, lintGutter, lintKeymap } from '@codemirror/lint';
 import { langs } from '@uiw/codemirror-extensions-langs';
-import { darcula } from '@uiw/codemirror-theme-darcula';
+import { darculaInit } from '@uiw/codemirror-theme-darcula';
 import type { ReactCodeMirrorProps } from '@uiw/react-codemirror';
 import CodeMirror, { basicSetup, keymap } from '@uiw/react-codemirror';
 import { useModel } from '@umijs/max';
@@ -81,9 +81,8 @@ const LuaEditor = (props: ReactCodeMirrorProps) => {
   return (
     <CodeMirror
       minHeight="400px"
-      theme={darcula}
+      theme={darculaInit({settings: {selection: 'rgba(227, 23, 13, 0.2)', lineHighlight: 'transparent'}})}
       autoFocus
-      // style={{fontSize: 16}}
       extensions={[
         langs.lua(),
         basicSetup({
