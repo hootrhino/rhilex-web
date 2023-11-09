@@ -84,7 +84,7 @@ const Inends = () => {
           编辑
         </a>,
         <Popconfirm
-          title="你确定要删除该资源?"
+          title="确定要删除该资源?"
           onConfirm={() => remove({ uuid })}
           okText="是"
           cancelText="否"

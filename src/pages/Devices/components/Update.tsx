@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { history, useParams, useRequest } from 'umi';
-
 import cloneDeep from 'lodash/cloneDeep';
 
 import { message } from '@/components/PopupHack';
@@ -10,7 +8,7 @@ import { postDevices, putDevices } from '@/services/rulex/shebeiguanli';
 import SchemaForm from '@/components/SchemaForm';
 
 import { ProSkeleton } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
+import { history, useModel, useParams } from '@umijs/max';
 import { columns } from './columns';
 import { defaultHostConfig, defaultValue } from './initialValue';
 
@@ -20,27 +18,11 @@ const BaseForm = () => {
   const { deviceId, groupId } = useParams();
   const { detail, getDetail, detailLoading } = useModel('useDevice');
   const [initialValue, setValue] = useState<any>();
-  const [formLoading, setLoading] = useState<boolean>(true);
-
-  // 新建
-  const { run: add, loading: addLoading } = useRequest((params) => postDevices(params), {
-    manual: true,
-    onSuccess: () => {
-      message.success('新建成功');
-      history.push(DefaultListUrl);
-    },
-  });
-
-  // 编辑
-  const { run: update, loading: updateLoading } = useRequest((params) => putDevices(params), {
-    manual: true,
-    onSuccess: () => {
-      message.success('更新成功');
-      history.push(DefaultListUrl);
-    },
-  });
+  const [spin, setSpin] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleOnFinish = async (values: any) => {
+    setLoading(true);
     try {
       let params = cloneDeep(values);
       const commonConfigParams = params.config.commonConfig?.[0];
@@ -102,10 +84,20 @@ const BaseForm = () => {
       }
 
       if (deviceId) {
-        update({ ...params, uuid: deviceId });
+        await putDevices({ ...params, uuid: deviceId });
+        message.success('更新成功');
       } else {
-        add(params);
+        const { msg } = await postDevices(params);
+
+        if (msg) {
+          const info = `创建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：${msg}`;
+          message.warning(info);
+        } else {
+          message.success('创建成功');
+        }
       }
+      history.push(DefaultListUrl);
+      setLoading(false);
       return true;
     } catch (error) {
       return false;
@@ -171,16 +163,16 @@ const BaseForm = () => {
 
   useEffect(() => {
     if (!detailLoading) {
-      setLoading(false);
+      setSpin(false);
     }
   }, [detailLoading]);
 
-  return formLoading ? (
+  return spin ? (
     <ProSkeleton />
   ) : (
     <SchemaForm
       title={deviceId ? '编辑设备' : '新建设备'}
-      loading={addLoading || updateLoading}
+      loading={loading}
       goBack={DefaultListUrl}
       columns={columns}
       initialValue={initialValue}

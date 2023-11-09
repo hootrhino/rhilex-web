@@ -135,7 +135,7 @@ const AppStack = () => {
           编辑
         </a>,
         <Popconfirm
-          title="你确定要删除该应用?"
+          title="确定要删除该应用?"
           onConfirm={() => uuid && remove({ uuid })}
           okText="是"
           cancelText="否"

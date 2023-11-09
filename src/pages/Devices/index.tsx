@@ -154,7 +154,7 @@ const Devices = () => {
           编辑
         </a>,
         <Popconfirm
-          title="你确定要删除该设备?"
+          title="确定要删除该设备?"
           onConfirm={() => remove({ uuid })}
           okText="是"
           cancelText="否"

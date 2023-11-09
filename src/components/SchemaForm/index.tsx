@@ -17,7 +17,6 @@ import omit from 'lodash/omit';
 
 import { useModel } from '@umijs/max';
 import './index.less';
-import ProCodeEditor from '../ProCodeEditor';
 
 type SchemaFormProps<T = any> = ProFormProps & {
   title?: string;
@@ -128,12 +127,6 @@ const SchemaForm = ({
           />
         </ConfigProvider>
       ),
-    },
-    luaCode: {
-      renderFormItem: (_: any, props: any) => {
-        return (
-        <ProCodeEditor {...props?.fieldProps} label='Lua 源码' className="w-full" />
-      )},
     },
     groupSelect: {
       renderFormItem: (_: any, props: any) => (

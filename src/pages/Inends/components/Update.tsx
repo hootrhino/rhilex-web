@@ -32,7 +32,7 @@ const DefaultListUrl = '/inends/list';
 const UpdateForm = () => {
   const { id } = useParams();
   const randomNumber = random(1000, 9999);
-  const [initialValue, setInitialValue] = useState<any>();
+  const [initialValue, setInitialValue] = useState<any>({ type: 'COAP', config: defaultCoapConfig });
 
   const { run: addInends, loading: addLoading } = useRequest((data) => postInends(data), {
     manual: true,
