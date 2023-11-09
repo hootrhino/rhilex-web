@@ -157,7 +157,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
   }, [uuid]);
 
   return (
-    <Drawer title="设备详情" placement="right" width="50%" {...props}>
+    <Drawer title="设备详情" placement="right" width="50%" destroyOnClose {...props}>
       {detailLoading ? (
         <ProSkeleton type="descriptions" />
       ) : (

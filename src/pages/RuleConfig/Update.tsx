@@ -1,10 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { history, useParams } from 'umi';
 
 import { luaGlobFuncs } from '@/components/LuaEditor/constant';
 import { message } from '@/components/PopupHack';
+import ProCodeEditor from '@/components/ProCodeEditor';
 import useGoBack from '@/hooks/useGoBack';
 import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanli';
+import type { ProFormInstance } from '@ant-design/pro-components';
 import {
   FooterToolbar,
   PageContainer,
@@ -13,12 +15,10 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import type {  ProFormInstance } from '@ant-design/pro-components';
 import { Button, Popconfirm, Space, Tooltip, Typography } from 'antd';
 import omit from 'lodash/omit';
 import { useModel, useRequest } from 'umi';
 import { RuleType } from '.';
-import ProCodeEditor from '@/components/ProCodeEditor';
 
 export type FormItem = {
   actions: string;
@@ -54,6 +54,7 @@ end`;
 const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
   const formRef = useRef<ProFormInstance>();
   const { ruleId, groupId } = useParams();
+  const [loading, setLoading] = useState<boolean>(false);
   const DefaultListUrl = groupId ? `/${type}/${groupId}/${typeId}/rule` : `/${type}/${typeId}/rule`;
 
   const { showModal } = useGoBack();
@@ -70,89 +71,35 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
     },
   });
 
-  // 新建
-  const { run: add, loading: addLoading } = useRequest((params) => postRules(params), {
-    manual: true,
-    onSuccess: () => {
-      message.success('新建成功');
-      history.push(DefaultListUrl);
-    },
-  });
-
-  // 编辑
-  const { run: update, loading: updateLoading } = useRequest((params) => putRules(params), {
-    manual: true,
-    onSuccess: () => {
-      message.success('更新成功');
-      history.push(DefaultListUrl);
-    },
-  });
-
   const handleOnFinish = async (values: any) => {
+    setLoading(true);
     try {
       const params = {
-        ...omit(values, ['sourceType']),
-        fromSource: values?.fromSource ? [values?.fromSource] : [],
-        fromDevice: values?.fromDevice ? [values?.fromDevice] : [],
+        ...omit(values, ['sourceId', 'template']),
+        fromSource: type === 'inends' ? [typeId] : [],
+        fromDevice: type === 'device' ? [typeId] : [],
       };
 
       if (ruleId) {
-        update({ ...params, uuid: ruleId });
+        await putRules({ ...params, uuid: ruleId } as any);
+        message.success('更新成功');
       } else {
-        add(params);
+        await postRules(params as any);
+        message.success('新建成功');
       }
-
+      history.push(DefaultListUrl);
+      setLoading(false);
       return true;
     } catch (err) {
-      message.error(err as any);
+      setLoading(false);
       return false;
     }
   };
 
   const getSourceIdList = () => {
-    let data = type === 'inends' ? sources : devices;
-
-    const options = data?.map((item: any) => ({
-      label: (
-        <Typography.Paragraph
-          copyable={{ text: item?.uuid }}
-          style={{ marginBottom: 0, display: 'flex', justifyContent: 'space-between' }}
-        >
-          <Space>
-            <span>{item?.name || item?.label}</span>
-            <span className="text-[12px] text-[#000000A6]">{item?.uuid || item?.value}</span>
-          </Space>
-        </Typography.Paragraph>
-      ),
-      value: item?.uuid,
-    }));
-    return options;
-  };
-
-  const getTemplateOptions = () => {
-    const options = luaGlobFuncs?.map((item) => ({
-      label: (
-        <Tooltip
-          placement="right"
-          arrow={false}
-          title={<pre>{item.apply}</pre>}
-          overlayInnerStyle={{ width: 400 }}
-        >
-          <Typography.Paragraph
-            copyable={{ text: item.apply }}
-            style={{ marginBottom: 0, display: 'flex', justifyContent: 'space-between' }}
-          >
-            <Space>
-              <span>{item.detail}</span>
-              <span className="text-[12px] text-[#000000A6]">{item.label}</span>
-            </Space>
-          </Typography.Paragraph>
-        </Tooltip>
-      ),
-      value: item?.apply,
-    }));
-
-    return options;
+    return type === 'device'
+      ? devices?.map((item) => ({ label: item?.name, value: item?.uuid }))
+      : sources;
   };
 
   useEffect(() => {
@@ -200,12 +147,7 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
                       <Button>重置</Button>
                     </Popconfirm>
 
-                    <Button
-                      key="submit"
-                      type="primary"
-                      onClick={submit}
-                      loading={addLoading || updateLoading}
-                    >
+                    <Button key="submit" type="primary" onClick={submit} loading={loading}>
                       提交
                     </Button>
                   </FooterToolbar>
@@ -218,10 +160,11 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
               <ProFormText
                 label="规则名称"
                 name="name"
+                placeholder="请输入规则名称"
                 rules={[
                   {
                     required: true,
-                    message: '规则名称为必填项',
+                    message: '请输入规则名称',
                   },
                 ]}
                 width="md"
@@ -231,21 +174,57 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
                 name="sourceId"
                 options={getSourceIdList()}
                 width="md"
+                fieldProps={{
+                  optionItemRender: (item) => (
+                    <Typography.Paragraph
+                      copyable={{ text: item?.value }}
+                      style={{ marginBottom: 0, display: 'flex', justifyContent: 'space-between' }}
+                    >
+                      <Space>
+                        <span>{item?.label}</span>
+                        <span className="text-[12px] text-[#000000A6]">{item?.value}</span>
+                      </Space>
+                    </Typography.Paragraph>
+                  ),
+                }}
               />
               <ProFormSelect
                 label="快捷模板"
                 name="template"
-                options={getTemplateOptions()}
+                options={luaGlobFuncs?.map((item) => ({
+                  label: item?.detail,
+                  value: item?.apply,
+                  desc: item?.label,
+                }))}
                 width="md"
+                fieldProps={{
+                  optionItemRender: (item) => (
+                    <Tooltip
+                      placement="right"
+                      arrow={false}
+                      title={<pre>{item.value}</pre>}
+                      overlayInnerStyle={{ width: 400 }}
+                    >
+                      <Typography.Paragraph
+                        copyable={{ text: item.value }}
+                        style={{
+                          marginBottom: 0,
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <Space>
+                          <span>{item.label}</span>
+                          <span className="text-[12px] text-[#000000A6]">{item.desc}</span>
+                        </Space>
+                      </Typography.Paragraph>
+                    </Tooltip>
+                  ),
+                }}
               />
-              <ProFormText label="备注" name="description" width="md" />
+              <ProFormText label="备注" name="description" width="md" placeholder="请输入备注" />
             </ProForm.Group>
-            <ProCodeEditor
-              label="规则回调"
-              name="actions"
-              ref={formRef}
-              required
-            />
+            <ProCodeEditor label="规则回调" name="actions" ref={formRef} required />
             <ProCodeEditor
               label="成功回调"
               name="success"
@@ -253,13 +232,7 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
               required
               defaultCollapsed
             />
-            <ProCodeEditor
-              label="失败回调"
-              name="failed"
-              ref={formRef}
-              required
-              defaultCollapsed
-            />
+            <ProCodeEditor label="失败回调" name="failed" ref={formRef} required defaultCollapsed />
           </ProForm>
         </ProCard>
       </PageContainer>

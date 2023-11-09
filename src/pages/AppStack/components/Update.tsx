@@ -131,12 +131,14 @@ const UpdateForm = () => {
               label="APP 名称"
               name="name"
               width="md"
+              placeholder="请输入 APP 名称"
               rules={[{ required: true, message: '请输入 APP 名称' }]}
             />
             <ProFormText
               label="APP 版本"
               name="version"
               width="md"
+              placeholder="请输入 APP 版本"
               rules={[{ required: true, message: '请输入 APP 版本' }]}
             />
             <ProForm.Item label="是否自启" name="autoStart" required>
@@ -165,6 +167,7 @@ const UpdateForm = () => {
               name="type"
               options={[{ label: 'LUA 脚本', value: 'lua' }]}
               width="md"
+              placeholder="请选择脚本类型"
               rules={[{ required: true, message: '请选择脚本类型' }]}
             />
           </ProForm.Group>

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import { history } from 'umi';
 
@@ -8,11 +8,11 @@ import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 
 import { message } from '@/components/PopupHack';
-import { deleteInends, getInends } from '@/services/rulex/shuruziyuanguanli';
-import { useRequest } from '@umijs/max';
-import { typeEnum } from './components/columns';
-import Detail from './components/Detail';
 import StateTag from '@/components/StateTag';
+import { deleteInends, getInends } from '@/services/rulex/shuruziyuanguanli';
+import { useModel, useRequest } from '@umijs/max';
+import Detail from './components/Detail';
+import { typeEnum } from './components/initialValue';
 
 export type InendsItem = {
   name: string;
@@ -25,10 +25,7 @@ export type InendsItem = {
 
 const Inends = () => {
   const actionRef = useRef<ActionType>();
-  const [detailConfig, setConfig] = useState<{ uuid: string; open: boolean }>({
-    uuid: '',
-    open: false,
-  });
+  const { detailConfig, setConfig } = useModel('useSource');
 
   // 删除
   const { run: remove } = useRequest((params: API.deleteInendsParams) => deleteInends(params), {
@@ -60,7 +57,7 @@ const Inends = () => {
       title: '状态',
       dataIndex: 'state',
       width: 100,
-      renderText: state => <StateTag state={state} />
+      renderText: (state) => <StateTag state={state} />,
     },
     {
       title: '备注',

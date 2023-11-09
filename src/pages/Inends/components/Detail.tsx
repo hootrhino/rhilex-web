@@ -6,7 +6,7 @@ import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
 import StateTag from '../../../components/StateTag';
-import { modeEnum, typeEnum } from './columns';
+import { modeEnum, typeEnum } from './initialValue';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -83,7 +83,6 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         title: '主机地址',
         dataIndex: 'host',
         copyable: true,
-        hideInDescriptions: data?.type !== 'NATS_SERVER',
       },
       {
         title: '服务端口',
@@ -92,6 +91,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: '主题',
         dataIndex: 'topic',
+        hideInDescriptions: data?.type !== 'NATS_SERVER',
       },
     ],
   };

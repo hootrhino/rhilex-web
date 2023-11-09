@@ -2,7 +2,7 @@ import LogTable from '@/components/LogTable';
 import { getRulesDetail } from '@/services/rulex/guizeguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { useParams } from '@umijs/max';
+import { history, useParams } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import { useModel } from 'umi';
@@ -19,21 +19,38 @@ type Option = {
 
 const Detail = ({ uuid, type, ...props }: DetailProps) => {
   const { groupId } = useParams();
-  const { data: sources } = useModel('useSource');
-  const { data: devices, run: getDeviceList } = useModel('useDevice');
+  const { data: sources, setConfig: setSourceDetail } = useModel('useSource');
+  const { data: devices, run: getDeviceList, setDeviceConfig } = useModel('useDevice');
 
   const getFromSourceName = (fromSource: string[], fromDevice: string[]) => {
     let name: string = '';
+    let url: string = '';
+    const isSource = fromSource?.length > 0;
 
-    if (fromSource?.length > 0) {
+    if (isSource) {
       const current = sources?.find((item: Option) => item?.value === fromSource?.[0]);
       name = current?.label || '';
+      url = '/inends/list';
     } else {
       const current = devices?.find((item) => item?.uuid === fromDevice?.[0]);
       name = current?.name || '';
+      url = '/device/list';
     }
 
-    return name;
+    return (
+      <a
+        onClick={() => {
+          history.push(url);
+          if (isSource) {
+            setSourceDetail({ open: true, uuid: fromSource?.[0] });
+          } else {
+            setDeviceConfig({ open: true, uuid: fromDevice?.[0] });
+          }
+        }}
+      >
+        {name}
+      </a>
+    );
   };
 
   const columns: ProDescriptionsItemProps<Record<string, any>>[] = [
@@ -82,6 +99,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       title={type === 'detail' ? '规则详情' : '规则日志'}
       placement="right"
       width="50%"
+      destroyOnClose
       {...props}
     >
       {type === 'detail' ? (

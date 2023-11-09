@@ -34,10 +34,10 @@ type GroupConfig = {
   title: string;
 };
 
-type DeviceConfig = {
-  uuid: string;
-  open: boolean;
-};
+// type DeviceConfig = {
+//   uuid: string;
+//   open: boolean;
+// };
 
 type GroupFormParams = {
   name: string;
@@ -49,15 +49,22 @@ const defaultGroupConfig = {
   title: '新建设备分组',
 };
 
-const defaultDeviceConfig = {
-  uuid: '',
-  open: false,
-};
+// const defaultDeviceConfig = {
+//   uuid: '',
+//   open: false,
+// };
 
 const Devices = () => {
   const groupFormRef = useRef<ProFormInstance>();
 
-  const { run: getDeviceList, data: deviceList, groupList, getGroupList } = useModel('useDevice');
+  const {
+    run: getDeviceList,
+    data: deviceList,
+    groupList,
+    getGroupList,
+    detailConfig,
+    setDeviceConfig,
+  } = useModel('useDevice');
   const {
     remove: removeGroup,
     create: createGroup,
@@ -67,7 +74,7 @@ const Devices = () => {
   } = useModel('useGroup');
 
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(defaultGroupConfig);
-  const [detailConfig, setDeviceConfig] = useState<DeviceConfig>(defaultDeviceConfig);
+  // const [detailConfig, setDeviceConfig] = useState<DeviceConfig>(defaultDeviceConfig);
   const [activeGroupKey, setActiveGroupKey] = useState<string>('DROOT');
 
   const getGroupName = (key: string) => {
