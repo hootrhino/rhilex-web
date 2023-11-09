@@ -1,3 +1,5 @@
+import { defaultRegistersConfig } from "./initialValue";
+
 // 模式
 export const modeEnum = {
   UART: 'UART',
@@ -219,6 +221,7 @@ export const columns = [
               valueType: 'formList',
               dataIndex: ['config', 'registers'],
               mode: 'multiple',
+              initialValue: [...defaultRegistersConfig],
               columns: [
                 {
                   valueType: 'group',
