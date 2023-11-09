@@ -14,7 +14,7 @@ import {
 } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
 import { AutoComplete, Button, Card, Descriptions, message, Modal } from 'antd';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { baudRateEnum, dataBitsEnum, parityEnum, stopBitsEnum, typeOptions } from './constant';
 
 type InterfaceItem = {
@@ -51,7 +51,7 @@ const Interface = () => {
   // 获取串口配置
   const { data: uartOptions } = useRequest(() => getOsUarts(), {
     formatResult: (res) =>
-      res?.data?.map((item) => ({
+      res?.data?.map(item => ({
         value: item.port,
         label: item.alias,
       })),
@@ -157,7 +157,7 @@ const Interface = () => {
           key="edit"
           onClick={() => {
             if (!uuid) return;
-            getDetail({ uuid });
+            getDetail({ uuid }).then(data => formRef.current?.setFieldsValue({ ...data, config: [data?.config] }));
             setOpen(true);
           }}
         >
@@ -166,12 +166,6 @@ const Interface = () => {
       ],
     },
   ];
-
-  useEffect(() => {
-    if (detail) {
-      formRef.current?.setFieldsValue({ ...detail, config: [detail?.config] });
-    }
-  }, [detail]);
 
   return (
     <>
@@ -293,6 +287,7 @@ const Interface = () => {
         open={detailConfig.open}
         onCancel={() => setDetailConfig({ open: false, uuid: '' })}
         maskClosable={false}
+        destroyOnClose
         footer={
           <Button type="primary" onClick={() => setDetailConfig({ open: false, uuid: '' })}>
             关闭
