@@ -64,7 +64,7 @@ export const processColumns = (columns: any) => {
           fieldProps: {
             min: 1,
             creatorButtonProps: { position: 'top' },
-            creatorRecord: col?.initialValue?.[0],
+            creatorRecord: col?.initialValue,
           },
         };
       }

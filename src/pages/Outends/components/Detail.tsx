@@ -6,7 +6,7 @@ import { Drawer, DrawerProps } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
-import { typeEnum } from './columns';
+import { typeEnum } from './initialValue';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -97,7 +97,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
   const { data, run, loading } = useRequest(() => getOutendsDetail({ uuid }), {
     manual: true,
     formatResult: (res) => {
-      return res?.data
+      return res?.data;
     },
   });
 

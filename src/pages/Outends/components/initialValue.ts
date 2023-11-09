@@ -1,3 +1,10 @@
+// 资源类型
+export const typeEnum = {
+  MONGO_SINGLE: 'MongoDB',
+  MQTT: 'MQTT Broker',
+  UDP_TARGET: 'UDP Server',
+};
+
 // MONGO_SINGLE 默认配置
 export const defaultMongoConfig = [
   {

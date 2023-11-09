@@ -1,15 +1,26 @@
 import { message } from '@/components/PopupHack';
-import SchemaForm from '@/components/SchemaForm';
 
 import { getOutendsDetail, postOutends, putOutends } from '@/services/rulex/shuchuziyuanguanli';
 
-import { ProSkeleton } from '@ant-design/pro-components';
+import useGoBack from '@/hooks/useGoBack';
+import type { ProFormInstance } from '@ant-design/pro-components';
+import {
+  FooterToolbar,
+  PageContainer,
+  ProCard,
+  ProForm,
+  ProFormDependency,
+  ProFormDigit,
+  ProFormList,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-components';
+import { Button, Popconfirm } from 'antd';
 import { pick } from 'lodash';
 import random from 'lodash/random';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
-import { columns } from './columns';
-import { defaultMongoConfig, defaultMqttConfig, defaultUdpConfig } from './initialValue';
+import { defaultMongoConfig, defaultMqttConfig, defaultUdpConfig, typeEnum } from './initialValue';
 
 // type Config = {
 //   host?: string;
@@ -34,39 +45,22 @@ import { defaultMongoConfig, defaultMqttConfig, defaultUdpConfig } from './initi
 const DefaultListUrl = '/outends/list';
 
 const UpdateForm = () => {
+  const formRef = useRef<ProFormInstance>();
   const { id } = useParams();
+  const { showModal } = useGoBack();
   const randomNumber = random(1000, 9999);
-  const [initialValue, setValue] = useState<any>();
-  const [formLoading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   // 获取详情
-  const {
-    run: getDetail,
-    data: detail,
-    loading: detailLoading,
-  } = useRequest((params: API.getOutendsDetailParams) => getOutendsDetail(params), {
-    manual: true,
-  });
-
-  // 新建
-  const { run: add, loading: addLoading } = useRequest((params) => postOutends(params), {
-    manual: true,
-    onSuccess: () => {
-      message.success('新建成功');
-      history.push(DefaultListUrl);
+  const { run: getDetail, data: detail } = useRequest(
+    (params: API.getOutendsDetailParams) => getOutendsDetail(params),
+    {
+      manual: true,
     },
-  });
-
-  // 编辑
-  const { run: update, loading: updateLoading } = useRequest((params) => putOutends(params), {
-    manual: true,
-    onSuccess: () => {
-      message.success('更新成功');
-      history.push(DefaultListUrl);
-    },
-  });
+  );
 
   const handleOnFinish = async ({ config, ...values }: any) => {
+    setLoading(true);
     try {
       let params = {
         ...values,
@@ -98,29 +92,34 @@ const UpdateForm = () => {
       }
 
       if (id) {
-        update({ ...params, uuid: id } as any);
+        await putOutends({ ...params, uuid: id } as any);
+        message.success('更新成功');
       } else {
-        add(params as any);
+        const { msg } = await postOutends(params as any);
+        if (msg === 'Success') {
+          message.success('创建成功');
+        } else {
+          message.warning(`创建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：${msg}`);
+        }
       }
-
+      setLoading(false);
+      history.push(DefaultListUrl);
       return true;
     } catch (error) {
+      setLoading(false);
+      history.push(DefaultListUrl);
       return false;
     }
   };
 
   useEffect(() => {
     if (detail) {
-      setValue({
+      formRef.current?.setFieldsValue({
         ...detail,
-        config: [
-          {
-            ...detail?.config,
-          },
-        ],
+        config: [detail?.config],
       });
     } else {
-      setValue({
+      formRef.current?.setFieldsValue({
         type: 'MONGO_SINGLE',
         config: defaultMongoConfig,
       });
@@ -133,40 +132,245 @@ const UpdateForm = () => {
     }
   }, [id]);
 
-  useEffect(() => {
-    if (!detailLoading) {
-      setLoading(false);
-    }
-  }, [detailLoading]);
+  return (
+    <PageContainer
+      header={{ title: id ? '编辑资源' : '新建资源' }}
+      onBack={() => showModal({ url: DefaultListUrl })}
+    >
+      <ProCard>
+        <ProForm
+          formRef={formRef}
+          onFinish={handleOnFinish}
+          submitter={{
+            render: ({ reset, submit }) => {
+              return (
+                <FooterToolbar>
+                  <Popconfirm
+                    key="reset"
+                    title="重置可能会丢失数据，确定要重置吗？"
+                    onConfirm={() => {
+                      reset();
+                      formRef.current?.setFieldsValue(
+                        id
+                          ? { ...detail, config: [detail?.config] }
+                          : { type: 'MONGO_SINGLE', config: defaultMongoConfig },
+                      );
+                    }}
+                  >
+                    <Button>重置</Button>
+                  </Popconfirm>
 
-  return formLoading ? (
-    <ProSkeleton />
-  ) : (
-    <SchemaForm
-      title={id ? '编辑目标' : '新建目标'}
-      loading={addLoading || updateLoading}
-      goBack={DefaultListUrl}
-      columns={columns}
-      initialValue={initialValue}
-      onFinish={handleOnFinish}
-      onValuesChange={(changedValue) => {
-        if (changedValue?.type === 'UDP_TARGET') {
-          setValue({
-            config: detail?.type === 'UDP_TARGET' ? [detail?.config] : defaultUdpConfig,
-          });
-        }
-        if (changedValue?.type === 'MQTT') {
-          setValue({
-            config: detail?.type === 'MQTT' ? [detail?.config] : defaultMqttConfig(randomNumber),
-          });
-        }
-        if (changedValue?.type === 'MONGO_SINGLE') {
-          setValue({
-            config: detail?.type === 'MONGO_SINGLE' ? [detail?.config] : defaultMongoConfig,
-          });
-        }
-      }}
-    />
+                  <Button key="submit" type="primary" onClick={submit} loading={loading}>
+                    提交
+                  </Button>
+                </FooterToolbar>
+              );
+            },
+          }}
+          onValuesChange={(changedValue) => {
+            if (!changedValue?.type) return;
+            let config: any = [];
+            switch (changedValue?.type) {
+              case 'MONGO_SINGLE':
+                config = defaultMongoConfig;
+                break;
+              case 'MQTT':
+                config = defaultMqttConfig(randomNumber);
+                break;
+              case 'UDP_TARGET':
+                config = defaultUdpConfig;
+                break;
+              default:
+                config = defaultMongoConfig;
+                break;
+            }
+            formRef.current?.setFieldsValue({
+              config: changedValue?.type === detail?.type ? [detail?.config] : config,
+            });
+          }}
+        >
+          <ProForm.Group>
+            <ProFormText
+              label="资源名称"
+              name="name"
+              width="md"
+              placeholder="请输入资源名称"
+              rules={[
+                {
+                  required: true,
+                  message: '请输入资源名称',
+                },
+              ]}
+            />
+            <ProFormSelect
+              label="资源类型"
+              name="type"
+              valueEnum={typeEnum}
+              width="md"
+              placeholder="请选择资源类型"
+              rules={[
+                {
+                  required: true,
+                  message: '请选择资源类型',
+                },
+              ]}
+            />
+            <ProFormText label="备注" name="description" width="md" placeholder="请输入备注" />
+          </ProForm.Group>
+          <ProFormDependency name={['type']}>
+            {({ type }) => {
+              if (!type) return;
+
+              return (
+                <ProFormList
+                  name="config"
+                  label="资源配置"
+                  creatorButtonProps={false}
+                  copyIconProps={false}
+                  deleteIconProps={false}
+                >
+                  {type === 'MONGO_SINGLE' && (
+                    <ProForm.Group>
+                      <ProFormText
+                        label="MongoDB URL"
+                        name="mongoUrl"
+                        width="md"
+                        placeholder="请输入 MongoDB URL"
+                        rules={[
+                          {
+                            required: true,
+                            message: '请输入 MongoDB URL',
+                          },
+                        ]}
+                      />
+                      <ProFormText
+                        label="MongoDB 数据库"
+                        name="database"
+                        width="md"
+                        placeholder="请输入 MongoDB 数据库"
+                        rules={[
+                          {
+                            required: true,
+                            message: '请输入 MongoDB 数据库',
+                          },
+                        ]}
+                      />
+                      <ProFormText
+                        label="MongoDB 集合"
+                        name="collection"
+                        width="md"
+                        placeholder="请输入 MongoDB 集合"
+                        rules={[
+                          {
+                            required: true,
+                            message: '请输入 MongoDB 集合',
+                          },
+                        ]}
+                      />
+                    </ProForm.Group>
+                  )}
+                  {type === 'MQTT' && (
+                    <>
+                      <ProForm.Group>
+                        <ProFormDigit
+                          label="服务地址"
+                          name="host"
+                          width="md"
+                          placeholder="请输入服务地址"
+                          rules={[{ required: true, message: '请输入服务地址' }]}
+                        />
+                        <ProFormDigit
+                          label="服务端口"
+                          name="port"
+                          width="md"
+                          placeholder="请输入服务端口"
+                          rules={[{ required: true, message: '请输入服务端口' }]}
+                        />
+                        <ProFormText
+                          label="客户端 ID"
+                          name="clientId"
+                          width="md"
+                          placeholder="请输入客户端 ID"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请输入客户端 ID',
+                            },
+                          ]}
+                        />
+                        <ProFormText
+                          label="上报 TOPIC"
+                          name="pubTopic"
+                          width="md"
+                          placeholder="请输入上报 TOPIC"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请输入上报 TOPIC',
+                            },
+                          ]}
+                        />
+                      </ProForm.Group>
+                      <ProForm.Group>
+                        <ProFormText
+                          label="连接账户"
+                          name="username"
+                          width="md"
+                          placeholder="请输入连接账户"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请输入连接账户',
+                            },
+                          ]}
+                        />
+                        <ProFormText.Password
+                          label="连接密码"
+                          name="password"
+                          width="md"
+                          placeholder="请输入连接密码"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请输入连接密码',
+                            },
+                          ]}
+                        />
+                      </ProForm.Group>
+                    </>
+                  )}
+                  {type === 'UDP_TARGET' && (
+                    <ProForm.Group>
+                      <ProFormDigit
+                        label="超时时间（毫秒）"
+                        name="timeout"
+                        width="md"
+                        placeholder="请输入超时时间（毫秒）"
+                        rules={[{ required: true, message: '请输入超时时间（毫秒）' }]}
+                      />
+                      <ProFormDigit
+                        label="服务地址"
+                        name="host"
+                        width="md"
+                        placeholder="请输入服务地址"
+                        rules={[{ required: true, message: '请输入服务地址' }]}
+                      />
+                      <ProFormDigit
+                        label="服务端口"
+                        name="port"
+                        width="md"
+                        placeholder="请输入服务端口"
+                        rules={[{ required: true, message: '请输入服务端口' }]}
+                      />
+                    </ProForm.Group>
+                  )}
+                </ProFormList>
+              );
+            }}
+          </ProFormDependency>
+        </ProForm>
+      </ProCard>
+    </PageContainer>
   );
 };
 

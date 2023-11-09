@@ -221,7 +221,7 @@ export const columns = [
               valueType: 'formList',
               dataIndex: ['config', 'registers'],
               mode: 'multiple',
-              initialValue: [...defaultRegistersConfig],
+              initialValue: defaultRegistersConfig[0],
               columns: [
                 {
                   valueType: 'group',

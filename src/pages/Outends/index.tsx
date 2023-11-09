@@ -7,9 +7,10 @@ import { Button, Popconfirm } from 'antd';
 import { history } from 'umi';
 
 import { message } from '@/components/PopupHack';
+import StateTag from '@/components/StateTag';
 import { deleteOutends, getOutends } from '@/services/rulex/shuchuziyuanguanli';
 import Detail from './components/Detail';
-import StateTag from '@/components/StateTag';
+import { typeEnum } from './components/initialValue';
 
 export type Item = {
   name: string;
@@ -54,17 +55,13 @@ const Targets = () => {
     {
       title: '类型',
       dataIndex: 'type',
-      valueEnum: {
-        MONGO_SINGLE: 'MongoDB',
-        MQTT: 'MQTT Broker',
-        UDP_TARGET: 'UDP Server',
-      },
+      valueEnum: typeEnum,
     },
     {
       title: '状态',
       dataIndex: 'state',
       width: 100,
-      renderText: state => <StateTag state={state} />
+      renderText: (state) => <StateTag state={state} />,
     },
     {
       title: '备注',

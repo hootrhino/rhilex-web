@@ -100,6 +100,8 @@ const BaseForm = () => {
       setLoading(false);
       return true;
     } catch (error) {
+      setLoading(false);
+      history.push(DefaultListUrl);
       return false;
     }
   };
