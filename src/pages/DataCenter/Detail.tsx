@@ -135,13 +135,6 @@ const DataCenter = () => {
           bodyStyle={{ height: 'calc(100% - 56px)', padding: '6px 0 0 0', overflowY: 'auto' }}
         >
           <CodeEditor mode='sql' theme='light'  value={code} onChange={(value) => setCode(value)} height="100%"/>
-          {/* <CodeMirror
-            value={code}
-            extensions={[sql()]}
-            onChange={(value) => setCode(value)}
-            height="100%"
-            theme={bbedit}
-          /> */}
         </Card>
       </div>
 
@@ -166,7 +159,7 @@ const DataCenter = () => {
               columns={columns}
               className="data-center-sheets"
               tableClassName={cn('data-center-scrollbar')}
-              scroll={{ y: height - 220, x: 2000 }}
+              scroll={{ y: height - 220, x: columns?.length > 10 ? 2000 : false }}
               pagination={false}
               options={{ density: true, setting: true, reload: () => refresh() }}
             />
