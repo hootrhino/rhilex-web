@@ -1,8 +1,8 @@
-import { putSiteUpdate } from '@/services/rulex/zhandianpeizhi';
+import { getSiteDetail, putSiteUpdate } from '@/services/rulex/zhandianpeizhi';
 import { getBase64 } from '@/utils/utils';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormText, ProFormUploadButton } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
+import { useModel, useRequest } from '@umijs/max';
 import type { UploadFile } from 'antd';
 import { Image, message, Modal, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload';
@@ -19,7 +19,11 @@ const SiteConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  const { siteDetail } = useModel('useSetting');
+  const { initialState, setInitialState } = useModel('@@initialState');
+
+  const { data: siteDetail } = useRequest(() => getSiteDetail(), {
+    onSuccess: res => setInitialState({...initialState, settings: {...initialState.settings, title: res?.appName}})
+  });
 
   const handleOnFinish = async (values: SiteForm) => {
     try {
