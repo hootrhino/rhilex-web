@@ -1,4 +1,4 @@
-import { message } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
 import { get4gInfo, postSettings4gRestart } from '@/services/rulex/4Gshezhi';
 import { green } from '@ant-design/colors';
 import { PoweroffOutlined, ReloadOutlined } from '@ant-design/icons';
@@ -24,32 +24,31 @@ const FourGConfig = () => {
   });
 
   // 重启4G
-  const { run: restart, loading } = useRequest(() => postSettings4gRestart(), {
+  const { run: restart } = useRequest(() => postSettings4gRestart(), {
     manual: true,
     onSuccess: () => {
       message.success('重启成功');
     },
   });
 
+  const getCsqPercent = () => {
+    const base = 31 / 100;
+    const percent = detail?.csq ? detail?.csq / base : 0;
+
+    return ~~percent;
+  };
+
   return (
     <>
-    <Title name='4G 配置' />
+      <Title name="4G 配置" />
       <ProForm
         formRef={formRef}
         layout="horizontal"
         labelCol={{ span: 2 }}
-        initialValues={{ zone: 'Asia/Shanghai', csq: 29 }}
+        initialValues={{ zone: 'Asia/Shanghai', csq: 0 }}
         submitter={{
           render: () => (
             <Space>
-              <Button
-                type="primary"
-                onClick={restart}
-                loading={loading}
-                icon={<PoweroffOutlined />}
-              >
-                重启 4G 网卡
-              </Button>
               <Button
                 type="primary"
                 onClick={getDetail}
@@ -58,6 +57,21 @@ const FourGConfig = () => {
               >
                 刷新状态
               </Button>
+              <Button
+                type="primary"
+                danger
+                onClick={() =>
+                  modal.confirm({
+                    title: '确定执行重启操作吗？',
+                    content: '重启 4G 网卡会造成短时间内移动网络处于离线状态，请谨慎操作',
+                    okText: '确认重启',
+                    onOk: restart,
+                  })
+                }
+                icon={<PoweroffOutlined />}
+              >
+                重启 4G 网卡
+              </Button>
             </Space>
           ),
         }}
@@ -65,7 +79,7 @@ const FourGConfig = () => {
         <ProFormText name="cops" label="运营商" placeholder="" disabled width="xl" />
         <ProFormText name="iccid" label="ICCID" placeholder="" disabled width="xl" />
         <ProForm.Item name="csq" label="信号强度">
-          <Progress steps={10} size={20} percent={detail?.csq || 0} strokeColor={green[6]} />
+          <Progress steps={10} size={20} percent={getCsqPercent()} strokeColor={green[6]} />
         </ProForm.Item>
       </ProForm>
     </>
