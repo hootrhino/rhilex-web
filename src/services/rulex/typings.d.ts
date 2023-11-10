@@ -1,5 +1,39 @@
 declare namespace API {
+  type CronTaskCreateDTO = {
+    /** "param1 param2 param3" */
+    args?: string;
+    cronExpr: string;
+    /** ["A=e1", "B=e2", "C=e3"] */
+    env?: string[];
+    /** 0-false 1-true */
+    isRoot?: string;
+    name: string;
+    script?: string;
+    /** 1-shell 2-cmd */
+    taskType: number;
+  };
+
+  type CronTaskUpdateDTO = {
+    /** "param1 param2 param3" */
+    args?: string;
+    cronExpr?: string;
+    /** ["A=e1", "B=e2", "C=e3"] */
+    env?: string[];
+    /** 0-false 1-true */
+    isRoot?: string;
+    name?: string;
+    script?: string;
+    /** 1-shell 2-cmd */
+    taskType?: number;
+    uuid: string;
+  };
+
   type deleteAppParams = {
+    uuid: string;
+  };
+
+  type deleteCrontask_openAPI_deleteParams = {
+    /** uuid */
     uuid: string;
   };
 
@@ -35,39 +69,23 @@ declare namespace API {
     uuid: string;
   };
 
-  type getCrontaskPageParams = {
-    /** 当前页，从1开始 */
-    current: number;
-    /** 每页个数 */
-    size?: number;
-  };
-
   type getCrontaskResultsPageParams = {
-    /** 当前页，从1开始 */
-    current: number;
-    /** 每页个数 */
-    size: number;
-    /** 任务id */
-    taskId?: number;
+    /** current */
+    current?: string;
+    /** size */
+    size?: string;
+    /** uuid */
+    uuid?: string;
   };
 
   type getCrontaskStartParams = {
-    /** 任务id */
-    id: number;
+    /** uuid */
+    uuid: string;
   };
 
   type getCrontaskStopParams = {
-    /** 任务id */
-    id?: number;
-  };
-
-  type getCrontaskTerminateRunningTaskParams = {
-    /** 当前页，从1开始 */
-    current: number;
-    /** 每页个数 */
-    size: number;
-    /** 任务id */
-    taskId?: number;
+    /** uuid */
+    uuid: string;
   };
 
   type getDataCenterSchemaDefineParams = {
@@ -157,5 +175,11 @@ declare namespace API {
 
   type putVisualPublishParams = {
     uuid: string;
+  };
+
+  type R = {
+    code: number;
+    data?: string;
+    msg: string;
   };
 }

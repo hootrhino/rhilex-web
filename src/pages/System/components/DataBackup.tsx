@@ -6,7 +6,7 @@ import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Space, Upload } from 'antd';
-import { endsWith, startsWith } from 'lodash';
+import { endsWith } from 'lodash';
 import { useRef } from 'react';
 import Title from './TItle';
 
@@ -30,6 +30,7 @@ const DataBackupConfig = () => {
   const { run: backup } = useRequest(() => getBackup(), {
     manual: true,
     onSuccess: () => {
+      window.open('', '_blank')
       message.success('下载成功');
     },
   });
@@ -62,12 +63,12 @@ const DataBackupConfig = () => {
         <ProForm.Item name="recovery" label="数据恢复">
           <Upload.Dragger
             className="w-full"
-            accept=".sql,text/sql"
+            accept=".db"
             maxCount={1}
             beforeUpload={(file) => {
-              const isSql = startsWith(file.type, 'text/sql') || endsWith(file.name, '.sql');
+              const isSql = endsWith(file.name, '.db');
               if (!isSql) {
-                message.error('仅支持sql文件，请检查上传文件格式');
+                message.error('仅支持 .db 格式的文件，请检查上传文件格式');
               }
 
               return isSql || Upload.LIST_IGNORE;
@@ -78,7 +79,7 @@ const DataBackupConfig = () => {
               <InboxOutlined />
             </p>
             <p className="ant-upload-text">单击或拖动文件到此区域进行上传</p>
-            <p className="ant-upload-hint">仅支持sql文件</p>
+            <p className="ant-upload-hint">仅支持 db 文件</p>
           </Upload.Dragger>
         </ProForm.Item>
       </ProForm>

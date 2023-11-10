@@ -15,7 +15,6 @@ const CodeEditor = ({ mode = 'shell', theme = 'dark', ...props }: CodeEditorProp
       height="200px"
       theme={theme === 'dark' ? monokai : bbedit}
       autoFocus={false}
-
       {...props}
     />
   );

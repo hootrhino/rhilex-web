@@ -2,20 +2,12 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 新建任务 POST /api/v1/crontask/create */
+/** 创建定时任务 POST /api/v1/crontask/create */
 export async function postCrontaskCreate(
-  body: {
-    name: string;
-    cronExpr: string;
-    taskType: number;
-    args?: string;
-    isRoot?: string;
-    env?: string[];
-    script: string;
-  },
+  body: API.CronTaskCreateDTO,
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: number }>('/api/v1/crontask/create', {
+  return request<API.R>('/api/v1/crontask/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -25,103 +17,14 @@ export async function postCrontaskCreate(
   });
 }
 
-/** 删除任务 DELETE /api/v1/crontask/delete */
+/** 删除定时任务 DELETE /api/v1/crontask/delete */
 export async function deleteCrontask__openAPI__delete(
-  body: {
-    id: number;
-  },
-  options?: { [key: string]: any },
-) {
-  return request<{
-    code: number;
-    msg: string;
-    data: {
-      current?: number;
-      size?: number;
-      total?: number;
-      records?: {
-        ID?: number;
-        CreatedAt?: string;
-        name?: string;
-        cronExpr?: string;
-        enable?: string;
-        taskType?: number;
-        command?: string;
-        args?: string;
-        isRoot?: string;
-        workDir?: string;
-        env?: string;
-        script?: string;
-        updatedAt?: string;
-      }[];
-    };
-  }>('/api/v1/crontask/delete', {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
-    ...(options || {}),
-  });
-}
-
-/** 正在运行任务列表 当前正在运行的任务（是指正在运行的任务，不是指start了的任务） GET /api/v1/crontask/listRunningTask */
-export async function getCrontaskListRunningTask(options?: { [key: string]: any }) {
-  return request<{
-    code: number;
-    msg: string;
-    data: {
-      current?: number;
-      size?: number;
-      total?: number;
-      records?: {
-        ID?: number;
-        CreatedAt?: string;
-        taskId?: number;
-        status?: string;
-        ExitCode?: string;
-        logPath?: string;
-        startTime?: string;
-        endTime?: string;
-      }[];
-    };
-  }>('/api/v1/crontask/listRunningTask', {
-    method: 'GET',
-    ...(options || {}),
-  });
-}
-
-/** 任务列表 分页获取已创建的定时任务 GET /api/v1/crontask/page */
-export async function getCrontaskPage(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getCrontaskPageParams,
+  params: API.deleteCrontask_openAPI_deleteParams,
   options?: { [key: string]: any },
 ) {
-  return request<{
-    code: number;
-    msg: string;
-    data: {
-      current?: number;
-      size?: number;
-      total?: number;
-      records?: {
-        ID?: number;
-        CreatedAt?: string;
-        name?: string;
-        cronExpr?: string;
-        enable?: string;
-        taskType?: number;
-        command?: string;
-        args?: string;
-        isRoot?: string;
-        workDir?: string;
-        env?: string;
-        script?: string;
-        updatedAt?: string;
-      }[];
-    };
-  }>('/api/v1/crontask/page', {
-    method: 'GET',
+  return request<API.R>('/api/v1/crontask/delete', {
+    method: 'DELETE',
     params: {
       ...params,
     },
@@ -129,31 +32,21 @@ export async function getCrontaskPage(
   });
 }
 
-/** 执行结果列表 按时间倒序返回定时任务执行记录 GET /api/v1/crontask/results/page */
+/** 获取所有定时任务 GET /api/v1/crontask/list */
+export async function getCrontaskList(options?: { [key: string]: any }) {
+  return request<API.R>('/api/v1/crontask/list', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 分页获取定时任务执行结果 GET /api/v1/crontask/results/page */
 export async function getCrontaskResultsPage(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getCrontaskResultsPageParams,
   options?: { [key: string]: any },
 ) {
-  return request<{
-    code: number;
-    msg: string;
-    data: {
-      current?: number;
-      size?: number;
-      total?: number;
-      records?: {
-        ID?: number;
-        CreatedAt?: string;
-        taskId?: number;
-        status?: string;
-        ExitCode?: string;
-        logPath?: string;
-        startTime?: string;
-        endTime?: string;
-      }[];
-    };
-  }>('/api/v1/crontask/results/page', {
+  return request<API.R>('/api/v1/crontask/results/page', {
     method: 'GET',
     params: {
       ...params,
@@ -162,13 +55,13 @@ export async function getCrontaskResultsPage(
   });
 }
 
-/** 启动任务 启动定时任务 GET /api/v1/crontask/start */
+/** 启动定时任务 GET /api/v1/crontask/start */
 export async function getCrontaskStart(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getCrontaskStartParams,
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: any }>('/api/v1/crontask/start', {
+  return request<API.R>('/api/v1/crontask/start', {
     method: 'GET',
     params: {
       ...params,
@@ -177,13 +70,13 @@ export async function getCrontaskStart(
   });
 }
 
-/** 停止任务 将任务停止，不再调度运行。 GET /api/v1/crontask/stop */
+/** 停止定时任务 GET /api/v1/crontask/stop */
 export async function getCrontaskStop(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getCrontaskStopParams,
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: any }>('/api/v1/crontask/stop', {
+  return request<API.R>('/api/v1/crontask/stop', {
     method: 'GET',
     params: {
       ...params,
@@ -192,54 +85,12 @@ export async function getCrontaskStop(
   });
 }
 
-/** 停止正在运行的任务 强行终止指定的正在运行的任务 GET /api/v1/crontask/terminateRunningTask */
-export async function getCrontaskTerminateRunningTask(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getCrontaskTerminateRunningTaskParams,
-  options?: { [key: string]: any },
-) {
-  return request<{
-    code: number;
-    msg: string;
-    data: {
-      current?: number;
-      size?: number;
-      total?: number;
-      records?: {
-        ID?: number;
-        CreatedAt?: string;
-        taskId?: number;
-        status?: string;
-        ExitCode?: string;
-        logPath?: string;
-        startTime?: string;
-        endTime?: string;
-      }[];
-    };
-  }>('/api/v1/crontask/terminateRunningTask', {
-    method: 'GET',
-    params: {
-      ...params,
-    },
-    ...(options || {}),
-  });
-}
-
-/** 更新任务 更新任务信息 PUT /api/v1/crontask/update */
+/** 更新定时任务 PUT /api/v1/crontask/update */
 export async function putCrontaskUpdate(
-  body: {
-    id: number;
-    name?: string;
-    cronExpr?: string;
-    taskType?: number;
-    args?: string;
-    isRoot?: string;
-    env?: string[];
-    script?: string;
-  },
+  body: API.CronTaskUpdateDTO,
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string }>('/api/v1/crontask/update', {
+  return request<API.R>('/api/v1/crontask/update', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

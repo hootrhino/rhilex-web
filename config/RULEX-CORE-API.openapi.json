@@ -3698,8 +3698,7 @@
                 },
                 "required": [
                   "uuid",
-                  "name",
-                  "args"
+                  "name"
                 ],
                 "x-apifox-orders": [
                   "uuid",
@@ -4865,7 +4864,7 @@
     },
     "/api/v1/crontask/create": {
       "post": {
-        "summary": "新建任务",
+        "summary": "创建定时任务",
         "x-apifox-folder": "定时任务",
         "x-apifox-status": "released",
         "deprecated": false,
@@ -4878,112 +4877,19 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "title": "任务名称"
-                  },
-                  "cronExpr": {
-                    "type": "string",
-                    "title": "cron表达式"
-                  },
-                  "taskType": {
-                    "type": "integer",
-                    "title": "任务类型，1-shell，目前仅支持1"
-                  },
-                  "args": {
-                    "type": "string",
-                    "title": "运行参数"
-                  },
-                  "isRoot": {
-                    "type": "string",
-                    "title": "是否root，目前还没实现，先默认传字符串1"
-                  },
-                  "env": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "title": "环境变量"
-                  },
-                  "script": {
-                    "type": "string",
-                    "title": "脚本内容(base64编码）"
-                  }
-                },
-                "required": [
-                  "name",
-                  "cronExpr",
-                  "taskType",
-                  "script"
-                ],
-                "x-apifox-orders": [
-                  "name",
-                  "cronExpr",
-                  "taskType",
-                  "args",
-                  "isRoot",
-                  "env",
-                  "script"
-                ],
-                "x-apifox-ignore-properties": []
+                "$ref": "#/components/schemas/dto.CronTaskCreateDTO"
               },
-              "example": {
-                "name": "test1",
-                "cronExpr": "*/2 * * * * *",
-                "taskTye": 1,
-                "args": "-j4 -name 123",
-                "isRoot": "1",
-                "env": [
-                  "A=B1",
-                  "B=B2",
-                  "C=B3"
-                ],
-                "script": "ZWNobyAnaGVsbG8gcnVsZXghJw=="
-              }
+              "example": ""
             }
           }
         },
         "responses": {
           "200": {
-            "description": "成功",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "integer"
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": 0
-                    }
-                  }
+                  "$ref": "#/components/schemas/httpserver.R"
                 }
               }
             }
@@ -4995,128 +4901,7 @@
     },
     "/api/v1/crontask/update": {
       "put": {
-        "summary": "更新任务",
-        "x-apifox-folder": "定时任务",
-        "x-apifox-status": "released",
-        "deprecated": false,
-        "description": "更新任务信息",
-        "tags": [
-          "定时任务"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "integer"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "cronExpr": {
-                    "type": "string"
-                  },
-                  "taskType": {
-                    "type": "integer"
-                  },
-                  "args": {
-                    "type": "string"
-                  },
-                  "isRoot": {
-                    "type": "string"
-                  },
-                  "env": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "script": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "id",
-                  "01HBJVTNV8QA740G1B1R16VFSD"
-                ],
-                "x-apifox-orders": [
-                  "01HBJVTNV8QA740G1B1R16VFSD",
-                  "id",
-                  "name",
-                  "cronExpr",
-                  "taskType",
-                  "args",
-                  "isRoot",
-                  "env",
-                  "script"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "id": 1,
-                "name": "test1",
-                "cronExpr": "*/2 * * * * *",
-                "taskTye": 1,
-                "args": "-j4 -name 123",
-                "isRoot": "1",
-                "env": [
-                  "A=B1",
-                  "B=B2",
-                  "C=B3"
-                ],
-                "script": "ZWNobyAnaGVsbG8gcnVsZXghJw=="
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-114236920-run",
-        "security": []
-      }
-    },
-    "/api/v1/crontask/delete": {
-      "delete": {
-        "summary": "删除任务",
+        "summary": "更新定时任务",
         "x-apifox-folder": "定时任务",
         "x-apifox-status": "released",
         "deprecated": false,
@@ -5129,174 +4914,56 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "integer",
-                    "title": "任务id"
-                  }
-                },
-                "required": [
-                  "id"
-                ],
-                "x-apifox-orders": [
-                  "id"
-                ],
-                "x-apifox-ignore-properties": []
+                "$ref": "#/components/schemas/dto.CronTaskUpdateDTO"
               },
-              "example": {
-                "id": 1
-              }
+              "example": ""
             }
           }
         },
         "responses": {
           "200": {
-            "description": "成功",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "current": {
-                          "type": "integer"
-                        },
-                        "size": {
-                          "type": "integer"
-                        },
-                        "total": {
-                          "type": "integer"
-                        },
-                        "records": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "ID": {
-                                "type": "integer"
-                              },
-                              "CreatedAt": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              },
-                              "cronExpr": {
-                                "type": "string"
-                              },
-                              "enable": {
-                                "type": "string"
-                              },
-                              "taskType": {
-                                "type": "integer"
-                              },
-                              "command": {
-                                "type": "string"
-                              },
-                              "args": {
-                                "type": "string"
-                              },
-                              "isRoot": {
-                                "type": "string"
-                              },
-                              "workDir": {
-                                "type": "string"
-                              },
-                              "env": {
-                                "type": "string"
-                              },
-                              "script": {
-                                "type": "string"
-                              },
-                              "updatedAt": {
-                                "type": "string"
-                              }
-                            },
-                            "x-apifox-orders": [
-                              "ID",
-                              "CreatedAt",
-                              "name",
-                              "cronExpr",
-                              "enable",
-                              "taskType",
-                              "command",
-                              "args",
-                              "isRoot",
-                              "workDir",
-                              "env",
-                              "script",
-                              "updatedAt"
-                            ],
-                            "x-apifox-ignore-properties": []
-                          }
-                        }
-                      },
-                      "required": [
-                        "current",
-                        "size",
-                        "total",
-                        "records"
-                      ],
-                      "x-apifox-orders": [
-                        "current",
-                        "size",
-                        "total",
-                        "records"
-                      ],
-                      "x-apifox-ignore-properties": []
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "current": 1,
-                        "size": 25,
-                        "total": 1,
-                        "records": [
-                          {
-                            "ID": 1,
-                            "CreatedAt": "2023-09-30T17:00:27.4096432+08:00",
-                            "name": "test1",
-                            "cronExpr": "30 * * * * *",
-                            "enable": "0",
-                            "taskType": 1,
-                            "command": "",
-                            "args": "123",
-                            "isRoot": "0",
-                            "workDir": "cron_assets/1",
-                            "env": "[\"A=B1\",\"B=B2\",\"C=B3\"]",
-                            "script": "echo 'hello rulex!'",
-                            "updatedAt": "2023-09-30T17:08:33.6235407+08:00"
-                          }
-                        ]
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/httpserver.R"
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-114236920-run",
+        "security": []
+      }
+    },
+    "/api/v1/crontask/delete": {
+      "delete": {
+        "summary": "删除定时任务",
+        "x-apifox-folder": "定时任务",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "定时任务"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "uuid",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/httpserver.R"
                 }
               }
             }
@@ -5306,231 +4973,13 @@
         "security": []
       }
     },
-    "/api/v1/crontask/page": {
-      "get": {
-        "summary": "任务列表",
-        "x-apifox-folder": "定时任务",
-        "x-apifox-status": "released",
-        "deprecated": false,
-        "description": "分页获取已创建的定时任务",
-        "tags": [
-          "定时任务"
-        ],
-        "parameters": [
-          {
-            "name": "current",
-            "in": "query",
-            "description": "当前页，从1开始",
-            "required": true,
-            "example": "",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "description": "每页个数",
-            "required": false,
-            "example": "",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "current": {
-                          "type": "integer"
-                        },
-                        "size": {
-                          "type": "integer"
-                        },
-                        "total": {
-                          "type": "integer"
-                        },
-                        "records": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "ID": {
-                                "type": "integer"
-                              },
-                              "CreatedAt": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              },
-                              "cronExpr": {
-                                "type": "string"
-                              },
-                              "enable": {
-                                "type": "string"
-                              },
-                              "taskType": {
-                                "type": "integer"
-                              },
-                              "command": {
-                                "type": "string"
-                              },
-                              "args": {
-                                "type": "string"
-                              },
-                              "isRoot": {
-                                "type": "string"
-                              },
-                              "workDir": {
-                                "type": "string"
-                              },
-                              "env": {
-                                "type": "string"
-                              },
-                              "script": {
-                                "type": "string"
-                              },
-                              "updatedAt": {
-                                "type": "string"
-                              }
-                            },
-                            "required": [
-                              "ID",
-                              "CreatedAt",
-                              "name",
-                              "cronExpr",
-                              "enable",
-                              "taskType",
-                              "command",
-                              "args",
-                              "isRoot",
-                              "workDir",
-                              "env",
-                              "script",
-                              "updatedAt"
-                            ],
-                            "x-apifox-orders": [
-                              "ID",
-                              "CreatedAt",
-                              "name",
-                              "cronExpr",
-                              "enable",
-                              "taskType",
-                              "command",
-                              "args",
-                              "isRoot",
-                              "workDir",
-                              "env",
-                              "script",
-                              "updatedAt"
-                            ],
-                            "x-apifox-ignore-properties": []
-                          }
-                        }
-                      },
-                      "required": [
-                        "current",
-                        "size",
-                        "total",
-                        "records"
-                      ],
-                      "x-apifox-orders": [
-                        "current",
-                        "size",
-                        "total",
-                        "records"
-                      ],
-                      "x-apifox-ignore-properties": []
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "current": 1,
-                        "size": 25,
-                        "total": 2,
-                        "records": [
-                          {
-                            "ID": 1,
-                            "CreatedAt": "2023-09-30T17:00:27.4096432+08:00",
-                            "name": "test1",
-                            "cronExpr": "30 * * * * *",
-                            "enable": "1",
-                            "taskType": 1,
-                            "command": "",
-                            "args": "123",
-                            "isRoot": "0",
-                            "workDir": "cron_assets/1",
-                            "env": "[\"A=B1\"]",
-                            "script": "ZWNobyAnaGVsbG8gcnVsZXghJw==",
-                            "updatedAt": "2023-09-30T18:49:06.8139346+08:00"
-                          },
-                          {
-                            "ID": 2,
-                            "CreatedAt": "2023-09-30T18:55:17.533694+08:00",
-                            "name": "test1",
-                            "cronExpr": "*/2 * * * * *",
-                            "enable": "0",
-                            "taskType": 1,
-                            "command": "",
-                            "args": "-j4 -name 123",
-                            "isRoot": "1",
-                            "workDir": "cron_assets/2",
-                            "env": "[\"A=B1\",\"B=B2\",\"C=B3\"]",
-                            "script": "ZWNobyAnaGVsbG8gcnVsZXghJw==",
-                            "updatedAt": "2023-09-30T18:55:17.5363696+08:00"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-114236943-run",
-        "security": []
-      }
-    },
     "/api/v1/crontask/results/page": {
       "get": {
-        "summary": "执行结果列表",
+        "summary": "分页获取定时任务执行结果",
         "x-apifox-folder": "定时任务",
         "x-apifox-status": "released",
         "deprecated": false,
-        "description": "按时间倒序返回定时任务执行记录",
+        "description": "",
         "tags": [
           "定时任务"
         ],
@@ -5538,176 +4987,38 @@
           {
             "name": "current",
             "in": "query",
-            "description": "当前页，从1开始",
-            "required": true,
-            "example": "",
+            "description": "current",
+            "required": false,
             "schema": {
-              "type": "integer"
+              "type": "string"
             }
           },
           {
             "name": "size",
             "in": "query",
-            "description": "每页个数",
-            "required": true,
-            "example": "",
+            "description": "size",
+            "required": false,
             "schema": {
-              "type": "number"
+              "type": "string"
             }
           },
           {
-            "name": "taskId",
+            "name": "uuid",
             "in": "query",
-            "description": "任务id",
+            "description": "uuid",
             "required": false,
-            "example": "",
             "schema": {
-              "type": "integer"
+              "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "成功",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "current": {
-                          "type": "integer"
-                        },
-                        "size": {
-                          "type": "integer"
-                        },
-                        "total": {
-                          "type": "integer"
-                        },
-                        "records": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "ID": {
-                                "type": "integer"
-                              },
-                              "CreatedAt": {
-                                "type": "string"
-                              },
-                              "taskId": {
-                                "type": "integer"
-                              },
-                              "status": {
-                                "type": "string"
-                              },
-                              "ExitCode": {
-                                "type": "string"
-                              },
-                              "logPath": {
-                                "type": "string"
-                              },
-                              "startTime": {
-                                "type": "string"
-                              },
-                              "endTime": {
-                                "type": "string"
-                              }
-                            },
-                            "required": [
-                              "ID",
-                              "CreatedAt",
-                              "taskId",
-                              "status",
-                              "ExitCode",
-                              "logPath",
-                              "startTime",
-                              "endTime"
-                            ],
-                            "x-apifox-orders": [
-                              "ID",
-                              "CreatedAt",
-                              "taskId",
-                              "status",
-                              "ExitCode",
-                              "logPath",
-                              "startTime",
-                              "endTime"
-                            ],
-                            "x-apifox-ignore-properties": []
-                          }
-                        }
-                      },
-                      "required": [
-                        "current",
-                        "size",
-                        "total",
-                        "records"
-                      ],
-                      "x-apifox-orders": [
-                        "current",
-                        "size",
-                        "total",
-                        "records"
-                      ],
-                      "x-apifox-ignore-properties": []
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "current": 1,
-                        "size": 25,
-                        "total": 2,
-                        "records": [
-                          {
-                            "ID": 2,
-                            "CreatedAt": "2023-09-30T17:08:30.0036778+08:00",
-                            "taskId": 1,
-                            "status": "2",
-                            "ExitCode": "-1",
-                            "logPath": "cron_logs/2023-09-30/1/17-08-30.log",
-                            "startTime": "2023-09-30T17:08:30.0031378+08:00",
-                            "endTime": "2023-09-30T17:08:30.0092769+08:00"
-                          },
-                          {
-                            "ID": 1,
-                            "CreatedAt": "2023-09-30T17:07:30.0116707+08:00",
-                            "taskId": 1,
-                            "status": "2",
-                            "ExitCode": "-1",
-                            "logPath": "cron_logs/2023-09-30/1/17-07-30.log",
-                            "startTime": "2023-09-30T17:07:30.0100324+08:00",
-                            "endTime": "2023-09-30T17:07:30.0158372+08:00"
-                          }
-                        ]
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/httpserver.R"
                 }
               }
             }
@@ -5719,55 +5030,32 @@
     },
     "/api/v1/crontask/start": {
       "get": {
-        "summary": "启动任务",
+        "summary": "启动定时任务",
         "x-apifox-folder": "定时任务",
         "x-apifox-status": "released",
         "deprecated": false,
-        "description": "启动定时任务",
+        "description": "",
         "tags": [
           "定时任务"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "uuid",
             "in": "query",
-            "description": "任务id",
+            "description": "uuid",
             "required": true,
-            "example": "1",
             "schema": {
-              "type": "integer"
+              "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "成功",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "null"
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
+                  "$ref": "#/components/schemas/httpserver.R"
                 }
               }
             }
@@ -5779,392 +5067,38 @@
     },
     "/api/v1/crontask/stop": {
       "get": {
-        "summary": "停止任务",
+        "summary": "停止定时任务",
         "x-apifox-folder": "定时任务",
         "x-apifox-status": "released",
         "deprecated": false,
-        "description": "将任务停止，不再调度运行。",
+        "description": "",
         "tags": [
           "定时任务"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "uuid",
             "in": "query",
-            "description": "任务id",
-            "required": false,
-            "example": "1",
+            "description": "uuid",
+            "required": true,
             "schema": {
-              "type": "integer"
+              "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "成功",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "null"
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data",
-                    "01HBJV8Y7PQ9XAZPD3N59ZWJTB"
-                  ],
-                  "x-apifox-orders": [
-                    "01HBJV8Y7PQ9XAZPD3N59ZWJTB",
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": null
-                    }
-                  }
+                  "$ref": "#/components/schemas/httpserver.R"
                 }
               }
             }
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-114238073-run",
-        "security": []
-      }
-    },
-    "/api/v1/crontask/listRunningTask": {
-      "get": {
-        "summary": "正在运行任务列表",
-        "x-apifox-folder": "定时任务",
-        "x-apifox-status": "released",
-        "deprecated": false,
-        "description": "当前正在运行的任务（是指正在运行的任务，不是指start了的任务）",
-        "tags": [
-          "定时任务"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "current": {
-                          "type": "integer"
-                        },
-                        "size": {
-                          "type": "integer"
-                        },
-                        "total": {
-                          "type": "integer"
-                        },
-                        "records": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "ID": {
-                                "type": "integer"
-                              },
-                              "CreatedAt": {
-                                "type": "string"
-                              },
-                              "taskId": {
-                                "type": "integer"
-                              },
-                              "status": {
-                                "type": "string"
-                              },
-                              "ExitCode": {
-                                "type": "string"
-                              },
-                              "logPath": {
-                                "type": "string"
-                              },
-                              "startTime": {
-                                "type": "string"
-                              },
-                              "endTime": {
-                                "type": "string"
-                              }
-                            },
-                            "required": [
-                              "ID",
-                              "CreatedAt",
-                              "taskId",
-                              "status",
-                              "ExitCode",
-                              "logPath",
-                              "startTime",
-                              "endTime"
-                            ],
-                            "x-apifox-orders": [
-                              "ID",
-                              "CreatedAt",
-                              "taskId",
-                              "status",
-                              "ExitCode",
-                              "logPath",
-                              "startTime",
-                              "endTime"
-                            ],
-                            "x-apifox-ignore-properties": []
-                          }
-                        }
-                      },
-                      "required": [
-                        "current",
-                        "size",
-                        "total",
-                        "records"
-                      ],
-                      "x-apifox-orders": [
-                        "current",
-                        "size",
-                        "total",
-                        "records"
-                      ],
-                      "x-apifox-ignore-properties": []
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-114238074-run",
-        "security": []
-      }
-    },
-    "/api/v1/crontask/terminateRunningTask": {
-      "get": {
-        "summary": "停止正在运行的任务",
-        "x-apifox-folder": "定时任务",
-        "x-apifox-status": "released",
-        "deprecated": false,
-        "description": "强行终止指定的正在运行的任务",
-        "tags": [
-          "定时任务"
-        ],
-        "parameters": [
-          {
-            "name": "current",
-            "in": "query",
-            "description": "当前页，从1开始",
-            "required": true,
-            "example": "",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "description": "每页个数",
-            "required": true,
-            "example": "",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "taskId",
-            "in": "query",
-            "description": "任务id",
-            "required": false,
-            "example": "",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "current": {
-                          "type": "integer"
-                        },
-                        "size": {
-                          "type": "integer"
-                        },
-                        "total": {
-                          "type": "integer"
-                        },
-                        "records": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "ID": {
-                                "type": "integer"
-                              },
-                              "CreatedAt": {
-                                "type": "string"
-                              },
-                              "taskId": {
-                                "type": "integer"
-                              },
-                              "status": {
-                                "type": "string"
-                              },
-                              "ExitCode": {
-                                "type": "string"
-                              },
-                              "logPath": {
-                                "type": "string"
-                              },
-                              "startTime": {
-                                "type": "string"
-                              },
-                              "endTime": {
-                                "type": "string"
-                              }
-                            },
-                            "required": [
-                              "ID",
-                              "CreatedAt",
-                              "taskId",
-                              "status",
-                              "ExitCode",
-                              "logPath",
-                              "startTime",
-                              "endTime"
-                            ],
-                            "x-apifox-orders": [
-                              "ID",
-                              "CreatedAt",
-                              "taskId",
-                              "status",
-                              "ExitCode",
-                              "logPath",
-                              "startTime",
-                              "endTime"
-                            ],
-                            "x-apifox-ignore-properties": []
-                          }
-                        }
-                      },
-                      "required": [
-                        "current",
-                        "size",
-                        "total",
-                        "records"
-                      ],
-                      "x-apifox-orders": [
-                        "current",
-                        "size",
-                        "total",
-                        "records"
-                      ],
-                      "x-apifox-ignore-properties": []
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "current": 1,
-                        "size": 25,
-                        "total": 2,
-                        "records": [
-                          {
-                            "ID": 2,
-                            "CreatedAt": "2023-09-30T17:08:30.0036778+08:00",
-                            "taskId": 1,
-                            "status": "2",
-                            "ExitCode": "-1",
-                            "logPath": "cron_logs/2023-09-30/1/17-08-30.log",
-                            "startTime": "2023-09-30T17:08:30.0031378+08:00",
-                            "endTime": "2023-09-30T17:08:30.0092769+08:00"
-                          },
-                          {
-                            "ID": 1,
-                            "CreatedAt": "2023-09-30T17:07:30.0116707+08:00",
-                            "taskId": 1,
-                            "status": "2",
-                            "ExitCode": "-1",
-                            "logPath": "cron_logs/2023-09-30/1/17-07-30.log",
-                            "startTime": "2023-09-30T17:07:30.0100324+08:00",
-                            "endTime": "2023-09-30T17:07:30.0158372+08:00"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-114238078-run",
         "security": []
       }
     },
@@ -10638,10 +9572,193 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-122519188-run",
         "security": []
       }
+    },
+    "/api/v1/crontask/list": {
+      "get": {
+        "summary": "获取所有定时任务",
+        "x-apifox-folder": "定时任务",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "定时任务"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/httpserver.R"
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-122797705-run",
+        "security": []
+      }
+    },
+    "/api/v1/firmware/upgradeLog": {
+      "get": {
+        "summary": "查看更新日志",
+        "x-apifox-folder": "系统配置/固件操作",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/固件操作"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-123729979-run",
+        "security": []
+      }
     }
   },
   "components": {
-    "schemas": {},
+    "schemas": {
+      "httpserver.R": {
+        "type": "object",
+        "required": [
+          "code",
+          "msg"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "data": {
+            "type": "string"
+          },
+          "msg": {
+            "type": "string"
+          }
+        },
+        "x-apifox-orders": [
+          "code",
+          "data",
+          "msg"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "Schemas"
+      },
+      "dto.CronTaskUpdateDTO": {
+        "type": "object",
+        "required": [
+          "uuid"
+        ],
+        "properties": {
+          "args": {
+            "description": "\"param1 param2 param3\"",
+            "type": "string"
+          },
+          "cronExpr": {
+            "type": "string"
+          },
+          "env": {
+            "description": "[\"A=e1\", \"B=e2\", \"C=e3\"]",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isRoot": {
+            "description": "0-false 1-true",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "script": {
+            "type": "string"
+          },
+          "taskType": {
+            "description": "1-shell 2-cmd",
+            "type": "integer"
+          },
+          "uuid": {
+            "type": "string"
+          }
+        },
+        "x-apifox-orders": [
+          "args",
+          "cronExpr",
+          "env",
+          "isRoot",
+          "name",
+          "script",
+          "taskType",
+          "uuid"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "Schemas"
+      },
+      "dto.CronTaskCreateDTO": {
+        "type": "object",
+        "required": [
+          "cronExpr",
+          "name",
+          "taskType"
+        ],
+        "properties": {
+          "args": {
+            "description": "\"param1 param2 param3\"",
+            "type": "string"
+          },
+          "cronExpr": {
+            "type": "string"
+          },
+          "env": {
+            "description": "[\"A=e1\", \"B=e2\", \"C=e3\"]",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isRoot": {
+            "description": "0-false 1-true",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "script": {
+            "type": "string"
+          },
+          "taskType": {
+            "description": "1-shell 2-cmd",
+            "type": "integer"
+          }
+        },
+        "x-apifox-orders": [
+          "args",
+          "cronExpr",
+          "env",
+          "isRoot",
+          "name",
+          "script",
+          "taskType"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "Schemas"
+      }
+    },
     "securitySchemes": {}
   },
   "servers": []

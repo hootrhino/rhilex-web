@@ -34,6 +34,14 @@ export async function postFirmwareUpgrade(options?: { [key: string]: any }) {
   });
 }
 
+/** 查看更新日志 GET /api/v1/firmware/upgradeLog */
+export async function getFirmwareUpgradeLog(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/firmware/upgradeLog', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** 上传最新版 POST /api/v1/firmware/upload */
 export async function postFirmwareUpload(body: {}, file?: File, options?: { [key: string]: any }) {
   const formData = new FormData();

@@ -7,7 +7,7 @@ export async function postPluginService(
   body: {
     uuid: string;
     name: string;
-    args: string;
+    args?: string;
   },
   options?: { [key: string]: any },
 ) {
