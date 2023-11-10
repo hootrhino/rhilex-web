@@ -1,8 +1,8 @@
-import loginBg from '@/assets/images/loginBg.png';
+import loginBg from '@/assets/images/loginBg.svg';
 import { message } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
+import { DefaultFooter, LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { Helmet, useModel } from '@umijs/max';
 import { flushSync } from 'react-dom';
 import { history } from 'umi';
@@ -46,8 +46,13 @@ const Login: React.FC = () => {
 
   return (
     <div
-      className="flex flex-col h-full overflow-auto"
-      style={{ backgroundImage: `url(${loginBg})`, backgroundSize: '100% 100%' }}
+      className="flex flex-col h-[100vh] overflow-auto bg-[#f0f2f5]"
+      style={{
+        backgroundImage: `url(${loginBg})`,
+        backgroundSize: '100%',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center 110px',
+      }}
     >
       <Helmet>
         <title>登录页 - {initialState?.settings?.title || Settings.title}</title>
@@ -60,7 +65,7 @@ const Login: React.FC = () => {
           }}
           logo={<img alt="logo" src="/favicon.png" />}
           title="Rhino EEKit"
-          subTitle="轻量级边缘计算网关"
+          subTitle="轻量级边缘计算框架"
           initialValues={{
             autoLogin: true,
           }}
@@ -113,6 +118,7 @@ const Login: React.FC = () => {
           </div>
         </LoginForm>
       </div>
+      <DefaultFooter copyright={`2023-2033 By Hootrhino Team`} className="bg-[#f0f2f5]" />
     </div>
   );
 };
