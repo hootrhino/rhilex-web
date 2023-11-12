@@ -23,7 +23,7 @@ const useDevice = () => {
   const { data: groupList, run: getGroupList } = useRequest(() => getDevicesGroup());
 
   // 设备列表
-  const { data, run } = useRequest((params: API.getDevicesListByGroupParams) =>
+  const { data, run, refresh } = useRequest((params: API.getDevicesListByGroupParams) =>
     getDevicesListByGroup(params),
   );
 
@@ -40,6 +40,7 @@ const useDevice = () => {
     data,
     detail,
     run,
+    refresh,
     groupList,
     getGroupList,
     getDetail,

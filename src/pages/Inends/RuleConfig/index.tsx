@@ -6,7 +6,7 @@ import RuleConfig from '../../RuleConfig';
 const RuleConfigList = () => {
   const { inendId } = useParams();
 
-  const { data, run: getRuleList } = useRequest(
+  const { data, run: getRuleList, refresh } = useRequest(
     (params: API.getRulesByInendParams) => getRulesByInend(params),
     {
       manual: true,
@@ -19,7 +19,7 @@ const RuleConfigList = () => {
     }
   }, [inendId]);
 
-  return <RuleConfig dataSource={data} type="inends" typeId={inendId || ''} />;
+  return <RuleConfig dataSource={data} type="inends" typeId={inendId || ''} refresh={refresh} />;
 };
 
 export default RuleConfigList;

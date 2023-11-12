@@ -6,7 +6,7 @@ import RuleConfig from '../../RuleConfig';
 const RuleConfigList = () => {
   const { deviceId } = useParams();
 
-  const { data, run: getRuleList } = useRequest(
+  const { data, run: getRuleList, refresh } = useRequest(
     (params: API.getRulesByDeviceParams) => getRulesByDevice(params),
     {
       manual: true,
@@ -19,7 +19,7 @@ const RuleConfigList = () => {
     }
   }, [deviceId]);
 
-  return <RuleConfig dataSource={data} type="device" typeId={deviceId || ''} />;
+  return <RuleConfig dataSource={data} type="device" typeId={deviceId || ''} refresh={refresh} />;
 };
 
 export default RuleConfigList;

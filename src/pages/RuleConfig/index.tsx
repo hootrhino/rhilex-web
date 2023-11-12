@@ -24,9 +24,10 @@ type RuleConfigProps = {
   dataSource: Item[];
   type: RuleType;
   typeId: string;
+  refresh: () => void;
 };
 
-const RuleConfig = ({ dataSource, type, typeId }: RuleConfigProps) => {
+const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
   const { groupId } = useParams();
   const actionRef = useRef<ActionType>();
   const [detailConfig, setDetailConfig] = useState<{
@@ -138,6 +139,7 @@ const RuleConfig = ({ dataSource, type, typeId }: RuleConfigProps) => {
           dataSource={dataSource}
           search={false}
           pagination={false}
+          options={{reload: () => refresh()}}
           toolBarRender={() => [
             <Button
               type="primary"
