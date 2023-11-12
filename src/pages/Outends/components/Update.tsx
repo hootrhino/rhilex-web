@@ -273,18 +273,18 @@ const UpdateForm = () => {
                     <>
                       <ProForm.Group>
                         <ProFormDigit
-                          label="服务地址"
+                          label="主机地址"
                           name="host"
                           width="md"
-                          placeholder="请输入服务地址"
-                          rules={[{ required: true, message: '请输入服务地址' }]}
+                          placeholder="请输入主机地址"
+                          rules={[{ required: true, message: '请输入主机地址' }]}
                         />
                         <ProFormDigit
-                          label="服务端口"
+                          label="端口"
                           name="port"
                           width="md"
-                          placeholder="请输入服务端口"
-                          rules={[{ required: true, message: '请输入服务端口' }]}
+                          placeholder="请输入端口"
+                          rules={[{ required: true, message: '请输入端口' }]}
                         />
                         <ProFormText
                           label="客户端 ID"
@@ -349,18 +349,18 @@ const UpdateForm = () => {
                         rules={[{ required: true, message: '请输入超时时间（毫秒）' }]}
                       />
                       <ProFormDigit
-                        label="服务地址"
+                        label="主机地址"
                         name="host"
                         width="md"
-                        placeholder="请输入服务地址"
-                        rules={[{ required: true, message: '请输入服务地址' }]}
+                        placeholder="请输入主机地址"
+                        rules={[{ required: true, message: '请输入主机地址' }]}
                       />
                       <ProFormDigit
-                        label="服务端口"
+                        label="端口"
                         name="port"
                         width="md"
-                        placeholder="请输入服务端口"
-                        rules={[{ required: true, message: '请输入服务端口' }]}
+                        placeholder="请输入端口"
+                        rules={[{ required: true, message: '请输入端口' }]}
                       />
                     </ProForm.Group>
                   )}

@@ -110,7 +110,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         dataIndex: 'host',
       },
       {
-        title: '服务端口',
+        title: '端口',
         dataIndex: 'port',
       },
     ],

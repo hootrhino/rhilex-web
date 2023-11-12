@@ -198,7 +198,7 @@ export const columns = [
                             required: true,
                           },
                           {
-                            title: '服务端口',
+                            title: '端口',
                             dataIndex: 'port',
                             valueType: 'digit',
                             required: true,

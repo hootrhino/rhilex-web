@@ -206,17 +206,17 @@ const UpdateForm = () => {
                       <ProForm.Group>
                         <ProFormDigit
                           name="host"
-                          label="主机地址"
+                          label="服务地址"
                           width="md"
-                          placeholder="请输入主机地址"
-                          rules={[{ required: true, message: '请输入主机地址' }]}
+                          placeholder="请输入服务地址"
+                          rules={[{ required: true, message: '请输入服务地址' }]}
                         />
                         <ProFormDigit
                           name="port"
-                          label="服务端口"
+                          label="端口"
                           width="md"
-                          placeholder="请输入服务端口"
-                          rules={[{ required: true, message: '请输入服务端口' }]}
+                          placeholder="请输入端口"
+                          rules={[{ required: true, message: '请输入端口' }]}
                         />
                         <ProFormSelect
                           label="模式"
@@ -299,17 +299,17 @@ const UpdateForm = () => {
                     <ProForm.Group>
                       <ProFormDigit
                         name="host"
-                        label="主机地址"
+                        label="服务地址"
                         width="md"
-                        placeholder="请输入主机地址"
-                        rules={[{ required: true, message: '请输入主机地址' }]}
+                        placeholder="请输入服务地址"
+                        rules={[{ required: true, message: '请输入服务地址' }]}
                       />
                       <ProFormDigit
                         name="port"
-                        label="服务端口"
+                        label="端口"
                         width="md"
-                        placeholder="请输入服务端口"
-                        rules={[{ required: true, message: '请输入服务端口' }]}
+                        placeholder="请输入端口"
+                        rules={[{ required: true, message: '请输入端口' }]}
                       />
                       {type === 'NATS_SERVER' && (
                         <ProFormText

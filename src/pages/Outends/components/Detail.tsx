@@ -51,12 +51,12 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
   ],
   MQTT: [
     {
-      title: '服务地址',
+      title: '主机地址',
       dataIndex: 'host',
       copyable: true,
     },
     {
-      title: '服务端口',
+      title: '端口',
       dataIndex: 'port',
     },
     {
@@ -82,12 +82,12 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
       dataIndex: 'timeout',
     },
     {
-      title: '服务地址',
+      title: '主机地址',
       dataIndex: 'host',
       copyable: true,
     },
     {
-      title: '服务端口',
+      title: '端口',
       dataIndex: 'port',
     },
   ],

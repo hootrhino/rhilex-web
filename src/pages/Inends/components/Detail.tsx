@@ -42,12 +42,12 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     ],
     GENERIC_IOT_HUB: [
       {
-        title: '主机地址',
+        title: '服务地址',
         dataIndex: 'host',
         copyable: true,
       },
       {
-        title: '服务端口',
+        title: '端口',
         dataIndex: 'port',
       },
       {
@@ -80,12 +80,12 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     ],
     DEFAULT_TYPE: [
       {
-        title: '主机地址',
+        title: '服务地址',
         dataIndex: 'host',
         copyable: true,
       },
       {
-        title: '服务端口',
+        title: '端口',
         dataIndex: 'port',
       },
       {
