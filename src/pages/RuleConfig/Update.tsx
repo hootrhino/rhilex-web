@@ -38,17 +38,17 @@ type UpdateFormProps = {
 
 const DefaultActions = `Actions = {
   function(args)
-    -- rulexlib:Debug(args)
+    --stdlib:Debug(args)
     return true, args
   end
 }`;
 
 const DefaultSuccess = `function Success()
---rulexlib:log("success")
+--stdlib:log("success")
 end`;
 
 const DefaultFailed = `function Failed(error)
-rulexlib:log(error)
+stdlib:log(error)
 end`;
 
 const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
