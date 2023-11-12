@@ -12,21 +12,33 @@ import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormTextArea, ProFormUploadDragger } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Space, Upload } from 'antd';
-import { endsWith } from 'lodash';
-import { useRef } from 'react';
+import endsWith from 'lodash/endsWith';
+import { useRef, useState } from 'react';
 import Title from './TItle';
 import { getFirmwareUpgradeLog } from '@/services/rulex/gujiancaozuo';
 import CodeEditor from '@/components/CodeEditor';
+import { useCountDown } from 'ahooks';
 
 const FirmwareConfig = () => {
   const formRef = useRef<ProFormInstance>();
+  const [targetDate, setTargetDate] = useState<number>();
+
   //const [file, setFile] = useState();
   // 分片大小
   // const chunkSize = 1024 * 1024;
   // let uploadedSize = 0;
 
-  useRequest(() => getFirmwareVendorKey(), {
+  const {run: getVendorKey} = useRequest(() => getFirmwareVendorKey(), {
     onSuccess: (data: string) => formRef.current?.setFieldsValue({ vendorKey: data }),
+  });
+
+  const [countdown] = useCountDown({
+    targetDate,
+    onEnd: () => {
+      getVendorKey();
+      setTargetDate(undefined);
+      message.success('升级成功');
+    },
   });
 
   // 上传固件
@@ -56,14 +68,6 @@ const FirmwareConfig = () => {
 //   await uploadChunk(file, start).then(() => uploadNextChunk(file));
 // }
 
-  // 升级
-  const { run: upgrade } = useRequest(() => postFirmwareUpgrade(), {
-    manual: true,
-    onSuccess: () => {
-      message.success('升级成功');
-    },
-  });
-
   // 重启设备
   const { run: reboot } = useRequest(() => postFirmwareReboot(), {
     manual: true,
@@ -91,7 +95,6 @@ const { data: logData } = useRequest(() => getFirmwareUpgradeLog());
         <ProForm
         formRef={formRef}
         layout='vertical'
-        //labelCol={{ span: 2 }}
         submitter={{
           render: () => (
             <Space>
@@ -104,12 +107,16 @@ const { data: logData } = useRequest(() => getFirmwareUpgradeLog());
                     content:
                       '升级时请确认版本，版本错误会导致升级失败，有可能会引起设备故障，请谨慎操作',
                     okText: '确认升级',
-                    onOk: upgrade,
+                    onOk: async() => {
+                      setTargetDate(Date.now() + 10000);
+                      await postFirmwareUpgrade();
+                    },
                   })
                 }
                 icon={<CloudUploadOutlined />}
+                disabled={countdown !== 0}
               >
-                确定升级
+                {countdown === 0 ? '确定升级' : `${Math.round(countdown / 1000)}s 后升级成功`}
               </Button>
               <Button
                 key="reboot"
