@@ -32,7 +32,6 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
       return <>{children}</>;
     },
     ...initialState?.settings,
-    logo: `${window?.location?.origin}/api/v1/site/logo`
   };
 };
 

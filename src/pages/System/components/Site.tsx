@@ -1,36 +1,41 @@
-import { getSiteDetail, putSiteUpdate } from '@/services/rulex/zhandianpeizhi';
+import { putSiteReset, putSiteUpdate } from '@/services/rulex/zhandianpeizhi';
 import { getBase64 } from '@/utils/utils';
+import { SyncOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormText, ProFormUploadButton } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
 import type { UploadFile } from 'antd';
-import { Image, message, Modal, Upload } from 'antd';
+import { Button, Image, message, Modal, Space, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { startsWith } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import Title from './TItle';
 
-type SiteForm = {
-  appName: string;
-  logo: RcFile[];
-};
-
 const SiteConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const {siteDetail: detail, getDetail} = useModel('useSetting');
+  const [previewImage, setPreview] = useState<string | undefined>();
 
-  const { data: siteDetail } = useRequest(() => getSiteDetail(), {
-    onSuccess: res => setInitialState({...initialState, settings: {...initialState.settings, title: res?.appName}})
-  });
-
-  const handleOnFinish = async (values: SiteForm) => {
+  const handleOnFinish = async (values: { appName: string }) => {
     try {
-      const file = values.logo?.[0] as UploadFile;
-      const logo = await getBase64(file?.originFileObj as RcFile);
+      let logo = '';
+      const file = fileList?.[0] as UploadFile;
+      if (file?.originFileObj) {
+        logo = await getBase64(file?.originFileObj as RcFile);
+      } else {
+        logo = file.thumbUrl || '';
+      }
+      const params = {
+        appName: values?.appName,
+        siteName: detail?.siteName || '',
+        logo,
+      };
 
-      await putSiteUpdate({ appName: values?.appName, siteName: siteDetail?.siteName || '', logo });
+      await putSiteUpdate(params);
+      getDetail();
+
       message.success('更新成功');
       return true;
     } catch (error) {
@@ -38,24 +43,39 @@ const SiteConfig = () => {
     }
   };
 
-  useEffect(() => {
-    if (siteDetail) {
-      formRef.current?.setFieldsValue({ appName: siteDetail?.appName });
-      setFileList([{ thumbUrl: siteDetail?.logo, status: 'done', name: 'App Logo', uid: 'logo' }]);
+  // 恢复默认设置
+  const { run: reset } = useRequest(() => putSiteReset(), {
+    manual: true,
+    onSuccess: () => {
+      message.success('恢复成功');
+      getDetail();
     }
-  }, [siteDetail]);
+  });
+
+  useEffect(() => {
+    if (detail) {
+      formRef.current?.setFieldsValue({ appName: detail?.appName });
+      setFileList([{ thumbUrl: detail?.logo, status: 'done', name: '系统 LOGO', uid: 'logo' }]);
+    }
+  }, [detail]);
 
   return (
     <>
-      <Title name='站点配置' />
+      <Title name="站点配置" />
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
         layout="horizontal"
         labelCol={{ span: 2 }}
-        onValuesChange={(changedValue) => console.log(changedValue)}
         submitter={{
-          render: (props, dom) => dom,
+          render: (props, dom) => (
+            <Space>
+              {dom}
+              <Button type="primary" onClick={reset} icon={<SyncOutlined />}>
+                恢复默认配置
+              </Button>
+            </Space>
+          ),
         }}
       >
         <ProFormText
@@ -67,6 +87,7 @@ const SiteConfig = () => {
         />
 
         <ProFormUploadButton
+        required
           label="系统 Logo"
           name="logo"
           accept="image/*"
@@ -76,6 +97,7 @@ const SiteConfig = () => {
             isImageUrl: () => true,
             fileList,
             className: 'upload-logo',
+            showUploadList: { showPreviewIcon: true, showRemoveIcon: false },
             beforeUpload: (file) => {
               const isImage = startsWith(file.type, 'image/');
               if (!isImage) {
@@ -92,22 +114,22 @@ const SiteConfig = () => {
             onChange: (info) => setFileList(info.fileList),
             onPreview: (file) => {
               if (file?.thumbUrl) {
+                setPreview(file?.thumbUrl);
                 setOpen(true);
               }
             },
           }}
-          rules={[{ required: true, message: '请上传系统 Logo' }]}
         />
       </ProForm>
       <Modal
         open={open}
         footer={false}
-        title={fileList[0]?.name || '系统 LOGO'}
+        title="系统 LOGO"
         width="40%"
         onCancel={() => setOpen(false)}
       >
-        <div className="w-full h-full flex justify-center items-center">
-          <Image src={fileList[0]?.thumbUrl} className="w-full" preview={false} />
+        <div className="w-full h-full flex justify-center items-center bg-[#f5f5f5]">
+          <Image src={previewImage} className="w-full" preview={false} />
         </div>
       </Modal>
     </>
