@@ -32,6 +32,7 @@ const BaseForm = () => {
       if (params.type === 'GENERIC_AIS_RECEIVER') {
         newCommonConfig = {
           mode: commonConfigParams?.mode,
+          gwsn: commonConfigParams?.gwsn,
           parseAis: commonConfigParams?.parseAis === 'true' ? true : false,
         };
       }

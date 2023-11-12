@@ -95,6 +95,11 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         ),
       },
       {
+        title: '主机序列号',
+        dataIndex: 'gwsn',
+        hideInDescriptions: deviceType !== 'GENERIC_AIS_RECEIVER',
+      },
+      {
         title: '工作模式',
         dataIndex: 'mode',
         valueEnum: modeEnum,

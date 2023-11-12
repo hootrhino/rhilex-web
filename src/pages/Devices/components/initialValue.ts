@@ -5,6 +5,7 @@ export const defaultCommonConfig = [
     retryTime: 5,
     autoRequest: 'false',
     parseAis: 'false',
+    gwsn: 'HR0001',
     mode: 'UART',
   },
 ];

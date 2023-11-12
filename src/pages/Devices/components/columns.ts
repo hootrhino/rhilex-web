@@ -132,12 +132,20 @@ export const columns = [
                       title: '是否启动轮询',
                       dataIndex: 'autoRequest',
                       valueType: 'segmented',
+                      required: true,
                       hideInForm: type !== 'GENERIC_MODBUS',
                     },
                     {
                       title: '是否解析 AIS 报文',
                       dataIndex: 'parseAis',
                       valueType: 'segmented',
+                      required: true,
+                      hideInForm: type !== 'GENERIC_AIS_RECEIVER',
+                    },
+                    {
+                      title: '主机序列号',
+                      dataIndex: 'gwsn',
+                      required: true,
                       hideInForm: type !== 'GENERIC_AIS_RECEIVER',
                     },
                     {
