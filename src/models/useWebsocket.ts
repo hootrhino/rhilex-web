@@ -17,17 +17,16 @@ const useWebsocket = () => {
   const { sendMessage, readyState } = useWebSocket(sockUrl, {
     reconnectInterval: 1000,
     onMessage: ({ data }) => {
-      let newLog: any = [];
+      let newLog: any = logs;
 
       if (data && data !== 'Connected') {
-        newLog = [...newLog, data];
-        newLog = newLog?.map((item: string) => item && JSON.parse(item));
-        newLog = [...logs, ...newLog];
-
+        newLog = [...newLog, JSON.parse(data)];
         newLog = orderBy(newLog, 'time', 'desc');
         newLog = slice(newLog, 0, 100);
+
         setLogs(newLog);
         setLog(JSON.parse(data));
+        newLog = null;
       }
     },
   });
@@ -40,7 +39,7 @@ const useWebsocket = () => {
 
   useEffect(() => {
     if (window?.location?.hostname) {
-      setUrl(`ws://${window?.location?.hostname}:2580/ws`);
+      setUrl(`ws://${window?.location?.host}/ws`);
      // setUrl(`ws://106.15.225.172:2580/ws`)
     }
   }, [window?.location?.hostname]);

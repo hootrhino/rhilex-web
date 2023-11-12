@@ -9,7 +9,6 @@ const useSetting = () => {
   // site setting
   const { data: siteDetail, run: getDetail } = useRequest(() => getSiteDetail(), {
     onSuccess: res => {
-      console.log(res);
       setInitialState({
         ...initialState,
         settings: {
