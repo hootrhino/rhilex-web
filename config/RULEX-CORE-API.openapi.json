@@ -55,6 +55,9 @@
       "name": "数据中心"
     },
     {
+      "name": "接口管理"
+    },
+    {
       "name": "系统配置"
     },
     {
@@ -80,9 +83,6 @@
     },
     {
       "name": "系统配置/数据备份"
-    },
-    {
-      "name": "接口管理"
     }
   ],
   "paths": {
@@ -9627,6 +9627,36 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-123729979-run",
+        "security": []
+      }
+    },
+    "/api/v1/site/reset": {
+      "put": {
+        "summary": "站点复原",
+        "x-apifox-folder": "系统配置/站点配置",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/站点配置"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-124174039-run",
         "security": []
       }
     }

@@ -49,6 +49,14 @@ export async function postSiteLogo(body: {}, file?: File, options?: { [key: stri
   });
 }
 
+/** 站点复原 PUT /api/v1/site/reset */
+export async function putSiteReset(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/site/reset', {
+    method: 'PUT',
+    ...(options || {}),
+  });
+}
+
 /** 更新最新站点配置 PUT /api/v1/site/update */
 export async function putSiteUpdate(
   body: {
