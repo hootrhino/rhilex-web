@@ -15,7 +15,7 @@ import LogTable from '@/components/LogTable';
 import { modal } from '@/components/PopupHack';
 import { getOsOsRelease } from '@/services/rulex/xitongshuju';
 import { ExperimentOutlined } from '@ant-design/icons';
-import { Progress, TinyArea } from '@ant-design/plots';
+import { Progress, TinyArea, RingProgress} from '@ant-design/plots';
 import { useRequest } from '@umijs/max';
 import { Descriptions } from 'antd';
 
@@ -79,6 +79,15 @@ const Dashboard = () => {
     ],
   };
 
+  const ringConfig = {
+    height: 60,
+    width: 60,
+    autoFit: false,
+    statistic: false,
+    percent: Number(dataSource?.hardWareInfo?.memPercent) / 100,
+    color: ['#5B8FF9', '#E8EDF3'],
+  };
+
   return (
     <PageContainer className="overflow-x-hidden">
       <RcResizeObserver
@@ -110,6 +119,14 @@ const Dashboard = () => {
             }}
           />
           <Divider type={responsive ? 'horizontal' : 'vertical'} />
+          <StatisticCard
+            statistic={{
+              title: '内存使用',
+              value: dataSource?.hardWareInfo?.memPercent || 0,
+              suffix: '%',
+            }}
+            chart={<RingProgress {...ringConfig} />}
+          />
           <StatisticCard
             statistic={{
               title: 'CPU 使用',

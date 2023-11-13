@@ -1,7 +1,8 @@
 import { message } from '@/components/PopupHack';
 import { deleteApp, getApp, putAppStart, putAppStop } from '@/services/rulex/qingliangyingyong';
 import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
-import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
+import { PageContainer, ProTable } from '@ant-design/pro-components';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { Button, Popconfirm, Tag } from 'antd';
 
 import { useRequest } from '@umijs/max';

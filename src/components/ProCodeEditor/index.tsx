@@ -1,12 +1,11 @@
 import LuaEditor from '@/components/LuaEditor';
+import { FormatCode } from '@/utils/utils';
 import { CodeOutlined } from '@ant-design/icons';
 import type { ProFormItemProps } from '@ant-design/pro-components';
 import { ProCard, ProForm } from '@ant-design/pro-components';
-import luamin from 'lua-format';
 import { forwardRef } from 'react';
 
 type ProCodeEditorProps = Omit<ProFormItemProps, 'children'> & {
-  // title: string;
   defaultCollapsed?: boolean;
 };
 
@@ -15,18 +14,7 @@ const ProCodeEditor = forwardRef(
     const handleOnFormatCode = () => {
       const code = ref.current?.getFieldValue(name);
 
-      const formatCode = luamin.Beautify(code, {
-        RenameVariables: false,
-        RenameGlobals: false,
-        SolveMath: true,
-      });
-
-      let formattedCode = formatCode
-        .toString()
-        .replace(/--discord\.gg\/boronide, code generated using luamin\.js™\n?/g, '');
-
-      formattedCode = formattedCode.replace(/^\s*\n/gm, '');
-      ref.current?.setFieldsValue({ [name]: formattedCode });
+      ref.current?.setFieldsValue({ [name]: FormatCode(code) });
     };
 
     return (
