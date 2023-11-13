@@ -105,6 +105,13 @@ const Dashboard = () => {
           <Divider type={responsive ? 'horizontal' : 'vertical'} />
           <StatisticCard
             statistic={{
+              title: '运行时长',
+              value: dataSource?.hardWareInfo?.osUpTime,
+            }}
+          />
+          <Divider type={responsive ? 'horizontal' : 'vertical'} />
+          <StatisticCard
+            statistic={{
               title: 'CPU 使用',
               value: dataSource?.hardWareInfo?.cpuPercent || 0,
               suffix: '%',
