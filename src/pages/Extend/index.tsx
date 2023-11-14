@@ -353,13 +353,6 @@ const ExtendedProtocol = () => {
             <p className="ant-upload-text">单击或拖动文件到此区域进行上传</p>
           </Upload.Dragger>
         </ProForm.Item>
-        {/* <ProFormUploadDragger
-          name="file"
-          label="可执行包"
-          max={1}
-          description=""
-          rules={[{ required: true, message: '请上传可执行包' }]}
-        /> */}
         <ProFormText name="description" label="备注" placeholder="请输入备注" />
       </ModalForm>
       <Modal

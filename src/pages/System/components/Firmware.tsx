@@ -6,7 +6,6 @@ import {
   postFirmwareUpgrade,
   postFirmwareUpload,
 } from '@/services/rulex/gujiancaozuo';
-import { getBlob } from '@/utils/utils';
 import { CloudUploadOutlined, PoweroffOutlined, SyncOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormTextArea, ProFormUploadDragger } from '@ant-design/pro-components';
@@ -22,11 +21,6 @@ import { useCountDown } from 'ahooks';
 const FirmwareConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const [targetDate, setTargetDate] = useState<number>();
-
-  //const [file, setFile] = useState();
-  // 分片大小
-  // const chunkSize = 1024 * 1024;
-  // let uploadedSize = 0;
 
   const {run: getVendorKey} = useRequest(() => getFirmwareVendorKey(), {
     onSuccess: (data: string) => formRef.current?.setFieldsValue({ vendorKey: data }),
@@ -49,24 +43,6 @@ const FirmwareConfig = () => {
       setTimeout(() => formRef.current?.setFieldsValue({ upload: [] }), 500);
     },
   });
-  // let lastChunkEnd = 0;
-  // 分片上传
-// const uploadChunk = async(file, start) => {
-//   // const chunkSize = Math.floor(file.size / 10);
-//   const chunk = file.slice(start, start + chunkSize);
-//   uploadedSize += chunkSize;
-//   // lastChunkEnd = Math.floor(lastChunkEnd);
-//   if(uploadedSize >= file.size) return;
-//   await uploadFile(chunk);
-
-// }
-
-// 递归上传其它分片
-// const uploadNextChunk = async(file) => {
-//   const start = uploadedSize;
-
-//   await uploadChunk(file, start).then(() => uploadNextChunk(file));
-// }
 
   // 重启设备
   const { run: reboot } = useRequest(() => postFirmwareReboot(), {
@@ -158,10 +134,8 @@ const { data: logData } = useRequest(() => getFirmwareUpgradeLog());
             const file = changedValue?.upload?.[0];
 
             if (file?.status === 'done') {
-              const blobFile = getBlob(file);
 
-              // uploadNextChunk(blobFile)
-              uploadFile(blobFile);
+              uploadFile(file?.originFileObj);
 
             }
           }
