@@ -9,7 +9,7 @@ import {
   putGoodsStop,
   putGoodsUpdate,
 } from '@/services/rulex/kuozhanxieyi';
-import { getBlob, IconFont } from '@/utils/utils';
+import { IconFont } from '@/utils/utils';
 import { InboxOutlined, MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -146,16 +146,16 @@ const ExtendedProtocol = () => {
   // 新建&编辑
   const handleOnFinish = async (params: FormParams) => {
     try {
-      const blobFile = getBlob(fileList?.[0]);
+      const uploadFile = fileList?.[0]?.originFileObj;
 
       if (initialValue?.uuid) {
         await putGoodsUpdate(
           { ...omit(params, 'upload'), uuid: initialValue?.uuid } as any,
-          blobFile as File,
+          uploadFile as File,
         );
         message.success('更新成功');
       } else {
-        await postGoodsCreate(omit(params, 'upload') as any, blobFile as File);
+        await postGoodsCreate(omit(params, 'upload') as any, uploadFile as File);
         message.success('新建成功');
       }
 
@@ -295,6 +295,7 @@ const ExtendedProtocol = () => {
               onClick={() => {
                 setOpen(true);
                 setInitialValue(defaultValue);
+                setFileList([]);
               }}
               icon={<PlusOutlined />}
             >
@@ -338,11 +339,11 @@ const ExtendedProtocol = () => {
           <Upload.Dragger
             multiple={false}
             maxCount={1}
-            beforeUpload={(file) => {
+            beforeUpload={() => {
               return false;
             }}
             fileList={fileList}
-            onChange={(info) => {
+            onChange={async (info) => {
               setFileList(info?.fileList);
             }}
           >
