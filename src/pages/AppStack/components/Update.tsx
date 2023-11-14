@@ -172,7 +172,7 @@ const UpdateForm = () => {
             />
           </ProForm.Group>
           <ProForm.Group>
-            <ProFormText label="备注" name="description" width="md" />
+            <ProFormText label="备注" name="description" width="md" placeholder='请输入备注' />
           </ProForm.Group>
           <ProFormDependency name={['type']}>
             {({ type }) => {
