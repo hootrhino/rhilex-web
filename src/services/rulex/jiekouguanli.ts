@@ -49,6 +49,14 @@ export async function getHwifaceList(options?: { [key: string]: any }) {
   });
 }
 
+/** 刷新接口 GET /api/v1/hwiface/refresh */
+export async function getHwifaceRefresh(options?: { [key: string]: any }) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/hwiface/refresh', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** 更新配置 POST /api/v1/hwiface/update */
 export async function postHwifaceUpdate(
   body: {

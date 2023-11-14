@@ -2,16 +2,16 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 备份数据 GET /api/v1/backup */
-export async function getBackup(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/v1/backup', {
+/** 备份数据 GET /api/v1/backup/download */
+export async function getBackupDownload(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/backup/download', {
     method: 'GET',
     ...(options || {}),
   });
 }
 
-/** 上传备份 POST /api/v1/backup */
-export async function postBackup(body: {}, file?: File, options?: { [key: string]: any }) {
+/** 上传备份 POST /api/v1/backup/upload */
+export async function postBackupUpload(body: {}, file?: File, options?: { [key: string]: any }) {
   const formData = new FormData();
 
   if (file) {
@@ -29,7 +29,7 @@ export async function postBackup(body: {}, file?: File, options?: { [key: string
     }
   });
 
-  return request<{ code: number; msg: string; data: { url?: string } }>('/api/v1/backup', {
+  return request<{ code: number; msg: string; data: { url?: string } }>('/api/v1/backup/upload', {
     method: 'POST',
     data: formData,
     requestType: 'form',

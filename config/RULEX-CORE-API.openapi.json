@@ -8823,7 +8823,7 @@
         "security": []
       }
     },
-    "/api/v1/backup": {
+    "/api/v1/backup/download": {
       "get": {
         "summary": "备份数据",
         "x-apifox-folder": "系统配置/数据备份",
@@ -8851,7 +8851,9 @@
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-121510623-run",
         "security": []
-      },
+      }
+    },
+    "/api/v1/backup/upload": {
       "post": {
         "summary": "上传备份",
         "x-apifox-folder": "系统配置/数据备份",
@@ -9657,6 +9659,58 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-124174039-run",
+        "security": []
+      }
+    },
+    "/api/v1/hwiface/refresh": {
+      "get": {
+        "summary": "刷新接口",
+        "x-apifox-folder": "接口管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "接口管理"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-124715046-run",
         "security": []
       }
     }
