@@ -10,7 +10,7 @@ import { CloudUploadOutlined, PoweroffOutlined, SyncOutlined } from '@ant-design
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormTextArea, ProFormUploadDragger } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button, Space, Upload } from 'antd';
+import { Button, Space } from 'antd';
 import endsWith from 'lodash/endsWith';
 import { useRef, useState } from 'react';
 import Title from './TItle';
@@ -132,12 +132,7 @@ const { data: logData } = useRequest(() => getFirmwareUpgradeLog());
         onValuesChange={async (changedValue) => {
           if (changedValue?.upload) {
             const file = changedValue?.upload?.[0];
-
-            if (file?.status === 'done') {
-
-              uploadFile(file?.originFileObj);
-
-            }
+            uploadFile(file?.originFileObj);
           }
         }}
       >
@@ -157,7 +152,8 @@ const { data: logData } = useRequest(() => getFirmwareUpgradeLog());
                 message.error('仅支持 zip 格式文件，请检查上传文件格式');
               }
 
-              return isZip || Upload.LIST_IGNORE;
+              // return isZip || Upload.LIST_IGNORE;
+              return false;
             },
           }}
           width="xl"
