@@ -9,22 +9,23 @@ import {
   putGoodsStop,
   putGoodsUpdate,
 } from '@/services/rulex/kuozhanxieyi';
-import { IconFont, getBlob } from '@/utils/utils';
-import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
+import { getBlob, IconFont } from '@/utils/utils';
+import { InboxOutlined, MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
   PageContainer,
   ProDescriptions,
+  ProForm,
   ProFormText,
   ProFormTextArea,
-  ProFormUploadDragger,
   ProTable,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button, Modal, Popconfirm, Tag } from 'antd';
-import { useEffect, useRef, useState } from 'react';
+import { Button, Modal, Popconfirm, Tag, Upload } from 'antd';
 import type { UploadFile } from 'antd/es/upload';
+import omit from 'lodash/omit';
+import { useEffect, useRef, useState } from 'react';
 
 type ExtendItem = {
   uuid?: string;
@@ -40,7 +41,7 @@ type FormParams = {
   net_addr: string;
   args: string[];
   description?: string;
-  file: UploadFile;
+  // file: UploadFile;
 };
 
 const baseColumns = [
@@ -140,22 +141,27 @@ const ExtendedProtocol = () => {
     open: false,
   });
   const [initialValue, setInitialValue] = useState<ExtendItem>(defaultValue);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   // 新建&编辑
-  const handleOnFinish = async ({ file, ...params }: FormParams) => {
+  const handleOnFinish = async (params: FormParams) => {
     try {
-      const blobFile = getBlob(file as UploadFile);
+      const blobFile = getBlob(fileList?.[0]);
 
       if (initialValue?.uuid) {
-        await putGoodsUpdate({ ...params, uuid: initialValue?.uuid } as any, blobFile as File);
+        await putGoodsUpdate(
+          { ...omit(params, 'upload'), uuid: initialValue?.uuid } as any,
+          blobFile as File,
+        );
         message.success('更新成功');
       } else {
-        await postGoodsCreate(params as any, blobFile as File);
+        await postGoodsCreate(omit(params, 'upload') as any, blobFile as File);
         message.success('新建成功');
       }
 
       actionRef.current?.reload();
       setInitialValue(defaultValue);
+      setFileList([]);
 
       return true;
     } catch (error) {
@@ -324,13 +330,35 @@ const ExtendedProtocol = () => {
           placeholder="请输入协议参数"
           rules={[{ required: true, message: '请输入协议参数' }]}
         />
-        <ProFormUploadDragger
+        <ProForm.Item
+          name="upload"
+          label="可执行包"
+          rules={[{ required: true, message: '请上传可执行包' }]}
+        >
+          <Upload.Dragger
+            multiple={false}
+            maxCount={1}
+            beforeUpload={(file) => {
+              return false;
+            }}
+            fileList={fileList}
+            onChange={(info) => {
+              setFileList(info?.fileList);
+            }}
+          >
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">单击或拖动文件到此区域进行上传</p>
+          </Upload.Dragger>
+        </ProForm.Item>
+        {/* <ProFormUploadDragger
           name="file"
           label="可执行包"
           max={1}
           description=""
           rules={[{ required: true, message: '请上传可执行包' }]}
-        />
+        /> */}
         <ProFormText name="description" label="备注" placeholder="请输入备注" />
       </ModalForm>
       <Modal
