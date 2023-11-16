@@ -1,3 +1,10 @@
+type SniptParams = {
+  target: string;
+  detail: string;
+  extra?: string;
+  params?: number;
+}
+
 // Lua 关键词
 export const luaKeywords = [
   'and',
@@ -27,53 +34,49 @@ export const luaKeywords = [
 // Lua 内置方法函数
 
 // data 函数
-const dataToHttp = `local err1 = data:ToHttp('uuid', arg)
+const dataToList = [
+  { target: 'Http', detail: '数据推送到 HTTP 服务' },
+  { target: 'Mqtt', detail: '数据推送到 MQTT 服务' },
+  { target: 'Udp', detail: '数据推送到 UDP 服务' },
+  { target: 'Tcp', detail: '数据推送到 TCP 服务' },
+  { target: 'TdEngine', detail: '数据推送到 Tdengine 数据库' },
+  { target: 'Mongo', detail: '数据推送到 Mongodb 数据库' },
+  { target: 'Nats', detail: '数据推送到 Nats' },
+  { target: 'Screen', detail: '数据推送到大屏' },
+];
+
+export const getDataToFunc = ({ target, detail }: SniptParams) => {
+  const code = `
+local err1 = data:To${target}('uuid', arg)
 if err1 ~= nil then
   stdlib:Log(err)
 end
 `;
-const dataToMqtt = `local err1 = data:ToMqtt('uuid', arg)
-if err1 ~= nil then
-  stdlib:Log(err)
-end
-`;
-const dataToUdp = `local err1 = data:ToUdp('uuid', arg)
-if err1 ~= nil then
-  stdlib:Log(err)
-end
-`;
-const dataToTdEngine = `local err1 = data:ToTdEngine('uuid', arg)
-if err1 ~= nil then
-  stdlib:Log(err)
-end
-`;
-const dataToMongo = `local err1 = data:ToMongo('uuid', arg)
-if err1 ~= nil then
-  stdlib:Log(err)
-end
-`;
-const dataToNats = `local err1 = data:ToNats('uuid', arg)
-if err1 ~= nil then
-  stdlib:Log(err)
-end
-`;
-const dataToScreen = `local err1 = data:ToScreen('uuid', arg)
-if err1 ~= nil then
-  stdlib:Log(err)
-end
-`;
+  return { label: `data:To${target}`, apply: code, type: 'function', detail };
+};
 
 // stdlib 函数
 const stdlibDebug = `stdlib:Debug('字符串会被输出到 Websocket 日志')`;
 const stdlibThrow = `stdlib:Throw('字符串会被输出到 Websocket 日志')`;
 
 // time 函数
-const timeTime = `local ts = time:Time()`;
-const timeTimeMs = `local ts = time:TimeMs()`;
-const timeTsUnix = `local ts = time:TsUnix()`;
-const timeTsUnixNano = `local ts = time:TsUnixNano()`;
-const timeNtpTime = `local ts = time:NtpTime()`;
-const timeSleep = `local ts = time:Sleep(时间单位是毫秒)`;
+const timeList = [
+  { target: 'Time', detail: '当前时间' },
+  { target: 'TimeMs', detail: '当前通用时间戳' },
+  { target: 'TsUnix', detail: '当前 Unix 时间戳' },
+  { target: 'TsUnixNano', detail: '当前纳秒级时间戳' },
+  { target: 'NtpTime', detail: 'NTP 时间' },
+  { target: 'Sleep', detail: '休眠', extra: '时间单位是毫秒' },
+];
+
+export const getTimeFunc = ({
+  target,
+  detail,
+  extra,
+}: SniptParams) => {
+  const code = `local ts = time:${target}(${extra})`;
+  return { label: `time:Time${target}`, apply: code, type: 'function', detail };
+};
 
 // kv 函数
 const kvSet = `kv:Set("K", "value")`;
@@ -101,72 +104,71 @@ const jqExecute = `local Value = jq:Execute(somedata, "Jq Expresssion" ))`;
 const rpcRequest = `local Value = rpc:Request('uuid', "cmd", "arg")`;
 
 // devide 函数
-const deviceWrite = `local data1, err1 = device:Write('uuid', "cmd", "args")
-if err ~= nil then
+const deviceList = [
+  { target: 'Write', detail: '向设备写入数据' },
+  { target: 'Read', detail: '从设备读取数据' },
+  { target: 'Ctrl', detail: '向设备发送控制指令' },
+];
+
+export const getDeviceFunc = ({target,detail}: SniptParams) => {
+  const err1 = target === 'Read' ? `local Data, err1 = device:${target}('uuid', "cmd", "args")` : `local err1 = device:${target}('uuid', "cmd", "args")`;
+  const code = `
+${err1}
+if err1 ~= nil then
   stdlib:Log(err)
-end`;
-
-const deviceRead = `local data1, err1 = device:Read('uuid', "cmd", "args")
-if err ~= nil then
-    stdlib:Log(err)
-end`;
-
-const deviceCtrl = `local data1, err1 = device:Ctrl('uuid', "cmd", "args")
-if err ~= nil then
-    stdlib:Log(err)
-end`;
+end
+`;
+  return { label: `device:${target}`, apply: code, type: 'function', detail };
+};
 
 // rhinopi 函数
-const rhinopiDO1Set = `local err1 = rhinopi:DO1Set(0)
-if err ~= nil then
+const rhinopiList = [
+  { target: 'DO1Set', detail: '设置 DO1 的值' },
+  { target: 'DO1Get', detail: '获取 DO1 的值' },
+  { target: 'DO2Set', detail: '设置 DO2 的值' },
+  { target: 'DO2Get', detail: '获取 DO2 的值' },
+  { target: 'DI1Get', detail: '获取 DI1 的值' },
+  { target: 'DI2Get', detail: '获取 DI2 的值' },
+  { target: 'DI3Get', detail: '获取 DI3 的值' },
+];
+
+export const getRhinopiFunc = ({target, detail}: SniptParams) => {
+  const code = `
+local err1 = rhinopi:${target}(0)
+if err1 ~= nil then
     stdlib:Log(err)
-end`;
-const rhinopiDO1Get = `local err1 = rhinopi:DO1Get(0)
-if err ~= nil then
+end
+`;
+  return { label: `rhinopi:${target}`, apply: code, type: 'function', detail };
+};
+
+// modbus 函数
+const modbusList = [
+  { target: 'F5', detail: '写单个线圈', extra: '00' },
+  { target: 'F6', detail: '写单个寄存器',extra: 'AABB' },
+  { target: 'F15', detail: '写多个线圈',extra: 'AA', params: 8 },
+  { target: 'F16', detail: '写多个寄存器',extra: 'AABBCCDD', params: 2 },
+];
+
+export const getModbusFunc = ({target, detail, extra, params}: SniptParams) => {
+  const err1 = params ? `local err1 = modbus:${target}(UUID, 1, 0, ${params}, ${extra})` : `local err1 = modbus:${target}(UUID, 1, 0, ${extra})`;
+  const code = `
+${err1}
+if err1 ~= nil then
     stdlib:Log(err)
-end`;
-const rhinopiDO2Set = `local err1 = rhinopi:DO2Set(0)
-if err ~= nil then
-    stdlib:Log(err)
-end`;
-const rhinopiDO2Get = `local err1 = rhinopi:DO2Get(0)
-if err ~= nil then
-    stdlib:Log(err)
-end`;
-const rhinopiDI1Get = `local err1 = rhinopi:DI1Get(0)
-if err ~= nil then
-    stdlib:Log(err)
-end`;
-const rhinopiDI2Get = `local err1 = rhinopi:DI2Get(0)
-if err ~= nil then
-    stdlib:Log(err)
-end`;
-const rhinopiDI3Get = `local err1 = rhinopi:DI3Get(0)
-if err ~= nil then
-    stdlib:Log(err)
-end`;
+end
+`;
+  return { label: `modbus:${target}`, apply: code, type: 'function', detail };
+};
 
 export const luaGlobFuncs = [
-  { label: 'data:ToHttp', apply: dataToHttp, type: 'function', detail: '数据推送到 HTTP 服务' },
-  { label: 'data:ToMqtt', apply: dataToMqtt, type: 'function', detail: '数据推送到 MQTT 服务' },
-  { label: 'data:ToUdp', apply: dataToUdp, type: 'function', detail: '数据推送到 UDP 服务' },
-  {
-    label: 'data:ToTdEngine',
-    apply: dataToTdEngine,
-    type: 'function',
-    detail: '数据推送到 Tdengine',
-  },
-  { label: 'data:ToMongo', apply: dataToMongo, type: 'function', detail: '数据推送到 Mongodb' },
-  { label: 'data:ToNats', apply: dataToNats, type: 'function', detail: '数据推送到 Nats' },
-  { label: 'data:ToScreen', apply: dataToScreen, type: 'function', detail: '数据推送到大屏' },
+  ...dataToList?.map((data) => getDataToFunc(data)),
+  ...timeList?.map((time) => getTimeFunc(time)),
+  ...rhinopiList?.map((rhinopi) => getRhinopiFunc(rhinopi)),
+  ...deviceList?.map((device) => getDeviceFunc(device)),
+  ...modbusList?.map((modbus) => getModbusFunc(modbus)),
   { label: 'stdlib:Debug', apply: stdlibDebug, type: 'function', detail: '打印日志' },
   { label: 'stdlib:Throw', apply: stdlibThrow, type: 'function', detail: '抛出异常' },
-  { label: 'time:Time', apply: timeTime, type: 'function', detail: '当前时间' },
-  { label: 'time:Time', apply: timeTimeMs, type: 'function', detail: '当前通用时间戳' },
-  { label: 'time:Time', apply: timeTsUnix, type: 'function', detail: '当前 Unix 时间戳' },
-  { label: 'time:Time', apply: timeTsUnixNano, type: 'function', detail: '当前纳秒级时间戳' },
-  { label: 'time:Time', apply: timeNtpTime, type: 'function', detail: 'NTP 时间' },
-  { label: 'time:Time', apply: timeSleep, type: 'function', detail: '休眠' },
   { label: 'kv:Set', apply: kvSet, type: 'function', detail: '全局缓存设置值' },
   { label: 'kv:Get', apply: kvGet, type: 'function', detail: '全局缓存取值' },
   { label: 'kv:Del', apply: kvDel, type: 'function', detail: '全局缓存删除值' },
@@ -187,14 +189,4 @@ export const luaGlobFuncs = [
   { label: 'math:TFloat', apply: mathTFloat, type: 'function', detail: '截取浮点数' },
   { label: 'jq:Execute', apply: jqExecute, type: 'function', detail: 'JQ 筛选数据' },
   { label: 'rpc:Request', apply: rpcRequest, type: 'function', detail: 'RPC 调用' },
-  { label: 'device:Write', apply: deviceWrite, type: 'function', detail: '向设备写入数据' },
-  { label: 'device:Read', apply: deviceRead, type: 'function', detail: '从设备读取数据' },
-  { label: 'device:Ctrl', apply: deviceCtrl, type: 'function', detail: '向设备发送控制指令' },
-  { label: 'rhinopi:DO1Set', apply: rhinopiDO1Set, type: 'function', detail: '设置 DO1 的值' },
-  { label: 'rhinopi:DO1Get', apply: rhinopiDO1Get, type: 'function', detail: '获取 DO1 的值' },
-  { label: 'rhinopi:DO2Set', apply: rhinopiDO2Set, type: 'function', detail: '设置 DO2 的值' },
-  { label: 'rhinopi:DO2Get', apply: rhinopiDO2Get, type: 'function', detail: '获取 DO2 的值' },
-  { label: 'rhinopi:DI1Get', apply: rhinopiDI1Get, type: 'function', detail: '获取 DI1 的值' },
-  { label: 'rhinopi:DI2Get', apply: rhinopiDI2Get, type: 'function', detail: '获取 DI2 的值' },
-  { label: 'rhinopi:DI3Get', apply: rhinopiDI3Get, type: 'function', detail: '获取 DI3 的值' },
 ];
