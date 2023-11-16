@@ -134,18 +134,6 @@ const Detail = () => {
         onCancel: handleOnClose,
       }}
       onOpenChange={(visible) => setDetailConfig({ ...detailConfig, open: visible })}
-      // initialValues={
-      //   detailConfig.name === 'scan'
-      //     ? {
-      //         timeout: 3000,
-      //         baudRate: '9600',
-      //         dataBits: '8',
-      //         stopBits: '1',
-      //         parity: 'N',
-      //         uart: isWindows ? 'COM1' : '/dev/ttyS1',
-      //       }
-      //     : {}
-      // }
     >
       {detailConfig.name === 'ping' && <Ping onLoading={handleOnLoading} />}
       {detailConfig.name === 'scan' && <Scan />}

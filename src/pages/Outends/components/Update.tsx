@@ -1,7 +1,7 @@
-import { message } from '@/components/PopupHack';
-
 import { getOutendsDetail, postOutends, putOutends } from '@/services/rulex/shuchuziyuanguanli';
 
+import { message } from '@/components/PopupHack';
+import ProSegmented from '@/components/ProSegmented';
 import useGoBack from '@/hooks/useGoBack';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -16,31 +16,29 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
-import { pick } from 'lodash';
 import random from 'lodash/random';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
-import { defaultMongoConfig, defaultMqttConfig, defaultUdpConfig, typeEnum } from './initialValue';
+import {
+  defaultMongoConfig,
+  defaultMqttConfig,
+  defaultTcpConfig,
+  defaultTdConfig,
+  defaultUdpConfig,
+  modeEnum,
+  typeEnum,
+} from './initialValue';
 
-// type Config = {
-//   host?: string;
-//   port?: number;
-//   clientId?: string;
-//   username?: string;
-//   password?: string;
-//   productId?: string;
-//   deviceName?: string;
-//   timeout?: number;
-//   [key: string]: any;
-// };
+type UpdateFormItem = {
+  name: string;
+  type: string;
+  config: Record<string, any>[];
+};
 
-// type UpdateFormItem<T = any> = {
-//   type: string;
-//   name: string;
-//   description?: string;
-//   config?: T;
-//   uuid?: string;
-// };
+type submitterProps = {
+  reset: () => void;
+  submit: () => void;
+};
 
 const DefaultListUrl = '/outends/list';
 
@@ -59,34 +57,22 @@ const UpdateForm = () => {
     },
   );
 
-  const handleOnFinish = async ({ config, ...values }: any) => {
+  const handleOnFinish = async (values: any) => {
     setLoading(true);
+
     try {
+      const formatConfig = values?.config?.[0];
       let params = {
         ...values,
+        config: formatConfig,
       };
 
-      if (values?.type === 'MONGO_SINGLE') {
+      if (values?.type === 'TCP_TRANSPORT') {
         params = {
-          ...params,
+          ...values,
           config: {
-            ...pick(config?.[0], ['mongoUrl', 'database', 'collection']),
-          },
-        };
-      }
-      if (values?.type === 'MQTT') {
-        params = {
-          ...params,
-          config: {
-            ...pick(config?.[0], ['port', 'host', 'clientId', 'pubTopic', 'username', 'password']),
-          },
-        };
-      }
-      if (values?.type === 'UDP_TARGET') {
-        params = {
-          ...params,
-          config: {
-            ...pick(config?.[0], ['port', 'host', 'timeout']),
+            ...formatConfig,
+            allowPing: formatConfig?.allowPing === 'true' ? true : false,
           },
         };
       }
@@ -112,18 +98,80 @@ const UpdateForm = () => {
     }
   };
 
-  useEffect(() => {
+  const handleOnReset = () => {
     if (detail) {
-      formRef.current?.setFieldsValue({
-        ...detail,
-        config: [detail?.config],
-      });
+      if (detail?.type === 'TCP_TRANSPORT') {
+        formRef.current?.setFieldsValue({
+          ...detail,
+          config: [{ ...detail?.config, allowPing: detail?.config?.allowPing.toString() }],
+        });
+      } else {
+        formRef.current?.setFieldsValue({
+          ...detail,
+          config: [detail?.config],
+        });
+      }
     } else {
       formRef.current?.setFieldsValue({
         type: 'MONGO_SINGLE',
         config: defaultMongoConfig,
       });
     }
+  };
+
+  const handleOnValuesChange = (changedValue: UpdateFormItem) => {
+    if (!changedValue?.type) return;
+    let config: any = [];
+
+    switch (changedValue?.type) {
+      case 'MONGO_SINGLE':
+        config = defaultMongoConfig;
+        break;
+      case 'MQTT':
+        config = defaultMqttConfig(randomNumber);
+        break;
+      case 'UDP_TARGET':
+        config = defaultUdpConfig;
+        break;
+      case 'TCP_TRANSPORT':
+        config = defaultTcpConfig;
+        break;
+      case 'TDENGINE':
+        config = defaultTdConfig;
+        break;
+      default:
+        config = defaultMongoConfig;
+        break;
+    }
+
+    formRef.current?.setFieldsValue({
+      config: changedValue?.type === detail?.type ? [detail?.config] : config,
+    });
+  };
+
+  const renderSubmitter = ({ reset, submit }: submitterProps) => {
+    return (
+      <FooterToolbar>
+        <Popconfirm
+          key="reset"
+          title="重置可能会丢失数据，确定要重置吗？"
+          onConfirm={() => {
+            reset();
+            handleOnReset();
+          }}
+        >
+          <Button>重置</Button>
+        </Popconfirm>
+
+        <Button key="submit" type="primary" onClick={submit} loading={loading}>
+          提交
+        </Button>
+      </FooterToolbar>
+    );
+  };
+
+  useEffect(() => {
+    handleOnReset();
   }, [detail]);
 
   useEffect(() => {
@@ -142,52 +190,9 @@ const UpdateForm = () => {
           formRef={formRef}
           onFinish={handleOnFinish}
           submitter={{
-            render: ({ reset, submit }) => {
-              return (
-                <FooterToolbar>
-                  <Popconfirm
-                    key="reset"
-                    title="重置可能会丢失数据，确定要重置吗？"
-                    onConfirm={() => {
-                      reset();
-                      formRef.current?.setFieldsValue(
-                        id
-                          ? { ...detail, config: [detail?.config] }
-                          : { type: 'MONGO_SINGLE', config: defaultMongoConfig },
-                      );
-                    }}
-                  >
-                    <Button>重置</Button>
-                  </Popconfirm>
-
-                  <Button key="submit" type="primary" onClick={submit} loading={loading}>
-                    提交
-                  </Button>
-                </FooterToolbar>
-              );
-            },
+            render: ({ reset, submit }) => renderSubmitter({ reset, submit }),
           }}
-          onValuesChange={(changedValue) => {
-            if (!changedValue?.type) return;
-            let config: any = [];
-            switch (changedValue?.type) {
-              case 'MONGO_SINGLE':
-                config = defaultMongoConfig;
-                break;
-              case 'MQTT':
-                config = defaultMqttConfig(randomNumber);
-                break;
-              case 'UDP_TARGET':
-                config = defaultUdpConfig;
-                break;
-              default:
-                config = defaultMongoConfig;
-                break;
-            }
-            formRef.current?.setFieldsValue({
-              config: changedValue?.type === detail?.type ? [detail?.config] : config,
-            });
-          }}
+          onValuesChange={handleOnValuesChange}
         >
           <ProForm.Group>
             <ProFormText
@@ -363,6 +368,126 @@ const UpdateForm = () => {
                         rules={[{ required: true, message: '请输入端口' }]}
                       />
                     </ProForm.Group>
+                  )}
+                  {type === 'TCP_TRANSPORT' && (
+                    <>
+                      <ProForm.Group>
+                        <ProFormSelect
+                          label="传输模式"
+                          name="dataMode"
+                          valueEnum={modeEnum}
+                          width="md"
+                          placeholder="请选择传输模式"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请选择传输模式',
+                            },
+                          ]}
+                        />
+                        <ProForm.Item label="开启心跳" name="allowPing">
+                          <ProSegmented width="md" />
+                        </ProForm.Item>
+                        <ProFormText
+                          label="心跳包内容"
+                          name="pingPacket"
+                          width="md"
+                          placeholder="请输入心跳包内容"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请输入心跳包内容',
+                            },
+                          ]}
+                        />
+                        <ProFormDigit
+                          label="主机地址"
+                          name="host"
+                          width="md"
+                          placeholder="请输入主机地址"
+                          rules={[{ required: true, message: '请输入主机地址' }]}
+                        />
+                      </ProForm.Group>
+                      <ProForm.Group>
+                        <ProFormDigit
+                          label="端口"
+                          name="port"
+                          width="md"
+                          placeholder="请输入端口"
+                          rules={[{ required: true, message: '请输入端口' }]}
+                        />
+                        <ProFormDigit
+                          label="超时时间（毫秒）"
+                          name="timeout"
+                          width="md"
+                          placeholder="请输入超时时间（毫秒）"
+                          rules={[{ required: true, message: '请输入超时时间（毫秒）' }]}
+                        />
+                      </ProForm.Group>
+                    </>
+                  )}
+                  {type === 'TDENGINE' && (
+                    <>
+                      <ProForm.Group>
+                        <ProFormText
+                          label="FQDN"
+                          name="fqdn"
+                          width="md"
+                          placeholder="请输入 FQDN"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请输入 FQDN',
+                            },
+                          ]}
+                        />
+                        <ProFormDigit
+                          label="端口"
+                          name="port"
+                          width="md"
+                          placeholder="请输入端口"
+                          rules={[{ required: true, message: '请输入端口' }]}
+                        />
+                        <ProFormText
+                          label="用户名"
+                          name="username"
+                          width="md"
+                          placeholder="请输入用户名"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请输入用户名',
+                            },
+                          ]}
+                        />
+                        <ProFormText.Password
+                          label="密码"
+                          name="password"
+                          width="md"
+                          placeholder="请输入密码"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请输入密码',
+                            },
+                          ]}
+                        />
+                      </ProForm.Group>
+                      <ProForm.Group>
+                        <ProFormText
+                          label="数据库名"
+                          name="dbName"
+                          width="md"
+                          placeholder="请输入数据库名"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请输入数据库名',
+                            },
+                          ]}
+                        />
+                      </ProForm.Group>
+                    </>
                   )}
                 </ProFormList>
               );
