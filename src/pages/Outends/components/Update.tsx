@@ -401,27 +401,27 @@ const UpdateForm = () => {
                           ]}
                         />
                         <ProFormDigit
+                          label="超时时间（毫秒）"
+                          name="timeout"
+                          width="md"
+                          placeholder="请输入超时时间（毫秒）"
+                          rules={[{ required: true, message: '请输入超时时间（毫秒）' }]}
+                        />
+                      </ProForm.Group>
+                      <ProForm.Group>
+                        <ProFormDigit
                           label="主机地址"
                           name="host"
                           width="md"
                           placeholder="请输入主机地址"
                           rules={[{ required: true, message: '请输入主机地址' }]}
                         />
-                      </ProForm.Group>
-                      <ProForm.Group>
                         <ProFormDigit
                           label="端口"
                           name="port"
                           width="md"
                           placeholder="请输入端口"
                           rules={[{ required: true, message: '请输入端口' }]}
-                        />
-                        <ProFormDigit
-                          label="超时时间（毫秒）"
-                          name="timeout"
-                          width="md"
-                          placeholder="请输入超时时间（毫秒）"
-                          rules={[{ required: true, message: '请输入超时时间（毫秒）' }]}
                         />
                       </ProForm.Group>
                     </>

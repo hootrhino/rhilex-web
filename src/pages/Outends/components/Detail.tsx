@@ -2,11 +2,11 @@ import StateTag from '@/components/StateTag';
 import { getOutendsDetail } from '@/services/rulex/shuchuziyuanguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { Drawer, DrawerProps } from 'antd';
+import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
-import { typeEnum } from './initialValue';
+import { allowPingEnum, modeEnum, typeEnum } from './initialValue';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -91,6 +91,59 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
       dataIndex: 'port',
     },
   ],
+  TCP_TRANSPORT: [
+    {
+      title: '传输模式',
+      dataIndex: 'dataMode',
+      valueEnum: modeEnum,
+    },
+    {
+      title: '开启心跳',
+      dataIndex: 'allowPing',
+      renderText: (allowPing) => (
+        <Tag color={allowPing ? 'success' : 'error'}>{allowPingEnum[allowPing]}</Tag>
+      ),
+    },
+    {
+      title: '心跳包内容',
+      dataIndex: 'pingPacket',
+    },
+    {
+      title: '超时时间（毫秒）',
+      dataIndex: 'timeout',
+    },
+    {
+      title: '主机地址',
+      dataIndex: 'host',
+      copyable: true,
+    },
+    {
+      title: '端口',
+      dataIndex: 'port',
+    },
+  ],
+  TDENGINE: [
+    {
+      title: 'FQDN',
+      dataIndex: 'fqdn',
+    },
+    {
+      title: '端口',
+      dataIndex: 'port',
+    },
+    {
+      title: '用户名',
+      dataIndex: 'username',
+    },
+    {
+      title: '密码',
+      dataIndex: 'password',
+    },
+    {
+      title: '数据库名',
+      dataIndex: 'dbName',
+    },
+  ],
 };
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
@@ -122,7 +175,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
           column={1}
           columns={columnsMap[data?.type]}
           labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
-          title="目标配置"
+          title="资源配置"
           dataSource={data?.config}
           loading={loading}
         />
