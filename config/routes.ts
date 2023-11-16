@@ -34,12 +34,12 @@
       {
         path: '/device/:groupId/new',
         name: '新建设备',
-        component: './Devices/components/Update',
+        component: './Devices/components/SchemaForm',
       },
       {
         path: '/device/:groupId/edit/:deviceId',
         name: '编辑设备',
-        component: './Devices/components/Update',
+        component: './Devices/components/SchemaForm',
       },
       {
         path: '/device/:groupId/:deviceId/rule',

@@ -5,7 +5,7 @@ import { history, useModel } from '@umijs/max';
 import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
-import { funcEnum, modeEnum, typeEnum } from './columns';
+import { funcEnum, modeEnum, typeEnum } from './SchemaForm/columns';
 
 type DetailProps = DrawerProps & {
   uuid: string;
