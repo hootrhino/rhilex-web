@@ -12,11 +12,12 @@ import type {  ProFormInstance} from '@ant-design/pro-components';
 
 import useGoBack from '@/hooks/useGoBack';
 import { FooterToolbar } from '@ant-design/pro-components';
-import { Button, ConfigProvider, Popconfirm, Segmented, Space } from 'antd';
+import { Button, Popconfirm, Space } from 'antd';
 import omit from 'lodash/omit';
 
 import { useModel } from '@umijs/max';
 import './index.less';
+import ProSegmented from '../ProSegmented';
 
 type SchemaFormProps<T = any> = ProFormProps & {
   title?: string;
@@ -106,26 +107,7 @@ const SchemaForm = ({
   const customizeValueType = {
     segmented: {
       renderFormItem: (_: any, props: any) => (
-        <ConfigProvider
-          theme={{
-            components: {
-              Segmented: {
-                itemSelectedColor: '#fff',
-                itemSelectedBg: '#1890ff',
-              },
-            },
-          }}
-        >
-          <Segmented
-            block
-            className="w-[328px]"
-            options={[
-              { label: '是', value: 'true' },
-              { label: '否', value: 'false' },
-            ]}
-            {...props?.fieldProps}
-          />
-        </ConfigProvider>
+       <ProSegmented width="md" {...props?.fieldProps} />
       ),
     },
     groupSelect: {

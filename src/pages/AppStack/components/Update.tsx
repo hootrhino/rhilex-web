@@ -1,6 +1,7 @@
 import { message } from '@/components/PopupHack';
 
 import ProCodeEditor from '@/components/ProCodeEditor';
+import ProSegmented from '@/components/ProSegmented';
 import useGoBack from '@/hooks/useGoBack';
 import { getAppDetail, postApp, putApp } from '@/services/rulex/qingliangyingyong';
 import type { ProFormInstance } from '@ant-design/pro-components';
@@ -13,7 +14,7 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button, ConfigProvider, Popconfirm, Segmented } from 'antd';
+import { Button, Popconfirm } from 'antd';
 import { useEffect, useRef } from 'react';
 import { history, useParams, useRequest } from 'umi';
 
@@ -142,25 +143,7 @@ const UpdateForm = () => {
               rules={[{ required: true, message: '请输入 APP 版本' }]}
             />
             <ProForm.Item label="是否自启" name="autoStart" required>
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Segmented: {
-                      itemSelectedColor: '#fff',
-                      itemSelectedBg: '#1890ff',
-                    },
-                  },
-                }}
-              >
-                <Segmented
-                  block
-                  className="w-[328px]"
-                  options={[
-                    { label: '是', value: 'true' },
-                    { label: '否', value: 'false' },
-                  ]}
-                />
-              </ConfigProvider>
+              <ProSegmented width='md' />
             </ProForm.Item>
             <ProFormSelect
               label="脚本类型"
