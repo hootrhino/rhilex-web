@@ -1,6 +1,6 @@
 import { message, modal } from '@/components/PopupHack';
 import { postUsers } from '@/services/rulex/yonghuguanli';
-import type { ProFormInstance, SubmitterProps } from '@ant-design/pro-components';
+import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormText } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { Button, Space } from 'antd';
@@ -28,13 +28,6 @@ const UserConfig = () => {
     }
   };
 
-  const handleOnConfirm = (props: SubmitterProps) => {
-    modal.confirm({
-      title: '确定修改用户名/密码并重新登录吗？',
-      onOk: props.onSubmit,
-    });
-  };
-
   useEffect(() => {
     formRef.current?.setFieldsValue({
       username: initialState?.currentUser?.username,
@@ -44,17 +37,25 @@ const UserConfig = () => {
 
   return (
     <>
-      <Title name='用户配置' />
+      <Title name="用户配置" />
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
         layout="horizontal"
         labelCol={{ span: 2 }}
         submitter={{
-          render: (props) => (
+          render: ({ reset, submit }) => (
             <Space>
-              <Button onClick={props.reset}>重置</Button>
-              <Button type="primary" onClick={() => handleOnConfirm(props)}>
+              <Button onClick={reset}>重置</Button>
+              <Button
+                type="primary"
+                onClick={() =>
+                  modal.confirm({
+                    title: '确定修改用户名/密码并重新登录吗？',
+                    onOk: submit,
+                  })
+                }
+              >
                 提交
               </Button>
             </Space>
