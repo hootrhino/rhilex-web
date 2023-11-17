@@ -1,5 +1,5 @@
 import { message, modal } from '@/components/PopupHack';
-import { postUsers } from '@/services/rulex/yonghuguanli';
+import { putUsersUpdate } from '@/services/rulex/yonghuguanli';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormText } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
@@ -19,7 +19,7 @@ const UserConfig = () => {
 
   const handleOnFinish = async (values: UpdateParams) => {
     try {
-      await postUsers(values);
+      await putUsersUpdate(values);
       logout();
       message.success('更新成功');
       return true;

@@ -75,3 +75,21 @@ export async function deleteUsers(
     ...(options || {}),
   });
 }
+
+/** 用户更新 PUT /api/v1/users/update */
+export async function putUsersUpdate(
+  body: {
+    username: string;
+    password: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/users/update', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
