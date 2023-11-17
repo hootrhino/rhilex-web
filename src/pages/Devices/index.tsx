@@ -127,7 +127,7 @@ const Devices = () => {
       title: '状态',
       dataIndex: 'state',
       width: 120,
-      renderText: (state) => (state ? <StateTag state={state} /> : '-'),
+      renderText: (state) => <StateTag state={state} />,
     },
     {
       title: '备注',
