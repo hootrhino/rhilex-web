@@ -9,8 +9,8 @@ import { history } from 'umi';
 import { message } from '@/components/PopupHack';
 import StateTag from '@/components/StateTag';
 import { deleteOutends, getOutends } from '@/services/rulex/shuchuziyuanguanli';
-import Detail from './components/Detail';
-import { typeEnum } from './components/initialValue';
+import Detail from './Detail';
+import { typeEnum } from './Update/initialValue';
 
 export type Item = {
   name: string;

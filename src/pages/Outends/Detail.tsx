@@ -6,7 +6,7 @@ import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
-import { allowPingEnum, modeEnum, typeEnum } from './initialValue';
+import { allowPingEnum, modeEnum, typeEnum } from './Update/initialValue';
 
 type DetailProps = DrawerProps & {
   uuid: string;

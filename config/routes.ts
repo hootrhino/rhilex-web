@@ -131,12 +131,12 @@
       {
         path: '/outends/new',
         name: '新建资源',
-        component: './Outends/components/Update',
+        component: './Outends/Update',
       },
       {
         path: '/outends/edit/:id',
         name: '编辑资源',
-        component: './Outends/components/Update',
+        component: './Outends/Update',
       },
     ],
   },
