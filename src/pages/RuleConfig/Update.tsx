@@ -1,23 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams } from 'umi';
 
-import { luaGlobFuncs } from '@/components/LuaEditor/constant';
+import type { Template } from '@/components/LuaEditor/constant';
+import {
+  DefaultActions,
+  DefaultFailed,
+  DefaultSuccess,
+  luaTemplates,
+} from '@/components/LuaEditor/constant';
 import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
 import useGoBack from '@/hooks/useGoBack';
 import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanli';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
   FooterToolbar,
   PageContainer,
   ProCard,
+  ProDescriptions,
   ProForm,
-  ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button, Popconfirm, Space, Tooltip, Typography } from 'antd';
-import omit from 'lodash/omit';
-import { useModel, useRequest } from 'umi';
+import { Button, Divider, FloatButton, Input, Modal, Popconfirm, Space, Typography } from 'antd';
+import { useRequest } from 'umi';
 import { RuleType } from '.';
 
 export type FormItem = {
@@ -36,31 +42,14 @@ type UpdateFormProps = {
   typeId: string;
 };
 
-const DefaultActions = `Actions = {
-  function(args)
-    --stdlib:Debug(args)
-    return true, args
-  end
-}`;
-
-const DefaultSuccess = `function Success()
---stdlib:log("success")
-end`;
-
-const DefaultFailed = `function Failed(error)
-stdlib:log(error)
-end`;
-
 const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
   const formRef = useRef<ProFormInstance>();
   const { ruleId, groupId } = useParams();
+  const { showModal } = useGoBack();
   const [loading, setLoading] = useState<boolean>(false);
   const DefaultListUrl = groupId ? `/${type}/${groupId}/${typeId}/rule` : `/${type}/${typeId}/rule`;
-
-  const { showModal } = useGoBack();
-
-  const { data: sources, run: getSourceList } = useModel('useSource');
-  const { data: devices, run: getDeviceList } = useModel('useDevice');
+  const [open, setOpen] = useState<boolean>(false);
+  const [templateData, setTplData] = useState<Template[]>([]);
 
   // 获取详情
   const { run: getDetail } = useRequest((uuid: string) => getRulesDetail({ uuid: uuid || '' }), {
@@ -75,7 +64,7 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
     setLoading(true);
     try {
       const params = {
-        ...omit(values, ['sourceId', 'template']),
+        ...values,
         fromSource: type === 'inends' ? [typeId] : [],
         fromDevice: type === 'device' ? [typeId] : [],
       };
@@ -96,10 +85,36 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
     }
   };
 
-  const getSourceIdList = () => {
-    return type === 'device'
-      ? devices?.map((item) => ({ label: item?.name, value: item?.uuid }))
-      : sources;
+  const filterData = (value: string) => {
+    let filtered = [...luaTemplates];
+    const regex = new RegExp(value, 'i');
+
+    return filtered
+      .map((item) => {
+        let matchItem = { ...item };
+
+        // 搜索标题
+        if (matchItem.title.includes(value)) {
+          return matchItem;
+        }
+
+        // 搜索内层
+        matchItem.data = item.data.filter(
+          (child) => child.label.match(regex) || child.detail.match(regex),
+        );
+        return matchItem.data?.length > 0 ? matchItem : null;
+      })
+      .filter((item) => item);
+  };
+
+  // 搜索快捷模板
+  const handleOnSearch = (value: string) => {
+    if (!value) {
+      setTplData(luaTemplates);
+    } else {
+      const newData = filterData(value.toLowerCase());
+      setTplData(newData as Template[]);
+    }
   };
 
   useEffect(() => {
@@ -116,14 +131,7 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
   }, [ruleId, typeId, type]);
 
   useEffect(() => {
-    if (!groupId) return;
-    getDeviceList({ uuid: groupId });
-  }, [groupId]);
-
-  useEffect(() => {
-    if (type === 'inends') {
-      getSourceList();
-    }
+    setTplData(luaTemplates);
   }, []);
 
   return (
@@ -167,62 +175,9 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
                     message: '请输入规则名称',
                   },
                 ]}
-                width="md"
+                width="lg"
               />
-              <ProFormSelect
-                label="数据来源"
-                name="sourceId"
-                options={getSourceIdList()}
-                width="md"
-                fieldProps={{
-                  optionItemRender: (item) => (
-                    <Typography.Paragraph
-                      copyable={{ text: item?.value }}
-                      style={{ marginBottom: 0, display: 'flex', justifyContent: 'space-between' }}
-                    >
-                      <Space>
-                        <span>{item?.label}</span>
-                        <span className="text-[12px] text-[#000000A6]">{item?.value}</span>
-                      </Space>
-                    </Typography.Paragraph>
-                  ),
-                }}
-              />
-              <ProFormSelect
-                label="快捷模板"
-                name="template"
-                options={luaGlobFuncs?.map((item) => ({
-                  label: item?.detail,
-                  value: item?.apply,
-                  desc: item?.label,
-                }))}
-                width="md"
-                fieldProps={{
-                  optionItemRender: (item) => (
-                    <Tooltip
-                      placement="right"
-                      arrow={false}
-                      title={<pre>{item.value}</pre>}
-                      overlayInnerStyle={{ width: 400 }}
-                    >
-                      <Typography.Paragraph
-                        copyable={{ text: item.value }}
-                        style={{
-                          marginBottom: 0,
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                        }}
-                      >
-                        <Space>
-                          <span>{item.label}</span>
-                          <span className="text-[12px] text-[#000000A6]">{item.desc}</span>
-                        </Space>
-                      </Typography.Paragraph>
-                    </Tooltip>
-                  ),
-                }}
-              />
-              <ProFormText label="备注" name="description" width="md" placeholder="请输入备注" />
+              <ProFormText label="备注" name="description" width="lg" placeholder="请输入备注" />
             </ProForm.Group>
             <ProCodeEditor label="规则回调" name="actions" ref={formRef} required />
             <ProCodeEditor
@@ -236,6 +191,74 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
           </ProForm>
         </ProCard>
       </PageContainer>
+      <FloatButton
+        icon={<QuestionCircleOutlined />}
+        type="primary"
+        className="right-[24px] bottom-[80px]"
+        tooltip="查看快捷模板"
+        onClick={() => setOpen(true)}
+      />
+      <Modal
+        title={
+          <Space className="w-full pr-[40px] justify-between">
+            <span>快捷模板</span>
+            <Input.Search
+              placeholder="请输入模板名称进行查询"
+              onSearch={handleOnSearch}
+              onChange={(e) => {
+                if (!e.target.value) {
+                  setTplData(luaTemplates);
+                }
+              }}
+              style={{ width: 300 }}
+            />
+          </Space>
+        }
+        width="45%"
+        open={open}
+        onCancel={() => setOpen(false)}
+        centered
+        destroyOnClose
+        maskClosable={false}
+        footer={
+          <Button type="primary" key="close" onClick={() => setOpen(false)}>
+            关闭
+          </Button>
+        }
+      >
+        <div className="h-[500px] overflow-y-auto">
+          {templateData?.map((tpl) => (
+            <>
+              <ProDescriptions column={2} title={tpl.title} layout="vertical" key={tpl.key}>
+                {tpl.data.map((item) => (
+                  <ProDescriptions.Item
+                    label={
+                      <Typography.Paragraph
+                        copyable={{ text: item.apply }}
+                        style={{
+                          marginBottom: 0,
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <Space>
+                          <span>{item.detail}</span>
+                          <span className="text-[12px] text-[#000000A6]">{item.label}</span>
+                        </Space>
+                      </Typography.Paragraph>
+                    }
+                    valueType="code"
+                    key={item?.label}
+                  >
+                    {item?.apply}
+                  </ProDescriptions.Item>
+                ))}
+              </ProDescriptions>
+              <Divider />
+            </>
+          ))}
+        </div>
+      </Modal>
     </>
   );
 };
