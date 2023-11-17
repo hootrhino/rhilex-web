@@ -16,8 +16,8 @@ import StateTag from '@/components/StateTag';
 import type { DeviceGroupItem } from '@/models/useGroup';
 import { deleteDevices } from '@/services/rulex/shebeiguanli';
 import { history, useModel, useRequest } from '@umijs/max';
-import { typeEnum } from './components/SchemaForm/columns';
-import Detail from './components/Detail';
+import { typeEnum } from './SchemaForm/columns';
+import Detail from './Detail';
 
 export type DeviceItem = {
   name: string;
