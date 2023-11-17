@@ -1,5 +1,10 @@
-import { getHwifaceList, postHwifaceUpdate } from '@/services/rulex/jiekouguanli';
+import {
+  getHwifaceList,
+  getHwifaceRefresh,
+  postHwifaceUpdate,
+} from '@/services/rulex/jiekouguanli';
 import { getOsUarts } from '@/services/rulex/xitongshuju';
+import { ScanOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -51,7 +56,7 @@ const Interface = () => {
   // 获取串口配置
   const { data: uartOptions } = useRequest(() => getOsUarts(), {
     formatResult: (res) =>
-      res?.data?.map(item => ({
+      res?.data?.map((item) => ({
         value: item.port,
         label: item.alias,
       })),
@@ -72,6 +77,12 @@ const Interface = () => {
       return false;
     }
   };
+
+  // 扫描端口
+  const { run: refresh } = useRequest(() => getHwifaceRefresh(), {
+    manual: true,
+    onSuccess: () => message.success('扫描成功'),
+  });
 
   const columns: ProColumns<InterfaceItem>[] = [
     {
@@ -157,7 +168,9 @@ const Interface = () => {
           key="edit"
           onClick={() => {
             if (!uuid) return;
-            getDetail({ uuid }).then(data => formRef.current?.setFieldsValue({ ...data, config: [data?.config] }));
+            getDetail({ uuid }).then((data) =>
+              formRef.current?.setFieldsValue({ ...data, config: [data?.config] }),
+            );
             setOpen(true);
           }}
         >
@@ -174,6 +187,8 @@ const Interface = () => {
           rowKey="uuid"
           actionRef={actionRef}
           columns={columns}
+          search={false}
+          pagination={false}
           request={async () => {
             const { data } = await getHwifaceList();
 
@@ -182,8 +197,11 @@ const Interface = () => {
               success: true,
             });
           }}
-          search={false}
-          pagination={false}
+          toolBarRender={() => [
+            <Button key="refresh" type="primary" icon={<ScanOutlined />} onClick={refresh}>
+              扫描端口
+            </Button>,
+          ]}
         />
       </PageContainer>
       <ModalForm
