@@ -2,30 +2,8 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 更新设备 PUT /api/v1/devices */
-export async function putDevices(
-  body: {
-    uuid: string;
-    name: string;
-    type: string;
-    autoRestart: boolean;
-    description: string;
-    config: Record<string, any>;
-  },
-  options?: { [key: string]: any },
-) {
-  return request<{ code: number; msg: string }>('/api/v1/devices', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
-    ...(options || {}),
-  });
-}
-
-/** 新建设备 POST /api/v1/devices */
-export async function postDevices(
+/** 新建设备 POST /api/v1/devices/create */
+export async function postDevicesCreate(
   body: {
     name: string;
     type: string;
@@ -35,7 +13,7 @@ export async function postDevices(
   },
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: string[] }>('/api/v1/devices', {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/devices/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -45,13 +23,13 @@ export async function postDevices(
   });
 }
 
-/** 删除设备 DELETE /api/v1/devices */
-export async function deleteDevices(
+/** 删除设备 DELETE /api/v1/devices/del */
+export async function deleteDevicesDel(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.deleteDevicesParams,
+  params: API.deleteDevicesDelParams,
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string }>('/api/v1/devices', {
+  return request<{ code: number; msg: string }>('/api/v1/devices/del', {
     method: 'DELETE',
     params: {
       ...params,
@@ -122,6 +100,28 @@ export async function getDevicesListByGroup(
     params: {
       ...params,
     },
+    ...(options || {}),
+  });
+}
+
+/** 更新设备 PUT /api/v1/devices/update */
+export async function putDevicesUpdate(
+  body: {
+    uuid: string;
+    name: string;
+    type: string;
+    autoRestart: boolean;
+    description: string;
+    config: Record<string, any>;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string }>('/api/v1/devices/update', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
     ...(options || {}),
   });
 }

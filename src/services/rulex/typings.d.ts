@@ -32,12 +32,12 @@ declare namespace API {
     uuid: string;
   };
 
-  type deleteCrontask_openAPI_deleteParams = {
+  type deleteCrontaskDelParams = {
     /** uuid */
     uuid: string;
   };
 
-  type deleteDevicesParams = {
+  type deleteDevicesDelParams = {
     uuid: string;
   };
 
@@ -45,20 +45,20 @@ declare namespace API {
     uuid: string;
   };
 
-  type deleteGroupParams = {
+  type deleteGroupDelParams = {
     uuid: string;
   };
 
-  type deleteInendsParams = {
+  type deleteInendsDelParams = {
     uuid?: string;
   };
 
-  type deleteOutendsParams = {
+  type deleteOutendsDelParams = {
     uuid?: string;
   };
 
-  type deleteRulesParams = {
-    uuid?: string;
+  type deleteRulesDelParams = {
+    uuid: string;
   };
 
   type deleteVisualParams = {
@@ -140,7 +140,7 @@ declare namespace API {
     uuid?: string;
   };
 
-  type getRulesParams = {
+  type getRulesListParams = {
     uuid?: string;
   };
 

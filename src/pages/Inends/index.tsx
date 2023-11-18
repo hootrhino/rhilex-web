@@ -9,7 +9,7 @@ import { Button, Popconfirm } from 'antd';
 
 import { message } from '@/components/PopupHack';
 import StateTag from '@/components/StateTag';
-import { deleteInends, getInends } from '@/services/rulex/shuruziyuanguanli';
+import { deleteInendsDel, getInendsList } from '@/services/rulex/shuruziyuanguanli';
 import { useModel, useRequest } from '@umijs/max';
 import Detail from './components/Detail';
 import { typeEnum } from './components/initialValue';
@@ -28,7 +28,7 @@ const Inends = () => {
   const { detailConfig, setConfig } = useModel('useSource');
 
   // 删除
-  const { run: remove } = useRequest((params: API.deleteInendsParams) => deleteInends(params), {
+  const { run: remove } = useRequest((params: API.deleteInendsDelParams) => deleteInendsDel(params), {
     manual: true,
     onSuccess: () => {
       actionRef.current?.reload();
@@ -101,7 +101,7 @@ const Inends = () => {
           actionRef={actionRef}
           columns={columns}
           request={async () => {
-            const res = await getInends();
+            const res = await getInendsList();
 
             return Promise.resolve({
               data: (res as any)?.data,

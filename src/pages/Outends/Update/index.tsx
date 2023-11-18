@@ -1,4 +1,4 @@
-import { getOutendsDetail, postOutends, putOutends } from '@/services/rulex/shuchuziyuanguanli';
+import { getOutendsDetail, postOutendsCreate, putOutendsUpdate } from '@/services/rulex/shuchuziyuanguanli';
 
 import { message } from '@/components/PopupHack';
 import ProSegmented from '@/components/ProSegmented';
@@ -78,10 +78,10 @@ const UpdateForm = () => {
       }
 
       if (id) {
-        await putOutends({ ...params, uuid: id } as any);
+        await putOutendsUpdate({ ...params, uuid: id } as any);
         message.success('更新成功');
       } else {
-        const { msg } = await postOutends(params as any);
+        const { msg } = await postOutendsCreate(params as any);
         if (msg === 'Success') {
           message.success('创建成功');
         } else {

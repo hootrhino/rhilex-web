@@ -12,7 +12,6 @@ import * as shuchuziyuanguanli from './shuchuziyuanguanli'
 import * as shuruziyuanguanli from './shuruziyuanguanli'
 import * as chajianguanli from './chajianguanli'
 import * as qingliangyingyong from './qingliangyingyong'
-import * as AInengli from './AInengli'
 import * as fenzuguanli from './fenzuguanli'
 import * as dingshirenwu from './dingshirenwu'
 import * as dapingguanli from './dapingguanli'
@@ -38,7 +37,6 @@ export default {
   shuruziyuanguanli,
   chajianguanli,
   qingliangyingyong,
-  AInengli,
   fenzuguanli,
   dingshirenwu,
   dapingguanli,

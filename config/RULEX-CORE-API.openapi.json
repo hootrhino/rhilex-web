@@ -37,9 +37,6 @@
       "name": "插件管理"
     },
     {
-      "name": "AI能力"
-    },
-    {
       "name": "分组管理"
     },
     {
@@ -86,7 +83,7 @@
     }
   ],
   "paths": {
-    "/api/v1/devices": {
+    "/api/v1/devices/create": {
       "post": {
         "summary": "新建设备",
         "x-apifox-folder": "设备管理",
@@ -203,212 +200,6 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-30852073-run",
-        "security": []
-      },
-      "delete": {
-        "summary": "删除设备",
-        "x-apifox-folder": "设备管理",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "设备管理"
-        ],
-        "parameters": [
-          {
-            "name": "uuid",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "DEVICE:c4e4e16c51a64bd0a442fd6147482b68",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "操作成功"
-                    }
-                  },
-                  "2": {
-                    "summary": "异常示例",
-                    "value": {
-                      "code": 400,
-                      "msg": "操作失败"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-30852084-run",
-        "security": []
-      },
-      "put": {
-        "summary": "更新设备",
-        "x-apifox-folder": "设备管理",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "设备管理"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "uuid": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string"
-                  },
-                  "autoRestart": {
-                    "type": "boolean"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "config": {
-                    "type": "object",
-                    "properties": {},
-                    "x-apifox-orders": [],
-                    "x-apifox-ignore-properties": []
-                  }
-                },
-                "required": [
-                  "uuid",
-                  "name",
-                  "type",
-                  "autoRestart",
-                  "description",
-                  "config"
-                ],
-                "x-apifox-orders": [
-                  "uuid",
-                  "name",
-                  "type",
-                  "autoRestart",
-                  "description",
-                  "config"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "uuid": "DEVICE:5306c1b94de14ce782d04543e4dc73f0",
-                "name": "GENERIC_MODBUS-NEW333",
-                "type": "GENERIC_MODBUS",
-                "actionScript": "",
-                "description": "GENERIC_MODBUS-NEW333",
-                "config": {
-                  "config": {
-                    "baudRate": 4800,
-                    "dataBits": 8,
-                    "ip": "127.0.0.1",
-                    "parity": "N",
-                    "port": 502,
-                    "stopBits": 1,
-                    "uart": "COM5"
-                  },
-                  "frequency": 5,
-                  "mode": "TCP",
-                  "registers": [
-                    {
-                      "address": 0,
-                      "function": 3,
-                      "quantity": 1,
-                      "slaverId": 1,
-                      "tag": "d1"
-                    }
-                  ],
-                  "timeout": 10
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "操作成功"
-                    }
-                  },
-                  "2": {
-                    "summary": "异常示例",
-                    "value": {
-                      "code": 400,
-                      "msg": "操作失败"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-30852085-run",
         "security": []
       }
     },
@@ -570,6 +361,216 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-30852075-run",
+        "security": []
+      }
+    },
+    "/api/v1/devices/del": {
+      "delete": {
+        "summary": "删除设备",
+        "x-apifox-folder": "设备管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "设备管理"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "DEVICE:c4e4e16c51a64bd0a442fd6147482b68",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "操作成功"
+                    }
+                  },
+                  "2": {
+                    "summary": "异常示例",
+                    "value": {
+                      "code": 400,
+                      "msg": "操作失败"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-30852084-run",
+        "security": []
+      }
+    },
+    "/api/v1/devices/update": {
+      "put": {
+        "summary": "更新设备",
+        "x-apifox-folder": "设备管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "设备管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "autoRestart": {
+                    "type": "boolean"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "config": {
+                    "type": "object",
+                    "properties": {},
+                    "x-apifox-orders": [],
+                    "x-apifox-ignore-properties": []
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "name",
+                  "type",
+                  "autoRestart",
+                  "description",
+                  "config"
+                ],
+                "x-apifox-orders": [
+                  "uuid",
+                  "name",
+                  "type",
+                  "autoRestart",
+                  "description",
+                  "config"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "uuid": "DEVICE:5306c1b94de14ce782d04543e4dc73f0",
+                "name": "GENERIC_MODBUS-NEW333",
+                "type": "GENERIC_MODBUS",
+                "actionScript": "",
+                "description": "GENERIC_MODBUS-NEW333",
+                "config": {
+                  "config": {
+                    "baudRate": 4800,
+                    "dataBits": 8,
+                    "ip": "127.0.0.1",
+                    "parity": "N",
+                    "port": 502,
+                    "stopBits": 1,
+                    "uart": "COM5"
+                  },
+                  "frequency": 5,
+                  "mode": "TCP",
+                  "registers": [
+                    {
+                      "address": 0,
+                      "function": 3,
+                      "quantity": 1,
+                      "slaverId": 1,
+                      "tag": "d1"
+                    }
+                  ],
+                  "timeout": 10
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "操作成功"
+                    }
+                  },
+                  "2": {
+                    "summary": "异常示例",
+                    "value": {
+                      "code": 400,
+                      "msg": "操作失败"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-30852085-run",
         "security": []
       }
     },
@@ -775,7 +776,7 @@
         "security": []
       }
     },
-    "/api/v1/rules": {
+    "/api/v1/rules/create": {
       "post": {
         "summary": "新建规则",
         "x-apifox-folder": "规则管理",
@@ -894,69 +895,9 @@
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-30852116-run",
         "security": []
-      },
-      "delete": {
-        "summary": "删除规则",
-        "x-apifox-folder": "规则管理",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "规则管理"
-        ],
-        "parameters": [
-          {
-            "name": "uuid",
-            "in": "query",
-            "description": "",
-            "required": false,
-            "example": "RULE_3f029445-2b89-4049-8f94-c96d7910d7fa",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "操作成功"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-30852117-run",
-        "security": []
-      },
+      }
+    },
+    "/api/v1/rules/list": {
       "get": {
         "summary": "规则列表",
         "x-apifox-folder": "规则管理",
@@ -1055,128 +996,6 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-30852118-run",
-        "security": []
-      },
-      "put": {
-        "summary": "更新规则",
-        "x-apifox-folder": "规则管理",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "规则管理"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "uuid": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "fromSource": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "fromDevice": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "actions": {
-                    "type": "string"
-                  },
-                  "success": {
-                    "type": "string"
-                  },
-                  "failed": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "uuid",
-                  "name",
-                  "fromSource",
-                  "fromDevice",
-                  "actions",
-                  "success",
-                  "failed",
-                  "description"
-                ],
-                "x-apifox-orders": [
-                  "uuid",
-                  "name",
-                  "fromSource",
-                  "fromDevice",
-                  "actions",
-                  "success",
-                  "failed",
-                  "description"
-                ],
-                "x-apifox-ignore-properties": []
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "异常示例",
-                    "value": {
-                      "code": 4000,
-                      "msg": "device not exists: DEVICEa171d3cef7f74fd695abf2b6d3ddfe0e",
-                      "data": []
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-88756048-run",
         "security": []
       }
     },
@@ -1471,7 +1290,7 @@
         "security": []
       }
     },
-    "/api/v1/outends": {
+    "/api/v1/outends/create": {
       "post": {
         "summary": "新建输出资源",
         "x-apifox-folder": "输出资源管理",
@@ -1609,7 +1428,9 @@
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-30852653-run",
         "security": []
-      },
+      }
+    },
+    "/api/v1/outends/del": {
       "delete": {
         "summary": "删除输出资源",
         "x-apifox-folder": "输出资源管理",
@@ -1671,7 +1492,9 @@
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-30852661-run",
         "security": []
-      },
+      }
+    },
+    "/api/v1/outends/update": {
       "put": {
         "summary": "更新输出资源",
         "x-apifox-folder": "输出资源管理",
@@ -1807,7 +1630,9 @@
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-30852662-run",
         "security": []
-      },
+      }
+    },
+    "/api/v1/outends/list": {
       "get": {
         "summary": "输出资源列表",
         "x-apifox-folder": "输出资源管理",
@@ -2148,7 +1973,7 @@
         "security": []
       }
     },
-    "/api/v1/inends": {
+    "/api/v1/inends/update": {
       "put": {
         "summary": "更新输入资源",
         "x-apifox-folder": "输入资源管理",
@@ -2284,7 +2109,9 @@
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-54020034-run",
         "security": []
-      },
+      }
+    },
+    "/api/v1/inends/list": {
       "get": {
         "summary": "输出输入资源",
         "x-apifox-folder": "输入资源管理",
@@ -2377,7 +2204,9 @@
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-54020035-run",
         "security": []
-      },
+      }
+    },
+    "/api/v1/inends/create": {
       "post": {
         "summary": "新建输入资源",
         "x-apifox-folder": "输入资源管理",
@@ -2515,7 +2344,9 @@
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-54020036-run",
         "security": []
-      },
+      }
+    },
+    "/api/v1/inends/del": {
       "delete": {
         "summary": "删除输入资源",
         "x-apifox-folder": "输入资源管理",
@@ -3621,13 +3452,11 @@
     "/api/v1/aibase": {
       "get": {
         "summary": "AI能力列表",
-        "x-apifox-folder": "AI能力",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "AI能力"
-        ],
+        "tags": [],
         "parameters": [],
         "responses": {
           "200": {
@@ -3798,6 +3627,130 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-84534367-run",
+        "security": []
+      }
+    },
+    "/api/v1/rules/update": {
+      "put": {
+        "summary": "更新规则",
+        "x-apifox-folder": "规则管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "规则管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "fromSource": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "fromDevice": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "actions": {
+                    "type": "string"
+                  },
+                  "success": {
+                    "type": "string"
+                  },
+                  "failed": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "name",
+                  "fromSource",
+                  "fromDevice",
+                  "actions",
+                  "success",
+                  "failed",
+                  "description"
+                ],
+                "x-apifox-orders": [
+                  "uuid",
+                  "name",
+                  "fromSource",
+                  "fromDevice",
+                  "actions",
+                  "success",
+                  "failed",
+                  "description"
+                ],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "异常示例",
+                    "value": {
+                      "code": 4000,
+                      "msg": "device not exists: DEVICEa171d3cef7f74fd695abf2b6d3ddfe0e",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-88756048-run",
         "security": []
       }
     },
@@ -4561,7 +4514,7 @@
         "security": []
       }
     },
-    "/api/v1/group": {
+    "/api/v1/group/del": {
       "delete": {
         "summary": "删除分组",
         "x-apifox-folder": "分组管理",
@@ -4936,7 +4889,7 @@
         "security": []
       }
     },
-    "/api/v1/crontask/delete": {
+    "/api/v1/crontask/del": {
       "delete": {
         "summary": "删除定时任务",
         "x-apifox-folder": "定时任务",
@@ -9803,6 +9756,47 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-125800788-run",
+        "security": []
+      }
+    },
+    "/api/v1/rules/del": {
+      "delete": {
+        "summary": "删除规则",
+        "x-apifox-folder": "规则管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "规则管理"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "11223344",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-126049508-run",
         "security": []
       }
     }

@@ -18,7 +18,7 @@ import omit from 'lodash/omit';
 
 import { message } from '@/components/PopupHack';
 import ProSegmented from '@/components/ProSegmented';
-import { postDevices, putDevices } from '@/services/rulex/shebeiguanli';
+import { postDevicesCreate, putDevicesUpdate } from '@/services/rulex/shebeiguanli';
 import { history, useModel, useParams } from '@umijs/max';
 import cloneDeep from 'lodash/cloneDeep';
 import { columns } from './columns';
@@ -198,10 +198,10 @@ const SchemaForm = ({}: ProFormProps) => {
       };
 
       if (deviceId) {
-        await putDevices({ ...params, uuid: deviceId });
+        await putDevicesUpdate({ ...params, uuid: deviceId });
         message.success('更新成功');
       } else {
-        const { msg } = await postDevices(params);
+        const { msg } = await postDevicesCreate(params);
 
         if (msg === 'Success') {
           message.success('创建成功');

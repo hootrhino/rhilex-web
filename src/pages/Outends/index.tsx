@@ -8,7 +8,7 @@ import { history } from 'umi';
 
 import { message } from '@/components/PopupHack';
 import StateTag from '@/components/StateTag';
-import { deleteOutends, getOutends } from '@/services/rulex/shuchuziyuanguanli';
+import { deleteOutendsDel, getOutendsList } from '@/services/rulex/shuchuziyuanguanli';
 import Detail from './Detail';
 import { typeEnum } from './Update/initialValue';
 
@@ -29,9 +29,9 @@ const Targets = () => {
   });
 
   // 删除
-  const handleOnDelete = async (values: API.deleteOutendsParams) => {
+  const handleOnDelete = async (values: API.deleteOutendsDelParams) => {
     try {
-      await deleteOutends(values);
+      await deleteOutendsDel(values);
       actionRef?.current?.reload();
       message.success('删除成功');
       return true;
@@ -100,7 +100,7 @@ const Targets = () => {
           actionRef={actionRef}
           columns={columns}
           request={async () => {
-            const res = await getOutends();
+            const res = await getOutendsList();
 
             return Promise.resolve({
               data: (res as any)?.data,

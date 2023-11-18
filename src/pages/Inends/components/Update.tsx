@@ -4,7 +4,7 @@ import { history, useParams, useRequest } from 'umi';
 
 import { message } from '@/components/PopupHack';
 import useGoBack from '@/hooks/useGoBack';
-import { getInendsDetail, postInends, putInends } from '@/services/rulex/shuruziyuanguanli';
+import { getInendsDetail, postInendsCreate, putInendsUpdate } from '@/services/rulex/shuruziyuanguanli';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
   FooterToolbar,
@@ -56,10 +56,10 @@ const UpdateForm = () => {
         config: values?.config?.[0],
       };
       if (id) {
-        await putInends({ ...params, uuid: id });
+        await putInendsUpdate({ ...params, uuid: id });
         message.success('更新成功');
       } else {
-        const { msg } = await postInends(params);
+        const { msg } = await postInendsCreate(params);
         if (msg === 'Success') {
           message.success('创建成功');
         } else {

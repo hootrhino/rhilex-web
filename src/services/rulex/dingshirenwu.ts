@@ -17,13 +17,13 @@ export async function postCrontaskCreate(
   });
 }
 
-/** 删除定时任务 DELETE /api/v1/crontask/delete */
-export async function deleteCrontask__openAPI__delete(
+/** 删除定时任务 DELETE /api/v1/crontask/del */
+export async function deleteCrontaskDel(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.deleteCrontask_openAPI_deleteParams,
+  params: API.deleteCrontaskDelParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.R>('/api/v1/crontask/delete', {
+  return request<API.R>('/api/v1/crontask/del', {
     method: 'DELETE',
     params: {
       ...params,

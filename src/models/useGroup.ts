@@ -1,6 +1,6 @@
 import { message } from '@/components/PopupHack';
 import {
-  deleteGroup,
+  deleteGroupDel,
   getGroupDetail,
   postGroupCreate,
   putGroupUpdate,
@@ -45,7 +45,7 @@ const useGroup = () => {
   });
 
   // 删除分组
-  const { run: remove } = useRequest((params: API.deleteGroupParams) => deleteGroup(params), {
+  const { run: remove } = useRequest((params: API.deleteGroupDelParams) => deleteGroupDel(params), {
     manual: true,
     onSuccess: () => message.success('删除成功'),
   });

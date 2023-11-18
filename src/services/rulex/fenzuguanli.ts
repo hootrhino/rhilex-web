@@ -2,21 +2,6 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 删除分组 DELETE /api/v1/group */
-export async function deleteGroup(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.deleteGroupParams,
-  options?: { [key: string]: any },
-) {
-  return request<Record<string, any>>('/api/v1/group', {
-    method: 'DELETE',
-    params: {
-      ...params,
-    },
-    ...(options || {}),
-  });
-}
-
 /** 新建分组 POST /api/v1/group/create */
 export async function postGroupCreate(
   body: {
@@ -31,6 +16,21 @@ export async function postGroupCreate(
       'Content-Type': 'application/json',
     },
     data: body,
+    ...(options || {}),
+  });
+}
+
+/** 删除分组 DELETE /api/v1/group/del */
+export async function deleteGroupDel(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteGroupDelParams,
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/api/v1/group/del', {
+    method: 'DELETE',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }

@@ -11,7 +11,7 @@ import {
 import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
 import useGoBack from '@/hooks/useGoBack';
-import { getRulesDetail, postRules, putRules } from '@/services/rulex/guizeguanli';
+import { getRulesDetail, postRulesCreate, putRulesUpdate } from '@/services/rulex/guizeguanli';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -70,10 +70,10 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
       };
 
       if (ruleId) {
-        await putRules({ ...params, uuid: ruleId } as any);
+        await putRulesUpdate({ ...params, uuid: ruleId } as any);
         message.success('更新成功');
       } else {
-        await postRules(params as any);
+        await postRulesCreate(params as any);
         message.success('新建成功');
       }
       history.push(DefaultListUrl);

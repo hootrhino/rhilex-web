@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from 'react';
 import { message } from '@/components/PopupHack';
 import StateTag from '@/components/StateTag';
 import type { DeviceGroupItem } from '@/models/useGroup';
-import { deleteDevices } from '@/services/rulex/shebeiguanli';
+import { deleteDevicesDel } from '@/services/rulex/shebeiguanli';
 import { history, useModel, useRequest } from '@umijs/max';
 import { typeEnum } from './SchemaForm/columns';
 import Detail from './Detail';
@@ -98,7 +98,7 @@ const Devices = () => {
   };
 
   // 删除设备
-  const { run: remove } = useRequest((params: API.deleteDevicesParams) => deleteDevices(params), {
+  const { run: remove } = useRequest((params: API.deleteDevicesDelParams) => deleteDevicesDel(params), {
     manual: true,
     onSuccess: () => {
       getDeviceList({ uuid: activeGroupKey });

@@ -5,7 +5,7 @@ import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 
 import { message } from '@/components/PopupHack';
-import { deleteRules } from '@/services/rulex/guizeguanli';
+import { deleteRulesDel } from '@/services/rulex/guizeguanli';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
 import Debug from './Debug';
 import Detail from './Detail';
@@ -44,7 +44,7 @@ const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
   // const { data: deviceList } = useModel('useDevice');
 
   // 删除
-  const { run: remove } = useRequest((params: API.deleteRulesParams) => deleteRules(params), {
+  const { run: remove } = useRequest((params: API.deleteRulesDelParams) => deleteRulesDel(params), {
     manual: true,
     onSuccess: () => {
       actionRef?.current?.reload();
