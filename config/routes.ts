@@ -218,23 +218,6 @@
     icon: 'control',
     component: './PortMgt'
   },
-  // {
-  //   path: '/ai',
-  //   name: `A${'\xa0'}I${'\xa0\xa0\xa0'}能力`,
-  //   icon: 'reddit',
-  //   routes: [
-  //     {
-  //       path: '/ai',
-  //       redirect: '/ai/list',
-  //     },
-  //     {
-  //       path: '/ai/list',
-  //       name: 'AI 能力列表',
-  //       component: './AI',
-  //       hideInMenu: true,
-  //     },
-  //   ],
-  // },
   {
     path: '/system-mgt',
     name: '系统管理',
