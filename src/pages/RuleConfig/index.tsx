@@ -1,8 +1,8 @@
 import { PlusOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import type { ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import { message } from '@/components/PopupHack';
 import { deleteRulesDel } from '@/services/rulex/guizeguanli';
@@ -29,7 +29,6 @@ type RuleConfigProps = {
 
 const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
   const { groupId } = useParams();
-  const actionRef = useRef<ActionType>();
   const [detailConfig, setDetailConfig] = useState<{
     open: boolean;
     type: 'detail' | 'log';
@@ -41,13 +40,12 @@ const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
   });
 
   const { run: getSources } = useModel('useSource');
-  // const { data: deviceList } = useModel('useDevice');
 
   // 删除
   const { run: remove } = useRequest((params: API.deleteRulesDelParams) => deleteRulesDel(params), {
     manual: true,
     onSuccess: () => {
-      actionRef?.current?.reload();
+      refresh();
       message.success('删除成功');
     },
   });
@@ -108,7 +106,6 @@ const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
           key="detail"
           onClick={() => {
             getSources();
-            // getDevices();
             setDetailConfig({ open: true, type: 'detail', uuid });
           }}
         >
@@ -134,7 +131,6 @@ const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
       <PageContainer>
         <ProTable
           rowKey="uuid"
-          actionRef={actionRef}
           columns={columns}
           dataSource={dataSource}
           search={false}
