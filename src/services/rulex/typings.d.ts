@@ -28,7 +28,7 @@ declare namespace API {
     uuid: string;
   };
 
-  type deleteAppParams = {
+  type deleteAppDelParams = {
     uuid: string;
   };
 

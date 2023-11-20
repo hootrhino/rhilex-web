@@ -2682,7 +2682,7 @@
         "security": []
       }
     },
-    "/api/v1/app": {
+    "/api/v1/app/create": {
       "post": {
         "summary": "新建应用",
         "x-apifox-folder": "轻量应用",
@@ -2766,7 +2766,9 @@
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-73798934-run",
         "security": []
-      },
+      }
+    },
+    "/api/v1/app/del": {
       "delete": {
         "summary": "删除应用",
         "x-apifox-folder": "轻量应用",
@@ -2819,7 +2821,9 @@
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-73798935-run",
         "security": []
-      },
+      }
+    },
+    "/api/v1/app/update": {
       "put": {
         "summary": "更新应用",
         "x-apifox-folder": "轻量应用",
@@ -2915,7 +2919,9 @@
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-73798936-run",
         "security": []
-      },
+      }
+    },
+    "/api/v1/app/list": {
       "get": {
         "summary": "应用列表",
         "x-apifox-folder": "轻量应用",
@@ -3446,55 +3452,6 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-76792324-run",
-        "security": []
-      }
-    },
-    "/api/v1/aibase": {
-      "get": {
-        "summary": "AI能力列表",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": [
-                        {
-                          "uuid": "BUILDIN_MNIST",
-                          "name": "BUILDIN_MNIST",
-                          "type": "BUILDIN_MNIST",
-                          "filepath": "...",
-                          "config": {
-                            "document": "http://yann.lecun.com/exdb/mnist"
-                          },
-                          "description": "BUILDIN_MNIST"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-77202058-run",
         "security": []
       }
     },

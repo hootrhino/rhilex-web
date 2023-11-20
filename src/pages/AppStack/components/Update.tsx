@@ -3,7 +3,7 @@ import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
 import ProSegmented from '@/components/ProSegmented';
 import useGoBack from '@/hooks/useGoBack';
-import { getAppDetail, postApp, putApp } from '@/services/rulex/qingliangyingyong';
+import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rulex/qingliangyingyong';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
   FooterToolbar,
@@ -41,7 +41,7 @@ const UpdateForm = () => {
   });
 
   // 新建
-  const { run: add, loading: addLoading } = useRequest((params) => postApp(params), {
+  const { run: add, loading: addLoading } = useRequest((params) => postAppCreate(params), {
     manual: true,
     onSuccess: () => {
       message.success('新建成功');
@@ -50,7 +50,7 @@ const UpdateForm = () => {
   });
 
   // 编辑
-  const { run: update, loading: updateLoading } = useRequest((params) => putApp(params), {
+  const { run: update, loading: updateLoading } = useRequest((params) => putAppUpdate(params), {
     manual: true,
     onSuccess: () => {
       message.success('更新成功');

@@ -1,5 +1,5 @@
 import { message } from '@/components/PopupHack';
-import { deleteApp, getApp, putAppStart, putAppStop } from '@/services/rulex/qingliangyingyong';
+import { deleteAppDel, getAppList, putAppStart, putAppStop } from '@/services/rulex/qingliangyingyong';
 import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
@@ -34,7 +34,7 @@ const AppStack = () => {
   });
 
   // 删除
-  const { run: remove } = useRequest((params: API.deleteAppParams) => deleteApp(params), {
+  const { run: remove } = useRequest((params: API.deleteAppDelParams) => deleteAppDel(params), {
     manual: true,
     onSuccess: () => {
       message.success('删除成功');
@@ -158,7 +158,7 @@ const AppStack = () => {
           search={false}
           pagination={false}
           request={async () => {
-            const { data } = await getApp();
+            const { data } = await getAppList();
 
             return Promise.resolve({
               data,

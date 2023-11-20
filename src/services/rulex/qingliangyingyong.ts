@@ -2,50 +2,8 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 应用列表 设备列表 GET /api/v1/app */
-export async function getApp(options?: { [key: string]: any }) {
-  return request<{
-    code: number;
-    msg: string;
-    data: {
-      uuid?: string;
-      name?: string;
-      version?: string;
-      autoStart?: boolean;
-      appState?: number;
-      filepath?: string;
-      luaSource?: string;
-    }[];
-  }>('/api/v1/app', {
-    method: 'GET',
-    ...(options || {}),
-  });
-}
-
-/** 更新应用 PUT /api/v1/app */
-export async function putApp(
-  body: {
-    uuid: string;
-    name: string;
-    version: string;
-    autoStart: boolean;
-    description: string;
-    luaSource: string;
-  },
-  options?: { [key: string]: any },
-) {
-  return request<{ code: number; msg: string }>('/api/v1/app', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
-    ...(options || {}),
-  });
-}
-
-/** 新建应用 POST /api/v1/app */
-export async function postApp(
+/** 新建应用 POST /api/v1/app/create */
+export async function postAppCreate(
   body: {
     name: string;
     version: string;
@@ -54,7 +12,7 @@ export async function postApp(
   },
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string }>('/api/v1/app', {
+  return request<{ code: number; msg: string }>('/api/v1/app/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -64,13 +22,13 @@ export async function postApp(
   });
 }
 
-/** 删除应用 DELETE /api/v1/app */
-export async function deleteApp(
+/** 删除应用 DELETE /api/v1/app/del */
+export async function deleteAppDel(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.deleteAppParams,
+  params: API.deleteAppDelParams,
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string }>('/api/v1/app', {
+  return request<{ code: number; msg: string }>('/api/v1/app/del', {
     method: 'DELETE',
     params: {
       ...params,
@@ -90,6 +48,26 @@ export async function getAppDetail(
     params: {
       ...params,
     },
+    ...(options || {}),
+  });
+}
+
+/** 应用列表 设备列表 GET /api/v1/app/list */
+export async function getAppList(options?: { [key: string]: any }) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      uuid?: string;
+      name?: string;
+      version?: string;
+      autoStart?: boolean;
+      appState?: number;
+      filepath?: string;
+      luaSource?: string;
+    }[];
+  }>('/api/v1/app/list', {
+    method: 'GET',
     ...(options || {}),
   });
 }
@@ -144,6 +122,28 @@ export async function putAppStop(
     params: {
       ...params,
     },
+    ...(options || {}),
+  });
+}
+
+/** 更新应用 PUT /api/v1/app/update */
+export async function putAppUpdate(
+  body: {
+    uuid: string;
+    name: string;
+    version: string;
+    autoStart: boolean;
+    description: string;
+    luaSource: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string }>('/api/v1/app/update', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
     ...(options || {}),
   });
 }
