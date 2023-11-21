@@ -277,7 +277,7 @@ const UpdateForm = () => {
                   {type === 'MQTT' && (
                     <>
                       <ProForm.Group>
-                        <ProFormDigit
+                        <ProFormText
                           label="主机地址"
                           name="host"
                           width="md"
@@ -353,7 +353,7 @@ const UpdateForm = () => {
                         placeholder="请输入超时时间（毫秒）"
                         rules={[{ required: true, message: '请输入超时时间（毫秒）' }]}
                       />
-                      <ProFormDigit
+                      <ProFormText
                         label="主机地址"
                         name="host"
                         width="md"
@@ -409,7 +409,7 @@ const UpdateForm = () => {
                         />
                       </ProForm.Group>
                       <ProForm.Group>
-                        <ProFormDigit
+                        <ProFormText
                           label="主机地址"
                           name="host"
                           width="md"

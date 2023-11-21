@@ -4,7 +4,11 @@ import { history, useParams, useRequest } from 'umi';
 
 import { message } from '@/components/PopupHack';
 import useGoBack from '@/hooks/useGoBack';
-import { getInendsDetail, postInendsCreate, putInendsUpdate } from '@/services/rulex/shuruziyuanguanli';
+import {
+  getInendsDetail,
+  postInendsCreate,
+  putInendsUpdate,
+} from '@/services/rulex/shuruziyuanguanli';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
   FooterToolbar,
@@ -193,6 +197,8 @@ const UpdateForm = () => {
           </ProForm.Group>
           <ProFormDependency name={['type']}>
             {({ type }) => {
+              if (!type) return;
+
               return (
                 <ProFormList
                   name="config"
@@ -201,49 +207,69 @@ const UpdateForm = () => {
                   copyIconProps={false}
                   deleteIconProps={false}
                 >
-                  {type === 'GENERIC_IOT_HUB' ? (
-                    <>
-                      <ProForm.Group>
-                        <ProFormDigit
-                          name="host"
-                          label="服务地址"
-                          width="md"
-                          placeholder="请输入服务地址"
-                          rules={[{ required: true, message: '请输入服务地址' }]}
-                        />
-                        <ProFormDigit
-                          name="port"
-                          label="端口"
-                          width="md"
-                          placeholder="请输入端口"
-                          rules={[{ required: true, message: '请输入端口' }]}
-                        />
-                        <ProFormSelect
-                          label="模式"
-                          name="mode"
-                          width="md"
-                          valueEnum={modeEnum}
-                          placeholder="请选择模式"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请选择模式',
-                            },
-                          ]}
-                        />
+                  <>
+                    <ProForm.Group>
+                      <ProFormText
+                        name="host"
+                        label="服务地址"
+                        width="md"
+                        placeholder="请输入服务地址"
+                        rules={[{ required: true, message: '请输入服务地址' }]}
+                      />
+                      <ProFormDigit
+                        name="port"
+                        label="端口"
+                        width="md"
+                        placeholder="请输入端口"
+                        rules={[{ required: true, message: '请输入端口' }]}
+                      />
+
+                      {type === 'GENERIC_IOT_HUB' && (
+                        <>
+                          <ProFormSelect
+                            label="模式"
+                            name="mode"
+                            width="md"
+                            valueEnum={modeEnum}
+                            placeholder="请选择模式"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请选择模式',
+                              },
+                            ]}
+                          />
+                          <ProFormText
+                            label="产品 ID"
+                            name="productId"
+                            width="md"
+                            placeholder="请输入产品 ID"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请输入产品 ID',
+                              },
+                            ]}
+                          />
+                        </>
+                      )}
+
+                      {type === 'NATS_SERVER' && (
                         <ProFormText
-                          label="产品 ID"
-                          name="productId"
+                          label="主题"
+                          name="topic"
                           width="md"
-                          placeholder="请输入产品 ID"
+                          placeholder="请输入主题"
                           rules={[
                             {
                               required: true,
-                              message: '请输入产品 ID',
+                              message: '请输入主题',
                             },
                           ]}
                         />
-                      </ProForm.Group>
+                      )}
+                    </ProForm.Group>
+                    {type === 'GENERIC_IOT_HUB' && (
                       <ProForm.Group>
                         <ProFormText
                           label="设备名"
@@ -294,39 +320,8 @@ const UpdateForm = () => {
                           ]}
                         />
                       </ProForm.Group>
-                    </>
-                  ) : (
-                    <ProForm.Group>
-                      <ProFormDigit
-                        name="host"
-                        label="服务地址"
-                        width="md"
-                        placeholder="请输入服务地址"
-                        rules={[{ required: true, message: '请输入服务地址' }]}
-                      />
-                      <ProFormDigit
-                        name="port"
-                        label="端口"
-                        width="md"
-                        placeholder="请输入端口"
-                        rules={[{ required: true, message: '请输入端口' }]}
-                      />
-                      {type === 'NATS_SERVER' && (
-                        <ProFormText
-                          label="主题"
-                          name="topic"
-                          width="md"
-                          placeholder="请输入主题"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请输入主题',
-                            },
-                          ]}
-                        />
-                      )}
-                    </ProForm.Group>
-                  )}
+                    )}
+                  </>
                 </ProFormList>
               );
             }}
