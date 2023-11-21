@@ -1,7 +1,14 @@
+export type Data = {
+  label: string;
+  apply: string;
+  detail: string;
+  type: string;
+}
+
 export type Template = {
   title: string;
   key: string;
-  data: Record<string, any>[];
+  data: Data[];
 };
 /** 规则默认值 **/
 export const DefaultActions = `Actions = {
