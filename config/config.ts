@@ -38,4 +38,7 @@ export default defineConfig({
   },
   requestRecord: {},
   favicons: ['/favicon1.png'],
+  devtool: REACT_APP_ENV === 'dev' ? 'source-map' : false, // 设置 sourcemap 生成方式
+  inlineLimit: 1000000, // 配置图片文件是否走 base64 编译的阈值 1000k = 1M
+  jsMinifier: 'uglifyJs', // 配置构建时压缩 JavaScript 的工具
 });
