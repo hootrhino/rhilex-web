@@ -163,6 +163,7 @@ const SchemaForm = ({}: ProFormProps) => {
 
       if (params.type === 'GENERIC_PROTOCOL') {
         newConfig = {
+          ...params.config,
           commonConfig: commonConfigParams,
           hostConfig: hostConfigParams,
         };
@@ -170,6 +171,7 @@ const SchemaForm = ({}: ProFormProps) => {
 
       if (params.type === 'GENERIC_MODBUS') {
         newConfig = {
+          ...params.config,
           commonConfig: {
             ...commonConfigParams,
             autoRequest: commonConfigParams?.autoRequest === 'true' ? true : false,
@@ -184,6 +186,7 @@ const SchemaForm = ({}: ProFormProps) => {
 
       if (params.type === 'GENERIC_AIS_RECEIVER') {
         newConfig = {
+          ...params.config,
           commonConfig: {
             ...commonConfigParams,
             parseAis: commonConfigParams?.parseAis === 'true' ? true : false,
