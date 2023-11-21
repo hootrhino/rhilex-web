@@ -103,7 +103,7 @@ const UpdateForm = () => {
       if (detail?.type === 'TCP_TRANSPORT') {
         formRef.current?.setFieldsValue({
           ...detail,
-          config: [{ ...detail?.config, allowPing: detail?.config?.allowPing.toString() }],
+          config: [{ ...detail?.config, allowPing: detail?.config?.allowPing === true ? 'true' : 'false' }],
         });
       } else {
         formRef.current?.setFieldsValue({
