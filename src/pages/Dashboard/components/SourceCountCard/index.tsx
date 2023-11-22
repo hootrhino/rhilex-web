@@ -49,7 +49,7 @@ const SourceCountCard = ({ responsive }: SourceCountCardProps) => {
     },
     {
       title: '设备总数',
-      value: Number(dataSource?.sourceCount?.devices),
+      value: dataSource?.sourceCount?.devices,
       icon: DeviceIcon,
       key: 'devices',
     },

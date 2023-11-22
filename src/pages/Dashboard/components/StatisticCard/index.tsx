@@ -10,25 +10,25 @@ const StatisticCard = () => {
   const statisticData = [
     {
       label: '输入成功',
-      value: Number(dataSource?.statistic?.inSuccess),
+      value: dataSource?.statistic?.inSuccess,
       status: 'success',
       key: 'inSuccess',
     },
     {
       label: '输入失败',
-      value: Number(dataSource?.statistic?.inFailed),
+      value: dataSource?.statistic?.inFailed,
       status: 'error',
       key: 'inFailed',
     },
     {
       label: '输出成功',
-      value: Number(dataSource?.statistic?.outSuccess),
+      value: dataSource?.statistic?.outSuccess,
       status: 'success',
       key: 'outSuccess',
     },
     {
       label: '输出失败',
-      value: Number(dataSource?.statistic?.outFailed),
+      value: dataSource?.statistic?.outFailed,
       status: 'error',
       key: 'outFailed',
     },
@@ -40,7 +40,7 @@ const StatisticCard = () => {
     <ProCard bodyStyle={{ padding: 0 }} className="dashboard-card">
       <ProCard layout="center" direction="column" type="inner" colSpan="25%">
         <div className="text-[#585858]">输入/输出总数</div>
-        <div className="font-bold text-[18px]">{sum(total)}</div>
+        <div className="font-bold text-[18px]">{sum(total) || 0}</div>
       </ProCard>
       <ProCard gutter={[16, 16]} wrap bodyStyle={{ paddingInline: 14 }}>
         {statisticData?.map((item) => (
@@ -62,7 +62,7 @@ const StatisticCard = () => {
               />
               <div className="text-[#585858] text-[13px]">{item.label}</div>
             </Space>
-            <div className="font-bold text-[16px]">{item.value}</div>
+            <div className="font-bold text-[16px]">{item.value || 0}</div>
           </ProCard>
         ))}
       </ProCard>
