@@ -1,31 +1,36 @@
 import { message } from '@/components/PopupHack';
 import { postBackupUpload } from '@/services/rulex/shujubeifen';
-import { DownloadOutlined, InboxOutlined, UploadOutlined } from '@ant-design/icons';
+import {
+  DownloadOutlined,
+  ExclamationCircleOutlined,
+  InboxOutlined,
+  UploadOutlined,
+} from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm } from '@ant-design/pro-components';
-import { Button, Space, Upload } from 'antd';
+import { history } from '@umijs/max';
+import { useCountDown } from 'ahooks';
+import { Button, Modal, Space, Upload } from 'antd';
 import { endsWith } from 'lodash';
 import { useRef, useState } from 'react';
 import Title from './TItle';
 
 const DataBackupConfig = () => {
   const formRef = useRef<ProFormInstance>();
-
+  const [targetDate, setTargetDate] = useState<number>();
   const [showList, setShowList] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
+  const [uploadFile, setUploadFile] = useState<any>();
 
-  // 数据恢复
-  const handleOnFinish = async ({ recovery }: any) => {
-    try {
-      const uploadFile = recovery?.fileList?.[0]?.originFileObj;
-      await postBackupUpload({}, uploadFile as File);
+  const [countdown] = useCountDown({
+    targetDate,
+    onEnd: () => {
       setShowList(false);
+      setTargetDate(undefined);
       formRef.current?.setFieldsValue({ recovery: undefined });
-      message.success('上传成功');
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
+      history.push('/');
+    },
+  });
 
   return (
     <>
@@ -33,7 +38,11 @@ const DataBackupConfig = () => {
       <ProForm
         formRef={formRef}
         layout="vertical"
-        onFinish={handleOnFinish}
+        onFinish={async ({ recovery }) => {
+          const uploadFile = recovery?.fileList?.[0]?.originFileObj;
+          setUploadFile(uploadFile);
+          setOpen(true);
+        }}
         submitter={{
           render: (props) => (
             <Space>
@@ -43,8 +52,13 @@ const DataBackupConfig = () => {
               >
                 备份下载
               </Button>
-              <Button type="primary" onClick={props.submit} icon={<UploadOutlined />}>
-                确定上传
+              <Button
+                type="primary"
+                onClick={props.submit}
+                icon={<UploadOutlined />}
+                disabled={countdown !== 0}
+              >
+                {countdown === 0 ? '确定上传' : `${Math.round(countdown / 1000)}s 后重启`}
               </Button>
             </Space>
           ),
@@ -80,6 +94,34 @@ const DataBackupConfig = () => {
           </Upload.Dragger>
         </ProForm.Item>
       </ProForm>
+      <Modal
+        title={
+          <Space align="center">
+            <ExclamationCircleOutlined style={{ color: '#faad14', fontSize: 22 }} />
+            <span>确定执行上传操作吗？</span>
+          </Space>
+        }
+        open={open}
+        destroyOnClose
+        onCancel={() => setOpen(false)}
+        rootClassName="none-header-border"
+        footer={
+          <Space>
+            <Button onClick={() => setOpen(false)}>取消</Button>
+            <Button
+              type="primary"
+              onClick={async () => {
+                setTargetDate(Date.now() + 10000);
+                await postBackupUpload({}, uploadFile as File);
+              }}
+            >
+              {countdown === 0 ? '确定上传' : `${Math.round(countdown / 1000)}s 后重启`}
+            </Button>
+          </Space>
+        }
+      >
+        上传时请确认版本，版本错误会导致失败，有可能会引起设备故障，请谨慎操作
+      </Modal>
     </>
   );
 };
