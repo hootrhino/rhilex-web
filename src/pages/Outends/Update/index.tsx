@@ -1,8 +1,13 @@
-import { getOutendsDetail, postOutendsCreate, putOutendsUpdate } from '@/services/rulex/shuchuziyuanguanli';
+import {
+  getOutendsDetail,
+  postOutendsCreate,
+  putOutendsUpdate,
+} from '@/services/rulex/shuchuziyuanguanli';
 
 import { message } from '@/components/PopupHack';
 import ProSegmented from '@/components/ProSegmented';
 import useGoBack from '@/hooks/useGoBack';
+import { PlusCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
   FooterToolbar,
@@ -15,11 +20,13 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button, Popconfirm } from 'antd';
+import { Button, Popconfirm, Space, Tooltip } from 'antd';
+import { isEmpty } from 'lodash';
 import random from 'lodash/random';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import {
+  defaultHttpConfig,
   defaultMongoConfig,
   defaultMqttConfig,
   defaultTcpConfig,
@@ -67,12 +74,32 @@ const UpdateForm = () => {
         config: formatConfig,
       };
 
-      if (values?.type === 'TCP_TRANSPORT') {
+      if (params?.type === 'TCP_TRANSPORT') {
         params = {
-          ...values,
+          ...params,
           config: {
             ...formatConfig,
             allowPing: formatConfig?.allowPing === 'true' ? true : false,
+          },
+        };
+      }
+      if (params.type === 'HTTP') {
+        const newHeaders = formatConfig?.headers.reduce(
+          (acc: any, curr: { k: string; v: string }) => {
+            if (curr.k && curr.v) {
+              acc[curr.k] = curr.v;
+            }
+
+            return acc;
+          },
+          {},
+        );
+
+        params = {
+          ...params,
+          config: {
+            ...formatConfig,
+            headers: newHeaders,
           },
         };
       }
@@ -103,7 +130,21 @@ const UpdateForm = () => {
       if (detail?.type === 'TCP_TRANSPORT') {
         formRef.current?.setFieldsValue({
           ...detail,
-          config: [{ ...detail?.config, allowPing: detail?.config?.allowPing === true ? 'true' : 'false' }],
+          config: [
+            { ...detail?.config, allowPing: detail?.config?.allowPing === true ? 'true' : 'false' },
+          ],
+        });
+      } else if (detail?.type === 'HTTP') {
+        const newHeaders = !isEmpty(detail?.config?.headers)
+          ? Object.keys(detail?.config?.headers)?.map((item) => ({
+              k: item,
+              v: detail?.config?.headers[item],
+            }))
+          : [{ k: '', v: '' }];
+
+        formRef.current?.setFieldsValue({
+          ...detail,
+          config: [{ ...detail?.config, headers: newHeaders }],
         });
       } else {
         formRef.current?.setFieldsValue({
@@ -138,6 +179,9 @@ const UpdateForm = () => {
         break;
       case 'TDENGINE':
         config = defaultTdConfig;
+        break;
+      case 'HTTP':
+        config = defaultHttpConfig;
         break;
       default:
         config = defaultMongoConfig;
@@ -487,6 +531,76 @@ const UpdateForm = () => {
                           ]}
                         />
                       </ProForm.Group>
+                    </>
+                  )}
+                  {type === 'HTTP' && (
+                    <>
+                      <ProFormText
+                        label="请求地址"
+                        name="url"
+                        width="md"
+                        placeholder="请输入请求地址"
+                        rules={[
+                          {
+                            required: true,
+                            message: '请输入请求地址',
+                          },
+                        ]}
+                      />
+                      <ProFormList
+                        name="headers"
+                        label={
+                          <Space align="center">
+                            <span>HTTP Headers</span>
+                            <div className="text-[12px] text-[#00000080] ml-[5px]">
+                              <QuestionCircleOutlined />
+                              <span className="mr-[5px] ml-[2px]">更多信息请参考</span>
+                              <a
+                                href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers"
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                HTTP Headers
+                              </a>
+                            </div>
+                          </Space>
+                        }
+                        min={1}
+                        creatorButtonProps={false}
+                        creatorRecord={{
+                          k: '',
+                          v: '',
+                        }}
+                        actionRender={(props, action, defaultActionDom) => {
+                          return [
+                            <Tooltip key="add" title="新建一行">
+                              <PlusCircleOutlined
+                                onClick={() => action.add()}
+                                className="ml-[10px]"
+                              />
+                            </Tooltip>,
+                            ...defaultActionDom,
+                          ];
+                        }}
+                      >
+                        <ProForm.Group>
+                          <ProFormText name="k" width="md" placeholder="请输入 key" />
+                          <ProFormDependency name={['k', 'v']}>
+                            {({ k, v }) => {
+                              const isSuccess = !k || (k && v);
+
+                              return (
+                                <ProFormText
+                                  name="v"
+                                  width="md"
+                                  placeholder="请输入 value"
+                                  validateStatus={isSuccess ? '' : 'error'}
+                                />
+                              );
+                            }}
+                          </ProFormDependency>
+                        </ProForm.Group>
+                      </ProFormList>
                     </>
                   )}
                 </ProFormList>

@@ -2,7 +2,7 @@ import StateTag from '@/components/StateTag';
 import { getOutendsDetail } from '@/services/rulex/shuchuziyuanguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { Drawer, DrawerProps, Tag } from 'antd';
+import { Descriptions, Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
@@ -144,6 +144,17 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
       dataIndex: 'dbName',
     },
   ],
+  HTTP: [
+    {
+      title: '请求地址',
+      dataIndex: 'url',
+    },
+    {
+      title: 'HTTP Headers',
+      dataIndex: 'headers',
+      renderText: (headers) => Object.keys(headers)?.length > 0 ? <div /> : null,
+    },
+  ],
 };
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
@@ -171,14 +182,25 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         loading={loading}
       />
       {data?.type && Object.keys(typeEnum).includes(data?.type) && (
-        <ProDescriptions
-          column={1}
-          columns={columnsMap[data?.type]}
-          labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
-          title="资源配置"
-          dataSource={data?.config}
-          loading={loading}
-        />
+        <>
+          <ProDescriptions
+            column={1}
+            columns={columnsMap[data?.type]}
+            labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
+            title="资源配置"
+            dataSource={data?.config}
+            loading={loading}
+          />
+          {data?.type === 'HTTP' && Object.keys(data?.config?.headers)?.length > 0 && (
+            <Descriptions column={1} bordered layout="vertical">
+              {Object.keys(data?.config?.headers)?.map((item) => (
+                <Descriptions.Item label={item} key={item}>
+                  {data?.config?.headers[item]}
+                </Descriptions.Item>
+              ))}
+            </Descriptions>
+          )}
+        </>
       )}
     </Drawer>
   );

@@ -5,6 +5,7 @@ export const typeEnum = {
   UDP_TARGET: 'UDP 数据传输',
   TCP_TRANSPORT: 'TCP 数据传输',
   TDENGINE: 'Tdengine 数据库',
+  HTTP: 'HTTP 数据推送'
 };
 
 // 传输模式
@@ -69,3 +70,11 @@ export const defaultTdConfig = [
     dbName: 'RULEX',
   },
 ];
+
+// HTTP 默认配置
+export const defaultHttpConfig = [
+  {
+    url: 'http://127.0.0.1:8080',
+    headers: [{k: '', v: ''}]
+  }
+]
