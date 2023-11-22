@@ -29,7 +29,7 @@ export async function postBackupUpload(body: {}, file?: File, options?: { [key: 
     }
   });
 
-  return request<{ code: number; msg: string; data: { url?: string } }>('/api/v1/backup/upload', {
+  return request<{ code: number; msg: string; data: string }>('/api/v1/backup/upload', {
     method: 'POST',
     data: formData,
     requestType: 'form',

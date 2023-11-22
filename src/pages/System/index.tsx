@@ -1,16 +1,16 @@
 import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { useEffect } from 'react';
-import FourGConfig from './components/4G';
-import APNConfig from './components/Apn';
-import DataBackupConfig from './components/DataBackup';
-import FirmwareConfig from './components/Firmware';
-import NetworkConfig from './components/Network';
-import RoutingConfig from './components/Routing';
-import SiteConfig from './components/Site';
-import TimeConfig from './components/Time';
-import UserConfig from './components/User';
-import WIFIConfig from './components/Wifi';
+import FourGConfig from './4G';
+import APNConfig from './Apn';
+import DataBackupConfig from './DataBackup';
+import FirmwareConfig from './Firmware';
+import NetworkConfig from './Network';
+import RoutingConfig from './Routing';
+import SiteConfig from './Site';
+import TimeConfig from './Time';
+import UserConfig from './User';
+import WIFIConfig from './Wifi';
 
 const System = () => {
   const { activeKey, setActiveKey } = useModel('useSetting');

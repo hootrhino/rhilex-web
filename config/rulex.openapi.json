@@ -7751,10 +7751,7 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -7775,7 +7772,7 @@
                     "value": {
                       "code": 200,
                       "msg": "操作成功",
-                      "data": []
+                      "data": ""
                     }
                   }
                 }
@@ -7813,10 +7810,7 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -7837,7 +7831,7 @@
                     "value": {
                       "code": 200,
                       "msg": "操作成功",
-                      "data": []
+                      "data": ""
                     }
                   }
                 }
@@ -8808,19 +8802,7 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "object",
-                      "properties": {
-                        "url": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "url"
-                      ],
-                      "x-apifox-ignore-properties": [],
-                      "x-apifox-orders": [
-                        "url"
-                      ]
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -8828,12 +8810,12 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
                 },
                 "examples": {
                   "1": {
@@ -9449,10 +9431,7 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -9473,7 +9452,7 @@
                     "value": {
                       "code": 200,
                       "msg": "操作成功",
-                      "data": []
+                      "data": ""
                     }
                   }
                 }

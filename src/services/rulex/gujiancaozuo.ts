@@ -4,7 +4,7 @@ import { request } from '@umijs/max';
 
 /** 重启系统 POST /api/v1/firmware/reboot */
 export async function postFirmwareReboot(options?: { [key: string]: any }) {
-  return request<{ code: number; msg: string; data: string[] }>('/api/v1/firmware/reboot', {
+  return request<{ code: number; msg: string; data: string }>('/api/v1/firmware/reboot', {
     method: 'POST',
     ...(options || {}),
   });
@@ -12,7 +12,7 @@ export async function postFirmwareReboot(options?: { [key: string]: any }) {
 
 /** 恢复出厂 POST /api/v1/firmware/recoverNew */
 export async function postFirmwareRecoverNew(options?: { [key: string]: any }) {
-  return request<{ code: number; msg: string; data: string[] }>('/api/v1/firmware/recoverNew', {
+  return request<{ code: number; msg: string; data: string }>('/api/v1/firmware/recoverNew', {
     method: 'POST',
     ...(options || {}),
   });
@@ -20,7 +20,7 @@ export async function postFirmwareRecoverNew(options?: { [key: string]: any }) {
 
 /** 重启固件 POST /api/v1/firmware/restartRulex */
 export async function postFirmwareRestartRulex(options?: { [key: string]: any }) {
-  return request<{ code: number; msg: string; data: string[] }>('/api/v1/firmware/restartRulex', {
+  return request<{ code: number; msg: string; data: string }>('/api/v1/firmware/restartRulex', {
     method: 'POST',
     ...(options || {}),
   });
