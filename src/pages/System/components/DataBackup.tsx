@@ -2,35 +2,44 @@ import { message } from '@/components/PopupHack';
 import { postBackupUpload } from '@/services/rulex/shujubeifen';
 import {
   DownloadOutlined,
-  ExclamationCircleOutlined,
+  ExclamationCircleFilled,
   InboxOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm } from '@ant-design/pro-components';
-import { history } from '@umijs/max';
+import { history, useModel } from '@umijs/max';
 import { useCountDown } from 'ahooks';
 import { Button, Modal, Space, Upload } from 'antd';
-import { endsWith } from 'lodash';
-import { useRef, useState } from 'react';
+import endsWith from 'lodash/endsWith';
+import { useEffect, useRef, useState } from 'react';
 import Title from './TItle';
 
 const DataBackupConfig = () => {
+  const { activeKey } = useModel('useSetting');
   const formRef = useRef<ProFormInstance>();
   const [targetDate, setTargetDate] = useState<number>();
   const [showList, setShowList] = useState<boolean>(true);
   const [open, setOpen] = useState<boolean>(false);
   const [uploadFile, setUploadFile] = useState<any>();
 
+  const handleReset = () => {
+    setShowList(false);
+    formRef.current?.setFieldsValue({ recovery: undefined });
+  };
+
   const [countdown] = useCountDown({
     targetDate,
     onEnd: () => {
-      setShowList(false);
       setTargetDate(undefined);
-      formRef.current?.setFieldsValue({ recovery: undefined });
+      handleReset();
       history.push('/');
     },
   });
+
+  useEffect(() => {
+    handleReset();
+  }, [activeKey]);
 
   return (
     <>
@@ -97,7 +106,7 @@ const DataBackupConfig = () => {
       <Modal
         title={
           <Space align="center">
-            <ExclamationCircleOutlined style={{ color: '#faad14', fontSize: 22 }} />
+            <ExclamationCircleFilled style={{ color: '#faad14', fontSize: 22 }} />
             <span>确定执行上传操作吗？</span>
           </Space>
         }
@@ -105,6 +114,7 @@ const DataBackupConfig = () => {
         destroyOnClose
         onCancel={() => setOpen(false)}
         rootClassName="none-header-border"
+        width={400}
         footer={
           <Space>
             <Button onClick={() => setOpen(false)}>取消</Button>
