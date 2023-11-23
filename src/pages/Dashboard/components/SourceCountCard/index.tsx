@@ -3,7 +3,7 @@ import { StatisticCard } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 
 import AppIcon from '@/assets/fontIcons/app.svg';
-import DeviceIcon from '@/assets/fontIcons/device1.svg';
+import DeviceIcon from '@/assets/fontIcons/device.svg';
 import ExportIcon from '@/assets/fontIcons/export.svg';
 import ImportIcon from '@/assets/fontIcons/import.svg';
 import PluginIcon from '@/assets/fontIcons/plugin.svg';
