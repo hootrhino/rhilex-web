@@ -1,6 +1,6 @@
 {
   "name": "hootrhino-eekit-web",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "private": true,
   "description": "轻量级边缘物联网网关开发框架",
   "scripts": {
@@ -46,6 +46,7 @@
     "@ant-design/icons": "^5.0.1",
     "@ant-design/plots": "^1.2.5",
     "@ant-design/pro-components": "^2.3.57",
+    "@antv/g6": "^4.8.23",
     "@antv/x6": "^2.13.1",
     "@antv/x6-plugin-clipboard": "^2.1.6",
     "@antv/x6-plugin-dnd": "^2.0.6",
@@ -61,12 +62,10 @@
     "@uiw/codemirror-extensions-langs": "^4.21.20",
     "@uiw/codemirror-theme-bbedit": "^4.21.20",
     "@uiw/codemirror-theme-darcula": "^4.21.20",
-    "@uiw/codemirror-theme-monokai": "^4.21.20",
     "@uiw/react-codemirror": "^4.21.20",
     "ahooks": "^3.7.8",
     "antd": "^5.5.0",
     "clsx": "^1.2.1",
-    "file-loader": "^6.2.0",
     "lodash": "^4.17.21",
     "lua-format": "^1.4.1",
     "luaparse": "^0.3.1",

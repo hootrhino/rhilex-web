@@ -5,6 +5,11 @@ import { useModel } from '@umijs/max';
 
 const HardWareInfoCard = () => {
   const { dataSource, cpuData } = useModel('useSystem');
+  const { memPercent, diskInfo, cpuPercent } = dataSource?.hardWareInfo || {
+    memPercent: 0,
+    diskInfo: 0,
+    cpuPercent: 0,
+  };
 
   const config = {
     width: 200,
@@ -33,7 +38,7 @@ const HardWareInfoCard = () => {
     width: 60,
     autoFit: false,
     statistic: false,
-    percent: Number(dataSource?.hardWareInfo?.memPercent) / 100,
+    percent: Number(memPercent) / 100,
   };
 
   return (
@@ -42,7 +47,7 @@ const HardWareInfoCard = () => {
         layout="center"
         statistic={{
           title: <div className="text-[#585858]">内存使用</div>,
-          value: dataSource?.hardWareInfo?.memPercent || 0,
+          value: memPercent,
           suffix: '%',
         }}
         chart={<RingProgress color={['#5B8FF9', '#E8EDF3']} {...ringConfig} />}
@@ -51,7 +56,7 @@ const HardWareInfoCard = () => {
         layout="center"
         statistic={{
           title: <div className="text-[#585858]">磁盘使用</div>,
-          value: dataSource?.hardWareInfo?.diskInfo || 0,
+          value: diskInfo,
           suffix: '%',
         }}
         chart={<RingProgress color={['#F4664A', '#E8EDF3']} {...ringConfig} />}
@@ -60,7 +65,7 @@ const HardWareInfoCard = () => {
         layout="center"
         statistic={{
           title: <div className="text-[#585858]">CPU 使用</div>,
-          value: dataSource?.hardWareInfo?.cpuPercent || 0,
+          value: cpuPercent,
           suffix: '%',
         }}
         chart={<TinyArea {...config} />}

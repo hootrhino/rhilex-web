@@ -3,7 +3,7 @@ import { StatisticCard } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 
 import AppIcon from '@/assets/fontIcons/app.svg';
-import DeviceIcon from '@/assets/fontIcons/device.svg';
+import DeviceIcon from '@/assets/fontIcons/device1.svg';
 import ExportIcon from '@/assets/fontIcons/export.svg';
 import ImportIcon from '@/assets/fontIcons/import.svg';
 import PluginIcon from '@/assets/fontIcons/plugin.svg';
@@ -15,41 +15,42 @@ type SourceCountCardProps = {
 
 const SourceCountCard = ({ responsive }: SourceCountCardProps) => {
   const { dataSource } = useModel('useSystem');
+  const { inends, outends, rules, plugins, apps, devices } = dataSource?.sourceCount || {};
 
   const sourceCountData = [
     {
       title: '入口总数',
-      value: dataSource?.sourceCount?.inends,
+      value: inends,
       icon: ImportIcon,
       key: 'inends',
     },
     {
       title: '出口总数',
-      value: dataSource?.sourceCount?.outends,
+      value: outends,
       icon: ExportIcon,
       key: 'outends',
     },
     {
       title: '规则总数',
-      value: dataSource?.sourceCount?.rules,
+      value: rules,
       icon: RuleIcon,
       key: 'rules',
     },
     {
       title: '插件总数',
-      value: dataSource?.sourceCount?.plugins,
+      value: plugins,
       icon: PluginIcon,
       key: 'plugins',
     },
     {
       title: '应用总数',
-      value: dataSource?.sourceCount?.apps,
+      value: apps,
       icon: AppIcon,
       key: 'apps',
     },
     {
       title: '设备总数',
-      value: dataSource?.sourceCount?.devices,
+      value: devices,
       icon: DeviceIcon,
       key: 'devices',
     },

@@ -17,6 +17,7 @@ const { Divider } = StatisticCard;
 
 const Dashboard = () => {
   const { dataSource } = useModel('useSystem');
+  const { version, osUpTime, osArch } = dataSource?.hardWareInfo || {};
   const [responsive, setResponsive] = useState(false);
 
   // 获取系统详情
@@ -50,14 +51,10 @@ const Dashboard = () => {
       className="overflow-x-hidden"
       content={
         <Space split={<Divider type="vertical" className="h-[12px]" />}>
+          <span className="text-[#585858] text-[13px]">当前版本 {version}</span>
+          <span className="text-[#585858] text-[13px]">运行时长 {osUpTime}</span>
           <span className="text-[#585858] text-[13px]">
-            当前版本 {dataSource?.hardWareInfo.version}
-          </span>
-          <span className="text-[#585858] text-[13px]">
-            运行时长 {dataSource?.hardWareInfo?.osUpTime}
-          </span>
-          <span className="text-[#585858] text-[13px]">
-            操作系统 {dataSource?.hardWareInfo?.osArch}{' '}
+            操作系统 {osArch}
             <a className="pl-[5px]" onClick={() => modal.info(detailConfig)}>
               查看详情
             </a>

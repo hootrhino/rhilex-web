@@ -1,11 +1,14 @@
 import StateTag from '@/components/StateTag';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
-import { ProDescriptions, ProSkeleton, ProTable } from '@ant-design/pro-components';
+import { ProDescriptions, ProSkeleton } from '@ant-design/pro-components';
 import { history, useModel } from '@umijs/max';
-import { Drawer, DrawerProps, Tag } from 'antd';
+import type { TabsProps } from 'antd';
+import { Drawer, DrawerProps, Tabs, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
-import { funcEnum, modeEnum, typeEnum } from './SchemaForm/columns';
+import { modeEnum, typeEnum } from '../SchemaForm/columns';
+import ModbusTable from './ModbusTable';
+import Topo from './Topo';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -33,8 +36,9 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     getDetail: getPortDetail,
   } = useModel('usePort');
 
-  const deviceType = detail?.type;
-  const mode = detail?.config?.commonConfig?.mode;
+  const { type, config } = detail || { type: '' };
+  const { registers, commonConfig, hostConfig, portUuid } = config || { registers: [] };
+  const mode = commonConfig?.mode;
 
   const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]> = {
     BASE: [
@@ -71,17 +75,17 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: '重试次数',
         dataIndex: 'retryTime',
-        hideInDescriptions: deviceType !== 'GENERIC_PROTOCOL',
+        hideInDescriptions: type !== 'GENERIC_PROTOCOL',
       },
       {
         title: '采集频率（毫秒）',
         dataIndex: 'frequency',
-        hideInDescriptions: deviceType !== 'GENERIC_MODBUS',
+        hideInDescriptions: type !== 'GENERIC_MODBUS',
       },
       {
         title: '是否启动轮询',
         dataIndex: 'autoRequest',
-        hideInDescriptions: deviceType !== 'GENERIC_MODBUS',
+        hideInDescriptions: type !== 'GENERIC_MODBUS',
         renderText: (autoRequest) => (
           <Tag color={autoRequest ? 'success' : 'error'}>{autoRequest ? '开启' : '关闭'}</Tag>
         ),
@@ -89,7 +93,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: '是否解析 AIS 报文',
         dataIndex: 'parseAis',
-        hideInDescriptions: deviceType !== 'GENERIC_AIS_RECEIVER',
+        hideInDescriptions: type !== 'GENERIC_AIS_RECEIVER',
         renderText: (parseAis) => (
           <Tag color={parseAis ? 'process' : 'default'}>{parseAis ? '解析' : '不解析'}</Tag>
         ),
@@ -97,7 +101,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: '主机序列号',
         dataIndex: 'gwsn',
-        hideInDescriptions: deviceType !== 'GENERIC_AIS_RECEIVER',
+        hideInDescriptions: type !== 'GENERIC_AIS_RECEIVER',
       },
       {
         title: '工作模式',
@@ -119,37 +123,23 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         dataIndex: 'port',
       },
     ],
-    REGISTERS: [
-      {
-        title: '数据标签',
-        dataIndex: 'tag',
-      },
-      {
-        title: '数据别名',
-        dataIndex: 'alias',
-      },
-      {
-        title: 'Modbus 功能',
-        dataIndex: 'function',
-        valueEnum: funcEnum,
-      },
-      {
-        title: '从设备 ID',
-        dataIndex: 'slaverId',
-      },
-      {
-        title: '起始地址',
-        dataIndex: 'address',
-      },
-      {
-        title: '读取数量',
-        dataIndex: 'quantity',
-      },
-    ],
   };
 
+  const items: TabsProps['items'] = [
+    {
+      key: 'table',
+      label: '列表',
+      children: <ModbusTable />,
+    },
+    {
+      key: 'topo',
+      label: '拓扑结构',
+      children: <Topo />,
+    },
+  ];
+
   const getPortName = () => {
-    const port = portList?.find((item) => item?.uuid === detail?.config?.portUuid);
+    const port = portList?.find((item) => item?.uuid === portUuid);
 
     return port ? port.name : '-';
   };
@@ -173,11 +163,11 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
             columns={columnsMap['BASE']}
             loading={detailLoading}
           />
-          {deviceType && Object.keys(typeEnum).includes(deviceType) && (
+          {type && Object.keys(typeEnum).includes(type) && (
             <>
               <EnhancedProDescriptions
                 title="通用信息"
-                dataSource={detail?.config?.commonConfig}
+                dataSource={commonConfig}
                 columns={columnsMap['COMMON']}
               />
               {mode === 'UART' && (
@@ -189,10 +179,9 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
                   <ProDescriptions.Item label="系统串口">
                     <a
                       onClick={() => {
-                        const portId = detail?.config?.portUuid;
                         history.push('/port');
-                        setDetailConfig({ open: true, uuid: portId });
-                        getPortDetail({ uuid: portId });
+                        setDetailConfig({ open: true, uuid: portUuid });
+                        getPortDetail({ uuid: portUuid });
                       }}
                     >
                       {getPortName()}
@@ -204,21 +193,14 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
               {mode === 'TCP' && (
                 <EnhancedProDescriptions
                   title="TCP 配置"
-                  dataSource={detail?.config?.hostConfig}
+                  dataSource={hostConfig}
                   columns={columnsMap['HOST']}
                 />
               )}
-              {deviceType === 'GENERIC_MODBUS' && detail?.config?.registers?.length > 0 && (
+              {type === 'GENERIC_MODBUS' && registers?.length > 0 && (
                 <>
                   <ProDescriptions title="寄存器配置" />
-                  <ProTable
-                    rowKey="id"
-                    columns={columnsMap['REGISTERS']}
-                    dataSource={detail?.config?.registers}
-                    search={false}
-                    pagination={false}
-                    options={false}
-                  />
+                  <Tabs defaultActiveKey="table" items={items} />
                 </>
               )}
             </>

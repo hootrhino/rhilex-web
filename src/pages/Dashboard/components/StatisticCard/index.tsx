@@ -6,29 +6,30 @@ import sum from 'lodash/sum';
 
 const StatisticCard = () => {
   const { dataSource } = useModel('useSystem');
+  const { inSuccess, inFailed, outSuccess, outFailed } = dataSource?.statistic || {};
 
   const statisticData = [
     {
       label: '输入成功',
-      value: dataSource?.statistic?.inSuccess,
+      value: inSuccess,
       status: 'success',
       key: 'inSuccess',
     },
     {
       label: '输入失败',
-      value: dataSource?.statistic?.inFailed,
+      value: inFailed,
       status: 'error',
       key: 'inFailed',
     },
     {
       label: '输出成功',
-      value: dataSource?.statistic?.outSuccess,
+      value: outSuccess,
       status: 'success',
       key: 'outSuccess',
     },
     {
       label: '输出失败',
-      value: dataSource?.statistic?.outFailed,
+      value: outFailed,
       status: 'error',
       key: 'outFailed',
     },
