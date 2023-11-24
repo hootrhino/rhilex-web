@@ -5,7 +5,6 @@ import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps, Tag } from 'antd';
 import { AppStackItem } from '..';
-import { useEffect } from 'react';
 
 type DetailProps = DrawerProps & {
   uuid: string;

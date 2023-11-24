@@ -15,7 +15,9 @@ export default defineConfig({
   proxy: proxy[(REACT_APP_ENV as keyof typeof proxy) || 'dev'],
   fastRefresh: true,
   model: {},
-  initialState: {},
+  initialState: {
+    loading: '@/loading',
+  },
   tailwindcss: {},
   title: defaultSettings.title as string,
   layout: defaultSettings,
@@ -26,11 +28,6 @@ export default defineConfig({
     },
   },
   request: {},
-  headScripts: [
-    // 解决首次加载时白屏的问题
-    { src: '/loading.js', async: true },
-  ],
-  copy: ['./loading.js'],
   presets: ['umi-presets-pro'],
   openAPI,
   mfsu: {
@@ -40,7 +37,7 @@ export default defineConfig({
   favicons: ['/favicon.png'],
   inlineLimit: 1000000, // 配置图片文件是否走 base64 编译的阈值 1000k = 1M
   jsMinifier: 'uglifyJs', // 配置构建时压缩 JavaScript 的工具
-  codeSplitting: {jsStrategy: 'granularChunks'}, // 代码拆分
+  codeSplitting: { jsStrategy: 'granularChunks' }, // 代码拆分
   chainWebpack: (config) => {
     config.module
       .rule('woff2')
