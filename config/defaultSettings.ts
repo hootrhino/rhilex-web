@@ -1,4 +1,4 @@
-import { DEFAULT_TITLE } from '@/utils/constant';
+import { DEFAULT_TITLE } from '../src/utils/constant';
 import { ProLayoutProps } from '@ant-design/pro-components';
 
 /**

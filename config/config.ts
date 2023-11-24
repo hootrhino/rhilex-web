@@ -40,4 +40,12 @@ export default defineConfig({
   favicons: ['/favicon.png'],
   inlineLimit: 1000000, // 配置图片文件是否走 base64 编译的阈值 1000k = 1M
   jsMinifier: 'uglifyJs', // 配置构建时压缩 JavaScript 的工具
+  codeSplitting: {jsStrategy: 'granularChunks'}, // 代码拆分
+  chainWebpack: (config) => {
+    config.module
+      .rule('woff2')
+      .test(/\.(woff|woff2)$/)
+      .use('file-loader')
+      .loader('file-loader');
+  },
 });
