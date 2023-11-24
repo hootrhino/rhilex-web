@@ -2,7 +2,7 @@
   "name": "hootrhino-eekit-web",
   "version": "0.5.3",
   "private": true,
-  "description": "轻量级边缘物联网网关开发框架",
+  "description": "轻量级边缘计算框架",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 max build",
     "build": "max build",

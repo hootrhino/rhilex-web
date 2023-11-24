@@ -1,4 +1,5 @@
 import loginBg from '@/assets/images/loginBg.svg';
+import loginIcon from '@/assets/images/loginLogo.png';
 import { message } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -6,7 +7,7 @@ import { DefaultFooter, LoginForm, ProFormCheckbox, ProFormText } from '@ant-des
 import { Helmet, useModel } from '@umijs/max';
 import { flushSync } from 'react-dom';
 import { history } from 'umi';
-import Settings from '../../../../config/defaultSettings';
+import { COPYRIGHT, DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';
 
 export type CurrentUser = {
   username: string;
@@ -55,7 +56,7 @@ const Login: React.FC = () => {
       }}
     >
       <Helmet>
-        <title>登录页 - {initialState?.settings?.title || Settings.title}</title>
+        <title>登录页 - {initialState?.settings?.title || DEFAULT_TITLE}</title>
       </Helmet>
       <div className="flex-1 py-32">
         <LoginForm
@@ -63,9 +64,9 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          logo={<img alt="logo" src="/favicon.png" />}
-          title="Rhino EEKit"
-          subTitle="轻量级边缘计算框架"
+          logo={<img alt="logo" src={loginIcon} />}
+          title={DEFAULT_TITLE}
+          subTitle={DEFAULT_SUBTITLE}
           initialValues={{
             autoLogin: true,
           }}
@@ -118,7 +119,7 @@ const Login: React.FC = () => {
           </div>
         </LoginForm>
       </div>
-      <DefaultFooter copyright={`2023-2033 By Hootrhino Team`} className="bg-[#f0f2f5]" />
+      <DefaultFooter copyright={COPYRIGHT} className="bg-[#f0f2f5]" />
     </div>
   );
 };

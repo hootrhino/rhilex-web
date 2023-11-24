@@ -1,3 +1,4 @@
+import { DEFAULT_TITLE } from '@/utils/constant';
 import { ProLayoutProps } from '@ant-design/pro-components';
 
 /**
@@ -14,7 +15,7 @@ const Settings: ProLayoutProps & {
   fixSiderbar: true,
   colorWeak: false,
   splitMenus: false,
-  title: 'Rhino EEKit',
+  title: DEFAULT_TITLE,
   pwa: false,
   logo: '/logo.png',
   iconfontUrl: '',
