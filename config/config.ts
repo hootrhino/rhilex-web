@@ -35,7 +35,7 @@ export default defineConfig({
   },
   requestRecord: {},
   favicons: ['/favicon.png'],
-  inlineLimit: 1000000, // 配置图片文件是否走 base64 编译的阈值 1000k = 1M
+  inlineLimit: 100000, // 配置图片文件是否走 base64 编译的阈值 100k
   jsMinifier: 'uglifyJs', // 配置构建时压缩 JavaScript 的工具
   codeSplitting: { jsStrategy: 'granularChunks' }, // 代码拆分
   chainWebpack: (config) => {
