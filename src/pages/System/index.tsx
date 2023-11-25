@@ -13,8 +13,23 @@ import UserConfig from './User';
 import WIFIConfig from './Wifi';
 
 const System = () => {
-  const { activeKey, setActiveKey } = useModel('useSetting');
+  const { data, activeKey, setActiveKey } = useModel('useSetting');
   const { isWindows } = useModel('useSystem');
+  const isH3 = data?.hardWareInfo?.product === 'EEKITH3';
+  const h3Config = isH3
+    ? [
+        {
+          label: <div>4G&nbsp;&nbsp;配置</div>,
+          key: '4g',
+          children: <FourGConfig />,
+        },
+        {
+          label: 'APN配置',
+          key: 'apn',
+          children: <APNConfig />,
+        },
+      ]
+    : [];
 
   const DefaultConfig = isWindows
     ? []
@@ -35,11 +50,6 @@ const System = () => {
           children: <TimeConfig />,
         },
         {
-          label: <div>4G&nbsp;&nbsp;配置</div>,
-          key: '4g',
-          children: <FourGConfig />,
-        },
-        {
           label: '路由设置',
           key: 'routing',
           children: <RoutingConfig />,
@@ -49,11 +59,7 @@ const System = () => {
           key: 'firmware',
           children: <FirmwareConfig />,
         },
-        {
-          label: 'APN配置',
-          key: 'apn',
-          children: <APNConfig />,
-        },
+        ...h3Config,
       ];
 
   useEffect(() => {
