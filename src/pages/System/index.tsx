@@ -13,8 +13,8 @@ import UserConfig from './User';
 import WIFIConfig from './Wifi';
 
 const System = () => {
-  const { data, activeKey, setActiveKey } = useModel('useSetting');
-  const { isWindows } = useModel('useSystem');
+  const { activeKey, setActiveKey } = useModel('useSetting');
+  const { isWindows, data } = useModel('useSystem');
   const isH3 = data?.hardWareInfo?.product === 'EEKITH3';
   const h3Config = isH3
     ? [

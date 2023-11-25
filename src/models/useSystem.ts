@@ -6,7 +6,7 @@ const useSystem = () => {
   const [cpuData, setCpuData] = useState<any[]>([]);
   const [isWindows, setWindows] = useState<boolean>(false);
 
-  const { data, run } = useRequest(() => getOsSystem(), {
+  const { data, run, cancel } = useRequest(() => getOsSystem(), {
     formatResult: (res) => res.data,
     pollingInterval: 5000,
     onSuccess: (res) => {
@@ -17,7 +17,7 @@ const useSystem = () => {
 
   const dataSource = useMemo(() => data, [data]);
 
-  return { dataSource, run, data, cpuData, isWindows };
+  return { dataSource, run, cancel, data, cpuData, isWindows };
 };
 
 export default useSystem;

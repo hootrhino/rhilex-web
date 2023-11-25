@@ -16,7 +16,7 @@ import {
   ProFormTextArea,
   ProFormUploadDragger,
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useModel, useRequest } from '@umijs/max';
 import { Button, Space } from 'antd';
 import endsWith from 'lodash/endsWith';
 import { useRef, useState } from 'react';
@@ -55,6 +55,7 @@ const defaultRecoverConfig = {
 
 const FirmwareConfig = () => {
   const formRef = useRef<ProFormInstance>();
+  const { run, cancel } = useModel('useSystem');
   const [open, setOpen] = useState<boolean>(false);
   const [confirmConfig, setConfirmConfig] = useState<ConfirmCofig>(defaultUpgradeConfig);
   const [errorMsg, setMsg] = useState<string>('');
@@ -78,6 +79,7 @@ const FirmwareConfig = () => {
   const handleOnEnd = () => {
     getVendorKey();
     setOpen(false);
+    run();
     message.success(errorMsg ? errorMsg : `${confirmConfig.afterOkText}成功`);
   };
 
@@ -102,6 +104,7 @@ const FirmwareConfig = () => {
                         handleOnOk: async () => {
                           const { data } = await postFirmwareUpgrade();
                           setMsg(data);
+                          cancel();
                         },
                         handleOnEnd,
                       });
@@ -121,6 +124,7 @@ const FirmwareConfig = () => {
                         handleOnOk: async () => {
                           const { data } = await postFirmwareReboot();
                           setMsg(data);
+                          cancel();
                         },
                         handleOnEnd,
                       });
@@ -140,6 +144,7 @@ const FirmwareConfig = () => {
                         handleOnOk: async () => {
                           const { data } = await postFirmwareRecoverNew();
                           setMsg(data);
+                          cancel();
                         },
                         handleOnEnd,
                       });

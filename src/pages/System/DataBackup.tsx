@@ -12,6 +12,7 @@ import Title from './TItle';
 
 const DataBackupConfig = () => {
   const { activeKey } = useModel('useSetting');
+  const { run, cancel } = useModel('useSystem');
   const formRef = useRef<ProFormInstance>();
   const [showList, setShowList] = useState<boolean>(true);
   const [open, setOpen] = useState<boolean>(false);
@@ -29,6 +30,7 @@ const DataBackupConfig = () => {
       message.error(errorMsg);
     } else {
       history.push('/');
+      run();
     }
   };
 
@@ -104,6 +106,7 @@ const DataBackupConfig = () => {
         handleOnOk={async () => {
           const { data } = await postBackupUpload({}, uploadFile as File);
           setMsg(data);
+          cancel();
         }}
       />
     </>
