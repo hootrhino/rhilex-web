@@ -70,7 +70,7 @@ const SourceCountCard = ({ responsive }: SourceCountCardProps) => {
           layout="center"
           statistic={{
             title: <div className="text-[#585858]">{item.title}</div>,
-            value: item.value,
+            value: item.value?.toLocaleString(),
             icon:
               typeof item.icon === 'string' ? (
                 <img src={item.icon} alt={item.title} className="w-[42px] h-[42px]" />

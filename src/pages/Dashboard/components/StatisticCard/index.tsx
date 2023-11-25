@@ -41,7 +41,7 @@ const StatisticCard = () => {
     <ProCard bodyStyle={{ padding: 0 }} className="dashboard-card">
       <ProCard layout="center" direction="column" type="inner" colSpan="25%">
         <div className="text-[#585858]">输入/输出总数</div>
-        <div className="font-bold text-[18px]">{sum(total) || 0}</div>
+        <div className="font-bold text-[18px]">{sum(total).toLocaleString() || 0}</div>
       </ProCard>
       <ProCard gutter={[16, 16]} wrap bodyStyle={{ paddingInline: 14 }}>
         {statisticData?.map((item) => (
@@ -63,7 +63,7 @@ const StatisticCard = () => {
               />
               <div className="text-[#585858] text-[13px]">{item.label}</div>
             </Space>
-            <div className="font-bold text-[16px]">{item.value || 0}</div>
+            <div className="font-bold text-[16px]">{item.value?.toLocaleString() || 0}</div>
           </ProCard>
         ))}
       </ProCard>
