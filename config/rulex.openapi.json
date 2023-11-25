@@ -1031,7 +1031,7 @@
                           "type": "object",
                           "properties": {
                             "cpuPercent": {
-                              "type": "number"
+                              "type": "integer"
                             },
                             "diskInfo": {
                               "type": "number"
@@ -1048,6 +1048,9 @@
                             "osUpTime": {
                               "type": "string"
                             },
+                            "product": {
+                              "type": "string"
+                            },
                             "startedAt": {
                               "type": "string"
                             },
@@ -1062,10 +1065,10 @@
                             "osArch",
                             "osDist",
                             "osUpTime",
+                            "product",
                             "startedAt",
                             "version"
                           ],
-                          "x-apifox-ignore-properties": [],
                           "x-apifox-orders": [
                             "cpuPercent",
                             "diskInfo",
@@ -1073,9 +1076,11 @@
                             "osArch",
                             "osDist",
                             "osUpTime",
+                            "product",
                             "startedAt",
                             "version"
-                          ]
+                          ],
+                          "x-apifox-ignore-properties": []
                         },
                         "sourceCount": {
                           "type": "object",
@@ -1111,7 +1116,6 @@
                             "plugins",
                             "rules"
                           ],
-                          "x-apifox-ignore-properties": [],
                           "x-apifox-orders": [
                             "apps",
                             "devices",
@@ -1120,7 +1124,8 @@
                             "outends",
                             "plugins",
                             "rules"
-                          ]
+                          ],
+                          "x-apifox-ignore-properties": []
                         },
                         "statistic": {
                           "type": "object",
@@ -1144,13 +1149,13 @@
                             "inFailed",
                             "outFailed"
                           ],
-                          "x-apifox-ignore-properties": [],
                           "x-apifox-orders": [
                             "inSuccess",
                             "outSuccess",
                             "inFailed",
                             "outFailed"
-                          ]
+                          ],
+                          "x-apifox-ignore-properties": []
                         }
                       },
                       "required": [
@@ -1158,12 +1163,12 @@
                         "sourceCount",
                         "statistic"
                       ],
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "hardWareInfo",
                         "sourceCount",
                         "statistic"
-                      ]
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -1171,12 +1176,12 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
                 },
                 "examples": {
                   "1": {
@@ -1186,48 +1191,15 @@
                       "msg": "Success",
                       "data": {
                         "hardWareInfo": {
-                          "allocMem": 36,
                           "cpuPercent": 0,
-                          "diskInfo": 7.02,
+                          "diskInfo": 3.54,
+                          "memPercent": 19.59,
                           "osArch": "ubuntu-amd64",
                           "osDist": "ubuntu",
-                          "startedTime": "2023-09-10 18:14:32",
-                          "systemMem": 62,
-                          "totalMem": 1874,
-                          "version": "v0.6.2"
-                        },
-                        "sourceCount": {
-                          "apps": 0,
-                          "devices": 0,
-                          "inends": 0,
-                          "outends": 0,
-                          "plugins": 7,
-                          "rules": 0
-                        },
-                        "statistic": {
-                          "inSuccess": 0,
-                          "outSuccess": 0,
-                          "inFailed": 0,
-                          "outFailed": 0
-                        }
-                      }
-                    }
-                  },
-                  "2": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "hardWareInfo": {
-                          "cpuPercent": 6.54,
-                          "diskInfo": 79.34,
-                          "memPercent": 96.75,
-                          "osArch": "deepin-amd64",
-                          "osDist": "deepin",
-                          "osUpTime": "0 days 22 hours 52 minutes",
-                          "startedAt": "2023-10-30 11:32:36",
-                          "version": "v0.6.3"
+                          "osUpTime": "3 days, 00:11:47",
+                          "product": "COMMON",
+                          "startedAt": "2023-11-25 16:40:38",
+                          "version": "v0.6.4"
                         },
                         "sourceCount": {
                           "apps": 0,
@@ -1235,41 +1207,7 @@
                           "goods": 0,
                           "inends": 0,
                           "outends": 0,
-                          "plugins": 7,
-                          "rules": 0
-                        },
-                        "statistic": {
-                          "inSuccess": 0,
-                          "outSuccess": 0,
-                          "inFailed": 0,
-                          "outFailed": 0
-                        }
-                      }
-                    }
-                  },
-                  "3": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "hardWareInfo": {
-                          "cpuPercent": 5.71,
-                          "diskInfo": 79.5,
-                          "memPercent": 96.9,
-                          "osArch": "deepin-amd64",
-                          "osDist": "deepin",
-                          "osUpTime": "0 days 23 hours 3 minutes",
-                          "startedAt": "2023-10-30 11:46:00",
-                          "version": "v0.6.3"
-                        },
-                        "sourceCount": {
-                          "apps": 0,
-                          "devices": 0,
-                          "goods": 0,
-                          "inends": 0,
-                          "outends": 0,
-                          "plugins": 7,
+                          "plugins": 9,
                           "rules": 0
                         },
                         "statistic": {

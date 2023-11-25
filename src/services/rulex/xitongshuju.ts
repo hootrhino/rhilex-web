@@ -43,6 +43,7 @@ export async function getOsSystem(options?: { [key: string]: any }) {
         osArch?: string;
         osDist?: string;
         osUpTime?: string;
+        product?: string;
         startedAt?: string;
         version?: string;
       };
