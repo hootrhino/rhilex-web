@@ -36,7 +36,7 @@ const Canvas = () => {
   const verticalGuidesRef = useRef<Guides>(null);
 
   const [canvasSize, setCanvasSize] = useState<number>(30);
-  const [canMouseDrag, setMouseDrag] = useState<boolean>(true);
+  const [canMouseDrag, setMouseDrag] = useState<boolean>(false);
   const [offset, setOffset] = useState<number>(0);
 
   const [modalConfig, setModalConfig] = useState<{ open: boolean; content: string }>({
@@ -67,7 +67,7 @@ const Canvas = () => {
     setActiveNodeShape,
     setQuickStyle,
     setLayers,
-    setAnimating
+    setAnimating,
   } = useModel('useEditor');
 
   // 使用插件
@@ -206,7 +206,7 @@ const Canvas = () => {
 
     graph.on('view:mounted', () => {
       setAnimating(false);
-    })
+    });
   };
 
   // 使用DND拖拽
@@ -230,21 +230,33 @@ const Canvas = () => {
   };
 
   // 往画布添加组件
-  const handleAddNode = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-
+  const handleAddNode = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, isDrag: boolean) => {
     const graph = graphRef.current;
     const dnd = dndRef.current;
 
-    const target = e.currentTarget; //获取目标对象
-    const type = target.getAttribute('datatype');
+    const target = e.target; //获取目标对象
+    const type = target.alt;
 
     const node = graph.createNode({
       shape: type,
     });
 
-    setLayers([{ title: nodeTitle[type || ''], id: node.id, icon: 'icon-charts' }, ...layers]);
+    if (isDrag) {
+      // 拖拽添加
+      dnd.start(node, e);
+    } else {
+      // 点击添加
+      const { width, height } = node.size();
 
-    dnd.start(node, e.nativeEvent);
+      graph.addNode({
+        shape: type,
+        width: width * 3,
+        height: height * 3,
+      });
+    }
+
+    // 更新图层
+    setLayers([{ title: nodeTitle[type || ''], id: node.id, icon: 'icon-charts' }, ...layers]);
   };
 
   // 刷新画布

@@ -125,7 +125,7 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
             <ComponentItem
               data={chart}
               key={chart.key}
-              onMouseDown={addNode}
+              addNode={addNode}
               datatype={chart.key}
             />
           ))}

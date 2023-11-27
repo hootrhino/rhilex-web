@@ -1,6 +1,7 @@
 import { cn, IconFont } from '@/utils/utils';
 import { useModel } from '@umijs/max';
-import { useState } from 'react';
+import { useLongPress } from 'ahooks';
+import { useRef, useState } from 'react';
 import Tooltip from '../../components/Tooltip';
 import { chartsList } from '../constant';
 
@@ -14,14 +15,29 @@ export type Data = {
 
 type ItemProps = React.LiHTMLAttributes<any> & {
   data: Data;
+  addNode: (e: React.MouseEvent<HTMLLIElement, MouseEvent>, isDrag: boolean) => void;
 };
 
-const Item = ({ data, ...props }: ItemProps) => {
+const Item = ({ data, addNode, ...props }: ItemProps) => {
   const { setQuickStyleConfig, setQuickStyle } = useModel('useEditor');
   const [iconType, setIconType] = useState<string>('icon-quick-style');
+  const ref = useRef<HTMLLIElement>(null);
+
+  useLongPress(
+    (e) => {
+      addNode(e, true);
+    },
+    ref,
+    {
+      onClick: (e) => {
+        addNode(e, false);
+      },
+    },
+  );
 
   return (
     <li
+      ref={ref}
       className="bg-[#242424] mb-[12px] rounded-[4px] cursor-pointer hover:bg-[#363636] relative"
       key={data.key}
       {...props}
@@ -32,7 +48,7 @@ const Item = ({ data, ...props }: ItemProps) => {
       <div className="pt-0 pb-[4px] px-[8px] w-full h-[94px] relative">
         <img
           src={data.image}
-          alt={data.title}
+          alt={data.key}
           className="w-full h-full object-cover cursor-pointer"
         />
         {data?.disabled && (
