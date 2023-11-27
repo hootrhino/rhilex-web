@@ -204,6 +204,10 @@ const Canvas = () => {
       setDetailFormType('canvas');
     });
 
+    graph.on('view:unmounted', () => {
+      setAnimating(true);
+    });
+
     graph.on('view:mounted', () => {
       setAnimating(false);
     });

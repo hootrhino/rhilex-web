@@ -782,17 +782,17 @@
     gl-matrix "^3.3.0"
     tslib "^2.3.1"
 
-"@antv/x6-common@^2.0.13":
-  version "2.0.14"
-  resolved "https://registry.npmmirror.com/@antv/x6-common/-/x6-common-2.0.14.tgz#ab89959df2f4bfb7626615ab60fc7203d339359a"
-  integrity sha512-/8OmYV2hxUIwNKt/YurWhGmhbTBu95mZRcF5cwUVp0oR0SmOGNFqMT710w1uvLAfWmfdoq/oEcCuScW/L8mOLw==
+"@antv/x6-common@^2.0.16":
+  version "2.0.16"
+  resolved "https://registry.npmjs.org/@antv/x6-common/-/x6-common-2.0.16.tgz#f5b12c3eb7afd5736deb1c9bd899c83de08d77f3"
+  integrity sha512-iT60SnTpzoXJwURH+ERYGsTQ8lOuXd7nBuDhgx135VdBG88TizgKrSknz35k8+6j6Qv7O8mRDCGmi2He9li8kg==
   dependencies:
     lodash-es "^4.17.15"
     utility-types "^3.10.0"
 
 "@antv/x6-geometry@^2.0.5":
   version "2.0.5"
-  resolved "https://registry.npmmirror.com/@antv/x6-geometry/-/x6-geometry-2.0.5.tgz#c158317d74135bedd78c2fdeb76f9c7cfa0ef0aa"
+  resolved "https://registry.npmjs.org/@antv/x6-geometry/-/x6-geometry-2.0.5.tgz#c158317d74135bedd78c2fdeb76f9c7cfa0ef0aa"
   integrity sha512-MId6riEQkxphBpVeTcL4ZNXL4lScyvDEPLyIafvWMcWNTGK0jgkK7N20XSzqt8ltJb0mGUso5s56mrk8ysHu2A==
 
 "@antv/x6-plugin-clipboard@^2.1.6":
@@ -801,14 +801,14 @@
   integrity sha512-roZPLnZx6PK8MBvee0QMo90fz/TXeF0WNe4EGin2NBq5M1I5XTWrYvA6N2XVIiWAAI67gjQeEE8TpkL7f8QdqA==
 
 "@antv/x6-plugin-dnd@^2.0.6":
-  version "2.0.6"
-  resolved "https://registry.npmmirror.com/@antv/x6-plugin-dnd/-/x6-plugin-dnd-2.0.6.tgz#403b8f45dc18f0622512298f556a531ed10a158b"
-  integrity sha512-HD0PgL27ZV+X1Q0gwQ0ltm67J5okvAdGndFv5p8Pp9bV5PKe8B2BzLF1CZwhBroz58xkXJVcGH0TT4NmrHjbRw==
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/@antv/x6-plugin-dnd/-/x6-plugin-dnd-2.1.1.tgz#4d9afed8e8105e01e31cdf526068fa686fb6b4aa"
+  integrity sha512-v0szzik1RkadPDn4Qi5mOSaB2AeI78D40/YuCYbPVzplG+HydGsHwO3MLTgJPQ+R5n0eM0W5F850p1VfTOHR7g==
 
 "@antv/x6-plugin-history@^2.2.3":
-  version "2.2.3"
-  resolved "https://registry.npmmirror.com/@antv/x6-plugin-history/-/x6-plugin-history-2.2.3.tgz#5fd81f85b07f59406731b6853b19129844920c7d"
-  integrity sha512-yiv5e7CQKm1HrJe7je4iWjkzDzU+I0WsyL8En2j0UwXJrUNaKYyv4BkRg2tvyi52hydxidMgi3tNnNQHEZwoMg==
+  version "2.2.4"
+  resolved "https://registry.npmjs.org/@antv/x6-plugin-history/-/x6-plugin-history-2.2.4.tgz#c4a543b8a2b6ae8b6934ec69067688459cae6c48"
+  integrity sha512-9gHHvEW4Fla+1hxUV49zNgJyIMoV9CjVM52MrFgAJcvyRn1Kvxz4MfxiKlG+DEZUs+/zvfjl9pS6gJOd8laRkg==
 
 "@antv/x6-plugin-keyboard@^2.2.1":
   version "2.2.1"
@@ -818,9 +818,9 @@
     mousetrap "^1.6.5"
 
 "@antv/x6-plugin-selection@^2.1.7":
-  version "2.1.7"
-  resolved "https://registry.npmmirror.com/@antv/x6-plugin-selection/-/x6-plugin-selection-2.1.7.tgz#8964041d595b732bec5883a1f77757bededec594"
-  integrity sha512-ODfYLNwKSaLgIYMYfMW4dYQ9KKFOVBEdH0BzvyG8mfRol+JtZuyrm4BRbAvMryQKHrSxs4JCYXTFd2F7ZTuxLQ==
+  version "2.2.1"
+  resolved "https://registry.npmjs.org/@antv/x6-plugin-selection/-/x6-plugin-selection-2.2.1.tgz#4868501efb117133a95b4eabaa7946e3f027b01a"
+  integrity sha512-9rV4jKcvqNqcGNBAm14nwOBtC+XC8/6qJTce8f8YBsE3XGSxrr8gNn2bmgzcV+3R+McXbAUaQT5P+vQV1Q6raA==
 
 "@antv/x6-plugin-snapline@^2.1.7":
   version "2.1.7"
@@ -828,9 +828,9 @@
   integrity sha512-AsysoCb9vES0U2USNhEpYuO/W8I0aYfkhlbee5Kt4NYiMfQfZKQyqW/YjDVaS2pm38C1NKu1LdPVk/BBr4CasA==
 
 "@antv/x6-plugin-transform@^2.1.7":
-  version "2.1.7"
-  resolved "https://registry.npmmirror.com/@antv/x6-plugin-transform/-/x6-plugin-transform-2.1.7.tgz#37583b5283fbc0c4884f96e9689d2146837e042d"
-  integrity sha512-idzBr8/Bcw8zHQUSNS0Y8VSNMigCWiUuiwqO572Ac/P2tMfP6Ot2SahEYHGUOD2NEMPr95q4JMZc+Evvt4JFTw==
+  version "2.1.8"
+  resolved "https://registry.npmjs.org/@antv/x6-plugin-transform/-/x6-plugin-transform-2.1.8.tgz#0a40cf63f1a0a882b08c800e37319973ba12e4c1"
+  integrity sha512-GvJuiJ4BKp0H7+qx3R1I+Vzbw5gXp9+oByXo/WyVxE3urOC7LC5sqnaDfIjyYMN6ROLPYPZraLSeSyYBgMgcDw==
 
 "@antv/x6-react-shape@^2.2.2":
   version "2.2.2"
@@ -838,11 +838,11 @@
   integrity sha512-uwehrdNCPkgBpVfsxEQk1M77Q+q9D7+HkqIm4Fm3Oz4kzkKCoc3KoxCIoLimbANAhqAPEJ40sRR0ZY+lzmP7WQ==
 
 "@antv/x6@^2.13.1":
-  version "2.13.1"
-  resolved "https://registry.npmmirror.com/@antv/x6/-/x6-2.13.1.tgz#c344eb797edc0e437ab1bed599099a8bd68a4ada"
-  integrity sha512-aAj3SlOi4KhBhpoiX4WCsJ61glztSmZy6Vb0aWZTFZXErfp1sUjTmrThJeTG6IQZbXW+7GcGjFGI04roOa05Bg==
+  version "2.16.1"
+  resolved "https://registry.npmjs.org/@antv/x6/-/x6-2.16.1.tgz#52051466629b1cbf4597ace00dca11866b3a2fe1"
+  integrity sha512-frH8gEa24dZGl/ca8tHVM2NWVETt3o8Cac7t55SyjzX1AKFifrV2SRqgp/Z4mrUt/SmfjUr6jUId5ZyQZJNRgQ==
   dependencies:
-    "@antv/x6-common" "^2.0.13"
+    "@antv/x6-common" "^2.0.16"
     "@antv/x6-geometry" "^2.0.5"
     utility-types "^3.10.0"
 
@@ -15898,7 +15898,7 @@ utila@~0.4:
 
 utility-types@^3.10.0:
   version "3.10.0"
-  resolved "https://registry.npmmirror.com/utility-types/-/utility-types-3.10.0.tgz#ea4148f9a741015f05ed74fd615e1d20e6bed82b"
+  resolved "https://registry.npmjs.org/utility-types/-/utility-types-3.10.0.tgz#ea4148f9a741015f05ed74fd615e1d20e6bed82b"
   integrity sha512-O11mqxmi7wMKCo6HKFt5AhO4BwY3VV68YU07tgxfz8zJTIxr4BpsezN49Ffwy9j3ZpwwJp4fkRwjRzq3uWE6Rg==
 
 utils-merge@1.0.1:

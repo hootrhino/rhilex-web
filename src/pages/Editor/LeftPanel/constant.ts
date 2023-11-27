@@ -271,7 +271,7 @@ export const chartsList = [
         ...point.point1,
         key: 'point1',
         title: '基本散点图',
-        hasQuickStyle: true,
+        hasQuickStyle: false,
       },
       {
         ...point.point2,
