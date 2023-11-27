@@ -2318,6 +2318,13 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
+"@babel/runtime@^7.22.15":
+  version "7.23.4"
+  resolved "https://registry.npmmirror.com/@babel/runtime/-/runtime-7.23.4.tgz#36fa1d2b36db873d25ec631dcc4923fdc1cf2e2e"
+  integrity sha512-2Yv65nlWnWlSpe3fXEyX5i7fx5kIKo4Qbcj+hMO0odwaneFjfXw5fdum+4yL20O0QiaHpia0cYQ9xpNMqrBwHg==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
 "@babel/template@^7.20.7", "@babel/template@^7.21.9", "@babel/template@^7.22.5", "@babel/template@^7.3.3":
   version "7.22.5"
   resolved "https://registry.npmjs.org/@babel/template/-/template-7.22.5.tgz#0c8c4d944509875849bd0344ff0050756eefc6ec"
@@ -3973,6 +3980,14 @@
     cosmiconfig "^7.0.1"
     deepmerge "^4.2.2"
     svgo "^2.8.0"
+
+"@tanem/react-nprogress@^5.0.51":
+  version "5.0.51"
+  resolved "https://registry.npmmirror.com/@tanem/react-nprogress/-/react-nprogress-5.0.51.tgz#6cbdb52a0a27ecf845f61d809ef6fd45b063662d"
+  integrity sha512-YxNUCpznuBVA+PhjEzFmxaa1czXgU+5Ojchw5JBK7DQS6SHIgNudpFohWpNBWMu2KWByGJ2OLH2OwbM/XyP18Q==
+  dependencies:
+    "@babel/runtime" "^7.22.15"
+    hoist-non-react-statics "^3.3.2"
 
 "@tanstack/match-sorter-utils@^8.7.0":
   version "8.8.4"

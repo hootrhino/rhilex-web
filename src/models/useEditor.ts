@@ -147,6 +147,9 @@ const useEditor = () => {
     manual: true,
   });
 
+  // 顶部进度条
+    const [isAnimating, setAnimating] = useState<boolean>(false);
+
   return {
     edgeFormData,
     setEdgeForm,
@@ -174,6 +177,8 @@ const useEditor = () => {
     setActiveGroup,
     canvasConfig,
     setConfig,
+    isAnimating,
+    setAnimating
   };
 };
 

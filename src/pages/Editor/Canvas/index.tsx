@@ -67,6 +67,7 @@ const Canvas = () => {
     setActiveNodeShape,
     setQuickStyle,
     setLayers,
+    setAnimating
   } = useModel('useEditor');
 
   // 使用插件
@@ -202,6 +203,10 @@ const Canvas = () => {
     graph.on('blank:click', () => {
       setDetailFormType('canvas');
     });
+
+    graph.on('view:mounted', () => {
+      setAnimating(false);
+    })
   };
 
   // 使用DND拖拽
@@ -215,6 +220,7 @@ const Canvas = () => {
       scaled: false,
       getDropNode(node) {
         const { width, height } = node.size();
+        setAnimating(true);
 
         return node.clone().size(width * 3, height * 3);
       },
@@ -225,6 +231,7 @@ const Canvas = () => {
 
   // 往画布添加组件
   const handleAddNode = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+
     const graph = graphRef.current;
     const dnd = dndRef.current;
 

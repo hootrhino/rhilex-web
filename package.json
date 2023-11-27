@@ -59,6 +59,7 @@
     "@codemirror/autocomplete": "^6.10.2",
     "@codemirror/lint": "^6.4.2",
     "@scena/react-guides": "^0.28.2",
+    "@tanem/react-nprogress": "^5.0.51",
     "@uiw/codemirror-extensions-langs": "^4.21.20",
     "@uiw/codemirror-theme-bbedit": "^4.21.20",
     "@uiw/codemirror-theme-darcula": "^4.21.20",
