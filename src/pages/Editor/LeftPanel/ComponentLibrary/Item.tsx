@@ -49,6 +49,7 @@ const Item = ({ data, addNode, ...props }: ItemProps) => {
         <img
           src={data.image}
           alt={data.key}
+          id={data.key}
           className="w-full h-full object-cover cursor-pointer"
         />
         {data?.disabled && (

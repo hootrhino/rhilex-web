@@ -1,6 +1,7 @@
 import { DEFAULT_GUIDE_CONFIG } from '@/models/useGuide';
 import { cn } from '@/utils/utils';
 import { Graph } from '@antv/x6';
+import type { Cell } from '@antv/x6';
 import { Clipboard } from '@antv/x6-plugin-clipboard';
 import { Dnd } from '@antv/x6-plugin-dnd';
 import { History } from '@antv/x6-plugin-history';
@@ -169,8 +170,9 @@ const Canvas = () => {
       const cells = graph.getSelectedCells();
 
       if (cells.length) {
-        const selectedShape = cells?.[0]?.shape;
-        setModalConfig({ open: true, content: nodeTitle[selectedShape] });
+        const selectedShape = cells?.map(cell => nodeTitle[cell?.shape]);
+
+        setModalConfig({ open: true, content: selectedShape.join('、') });
       }
     });
   };
@@ -203,6 +205,12 @@ const Canvas = () => {
     graph.on('blank:click', () => {
       setDetailFormType('canvas');
     });
+
+    graph.on('node:added', () => {
+      const allCells = graphRef.current?.getCells()?.map((cell: Cell) => ({id: cell.id, icon: 'icon-charts', title: nodeTitle[cell?.shape || '']}));
+      // 更新图层
+    setLayers(allCells.reverse());
+    })
 
     graph.on('view:unmounted', () => {
       setAnimating(true);
@@ -237,13 +245,9 @@ const Canvas = () => {
   const handleAddNode = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, isDrag: boolean) => {
     const graph = graphRef.current;
     const dnd = dndRef.current;
+    const shape = e.target?.id;
 
-    const target = e.target; //获取目标对象
-    const type = target.alt;
-
-    const node = graph.createNode({
-      shape: type,
-    });
+    const node = graph.createNode({shape});
 
     if (isDrag) {
       // 拖拽添加
@@ -251,17 +255,23 @@ const Canvas = () => {
     } else {
       // 点击添加
       const { width, height } = node.size();
-
-      graph.addNode({
-        shape: type,
-        width: width * 3,
-        height: height * 3,
-      });
+      graph.addNode(node).resize(width * 3, height * 3);
     }
-
-    // 更新图层
-    setLayers([{ title: nodeTitle[type || ''], id: node.id, icon: 'icon-charts' }, ...layers]);
   };
+
+  // 删除组件
+  const handleOnRemove = () => {
+    const graph = graphRef.current;
+    const cells = graph?.getSelectedCells();
+    graph.removeCells(cells);
+    const removeIds = cells.map((cell: Cell) => cell.id);
+    const newLayers = layers.filter(layer => {
+      return !removeIds.includes(layer.id)
+    })
+
+    setLayers(newLayers);
+    setModalConfig({ open: false, content: '' });
+  }
 
   // 刷新画布
   const handleOnRefresh = () => {
@@ -469,12 +479,7 @@ const Canvas = () => {
         title="删除组件"
         open={modalConfig.open}
         onCancel={() => setModalConfig({ open: false, content: '' })}
-        onOk={() => {
-          const graph = graphRef.current;
-          const cells = graph?.getSelectedCells();
-          graph.removeCells(cells);
-          setModalConfig({ open: false, content: '' });
-        }}
+        onOk={handleOnRemove}
       >
         <div className="text-[#ADADAD]">是否删除组件: {modalConfig.content}</div>
       </ConfirmModal>
