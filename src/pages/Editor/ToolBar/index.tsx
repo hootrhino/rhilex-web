@@ -9,7 +9,7 @@ import { history, useModel, useParams, useRequest } from '@umijs/max';
 import { Input } from 'antd';
 import ConfirmModal from '../components/ConfirmModal';
 import Tooltip from '../components/Tooltip';
-import './index.less';
+import LogoIcon from './images/logo.png';
 
 type ToolBarProps = {
   refresh: () => void;
@@ -30,6 +30,7 @@ const ToolBar = ({ refresh }: ToolBarProps) => {
   const [groupName, setGroupName] = useState<string>('');
   const { uuid } = useParams();
 
+  // 更新大屏名称
   const { run: update } = useRequest(
     (params: Update & { uuid: string }) => putVisualUpdate(params),
     {
@@ -43,11 +44,8 @@ const ToolBar = ({ refresh }: ToolBarProps) => {
     },
   );
 
-  // useEffect(() => {
-  //   if (uuid) {
-  //     getDetail({ uuid });
-  //   }
-  // }, [uuid]);
+  // TODO 预览
+  // TODO 发布
 
   useEffect(() => {
     if (detail) {
@@ -75,7 +73,7 @@ const ToolBar = ({ refresh }: ToolBarProps) => {
         <div className="w-full h-full px-[24px] flex">
           <div className="h-full flex-1">
             <div className="h-full flex items-center mr-[20px]">
-              <img alt="logo" src="/logo.png" className="h-[28px] w-[45px]" />
+              <img alt="logo" src={LogoIcon} className="h-[28px] w-[45px]" />
               <div className="ml-[12px] flex flex-col">
                 <div
                   className="text-[#fff] truncate max-w-[140px] cursor-pointer hover:underline"
@@ -98,7 +96,7 @@ const ToolBar = ({ refresh }: ToolBarProps) => {
                       setActiveGroup(detail.gid);
                     }}
                   >
-                    {groupName}
+                    {groupName ? groupName : '默认分组'}
                   </span>
                 </div>
               </div>
@@ -128,16 +126,6 @@ const ToolBar = ({ refresh }: ToolBarProps) => {
                   />
                 </div>
               </Tooltip>
-              {/* <Tooltip title="生成快照">
-                <div
-                  className="flex justify-center items-center bg-[#474747] w-[66px] h-[24px] mr-[12px] rounded-[4px] cursor-pointer hover:bg-[#565656]"
-                  onClick={() => {
-                  }}
-                >
-                  <IconFont type="icon-snapshot" className="text-[14px]" />
-                  <span className="pl-[5px] text-base text-[#dbdbdb]">快照</span>
-                </div>
-              </Tooltip> */}
               <div
                 className="flex justify-center items-center bg-[#474747] w-[66px] h-[24px] mr-[12px] rounded-[4px] cursor-pointer hover:bg-[#565656]"
                 onClick={() => {
@@ -173,7 +161,10 @@ const ToolBar = ({ refresh }: ToolBarProps) => {
 
         <Input
           size="middle"
-          rootClassName="edit-input"
+          rootClassName={cn(
+            'border-transparent',
+            'bg-[#333] text-[#adadad] text-[12px] rounded-[4px] hover:bg-[#434343] focus:bg-[#1a1a1a]',
+          )}
           value={name}
           onChange={(e) => setName(e.target?.value)}
         />

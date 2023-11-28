@@ -47,6 +47,15 @@ const shortcutOptions = [
   },
 ];
 
+const zoomOptions = [
+  { value: '50', label: '50%' },
+  { value: '100', label: '100%' },
+  { value: '150', label: '150%' },
+  { value: '200', label: '200%' },
+  { value: '250', label: '250%' },
+  { value: '300', label: '300%' },
+];
+
 const Footer = ({ value, onChange }: FooterProps) => {
   const { collapseLeftPanel } = useModel('useEditor');
   const [minDisabled, setMinDisabled] = useState<boolean>(false);
@@ -105,14 +114,7 @@ const Footer = ({ value, onChange }: FooterProps) => {
           bordered={false}
           onSelect={(selectValue: string) => onChange(Number(selectValue))}
           suffixIcon={<IconFont type="icon-arrow-down" />}
-          options={[
-            { value: '50', label: '50%' },
-            { value: '100', label: '100%' },
-            { value: '150', label: '150%' },
-            { value: '200', label: '200%' },
-            { value: '250', label: '250%' },
-            { value: '300', label: '300%' },
-          ]}
+          options={zoomOptions}
         />
         <Tooltip
           placement="top"

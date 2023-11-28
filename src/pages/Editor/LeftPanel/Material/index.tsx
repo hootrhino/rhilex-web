@@ -3,6 +3,8 @@ import { Tooltip } from 'antd';
 import { useState } from 'react';
 import { MaterialData, MaterialTabList } from '../constant';
 
+import './index.less';
+
 const Material = () => {
   const [activeTab, setTab] = useState<string>('temp');
 
@@ -19,7 +21,7 @@ const Material = () => {
             <div
               className={cn(
                 'h-[50px] px-[4px] flex justify-center flex-col items-center hover:bg-panelBg',
-                activeTab === tab.key && 'active-tab2',
+                activeTab === tab.key && 'active-tab',
                 tab.key === 'temp' ? 'cursor-pointer' : 'cursor-not-allowed',
               )}
               onClick={() => tab.key === 'temp' && setTab(tab.key)}

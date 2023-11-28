@@ -1,0 +1,25 @@
+.quick-style-wrapper {
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 26% 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 26% 100%);
+}
+
+.left-panel-tab-wrapper {
+  svg {
+    z-index: 1;
+    font-size: 16px;
+  }
+
+  .active-tab {
+    &::before {
+      position: absolute;
+      left: 4px;
+      display: block;
+      width: 40px;
+      height: 48px;
+      background-color: var(--panel-bg);
+      border-radius: 4px 0 0 4px;
+      transform: translateY(5%);
+      content: '';
+    }
+  }
+}

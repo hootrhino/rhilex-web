@@ -1,9 +1,7 @@
-import { cn, IconFont } from '@/utils/utils';
-import { useModel } from '@umijs/max';
 import { useLongPress } from 'ahooks';
-import { useRef, useState } from 'react';
-import Tooltip from '../../components/Tooltip';
-import { chartsList } from '../constant';
+import { useRef } from 'react';
+import DisabledIcon from './DisabledIcon';
+import QuickStyleIcon from './QuickStyleIcon';
 
 export type Data = {
   title: string;
@@ -19,8 +17,6 @@ type ItemProps = React.LiHTMLAttributes<any> & {
 };
 
 const Item = ({ data, addNode, ...props }: ItemProps) => {
-  const { setQuickStyleConfig, setQuickStyle } = useModel('useEditor');
-  const [iconType, setIconType] = useState<string>('icon-quick-style');
   const ref = useRef<HTMLLIElement>(null);
 
   useLongPress(
@@ -52,46 +48,9 @@ const Item = ({ data, addNode, ...props }: ItemProps) => {
           id={data.key}
           className="w-full h-full object-cover cursor-pointer"
         />
-        {data?.disabled && (
-          <span className="bg-black bg-opacity-60 w-full h-full text-center cursor-not-allowed absolute top-0 left-0 flex items-center justify-center">
-            <Tooltip
-              title="需要升级才可以使用当前组件包"
-              overlayInnerStyle={{ fontSize: 10, borderRadius: 4 }}
-            >
-              <IconFont type="icon-lock" className="text-[16px]" />
-            </Tooltip>
-          </span>
-        )}
+        <DisabledIcon show={data?.disabled} />
       </div>
-      {data?.hasQuickStyle && (
-        <Tooltip title="快速样式">
-          <div
-            className={cn(
-              'quick-style-wrapper',
-              'absolute top-0 right-0 flex items-center justify-center w-[28px] h-[16px] bg-[#333] rounded-[3px] hover:bg-primary',
-            )}
-            onMouseEnter={() => {
-              chartsList?.forEach((chart) => {
-                if (data.key.includes(chart.group)) {
-                  chart.children?.forEach((child) => {
-                    if (child.key === data.key) {
-                      setQuickStyle(child.children);
-                    }
-                  });
-                }
-              });
-
-              setIconType('icon-quick-style-active');
-              setQuickStyleConfig!({ open: true, title: data.title });
-            }}
-            onMouseLeave={() => {
-              setIconType('icon-quick-style');
-            }}
-          >
-            <IconFont type={iconType} className="pl-[5px]" />
-          </div>
-        </Tooltip>
-      )}
+      <QuickStyleIcon show={data?.hasQuickStyle || false} data={data} />
     </li>
   );
 };

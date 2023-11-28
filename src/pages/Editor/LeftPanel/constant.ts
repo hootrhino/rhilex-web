@@ -92,32 +92,32 @@ export const MaterialData = [
 export const ComponentTabList = [
   {
     key: 'charts',
-    icon: 'icon-charts',
+    icon: 'charts',
     name: '图表',
   },
   {
     key: 'map',
-    icon: 'icon-map',
+    icon: 'map',
     name: '地图',
   },
   {
     key: 'text',
-    icon: 'icon-text',
+    icon: 'text',
     name: '信息',
   },
   {
     key: 'table',
-    icon: 'icon-table',
+    icon: 'table',
     name: '表格',
   },
   {
     key: 'widget',
-    icon: 'icon-widget',
+    icon: 'widget',
     name: '控件',
   },
   {
     key: 'media',
-    icon: 'icon-multimedia',
+    icon: 'multimedia',
     name: '媒体',
   },
   // {
@@ -419,7 +419,7 @@ export const mediaList = [
 ];
 
 export const panelItems = [
-  { name: '图层', icon: 'icon-layers', key: 'layers' },
-  { name: '组件库', icon: 'icon-components', key: 'components' },
-  { name: '设计库', icon: 'icon-folder-star', key: 'material' },
+  { name: '图层', icon: 'layers', key: 'layers' },
+  { name: '组件库', icon: 'components', key: 'components' },
+  { name: '设计库', icon: 'folder-star', key: 'material' },
 ];

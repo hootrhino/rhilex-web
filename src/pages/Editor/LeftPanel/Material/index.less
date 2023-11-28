@@ -1,0 +1,24 @@
+.left-panel-tab-wrapper {
+  svg {
+    z-index: 1;
+    font-size: 16px;
+  }
+
+  .active-tab {
+    background-color: transparent;
+    .title {
+      z-index: 98;
+    }
+    &::before {
+      position: absolute;
+      left: 4px;
+      display: block;
+      width: 67px;
+      height: 64.8px;
+      background-color: var(--panel-bg);
+      border-radius: 4px 0 0 4px;
+      transform: translateY(5%);
+      content: '';
+    }
+  }
+}

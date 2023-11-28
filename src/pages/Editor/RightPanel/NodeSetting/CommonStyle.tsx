@@ -11,7 +11,7 @@ import { Space } from 'antd';
 import type { SegmentedValue } from 'antd/es/segmented';
 import { useState } from 'react';
 import Tooltip from '../../components/Tooltip';
-import { nodeTitle } from '../../constants';
+import { getNodeTitle } from '../../utils';
 import { colorOptions } from './constants';
 
 const fontWeightOptions = [
@@ -103,7 +103,7 @@ const CommonStyle = () => {
                   >
                     <div className="py-[16px] px-[20px]">
                       <div className="text-[#F7F7F7] text-[16px] mb-[12px]">
-                        {nodeTitle[activeNodeShape]}快速样式
+                        {getNodeTitle(activeNodeShape)}快速样式
                       </div>
                       <div className="text-baseColor text-base my-[6px]">
                         使用默认数据绘制的组件样式如下
@@ -143,9 +143,9 @@ const CommonStyle = () => {
     <div className="">
       <div className="flex items-center justify-between pt-[10px] pb-[12px] pl-[32px] pr-[24px]">
         <div className="text-[14px] text-[#F7F7F7]">
-          <span>{nodeTitle[activeNodeShape]}</span>
+          <span>{getNodeTitle(activeNodeShape)}</span>
           <Tooltip title="查看组件文档">
-            <IconFont type='icon-doc' className='pl-[5px] cursor-pointer text-[14px]'/>
+            <IconFont type="icon-doc" className="pl-[5px] cursor-pointer text-[14px]" />
           </Tooltip>
         </div>
         <Segmented options={['基础', '全量']} defaultValue="基础" />

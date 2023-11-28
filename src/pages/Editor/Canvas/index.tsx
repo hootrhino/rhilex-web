@@ -1,17 +1,10 @@
 import { DEFAULT_GUIDE_CONFIG } from '@/models/useGuide';
 import { cn } from '@/utils/utils';
-import { Graph } from '@antv/x6';
 import type { Cell } from '@antv/x6';
-import { Clipboard } from '@antv/x6-plugin-clipboard';
+import { Graph } from '@antv/x6';
 import { Dnd } from '@antv/x6-plugin-dnd';
-import { History } from '@antv/x6-plugin-history';
-import { Keyboard } from '@antv/x6-plugin-keyboard';
-import { Selection } from '@antv/x6-plugin-selection';
-import { Snapline } from '@antv/x6-plugin-snapline';
-import { Transform } from '@antv/x6-plugin-transform';
 import { register } from '@antv/x6-react-shape';
 import Guides from '@scena/react-guides';
-import inRange from 'lodash/inRange';
 import round from 'lodash/round';
 import { useEffect, useRef, useState } from 'react';
 import type { OnScroll } from 'react-infinite-viewer';
@@ -19,7 +12,6 @@ import InfiniteViewer from 'react-infinite-viewer';
 import { useModel } from 'umi';
 import ConfirmModal from '../components/ConfirmModal';
 import Icon from '../components/Icon';
-import { nodeTitle } from '../constants';
 import Footer from '../Footer';
 import LeftPanel from '../LeftPanel';
 import { chartsList } from '../LeftPanel/constant';
@@ -27,6 +19,8 @@ import RightPanel from '../RightPanel';
 import shapes from '../Shapes/ReactNodes';
 import ToolBar from '../ToolBar';
 
+import type { RemoveModalConfigType } from '../utils';
+import { getGuideConfig, getNodeTitle, handleOnBindKey, handleOnPlugins } from '../utils';
 import './index.less';
 
 const Canvas = () => {
@@ -40,7 +34,7 @@ const Canvas = () => {
   const [canMouseDrag, setMouseDrag] = useState<boolean>(false);
   const [offset, setOffset] = useState<number>(0);
 
-  const [modalConfig, setModalConfig] = useState<{ open: boolean; content: string }>({
+  const [modalConfig, setModalConfig] = useState<RemoveModalConfigType>({
     open: false,
     content: '',
   });
@@ -70,112 +64,6 @@ const Canvas = () => {
     setLayers,
     setAnimating,
   } = useModel('useEditor');
-
-  // 使用插件
-  const handleOnPlugins = (graph: Graph) => {
-    graph
-      .use(
-        new Snapline({
-          enabled: true,
-        }),
-      )
-      .use(
-        new Transform({
-          resizing: true,
-          rotating: true,
-        }),
-      )
-      .use(
-        new Selection({
-          enabled: true,
-          rubberband: true,
-          showNodeSelectionBox: true,
-          pointerEvents: 'none',
-          // modifiers: ['alt']
-        }),
-      )
-      .use(
-        new Keyboard({
-          enabled: true,
-        }),
-      )
-      .use(
-        new Clipboard({
-          enabled: true,
-        }),
-      )
-      .use(
-        new History({
-          enabled: true,
-        }),
-      );
-  };
-
-  // 使用快捷键
-  const handleOnBindKey = (graph: Graph) => {
-    // 复制
-    graph.bindKey(['meta+c', 'ctrl+c'], () => {
-      const cells = graph.getSelectedCells();
-      if (cells.length) {
-        graph.copy(cells);
-      }
-      return false;
-    });
-
-    // 剪切
-    graph.bindKey(['meta+x', 'ctrl+x'], () => {
-      const cells = graph.getSelectedCells();
-      if (cells.length) {
-        graph.cut(cells);
-      }
-      return false;
-    });
-
-    // 粘贴
-    graph.bindKey(['meta+v', 'ctrl+v'], () => {
-      if (!graph.isClipboardEmpty()) {
-        const cells = graph.paste({ offset: 32 });
-        graph.cleanSelection();
-        graph.select(cells);
-      }
-      return false;
-    });
-
-    // 撤销
-    graph.bindKey(['meta+z', 'ctrl+z'], () => {
-      if (graph.canUndo()) {
-        graph.undo();
-      }
-      return false;
-    });
-
-    // 重做
-    graph.bindKey(['meta+shift+z', 'ctrl+shift+z'], () => {
-      if (graph.canRedo()) {
-        graph.redo();
-      }
-      return false;
-    });
-
-    // 全选
-    graph.bindKey(['meta+shift+a', 'ctrl+shift+a'], () => {
-      const nodes = graph.getNodes();
-      if (nodes) {
-        graph.select(nodes);
-      }
-    });
-
-    // 删除
-    graph.bindKey('backspace', () => {
-      const cells = graph.getSelectedCells();
-
-      if (cells.length) {
-        const selectedShape = cells?.map(cell => nodeTitle[cell?.shape]);
-
-        setModalConfig({ open: true, content: selectedShape.join('、') });
-      }
-    });
-  };
 
   // 使用事件
   const handleOnEvent = (graph: Graph) => {
@@ -207,10 +95,14 @@ const Canvas = () => {
     });
 
     graph.on('node:added', () => {
-      const allCells = graphRef.current?.getCells()?.map((cell: Cell) => ({id: cell.id, icon: 'icon-charts', title: nodeTitle[cell?.shape || '']}));
+      const allCells = graphRef.current?.getCells()?.map((cell: Cell) => ({
+        id: cell.id,
+        icon: 'icon-charts',
+        title: getNodeTitle(cell?.shape || ''),
+      }));
       // 更新图层
-    setLayers(allCells.reverse());
-    })
+      setLayers(allCells.reverse());
+    });
 
     graph.on('view:unmounted', () => {
       setAnimating(true);
@@ -247,7 +139,7 @@ const Canvas = () => {
     const dnd = dndRef.current;
     const shape = e.target?.id;
 
-    const node = graph.createNode({shape});
+    const node = graph.createNode({ shape });
 
     if (isDrag) {
       // 拖拽添加
@@ -265,13 +157,13 @@ const Canvas = () => {
     const cells = graph?.getSelectedCells();
     graph.removeCells(cells);
     const removeIds = cells.map((cell: Cell) => cell.id);
-    const newLayers = layers.filter(layer => {
-      return !removeIds.includes(layer.id)
-    })
+    const newLayers = layers.filter((layer) => {
+      return !removeIds.includes(layer.id);
+    });
 
     setLayers(newLayers);
     setModalConfig({ open: false, content: '' });
-  }
+  };
 
   // 刷新画布
   const handleOnRefresh = () => {
@@ -296,7 +188,7 @@ const Canvas = () => {
 
     handleOnEvent(graph);
     handleOnPlugins(graph);
-    handleOnBindKey(graph);
+    handleOnBindKey(graph, setModalConfig);
     handleOnDnd(graph);
     graphRef.current = graph;
 
@@ -321,39 +213,14 @@ const Canvas = () => {
     verticalGuidesRef.current?.scrollGuides(verticalScrollLeft, viewZoom);
   };
 
-  const getGuideConfig = () => {
-    let unit = horizontalUnit;
-    let guideZoom = horizontalZoom;
-
-    if (inRange(canvasSize, 0, 35)) {
-      unit = 300;
-      guideZoom = 0.3;
-    } else if (inRange(canvasSize, 35, 55)) {
-      unit = 200;
-      guideZoom = 0.35;
-    } else if (inRange(canvasSize, 55, 100)) {
-      unit = 100;
-      guideZoom = 0.55;
-    } else if (inRange(canvasSize, 100, 125)) {
-      unit = 80;
-      guideZoom = 1;
-    } else if (inRange(canvasSize, 125, 170)) {
-      unit = 60;
-      guideZoom = 1.25;
-    } else {
-      unit = 40;
-      guideZoom = 1.5;
-    }
-
+  useEffect(() => {
+    const zoom = canvasSize / 100;
+    // 更新标尺
+    const { unit, guideZoom } = getGuideConfig({ horizontalUnit, horizontalZoom, canvasSize });
     setHorizontalUnit(unit);
     setVerticalUnit(unit);
     setHorizontalZoom(guideZoom);
     setVerticalZoom(guideZoom);
-  };
-
-  useEffect(() => {
-    const zoom = canvasSize / 100;
-    getGuideConfig();
     handleClearGuideLine();
 
     viewerRef.current?.setZoom(zoom);

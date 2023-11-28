@@ -1,4 +1,4 @@
-import { cn, IconFont } from '@/utils/utils';
+import { cn } from '@/utils/utils';
 import { Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
 import {
@@ -14,7 +14,8 @@ import {
 import type { Data } from './Item';
 import ComponentItem from './Item';
 
-import '../index.less';
+import Icon from '../../components/Icon';
+import './index.less';
 
 type ComponentLibraryProps = {
   addNode: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
@@ -89,7 +90,7 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
           >
             <Tooltip title={tab.name} placement="left" color="#4281ff">
               <div className="w-[20px] h-[20px] flex justify-center items-center hover:bg-panelBg cursor-pointer">
-                <IconFont type={activeTab === tab.key ? `${tab.icon}-active` : tab.icon} />
+                <Icon selected={activeTab === tab.key} type={tab.icon} />
               </div>
             </Tooltip>
           </div>
@@ -122,12 +123,7 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
           )}
         >
           {data?.map((chart) => (
-            <ComponentItem
-              data={chart}
-              key={chart.key}
-              addNode={addNode}
-              datatype={chart.key}
-            />
+            <ComponentItem data={chart} key={chart.key} addNode={addNode} datatype={chart.key} />
           ))}
         </ul>
       </div>
