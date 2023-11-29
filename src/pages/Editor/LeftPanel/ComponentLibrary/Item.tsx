@@ -1,4 +1,5 @@
-import { useLongPress } from 'ahooks';
+import { useModel } from '@umijs/max';
+import { useHover, useLongPress } from 'ahooks';
 import { useRef } from 'react';
 import DisabledIcon from './DisabledIcon';
 import QuickStyleIcon from './QuickStyleIcon';
@@ -18,18 +19,25 @@ type ItemProps = React.LiHTMLAttributes<any> & {
 
 const Item = ({ data, addNode, ...props }: ItemProps) => {
   const ref = useRef<HTMLLIElement>(null);
+  const { setQuickStyleConfig } = useModel('useEditor');
 
   useLongPress(
     (e) => {
-      addNode(e, true);
+      addNode(e as any, true);
     },
     ref,
     {
       onClick: (e) => {
-        addNode(e, false);
+        addNode(e as any, false);
       },
     },
   );
+
+  useHover(ref, {
+    onEnter() {
+      setQuickStyleConfig({ open: false, title: '' });
+    },
+  });
 
   return (
     <li
@@ -50,7 +58,7 @@ const Item = ({ data, addNode, ...props }: ItemProps) => {
         />
         <DisabledIcon show={data?.disabled} />
       </div>
-      <QuickStyleIcon show={data?.hasQuickStyle || false} data={data} />
+      <QuickStyleIcon data={data} />
     </li>
   );
 };

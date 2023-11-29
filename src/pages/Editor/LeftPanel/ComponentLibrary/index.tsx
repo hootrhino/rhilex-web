@@ -1,6 +1,6 @@
 import { cn } from '@/utils/utils';
 import { Tooltip } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   chartsList,
   chartsTypeList,
@@ -14,14 +14,19 @@ import {
 import type { Data } from './Item';
 import ComponentItem from './Item';
 
+import { useModel } from '@umijs/max';
+import { useHover } from 'ahooks';
 import Icon from '../../components/Icon';
 import './index.less';
+import QuickStyle from './QuickStyleContent';
 
 type ComponentLibraryProps = {
   addNode: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
 };
 
 const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
+  const ref = useRef(null);
+  const { setQuickStyleConfig } = useModel('useEditor');
   const [activeTab, setTab] = useState<string>('charts');
   const [activeType, setType] = useState<string>('all');
   const [data, setData] = useState<Data[]>([]);
@@ -54,6 +59,12 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
 
     setData(dataSource);
   };
+
+  useHover(ref, {
+    onLeave() {
+      setQuickStyleConfig({ open: false, title: '' });
+    },
+  });
 
   useEffect(() => {
     getData();
@@ -116,6 +127,7 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
         )}
 
         <ul
+          ref={ref}
           className={cn(
             'h-full overflow-y-auto w-full',
             'editor-scrollbar',
@@ -125,6 +137,7 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
           {data?.map((chart) => (
             <ComponentItem data={chart} key={chart.key} addNode={addNode} datatype={chart.key} />
           ))}
+          <QuickStyle />
         </ul>
       </div>
     </div>

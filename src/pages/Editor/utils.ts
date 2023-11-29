@@ -6,6 +6,7 @@ import { Selection } from '@antv/x6-plugin-selection';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { Transform } from '@antv/x6-plugin-transform';
 import inRange from 'lodash/inRange';
+import { chartsList } from './LeftPanel/constant';
 
 // 组件 title
 export const NODE_TITLE = {
@@ -196,4 +197,18 @@ export const getGuideConfig = ({ horizontalUnit, horizontalZoom, canvasSize }: G
   }
 
   return { unit, guideZoom };
+};
+
+// 获取组件快速样式
+export const getQuickStyle = (activeKey: string) => {
+  let activeQuickStyle;
+
+  const activeGroup = chartsList.find(chart => activeKey.includes(chart.group));
+
+  if (activeGroup?.children && activeGroup?.children?.length > 0) {
+    const activeItem = activeGroup.children.find(item => item.key === activeKey);
+    activeQuickStyle = activeItem?.children;
+  }
+
+  return activeQuickStyle;
 };

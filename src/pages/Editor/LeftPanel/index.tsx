@@ -8,7 +8,6 @@ import { panelItems } from './constant';
 import Help from './Help';
 import Layers from './Layers';
 import Material from './Material';
-import QuickStyle from './QuickStyle';
 import DetailTitle from './Title';
 
 import Icon from '../components/Icon';
@@ -19,7 +18,6 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
   const {
     collapseLeftPanel: collapse,
     setCollapseLeftPanel: setCollapse,
-    quickStyleConfig,
   } = useModel('useEditor');
   const [activeItem, setActiveItem] = useState<string>('layers');
 
@@ -132,7 +130,6 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
           </div>
         </div>
       )}
-      <QuickStyle show={quickStyleConfig.open} />
     </>
   );
 });

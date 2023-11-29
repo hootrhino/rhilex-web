@@ -14,13 +14,12 @@ import ConfirmModal from '../components/ConfirmModal';
 import Icon from '../components/Icon';
 import Footer from '../Footer';
 import LeftPanel from '../LeftPanel';
-import { chartsList } from '../LeftPanel/constant';
 import RightPanel from '../RightPanel';
 import shapes from '../Shapes/ReactNodes';
 import ToolBar from '../ToolBar';
 
 import type { RemoveModalConfigType } from '../utils';
-import { getGuideConfig, getNodeTitle, handleOnBindKey, handleOnPlugins } from '../utils';
+import { getGuideConfig, getNodeTitle, getQuickStyle, handleOnBindKey, handleOnPlugins } from '../utils';
 import './index.less';
 
 const Canvas = () => {
@@ -60,7 +59,7 @@ const Canvas = () => {
     canvasConfig,
     setDetailFormType,
     setActiveNodeShape,
-    setQuickStyle,
+    setRightQuickStyle,
     setLayers,
     setAnimating,
   } = useModel('useEditor');
@@ -76,16 +75,7 @@ const Canvas = () => {
     });
 
     graph.on('node:click', ({ node }) => {
-      chartsList?.forEach((chart) => {
-        if (node.shape.includes(chart.group)) {
-          chart.children?.forEach((child) => {
-            if (child.key === node.shape) {
-              setQuickStyle(child.children);
-            }
-          });
-        }
-      });
-
+      setRightQuickStyle(getQuickStyle(node.shape) as any);
       setActiveNodeShape(node.shape);
       setDetailFormType('node');
     });
@@ -138,6 +128,8 @@ const Canvas = () => {
     const graph = graphRef.current;
     const dnd = dndRef.current;
     const shape = e.target?.id;
+
+    if (!shape) return;
 
     const node = graph.createNode({ shape });
 

@@ -1,25 +1,30 @@
 import { cn } from '@/utils/utils';
 import { useModel } from '@umijs/max';
+import { useHover } from 'ahooks';
+import { useRef } from 'react';
 
-type QuickStyleProps = {
-  show: boolean;
-};
+const QuickStyle = () => {
+  const { quickStyleConfig, leftQuickStyle, setQuickStyleConfig } = useModel('useEditor');
+  const ref = useRef(null);
 
-const QuickStyle = ({ show }: QuickStyleProps) => {
-  const { quickStyleConfig, activeNodeQuickStyle, setQuickStyleConfig } = useModel('useEditor');
+  useHover(ref, {
+    onChange(isHovering) {
+      if (!isHovering) {
+        setQuickStyleConfig({ open: false, title: '' });
+      }
+    },
+  });
 
   return (
-    show && (
+    quickStyleConfig.open && (
       <div
+        ref={ref}
         className={cn(
-          'absolute top-[60px] left-[362px] z-[98] w-[190px] h-[calc(100%-60px)] pr-[1px] overflow-hidden bg-panelBg',
+          'fixed top-[60px] left-[362px] z-[98] w-[190px] h-[calc(100%-60px)] pr-[1px] overflow-hidden bg-panelBg',
           'editor-shadow-outer-r',
           'editor-box-shadow-1',
           'editor-divider-l',
         )}
-        onMouseLeave={() => {
-          setQuickStyleConfig!({ open: false, title: '' });
-        }}
       >
         <div
           className={cn(
@@ -35,7 +40,7 @@ const QuickStyle = ({ show }: QuickStyleProps) => {
             'editor-scrollbar',
           )}
         >
-          {activeNodeQuickStyle?.map((item) => (
+          {leftQuickStyle?.map((item) => (
             <div
               key={item.key}
               className="w-[166px] h-[93px] bg-[#242424] my-[12px] mr-[8px] ml-[12px] rounded-[4px] hover:bg-[#363636]"

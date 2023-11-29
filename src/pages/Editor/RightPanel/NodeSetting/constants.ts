@@ -37,3 +37,24 @@ export const colorOptions = [
     value: '9',
   },
 ];
+
+// font-weight
+export const fontWeightOptions = [
+  { label: '超细体', value: '200' },
+  { label: '细体', value: '300' },
+  { label: '常规体', value: '400' },
+  { label: '中等', value: '500' },
+  { label: '粗体', value: '700' },
+  { label: '黑体', value: '900' },
+];
+
+// font-family
+export const fontFamilyOptions = [
+  // { label: '阿里巴巴普惠体', value: 'AlibabaPuHuiTi' },
+  { label: '钉钉进步体', value: 'DingTalk JinBuTi ' },
+  { label: '微软雅黑', value: 'Microsoft YaHei' },
+  { label: '黑体', value: 'SimHei' },
+  { label: '苹方', value: 'PingFangSC' },
+  { label: 'Arial', value: 'Arial' },
+  { label: 'Helvetica', value: 'Helvetica' },
+];
