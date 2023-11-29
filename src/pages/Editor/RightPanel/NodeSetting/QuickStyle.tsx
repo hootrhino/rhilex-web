@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { getNodeTitle } from '../../utils';
 
 const QuickStyle = () => {
-  const { activeNodeShape, rightQuickStyle } = useModel('useEditor');
+  const { activeNode, rightQuickStyle } = useModel('useEditor');
   const [activeStyle, setStyle] = useState<string>('');
 
   return (
@@ -30,7 +30,7 @@ const QuickStyle = () => {
               >
                 <div className="py-[16px] px-[20px]">
                   <div className="text-[#F7F7F7] text-[16px] mb-[12px]">
-                    {getNodeTitle(activeNodeShape)}快速样式
+                    {getNodeTitle(activeNode?.shape || '')}快速样式
                   </div>
                   <div className="text-baseColor text-base my-[6px]">
                     使用默认数据绘制的组件样式如下

@@ -1,6 +1,6 @@
 import { getVisualDetail, getVisualGroup } from '@/services/rulex/dapingguanli';
 import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from '@/utils/constant';
-import { Edge } from '@antv/x6';
+import type { Edge, Cell } from '@antv/x6';
 import { useRequest } from '@umijs/max';
 import { useState } from 'react';
 
@@ -127,7 +127,7 @@ const useEditor = () => {
   const [rightQuickStyle, setRightQuickStyle] = useState<QuickStyleItem[]>([]);
 
   // 节点 Node
-  const [activeNodeShape, setActiveNodeShape] = useState<string>('');
+  const [activeNode, setActiveNode] = useState<Cell>();
   const [quickStyleConfig, setQuickStyleConfig] = useState<QuickStyleConfig>({
     open: false,
     title: '',
@@ -163,8 +163,6 @@ const useEditor = () => {
     setCollapseRightPanel,
     detailFormType,
     setDetailFormType,
-    activeNodeShape,
-    setActiveNodeShape,
     rightQuickStyle,
     setRightQuickStyle,
     quickStyleConfig,
@@ -183,6 +181,8 @@ const useEditor = () => {
     setAnimating,
     leftQuickStyle,
     setLeftQuickStyle,
+    activeNode,
+    setActiveNode
   };
 };
 

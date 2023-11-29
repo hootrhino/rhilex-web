@@ -10,7 +10,7 @@ import { getNodeTitle } from '../../utils';
 
 const DEFAULT_OPTION = [{ label: '静态数据', value: 'static' }];
 const DataSource = () => {
-  const { activeNodeShape } = useModel('useEditor');
+  const { activeNode } = useModel('useEditor');
 
   return (
     <ConfigProvider
@@ -24,7 +24,7 @@ const DataSource = () => {
       }}
     >
       <div className="pt-[10px] pb-[12px] pl-[32px] text-[14px] text-[#F7F7F7]">
-        <span>{getNodeTitle(activeNodeShape)}</span>
+        <span>{getNodeTitle(activeNode?.shape || '')}</span>
         <Tooltip title="查看组件文档">
           <Icon type="doc" className="pl-[5px] text-[14px]" />
         </Tooltip>

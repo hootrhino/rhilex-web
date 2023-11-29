@@ -16,7 +16,7 @@ import { colorOptions, fontFamilyOptions, fontWeightOptions } from './constants'
 import QuickStyle from './QuickStyle';
 
 const CommonStyle = () => {
-  const { activeNodeShape, rightQuickStyle } = useModel('useEditor');
+  const { activeNode, rightQuickStyle } = useModel('useEditor');
   const [fontTheme, setTheme] = useState<SegmentedValue>('light');
   const [fontSize, setSize] = useState<SegmentedValue>('');
 
@@ -62,7 +62,7 @@ const CommonStyle = () => {
     <div className="">
       <div className="flex items-center justify-between pt-[10px] pb-[12px] pl-[32px] pr-[24px]">
         <div className="text-[14px] text-[#F7F7F7]">
-          <span>{getNodeTitle(activeNodeShape)}</span>
+          <span>{getNodeTitle(activeNode?.shape || '')}</span>
           <Tooltip title="查看组件文档">
             <IconFont type="icon-doc" className="pl-[5px] cursor-pointer text-[14px]" />
           </Tooltip>

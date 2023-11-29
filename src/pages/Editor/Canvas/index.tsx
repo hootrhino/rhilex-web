@@ -18,10 +18,16 @@ import RightPanel from '../RightPanel';
 import shapes from '../Shapes/ReactNodes';
 import ToolBar from '../ToolBar';
 
-import type { RemoveModalConfigType } from '../utils';
-import { getGuideConfig, getNodeTitle, getQuickStyle, handleOnBindKey, handleOnPlugins } from '../utils';
-import './index.less';
 import { useClickAway } from 'ahooks';
+import type { RemoveModalConfigType } from '../utils';
+import {
+  getGuideConfig,
+  getNodeTitle,
+  getQuickStyle,
+  handleOnBindKey,
+  handleOnPlugins,
+} from '../utils';
+import './index.less';
 
 const Canvas = () => {
   const graphRef = useRef<any>(null);
@@ -58,18 +64,19 @@ const Canvas = () => {
     collapseLeftPanel,
     layers,
     canvasConfig,
+    activeNode,
     setDetailFormType,
-    setActiveNodeShape,
     setRightQuickStyle,
     setLayers,
     setAnimating,
+    setActiveNode,
   } = useModel('useEditor');
 
   // 使用事件
   const handleOnEvent = (graph: Graph) => {
     graph.on('node:click', ({ node }) => {
       setRightQuickStyle(getQuickStyle(node.shape) as any);
-      setActiveNodeShape(node.shape);
+      setActiveNode(node);
       setDetailFormType('node');
     });
 
@@ -78,7 +85,7 @@ const Canvas = () => {
     });
 
     graph.on('node:added', () => {
-      const allCells = graphRef.current?.getCells()?.map((cell: Cell) => ({
+      const allCells = graph?.getCells()?.map((cell: Cell) => ({
         id: cell.id,
         icon: 'icon-charts',
         title: getNodeTitle(cell?.shape || ''),
@@ -198,10 +205,13 @@ const Canvas = () => {
     verticalGuidesRef.current?.scrollGuides(verticalScrollLeft, viewZoom);
   };
 
-  useClickAway(() => {
-   // 禁止画布移动
-   setMouseDrag(false);
-  }, () => document.getElementById('canvas-container'));
+  useClickAway(
+    () => {
+      // 禁止画布移动
+      setMouseDrag(false);
+    },
+    () => document.getElementById('canvas-container'),
+  );
 
   useEffect(() => {
     const zoom = canvasSize / 100;
@@ -262,7 +272,7 @@ const Canvas = () => {
   return (
     <div className="editor-wrapper">
       <ToolBar refresh={handleOnRefresh} />
-      <LeftPanel ref={dndRef} id="dnd-container" addNode={handleAddNode} />
+      <LeftPanel ref={graphRef} id="dnd-container" addNode={handleAddNode} />
       <div className={cn('editor-content', 'relative w-full h-full transform-gpu')}>
         <div
           className={cn(

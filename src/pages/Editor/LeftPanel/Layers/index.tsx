@@ -1,10 +1,15 @@
 import { cn, IconFont } from '@/utils/utils';
+import type { Cell } from '@antv/x6';
 import { useModel } from '@umijs/max';
 import { Tree } from 'antd';
 import type { DataNode } from 'antd/es/tree';
 import { useEffect, useState } from 'react';
 import Icon from '../../components/Icon';
 import Tooltip from '../../components/Tooltip';
+
+type LayersProps = {
+  cells: Cell[];
+};
 
 const toolbars = [
   {
@@ -29,9 +34,8 @@ const toolbars = [
   },
 ];
 
-const Layers = () => {
-  const { layers } = useModel('useEditor');
-  const [activeLayer, setActiveLayer] = useState<string>('');
+const Layers = ({ cells }: LayersProps) => {
+  const { layers, activeNode, setActiveNode } = useModel('useEditor');
   const [isGroup, setGroup] = useState<boolean>(false);
   const [treeData, setData] = useState<DataNode[]>([]);
 
@@ -101,10 +105,12 @@ const Layers = () => {
           blockNode
           defaultExpandAll
           treeData={treeData}
+          selectedKeys={[activeNode?.id || '']}
           onSelect={(_, { node }) => {
-            setActiveLayer(node.key as string);
+            const activeItem = cells?.find((cell) => cell?.id === node?.key);
+            setActiveNode(activeItem);
           }}
-          rootClassName='editor-tree'
+          rootClassName="editor-tree"
         />
       </div>
     </div>

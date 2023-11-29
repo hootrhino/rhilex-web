@@ -2,7 +2,7 @@ import Tooltip from '@/pages/Editor/components/Tooltip';
 import { cn } from '@/utils/utils';
 import { useModel } from '@umijs/max';
 import { Space } from 'antd';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import ComponentLibrary from './ComponentLibrary';
 import { panelItems } from './constant';
 import Help from './Help';
@@ -18,11 +18,12 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
   const {
     collapseLeftPanel: collapse,
     setCollapseLeftPanel: setCollapse,
+    activeNode,
   } = useModel('useEditor');
   const [activeItem, setActiveItem] = useState<string>('layers');
 
   const detailContent = {
-    layers: <Layers />,
+    layers: <Layers cells={ref?.current?.getCells() || []} />,
     material: <Material />,
     components: <ComponentLibrary addNode={addNode} />,
     help: <Help />,
@@ -38,6 +39,12 @@ const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) =
       setCollapse(false);
     }
   };
+  useEffect(() => {
+    const graph = ref?.current;
+    if (!graph) return;
+
+    graph.resetSelection([activeNode]);
+  }, [activeNode]);
 
   return (
     <>
