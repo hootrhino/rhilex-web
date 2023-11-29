@@ -21,6 +21,7 @@ import ToolBar from '../ToolBar';
 import type { RemoveModalConfigType } from '../utils';
 import { getGuideConfig, getNodeTitle, getQuickStyle, handleOnBindKey, handleOnPlugins } from '../utils';
 import './index.less';
+import { useClickAway } from 'ahooks';
 
 const Canvas = () => {
   const graphRef = useRef<any>(null);
@@ -30,7 +31,7 @@ const Canvas = () => {
   const verticalGuidesRef = useRef<Guides>(null);
 
   const [canvasSize, setCanvasSize] = useState<number>(30);
-  const [canMouseDrag, setMouseDrag] = useState<boolean>(false);
+  const [canMouseDrag, setMouseDrag] = useState<boolean>(true);
   const [offset, setOffset] = useState<number>(0);
 
   const [modalConfig, setModalConfig] = useState<RemoveModalConfigType>({
@@ -66,14 +67,6 @@ const Canvas = () => {
 
   // 使用事件
   const handleOnEvent = (graph: Graph) => {
-    graph.on('graph:mouseenter', () => {
-      setMouseDrag(false);
-    });
-
-    graph.on('graph:mouseleave', () => {
-      setMouseDrag(true);
-    });
-
     graph.on('node:click', ({ node }) => {
       setRightQuickStyle(getQuickStyle(node.shape) as any);
       setActiveNodeShape(node.shape);
@@ -204,6 +197,11 @@ const Canvas = () => {
     verticalGuidesRef.current?.scroll(e.scrollTop, viewZoom);
     verticalGuidesRef.current?.scrollGuides(verticalScrollLeft, viewZoom);
   };
+
+  useClickAway(() => {
+   // 禁止画布移动
+   setMouseDrag(false);
+  }, () => document.getElementById('canvas-container'));
 
   useEffect(() => {
     const zoom = canvasSize / 100;
