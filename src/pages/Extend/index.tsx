@@ -10,20 +10,20 @@ import {
   putGoodsUpdate,
 } from '@/services/rulex/kuozhanxieyi';
 import { IconFont } from '@/utils/utils';
-import { InboxOutlined, MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
   PageContainer,
   ProDescriptions,
-  ProForm,
   ProFormText,
   ProFormTextArea,
+  ProFormUploadDragger,
   ProTable,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button, Modal, Popconfirm, Tag, Upload } from 'antd';
-import type { UploadFile } from 'antd/es/upload';
+import { Button, Modal, Popconfirm, Tag } from 'antd';
+import type { UploadFile } from 'antd/es/upload/interface';
 import omit from 'lodash/omit';
 import { useEffect, useRef, useState } from 'react';
 
@@ -41,7 +41,7 @@ type FormParams = {
   net_addr: string;
   args: string[];
   description?: string;
-  // file: UploadFile;
+  upload: UploadFile;
 };
 
 const baseColumns = [
@@ -125,6 +125,7 @@ const defaultValue = {
   args: ['-arg1=hello -arg2=rulex'],
   local_path: '',
   running: false,
+  upload: undefined,
 };
 
 const ExtendedProtocol = () => {
@@ -141,12 +142,11 @@ const ExtendedProtocol = () => {
     open: false,
   });
   const [initialValue, setInitialValue] = useState<ExtendItem>(defaultValue);
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   // 新建&编辑
   const handleOnFinish = async (params: FormParams) => {
     try {
-      const uploadFile = fileList?.[0]?.originFileObj;
+      const uploadFile = params?.upload?.[0]?.originFileObj;
 
       if (initialValue?.uuid) {
         await putGoodsUpdate(
@@ -161,7 +161,6 @@ const ExtendedProtocol = () => {
 
       actionRef.current?.reload();
       setInitialValue(defaultValue);
-      setFileList([]);
 
       return true;
     } catch (error) {
@@ -295,7 +294,6 @@ const ExtendedProtocol = () => {
               onClick={() => {
                 setOpen(true);
                 setInitialValue(defaultValue);
-                setFileList([]);
               }}
               icon={<PlusOutlined />}
             >
@@ -331,28 +329,14 @@ const ExtendedProtocol = () => {
           placeholder="请输入协议参数"
           rules={[{ required: true, message: '请输入协议参数' }]}
         />
-        <ProForm.Item
-          name="upload"
+        <ProFormUploadDragger
           label="可执行包"
+          name="upload"
+          max={1}
+          description=""
           rules={[{ required: true, message: '请上传可执行包' }]}
-        >
-          <Upload.Dragger
-            multiple={false}
-            maxCount={1}
-            beforeUpload={() => {
-              return false;
-            }}
-            fileList={fileList}
-            onChange={async (info) => {
-              setFileList(info?.fileList);
-            }}
-          >
-            <p className="ant-upload-drag-icon">
-              <InboxOutlined />
-            </p>
-            <p className="ant-upload-text">单击或拖动文件到此区域进行上传</p>
-          </Upload.Dragger>
-        </ProForm.Item>
+          width="xl"
+        />
         <ProFormText name="description" label="备注" placeholder="请输入备注" />
       </ModalForm>
       <Modal

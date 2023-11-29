@@ -18,6 +18,7 @@ import {
 } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
 import { Button, Space } from 'antd';
+import type { UploadFile } from 'antd/es/upload/interface';
 import endsWith from 'lodash/endsWith';
 import { useRef, useState } from 'react';
 import ProConfirmModal from './components/ProConfirmModal';
@@ -59,6 +60,7 @@ const FirmwareConfig = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [confirmConfig, setConfirmConfig] = useState<ConfirmCofig>(defaultUpgradeConfig);
   const [errorMsg, setMsg] = useState<string>('');
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const { run: getVendorKey } = useRequest(() => getFirmwareVendorKey(), {
     onSuccess: (data: string) => formRef.current?.setFieldsValue({ vendorKey: data }),
@@ -67,9 +69,13 @@ const FirmwareConfig = () => {
   // 上传固件
   const { run: uploadFile } = useRequest((params) => postFirmwareUpload({}, params), {
     manual: true,
-    onSuccess: (data: string) => {
-      message.success(`上传成功，固件保存在${data}路径下面`);
-      setTimeout(() => formRef.current?.setFieldsValue({ upload: [] }), 500);
+    onSuccess: () => {
+      message.success('上传成功');
+      setFileList([{ ...fileList[0], status: 'done', percent: 100 }]);
+      setTimeout(() => {
+        formRef.current?.setFieldsValue({ upload: [] });
+        setFileList([]);
+      }, 500);
     },
   });
 
@@ -159,7 +165,15 @@ const FirmwareConfig = () => {
             onValuesChange={async (changedValue) => {
               if (changedValue?.upload) {
                 const file = changedValue?.upload?.[0];
-                uploadFile(file?.originFileObj);
+
+                if (file?.percent === 100) {
+                  if (file?.status === 'done') {
+                    uploadFile(file?.originFileObj);
+                  }
+                  setFileList([{ ...file, percent: 99, status: 'uploading' }]);
+                } else {
+                  setFileList(changedValue?.upload);
+                }
               }
             }}
           >
@@ -172,6 +186,7 @@ const FirmwareConfig = () => {
               description="仅支持 zip 格式文件"
               fieldProps={{
                 style: { maxWidth: 550 },
+                fileList,
                 beforeUpload: (file) => {
                   const isZip = file.type === 'application/zip' || endsWith(file?.name, '.zip');
 
@@ -179,8 +194,9 @@ const FirmwareConfig = () => {
                     message.error('仅支持 zip 格式文件，请检查上传文件格式');
                   }
 
-                  // return isZip || Upload.LIST_IGNORE;
-                  return false;
+                  return new Promise((resolve) => {
+                    resolve(file);
+                  });
                 },
               }}
               width="xl"
