@@ -6,31 +6,32 @@ import type { DataNode } from 'antd/es/tree';
 import { useEffect, useState } from 'react';
 import Icon from '../../components/Icon';
 import Tooltip from '../../components/Tooltip';
+import ToolbarItem from './ToolbarItem';
 
 type LayersProps = {
   cells: Cell[];
 };
 
-const toolbars = [
+const baseToolbar = [
   {
     key: 'move-prev',
-    icon: 'icon-move-prev',
-    name: '上移一层',
+    icon: 'move-prev',
+    title: '上移一层',
   },
   {
     key: 'move-next',
-    icon: 'icon-move-next',
-    name: '下移一层',
+    icon: 'move-next',
+    title: '下移一层',
   },
   {
     key: 'move-top',
-    icon: 'icon-move-top',
-    name: '置顶',
+    icon: 'move-top',
+    title: '置顶',
   },
   {
     key: 'move-bottom',
-    icon: 'icon-move-bottom',
-    name: '置底',
+    icon: 'move-bottom',
+    title: '置底',
   },
 ];
 
@@ -38,6 +39,8 @@ const Layers = ({ cells }: LayersProps) => {
   const { layers, activeNode, setActiveNode } = useModel('useEditor');
   const [isGroup, setGroup] = useState<boolean>(false);
   const [treeData, setData] = useState<DataNode[]>([]);
+
+  const isLayerEmpty = layers?.length < 1;
 
   useEffect(() => {
     const newData = layers?.map((item) => ({
@@ -75,29 +78,12 @@ const Layers = ({ cells }: LayersProps) => {
           'h-[40px] w-full flex items-center justify-between px-[16px]',
         )}
       >
-        {toolbars.map((toolbar) => (
-          <Tooltip key={toolbar.key} title={toolbar.name}>
-            <div className="flex items-center justify-center w-[24px] h-[24px] cursor-pointer rounded-[4px] g-transparent hover:bg-[#FFFFFF14]">
-              <IconFont type={toolbar.icon} />
-            </div>
-          </Tooltip>
+        {baseToolbar.map(({ key, ...toolbar }) => (
+          <ToolbarItem key={key} disabled={isLayerEmpty} {...toolbar} />
         ))}
         <div className="w-[1px] h-[12px] bg-[#333]" />
-        <Tooltip title="成组">
-          <div className="flex items-center justify-center w-[24px] h-[24px] cursor-pointer rounded-[4px] g-transparent hover:bg-[#FFFFFF14]">
-            <IconFont type="icon-group" />
-          </div>
-        </Tooltip>
-        <Tooltip title="解组" disabled={!isGroup}>
-          <div
-            className={cn(
-              'flex items-center justify-center w-[24px] h-[24px] rounded-[4px] bg-transparent',
-              isGroup ? 'cursor-pointer hover:bg-[#FFFFFF14]' : 'cursor-not-allowed',
-            )}
-          >
-            <IconFont type={isGroup ? 'icon-ungroup' : 'icon-ungroup-disabled'} />
-          </div>
-        </Tooltip>
+        <ToolbarItem title="成组" disabled={isLayerEmpty} icon="group" />
+        <ToolbarItem title="解组" disabled={!isGroup} icon="ungroup" />
       </div>
       <div className=" w-full p-[8px]">
         <Tree
