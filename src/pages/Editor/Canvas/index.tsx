@@ -149,6 +149,7 @@ const Canvas = () => {
       // 点击添加
       const { width, height } = node.size();
       graph.addNode(node).resize(width * 3, height * 3);
+      graph.centerCell(node);
     }
   };
 
