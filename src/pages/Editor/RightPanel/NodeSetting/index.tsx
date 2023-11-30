@@ -1,15 +1,13 @@
 import { cn, IconFont } from '@/utils/utils';
 import { ConfigProvider, Space, Tabs } from 'antd';
 import { useState } from 'react';
+import type { AddNodeProps } from '../../Canvas';
 import CommonStyle from './CommonStyle';
 import DataSource from './DataSource';
-// import './index.less';
 
-type NodeSettingProps = {
-  // shape: string;
-};
+type NodeSettingProps = AddNodeProps;
 
-const NodeSetting = ({}: NodeSettingProps) => {
+const NodeSetting = ({ addNode }: NodeSettingProps) => {
   const [activeTab, setActiveTab] = useState<string>('commonStyle');
 
   const getLabel = (label: string, key: string, icon: string) => (
@@ -23,7 +21,7 @@ const NodeSetting = ({}: NodeSettingProps) => {
     {
       label: getLabel('样式', 'commonStyle', 'icon-style-setting'),
       key: 'commonStyle',
-      children: <CommonStyle />,
+      children: <CommonStyle addNode={addNode} />,
     },
     {
       label: getLabel('数据源', 'dataSource', 'icon-data-setting'),

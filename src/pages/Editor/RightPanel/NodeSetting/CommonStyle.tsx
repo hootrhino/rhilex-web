@@ -10,12 +10,15 @@ import { useModel } from '@umijs/max';
 import { Space } from 'antd';
 import type { SegmentedValue } from 'antd/es/segmented';
 import { useState } from 'react';
+import type { AddNodeProps } from '../../Canvas';
 import Tooltip from '../../components/Tooltip';
 import { getNodeTitle } from '../../utils';
 import { colorOptions, fontFamilyOptions, fontWeightOptions } from './constants';
 import QuickStyle from './QuickStyle';
 
-const CommonStyle = () => {
+type CommonStyleProps = AddNodeProps;
+
+const CommonStyle = ({ addNode }: CommonStyleProps) => {
   const { activeNode, rightQuickStyle } = useModel('useEditor');
   const [fontTheme, setTheme] = useState<SegmentedValue>('light');
   const [fontSize, setSize] = useState<SegmentedValue>('');
@@ -105,7 +108,7 @@ const CommonStyle = () => {
             {
               key: 'quickStyle',
               label: '快速样式',
-              children: <QuickStyle />,
+              children: <QuickStyle addNode={addNode} />,
             },
           ]}
           className={cn('editor-divider-t')}

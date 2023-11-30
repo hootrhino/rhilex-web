@@ -2,11 +2,14 @@ import { cn } from '@/utils/utils';
 import { useModel } from '@umijs/max';
 import { forwardRef, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import type { AddNodeProps } from '../Canvas';
 import CanvasSetting from './CanvasSetting';
 import './index.less';
 import NodeSetting from './NodeSetting';
 
-const RightPanel = forwardRef((props, ref) => {
+type RightPanelProps = AddNodeProps;
+
+const RightPanel = forwardRef<RightPanelProps, any>(({ addNode, ...props }, ref) => {
   const nodeRef = useRef(null);
   const { collapseRightPanel, setCollapseRightPanel, detailFormType } = useModel('useEditor');
 
@@ -30,8 +33,9 @@ const RightPanel = forwardRef((props, ref) => {
           'fixed right-0 bottom-0 bg-panelBg pl-[1px] z-[98] h-[calc(100%-60px)]',
         )}
         ref={nodeRef}
+        {...props}
       >
-        {detailFormType === 'canvas' ? <CanvasSetting /> : <NodeSetting />}
+        {detailFormType === 'canvas' ? <CanvasSetting /> : <NodeSetting addNode={addNode} />}
       </div>
     </CSSTransition>
   );

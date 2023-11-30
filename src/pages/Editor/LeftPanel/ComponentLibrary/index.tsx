@@ -16,13 +16,12 @@ import ComponentItem from './Item';
 
 import { useModel } from '@umijs/max';
 import { useHover } from 'ahooks';
+import type { AddNodeProps } from '../../Canvas';
 import Icon from '../../components/Icon';
 import './index.less';
 import QuickStyle from './QuickStyleContent';
 
-type ComponentLibraryProps = {
-  addNode: (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>, isDrag: boolean) => void;
-};
+type ComponentLibraryProps = AddNodeProps;
 
 const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
   const ref = useRef(null);

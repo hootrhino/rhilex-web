@@ -29,6 +29,16 @@ import {
 } from '../utils';
 import './index.less';
 
+export type AddNodeParamsType = {
+  isDrag: boolean;
+  shape: string;
+  e?: React.MouseEvent<HTMLLIElement, MouseEvent>;
+};
+
+export type AddNodeProps = {
+  addNode: (values: AddNodeParamsType) => void;
+};
+
 const Canvas = () => {
   const graphRef = useRef<any>(null);
   const dndRef = useRef<any>(null);
@@ -123,11 +133,10 @@ const Canvas = () => {
   };
 
   // 往画布添加组件
-  const handleAddNode = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, isDrag: boolean) => {
-
+  const handleAddNode = ({ isDrag, shape, e }: AddNodeParamsType) => {
     const graph = graphRef.current;
     const dnd = dndRef.current;
-    const shape = e.target?.id;
+    // const shape = e.target?.id;
 
     if (!shape) return;
 
@@ -272,7 +281,7 @@ const Canvas = () => {
   return (
     <div className="editor-wrapper">
       <ToolBar refresh={handleOnRefresh} />
-      <LeftPanel ref={graphRef} id="dnd-container" addNode={handleAddNode} />
+      <LeftPanel id="dnd-container" ref={graphRef} addNode={handleAddNode} />
       <div className={cn('editor-content', 'relative w-full h-full transform-gpu')}>
         <div
           className={cn(
@@ -340,7 +349,7 @@ const Canvas = () => {
           <div id="canvas-container" />
         </InfiniteViewer>
       </div>
-      <RightPanel ref={graphRef} />
+      <RightPanel ref={graphRef} addNode={handleAddNode} />
       <Footer value={canvasSize} onChange={(changeValue: number) => setCanvasSize(changeValue)} />
       <ConfirmModal
         title="删除组件"

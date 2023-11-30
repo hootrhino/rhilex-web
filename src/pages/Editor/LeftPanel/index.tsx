@@ -10,9 +10,10 @@ import Layers from './Layers';
 import Material from './Material';
 import DetailTitle from './Title';
 
+import type { AddNodeProps } from '../Canvas';
 import Icon from '../components/Icon';
 
-type LeftPanelProps = React.HTMLAttributes<HTMLDivElement>;
+type LeftPanelProps = React.HTMLAttributes<HTMLDivElement> & AddNodeProps;
 
 const LeftPanel = forwardRef<LeftPanelProps, any>(({ addNode, ...props }, ref) => {
   const {

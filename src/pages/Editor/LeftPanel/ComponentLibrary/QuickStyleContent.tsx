@@ -2,13 +2,12 @@ import { cn } from '@/utils/utils';
 import { useModel } from '@umijs/max';
 import { useHover } from 'ahooks';
 import { useRef } from 'react';
+import type { AddNodeProps } from '../../Canvas';
 import DisabledIcon from '../../components/DisabledIcon';
 
-type QuickStyleProps = {
-  addNode: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, isDrag: boolean) => void;
-}
+type QuickStyleProps = AddNodeProps;
 
-const QuickStyle = ({addNode}: QuickStyleProps) => {
+const QuickStyle = ({ addNode }: QuickStyleProps) => {
   const { quickStyleConfig, leftQuickStyle, setQuickStyleConfig } = useModel('useEditor');
   const boxRef = useRef(null);
   // const dndItemRef = useRef(null);
@@ -61,12 +60,19 @@ const QuickStyle = ({addNode}: QuickStyleProps) => {
         >
           {leftQuickStyle?.map((item) => (
             <div
-             // ref={dndItemRef}
+              // ref={dndItemRef}
               key={item.key}
               className="relative w-[166px] h-[93px] bg-[#242424] my-[12px] mr-[8px] ml-[12px] rounded-[4px] hover:bg-[#363636]"
-              onClick={e => addNode(e, false)}
+              onClick={(e) => {
+                const shape = e.target?.id;
+                addNode({ isDrag: false, shape });
+              }}
             >
-              <img src={item.value} className="w-full h-full object-contain cursor-pointer" id={item.key} />
+              <img
+                src={item.value}
+                className="w-full h-full object-contain cursor-pointer"
+                id={item.key}
+              />
               <DisabledIcon show={item?.disabled} />
             </div>
           ))}

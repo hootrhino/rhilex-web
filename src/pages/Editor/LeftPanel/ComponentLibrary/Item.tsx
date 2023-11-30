@@ -1,8 +1,9 @@
 import { useModel } from '@umijs/max';
 import { useHover, useLongPress } from 'ahooks';
 import { useRef } from 'react';
-import QuickStyleIcon from './QuickStyleIcon';
+import type { AddNodeProps } from '../../Canvas';
 import DisabledIcon from '../../components/DisabledIcon';
+import QuickStyleIcon from './QuickStyleIcon';
 
 export type Data = {
   title: string;
@@ -12,10 +13,10 @@ export type Data = {
   hasQuickStyle?: boolean;
 };
 
-type ItemProps = React.LiHTMLAttributes<any> & {
-  data: Data;
-  addNode: (e: React.MouseEvent<HTMLLIElement, MouseEvent>, isDrag: boolean) => void;
-};
+type ItemProps = React.LiHTMLAttributes<any> &
+  AddNodeProps & {
+    data: Data;
+  };
 
 const Item = ({ data, addNode, ...props }: ItemProps) => {
   const ref = useRef<HTMLLIElement>(null);
@@ -23,12 +24,14 @@ const Item = ({ data, addNode, ...props }: ItemProps) => {
 
   useLongPress(
     (e) => {
-      addNode(e as any, true);
+      const shape = e.target?.id;
+      addNode({ isDrag: true, shape, e: e as any });
     },
     ref,
     {
       onClick: (e) => {
-        addNode(e as any, false);
+        const shape = e.target?.id;
+        addNode({ isDrag: false, shape });
       },
     },
   );

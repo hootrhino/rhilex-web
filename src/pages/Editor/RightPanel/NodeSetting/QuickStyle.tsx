@@ -2,10 +2,13 @@ import { cn } from '@/utils/utils';
 import { useModel } from '@umijs/max';
 import { Space } from 'antd';
 import { useState } from 'react';
-import { getNodeTitle } from '../../utils';
+import type { AddNodeProps } from '../../Canvas';
 import DisabledIcon from '../../components/DisabledIcon';
+import { getNodeTitle } from '../../utils';
 
-const QuickStyle = () => {
+type QuickStyleProps = AddNodeProps;
+
+const QuickStyle = ({ addNode }: QuickStyleProps) => {
   const { activeNode, rightQuickStyle } = useModel('useEditor');
   const [activeStyle, setStyle] = useState<string>('');
 
@@ -50,9 +53,7 @@ const QuickStyle = () => {
                     </div>
                     <div
                       className="flex items-center h-[28px] leading-[28px] px-[12px] bg-primary text-[#fff] text-base rounded-[4px] cursor-pointer hover:bg-[#4281ff]"
-                      onClick={() => {
-                        // TODO
-                      }}
+                      onClick={() => addNode({ isDrag: false, shape: activeStyle })}
                     >
                       试一试
                     </div>
