@@ -6,23 +6,28 @@ import image5 from './style5.png';
 
 export default [
   {
-    key: 'style1',
+    key: 'other2',
     value: image1,
+    disabled: false,
   },
   {
     key: 'style2',
     value: image2,
+    disabled: true,
   },
   {
     key: 'style3',
     value: image3,
+    disabled: true,
   },
   {
     key: 'style4',
     value: image4,
+    disabled: true,
   },
   {
     key: 'style5',
     value: image5,
+    disabled: true,
   },
 ];

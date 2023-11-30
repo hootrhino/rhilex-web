@@ -64,7 +64,6 @@ const Canvas = () => {
     collapseLeftPanel,
     layers,
     canvasConfig,
-    activeNode,
     setDetailFormType,
     setRightQuickStyle,
     setLayers,
@@ -125,6 +124,7 @@ const Canvas = () => {
 
   // 往画布添加组件
   const handleAddNode = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, isDrag: boolean) => {
+
     const graph = graphRef.current;
     const dnd = dndRef.current;
     const shape = e.target?.id;

@@ -21,7 +21,7 @@ import './index.less';
 import QuickStyle from './QuickStyleContent';
 
 type ComponentLibraryProps = {
-  addNode: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
+  addNode: (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>, isDrag: boolean) => void;
 };
 
 const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
@@ -137,7 +137,7 @@ const ComponentLibrary = ({ addNode }: ComponentLibraryProps) => {
           {data?.map((chart) => (
             <ComponentItem data={chart} key={chart.key} addNode={addNode} datatype={chart.key} />
           ))}
-          <QuickStyle />
+          <QuickStyle addNode={addNode} />
         </ul>
       </div>
     </div>

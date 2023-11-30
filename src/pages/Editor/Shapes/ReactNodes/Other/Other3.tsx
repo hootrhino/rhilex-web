@@ -9,13 +9,13 @@ const Other3 = () => {
       number: 253,
     },
     {
-      stage: '初试人数',
+      stage: '面试人数',
       number: 151,
     },
-    {
-      stage: '复试人数',
-      number: 113,
-    },
+    // {
+    //   stage: '复试人数',
+    //   number: 113,
+    // },
     {
       stage: '录取人数',
       number: 87,
@@ -31,6 +31,7 @@ const Other3 = () => {
     xField: 'stage',
     yField: 'number',
     legend: false,
+    dynamicHeight: true
   } as FunnelConfig;
 
   return <Funnel {...config} />;

@@ -2,12 +2,31 @@ import { cn } from '@/utils/utils';
 import { useModel } from '@umijs/max';
 import { useHover } from 'ahooks';
 import { useRef } from 'react';
+import DisabledIcon from './DisabledIcon';
 
-const QuickStyle = () => {
+type QuickStyleProps = {
+  addNode: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, isDrag: boolean) => void;
+}
+
+const QuickStyle = ({addNode}: QuickStyleProps) => {
   const { quickStyleConfig, leftQuickStyle, setQuickStyleConfig } = useModel('useEditor');
-  const ref = useRef(null);
+  const boxRef = useRef(null);
+  // const dndItemRef = useRef(null);
 
-  useHover(ref, {
+  // useLongPress(
+  //   (e) => {
+  //     addNode(e as any, true);
+  //   },
+  //   dndItemRef,
+  //   {
+  //     onClick: (e) => {
+  //       console.log(e);
+  //       addNode(e as any, false);
+  //     },
+  //   },
+  // );
+
+  useHover(boxRef, {
     onChange(isHovering) {
       if (!isHovering) {
         setQuickStyleConfig({ open: false, title: '' });
@@ -18,7 +37,7 @@ const QuickStyle = () => {
   return (
     quickStyleConfig.open && (
       <div
-        ref={ref}
+        ref={boxRef}
         className={cn(
           'fixed top-[60px] left-[362px] z-[98] w-[190px] h-[calc(100%-60px)] pr-[1px] overflow-hidden bg-panelBg',
           'editor-shadow-outer-r',
@@ -42,10 +61,13 @@ const QuickStyle = () => {
         >
           {leftQuickStyle?.map((item) => (
             <div
+             // ref={dndItemRef}
               key={item.key}
-              className="w-[166px] h-[93px] bg-[#242424] my-[12px] mr-[8px] ml-[12px] rounded-[4px] hover:bg-[#363636]"
+              className="relative w-[166px] h-[93px] bg-[#242424] my-[12px] mr-[8px] ml-[12px] rounded-[4px] hover:bg-[#363636]"
+              onClick={e => addNode(e, false)}
             >
-              <img src={item.value} className="w-full h-full object-contain" />
+              <img src={item.value} className="w-full h-full object-contain cursor-pointer" id={item.key} />
+              <DisabledIcon show={item?.disabled} />
             </div>
           ))}
         </div>

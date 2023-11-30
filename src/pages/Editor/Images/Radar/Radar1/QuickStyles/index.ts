@@ -10,39 +10,48 @@ import image9 from './style9.png';
 
 export default [
   {
-    key: 'style1',
+    key: 'radar1',
     value: image1,
+    disabled: false,
   },
   {
     key: 'style2',
     value: image2,
+    disabled: true,
   },
   {
     key: 'style3',
     value: image3,
+    disabled: true,
   },
   {
     key: 'style4',
     value: image4,
+    disabled: true,
   },
   {
     key: 'style5',
     value: image5,
+    disabled: true,
   },
   {
     key: 'style6',
     value: image6,
+    disabled: true,
   },
   {
     key: 'style7',
     value: image7,
+    disabled: true,
   },
   {
     key: 'style8',
     value: image8,
+    disabled: true,
   },
   {
     key: 'style9',
     value: image9,
+    disabled: true,
   },
 ];

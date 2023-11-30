@@ -8,6 +8,7 @@ const Editor = () => {
   const { getDetail, isAnimating } = useModel('useEditor');
 
   useEffect(() => {
+
     if (uuid) {
       getDetail({ uuid });
     }
