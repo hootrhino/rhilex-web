@@ -2,7 +2,7 @@ import { cn } from '@/utils/utils';
 import { useModel } from '@umijs/max';
 import { useHover } from 'ahooks';
 import { useRef } from 'react';
-import DisabledIcon from './DisabledIcon';
+import DisabledIcon from '../../components/DisabledIcon';
 
 type QuickStyleProps = {
   addNode: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, isDrag: boolean) => void;

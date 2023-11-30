@@ -3,6 +3,7 @@ import { useModel } from '@umijs/max';
 import { Space } from 'antd';
 import { useState } from 'react';
 import { getNodeTitle } from '../../utils';
+import DisabledIcon from '../../components/DisabledIcon';
 
 const QuickStyle = () => {
   const { activeNode, rightQuickStyle } = useModel('useEditor');
@@ -15,10 +16,11 @@ const QuickStyle = () => {
           <>
             <div
               key={item.key}
-              className="w-[86px] h-[47px] bg-[#242424] mr-[9px] mb-[8px] hover:bg-[#363636]"
-              onClick={() => setStyle(item.key)}
+              className="relative w-[86px] h-[47px] bg-[#242424] mr-[9px] mb-[8px] hover:bg-[#363636]"
+              onClick={() => setStyle(item?.disabled ? '' : item.key)}
             >
               <img src={item.value} className="w-full h-full object-cover" />
+              <DisabledIcon show={item?.disabled} />
             </div>
             {activeStyle === item.key && (
               <div

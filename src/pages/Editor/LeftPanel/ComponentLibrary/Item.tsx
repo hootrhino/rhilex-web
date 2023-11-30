@@ -1,8 +1,8 @@
 import { useModel } from '@umijs/max';
 import { useHover, useLongPress } from 'ahooks';
 import { useRef } from 'react';
-import DisabledIcon from './DisabledIcon';
 import QuickStyleIcon from './QuickStyleIcon';
+import DisabledIcon from '../../components/DisabledIcon';
 
 export type Data = {
   title: string;
