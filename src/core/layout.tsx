@@ -3,10 +3,10 @@ import { history, Link } from '@umijs/max';
 import type { RunTimeLayoutConfig } from 'umi';
 
 import RightContent from '@/components/RightContent';
-import { LOGIN_PATH } from '@/utils/constant';
+import { COPYRIGHT, LOGIN_PATH } from '@/utils/constant';
+import { DefaultFooter } from '@ant-design/pro-components';
 
 const layout: RunTimeLayoutConfig = ({ initialState }) => {
-
   return {
     siderWidth: 208,
     rightContentRender: () => <RightContent />,
@@ -26,11 +26,12 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
         <Link to={`/${paths[paths.length - 1]}`}>{route.title}</Link>
       );
     },
-
+    footerRender: () => <DefaultFooter copyright={COPYRIGHT} />,
     menuHeaderRender: undefined,
     childrenRender: (children) => {
       return <>{children}</>;
     },
+    className: 'h-[100vh]',
     ...initialState?.settings,
   };
 };
