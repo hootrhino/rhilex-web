@@ -1,28 +1,43 @@
+import { getNotifyList, putNotifyClear } from '@/services/rulex/zhanneitongzhi';
 import { DeleteOutlined } from '@ant-design/icons';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { useRequest } from '@umijs/max';
 import { Button, Tag } from 'antd';
+import { useRef } from 'react';
 
-const typeEnum = {
+export type NotifyLogItem = {
+  uuid: string;
+  type: string;
+  event: string;
+  ts: number;
+  summary: string;
+  info: string;
+};
+
+export const typeEnum = {
   info: {
     text: '信息',
-    color: 'processing'
+    color: 'processing',
   },
   error: {
     text: '错误',
-    color: 'error'
+    color: 'error',
   },
   warning: {
     text: '报警',
-    color: 'warning'
-  }
-}
+    color: 'warning',
+  },
+};
 
 const NotifyLog = () => {
-  const columns = [
+  const actionRef = useRef<ActionType>();
+
+  const columns: ProColumns<Partial<NotifyLogItem>>[] = [
     {
       title: '类型',
       dataIndex: 'type',
-      renderText: (type: string) => <Tag color={typeEnum[type].color}>{typeEnum[type].text}</Tag>
+      renderText: (type: string) => <Tag color={typeEnum[type].color}>{typeEnum[type].text}</Tag>,
     },
     {
       title: '事件',
@@ -39,32 +54,32 @@ const NotifyLog = () => {
     },
   ];
 
+  const { run: clear } = useRequest(() => putNotifyClear(), {
+    manual: true,
+  });
+
   return (
     <>
       <PageContainer>
         <ProTable
           rowKey="uuid"
+          actionRef={actionRef}
           columns={columns}
-          dataSource={[]}
           search={false}
           pagination={false}
+          request={async () => {
+            const { data } = await getNotifyList();
+
+            return Promise.resolve({
+              data,
+              success: true,
+            });
+          }}
           toolBarRender={() => [
-            <Button
-              type="primary"
-              key="clear"
-              onClick={() => {
-                // TODO 一键清空
-              }}
-              icon={<DeleteOutlined />}
-            >
+            <Button type="primary" key="clear" onClick={clear} icon={<DeleteOutlined />}>
               一键清空
             </Button>,
           ]}
-          options={{
-            reload: () => {
-              // TODO reload
-            },
-          }}
         />
       </PageContainer>
     </>
