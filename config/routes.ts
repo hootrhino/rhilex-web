@@ -225,6 +225,12 @@
     component: './System',
   },
   {
+    path: '/notify-log',
+    name: '站内日志',
+    component: './NotifyLog',
+    hideInMenu: true,
+  },
+  {
     path: '/',
     redirect: '/dashboard',
   },
