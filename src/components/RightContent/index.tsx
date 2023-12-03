@@ -1,13 +1,12 @@
-import { IconFont } from '@/utils/utils';
-import { GithubFilled } from '@ant-design/icons';
+import { BellOutlined, GithubFilled, QuestionCircleOutlined } from '@ant-design/icons';
 import { history, useModel } from '@umijs/max';
 import { Badge, Popover, Tag } from 'antd';
 import Avatar from './AvatarDropdown';
 
+import { typeEnum } from '@/pages/NotifyLog';
 import { getNotifyHeader } from '@/services/rulex/zhanneitongzhi';
 import { ProList } from '@ant-design/pro-components';
 import './index.less';
-import { typeEnum } from '@/pages/NotifyLog';
 
 export type SiderTheme = 'light' | 'dark';
 
@@ -44,8 +43,8 @@ const GlobalHeaderRight = () => {
           dataIndex: 'ts',
         },
         subTitle: {
-          render: (_, {type}) => {
-            return type && <Tag color={typeEnum[type].color}>{typeEnum[type].text}</Tag>
+          render: (_, { type }) => {
+            return type && <Tag color={typeEnum[type].color}>{typeEnum[type].text}</Tag>;
           },
         },
       }}
@@ -55,26 +54,33 @@ const GlobalHeaderRight = () => {
 
   return (
     <div className="flex justify-end items-center">
+      <span
+        className="cursor-pointer px-[12px] transition-all duration-300 hover:bg-[#32393F]"
+        onClick={() => {
+          window.open('http://www.hootrhino.com');
+        }}
+      >
+        <QuestionCircleOutlined style={{ color: '#fff', fontSize: 16, verticalAlign: 'middle' }} />
+      </span>
       <Popover content={content} trigger="hover" arrow={false} rootClassName="notification-popver">
-        <Badge dot={true}>
-          <IconFont type="icon-notification" className="text-[24px] cursor-pointer opacity-[0.8]" />
-        </Badge>
+        <span className="inline cursor-pointer transition-all duration-300 px-[8px]">
+          <Badge count={11} className="shadow-none text-[16px]">
+            <BellOutlined
+              style={{ color: '#fff', fontSize: 16, padding: 4, verticalAlign: 'middle' }}
+            />
+          </Badge>
+        </span>
       </Popover>
+
+      <Avatar />
       <GithubFilled
         style={{
-          fontSize: 24,
+          fontSize: 20,
           color: 'rgba(255, 255, 255, 0.95)',
-          height: 56,
-          cursor: 'pointer',
-          padding: '0 4px 0 12px',
         }}
-        onClick={() => {
-          const w = window.open('about:blank');
-          if (!w) return;
-          w.location.href = 'https://github.com/hootrhino';
-        }}
+        className="cursor-pointer pl-[12px] pr-[12px] h-[56px] hover:bg-[#32393F]"
+        onClick={() => window.open('https://github.com/hootrhino')}
       />
-      <Avatar />
     </div>
   );
 };
