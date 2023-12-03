@@ -1,9 +1,9 @@
 import { cn, IconFont } from '@/utils/utils';
-import { Tooltip } from 'antd';
 import { useState } from 'react';
 import { MaterialData, MaterialTabList } from '../constant';
 
 import './index.less';
+import DisabledIcon from '../../components/DisabledIcon';
 
 const Material = () => {
   const [activeTab, setTab] = useState<string>('temp');
@@ -58,17 +58,7 @@ const Material = () => {
                   alt="大屏模板"
                   className="w-full h-full object-cover cursor-pointer"
                 />
-                {item?.disabled && (
-                  <span className="bg-black bg-opacity-60 w-full h-full text-center cursor-not-allowed absolute top-0 left-0 flex items-center justify-center">
-                    <Tooltip
-                      title="需要升级才可以使用当前大屏模板"
-                      color="#4281ff"
-                      overlayInnerStyle={{ fontSize: 10, borderRadius: 4 }}
-                    >
-                      <IconFont type="icon-lock" className="text-[16px]" />
-                    </Tooltip>
-                  </span>
-                )}
+                <DisabledIcon show={item?.disabled} />
               </div>
             </li>
           ))}

@@ -11,14 +11,14 @@ export default [
     disabled: false,
   },
   {
-    key: 'style2',
+    key: 'sunburst2',
     value: image2,
-    disabled: true,
+    disabled: false,
   },
   {
-    key: 'style3',
+    key: 'sunburst3',
     value: image3,
-    disabled: true,
+    disabled: false,
   },
   {
     key: 'style4',
@@ -26,8 +26,8 @@ export default [
     disabled: true,
   },
   {
-    key: 'style5',
+    key: 'sunburst5',
     value: image5,
-    disabled: true,
+    disabled: false,
   },
 ];

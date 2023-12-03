@@ -75,6 +75,7 @@ const Canvas = () => {
     layers,
     canvasConfig,
     setDetailFormType,
+    setLeftQuickStyle,
     setRightQuickStyle,
     setLayers,
     setAnimating,
@@ -84,7 +85,9 @@ const Canvas = () => {
   // 使用事件
   const handleOnEvent = (graph: Graph) => {
     graph.on('node:click', ({ node }) => {
-      setRightQuickStyle(getQuickStyle(node.shape) as any);
+      const quickStyleData = getQuickStyle(node.shape) as any;
+      setRightQuickStyle(quickStyleData);
+      setLeftQuickStyle(quickStyleData);
       setActiveNode(node);
       setDetailFormType('node');
     });

@@ -1,9 +1,12 @@
 import { chartConfig } from '../../constants';
 import Other1 from './Other1';
-import Other2 from './Other2';
 import Other3 from './Other3';
 import Other4 from './Other4';
 import Other5 from './Other5';
+import Sunburst1 from './Sunburst/Sunburst1';
+import Sunburst2 from './Sunburst/Sunburst2';
+import Sunburst3 from './Sunburst/Sunburst3';
+import Sunburst5 from './Sunburst/Sunburst5';
 
 export const others = [
   {
@@ -14,7 +17,25 @@ export const others = [
   },
   {
     shape: 'other2',
-    component: Other2,
+    component: Sunburst1,
+    width: 100,
+    height: 100,
+  },
+  {
+    shape: 'sunburst2',
+    component: Sunburst2,
+    width: 100,
+    height: 100,
+  },
+  {
+    shape: 'sunburst3',
+    component: Sunburst3,
+    width: 100,
+    height: 100,
+  },
+  {
+    shape: 'sunburst5',
+    component: Sunburst5,
     width: 100,
     height: 100,
   },
