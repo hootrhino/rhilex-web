@@ -19,6 +19,7 @@ import omit from 'lodash/omit';
 import { message } from '@/components/PopupHack';
 import ProSegmented from '@/components/ProSegmented';
 import { postDevicesCreate, putDevicesUpdate } from '@/services/rulex/shebeiguanli';
+import { DownloadOutlined, QuestionCircleOutlined, UploadOutlined } from '@ant-design/icons';
 import { history, useModel, useParams } from '@umijs/max';
 import cloneDeep from 'lodash/cloneDeep';
 import { columns } from './columns';
@@ -49,8 +50,38 @@ export const toolTip = (url?: string) => (
 
 export const processColumns = (columns: any) => {
   return columns.map((col: any) => {
+    let title;
+
     if (col.valueType === 'group') {
-      return { ...col, columns: processColumns(col.columns) };
+      if (col.title === '寄存器配置') {
+        title = (
+          <div className="flex items-center">
+            <span>{col.title}</span>
+            <div className="pl-[12px] pr-[24px]">
+              <a key="upload">
+                <UploadOutlined className="pr-[5px]" />
+                上传点位表
+              </a>
+              <span className="pl-[5px]">
+                <span className="font-light">(</span>
+                <a className="text-[12px]">
+                  <QuestionCircleOutlined className="pr-[2px]" />
+                  查看详细规则
+                </a>
+                <span className="font-light">)</span>
+              </span>
+            </div>
+
+            <a key="download">
+              <DownloadOutlined className="pr-[5px]" />
+              下载点位表
+            </a>
+          </div>
+        );
+      } else {
+        title = col.title;
+      }
+      return { ...col, columns: processColumns(col.columns), title };
     }
 
     if (col.valueType === 'dependency') {
@@ -78,7 +109,7 @@ export const processColumns = (columns: any) => {
           columns: processColumns(col.columns),
           fieldProps: {
             // min: 1,
-            creatorButtonProps: { position: 'top', style: {width: 'calc(100vw - 500px)'}},
+            creatorButtonProps: { position: 'top', style: { width: 'calc(100vw - 500px)' } },
             creatorRecord: col?.initialValue,
           },
         };
@@ -325,7 +356,7 @@ const SchemaForm = ({}: ProFormProps) => {
               onFinish={handleOnFinish}
               onValuesChange={handleOnValuesChange}
               initialValues={initialValues}
-              rootClassName='device-form'
+              rootClassName="device-form"
               submitter={{
                 render: ({ reset, submit }) => {
                   return (

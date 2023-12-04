@@ -6,6 +6,8 @@ import { Badge, Popover, Tag } from 'antd';
 import { BellOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 
+import './index.less';
+
 const NoticeIcon = () => {
   const { data } = useModel('useNotify');
 
@@ -44,7 +46,7 @@ const NoticeIcon = () => {
   return (
     <Popover content={content} trigger="hover" arrow={false} rootClassName="notification-popver">
       <span className="inline cursor-pointer transition-all duration-300 px-[8px]">
-        <Badge count={data?.length} className="shadow-none text-[16px]">
+        <Badge count={data?.length} rootClassName='notice-badge'>
           <BellOutlined
             style={{ color: '#fff', fontSize: 16, padding: 4, verticalAlign: 'middle' }}
           />
