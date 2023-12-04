@@ -121,13 +121,13 @@ export const columns = [
                       required: true,
                       hideInForm: type !== 'GENERIC_PROTOCOL',
                     },
-                    {
-                      title: '采集频率（毫秒）',
-                      dataIndex: 'frequency',
-                      valueType: 'digit',
-                      required: true,
-                      hideInForm: type !== 'GENERIC_MODBUS',
-                    },
+                    // {
+                    //   title: '采集频率（毫秒）',
+                    //   dataIndex: 'frequency',
+                    //   valueType: 'digit',
+                    //   required: true,
+                    //   hideInForm: type !== 'GENERIC_MODBUS',
+                    // },
                     {
                       title: '是否启动轮询',
                       dataIndex: 'autoRequest',
@@ -237,22 +237,29 @@ export const columns = [
                     {
                       title: '数据标签',
                       dataIndex: 'tag',
-                      width: 'md',
+                      width: 'sm',
                       required: true,
                     },
                     {
                       title: '数据别名',
                       dataIndex: 'alias',
-                      width: 'md',
+                      width: 'sm',
                       required: true,
                     },
                     {
                       title: 'Modbus 功能',
                       dataIndex: 'function',
                       valueType: 'select',
-                      width: 'md',
+                      width: 'sm',
                       required: true,
                       valueEnum: funcEnum,
+                    },
+                    {
+                      title: '采集频率（毫秒）',
+                      dataIndex: 'frequency',
+                      valueType: 'digit',
+                      width: 'sm',
+                      required: true,
                     },
                     {
                       title: '从设备 ID',

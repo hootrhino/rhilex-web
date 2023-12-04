@@ -16,6 +16,7 @@ export const defaultRegistersConfig = [
     address: 0,
     quantity: 1,
     function: 3,
+    frequency: 3000,
   },
 ];
 
@@ -41,7 +42,7 @@ export const defaultAisConfig = {
 export const defaultModbusConfig = {
   commonConfig: [
     {
-      frequency: 3000,
+      // frequency: 3000,
       autoRequest: 'false',
       mode: 'UART',
     },

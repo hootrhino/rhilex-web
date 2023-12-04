@@ -77,8 +77,8 @@ export const processColumns = (columns: any) => {
           ...omit(col, ['mode']),
           columns: processColumns(col.columns),
           fieldProps: {
-            min: 1,
-            creatorButtonProps: { position: 'top' },
+            // min: 1,
+            creatorButtonProps: { position: 'top', style: {width: 'calc(100vw - 500px)'}},
             creatorRecord: col?.initialValue,
           },
         };
@@ -325,6 +325,7 @@ const SchemaForm = ({}: ProFormProps) => {
               onFinish={handleOnFinish}
               onValuesChange={handleOnValuesChange}
               initialValues={initialValues}
+              rootClassName='device-form'
               submitter={{
                 render: ({ reset, submit }) => {
                   return (
