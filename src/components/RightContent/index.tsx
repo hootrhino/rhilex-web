@@ -1,12 +1,9 @@
-import { BellOutlined, GithubFilled, QuestionCircleOutlined } from '@ant-design/icons';
-import { history, useModel } from '@umijs/max';
-import { Badge, Popover, Tag } from 'antd';
-import Avatar from './AvatarDropdown';
+import { GithubFilled, QuestionCircleOutlined } from '@ant-design/icons';
+import { useModel } from '@umijs/max';
 
-import { typeEnum } from '@/pages/NotifyLog';
-import { getNotifyHeader } from '@/services/rulex/zhanneitongzhi';
-import { ProList } from '@ant-design/pro-components';
+import Avatar from './AvatarDropdown';
 import './index.less';
+import NoticeIcon from './NoticeIcon';
 
 export type SiderTheme = 'light' | 'dark';
 
@@ -16,41 +13,6 @@ const GlobalHeaderRight = () => {
   if (!initialState || !initialState.settings) {
     return null;
   }
-
-  const content = (
-    <ProList
-      rowKey="uuid"
-      headerTitle="站内日志通知"
-      pagination={false}
-      footer={
-        <div className="cursor-pointer" onClick={() => history.push('/notify-log')}>
-          查看更多
-        </div>
-      }
-      request={async () => {
-        const { data } = await getNotifyHeader();
-
-        return Promise.resolve({
-          data,
-          success: true,
-        });
-      }}
-      metas={{
-        title: {
-          dataIndex: 'summary',
-        },
-        description: {
-          dataIndex: 'ts',
-        },
-        subTitle: {
-          render: (_, { type }) => {
-            return type && <Tag color={typeEnum[type].color}>{typeEnum[type].text}</Tag>;
-          },
-        },
-      }}
-      className="notification-list"
-    />
-  );
 
   return (
     <div className="flex justify-end items-center">
@@ -62,16 +24,7 @@ const GlobalHeaderRight = () => {
       >
         <QuestionCircleOutlined style={{ color: '#fff', fontSize: 16, verticalAlign: 'middle' }} />
       </span>
-      <Popover content={content} trigger="hover" arrow={false} rootClassName="notification-popver">
-        <span className="inline cursor-pointer transition-all duration-300 px-[8px]">
-          <Badge count={11} className="shadow-none text-[16px]">
-            <BellOutlined
-              style={{ color: '#fff', fontSize: 16, padding: 4, verticalAlign: 'middle' }}
-            />
-          </Badge>
-        </span>
-      </Popover>
-
+      <NoticeIcon />
       <Avatar />
       <GithubFilled
         style={{

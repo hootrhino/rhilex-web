@@ -1,8 +1,9 @@
-import { getNotifyList, putNotifyClear } from '@/services/rulex/zhanneitongzhi';
-import { DeleteOutlined } from '@ant-design/icons';
+import { message } from '@/components/PopupHack';
+import { getNotifyList, putNotifyClear, putNotifyRead } from '@/services/rulex/zhanneitongzhi';
+import { ClearOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useModel, useRequest } from '@umijs/max';
 import { Button, Tag } from 'antd';
 import { useRef } from 'react';
 
@@ -13,18 +14,19 @@ export type NotifyLogItem = {
   ts: number;
   summary: string;
   info: string;
+  status: number;
 };
 
 export const typeEnum = {
-  info: {
+  INFO: {
     text: '信息',
     color: 'processing',
   },
-  error: {
+  ERROR: {
     text: '错误',
     color: 'error',
   },
-  warning: {
+  WARNING: {
     text: '报警',
     color: 'warning',
   },
@@ -32,31 +34,56 @@ export const typeEnum = {
 
 const NotifyLog = () => {
   const actionRef = useRef<ActionType>();
+  const { refresh } = useModel('useNotify');
+
+  // 已读
+  const { run: read } = useRequest((params: API.putNotifyReadParams) => putNotifyRead(params), {
+    manual: true,
+    onSuccess: () => {
+      actionRef.current?.reload();
+      refresh();
+      message.success('设置成功');
+    },
+  });
+
+  // 全部已读
+  const { run: clear } = useRequest(() => putNotifyClear(), {
+    manual: true,
+  });
 
   const columns: ProColumns<Partial<NotifyLogItem>>[] = [
+    {
+      title: '事件',
+      dataIndex: 'event',
+    },
     {
       title: '类型',
       dataIndex: 'type',
       renderText: (type: string) => <Tag color={typeEnum[type].color}>{typeEnum[type].text}</Tag>,
     },
     {
-      title: '事件',
-      dataIndex: 'event',
-    },
-    {
-      title: '时间',
-      dataIndex: 'ts',
-    },
-    {
       title: '概览',
       dataIndex: 'summary',
       ellipsis: true,
     },
+    {
+      title: '时间',
+      dataIndex: 'ts',
+      valueType: 'dateTime',
+    },
+    {
+      title: '操作',
+      valueType: 'option',
+      key: 'option',
+      width: 80,
+      fixed: 'right',
+      render: (_, { uuid }) => [
+        <a key="read" onClick={() => uuid && read({ uuid })}>
+          设置已读
+        </a>,
+      ],
+    },
   ];
-
-  const { run: clear } = useRequest(() => putNotifyClear(), {
-    manual: true,
-  });
 
   return (
     <>
@@ -76,10 +103,18 @@ const NotifyLog = () => {
             });
           }}
           toolBarRender={() => [
-            <Button type="primary" key="clear" onClick={clear} icon={<DeleteOutlined />}>
-              一键清空
+            <Button type="primary" key="clear" onClick={clear} icon={<ClearOutlined />}>
+              全部已读
             </Button>,
           ]}
+          expandable={{
+            expandedRowRender: ({ info }) => (
+              <>
+                <div>日志详情:</div>
+                <div>{info}</div>
+              </>
+            ),
+          }}
         />
       </PageContainer>
     </>

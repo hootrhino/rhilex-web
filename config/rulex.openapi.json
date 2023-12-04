@@ -9713,6 +9713,9 @@
                           "type": {
                             "type": "string"
                           },
+                          "status": {
+                            "type": "integer"
+                          },
                           "event": {
                             "type": "string"
                           },
@@ -9727,6 +9730,7 @@
                         "x-apifox-orders": [
                           "uuid",
                           "type",
+                          "status",
                           "event",
                           "ts",
                           "summary"
@@ -9745,24 +9749,6 @@
                     "msg",
                     "data"
                   ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": [
-                        {
-                          "uuid": "001",
-                          "type": "DEVICE",
-                          "event": "event.connect",
-                          "ts": 1701606275783000000,
-                          "summary": "设备离线"
-                        }
-                      ]
-                    }
-                  }
                 }
               }
             }
@@ -9808,6 +9794,9 @@
                           "type": {
                             "type": "string"
                           },
+                          "status": {
+                            "type": "integer"
+                          },
                           "event": {
                             "type": "string"
                           },
@@ -9825,6 +9814,7 @@
                         "x-apifox-orders": [
                           "uuid",
                           "type",
+                          "status",
                           "event",
                           "ts",
                           "summary",
@@ -9844,25 +9834,6 @@
                     "msg",
                     "data"
                   ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": [
-                        {
-                          "uuid": "001",
-                          "type": "DEVICE",
-                          "event": "event.connect",
-                          "ts": 1701606251791652400,
-                          "summary": "设备离线",
-                          "info": "AIS设备已经离线, 错误信息: Uart 连接失败, 超时3000ms"
-                        }
-                      ]
-                    }
-                  }
                 }
               }
             }
@@ -9915,22 +9886,53 @@
                     "msg",
                     "data"
                   ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": []
-                    }
-                  }
                 }
               }
             }
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-130086097-run",
+        "security": []
+      }
+    },
+    "/api/v1/notify/read": {
+      "put": {
+        "summary": "阅读通知",
+        "x-apifox-folder": "站内通知",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "站内通知"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-130096989-run",
         "security": []
       }
     }

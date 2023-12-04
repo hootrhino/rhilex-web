@@ -173,6 +173,10 @@ declare namespace API {
     action?: string;
   };
 
+  type putNotifyReadParams = {
+    uuid: string;
+  };
+
   type putVisualPublishParams = {
     uuid: string;
   };

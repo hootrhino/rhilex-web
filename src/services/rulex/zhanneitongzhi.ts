@@ -15,7 +15,14 @@ export async function getNotifyHeader(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { uuid?: string; type?: string; event?: string; ts?: number; summary?: string }[];
+    data: {
+      uuid?: string;
+      type?: string;
+      status?: number;
+      event?: string;
+      ts?: number;
+      summary?: string;
+    }[];
   }>('/api/v1/notify/header', {
     method: 'GET',
     ...(options || {}),
@@ -30,6 +37,7 @@ export async function getNotifyList(options?: { [key: string]: any }) {
     data: {
       uuid?: string;
       type?: string;
+      status?: number;
       event?: string;
       ts?: number;
       summary?: string;
@@ -37,6 +45,21 @@ export async function getNotifyList(options?: { [key: string]: any }) {
     }[];
   }>('/api/v1/notify/list', {
     method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 阅读通知 PUT /api/v1/notify/read */
+export async function putNotifyRead(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putNotifyReadParams,
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/api/v1/notify/read', {
+    method: 'PUT',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }
