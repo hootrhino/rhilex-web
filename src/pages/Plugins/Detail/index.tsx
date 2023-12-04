@@ -12,11 +12,18 @@ import Terminal from './Terminal';
 
 const Detail = () => {
   const formRef = useRef<ProFormInstance>();
-  const { run, setDetailConfig, detailConfig, setLoading, loading, disabled, setDisabled } =
-    useModel('usePlugin');
+  const {
+    run,
+    errorData,
+    setDetailConfig,
+    detailConfig,
+    setLoading,
+    loading,
+    disabled,
+    setDisabled,
+  } = useModel('usePlugin');
   const { currentLog } = useModel('useWebsocket');
 
-  const { isWindows } = useModel('useSystem');
   const [logData, setLogData] = useState<LogItem[]>([]);
 
   const handleOnLoading = (output: string) => {
@@ -41,9 +48,6 @@ const Detail = () => {
 
     formValues = {
       ...omit(formValues, ['output']),
-      // baudRate: Number(formValues.baudRate),
-      // dataBits: Number(formValues.dataBits),
-      // stopBits: Number(formValues.stopBits),
     };
     const params = {
       uuid: detailConfig.uuid,
@@ -59,7 +63,9 @@ const Detail = () => {
 
   // 停止扫描
   const onStop = () => {
+    setLoading(false);
     run({ uuid: detailConfig.uuid, name: 'stop', args: '' });
+    setDetailConfig({ ...detailConfig, open: true, name: 'stop', args: '' });
   };
 
   const renderSubmitter = () => {
@@ -69,7 +75,7 @@ const Detail = () => {
         <Button key="start" onClick={onStart} type="primary" loading={loading} disabled={disabled}>
           开始扫描
         </Button>
-        <Button key="stop" onClick={onStop} disabled={!disabled}>
+        <Button key="stop" onClick={onStop}>
           停止扫描
         </Button>
       </Space>
@@ -93,11 +99,11 @@ const Detail = () => {
     const filterLogs = logData
       ?.filter((log) => log?.topic === topic)
       ?.map((item: LogItem) => item?.msg);
-
     formRef.current?.setFieldsValue({
-      output: filterLogs?.length > 0 ? filterLogs?.join('\n') : '',
+      output:
+        errorData?.length > 0 ? errorData.concat(filterLogs).join('\n') : filterLogs?.join('/n'),
     });
-  }, [logData, detailConfig.name]);
+  }, [logData, errorData, detailConfig.name]);
 
   useEffect(() => {
     if (currentLog !== undefined) {
@@ -136,7 +142,7 @@ const Detail = () => {
       onOpenChange={(visible) => setDetailConfig({ ...detailConfig, open: visible })}
     >
       {detailConfig.name === 'ping' && <Ping onLoading={handleOnLoading} />}
-      {detailConfig.name === 'scan' && <Scan />}
+      {['scan', 'stop'].includes(detailConfig.name) && <Scan />}
     </ModalForm>
   );
 };

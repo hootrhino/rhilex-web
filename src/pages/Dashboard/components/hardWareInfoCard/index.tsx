@@ -5,11 +5,7 @@ import { useModel } from '@umijs/max';
 
 const HardWareInfoCard = () => {
   const { dataSource, cpuData } = useModel('useSystem');
-  const { memPercent, diskInfo, cpuPercent } = dataSource?.hardWareInfo || {
-    memPercent: 0,
-    diskInfo: 0,
-    cpuPercent: 0,
-  };
+  const { memPercent, diskInfo, cpuPercent } = dataSource?.hardWareInfo || {};
 
   const config = {
     width: 200,
