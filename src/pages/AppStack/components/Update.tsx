@@ -149,18 +149,7 @@ const UpdateForm = () => {
               <ProSegmented width="md" />
             </ProForm.Item>
             <ProFormText label="备注" name="description" width="md" placeholder="请输入备注" />
-            {/* <ProFormSelect
-              label="脚本类型"
-              name="type"
-              options={[{ label: 'LUA 脚本', value: 'lua' }]}
-              width="md"
-              placeholder="请选择脚本类型"
-              rules={[{ required: true, message: '请选择脚本类型' }]}
-            /> */}
           </ProForm.Group>
-          {/* <ProForm.Group>
-
-          </ProForm.Group> */}
           <ProFormDependency name={['type']}>
             {({ type }) => {
               if (type !== 'lua') return;
