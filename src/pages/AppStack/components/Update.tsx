@@ -11,7 +11,6 @@ import {
   ProCard,
   ProForm,
   ProFormDependency,
-  ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
@@ -60,7 +59,11 @@ const UpdateForm = () => {
 
   const handleOnFinish = async (values: any) => {
     try {
-      const params = { ...values, autoStart: values?.autoStart === 'true' ? true : false };
+      const params = {
+        ...values,
+        type: 'lua',
+        autoStart: values?.autoStart === 'true' ? true : false,
+      };
       if (id) {
         update({ ...params, uuid: id });
       } else {
@@ -143,20 +146,21 @@ const UpdateForm = () => {
               rules={[{ required: true, message: '请输入 APP 版本' }]}
             />
             <ProForm.Item label="是否自启" name="autoStart" required>
-              <ProSegmented width='md' />
+              <ProSegmented width="md" />
             </ProForm.Item>
-            <ProFormSelect
+            <ProFormText label="备注" name="description" width="md" placeholder="请输入备注" />
+            {/* <ProFormSelect
               label="脚本类型"
               name="type"
               options={[{ label: 'LUA 脚本', value: 'lua' }]}
               width="md"
               placeholder="请选择脚本类型"
               rules={[{ required: true, message: '请选择脚本类型' }]}
-            />
+            /> */}
           </ProForm.Group>
-          <ProForm.Group>
-            <ProFormText label="备注" name="description" width="md" placeholder='请输入备注' />
-          </ProForm.Group>
+          {/* <ProForm.Group>
+
+          </ProForm.Group> */}
           <ProFormDependency name={['type']}>
             {({ type }) => {
               if (type !== 'lua') return;
