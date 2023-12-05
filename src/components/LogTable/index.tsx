@@ -30,7 +30,6 @@ enum levelColor {
 const LogTable = ({ filters = false, topic, options, ...props }: LogTableProps) => {
   const { logs } = useModel('useWebsocket');
   const [dataSource, setData] = useState<LogItem[]>([]);
-  const [pagination, setPagination] = useState<Pagination>({ current: 1, pageSize: 10, total: 0 });
 
   const columns = [
     {
@@ -96,17 +95,8 @@ const LogTable = ({ filters = false, topic, options, ...props }: LogTableProps) 
       filterLogs = logs?.filter((log) => log?.topic === topic);
     }
 
-    filterLogs = filterLogs.slice(
-      (pagination.current - 1) * pagination.pageSize,
-      pagination.current * pagination.pageSize,
-    );
-
     setData(filterLogs);
-  }, [pagination, logs, topic]);
-
-  useEffect(() => {
-    setPagination({ ...pagination, total: logs?.length });
-  }, [logs]);
+  }, [logs, topic]);
 
   return (
     <ProTable
@@ -114,13 +104,11 @@ const LogTable = ({ filters = false, topic, options, ...props }: LogTableProps) 
       columns={columns as any}
       dataSource={dataSource}
       search={false}
-      pagination={{
-        ...pagination,
-        onChange: (current, pageSize) => setPagination({ ...pagination, current, pageSize }),
-      }}
+      pagination={false}
       options={
         options === false
-          ? false : {
+          ? false
+          : {
               search: {
                 onSearch: (keyword: string) => {
                   handleOnsearch(keyword);

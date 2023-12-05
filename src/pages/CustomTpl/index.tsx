@@ -41,6 +41,8 @@ type GroupConfig = {
 
 const defaultCofig = { open: false, type: 'new', title: '新建模板分组' };
 
+const DEFAULT_TYPE = 'LUA_TEMPLATE';
+
 const CustomTpl = () => {
   const actionRef = useRef<ActionType>();
   const groupFormRef = useRef<ProFormInstance>();

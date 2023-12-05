@@ -22,7 +22,7 @@ const useWebsocket = () => {
       if (data && data !== 'Connected') {
         newLog = [...newLog, JSON.parse(data)];
         newLog = orderBy(newLog, 'time', 'desc');
-        newLog = slice(newLog, 0, 100);
+        newLog = slice(newLog, 0, 50);
 
         setLogs(newLog);
         setLog(JSON.parse(data));
