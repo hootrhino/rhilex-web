@@ -4,6 +4,7 @@ import { useModel } from '@umijs/max';
 import Avatar from './AvatarDropdown';
 import './index.less';
 import NoticeIcon from './NoticeIcon';
+import { DOC_URL } from '@/utils/constant';
 
 export type SiderTheme = 'light' | 'dark';
 
@@ -19,7 +20,7 @@ const GlobalHeaderRight = () => {
       <span
         className="cursor-pointer px-[12px] transition-all duration-300 hover:bg-[#32393F]"
         onClick={() => {
-          window.open('http://www.hootrhino.com');
+          window.open(DOC_URL);
         }}
       >
         <QuestionCircleOutlined style={{ color: '#fff', fontSize: 16, verticalAlign: 'middle' }} />

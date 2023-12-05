@@ -8,7 +8,6 @@ import {
   ProConfigProvider,
   ProFormProps,
   ProFormSelect,
-  ProSkeleton,
 } from '@ant-design/pro-components';
 
 import useGoBack from '@/hooks/useGoBack';
@@ -16,7 +15,7 @@ import { FooterToolbar } from '@ant-design/pro-components';
 import { Button, Popconfirm, Space } from 'antd';
 import omit from 'lodash/omit';
 
-import { message } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
 import ProSegmented from '@/components/ProSegmented';
 import { postDevicesCreate, putDevicesUpdate } from '@/services/rulex/shebeiguanli';
 import { DownloadOutlined, QuestionCircleOutlined, UploadOutlined } from '@ant-design/icons';
@@ -30,23 +29,10 @@ import {
   defaultModbusConfig,
   defaultProtocolConfig,
 } from './initialValue';
-
-// type SchemaFormProps<T = any> = ProFormProps & {
-//   // title?: string;
-//   // goBack: string;
-//   // columns: T[];
-//   //initialValue: T;
-//   // loading?: boolean;
-//   // deviceId: string;
-// };
+import Title from './Title';
+import UploadRule from './UploadRule';
 
 const DefaultListUrl = '/device/list';
-
-export const toolTip = (url?: string) => (
-  <a href={url ? url : 'http://www.hootrhino.com/'} target="_blank" rel="noreferrer">
-    前往官方文档主页查看更多帮助信息
-  </a>
-);
 
 export const processColumns = (columns: any) => {
   return columns.map((col: any) => {
@@ -64,7 +50,17 @@ export const processColumns = (columns: any) => {
               </a>
               <span className="pl-[5px]">
                 <span className="font-light">(</span>
-                <a className="text-[12px]">
+                <a
+                  className="text-[12px]"
+                  onClick={() =>
+                    modal.info({
+                      title: 'Modbus 点位表上传规则',
+                      autoFocusButton: null,
+                      width: '40%',
+                      content: <UploadRule />,
+                    })
+                  }
+                >
                   <QuestionCircleOutlined className="pr-[2px]" />
                   查看详细规则
                 </a>
@@ -130,7 +126,7 @@ export const processColumns = (columns: any) => {
           },
         ],
       },
-      tooltip: col?.tooltip === true ? toolTip : toolTip(col?.tooltip),
+      // tooltip: col?.tooltip === true ? toolTip : toolTip(col?.tooltip),
     };
   });
 };
@@ -139,10 +135,9 @@ const SchemaForm = ({}: ProFormProps) => {
   const formRef = useRef<ProFormInstance>();
   const { showModal } = useGoBack();
   const { deviceId, groupId } = useParams();
-  const { groupList, detail, getDetail, detailLoading } = useModel('useDevice');
+  const { groupList, detail, getDetail } = useModel('useDevice');
   const { data: portList, run: getPort } = useModel('usePort');
   const [loading, setLoading] = useState<boolean>(false);
-  const [spin, setSpin] = useState<boolean>(true);
 
   const initialValues = {
     type: 'GENERIC_PROTOCOL',
@@ -330,59 +325,49 @@ const SchemaForm = ({}: ProFormProps) => {
   }, [deviceId]);
 
   useEffect(() => {
-    if (!detailLoading) {
-      setSpin(false);
-    }
-  }, [detailLoading]);
-
-  useEffect(() => {
     getPort();
   }, []);
 
   return (
     <PageContainer
-      header={{ title: deviceId ? '编辑设备' : '新建设备' }}
+      header={{ title: <Title deviceId={deviceId} /> }}
       onBack={() => showModal({ url: DefaultListUrl })}
     >
-      {spin ? (
-        <ProSkeleton />
-      ) : (
-        <ProConfigProvider valueTypeMap={customizeValueType} hashed={false}>
-          <ProCard>
-            <BetaSchemaForm
-              layoutType="Form"
-              formRef={formRef}
-              columns={processColumns(columns)}
-              onFinish={handleOnFinish}
-              onValuesChange={handleOnValuesChange}
-              initialValues={initialValues}
-              rootClassName="device-form"
-              submitter={{
-                render: ({ reset, submit }) => {
-                  return (
-                    <FooterToolbar>
-                      <Popconfirm
-                        key="reset"
-                        title="重置可能会丢失数据，确定要重置吗？"
-                        onConfirm={() => {
-                          reset();
-                          handleOnReset();
-                        }}
-                      >
-                        <Button>重置</Button>
-                      </Popconfirm>
+      <ProConfigProvider valueTypeMap={customizeValueType} hashed={false}>
+        <ProCard>
+          <BetaSchemaForm
+            layoutType="Form"
+            formRef={formRef}
+            columns={processColumns(columns)}
+            onFinish={handleOnFinish}
+            onValuesChange={handleOnValuesChange}
+            initialValues={initialValues}
+            rootClassName="device-form"
+            submitter={{
+              render: ({ reset, submit }) => {
+                return (
+                  <FooterToolbar>
+                    <Popconfirm
+                      key="reset"
+                      title="重置可能会丢失数据，确定要重置吗？"
+                      onConfirm={() => {
+                        reset();
+                        handleOnReset();
+                      }}
+                    >
+                      <Button>重置</Button>
+                    </Popconfirm>
 
-                      <Button key="submit" type="primary" onClick={submit} loading={loading}>
-                        提交
-                      </Button>
-                    </FooterToolbar>
-                  );
-                },
-              }}
-            />
-          </ProCard>
-        </ProConfigProvider>
-      )}
+                    <Button key="submit" type="primary" onClick={submit} loading={loading}>
+                      提交
+                    </Button>
+                  </FooterToolbar>
+                );
+              },
+            }}
+          />
+        </ProCard>
+      </ProConfigProvider>
     </PageContainer>
   );
 };

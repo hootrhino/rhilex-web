@@ -21,3 +21,6 @@ export const COPYRIGHT = '2023-2033 By Hootrhino Team';
 export const DEFAULT_TITLE = 'Rhino EEKit';
 
 export const DEFAULT_SUBTITLE = '轻量级边缘计算框架';
+
+// 官方文档地址
+export const DOC_URL = 'http://www.hootrhino.com/';
