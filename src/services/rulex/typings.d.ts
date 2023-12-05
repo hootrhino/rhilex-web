@@ -61,6 +61,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type deleteUserlua_openAPI_deleteParams = {
+    uuid: string;
+  };
+
   type deleteVisualParams = {
     uuid: string;
   };
@@ -142,6 +146,11 @@ declare namespace API {
 
   type getRulesListParams = {
     uuid?: string;
+  };
+
+  type getUserluaListByGroupParams = {
+    /** 分组ID */
+    uuid: string;
   };
 
   type getVisualDetailParams = {

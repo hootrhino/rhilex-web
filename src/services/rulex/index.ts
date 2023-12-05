@@ -27,6 +27,7 @@ import * as luyoupeizhi from './luyoupeizhi'
 import * as shujubeifen from './shujubeifen'
 import * as jiekouguanli from './jiekouguanli'
 import * as zhanneitongzhi from './zhanneitongzhi'
+import * as yonghuLUApianduan from './yonghuLUApianduan'
 export default {
   shebeiguanli,
   yonghuguanli,
@@ -53,4 +54,5 @@ export default {
   shujubeifen,
   jiekouguanli,
   zhanneitongzhi,
+  yonghuLUApianduan,
   }
