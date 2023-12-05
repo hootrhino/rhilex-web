@@ -231,6 +231,12 @@
     hideInMenu: true,
   },
   {
+    path: '/custom-tpl',
+    name: '自定义模板',
+    component: './CustomTpl',
+    hideInMenu: true
+  },
+  {
     path: '/',
     redirect: '/dashboard',
   },

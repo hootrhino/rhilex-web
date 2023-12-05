@@ -1,6 +1,13 @@
-import { CaretRightOutlined, CheckOutlined, CopyOutlined } from '@ant-design/icons';
+import {
+  CaretRightOutlined,
+  CheckOutlined,
+  CopyOutlined,
+  EditOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
+import { history } from '@umijs/max';
 import type { DrawerProps } from 'antd';
-import { Button, Collapse, Drawer, Space, theme, Typography } from 'antd';
+import { Button, Collapse, Divider, Drawer, Input, Space, theme, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import CodeEditor from '../CodeEditor';
@@ -110,7 +117,35 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
   }, []);
 
   return (
-    <Drawer destroyOnClose maskClosable={false} title="常用 Lua 示例" placement="right" size="large" {...props}>
+    <Drawer
+      destroyOnClose
+      maskClosable={false}
+      title="常用 Lua 示例"
+      placement="right"
+      size="large"
+      extra={
+        <Space>
+          <Input
+            allowClear
+            placeholder="搜索模板"
+            size="small"
+            prefix={<SearchOutlined />}
+            onChange={(e) => handleOnSearch(e.target.value)}
+          />
+          <Button
+            ghost
+            size="small"
+            type="primary"
+            onClick={() => history.push('/custom-tpl')}
+            icon={<EditOutlined />}
+          >
+            去自定义模板
+          </Button>
+        </Space>
+      }
+      {...props}
+    >
+      <div className="mb-[16px] text-[18px]">内置模板</div>
       <Collapse
         bordered={false}
         defaultActiveKey={['data']}
@@ -119,6 +154,8 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
         items={getItems()}
         expandIconPosition="end"
       />
+      <Divider />
+      <div className="my-[16px] text-[18px]">自定义模板</div>
     </Drawer>
   );
 };
