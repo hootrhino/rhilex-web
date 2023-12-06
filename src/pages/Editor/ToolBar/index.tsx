@@ -1,8 +1,7 @@
-import { cn, IconFont } from '@/utils/utils';
+import { cn, getGroupName, IconFont } from '@/utils/utils';
 import { useEffect, useState } from 'react';
 
 import { message } from '@/components/PopupHack';
-import type { GroupItem } from '@/pages/ScreenMgt';
 import { Update } from '@/pages/ScreenMgt/components/GroupDetail';
 import { putVisualUpdate } from '@/services/rulex/dapingguanli';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
@@ -49,9 +48,9 @@ const ToolBar = ({ refresh }: ToolBarProps) => {
 
   useEffect(() => {
     if (detail) {
-      const group = groupList?.find((item: GroupItem) => item?.uuid === detail.gid);
+      const groupName = getGroupName(groupList, detail.gid);
 
-      setGroupName(group?.name);
+      setGroupName(groupName || '');
       setName(detail.name);
     }
   }, [detail]);

@@ -4,17 +4,16 @@ import type { ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProList } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { Space, Tooltip } from 'antd';
-import { useEffect, useRef, useState } from 'react';
-import { DEFAULT_TYPE } from '.';
+import { useEffect, useRef } from 'react';
 
-type GroupItem = {
+export type GroupItem = {
   uuid: string;
   name: string;
   type: string;
   [key: string]: any;
 };
 
-type GroupConfig = {
+export type GroupConfig = {
   open: boolean;
   type: string;
   title: string;
@@ -23,21 +22,29 @@ type GroupConfig = {
 type GroupListProps = {
   dataSource: any[];
   activeGroup: string;
-  tplCount: number;
+  itemCount: number;
+  config: GroupConfig;
+  groupRoot: string;
+  groupType: string;
   onReset: () => void;
   onRefresh: () => void;
   updateActiveGroup: (key: string) => void;
+  updateConfig: (values: GroupConfig) => void;
 };
 
-const defaultCofig = { open: false, type: 'new', title: '新建模板分组' };
+export const DEFAULT_CONFIG = { open: false, type: 'new', title: '新建分组' };
 
 const GroupList = ({
   dataSource,
   activeGroup,
-  tplCount,
+  itemCount,
+  config,
+  groupRoot,
+  groupType,
   onReset,
   onRefresh,
   updateActiveGroup,
+  updateConfig,
 }: GroupListProps) => {
   const {
     remove: removeGroup,
@@ -47,16 +54,34 @@ const GroupList = ({
     detail: groupDetail,
   } = useModel('useGroup');
   const groupFormRef = useRef<ProFormInstance>();
-  const [groupConfig, setConfig] = useState<GroupConfig>(defaultCofig);
+  const { type, ...params } = config;
 
   // 删除分组
-  const handleOnRemoveGroup = ({ name, uuid }: GroupItem) => {
+  const handleOnRemoveGroup = ({ name, uuid }: { name: string; uuid: string }) => {
     modal.confirm({
       title: `确定要删除${name}吗？`,
       width: 600,
-      content: `模板分组中包含 ${tplCount} 个模板，删除后将被移入默认分组中，请谨慎处理。`,
+      content: `分组中包含 ${itemCount} 个子项目，删除后将被移入默认分组中，请谨慎处理。`,
       onOk: () => removeGroup({ uuid: uuid }).then(() => onReset()),
     });
+  };
+
+  // 新增&编辑
+  const handleOnFinish = async ({ name }: { name: string }) => {
+    if (type === 'new') {
+      createGroup({ type: groupType, name }).then((value: any) => {
+        updateActiveGroup(value?.gid);
+        onRefresh();
+      });
+    } else {
+      updateGroup({
+        type: groupType,
+        uuid: groupDetail?.uuid || '',
+        name,
+      }).then(() => {
+        onRefresh();
+      });
+    }
   };
 
   useEffect(() => {
@@ -66,48 +91,47 @@ const GroupList = ({
       groupFormRef.current?.setFieldsValue({ name: '' });
     }
   }, [groupDetail]);
+
   return (
     <>
-      <ProList<any>
-        toolBarRender={false}
-        onRow={(record: GroupItem) => {
-          return {
-            onClick: () => {
-              updateActiveGroup(record.uuid);
-            },
-          };
-        }}
+      <ProList<GroupItem>
         rowKey="uuid"
         headerTitle={false}
         dataSource={dataSource}
-        rowClassName={(item: GroupItem) => (item?.uuid === activeGroup ? 'active-group' : '')}
+        toolBarRender={false}
+        onRow={({ uuid }: GroupItem) => {
+          return {
+            onClick: () => {
+              updateActiveGroup(uuid);
+            },
+          };
+        }}
+        rowClassName={({ uuid }: GroupItem) => (uuid === activeGroup ? 'active-group' : '')}
         metas={{
           title: {
             dataIndex: 'name',
-            render: (dom) => {
-              return <div className="w-[120px] truncate">{dom}</div>;
-            },
+            render: (dom) => <div className="w-[120px] truncate">{dom}</div>,
           },
           avatar: {
             render: () => <FolderOpenOutlined className="pl-[10px]" />,
           },
           actions: {
-            render: (dom, entity) =>
-              entity?.uuid === 'VROOT' ? null : (
+            render: (dom, { uuid, name }) =>
+              uuid === groupRoot ? null : (
                 <Space size="middle">
                   <Tooltip title="重命名分组">
                     <a
                       key="edit"
                       onClick={() => {
-                        setConfig({ open: true, title: '编辑模板分组', type: 'edit' });
-                        getGroupDetail({ uuid: entity.uuid });
+                        updateConfig({ open: true, title: '编辑分组', type: 'edit' });
+                        getGroupDetail({ uuid });
                       }}
                     >
                       <EditOutlined />
                     </a>
                   </Tooltip>
                   <Tooltip title="删除分组">
-                    <a key="remove" onClick={() => handleOnRemoveGroup(entity)}>
+                    <a key="remove" onClick={() => handleOnRemoveGroup({ uuid, name })}>
                       <DeleteOutlined />
                     </a>
                   </Tooltip>
@@ -117,29 +141,11 @@ const GroupList = ({
         }}
       />
       <ModalForm
+        {...params}
         formRef={groupFormRef}
-        title={groupConfig.title}
-        open={groupConfig.open}
-        onOpenChange={(visible) => setConfig({ ...groupConfig, open: visible })}
+        onOpenChange={(visible) => updateConfig({ ...config, open: visible })}
         modalProps={{ destroyOnClose: true }}
-        onFinish={async (values) => {
-          if (groupConfig.type === 'new') {
-            createGroup({ type: DEFAULT_TYPE, name: values?.name }).then((value: any) => {
-              updateActiveGroup(value?.gid);
-              setConfig(defaultCofig);
-              onRefresh();
-            });
-          } else {
-            updateGroup({
-              type: DEFAULT_TYPE,
-              uuid: groupDetail?.uuid || '',
-              name: values.name,
-            }).then(() => {
-              setConfig(defaultCofig);
-              onRefresh();
-            });
-          }
-        }}
+        onFinish={handleOnFinish}
         layout="horizontal"
         width="30%"
       >

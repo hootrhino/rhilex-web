@@ -1,8 +1,9 @@
+import type { DeviceGroupItem } from '@/models/useGroup';
 import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
 import luamin from 'lua-format';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -71,4 +72,11 @@ export const FormatCode = (code: string) => {
   formattedCode = formattedCode.replace(/^\s*\n/gm, '');
 
   return formattedCode;
+};
+
+// 获取分组名称
+export const getGroupName = (groupList: DeviceGroupItem[], key: string) => {
+  const group = groupList?.find((group: any) => group.uuid === key);
+
+  return group?.name;
 };

@@ -16,8 +16,8 @@ import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-component
 import { useModel, useRequest } from '@umijs/max';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useEffect, useRef, useState } from 'react';
-import type { GroupItem } from '../..';
 import defaultImg from './images/default.png';
+import type { GroupItem } from '@/components/GroupList';
 
 type ScreenItem = {
   uuid: string;

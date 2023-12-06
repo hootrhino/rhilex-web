@@ -1,5 +1,5 @@
 import { getVisualDetail, getVisualGroup } from '@/services/rulex/dapingguanli';
-import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from '@/utils/constant';
+import { DEFAULT_GROUP_KEY_SCREEN, DEFAULT_HEIGHT, DEFAULT_WIDTH } from '@/utils/constant';
 import type { Edge, Cell } from '@antv/x6';
 import { useRequest } from '@umijs/max';
 import { useState } from 'react';
@@ -134,7 +134,7 @@ const useEditor = () => {
   });
 
   // 大屏分组
-  const [activeGroup, setActiveGroup] = useState<string>('VROOT');
+  const [activeGroup, setActiveGroup] = useState<string>(DEFAULT_GROUP_KEY_SCREEN);
 
   // 大屏详情
   const { data: detail, run: getDetail } = useRequest(

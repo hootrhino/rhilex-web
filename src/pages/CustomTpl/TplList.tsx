@@ -16,6 +16,7 @@ type TplListProps = {
 };
 
 const TplList = ({ dataSource }: TplListProps) => {
+  // TODO 新建表单
   const columns: ProColumns<Partial<CustomTplItem>>[] = [
     {
       title: '模板名称',
@@ -60,25 +61,27 @@ const TplList = ({ dataSource }: TplListProps) => {
   ];
 
   return (
-    <ProTable
-      rowKey="uuid"
-      columns={columns}
-      search={false}
-      pagination={false}
-      dataSource={dataSource}
-      toolBarRender={() => [
-        <Button
-          type="primary"
-          key="add"
-          onClick={() => {
-            // TODO 新建模板
-          }}
-          icon={<PlusOutlined />}
-        >
-          新建
-        </Button>,
-      ]}
-    />
+    <>
+      <ProTable
+        rowKey="uuid"
+        columns={columns}
+        search={false}
+        pagination={false}
+        dataSource={dataSource}
+        toolBarRender={() => [
+          <Button
+            type="primary"
+            key="add"
+            onClick={() => {
+              // TODO 新建模板
+            }}
+            icon={<PlusOutlined />}
+          >
+            新建
+          </Button>,
+        ]}
+      />
+    </>
   );
 };
 
