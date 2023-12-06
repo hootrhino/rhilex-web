@@ -10061,8 +10061,40 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {}
-              }
+                "properties": {
+                  "gid": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "apply": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "gid",
+                  "name",
+                  "type",
+                  "apply",
+                  "label"
+                ],
+                "x-apifox-ignore-properties": [],
+                "x-apifox-orders": [
+                  "gid",
+                  "name",
+                  "type",
+                  "apply",
+                  "label"
+                ]
+              },
+              "example": ""
             }
           }
         },
@@ -10128,7 +10160,7 @@
         "security": []
       }
     },
-    "/api/v1/userlua/delete": {
+    "/api/v1/userlua/del": {
       "delete": {
         "summary": "删除模板",
         "x-apifox-folder": "用户LUA片段",
@@ -10217,8 +10249,45 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {}
-              }
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "gid": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "apply": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "gid",
+                  "name",
+                  "type",
+                  "apply",
+                  "label"
+                ],
+                "x-apifox-ignore-properties": [],
+                "x-apifox-orders": [
+                  "uuid",
+                  "gid",
+                  "name",
+                  "type",
+                  "apply",
+                  "label"
+                ]
+              },
+              "example": ""
             }
           }
         },

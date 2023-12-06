@@ -61,7 +61,7 @@ declare namespace API {
     uuid: string;
   };
 
-  type deleteUserlua_openAPI_deleteParams = {
+  type deleteUserluaDelParams = {
     uuid: string;
   };
 

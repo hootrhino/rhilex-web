@@ -9,10 +9,22 @@ import LuaExample from '../LuaExample';
 
 type ProCodeEditorProps = Omit<ProFormItemProps, 'children'> & {
   defaultCollapsed?: boolean;
+  showTpl?: boolean;
+  collapsible?: boolean;
 };
 
 const ProCodeEditor = forwardRef(
-  ({ defaultCollapsed, label, name, ...props }: ProCodeEditorProps, ref: any) => {
+  (
+    {
+      defaultCollapsed,
+      label,
+      name,
+      showTpl = true,
+      collapsible = true,
+      ...props
+    }: ProCodeEditorProps,
+    ref: any,
+  ) => {
     const [open, setOpen] = useState<boolean>(false);
 
     const handleOnFormatCode = () => {
@@ -30,21 +42,24 @@ const ProCodeEditor = forwardRef(
               <span>{label}</span>
             </>
           }
-          collapsible
+          collapsible={collapsible}
           defaultCollapsed={defaultCollapsed}
           extra={
             <Space>
-              <Button
-                type="primary"
-                ghost
-                size="small"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setOpen(true);
-                }}
-              >
-                Lua 示例
-              </Button>
+              {showTpl && (
+                <Button
+                  type="primary"
+                  ghost
+                  size="small"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setOpen(true);
+                  }}
+                >
+                  Lua 示例
+                </Button>
+              )}
+
               <div
                 className="flex items-center h-[24px] bg-[#18f] text-[#fff] px-[10px] rounded-[2px]"
                 onClick={(e) => {

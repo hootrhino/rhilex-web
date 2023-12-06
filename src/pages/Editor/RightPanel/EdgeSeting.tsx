@@ -1,5 +1,4 @@
 import type { EdgeForm } from '@/models/useEditor';
-import { detailFormItemLayout } from '@/utils/constant';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
   ProForm,
@@ -11,6 +10,12 @@ import { useModel } from '@umijs/max';
 import { ColorPicker, Divider } from 'antd';
 import { omit } from 'lodash';
 import { useEffect, useRef } from 'react';
+
+// 右侧表单 Layout 配置
+export const detailFormItemLayout = {
+  labelCol: { span: 6 },
+  wrapperCol: { span: 18 },
+};
 
 const EdgeSetting = () => {
   const { edgeFormData, setEdgeForm, setEdgeData } = useModel('useEditor');

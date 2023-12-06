@@ -11,7 +11,7 @@ import { Col, Image, Row, Space, Upload } from 'antd';
 import { message } from '@/components/PopupHack';
 import { CanvasBgColor } from '@/models/useEditor';
 import { postVisualThumbnail, putVisualUpdate } from '@/services/rulex/dapingguanli';
-import { DEFAULT_HEIGHT, DEFAULT_WIDTH, fallback } from '@/utils/constant';
+import { DEFAULT_HEIGHT, DEFAULT_WIDTH, FALLBACK } from '@/utils/constant';
 import { useModel, useRequest } from '@umijs/max';
 import type { RcFile } from 'antd/es/upload';
 import { startsWith } from 'lodash';
@@ -180,7 +180,7 @@ const CanvasSetting = () => {
                   width="100%"
                   height="100%"
                   src={canvasConfig?.thumbnail}
-                  fallback={fallback}
+                  fallback={FALLBACK}
                 />
               )}
             </div>

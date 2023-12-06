@@ -18,7 +18,7 @@ const CustomTpl = () => {
   const { data: groupList, run: getGroupList } = useRequest(() => getUserluaGroup());
 
   // 模板列表
-  const { data: tplList, run: getTplList } = useRequest(
+  const { data: tplList, run: getTplList, refresh } = useRequest(
     (params: API.getUserluaListByGroupParams) => getUserluaListByGroup(params),
     {
       manual: true,
@@ -79,7 +79,7 @@ const CustomTpl = () => {
             />
           </ProCard>
           <ProCard title={getGroupName(groupList || [], activeGroup)}>
-            <TplList dataSource={tplList || []} />
+            <TplList dataSource={tplList || []} refresh={refresh} />
           </ProCard>
         </ProCard>
       </PageContainer>
