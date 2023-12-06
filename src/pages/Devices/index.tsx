@@ -3,8 +3,6 @@ import type { ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProCard, ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 import { useEffect, useState } from 'react';
-
-import type { GroupConfig } from '@/components/GroupList';
 import GroupList, { DEFAULT_CONFIG } from '@/components/GroupList';
 import { message } from '@/components/PopupHack';
 import StateTag from '@/components/StateTag';

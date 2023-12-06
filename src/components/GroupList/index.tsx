@@ -13,12 +13,6 @@ export type GroupItem = {
   [key: string]: any;
 };
 
-export type GroupConfig = {
-  open: boolean;
-  type: string;
-  title: string;
-};
-
 type GroupListProps = {
   dataSource: any[];
   activeGroup: string;
@@ -32,7 +26,7 @@ type GroupListProps = {
   updateConfig: (values: GroupConfig) => void;
 };
 
-export const DEFAULT_CONFIG = { open: false, type: 'new', title: '新建分组' };
+export const DEFAULT_CONFIG: GroupConfig = { open: false, type: 'new', title: '新建分组' };
 
 const GroupList = ({
   dataSource,

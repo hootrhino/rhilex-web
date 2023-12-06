@@ -46,11 +46,6 @@ export const NODE_TITLE = {
   media6: '基础图形',
 };
 
-export type RemoveModalConfigType = {
-  open: boolean;
-  content: string;
-};
-
 export type GuideConfigType = {
   horizontalUnit: number;
   horizontalZoom: number;
@@ -105,7 +100,7 @@ export const handleOnPlugins = (graph: Graph) => {
 // 使用快捷键
 export const handleOnBindKey = (
   graph: Graph,
-  updateRemoveModalConfig: (value: RemoveModalConfigType) => void,
+  updateRemoveModalConfig: (value: RemoveModalConfig) => void,
 ) => {
   // 复制
   graph.bindKey(['meta+c', 'ctrl+c'], () => {

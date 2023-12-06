@@ -45,11 +45,6 @@ export type QuickStyleItem = {
   [key: string]: any;
 };
 
-export type QuickStyleConfig = {
-  open: boolean;
-  title: string;
-};
-
 type LayersBaseItem = {
   title: string;
   id: string;

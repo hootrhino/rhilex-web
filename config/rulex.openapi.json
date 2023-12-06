@@ -9994,6 +9994,9 @@
                           },
                           "type": {
                             "type": "string"
+                          },
+                          "detail": {
+                            "type": "string"
                           }
                         },
                         "x-apifox-ignore-properties": [],
@@ -10002,7 +10005,8 @@
                           "uuid",
                           "label",
                           "apply",
-                          "type"
+                          "type",
+                          "detail"
                         ]
                       }
                     }
@@ -10031,7 +10035,8 @@
                           "uuid": "USERLUADQNHGX",
                           "label": "11111111111111111111111",
                           "apply": "apply",
-                          "type": "function"
+                          "type": "function",
+                          "detail": ""
                         }
                       ]
                     }
@@ -10065,7 +10070,7 @@
                   "gid": {
                     "type": "string"
                   },
-                  "name": {
+                  "detail": {
                     "type": "string"
                   },
                   "type": {
@@ -10080,7 +10085,7 @@
                 },
                 "required": [
                   "gid",
-                  "name",
+                  "detail",
                   "type",
                   "apply",
                   "label"
@@ -10088,7 +10093,7 @@
                 "x-apifox-ignore-properties": [],
                 "x-apifox-orders": [
                   "gid",
-                  "name",
+                  "detail",
                   "type",
                   "apply",
                   "label"
@@ -10256,7 +10261,7 @@
                   "gid": {
                     "type": "string"
                   },
-                  "name": {
+                  "detail": {
                     "type": "string"
                   },
                   "type": {
@@ -10272,7 +10277,7 @@
                 "required": [
                   "uuid",
                   "gid",
-                  "name",
+                  "detail",
                   "type",
                   "apply",
                   "label"
@@ -10281,7 +10286,7 @@
                 "x-apifox-orders": [
                   "uuid",
                   "gid",
-                  "name",
+                  "detail",
                   "type",
                   "apply",
                   "label"
@@ -10440,6 +10445,120 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-130861137-run",
+        "security": []
+      }
+    },
+    "/api/v1/userlua/detail": {
+      "get": {
+        "summary": "获取详情",
+        "x-apifox-folder": "用户LUA片段",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "用户LUA片段"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "USERLUADQNHGX",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "gid": {
+                          "type": "string"
+                        },
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "apply": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "detail": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "gid",
+                        "uuid",
+                        "label",
+                        "apply",
+                        "type",
+                        "detail"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "gid",
+                        "uuid",
+                        "label",
+                        "apply",
+                        "type",
+                        "detail"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "gid": "ULTROOT",
+                        "uuid": "USERLUADQNHGX",
+                        "label": "11111111111111111111111",
+                        "apply": "apply",
+                        "type": "function",
+                        "detail": ""
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-131205305-run",
         "security": []
       }
     }

@@ -23,7 +23,7 @@ export type Item = {
 
 const Targets = () => {
   const actionRef = useRef<ActionType>();
-  const [detailConfig, setConfig] = useState<{ uuid: string; open: boolean }>({
+  const [detailConfig, setConfig] = useState<DetailModalConfig>({
     uuid: '',
     open: false,
   });

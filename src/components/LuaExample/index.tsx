@@ -1,33 +1,35 @@
-import {
-  CaretRightOutlined,
-  CheckOutlined,
-  CopyOutlined,
-  EditOutlined,
-  SearchOutlined,
-} from '@ant-design/icons';
-import { history } from '@umijs/max';
+import { getUserluaGroup } from '@/services/rulex/yonghuLUApianduan';
+import { EditOutlined, SearchOutlined } from '@ant-design/icons';
+import { history, useRequest } from '@umijs/max';
 import type { DrawerProps } from 'antd';
-import { Button, Collapse, Divider, Drawer, Input, Space, theme, Typography } from 'antd';
+import { Button, Divider, Drawer, Input, Space } from 'antd';
 import { useEffect, useState } from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import CodeEditor from '../CodeEditor';
-import type { Data, Template } from '../LuaEditor/constant';
 import { luaTemplates } from '../LuaEditor/constant';
+import ExampleItem from './ExampleItem';
 
 type LuaExampleProps = DrawerProps;
 
 const LuaExample = ({ ...props }: LuaExampleProps) => {
-  const [templateData, setTplData] = useState<Template[]>([]);
-  const [copied, setCopied] = useState<string>('');
-  const { token } = theme.useToken();
+  // const [customTplData, setCustomTplData] = useState<TplGroupItem[]>([]);
+  const [builtInTplData, setBuiltInTplData] = useState<TplGroupItem[]>([]);
 
-  const panelStyle: React.CSSProperties = {
-    marginBottom: 12,
-    background: token.colorFillAlter,
-    borderRadius: token.borderRadiusLG,
-    border: 'none',
-  };
+  // TODO 搜索自定义模板
 
+  // 模板分组列表
+  const { data: groupList, run: getGroupList } = useRequest(() => getUserluaGroup(), {
+    manual: true,
+    formatResult: (res) => {
+      const formatTpl = res?.data?.map((item) => ({
+        uuid: item?.uuid,
+        name: item?.name,
+        children: [],
+      }));
+      // setCustomTplData(formatTpl as TplGroupItem[]);
+      return formatTpl;
+    },
+  });
+
+  // 搜索内置模板
   const filterData = (value: string) => {
     let filtered = [...luaTemplates];
     const regex = new RegExp(value, 'i');
@@ -37,15 +39,15 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
         let matchItem = { ...item };
 
         // 搜索标题
-        if (matchItem.title.includes(value)) {
+        if (matchItem.name.includes(value)) {
           return matchItem;
         }
 
         // 搜索内层
-        matchItem.data = item.data.filter(
+        matchItem.children = item.children.filter(
           (child) => child.label.match(regex) || child.detail.match(regex),
         );
-        return matchItem.data?.length > 0 ? matchItem : null;
+        return matchItem.children?.length > 0 ? matchItem : null;
       })
       .filter((item) => item);
   };
@@ -53,67 +55,16 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
   // 搜索快捷模板
   const handleOnSearch = (value: string) => {
     if (!value) {
-      setTplData(luaTemplates);
+      setBuiltInTplData(luaTemplates);
     } else {
       const newData = filterData(value.toLowerCase());
-      setTplData(newData as Template[]);
+      setBuiltInTplData(newData as TplGroupItem[]);
     }
   };
 
-  const getItemsChildren = (data: Data[]) => {
-    return data.map((item) => ({
-      key: item.label,
-      label: (
-        <Typography.Paragraph
-          style={{
-            marginBottom: 0,
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Space>
-            <span>{item.detail}</span>
-            <span className="text-[12px] text-[#000000A6]">{item.label}</span>
-          </Space>
-        </Typography.Paragraph>
-      ),
-      style: panelStyle,
-      children: <CodeEditor value={item.apply} readOnly height="150px" />,
-      extra: (
-        <CopyToClipboard
-          key={item.apply}
-          text={item.apply}
-          onCopy={(text, result) => {
-            setCopied(result ? text : '');
-            setTimeout(() => {
-              setCopied('');
-            }, 1500);
-          }}
-        >
-          <Button
-            type="primary"
-            size="small"
-            ghost
-            onClick={(e) => e.stopPropagation()}
-            icon={copied === item.apply ? <CheckOutlined /> : <CopyOutlined />}
-          >
-            复制 Lua
-          </Button>
-        </CopyToClipboard>
-      ),
-    }));
-  };
-
-  const getItems = () =>
-    templateData.map((tpl: Template) => ({
-      key: tpl.key,
-      label: tpl.title,
-      style: panelStyle,
-      children: <Collapse bordered={false} items={getItemsChildren(tpl.data)} />,
-    }));
-
   useEffect(() => {
-    setTplData(luaTemplates);
+    setBuiltInTplData(luaTemplates);
+    getGroupList();
   }, []);
 
   return (
@@ -145,17 +96,9 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
       }
       {...props}
     >
-      <div className="mb-[16px] text-[18px]">内置模板</div>
-      <Collapse
-        bordered={false}
-        defaultActiveKey={['data']}
-        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-        style={{ background: token.colorBgContainer }}
-        items={getItems()}
-        expandIconPosition="end"
-      />
-      <Divider />
-      <div className="my-[16px] text-[18px]">自定义模板</div>
+      <ExampleItem type="built-in" dataSource={builtInTplData} />
+      {groupList && groupList.length > 0 && <Divider />}
+      <ExampleItem type="custom" dataSource={groupList as TplGroupItem[]} />
     </Drawer>
   );
 };

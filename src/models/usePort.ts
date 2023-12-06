@@ -3,7 +3,7 @@ import { useRequest } from '@umijs/max';
 import { useState } from 'react';
 
 const usePort = () => {
-  const [detailConfig, setDetailConfig] = useState<{ open: boolean; uuid: string }>({
+  const [detailConfig, setDetailConfig] = useState<DetailModalConfig>({
     open: false,
     uuid: '',
   });

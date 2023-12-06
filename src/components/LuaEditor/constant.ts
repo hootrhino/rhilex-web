@@ -1,15 +1,3 @@
-export type Data = {
-  label: string;
-  apply: string;
-  detail: string;
-  type: string;
-}
-
-export type Template = {
-  title: string;
-  key: string;
-  data: Data[];
-};
 /** 规则默认值 **/
 export const DefaultActions = `Actions = {
   function(args)
@@ -241,53 +229,53 @@ export const luaGlobFuncs = [
 
 export const luaTemplates = [
   {
-    title: 'data 函数',
-    data: dataFuncs,
-    key: 'data',
+    name: 'data 函数',
+    children: dataFuncs,
+    uuid: 'data',
   },
   {
-    title: 'time 函数',
-    data: timeFuncs,
-    key: 'time',
+    name: 'time 函数',
+    children: timeFuncs,
+    uuid: 'time',
   },
   {
-    title: 'rhinopi 函数',
-    data: rhinopiFuncs,
-    key: 'rhinopi',
+    name: 'rhinopi 函数',
+    children: rhinopiFuncs,
+    uuid: 'rhinopi',
   },
   {
-    title: 'device 函数',
-    data: deviceFuncs,
-    key: 'device',
+    name: 'device 函数',
+    children: deviceFuncs,
+    uuid: 'device',
   },
   {
-    title: 'modbus 函数',
-    data: modbusFuncs,
-    key: 'modbus',
+    name: 'modbus 函数',
+    children: modbusFuncs,
+    uuid: 'modbus',
   },
   {
-    title: 'kv 函数',
-    data: kvFuncs,
-    key: 'kv',
+    name: 'kv 函数',
+    children: kvFuncs,
+    uuid: 'kv',
   },
   {
-    title: 'stdlib 函数',
-    data: stdlibFuncs,
-    key: 'stdlib',
+    name: 'stdlib 函数',
+    children: stdlibFuncs,
+    uuid: 'stdlib',
   },
   {
-    title: 'localdb 函数',
-    data: localdbFuncs,
-    key: 'localdb',
+    name: 'localdb 函数',
+    children: localdbFuncs,
+    uuid: 'localdb',
   },
   {
-    title: 'json 函数',
-    data: jsonFuncs,
-    key: 'json',
+    name: 'json 函数',
+    children: jsonFuncs,
+    uuid: 'json',
   },
   {
-    title: '其他函数',
-    data: otherFuncs,
-    key: 'other',
+    name: '其他函数',
+    children: otherFuncs,
+    uuid: 'other',
   },
 ];

@@ -6,18 +6,13 @@ import {
 import { useState } from 'react';
 import { useRequest } from 'umi';
 
-export type DeviceConfig = {
-  uuid: string;
-  open: boolean;
-};
-
 const defaultDeviceConfig = {
   uuid: '',
   open: false,
 };
 
 const useDevice = () => {
-  const [detailConfig, setDeviceConfig] = useState<DeviceConfig>(defaultDeviceConfig);
+  const [detailConfig, setDeviceConfig] = useState<DetailModalConfig>(defaultDeviceConfig);
 
   // 设备分组列表
   const { data: groupList, run: getGroupList } = useRequest(() => getDevicesGroup());

@@ -1,20 +1,18 @@
+// import type { TplItem } from '@/components/LuaExample/ExampleItem';
 import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
-import { deleteUserluaDel } from '@/services/rulex/yonghuLUApianduan';
+import {
+  deleteUserluaDel,
+  getUserluaDetail,
+  postUserluaCreate,
+  putUserluaUpdate,
+} from '@/services/rulex/yonghuLUApianduan';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button } from 'antd';
-import { useRef, useState } from 'react';
-
-type CustomTplItem = {
-  gid?: string;
-  uuid?: string;
-  label?: string;
-  apply?: string;
-  type?: string;
-};
+import { useEffect, useRef, useState } from 'react';
 
 type FormParams = {
   label: string;
@@ -33,13 +31,31 @@ type TplListProps = {
   refresh: () => void;
 };
 
+const defaultValue = {
+  label: '',
+  apply: '',
+  detail: '',
+};
+
 const TplList = ({ activeGroup, dataSource, refresh }: TplListProps) => {
   const formRef = useRef<ProFormInstance>();
   const [open, setOpen] = useState<boolean>(false);
+  const [initialValue, setInitialValue] = useState<TplItem>();
 
-  // TODO 详情
+  const handleOnReset = () => {
+    formRef.current?.setFieldsValue(defaultValue);
+    setInitialValue({});
+  };
 
-  // TODO 新建表单
+  // 详情
+  const { run: getDetail } = useRequest(
+    (params: API.getUserluaDetailParams) => getUserluaDetail(params),
+    {
+      manual: true,
+      onSuccess: (data) => setInitialValue(data),
+    },
+  );
+
   const handleOnFinish = async (values: FormParams) => {
     try {
       const params = {
@@ -47,7 +63,16 @@ const TplList = ({ activeGroup, dataSource, refresh }: TplListProps) => {
         gid: activeGroup,
         type: 'function',
       };
-      console.log(values, params);
+      if (initialValue?.uuid) {
+        // 编辑
+        await putUserluaUpdate({ ...params, uuid: initialValue.uuid });
+        message.success('更新成功');
+      } else {
+        // 新增
+        await postUserluaCreate(params);
+        message.success('新建成功');
+      }
+
       refresh();
       return true;
     } catch (error) {
@@ -67,7 +92,7 @@ const TplList = ({ activeGroup, dataSource, refresh }: TplListProps) => {
     },
   );
 
-  const columns: ProColumns<Partial<CustomTplItem>>[] = [
+  const columns: ProColumns<TplItem>[] = [
     {
       title: '模板名称',
       dataIndex: 'label',
@@ -92,7 +117,9 @@ const TplList = ({ activeGroup, dataSource, refresh }: TplListProps) => {
         <a
           key="edit"
           onClick={() => {
+            if (!uuid) return;
             setOpen(true);
+            getDetail({ uuid });
           }}
         >
           编辑
@@ -104,6 +131,14 @@ const TplList = ({ activeGroup, dataSource, refresh }: TplListProps) => {
     },
   ];
 
+  useEffect(() => {
+    if (initialValue?.uuid) {
+      formRef.current?.setFieldsValue(initialValue);
+    } else {
+      handleOnReset();
+    }
+  }, [initialValue]);
+
   return (
     <>
       <ProTable
@@ -113,13 +148,21 @@ const TplList = ({ activeGroup, dataSource, refresh }: TplListProps) => {
         pagination={false}
         dataSource={dataSource}
         toolBarRender={() => [
-          <Button type="primary" key="add" onClick={() => setOpen(true)} icon={<PlusOutlined />}>
+          <Button
+            type="primary"
+            key="add"
+            onClick={() => {
+              setOpen(true);
+              handleOnReset();
+            }}
+            icon={<PlusOutlined />}
+          >
             新建
           </Button>,
         ]}
       />
       <ModalForm
-        title="新增自定义模板"
+        title={initialValue?.uuid ? '编辑自定义模板' : '新增自定义模板'}
         open={open}
         onOpenChange={(visible) => setOpen(visible)}
         formRef={formRef}

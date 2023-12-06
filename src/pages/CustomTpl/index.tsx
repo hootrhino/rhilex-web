@@ -7,7 +7,6 @@ import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button } from 'antd';
 import { useEffect, useState } from 'react';
-import type { GroupConfig } from '@/components/GroupList';
 import TplList from './TplList';
 
 const CustomTpl = () => {
@@ -79,7 +78,7 @@ const CustomTpl = () => {
             />
           </ProCard>
           <ProCard title={getGroupName(groupList || [], activeGroup)}>
-            <TplList dataSource={tplList || []} refresh={refresh} />
+            <TplList dataSource={tplList || []} refresh={refresh} activeGroup={activeGroup} />
           </ProCard>
         </ProCard>
       </PageContainer>

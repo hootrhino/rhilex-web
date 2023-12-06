@@ -133,13 +133,10 @@ const ExtendedProtocol = () => {
   const formRef = useRef<ProFormInstance>();
 
   const [open, setOpen] = useState<boolean>(false);
-  const [detailConfig, setDetailConfig] = useState<{
-    type: 'detail' | 'log';
-    open: boolean;
-    uuid?: string;
-  }>({
+  const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({
     type: 'detail',
     open: false,
+    uuid: ''
   });
   const [initialValue, setInitialValue] = useState<ExtendItem>(defaultValue);
 
@@ -216,8 +213,7 @@ const ExtendedProtocol = () => {
         <a
           key="log"
           onClick={() => {
-            if (!uuid) return;
-            setDetailConfig({ type: 'log', open: true, uuid });
+            setDetailConfig({ type: 'log', open: true, uuid: uuid || '' });
           }}
         >
           日志
@@ -225,9 +221,8 @@ const ExtendedProtocol = () => {
         <a
           key="detail"
           onClick={() => {
-            if (!uuid) return;
-            setDetailConfig({ type: 'detail', open: true });
-            getDetail({ uuid });
+            setDetailConfig({ type: 'detail', open: true, uuid: '' });
+            getDetail({ uuid: uuid || '' });
           }}
         >
           详情

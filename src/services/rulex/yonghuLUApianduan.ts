@@ -6,7 +6,7 @@ import { request } from '@umijs/max';
 export async function postUserluaCreate(
   body: {
     gid: string;
-    name: string;
+    detail: string;
     type: string;
     apply: string;
     label: string;
@@ -38,6 +38,32 @@ export async function deleteUserluaDel(
   });
 }
 
+/** 获取详情 GET /api/v1/userlua/detail */
+export async function getUserluaDetail(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getUserluaDetailParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      gid?: string;
+      uuid?: string;
+      label?: string;
+      apply?: string;
+      type?: string;
+      detail?: string;
+    };
+  }>('/api/v1/userlua/detail', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 分组列表 GET /api/v1/userlua/group */
 export async function getUserluaGroup(options?: { [key: string]: any }) {
   return request<{
@@ -59,7 +85,14 @@ export async function getUserluaListByGroup(
   return request<{
     code: number;
     msg: string;
-    data: { gid?: string; uuid?: string; label?: string; apply?: string; type?: string }[];
+    data: {
+      gid?: string;
+      uuid?: string;
+      label?: string;
+      apply?: string;
+      type?: string;
+      detail?: string;
+    }[];
   }>('/api/v1/userlua/listByGroup', {
     method: 'GET',
     params: {
@@ -74,7 +107,7 @@ export async function putUserluaUpdate(
   body: {
     uuid: string;
     gid: string;
-    name: string;
+    detail: string;
     type: string;
     apply: string;
     label: string;

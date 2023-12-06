@@ -29,12 +29,8 @@ type RuleConfigProps = {
 
 const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
   const { groupId } = useParams();
-  const [detailConfig, setDetailConfig] = useState<{
-    open: boolean;
-    type: 'detail' | 'log';
-    uuid: string;
-  }>({ open: false, type: 'detail', uuid: '' });
-  const [debugConfig, setDebugConfig] = useState<{ open: boolean; uuid: string }>({
+  const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({ open: false, type: 'detail', uuid: '' });
+  const [debugConfig, setDebugConfig] = useState<DetailModalConfig>({
     open: false,
     uuid: '',
   });

@@ -148,6 +148,10 @@ declare namespace API {
     uuid?: string;
   };
 
+  type getUserluaDetailParams = {
+    uuid: string;
+  };
+
   type getUserluaListByGroupParams = {
     /** 分组ID */
     uuid: string;

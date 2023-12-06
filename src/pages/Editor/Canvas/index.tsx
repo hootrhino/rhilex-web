@@ -17,9 +17,7 @@ import LeftPanel from '../LeftPanel';
 import RightPanel from '../RightPanel';
 import shapes from '../Shapes/ReactNodes';
 import ToolBar from '../ToolBar';
-
 import { useClickAway } from 'ahooks';
-import type { RemoveModalConfigType } from '../utils';
 import {
   getGuideConfig,
   getNodeTitle,
@@ -50,7 +48,7 @@ const Canvas = () => {
   const [canMouseDrag, setMouseDrag] = useState<boolean>(true);
   const [offset, setOffset] = useState<number>(0);
 
-  const [modalConfig, setModalConfig] = useState<RemoveModalConfigType>({
+  const [modalConfig, setModalConfig] = useState<RemoveModalConfig>({
     open: false,
     content: '',
   });

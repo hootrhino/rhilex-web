@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRequest } from 'umi';
 
 const useSource = () => {
-  const [detailConfig, setConfig] = useState<{ uuid: string; open: boolean }>({
+  const [detailConfig, setConfig] = useState<DetailModalConfig>({
     uuid: '',
     open: false,
   });

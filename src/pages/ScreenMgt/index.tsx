@@ -1,4 +1,3 @@
-import type { GroupConfig } from '@/components/GroupList';
 import GroupList, { DEFAULT_CONFIG } from '@/components/GroupList';
 import { getVisualListByGroup } from '@/services/rulex/dapingguanli';
 import { DEFAULT_GROUP_KEY_SCREEN, GROUP_TYPE_SCREEN } from '@/utils/constant';

@@ -23,11 +23,7 @@ export type AppStackItem = {
 
 const AppStack = () => {
   const actionRef = useRef<ActionType>();
-  const [detailConfig, setConfig] = useState<{
-    uuid: string;
-    open: boolean;
-    type: 'detail' | 'log';
-  }>({
+  const [detailConfig, setConfig] = useState<DetailLogModalConfig>({
     uuid: '',
     open: false,
     type: 'detail',
