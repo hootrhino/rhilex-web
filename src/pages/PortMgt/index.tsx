@@ -1,28 +1,14 @@
-import {
-  getHwifaceList,
-  getHwifaceRefresh,
-  postHwifaceUpdate,
-} from '@/services/rulex/jiekouguanli';
-import { getOsUarts } from '@/services/rulex/xitongshuju';
+import { getHwifaceList, getHwifaceRefresh } from '@/services/rulex/jiekouguanli';
 import { ScanOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components';
-import {
-  ModalForm,
-  PageContainer,
-  ProDescriptions,
-  ProForm,
-  ProFormDigit,
-  ProFormList,
-  ProFormSelect,
-  ProFormText,
-  ProTable,
-} from '@ant-design/pro-components';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { PageContainer, ProDescriptions, ProTable } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
-import { AutoComplete, Button, Card, Descriptions, message, Modal } from 'antd';
+import { Button, Card, Descriptions, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
-import { baudRateEnum, dataBitsEnum, parityEnum, stopBitsEnum, typeOptions } from './constant';
+import { parityEnum, typeOptions } from './constant';
+import Update from './Update';
 
-type InterfaceItem = {
+export type InterfaceItem = {
   uuid?: string;
   name?: string;
   type?: string;
@@ -31,52 +17,10 @@ type InterfaceItem = {
   config?: Record<string, any>;
 };
 
-type InterfaceFormParams = InterfaceItem & {
-  config: {
-    timeout: number;
-    baudRate: number;
-    dataBits: number;
-    parity: string;
-    stopBits: number;
-    uart: string;
-  };
-};
-
-type UpdateParams = {
-  uuid: string;
-  config: Record<string, any>;
-};
-
 const Interface = () => {
   const actionRef = useRef<ActionType>();
-  const formRef = useRef<ProFormInstance>();
-  const [open, setOpen] = useState<boolean>(false);
+  const [formConfig, setFormConfig] = useState<DetailModalConfig>({ open: false, uuid: '' });
   const { detailConfig, setDetailConfig, detail, getDetail } = useModel('usePort');
-
-  // 获取串口配置
-  const { data: uartOptions } = useRequest(() => getOsUarts(), {
-    formatResult: (res) =>
-      res?.data?.map((item) => ({
-        value: item.port,
-        label: item.alias,
-      })),
-  });
-
-  // 更新接口配置
-  const handleOnFinish = async ({ config }: InterfaceFormParams) => {
-    try {
-      const params: UpdateParams = {
-        uuid: detail?.uuid || '',
-        config: config?.[0],
-      };
-      message.success('更新成功');
-      await postHwifaceUpdate(params);
-      actionRef.current?.reload();
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
 
   // 扫描端口
   const { run: refresh } = useRequest(() => getHwifaceRefresh(), {
@@ -128,15 +72,18 @@ const Interface = () => {
       valueType: 'formList',
       hideInTable: true,
       renderText: (config) => {
+        if (!config) return;
+        const { timeout, baudRate, dataBits, parity, stopBits, uart } = config;
+
         return (
           <Card bodyStyle={{ padding: '16px 18px' }}>
             <Descriptions column={1} labelStyle={{ width: 130, justifyContent: 'flex-end' }}>
-              <Descriptions.Item label="超时时间（毫秒）">{config?.timeout}</Descriptions.Item>
-              <Descriptions.Item label="波特率">{config?.baudRate}</Descriptions.Item>
-              <Descriptions.Item label="数据位">{config?.dataBits}</Descriptions.Item>
-              <Descriptions.Item label="奇偶校验">{parityEnum[config?.parity]}</Descriptions.Item>
-              <Descriptions.Item label="停止位">{config?.stopBits}</Descriptions.Item>
-              <Descriptions.Item label="串口路径">{config?.uart}</Descriptions.Item>
+              <Descriptions.Item label="超时时间（毫秒）">{timeout}</Descriptions.Item>
+              <Descriptions.Item label="波特率">{baudRate}</Descriptions.Item>
+              <Descriptions.Item label="数据位">{dataBits}</Descriptions.Item>
+              <Descriptions.Item label="奇偶校验">{parityEnum[parity]}</Descriptions.Item>
+              <Descriptions.Item label="停止位">{stopBits}</Descriptions.Item>
+              <Descriptions.Item label="串口路径">{uart}</Descriptions.Item>
             </Descriptions>
           </Card>
         );
@@ -168,10 +115,7 @@ const Interface = () => {
           key="edit"
           onClick={() => {
             if (!uuid) return;
-            getDetail({ uuid }).then((data) =>
-              formRef.current?.setFieldsValue({ ...data, config: [data?.config] }),
-            );
-            setOpen(true);
+            setFormConfig({ open: true, uuid });
           }}
         >
           编辑
@@ -204,102 +148,11 @@ const Interface = () => {
           ]}
         />
       </PageContainer>
-      <ModalForm
-        formRef={formRef}
-        title="更新接口"
-        open={open}
-        onOpenChange={(visible) => setOpen(visible)}
-        modalProps={{ destroyOnClose: true, maskClosable: false }}
-        onFinish={handleOnFinish}
-      >
-        <ProForm.Group>
-          <ProFormText
-            name="name"
-            label="接口名称"
-            placeholder="请输入接口名称"
-            width="sm"
-            disabled
-          />
-          <ProFormSelect
-            name="type"
-            label="接口类型"
-            placeholder="请选择接口类型"
-            width="sm"
-            disabled
-            options={typeOptions}
-          />
-          <ProFormText name="alias" label="别名" placeholder="请输入别名" width="sm" disabled />
-        </ProForm.Group>
-        <ProFormList
-          name="config"
-          label="接口配置"
-          creatorButtonProps={false}
-          copyIconProps={false}
-          deleteIconProps={false}
-          itemContainerRender={(doms) => (
-            <Card type="inner" bodyStyle={{ padding: '16px 18px' }}>
-              {doms}
-            </Card>
-          )}
-        >
-          <ProForm.Group>
-            <ProFormDigit
-              name="timeout"
-              label="超时时间（毫秒）"
-              width="sm"
-              placeholder="请输入超时时间"
-              rules={[{ required: true, message: '请输入超时时间' }]}
-            />
-            <ProFormSelect
-              label="波特率"
-              name="baudRate"
-              width="sm"
-              valueEnum={baudRateEnum}
-              placeholder="请选择波特率"
-              rules={[{ required: true, message: '请选择波特率' }]}
-            />
-            <ProFormSelect
-              label="数据位"
-              name="dataBits"
-              width="sm"
-              valueEnum={dataBitsEnum}
-              placeholder="请选择数据位"
-              rules={[{ required: true, message: '请选择数据位' }]}
-            />
-          </ProForm.Group>
-          <ProForm.Group>
-            <ProFormSelect
-              label="奇偶校验"
-              name="parity"
-              width="sm"
-              valueEnum={parityEnum}
-              placeholder="请选择奇偶校验"
-              rules={[{ required: true, message: '请选择奇偶校验' }]}
-            />
-            <ProFormSelect
-              label="停止位"
-              name="stopBits"
-              width="sm"
-              valueEnum={stopBitsEnum}
-              placeholder="请选择停止位"
-              rules={[{ required: true, message: '请选择停止位' }]}
-            />
-            <ProForm.Item
-              label="串口路径"
-              name="uart"
-              rules={[{ required: true, message: '请输入本地系统的串口路径' }]}
-              className="w-[216px]"
-            >
-              <AutoComplete
-                className="w-full"
-                options={uartOptions}
-                placeholder="请输入本地系统的串口路径"
-              />
-            </ProForm.Item>
-          </ProForm.Group>
-        </ProFormList>
-        <ProFormText name="description" label="备注" placeholder="请输入备注" disabled />
-      </ModalForm>
+      <Update
+        {...formConfig}
+        onOpenChange={(visible) => setFormConfig({ open: visible, uuid: '' })}
+        reload={() => actionRef.current?.reload()}
+      />
       <Modal
         title="接口详情"
         open={detailConfig.open}

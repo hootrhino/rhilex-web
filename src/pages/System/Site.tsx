@@ -1,4 +1,4 @@
-import { putSiteReset, putSiteUpdate } from '@/services/rulex/zhandianpeizhi';
+import { getSiteDetail, putSiteReset, putSiteUpdate } from '@/services/rulex/zhandianpeizhi';
 import { getBase64 } from '@/utils/utils';
 import { SyncOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
@@ -13,10 +13,24 @@ import Title from './TItle';
 
 const SiteConfig = () => {
   const formRef = useRef<ProFormInstance>();
+  const { initialState, setInitialState } = useModel('@@initialState');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  const {siteDetail: detail, getDetail} = useModel('useSetting');
   const [previewImage, setPreview] = useState<string | undefined>();
+
+  // site setting
+  const { data: detail, run: getDetail } = useRequest(() => getSiteDetail(), {
+    onSuccess: res => {
+      setInitialState({
+        ...initialState,
+        settings: {
+          ...initialState.settings,
+          title: res?.appName,
+          logo: res?.logo === '/logo.png' ? res?.logo : `${window?.location?.origin}/api/v1/site/logo`,
+        },
+      });
+    }
+  });
 
   const handleOnFinish = async (values: { appName: string }) => {
     try {

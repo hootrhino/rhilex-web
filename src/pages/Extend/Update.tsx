@@ -1,15 +1,16 @@
 import { message } from '@/components/PopupHack';
-import { postGoodsCreate, putGoodsUpdate } from '@/services/rulex/kuozhanxieyi';
-import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
+import { getGoodsDetail,postGoodsCreate,putGoodsUpdate } from '@/services/rulex/kuozhanxieyi';
+import type { ModalFormProps,ProFormInstance } from '@ant-design/pro-components';
 import {
-  ModalForm,
-  ProFormText,
-  ProFormTextArea,
-  ProFormUploadDragger,
+ModalForm,
+ProFormText,
+ProFormTextArea,
+ProFormUploadDragger
 } from '@ant-design/pro-components';
+import { useRequest } from '@umijs/max';
 import type { UploadFile } from 'antd/es/upload/interface';
 import omit from 'lodash/omit';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type FormParams = {
   net_addr: string;
@@ -38,7 +39,7 @@ export type DetailItem = {
 };
 
 type UpdateFormProps = ModalFormProps<any> & {
-  data: DetailItem | undefined;
+  uuid: string;
   reload: () => void;
 };
 
@@ -52,17 +53,27 @@ export const defaultValue = {
   uuid: '',
 };
 
-const UpdateForm = ({ data, reload, ...props }: UpdateFormProps) => {
+const UpdateForm = ({ uuid, reload, onOpenChange, ...props }: UpdateFormProps) => {
   const formRef = useRef<ProFormInstance>();
+  const [formData, setFormData] = useState<DetailItem>(defaultValue);
+
+  // 详情
+  const { run: getDetail } = useRequest(
+    (params: API.getGoodsDetailParams) => getGoodsDetail(params),
+    {
+      manual: true,
+      formatResult: (res) => setFormData(res?.data),
+    },
+  );
 
   // 新建&编辑
   const handleOnFinish = async (params: FormParams) => {
     try {
       const uploadFile = params?.upload?.[0]?.originFileObj;
 
-      if (data?.uuid) {
+      if (formData?.uuid) {
         await putGoodsUpdate(
-          { ...omit(params, 'upload'), uuid: data?.uuid } as any,
+          { ...omit(params, 'upload'), uuid: formData?.uuid } as any,
           uploadFile as File,
         );
         message.success('更新成功');
@@ -79,16 +90,28 @@ const UpdateForm = ({ data, reload, ...props }: UpdateFormProps) => {
   };
 
   useEffect(() => {
-    formRef.current?.setFieldsValue({ ...data });
-  }, [data]);
+    formRef.current?.setFieldsValue({ ...formData });
+  }, [formData]);
+
+  useEffect(() => {
+    if (uuid) {
+      getDetail({ uuid });
+    } else {
+      setFormData(defaultValue);
+    }
+  }, [uuid]);
 
   return (
     <ModalForm
-      title={data?.uuid ? '更新协议' : '新建协议'}
+      title={formData?.uuid ? '更新协议' : '新建协议'}
       formRef={formRef}
       width="40%"
       layout="horizontal"
       labelCol={{ span: 4 }}
+      onOpenChange={(visible) => {
+        onOpenChange!(visible);
+        setFormData(defaultValue);
+      }}
       modalProps={{
         destroyOnClose: true,
         maskClosable: false,

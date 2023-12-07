@@ -1,21 +1,19 @@
-import LogTable from '@/components/LogTable';
 import { message } from '@/components/PopupHack';
 import {
-  deleteGoods,
-  getGoodsDetail,
-  getGoodsList,
-  putGoodsStart,
-  putGoodsStop,
+deleteGoods,
+getGoodsList,
+putGoodsStart,
+putGoodsStop
 } from '@/services/rulex/kuozhanxieyi';
 import { IconFont } from '@/utils/utils';
-import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProDescriptions, ProTable } from '@ant-design/pro-components';
+import { MinusCircleOutlined,PlusOutlined,SyncOutlined } from '@ant-design/icons';
+import type { ActionType,ProColumns } from '@ant-design/pro-components';
+import { PageContainer,ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button, Modal, Popconfirm, Tag } from 'antd';
-import { useEffect, useRef, useState } from 'react';
-import type { DetailItem } from './Update';
-import UpdateForm, { defaultValue } from './Update';
+import { Button,Popconfirm,Tag } from 'antd';
+import { useRef,useState } from 'react';
+import Detail from './Detail';
+import UpdateForm from './Update';
 
 export type ExtendItem = {
   uuid?: string;
@@ -27,7 +25,7 @@ export type ExtendItem = {
   [key: string]: any;
 };
 
-const baseColumns = [
+export const baseColumns = [
   {
     title: 'UUID',
     dataIndex: 'uuid',
@@ -105,13 +103,12 @@ const baseColumns = [
 const ExtendedProtocol = () => {
   const actionRef = useRef<ActionType>();
 
-  const [open, setOpen] = useState<boolean>(false);
+  const [formConfig, setFormConfig] = useState<DetailModalConfig>({ open: false, uuid: '' });
   const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({
     type: 'detail',
     open: false,
     uuid: '',
   });
-  const [formData, setFormData] = useState<DetailItem>(defaultValue);
 
   // 删除
   const { run: remove } = useRequest((params: API.deleteGoodsParams) => deleteGoods(params), {
@@ -140,14 +137,6 @@ const ExtendedProtocol = () => {
     },
   });
 
-  // 详情
-  const { run: getDetail, data: detail } = useRequest(
-    (params: API.getGoodsDetailParams) => getGoodsDetail(params),
-    {
-      manual: true,
-    },
-  );
-
   const columns: ProColumns<ExtendItem>[] = [
     ...baseColumns,
     {
@@ -168,8 +157,8 @@ const ExtendedProtocol = () => {
         <a
           key="detail"
           onClick={() => {
-            setDetailConfig({ type: 'detail', open: true, uuid: '' });
-            getDetail({ uuid: uuid || '' });
+            if (!uuid) return;
+            setDetailConfig({ type: 'detail', open: true, uuid });
           }}
         >
           详情
@@ -191,8 +180,7 @@ const ExtendedProtocol = () => {
           key="edit"
           onClick={() => {
             if (!uuid) return;
-            setOpen(true);
-            getDetail({ uuid });
+            setFormConfig({ open: true, uuid });
           }}
         >
           编辑
@@ -207,14 +195,6 @@ const ExtendedProtocol = () => {
       ],
     },
   ];
-
-  useEffect(() => {
-    if (detail) {
-      setFormData(detail);
-    } else {
-      setFormData(defaultValue);
-    }
-  }, [detail]);
 
   return (
     <>
@@ -238,8 +218,7 @@ const ExtendedProtocol = () => {
               type="primary"
               key="new"
               onClick={() => {
-                setOpen(true);
-                setFormData(defaultValue);
+                setFormConfig({ open: true, uuid: '' });
               }}
               icon={<PlusOutlined />}
             >
@@ -249,44 +228,14 @@ const ExtendedProtocol = () => {
         />
       </PageContainer>
       <UpdateForm
-        open={open}
-        onOpenChange={(visible) => setOpen(visible)}
-        data={formData}
+        {...formConfig}
+        onOpenChange={(visible) => setFormConfig({ open: visible, uuid: '' })}
         reload={() => actionRef.current?.reload()}
       />
-      <Modal
-        title={`扩展协议${detailConfig.type === 'detail' ? '详情' : '日志'}`}
-        open={detailConfig.open}
-        width="40%"
-        footer={
-          <Button
-            key="close"
-            type="primary"
-            onClick={() => setDetailConfig({ type: 'detail', open: false, uuid: '' })}
-          >
-            关闭
-          </Button>
-        }
-        maskClosable={false}
+      <Detail
+        config={detailConfig}
         onCancel={() => setDetailConfig({ type: 'detail', open: false, uuid: '' })}
-      >
-        {detailConfig.type === 'detail' ? (
-          <ProDescriptions
-            dataSource={detail}
-            columns={baseColumns.filter((col) => col.dataIndex !== 'args')}
-            column={1}
-            labelStyle={{ width: 120, justifyContent: 'end', paddingRight: 10 }}
-          >
-            <ProDescriptions.Item label="协议参数">{detail?.args}</ProDescriptions.Item>
-          </ProDescriptions>
-        ) : (
-          <LogTable
-            topic={`goods/console/${detailConfig?.uuid}`}
-            options={false}
-            headerTitle={undefined}
-          />
-        )}
-      </Modal>
+      />
     </>
   );
 };
