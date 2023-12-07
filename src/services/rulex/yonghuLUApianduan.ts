@@ -102,6 +102,25 @@ export async function getUserluaListByGroup(
   });
 }
 
+/** 模糊搜索 GET /api/v1/userlua/search */
+export async function getUserluaSearch(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getUserluaSearchParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code: number;
+    msg: string;
+    data: { uuid?: string; label?: string; apply?: string; type?: string; detail?: string }[];
+  }>('/api/v1/userlua/search', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 更新模板 PUT /api/v1/userlua/update */
 export async function putUserluaUpdate(
   body: {

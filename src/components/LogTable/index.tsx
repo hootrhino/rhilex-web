@@ -3,12 +3,6 @@ import { ProTable } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import type { FilterValue } from 'antd/es/table/interface';
 
-export type Pagination = {
-  current: number;
-  pageSize: number;
-  total: number;
-};
-
 type LogTableProps = ProTableProps<any, any, any> & {
   topic?: string;
   filters?: boolean;

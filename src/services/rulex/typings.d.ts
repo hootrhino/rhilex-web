@@ -157,6 +157,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type getUserluaSearchParams = {
+    keyword: string;
+  };
+
   type getVisualDetailParams = {
     uuid: string;
   };

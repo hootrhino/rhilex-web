@@ -1,4 +1,4 @@
-import { getUserluaGroup } from '@/services/rulex/yonghuLUApianduan';
+import { getUserluaGroup, getUserluaSearch } from '@/services/rulex/yonghuLUApianduan';
 import { EditOutlined, SearchOutlined } from '@ant-design/icons';
 import { history, useRequest } from '@umijs/max';
 import type { DrawerProps } from 'antd';
@@ -10,10 +10,13 @@ import ExampleItem from './ExampleItem';
 type LuaExampleProps = DrawerProps;
 
 const LuaExample = ({ ...props }: LuaExampleProps) => {
-  // const [customTplData, setCustomTplData] = useState<TplGroupItem[]>([]);
+  const [customTplData, setCustomTplData] = useState<TplGroupItem[]>([]);
   const [builtInTplData, setBuiltInTplData] = useState<TplGroupItem[]>([]);
 
   // TODO 搜索自定义模板
+  const {run: searchTpl, data} = useRequest((params: API.getUserluaSearchParams) => getUserluaSearch(params), {
+    manual: true,
+  })
 
   // 模板分组列表
   const { data: groupList, run: getGroupList } = useRequest(() => getUserluaGroup(), {
@@ -24,7 +27,6 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
         name: item?.name,
         children: [],
       }));
-      // setCustomTplData(formatTpl as TplGroupItem[]);
       return formatTpl;
     },
   });
@@ -56,11 +58,18 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
   const handleOnSearch = (value: string) => {
     if (!value) {
       setBuiltInTplData(luaTemplates);
+      setCustomTplData(groupList as TplGroupItem[]);
     } else {
       const newData = filterData(value.toLowerCase());
       setBuiltInTplData(newData as TplGroupItem[]);
+      searchTpl({keyword: value});
     }
   };
+
+  useEffect(() => {
+    // TODO 格式化搜索结果
+    console.log(data, customTplData);
+  }, [data])
 
   useEffect(() => {
     setBuiltInTplData(luaTemplates);

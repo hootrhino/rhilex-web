@@ -50,4 +50,6 @@ declare global {
     type: 'edit' | 'new';
   }
 
+  type Key = string | number;
+
 }

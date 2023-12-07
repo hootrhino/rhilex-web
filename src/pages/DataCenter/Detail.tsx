@@ -13,8 +13,6 @@ import type { LogItem } from '@/models/useWebsocket';
 import { ProTable } from '@ant-design/pro-components';
 import CodeEditor from '@/components/CodeEditor';
 
-export type Key = string | number;
-
 const DataCenter = () => {
   const { uuid } = useParams();
   const { logs } = useModel('useWebsocket');

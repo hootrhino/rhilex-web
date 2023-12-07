@@ -10561,6 +10561,112 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-131205305-run",
         "security": []
       }
+    },
+    "/api/v1/userlua/search": {
+      "get": {
+        "summary": "模糊搜索",
+        "x-apifox-folder": "用户LUA片段",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "用户LUA片段"
+        ],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "1111",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "uuid": {
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "apply": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "detail": {
+                            "type": "string"
+                          }
+                        },
+                        "x-apifox-ignore-properties": [],
+                        "x-apifox-orders": [
+                          "uuid",
+                          "label",
+                          "apply",
+                          "type",
+                          "detail"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "uuid": "USERLUADQNHGX",
+                          "label": "11111111111111111111111",
+                          "apply": "apply",
+                          "type": "function",
+                          "detail": ""
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-131391237-run",
+        "security": []
+      }
     }
   },
   "components": {
