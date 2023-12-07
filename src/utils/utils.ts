@@ -1,4 +1,4 @@
-import type { DeviceGroupItem } from '@/models/useGroup';
+import type { GroupItem } from '@/components/GroupList';
 import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
@@ -75,7 +75,7 @@ export const FormatCode = (code: string) => {
 };
 
 // 获取分组名称
-export const getGroupName = (groupList: DeviceGroupItem[], key: string) => {
+export const getGroupName = (groupList: Partial<GroupItem>[], key: string) => {
   const group = groupList?.find((group: any) => group.uuid === key);
 
   return group?.name;

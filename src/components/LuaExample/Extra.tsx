@@ -4,7 +4,7 @@ import { useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 type ExtraProps = {
-  data: any;
+  data: TplItem;
 };
 
 const Extra = ({ data }: ExtraProps) => {
@@ -14,7 +14,7 @@ const Extra = ({ data }: ExtraProps) => {
   return (
     <CopyToClipboard
       key={label}
-      text={apply}
+      text={apply || ''}
       onCopy={(text, result) => {
         setCopied(result ? text : '');
         setTimeout(() => {

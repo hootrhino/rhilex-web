@@ -1,8 +1,9 @@
 import LogTable from '@/components/LogTable';
 import { getRulesDetail } from '@/services/rulex/guizeguanli';
+import { getInendsList } from '@/services/rulex/shuruziyuanguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { history, useParams } from '@umijs/max';
+import { history, useParams, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import { useModel } from 'umi';
@@ -12,28 +13,30 @@ type DetailProps = DrawerProps & {
   type: 'detail' | 'log';
 };
 
-type Option = {
-  label: string;
-  value: string;
-};
-
 const Detail = ({ uuid, type, ...props }: DetailProps) => {
   const { groupId } = useParams();
-  const { data: sources, setConfig: setSourceDetail } = useModel('useSource');
+  const { setConfig: setSourceDetail } = useModel('useSource');
   const { data: devices, run: getDeviceList, setDeviceConfig } = useModel('useDevice');
 
-  const getFromSourceName = (fromSource: string[], fromDevice: string[]) => {
+  // 获取资源
+  const { data: sources } = useRequest(() => getInendsList());
+
+  const getSourceName = (data: any[], key: string) => {
+    const current = (data || [])?.find((item) => item?.uuid === key);
+
+    return current?.name || '';
+  }
+
+  const renderSourceName = (fromSource: string[], fromDevice: string[]) => {
     let name: string = '';
     let url: string = '';
     const isSource = fromSource?.length > 0;
 
     if (isSource) {
-      const current = sources?.find((item: Option) => item?.value === fromSource?.[0]);
-      name = current?.label || '';
+      name = getSourceName(sources as any, fromSource?.[0]);
       url = '/inends/list';
     } else {
-      const current = devices?.find((item) => item?.uuid === fromDevice?.[0]);
-      name = current?.name || '';
+      name = getSourceName(devices || [], fromSource?.[0]);
       url = '/device/list';
     }
 
@@ -70,7 +73,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     {
       title: '输入资源',
       dataIndex: 'fromSource',
-      render: (_, { fromSource, fromDevice }) => getFromSourceName(fromSource, fromDevice),
+      render: (_, { fromSource, fromDevice }) => renderSourceName(fromSource, fromDevice),
     },
     {
       title: '规则回调',
@@ -93,6 +96,10 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     if (!groupId) return;
     getDeviceList({ uuid: groupId });
   }, [groupId]);
+
+  // useEffect(() => {
+  //   getSources();
+  // }, [])
 
   return (
     <Drawer

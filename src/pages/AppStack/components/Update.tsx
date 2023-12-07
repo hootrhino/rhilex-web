@@ -17,6 +17,18 @@ import { Button, Popconfirm } from 'antd';
 import { useEffect, useRef } from 'react';
 import { history, useParams, useRequest } from 'umi';
 
+type CreatAppParams = {
+  name: string;
+  version: string;
+  autoStart: boolean;
+  description: string;
+}
+
+type UpdateAppParams = CreatAppParams & {
+  uuid: string;
+  luaSource: string;
+}
+
 const DefaultListUrl = '/app-stack/list';
 
 const defaultValue = {
@@ -34,13 +46,13 @@ const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
 
   // 获取详情
-  const { run: getDetail, data: detail } = useRequest(() => getAppDetail({ uuid: id || '' }), {
+  const { run: getDetail, data: detail } = useRequest((params: API.getAppDetailParams) => getAppDetail(params), {
     manual: true,
     formatResult: (res) => res?.data,
   });
 
   // 新建
-  const { run: add, loading: addLoading } = useRequest((params) => postAppCreate(params), {
+  const { run: add, loading: addLoading } = useRequest((params: CreatAppParams) => postAppCreate(params), {
     manual: true,
     onSuccess: () => {
       message.success('新建成功');
@@ -49,7 +61,7 @@ const UpdateForm = () => {
   });
 
   // 编辑
-  const { run: update, loading: updateLoading } = useRequest((params) => putAppUpdate(params), {
+  const { run: update, loading: updateLoading } = useRequest((params: UpdateAppParams) => putAppUpdate(params), {
     manual: true,
     onSuccess: () => {
       message.success('更新成功');
@@ -85,7 +97,7 @@ const UpdateForm = () => {
 
   useEffect(() => {
     if (id) {
-      getDetail();
+      getDetail({ uuid: id });
     }
   }, [id]);
 

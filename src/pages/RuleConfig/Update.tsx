@@ -18,16 +18,22 @@ import { Button, Popconfirm } from 'antd';
 import { useRequest } from 'umi';
 import { RuleType } from '.';
 
-export type FormItem = {
-  actions: string;
-  description: string;
-  failed: string;
-  fromSource: string[];
-  fromDevice: string[];
+type FormParams = {
   name: string;
+  description: string;
+  actions: string;
   success: string;
-  uuid?: string;
+  failed: string;
 };
+
+// type CreateParams = FormParams & {
+//  fromSource: string[];
+//  fromDevice: string[];
+// }
+
+// type UpdateParams = CreateParams & {
+//   uuid: string;
+// }
 
 type UpdateFormProps = {
   type: RuleType;
@@ -42,7 +48,7 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
   const DefaultListUrl = groupId ? `/${type}/${groupId}/${typeId}/rule` : `/${type}/${typeId}/rule`;
 
   // 获取详情
-  const { run: getDetail } = useRequest((uuid: string) => getRulesDetail({ uuid: uuid || '' }), {
+  const { run: getDetail } = useRequest((params: API.getRulesDetailParams) => getRulesDetail(params), {
     manual: true,
     formatResult: (res) => res?.data,
     onSuccess: (data) => {
@@ -50,7 +56,7 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
     },
   });
 
-  const handleOnFinish = async (values: any) => {
+  const handleOnFinish = async (values: FormParams) => {
     setLoading(true);
     try {
       const params = {
@@ -60,10 +66,10 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
       };
 
       if (ruleId) {
-        await putRulesUpdate({ ...params, uuid: ruleId } as any);
+        await putRulesUpdate({ ...params, uuid: ruleId });
         message.success('更新成功');
       } else {
-        await postRulesCreate(params as any);
+        await postRulesCreate(params);
         message.success('新建成功');
       }
       history.push(DefaultListUrl);
@@ -77,7 +83,7 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
 
   useEffect(() => {
     if (ruleId) {
-      getDetail(ruleId);
+      getDetail({uuid: ruleId});
     } else {
       formRef.current?.setFieldsValue({
         actions: DefaultActions,

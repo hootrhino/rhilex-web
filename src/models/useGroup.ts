@@ -16,13 +16,6 @@ type updateGroupParams = createGroupParams & {
   uuid: string;
 };
 
-export type DeviceGroupItem = {
-  name?: string;
-  uuid?: string;
-  type?: string;
-  parent?: string;
-};
-
 const useGroup = () => {
   // 分组详情
   const { run: getDetail, data: detail } = useRequest(

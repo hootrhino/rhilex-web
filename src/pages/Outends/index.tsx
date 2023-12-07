@@ -12,7 +12,7 @@ import { deleteOutendsDel, getOutendsList } from '@/services/rulex/shuchuziyuang
 import Detail from './Detail';
 import { typeEnum } from './Update/initialValue';
 
-export type Item = {
+export type OutendsItem = {
   name: string;
   type: string;
   state: number;
@@ -21,7 +21,7 @@ export type Item = {
   [key: string]: any;
 };
 
-const Targets = () => {
+const Outends = () => {
   const actionRef = useRef<ActionType>();
   const [detailConfig, setConfig] = useState<DetailModalConfig>({
     uuid: '',
@@ -40,7 +40,7 @@ const Targets = () => {
     }
   };
 
-  const columns: ProColumns<Item>[] = [
+  const columns: ProColumns<OutendsItem>[] = [
     {
       title: 'UUID',
       dataIndex: 'uuid',
@@ -126,4 +126,4 @@ const Targets = () => {
   );
 };
 
-export default Targets;
+export default Outends;

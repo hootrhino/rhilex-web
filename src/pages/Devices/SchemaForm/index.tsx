@@ -126,7 +126,6 @@ export const processColumns = (columns: any) => {
           },
         ],
       },
-      // tooltip: col?.tooltip === true ? toolTip : toolTip(col?.tooltip),
     };
   });
 };

@@ -36,19 +36,22 @@ const NotifyLog = () => {
   const actionRef = useRef<ActionType>();
   const { refresh } = useModel('useNotify');
 
+  const handleOnSuccess = () => {
+    actionRef.current?.reload();
+    refresh();
+    message.success('设置成功');
+  }
+
   // 已读
   const { run: read } = useRequest((params: API.putNotifyReadParams) => putNotifyRead(params), {
     manual: true,
-    onSuccess: () => {
-      actionRef.current?.reload();
-      refresh();
-      message.success('设置成功');
-    },
+    onSuccess: () => handleOnSuccess(),
   });
 
   // 全部已读
   const { run: clear } = useRequest(() => putNotifyClear(), {
     manual: true,
+    onSuccess: () => handleOnSuccess()
   });
 
   const columns: ProColumns<Partial<NotifyLogItem>>[] = [

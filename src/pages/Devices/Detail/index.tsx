@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { modeEnum, typeEnum } from '../SchemaForm/columns';
 import ModbusTable from './ModbusTable';
 import Topo from './Topo';
+import { getGroupName } from '@/utils/utils';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -55,11 +56,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: '设备分组',
         dataIndex: 'gid',
-        renderText: (value) => {
-          const group = groupList?.find((item) => item?.uuid === value);
-
-          return group?.name;
-        },
+        renderText: (value) => getGroupName(groupList || [], value),
       },
       {
         title: '设备状态',

@@ -6,11 +6,11 @@ import { useState } from 'react';
 
 import { message } from '@/components/PopupHack';
 import { deleteRulesDel } from '@/services/rulex/guizeguanli';
-import { history, useModel, useParams, useRequest } from '@umijs/max';
+import { history, useParams, useRequest } from '@umijs/max';
 import Debug from './Debug';
 import Detail from './Detail';
 
-export type Item = {
+export type RuleItem = {
   uuid: string;
   name: string;
   status: number;
@@ -21,7 +21,7 @@ export type Item = {
 export type RuleType = 'device' | 'inends';
 
 type RuleConfigProps = {
-  dataSource: Item[];
+  dataSource: RuleItem[];
   type: RuleType;
   typeId: string;
   refresh: () => void;
@@ -34,8 +34,6 @@ const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
     open: false,
     uuid: '',
   });
-
-  const { run: getSources } = useModel('useSource');
 
   // 删除
   const { run: remove } = useRequest((params: API.deleteRulesDelParams) => deleteRulesDel(params), {
@@ -59,7 +57,7 @@ const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
     return url;
   };
 
-  const columns: ProColumns<Item>[] = [
+  const columns: ProColumns<RuleItem>[] = [
     {
       title: 'UUID',
       dataIndex: 'uuid',
@@ -101,7 +99,6 @@ const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
         <a
           key="detail"
           onClick={() => {
-            getSources();
             setDetailConfig({ open: true, type: 'detail', uuid });
           }}
         >

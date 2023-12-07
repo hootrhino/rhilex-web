@@ -4,18 +4,15 @@ import { langs } from '@uiw/codemirror-extensions-langs';
 import { darculaInit } from '@uiw/codemirror-theme-darcula';
 import type { ReactCodeMirrorProps } from '@uiw/react-codemirror';
 import CodeMirror, { basicSetup, keymap } from '@uiw/react-codemirror';
-import { useModel } from '@umijs/max';
+import { useRequest } from '@umijs/max';
 import luaparse from 'luaparse';
 import { luaGlobFuncs, luaKeywords } from './constant';
-
-type Options = {
-  value: string;
-  label: string;
-};
+import { getOutendsList } from '@/services/rulex/shuchuziyuanguanli';
+import { getInendsList } from '@/services/rulex/shuruziyuanguanli';
 
 const LuaEditor = (props: ReactCodeMirrorProps) => {
-  const { data: inends } = useModel('useSource');
-  const { data: outends } = useModel('useOutends');
+  const { data: inends } = useRequest(() => getInendsList());
+  const { data: outends } = useRequest(() => getOutendsList());
 
   // 格式化关键字
   const fuzzySearch = (query: string) => {
@@ -32,19 +29,19 @@ const LuaEditor = (props: ReactCodeMirrorProps) => {
     const buildInKeyword = queryData?.map((item) => ({ label: ` ${item}`, type: 'keyword' }));
 
     // 输入资源 UUID
-    const inendsOptions = inends?.map((item: Options) => ({
-      label: ` ${item?.value}`,
+    const inendsOptions = (inends || [])?.map((item: any) => ({
+      label: ` ${item?.name}`,
       type: 'text',
       detail: `UUID 参数来自资源管理`,
-      apply: item.value,
+      apply: item.uuid,
     }));
 
     // 输出资源 UUID
-    const outendsOptions = outends?.map((item: Options) => ({
-      label: ` ${item?.value}`,
+    const outendsOptions = (outends || [])?.map((item: any) => ({
+      label: ` ${item?.name}`,
       type: 'text',
       detail: `UUID 参数来自目标管理`,
-      apply: item.value,
+      apply: item.uuid,
     }));
 
     return {

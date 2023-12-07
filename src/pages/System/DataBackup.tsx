@@ -15,7 +15,7 @@ const DataBackupConfig = () => {
   const { run, cancel } = useModel('useSystem');
   const formRef = useRef<ProFormInstance>();
   const [open, setOpen] = useState<boolean>(false);
-  const [uploadFile, setUploadFile] = useState<any>();
+  const [uploadFile, setUploadFile] = useState<File>();
   const [errorMsg, setMsg] = useState<string>('');
 
   const handleReset = () => {
@@ -99,7 +99,7 @@ const DataBackupConfig = () => {
         content="上传时请确认版本，版本错误会导致失败，有可能会引起设备故障，请谨慎操作"
         handleOnEnd={handleOnEnd}
         handleOnOk={async () => {
-          const { data } = await postBackupUpload({}, uploadFile as File);
+          const { data } = await postBackupUpload({}, uploadFile);
           setMsg(data);
           cancel();
         }}

@@ -1,7 +1,7 @@
 import { Space, Typography } from 'antd';
 
 type LabelProps = {
-  data: any;
+  data: TplItem;
 };
 
 const Label = ({ data }: LabelProps) => {
