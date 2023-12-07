@@ -35,7 +35,7 @@ const HardWareInfoCard = () => {
     autoFit: false,
     statistic: false,
     percent: Number(memPercent) / 100,
-  };
+  } as any;
 
   return (
     <StatisticCard.Group direction="row" className={cn('dashboard-card', 'h-full')}>

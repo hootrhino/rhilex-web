@@ -4,30 +4,20 @@ import {
   deleteGoods,
   getGoodsDetail,
   getGoodsList,
-  postGoodsCreate,
   putGoodsStart,
   putGoodsStop,
-  putGoodsUpdate,
 } from '@/services/rulex/kuozhanxieyi';
 import { IconFont } from '@/utils/utils';
 import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns, ProFormInstance } from '@ant-design/pro-components';
-import {
-  ModalForm,
-  PageContainer,
-  ProDescriptions,
-  ProFormText,
-  ProFormTextArea,
-  ProFormUploadDragger,
-  ProTable,
-} from '@ant-design/pro-components';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { PageContainer, ProDescriptions, ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Modal, Popconfirm, Tag } from 'antd';
-import type { UploadFile } from 'antd/es/upload/interface';
-import omit from 'lodash/omit';
 import { useEffect, useRef, useState } from 'react';
+import type { DetailItem } from './Update';
+import UpdateForm, { defaultValue } from './Update';
 
-type ExtendItem = {
+export type ExtendItem = {
   uuid?: string;
   running: boolean;
   net_addr: string;
@@ -35,13 +25,6 @@ type ExtendItem = {
   local_path: string;
   description?: string;
   [key: string]: any;
-};
-
-type FormParams = {
-  net_addr: string;
-  args: string[];
-  description?: string;
-  upload: UploadFile;
 };
 
 const baseColumns = [
@@ -119,51 +102,16 @@ const baseColumns = [
   },
 ];
 
-const defaultValue = {
-  net_addr: '127.0.0.1:8080',
-  description: '',
-  args: ['-arg1=hello -arg2=rulex'],
-  local_path: '',
-  running: false,
-  upload: undefined,
-};
-
 const ExtendedProtocol = () => {
   const actionRef = useRef<ActionType>();
-  const formRef = useRef<ProFormInstance>();
 
   const [open, setOpen] = useState<boolean>(false);
   const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({
     type: 'detail',
     open: false,
-    uuid: ''
+    uuid: '',
   });
-  const [initialValue, setInitialValue] = useState<ExtendItem>(defaultValue);
-
-  // 新建&编辑
-  const handleOnFinish = async (params: FormParams) => {
-    try {
-      const uploadFile = params?.upload?.[0]?.originFileObj;
-
-      if (initialValue?.uuid) {
-        await putGoodsUpdate(
-          { ...omit(params, 'upload'), uuid: initialValue?.uuid } as any,
-          uploadFile as File,
-        );
-        message.success('更新成功');
-      } else {
-        await postGoodsCreate(omit(params, 'upload') as any, uploadFile as File);
-        message.success('新建成功');
-      }
-
-      actionRef.current?.reload();
-      setInitialValue(defaultValue);
-
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
+  const [formData, setFormData] = useState<DetailItem>(defaultValue);
 
   // 删除
   const { run: remove } = useRequest((params: API.deleteGoodsParams) => deleteGoods(params), {
@@ -193,11 +141,10 @@ const ExtendedProtocol = () => {
   });
 
   // 详情
-  const { run: getDetail } = useRequest(
+  const { run: getDetail, data: detail } = useRequest(
     (params: API.getGoodsDetailParams) => getGoodsDetail(params),
     {
       manual: true,
-      onSuccess: (data) => setInitialValue(data as ExtendItem),
     },
   );
 
@@ -262,8 +209,12 @@ const ExtendedProtocol = () => {
   ];
 
   useEffect(() => {
-    formRef.current?.setFieldsValue({ ...initialValue });
-  }, [initialValue]);
+    if (detail) {
+      setFormData(detail);
+    } else {
+      setFormData(defaultValue);
+    }
+  }, [detail]);
 
   return (
     <>
@@ -288,7 +239,7 @@ const ExtendedProtocol = () => {
               key="new"
               onClick={() => {
                 setOpen(true);
-                setInitialValue(defaultValue);
+                setFormData(defaultValue);
               }}
               icon={<PlusOutlined />}
             >
@@ -297,43 +248,12 @@ const ExtendedProtocol = () => {
           ]}
         />
       </PageContainer>
-      <ModalForm
-        title={initialValue?.uuid ? '更新协议' : '新建协议'}
+      <UpdateForm
         open={open}
-        formRef={formRef}
-        width="40%"
-        layout="horizontal"
-        labelCol={{ span: 4 }}
         onOpenChange={(visible) => setOpen(visible)}
-        modalProps={{
-          destroyOnClose: true,
-          maskClosable: false,
-        }}
-        onFinish={handleOnFinish}
-        initialValues={defaultValue}
-      >
-        <ProFormText
-          name="net_addr"
-          label="接口地址"
-          placeholder="请输入接口地址"
-          rules={[{ required: true, message: '请输入接口地址' }]}
-        />
-        <ProFormTextArea
-          name="args"
-          label="协议参数"
-          placeholder="请输入协议参数"
-          rules={[{ required: true, message: '请输入协议参数' }]}
-        />
-        <ProFormUploadDragger
-          label="可执行包"
-          name="upload"
-          max={1}
-          description=""
-          rules={[{ required: true, message: '请上传可执行包' }]}
-          width="xl"
-        />
-        <ProFormText name="description" label="备注" placeholder="请输入备注" />
-      </ModalForm>
+        data={formData}
+        reload={() => actionRef.current?.reload()}
+      />
       <Modal
         title={`扩展协议${detailConfig.type === 'detail' ? '详情' : '日志'}`}
         open={detailConfig.open}
@@ -352,12 +272,12 @@ const ExtendedProtocol = () => {
       >
         {detailConfig.type === 'detail' ? (
           <ProDescriptions
-            dataSource={initialValue}
+            dataSource={detail}
             columns={baseColumns.filter((col) => col.dataIndex !== 'args')}
             column={1}
             labelStyle={{ width: 120, justifyContent: 'end', paddingRight: 10 }}
           >
-            <ProDescriptions.Item label="协议参数">{initialValue.args}</ProDescriptions.Item>
+            <ProDescriptions.Item label="协议参数">{detail?.args}</ProDescriptions.Item>
           </ProDescriptions>
         ) : (
           <LogTable
