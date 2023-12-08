@@ -5,6 +5,8 @@ import {
   funcEnum,
   modeEnum,
   plcModelEnum,
+  rackEnum,
+  slotEnum,
   typeEnum,
 } from './initialValue';
 
@@ -103,6 +105,7 @@ export const columns = [
                       title: '型号',
                       dataIndex: 'model',
                       required: true,
+                      valueType: 'select',
                       valueEnum: plcModelEnum,
                       hideInForm: type !== 'S1200PLC',
                     },
@@ -133,15 +136,17 @@ export const columns = [
                           {
                             title: '机架号',
                             dataIndex: 'rack',
-                            valueType: 'digit',
                             required: true,
+                            valueType: 'select',
+                            valueEnum: rackEnum,
                             hideInForm: model === 'S7200',
                           },
                           {
                             title: '插槽号',
                             dataIndex: 'slot',
-                            valueType: 'digit',
                             required: true,
+                            valueType: 'select',
+                            valueEnum: slotEnum,
                             hideInForm: model === 'S7200',
                           },
                         ],
@@ -329,6 +334,7 @@ export const columns = [
                       dataIndex: 'type',
                       width: 'sm',
                       required: true,
+                      valueType: 'select',
                       valueEnum: blockTypeEnum,
                     },
                     {

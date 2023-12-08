@@ -25,46 +25,46 @@ export const typeEnum = {
 };
 
 // 协议分隔符
-export const separatorEnum = {
-  LF: 'LF',
-  CRLF: 'CRLF',
-};
+// export const separatorEnum = {
+//   LF: 'LF',
+//   CRLF: 'CRLF',
+// };
 
 // 安全模式
-export const securityModelEnum = new Map([
-  [0, '不认证'],
-  [3, 'V3 认证'],
-]);
+// export const securityModelEnum = new Map([
+//   [0, '不认证'],
+//   [3, 'V3 认证'],
+// ]);
 
 // 消息选项
-export const snmpV3MsgFlagsEnum = new Map([
-  [0, 'NoAuthNoPriv'],
-  [1, 'AuthNoPriv'],
-  [2, 'AuthPriv'],
-  [3, 'Reportable'],
-]);
+// export const snmpV3MsgFlagsEnum = new Map([
+//   [0, 'NoAuthNoPriv'],
+//   [1, 'AuthNoPriv'],
+//   [2, 'AuthPriv'],
+//   [3, 'Reportable'],
+// ]);
 
 // SNMP 认证协议
-export const snmpV3AuthProtocolEnum = new Map([
-  [1, 'NoAuth'],
-  [2, 'MD5'],
-  [3, 'SHA'],
-  [4, 'SHA224'],
-  [5, 'SHA256'],
-  [6, 'SHA384'],
-  [7, 'SHA512'],
-]);
+// export const snmpV3AuthProtocolEnum = new Map([
+//   [1, 'NoAuth'],
+//   [2, 'MD5'],
+//   [3, 'SHA'],
+//   [4, 'SHA224'],
+//   [5, 'SHA256'],
+//   [6, 'SHA384'],
+//   [7, 'SHA512'],
+// ]);
 
 // 私有认证协议
-export const privacyProtocolEnum = new Map([
-  [1, 'NoPriv'],
-  [2, 'DES'],
-  [3, 'AES'],
-  [4, 'AES192'],
-  [5, 'AES256'],
-  [6, 'AES192C'],
-  [7, 'AES256C'],
-]);
+// export const privacyProtocolEnum = new Map([
+//   [1, 'NoPriv'],
+//   [2, 'DES'],
+//   [3, 'AES'],
+//   [4, 'AES192'],
+//   [5, 'AES256'],
+//   [6, 'AES192C'],
+//   [7, 'AES256C'],
+// ]);
 
 // 块类型
 export const blockTypeEnum = {
@@ -95,6 +95,13 @@ export const slotEnum = new Map([
   [2, '2'],
   [3, '3'],
   [4, '4'],
+  [5, '5'],
+  [6, '6'],
+  [7, '7'],
+  [8, '8'],
+  [9, '9'],
+  [10, '10'],
+  [11, '11'],
 ]);
 
 // TCP 配置
@@ -141,7 +148,6 @@ export const defaultAisConfig = {
 export const defaultModbusConfig = {
   commonConfig: [
     {
-      // frequency: 3000,
       autoRequest: 'false',
       mode: 'UART',
     },
