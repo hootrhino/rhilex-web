@@ -74,7 +74,7 @@ export const processColumns = (columns: any) => {
           columns: processColumns(col.columns),
           fieldProps: {
             // min: 1,
-            creatorButtonProps: { position: 'top', style: { width: 'calc(100vw - 500px)' } },
+            creatorButtonProps: { position: 'top', creatorButtonText: '添加点位',style: { width: 'calc(100vw - 500px)' } },
             creatorRecord: col?.initialValue,
           },
         };
