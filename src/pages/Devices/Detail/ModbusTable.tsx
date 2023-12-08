@@ -1,6 +1,6 @@
 import { ProTable } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
-import { funcEnum } from '../SchemaForm/columns';
+import { funcEnum } from '../SchemaForm/initialValue';
 
 const columns = [
   {

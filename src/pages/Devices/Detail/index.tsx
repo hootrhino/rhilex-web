@@ -6,7 +6,7 @@ import type { TabsProps } from 'antd';
 import { Drawer, DrawerProps, Tabs, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
-import { modeEnum, typeEnum } from '../SchemaForm/columns';
+import { modeEnum, typeEnum } from '../SchemaForm/initialValue';
 import ModbusTable from './ModbusTable';
 import Topo from './Topo';
 import { getGroupName } from '@/utils/utils';

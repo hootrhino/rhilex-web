@@ -47,6 +47,5 @@ export const parityEnum = { E: '奇校验', O: '偶校验', N: '不校验' };
 // 停止位
 export const stopBitsEnum = new Map([
   [1, '1'],
-  [1.5, '1.5'],
   [2, '2'],
 ]);

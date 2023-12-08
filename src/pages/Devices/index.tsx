@@ -11,7 +11,7 @@ import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
 import { getGroupName } from '@/utils/utils';
 import { history, useModel, useRequest } from '@umijs/max';
 import Detail from './Detail';
-import { typeEnum } from './SchemaForm/columns';
+import { typeEnum } from './SchemaForm/initialValue';
 
 export type DeviceItem = {
   name: string;

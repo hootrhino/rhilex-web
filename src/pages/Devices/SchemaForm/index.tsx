@@ -15,22 +15,24 @@ import { FooterToolbar } from '@ant-design/pro-components';
 import { Button, Popconfirm, Space } from 'antd';
 import omit from 'lodash/omit';
 
-import { message, modal } from '@/components/PopupHack';
+import { message } from '@/components/PopupHack';
 import ProSegmented from '@/components/ProSegmented';
 import { postDevicesCreate, putDevicesUpdate } from '@/services/rulex/shebeiguanli';
-import { DownloadOutlined, QuestionCircleOutlined, UploadOutlined } from '@ant-design/icons';
+
+import { string2Boolean } from '@/utils/utils';
 import { history, useModel, useParams } from '@umijs/max';
 import cloneDeep from 'lodash/cloneDeep';
 import { columns } from './columns';
+import Title from './FormTitle';
+import Extra from './GroupTitleExtra';
 import './index.less';
 import {
   defaultAisConfig,
   defaultHostConfig,
   defaultModbusConfig,
+  defaultPlcConfig,
   defaultProtocolConfig,
 } from './initialValue';
-import Title from './Title';
-import UploadRule from './UploadRule';
 
 const DefaultListUrl = '/device/list';
 
@@ -40,40 +42,7 @@ export const processColumns = (columns: any) => {
 
     if (col.valueType === 'group') {
       if (col.title === '寄存器配置') {
-        title = (
-          <div className="flex items-center">
-            <span>{col.title}</span>
-            <div className="pl-[12px] pr-[24px]">
-              <a key="upload">
-                <UploadOutlined className="pr-[5px]" />
-                上传点位表
-              </a>
-              <span className="pl-[5px]">
-                <span className="font-light">(</span>
-                <a
-                  className="text-[12px]"
-                  onClick={() =>
-                    modal.info({
-                      title: 'Modbus 点位表上传规则',
-                      autoFocusButton: null,
-                      width: '40%',
-                      content: <UploadRule />,
-                    })
-                  }
-                >
-                  <QuestionCircleOutlined className="pr-[2px]" />
-                  查看详细规则
-                </a>
-                <span className="font-light">)</span>
-              </span>
-            </div>
-
-            <a key="download">
-              <DownloadOutlined className="pr-[5px]" />
-              下载点位表
-            </a>
-          </div>
-        );
+        title = <Extra title={col.title} />;
       } else {
         title = col.title;
       }
@@ -180,49 +149,27 @@ const SchemaForm = ({}: ProFormProps) => {
     setLoading(true);
     try {
       let params = cloneDeep(values);
-      const commonConfigParams = params.config.commonConfig?.[0];
+      const commonConfigParams = params.config.commonConfig?.map((item) => {
+        if (item?.autoRequest) {
+          return { ...item, autoRequest: string2Boolean(item?.autoRequest) };
+        }
+        if (item?.parseAis) {
+          return { ...item, parseAis: string2Boolean(item?.parseAis) };
+        }
+        return item;
+      });
+
       const hostConfigParams = params?.config?.hostConfig?.[0];
-      const registersParams = params?.config?.registers;
 
-      let newConfig;
-
-      if (params.type === 'GENERIC_PROTOCOL') {
-        newConfig = {
-          ...params.config,
-          commonConfig: commonConfigParams,
-          hostConfig: hostConfigParams,
-        };
-      }
-
-      if (params.type === 'GENERIC_MODBUS') {
-        newConfig = {
-          ...params.config,
-          commonConfig: {
-            ...commonConfigParams,
-            autoRequest: commonConfigParams?.autoRequest === 'true' ? true : false,
-          },
-          hostConfig: hostConfigParams,
-          registers: registersParams?.map((item: Record<string, any>) => ({
-            ...item,
-            value: '',
-          })),
-        };
-      }
-
-      if (params.type === 'GENERIC_AIS_RECEIVER') {
-        newConfig = {
-          ...params.config,
-          commonConfig: {
-            ...commonConfigParams,
-            parseAis: commonConfigParams?.parseAis === 'true' ? true : false,
-          },
-          hostConfig: hostConfigParams,
-        };
-      }
+      const newConfig = {
+        ...params.config,
+        commonConfig: commonConfigParams?.[0],
+        hostConfig: hostConfigParams,
+      };
 
       params = {
         ...params,
-        config: commonConfigParams.mode === 'TCP' ? newConfig : omit(newConfig, 'hostConfig'),
+        config: commonConfigParams?.[0]?.mode === 'TCP' ? newConfig : omit(newConfig, 'hostConfig'),
       };
 
       if (deviceId) {
@@ -258,7 +205,7 @@ const SchemaForm = ({}: ProFormProps) => {
       hostConfig: newHostConfig ? [newHostConfig] : defaultHostConfig,
     };
 
-    if (type === 'GENERIC_MODBUS') {
+    if (['GENERIC_MODBUS', 'S1200PLC'].includes(type)) {
       newConfig = {
         ...newConfig,
         commonConfig: newConfig?.commonConfig?.map((item: any) => ({
@@ -302,6 +249,9 @@ const SchemaForm = ({}: ProFormProps) => {
         break;
       case 'GENERIC_AIS_RECEIVER':
         newConfig = defaultAisConfig;
+        break;
+      case 'S1200PLC':
+        newConfig = defaultPlcConfig;
         break;
       default:
         newConfig = defaultProtocolConfig;

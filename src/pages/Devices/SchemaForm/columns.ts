@@ -1,71 +1,12 @@
-import { defaultRegistersConfig } from "./initialValue";
-
-// 模式
-export const modeEnum = {
-  UART: 'UART',
-  TCP: 'TCP',
-};
-
-// Modbus 功能
-export const funcEnum = new Map([
-  [1, '01 读线圈状态'],
-  [2, '02 读离散输入状态'],
-  [3, '03 读保持寄存器'],
-  [4, '04 读输入寄存器'],
-  // [5, '05 写单个线圈'],
-  // [6, '06 写单个保持寄存器'],
-  // [15, '15 写多个线圈'],
-  // [16, '16 写多个保持寄存器'],
-]);
-
-// 设备类型
-export const typeEnum = {
-  GENERIC_PROTOCOL: '通用时间片中断串口协议',
-  GENERIC_MODBUS: '通用 Modbus Master',
-  GENERIC_AIS_RECEIVER: '通用船舶 AIS 数据解析器',
-};
-
-// 协议分隔符
-export const separatorEnum = {
-  LF: 'LF',
-  CRLF: 'CRLF',
-};
-
-// 安全模式
-export const securityModelEnum = new Map([
-  [0, '不认证'],
-  [3, 'V3 认证'],
-]);
-
-// 消息选项
-export const snmpV3MsgFlagsEnum = new Map([
-  [0, 'NoAuthNoPriv'],
-  [1, 'AuthNoPriv'],
-  [2, 'AuthPriv'],
-  [3, 'Reportable'],
-]);
-
-// SNMP 认证协议
-export const snmpV3AuthProtocolEnum = new Map([
-  [1, 'NoAuth'],
-  [2, 'MD5'],
-  [3, 'SHA'],
-  [4, 'SHA224'],
-  [5, 'SHA256'],
-  [6, 'SHA384'],
-  [7, 'SHA512'],
-]);
-
-// 私有认证协议
-export const privacyProtocolEnum = new Map([
-  [1, 'NoPriv'],
-  [2, 'DES'],
-  [3, 'AES'],
-  [4, 'AES192'],
-  [5, 'AES256'],
-  [6, 'AES192C'],
-  [7, 'AES256C'],
-]);
+import {
+  blockTypeEnum,
+  defaultBlocksConfig,
+  defaultRegistersConfig,
+  funcEnum,
+  modeEnum,
+  plcModelEnum,
+  typeEnum,
+} from './initialValue';
 
 export const columns = [
   {
@@ -99,7 +40,10 @@ export const columns = [
     valueType: 'dependency',
     name: ['type'],
     columns: ({ type }: any) => {
-      if (!['GENERIC_AIS_RECEIVER', 'GENERIC_PROTOCOL', 'GENERIC_MODBUS'].includes(type)) return [];
+      if (
+        !['GENERIC_AIS_RECEIVER', 'GENERIC_PROTOCOL', 'GENERIC_MODBUS', 'S1200PLC'].includes(type)
+      )
+        return [];
 
       return [
         {
@@ -121,19 +65,12 @@ export const columns = [
                       required: true,
                       hideInForm: type !== 'GENERIC_PROTOCOL',
                     },
-                    // {
-                    //   title: '采集频率（毫秒）',
-                    //   dataIndex: 'frequency',
-                    //   valueType: 'digit',
-                    //   required: true,
-                    //   hideInForm: type !== 'GENERIC_MODBUS',
-                    // },
                     {
                       title: '是否启动轮询',
                       dataIndex: 'autoRequest',
                       valueType: 'segmented',
                       required: true,
-                      hideInForm: type !== 'GENERIC_MODBUS',
+                      hideInForm: !['GENERIC_MODBUS', 'S1200PLC'].includes(type),
                     },
                     {
                       title: '是否解析 AIS 报文',
@@ -154,8 +91,63 @@ export const columns = [
                       valueType: 'select',
                       required: true,
                       valueEnum: modeEnum,
+                      hideInForm: type === 'S1200PLC',
+                    },
+                    {
+                      title: 'PLC 地址',
+                      dataIndex: 'host',
+                      required: true,
+                      hideInForm: type !== 'S1200PLC',
+                    },
+                    {
+                      title: '型号',
+                      dataIndex: 'model',
+                      required: true,
+                      valueEnum: plcModelEnum,
+                      hideInForm: type !== 'S1200PLC',
+                    },
+                    {
+                      title: '连接超时时间（毫秒）',
+                      dataIndex: 'timeout',
+                      valueType: 'digit',
+                      required: true,
+                      hideInForm: type !== 'S1200PLC',
                     },
                   ],
+                },
+                {
+                  valueType: 'dependency',
+                  name: ['model'],
+                  hideInForm: type !== 'S1200PLC',
+                  columns: ({ model }: { model: string }) => {
+                    return [
+                      {
+                        valueType: 'group',
+                        columns: [
+                          {
+                            title: '心跳超时时间（毫秒）',
+                            dataIndex: 'idleTimeout',
+                            valueType: 'digit',
+                            required: true,
+                          },
+                          {
+                            title: '机架号',
+                            dataIndex: 'rack',
+                            valueType: 'digit',
+                            required: true,
+                            hideInForm: model === 'S7200',
+                          },
+                          {
+                            title: '插槽号',
+                            dataIndex: 'slot',
+                            valueType: 'digit',
+                            required: true,
+                            hideInForm: model === 'S7200',
+                          },
+                        ],
+                      },
+                    ];
+                  },
                 },
               ],
             },
@@ -292,6 +284,88 @@ export const columns = [
                       dataIndex: 'quantity',
                       valueType: 'digit',
                       width: 'xs',
+                      required: true,
+                      rules: [
+                        {
+                          min: 1,
+                          type: 'integer',
+                          message: '读取数量在 1-255 之间',
+                        },
+                        {
+                          max: 255,
+                          type: 'integer',
+                          message: '读取数量在 1-255 之间',
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          title: '点位列表',
+          valueType: 'group',
+          hideInForm: type !== 'S1200PLC',
+          columns: [
+            {
+              valueType: 'formList',
+              dataIndex: ['config', 'blocks'],
+              mode: 'multiple',
+              initialValue: defaultBlocksConfig[0],
+              columns: [
+                {
+                  valueType: 'group',
+                  columns: [
+                    {
+                      title: '数据标签',
+                      dataIndex: 'tag',
+                      width: 'sm',
+                      required: true,
+                    },
+                    {
+                      title: '块类型',
+                      dataIndex: 'type',
+                      width: 'sm',
+                      required: true,
+                      valueEnum: blockTypeEnum,
+                    },
+                    {
+                      title: '采集频率（毫秒）',
+                      dataIndex: 'frequency',
+                      valueType: 'digit',
+                      width: 'sm',
+                      required: true,
+                    },
+                    {
+                      valueType: 'dependency',
+                      name: ['type'],
+                      columns: ({ type }: { type: string }) => {
+                        return [
+                          {
+                            title: '块地址',
+                            dataIndex: 'address',
+                            valueType: 'digit',
+                            width: 'sm',
+                            required: true,
+                            hideInForm: type === 'MB',
+                          },
+                        ];
+                      },
+                    },
+                    {
+                      title: '起始地址',
+                      dataIndex: 'start',
+                      valueType: 'digit',
+                      width: 'sm',
+                      required: true,
+                    },
+                    {
+                      title: '采集长度（字节）',
+                      dataIndex: 'size',
+                      valueType: 'digit',
+                      width: 'sm',
                       required: true,
                       rules: [
                         {
