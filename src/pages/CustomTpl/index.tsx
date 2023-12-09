@@ -4,7 +4,7 @@ import { DEFAULT_GROUP_KEY_LUA_TPL, GROUP_TYPE_LUA_TPL } from '@/utils/constant'
 import { getGroupName } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { history, useRequest } from '@umijs/max';
 import { Button } from 'antd';
 import { useEffect, useState } from 'react';
 import TplList from './TplList';
@@ -43,7 +43,7 @@ const CustomTpl = () => {
 
   return (
     <>
-      <PageContainer>
+      <PageContainer onBack={() => history.back()}>
         <ProCard split="vertical">
           <ProCard
             headerBordered

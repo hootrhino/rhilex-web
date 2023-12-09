@@ -9,7 +9,6 @@ import { deleteRulesDel } from '@/services/rulex/guizeguanli';
 import { history, useParams, useRequest } from '@umijs/max';
 import Debug from './Debug';
 import Detail from './Detail';
-import useGoBack from '@/hooks/useGoBack';
 
 export type RuleItem = {
   uuid: string;
@@ -29,7 +28,6 @@ type RuleConfigProps = {
 };
 
 const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
-  const { showModal } = useGoBack();
   const { groupId } = useParams();
   const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({ open: false, type: 'detail', uuid: '' });
   const [debugConfig, setDebugConfig] = useState<DetailModalConfig>({
@@ -123,7 +121,7 @@ const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
 
   return (
     <>
-      <PageContainer onBack={() => showModal({ url: `/${type}/list` })}>
+      <PageContainer onBack={() => history.push('/device/list')}>
         <ProTable
           rowKey="uuid"
           columns={columns}

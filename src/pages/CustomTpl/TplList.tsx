@@ -11,7 +11,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import type { ProColumns, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button } from 'antd';
+import { Button, Popconfirm, Typography } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
 type FormParams = {
@@ -100,7 +100,15 @@ const TplList = ({ activeGroup, dataSource, refresh }: TplListProps) => {
     {
       title: '代码',
       dataIndex: 'apply',
-      valueType: 'code',
+      renderText: (apply) => {
+        return (
+          <div className="bg-[#f6f8fa]">
+            <Typography.Text style={{ width: 400, padding: 10 }} ellipsis={{ tooltip: apply }}>
+              {apply}
+            </Typography.Text>
+          </div>
+        );
+      },
     },
     {
       title: '描述',
@@ -124,9 +132,15 @@ const TplList = ({ activeGroup, dataSource, refresh }: TplListProps) => {
         >
           编辑
         </a>,
-        <a key="remove" onClick={() => uuid && remove({ uuid })}>
-          删除
-        </a>,
+        <Popconfirm
+          title="确定要删除该模板?"
+          onConfirm={() => uuid && remove({ uuid })}
+          okText="是"
+          cancelText="否"
+          key="remove"
+        >
+          <a>删除</a>
+        </Popconfirm>,
       ],
     },
   ];
@@ -135,7 +149,8 @@ const TplList = ({ activeGroup, dataSource, refresh }: TplListProps) => {
     if (initialValue?.uuid) {
       formRef.current?.setFieldsValue(initialValue);
     } else {
-      handleOnReset();
+      formRef.current?.setFieldsValue(defaultValue);
+      // handleOnReset();
     }
   }, [initialValue]);
 
