@@ -46,8 +46,8 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
           {type === 'built-in' ? '内置模板' : '自定义模板'}
         </div>
         <Collapse
+          accordion
           bordered={false}
-          defaultActiveKey={['data']}
           expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
           style={{ background: token.colorBgContainer }}
           items={getItems()}
