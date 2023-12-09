@@ -3,7 +3,7 @@ import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/ic
 import type { ProColumns } from '@ant-design/pro-components';
 import { EditableProTable } from '@ant-design/pro-components';
 import { Button } from 'antd';
-import { useState } from 'react';
+import {useState } from 'react';
 import { blockTypeEnum, defaultBlocksConfig } from '../SchemaForm/initialValue';
 
 type PlcSheetItem = {
@@ -19,7 +19,8 @@ type PlcSheetItem = {
 const PlcSheet = () => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly PlcSheetItem[]>([]);
-  console.log(editableKeys);
+  const [hide, setHide] = useState<boolean>(false);
+
   const columns: ProColumns<PlcSheetItem>[] = [
     {
       title: '数据标签',
@@ -35,8 +36,15 @@ const PlcSheet = () => {
       dataIndex: 'type',
       valueType: 'select',
       valueEnum: blockTypeEnum,
-      hideInForm: true,
-      // hideInForm: type === 'MB',
+      fieldProps: (_, config) => {
+        return {
+          onSelect: (value: string) => {
+            if (config.entity?.uuid && editableKeys.includes(config.entity.uuid)) {
+              setHide(value === 'MB' ? true : false)
+            }
+          }
+        };
+      },
       formItemProps: () => {
         return {
           rules: [{ required: true, message: '此项为必填项' }],
@@ -62,6 +70,8 @@ const PlcSheet = () => {
       title: '块地址',
       dataIndex: 'address',
       valueType: 'digit',
+      hideInForm: hide,
+      hideInTable: hide,
       fieldProps: () => {
         return {
           style: { width: '100%' },
