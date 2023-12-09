@@ -1,15 +1,15 @@
-import { PlusOutlined } from '@ant-design/icons';
-import type { ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProCard, ProTable } from '@ant-design/pro-components';
-import { Button, Popconfirm } from 'antd';
-import { useEffect, useState } from 'react';
 import GroupList, { DEFAULT_CONFIG } from '@/components/GroupList';
 import { message } from '@/components/PopupHack';
 import StateTag from '@/components/StateTag';
 import { deleteDevicesDel } from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
 import { getGroupName } from '@/utils/utils';
+import { PlusOutlined } from '@ant-design/icons';
+import type { ProColumns } from '@ant-design/pro-components';
+import { PageContainer, ProCard, ProTable } from '@ant-design/pro-components';
 import { history, useModel, useRequest } from '@umijs/max';
+import { Button, Popconfirm, Space } from 'antd';
+import { useEffect, useState } from 'react';
 import Detail from './Detail';
 import { typeEnum } from './SchemaForm/initialValue';
 
@@ -91,30 +91,45 @@ const Devices = () => {
     },
     {
       title: '操作',
-      width: 180,
+      width: 280,
       fixed: 'right',
       key: 'option',
       valueType: 'option',
-      render: (_, { uuid, gid }) => [
-        <a key="rule" onClick={() => history.push(`/device/${gid}/${uuid}/rule`)}>
-          规则配置
-        </a>,
-        <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
-          详情
-        </a>,
-        <a key="edit" onClick={() => history.push(`/device/${gid}/edit/${uuid}`)}>
-          编辑
-        </a>,
-        <Popconfirm
-          title="确定要删除该设备?"
-          onConfirm={() => remove({ uuid })}
-          okText="是"
-          cancelText="否"
-          key="remove"
-        >
-          <a>删除</a>
-        </Popconfirm>,
-      ],
+      render: (_, { uuid, gid, type }) => {
+        const showSheet = ['GENERIC_MODBUS', 'S1200PLC'].includes(type);
+
+        return (
+          <Space>
+            <a key="rule" onClick={() => history.push(`/device/${gid}/${uuid}/rule`)}>
+              规则配置
+            </a>
+            {showSheet && (
+              <a
+                key="device-specific-sheet "
+                onClick={() => history.push(`/device/${gid}/${uuid}/specific-sheet/${type}`)}
+              >
+                点位表配置
+              </a>
+            )}
+
+            <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
+              详情
+            </a>
+            <a key="edit" onClick={() => history.push(`/device/${gid}/edit/${uuid}`)}>
+              编辑
+            </a>
+            <Popconfirm
+              title="确定要删除该设备?"
+              onConfirm={() => remove({ uuid })}
+              okText="是"
+              cancelText="否"
+              key="remove"
+            >
+              <a>删除</a>
+            </Popconfirm>
+          </Space>
+        );
+      },
     },
   ];
 

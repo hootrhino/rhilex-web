@@ -115,7 +115,7 @@ const DataCenter = () => {
               showLine
               showIcon
               blockNode
-              expandedKeys={[uuid as Key, 'columns']}
+              expandedKeys={[uuid as React.Key, 'columns']}
               switcherIcon={null}
               treeData={treeData}
               className="h-full"

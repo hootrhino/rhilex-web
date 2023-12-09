@@ -24,7 +24,7 @@ import { history, useModel, useParams } from '@umijs/max';
 import cloneDeep from 'lodash/cloneDeep';
 import { columns } from './columns';
 import Title from './FormTitle';
-import Extra from './GroupTitleExtra';
+// import Extra from './GroupTitleExtra';
 import './index.less';
 import {
   defaultAisConfig,
@@ -38,15 +38,15 @@ const DefaultListUrl = '/device/list';
 
 export const processColumns = (columns: any) => {
   return columns.map((col: any) => {
-    let title;
+    // let title;
 
     if (col.valueType === 'group') {
-      if (col.title === '寄存器配置') {
-        title = <Extra title={col.title} />;
-      } else {
-        title = col.title;
-      }
-      return { ...col, columns: processColumns(col.columns), title };
+      // if (col.title === '寄存器配置') {
+      //   title = <Extra title={col.title} />;
+      // } else {
+      //   title = col.title;
+      // }
+      return { ...col, columns: processColumns(col.columns) };
     }
 
     if (col.valueType === 'dependency') {
@@ -74,7 +74,11 @@ export const processColumns = (columns: any) => {
           columns: processColumns(col.columns),
           fieldProps: {
             // min: 1,
-            creatorButtonProps: { position: 'top', creatorButtonText: '添加点位',style: { width: 'calc(100vw - 500px)' } },
+            creatorButtonProps: {
+              position: 'top',
+              creatorButtonText: '添加点位',
+              style: { width: 'calc(100vw - 500px)' },
+            },
             creatorRecord: col?.initialValue,
           },
         };

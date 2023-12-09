@@ -51,7 +51,6 @@ declare global {
   }
 
   // 其他
-  type Key = string | number;
 
   type Option = {
     label: string;

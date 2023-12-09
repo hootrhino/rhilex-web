@@ -56,6 +56,11 @@
         name: '编辑规则配置',
         component: './Devices/RuleConfig/Update',
       },
+      {
+        path: '/device/:groupId/:deviceId/specific-sheet/:deviceType',
+        name: '点位表配置',
+        component: './Devices/SpecificSheet'
+      }
     ],
   },
   {

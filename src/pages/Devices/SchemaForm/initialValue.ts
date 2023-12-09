@@ -114,17 +114,15 @@ export const defaultHostConfig = [
 ];
 
 // 寄存器配置
-export const defaultRegistersConfig = [
-  {
-    weight: 1,
-    initValue: 0,
-    slaverId: 1,
-    address: 0,
-    quantity: 1,
-    function: 3,
-    frequency: 3000,
-  },
-];
+export const defaultRegistersConfig = {
+  tag: '',
+  alias: '',
+  function: 3,
+  frequency: 3000,
+  slaverId: 1,
+  address: 0,
+  quantity: 1,
+};
 
 // AIS 默认配置
 export const defaultAisConfig = {
@@ -153,7 +151,6 @@ export const defaultModbusConfig = {
     },
   ],
   hostConfig: defaultHostConfig,
-  registers: defaultRegistersConfig,
 };
 
 // PROTOCOL 默认配置
@@ -168,16 +165,14 @@ export const defaultProtocolConfig = {
 };
 
 // 点位列表默认值
-export const defaultBlocksConfig = [
-  {
-    tag: '',
-    frequency: 1000,
-    type: 'DB',
-    address: 1,
-    start: 100,
-    size: 16,
-  },
-];
+export const defaultBlocksConfig = {
+  tag: '',
+  type: 'DB',
+  frequency: 1000,
+  address: 1,
+  start: 100,
+  size: 16,
+};
 
 // 西门子 PLC 默认配置
 export const defaultPlcConfig = {
@@ -192,5 +187,4 @@ export const defaultPlcConfig = {
       idleTimeout: 5000,
     },
   ],
-  blocks: defaultBlocksConfig,
 };
