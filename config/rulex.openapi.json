@@ -10802,12 +10802,6 @@
                           "items": {
                             "type": "object",
                             "properties": {
-                              "id": {
-                                "type": "integer"
-                              },
-                              "created_at": {
-                                "type": "string"
-                              },
                               "uuid": {
                                 "type": "string"
                               },
@@ -10823,7 +10817,7 @@
                               "function": {
                                 "type": "integer"
                               },
-                              "slaver_id": {
+                              "slaverId": {
                                 "type": "integer"
                               },
                               "address": {
@@ -10836,29 +10830,14 @@
                                 "type": "integer"
                               }
                             },
-                            "required": [
-                              "id",
-                              "created_at",
-                              "uuid",
-                              "device_uuid",
-                              "tag",
-                              "alias",
-                              "function",
-                              "slaver_id",
-                              "address",
-                              "frequency",
-                              "quantity"
-                            ],
                             "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
-                              "id",
-                              "created_at",
                               "uuid",
                               "device_uuid",
                               "tag",
                               "alias",
                               "function",
-                              "slaver_id",
+                              "slaverId",
                               "address",
                               "frequency",
                               "quantity"
@@ -10900,33 +10879,18 @@
                       "code": 200,
                       "msg": "Success",
                       "data": {
-                        "current": 6,
+                        "current": 1,
                         "size": 2,
-                        "total": 56,
+                        "total": 1,
                         "records": [
                           {
-                            "id": 15,
-                            "created_at": "2023-12-09T20:24:56.3725943+08:00",
-                            "uuid": "MDTBHC4F2O",
-                            "device_uuid": "DEVICEDQNLO8",
-                            "tag": "a14",
-                            "alias": "a14",
+                            "uuid": "MDTBHMPBQKAR",
+                            "device_uuid": "DEVICETWRRCW",
+                            "tag": "a11-new111111",
+                            "alias": "a111",
                             "function": 3,
-                            "slaver_id": 14,
-                            "address": 13,
-                            "frequency": 100,
-                            "quantity": 2
-                          },
-                          {
-                            "id": 16,
-                            "created_at": "2023-12-09T20:24:56.3725943+08:00",
-                            "uuid": "MDTBPK8SCX",
-                            "device_uuid": "DEVICEDQNLO8",
-                            "tag": "a15",
-                            "alias": "a15",
-                            "function": 3,
-                            "slaver_id": 15,
-                            "address": 14,
+                            "slaverId": 10,
+                            "address": 10,
                             "frequency": 100,
                             "quantity": 2
                           }
@@ -10962,12 +10926,6 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "integer"
-                    },
-                    "created_at": {
-                      "type": "string"
-                    },
                     "uuid": {
                       "type": "string"
                     },
@@ -10983,9 +10941,6 @@
                     "function": {
                       "type": "integer"
                     },
-                    "slaver_id": {
-                      "type": "integer"
-                    },
                     "address": {
                       "type": "integer"
                     },
@@ -10994,34 +10949,33 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "slaverId": {
+                      "type": "integer"
                     }
                   },
                   "x-apifox-orders": [
-                    "id",
-                    "created_at",
                     "uuid",
                     "device_uuid",
                     "tag",
                     "alias",
                     "function",
-                    "slaver_id",
                     "address",
                     "frequency",
-                    "quantity"
+                    "quantity",
+                    "slaverId"
                   ],
                   "x-apifox-ignore-properties": []
                 }
               },
               "example": [
                 {
-                  "id": 12,
-                  "created_at": "2023-12-09T20:24:56.3725943+08:00",
-                  "uuid": "MDTBAJZOVI",
-                  "device_uuid": "DEVICEDQNLO8",
-                  "tag": "a11-new",
-                  "alias": "a11",
+                  "uuid": "MDTBHMPBQKAR",
+                  "device_uuid": "DEVICETWRRCW",
+                  "tag": "a11-new111111",
+                  "alias": "a111",
                   "function": 3,
-                  "slaver_id": 11,
+                  "slaverId": 10,
                   "address": 10,
                   "frequency": 100,
                   "quantity": 2

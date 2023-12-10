@@ -22,7 +22,7 @@ type ModbusSheetItem = {
   alias: string;
   function: number;
   frequency: number;
-  slaver_id: number;
+  slaverId: number;
   address: number;
   quantity: number;
 };
@@ -163,7 +163,7 @@ const ModbusSheet = () => {
     },
     {
       title: '从设备 ID',
-      dataIndex: 'slaver_id',
+      dataIndex: 'slaverId',
       valueType: 'digit',
       fieldProps: () => {
         return {
@@ -219,7 +219,7 @@ const ModbusSheet = () => {
           key="copy"
           record={{
             ...record,
-            uuid: 'copy',
+            uuid: 'new',
           }}
         >
           <a>复制</a>
@@ -259,7 +259,7 @@ const ModbusSheet = () => {
       value={dataSource}
       onChange={setDataSource}
       recordCreatorProps={{
-        position: 'bottom',
+        position: 'top',
         creatorButtonText: '添加点位',
         record: () => ({
           ...defaultRegistersConfig,
@@ -321,6 +321,10 @@ const ModbusSheet = () => {
           total: data?.total,
           success: true,
         });
+      }}
+      pagination={{
+        // current: 1,
+        // pageSize: 10
       }}
       editable={{
         type: 'multiple',

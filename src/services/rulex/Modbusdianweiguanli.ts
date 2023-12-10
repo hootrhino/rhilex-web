@@ -85,14 +85,12 @@ export async function getModbusDataSheetList(
       size?: number;
       total?: number;
       records?: {
-        id?: number;
-        created_at?: string;
         uuid?: string;
         device_uuid?: string;
         tag?: string;
         alias?: string;
         function?: number;
-        slaver_id?: number;
+        slaverId?: number;
         address?: number;
         frequency?: number;
         quantity?: number;
@@ -110,17 +108,15 @@ export async function getModbusDataSheetList(
 /** 更新点位表 POST /api/v1/modbus_data_sheet/update */
 export async function postModbusDataSheetUpdate(
   body: {
-    id?: number;
-    created_at?: string;
     uuid?: string;
     device_uuid?: string;
     tag?: string;
     alias?: string;
     function?: number;
-    slaver_id?: number;
     address?: number;
     frequency?: number;
     quantity?: number;
+    slaverId?: number;
   }[],
   options?: { [key: string]: any },
 ) {
