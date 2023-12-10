@@ -31,40 +31,50 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
   });
 
   // 搜索内置模板
-  const filterData = (value: string) => {
-    let filtered = [...luaTemplates];
-    const regex = new RegExp(value, 'i');
+  const searchBuiltInTpl = (regex: RegExp) => {
+    const newData = luaTemplates.map((item) => {
+      let matchItem = { ...item };
 
-    return filtered
-      .map((item) => {
-        let matchItem = { ...item };
+      // 搜索标题
+      if (matchItem.name.match(regex)) {
+        return matchItem;
+      }
 
-        // 搜索标题
-        if (matchItem.name.includes(value)) {
-          return matchItem;
-        }
+      // 搜索内层
+      matchItem.children = item.children.filter(
+        (child) => child.label.match(regex) || child.detail.match(regex),
+      );
+      return matchItem.children?.length > 0 ? matchItem : null;
+    })
+    .filter((item) => item);
 
-        // 搜索内层
-        matchItem.children = item.children.filter(
-          (child) => child.label.match(regex) || child.detail.match(regex),
-        );
-        return matchItem.children?.length > 0 ? matchItem : null;
-      })
-      .filter((item) => item);
+    setBuiltInTplData(newData as TplGroupItem[]);
   };
 
-  // 搜索自定义模板分组
-  const searchGroup = async (value: string) => {
-    const newGroupData = customTplData
-      ?.map((item) => item.name.includes(value) && item)
-      ?.filter((item) => item);
-    if (newGroupData?.length > 0) {
-      setCustomTplData(newGroupData as TplGroupItem[]);
+  // 搜索自定义模板
+  const searchCustomTpl = async (regex: RegExp, value: string) => {
+    let newData: any = groupList?.filter((item) => item?.name?.match(regex));
+
+    if (newData && newData?.length > 0) {
+      setCustomTplData(newData);
     } else {
-      // TODO 搜索内层返回值缺少gid字段
       const res = await getUserluaSearch({ keyword: value });
-      console.log(res, customTplData);
-      // searchTpl({keyword: value});
+
+      if (res?.data?.length > 0) {
+        newData = groupList
+          ?.map((group) => {
+            const children = res?.data?.filter((item) => item.gid === group.uuid);
+
+            return {
+              ...group,
+              children,
+            };
+          })
+          ?.filter((group) => group?.children?.length > 0);
+        setCustomTplData(newData);
+      } else {
+        setCustomTplData([]);
+      }
     }
   };
 
@@ -75,9 +85,10 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
       setCustomTplData(groupList as TplGroupItem[]);
     } else {
       const searchValue = value.toLowerCase();
-      const newData = filterData(searchValue);
-      setBuiltInTplData(newData as TplGroupItem[]);
-      searchGroup(searchValue);
+      const regex = new RegExp(searchValue, 'i');
+
+      searchBuiltInTpl(regex);
+      searchCustomTpl(regex, searchValue);
     }
   };
 

@@ -2,29 +2,30 @@ declare namespace API {
   type CronTaskCreateDTO = {
     /** "param1 param2 param3" */
     args?: string;
+    /** cron表达式，6个域，使用quartz标准 */
     cronExpr: string;
     /** ["A=e1", "B=e2", "C=e3"] */
     env?: string[];
-    /** 0-false 1-true */
-    isRoot?: string;
+    /** 定时任务名称 */
     name: string;
+    /** base64编码的shell脚本，脚本不要加#!/bin/bash */
     script?: string;
-    /** 1-shell 2-cmd */
-    taskType: number;
+    /** 目前仅支持LINUX_SHELL */
+    taskType: string;
   };
 
   type CronTaskUpdateDTO = {
     /** "param1 param2 param3" */
     args?: string;
+    /** cron表达式，6个域不支持年份，使用quartz标准 */
     cronExpr?: string;
     /** ["A=e1", "B=e2", "C=e3"] */
     env?: string[];
-    /** 0-false 1-true */
-    isRoot?: string;
     name?: string;
+    /** 脚本内容，base64编码 */
     script?: string;
     /** 1-shell 2-cmd */
-    taskType?: number;
+    taskType?: string;
     uuid: string;
   };
 
@@ -74,21 +75,21 @@ declare namespace API {
   };
 
   type getCrontaskResultsPageParams = {
-    /** current */
+    /** 当前页 */
     current?: string;
-    /** size */
+    /** 每页数量 */
     size?: string;
-    /** uuid */
+    /** 定时任务uuid，可选 */
     uuid?: string;
   };
 
   type getCrontaskStartParams = {
-    /** uuid */
+    /** 定时任务uuid */
     uuid: string;
   };
 
   type getCrontaskStopParams = {
-    /** uuid */
+    /** 定时任务uuid */
     uuid: string;
   };
 
@@ -122,6 +123,16 @@ declare namespace API {
 
   type getInendsDetailParams = {
     uuid: string;
+  };
+
+  type getModbusDataSheet_openAPI_exportParams = {
+    device_uuid: string;
+  };
+
+  type getModbusDataSheetListParams = {
+    device_uuid?: string;
+    current?: number;
+    size?: number;
   };
 
   type getOutendsDetailParams = {

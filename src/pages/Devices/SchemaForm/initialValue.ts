@@ -119,7 +119,7 @@ export const defaultRegistersConfig = {
   alias: '',
   function: 3,
   frequency: 3000,
-  slaverId: 1,
+  slaver_id: 1,
   address: 0,
   quantity: 1,
 };

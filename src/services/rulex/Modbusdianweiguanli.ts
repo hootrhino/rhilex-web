@@ -1,0 +1,138 @@
+// @ts-ignore
+/* eslint-disable */
+import { request } from '@umijs/max';
+
+/** 多行删除 DELETE /api/v1/modbus_data_sheet/delIds */
+export async function deleteModbusDataSheetDelIds(
+  body: {
+    device_uuid: string;
+    uuids: string[];
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string[] }>(
+    '/api/v1/modbus_data_sheet/delIds',
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: body,
+      ...(options || {}),
+    },
+  );
+}
+
+/** 导出点表 GET /api/v1/modbus_data_sheet/export */
+export async function getModbusDataSheet__openAPI__export(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getModbusDataSheet_openAPI_exportParams,
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/api/v1/modbus_data_sheet/export', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 导入点位表 POST /api/v1/modbus_data_sheet/import */
+export async function postModbusDataSheet__openAPI__import(
+  body: {
+    device_uuid: string;
+  },
+  file?: File,
+  options?: { [key: string]: any },
+) {
+  const formData = new FormData();
+
+  if (file) {
+    formData.append('file', file);
+  }
+
+  Object.keys(body).forEach((ele) => {
+    const item = (body as any)[ele];
+
+    if (item !== undefined && item !== null) {
+      formData.append(
+        ele,
+        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
+      );
+    }
+  });
+
+  return request<Record<string, any>>('/api/v1/modbus_data_sheet/import', {
+    method: 'POST',
+    data: formData,
+    requestType: 'form',
+    ...(options || {}),
+  });
+}
+
+/** 分页查看点位表 GET /api/v1/modbus_data_sheet/list */
+export async function getModbusDataSheetList(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getModbusDataSheetListParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      current?: number;
+      size?: number;
+      total?: number;
+      records?: {
+        id?: number;
+        created_at?: string;
+        uuid?: string;
+        device_uuid?: string;
+        tag?: string;
+        alias?: string;
+        function?: number;
+        slaver_id?: number;
+        address?: number;
+        frequency?: number;
+        quantity?: number;
+      }[];
+    };
+  }>('/api/v1/modbus_data_sheet/list', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 更新点位表 POST /api/v1/modbus_data_sheet/update */
+export async function postModbusDataSheetUpdate(
+  body: {
+    id?: number;
+    created_at?: string;
+    uuid?: string;
+    device_uuid?: string;
+    tag?: string;
+    alias?: string;
+    function?: number;
+    slaver_id?: number;
+    address?: number;
+    frequency?: number;
+    quantity?: number;
+  }[],
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string[] }>(
+    '/api/v1/modbus_data_sheet/update',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: body,
+      ...(options || {}),
+    },
+  );
+}

@@ -28,6 +28,7 @@ import * as shujubeifen from './shujubeifen'
 import * as jiekouguanli from './jiekouguanli'
 import * as zhanneitongzhi from './zhanneitongzhi'
 import * as yonghuLUApianduan from './yonghuLUApianduan'
+import * as Modbusdianweiguanli from './Modbusdianweiguanli'
 export default {
   shebeiguanli,
   yonghuguanli,
@@ -55,4 +56,5 @@ export default {
   jiekouguanli,
   zhanneitongzhi,
   yonghuLUApianduan,
+  Modbusdianweiguanli,
   }

@@ -111,7 +111,14 @@ export async function getUserluaSearch(
   return request<{
     code: number;
     msg: string;
-    data: { uuid?: string; label?: string; apply?: string; type?: string; detail?: string }[];
+    data: {
+      gid?: string;
+      uuid?: string;
+      label?: string;
+      apply?: string;
+      type?: string;
+      detail?: string;
+    }[];
   }>('/api/v1/userlua/search', {
     method: 'GET',
     params: {

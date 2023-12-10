@@ -86,6 +86,9 @@
     },
     {
       "name": "用户LUA片段"
+    },
+    {
+      "name": "Modbus点位管理"
     }
   ],
   "paths": {
@@ -4841,7 +4844,7 @@
           {
             "name": "current",
             "in": "query",
-            "description": "current",
+            "description": "当前页",
             "required": false,
             "schema": {
               "type": "string"
@@ -4850,7 +4853,7 @@
           {
             "name": "size",
             "in": "query",
-            "description": "size",
+            "description": "每页数量",
             "required": false,
             "schema": {
               "type": "string"
@@ -4859,7 +4862,7 @@
           {
             "name": "uuid",
             "in": "query",
-            "description": "uuid",
+            "description": "定时任务uuid，可选",
             "required": false,
             "schema": {
               "type": "string"
@@ -4896,7 +4899,7 @@
           {
             "name": "uuid",
             "in": "query",
-            "description": "uuid",
+            "description": "定时任务uuid",
             "required": true,
             "schema": {
               "type": "string"
@@ -4933,7 +4936,7 @@
           {
             "name": "uuid",
             "in": "query",
-            "description": "uuid",
+            "description": "定时任务uuid",
             "required": true,
             "schema": {
               "type": "string"
@@ -10603,6 +10606,9 @@
                       "items": {
                         "type": "object",
                         "properties": {
+                          "gid": {
+                            "type": "string"
+                          },
                           "uuid": {
                             "type": "string"
                           },
@@ -10621,6 +10627,7 @@
                         },
                         "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
+                          "gid",
                           "uuid",
                           "label",
                           "apply",
@@ -10650,11 +10657,12 @@
                       "msg": "Success",
                       "data": [
                         {
-                          "uuid": "USERLUADQNHGX",
-                          "label": "11111111111111111111111",
+                          "gid": "ULTROOT",
+                          "uuid": "USERLUAMZ4KSZ",
+                          "label": "labellabellabellabellabel",
                           "apply": "apply",
                           "type": "function",
-                          "detail": ""
+                          "detail": "string"
                         }
                       ]
                     }
@@ -10665,6 +10673,550 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-131391237-run",
+        "security": []
+      }
+    },
+    "/api/v1/modbus_data_sheet/import": {
+      "post": {
+        "summary": "导入点位表",
+        "x-apifox-folder": "Modbus点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Modbus点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string",
+                    "example": "11223344"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-132053057-run",
+        "security": []
+      }
+    },
+    "/api/v1/modbus_data_sheet/list": {
+      "get": {
+        "summary": "分页查看点位表",
+        "x-apifox-folder": "Modbus点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Modbus点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "DEVICEDQNLO8",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "6",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "2",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "created_at": {
+                                "type": "string"
+                              },
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "device_uuid": {
+                                "type": "string"
+                              },
+                              "tag": {
+                                "type": "string"
+                              },
+                              "alias": {
+                                "type": "string"
+                              },
+                              "function": {
+                                "type": "integer"
+                              },
+                              "slaver_id": {
+                                "type": "integer"
+                              },
+                              "address": {
+                                "type": "integer"
+                              },
+                              "frequency": {
+                                "type": "integer"
+                              },
+                              "quantity": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "created_at",
+                              "uuid",
+                              "device_uuid",
+                              "tag",
+                              "alias",
+                              "function",
+                              "slaver_id",
+                              "address",
+                              "frequency",
+                              "quantity"
+                            ],
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "id",
+                              "created_at",
+                              "uuid",
+                              "device_uuid",
+                              "tag",
+                              "alias",
+                              "function",
+                              "slaver_id",
+                              "address",
+                              "frequency",
+                              "quantity"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 6,
+                        "size": 2,
+                        "total": 56,
+                        "records": [
+                          {
+                            "id": 15,
+                            "created_at": "2023-12-09T20:24:56.3725943+08:00",
+                            "uuid": "MDTBHC4F2O",
+                            "device_uuid": "DEVICEDQNLO8",
+                            "tag": "a14",
+                            "alias": "a14",
+                            "function": 3,
+                            "slaver_id": 14,
+                            "address": 13,
+                            "frequency": 100,
+                            "quantity": 2
+                          },
+                          {
+                            "id": 16,
+                            "created_at": "2023-12-09T20:24:56.3725943+08:00",
+                            "uuid": "MDTBPK8SCX",
+                            "device_uuid": "DEVICEDQNLO8",
+                            "tag": "a15",
+                            "alias": "a15",
+                            "function": 3,
+                            "slaver_id": 15,
+                            "address": 14,
+                            "frequency": 100,
+                            "quantity": 2
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-132053062-run",
+        "security": []
+      }
+    },
+    "/api/v1/modbus_data_sheet/update": {
+      "post": {
+        "summary": "更新点位表",
+        "x-apifox-folder": "Modbus点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Modbus点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "uuid": {
+                      "type": "string"
+                    },
+                    "device_uuid": {
+                      "type": "string"
+                    },
+                    "tag": {
+                      "type": "string"
+                    },
+                    "alias": {
+                      "type": "string"
+                    },
+                    "function": {
+                      "type": "integer"
+                    },
+                    "slaver_id": {
+                      "type": "integer"
+                    },
+                    "address": {
+                      "type": "integer"
+                    },
+                    "frequency": {
+                      "type": "integer"
+                    },
+                    "quantity": {
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "id",
+                    "created_at",
+                    "uuid",
+                    "device_uuid",
+                    "tag",
+                    "alias",
+                    "function",
+                    "slaver_id",
+                    "address",
+                    "frequency",
+                    "quantity"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              },
+              "example": [
+                {
+                  "id": 12,
+                  "created_at": "2023-12-09T20:24:56.3725943+08:00",
+                  "uuid": "MDTBAJZOVI",
+                  "device_uuid": "DEVICEDQNLO8",
+                  "tag": "a11-new",
+                  "alias": "a11",
+                  "function": 3,
+                  "slaver_id": 11,
+                  "address": 10,
+                  "frequency": 100,
+                  "quantity": 2
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-132053081-run",
+        "security": []
+      }
+    },
+    "/api/v1/modbus_data_sheet/delIds": {
+      "delete": {
+        "summary": "多行删除",
+        "x-apifox-folder": "Modbus点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Modbus点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "uuids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICEDQNLO8",
+                "uuids": [
+                  "MDTBJJMDUX",
+                  "MDTBC4TT8B"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-132053090-run",
+        "security": []
+      }
+    },
+    "/api/v1/modbus_data_sheet/export": {
+      "get": {
+        "summary": "导出点表",
+        "x-apifox-folder": "Modbus点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Modbus点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "AABBCCDD",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-132076503-run",
         "security": []
       }
     }
@@ -10707,7 +11259,8 @@
             "type": "string"
           },
           "cronExpr": {
-            "type": "string"
+            "type": "string",
+            "description": "cron表达式，6个域不支持年份，使用quartz标准"
           },
           "env": {
             "description": "[\"A=e1\", \"B=e2\", \"C=e3\"]",
@@ -10716,19 +11269,16 @@
               "type": "string"
             }
           },
-          "isRoot": {
-            "description": "0-false 1-true",
-            "type": "string"
-          },
           "name": {
             "type": "string"
           },
           "script": {
-            "type": "string"
+            "type": "string",
+            "description": "脚本内容，base64编码"
           },
           "taskType": {
-            "description": "1-shell 2-cmd",
-            "type": "integer"
+            "type": "string",
+            "description": "1-shell 2-cmd"
           },
           "uuid": {
             "type": "string"
@@ -10738,7 +11288,6 @@
           "args",
           "cronExpr",
           "env",
-          "isRoot",
           "name",
           "script",
           "taskType",
@@ -10760,7 +11309,8 @@
             "type": "string"
           },
           "cronExpr": {
-            "type": "string"
+            "type": "string",
+            "description": "cron表达式，6个域，使用quartz标准"
           },
           "env": {
             "description": "[\"A=e1\", \"B=e2\", \"C=e3\"]",
@@ -10769,26 +11319,23 @@
               "type": "string"
             }
           },
-          "isRoot": {
-            "description": "0-false 1-true",
-            "type": "string"
-          },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "定时任务名称"
           },
           "script": {
-            "type": "string"
+            "type": "string",
+            "description": "base64编码的shell脚本，脚本不要加#!/bin/bash"
           },
           "taskType": {
-            "description": "1-shell 2-cmd",
-            "type": "integer"
+            "type": "string",
+            "description": "目前仅支持LINUX_SHELL"
           }
         },
         "x-apifox-orders": [
           "args",
           "cronExpr",
           "env",
-          "isRoot",
           "name",
           "script",
           "taskType"
