@@ -87,9 +87,15 @@ const PlcSheet = () => {
   // 单个更新
   const handleOnSave = async (rowKey: RecordKey, data: Partial<PlcSheetItem>) => {
     let params = {
-      ...omit(data, ['index']),
+      ...omit(data, ['index', 'status', 'lastFetchTime', 'value']),
       device_uuid: deviceId,
     };
+
+    if (params?.type === 'MB') {
+      params = {
+        ...omit(params, ['address']),
+      }
+    }
 
     if (rowKey === 'new') {
       params = {
