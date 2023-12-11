@@ -16,7 +16,7 @@ import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
 import { defaultRegistersConfig, funcEnum } from '../SchemaForm/initialValue';
 
-import './index.less';
+import '../index.less';
 
 type ModbusSheetItem = {
   uuid?: string;

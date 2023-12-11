@@ -2,13 +2,11 @@ import StateTag from '@/components/StateTag';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions, ProSkeleton } from '@ant-design/pro-components';
 import { history, useModel } from '@umijs/max';
-import type { TabsProps } from 'antd';
-import { Drawer, DrawerProps, Tabs, Tag } from 'antd';
+import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { modeEnum, typeEnum } from '../SchemaForm/initialValue';
 import ModbusTable from './ModbusTable';
-import Topo from './Topo';
 import { getGroupName } from '@/utils/utils';
 
 type DetailProps = DrawerProps & {
@@ -38,7 +36,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
   } = useModel('usePort');
 
   const { type, config } = detail || { type: '' };
-  const { registers, commonConfig, hostConfig, portUuid } = config || { registers: [] };
+  const { commonConfig, hostConfig, portUuid } = config || { registers: [] };
   const mode = commonConfig?.mode;
 
   const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]> = {
@@ -122,19 +120,6 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     ],
   };
 
-  const items: TabsProps['items'] = [
-    {
-      key: 'table',
-      label: '列表',
-      children: <ModbusTable />,
-    },
-    {
-      key: 'topo',
-      label: '拓扑结构',
-      children: <Topo />,
-    },
-  ];
-
   const getPortName = () => {
     const port = portList?.find((item) => item?.uuid === portUuid);
 
@@ -194,10 +179,10 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
                   columns={columnsMap['HOST']}
                 />
               )}
-              {type === 'GENERIC_MODBUS' && registers?.length > 0 && (
+              {type === 'GENERIC_MODBUS' && (
                 <>
-                  <ProDescriptions title="寄存器配置" />
-                  <Tabs defaultActiveKey="table" items={items} />
+                  <ProDescriptions title="点位表配置" />
+                  <ModbusTable />
                 </>
               )}
             </>
