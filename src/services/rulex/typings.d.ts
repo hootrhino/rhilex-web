@@ -159,6 +159,16 @@ declare namespace API {
     uuid?: string;
   };
 
+  type getS1200DataSheetListParams = {
+    device_uuid?: string;
+    current?: number;
+    size?: number;
+  };
+
+  type getS1200DataSheetSheetExportParams = {
+    device_uuid: string;
+  };
+
   type getUserluaDetailParams = {
     uuid: string;
   };

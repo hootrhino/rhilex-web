@@ -1,11 +1,4 @@
 import { message, modal } from '@/components/PopupHack';
-import {
-  deleteModbusDataSheetDelIds,
-  getModbusDataSheetList,
-  getModbusDataSheetSheetExport,
-  postModbusDataSheetSheetImport,
-  postModbusDataSheetUpdate,
-} from '@/services/rulex/Modbusdianweiguanli';
 import { IconFont } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
@@ -16,11 +9,19 @@ import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
 import { blockTypeEnum, defaultBlocksConfig } from '../SchemaForm/initialValue';
 
+import {
+  deleteS1200DataSheetDelIds,
+  getS1200DataSheetList,
+  getS1200DataSheetSheetExport,
+  postS1200DataSheetSheetImport,
+  postS1200DataSheetUpdate,
+} from '@/services/rulex/ximenzidianweiguanli';
 import '../index.less';
 
 type PlcSheetItem = {
   uuid?: string;
   tag: string;
+  alias: string;
   type: string;
   frequency: number;
   address: number;
@@ -36,7 +37,7 @@ type removeParams = {
   uuids: string[];
 };
 
-type UpdateParams = Partial<PlcSheetItem> & {
+type UpdateParams = Omit<PlcSheetItem, 'status' | 'lastFetchTime' | 'value'> & {
   device_uuid?: string;
 };
 
@@ -57,33 +58,29 @@ const PlcSheet = () => {
   };
 
   // 删除点位表
-  const { run: remove } = useRequest(
-    (params: removeParams) => deleteModbusDataSheetDelIds(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        handleOnReset();
-        message.success('删除成功');
-      },
+  const { run: remove } = useRequest((params: removeParams) => deleteS1200DataSheetDelIds(params), {
+    manual: true,
+    onSuccess: () => {
+      handleOnReset();
+      message.success('删除成功');
     },
-  );
+  });
 
   // 更新点位表
-  const { run: update } = useRequest(
-    (params: UpdateParams[]) => postModbusDataSheetUpdate(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        handleOnReset();
-        setEditableRowKeys([]);
-        message.success('更新成功');
-      },
+  const { run: update } = useRequest((params: Partial<UpdateParams>[]) => postS1200DataSheetUpdate(params), {
+    manual: true,
+    onSuccess: () => {
+      handleOnReset();
+      setEditableRowKeys([]);
+      message.success('更新成功');
     },
-  );
+  });
 
   // 批量更新
   const handleOnBatchUpdate = () => {
-    const updateData = dataSource?.filter((row) => row?.uuid && selectedRowKeys.includes(row?.uuid));
+    const updateData = dataSource?.filter(
+      (row) => row?.uuid && selectedRowKeys.includes(row?.uuid),
+    );
     update(updateData);
   };
 
@@ -121,7 +118,7 @@ const PlcSheet = () => {
 
   // 导入点位表
   const { run: upload } = useRequest(
-    (file: File) => postModbusDataSheetSheetImport({ device_uuid: deviceId || '' }, file),
+    (file: File) => postS1200DataSheetSheetImport({ device_uuid: deviceId || '' }, file),
     {
       manual: true,
       onSuccess: () => {
@@ -132,8 +129,7 @@ const PlcSheet = () => {
   );
   // 导出点位表
   const { run: download } = useRequest(
-    (params: API.getModbusDataSheetSheetExportParams) =>
-    getModbusDataSheetSheetExport(params),
+    (params: API.getS1200DataSheetSheetExportParams) => getS1200DataSheetSheetExport(params),
     {
       manual: true,
       onSuccess: () => message.success('导出成功'),
@@ -164,6 +160,15 @@ const PlcSheet = () => {
       },
     },
     {
+      title: '数据别名',
+      dataIndex: 'alias',
+      formItemProps: () => {
+        return {
+          rules: [{ required: true, message: '此项为必填项' }],
+        };
+      },
+    },
+    {
       title: '块类型',
       dataIndex: 'type',
       valueType: 'select',
@@ -172,9 +177,9 @@ const PlcSheet = () => {
         return {
           onSelect: (value: string) => {
             if (config.entity?.uuid && editableKeys.includes(config.entity.uuid)) {
-              setHide(value === 'MB' ? true : false)
+              setHide(value === 'MB' ? true : false);
             }
-          }
+          },
         };
       },
       formItemProps: () => {
@@ -252,7 +257,7 @@ const PlcSheet = () => {
     {
       title: '最新值',
       dataIndex: 'value',
-      editable: false
+      editable: false,
     },
     {
       title: '点位状态',
@@ -261,14 +266,14 @@ const PlcSheet = () => {
       renderText(_, record) {
         if (!record?.status) return '-';
         const isSuccess = record?.status === 1;
-        return <Tag color={isSuccess ? 'success' : 'error'}>{isSuccess ? '正常' : '异常'}</Tag>
+        return <Tag color={isSuccess ? 'success' : 'error'}>{isSuccess ? '正常' : '异常'}</Tag>;
       },
     },
     {
       title: '采集时间',
       dataIndex: 'lastFetchTime',
       valueType: 'dateTime',
-      editable: false
+      editable: false,
     },
     {
       title: '操作',
@@ -318,7 +323,7 @@ const PlcSheet = () => {
       columns={columns}
       value={dataSource}
       onChange={setDataSource}
-      rootClassName='sheet-table'
+      rootClassName="sheet-table"
       recordCreatorProps={{
         position: 'top',
         creatorButtonText: '添加点位',
@@ -386,7 +391,7 @@ const PlcSheet = () => {
         </Button>,
       ]}
       request={async ({ current = 1, pageSize = 10 }) => {
-        const { data } = await getModbusDataSheetList({
+        const { data } = await getS1200DataSheetList({
           device_uuid: deviceId,
           current,
           size: pageSize,
@@ -399,7 +404,7 @@ const PlcSheet = () => {
         });
       }}
       pagination={{
-        defaultPageSize: 10
+        defaultPageSize: 10,
       }}
       editable={{
         type: 'multiple',

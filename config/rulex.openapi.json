@@ -89,6 +89,9 @@
     },
     {
       "name": "Modbus点位管理"
+    },
+    {
+      "name": "西门子点位管理"
     }
   ],
   "paths": {
@@ -11214,6 +11217,705 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-132076503-run",
+        "security": []
+      }
+    },
+    "/api/v1/s1200_data_sheet/sheetImport": {
+      "post": {
+        "summary": "导入点位表",
+        "x-apifox-folder": "西门子点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "西门子点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string",
+                    "example": "DEVICEPGCZHKFU"
+                  },
+                  "file": {
+                    "type": "string",
+                    "example": "file://C:\\Users\\wangwenhai\\workspace\\rulex\\test\\data\\test-modbus-sheet.xlsx",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-132357825-run",
+        "security": []
+      }
+    },
+    "/api/v1/s1200_data_sheet/list": {
+      "get": {
+        "summary": "分页查看点位表",
+        "x-apifox-folder": "西门子点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "西门子点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "DEVICEDQNLO8",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "6",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "2",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "device_uuid": {
+                                "type": "string"
+                              },
+                              "tag": {
+                                "type": "string"
+                              },
+                              "alias": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "frequency": {
+                                "type": "integer"
+                              },
+                              "address": {
+                                "type": "integer"
+                              },
+                              "start": {
+                                "type": "null"
+                              },
+                              "size": {
+                                "type": "null"
+                              },
+                              "status": {
+                                "type": "integer"
+                              },
+                              "lastFetchTime": {
+                                "type": "integer"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "uuid",
+                              "device_uuid",
+                              "tag",
+                              "alias",
+                              "type",
+                              "frequency",
+                              "address",
+                              "start",
+                              "size",
+                              "status",
+                              "lastFetchTime",
+                              "value"
+                            ],
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "device_uuid",
+                              "tag",
+                              "alias",
+                              "type",
+                              "frequency",
+                              "address",
+                              "start",
+                              "size",
+                              "status",
+                              "lastFetchTime",
+                              "value"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 10,
+                        "total": 59,
+                        "records": [
+                          {
+                            "uuid": "SIMTBHYDCYKBL",
+                            "device_uuid": "DEVICER27H4F7Q",
+                            "tag": "a1",
+                            "alias": "a1",
+                            "type": "",
+                            "frequency": 100,
+                            "address": 0,
+                            "start": null,
+                            "size": null,
+                            "status": 1,
+                            "lastFetchTime": 1702284745550,
+                            "value": "00000000"
+                          },
+                          {
+                            "uuid": "SIMTBBCRWHBGM",
+                            "device_uuid": "DEVICER27H4F7Q",
+                            "tag": "a2",
+                            "alias": "a2",
+                            "type": "",
+                            "frequency": 100,
+                            "address": 1,
+                            "start": null,
+                            "size": null,
+                            "status": 1,
+                            "lastFetchTime": 1702284745550,
+                            "value": "00000000"
+                          },
+                          {
+                            "uuid": "SIMTBCCZKYKIX",
+                            "device_uuid": "DEVICER27H4F7Q",
+                            "tag": "a3",
+                            "alias": "a3",
+                            "type": "",
+                            "frequency": 100,
+                            "address": 2,
+                            "start": null,
+                            "size": null,
+                            "status": 1,
+                            "lastFetchTime": 1702284745550,
+                            "value": "00000000"
+                          },
+                          {
+                            "uuid": "SIMTBK9EAMQTM",
+                            "device_uuid": "DEVICER27H4F7Q",
+                            "tag": "a4",
+                            "alias": "a4",
+                            "type": "",
+                            "frequency": 100,
+                            "address": 3,
+                            "start": null,
+                            "size": null,
+                            "status": 1,
+                            "lastFetchTime": 1702284745550,
+                            "value": "00000000"
+                          },
+                          {
+                            "uuid": "SIMTBVKQYH2VG",
+                            "device_uuid": "DEVICER27H4F7Q",
+                            "tag": "a5",
+                            "alias": "a5",
+                            "type": "",
+                            "frequency": 100,
+                            "address": 4,
+                            "start": null,
+                            "size": null,
+                            "status": 1,
+                            "lastFetchTime": 1702284745550,
+                            "value": "00000000"
+                          },
+                          {
+                            "uuid": "SIMTBRYGSTEXA",
+                            "device_uuid": "DEVICER27H4F7Q",
+                            "tag": "a6",
+                            "alias": "a6",
+                            "type": "",
+                            "frequency": 100,
+                            "address": 5,
+                            "start": null,
+                            "size": null,
+                            "status": 1,
+                            "lastFetchTime": 1702284745550,
+                            "value": "00000000"
+                          },
+                          {
+                            "uuid": "SIMTBQRRHKNFC",
+                            "device_uuid": "DEVICER27H4F7Q",
+                            "tag": "a7",
+                            "alias": "a7",
+                            "type": "",
+                            "frequency": 100,
+                            "address": 6,
+                            "start": null,
+                            "size": null,
+                            "status": 1,
+                            "lastFetchTime": 1702284745550,
+                            "value": "00000000"
+                          },
+                          {
+                            "uuid": "SIMTBOAJIEEXK",
+                            "device_uuid": "DEVICER27H4F7Q",
+                            "tag": "a8",
+                            "alias": "a8",
+                            "type": "",
+                            "frequency": 100,
+                            "address": 7,
+                            "start": null,
+                            "size": null,
+                            "status": 1,
+                            "lastFetchTime": 1702284745550,
+                            "value": "00000000"
+                          },
+                          {
+                            "uuid": "SIMTB2QTDHORW",
+                            "device_uuid": "DEVICER27H4F7Q",
+                            "tag": "a9",
+                            "alias": "a9",
+                            "type": "",
+                            "frequency": 100,
+                            "address": 8,
+                            "start": null,
+                            "size": null,
+                            "status": 1,
+                            "lastFetchTime": 1702284745550,
+                            "value": "00000000"
+                          },
+                          {
+                            "uuid": "SIMTBKMLLVVRV",
+                            "device_uuid": "DEVICER27H4F7Q",
+                            "tag": "a10",
+                            "alias": "a10",
+                            "type": "",
+                            "frequency": 100,
+                            "address": 9,
+                            "start": null,
+                            "size": null,
+                            "status": 1,
+                            "lastFetchTime": 1702284745550,
+                            "value": "00000000"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-132357826-run",
+        "security": []
+      }
+    },
+    "/api/v1/s1200_data_sheet/update": {
+      "post": {
+        "summary": "更新点位表",
+        "x-apifox-folder": "西门子点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "西门子点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "uuid": {
+                      "type": "string"
+                    },
+                    "device_uuid": {
+                      "type": "string"
+                    },
+                    "tag": {
+                      "type": "string"
+                    },
+                    "alias": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "integer"
+                    },
+                    "frequency": {
+                      "type": "integer"
+                    },
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "start": {
+                      "type": "integer"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "uuid",
+                    "device_uuid",
+                    "tag",
+                    "alias",
+                    "address",
+                    "frequency",
+                    "type",
+                    "start",
+                    "size"
+                  ],
+                  "required": [
+                    "device_uuid",
+                    "tag",
+                    "alias",
+                    "address",
+                    "frequency",
+                    "start",
+                    "size"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              },
+              "example": [
+                {
+                  "uuid": "SIMTBHYDCYKBL",
+                  "device_uuid": "DEVICER27H4F7Q",
+                  "tag": "a11",
+                  "alias": "a11",
+                  "type": "",
+                  "frequency": 100,
+                  "address": 0,
+                  "start": null,
+                  "size": null,
+                  "status": 1,
+                  "lastFetchTime": 1702284745550,
+                  "value": "00000000"
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-132357827-run",
+        "security": []
+      }
+    },
+    "/api/v1/s1200_data_sheet/delIds": {
+      "delete": {
+        "summary": "多行删除",
+        "x-apifox-folder": "西门子点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "西门子点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "uuids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICEDQNLO8",
+                "uuids": [
+                  "MDTBJJMDUX",
+                  "MDTBC4TT8B"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-132357829-run",
+        "security": []
+      }
+    },
+    "/api/v1/s1200_data_sheet/sheetExport": {
+      "get": {
+        "summary": "导出点表",
+        "x-apifox-folder": "西门子点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "西门子点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "AABBCCDD",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-132357831-run",
         "security": []
       }
     }
