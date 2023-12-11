@@ -1,10 +1,22 @@
+import { message, modal } from '@/components/PopupHack';
+import {
+  deleteModbusDataSheetDelIds,
+  getModbusDataSheetList,
+  getModbusDataSheetSheetExport,
+  postModbusDataSheetSheetImport,
+  postModbusDataSheetUpdate,
+} from '@/services/rulex/Modbusdianweiguanli';
 import { IconFont } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
-import type { ProColumns } from '@ant-design/pro-components';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { EditableProTable } from '@ant-design/pro-components';
-import { Button } from 'antd';
-import {useState } from 'react';
+import { useParams, useRequest } from '@umijs/max';
+import { Button, Popconfirm, Tag, Upload } from 'antd';
+import omit from 'lodash/omit';
+import { useRef, useState } from 'react';
 import { blockTypeEnum, defaultBlocksConfig } from '../SchemaForm/initialValue';
+
+import '../index.less';
 
 type PlcSheetItem = {
   uuid?: string;
@@ -14,14 +26,134 @@ type PlcSheetItem = {
   address: number;
   start: number;
   size: number;
+  status: number;
+  lastFetchTime: number;
+  value: string;
+};
+
+type removeParams = {
+  device_uuid: string;
+  uuids: string[];
+};
+
+type UpdateParams = Partial<PlcSheetItem> & {
+  device_uuid?: string;
 };
 
 const PlcSheet = () => {
+  const { deviceId } = useParams();
+  const actionRef = useRef<ActionType>();
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
-  const [dataSource, setDataSource] = useState<readonly PlcSheetItem[]>([]);
+  const [dataSource, setDataSource] = useState<readonly Partial<PlcSheetItem>[]>([]);
   const [hide, setHide] = useState<boolean>(false);
 
-  const columns: ProColumns<PlcSheetItem>[] = [
+  const disabled = selectedRowKeys?.length === 0;
+
+  const handleOnReset = () => {
+    actionRef.current?.reload();
+    setSelectedRowKeys([]);
+  };
+
+  // 删除点位表
+  const { run: remove } = useRequest(
+    (params: removeParams) => deleteModbusDataSheetDelIds(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        handleOnReset();
+        message.success('删除成功');
+      },
+    },
+  );
+
+  // 更新点位表
+  const { run: update } = useRequest(
+    (params: UpdateParams[]) => postModbusDataSheetUpdate(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        handleOnReset();
+        setEditableRowKeys([]);
+        message.success('更新成功');
+      },
+    },
+  );
+
+  // 批量更新
+  const handleOnBatchUpdate = () => {
+    const updateData = dataSource?.filter((row) => row?.uuid && selectedRowKeys.includes(row?.uuid));
+    update(updateData);
+  };
+
+  // 单个更新
+  const handleOnSave = async (rowKey: RecordKey, data: Partial<PlcSheetItem>) => {
+    let params = {
+      ...omit(data, ['index']),
+      device_uuid: deviceId,
+    };
+
+    if (rowKey === 'new') {
+      params = {
+        ...omit(params, ['uuid']),
+      };
+
+      update([params]);
+      // 新增
+    } else {
+      // 编辑
+      update([params]);
+    }
+  };
+
+  // 批量删除
+  const handleOnBatchDelete = () => {
+    const uuids = selectedRowKeys as string[];
+    if (uuids && deviceId) {
+      const params = {
+        device_uuid: deviceId,
+        uuids,
+      };
+      remove(params);
+    }
+  };
+
+  // 导入点位表
+  const { run: upload } = useRequest(
+    (file: File) => postModbusDataSheetSheetImport({ device_uuid: deviceId || '' }, file),
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('上传成功');
+        actionRef.current?.reload();
+      },
+    },
+  );
+  // 导出点位表
+  const { run: download } = useRequest(
+    (params: API.getModbusDataSheetSheetExportParams) =>
+    getModbusDataSheetSheetExport(params),
+    {
+      manual: true,
+      onSuccess: () => message.success('导出成功'),
+    },
+  );
+
+  const columns: ProColumns<Partial<PlcSheetItem>>[] = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      width: 50,
+      render: (index) => {
+        return (
+          <div className="text-[12px] text-[#fff] rounded-full w-[18px] h-[18px] bg-[#979797]">
+            {index}
+          </div>
+        );
+      },
+    },
     {
       title: '数据标签',
       dataIndex: 'tag',
@@ -118,6 +250,27 @@ const PlcSheet = () => {
       },
     },
     {
+      title: '最新值',
+      dataIndex: 'value',
+      editable: false
+    },
+    {
+      title: '点位状态',
+      dataIndex: 'status',
+      editable: false,
+      renderText(_, record) {
+        if (!record?.status) return '-';
+        const isSuccess = record?.status === 1;
+        return <Tag color={isSuccess ? 'success' : 'error'}>{isSuccess ? '正常' : '异常'}</Tag>
+      },
+    },
+    {
+      title: '采集时间',
+      dataIndex: 'lastFetchTime',
+      valueType: 'dateTime',
+      editable: false
+    },
+    {
       title: '操作',
       valueType: 'option',
       width: 150,
@@ -126,10 +279,10 @@ const PlcSheet = () => {
           key="copy"
           record={{
             ...record,
-            uuid: 'copy',
+            uuid: 'new',
           }}
         >
-          <a>复制此项到末尾</a>
+          <a>复制</a>
         </EditableProTable.RecordCreator>,
         <a
           key="editable"
@@ -140,63 +293,118 @@ const PlcSheet = () => {
         >
           编辑
         </a>,
-        <a
-          key="delete"
-          onClick={() => {
-            // TODO 删除
-            setDataSource(dataSource.filter((item) => item.uuid !== record.uuid));
+        <Popconfirm
+          title="确定要删除该点位?"
+          onConfirm={() => {
+            if (deviceId && record?.uuid) {
+              remove({ device_uuid: deviceId, uuids: [record?.uuid] });
+            }
           }}
+          okText="是"
+          cancelText="否"
+          key="remove"
         >
-          删除
-        </a>,
+          <a>删除</a>
+        </Popconfirm>,
       ],
     },
   ];
 
   return (
-    <EditableProTable<PlcSheetItem>
+    <EditableProTable<Partial<PlcSheetItem>>
+      controlled
       rowKey="uuid"
+      actionRef={actionRef}
+      columns={columns}
+      value={dataSource}
+      onChange={setDataSource}
+      rootClassName='sheet-table'
       recordCreatorProps={{
-        position: 'bottom',
+        position: 'top',
         creatorButtonText: '添加点位',
         record: () => ({
           ...defaultBlocksConfig,
           uuid: 'new',
         }),
       }}
+      rowSelection={{
+        selectedRowKeys: selectedRowKeys,
+        onChange: (keys) => {
+          setSelectedRowKeys(keys);
+        },
+      }}
       toolBarRender={() => [
-        <Button key="upload" type="primary" icon={<DownloadOutlined />}>
-          导入点位表
-        </Button>,
+        <Upload
+          key="upload"
+          accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          showUploadList={false}
+          onChange={async ({ file }) => {
+            if (file.status === 'done' && file.originFileObj) {
+              upload(file.originFileObj);
+            }
+          }}
+        >
+          <Button type="primary" icon={<DownloadOutlined />}>
+            导入点位表
+          </Button>
+        </Upload>,
         <Button
           key="batch-update"
           type="primary"
-          icon={<IconFont type="icon-batch-create" className="text-[16px]" />}
+          icon={
+            <IconFont
+              type={disabled ? 'icon-batch-create-disabled' : 'icon-batch-create'}
+              className="text-[16px]"
+            />
+          }
+          onClick={handleOnBatchUpdate}
+          disabled={disabled}
         >
           批量更新
         </Button>,
-        <Button key="batch-remove" danger icon={<DeleteOutlined />}>
+        <Button
+          key="batch-remove"
+          danger
+          icon={<DeleteOutlined />}
+          disabled={disabled}
+          onClick={() =>
+            modal.confirm({
+              title: '批量删除点位',
+              content: '该操作会一次性删除多个点位，请谨慎处理!',
+              onOk: handleOnBatchDelete,
+            })
+          }
+        >
           批量删除
         </Button>,
-        <Button key="download" icon={<UploadOutlined />}>
+        <Button
+          key="download"
+          icon={<UploadOutlined />}
+          onClick={() => deviceId && download({ device_uuid: deviceId })}
+        >
           导出点位表
         </Button>,
       ]}
-      columns={columns}
-      request={async () => ({
-        data: [],
-        total: 3,
-        success: true,
-      })}
-      value={dataSource}
-      onChange={setDataSource}
+      request={async ({ current = 1, pageSize = 10 }) => {
+        const { data } = await getModbusDataSheetList({
+          device_uuid: deviceId,
+          current,
+          size: pageSize,
+        });
+
+        return Promise.resolve({
+          data: data?.records,
+          total: data?.total,
+          success: true,
+        });
+      }}
+      pagination={{
+        defaultPageSize: 10
+      }}
       editable={{
         type: 'multiple',
         editableKeys,
-        onSave: async (rowKey, data, row) => {
-          // TODO 保存
-          console.log(rowKey, data, row);
-        },
+        onSave: handleOnSave,
         onChange: setEditableRowKeys,
       }}
     />

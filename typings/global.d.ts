@@ -51,10 +51,10 @@ declare global {
   }
 
   // 其他
-
   type Option = {
     label: string;
     value: string;
   };
 
+  type RecordKey = React.Key | React.Key[];
 }

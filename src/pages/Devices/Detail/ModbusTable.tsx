@@ -1,16 +1,25 @@
 import { ProTable } from '@ant-design/pro-components';
+import type {ProColumns} from '@ant-design/pro-components';
 import { funcEnum } from '../SchemaForm/initialValue';
 import { getModbusDataSheetList } from '@/services/rulex/Modbusdianweiguanli';
 import { useModel } from '@umijs/max';
 
 import '../index.less';
+import type { ModbusSheetItem } from '../SpecificSheet/ModbusSheet';
 
-const columns = [
+const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
   {
     title: '序号',
     dataIndex: 'index',
-    valueType: 'indexBorder',
+    valueType: 'index',
     width: 50,
+    render: (index) => {
+      return (
+        <div className="text-[12px] text-[#fff] rounded-full w-[18px] h-[18px] bg-[#979797]">
+          {index}
+        </div>
+      );
+    },
   },
   {
     title: '数据标签',

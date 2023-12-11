@@ -11,14 +11,14 @@ import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/ic
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { EditableProTable } from '@ant-design/pro-components';
 import { useParams, useRequest } from '@umijs/max';
-import { Button, Popconfirm, Upload } from 'antd';
+import { Button, Popconfirm, Tag, Upload } from 'antd';
 import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
 import { defaultRegistersConfig, funcEnum } from '../SchemaForm/initialValue';
 
 import '../index.less';
 
-type ModbusSheetItem = {
+export type ModbusSheetItem = {
   uuid?: string;
   id?: number;
   created_at?: string;
@@ -29,6 +29,9 @@ type ModbusSheetItem = {
   slaverId: number;
   address: number;
   quantity: number;
+  status: number;
+  lastFetchTime: number;
+  value: string;
 };
 
 type removeParams = {
@@ -39,8 +42,6 @@ type removeParams = {
 type UpdateParams = Partial<ModbusSheetItem> & {
   device_uuid?: string;
 };
-
-type RecordKey = React.Key | React.Key[];
 
 const ModbusSheet = () => {
   const { deviceId } = useParams();
@@ -84,7 +85,9 @@ const ModbusSheet = () => {
 
   // 批量更新
   const handleOnBatchUpdate = () => {
-    const updateData = dataSource?.filter((row) => selectedRowKeys.includes(row?.uuid));
+    const updateData = dataSource?.filter(
+      (row) => row?.uuid && selectedRowKeys.includes(row?.uuid),
+    );
     update(updateData);
   };
 
@@ -133,8 +136,7 @@ const ModbusSheet = () => {
   );
   // 导出点位表
   const { run: download } = useRequest(
-    (params: API.getModbusDataSheetSheetExportParams) =>
-    getModbusDataSheetSheetExport(params),
+    (params: API.getModbusDataSheetSheetExportParams) => getModbusDataSheetSheetExport(params),
     {
       manual: true,
       onSuccess: () => message.success('导出成功'),
@@ -145,8 +147,15 @@ const ModbusSheet = () => {
     {
       title: '序号',
       dataIndex: 'index',
-      valueType: 'indexBorder',
+      valueType: 'index',
       width: 50,
+      render: (index) => {
+        return (
+          <div className="text-[12px] text-[#fff] rounded-full w-[18px] h-[18px] bg-[#979797]">
+            {index}
+          </div>
+        );
+      },
     },
     {
       title: '数据标签',
@@ -242,6 +251,27 @@ const ModbusSheet = () => {
       },
     },
     {
+      title: '最新值',
+      dataIndex: 'value',
+      editable: false
+    },
+    {
+      title: '点位状态',
+      dataIndex: 'status',
+      editable: false,
+      renderText(_, record) {
+        if (!record?.status) return '-';
+        const isSuccess = record?.status === 1;
+        return <Tag color={isSuccess ? 'success' : 'error'}>{isSuccess ? '正常' : '异常'}</Tag>
+      },
+    },
+    {
+      title: '采集时间',
+      dataIndex: 'lastFetchTime',
+      valueType: 'dateTime',
+      editable: false
+    },
+    {
       title: '操作',
       valueType: 'option',
       width: 150,
@@ -289,7 +319,7 @@ const ModbusSheet = () => {
       columns={columns}
       value={dataSource}
       onChange={setDataSource}
-      rootClassName='sheet-table'
+      rootClassName="sheet-table"
       recordCreatorProps={{
         position: 'top',
         creatorButtonText: '添加点位',
@@ -370,7 +400,7 @@ const ModbusSheet = () => {
         });
       }}
       pagination={{
-        defaultPageSize: 10
+        defaultPageSize: 10,
       }}
       editable={{
         type: 'multiple',

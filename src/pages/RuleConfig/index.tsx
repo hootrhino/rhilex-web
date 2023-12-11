@@ -24,10 +24,12 @@ type RuleConfigProps = {
   dataSource: RuleItem[];
   type: RuleType;
   typeId: string;
+  pageTitle: string;
   refresh: () => void;
+  onBack: () => void;
 };
 
-const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
+const RuleConfig = ({ dataSource, type, typeId, pageTitle, refresh, onBack }: RuleConfigProps) => {
   const { groupId } = useParams();
   const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({ open: false, type: 'detail', uuid: '' });
   const [debugConfig, setDebugConfig] = useState<DetailModalConfig>({
@@ -121,7 +123,7 @@ const RuleConfig = ({ dataSource, type, typeId, refresh }: RuleConfigProps) => {
 
   return (
     <>
-      <PageContainer onBack={() => history.push('/device/list')}>
+      <PageContainer onBack={onBack} title={pageTitle ? pageTitle : '规则配置'}>
         <ProTable
           rowKey="uuid"
           columns={columns}

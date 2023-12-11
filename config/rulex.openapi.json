@@ -10828,8 +10828,31 @@
                               },
                               "quantity": {
                                 "type": "integer"
+                              },
+                              "status": {
+                                "type": "integer"
+                              },
+                              "lastFetchTime": {
+                                "type": "integer"
+                              },
+                              "value": {
+                                "type": "string"
                               }
                             },
+                            "required": [
+                              "uuid",
+                              "device_uuid",
+                              "tag",
+                              "alias",
+                              "function",
+                              "slaverId",
+                              "address",
+                              "frequency",
+                              "quantity",
+                              "status",
+                              "lastFetchTime",
+                              "value"
+                            ],
                             "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "uuid",
@@ -10840,7 +10863,10 @@
                               "slaverId",
                               "address",
                               "frequency",
-                              "quantity"
+                              "quantity",
+                              "status",
+                              "lastFetchTime",
+                              "value"
                             ]
                           }
                         }
@@ -10881,18 +10907,35 @@
                       "data": {
                         "current": 1,
                         "size": 2,
-                        "total": 1,
+                        "total": 18,
                         "records": [
                           {
-                            "uuid": "MDTBHMPBQKAR",
+                            "uuid": "MDTB5RMGMESG",
                             "device_uuid": "DEVICETWRRCW",
-                            "tag": "a11-new111111",
+                            "tag": "a11-new11111111",
                             "alias": "a111",
                             "function": 3,
                             "slaverId": 10,
                             "address": 10,
                             "frequency": 100,
-                            "quantity": 2
+                            "quantity": 2,
+                            "status": 1,
+                            "lastFetchTime": 1702279278512,
+                            "value": "00000000"
+                          },
+                          {
+                            "uuid": "MDTB5ZAZZHWC",
+                            "device_uuid": "DEVICETWRRCW",
+                            "tag": "a11-new1111111",
+                            "alias": "a111",
+                            "function": 3,
+                            "slaverId": 10,
+                            "address": 10,
+                            "frequency": 100,
+                            "quantity": 2,
+                            "status": 1,
+                            "lastFetchTime": 1702279278512,
+                            "value": "00000000"
                           }
                         ]
                       }
@@ -11300,10 +11343,5 @@
     },
     "securitySchemes": {}
   },
-  "servers": [
-    {
-      "url": "http://127.0.0.1:2580",
-      "description": "本机环境"
-    }
-  ]
+  "servers": []
 }
