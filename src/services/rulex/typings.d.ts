@@ -125,14 +125,14 @@ declare namespace API {
     uuid: string;
   };
 
-  type getModbusDataSheet_openAPI_exportParams = {
-    device_uuid: string;
-  };
-
   type getModbusDataSheetListParams = {
     device_uuid?: string;
     current?: number;
     size?: number;
+  };
+
+  type getModbusDataSheetSheetExportParams = {
+    device_uuid: string;
   };
 
   type getOutendsDetailParams = {

@@ -2,6 +2,8 @@ import { message, modal } from '@/components/PopupHack';
 import {
   deleteModbusDataSheetDelIds,
   getModbusDataSheetList,
+  getModbusDataSheetSheetExport,
+  postModbusDataSheetSheetImport,
   postModbusDataSheetUpdate,
 } from '@/services/rulex/Modbusdianweiguanli';
 import { IconFont } from '@/utils/utils';
@@ -9,10 +11,12 @@ import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/ic
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { EditableProTable } from '@ant-design/pro-components';
 import { useParams, useRequest } from '@umijs/max';
-import { Button, Popconfirm } from 'antd';
+import { Button, Popconfirm, Upload } from 'antd';
 import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
 import { defaultRegistersConfig, funcEnum } from '../SchemaForm/initialValue';
+
+import './index.less';
 
 type ModbusSheetItem = {
   uuid?: string;
@@ -116,7 +120,34 @@ const ModbusSheet = () => {
     }
   };
 
+  // 导入点位表
+  const { run: upload } = useRequest(
+    (file: File) => postModbusDataSheetSheetImport({ device_uuid: deviceId || '' }, file),
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('上传成功');
+        actionRef.current?.reload();
+      },
+    },
+  );
+  // 导出点位表
+  const { run: download } = useRequest(
+    (params: API.getModbusDataSheetSheetExportParams) =>
+    getModbusDataSheetSheetExport(params),
+    {
+      manual: true,
+      onSuccess: () => message.success('导出成功'),
+    },
+  );
+
   const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'indexBorder',
+      width: 50,
+    },
     {
       title: '数据标签',
       dataIndex: 'tag',
@@ -258,6 +289,7 @@ const ModbusSheet = () => {
       columns={columns}
       value={dataSource}
       onChange={setDataSource}
+      rootClassName='sheet-table'
       recordCreatorProps={{
         position: 'top',
         creatorButtonText: '添加点位',
@@ -273,9 +305,20 @@ const ModbusSheet = () => {
         },
       }}
       toolBarRender={() => [
-        <Button key="upload" type="primary" icon={<DownloadOutlined />}>
-          导入点位表
-        </Button>,
+        <Upload
+          key="upload"
+          accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          showUploadList={false}
+          onChange={async ({ file }) => {
+            if (file.status === 'done' && file.originFileObj) {
+              upload(file.originFileObj);
+            }
+          }}
+        >
+          <Button type="primary" icon={<DownloadOutlined />}>
+            导入点位表
+          </Button>
+        </Upload>,
         <Button
           key="batch-update"
           type="primary"
@@ -305,7 +348,11 @@ const ModbusSheet = () => {
         >
           批量删除
         </Button>,
-        <Button key="download" icon={<UploadOutlined />}>
+        <Button
+          key="download"
+          icon={<UploadOutlined />}
+          onClick={() => deviceId && download({ device_uuid: deviceId })}
+        >
           导出点位表
         </Button>,
       ]}
@@ -323,8 +370,7 @@ const ModbusSheet = () => {
         });
       }}
       pagination={{
-        // current: 1,
-        // pageSize: 10
+        defaultPageSize: 10
       }}
       editable={{
         type: 'multiple',

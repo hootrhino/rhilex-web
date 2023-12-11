@@ -10676,7 +10676,7 @@
         "security": []
       }
     },
-    "/api/v1/modbus_data_sheet/import": {
+    "/api/v1/modbus_data_sheet/sheetImport": {
       "post": {
         "summary": "导入点位表",
         "x-apifox-folder": "Modbus点位管理",
@@ -11133,7 +11133,7 @@
         "security": []
       }
     },
-    "/api/v1/modbus_data_sheet/export": {
+    "/api/v1/modbus_data_sheet/sheetExport": {
       "get": {
         "summary": "导出点表",
         "x-apifox-folder": "Modbus点位管理",
@@ -11300,5 +11300,10 @@
     },
     "securitySchemes": {}
   },
-  "servers": []
+  "servers": [
+    {
+      "url": "http://127.0.0.1:2580",
+      "description": "本机环境"
+    }
+  ]
 }

@@ -23,54 +23,6 @@ export async function deleteModbusDataSheetDelIds(
   );
 }
 
-/** 导出点表 GET /api/v1/modbus_data_sheet/export */
-export async function getModbusDataSheet__openAPI__export(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getModbusDataSheet_openAPI_exportParams,
-  options?: { [key: string]: any },
-) {
-  return request<Record<string, any>>('/api/v1/modbus_data_sheet/export', {
-    method: 'GET',
-    params: {
-      ...params,
-    },
-    ...(options || {}),
-  });
-}
-
-/** 导入点位表 POST /api/v1/modbus_data_sheet/import */
-export async function postModbusDataSheet__openAPI__import(
-  body: {
-    device_uuid: string;
-  },
-  file?: File,
-  options?: { [key: string]: any },
-) {
-  const formData = new FormData();
-
-  if (file) {
-    formData.append('file', file);
-  }
-
-  Object.keys(body).forEach((ele) => {
-    const item = (body as any)[ele];
-
-    if (item !== undefined && item !== null) {
-      formData.append(
-        ele,
-        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
-      );
-    }
-  });
-
-  return request<Record<string, any>>('/api/v1/modbus_data_sheet/import', {
-    method: 'POST',
-    data: formData,
-    requestType: 'form',
-    ...(options || {}),
-  });
-}
-
 /** 分页查看点位表 GET /api/v1/modbus_data_sheet/list */
 export async function getModbusDataSheetList(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
@@ -101,6 +53,54 @@ export async function getModbusDataSheetList(
     params: {
       ...params,
     },
+    ...(options || {}),
+  });
+}
+
+/** 导出点表 GET /api/v1/modbus_data_sheet/sheetExport */
+export async function getModbusDataSheetSheetExport(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getModbusDataSheetSheetExportParams,
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/api/v1/modbus_data_sheet/sheetExport', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 导入点位表 POST /api/v1/modbus_data_sheet/sheetImport */
+export async function postModbusDataSheetSheetImport(
+  body: {
+    device_uuid: string;
+  },
+  file?: File,
+  options?: { [key: string]: any },
+) {
+  const formData = new FormData();
+
+  if (file) {
+    formData.append('file', file);
+  }
+
+  Object.keys(body).forEach((ele) => {
+    const item = (body as any)[ele];
+
+    if (item !== undefined && item !== null) {
+      formData.append(
+        ele,
+        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
+      );
+    }
+  });
+
+  return request<Record<string, any>>('/api/v1/modbus_data_sheet/sheetImport', {
+    method: 'POST',
+    data: formData,
+    requestType: 'form',
     ...(options || {}),
   });
 }
