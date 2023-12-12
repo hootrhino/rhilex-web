@@ -1,3 +1,4 @@
+import UnitTitle from '@/components/UnitTitle';
 import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from './initialValue';
 
 export const columns = [
@@ -100,7 +101,7 @@ export const columns = [
                       hideInForm: type !== 'S1200PLC',
                     },
                     {
-                      title: '连接超时时间（毫秒）',
+                      title: <UnitTitle title='连接超时时间' />,
                       dataIndex: 'timeout',
                       valueType: 'digit',
                       required: true,
@@ -118,7 +119,7 @@ export const columns = [
                         valueType: 'group',
                         columns: [
                           {
-                            title: '心跳超时时间（毫秒）',
+                            title: <UnitTitle title='心跳超时时间' />,
                             dataIndex: 'idleTimeout',
                             valueType: 'digit',
                             required: true,
@@ -182,7 +183,7 @@ export const columns = [
                         valueType: 'group',
                         columns: [
                           {
-                            title: '超时时间（毫秒）',
+                            title: <UnitTitle title='超时时间' />,
                             dataIndex: 'timeout',
                             valueType: 'digit',
                             required: true,

@@ -15,6 +15,7 @@ import { AutoComplete, Card } from 'antd';
 import { useEffect, useRef } from 'react';
 import type { InterfaceItem } from '.';
 import { baudRateEnum, dataBitsEnum, parityEnum, stopBitsEnum, typeOptions } from './constant';
+import UnitTitle from '@/components/UnitTitle';
 
 type UpdateProps = ModalFormProps<any> & {
   uuid: string;
@@ -116,7 +117,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
         <ProForm.Group>
           <ProFormDigit
             name="timeout"
-            label="超时时间（毫秒）"
+            label={<UnitTitle title='超时时间' />}
             width="sm"
             placeholder="请输入超时时间"
             rules={[{ required: true, message: '请输入超时时间' }]}

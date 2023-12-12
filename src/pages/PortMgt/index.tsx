@@ -7,6 +7,7 @@ import { Button, Card, Descriptions, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
 import { parityEnum, typeOptions } from './constant';
 import Update from './Update';
+import UnitTitle from '@/components/UnitTitle';
 
 export type InterfaceItem = {
   uuid?: string;
@@ -78,7 +79,7 @@ const Interface = () => {
         return (
           <Card bodyStyle={{ padding: '16px 18px' }}>
             <Descriptions column={1} labelStyle={{ width: 130, justifyContent: 'flex-end' }}>
-              <Descriptions.Item label="超时时间（毫秒）">{timeout}</Descriptions.Item>
+              <Descriptions.Item label={<UnitTitle title='超时时间' />}>{timeout}</Descriptions.Item>
               <Descriptions.Item label="波特率">{baudRate}</Descriptions.Item>
               <Descriptions.Item label="数据位">{dataBits}</Descriptions.Item>
               <Descriptions.Item label="奇偶校验">{parityEnum[parity]}</Descriptions.Item>

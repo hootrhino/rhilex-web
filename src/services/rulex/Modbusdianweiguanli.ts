@@ -111,16 +111,19 @@ export async function postModbusDataSheetSheetImport(
 /** 更新点位表 POST /api/v1/modbus_data_sheet/update */
 export async function postModbusDataSheetUpdate(
   body: {
-    uuid?: string;
-    device_uuid?: string;
-    tag?: string;
-    alias?: string;
-    function?: number;
-    address?: number;
-    frequency?: number;
-    quantity?: number;
-    slaverId?: number;
-  }[],
+    device_uuid: string;
+    modbus_data_points: {
+      uuid?: string;
+      device_uuid?: string;
+      tag?: string;
+      alias?: string;
+      function?: number;
+      slaverId?: number;
+      address?: number;
+      frequency?: number;
+      quantity?: number;
+    }[];
+  },
   options?: { [key: string]: any },
 ) {
   return request<{ code: number; msg: string; data: string[] }>(

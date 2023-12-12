@@ -10968,65 +10968,85 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "uuid": {
-                      "type": "string"
-                    },
-                    "device_uuid": {
-                      "type": "string"
-                    },
-                    "tag": {
-                      "type": "string"
-                    },
-                    "alias": {
-                      "type": "string"
-                    },
-                    "function": {
-                      "type": "integer"
-                    },
-                    "address": {
-                      "type": "integer"
-                    },
-                    "frequency": {
-                      "type": "integer"
-                    },
-                    "quantity": {
-                      "type": "integer"
-                    },
-                    "slaverId": {
-                      "type": "integer"
-                    }
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
                   },
-                  "x-apifox-orders": [
-                    "uuid",
-                    "device_uuid",
-                    "tag",
-                    "alias",
-                    "function",
-                    "address",
-                    "frequency",
-                    "quantity",
-                    "slaverId"
-                  ],
-                  "x-apifox-ignore-properties": []
-                }
+                  "modbus_data_points": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "device_uuid": {
+                          "type": "string"
+                        },
+                        "tag": {
+                          "type": "string"
+                        },
+                        "alias": {
+                          "type": "string"
+                        },
+                        "function": {
+                          "type": "integer"
+                        },
+                        "slaverId": {
+                          "type": "integer"
+                        },
+                        "address": {
+                          "type": "integer"
+                        },
+                        "frequency": {
+                          "type": "integer"
+                        },
+                        "quantity": {
+                          "type": "integer"
+                        }
+                      },
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "uuid",
+                        "device_uuid",
+                        "tag",
+                        "alias",
+                        "function",
+                        "slaverId",
+                        "address",
+                        "frequency",
+                        "quantity"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "modbus_data_points"
+                ],
+                "x-apifox-ignore-properties": [],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "modbus_data_points"
+                ]
               },
-              "example": [
-                {
-                  "uuid": "MDTBHMPBQKAR",
-                  "device_uuid": "DEVICETWRRCW",
-                  "tag": "a11-new111111",
-                  "alias": "a111",
-                  "function": 3,
-                  "slaverId": 10,
-                  "address": 10,
-                  "frequency": 100,
-                  "quantity": 2
-                }
-              ]
+              "example": {
+                "device_uuid": "DEVICETWRRCW",
+                "modbus_data_points": [
+                  {
+                    "uuid": "MDTBHMPBQKAR",
+                    "device_uuid": "DEVICETWRRCW",
+                    "tag": "a11-new111111",
+                    "alias": "a111",
+                    "function": 3,
+                    "slaverId": 10,
+                    "address": 10,
+                    "frequency": 100,
+                    "quantity": 2
+                  }
+                ]
+              }
             }
           }
         },
@@ -11654,78 +11674,80 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "uuid": {
-                      "type": "string"
-                    },
-                    "device_uuid": {
-                      "type": "string"
-                    },
-                    "tag": {
-                      "type": "string"
-                    },
-                    "alias": {
-                      "type": "string"
-                    },
-                    "address": {
-                      "type": "integer"
-                    },
-                    "frequency": {
-                      "type": "integer"
-                    },
-                    "type": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "start": {
-                      "type": "integer"
-                    },
-                    "size": {
-                      "type": "integer"
-                    }
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
                   },
-                  "x-apifox-orders": [
-                    "uuid",
-                    "device_uuid",
-                    "tag",
-                    "alias",
-                    "address",
-                    "frequency",
-                    "type",
-                    "start",
-                    "size"
-                  ],
-                  "required": [
-                    "device_uuid",
-                    "tag",
-                    "alias",
-                    "address",
-                    "frequency",
-                    "start",
-                    "size"
-                  ],
-                  "x-apifox-ignore-properties": []
-                }
+                  "siemens_data_points": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "device_uuid": {
+                          "type": "string"
+                        },
+                        "tag": {
+                          "type": "string"
+                        },
+                        "alias": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "frequency": {
+                          "type": "integer"
+                        },
+                        "address": {
+                          "type": "integer"
+                        },
+                        "start": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        }
+                      },
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "device_uuid",
+                        "tag",
+                        "alias",
+                        "type",
+                        "frequency",
+                        "address",
+                        "start",
+                        "size"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "siemens_data_points"
+                ],
+                "x-apifox-ignore-properties": [],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "siemens_data_points"
+                ]
               },
-              "example": [
-                {
-                  "uuid": "SIMTBHYDCYKBL",
-                  "device_uuid": "DEVICER27H4F7Q",
-                  "tag": "a11",
-                  "alias": "a11",
-                  "type": "",
-                  "frequency": 100,
-                  "address": 0,
-                  "start": null,
-                  "size": null,
-                  "status": 1,
-                  "lastFetchTime": 1702284745550,
-                  "value": "00000000"
-                }
-              ]
+              "example": {
+                "device_uuid": "DEVICER27H4F7Q",
+                "siemens_data_points": [
+                  {
+                    "device_uuid": "DEVICER27H4F7Q",
+                    "tag": "a111",
+                    "alias": "a111",
+                    "type": "ABC",
+                    "frequency": 100,
+                    "address": 0,
+                    "start": 0,
+                    "size": 1
+                  }
+                ]
+              }
             }
           }
         },

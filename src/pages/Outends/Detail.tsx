@@ -7,6 +7,7 @@ import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
 import { allowPingEnum, modeEnum, typeEnum } from './Update/initialValue';
+import UnitTitle from '@/components/UnitTitle';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -78,7 +79,7 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
   ],
   UDP_TARGET: [
     {
-      title: '超时时间（毫秒）',
+      title: <UnitTitle title='超时时间' />,
       dataIndex: 'timeout',
     },
     {
@@ -109,7 +110,7 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
       dataIndex: 'pingPacket',
     },
     {
-      title: '超时时间（毫秒）',
+      title: <UnitTitle title='超时时间' />,
       dataIndex: 'timeout',
     },
     {

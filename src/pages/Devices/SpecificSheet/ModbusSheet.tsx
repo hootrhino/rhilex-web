@@ -16,6 +16,8 @@ import { useRef, useState } from 'react';
 import { defaultRegistersConfig, funcEnum } from '../SchemaForm/initialValue';
 
 import '../index.less';
+import UnitTitle from '@/components/UnitTitle';
+import IndexBorder from '@/components/IndexBorder';
 
 export type ModbusSheetItem = {
   uuid?: string;
@@ -38,8 +40,13 @@ type removeParams = {
   uuids: string[];
 };
 
-type UpdateParams = Partial<ModbusSheetItem> & {
+type Point = Partial<ModbusSheetItem> & {
   device_uuid?: string;
+}
+
+type UpdateParams = {
+  device_uuid: string;
+  modbus_data_points: Point[]
 };
 
 const ModbusSheet = () => {
@@ -71,7 +78,7 @@ const ModbusSheet = () => {
 
   // 更新点位表
   const { run: update } = useRequest(
-    (params: UpdateParams[]) => postModbusDataSheetUpdate(params),
+    (params: UpdateParams) => postModbusDataSheetUpdate(params),
     {
       manual: true,
       onSuccess: () => {
@@ -87,7 +94,7 @@ const ModbusSheet = () => {
     const updateData = dataSource?.filter(
       (row) => row?.uuid && selectedRowKeys.includes(row?.uuid),
     );
-    update(updateData);
+    update({device_uuid: deviceId || '', modbus_data_points: updateData});
   };
 
   // 单个更新
@@ -102,12 +109,9 @@ const ModbusSheet = () => {
         ...omit(params, ['uuid']),
       };
 
-      update([params]);
-      // 新增
-    } else {
-      // 编辑
-      update([params]);
+
     }
+    update({device_uuid: deviceId || '', modbus_data_points: [params]});
   };
 
   // 批量删除
@@ -140,13 +144,7 @@ const ModbusSheet = () => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      render: (index) => {
-        return (
-          <div className="text-[12px] text-[#fff] rounded-full w-[18px] h-[18px] bg-[#979797]">
-            {index}
-          </div>
-        );
-      },
+      render: (text, record, index) => <IndexBorder serial={index} />,
     },
     {
       title: '数据标签',
@@ -193,11 +191,7 @@ const ModbusSheet = () => {
       },
     },
     {
-      title: (
-        <div>
-          采集频率<span className="text-[12px] opacity-[.8] pl-[5px] font-normal">(毫秒)</span>
-        </div>
-      ),
+      title: <UnitTitle title='采集频率' />,
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
@@ -419,6 +413,7 @@ const ModbusSheet = () => {
       }}
       pagination={{
         defaultPageSize: 10,
+        hideOnSinglePage: true
       }}
       editable={{
         type: 'multiple',

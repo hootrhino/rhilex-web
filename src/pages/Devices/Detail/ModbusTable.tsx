@@ -6,6 +6,8 @@ import { funcEnum } from '../SchemaForm/initialValue';
 
 import '../index.less';
 import type { ModbusSheetItem } from '../SpecificSheet/ModbusSheet';
+import IndexBorder from '@/components/IndexBorder';
+import UnitTitle from '@/components/UnitTitle';
 
 const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
   {
@@ -13,13 +15,7 @@ const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
     dataIndex: 'index',
     valueType: 'index',
     width: 50,
-    render: (index) => {
-      return (
-        <div className="text-[12px] text-[#fff] rounded-full w-[18px] h-[18px] bg-[#979797]">
-          {index}
-        </div>
-      );
-    },
+    render: (text, record, index) => <IndexBorder serial={index} />,
   },
   {
     title: '数据标签',
@@ -35,11 +31,7 @@ const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
     valueEnum: funcEnum,
   },
   {
-    title: (
-      <div>
-        采集频率<span className="text-[12px] opacity-[.8] pl-[5px] font-normal">(毫秒)</span>
-      </div>
-    ),
+    title: <UnitTitle title='采集频率' />,
     dataIndex: 'frequency',
     valueType: 'digit',
   },
@@ -67,7 +59,7 @@ const ModbusTable = () => {
       columns={columns}
       search={false}
       options={false}
-      pagination={{ defaultPageSize: 10 }}
+      pagination={{ defaultPageSize: 10, hideOnSinglePage: true }}
       request={async ({ current = 1, pageSize = 10 }) => {
         const { data } = await getModbusDataSheetList({
           device_uuid: detail?.uuid,

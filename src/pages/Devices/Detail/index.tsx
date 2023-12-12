@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from '../SchemaForm/initialValue';
 import ModbusTable from './ModbusTable';
 import PlcTable from './PlcTable';
+import UnitTitle from '@/components/UnitTitle';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -36,7 +37,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     getDetail: getPortDetail,
   } = useModel('usePort');
 
-  const { type, config } = detail || { type: '' };
+  const { type = 'GENERIC_PROTOCOL', config } = detail || {};
   const { commonConfig, hostConfig, portUuid } = config || { registers: [] };
   const { mode, model } = commonConfig || {};
 
@@ -86,7 +87,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         dataIndex: 'parseAis',
         hideInDescriptions: type !== 'GENERIC_AIS_RECEIVER',
         renderText: (parseAis) => (
-          <Tag color={parseAis ? 'process' : 'default'}>{parseAis ? '解析' : '不解析'}</Tag>
+          <Tag color={parseAis ? 'processing' : 'default'}>{parseAis ? '解析' : '不解析'}</Tag>
         ),
       },
       {
@@ -112,12 +113,12 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         hideInDescriptions: type !== 'S1200PLC',
       },
       {
-        title: '连接超时时间(ms)',
+        title: <UnitTitle title='连接超时时间' />,
         dataIndex: 'timeout',
         hideInDescriptions: type !== 'S1200PLC',
       },
       {
-        title: '心跳超时时间(ms)',
+        title: <UnitTitle title='心跳超时时间' />,
         dataIndex: 'idleTimeout',
         hideInDescriptions: type !== 'S1200PLC',
       },
@@ -136,7 +137,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     ],
     HOST: [
       {
-        title: '超时时间(ms)',
+        title: <UnitTitle title='超时时间' />,
         dataIndex: 'timeout',
       },
       {
@@ -170,7 +171,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       ) : (
         <>
           <EnhancedProDescriptions
-            title="基本信息"
+            title="基本配置"
             dataSource={omit(detail, 'config')}
             columns={columnsMap['BASE']}
             loading={detailLoading}
@@ -178,7 +179,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
           {type && Object.keys(typeEnum).includes(type) && (
             <>
               <EnhancedProDescriptions
-                title="通用信息"
+                title="通用配置"
                 dataSource={commonConfig}
                 columns={columnsMap['COMMON']}
               />
@@ -209,16 +210,10 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
                   columns={columnsMap['HOST']}
                 />
               )}
-              {type === 'GENERIC_MODBUS' && (
+              {['GENERIC_MODBUS', 'S1200PLC'].includes(type) && (
                 <>
                   <ProDescriptions title="点位表配置" />
-                  <ModbusTable />
-                </>
-              )}
-              {type === 'S1200PLC' && (
-                <>
-                  <ProDescriptions title="点位表配置" />
-                  <PlcTable />
+                  {type === 'GENERIC_MODBUS' ? <ModbusTable /> : <PlcTable />}
                 </>
               )}
             </>

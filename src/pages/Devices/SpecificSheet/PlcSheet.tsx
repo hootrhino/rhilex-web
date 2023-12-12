@@ -16,6 +16,8 @@ import {
   postS1200DataSheetUpdate,
 } from '@/services/rulex/ximenzidianweiguanli';
 import '../index.less';
+import UnitTitle from '@/components/UnitTitle';
+import IndexBorder from '@/components/IndexBorder';
 
 export type PlcSheetItem = {
   uuid?: string;
@@ -36,8 +38,13 @@ type removeParams = {
   uuids: string[];
 };
 
-type UpdateParams = Omit<PlcSheetItem, 'status' | 'lastFetchTime' | 'value'> & {
+type Point = Omit<PlcSheetItem, 'status' | 'lastFetchTime' | 'value'> & {
   device_uuid?: string;
+}
+
+type UpdateParams = {
+  device_uuid: string;
+  siemens_data_points: Partial<Point>[];
 };
 
 const PlcSheet = () => {
@@ -67,7 +74,7 @@ const PlcSheet = () => {
 
   // 更新点位表
   const { run: update } = useRequest(
-    (params: Partial<UpdateParams>[]) => postS1200DataSheetUpdate(params),
+    (params: UpdateParams) => postS1200DataSheetUpdate(params),
     {
       manual: true,
       onSuccess: () => {
@@ -83,7 +90,7 @@ const PlcSheet = () => {
     const updateData = dataSource?.filter(
       (row) => row?.uuid && selectedRowKeys.includes(row?.uuid),
     );
-    update(updateData);
+    update({device_uuid: deviceId || '', siemens_data_points: updateData});
   };
 
   // 单个更新
@@ -104,12 +111,8 @@ const PlcSheet = () => {
         ...omit(params, ['uuid']),
       };
 
-      update([params]);
-      // 新增
-    } else {
-      // 编辑
-      update([params]);
     }
+    update({device_uuid: deviceId || '', siemens_data_points: [params]});
   };
 
   // 批量删除
@@ -142,13 +145,7 @@ const PlcSheet = () => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      render: (index) => {
-        return (
-          <div className="text-[12px] text-[#fff] rounded-full w-[18px] h-[18px] bg-[#979797]">
-            {index}
-          </div>
-        );
-      },
+      render: (text, record, index) => <IndexBorder serial={index} />,
     },
     {
       title: '数据标签',
@@ -202,11 +199,7 @@ const PlcSheet = () => {
       },
     },
     {
-      title: (
-        <div>
-          采集频率<span className="text-[12px] opacity-[.8] pl-[5px] font-normal">(毫秒)</span>
-        </div>
-      ),
+      title: <UnitTitle title='采集频率' />,
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
@@ -257,11 +250,7 @@ const PlcSheet = () => {
       },
     },
     {
-      title: (
-        <div>
-          采集长度<span className="text-[12px] opacity-[.8] pl-[5px] font-normal">(字节)</span>
-        </div>
-      ),
+      title: <UnitTitle title='采集长度' unit='字节' />,
       dataIndex: 'size',
       valueType: 'digit',
       width: 120,
@@ -433,6 +422,7 @@ const PlcSheet = () => {
       }}
       pagination={{
         defaultPageSize: 10,
+        hideOnSinglePage: true
       }}
       editable={{
         type: 'multiple',

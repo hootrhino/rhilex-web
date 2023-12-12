@@ -7,6 +7,8 @@ import type { PlcSheetItem } from '../SpecificSheet/PlcSheet';
 
 import { getS1200DataSheetList } from '@/services/rulex/ximenzidianweiguanli';
 import '../index.less';
+import IndexBorder from '@/components/IndexBorder';
+import UnitTitle from '@/components/UnitTitle';
 
 const columns: ProColumns<Partial<PlcSheetItem>>[] = [
   {
@@ -15,13 +17,7 @@ const columns: ProColumns<Partial<PlcSheetItem>>[] = [
     valueType: 'index',
     width: 50,
     fixed: 'left',
-    render: (index) => {
-      return (
-        <div className="text-[12px] text-[#fff] rounded-full w-[18px] h-[18px] bg-[#979797]">
-          {index}
-        </div>
-      );
-    },
+    render: (text, record, index) => <IndexBorder serial={index} />,
   },
   {
     title: '数据标签',
@@ -39,11 +35,7 @@ const columns: ProColumns<Partial<PlcSheetItem>>[] = [
     width: 80,
   },
   {
-    title: (
-      <div>
-        采集频率<span className="text-[12px] opacity-[.8] pl-[5px] font-normal">(毫秒)</span>
-      </div>
-    ),
+    title: <UnitTitle title='采集频率' />,
     dataIndex: 'frequency',
     valueType: 'digit',
     width: 120,
@@ -59,11 +51,7 @@ const columns: ProColumns<Partial<PlcSheetItem>>[] = [
     valueType: 'digit',
   },
   {
-    title: (
-      <div>
-        采集长度<span className="text-[12px] opacity-[.8] pl-[5px] font-normal">(字节)</span>
-      </div>
-    ),
+    title: <UnitTitle title='采集长度' unit='字节' />,
     dataIndex: 'size',
     valueType: 'digit',
     width: 120,
@@ -100,7 +88,7 @@ const PlcTable = () => {
       search={false}
       options={false}
       scroll={{ x: 1400 }}
-      pagination={{ defaultPageSize: 10 }}
+      pagination={{ defaultPageSize: 10, hideOnSinglePage: true }}
       request={async ({ current = 1, pageSize = 10 }) => {
         const { data } = await getS1200DataSheetList({
           device_uuid: detail?.uuid,

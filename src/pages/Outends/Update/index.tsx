@@ -35,6 +35,7 @@ import {
   modeEnum,
   typeEnum,
 } from './initialValue';
+import UnitTitle from '@/components/UnitTitle';
 
 type UpdateFormItem = {
   name: string;
@@ -391,7 +392,7 @@ const UpdateForm = () => {
                   {type === 'UDP_TARGET' && (
                     <ProForm.Group>
                       <ProFormDigit
-                        label="超时时间（毫秒）"
+                        label={<UnitTitle title='超时时间' />}
                         name="timeout"
                         width="md"
                         placeholder="请输入超时时间（毫秒）"
@@ -445,7 +446,7 @@ const UpdateForm = () => {
                           ]}
                         />
                         <ProFormDigit
-                          label="超时时间（毫秒）"
+                          label={<UnitTitle title='超时时间' />}
                           name="timeout"
                           width="md"
                           placeholder="请输入超时时间（毫秒）"

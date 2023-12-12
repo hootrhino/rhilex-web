@@ -111,16 +111,18 @@ export async function postS1200DataSheetSheetImport(
 /** 更新点位表 POST /api/v1/s1200_data_sheet/update */
 export async function postS1200DataSheetUpdate(
   body: {
-    uuid?: string;
-    device_uuid?: string;
-    tag?: string;
-    alias?: string;
-    address?: number;
-    frequency?: number;
-    type?: string;
-    start?: number;
-    size?: number;
-  }[],
+    device_uuid: string;
+    siemens_data_points: {
+      device_uuid?: string;
+      tag?: string;
+      alias?: string;
+      type?: string;
+      frequency?: number;
+      address?: number;
+      start?: number;
+      size?: number;
+    }[];
+  },
   options?: { [key: string]: any },
 ) {
   return request<{ code: number; msg: string; data: string[] }>('/api/v1/s1200_data_sheet/update', {
