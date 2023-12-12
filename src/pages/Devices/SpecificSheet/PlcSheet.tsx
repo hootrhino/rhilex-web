@@ -12,7 +12,6 @@ import { blockTypeEnum, defaultBlocksConfig } from '../SchemaForm/initialValue';
 import {
   deleteS1200DataSheetDelIds,
   getS1200DataSheetList,
-  getS1200DataSheetSheetExport,
   postS1200DataSheetSheetImport,
   postS1200DataSheetUpdate,
 } from '@/services/rulex/ximenzidianweiguanli';
@@ -67,14 +66,17 @@ const PlcSheet = () => {
   });
 
   // 更新点位表
-  const { run: update } = useRequest((params: Partial<UpdateParams>[]) => postS1200DataSheetUpdate(params), {
-    manual: true,
-    onSuccess: () => {
-      handleOnReset();
-      setEditableRowKeys([]);
-      message.success('更新成功');
+  const { run: update } = useRequest(
+    (params: Partial<UpdateParams>[]) => postS1200DataSheetUpdate(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        handleOnReset();
+        setEditableRowKeys([]);
+        message.success('更新成功');
+      },
     },
-  });
+  );
 
   // 批量更新
   const handleOnBatchUpdate = () => {
@@ -94,7 +96,7 @@ const PlcSheet = () => {
     if (params?.type === 'MB') {
       params = {
         ...omit(params, ['address']),
-      }
+      };
     }
 
     if (rowKey === 'new') {
@@ -133,14 +135,6 @@ const PlcSheet = () => {
       },
     },
   );
-  // 导出点位表
-  const { run: download } = useRequest(
-    (params: API.getS1200DataSheetSheetExportParams) => getS1200DataSheetSheetExport(params),
-    {
-      manual: true,
-      onSuccess: () => message.success('导出成功'),
-    },
-  );
 
   const columns: ProColumns<Partial<PlcSheetItem>>[] = [
     {
@@ -164,6 +158,11 @@ const PlcSheet = () => {
           rules: [{ required: true, message: '此项为必填项' }],
         };
       },
+      fieldProps: () => {
+        return {
+          placeholder: '请输入数据标签',
+        };
+      },
     },
     {
       title: '数据别名',
@@ -171,6 +170,11 @@ const PlcSheet = () => {
       formItemProps: () => {
         return {
           rules: [{ required: true, message: '此项为必填项' }],
+        };
+      },
+      fieldProps: () => {
+        return {
+          placeholder: '请输入数据别名',
         };
       },
     },
@@ -186,6 +190,7 @@ const PlcSheet = () => {
               setHide(value === 'MB' ? true : false);
             }
           },
+          placeholder: '请选择块类型',
         };
       },
       formItemProps: () => {
@@ -201,6 +206,7 @@ const PlcSheet = () => {
       fieldProps: () => {
         return {
           style: { width: '100%' },
+          placeholder: '请输入采集频率',
         };
       },
       formItemProps: () => {
@@ -218,6 +224,7 @@ const PlcSheet = () => {
       fieldProps: () => {
         return {
           style: { width: '100%' },
+          placeholder: '请输入块地址',
         };
       },
       formItemProps: () => {
@@ -233,6 +240,7 @@ const PlcSheet = () => {
       fieldProps: () => {
         return {
           style: { width: '100%' },
+          placeholder: '请输入起始地址',
         };
       },
       formItemProps: () => {
@@ -248,6 +256,7 @@ const PlcSheet = () => {
       fieldProps: () => {
         return {
           style: { width: '100%' },
+          placeholder: '请输入采集长度',
         };
       },
       formItemProps: () => {
@@ -391,7 +400,7 @@ const PlcSheet = () => {
         <Button
           key="download"
           icon={<UploadOutlined />}
-          onClick={() => deviceId && download({ device_uuid: deviceId })}
+          onClick={() => (window.location.href = '/api/v1/s1200_data_sheet/sheetExport')}
         >
           导出点位表
         </Button>,

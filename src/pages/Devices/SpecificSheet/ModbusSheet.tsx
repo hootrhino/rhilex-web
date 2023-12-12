@@ -2,7 +2,6 @@ import { message, modal } from '@/components/PopupHack';
 import {
   deleteModbusDataSheetDelIds,
   getModbusDataSheetList,
-  getModbusDataSheetSheetExport,
   postModbusDataSheetSheetImport,
   postModbusDataSheetUpdate,
 } from '@/services/rulex/Modbusdianweiguanli';
@@ -134,14 +133,6 @@ const ModbusSheet = () => {
       },
     },
   );
-  // 导出点位表
-  const { run: download } = useRequest(
-    (params: API.getModbusDataSheetSheetExportParams) => getModbusDataSheetSheetExport(params),
-    {
-      manual: true,
-      onSuccess: () => message.success('导出成功'),
-    },
-  );
 
   const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
     {
@@ -165,6 +156,11 @@ const ModbusSheet = () => {
           rules: [{ required: true, message: '此项为必填项' }],
         };
       },
+      fieldProps: () => {
+        return {
+          placeholder: '请输入数据标签',
+        };
+      },
     },
     {
       title: '数据别名',
@@ -172,6 +168,11 @@ const ModbusSheet = () => {
       formItemProps: () => {
         return {
           rules: [{ required: true, message: '此项为必填项' }],
+        };
+      },
+      fieldProps: () => {
+        return {
+          placeholder: '请输入数据别名',
         };
       },
     },
@@ -185,6 +186,11 @@ const ModbusSheet = () => {
           rules: [{ required: true, message: '此项为必填项' }],
         };
       },
+      fieldProps: () => {
+        return {
+          placeholder: '请选择 Modbus 功能',
+        };
+      },
     },
     {
       title: '采集频率（毫秒）',
@@ -193,6 +199,7 @@ const ModbusSheet = () => {
       fieldProps: () => {
         return {
           style: { width: '100%' },
+          placeholder: '请输入采集频率',
         };
       },
       formItemProps: () => {
@@ -208,6 +215,7 @@ const ModbusSheet = () => {
       fieldProps: () => {
         return {
           style: { width: '100%' },
+          placeholder: '请输入从设备 ID',
         };
       },
       formItemProps: () => {
@@ -227,6 +235,7 @@ const ModbusSheet = () => {
       fieldProps: () => {
         return {
           style: { width: '100%' },
+          placeholder: '请输入起始地址',
         };
       },
       formItemProps: () => {
@@ -242,6 +251,7 @@ const ModbusSheet = () => {
       fieldProps: () => {
         return {
           style: { width: '100%' },
+          placeholder: '请输入读取数量',
         };
       },
       formItemProps: () => {
@@ -253,7 +263,7 @@ const ModbusSheet = () => {
     {
       title: '最新值',
       dataIndex: 'value',
-      editable: false
+      editable: false,
     },
     {
       title: '点位状态',
@@ -262,14 +272,14 @@ const ModbusSheet = () => {
       renderText(_, record) {
         if (!record?.status) return '-';
         const isSuccess = record?.status === 1;
-        return <Tag color={isSuccess ? 'success' : 'error'}>{isSuccess ? '正常' : '异常'}</Tag>
+        return <Tag color={isSuccess ? 'success' : 'error'}>{isSuccess ? '正常' : '异常'}</Tag>;
       },
     },
     {
       title: '采集时间',
       dataIndex: 'lastFetchTime',
       valueType: 'dateTime',
-      editable: false
+      editable: false,
     },
     {
       title: '操作',
@@ -381,7 +391,7 @@ const ModbusSheet = () => {
         <Button
           key="download"
           icon={<UploadOutlined />}
-          onClick={() => deviceId && download({ device_uuid: deviceId })}
+          onClick={() => (window.location.href = '/api/v1/modbus_data_sheet/sheetExport')}
         >
           导出点位表
         </Button>,
