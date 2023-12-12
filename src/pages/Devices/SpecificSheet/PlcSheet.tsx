@@ -17,7 +17,7 @@ import {
 } from '@/services/rulex/ximenzidianweiguanli';
 import '../index.less';
 
- export type PlcSheetItem = {
+export type PlcSheetItem = {
   uuid?: string;
   tag: string;
   alias: string;
@@ -183,8 +183,10 @@ const PlcSheet = () => {
       dataIndex: 'type',
       valueType: 'select',
       valueEnum: blockTypeEnum,
+      width: 85,
       fieldProps: (_, config) => {
         return {
+          style: { width: '100%' },
           onSelect: (value: string) => {
             if (config.entity?.uuid && editableKeys.includes(config.entity.uuid)) {
               setHide(value === 'MB' ? true : false);
@@ -200,9 +202,14 @@ const PlcSheet = () => {
       },
     },
     {
-      title: '采集频率（毫秒）',
+      title: (
+        <div>
+          采集频率<span className="text-[12px] opacity-[.8] pl-[5px] font-normal">(毫秒)</span>
+        </div>
+      ),
       dataIndex: 'frequency',
       valueType: 'digit',
+      width: 120,
       fieldProps: () => {
         return {
           style: { width: '100%' },
@@ -250,9 +257,14 @@ const PlcSheet = () => {
       },
     },
     {
-      title: '采集长度（字节）',
+      title: (
+        <div>
+          采集长度<span className="text-[12px] opacity-[.8] pl-[5px] font-normal">(字节)</span>
+        </div>
+      ),
       dataIndex: 'size',
       valueType: 'digit',
+      width: 120,
       fieldProps: () => {
         return {
           style: { width: '100%' },
@@ -278,6 +290,7 @@ const PlcSheet = () => {
       title: '点位状态',
       dataIndex: 'status',
       editable: false,
+      width: 80,
       renderText(_, record) {
         if (!record?.status) return '-';
         const isSuccess = record?.status === 1;

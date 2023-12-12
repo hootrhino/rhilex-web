@@ -14,6 +14,7 @@ const columns: ProColumns<Partial<PlcSheetItem>>[] = [
     dataIndex: 'index',
     valueType: 'index',
     width: 50,
+    fixed: 'left',
     render: (index) => {
       return (
         <div className="text-[12px] text-[#fff] rounded-full w-[18px] h-[18px] bg-[#979797]">
@@ -35,11 +36,17 @@ const columns: ProColumns<Partial<PlcSheetItem>>[] = [
     dataIndex: 'type',
     valueType: 'select',
     valueEnum: blockTypeEnum,
+    width: 80,
   },
   {
-    title: '采集频率(ms)',
+    title: (
+      <div>
+        采集频率<span className="text-[12px] opacity-[.8] pl-[5px] font-normal">(毫秒)</span>
+      </div>
+    ),
     dataIndex: 'frequency',
     valueType: 'digit',
+    width: 120,
   },
   {
     title: '块地址',
@@ -52,9 +59,14 @@ const columns: ProColumns<Partial<PlcSheetItem>>[] = [
     valueType: 'digit',
   },
   {
-    title: '采集长度(byte)',
+    title: (
+      <div>
+        采集长度<span className="text-[12px] opacity-[.8] pl-[5px] font-normal">(字节)</span>
+      </div>
+    ),
     dataIndex: 'size',
     valueType: 'digit',
+    width: 120,
   },
   {
     title: '最新值',
@@ -63,6 +75,7 @@ const columns: ProColumns<Partial<PlcSheetItem>>[] = [
   {
     title: '点位状态',
     dataIndex: 'status',
+    width: 80,
     renderText(_, record) {
       if (!record?.status) return '-';
       const isSuccess = record?.status === 1;
@@ -86,6 +99,7 @@ const PlcTable = () => {
       columns={columns}
       search={false}
       options={false}
+      scroll={{ x: 1400 }}
       pagination={{ defaultPageSize: 10 }}
       request={async ({ current = 1, pageSize = 10 }) => {
         const { data } = await getS1200DataSheetList({

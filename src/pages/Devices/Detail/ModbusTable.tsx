@@ -1,8 +1,8 @@
-import { ProTable } from '@ant-design/pro-components';
-import type {ProColumns} from '@ant-design/pro-components';
-import { funcEnum } from '../SchemaForm/initialValue';
 import { getModbusDataSheetList } from '@/services/rulex/Modbusdianweiguanli';
+import type { ProColumns } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
+import { funcEnum } from '../SchemaForm/initialValue';
 
 import '../index.less';
 import type { ModbusSheetItem } from '../SpecificSheet/ModbusSheet';
@@ -35,7 +35,11 @@ const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
     valueEnum: funcEnum,
   },
   {
-    title: '采集频率（毫秒）',
+    title: (
+      <div>
+        采集频率<span className="text-[12px] opacity-[.8] pl-[5px] font-normal">(毫秒)</span>
+      </div>
+    ),
     dataIndex: 'frequency',
     valueType: 'digit',
   },
@@ -59,11 +63,11 @@ const ModbusTable = () => {
   return (
     <ProTable
       rowKey="uuid"
-      rootClassName='sheet-table'
+      rootClassName="sheet-table"
       columns={columns}
       search={false}
       options={false}
-      pagination={{defaultPageSize: 10}}
+      pagination={{ defaultPageSize: 10 }}
       request={async ({ current = 1, pageSize = 10 }) => {
         const { data } = await getModbusDataSheetList({
           device_uuid: detail?.uuid,

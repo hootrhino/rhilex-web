@@ -193,9 +193,14 @@ const ModbusSheet = () => {
       },
     },
     {
-      title: '采集频率（毫秒）',
+      title: (
+        <div>
+          采集频率<span className="text-[12px] opacity-[.8] pl-[5px] font-normal">(毫秒)</span>
+        </div>
+      ),
       dataIndex: 'frequency',
       valueType: 'digit',
+      width: 120,
       fieldProps: () => {
         return {
           style: { width: '100%' },
@@ -212,6 +217,7 @@ const ModbusSheet = () => {
       title: '从设备 ID',
       dataIndex: 'slaverId',
       valueType: 'digit',
+      width: 100,
       fieldProps: () => {
         return {
           style: { width: '100%' },
@@ -248,6 +254,7 @@ const ModbusSheet = () => {
       title: '读取数量',
       dataIndex: 'quantity',
       valueType: 'digit',
+      width: 100,
       fieldProps: () => {
         return {
           style: { width: '100%' },
@@ -268,6 +275,7 @@ const ModbusSheet = () => {
     {
       title: '点位状态',
       dataIndex: 'status',
+      width: 80,
       editable: false,
       renderText(_, record) {
         if (!record?.status) return '-';
