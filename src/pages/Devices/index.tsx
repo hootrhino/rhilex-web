@@ -100,18 +100,22 @@ const Devices = () => {
 
         return (
           <Space>
+            <a
+              key="device-specific-sheet "
+              onClick={() =>
+                showSheet && history.push(`/device/${gid}/${uuid}/specific-sheet/${type}`)
+              }
+              className={
+                showSheet
+                  ? 'cursor-pointer'
+                  : 'cursor-not-allowed text-[rgba(0,0,0,.25)] hover:text-[rgba(0,0,0,.25)]'
+              }
+            >
+              点位表配置
+            </a>
             <a key="rule" onClick={() => history.push(`/device/${gid}/${uuid}/rule`)}>
               规则配置
             </a>
-            {showSheet && (
-              <a
-                key="device-specific-sheet "
-                onClick={() => history.push(`/device/${gid}/${uuid}/specific-sheet/${type}`)}
-              >
-                点位表配置
-              </a>
-            )}
-
             <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
               详情
             </a>

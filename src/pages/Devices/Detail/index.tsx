@@ -1,13 +1,14 @@
 import StateTag from '@/components/StateTag';
+import { getGroupName } from '@/utils/utils';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions, ProSkeleton } from '@ant-design/pro-components';
 import { history, useModel } from '@umijs/max';
 import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
-import { modeEnum, typeEnum } from '../SchemaForm/initialValue';
+import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from '../SchemaForm/initialValue';
 import ModbusTable from './ModbusTable';
-import { getGroupName } from '@/utils/utils';
+import PlcTable from './PlcTable';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -37,7 +38,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
 
   const { type, config } = detail || { type: '' };
   const { commonConfig, hostConfig, portUuid } = config || { registers: [] };
-  const mode = commonConfig?.mode;
+  const { mode, model } = commonConfig || {};
 
   const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]> = {
     BASE: [
@@ -73,14 +74,9 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         hideInDescriptions: type !== 'GENERIC_PROTOCOL',
       },
       {
-        title: '采集频率（毫秒）',
-        dataIndex: 'frequency',
-        hideInDescriptions: type !== 'GENERIC_MODBUS',
-      },
-      {
         title: '是否启动轮询',
         dataIndex: 'autoRequest',
-        hideInDescriptions: type !== 'GENERIC_MODBUS',
+        hideInDescriptions: !['GENERIC_MODBUS', 'S1200PLC'].includes(type),
         renderText: (autoRequest) => (
           <Tag color={autoRequest ? 'success' : 'error'}>{autoRequest ? '开启' : '关闭'}</Tag>
         ),
@@ -102,11 +98,45 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         title: '工作模式',
         dataIndex: 'mode',
         valueEnum: modeEnum,
+        hideInDescriptions: type === 'S1200PLC',
+      },
+      {
+        title: '型号',
+        dataIndex: 'model',
+        valueEnum: plcModelEnum,
+        hideInDescriptions: type !== 'S1200PLC',
+      },
+      {
+        title: 'PLC 地址',
+        dataIndex: 'host',
+        hideInDescriptions: type !== 'S1200PLC',
+      },
+      {
+        title: '连接超时时间(ms)',
+        dataIndex: 'timeout',
+        hideInDescriptions: type !== 'S1200PLC',
+      },
+      {
+        title: '心跳超时时间(ms)',
+        dataIndex: 'idleTimeout',
+        hideInDescriptions: type !== 'S1200PLC',
+      },
+      {
+        title: '机架号',
+        dataIndex: 'rack',
+        valueEnum: rackEnum,
+        hideInDescriptions: type !== 'S1200PLC' || model === 'S7200',
+      },
+      {
+        title: '插槽号',
+        dataIndex: 'slot',
+        valueEnum: slotEnum,
+        hideInDescriptions: type !== 'S1200PLC',
       },
     ],
     HOST: [
       {
-        title: '超时时间（毫秒）',
+        title: '超时时间(ms)',
         dataIndex: 'timeout',
       },
       {
@@ -183,6 +213,12 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
                 <>
                   <ProDescriptions title="点位表配置" />
                   <ModbusTable />
+                </>
+              )}
+              {type === 'S1200PLC' && (
+                <>
+                  <ProDescriptions title="点位表配置" />
+                  <PlcTable />
                 </>
               )}
             </>

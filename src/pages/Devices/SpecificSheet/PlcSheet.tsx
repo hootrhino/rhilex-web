@@ -17,7 +17,7 @@ import {
 } from '@/services/rulex/ximenzidianweiguanli';
 import '../index.less';
 
-type PlcSheetItem = {
+ export type PlcSheetItem = {
   uuid?: string;
   tag: string;
   alias: string;

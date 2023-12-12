@@ -24,7 +24,6 @@ import { history, useModel, useParams } from '@umijs/max';
 import cloneDeep from 'lodash/cloneDeep';
 import { columns } from './columns';
 import Title from './FormTitle';
-// import Extra from './GroupTitleExtra';
 import './index.less';
 import {
   defaultAisConfig,
@@ -41,11 +40,6 @@ export const processColumns = (columns: any) => {
     // let title;
 
     if (col.valueType === 'group') {
-      // if (col.title === '寄存器配置') {
-      //   title = <Extra title={col.title} />;
-      // } else {
-      //   title = col.title;
-      // }
       return { ...col, columns: processColumns(col.columns) };
     }
 
