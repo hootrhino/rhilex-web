@@ -22,12 +22,12 @@ type CreatAppParams = {
   version: string;
   autoStart: boolean;
   description: string;
-}
+};
 
 type UpdateAppParams = CreatAppParams & {
   uuid: string;
   luaSource: string;
-}
+};
 
 const DefaultListUrl = '/app-stack/list';
 
@@ -46,35 +46,43 @@ const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
 
   // 获取详情
-  const { run: getDetail, data: detail } = useRequest((params: API.getAppDetailParams) => getAppDetail(params), {
-    manual: true,
-    formatResult: (res) => res?.data,
-  });
+  const { run: getDetail, data: detail } = useRequest(
+    (params: API.getAppDetailParams) => getAppDetail(params),
+    {
+      manual: true,
+      formatResult: (res) => res?.data,
+    },
+  );
 
   // 新建
-  const { run: add, loading: addLoading } = useRequest((params: CreatAppParams) => postAppCreate(params), {
-    manual: true,
-    onSuccess: () => {
-      message.success('新建成功');
-      history.push(DefaultListUrl);
+  const { run: add, loading: addLoading } = useRequest(
+    (params: CreatAppParams) => postAppCreate(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('新建成功');
+        history.push(DefaultListUrl);
+      },
     },
-  });
+  );
 
   // 编辑
-  const { run: update, loading: updateLoading } = useRequest((params: UpdateAppParams) => putAppUpdate(params), {
-    manual: true,
-    onSuccess: () => {
-      message.success('更新成功');
-      history.push(DefaultListUrl);
+  const { run: update, loading: updateLoading } = useRequest(
+    (params: UpdateAppParams) => putAppUpdate(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('更新成功');
+        history.push(DefaultListUrl);
+      },
     },
-  });
+  );
 
   const handleOnFinish = async (values: any) => {
     try {
       const params = {
         ...values,
         type: 'lua',
-        autoStart: values?.autoStart === 'true' ? true : false,
       };
       if (id) {
         update({ ...params, uuid: id });
@@ -89,7 +97,7 @@ const UpdateForm = () => {
 
   useEffect(() => {
     if (detail) {
-      formRef.current?.setFieldsValue({ ...detail, autoStart: detail?.autoStart.toString() });
+      formRef.current?.setFieldsValue(detail);
     } else {
       formRef.current?.setFieldsValue(defaultValue);
     }
@@ -120,9 +128,7 @@ const UpdateForm = () => {
                     onConfirm={() => {
                       reset();
                       formRef.current?.setFieldsValue(
-                        id
-                          ? { ...defaultValue, ...detail, autoStart: detail?.autoStart.toString() }
-                          : defaultValue,
+                        id ? { ...defaultValue, ...detail } : defaultValue,
                       );
                     }}
                   >
@@ -157,7 +163,13 @@ const UpdateForm = () => {
               placeholder="请输入 APP 版本"
               rules={[{ required: true, message: '请输入 APP 版本' }]}
             />
-            <ProForm.Item label="是否自启" name="autoStart" required>
+            <ProForm.Item
+              label="是否自启"
+              name="autoStart"
+              required
+              transform={(value: string) => ({ autoStart: value === 'true' ? true : false })}
+              convertValue={(value: boolean) => value?.toString()}
+            >
               <ProSegmented width="md" />
             </ProForm.Item>
             <ProFormText label="备注" name="description" width="md" placeholder="请输入备注" />

@@ -9,6 +9,8 @@ import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
 import { blockTypeEnum, defaultBlocksConfig } from '../SchemaForm/initialValue';
 
+import IndexBorder from '@/components/IndexBorder';
+import UnitTitle from '@/components/UnitTitle';
 import {
   deleteS1200DataSheetDelIds,
   getS1200DataSheetList,
@@ -16,8 +18,7 @@ import {
   postS1200DataSheetUpdate,
 } from '@/services/rulex/ximenzidianweiguanli';
 import '../index.less';
-import UnitTitle from '@/components/UnitTitle';
-import IndexBorder from '@/components/IndexBorder';
+import UploadRule from './UploadRule';
 
 export type PlcSheetItem = {
   uuid?: string;
@@ -40,7 +41,7 @@ type removeParams = {
 
 type Point = Omit<PlcSheetItem, 'status' | 'lastFetchTime' | 'value'> & {
   device_uuid?: string;
-}
+};
 
 type UpdateParams = {
   device_uuid: string;
@@ -73,24 +74,21 @@ const PlcSheet = () => {
   });
 
   // 更新点位表
-  const { run: update } = useRequest(
-    (params: UpdateParams) => postS1200DataSheetUpdate(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        handleOnReset();
-        setEditableRowKeys([]);
-        message.success('更新成功');
-      },
+  const { run: update } = useRequest((params: UpdateParams) => postS1200DataSheetUpdate(params), {
+    manual: true,
+    onSuccess: () => {
+      handleOnReset();
+      setEditableRowKeys([]);
+      message.success('更新成功');
     },
-  );
+  });
 
   // 批量更新
   const handleOnBatchUpdate = () => {
     const updateData = dataSource?.filter(
       (row) => row?.uuid && selectedRowKeys.includes(row?.uuid),
     );
-    update({device_uuid: deviceId || '', siemens_data_points: updateData});
+    update({ device_uuid: deviceId || '', siemens_data_points: updateData });
   };
 
   // 单个更新
@@ -110,9 +108,8 @@ const PlcSheet = () => {
       params = {
         ...omit(params, ['uuid']),
       };
-
     }
-    update({device_uuid: deviceId || '', siemens_data_points: [params]});
+    update({ device_uuid: deviceId || '', siemens_data_points: [params] });
   };
 
   // 批量删除
@@ -199,7 +196,7 @@ const PlcSheet = () => {
       },
     },
     {
-      title: <UnitTitle title='采集频率' />,
+      title: <UnitTitle title="采集频率" />,
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
@@ -250,7 +247,7 @@ const PlcSheet = () => {
       },
     },
     {
-      title: <UnitTitle title='采集长度' unit='字节' />,
+      title: <UnitTitle title="采集长度" unit="字节" />,
       dataIndex: 'size',
       valueType: 'digit',
       width: 120,
@@ -360,10 +357,14 @@ const PlcSheet = () => {
           key="upload"
           accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
           showUploadList={false}
-          onChange={async ({ file }) => {
-            if (file.status === 'done' && file.originFileObj) {
-              upload(file.originFileObj);
-            }
+          beforeUpload={(file) => {
+            modal.confirm({
+              title: '导入点位表',
+              width: '50%',
+              content: <UploadRule fileName={file?.name} type="plc" />,
+              onOk: () => upload(file),
+            });
+            return Upload.LIST_IGNORE;
           }}
         >
           <Button type="primary" icon={<DownloadOutlined />}>
@@ -422,7 +423,7 @@ const PlcSheet = () => {
       }}
       pagination={{
         defaultPageSize: 10,
-        hideOnSinglePage: true
+        hideOnSinglePage: true,
       }}
       editable={{
         type: 'multiple',

@@ -80,8 +80,3 @@ export const getGroupName = (groupList: Partial<GroupItem>[], key: string) => {
 
   return group?.name;
 };
-
-export const string2Boolean = (value: string) => {
-
-  return value === 'true' ? true : false;
-}

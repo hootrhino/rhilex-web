@@ -1,4 +1,3 @@
-
 import { getSoftRouterDhcpClients } from '@/services/rulex/luyoupeizhi';
 import { ProTable } from '@ant-design/pro-components';
 
@@ -23,6 +22,7 @@ const DHCPList = () => {
       columns={columns}
       search={false}
       pagination={false}
+      options={false}
       request={async () => {
         const { data } = await getSoftRouterDhcpClients();
         return Promise.resolve({

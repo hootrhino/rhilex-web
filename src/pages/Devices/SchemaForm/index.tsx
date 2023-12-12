@@ -19,7 +19,6 @@ import { message } from '@/components/PopupHack';
 import ProSegmented from '@/components/ProSegmented';
 import { postDevicesCreate, putDevicesUpdate } from '@/services/rulex/shebeiguanli';
 
-import { string2Boolean } from '@/utils/utils';
 import { history, useModel, useParams } from '@umijs/max';
 import cloneDeep from 'lodash/cloneDeep';
 import { columns } from './columns';
@@ -37,8 +36,6 @@ const DefaultListUrl = '/device/list';
 
 export const processColumns = (columns: any) => {
   return columns.map((col: any) => {
-    // let title;
-
     if (col.valueType === 'group') {
       return { ...col, columns: processColumns(col.columns) };
     }
@@ -67,11 +64,10 @@ export const processColumns = (columns: any) => {
           ...omit(col, ['mode']),
           columns: processColumns(col.columns),
           fieldProps: {
-            // min: 1,
             creatorButtonProps: {
               position: 'top',
-              creatorButtonText: '添加点位',
-              style: { width: 'calc(100vw - 500px)' },
+              // creatorButtonText: '添加点位',
+              // style: { width: 'calc(100vw - 500px)' },
             },
             creatorRecord: col?.initialValue,
           },
@@ -147,27 +143,24 @@ const SchemaForm = ({}: ProFormProps) => {
     setLoading(true);
     try {
       let params = cloneDeep(values);
-      const commonConfigParams = params.config.commonConfig?.map((item) => {
-        if (item?.autoRequest) {
-          return { ...item, autoRequest: string2Boolean(item?.autoRequest) };
-        }
-        if (item?.parseAis) {
-          return { ...item, parseAis: string2Boolean(item?.parseAis) };
-        }
-        return item;
-      });
-
+      const commonConfigParams = params.config.commonConfig;
       const hostConfigParams = params?.config?.hostConfig?.[0];
 
-      const newConfig = {
+      let newConfig = {
         ...params.config,
         commonConfig: commonConfigParams?.[0],
         hostConfig: hostConfigParams,
       };
 
+      if (commonConfigParams?.[0]?.mode !== 'TCP') {
+        newConfig = {
+          ...omit(newConfig, 'hostConfig'),
+        };
+      }
+
       params = {
         ...params,
-        config: commonConfigParams?.[0]?.mode === 'TCP' ? newConfig : omit(newConfig, 'hostConfig'),
+        config: newConfig,
       };
 
       if (deviceId) {
@@ -193,34 +186,15 @@ const SchemaForm = ({}: ProFormProps) => {
     }
   };
 
-  const handleOnUpdateValue = ({ type, config }: any) => {
+  const handleOnUpdateValue = ({ config }: any) => {
     const newCommonConfig = config?.commonConfig;
     const newHostConfig = config?.hostConfig;
 
-    let newConfig = {
+    const newConfig = {
       ...config,
       commonConfig: [newCommonConfig],
       hostConfig: newHostConfig ? [newHostConfig] : defaultHostConfig,
     };
-
-    if (['GENERIC_MODBUS', 'S1200PLC'].includes(type)) {
-      newConfig = {
-        ...newConfig,
-        commonConfig: newConfig?.commonConfig?.map((item: any) => ({
-          ...item,
-          autoRequest: item?.autoRequest.toString(),
-        })),
-      };
-    }
-    if (type === 'GENERIC_AIS_RECEIVER') {
-      newConfig = {
-        ...newConfig,
-        commonConfig: newConfig?.commonConfig?.map((item: any) => ({
-          ...item,
-          parseAis: item?.parseAis.toString(),
-        })),
-      };
-    }
 
     return newConfig;
   };

@@ -1,6 +1,6 @@
 import { message } from '@/components/PopupHack';
+import UnitTitle from '@/components/UnitTitle';
 import { postHwifaceUpdate } from '@/services/rulex/jiekouguanli';
-import { getOsUarts } from '@/services/rulex/xitongshuju';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -10,12 +10,11 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useModel, useRequest } from '@umijs/max';
-import { AutoComplete, Card } from 'antd';
+import { useModel } from '@umijs/max';
+import { Card } from 'antd';
 import { useEffect, useRef } from 'react';
 import type { InterfaceItem } from '.';
 import { baudRateEnum, dataBitsEnum, parityEnum, stopBitsEnum, typeOptions } from './constant';
-import UnitTitle from '@/components/UnitTitle';
 
 type UpdateProps = ModalFormProps<any> & {
   uuid: string;
@@ -41,15 +40,6 @@ type UpdateParams = {
 const Update = ({ reload, uuid, ...props }: UpdateProps) => {
   const formRef = useRef<ProFormInstance>();
   const { detail, getDetail } = useModel('usePort');
-
-  // 获取串口配置
-  const { data: uartOptions } = useRequest(() => getOsUarts(), {
-    formatResult: (res) =>
-      res?.data?.map((item) => ({
-        value: item.port,
-        label: item.alias,
-      })),
-  });
 
   // 更新接口配置
   const handleOnFinish = async ({ config }: InterfaceFormParams) => {
@@ -91,6 +81,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
           placeholder="请输入接口名称"
           width="sm"
           disabled
+          required
         />
         <ProFormSelect
           name="type"
@@ -98,9 +89,16 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
           placeholder="请选择接口类型"
           width="sm"
           disabled
+          required
           options={typeOptions}
         />
-        <ProFormText name="alias" label="别名" placeholder="请输入别名" width="sm" disabled />
+        <ProFormText
+          name="alias"
+          label="别名"
+          placeholder="请输入别名"
+          width="sm"
+          rules={[{ required: true, message: '请输入别名' }]}
+        />
       </ProForm.Group>
       <ProFormList
         name="config"
@@ -117,7 +115,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
         <ProForm.Group>
           <ProFormDigit
             name="timeout"
-            label={<UnitTitle title='超时时间' />}
+            label={<UnitTitle title="超时时间" />}
             width="sm"
             placeholder="请输入超时时间"
             rules={[{ required: true, message: '请输入超时时间' }]}
@@ -156,21 +154,17 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
             placeholder="请选择停止位"
             rules={[{ required: true, message: '请选择停止位' }]}
           />
-          <ProForm.Item
+          <ProFormText
             label="串口路径"
             name="uart"
-            rules={[{ required: true, message: '请输入本地系统的串口路径' }]}
-            className="w-[216px]"
-          >
-            <AutoComplete
-              className="w-full"
-              options={uartOptions}
-              placeholder="请输入本地系统的串口路径"
-            />
-          </ProForm.Item>
+            width="sm"
+            placeholder="请输入本地系统的串口路径"
+            disabled
+            required
+          />
         </ProForm.Group>
       </ProFormList>
-      <ProFormText name="description" label="备注" placeholder="请输入备注" disabled />
+      <ProFormText name="description" label="备注" placeholder="请输入备注" />
     </ModalForm>
   );
 };

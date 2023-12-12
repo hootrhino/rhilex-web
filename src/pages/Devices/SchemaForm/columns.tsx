@@ -64,6 +64,10 @@ export const columns = [
                       valueType: 'segmented',
                       required: true,
                       hideInForm: !['GENERIC_MODBUS', 'S1200PLC'].includes(type),
+                      transform: (value: string) => ({
+                        autoRequest: value === 'true' ? true : false,
+                      }),
+                      convertValue: (value: boolean) => value.toString(),
                     },
                     {
                       title: '是否解析 AIS 报文',
@@ -71,6 +75,8 @@ export const columns = [
                       valueType: 'segmented',
                       required: true,
                       hideInForm: type !== 'GENERIC_AIS_RECEIVER',
+                      transform: (value: string) => ({ parseAis: value === 'true' ? true : false }),
+                      convertValue: (value: boolean) => value.toString(),
                     },
                     {
                       title: '主机序列号',
@@ -101,7 +107,7 @@ export const columns = [
                       hideInForm: type !== 'S1200PLC',
                     },
                     {
-                      title: <UnitTitle title='连接超时时间' />,
+                      title: <UnitTitle title="连接超时时间" />,
                       dataIndex: 'timeout',
                       valueType: 'digit',
                       required: true,
@@ -119,7 +125,7 @@ export const columns = [
                         valueType: 'group',
                         columns: [
                           {
-                            title: <UnitTitle title='心跳超时时间' />,
+                            title: <UnitTitle title="心跳超时时间" />,
                             dataIndex: 'idleTimeout',
                             valueType: 'digit',
                             required: true,
@@ -183,7 +189,7 @@ export const columns = [
                         valueType: 'group',
                         columns: [
                           {
-                            title: <UnitTitle title='超时时间' />,
+                            title: <UnitTitle title="超时时间" />,
                             dataIndex: 'timeout',
                             valueType: 'digit',
                             required: true,

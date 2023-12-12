@@ -6,6 +6,7 @@ import {
 
 import { message } from '@/components/PopupHack';
 import ProSegmented from '@/components/ProSegmented';
+import UnitTitle from '@/components/UnitTitle';
 import useGoBack from '@/hooks/useGoBack';
 import { PlusCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
@@ -35,7 +36,6 @@ import {
   modeEnum,
   typeEnum,
 } from './initialValue';
-import UnitTitle from '@/components/UnitTitle';
 
 type UpdateFormItem = {
   name: string;
@@ -75,15 +75,6 @@ const UpdateForm = () => {
         config: formatConfig,
       };
 
-      if (params?.type === 'TCP_TRANSPORT') {
-        params = {
-          ...params,
-          config: {
-            ...formatConfig,
-            allowPing: formatConfig?.allowPing === 'true' ? true : false,
-          },
-        };
-      }
       if (params.type === 'HTTP') {
         const newHeaders = formatConfig?.headers.reduce(
           (acc: any, curr: { k: string; v: string }) => {
@@ -128,14 +119,7 @@ const UpdateForm = () => {
 
   const handleOnReset = () => {
     if (detail) {
-      if (detail?.type === 'TCP_TRANSPORT') {
-        formRef.current?.setFieldsValue({
-          ...detail,
-          config: [
-            { ...detail?.config, allowPing: detail?.config?.allowPing === true ? 'true' : 'false' },
-          ],
-        });
-      } else if (detail?.type === 'HTTP') {
+      if (detail?.type === 'HTTP') {
         const newHeaders = !isEmpty(detail?.config?.headers)
           ? Object.keys(detail?.config?.headers)?.map((item) => ({
               k: item,
@@ -267,193 +251,138 @@ const UpdateForm = () => {
             />
             <ProFormText label="备注" name="description" width="md" placeholder="请输入备注" />
           </ProForm.Group>
-          <ProFormDependency name={['type']}>
-            {({ type }) => {
-              if (!type) return;
+          <ProForm.Group title="资源配置" titleStyle={{ marginBlockEnd: 24 }}>
+            <ProFormDependency name={['type']}>
+              {({ type }) => {
+                if (!type) return;
 
-              return (
-                <ProFormList
-                  name="config"
-                  label="资源配置"
-                  creatorButtonProps={false}
-                  copyIconProps={false}
-                  deleteIconProps={false}
-                >
-                  {type === 'MONGO_SINGLE' && (
-                    <ProForm.Group>
-                      <ProFormText
-                        label="MongoDB URL"
-                        name="mongoUrl"
-                        width="md"
-                        placeholder="请输入 MongoDB URL"
-                        rules={[
-                          {
-                            required: true,
-                            message: '请输入 MongoDB URL',
-                          },
-                        ]}
-                      />
-                      <ProFormText
-                        label="MongoDB 数据库"
-                        name="database"
-                        width="md"
-                        placeholder="请输入 MongoDB 数据库"
-                        rules={[
-                          {
-                            required: true,
-                            message: '请输入 MongoDB 数据库',
-                          },
-                        ]}
-                      />
-                      <ProFormText
-                        label="MongoDB 集合"
-                        name="collection"
-                        width="md"
-                        placeholder="请输入 MongoDB 集合"
-                        rules={[
-                          {
-                            required: true,
-                            message: '请输入 MongoDB 集合',
-                          },
-                        ]}
-                      />
-                    </ProForm.Group>
-                  )}
-                  {type === 'MQTT' && (
-                    <>
+                return (
+                  <ProFormList
+                    name="config"
+                    // label="资源配置"
+                    creatorButtonProps={false}
+                    copyIconProps={false}
+                    deleteIconProps={false}
+                  >
+                    {type === 'MONGO_SINGLE' && (
                       <ProForm.Group>
                         <ProFormText
-                          label="主机地址"
-                          name="host"
+                          label="MongoDB URL"
+                          name="mongoUrl"
                           width="md"
-                          placeholder="请输入主机地址"
-                          rules={[{ required: true, message: '请输入主机地址' }]}
-                        />
-                        <ProFormDigit
-                          label="端口"
-                          name="port"
-                          width="md"
-                          placeholder="请输入端口"
-                          rules={[{ required: true, message: '请输入端口' }]}
-                        />
-                        <ProFormText
-                          label="客户端 ID"
-                          name="clientId"
-                          width="md"
-                          placeholder="请输入客户端 ID"
+                          placeholder="请输入 MongoDB URL"
                           rules={[
                             {
                               required: true,
-                              message: '请输入客户端 ID',
+                              message: '请输入 MongoDB URL',
                             },
                           ]}
                         />
                         <ProFormText
-                          label="上报 TOPIC"
-                          name="pubTopic"
+                          label="MongoDB 数据库"
+                          name="database"
                           width="md"
-                          placeholder="请输入上报 TOPIC"
+                          placeholder="请输入 MongoDB 数据库"
                           rules={[
                             {
                               required: true,
-                              message: '请输入上报 TOPIC',
+                              message: '请输入 MongoDB 数据库',
+                            },
+                          ]}
+                        />
+                        <ProFormText
+                          label="MongoDB 集合"
+                          name="collection"
+                          width="md"
+                          placeholder="请输入 MongoDB 集合"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请输入 MongoDB 集合',
                             },
                           ]}
                         />
                       </ProForm.Group>
+                    )}
+                    {type === 'MQTT' && (
+                      <>
+                        <ProForm.Group>
+                          <ProFormText
+                            label="主机地址"
+                            name="host"
+                            width="md"
+                            placeholder="请输入主机地址"
+                            rules={[{ required: true, message: '请输入主机地址' }]}
+                          />
+                          <ProFormDigit
+                            label="端口"
+                            name="port"
+                            width="md"
+                            placeholder="请输入端口"
+                            rules={[{ required: true, message: '请输入端口' }]}
+                          />
+                          <ProFormText
+                            label="客户端 ID"
+                            name="clientId"
+                            width="md"
+                            placeholder="请输入客户端 ID"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请输入客户端 ID',
+                              },
+                            ]}
+                          />
+                          <ProFormText
+                            label="上报 TOPIC"
+                            name="pubTopic"
+                            width="md"
+                            placeholder="请输入上报 TOPIC"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请输入上报 TOPIC',
+                              },
+                            ]}
+                          />
+                        </ProForm.Group>
+                        <ProForm.Group>
+                          <ProFormText
+                            label="连接账户"
+                            name="username"
+                            width="md"
+                            placeholder="请输入连接账户"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请输入连接账户',
+                              },
+                            ]}
+                          />
+                          <ProFormText.Password
+                            label="连接密码"
+                            name="password"
+                            width="md"
+                            placeholder="请输入连接密码"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请输入连接密码',
+                              },
+                            ]}
+                          />
+                        </ProForm.Group>
+                      </>
+                    )}
+                    {type === 'UDP_TARGET' && (
                       <ProForm.Group>
-                        <ProFormText
-                          label="连接账户"
-                          name="username"
-                          width="md"
-                          placeholder="请输入连接账户"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请输入连接账户',
-                            },
-                          ]}
-                        />
-                        <ProFormText.Password
-                          label="连接密码"
-                          name="password"
-                          width="md"
-                          placeholder="请输入连接密码"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请输入连接密码',
-                            },
-                          ]}
-                        />
-                      </ProForm.Group>
-                    </>
-                  )}
-                  {type === 'UDP_TARGET' && (
-                    <ProForm.Group>
-                      <ProFormDigit
-                        label={<UnitTitle title='超时时间' />}
-                        name="timeout"
-                        width="md"
-                        placeholder="请输入超时时间（毫秒）"
-                        rules={[{ required: true, message: '请输入超时时间（毫秒）' }]}
-                      />
-                      <ProFormText
-                        label="主机地址"
-                        name="host"
-                        width="md"
-                        placeholder="请输入主机地址"
-                        rules={[{ required: true, message: '请输入主机地址' }]}
-                      />
-                      <ProFormDigit
-                        label="端口"
-                        name="port"
-                        width="md"
-                        placeholder="请输入端口"
-                        rules={[{ required: true, message: '请输入端口' }]}
-                      />
-                    </ProForm.Group>
-                  )}
-                  {type === 'TCP_TRANSPORT' && (
-                    <>
-                      <ProForm.Group>
-                        <ProFormSelect
-                          label="传输模式"
-                          name="dataMode"
-                          valueEnum={modeEnum}
-                          width="md"
-                          placeholder="请选择传输模式"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请选择传输模式',
-                            },
-                          ]}
-                        />
-                        <ProForm.Item label="开启心跳" name="allowPing">
-                          <ProSegmented width="md" />
-                        </ProForm.Item>
-                        <ProFormText
-                          label="心跳包内容"
-                          name="pingPacket"
-                          width="md"
-                          placeholder="请输入心跳包内容"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请输入心跳包内容',
-                            },
-                          ]}
-                        />
                         <ProFormDigit
-                          label={<UnitTitle title='超时时间' />}
+                          label={<UnitTitle title="超时时间" />}
                           name="timeout"
                           width="md"
                           placeholder="请输入超时时间（毫秒）"
                           rules={[{ required: true, message: '请输入超时时间（毫秒）' }]}
                         />
-                      </ProForm.Group>
-                      <ProForm.Group>
                         <ProFormText
                           label="主机地址"
                           name="host"
@@ -469,145 +398,210 @@ const UpdateForm = () => {
                           rules={[{ required: true, message: '请输入端口' }]}
                         />
                       </ProForm.Group>
-                    </>
-                  )}
-                  {type === 'TDENGINE' && (
-                    <>
-                      <ProForm.Group>
-                        <ProFormText
-                          label="FQDN"
-                          name="fqdn"
-                          width="md"
-                          placeholder="请输入 FQDN"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请输入 FQDN',
-                            },
-                          ]}
-                        />
-                        <ProFormDigit
-                          label="端口"
-                          name="port"
-                          width="md"
-                          placeholder="请输入端口"
-                          rules={[{ required: true, message: '请输入端口' }]}
-                        />
-                        <ProFormText
-                          label="用户名"
-                          name="username"
-                          width="md"
-                          placeholder="请输入用户名"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请输入用户名',
-                            },
-                          ]}
-                        />
-                        <ProFormText.Password
-                          label="密码"
-                          name="password"
-                          width="md"
-                          placeholder="请输入密码"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请输入密码',
-                            },
-                          ]}
-                        />
-                      </ProForm.Group>
-                      <ProForm.Group>
-                        <ProFormText
-                          label="数据库名"
-                          name="dbName"
-                          width="md"
-                          placeholder="请输入数据库名"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请输入数据库名',
-                            },
-                          ]}
-                        />
-                      </ProForm.Group>
-                    </>
-                  )}
-                  {type === 'HTTP' && (
-                    <>
-                      <ProFormText
-                        label="请求地址"
-                        name="url"
-                        width="md"
-                        placeholder="请输入请求地址"
-                        rules={[
-                          {
-                            required: true,
-                            message: '请输入请求地址',
-                          },
-                        ]}
-                      />
-                      <ProFormList
-                        name="headers"
-                        label={
-                          <Space align="center">
-                            <span>HTTP Headers</span>
-                            <div className="text-[12px] text-[#00000080] ml-[5px]">
-                              <QuestionCircleOutlined />
-                              <span className="mr-[5px] ml-[2px]">更多信息请参考</span>
-                              <a
-                                href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers"
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                HTTP Headers
-                              </a>
-                            </div>
-                          </Space>
-                        }
-                        min={1}
-                        creatorButtonProps={false}
-                        creatorRecord={{
-                          k: '',
-                          v: '',
-                        }}
-                        actionRender={(props, action, defaultActionDom) => {
-                          return [
-                            <Tooltip key="add" title="新建一行">
-                              <PlusCircleOutlined
-                                onClick={() => action.add()}
-                                className="ml-[10px]"
-                              />
-                            </Tooltip>,
-                            ...defaultActionDom,
-                          ];
-                        }}
-                      >
+                    )}
+                    {type === 'TCP_TRANSPORT' && (
+                      <>
                         <ProForm.Group>
-                          <ProFormText name="k" width="md" placeholder="请输入 key" />
-                          <ProFormDependency name={['k', 'v']}>
-                            {({ k, v }) => {
-                              const isSuccess = !k || (k && v);
-
-                              return (
-                                <ProFormText
-                                  name="v"
-                                  width="md"
-                                  placeholder="请输入 value"
-                                  validateStatus={isSuccess ? '' : 'error'}
-                                />
-                              );
-                            }}
-                          </ProFormDependency>
+                          <ProFormSelect
+                            label="传输模式"
+                            name="dataMode"
+                            valueEnum={modeEnum}
+                            width="md"
+                            placeholder="请选择传输模式"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请选择传输模式',
+                              },
+                            ]}
+                          />
+                          <ProForm.Item
+                            required
+                            label="开启心跳"
+                            name="allowPing"
+                            transform={(value: string) => ({
+                              allowPing: value === 'true' ? true : false,
+                            })}
+                            convertValue={(value: boolean) => value.toString()}
+                          >
+                            <ProSegmented width="md" />
+                          </ProForm.Item>
+                          <ProFormText
+                            label="心跳包内容"
+                            name="pingPacket"
+                            width="md"
+                            placeholder="请输入心跳包内容"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请输入心跳包内容',
+                              },
+                            ]}
+                          />
+                          <ProFormDigit
+                            label={<UnitTitle title="超时时间" />}
+                            name="timeout"
+                            width="md"
+                            placeholder="请输入超时时间（毫秒）"
+                            rules={[{ required: true, message: '请输入超时时间（毫秒）' }]}
+                          />
                         </ProForm.Group>
-                      </ProFormList>
-                    </>
-                  )}
-                </ProFormList>
-              );
-            }}
-          </ProFormDependency>
+                        <ProForm.Group>
+                          <ProFormText
+                            label="主机地址"
+                            name="host"
+                            width="md"
+                            placeholder="请输入主机地址"
+                            rules={[{ required: true, message: '请输入主机地址' }]}
+                          />
+                          <ProFormDigit
+                            label="端口"
+                            name="port"
+                            width="md"
+                            placeholder="请输入端口"
+                            rules={[{ required: true, message: '请输入端口' }]}
+                          />
+                        </ProForm.Group>
+                      </>
+                    )}
+                    {type === 'TDENGINE' && (
+                      <>
+                        <ProForm.Group>
+                          <ProFormText
+                            label="FQDN"
+                            name="fqdn"
+                            width="md"
+                            placeholder="请输入 FQDN"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请输入 FQDN',
+                              },
+                            ]}
+                          />
+                          <ProFormDigit
+                            label="端口"
+                            name="port"
+                            width="md"
+                            placeholder="请输入端口"
+                            rules={[{ required: true, message: '请输入端口' }]}
+                          />
+                          <ProFormText
+                            label="用户名"
+                            name="username"
+                            width="md"
+                            placeholder="请输入用户名"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请输入用户名',
+                              },
+                            ]}
+                          />
+                          <ProFormText.Password
+                            label="密码"
+                            name="password"
+                            width="md"
+                            placeholder="请输入密码"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请输入密码',
+                              },
+                            ]}
+                          />
+                        </ProForm.Group>
+                        <ProForm.Group>
+                          <ProFormText
+                            label="数据库名"
+                            name="dbName"
+                            width="md"
+                            placeholder="请输入数据库名"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请输入数据库名',
+                              },
+                            ]}
+                          />
+                        </ProForm.Group>
+                      </>
+                    )}
+                    {type === 'HTTP' && (
+                      <>
+                        <ProFormText
+                          label="请求地址"
+                          name="url"
+                          width="md"
+                          placeholder="请输入请求地址"
+                          rules={[
+                            {
+                              required: true,
+                              message: '请输入请求地址',
+                            },
+                          ]}
+                        />
+                        <ProFormList
+                          name="headers"
+                          label={
+                            <Space align="center">
+                              <span>HTTP Headers</span>
+                              <div className="text-[12px] text-[#00000080] ml-[5px]">
+                                <QuestionCircleOutlined />
+                                <span className="mr-[5px] ml-[2px]">更多信息请参考</span>
+                                <a
+                                  href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers"
+                                  target="_blank"
+                                  rel="noreferrer"
+                                >
+                                  HTTP Headers
+                                </a>
+                              </div>
+                            </Space>
+                          }
+                          min={1}
+                          creatorButtonProps={false}
+                          creatorRecord={{
+                            k: '',
+                            v: '',
+                          }}
+                          actionRender={(props, action, defaultActionDom) => {
+                            return [
+                              <Tooltip key="add" title="新建一行">
+                                <PlusCircleOutlined
+                                  onClick={() => action.add()}
+                                  className="ml-[10px]"
+                                />
+                              </Tooltip>,
+                              ...defaultActionDom,
+                            ];
+                          }}
+                        >
+                          <ProForm.Group>
+                            <ProFormText name="k" width="md" placeholder="请输入 key" />
+                            <ProFormDependency name={['k', 'v']}>
+                              {({ k, v }) => {
+                                const isSuccess = !k || (k && v);
+
+                                return (
+                                  <ProFormText
+                                    name="v"
+                                    width="md"
+                                    placeholder="请输入 value"
+                                    validateStatus={isSuccess ? '' : 'error'}
+                                  />
+                                );
+                              }}
+                            </ProFormDependency>
+                          </ProForm.Group>
+                        </ProFormList>
+                      </>
+                    )}
+                  </ProFormList>
+                );
+              }}
+            </ProFormDependency>
+          </ProForm.Group>
         </ProForm>
       </ProCard>
     </PageContainer>

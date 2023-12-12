@@ -195,137 +195,139 @@ const UpdateForm = () => {
             />
             <ProFormText label="备注" name="description" width="md" placeholder="请输入备注" />
           </ProForm.Group>
-          <ProFormDependency name={['type']}>
-            {({ type }) => {
-              if (!type) return;
+          <ProForm.Group title="资源配置" titleStyle={{ marginBlockEnd: 24 }}>
+            <ProFormDependency name={['type']}>
+              {({ type }) => {
+                if (!type) return;
 
-              return (
-                <ProFormList
-                  name="config"
-                  label="资源配置"
-                  creatorButtonProps={false}
-                  copyIconProps={false}
-                  deleteIconProps={false}
-                >
-                  <>
-                    <ProForm.Group>
-                      <ProFormText
-                        name="host"
-                        label="服务地址"
-                        width="md"
-                        placeholder="请输入服务地址"
-                        rules={[{ required: true, message: '请输入服务地址' }]}
-                      />
-                      <ProFormDigit
-                        name="port"
-                        label="端口"
-                        width="md"
-                        placeholder="请输入端口"
-                        rules={[{ required: true, message: '请输入端口' }]}
-                      />
+                return (
+                  <ProFormList
+                    name="config"
+                    // label="资源配置"
+                    creatorButtonProps={false}
+                    copyIconProps={false}
+                    deleteIconProps={false}
+                  >
+                    <>
+                      <ProForm.Group>
+                        <ProFormText
+                          name="host"
+                          label="服务地址"
+                          width="md"
+                          placeholder="请输入服务地址"
+                          rules={[{ required: true, message: '请输入服务地址' }]}
+                        />
+                        <ProFormDigit
+                          name="port"
+                          label="端口"
+                          width="md"
+                          placeholder="请输入端口"
+                          rules={[{ required: true, message: '请输入端口' }]}
+                        />
 
-                      {type === 'GENERIC_IOT_HUB' && (
-                        <>
-                          <ProFormSelect
-                            label="模式"
-                            name="mode"
+                        {type === 'GENERIC_IOT_HUB' && (
+                          <>
+                            <ProFormSelect
+                              label="模式"
+                              name="mode"
+                              width="md"
+                              valueEnum={modeEnum}
+                              placeholder="请选择模式"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: '请选择模式',
+                                },
+                              ]}
+                            />
+                            <ProFormText
+                              label="产品 ID"
+                              name="productId"
+                              width="md"
+                              placeholder="请输入产品 ID"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: '请输入产品 ID',
+                                },
+                              ]}
+                            />
+                          </>
+                        )}
+
+                        {type === 'NATS_SERVER' && (
+                          <ProFormText
+                            label="主题"
+                            name="topic"
                             width="md"
-                            valueEnum={modeEnum}
-                            placeholder="请选择模式"
+                            placeholder="请输入主题"
                             rules={[
                               {
                                 required: true,
-                                message: '请选择模式',
+                                message: '请输入主题',
+                              },
+                            ]}
+                          />
+                        )}
+                      </ProForm.Group>
+                      {type === 'GENERIC_IOT_HUB' && (
+                        <ProForm.Group>
+                          <ProFormText
+                            label="设备名"
+                            name="deviceName"
+                            width="md"
+                            placeholder="请输入设备名"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请输入设备名',
                               },
                             ]}
                           />
                           <ProFormText
-                            label="产品 ID"
-                            name="productId"
+                            label="客户端 ID"
+                            name="clientId"
                             width="md"
-                            placeholder="请输入产品 ID"
+                            placeholder="请输入客户端 ID"
                             rules={[
                               {
                                 required: true,
-                                message: '请输入产品 ID',
+                                message: '请输入客户端 ID',
                               },
                             ]}
                           />
-                        </>
+                          <ProFormText
+                            label="用户名称"
+                            name="username"
+                            width="md"
+                            placeholder="请输入用户名称"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请输入用户名称',
+                              },
+                            ]}
+                          />
+                          <ProFormText.Password
+                            label="用户密码"
+                            name="password"
+                            width="md"
+                            placeholder="请输入用户密码"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请输入用户密码',
+                              },
+                            ]}
+                          />
+                        </ProForm.Group>
                       )}
-
-                      {type === 'NATS_SERVER' && (
-                        <ProFormText
-                          label="主题"
-                          name="topic"
-                          width="md"
-                          placeholder="请输入主题"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请输入主题',
-                            },
-                          ]}
-                        />
-                      )}
-                    </ProForm.Group>
-                    {type === 'GENERIC_IOT_HUB' && (
-                      <ProForm.Group>
-                        <ProFormText
-                          label="设备名"
-                          name="deviceName"
-                          width="md"
-                          placeholder="请输入设备名"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请输入设备名',
-                            },
-                          ]}
-                        />
-                        <ProFormText
-                          label="客户端 ID"
-                          name="clientId"
-                          width="md"
-                          placeholder="请输入客户端 ID"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请输入客户端 ID',
-                            },
-                          ]}
-                        />
-                        <ProFormText
-                          label="用户名称"
-                          name="username"
-                          width="md"
-                          placeholder="请输入用户名称"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请输入用户名称',
-                            },
-                          ]}
-                        />
-                        <ProFormText.Password
-                          label="用户密码"
-                          name="password"
-                          width="md"
-                          placeholder="请输入用户密码"
-                          rules={[
-                            {
-                              required: true,
-                              message: '请输入用户密码',
-                            },
-                          ]}
-                        />
-                      </ProForm.Group>
-                    )}
-                  </>
-                </ProFormList>
-              );
-            }}
-          </ProFormDependency>
+                    </>
+                  </ProFormList>
+                );
+              }}
+            </ProFormDependency>
+          </ProForm.Group>
         </ProForm>
       </ProCard>
     </PageContainer>

@@ -15,9 +15,10 @@ import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
 import { defaultRegistersConfig, funcEnum } from '../SchemaForm/initialValue';
 
-import '../index.less';
-import UnitTitle from '@/components/UnitTitle';
 import IndexBorder from '@/components/IndexBorder';
+import UnitTitle from '@/components/UnitTitle';
+import '../index.less';
+import UploadRule from './UploadRule';
 
 export type ModbusSheetItem = {
   uuid?: string;
@@ -42,11 +43,11 @@ type removeParams = {
 
 type Point = Partial<ModbusSheetItem> & {
   device_uuid?: string;
-}
+};
 
 type UpdateParams = {
   device_uuid: string;
-  modbus_data_points: Point[]
+  modbus_data_points: Point[];
 };
 
 const ModbusSheet = () => {
@@ -77,24 +78,21 @@ const ModbusSheet = () => {
   );
 
   // 更新点位表
-  const { run: update } = useRequest(
-    (params: UpdateParams) => postModbusDataSheetUpdate(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        handleOnReset();
-        setEditableRowKeys([]);
-        message.success('更新成功');
-      },
+  const { run: update } = useRequest((params: UpdateParams) => postModbusDataSheetUpdate(params), {
+    manual: true,
+    onSuccess: () => {
+      handleOnReset();
+      setEditableRowKeys([]);
+      message.success('更新成功');
     },
-  );
+  });
 
   // 批量更新
   const handleOnBatchUpdate = () => {
     const updateData = dataSource?.filter(
       (row) => row?.uuid && selectedRowKeys.includes(row?.uuid),
     );
-    update({device_uuid: deviceId || '', modbus_data_points: updateData});
+    update({ device_uuid: deviceId || '', modbus_data_points: updateData });
   };
 
   // 单个更新
@@ -108,10 +106,8 @@ const ModbusSheet = () => {
       params = {
         ...omit(params, ['uuid']),
       };
-
-
     }
-    update({device_uuid: deviceId || '', modbus_data_points: [params]});
+    update({ device_uuid: deviceId || '', modbus_data_points: [params] });
   };
 
   // 批量删除
@@ -191,7 +187,7 @@ const ModbusSheet = () => {
       },
     },
     {
-      title: <UnitTitle title='采集频率' />,
+      title: <UnitTitle title="采集频率" />,
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
@@ -351,10 +347,14 @@ const ModbusSheet = () => {
           key="upload"
           accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
           showUploadList={false}
-          onChange={async ({ file }) => {
-            if (file.status === 'done' && file.originFileObj) {
-              upload(file.originFileObj);
-            }
+          beforeUpload={(file) => {
+            modal.confirm({
+              title: '导入点位表',
+              width: '50%',
+              content: <UploadRule fileName={file?.name} />,
+              onOk: () => upload(file),
+            });
+            return Upload.LIST_IGNORE;
           }}
         >
           <Button type="primary" icon={<DownloadOutlined />}>
@@ -413,7 +413,7 @@ const ModbusSheet = () => {
       }}
       pagination={{
         defaultPageSize: 10,
-        hideOnSinglePage: true
+        hideOnSinglePage: true,
       }}
       editable={{
         type: 'multiple',
