@@ -415,6 +415,7 @@ const ModbusSheet = () => {
         defaultPageSize: 10,
         hideOnSinglePage: true,
       }}
+      options={{}}
       editable={{
         type: 'multiple',
         editableKeys,
