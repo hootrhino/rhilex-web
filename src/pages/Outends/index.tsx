@@ -1,14 +1,19 @@
 import { useRef, useState } from 'react';
 
-import { PlusOutlined } from '@ant-design/icons';
+import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Button, Popconfirm } from 'antd';
+import { Button, Dropdown, Popconfirm } from 'antd';
 import { history } from 'umi';
 
 import { message } from '@/components/PopupHack';
+import ProConfirmModal from '@/components/ProConfirmModal';
 import StateTag from '@/components/StateTag';
-import { deleteOutendsDel, getOutendsList } from '@/services/rulex/shuchuziyuanguanli';
+import {
+  deleteOutendsDel,
+  getOutendsList,
+  putOutendsRestart,
+} from '@/services/rulex/shuchuziyuanguanli';
 import Detail from './Detail';
 import { typeEnum } from './Update/initialValue';
 
@@ -27,6 +32,8 @@ const Outends = () => {
     uuid: '',
     open: false,
   });
+  const [open, setOpen] = useState<boolean>(false);
+  const [restartId, setRestartId] = useState<string>('');
 
   // 删除
   const handleOnDelete = async (values: API.deleteOutendsDelParams) => {
@@ -72,7 +79,7 @@ const Outends = () => {
       title: '操作',
       valueType: 'option',
       key: 'option',
-      width: 150,
+      width: 210,
       fixed: 'right',
       render: (_, { uuid }) => [
         <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
@@ -88,6 +95,26 @@ const Outends = () => {
         >
           <a>删除</a>
         </Popconfirm>,
+        <Dropdown
+          key="advance-action"
+          menu={{
+            items: [{ key: 'restart', label: '重启资源' }],
+            onClick: ({ key }) => {
+              switch (key) {
+                case 'restart':
+                  setOpen(true);
+                  setRestartId(uuid);
+                  break;
+                default:
+                  break;
+              }
+            },
+          }}
+        >
+          <a>
+            高级操作 <DownOutlined />
+          </a>
+        </Dropdown>,
       ],
     },
   ];
@@ -122,6 +149,22 @@ const Outends = () => {
         />
       </PageContainer>
       <Detail {...detailConfig} onClose={() => setConfig({ ...detailConfig, open: false })} />
+      <ProConfirmModal
+        open={open}
+        onCancel={() => setOpen(false)}
+        title="确定执行设备重启操作吗？"
+        okText="确定重启"
+        afterOkText="重启"
+        content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"
+        handleOnEnd={() => {
+          actionRef.current?.reload();
+          message.success('重启成功');
+          setOpen(false);
+        }}
+        handleOnOk={async () => {
+          await putOutendsRestart({ uuid: restartId });
+        }}
+      />
     </>
   );
 };

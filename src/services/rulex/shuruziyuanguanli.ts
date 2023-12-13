@@ -82,6 +82,21 @@ export async function getInendsList(options?: { [key: string]: any }) {
   );
 }
 
+/** 重启资源 PUT /api/v1/inends/restart */
+export async function putInendsRestart(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putInendsRestartParams,
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/api/v1/inends/restart', {
+    method: 'PUT',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 更新输入资源 更新输出资源 PUT /api/v1/inends/update */
 export async function putInendsUpdate(
   body: {

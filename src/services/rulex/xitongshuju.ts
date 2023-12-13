@@ -63,14 +63,3 @@ export async function getOsSystem(options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
-
-/** 串口列表 GET /api/v1/os/uarts */
-export async function getOsUarts(options?: { [key: string]: any }) {
-  return request<{ code: number; msg: string; data: { alias?: string; port?: string }[] }>(
-    '/api/v1/os/uarts',
-    {
-      method: 'GET',
-      ...(options || {}),
-    },
-  );
-}

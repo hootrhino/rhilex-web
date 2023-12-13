@@ -198,11 +198,19 @@ declare namespace API {
     uuid: string;
   };
 
+  type putDevicesRestartParams = {
+    uuid: string;
+  };
+
   type putGoodsStartParams = {
     uuid: string;
   };
 
   type putGoodsStopParams = {
+    uuid: string;
+  };
+
+  type putInendsRestartParams = {
     uuid: string;
   };
 
@@ -212,6 +220,10 @@ declare namespace API {
   };
 
   type putNotifyReadParams = {
+    uuid: string;
+  };
+
+  type putOutendsRestartParams = {
     uuid: string;
   };
 

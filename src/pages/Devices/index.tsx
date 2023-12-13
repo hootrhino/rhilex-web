@@ -1,17 +1,18 @@
 import GroupList, { DEFAULT_CONFIG } from '@/components/GroupList';
 import { message } from '@/components/PopupHack';
 import StateTag from '@/components/StateTag';
-import { deleteDevicesDel } from '@/services/rulex/shebeiguanli';
+import { deleteDevicesDel, putDevicesRestart } from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
 import { getGroupName } from '@/utils/utils';
-import { PlusOutlined } from '@ant-design/icons';
+import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProCard, ProTable } from '@ant-design/pro-components';
 import { history, useModel, useRequest } from '@umijs/max';
-import { Button, Popconfirm, Space } from 'antd';
+import { Button, Dropdown, Popconfirm, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import Detail from './Detail';
 import { typeEnum } from './SchemaForm/initialValue';
+import ProConfirmModal from '@/components/ProConfirmModal';
 
 export type DeviceItem = {
   name: string;
@@ -35,6 +36,8 @@ const Devices = () => {
 
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(DEFAULT_CONFIG);
   const [activeGroupKey, setActiveGroupKey] = useState<string>(DEFAULT_GROUP_KEY_DEVICE);
+  const [open, setOpen] = useState<boolean>(false);
+  const [restartDeviceId, setDeviceId] = useState<string>('');
 
   // 重置分组表单
   const handleOnReset = () => {
@@ -91,7 +94,7 @@ const Devices = () => {
     },
     {
       title: '操作',
-      width: 280,
+      width: 210,
       fixed: 'right',
       key: 'option',
       valueType: 'option',
@@ -100,22 +103,6 @@ const Devices = () => {
 
         return (
           <Space>
-            <a
-              key="device-specific-sheet "
-              onClick={() =>
-                showSheet && history.push(`/device/${gid}/${uuid}/specific-sheet/${type}`)
-              }
-              className={
-                showSheet
-                  ? 'cursor-pointer'
-                  : 'cursor-not-allowed text-[rgba(0,0,0,.25)] hover:text-[rgba(0,0,0,.25)]'
-              }
-            >
-              点位表配置
-            </a>
-            <a key="rule" onClick={() => history.push(`/device/${gid}/${uuid}/rule`)}>
-              规则配置
-            </a>
             <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
               详情
             </a>
@@ -131,6 +118,35 @@ const Devices = () => {
             >
               <a>删除</a>
             </Popconfirm>
+            <Dropdown
+              menu={{
+                items: [
+                  { key: 'restart', label: '重启设备' },
+                  { key: 'rule', label: '规则配置' },
+                  { key: 'specific-sheet', label: '点位表配置', disabled: !showSheet },
+                ],
+                onClick: ({ key }) => {
+                  switch (key) {
+                    case 'restart':
+                      setOpen(true);
+                      setDeviceId(uuid);
+                      break;
+                    case 'rule':
+                      history.push(`/device/${gid}/${uuid}/rule`);
+                      break;
+                    case 'specific-sheet':
+                      history.push(`/device/${gid}/${uuid}/specific-sheet/${type}`);
+                      break;
+                    default:
+                      break;
+                  }
+                },
+              }}
+            >
+              <a>
+                高级操作 <DownOutlined />
+              </a>
+            </Dropdown>
           </Space>
         );
       },
@@ -202,6 +218,22 @@ const Devices = () => {
         </ProCard>
       </PageContainer>
       <Detail {...detailConfig} onClose={() => setDeviceConfig({ ...detailConfig, open: false })} />
+      <ProConfirmModal
+        open={open}
+        onCancel={() => setOpen(false)}
+        title="确定执行设备重启操作吗？"
+        okText="确定重启"
+        afterOkText="重启"
+        content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"
+        handleOnEnd={() => {
+          getDeviceList({ uuid: activeGroupKey });
+          message.success('重启成功');
+          setOpen(false);
+        }}
+        handleOnOk={async () => {
+          await putDevicesRestart({ uuid: restartDeviceId });
+        }}
+      />
     </>
   );
 };

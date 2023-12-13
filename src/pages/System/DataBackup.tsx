@@ -7,8 +7,8 @@ import { history, useModel } from '@umijs/max';
 import { Button, Space } from 'antd';
 import endsWith from 'lodash/endsWith';
 import { useEffect, useRef, useState } from 'react';
-import ProConfirmModal from './components/ProConfirmModal';
 import Title from './TItle';
+import ProConfirmModal from '@/components/ProConfirmModal';
 
 const DataBackupConfig = () => {
   const { activeKey } = useModel('useSetting');

@@ -1,15 +1,20 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { history } from 'umi';
 
-import { PlusOutlined } from '@ant-design/icons';
+import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Button, Popconfirm } from 'antd';
+import { Button, Dropdown, Popconfirm } from 'antd';
 
 import { message } from '@/components/PopupHack';
+import ProConfirmModal from '@/components/ProConfirmModal';
 import StateTag from '@/components/StateTag';
-import { deleteInendsDel, getInendsList } from '@/services/rulex/shuruziyuanguanli';
+import {
+  deleteInendsDel,
+  getInendsList,
+  putInendsRestart,
+} from '@/services/rulex/shuruziyuanguanli';
 import { useModel, useRequest } from '@umijs/max';
 import Detail from './components/Detail';
 import { typeEnum } from './components/initialValue';
@@ -26,15 +31,20 @@ export type InendsItem = {
 const Inends = () => {
   const actionRef = useRef<ActionType>();
   const { detailConfig, setConfig } = useModel('useSource');
+  const [open, setOpen] = useState<boolean>(false);
+  const [restartId, setRestartId] = useState<string>('');
 
   // 删除
-  const { run: remove } = useRequest((params: API.deleteInendsDelParams) => deleteInendsDel(params), {
-    manual: true,
-    onSuccess: () => {
-      actionRef.current?.reload();
-      message.success('删除成功');
+  const { run: remove } = useRequest(
+    (params: API.deleteInendsDelParams) => deleteInendsDel(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        actionRef.current?.reload();
+        message.success('删除成功');
+      },
     },
-  });
+  );
 
   const columns: ProColumns<InendsItem>[] = [
     {
@@ -66,14 +76,11 @@ const Inends = () => {
     },
     {
       title: '操作',
-      width: 180,
+      width: 210,
       fixed: 'right',
       key: 'option',
       valueType: 'option',
       render: (_, { uuid }) => [
-        <a key="rules" onClick={() => history.push(`/inends/${uuid}/rule`)}>
-          规则配置
-        </a>,
         <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
           详情
         </a>,
@@ -89,6 +96,32 @@ const Inends = () => {
         >
           <a>删除</a>
         </Popconfirm>,
+        <Dropdown
+          key="advance-action"
+          menu={{
+            items: [
+              { key: 'restart', label: '重启资源' },
+              { key: 'rule', label: '规则配置' },
+            ],
+            onClick: ({ key }) => {
+              switch (key) {
+                case 'restart':
+                  setOpen(true);
+                  setRestartId(uuid);
+                  break;
+                case 'rule':
+                  history.push(`/inends/${uuid}/rule`);
+                  break;
+                default:
+                  break;
+              }
+            },
+          }}
+        >
+          <a>
+            高级操作 <DownOutlined />
+          </a>
+        </Dropdown>,
       ],
     },
   ];
@@ -123,6 +156,22 @@ const Inends = () => {
         />
       </PageContainer>
       <Detail {...detailConfig} onClose={() => setConfig({ ...detailConfig, open: false })} />
+      <ProConfirmModal
+        open={open}
+        onCancel={() => setOpen(false)}
+        title="确定执行重启操作吗？"
+        okText="确定重启"
+        afterOkText="重启"
+        content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"
+        handleOnEnd={() => {
+          actionRef.current?.reload();
+          message.success('重启成功');
+          setOpen(false);
+        }}
+        handleOnOk={async () => {
+          await putInendsRestart({ uuid: restartId });
+        }}
+      />
     </>
   );
 };

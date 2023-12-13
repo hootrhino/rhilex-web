@@ -83,6 +83,21 @@ export async function getOutendsList(options?: { [key: string]: any }) {
   );
 }
 
+/** 重启资源 PUT /api/v1/outends/restart */
+export async function putOutendsRestart(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putOutendsRestartParams,
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/api/v1/outends/restart', {
+    method: 'PUT',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 更新输出资源 更新输出资源 PUT /api/v1/outends/update */
 export async function putOutendsUpdate(
   body: {

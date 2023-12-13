@@ -104,6 +104,21 @@ export async function getDevicesListByGroup(
   });
 }
 
+/** 重启设备 PUT /api/v1/devices/restart */
+export async function putDevicesRestart(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.putDevicesRestartParams,
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/devices/restart', {
+    method: 'PUT',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 更新设备 PUT /api/v1/devices/update */
 export async function putDevicesUpdate(
   body: {
