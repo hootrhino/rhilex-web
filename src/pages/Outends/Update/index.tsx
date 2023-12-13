@@ -422,7 +422,7 @@ const UpdateForm = () => {
                             transform={(value: string) => ({
                               allowPing: value === 'true' ? true : false,
                             })}
-                            convertValue={(value: boolean) => value.toString()}
+                            convertValue={(value: boolean) => value?.toString()}
                           >
                             <ProSegmented width="md" />
                           </ProForm.Item>

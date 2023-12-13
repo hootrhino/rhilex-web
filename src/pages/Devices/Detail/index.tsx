@@ -77,7 +77,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: '是否启动轮询',
         dataIndex: 'autoRequest',
-        hideInDescriptions: !['GENERIC_MODBUS', 'S1200PLC'].includes(type),
+        hideInDescriptions: !['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type),
         renderText: (autoRequest) => (
           <Tag color={autoRequest ? 'success' : 'error'}>{autoRequest ? '开启' : '关闭'}</Tag>
         ),
@@ -99,40 +99,40 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         title: '工作模式',
         dataIndex: 'mode',
         valueEnum: modeEnum,
-        hideInDescriptions: type === 'S1200PLC',
+        hideInDescriptions: type === 'SIEMENS_PLC',
       },
       {
         title: '型号',
         dataIndex: 'model',
         valueEnum: plcModelEnum,
-        hideInDescriptions: type !== 'S1200PLC',
+        hideInDescriptions: type !== 'SIEMENS_PLC',
       },
       {
         title: 'PLC 地址',
         dataIndex: 'host',
-        hideInDescriptions: type !== 'S1200PLC',
+        hideInDescriptions: type !== 'SIEMENS_PLC',
       },
       {
         title: <UnitTitle title='连接超时时间' />,
         dataIndex: 'timeout',
-        hideInDescriptions: type !== 'S1200PLC',
+        hideInDescriptions: type !== 'SIEMENS_PLC',
       },
       {
         title: <UnitTitle title='心跳超时时间' />,
         dataIndex: 'idleTimeout',
-        hideInDescriptions: type !== 'S1200PLC',
+        hideInDescriptions: type !== 'SIEMENS_PLC',
       },
       {
         title: '机架号',
         dataIndex: 'rack',
         valueEnum: rackEnum,
-        hideInDescriptions: type !== 'S1200PLC' || model === 'S7200',
+        hideInDescriptions: type !== 'SIEMENS_PLC' || model === 'S7200',
       },
       {
         title: '插槽号',
         dataIndex: 'slot',
         valueEnum: slotEnum,
-        hideInDescriptions: type !== 'S1200PLC',
+        hideInDescriptions: type !== 'SIEMENS_PLC',
       },
     ],
     HOST: [
@@ -210,7 +210,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
                   columns={columnsMap['HOST']}
                 />
               )}
-              {['GENERIC_MODBUS', 'S1200PLC'].includes(type) && (
+              {['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type) && (
                 <>
                   <ProDescriptions title="点位表配置" />
                   {type === 'GENERIC_MODBUS' ? <ModbusTable /> : <PlcTable />}

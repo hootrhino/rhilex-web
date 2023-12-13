@@ -17,7 +17,7 @@ const SpecificSheet = () => {
   return (
     <PageContainer title={deviceName ? `${deviceName} 点位表配置` : '点位表配置'} onBack={() => history.push('/device/list')}>
       {deviceType === 'GENERIC_MODBUS' && <ModbusSheet />}
-      {deviceType === 'S1200PLC' && <PlcSheet />}
+      {deviceType === 'SIEMENS_PLC' && <PlcSheet />}
     </PageContainer>
   );
 };

@@ -28,6 +28,7 @@ import {
   defaultAisConfig,
   defaultHostConfig,
   defaultModbusConfig,
+  defaultModelConfig,
   defaultPlcConfig,
   defaultProtocolConfig,
 } from './initialValue';
@@ -209,30 +210,43 @@ const SchemaForm = ({}: ProFormProps) => {
   };
 
   const handleOnValuesChange = (changedValue: any) => {
-    if (!changedValue?.type) return;
-    let newConfig;
+    if (changedValue?.type) {
+      let newConfig;
 
-    switch (changedValue?.type) {
-      case 'GENERIC_PROTOCOL':
-        newConfig = defaultProtocolConfig;
-        break;
-      case 'GENERIC_MODBUS':
-        newConfig = defaultModbusConfig;
-        break;
-      case 'GENERIC_AIS_RECEIVER':
-        newConfig = defaultAisConfig;
-        break;
-      case 'S1200PLC':
-        newConfig = defaultPlcConfig;
-        break;
-      default:
-        newConfig = defaultProtocolConfig;
-        break;
+      switch (changedValue?.type) {
+        case 'GENERIC_PROTOCOL':
+          newConfig = defaultProtocolConfig;
+          break;
+        case 'GENERIC_MODBUS':
+          newConfig = defaultModbusConfig;
+          break;
+        case 'GENERIC_AIS_RECEIVER':
+          newConfig = defaultAisConfig;
+          break;
+        case 'SIEMENS_PLC':
+          newConfig = defaultPlcConfig;
+          break;
+        default:
+          newConfig = defaultProtocolConfig;
+          break;
+      }
+
+      formRef.current?.setFieldsValue({
+        config: changedValue?.type === detail?.type ? handleOnUpdateValue(detail) : newConfig,
+      });
+    } else {
+      const model = changedValue?.config?.commonConfig?.[0]?.model;
+      if (model) {
+        const newCommonConfig = defaultPlcConfig.commonConfig?.map((item) => ({
+          ...item,
+          ...defaultModelConfig[model],
+          model,
+        }));
+        formRef.current?.setFieldsValue({ config: { commonConfig: newCommonConfig } });
+      } else {
+        return;
+      }
     }
-
-    formRef.current?.setFieldsValue({
-      config: changedValue?.type === detail?.type ? handleOnUpdateValue(detail) : newConfig,
-    });
   };
 
   useEffect(() => {

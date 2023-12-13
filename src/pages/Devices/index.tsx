@@ -99,7 +99,7 @@ const Devices = () => {
       key: 'option',
       valueType: 'option',
       render: (_, { uuid, gid, type }) => {
-        const showSheet = ['GENERIC_MODBUS', 'S1200PLC'].includes(type);
+        const showSheet = ['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type);
 
         return (
           <Space>

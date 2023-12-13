@@ -34,7 +34,9 @@ export const columns = [
     name: ['type'],
     columns: ({ type }: any) => {
       if (
-        !['GENERIC_AIS_RECEIVER', 'GENERIC_PROTOCOL', 'GENERIC_MODBUS', 'S1200PLC'].includes(type)
+        !['GENERIC_AIS_RECEIVER', 'GENERIC_PROTOCOL', 'GENERIC_MODBUS', 'SIEMENS_PLC'].includes(
+          type,
+        )
       )
         return [];
 
@@ -63,11 +65,11 @@ export const columns = [
                       dataIndex: 'autoRequest',
                       valueType: 'segmented',
                       required: true,
-                      hideInForm: !['GENERIC_MODBUS', 'S1200PLC'].includes(type),
+                      hideInForm: !['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type),
                       transform: (value: string) => ({
                         autoRequest: value === 'true' ? true : false,
                       }),
-                      convertValue: (value: boolean) => value.toString(),
+                      convertValue: (value: boolean) => value?.toString(),
                     },
                     {
                       title: '是否解析 AIS 报文',
@@ -76,7 +78,7 @@ export const columns = [
                       required: true,
                       hideInForm: type !== 'GENERIC_AIS_RECEIVER',
                       transform: (value: string) => ({ parseAis: value === 'true' ? true : false }),
-                      convertValue: (value: boolean) => value.toString(),
+                      convertValue: (value: boolean) => value?.toString(),
                     },
                     {
                       title: '主机序列号',
@@ -90,13 +92,13 @@ export const columns = [
                       valueType: 'select',
                       required: true,
                       valueEnum: modeEnum,
-                      hideInForm: type === 'S1200PLC',
+                      hideInForm: type === 'SIEMENS_PLC',
                     },
                     {
                       title: 'PLC 地址',
                       dataIndex: 'host',
                       required: true,
-                      hideInForm: type !== 'S1200PLC',
+                      hideInForm: type !== 'SIEMENS_PLC',
                     },
                     {
                       title: '型号',
@@ -104,53 +106,83 @@ export const columns = [
                       required: true,
                       valueType: 'select',
                       valueEnum: plcModelEnum,
-                      hideInForm: type !== 'S1200PLC',
+                      hideInForm: type !== 'SIEMENS_PLC',
                     },
                     {
                       title: <UnitTitle title="连接超时时间" />,
                       dataIndex: 'timeout',
                       valueType: 'digit',
                       required: true,
-                      hideInForm: type !== 'S1200PLC',
+                      hideInForm: type !== 'SIEMENS_PLC',
                     },
                   ],
                 },
                 {
-                  valueType: 'dependency',
-                  name: ['model'],
-                  hideInForm: type !== 'S1200PLC',
-                  columns: ({ model }: { model: string }) => {
-                    return [
-                      {
-                        valueType: 'group',
-                        columns: [
-                          {
-                            title: <UnitTitle title="心跳超时时间" />,
-                            dataIndex: 'idleTimeout',
-                            valueType: 'digit',
-                            required: true,
-                          },
-                          {
-                            title: '机架号',
-                            dataIndex: 'rack',
-                            required: true,
-                            valueType: 'select',
-                            valueEnum: rackEnum,
-                            hideInForm: model === 'S7200',
-                          },
-                          {
-                            title: '插槽号',
-                            dataIndex: 'slot',
-                            required: true,
-                            valueType: 'select',
-                            valueEnum: slotEnum,
-                            hideInForm: model === 'S7200',
-                          },
-                        ],
-                      },
-                    ];
-                  },
+                  valueType: 'group',
+                  columns: [
+                    {
+                      title: <UnitTitle title="心跳超时时间" />,
+                      dataIndex: 'idleTimeout',
+                      valueType: 'digit',
+                      required: true,
+                      hideInForm: type !== 'SIEMENS_PLC',
+                    },
+                    {
+                      title: '机架号',
+                      dataIndex: 'rack',
+                      required: true,
+                      valueType: 'select',
+                      valueEnum: rackEnum,
+                      hideInForm: type !== 'SIEMENS_PLC',
+                      // hideInForm: model === 'S7200',
+                    },
+                    {
+                      title: '插槽号',
+                      dataIndex: 'slot',
+                      required: true,
+                      valueType: 'select',
+                      valueEnum: slotEnum,
+                      hideInForm: type !== 'SIEMENS_PLC',
+                      // hideInForm: model === 'S7200',
+                    },
+                  ],
                 },
+                // {
+                //   valueType: 'dependency',
+                //   name: ['model'],
+                //   hideInForm: type !== 'SIEMENS_PLC',
+                //   columns: ({ model }: { model: string }) => {
+                //     return [
+                //       {
+                //         valueType: 'group',
+                //         columns: [
+                //           {
+                //             title: <UnitTitle title="心跳超时时间" />,
+                //             dataIndex: 'idleTimeout',
+                //             valueType: 'digit',
+                //             required: true,
+                //           },
+                //           {
+                //             title: '机架号',
+                //             dataIndex: 'rack',
+                //             required: true,
+                //             valueType: 'select',
+                //             valueEnum: rackEnum,
+                //             hideInForm: model === 'S7200',
+                //           },
+                //           {
+                //             title: '插槽号',
+                //             dataIndex: 'slot',
+                //             required: true,
+                //             valueType: 'select',
+                //             valueEnum: slotEnum,
+                //             hideInForm: model === 'S7200',
+                //           },
+                //         ],
+                //       },
+                //     ];
+                //   },
+                // },
               ],
             },
           ],

@@ -21,7 +21,7 @@ export const typeEnum = {
   GENERIC_PROTOCOL: '通用时间片中断串口协议',
   GENERIC_MODBUS: '通用 Modbus Master',
   GENERIC_AIS_RECEIVER: '通用船舶 AIS 数据解析器',
-  S1200PLC: '西门子 PLC',
+  SIEMENS_PLC: '西门子 PLC',
 };
 
 // 协议分隔符
@@ -75,8 +75,11 @@ export const blockTypeEnum = {
 
 // PLC Model
 export const plcModelEnum = {
+  S7200: '西门子 S7200 系列 PLC',
+  S7300: '西门子 S7300 系列 PLC',
+  S7400: '西门子 S7400 系列 PLC',
   S71200: '西门子 S71200 系列 PLC',
-  S7200: '西门子 S200 系列 PLC',
+  S71500: '西门子 S71500 系列 PLC',
 };
 
 // 机架号 rack
@@ -179,7 +182,7 @@ export const defaultPlcConfig = {
   commonConfig: [
     {
       autoRequest: 'false',
-      host: '127.0.0.1:502',
+      host: '127.0.0.1:102',
       model: 'S71200',
       rack: 0,
       slot: 1,
@@ -187,4 +190,28 @@ export const defaultPlcConfig = {
       idleTimeout: 5000,
     },
   ],
+};
+
+// 根据 PLC 型号改变 rack&slot 默认值
+export const defaultModelConfig = {
+  S7200: {
+    rack: 0,
+    slot: 2,
+  },
+  S7300: {
+    rack: 0,
+    slot: 2,
+  },
+  S7400: {
+    rack: 0,
+    slot: 2,
+  },
+  S71200: {
+    rack: 0,
+    slot: 1,
+  },
+  S71500: {
+    rack: 0,
+    slot: 1,
+  },
 };
