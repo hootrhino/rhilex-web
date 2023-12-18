@@ -26,15 +26,6 @@ type FormParams = {
   failed: string;
 };
 
-// type CreateParams = FormParams & {
-//  fromSource: string[];
-//  fromDevice: string[];
-// }
-
-// type UpdateParams = CreateParams & {
-//   uuid: string;
-// }
-
 type UpdateFormProps = {
   type: RuleType;
   typeId: string;

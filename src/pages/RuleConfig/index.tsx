@@ -9,6 +9,7 @@ import { deleteRulesDel } from '@/services/rulex/guizeguanli';
 import { history, useParams, useRequest } from '@umijs/max';
 import Debug from './Debug';
 import Detail from './Detail';
+import { getName } from '@/utils/utils';
 
 export type RuleItem = {
   uuid: string;
@@ -24,12 +25,11 @@ type RuleConfigProps = {
   dataSource: RuleItem[];
   type: RuleType;
   typeId: string;
-  pageTitle: string;
+  pageTitleData: Record<string, any>[];
   refresh: () => void;
-  onBack: () => void;
 };
 
-const RuleConfig = ({ dataSource, type, typeId, pageTitle, refresh, onBack }: RuleConfigProps) => {
+const RuleConfig = ({ dataSource, pageTitleData, type, typeId, refresh }: RuleConfigProps) => {
   const { groupId } = useParams();
   const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({ open: false, type: 'detail', uuid: '' });
   const [debugConfig, setDebugConfig] = useState<DetailModalConfig>({
@@ -121,9 +121,18 @@ const RuleConfig = ({ dataSource, type, typeId, pageTitle, refresh, onBack }: Ru
     },
   ];
 
+  const getTitle = () => {
+    const title = getName(pageTitleData, typeId);
+    if (title) {
+      return `${title} 规则配置`
+    } else {
+      return '规则配置'
+    }
+  }
+
   return (
     <>
-      <PageContainer onBack={onBack} title={pageTitle ? pageTitle : '规则配置'}>
+      <PageContainer onBack={() => history.push(`/${type}/list`)} title={getTitle()}>
         <ProTable
           rowKey="uuid"
           columns={columns}

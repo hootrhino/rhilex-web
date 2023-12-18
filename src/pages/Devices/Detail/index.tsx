@@ -1,5 +1,5 @@
 import StateTag from '@/components/StateTag';
-import { getGroupName } from '@/utils/utils';
+import { getName } from '@/utils/utils';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions, ProSkeleton } from '@ant-design/pro-components';
 import { history, useModel } from '@umijs/max';
@@ -56,7 +56,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: '设备分组',
         dataIndex: 'gid',
-        renderText: (value) => getGroupName(groupList || [], value),
+        renderText: (value) => getName(groupList || [], value),
       },
       {
         title: '设备状态',

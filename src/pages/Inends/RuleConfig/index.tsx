@@ -1,33 +1,20 @@
 import { getInendsList, getRulesByInend } from '@/services/rulex/shuruziyuanguanli';
-import { history, useParams, useRequest } from '@umijs/max';
-import { useEffect, useState } from 'react';
+import { useParams, useRequest } from '@umijs/max';
 import RuleConfig from '../../RuleConfig';
 
 const RuleConfigList = () => {
   const { inendId } = useParams();
-  const [name, setName] = useState<string>('');
 
-  const { data, run: getRuleList, refresh } = useRequest(
-    (params: API.getRulesByInendParams) => getRulesByInend(params),
+  const { data, refresh } = useRequest(
+    () => getRulesByInend({ inendId: inendId || '' }),
     {
-      manual: true,
+      ready: !!inendId,
     },
   );
 
-  useRequest(() => getInendsList(), {
-    onSuccess: (res) => {
-      const inends = (res || [])?.find(item => item?.uuid === inendId);
-      setName(inends?.name);
-    }
-  })
+  const {data: inendsList} = useRequest(() => getInendsList())
 
-  useEffect(() => {
-    if (inendId) {
-      getRuleList({ inendId });
-    }
-  }, [inendId]);
-
-  return <RuleConfig pageTitle={`${name} 规则配置`} dataSource={data} type="inends" typeId={inendId || ''} refresh={refresh} onBack={() => history.push('/inends/list')}/>;
+  return <RuleConfig dataSource={data} pageTitleData={inendsList as Record<string, any>[]} type="inends" typeId={inendId || ''} refresh={refresh} />;
 };
 
 export default RuleConfigList;

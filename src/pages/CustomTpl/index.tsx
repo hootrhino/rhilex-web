@@ -1,7 +1,7 @@
 import GroupList, { DEFAULT_CONFIG } from '@/components/GroupList';
 import { getUserluaGroup, getUserluaListByGroup } from '@/services/rulex/yonghuLUApianduan';
 import { DEFAULT_GROUP_KEY_LUA_TPL, GROUP_TYPE_LUA_TPL } from '@/utils/constant';
-import { getGroupName } from '@/utils/utils';
+import { getName } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { history, useRequest } from '@umijs/max';
@@ -77,7 +77,7 @@ const CustomTpl = () => {
               updateConfig={setConfig}
             />
           </ProCard>
-          <ProCard title={getGroupName(groupList || [], activeGroup)}>
+          <ProCard title={getName(groupList || [], activeGroup)}>
             <TplList dataSource={tplList || []} refresh={refresh} activeGroup={activeGroup} />
           </ProCard>
         </ProCard>

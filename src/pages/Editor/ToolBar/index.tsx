@@ -1,4 +1,4 @@
-import { cn, getGroupName, IconFont } from '@/utils/utils';
+import { cn, getName, IconFont } from '@/utils/utils';
 import { useEffect, useState } from 'react';
 
 import { message } from '@/components/PopupHack';
@@ -48,7 +48,7 @@ const ToolBar = ({ refresh }: ToolBarProps) => {
 
   useEffect(() => {
     if (detail) {
-      const groupName = getGroupName(groupList, detail.gid);
+      const groupName = getName(groupList, detail.gid);
 
       setGroupName(groupName || '');
       setName(detail.name);

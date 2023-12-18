@@ -1,29 +1,19 @@
 import { getRulesByDevice } from '@/services/rulex/shebeiguanli';
-import { history, useModel, useParams, useRequest } from '@umijs/max';
-import { useEffect, useState } from 'react';
+import { useModel, useParams, useRequest } from '@umijs/max';
 import RuleConfig from '../../RuleConfig';
 
 const RuleConfigList = () => {
   const { deviceId } = useParams();
   const {data: deviceList} = useModel('useDevice');
-  const [deviceName, setName] = useState<string>('');
 
-  const { data, run: getRuleList, refresh } = useRequest(
-    (params: API.getRulesByDeviceParams) => getRulesByDevice(params),
+  const { data, refresh } = useRequest(
+    () => getRulesByDevice({ deviceId: deviceId || '' }),
     {
-      manual: true,
+      ready: !!deviceId
     },
   );
 
-  useEffect(() => {
-    if (deviceId) {
-      const device = deviceList?.find(item => item?.uuid === deviceId);
-      setName(device?.name || '');
-      getRuleList({ deviceId });
-    }
-  }, [deviceId, deviceList]);
-
-  return <RuleConfig pageTitle={`${deviceName} 规则配置`} dataSource={data} type="device" typeId={deviceId || ''} refresh={refresh} onBack={() => history.push('/device/list')}/>;
+  return <RuleConfig dataSource={data} pageTitleData={deviceList as Record<string, any>[]} type="device" typeId={deviceId || ''} refresh={refresh} />;
 };
 
 export default RuleConfigList;

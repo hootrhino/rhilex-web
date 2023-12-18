@@ -18,10 +18,10 @@ export const funcEnum = new Map([
 
 // 设备类型
 export const typeEnum = {
-  GENERIC_PROTOCOL: '通用时间片中断串口协议',
-  GENERIC_MODBUS: '通用 Modbus Master',
-  GENERIC_AIS_RECEIVER: '通用船舶 AIS 数据解析器',
-  SIEMENS_PLC: '西门子 PLC',
+  GENERIC_PROTOCOL: '通用时间片中断协议串口类设备',
+  GENERIC_MODBUS: '通用 Modbus Slaver 设备',
+  GENERIC_AIS_RECEIVER: '通用船舶 AIS 报文解析网关',
+  SIEMENS_PLC: '西门子 S7 系列 PLC 设备',
 };
 
 // 协议分隔符
@@ -75,11 +75,11 @@ export const blockTypeEnum = {
 
 // PLC Model
 export const plcModelEnum = {
-  S7200: '西门子 S7200 系列 PLC',
-  S7300: '西门子 S7300 系列 PLC',
-  S7400: '西门子 S7400 系列 PLC',
-  S71200: '西门子 S71200 系列 PLC',
-  S71500: '西门子 S71500 系列 PLC',
+  S7200: '西门子 S7-200 系列 PLC',
+  S7300: '西门子 S7-300 系列 PLC',
+  S7400: '西门子 S7-400 系列 PLC',
+  S71200: '西门子 S7-1200 系列 PLC',
+  S71500: '西门子 S7-1500 系列 PLC',
 };
 
 // 机架号 rack
@@ -195,23 +195,18 @@ export const defaultPlcConfig = {
 // 根据 PLC 型号改变 rack&slot 默认值
 export const defaultModelConfig = {
   S7200: {
-    rack: 0,
     slot: 2,
   },
   S7300: {
-    rack: 0,
     slot: 2,
   },
   S7400: {
-    rack: 0,
     slot: 2,
   },
   S71200: {
-    rack: 0,
     slot: 1,
   },
   S71500: {
-    rack: 0,
     slot: 1,
   },
 };

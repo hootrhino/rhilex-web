@@ -1,4 +1,3 @@
-import type { GroupItem } from '@/components/GroupList';
 import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
@@ -74,9 +73,9 @@ export const FormatCode = (code: string) => {
   return formattedCode;
 };
 
-// 获取分组名称
-export const getGroupName = (groupList: Partial<GroupItem>[], key: string) => {
-  const group = groupList?.find((group: any) => group.uuid === key);
+// 获取名称
+export const getName = (list: Record<string, any>[], key: string) => {
+  const currentItem = list?.find((item: Record<string, any>) => item.uuid === key);
 
-  return group?.name;
+  return currentItem?.name;
 };

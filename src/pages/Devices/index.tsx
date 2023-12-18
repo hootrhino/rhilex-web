@@ -3,7 +3,7 @@ import { message } from '@/components/PopupHack';
 import StateTag from '@/components/StateTag';
 import { deleteDevicesDel, putDevicesRestart } from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
-import { getGroupName } from '@/utils/utils';
+import { getName } from '@/utils/utils';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProCard, ProTable } from '@ant-design/pro-components';
@@ -195,7 +195,7 @@ const Devices = () => {
               updateConfig={setGroupConfig}
             />
           </ProCard>
-          <ProCard title={getGroupName(groupList || [], activeGroupKey)}>
+          <ProCard title={getName(groupList || [], activeGroupKey)}>
             <ProTable
               rowKey="uuid"
               columns={columns}

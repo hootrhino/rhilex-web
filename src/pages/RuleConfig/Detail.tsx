@@ -97,10 +97,6 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     getDeviceList({ uuid: groupId });
   }, [groupId]);
 
-  // useEffect(() => {
-  //   getSources();
-  // }, [])
-
   return (
     <Drawer
       title={type === 'detail' ? '规则详情' : '规则日志'}

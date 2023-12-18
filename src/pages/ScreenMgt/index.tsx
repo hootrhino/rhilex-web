@@ -1,7 +1,7 @@
 import GroupList, { DEFAULT_CONFIG } from '@/components/GroupList';
 import { getVisualListByGroup } from '@/services/rulex/dapingguanli';
 import { DEFAULT_GROUP_KEY_SCREEN, GROUP_TYPE_SCREEN } from '@/utils/constant';
-import { getGroupName } from '@/utils/utils';
+import { getName } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
@@ -78,7 +78,7 @@ const Screen = () => {
             updateConfig={setConfig}
           />
         </ProCard>
-        <ProCard title={getGroupName(groupList || [], activeGroup)}>
+        <ProCard title={getName(groupList || [], activeGroup)}>
           <GroupDetail list={groupItems} activeGroup={activeGroup} reload={refresh} />
         </ProCard>
       </ProCard>
