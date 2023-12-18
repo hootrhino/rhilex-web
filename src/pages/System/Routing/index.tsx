@@ -1,6 +1,6 @@
 import { ProCard } from '@ant-design/pro-components';
 import { useState } from 'react';
-import Title from '../TItle';
+import Title from '../components/Title';
 import Config from './Config';
 import List from './List';
 

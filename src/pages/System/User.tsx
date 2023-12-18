@@ -5,7 +5,7 @@ import { ProForm, ProFormText } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { Button, Space } from 'antd';
 import { useEffect, useRef } from 'react';
-import Title from './TItle';
+import Title from './components/Title';
 
 type UpdateParams = {
   username: string;

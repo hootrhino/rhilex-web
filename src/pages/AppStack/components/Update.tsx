@@ -14,20 +14,8 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
-
-type CreatAppParams = {
-  name: string;
-  version: string;
-  autoStart: boolean;
-  description: string;
-};
-
-type UpdateAppParams = CreatAppParams & {
-  uuid: string;
-  luaSource: string;
-};
 
 const DefaultListUrl = '/app-stack/list';
 
@@ -41,54 +29,35 @@ const defaultValue = {
 };
 
 const UpdateForm = () => {
-  const { id } = useParams();
+  const { uuid } = useParams();
   const { showModal } = useGoBack();
   const formRef = useRef<ProFormInstance>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   // 获取详情
-  const { run: getDetail, data: detail } = useRequest(
-    (params: API.getAppDetailParams) => getAppDetail(params),
+  const { data: detail } = useRequest(
+    () => getAppDetail({uuid: uuid || ''}),
     {
-      manual: true,
-      formatResult: (res) => res?.data,
-    },
-  );
-
-  // 新建
-  const { run: add, loading: addLoading } = useRequest(
-    (params: CreatAppParams) => postAppCreate(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        message.success('新建成功');
-        history.push(DefaultListUrl);
-      },
-    },
-  );
-
-  // 编辑
-  const { run: update, loading: updateLoading } = useRequest(
-    (params: UpdateAppParams) => putAppUpdate(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        message.success('更新成功');
-        history.push(DefaultListUrl);
-      },
+      ready: !!uuid,
     },
   );
 
   const handleOnFinish = async (values: any) => {
+    setLoading(true);
     try {
       const params = {
         ...values,
         type: 'lua',
       };
-      if (id) {
-        update({ ...params, uuid: id });
+      if (uuid) {
+        await putAppUpdate({ ...params, uuid });
+        message.success('更新成功');
       } else {
-        add(params);
+        await postAppCreate(params);
+        message.success('新建成功');
       }
+      setLoading(false);
+      history.push(DefaultListUrl);
       return true;
     } catch (error) {
       return false;
@@ -103,15 +72,9 @@ const UpdateForm = () => {
     }
   }, [detail]);
 
-  useEffect(() => {
-    if (id) {
-      getDetail({ uuid: id });
-    }
-  }, [id]);
-
   return (
     <PageContainer
-      header={{ title: id ? '更新应用' : '新建应用' }}
+      header={{ title: uuid ? '更新应用' : '新建应用' }}
       onBack={() => showModal({ url: DefaultListUrl })}
     >
       <ProCard>
@@ -128,7 +91,7 @@ const UpdateForm = () => {
                     onConfirm={() => {
                       reset();
                       formRef.current?.setFieldsValue(
-                        id ? { ...defaultValue, ...detail } : defaultValue,
+                        uuid ? { ...defaultValue, ...detail } : defaultValue,
                       );
                     }}
                   >
@@ -139,7 +102,7 @@ const UpdateForm = () => {
                     key="submit"
                     type="primary"
                     onClick={submit}
-                    loading={addLoading || updateLoading}
+                    loading={loading}
                   >
                     提交
                   </Button>
@@ -178,7 +141,7 @@ const UpdateForm = () => {
             {({ type }) => {
               if (type !== 'lua') return;
               return (
-                id && <ProCodeEditor label="Lua 源码" name="luaSource" ref={formRef} required />
+                uuid && <ProCodeEditor label="Lua 源码" name="luaSource" ref={formRef} required />
               );
             }}
           </ProFormDependency>

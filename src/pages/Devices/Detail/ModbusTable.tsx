@@ -3,11 +3,12 @@ import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { funcEnum } from '../SchemaForm/initialValue';
-
-import '../index.less';
 import type { ModbusSheetItem } from '../SpecificSheet/ModbusSheet';
 import IndexBorder from '@/components/IndexBorder';
 import UnitTitle from '@/components/UnitTitle';
+
+import '../index.less';
+import { Tag } from 'antd';
 
 const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
   {
@@ -46,6 +47,19 @@ const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
   {
     title: '读取数量',
     dataIndex: 'quantity',
+  },
+  {
+    title: '最新值',
+    dataIndex: 'value',
+  },
+  {
+    title: '点位状态',
+    dataIndex: 'status',
+    width: 80,
+    renderText(_, record) {
+      const isSuccess = record?.status === 1;
+      return <Tag color={isSuccess ? 'success' : 'error'}>{isSuccess ? '正常' : '异常'}</Tag>;
+    },
   },
 ];
 

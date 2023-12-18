@@ -134,7 +134,6 @@ export const columns = [
                       valueType: 'select',
                       valueEnum: rackEnum,
                       hideInForm: type !== 'SIEMENS_PLC',
-                      // hideInForm: model === 'S7200',
                     },
                     {
                       title: '插槽号',
@@ -143,46 +142,9 @@ export const columns = [
                       valueType: 'select',
                       valueEnum: slotEnum,
                       hideInForm: type !== 'SIEMENS_PLC',
-                      // hideInForm: model === 'S7200',
                     },
                   ],
                 },
-                // {
-                //   valueType: 'dependency',
-                //   name: ['model'],
-                //   hideInForm: type !== 'SIEMENS_PLC',
-                //   columns: ({ model }: { model: string }) => {
-                //     return [
-                //       {
-                //         valueType: 'group',
-                //         columns: [
-                //           {
-                //             title: <UnitTitle title="心跳超时时间" />,
-                //             dataIndex: 'idleTimeout',
-                //             valueType: 'digit',
-                //             required: true,
-                //           },
-                //           {
-                //             title: '机架号',
-                //             dataIndex: 'rack',
-                //             required: true,
-                //             valueType: 'select',
-                //             valueEnum: rackEnum,
-                //             hideInForm: model === 'S7200',
-                //           },
-                //           {
-                //             title: '插槽号',
-                //             dataIndex: 'slot',
-                //             required: true,
-                //             valueType: 'select',
-                //             valueEnum: slotEnum,
-                //             hideInForm: model === 'S7200',
-                //           },
-                //         ],
-                //       },
-                //     ];
-                //   },
-                // },
               ],
             },
           ],

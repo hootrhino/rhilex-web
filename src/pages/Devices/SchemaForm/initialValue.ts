@@ -127,46 +127,6 @@ export const defaultRegistersConfig = {
   quantity: 1,
 };
 
-// AIS 默认配置
-export const defaultAisConfig = {
-  commonConfig: [
-    {
-      parseAis: 'false',
-      gwsn: 'HR0001',
-      mode: 'UART',
-    },
-  ],
-  hostConfig: [
-    {
-      port: 6005,
-      host: '0.0.0.0',
-      timeout: 3000,
-    },
-  ],
-};
-
-// MODBUS 默认配置
-export const defaultModbusConfig = {
-  commonConfig: [
-    {
-      autoRequest: 'false',
-      mode: 'UART',
-    },
-  ],
-  hostConfig: defaultHostConfig,
-};
-
-// PROTOCOL 默认配置
-export const defaultProtocolConfig = {
-  commonConfig: [
-    {
-      retryTime: 5,
-      mode: 'UART',
-    },
-  ],
-  hostConfig: defaultHostConfig,
-};
-
 // 点位列表默认值
 export const defaultBlocksConfig = {
   tag: '',
@@ -177,19 +137,54 @@ export const defaultBlocksConfig = {
   size: 16,
 };
 
-// 西门子 PLC 默认配置
-export const defaultPlcConfig = {
-  commonConfig: [
-    {
-      autoRequest: 'false',
-      host: '127.0.0.1:102',
-      model: 'S71200',
-      rack: 0,
-      slot: 1,
-      timeout: 5000,
-      idleTimeout: 5000,
-    },
-  ],
+export const defaultConfig = {
+  GENERIC_PROTOCOL: {
+    commonConfig: [
+      {
+        retryTime: 5,
+        mode: 'UART',
+      },
+    ],
+    hostConfig: defaultHostConfig,
+  },
+  GENERIC_MODBUS: {
+    commonConfig: [
+      {
+        autoRequest: 'false',
+        mode: 'UART',
+      },
+    ],
+    hostConfig: defaultHostConfig,
+  },
+  GENERIC_AIS_RECEIVER: {
+    commonConfig: [
+      {
+        parseAis: 'false',
+        gwsn: 'HR0001',
+        mode: 'UART',
+      },
+    ],
+    hostConfig: [
+      {
+        port: 6005,
+        host: '0.0.0.0',
+        timeout: 3000,
+      },
+    ],
+  },
+  SIEMENS_PLC: {
+    commonConfig: [
+      {
+        autoRequest: 'false',
+        host: '127.0.0.1:102',
+        model: 'S71200',
+        rack: 0,
+        slot: 1,
+        timeout: 5000,
+        idleTimeout: 5000,
+      },
+    ],
+  },
 };
 
 // 根据 PLC 型号改变 rack&slot 默认值

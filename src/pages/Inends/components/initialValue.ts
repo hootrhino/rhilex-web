@@ -34,49 +34,40 @@ export const defaultIothubConfig = (randomNumber: number) => [
   },
 ];
 
-// COAP 默认配置
-export const defaultCoapConfig = [
-  {
-    port: 2582,
-    host: '127.0.0.1',
-  },
-];
-
-// RULEX_UDP 默认配置
-export const defaultUdpConfig = [
-  {
-    port: 2583,
-    host: '127.0.0.1',
-  },
-];
-
-// HTTP 默认配置
-export const defaultHttpConfig = [
-  {
-    port: 2584,
-    host: '127.0.0.1',
-  },
-];
-
-// NATS_SERVER 默认配置
-export const defaultNatsConfig = [
-  {
-    port: 4222,
-    host: '127.0.0.1',
-  },
-];
-
-// GRPC 默认配置
-export const defaultGrpcConfig = [
-  {
-    port: 2585,
-    host: '127.0.0.1',
-  },
-];
-
-// INTERNAL_EVENT 默认配置
-export const defaultEventConfig = [
-  {
-    type: 'ALL',
-  },
-];
+export const defaultConfig = {
+  COAP: [
+    {
+      port: 2582,
+      host: '127.0.0.1',
+    },
+  ],
+  RULEX_UDP: [
+    {
+      port: 2583,
+      host: '127.0.0.1',
+    },
+  ],
+  HTTP: [
+    {
+      port: 2584,
+      host: '127.0.0.1',
+    },
+  ],
+  NATS_SERVER: [
+    {
+      port: 4222,
+      host: '127.0.0.1',
+    },
+  ],
+  GRPC: [
+    {
+      port: 2585,
+      host: '127.0.0.1',
+    },
+  ],
+  INTERNAL_EVENT: [
+    {
+      type: 'ALL',
+    },
+  ],
+};

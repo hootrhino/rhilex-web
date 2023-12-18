@@ -97,7 +97,7 @@
         component: './Inends/components/Update',
       },
       {
-        path: '/inends/edit/:id',
+        path: '/inends/edit/:uuid',
         name: '编辑资源',
         component: './Inends/components/Update',
       },
@@ -139,7 +139,7 @@
         component: './Outends/Update',
       },
       {
-        path: '/outends/edit/:id',
+        path: '/outends/edit/:uuid',
         name: '编辑资源',
         component: './Outends/Update',
       },
@@ -166,7 +166,7 @@
         component: './AppStack/components/Update',
       },
       {
-        path: '/app-stack/edit/:id',
+        path: '/app-stack/edit/:uuid',
         name: '编辑应用',
         component: './AppStack/components/Update',
       },

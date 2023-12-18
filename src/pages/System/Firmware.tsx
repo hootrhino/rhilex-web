@@ -21,7 +21,7 @@ import { Button, Space } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
 import endsWith from 'lodash/endsWith';
 import { useRef, useState } from 'react';
-import Title from './TItle';
+import Title from './components/Title';
 import ProConfirmModal from '@/components/ProConfirmModal';
 
 type ConfirmCofig = {

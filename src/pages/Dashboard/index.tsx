@@ -21,9 +21,7 @@ const Dashboard = () => {
   const [responsive, setResponsive] = useState(false);
 
   // 获取系统详情
-  const { data: osDetail } = useRequest(() => getOsOsRelease({}), {
-    formatResult: (res) => res?.data,
-  });
+  const { data: osDetail } = useRequest(() => getOsOsRelease({}));
 
   // 展示系统详情
   const detailConfig = {

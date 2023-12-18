@@ -103,7 +103,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
   };
 
   return (
-    <Drawer title="资源详情" placement="right" width="30%" {...props}>
+    <Drawer title="资源详情" placement="right" width="30%" destroyOnClose {...props}>
       <ProDescriptions
         column={1}
         columns={columnsMap['COMMON']}

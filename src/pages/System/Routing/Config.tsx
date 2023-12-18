@@ -17,6 +17,15 @@ type DHCPUpdateParams = {
   iface_to: string;
 };
 
+const initialValue = {
+  iface_from: 'eth1',
+  iface_to: '4G(usb1)',
+  netmask: '255.255.255.0',
+  ip: '192.168.64.100',
+  ip_pool_begin: '192.168.64.100',
+  ip_pool_end: '192.168.64.130',
+}
+
 const DHCPConfig = () => {
   const formRef = useRef<ProFormInstance>();
 
@@ -42,14 +51,7 @@ const DHCPConfig = () => {
     if (detail) {
       formRef.current?.setFieldsValue({ ...detail });
     } else {
-      formRef.current?.setFieldsValue({
-        iface_from: 'eth1',
-        iface_to: '4G(usb1)',
-        netmask: '255.255.255.0',
-        ip: '192.168.64.100',
-        ip_pool_begin: '192.168.64.100',
-        ip_pool_end: '192.168.64.130',
-      });
+      formRef.current?.setFieldsValue(initialValue);
     }
   }, [detail]);
 

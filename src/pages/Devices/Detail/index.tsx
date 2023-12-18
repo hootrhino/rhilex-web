@@ -1,7 +1,7 @@
 import StateTag from '@/components/StateTag';
 import { getName } from '@/utils/utils';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
-import { ProDescriptions, ProSkeleton } from '@ant-design/pro-components';
+import { ProDescriptions } from '@ant-design/pro-components';
 import { history, useModel } from '@umijs/max';
 import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
@@ -151,12 +151,6 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     ],
   };
 
-  const getPortName = () => {
-    const port = portList?.find((item) => item?.uuid === portUuid);
-
-    return port ? port.name : '-';
-  };
-
   useEffect(() => {
     if (uuid) {
       getDeviceDetail({ uuid });
@@ -166,9 +160,6 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
 
   return (
     <Drawer title="设备详情" placement="right" width="50%" destroyOnClose {...props}>
-      {detailLoading ? (
-        <ProSkeleton type="descriptions" />
-      ) : (
         <>
           <EnhancedProDescriptions
             title="基本配置"
@@ -197,7 +188,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
                         getPortDetail({ uuid: portUuid });
                       }}
                     >
-                      {getPortName()}
+                      {getName(portList || [], portUuid)}
                     </a>
                   </ProDescriptions.Item>
                 </ProDescriptions>
@@ -219,7 +210,6 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
             </>
           )}
         </>
-      )}
     </Drawer>
   );
 };

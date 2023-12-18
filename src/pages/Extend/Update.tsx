@@ -62,7 +62,7 @@ const UpdateForm = ({ uuid, reload, onOpenChange, ...props }: UpdateFormProps) =
     (params: API.getGoodsDetailParams) => getGoodsDetail(params),
     {
       manual: true,
-      formatResult: (res) => setFormData(res?.data),
+      onSuccess: (data) => setFormData(data),
     },
   );
 

@@ -9,7 +9,7 @@ import { Button, Image, message, Modal, Space, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { startsWith } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
-import Title from './TItle';
+import Title from './components/Title';
 
 const SiteConfig = () => {
   const formRef = useRef<ProFormInstance>();

@@ -24,13 +24,8 @@ import {
 import { Button, Popconfirm } from 'antd';
 import random from 'lodash/random';
 import {
-  defaultCoapConfig,
-  defaultEventConfig,
-  defaultGrpcConfig,
-  defaultHttpConfig,
+  defaultConfig,
   defaultIothubConfig,
-  defaultNatsConfig,
-  defaultUdpConfig,
   eventEnum,
   modeEnum,
   typeEnum,
@@ -40,16 +35,18 @@ const DefaultListUrl = '/inends/list';
 
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
-  const { id } = useParams();
+  const { uuid } = useParams();
   const { showModal } = useGoBack();
   const [loading, setLoading] = useState<boolean>(false);
   const randomNumber = random(1000, 9999);
+  const defaultValue = { type: 'COAP', config: defaultConfig['COAP'] }
 
   // 获取详情
-  const { run: getDetail, data: detail } = useRequest(
-    (params: API.getInendsDetailParams) => getInendsDetail(params),
+  const { data: detail } = useRequest(
+    () => getInendsDetail({uuid: uuid || ''}),
     {
-      manual: true,
+      ready: !!uuid,
+      refreshDeps: [uuid]
     },
   );
 
@@ -61,8 +58,8 @@ const UpdateForm = () => {
         ...values,
         config: values?.config?.[0],
       };
-      if (id) {
-        await putInendsUpdate({ ...params, uuid: id });
+      if (uuid) {
+        await putInendsUpdate({ ...params, uuid });
         message.success('更新成功');
       } else {
         const { msg } = await postInendsCreate(params);
@@ -86,19 +83,13 @@ const UpdateForm = () => {
     if (detail) {
       formRef.current?.setFieldsValue({ ...detail, config: [detail?.config] });
     } else {
-      formRef.current?.setFieldsValue({ type: 'COAP', config: defaultCoapConfig });
+      formRef.current?.setFieldsValue(defaultValue);
     }
   }, [detail]);
 
-  useEffect(() => {
-    if (id) {
-      getDetail({ uuid: id });
-    }
-  }, [id]);
-
   return (
     <PageContainer
-      header={{ title: id ? '编辑资源' : '新建资源' }}
+      header={{ title: uuid ? '编辑资源' : '新建资源' }}
       onBack={() => showModal({ url: DefaultListUrl })}
     >
       <ProCard>
@@ -115,9 +106,9 @@ const UpdateForm = () => {
                     onConfirm={() => {
                       reset();
                       formRef.current?.setFieldsValue(
-                        id
+                        uuid
                           ? { ...detail, config: [detail?.config] }
-                          : { type: 'COAP', config: defaultCoapConfig },
+                          : defaultValue,
                       );
                     }}
                   >
@@ -135,36 +126,10 @@ const UpdateForm = () => {
             if (!changedValue?.type) return;
 
             let config;
-
-            switch (changedValue?.type) {
-              case 'COAP':
-                config = defaultCoapConfig;
-
-                break;
-              case 'GENERIC_IOT_HUB':
-                config = defaultIothubConfig(randomNumber);
-
-                break;
-              case 'RULEX_UDP':
-                config = defaultUdpConfig;
-
-                break;
-              case 'HTTP':
-                config = defaultHttpConfig;
-                break;
-              case 'NATS_SERVER':
-                config = defaultNatsConfig;
-
-                break;
-              case 'GRPC':
-                config = defaultGrpcConfig;
-                break;
-              case 'INTERNAL_EVENT':
-                config = defaultEventConfig;
-                break;
-              default:
-                config = defaultCoapConfig;
-                break;
+            if (changedValue?.type === 'GENERIC_IOT_HUB') {
+              config = defaultIothubConfig(randomNumber);
+            } else {
+              config = defaultConfig[changedValue?.type]
             }
 
             formRef.current?.setFieldsValue({
@@ -208,7 +173,6 @@ const UpdateForm = () => {
                 return (
                   <ProFormList
                     name="config"
-                    // label="资源配置"
                     creatorButtonProps={false}
                     copyIconProps={false}
                     deleteIconProps={false}

@@ -7,7 +7,7 @@ import { ProForm, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Progress, Space } from 'antd';
 import { useRef } from 'react';
-import Title from './TItle';
+import Title from './components/Title';
 
 const FourGConfig = () => {
   const formRef = useRef<ProFormInstance>();

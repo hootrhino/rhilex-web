@@ -10,7 +10,7 @@ import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components'
 import { useRequest } from '@umijs/max';
 import { AutoComplete, Button, Space } from 'antd';
 import { useRef } from 'react';
-import Title from './TItle';
+import Title from './components/Title';
 
 type UpdateForm = {
   ssid: string;

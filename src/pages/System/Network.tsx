@@ -14,7 +14,7 @@ import { useRequest } from '@umijs/max';
 import { Tooltip } from 'antd';
 import { omit } from 'lodash';
 import { useRef } from 'react';
-import Title from './TItle';
+import Title from './components/Title';
 
 type DnsListItem = {
   dns: string;
@@ -33,6 +33,14 @@ type UpdateParams = Omit<BaseFormItem, 'dnsList'> & {
   dns: string[];
 };
 
+const initialValue = {
+  interface: 'eth0',
+  address: '192.168.199.1',
+  netmask: '255.255.255.0',
+  gateway: '192.168.199.1',
+  dnsList: [{ dns: '8.8.8.8' }, { dns: '114.114.114.114' }],
+}
+
 const NetworkConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const actionRef = useRef<FormListActionType>();
@@ -41,13 +49,7 @@ const NetworkConfig = () => {
   const { data: detail } = useRequest(() => getSettingsEth(), {
     onSuccess: (data) => {
       if (!data) {
-        formRef.current?.setFieldsValue({
-          interface: 'eth0',
-          address: '192.168.199.1',
-          netmask: '255.255.255.0',
-          gateway: '192.168.199.1',
-          dnsList: [{ dns: '8.8.8.8' }, { dns: '114.114.114.114' }],
-        });
+        formRef.current?.setFieldsValue(initialValue);
       } else {
         const dnsList = data['eth0'].dns?.map((item) => ({ dns: item }));
         formRef.current?.setFieldsValue({ ...omit(data['eth0'], 'dns'), dnsList });

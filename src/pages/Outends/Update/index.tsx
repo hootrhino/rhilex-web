@@ -27,12 +27,8 @@ import random from 'lodash/random';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import {
-  defaultHttpConfig,
-  defaultMongoConfig,
+  defaultConfig,
   defaultMqttConfig,
-  defaultTcpConfig,
-  defaultTdConfig,
-  defaultUdpConfig,
   modeEnum,
   typeEnum,
 } from './initialValue';
@@ -52,16 +48,16 @@ const DefaultListUrl = '/outends/list';
 
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
-  const { id } = useParams();
+  const { uuid } = useParams();
   const { showModal } = useGoBack();
   const randomNumber = random(1000, 9999);
   const [loading, setLoading] = useState<boolean>(false);
 
   // 获取详情
-  const { run: getDetail, data: detail } = useRequest(
-    (params: API.getOutendsDetailParams) => getOutendsDetail(params),
+  const { data: detail } = useRequest(
+    () => getOutendsDetail({uuid: uuid || ''}),
     {
-      manual: true,
+     ready: !!uuid
     },
   );
 
@@ -96,11 +92,11 @@ const UpdateForm = () => {
         };
       }
 
-      if (id) {
-        await putOutendsUpdate({ ...params, uuid: id } as any);
+      if (uuid) {
+        await putOutendsUpdate({ ...params, uuid });
         message.success('更新成功');
       } else {
-        const { msg } = await postOutendsCreate(params as any);
+        const { msg } = await postOutendsCreate(params);
         if (msg === 'Success') {
           message.success('创建成功');
         } else {
@@ -140,7 +136,7 @@ const UpdateForm = () => {
     } else {
       formRef.current?.setFieldsValue({
         type: 'MONGO_SINGLE',
-        config: defaultMongoConfig,
+        config: defaultConfig['MONGO_SINGLE'],
       });
     }
   };
@@ -149,28 +145,10 @@ const UpdateForm = () => {
     if (!changedValue?.type) return;
     let config: any = [];
 
-    switch (changedValue?.type) {
-      case 'MONGO_SINGLE':
-        config = defaultMongoConfig;
-        break;
-      case 'MQTT':
-        config = defaultMqttConfig(randomNumber);
-        break;
-      case 'UDP_TARGET':
-        config = defaultUdpConfig;
-        break;
-      case 'TCP_TRANSPORT':
-        config = defaultTcpConfig;
-        break;
-      case 'TDENGINE':
-        config = defaultTdConfig;
-        break;
-      case 'HTTP':
-        config = defaultHttpConfig;
-        break;
-      default:
-        config = defaultMongoConfig;
-        break;
+    if (changedValue?.type === 'MQTT') {
+      config = defaultMqttConfig(randomNumber);
+    } else {
+      config = defaultConfig[changedValue?.type]
     }
 
     formRef.current?.setFieldsValue({
@@ -203,15 +181,9 @@ const UpdateForm = () => {
     handleOnReset();
   }, [detail]);
 
-  useEffect(() => {
-    if (id) {
-      getDetail({ uuid: id });
-    }
-  }, [id]);
-
   return (
     <PageContainer
-      header={{ title: id ? '编辑资源' : '新建资源' }}
+      header={{ title: uuid ? '编辑资源' : '新建资源' }}
       onBack={() => showModal({ url: DefaultListUrl })}
     >
       <ProCard>
@@ -259,7 +231,6 @@ const UpdateForm = () => {
                 return (
                   <ProFormList
                     name="config"
-                    // label="资源配置"
                     creatorButtonProps={false}
                     copyIconProps={false}
                     deleteIconProps={false}

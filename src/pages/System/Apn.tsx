@@ -4,7 +4,7 @@ import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { useEffect, useRef } from 'react';
-import Title from './TItle';
+import Title from './components/Title';
 
 type UpdateParams = {
   senceId: number;
@@ -15,6 +15,15 @@ type UpdateParams = {
   apn_username: string;
   apn_password: string;
 };
+
+const initialValue = {
+  senceId: 1,
+  ptytpe: 1,
+  auth: 0,
+  cdmapwd: 0,
+  apn_username: undefined,
+  apn_password: undefined,
+}
 
 const APNConfig = () => {
   const formRef = useRef<ProFormInstance>();
@@ -35,14 +44,7 @@ const APNConfig = () => {
     if (detail) {
       formRef.current?.setFieldsValue({ ...detail });
     } else {
-      formRef.current?.setFieldsValue({
-        senceId: 1,
-        ptytpe: 1,
-        auth: 0,
-        cdmapwd: 0,
-        apn_username: undefined,
-        apn_password: undefined,
-      });
+      formRef.current?.setFieldsValue(initialValue);
     }
   }, [detail]);
 

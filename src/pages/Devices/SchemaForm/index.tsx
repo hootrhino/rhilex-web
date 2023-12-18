@@ -24,14 +24,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import { columns } from './columns';
 import Title from './FormTitle';
 import './index.less';
-import {
-  defaultAisConfig,
-  defaultHostConfig,
-  defaultModbusConfig,
-  defaultModelConfig,
-  defaultPlcConfig,
-  defaultProtocolConfig,
-} from './initialValue';
+import { defaultConfig, defaultHostConfig, defaultModelConfig } from './initialValue';
 
 const DefaultListUrl = '/device/list';
 
@@ -105,7 +98,7 @@ const SchemaForm = ({}: ProFormProps) => {
   const initialValues = {
     type: 'GENERIC_PROTOCOL',
     gid: groupId,
-    config: defaultProtocolConfig,
+    config: defaultConfig['GENERIC_PROTOCOL'],
   };
 
   const customizeValueType = {
@@ -211,25 +204,7 @@ const SchemaForm = ({}: ProFormProps) => {
 
   const handleOnValuesChange = (changedValue: any) => {
     if (changedValue?.type) {
-      let newConfig;
-
-      switch (changedValue?.type) {
-        case 'GENERIC_PROTOCOL':
-          newConfig = defaultProtocolConfig;
-          break;
-        case 'GENERIC_MODBUS':
-          newConfig = defaultModbusConfig;
-          break;
-        case 'GENERIC_AIS_RECEIVER':
-          newConfig = defaultAisConfig;
-          break;
-        case 'SIEMENS_PLC':
-          newConfig = defaultPlcConfig;
-          break;
-        default:
-          newConfig = defaultProtocolConfig;
-          break;
-      }
+      const newConfig = defaultConfig[changedValue?.type];
 
       formRef.current?.setFieldsValue({
         config: changedValue?.type === detail?.type ? handleOnUpdateValue(detail) : newConfig,
@@ -237,6 +212,7 @@ const SchemaForm = ({}: ProFormProps) => {
     } else {
       const model = changedValue?.config?.commonConfig?.[0]?.model;
       if (model) {
+        const defaultPlcConfig = defaultConfig['SIEMENS_PLC'];
         const newCommonConfig = defaultPlcConfig.commonConfig?.map((item) => ({
           ...item,
           ...defaultModelConfig[model],

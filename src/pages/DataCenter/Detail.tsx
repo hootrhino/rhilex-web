@@ -93,7 +93,6 @@ const DataCenter = () => {
   return (
     <PageContainer onBack={() => history.back()}>
       <div className="w-full h-[840px] flex flex-col overflow-hidden">
-        {/* <div className="text-[20px] text-[#000000e0] font-semibold mb-[12px]">数据中心详情</div> */}
         <div className="flex justify-between w-full h-full min-h-[56px]">
           <Resizable
             size={{ height: '100%', width }}

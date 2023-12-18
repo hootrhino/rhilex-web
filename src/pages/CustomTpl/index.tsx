@@ -6,7 +6,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { history, useRequest } from '@umijs/max';
 import { Button } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import TplList from './TplList';
 
 const CustomTpl = () => {
@@ -17,10 +17,11 @@ const CustomTpl = () => {
   const { data: groupList, run: getGroupList } = useRequest(() => getUserluaGroup());
 
   // 模板列表
-  const { data: tplList, run: getTplList, refresh } = useRequest(
+  const { data: tplList, refresh } = useRequest(
     (params: API.getUserluaListByGroupParams) => getUserluaListByGroup(params),
     {
-      manual: true,
+      ready: !!activeGroup,
+      refreshDeps: [activeGroup]
     },
   );
 
@@ -36,10 +37,6 @@ const CustomTpl = () => {
     setConfig(DEFAULT_CONFIG);
     getGroupList();
   };
-
-  useEffect(() => {
-    getTplList({ uuid: activeGroup });
-  }, [activeGroup]);
 
   return (
     <>

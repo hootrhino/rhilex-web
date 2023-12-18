@@ -7,7 +7,7 @@ import { history, useModel } from '@umijs/max';
 import { Button, Space } from 'antd';
 import endsWith from 'lodash/endsWith';
 import { useEffect, useRef, useState } from 'react';
-import Title from './TItle';
+import Title from './components/Title';
 import ProConfirmModal from '@/components/ProConfirmModal';
 
 const DataBackupConfig = () => {
