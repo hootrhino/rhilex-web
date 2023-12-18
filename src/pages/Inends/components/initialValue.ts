@@ -5,11 +5,21 @@ export const typeEnum = {
   HTTP: 'HTTP 协议支持',
   NATS_SERVER: 'Nats 中间件支持',
   GRPC: 'GRPC 协议支持',
+  INTERNAL_EVENT: '内部事件源',
 };
 
 export const modeEnum = {
   GW: '网关',
   DC: '直连',
+};
+
+export const eventEnum = {
+  ALL: '全部事件',
+  SOURCE: '南向事件',
+  DEVICE: '设备事件',
+  TARGET: '北向事件',
+  SYSTEM: '系统事件',
+  HARDWARE: '硬件事件',
 };
 
 // GENERIC_IOT_HUB 默认配置
@@ -61,5 +71,12 @@ export const defaultGrpcConfig = [
   {
     port: 2585,
     host: '127.0.0.1',
+  },
+];
+
+// INTERNAL_EVENT 默认配置
+export const defaultEventConfig = [
+  {
+    type: 'ALL',
   },
 ];

@@ -1,21 +1,20 @@
+import StateTag from '@/components/StateTag';
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps } from 'antd';
 import omit from 'lodash/omit';
-import { useEffect } from 'react';
 import { useRequest } from 'umi';
-import StateTag from '@/components/StateTag';
-import { modeEnum, typeEnum } from './initialValue';
+import { eventEnum, modeEnum, typeEnum } from './initialValue';
 
 type DetailProps = DrawerProps & {
   uuid: string;
 };
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
-  const { data, run, loading } = useRequest(() => getInendsDetail({ uuid }), {
-    manual: true,
-    formatResult: (res) => res?.data,
+  const { data, loading } = useRequest(() => getInendsDetail({ uuid }), {
+    ready: !!uuid,
+    refreshDeps: [uuid],
   });
 
   const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]> = {
@@ -78,6 +77,13 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         valueType: 'password',
       },
     ],
+    INTERNAL_EVENT: [
+      {
+        title: '事件类型',
+        dataIndex: 'type',
+        valueEnum: eventEnum,
+      },
+    ],
     DEFAULT_TYPE: [
       {
         title: '服务地址',
@@ -96,12 +102,6 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     ],
   };
 
-  useEffect(() => {
-    if (uuid) {
-      run();
-    }
-  }, [uuid]);
-
   return (
     <Drawer title="资源详情" placement="right" width="30%" {...props}>
       <ProDescriptions
@@ -115,7 +115,13 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {data?.type && Object.keys(typeEnum).includes(data?.type) && (
         <ProDescriptions
           column={1}
-          columns={columnsMap[data?.type === 'GENERIC_IOT_HUB' ? data?.type : 'DEFAULT_TYPE']}
+          columns={
+            columnsMap[
+              ['INTERNAL_EVENT', 'GENERIC_IOT_HUB'].includes(data?.type)
+                ? data?.type
+                : 'DEFAULT_TYPE'
+            ]
+          }
           labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
           title="资源配置"
           dataSource={data?.config}

@@ -25,11 +25,13 @@ import { Button, Popconfirm } from 'antd';
 import random from 'lodash/random';
 import {
   defaultCoapConfig,
+  defaultEventConfig,
   defaultGrpcConfig,
   defaultHttpConfig,
   defaultIothubConfig,
   defaultNatsConfig,
   defaultUdpConfig,
+  eventEnum,
   modeEnum,
   typeEnum,
 } from './initialValue';
@@ -157,6 +159,9 @@ const UpdateForm = () => {
               case 'GRPC':
                 config = defaultGrpcConfig;
                 break;
+              case 'INTERNAL_EVENT':
+                config = defaultEventConfig;
+                break;
               default:
                 config = defaultCoapConfig;
                 break;
@@ -210,20 +215,38 @@ const UpdateForm = () => {
                   >
                     <>
                       <ProForm.Group>
-                        <ProFormText
-                          name="host"
-                          label="服务地址"
-                          width="md"
-                          placeholder="请输入服务地址"
-                          rules={[{ required: true, message: '请输入服务地址' }]}
-                        />
-                        <ProFormDigit
-                          name="port"
-                          label="端口"
-                          width="md"
-                          placeholder="请输入端口"
-                          rules={[{ required: true, message: '请输入端口' }]}
-                        />
+                        {type === 'INTERNAL_EVENT' ? (
+                          <ProFormSelect
+                            label="事件类型"
+                            name="type"
+                            valueEnum={eventEnum}
+                            width="md"
+                            placeholder="请选择事件类型"
+                            rules={[
+                              {
+                                required: true,
+                                message: '请选择事件类型',
+                              },
+                            ]}
+                          />
+                        ) : (
+                          <>
+                            <ProFormText
+                              name="host"
+                              label="服务地址"
+                              width="md"
+                              placeholder="请输入服务地址"
+                              rules={[{ required: true, message: '请输入服务地址' }]}
+                            />
+                            <ProFormDigit
+                              name="port"
+                              label="端口"
+                              width="md"
+                              placeholder="请输入端口"
+                              rules={[{ required: true, message: '请输入端口' }]}
+                            />
+                          </>
+                        )}
 
                         {type === 'GENERIC_IOT_HUB' && (
                           <>
