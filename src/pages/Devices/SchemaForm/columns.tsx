@@ -66,9 +66,7 @@ export const columns = [
                         'SIEMENS_PLC',
                         'GENERIC_HTTP_DEVICE',
                       ].includes(type),
-                      transform: (value: string) => ({
-                        autoRequest: value === 'true' ? true : false,
-                      }),
+                      transform: (value: string) => ({autoRequest: Boolean(value)}),
                       convertValue: (value: boolean) => value?.toString(),
                     },
                     {
@@ -77,7 +75,7 @@ export const columns = [
                       valueType: 'segmented',
                       required: true,
                       hideInForm: type !== 'GENERIC_AIS_RECEIVER',
-                      transform: (value: string) => ({ parseAis: value === 'true' ? true : false }),
+                      transform: (value: string) => ({ parseAis: Boolean(value) }),
                       convertValue: (value: boolean) => value?.toString(),
                     },
                     {

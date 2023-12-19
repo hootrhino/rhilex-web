@@ -352,9 +352,7 @@ const UpdateForm = () => {
                             required
                             label="开启心跳"
                             name="allowPing"
-                            transform={(value: string) => ({
-                              allowPing: value === 'true' ? true : false,
-                            })}
+                            transform={(value: string) => ({allowPing: Boolean(value)})}
                             convertValue={(value: boolean) => value?.toString()}
                           >
                             <ProSegmented width="md" />

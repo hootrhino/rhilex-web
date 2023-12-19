@@ -111,7 +111,7 @@ const UpdateForm = () => {
               label="是否自启"
               name="autoStart"
               required
-              transform={(value: string) => ({ autoStart: value === 'true' ? true : false })}
+              transform={(value: string) => ({ autoStart: Boolean(value) })}
               convertValue={(value: boolean) => value?.toString()}
             >
               <ProSegmented width="md" />
