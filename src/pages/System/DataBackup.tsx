@@ -56,12 +56,26 @@ const DataBackupConfig = () => {
             <Space>
               <Button
                 icon={<DownloadOutlined />}
+                onClick={() => (window.location.href = '/api/v1/backup/runningLog')}
+              >
+                日志下载
+              </Button>
+              <Button
+                icon={<DownloadOutlined />}
+                onClick={() => (window.location.href = '/api/v1/backup/snapshot')}
+              >
+                快照下载
+              </Button>
+              <Button
+               ghost
+               type='primary'
+                icon={<DownloadOutlined />}
                 onClick={() => (window.location.href = '/api/v1/backup/download')}
               >
                 备份下载
               </Button>
               <Button type="primary" onClick={() => setOpen(true)} icon={<UploadOutlined />}>
-                确定上传
+                备份上传
               </Button>
             </Space>
           ),

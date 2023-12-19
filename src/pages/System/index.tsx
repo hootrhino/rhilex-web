@@ -87,7 +87,6 @@ const System = () => {
               key: 'user',
               children: <UserConfig />,
             },
-
             {
               label: '站点配置',
               key: 'site',
