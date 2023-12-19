@@ -1,6 +1,7 @@
 import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
+import isEmpty from 'lodash/isEmpty';
 import luamin from 'lua-format';
 import { twMerge } from 'tailwind-merge';
 
@@ -81,17 +82,25 @@ export const getName = (list: Record<string, any>[], key: string) => {
 };
 
 // 格式化 k-v
-export const formatHeaders = (data: { k: string; v: string }[]) => {
-  const newData = data.reduce(
-    (acc: any, curr: { k: string; v: string }) => {
-      if (curr.k && curr.v) {
-        acc[curr.k] = curr.v;
-      }
+export const formatHeaders2Obj = (data: { k: string; v: string }[]) => {
+  const newData = data.reduce((acc: any, curr: { k: string; v: string }) => {
+    if (curr.k && curr.v) {
+      acc[curr.k] = curr.v;
+    }
 
-      return acc;
-    },
-    {},
-  );
+    return acc;
+  }, {});
 
-  return newData
-}
+  return newData;
+};
+
+export const formatHeaders2Arr = (data: Record<string, any>) => {
+  const newData = !isEmpty(data)
+    ? Object.keys(data)?.map((item) => ({
+        k: item,
+        v: data[item],
+      }))
+    : [{ k: '', v: '' }];
+
+  return newData;
+};

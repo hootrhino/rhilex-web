@@ -22,12 +22,11 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { Tooltip } from 'antd';
-import { isEmpty } from 'lodash';
 import random from 'lodash/random';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { defaultConfig, modeEnum, typeEnum } from './initialValue';
-import { formatHeaders } from '@/utils/utils';
+import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
 
 type UpdateFormItem = {
@@ -65,7 +64,7 @@ const UpdateForm = () => {
           ...params,
           config: {
             ...formatConfig,
-            headers: formatHeaders(formatConfig?.headers),
+            headers: formatHeaders2Obj(formatConfig?.headers),
           },
         };
       }
@@ -94,16 +93,9 @@ const UpdateForm = () => {
   const handleOnReset = () => {
     if (detail) {
       if (detail?.type === 'HTTP') {
-        const newHeaders = !isEmpty(detail?.config?.headers)
-          ? Object.keys(detail?.config?.headers)?.map((item) => ({
-              k: item,
-              v: detail?.config?.headers[item],
-            }))
-          : [{ k: '', v: '' }];
-
         formRef.current?.setFieldsValue({
           ...detail,
-          config: [{ ...detail?.config, headers: newHeaders }],
+          config: [{ ...detail?.config, headers: formatHeaders2Arr(detail?.config?.headers) }],
         });
       } else {
         formRef.current?.setFieldsValue({

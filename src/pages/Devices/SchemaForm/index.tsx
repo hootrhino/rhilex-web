@@ -24,7 +24,7 @@ import { columns } from './columns';
 import Title from './FormTitle';
 import './index.less';
 import { defaultConfig, defaultHostConfig, defaultModelConfig } from './initialValue';
-import { formatHeaders } from '@/utils/utils';
+import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
 
 const DefaultListUrl = '/device/list';
@@ -164,7 +164,7 @@ const SchemaForm = ({}: ProFormProps) => {
           ...newConfig,
           httpConfig: {
             ...httpConfigParams,
-            headers: formatHeaders(httpConfigParams?.headers)
+            headers: httpConfigParams?.headers?.length > 0 ? formatHeaders2Obj(httpConfigParams?.headers) : {}
           }
         }
       }
@@ -193,28 +193,37 @@ const SchemaForm = ({}: ProFormProps) => {
       return true;
     } catch (error) {
       setLoading(false);
-      history.push(DefaultListUrl);
+     history.push(DefaultListUrl);
       return false;
     }
   };
 
-  const handleOnUpdateValue = ({ config }: any) => {
+  const handleOnUpdateValue = ({ config, type }: any) => {
     const newCommonConfig = config?.commonConfig;
     const newHostConfig = config?.hostConfig;
 
-    const newConfig = {
+    let newConfig = {
       ...config,
       commonConfig: [newCommonConfig],
       hostConfig: newHostConfig ? [newHostConfig] : defaultHostConfig,
     };
+
+    if (type === 'GENERIC_HTTP_DEVICE') {
+      newConfig = {
+        ...newConfig,
+        httpConfig: [{
+          ...newConfig.httpConfig,
+          headers: formatHeaders2Arr(newConfig?.httpConfig?.headers)
+        }]
+      }
+    }
 
     return newConfig;
   };
 
   const handleOnReset = () => {
     if (deviceId && detail) {
-      const newConfig = handleOnUpdateValue(detail);
-      formRef.current?.setFieldsValue({ ...detail, config: newConfig });
+      formRef.current?.setFieldsValue({ ...detail, config: handleOnUpdateValue(detail) });
     } else {
       formRef.current?.setFieldsValue(initialValues);
     }

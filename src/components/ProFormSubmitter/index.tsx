@@ -2,7 +2,7 @@ import { FooterToolbar } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 
 type ProFormSubmitterProps = {
-  handleOnSubmit: () => void;
+  handleOnSubmit: (values?: any) => void;
   handleOnReset: () => void;
   loading: boolean;
 };
@@ -14,7 +14,7 @@ const ProFormSubmitter = ({ handleOnSubmit, handleOnReset, loading }: ProFormSub
         <Button>重置</Button>
       </Popconfirm>
 
-      <Button key="submit" type="primary" onClick={handleOnSubmit} loading={loading}>
+      <Button key="submit" type="primary" onClick={async() => await handleOnSubmit()} loading={loading}>
         提交
       </Button>
     </FooterToolbar>
