@@ -1,4 +1,12 @@
+import IndexBorder from '@/components/IndexBorder';
 import { message, modal } from '@/components/PopupHack';
+import UnitTitle from '@/components/UnitTitle';
+import {
+  deleteS1200DataSheetDelIds,
+  getS1200DataSheetList,
+  postS1200DataSheetSheetImport,
+  postS1200DataSheetUpdate,
+} from '@/services/rulex/ximenzidianweiguanli';
 import { IconFont } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
@@ -7,18 +15,11 @@ import { useParams, useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Upload } from 'antd';
 import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
-import { blockTypeEnum, defaultBlocksConfig } from '../SchemaForm/initialValue';
-
-import IndexBorder from '@/components/IndexBorder';
-import UnitTitle from '@/components/UnitTitle';
-import {
-  deleteS1200DataSheetDelIds,
-  getS1200DataSheetList,
-  postS1200DataSheetSheetImport,
-  postS1200DataSheetUpdate,
-} from '@/services/rulex/ximenzidianweiguanli';
-import '../index.less';
+import { blockTypeEnum } from '../SchemaForm/initialValue';
+import { defaultPlcConfig } from './initialValue';
 import UploadRule from './UploadRule';
+
+import '../index.less';
 
 export type PlcSheetItem = {
   uuid?: string;
@@ -341,7 +342,7 @@ const PlcSheet = () => {
         position: 'top',
         creatorButtonText: '添加点位',
         record: () => ({
-          ...defaultBlocksConfig,
+          ...defaultPlcConfig,
           uuid: 'new',
         }),
       }}

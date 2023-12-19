@@ -20,17 +20,13 @@ export const allowPingEnum = {
   false: '关闭',
 };
 
-// MQTT 默认配置
-export const defaultMqttConfig = (randomNumber: number) => [
-  {
-    port: 1883,
-    host: '127.0.0.1',
-    clientId: `eekit${randomNumber}`,
-    pubTopic: `eekit${randomNumber}`,
-  },
-];
-
 export const defaultConfig = {
+  MQTT: [
+    {
+      port: 1883,
+      host: '127.0.0.1',
+    },
+  ],
   MONGO_SINGLE: [
     {
       mongoUrl: 'mongodb://root:root@127.0.0.1:27017/?connect=direct',

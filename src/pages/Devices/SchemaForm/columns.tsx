@@ -1,3 +1,4 @@
+import HttpHeadersTitle from '@/components/HttpHeadersTitle';
 import UnitTitle from '@/components/UnitTitle';
 import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from './initialValue';
 
@@ -33,12 +34,7 @@ export const columns = [
     valueType: 'dependency',
     name: ['type'],
     columns: ({ type }: any) => {
-      if (
-        !['GENERIC_AIS_RECEIVER', 'GENERIC_PROTOCOL', 'GENERIC_MODBUS', 'SIEMENS_PLC'].includes(
-          type,
-        )
-      )
-        return [];
+      if (!Object.keys(typeEnum).includes(type)) return [];
 
       return [
         {
@@ -65,7 +61,11 @@ export const columns = [
                       dataIndex: 'autoRequest',
                       valueType: 'segmented',
                       required: true,
-                      hideInForm: !['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type),
+                      hideInForm: ![
+                        'GENERIC_MODBUS',
+                        'SIEMENS_PLC',
+                        'GENERIC_HTTP_DEVICE',
+                      ].includes(type),
                       transform: (value: string) => ({
                         autoRequest: value === 'true' ? true : false,
                       }),
@@ -92,7 +92,7 @@ export const columns = [
                       valueType: 'select',
                       required: true,
                       valueEnum: modeEnum,
-                      hideInForm: type === 'SIEMENS_PLC',
+                      hideInForm: ['SIEMENS_PLC', 'GENERIC_HTTP_DEVICE'].includes(type),
                     },
                     {
                       title: 'PLC 地址',
@@ -113,19 +113,26 @@ export const columns = [
                       dataIndex: 'timeout',
                       valueType: 'digit',
                       required: true,
-                      hideInForm: type !== 'SIEMENS_PLC',
+                      hideInForm: !['SIEMENS_PLC', 'GENERIC_HTTP_DEVICE'].includes(type),
+                    },
+                    {
+                      title: <UnitTitle title="采集频率" />,
+                      dataIndex: 'frequency',
+                      valueType: 'digit',
+                      required: true,
+                      hideInForm: !['GENERIC_HTTP_DEVICE'].includes(type),
                     },
                   ],
                 },
                 {
                   valueType: 'group',
+                  hideInForm: type !== 'SIEMENS_PLC',
                   columns: [
                     {
                       title: <UnitTitle title="心跳超时时间" />,
                       dataIndex: 'idleTimeout',
                       valueType: 'digit',
                       required: true,
-                      hideInForm: type !== 'SIEMENS_PLC',
                     },
                     {
                       title: '机架号',
@@ -133,7 +140,6 @@ export const columns = [
                       required: true,
                       valueType: 'select',
                       valueEnum: rackEnum,
-                      hideInForm: type !== 'SIEMENS_PLC',
                     },
                     {
                       title: '插槽号',
@@ -141,7 +147,50 @@ export const columns = [
                       required: true,
                       valueType: 'select',
                       valueEnum: slotEnum,
-                      hideInForm: type !== 'SIEMENS_PLC',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          title: 'HTTP 配置',
+          valueType: 'group',
+          hideInForm: type !== 'GENERIC_HTTP_DEVICE',
+          columns: [
+            {
+              valueType: 'formList',
+              dataIndex: ['config', 'httpConfig'],
+              mode: 'single',
+              columns: [
+                {
+                  valueType: 'group',
+                  columns: [
+                    {
+                      title: '请求地址',
+                      dataIndex: 'url',
+                      required: true,
+                    },
+                  ],
+                },
+                {
+                  valueType: 'formList',
+                  dataIndex: 'headers',
+                  title: <HttpHeadersTitle />,
+                  columns: [
+                    {
+                      valueType: 'group',
+                      columns: [
+                        {
+                          title: 'key',
+                          dataIndex: 'k',
+                        },
+                        {
+                          title: 'value',
+                          dataIndex: 'v',
+                        },
+                      ],
                     },
                   ],
                 },

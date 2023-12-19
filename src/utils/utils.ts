@@ -79,3 +79,19 @@ export const getName = (list: Record<string, any>[], key: string) => {
 
   return currentItem?.name;
 };
+
+// 格式化 k-v
+export const formatHeaders = (data: { k: string; v: string }[]) => {
+  const newData = data.reduce(
+    (acc: any, curr: { k: string; v: string }) => {
+      if (curr.k && curr.v) {
+        acc[curr.k] = curr.v;
+      }
+
+      return acc;
+    },
+    {},
+  );
+
+  return newData
+}

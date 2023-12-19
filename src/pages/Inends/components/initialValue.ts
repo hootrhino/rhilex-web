@@ -22,18 +22,6 @@ export const eventEnum = {
   HARDWARE: '硬件事件',
 };
 
-// GENERIC_IOT_HUB 默认配置
-export const defaultIothubConfig = (randomNumber: number) => [
-  {
-    host: '127.0.0.1',
-    port: 1883,
-    mode: 'DC',
-    productId: `eekit${randomNumber}`,
-    deviceName: `eekit${randomNumber}`,
-    clientId: `eekit${randomNumber}`,
-  },
-];
-
 export const defaultConfig = {
   COAP: [
     {
@@ -68,6 +56,13 @@ export const defaultConfig = {
   INTERNAL_EVENT: [
     {
       type: 'ALL',
+    },
+  ],
+  GENERIC_IOT_HUB: [
+    {
+      host: '127.0.0.1',
+      port: 1883,
+      mode: 'DC',
     },
   ],
 };

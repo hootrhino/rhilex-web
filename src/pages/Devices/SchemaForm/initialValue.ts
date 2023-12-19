@@ -1,3 +1,12 @@
+// 设备类型
+export const typeEnum = {
+  GENERIC_PROTOCOL: '通用时间片中断协议串口类设备',
+  GENERIC_MODBUS: '通用 Modbus Slaver 设备',
+  GENERIC_AIS_RECEIVER: '通用船舶 AIS 报文解析网关',
+  SIEMENS_PLC: '西门子 S7 系列 PLC 设备',
+  GENERIC_HTTP_DEVICE: '通用 HTTP 协议类设备',
+};
+
 // 模式
 export const modeEnum = {
   UART: 'UART',
@@ -15,56 +24,6 @@ export const funcEnum = new Map([
   // [15, '15 写多个线圈'],
   // [16, '16 写多个保持寄存器'],
 ]);
-
-// 设备类型
-export const typeEnum = {
-  GENERIC_PROTOCOL: '通用时间片中断协议串口类设备',
-  GENERIC_MODBUS: '通用 Modbus Slaver 设备',
-  GENERIC_AIS_RECEIVER: '通用船舶 AIS 报文解析网关',
-  SIEMENS_PLC: '西门子 S7 系列 PLC 设备',
-};
-
-// 协议分隔符
-// export const separatorEnum = {
-//   LF: 'LF',
-//   CRLF: 'CRLF',
-// };
-
-// 安全模式
-// export const securityModelEnum = new Map([
-//   [0, '不认证'],
-//   [3, 'V3 认证'],
-// ]);
-
-// 消息选项
-// export const snmpV3MsgFlagsEnum = new Map([
-//   [0, 'NoAuthNoPriv'],
-//   [1, 'AuthNoPriv'],
-//   [2, 'AuthPriv'],
-//   [3, 'Reportable'],
-// ]);
-
-// SNMP 认证协议
-// export const snmpV3AuthProtocolEnum = new Map([
-//   [1, 'NoAuth'],
-//   [2, 'MD5'],
-//   [3, 'SHA'],
-//   [4, 'SHA224'],
-//   [5, 'SHA256'],
-//   [6, 'SHA384'],
-//   [7, 'SHA512'],
-// ]);
-
-// 私有认证协议
-// export const privacyProtocolEnum = new Map([
-//   [1, 'NoPriv'],
-//   [2, 'DES'],
-//   [3, 'AES'],
-//   [4, 'AES192'],
-//   [5, 'AES256'],
-//   [6, 'AES192C'],
-//   [7, 'AES256C'],
-// ]);
 
 // 块类型
 export const blockTypeEnum = {
@@ -116,27 +75,6 @@ export const defaultHostConfig = [
   },
 ];
 
-// 寄存器配置
-export const defaultRegistersConfig = {
-  tag: '',
-  alias: '',
-  function: 3,
-  frequency: 3000,
-  slaverId: 1,
-  address: 0,
-  quantity: 1,
-};
-
-// 点位列表默认值
-export const defaultBlocksConfig = {
-  tag: '',
-  type: 'DB',
-  frequency: 1000,
-  address: 1,
-  start: 100,
-  size: 16,
-};
-
 export const defaultConfig = {
   GENERIC_PROTOCOL: {
     commonConfig: [
@@ -180,8 +118,22 @@ export const defaultConfig = {
         model: 'S71200',
         rack: 0,
         slot: 1,
-        timeout: 5000,
+        timeout: 3000,
         idleTimeout: 5000,
+      },
+    ],
+  },
+  GENERIC_HTTP_DEVICE: {
+    commonConfig: [
+      {
+        autoRequest: 'false',
+        timeout: 3000,
+        frequency: 1000,
+      },
+    ],
+    httpConfig: [
+      {
+        url: 'http://127.0.0.1:8080',
       },
     ],
   },
@@ -205,3 +157,46 @@ export const defaultModelConfig = {
     slot: 1,
   },
 };
+
+/** SNMP */
+// 协议分隔符
+// export const separatorEnum = {
+//   LF: 'LF',
+//   CRLF: 'CRLF',
+// };
+
+// 安全模式
+// export const securityModelEnum = new Map([
+//   [0, '不认证'],
+//   [3, 'V3 认证'],
+// ]);
+
+// 消息选项
+// export const snmpV3MsgFlagsEnum = new Map([
+//   [0, 'NoAuthNoPriv'],
+//   [1, 'AuthNoPriv'],
+//   [2, 'AuthPriv'],
+//   [3, 'Reportable'],
+// ]);
+
+// SNMP 认证协议
+// export const snmpV3AuthProtocolEnum = new Map([
+//   [1, 'NoAuth'],
+//   [2, 'MD5'],
+//   [3, 'SHA'],
+//   [4, 'SHA224'],
+//   [5, 'SHA256'],
+//   [6, 'SHA384'],
+//   [7, 'SHA512'],
+// ]);
+
+// 私有认证协议
+// export const privacyProtocolEnum = new Map([
+//   [1, 'NoPriv'],
+//   [2, 'DES'],
+//   [3, 'AES'],
+//   [4, 'AES192'],
+//   [5, 'AES256'],
+//   [6, 'AES192C'],
+//   [7, 'AES256C'],
+// ]);

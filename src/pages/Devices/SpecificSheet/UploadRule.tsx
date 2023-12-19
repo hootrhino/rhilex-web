@@ -6,7 +6,7 @@ const dataSource = {
       tag: '标签',
       alias: '别名',
       function: 3,
-      frequency: 3000,
+      frequency: 1000,
       slaverId: 1,
       address: 0,
       quantity: 1,

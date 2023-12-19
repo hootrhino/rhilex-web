@@ -1,4 +1,6 @@
+import IndexBorder from '@/components/IndexBorder';
 import { message, modal } from '@/components/PopupHack';
+import UnitTitle from '@/components/UnitTitle';
 import {
   deleteModbusDataSheetDelIds,
   getModbusDataSheetList,
@@ -13,12 +15,11 @@ import { useParams, useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Upload } from 'antd';
 import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
-import { defaultRegistersConfig, funcEnum } from '../SchemaForm/initialValue';
-
-import IndexBorder from '@/components/IndexBorder';
-import UnitTitle from '@/components/UnitTitle';
-import '../index.less';
+import { funcEnum } from '../SchemaForm/initialValue';
+import { defaultModbusConfig } from './initialValue';
 import UploadRule from './UploadRule';
+
+import '../index.less';
 
 export type ModbusSheetItem = {
   uuid?: string;
@@ -331,7 +332,7 @@ const ModbusSheet = () => {
         position: 'top',
         creatorButtonText: '添加点位',
         record: () => ({
-          ...defaultRegistersConfig,
+          ...defaultModbusConfig,
           uuid: 'new',
         }),
       }}

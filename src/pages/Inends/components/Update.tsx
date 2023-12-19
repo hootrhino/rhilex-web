@@ -23,13 +23,7 @@ import {
 } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 import random from 'lodash/random';
-import {
-  defaultConfig,
-  defaultIothubConfig,
-  eventEnum,
-  modeEnum,
-  typeEnum,
-} from './initialValue';
+import { defaultConfig, eventEnum, modeEnum, typeEnum } from './initialValue';
 
 const DefaultListUrl = '/inends/list';
 
@@ -39,16 +33,13 @@ const UpdateForm = () => {
   const { showModal } = useGoBack();
   const [loading, setLoading] = useState<boolean>(false);
   const randomNumber = random(1000, 9999);
-  const defaultValue = { type: 'COAP', config: defaultConfig['COAP'] }
+  const defaultValue = { type: 'COAP', config: defaultConfig['COAP'] };
 
   // 获取详情
-  const { data: detail } = useRequest(
-    () => getInendsDetail({uuid: uuid || ''}),
-    {
-      ready: !!uuid,
-      refreshDeps: [uuid]
-    },
-  );
+  const { data: detail } = useRequest(() => getInendsDetail({ uuid: uuid || '' }), {
+    ready: !!uuid,
+    refreshDeps: [uuid],
+  });
 
   // 新建&编辑
   const handleOnFinish = async (values: any) => {
@@ -106,9 +97,7 @@ const UpdateForm = () => {
                     onConfirm={() => {
                       reset();
                       formRef.current?.setFieldsValue(
-                        uuid
-                          ? { ...detail, config: [detail?.config] }
-                          : defaultValue,
+                        uuid ? { ...detail, config: [detail?.config] } : defaultValue,
                       );
                     }}
                   >
@@ -127,9 +116,14 @@ const UpdateForm = () => {
 
             let config;
             if (changedValue?.type === 'GENERIC_IOT_HUB') {
-              config = defaultIothubConfig(randomNumber);
+              config = defaultConfig['GENERIC_IOT_HUB']?.map((item) => ({
+                ...item,
+                productId: `eekit${randomNumber}`,
+                deviceName: `eekit${randomNumber}`,
+                clientId: `eekit${randomNumber}`,
+              }));
             } else {
-              config = defaultConfig[changedValue?.type]
+              config = defaultConfig[changedValue?.type];
             }
 
             formRef.current?.setFieldsValue({

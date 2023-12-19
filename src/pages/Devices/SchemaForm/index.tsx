@@ -25,6 +25,7 @@ import { columns } from './columns';
 import Title from './FormTitle';
 import './index.less';
 import { defaultConfig, defaultHostConfig, defaultModelConfig } from './initialValue';
+import { formatHeaders } from '@/utils/utils';
 
 const DefaultListUrl = '/device/list';
 
@@ -60,8 +61,6 @@ export const processColumns = (columns: any) => {
           fieldProps: {
             creatorButtonProps: {
               position: 'top',
-              // creatorButtonText: '添加点位',
-              // style: { width: 'calc(100vw - 500px)' },
             },
             creatorRecord: col?.initialValue,
           },
@@ -139,17 +138,28 @@ const SchemaForm = ({}: ProFormProps) => {
       let params = cloneDeep(values);
       const commonConfigParams = params.config.commonConfig;
       const hostConfigParams = params?.config?.hostConfig?.[0];
+      const httpConfigParams = params?.config?.httpConfig?.[0]
 
       let newConfig = {
         ...params.config,
         commonConfig: commonConfigParams?.[0],
-        hostConfig: hostConfigParams,
       };
 
-      if (commonConfigParams?.[0]?.mode !== 'TCP') {
+      if (commonConfigParams?.[0]?.mode === 'TCP') {
         newConfig = {
-          ...omit(newConfig, 'hostConfig'),
+          ...newConfig,
+          hostConfig: hostConfigParams,
         };
+      }
+
+      if (params?.type === 'GENERIC_HTTP_DEVICE') {
+        newConfig = {
+          ...newConfig,
+          httpConfig: {
+            ...httpConfigParams,
+            headers: formatHeaders(httpConfigParams?.headers)
+          }
+        }
       }
 
       params = {

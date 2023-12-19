@@ -4,11 +4,12 @@ import {
   putOutendsUpdate,
 } from '@/services/rulex/shuchuziyuanguanli';
 
+import HttpHeadersTitle from '@/components/HttpHeadersTitle';
 import { message } from '@/components/PopupHack';
 import ProSegmented from '@/components/ProSegmented';
 import UnitTitle from '@/components/UnitTitle';
 import useGoBack from '@/hooks/useGoBack';
-import { PlusCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
   FooterToolbar,
@@ -21,17 +22,13 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button, Popconfirm, Space, Tooltip } from 'antd';
+import { Button, Popconfirm, Tooltip } from 'antd';
 import { isEmpty } from 'lodash';
 import random from 'lodash/random';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
-import {
-  defaultConfig,
-  defaultMqttConfig,
-  modeEnum,
-  typeEnum,
-} from './initialValue';
+import { defaultConfig, modeEnum, typeEnum } from './initialValue';
+import { formatHeaders } from '@/utils/utils';
 
 type UpdateFormItem = {
   name: string;
@@ -54,12 +51,9 @@ const UpdateForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   // 获取详情
-  const { data: detail } = useRequest(
-    () => getOutendsDetail({uuid: uuid || ''}),
-    {
-     ready: !!uuid
-    },
-  );
+  const { data: detail } = useRequest(() => getOutendsDetail({ uuid: uuid || '' }), {
+    ready: !!uuid,
+  });
 
   const handleOnFinish = async (values: any) => {
     setLoading(true);
@@ -72,22 +66,11 @@ const UpdateForm = () => {
       };
 
       if (params.type === 'HTTP') {
-        const newHeaders = formatConfig?.headers.reduce(
-          (acc: any, curr: { k: string; v: string }) => {
-            if (curr.k && curr.v) {
-              acc[curr.k] = curr.v;
-            }
-
-            return acc;
-          },
-          {},
-        );
-
         params = {
           ...params,
           config: {
             ...formatConfig,
-            headers: newHeaders,
+            headers: formatHeaders(formatConfig?.headers),
           },
         };
       }
@@ -146,9 +129,13 @@ const UpdateForm = () => {
     let config: any = [];
 
     if (changedValue?.type === 'MQTT') {
-      config = defaultMqttConfig(randomNumber);
+      config = defaultConfig['MQTT']?.map((item) => ({
+        ...item,
+        clientId: `eekit${randomNumber}`,
+        pubTopic: `eekit${randomNumber}`,
+      }));
     } else {
-      config = defaultConfig[changedValue?.type]
+      config = defaultConfig[changedValue?.type];
     }
 
     formRef.current?.setFieldsValue({
@@ -514,22 +501,7 @@ const UpdateForm = () => {
                         />
                         <ProFormList
                           name="headers"
-                          label={
-                            <Space align="center">
-                              <span>HTTP Headers</span>
-                              <div className="text-[12px] text-[#00000080] ml-[5px]">
-                                <QuestionCircleOutlined />
-                                <span className="mr-[5px] ml-[2px]">更多信息请参考</span>
-                                <a
-                                  href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers"
-                                  target="_blank"
-                                  rel="noreferrer"
-                                >
-                                  HTTP Headers
-                                </a>
-                              </div>
-                            </Space>
-                          }
+                          label={<HttpHeadersTitle />}
                           min={1}
                           creatorButtonProps={false}
                           creatorRecord={{
