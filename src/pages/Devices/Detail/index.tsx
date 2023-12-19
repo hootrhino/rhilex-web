@@ -1,4 +1,6 @@
+import HeadersDetail from '@/components/HttpHeaders/Detail';
 import StateTag from '@/components/StateTag';
+import UnitTitle from '@/components/UnitTitle';
 import { getName } from '@/utils/utils';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
@@ -9,7 +11,7 @@ import { useEffect } from 'react';
 import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from '../SchemaForm/initialValue';
 import ModbusTable from './ModbusTable';
 import PlcTable from './PlcTable';
-import UnitTitle from '@/components/UnitTitle';
+import { boolEnum } from '@/utils/enum';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -38,7 +40,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
   } = useModel('usePort');
 
   const { type = 'GENERIC_PROTOCOL', config } = detail || {};
-  const { commonConfig, hostConfig, portUuid } = config || { registers: [] };
+  const { commonConfig, hostConfig, portUuid, httpConfig } = config || {};
   const { mode, model } = commonConfig || {};
 
   const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]> = {
@@ -79,7 +81,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         dataIndex: 'autoRequest',
         hideInDescriptions: !['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type),
         renderText: (autoRequest) => (
-          <Tag color={autoRequest ? 'success' : 'error'}>{autoRequest ? '开启' : '关闭'}</Tag>
+          <Tag color={boolEnum[autoRequest]?.color}>{boolEnum[autoRequest]?.text}</Tag>
         ),
       },
       {
@@ -99,7 +101,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         title: '工作模式',
         dataIndex: 'mode',
         valueEnum: modeEnum,
-        hideInDescriptions: type === 'SIEMENS_PLC',
+        hideInDescriptions: ['SIEMENS_PLC', 'GENERIC_HTTP_DEVICE'].includes(type),
       },
       {
         title: '型号',
@@ -113,12 +115,12 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         hideInDescriptions: type !== 'SIEMENS_PLC',
       },
       {
-        title: <UnitTitle title='连接超时时间' />,
+        title: <UnitTitle title="连接超时时间" />,
         dataIndex: 'timeout',
         hideInDescriptions: type !== 'SIEMENS_PLC',
       },
       {
-        title: <UnitTitle title='心跳超时时间' />,
+        title: <UnitTitle title="心跳超时时间" />,
         dataIndex: 'idleTimeout',
         hideInDescriptions: type !== 'SIEMENS_PLC',
       },
@@ -137,7 +139,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     ],
     HOST: [
       {
-        title: <UnitTitle title='超时时间' />,
+        title: <UnitTitle title="超时时间" />,
         dataIndex: 'timeout',
       },
       {
@@ -147,6 +149,17 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: '端口',
         dataIndex: 'port',
+      },
+    ],
+    HTTP: [
+      {
+        title: '请求地址',
+        dataIndex: 'url',
+      },
+      {
+        title: 'HTTP Headers',
+        dataIndex: 'headers',
+        renderText: (headers) => (Object.keys(headers)?.length > 0 ? <div /> : null),
       },
     ],
   };
@@ -160,56 +173,64 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
 
   return (
     <Drawer title="设备详情" placement="right" width="50%" destroyOnClose {...props}>
-        <>
-          <EnhancedProDescriptions
-            title="基本配置"
-            dataSource={omit(detail, 'config')}
-            columns={columnsMap['BASE']}
-            loading={detailLoading}
-          />
-          {type && Object.keys(typeEnum).includes(type) && (
-            <>
+      <>
+        <EnhancedProDescriptions
+          title="基本配置"
+          dataSource={omit(detail, 'config')}
+          columns={columnsMap['BASE']}
+          loading={detailLoading}
+        />
+        {type && Object.keys(typeEnum).includes(type) && (
+          <>
+            <EnhancedProDescriptions
+              title="通用配置"
+              dataSource={commonConfig}
+              columns={columnsMap['COMMON']}
+            />
+            {mode === 'UART' && (
+              <ProDescriptions
+                column={1}
+                title="串口配置"
+                labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
+              >
+                <ProDescriptions.Item label="系统串口">
+                  <a
+                    onClick={() => {
+                      history.push('/port');
+                      setDetailConfig({ open: true, uuid: portUuid });
+                      getPortDetail({ uuid: portUuid });
+                    }}
+                  >
+                    {getName(portList || [], portUuid)}
+                  </a>
+                </ProDescriptions.Item>
+              </ProDescriptions>
+            )}
+            {mode === 'TCP' && (
               <EnhancedProDescriptions
-                title="通用配置"
-                dataSource={commonConfig}
-                columns={columnsMap['COMMON']}
+                title="TCP 配置"
+                dataSource={hostConfig}
+                columns={columnsMap['HOST']}
               />
-              {mode === 'UART' && (
-                <ProDescriptions
-                  column={1}
-                  title="串口配置"
-                  labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
-                >
-                  <ProDescriptions.Item label="系统串口">
-                    <a
-                      onClick={() => {
-                        history.push('/port');
-                        setDetailConfig({ open: true, uuid: portUuid });
-                        getPortDetail({ uuid: portUuid });
-                      }}
-                    >
-                      {getName(portList || [], portUuid)}
-                    </a>
-                  </ProDescriptions.Item>
-                </ProDescriptions>
-              )}
-
-              {mode === 'TCP' && (
-                <EnhancedProDescriptions
-                  title="TCP 配置"
-                  dataSource={hostConfig}
-                  columns={columnsMap['HOST']}
-                />
-              )}
-              {['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type) && (
-                <>
-                  <ProDescriptions title="点位表配置" />
-                  {type === 'GENERIC_MODBUS' ? <ModbusTable /> : <PlcTable />}
-                </>
-              )}
-            </>
-          )}
-        </>
+            )}
+            {type === 'GENERIC_HTTP_DEVICE' && (
+              <EnhancedProDescriptions
+                title="HTTP 配置"
+                dataSource={httpConfig}
+                columns={columnsMap['HTTP']}
+                column={1}
+              />
+            )}
+            {type === '' && <HeadersDetail data={httpConfig?.headers} />}
+            {['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type) && (
+              <>
+                <ProDescriptions title="点位表配置" />
+                {type === 'GENERIC_MODBUS' ? <ModbusTable /> : <PlcTable />}
+              </>
+            )}
+          </>
+        )}
+      </>
     </Drawer>
   );
 };

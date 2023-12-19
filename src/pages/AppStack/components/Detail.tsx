@@ -5,6 +5,7 @@ import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps, Tag } from 'antd';
 import { AppStackItem } from '..';
+import { boolEnum } from '@/utils/enum';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -26,7 +27,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       title: '是否自启',
       dataIndex: 'autoStart',
       renderText: (autoStart) => (
-        <Tag color={autoStart ? 'success' : 'error'}>{autoStart ? '开启' : '关闭'}</Tag>
+        <Tag color={boolEnum[autoStart]?.color}>{boolEnum[autoStart]?.text}</Tag>
       ),
     },
     {

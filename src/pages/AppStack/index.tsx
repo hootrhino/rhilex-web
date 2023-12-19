@@ -9,6 +9,7 @@ import { useRequest } from '@umijs/max';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
 import Detail from './components/Detail';
+import { boolEnum } from '@/utils/enum';
 
 export type AppStackItem = {
   uuid?: string;
@@ -20,6 +21,19 @@ export type AppStackItem = {
   luaSource?: string;
   [key: string]: any;
 };
+
+const appStateEnum = {
+  1: {
+    text: '正在运行',
+    color: 'processing',
+    icon: <SyncOutlined spin />
+  },
+  0: {
+    text: '已结束',
+    color: 'default',
+    icon: <MinusCircleOutlined />
+  }
+}
 
 const AppStack = () => {
   const actionRef = useRef<ActionType>();
@@ -71,7 +85,7 @@ const AppStack = () => {
       title: '是否自启',
       dataIndex: 'autoStart',
       renderText: (autoStart) => (
-        <Tag color={autoStart ? 'success' : 'error'}>{autoStart === true ? '开启' : '关闭'}</Tag>
+        <Tag color={boolEnum[autoStart]?.color}>{boolEnum[autoStart]?.text}</Tag>
       ),
     },
     {
@@ -79,10 +93,10 @@ const AppStack = () => {
       dataIndex: 'appState',
       renderText: (appState) => (
         <Tag
-          icon={appState === 1 ? <SyncOutlined spin /> : <MinusCircleOutlined />}
-          color={appState === 1 ? 'processing' : 'default'}
+          icon={appStateEnum[appState]?.icon}
+          color={appStateEnum[appState]?.color}
         >
-          {appState === 1 ? '正在运行' : '已结束'}
+          {appStateEnum[appState]?.text}
         </Tag>
       ),
     },

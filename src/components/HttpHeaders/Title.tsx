@@ -1,7 +1,7 @@
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Space } from 'antd';
 
-const HttpHeadersTitle = () => {
+const HeadersTitle = () => {
   return (
     <Space align="center">
       <span>HTTP Headers</span>
@@ -20,4 +20,4 @@ const HttpHeadersTitle = () => {
   );
 };
 
-export default HttpHeadersTitle;
+export default HeadersTitle;

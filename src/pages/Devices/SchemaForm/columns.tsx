@@ -1,4 +1,4 @@
-import HttpHeadersTitle from '@/components/HttpHeadersTitle';
+import HeadersTitle from '@/components/HttpHeaders/Title';
 import UnitTitle from '@/components/UnitTitle';
 import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from './initialValue';
 
@@ -177,7 +177,7 @@ export const columns = [
                 {
                   valueType: 'formList',
                   dataIndex: 'headers',
-                  title: <HttpHeadersTitle />,
+                  title: <HeadersTitle />,
                   columns: [
                     {
                       valueType: 'group',

@@ -14,12 +14,6 @@ export const modeEnum = {
   HEX_STRING: '十六进制字符串',
 };
 
-// 开启心跳
-export const allowPingEnum = {
-  true: '开启',
-  false: '关闭',
-};
-
 export const defaultConfig = {
   MQTT: [
     {

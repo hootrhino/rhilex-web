@@ -12026,6 +12026,66 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-132907069-run",
         "security": []
       }
+    },
+    "/api/v1/backup/snapshot": {
+      "get": {
+        "summary": "运行快照",
+        "x-apifox-folder": "系统配置/数据备份",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/数据备份"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-134543133-run",
+        "security": []
+      }
+    },
+    "/api/v1/backup/runningLog": {
+      "get": {
+        "summary": "运行日志",
+        "x-apifox-folder": "系统配置/数据备份",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/数据备份"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-134543140-run",
+        "security": []
+      }
     }
   },
   "components": {

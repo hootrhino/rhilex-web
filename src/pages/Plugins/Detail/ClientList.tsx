@@ -15,6 +15,19 @@ type DetailItem = {
   [key: string]: any;
 };
 
+const cleanSessionEnum = {
+  true: {
+    text: 'true',
+    color: 'success',
+    icon: <CheckCircleOutlined />
+  },
+  false: {
+    text: 'false',
+    color: 'error',
+    icon: <CloseCircleOutlined />
+  }
+}
+
 const ClientList = () => {
   const { data, run, setDetailConfig, detailConfig } = useModel('usePlugin');
 
@@ -37,10 +50,10 @@ const ClientList = () => {
       dataIndex: 'cleanSession',
       renderText: (cleanSession) => (
         <Tag
-          icon={cleanSession ? <CheckCircleOutlined /> : <CloseCircleOutlined />}
-          color={cleanSession ? 'success' : 'error'}
+          icon={cleanSessionEnum[cleanSession]?.icon}
+          color={cleanSessionEnum[cleanSession]?.color}
         >
-          {cleanSession === true ? 'true' : 'false'}
+          {cleanSessionEnum[cleanSession]?.text}
         </Tag>
       ),
     },

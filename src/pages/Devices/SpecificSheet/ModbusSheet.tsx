@@ -20,6 +20,7 @@ import { defaultModbusConfig } from './initialValue';
 import UploadRule from './UploadRule';
 
 import '../index.less';
+import { statusEnum } from '@/utils/enum';
 
 export type ModbusSheetItem = {
   uuid?: string;
@@ -269,8 +270,7 @@ const ModbusSheet = () => {
       width: 80,
       editable: false,
       renderText(_, record) {
-        const isSuccess = record?.status === 1;
-        return <Tag color={isSuccess ? 'success' : 'error'}>{isSuccess ? '正常' : '异常'}</Tag>;
+        return <Tag color={statusEnum[record?.status || 0]?.color}>{statusEnum[record?.status || 0]?.text}</Tag>;
       },
     },
     {

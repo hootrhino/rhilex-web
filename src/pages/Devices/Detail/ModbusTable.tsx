@@ -9,6 +9,7 @@ import UnitTitle from '@/components/UnitTitle';
 
 import '../index.less';
 import { Tag } from 'antd';
+import { statusEnum } from '@/utils/enum';
 
 const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
   {
@@ -57,8 +58,7 @@ const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
     dataIndex: 'status',
     width: 80,
     renderText(_, record) {
-      const isSuccess = record?.status === 1;
-      return <Tag color={isSuccess ? 'success' : 'error'}>{isSuccess ? '正常' : '异常'}</Tag>;
+      return <Tag color={statusEnum[record?.status || 0]?.color}>{statusEnum[record?.status || 0]?.text}</Tag>;
     },
   },
 ];

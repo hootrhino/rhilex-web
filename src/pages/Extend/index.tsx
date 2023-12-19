@@ -25,6 +25,19 @@ export type ExtendItem = {
   [key: string]: any;
 };
 
+const runningEnum = {
+  true: {
+    text: '运行中',
+    color: 'processing',
+    icon: <SyncOutlined spin />
+  },
+  false: {
+    text: '停止',
+    color: 'error',
+    icon: <MinusCircleOutlined />
+  }
+}
+
 export const baseColumns = [
   {
     title: 'UUID',
@@ -83,12 +96,12 @@ export const baseColumns = [
     title: '运行状态',
     dataIndex: 'running',
     width: 100,
-    renderText: (running: boolean) => (
+    renderText: (running: any) => (
       <Tag
-        icon={running ? <SyncOutlined spin /> : <MinusCircleOutlined />}
-        color={running ? 'processing' : 'error'}
+        icon={runningEnum[running]?.icon}
+        color={runningEnum[running]?.color}
       >
-        {running ? '运行中' : '停止'}
+        {runningEnum[running]?.text}
       </Tag>
     ),
   },

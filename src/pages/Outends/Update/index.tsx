@@ -4,7 +4,7 @@ import {
   putOutendsUpdate,
 } from '@/services/rulex/shuchuziyuanguanli';
 
-import HttpHeadersTitle from '@/components/HttpHeadersTitle';
+import HeadersTitle from '@/components/HttpHeaders/Title';
 import { message } from '@/components/PopupHack';
 import ProSegmented from '@/components/ProSegmented';
 import UnitTitle from '@/components/UnitTitle';
@@ -501,7 +501,7 @@ const UpdateForm = () => {
                         />
                         <ProFormList
                           name="headers"
-                          label={<HttpHeadersTitle />}
+                          label={<HeadersTitle />}
                           min={1}
                           creatorButtonProps={false}
                           creatorRecord={{

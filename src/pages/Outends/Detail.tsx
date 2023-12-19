@@ -1,13 +1,15 @@
+import HeadersDetail from '@/components/HttpHeaders/Detail';
 import StateTag from '@/components/StateTag';
+import UnitTitle from '@/components/UnitTitle';
 import { getOutendsDetail } from '@/services/rulex/shuchuziyuanguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { Descriptions, Drawer, DrawerProps, Tag } from 'antd';
+import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
-import { allowPingEnum, modeEnum, typeEnum } from './Update/initialValue';
-import UnitTitle from '@/components/UnitTitle';
+import { modeEnum, typeEnum } from './Update/initialValue';
+import { boolEnum } from '@/utils/enum';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -79,7 +81,7 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
   ],
   UDP_TARGET: [
     {
-      title: <UnitTitle title='超时时间' />,
+      title: <UnitTitle title="超时时间" />,
       dataIndex: 'timeout',
     },
     {
@@ -102,7 +104,7 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
       title: '开启心跳',
       dataIndex: 'allowPing',
       renderText: (allowPing) => (
-        <Tag color={allowPing ? 'success' : 'error'}>{allowPingEnum[allowPing]}</Tag>
+        <Tag color={boolEnum[allowPing]?.color}>{boolEnum[allowPing]?.text}</Tag>
       ),
     },
     {
@@ -110,7 +112,7 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
       dataIndex: 'pingPacket',
     },
     {
-      title: <UnitTitle title='超时时间' />,
+      title: <UnitTitle title="超时时间" />,
       dataIndex: 'timeout',
     },
     {
@@ -153,7 +155,7 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
     {
       title: 'HTTP Headers',
       dataIndex: 'headers',
-      renderText: (headers) => Object.keys(headers)?.length > 0 ? <div /> : null,
+      renderText: (headers) => (Object.keys(headers)?.length > 0 ? <div /> : null),
     },
   ],
 };
@@ -161,9 +163,6 @@ const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]
 const Detail = ({ uuid, ...props }: DetailProps) => {
   const { data, run, loading } = useRequest(() => getOutendsDetail({ uuid }), {
     manual: true,
-    formatResult: (res) => {
-      return res?.data;
-    },
   });
 
   useEffect(() => {
@@ -192,15 +191,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
             dataSource={data?.config}
             loading={loading}
           />
-          {data?.type === 'HTTP' && Object.keys(data?.config?.headers)?.length > 0 && (
-            <Descriptions column={1} bordered layout="vertical">
-              {Object.keys(data?.config?.headers)?.map((item) => (
-                <Descriptions.Item label={item} key={item}>
-                  {data?.config?.headers[item]}
-                </Descriptions.Item>
-              ))}
-            </Descriptions>
-          )}
+          {data?.type === 'HTTP' && <HeadersDetail data={data?.config?.headers} />}
         </>
       )}
     </Drawer>

@@ -10,6 +10,7 @@ import IndexBorder from '@/components/IndexBorder';
 import UnitTitle from '@/components/UnitTitle';
 
 import '../index.less';
+import { statusEnum } from '@/utils/enum';
 
 const columns: ProColumns<Partial<PlcSheetItem>>[] = [
   {
@@ -66,8 +67,7 @@ const columns: ProColumns<Partial<PlcSheetItem>>[] = [
     dataIndex: 'status',
     width: 80,
     renderText(_, record) {
-      const isSuccess = record?.status === 1;
-      return <Tag color={isSuccess ? 'success' : 'error'}>{isSuccess ? '正常' : '异常'}</Tag>;
+      return <Tag color={statusEnum[record?.status || 0]?.color}>{statusEnum[record?.status || 0]?.text}</Tag>;
     },
   },
   {

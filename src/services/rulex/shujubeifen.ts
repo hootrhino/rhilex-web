@@ -10,6 +10,22 @@ export async function getBackupDownload(options?: { [key: string]: any }) {
   });
 }
 
+/** 运行日志 GET /api/v1/backup/runningLog */
+export async function getBackupRunningLog(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/backup/runningLog', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 运行快照 GET /api/v1/backup/snapshot */
+export async function getBackupSnapshot(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/backup/snapshot', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** 上传备份 POST /api/v1/backup/upload */
 export async function postBackupUpload(body: {}, file?: File, options?: { [key: string]: any }) {
   const formData = new FormData();
