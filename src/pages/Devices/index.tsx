@@ -1,5 +1,6 @@
 import GroupList, { DEFAULT_CONFIG } from '@/components/GroupList';
 import { message } from '@/components/PopupHack';
+import ProConfirmModal from '@/components/ProConfirmModal';
 import StateTag from '@/components/StateTag';
 import { deleteDevicesDel, putDevicesRestart } from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
@@ -12,7 +13,6 @@ import { Button, Dropdown, Popconfirm, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import Detail from './Detail';
 import { typeEnum } from './SchemaForm/initialValue';
-import ProConfirmModal from '@/components/ProConfirmModal';
 
 export type DeviceItem = {
   name: string;
@@ -33,7 +33,7 @@ const Devices = () => {
     detailConfig,
     setDeviceConfig,
     activeGroupKey,
-    setActiveGroupKey
+    setActiveGroupKey,
   } = useModel('useDevice');
 
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(DEFAULT_CONFIG);
@@ -64,6 +64,20 @@ const Devices = () => {
       },
     },
   );
+
+  const getMenuItems = (type: string) => {
+    const showSheet = ['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type);
+    let items = [
+      { key: 'restart', label: '重启设备' },
+      { key: 'rule', label: '规则配置' },
+    ];
+
+    if (showSheet) {
+      items = [...items, { key: 'specific-sheet', label: '点位表配置' }];
+    }
+
+    return items;
+  };
 
   const columns: ProColumns<DeviceItem>[] = [
     {
@@ -100,8 +114,6 @@ const Devices = () => {
       key: 'option',
       valueType: 'option',
       render: (_, { uuid, gid, type }) => {
-        const showSheet = ['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type);
-
         return (
           <Space>
             <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
@@ -121,11 +133,7 @@ const Devices = () => {
             </Popconfirm>
             <Dropdown
               menu={{
-                items: [
-                  { key: 'restart', label: '重启设备' },
-                  { key: 'rule', label: '规则配置' },
-                  { key: 'specific-sheet', label: '点位表配置', disabled: !showSheet },
-                ],
+                items: getMenuItems(type),
                 onClick: ({ key }) => {
                   switch (key) {
                     case 'restart':
