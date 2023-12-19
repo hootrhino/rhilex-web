@@ -11,7 +11,6 @@ import {
 } from '@/services/rulex/shuruziyuanguanli';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
-  FooterToolbar,
   PageContainer,
   ProCard,
   ProForm,
@@ -21,9 +20,9 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button, Popconfirm } from 'antd';
 import random from 'lodash/random';
 import { defaultConfig, eventEnum, modeEnum, typeEnum } from './initialValue';
+import ProFormSubmitter from '@/components/ProFormSubmitter';
 
 const DefaultListUrl = '/inends/list';
 
@@ -88,28 +87,18 @@ const UpdateForm = () => {
           formRef={formRef}
           onFinish={handleOnFinish}
           submitter={{
-            render: ({ reset, submit }) => {
-              return (
-                <FooterToolbar>
-                  <Popconfirm
-                    key="reset"
-                    title="重置可能会丢失数据，确定要重置吗？"
-                    onConfirm={() => {
-                      reset();
-                      formRef.current?.setFieldsValue(
-                        uuid ? { ...detail, config: [detail?.config] } : defaultValue,
-                      );
-                    }}
-                  >
-                    <Button>重置</Button>
-                  </Popconfirm>
-
-                  <Button key="submit" type="primary" onClick={submit} loading={loading}>
-                    提交
-                  </Button>
-                </FooterToolbar>
-              );
-            },
+            render: ({ reset, submit }) => (
+              <ProFormSubmitter
+                handleOnSubmit={submit}
+                handleOnReset={() => {
+                  reset();
+                  formRef.current?.setFieldsValue(
+                    uuid ? { ...detail, config: [detail?.config] } : defaultValue,
+                  );
+                }}
+                loading={loading}
+              />
+            ),
           }}
           onValuesChange={(changedValue) => {
             if (!changedValue?.type) return;

@@ -4,7 +4,7 @@ import UnitTitle from '@/components/UnitTitle';
 import { getName } from '@/utils/utils';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { history, useModel } from '@umijs/max';
+import { history, useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
@@ -12,6 +12,7 @@ import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from '../SchemaF
 import ModbusTable from './ModbusTable';
 import PlcTable from './PlcTable';
 import { boolEnum } from '@/utils/enum';
+import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -31,13 +32,20 @@ const EnhancedProDescriptions = ({
 };
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
-  const { groupList, detailLoading, detail, getDetail: getDeviceDetail } = useModel('useDevice');
+  const { groupList } = useModel('useDevice');
   const {
     run: getPort,
     data: portList,
     setDetailConfig,
     getDetail: getPortDetail,
   } = useModel('usePort');
+
+  const {
+    data: detail,
+    run: getDeviceDetail,
+  } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
+    manual: true,
+  });
 
   const { type = 'GENERIC_PROTOCOL', config } = detail || {};
   const { commonConfig, hostConfig, portUuid, httpConfig } = config || {};
@@ -79,7 +87,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: '是否启动轮询',
         dataIndex: 'autoRequest',
-        hideInDescriptions: !['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type),
+        hideInDescriptions: !['GENERIC_MODBUS', 'SIEMENS_PLC', 'GENERIC_HTTP_DEVICE'].includes(type),
         renderText: (autoRequest) => (
           <Tag color={boolEnum[autoRequest]?.color}>{boolEnum[autoRequest]?.text}</Tag>
         ),
@@ -117,7 +125,8 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {
         title: <UnitTitle title="连接超时时间" />,
         dataIndex: 'timeout',
-        hideInDescriptions: type !== 'SIEMENS_PLC',
+
+        hideInDescriptions: !['SIEMENS_PLC', 'GENERIC_HTTP_DEVICE'].includes(type),
       },
       {
         title: <UnitTitle title="心跳超时时间" />,
@@ -135,6 +144,11 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         dataIndex: 'slot',
         valueEnum: slotEnum,
         hideInDescriptions: type !== 'SIEMENS_PLC',
+      },
+      {
+        title: <UnitTitle title="采集频率" />,
+        dataIndex: 'frequency',
+        hideInDescriptions: !['GENERIC_HTTP_DEVICE'].includes(type),
       },
     ],
     HOST: [
@@ -165,7 +179,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
   };
 
   useEffect(() => {
-    if (uuid) {
+    if (uuid && props?.open) {
       getDeviceDetail({ uuid });
       getPort();
     }
@@ -178,7 +192,6 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
           title="基本配置"
           dataSource={omit(detail, 'config')}
           columns={columnsMap['BASE']}
-          loading={detailLoading}
         />
         {type && Object.keys(typeEnum).includes(type) && (
           <>
@@ -221,11 +234,11 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
                 column={1}
               />
             )}
-            {type === '' && <HeadersDetail data={httpConfig?.headers} />}
+            {type === 'GENERIC_HTTP_DEVICE' && <HeadersDetail data={httpConfig?.headers} />}
             {['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type) && (
               <>
                 <ProDescriptions title="点位表配置" />
-                {type === 'GENERIC_MODBUS' ? <ModbusTable /> : <PlcTable />}
+                {type === 'GENERIC_MODBUS' ? <ModbusTable deviceId={detail?.uuid || ''} /> : <PlcTable deviceId={detail?.uuid || ''} />}
               </>
             )}
           </>

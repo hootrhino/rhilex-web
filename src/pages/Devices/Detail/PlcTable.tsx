@@ -1,6 +1,5 @@
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
 import { Tag } from 'antd';
 import { blockTypeEnum } from '../SchemaForm/initialValue';
 import type { PlcSheetItem } from '../SpecificSheet/PlcSheet';
@@ -11,6 +10,10 @@ import UnitTitle from '@/components/UnitTitle';
 
 import '../index.less';
 import { statusEnum } from '@/utils/enum';
+
+type PlcTableProps = {
+  deviceId: string;
+}
 
 const columns: ProColumns<Partial<PlcSheetItem>>[] = [
   {
@@ -77,8 +80,7 @@ const columns: ProColumns<Partial<PlcSheetItem>>[] = [
   },
 ];
 
-const PlcTable = () => {
-  const { detail } = useModel('useDevice');
+const PlcTable = ({deviceId}: PlcTableProps) => {
 
   return (
     <ProTable
@@ -91,7 +93,7 @@ const PlcTable = () => {
       pagination={{ defaultPageSize: 10, hideOnSinglePage: true }}
       request={async ({ current = 1, pageSize = 10 }) => {
         const { data } = await getS1200DataSheetList({
-          device_uuid: detail?.uuid,
+          device_uuid: deviceId,
           current,
           size: pageSize,
         });

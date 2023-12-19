@@ -1,19 +1,18 @@
 import { message } from '@/components/PopupHack';
 
 import ProCodeEditor from '@/components/ProCodeEditor';
+import ProFormSubmitter from '@/components/ProFormSubmitter';
 import ProSegmented from '@/components/ProSegmented';
 import useGoBack from '@/hooks/useGoBack';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rulex/qingliangyingyong';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
-  FooterToolbar,
   PageContainer,
   ProCard,
   ProForm,
   ProFormDependency,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button, Popconfirm } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 
@@ -35,12 +34,9 @@ const UpdateForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   // 获取详情
-  const { data: detail } = useRequest(
-    () => getAppDetail({uuid: uuid || ''}),
-    {
-      ready: !!uuid,
-    },
-  );
+  const { data: detail } = useRequest(() => getAppDetail({ uuid: uuid || '' }), {
+    ready: !!uuid,
+  });
 
   const handleOnFinish = async (values: any) => {
     setLoading(true);
@@ -82,33 +78,18 @@ const UpdateForm = () => {
           formRef={formRef}
           onFinish={handleOnFinish}
           submitter={{
-            render: ({ reset, submit }) => {
-              return (
-                <FooterToolbar>
-                  <Popconfirm
-                    key="reset"
-                    title="重置可能会丢失数据，确定要重置吗？"
-                    onConfirm={() => {
-                      reset();
-                      formRef.current?.setFieldsValue(
-                        uuid ? { ...defaultValue, ...detail } : defaultValue,
-                      );
-                    }}
-                  >
-                    <Button>重置</Button>
-                  </Popconfirm>
-
-                  <Button
-                    key="submit"
-                    type="primary"
-                    onClick={submit}
-                    loading={loading}
-                  >
-                    提交
-                  </Button>
-                </FooterToolbar>
-              );
-            },
+            render: ({ reset, submit }) => (
+              <ProFormSubmitter
+                handleOnSubmit={submit}
+                handleOnReset={() => {
+                  reset();
+                  formRef.current?.setFieldsValue(
+                    uuid ? { ...defaultValue, ...detail } : defaultValue,
+                  );
+                }}
+                loading={loading}
+              />
+            ),
           }}
         >
           <ProForm.Group>

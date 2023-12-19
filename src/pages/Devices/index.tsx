@@ -32,10 +32,11 @@ const Devices = () => {
     getGroupList,
     detailConfig,
     setDeviceConfig,
+    activeGroupKey,
+    setActiveGroupKey
   } = useModel('useDevice');
 
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(DEFAULT_CONFIG);
-  const [activeGroupKey, setActiveGroupKey] = useState<string>(DEFAULT_GROUP_KEY_DEVICE);
   const [open, setOpen] = useState<boolean>(false);
   const [restartDeviceId, setDeviceId] = useState<string>('');
 

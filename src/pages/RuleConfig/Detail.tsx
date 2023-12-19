@@ -36,7 +36,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       name = getSourceName(sources as any, fromSource?.[0]);
       url = '/inends/list';
     } else {
-      name = getSourceName(devices || [], fromSource?.[0]);
+      name = getSourceName(devices || [], fromDevice?.[0]);
       url = '/device/list';
     }
 

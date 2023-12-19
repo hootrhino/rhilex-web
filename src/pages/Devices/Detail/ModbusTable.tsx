@@ -1,7 +1,6 @@
 import { getModbusDataSheetList } from '@/services/rulex/Modbusdianweiguanli';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
 import { funcEnum } from '../SchemaForm/initialValue';
 import type { ModbusSheetItem } from '../SpecificSheet/ModbusSheet';
 import IndexBorder from '@/components/IndexBorder';
@@ -10,6 +9,10 @@ import UnitTitle from '@/components/UnitTitle';
 import '../index.less';
 import { Tag } from 'antd';
 import { statusEnum } from '@/utils/enum';
+
+type ModbusTableProps = {
+  deviceId: string;
+}
 
 const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
   {
@@ -63,8 +66,7 @@ const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
   },
 ];
 
-const ModbusTable = () => {
-  const { detail } = useModel('useDevice');
+const ModbusTable = ({deviceId}: ModbusTableProps) => {
 
   return (
     <ProTable
@@ -76,7 +78,7 @@ const ModbusTable = () => {
       pagination={{ defaultPageSize: 10, hideOnSinglePage: true }}
       request={async ({ current = 1, pageSize = 10 }) => {
         const { data } = await getModbusDataSheetList({
-          device_uuid: detail?.uuid,
+          device_uuid: deviceId,
           current,
           size: pageSize,
         });

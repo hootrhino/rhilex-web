@@ -11,21 +11,21 @@ import {
 } from '@ant-design/pro-components';
 
 import useGoBack from '@/hooks/useGoBack';
-import { FooterToolbar } from '@ant-design/pro-components';
-import { Button, Popconfirm, Space } from 'antd';
+import { Space } from 'antd';
 import omit from 'lodash/omit';
 
 import { message } from '@/components/PopupHack';
 import ProSegmented from '@/components/ProSegmented';
-import { postDevicesCreate, putDevicesUpdate } from '@/services/rulex/shebeiguanli';
+import { getDevicesDetail, postDevicesCreate, putDevicesUpdate } from '@/services/rulex/shebeiguanli';
 
-import { history, useModel, useParams } from '@umijs/max';
+import { history, useModel, useParams, useRequest } from '@umijs/max';
 import cloneDeep from 'lodash/cloneDeep';
 import { columns } from './columns';
 import Title from './FormTitle';
 import './index.less';
 import { defaultConfig, defaultHostConfig, defaultModelConfig } from './initialValue';
 import { formatHeaders } from '@/utils/utils';
+import ProFormSubmitter from '@/components/ProFormSubmitter';
 
 const DefaultListUrl = '/device/list';
 
@@ -90,7 +90,7 @@ const SchemaForm = ({}: ProFormProps) => {
   const formRef = useRef<ProFormInstance>();
   const { showModal } = useGoBack();
   const { deviceId, groupId } = useParams();
-  const { groupList, detail, getDetail } = useModel('useDevice');
+  const { groupList, setActiveGroupKey } = useModel('useDevice');
   const { data: portList, run: getPort } = useModel('usePort');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -131,6 +131,13 @@ const SchemaForm = ({}: ProFormProps) => {
       ),
     },
   };
+
+    // 设备详情
+    const {
+      data: detail,
+    } = useRequest(() => getDevicesDetail({ uuid: deviceId || '' }), {
+      ready: !!deviceId
+    });
 
   const handleOnFinish = async (values: any) => {
     setLoading(true);
@@ -175,6 +182,7 @@ const SchemaForm = ({}: ProFormProps) => {
 
         if (msg === 'Success') {
           message.success('创建成功');
+          setActiveGroupKey(groupId ? groupId : 'DROOT');
         } else {
           const info = `创建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：${msg}`;
           message.warning(info);
@@ -240,12 +248,6 @@ const SchemaForm = ({}: ProFormProps) => {
   }, [detail]);
 
   useEffect(() => {
-    if (deviceId) {
-      getDetail({ uuid: deviceId });
-    }
-  }, [deviceId]);
-
-  useEffect(() => {
     getPort();
   }, []);
 
@@ -265,26 +267,16 @@ const SchemaForm = ({}: ProFormProps) => {
             initialValues={initialValues}
             rootClassName="device-form"
             submitter={{
-              render: ({ reset, submit }) => {
-                return (
-                  <FooterToolbar>
-                    <Popconfirm
-                      key="reset"
-                      title="重置可能会丢失数据，确定要重置吗？"
-                      onConfirm={() => {
-                        reset();
-                        handleOnReset();
-                      }}
-                    >
-                      <Button>重置</Button>
-                    </Popconfirm>
-
-                    <Button key="submit" type="primary" onClick={submit} loading={loading}>
-                      提交
-                    </Button>
-                  </FooterToolbar>
-                );
-              },
+              render: ({ reset, submit }) => (
+                <ProFormSubmitter
+                  handleOnSubmit={submit}
+                  handleOnReset={() => {
+                    reset();
+                    handleOnReset();
+                  }}
+                  loading={loading}
+                />
+              ),
             }}
           />
         </ProCard>

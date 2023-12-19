@@ -12,7 +12,6 @@ import useGoBack from '@/hooks/useGoBack';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
-  FooterToolbar,
   PageContainer,
   ProCard,
   ProForm,
@@ -22,23 +21,19 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button, Popconfirm, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
 import { isEmpty } from 'lodash';
 import random from 'lodash/random';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { defaultConfig, modeEnum, typeEnum } from './initialValue';
 import { formatHeaders } from '@/utils/utils';
+import ProFormSubmitter from '@/components/ProFormSubmitter';
 
 type UpdateFormItem = {
   name: string;
   type: string;
   config: Record<string, any>[];
-};
-
-type submitterProps = {
-  reset: () => void;
-  submit: () => void;
 };
 
 const DefaultListUrl = '/outends/list';
@@ -143,27 +138,6 @@ const UpdateForm = () => {
     });
   };
 
-  const renderSubmitter = ({ reset, submit }: submitterProps) => {
-    return (
-      <FooterToolbar>
-        <Popconfirm
-          key="reset"
-          title="重置可能会丢失数据，确定要重置吗？"
-          onConfirm={() => {
-            reset();
-            handleOnReset();
-          }}
-        >
-          <Button>重置</Button>
-        </Popconfirm>
-
-        <Button key="submit" type="primary" onClick={submit} loading={loading}>
-          提交
-        </Button>
-      </FooterToolbar>
-    );
-  };
-
   useEffect(() => {
     handleOnReset();
   }, [detail]);
@@ -178,7 +152,16 @@ const UpdateForm = () => {
           formRef={formRef}
           onFinish={handleOnFinish}
           submitter={{
-            render: ({ reset, submit }) => renderSubmitter({ reset, submit }),
+            render: ({ reset, submit }) => (
+              <ProFormSubmitter
+                handleOnSubmit={submit}
+                handleOnReset={() => {
+                  reset();
+                  handleOnReset();
+                }}
+                loading={loading}
+              />
+            ),
           }}
           onValuesChange={handleOnValuesChange}
         >

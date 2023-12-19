@@ -1,8 +1,8 @@
 import {
-  getDevicesDetail,
   getDevicesGroup,
   getDevicesListByGroup,
 } from '@/services/rulex/shebeiguanli';
+import { DEFAULT_GROUP_KEY_DEVICE } from '@/utils/constant';
 import { useState } from 'react';
 import { useRequest } from 'umi';
 
@@ -12,6 +12,7 @@ const defaultDeviceConfig = {
 };
 
 const useDevice = () => {
+  const [activeGroupKey, setActiveGroupKey] = useState<string>(DEFAULT_GROUP_KEY_DEVICE);
   const [detailConfig, setDeviceConfig] = useState<DetailModalConfig>(defaultDeviceConfig);
 
   // 设备分组列表
@@ -22,26 +23,16 @@ const useDevice = () => {
     getDevicesListByGroup(params),
   );
 
-  // 设备详情
-  const {
-    data: detail,
-    run: getDetail,
-    loading: detailLoading,
-  } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
-    manual: true,
-  });
-
   return {
     data,
-    detail,
     run,
     refresh,
     groupList,
     getGroupList,
-    getDetail,
-    detailLoading,
     detailConfig,
     setDeviceConfig,
+    activeGroupKey,
+    setActiveGroupKey
   };
 };
 

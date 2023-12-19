@@ -4,17 +4,11 @@ import { history, useParams } from 'umi';
 import { DefaultActions, DefaultFailed, DefaultSuccess } from '@/components/LuaEditor/constant';
 import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
+import ProFormSubmitter from '@/components/ProFormSubmitter';
 import useGoBack from '@/hooks/useGoBack';
 import { getRulesDetail, postRulesCreate, putRulesUpdate } from '@/services/rulex/guizeguanli';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import {
-  FooterToolbar,
-  PageContainer,
-  ProCard,
-  ProForm,
-  ProFormText,
-} from '@ant-design/pro-components';
-import { Button, Popconfirm } from 'antd';
+import { PageContainer, ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from 'umi';
 import { RuleType } from '.';
 
@@ -31,6 +25,13 @@ type UpdateFormProps = {
   typeId: string;
 };
 
+const initialValue = {
+  actions: DefaultActions,
+  success: DefaultSuccess,
+  failed: DefaultFailed,
+  name: '',
+};
+
 const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
   const formRef = useRef<ProFormInstance>();
   const { ruleId, groupId } = useParams();
@@ -39,12 +40,8 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
   const DefaultListUrl = groupId ? `/${type}/${groupId}/${typeId}/rule` : `/${type}/${typeId}/rule`;
 
   // 获取详情
-  const { run: getDetail } = useRequest((params: API.getRulesDetailParams) => getRulesDetail(params), {
-    manual: true,
-    formatResult: (res) => res?.data,
-    onSuccess: (data) => {
-      formRef.current?.setFieldsValue({ ...data });
-    },
+  const { data: detail } = useRequest(() => getRulesDetail({ uuid: ruleId || '' }), {
+    ready: !!ruleId,
   });
 
   const handleOnFinish = async (values: FormParams) => {
@@ -73,17 +70,8 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
   };
 
   useEffect(() => {
-    if (ruleId) {
-      getDetail({uuid: ruleId});
-    } else {
-      formRef.current?.setFieldsValue({
-        actions: DefaultActions,
-        success: DefaultSuccess,
-        failed: DefaultFailed,
-        name: '',
-      });
-    }
-  }, [ruleId, typeId, type]);
+    formRef.current?.setFieldsValue(detail ? detail : initialValue);
+  }, [detail]);
 
   return (
     <PageContainer
@@ -94,23 +82,16 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
         <ProForm
           formRef={formRef}
           submitter={{
-            render: ({ reset, submit }) => {
-              return (
-                <FooterToolbar>
-                  <Popconfirm
-                    key="reset"
-                    title="重置可能会丢失数据，确定要重置吗？"
-                    onConfirm={reset}
-                  >
-                    <Button>重置</Button>
-                  </Popconfirm>
-
-                  <Button key="submit" type="primary" onClick={submit} loading={loading}>
-                    提交
-                  </Button>
-                </FooterToolbar>
-              );
-            },
+            render: ({ reset, submit }) => (
+              <ProFormSubmitter
+                handleOnSubmit={submit}
+                handleOnReset={() => {
+                  reset();
+                  formRef.current?.setFieldsValue(detail ? detail : initialValue);
+                }}
+                loading={loading}
+              />
+            ),
           }}
           onFinish={handleOnFinish}
         >
