@@ -31,7 +31,7 @@ const EnhancedProDescriptions = ({
   return <ProDescriptions labelStyle={labelStyle} loading={loading} column={column} {...props} />;
 };
 
-const Detail = ({ uuid, ...props }: DetailProps) => {
+const Detail = ({ uuid, open, ...props }: DetailProps) => {
   const { groupList } = useModel('useDevice');
   const {
     run: getPort,
@@ -179,14 +179,14 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
   };
 
   useEffect(() => {
-    if (uuid && props?.open) {
+    if (uuid && open) {
       getDeviceDetail({ uuid });
       getPort();
     }
-  }, [uuid]);
+  }, [uuid, open]);
 
   return (
-    <Drawer title="设备详情" placement="right" width="50%" destroyOnClose {...props}>
+    <Drawer open={open} title="设备详情" placement="right" width="50%" destroyOnClose {...props}>
       <>
         <EnhancedProDescriptions
           title="基本配置"
