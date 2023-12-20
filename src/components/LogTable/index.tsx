@@ -9,7 +9,9 @@ type LogTableProps = ProTableProps<any, any, any> & {
 };
 
 import { LogItem } from '@/models/useWebsocket';
+import { filterLogByTopic } from '@/utils/utils';
 import { Tag } from 'antd';
+import { orderBy } from 'lodash';
 import { useEffect, useState } from 'react';
 
 enum levelColor {
@@ -22,7 +24,7 @@ enum levelColor {
 }
 
 const LogTable = ({ filters = false, topic, options, ...props }: LogTableProps) => {
-  const { logs } = useModel('useWebsocket');
+  const { messageHistory } = useModel('useWebsocket');
   const [dataSource, setData] = useState<LogItem[]>([]);
 
   const columns = [
@@ -68,33 +70,37 @@ const LogTable = ({ filters = false, topic, options, ...props }: LogTableProps) 
   ];
 
   const handleOnsearch = (keyword?: string, filters?: Record<string, FilterValue | null>) => {
-    let filteredLogs = [...dataSource];
+    let searchData = [...dataSource];
 
     if (keyword) {
-      filteredLogs = logs.filter((log) => {
+      searchData = searchData.filter((log) => {
         return log.msg.includes(keyword);
       });
     }
     if (filters) {
-      filteredLogs = logs.filter((log) => filters?.level?.includes(log?.level));
+      searchData = searchData.filter((log) => filters?.level?.includes(log?.level));
     }
 
-    setData(filteredLogs);
+    setData(searchData);
   };
 
   useEffect(() => {
-    let filterLogs = [...logs];
-
     if (topic) {
-      filterLogs = logs?.filter((log) => log?.topic === topic);
+      const filterData = filterLogByTopic(messageHistory.current, topic);
+      setData(filterData);
     }
+  }, [topic, JSON.stringify(messageHistory.current)]);
 
-    setData(filterLogs);
-  }, [logs, topic]);
+  useEffect(() => {
+    let newData = messageHistory.current?.map((item) => JSON.parse(item));
+    newData = orderBy(newData, 'time', 'desc');
+
+    setData(newData);
+  }, [JSON.stringify(messageHistory.current)]);
 
   return (
     <ProTable
-      rowKey="ts"
+      rowKey={(record) => `log-${record.ts.toString()}-${Math.random()}`}
       columns={columns as any}
       dataSource={dataSource}
       search={false}

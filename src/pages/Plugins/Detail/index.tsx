@@ -22,7 +22,7 @@ const Detail = () => {
     disabled,
     setDisabled,
   } = useModel('usePlugin');
-  const { currentLog } = useModel('useWebsocket');
+  const { latestMessage } = useModel('useWebsocket');
 
   const [logData, setLogData] = useState<LogItem[]>([]);
 
@@ -106,10 +106,11 @@ const Detail = () => {
   }, [logData, errorData, detailConfig.name]);
 
   useEffect(() => {
-    if (currentLog !== undefined) {
-      setLogData(logData.concat(currentLog));
+    if (latestMessage !== undefined) {
+      const newLog = JSON.parse(latestMessage?.data);
+      setLogData(logData.concat(newLog));
     }
-  }, [currentLog]);
+  }, [latestMessage]);
 
   return ['clients', 'start'].includes(detailConfig.name) ? (
     <Modal

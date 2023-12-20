@@ -1,6 +1,7 @@
 import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
+import { orderBy } from 'lodash';
 import isEmpty from 'lodash/isEmpty';
 import luamin from 'lua-format';
 import { twMerge } from 'tailwind-merge';
@@ -103,4 +104,11 @@ export const formatHeaders2Arr = (data: Record<string, any>) => {
     : [{ k: '', v: '' }];
 
   return newData;
+};
+
+export const filterLogByTopic = (data: string[], topic: string) => {
+  const newData = data?.map((item) => JSON.parse(item));
+  const filterLogs = newData?.filter((log) => log?.topic === topic);
+
+  return orderBy(filterLogs, 'time', 'desc');
 };

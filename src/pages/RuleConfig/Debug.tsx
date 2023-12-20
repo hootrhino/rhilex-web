@@ -1,4 +1,5 @@
 import CodeEditor from '@/components/CodeEditor';
+import { filterLogByTopic } from '@/utils/utils';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProForm } from '@ant-design/pro-components';
 import { Button } from 'antd';
@@ -12,7 +13,7 @@ type DebugProps = ModalFormProps & {
 
 const Debug = ({ uuid, onClose, ...props }: DebugProps) => {
   const formRef = useRef<ProFormInstance>();
-  const { logs } = useModel('useWebsocket');
+  const { messageHistory } = useModel('useWebsocket');
 
   return (
     <ModalForm
@@ -34,8 +35,8 @@ const Debug = ({ uuid, onClose, ...props }: DebugProps) => {
         },
       }}
       onFinish={async () => {
-        const filterLogs = logs?.filter((log) => log?.topic === `rule/test/${uuid}`);
-        formRef.current?.setFieldsValue({ output: filterLogs.join('\n') });
+        const filterData = filterLogByTopic(messageHistory.current, `rule/test/${uuid}`);
+        formRef.current?.setFieldsValue({ output: filterData.join('\n') });
 
         return false;
       }}
@@ -50,7 +51,7 @@ const Debug = ({ uuid, onClose, ...props }: DebugProps) => {
       </ProForm.Item>
 
       <ProForm.Item name="output" label="输出结果">
-        <CodeEditor readOnly  />
+        <CodeEditor readOnly />
       </ProForm.Item>
     </ModalForm>
   );

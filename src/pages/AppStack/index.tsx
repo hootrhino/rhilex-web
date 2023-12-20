@@ -1,15 +1,20 @@
 import { message } from '@/components/PopupHack';
-import { deleteAppDel, getAppList, putAppStart, putAppStop } from '@/services/rulex/qingliangyingyong';
+import {
+  deleteAppDel,
+  getAppList,
+  putAppStart,
+  putAppStop,
+} from '@/services/rulex/qingliangyingyong';
 import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm, Tag } from 'antd';
 
+import { boolEnum } from '@/utils/enum';
 import { useRequest } from '@umijs/max';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
 import Detail from './components/Detail';
-import { boolEnum } from '@/utils/enum';
 
 export type AppStackItem = {
   uuid?: string;
@@ -22,18 +27,18 @@ export type AppStackItem = {
   [key: string]: any;
 };
 
-const appStateEnum = {
+export const appStateEnum = {
   1: {
     text: '正在运行',
     color: 'processing',
-    icon: <SyncOutlined spin />
+    icon: <SyncOutlined spin />,
   },
   0: {
     text: '已结束',
     color: 'default',
-    icon: <MinusCircleOutlined />
-  }
-}
+    icon: <MinusCircleOutlined />,
+  },
+};
 
 const AppStack = () => {
   const actionRef = useRef<ActionType>();
@@ -92,10 +97,7 @@ const AppStack = () => {
       title: 'APP 状态',
       dataIndex: 'appState',
       renderText: (appState) => (
-        <Tag
-          icon={appStateEnum[appState]?.icon}
-          color={appStateEnum[appState]?.color}
-        >
+        <Tag icon={appStateEnum[appState]?.icon} color={appStateEnum[appState]?.color}>
           {appStateEnum[appState]?.text}
         </Tag>
       ),

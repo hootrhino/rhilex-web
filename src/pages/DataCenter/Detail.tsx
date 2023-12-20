@@ -6,7 +6,7 @@ import type { DataNode } from 'antd/es/tree';
 import { Resizable } from 're-resizable';
 import { useEffect, useState } from 'react';
 
-import { cn } from '@/utils/utils';
+import { cn, filterLogByTopic } from '@/utils/utils';
 import dayjs from 'dayjs';
 
 import CodeEditor from '@/components/CodeEditor';
@@ -15,7 +15,7 @@ import { PageContainer, ProTable } from '@ant-design/pro-components';
 
 const DataCenter = () => {
   const { uuid } = useParams();
-  const { logs } = useModel('useWebsocket');
+  const { messageHistory } = useModel('useWebsocket');
 
   const [height, setHeight] = useState<number>(500);
   const [logHeight, setLogHeight] = useState<number>(100);
@@ -26,9 +26,9 @@ const DataCenter = () => {
   const [logData, setLogData] = useState<LogItem[]>([]);
 
   useEffect(() => {
-    const formatData = logs?.filter((log) => log.topic === `datacenter/console/${uuid}`);
-    setLogData(formatData);
-  }, [logs]);
+    const filterData = filterLogByTopic(messageHistory.current, `datacenter/console/${uuid}`);
+    setLogData(filterData);
+  }, [JSON.stringify(messageHistory.current), uuid]);
 
   // 获取结构
   const { run: getTreeData } = useRequest(() => getDataCenterSchemaDefine({ uuid: uuid || '' }), {

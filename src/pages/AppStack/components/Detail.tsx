@@ -1,11 +1,10 @@
 import LogTable from '@/components/LogTable';
 import { getAppDetail } from '@/services/rulex/qingliangyingyong';
-import { MinusCircleOutlined, SyncOutlined } from '@ant-design/icons';
+import { boolEnum } from '@/utils/enum';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps, Tag } from 'antd';
-import { AppStackItem } from '..';
-import { boolEnum } from '@/utils/enum';
+import { AppStackItem, appStateEnum } from '..';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -34,11 +33,8 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       title: 'APP 状态',
       dataIndex: 'appState',
       renderText: (appState) => (
-        <Tag
-          icon={appState === 1 ? <SyncOutlined spin /> : <MinusCircleOutlined />}
-          color={appState === 1 ? 'processing' : 'default'}
-        >
-          {appState === 1 ? '正在运行' : '已结束'}
+        <Tag icon={appStateEnum[appState]?.icon} color={appStateEnum[appState]?.color}>
+          {appStateEnum[appState]?.text}
         </Tag>
       ),
     },
