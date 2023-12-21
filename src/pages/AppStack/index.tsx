@@ -117,7 +117,8 @@ const AppStack = () => {
         <a
           key="log"
           onClick={() => {
-            setConfig({ uuid: uuid || '', open: true, type: 'log' });
+            if (!uuid) return;
+            setConfig({ uuid, open: true, type: 'log' });
           }}
         >
           日志
@@ -125,7 +126,8 @@ const AppStack = () => {
         <a
           key="detail"
           onClick={() => {
-            setConfig({ uuid: uuid || '', open: true, type: 'detail' });
+            if (!uuid) return;
+            setConfig({ uuid, open: true, type: 'detail' });
           }}
         >
           详情

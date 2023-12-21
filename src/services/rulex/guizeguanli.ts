@@ -70,6 +70,24 @@ export async function getRulesList(
   });
 }
 
+/** 测试规则 POST /api/v1/rules/testDevice */
+export async function postRulesTestDevice(
+  body: {
+    uuid: string;
+    testData: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/rules/testDevice', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 更新规则 PUT /api/v1/rules/update */
 export async function putRulesUpdate(
   body: {

@@ -10,7 +10,6 @@ import { cn, filterLogByTopic } from '@/utils/utils';
 import dayjs from 'dayjs';
 
 import CodeEditor from '@/components/CodeEditor';
-import type { LogItem } from '@/models/useWebsocket';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 
 const DataCenter = () => {
@@ -23,12 +22,6 @@ const DataCenter = () => {
   const [treeData, setData] = useState<DataNode[]>([]);
   const [code, setCode] = useState<string>('');
   const [columns, setColumns] = useState<any>([]);
-  const [logData, setLogData] = useState<LogItem[]>([]);
-
-  useEffect(() => {
-    const filterData = filterLogByTopic(messageHistory.current, `datacenter/console/${uuid}`);
-    setLogData(filterData);
-  }, [JSON.stringify(messageHistory.current), uuid]);
 
   // 获取结构
   const { run: getTreeData } = useRequest(() => getDataCenterSchemaDefine({ uuid: uuid || '' }), {
@@ -195,7 +188,7 @@ const DataCenter = () => {
             <List
               header={false}
               footer={false}
-              dataSource={logData}
+              dataSource={filterLogByTopic(messageHistory.current)}
               size="small"
               style={{ maxHeight: logHeight - 56, overflowY: 'auto' }}
               renderItem={(item) => (

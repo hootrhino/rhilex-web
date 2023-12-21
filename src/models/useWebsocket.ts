@@ -9,15 +9,40 @@ export type LogItem = {
 };
 
 const useWebsocket = () => {
-  const messageHistory = useRef<any[]>([]);
+  const messageHistory = useRef<string[]>([]);
   const [sockUrl, setUrl] = useState<string>('');
+  const [ruleLogData, setRuleLogData] = useState<string[]>([]);
+  const [ruleTestData, setRuleTestData] = useState<string[]>([]);
+  const [appConsoleData, setAppConsoleData] = useState<string[]>([]);
+  const [goodsConsoleData, setGoodsConsoleData] = useState<string[]>([]);
 
   const { sendMessage, readyState, latestMessage } = useWebSocket(sockUrl, {
     reconnectInterval: 1000,
   });
 
+  const getLogData = (dataSource: string[], topic: string, maxLen = 50) => {
+    const newData = JSON.parse(latestMessage?.data);
+    let filterData = dataSource;
+
+    if (newData.topic.includes(topic)) {
+      filterData = dataSource.concat(latestMessage?.data);
+    }
+    if (filterData?.length > maxLen) {
+      filterData.shift();
+    }
+    return filterData;
+  };
+
   useMemo(() => {
     if (latestMessage?.data && latestMessage?.data !== 'Connected') {
+      if (JSON.parse(latestMessage?.data)?.topic) {
+        setRuleLogData(getLogData(ruleLogData, 'rule/log/'));
+        // TODO setRuleTestData(getLogData(ruleTestData, 'rule/test/'));
+        setRuleTestData(getLogData(ruleTestData, 'rule/log/', 10));
+        setAppConsoleData(getLogData(appConsoleData, 'app/console/'));
+        setGoodsConsoleData(getLogData(goodsConsoleData, 'goods/console/'));
+      }
+
       messageHistory.current = messageHistory.current.concat(latestMessage?.data);
       if (messageHistory.current?.length > 50) {
         messageHistory.current.shift();
@@ -37,10 +62,17 @@ const useWebsocket = () => {
     if (window?.location?.host) {
       setUrl(`ws://${window?.location?.host}/ws`);
     }
-    // setUrl(`ws://106.15.225.172:2580/ws`)
+    // setUrl(`ws://106.15.225.172:2580/ws`);
   }, [window?.location?.host]);
 
-  return { latestMessage, messageHistory };
+  return {
+    latestMessage,
+    messageHistory,
+    ruleLogData,
+    ruleTestData,
+    appConsoleData,
+    goodsConsoleData,
+  };
 };
 
 export default useWebsocket;

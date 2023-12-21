@@ -1,57 +1,91 @@
 import CodeEditor from '@/components/CodeEditor';
+import { postRulesTestDevice } from '@/services/rulex/guizeguanli';
 import { filterLogByTopic } from '@/utils/utils';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
-import { ModalForm, ProForm } from '@ant-design/pro-components';
-import { Button } from 'antd';
-import { useRef } from 'react';
+import { ModalForm, ProForm, ProList } from '@ant-design/pro-components';
+import { useParams } from '@umijs/max';
+import { Button, Tag } from 'antd';
+import dayjs from 'dayjs';
+import { useRef, useState } from 'react';
 import { useModel } from 'umi';
 
 type DebugProps = ModalFormProps & {
   uuid: string;
-  onClose?: () => void;
 };
 
-const Debug = ({ uuid, onClose, ...props }: DebugProps) => {
+const Debug = ({ uuid, ...props }: DebugProps) => {
+  const { deviceId } = useParams();
   const formRef = useRef<ProFormInstance>();
-  const { messageHistory } = useModel('useWebsocket');
+  const { ruleTestData } = useModel('useWebsocket');
+  const [showOutput, setShowOutput] = useState<boolean>(false);
 
   return (
     <ModalForm
       formRef={formRef}
       title="测试脚本"
+      style={{ height: 500 }}
+      modalProps={{
+        maskClosable: false,
+        onCancel: () => {
+          setShowOutput(false);
+          formRef.current?.resetFields();
+        },
+      }}
       submitter={{
-        render: (props) => {
+        render: ({ reset, submit }) => {
           return [
-            <Button key="close" onClick={onClose}>
-              关闭
-            </Button>,
-            <Button key="reset" onClick={props.reset}>
+            <Button
+              key="reset"
+              onClick={() => {
+                reset();
+                setShowOutput(false);
+              }}
+            >
               重置
             </Button>,
-            <Button key="debug" type="primary" onClick={props.submit}>
+            <Button key="debug" type="primary" onClick={submit}>
               测试
             </Button>,
           ];
         },
       }}
-      onFinish={async () => {
-        const filterData = filterLogByTopic(messageHistory.current, `rule/test/${uuid}`);
-        formRef.current?.setFieldsValue({ output: filterData.join('\n') });
-
-        return false;
+      onFinish={async ({ testData }) => {
+        try {
+          if (deviceId) {
+            await postRulesTestDevice({ testData, uuid: deviceId }).then(() => setShowOutput(true));
+          }
+          return false;
+        } catch (error) {
+          return false;
+        }
       }}
       {...props}
     >
       <ProForm.Item
-        name="input"
+        name="testData"
         label="输入数据"
         rules={[{ required: true, message: '请输入数据' }]}
       >
         <CodeEditor autoFocus />
       </ProForm.Item>
 
-      <ProForm.Item name="output" label="输出结果">
-        <CodeEditor readOnly />
+      <ProForm.Item name="output" label="输出结果" className="h-[300px]">
+        <ProList
+          className="h-[250px] overflow-y-auto"
+          rowKey={(record) => `testLog-${record.ts}-${Math.random()}`}
+          dataSource={showOutput ? filterLogByTopic(ruleTestData, `rule/log/${uuid}`) : []}
+          metas={{
+            title: {
+              dataIndex: 'time',
+              render: (_, row) => dayjs(row.time).format('YYYY-MM-DD hh:mm:ss'),
+            },
+            description: { dataIndex: 'msg' },
+            subTitle: {
+              dataIndex: 'level',
+              render: (_, row) => <Tag color="blue">{row.level}</Tag>,
+            },
+          }}
+        />
       </ProForm.Item>
     </ModalForm>
   );

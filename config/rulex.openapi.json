@@ -12086,6 +12086,98 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-134543140-run",
         "security": []
       }
+    },
+    "/api/v1/rules/testDevice": {
+      "post": {
+        "summary": "测试规则",
+        "x-apifox-folder": "规则管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "规则管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "testData": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "testData"
+                ],
+                "x-apifox-ignore-properties": [],
+                "x-apifox-orders": [
+                  "uuid",
+                  "testData"
+                ]
+              },
+              "example": {
+                "uuid": "RULEBR75ZXZV",
+                "testData": "122333"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-135485403-run",
+        "security": []
+      }
     }
   },
   "components": {
@@ -12213,5 +12305,10 @@
     },
     "securitySchemes": {}
   },
-  "servers": []
+  "servers": [
+    {
+      "url": "http://127.0.0.1:2580",
+      "description": "本机环境"
+    }
+  ]
 }

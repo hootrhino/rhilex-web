@@ -1,17 +1,19 @@
 import LogTable from '@/components/LogTable';
 import { getGoodsDetail } from '@/services/rulex/kuozhanxieyi';
+import { filterLogByTopic } from '@/utils/utils';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
-import type { ModalFuncProps } from 'antd';
-import { Button, Modal } from 'antd';
+import { useModel, useRequest } from '@umijs/max';
+import type { DrawerProps } from 'antd';
+import { Drawer } from 'antd';
 import { useEffect } from 'react';
 import { baseColumns } from '.';
 
-type DetailProps = ModalFuncProps & {
+type DetailProps = DrawerProps & {
   config: DetailLogModalConfig;
 };
 
-const Detail = ({ config, onCancel, ...props }: DetailProps) => {
+const Detail = ({ config, onClose, ...props }: DetailProps) => {
+  const { goodsConsoleData } = useModel('useWebsocket');
   const { uuid, type, open } = config;
   const { run: getDetail, data: detail } = useRequest(
     (params: API.getGoodsDetailParams) => getGoodsDetail(params),
@@ -27,17 +29,13 @@ const Detail = ({ config, onCancel, ...props }: DetailProps) => {
   }, [uuid]);
 
   return (
-    <Modal
+    <Drawer
       title={`扩展协议${type === 'detail' ? '详情' : '日志'}`}
       open={open}
-      width="40%"
-      footer={
-        <Button key="close" type="primary" onClick={onCancel}>
-          关闭
-        </Button>
-      }
+      width={type === 'detail' ? '30%' : '40%'}
+      placement="right"
+      onClose={onClose}
       maskClosable={false}
-      onCancel={onCancel}
       {...props}
     >
       {type === 'detail' ? (
@@ -50,9 +48,13 @@ const Detail = ({ config, onCancel, ...props }: DetailProps) => {
           <ProDescriptions.Item label="协议参数">{detail?.args}</ProDescriptions.Item>
         </ProDescriptions>
       ) : (
-        <LogTable topic={`goods/console/${uuid}`} options={false} headerTitle={undefined} />
+        <LogTable
+          options={false}
+          headerTitle={undefined}
+          logData={filterLogByTopic(goodsConsoleData, `goods/console/${uuid}`)}
+        />
       )}
-    </Modal>
+    </Drawer>
   );
 };
 

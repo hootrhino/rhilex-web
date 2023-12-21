@@ -1,6 +1,7 @@
 import LogTable from '@/components/LogTable';
 import { getRulesDetail } from '@/services/rulex/guizeguanli';
 import { getInendsList } from '@/services/rulex/shuruziyuanguanli';
+import { filterLogByTopic } from '@/utils/utils';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { history, useParams, useRequest } from '@umijs/max';
@@ -17,6 +18,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
   const { groupId } = useParams();
   const { setConfig: setSourceDetail } = useModel('useSource');
   const { data: devices, run: getDeviceList, setDeviceConfig } = useModel('useDevice');
+  const { ruleLogData } = useModel('useWebsocket');
 
   // 获取资源
   const { data: sources } = useRequest(() => getInendsList());
@@ -25,7 +27,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     const current = (data || [])?.find((item) => item?.uuid === key);
 
     return current?.name || '';
-  }
+  };
 
   const renderSourceName = (fromSource: string[], fromDevice: string[]) => {
     let name: string = '';
@@ -101,8 +103,9 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     <Drawer
       title={type === 'detail' ? '规则详情' : '规则日志'}
       placement="right"
-      width="50%"
+      width={type === 'detail' ? '35%' : '40%'}
       destroyOnClose
+      maskClosable={false}
       {...props}
     >
       {type === 'detail' ? (
@@ -126,7 +129,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
           }}
         />
       ) : (
-        <LogTable topic={`rule/log/${uuid}`} options={false} />
+        <LogTable options={false} logData={filterLogByTopic(ruleLogData, `rule/log/${uuid}`)} />
       )}
     </Drawer>
   );

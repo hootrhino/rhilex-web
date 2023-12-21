@@ -1,9 +1,12 @@
 import LogTable from '@/components/LogTable';
 import { getAppDetail } from '@/services/rulex/qingliangyingyong';
 import { boolEnum } from '@/utils/enum';
+import { filterLogByTopic } from '@/utils/utils';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { Drawer, DrawerProps, Tag } from 'antd';
+import { useModel } from '@umijs/max';
+import { Drawer, Tag } from 'antd';
+import type { DrawerProps } from 'antd';
 import { AppStackItem, appStateEnum } from '..';
 
 type DetailProps = DrawerProps & {
@@ -12,6 +15,8 @@ type DetailProps = DrawerProps & {
 };
 
 const Detail = ({ uuid, type, ...props }: DetailProps) => {
+  const { appConsoleData } = useModel('useWebsocket');
+
   const columns: ProDescriptionsItemProps<AppStackItem>[] = [
     {
       title: 'APP 名称',
@@ -61,7 +66,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     <Drawer
       title={type === 'detail' ? '轻量应用详情' : '轻量应用日志'}
       placement="right"
-      width="50%"
+      width={type === 'detail' ? '35%' : '40%'}
       {...props}
     >
       {type === 'detail' ? (
@@ -81,7 +86,10 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
           }}
         />
       ) : (
-        <LogTable topic={`app/console/${uuid}`} options={false} />
+        <LogTable
+          options={false}
+          logData={filterLogByTopic(appConsoleData, `app/console/${uuid}`)}
+        />
       )}
     </Drawer>
   );

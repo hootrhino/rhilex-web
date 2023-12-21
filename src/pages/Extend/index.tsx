@@ -162,7 +162,8 @@ const ExtendedProtocol = () => {
         <a
           key="log"
           onClick={() => {
-            setDetailConfig({ type: 'log', open: true, uuid: uuid || '' });
+            if (!uuid) return;
+            setDetailConfig({ type: 'log', open: true, uuid });
           }}
         >
           日志
@@ -247,7 +248,7 @@ const ExtendedProtocol = () => {
       />
       <Detail
         config={detailConfig}
-        onCancel={() => setDetailConfig({ type: 'detail', open: false, uuid: '' })}
+        onClose={() => setDetailConfig({ ...detailConfig, open: false, uuid: '' })}
       />
     </>
   );

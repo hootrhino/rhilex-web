@@ -7,6 +7,7 @@ import RcResizeObserver from 'rc-resize-observer';
 import LogTable from '@/components/LogTable';
 import { modal } from '@/components/PopupHack';
 import { getOsOsRelease } from '@/services/rulex/xitongshuju';
+import { filterLogByTopic } from '@/utils/utils';
 import { useRequest } from '@umijs/max';
 import { Col, Descriptions, Row, Space } from 'antd';
 import HardWareInfoCard from './components/hardWareInfoCard';
@@ -16,6 +17,7 @@ import ProStatisticCard from './components/StatisticCard';
 const { Divider } = StatisticCard;
 
 const Dashboard = () => {
+  const { messageHistory } = useModel('useWebsocket');
   const { dataSource } = useModel('useSystem');
   const { version, osUpTime, osArch } = dataSource?.hardWareInfo || {};
   const [responsive, setResponsive] = useState(false);
@@ -84,7 +86,11 @@ const Dashboard = () => {
         <SourceCountCard responsive={responsive} />
       </RcResizeObserver>
       <ProCard className="mt-6">
-        <LogTable filters={true} headerTitle="日志列表" />
+        <LogTable
+          filters={true}
+          headerTitle="日志列表"
+          logData={filterLogByTopic(messageHistory.current)}
+        />
       </ProCard>
     </PageContainer>
   );

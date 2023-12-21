@@ -4,14 +4,12 @@ import { useModel } from '@umijs/max';
 import type { FilterValue } from 'antd/es/table/interface';
 
 type LogTableProps = ProTableProps<any, any, any> & {
-  topic?: string;
+  logData: LogItem[];
   filters?: boolean;
 };
 
 import { LogItem } from '@/models/useWebsocket';
-import { filterLogByTopic } from '@/utils/utils';
 import { Tag } from 'antd';
-import { orderBy } from 'lodash';
 import { useEffect, useState } from 'react';
 
 enum levelColor {
@@ -23,8 +21,8 @@ enum levelColor {
   info = 'blue',
 }
 
-const LogTable = ({ filters = false, topic, options, ...props }: LogTableProps) => {
-  const { messageHistory } = useModel('useWebsocket');
+const LogTable = ({ filters = false, options, logData, ...props }: LogTableProps) => {
+  const { latestMessage } = useModel('useWebsocket');
   const [dataSource, setData] = useState<LogItem[]>([]);
 
   const columns = [
@@ -41,7 +39,7 @@ const LogTable = ({ filters = false, topic, options, ...props }: LogTableProps) 
       width: 80,
       filters,
       onFilter: filters,
-      hideInTable: topic,
+      hideInTable: !filters,
       valueEnum: {
         fatal: { text: 'Fatal', status: 'Error' },
         error: {
@@ -85,18 +83,8 @@ const LogTable = ({ filters = false, topic, options, ...props }: LogTableProps) 
   };
 
   useEffect(() => {
-    if (topic) {
-      const filterData = filterLogByTopic(messageHistory.current, topic);
-      setData(filterData);
-    }
-  }, [topic, JSON.stringify(messageHistory.current)]);
-
-  useEffect(() => {
-    let newData = messageHistory.current?.map((item) => JSON.parse(item));
-    newData = orderBy(newData, 'time', 'desc');
-
-    setData(newData);
-  }, [JSON.stringify(messageHistory.current)]);
+    setData(logData);
+  }, [latestMessage, logData]);
 
   return (
     <ProTable

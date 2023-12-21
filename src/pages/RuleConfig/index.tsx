@@ -6,10 +6,10 @@ import { useState } from 'react';
 
 import { message } from '@/components/PopupHack';
 import { deleteRulesDel } from '@/services/rulex/guizeguanli';
+import { getName } from '@/utils/utils';
 import { history, useParams, useRequest } from '@umijs/max';
 import Debug from './Debug';
 import Detail from './Detail';
-import { getName } from '@/utils/utils';
 
 export type RuleItem = {
   uuid: string;
@@ -31,7 +31,11 @@ type RuleConfigProps = {
 
 const RuleConfig = ({ dataSource, pageTitleData, type, typeId, refresh }: RuleConfigProps) => {
   const { groupId } = useParams();
-  const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({ open: false, type: 'detail', uuid: '' });
+  const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({
+    open: false,
+    type: 'detail',
+    uuid: '',
+  });
   const [debugConfig, setDebugConfig] = useState<DetailModalConfig>({
     open: false,
     uuid: '',
@@ -124,11 +128,11 @@ const RuleConfig = ({ dataSource, pageTitleData, type, typeId, refresh }: RuleCo
   const getTitle = () => {
     const title = getName(pageTitleData, typeId);
     if (title) {
-      return `${title} 规则配置`
+      return `${title} 规则配置`;
     } else {
-      return '规则配置'
+      return '规则配置';
     }
-  }
+  };
 
   return (
     <>
@@ -139,7 +143,7 @@ const RuleConfig = ({ dataSource, pageTitleData, type, typeId, refresh }: RuleCo
           dataSource={dataSource}
           search={false}
           pagination={false}
-          options={{reload: () => refresh()}}
+          options={{ reload: () => refresh() }}
           toolBarRender={() => [
             <Button
               type="primary"
@@ -157,7 +161,6 @@ const RuleConfig = ({ dataSource, pageTitleData, type, typeId, refresh }: RuleCo
       <Detail onClose={() => setDetailConfig({ ...detailConfig, open: false })} {...detailConfig} />
       <Debug
         onOpenChange={(visible: boolean) => setDebugConfig({ ...debugConfig, open: visible })}
-        onClose={() => setDebugConfig({ ...debugConfig, open: false })}
         {...debugConfig}
       />
     </>

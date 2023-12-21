@@ -106,9 +106,12 @@ export const formatHeaders2Arr = (data: Record<string, any>) => {
   return newData;
 };
 
-export const filterLogByTopic = (data: string[], topic: string) => {
-  const newData = data?.map((item) => JSON.parse(item));
-  const filterLogs = newData?.filter((log) => log?.topic === topic);
+export const filterLogByTopic = (data: string[], topic?: string) => {
+  let newData = data?.map((item) => JSON.parse(item));
 
-  return orderBy(filterLogs, 'time', 'desc');
+  if (topic) {
+    newData = newData?.filter((log) => log?.topic === topic);
+  }
+
+  return orderBy(newData, 'time', 'desc');
 };
