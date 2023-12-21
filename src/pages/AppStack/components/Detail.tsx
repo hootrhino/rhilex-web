@@ -5,8 +5,8 @@ import { filterLogByTopic } from '@/utils/utils';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
-import { Drawer, Tag } from 'antd';
 import type { DrawerProps } from 'antd';
+import { Drawer, Tag } from 'antd';
 import { AppStackItem, appStateEnum } from '..';
 
 type DetailProps = DrawerProps & {
@@ -15,7 +15,9 @@ type DetailProps = DrawerProps & {
 };
 
 const Detail = ({ uuid, type, ...props }: DetailProps) => {
-  const { appConsoleData } = useModel('useWebsocket');
+  const {
+    topicData: { appConsole },
+  } = useModel('useWebsocket');
 
   const columns: ProDescriptionsItemProps<AppStackItem>[] = [
     {
@@ -86,10 +88,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
           }}
         />
       ) : (
-        <LogTable
-          options={false}
-          logData={filterLogByTopic(appConsoleData, `app/console/${uuid}`)}
-        />
+        <LogTable options={false} logData={filterLogByTopic(appConsole, `app/console/${uuid}`)} />
       )}
     </Drawer>
   );

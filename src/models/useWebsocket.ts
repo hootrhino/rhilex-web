@@ -8,13 +8,22 @@ export type LogItem = {
   [key: string]: any;
 };
 
+type TopicData = {
+  ruleLog: string[];
+  ruleTest: string[];
+  appConsole: string[];
+  goodsConsole: string[];
+};
+
 const useWebsocket = () => {
   const messageHistory = useRef<string[]>([]);
   const [sockUrl, setUrl] = useState<string>('');
-  const [ruleLogData, setRuleLogData] = useState<string[]>([]);
-  const [ruleTestData, setRuleTestData] = useState<string[]>([]);
-  const [appConsoleData, setAppConsoleData] = useState<string[]>([]);
-  const [goodsConsoleData, setGoodsConsoleData] = useState<string[]>([]);
+  const [topicData, setTopicData] = useState<TopicData>({
+    ruleLog: [],
+    ruleTest: [],
+    appConsole: [],
+    goodsConsole: [],
+  });
 
   const { sendMessage, readyState, latestMessage } = useWebSocket(sockUrl, {
     reconnectInterval: 1000,
@@ -36,11 +45,16 @@ const useWebsocket = () => {
   useMemo(() => {
     if (latestMessage?.data && latestMessage?.data !== 'Connected') {
       if (JSON.parse(latestMessage?.data)?.topic) {
-        setRuleLogData(getLogData(ruleLogData, 'rule/log/'));
-        // TODO setRuleTestData(getLogData(ruleTestData, 'rule/test/'));
-        setRuleTestData(getLogData(ruleTestData, 'rule/log/', 10));
-        setAppConsoleData(getLogData(appConsoleData, 'app/console/'));
-        setGoodsConsoleData(getLogData(goodsConsoleData, 'goods/console/'));
+        const { ruleLog, ruleTest, appConsole, goodsConsole } = topicData;
+        // TODO getLogData(ruleTest, 'rule/test/', 10),
+
+        const newTopicData = {
+          ruleLog: getLogData(ruleLog, 'rule/log/'),
+          ruleTest: getLogData(ruleTest, 'rule/log/', 10),
+          appConsole: getLogData(appConsole, 'app/console/'),
+          goodsConsole: getLogData(goodsConsole, 'goods/console/'),
+        };
+        setTopicData(newTopicData);
       }
 
       messageHistory.current = messageHistory.current.concat(latestMessage?.data);
@@ -68,10 +82,7 @@ const useWebsocket = () => {
   return {
     latestMessage,
     messageHistory,
-    ruleLogData,
-    ruleTestData,
-    appConsoleData,
-    goodsConsoleData,
+    topicData,
   };
 };
 

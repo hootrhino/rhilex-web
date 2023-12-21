@@ -16,7 +16,9 @@ type DebugProps = ModalFormProps & {
 const Debug = ({ uuid, ...props }: DebugProps) => {
   const { deviceId } = useParams();
   const formRef = useRef<ProFormInstance>();
-  const { ruleTestData } = useModel('useWebsocket');
+  const {
+    topicData: { ruleTest },
+  } = useModel('useWebsocket');
   const [showOutput, setShowOutput] = useState<boolean>(false);
 
   return (
@@ -73,7 +75,7 @@ const Debug = ({ uuid, ...props }: DebugProps) => {
         <ProList
           className="h-[250px] overflow-y-auto"
           rowKey={(record) => `testLog-${record.ts}-${Math.random()}`}
-          dataSource={showOutput ? filterLogByTopic(ruleTestData, `rule/log/${uuid}`) : []}
+          dataSource={showOutput ? filterLogByTopic(ruleTest, `rule/log/${uuid}`) : []}
           metas={{
             title: {
               dataIndex: 'time',

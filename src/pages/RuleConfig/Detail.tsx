@@ -18,7 +18,9 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
   const { groupId } = useParams();
   const { setConfig: setSourceDetail } = useModel('useSource');
   const { data: devices, run: getDeviceList, setDeviceConfig } = useModel('useDevice');
-  const { ruleLogData } = useModel('useWebsocket');
+  const {
+    topicData: { ruleLog },
+  } = useModel('useWebsocket');
 
   // 获取资源
   const { data: sources } = useRequest(() => getInendsList());
@@ -129,7 +131,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
           }}
         />
       ) : (
-        <LogTable options={false} logData={filterLogByTopic(ruleLogData, `rule/log/${uuid}`)} />
+        <LogTable options={false} logData={filterLogByTopic(ruleLog, `rule/log/${uuid}`)} />
       )}
     </Drawer>
   );

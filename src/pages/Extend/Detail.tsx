@@ -13,7 +13,9 @@ type DetailProps = DrawerProps & {
 };
 
 const Detail = ({ config, onClose, ...props }: DetailProps) => {
-  const { goodsConsoleData } = useModel('useWebsocket');
+  const {
+    topicData: { goodsConsole },
+  } = useModel('useWebsocket');
   const { uuid, type, open } = config;
   const { run: getDetail, data: detail } = useRequest(
     (params: API.getGoodsDetailParams) => getGoodsDetail(params),
@@ -51,7 +53,7 @@ const Detail = ({ config, onClose, ...props }: DetailProps) => {
         <LogTable
           options={false}
           headerTitle={undefined}
-          logData={filterLogByTopic(goodsConsoleData, `goods/console/${uuid}`)}
+          logData={filterLogByTopic(goodsConsole, `goods/console/${uuid}`)}
         />
       )}
     </Drawer>
