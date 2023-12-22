@@ -19,3 +19,8 @@ export const statusEnum = {
     color: 'error'
   },
 };
+
+export const boolMap = {
+  'true': true,
+  'false': false
+};

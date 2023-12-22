@@ -28,6 +28,7 @@ import { history, useParams, useRequest } from 'umi';
 import { defaultConfig, modeEnum, typeEnum } from './initialValue';
 import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
+import { boolMap } from '@/utils/enum';
 
 type UpdateFormItem = {
   name: string;
@@ -352,7 +353,7 @@ const UpdateForm = () => {
                             required
                             label="开启心跳"
                             name="allowPing"
-                            transform={(value: string) => ({allowPing: Boolean(value)})}
+                            transform={(value: string) => ({allowPing: boolMap[value]})}
                             convertValue={(value: boolean) => value?.toString()}
                           >
                             <ProSegmented width="md" />

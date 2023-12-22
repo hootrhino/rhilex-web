@@ -1,6 +1,7 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
 import UnitTitle from '@/components/UnitTitle';
 import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from './initialValue';
+import { boolMap } from '@/utils/enum';
 
 export const columns = [
   {
@@ -66,7 +67,7 @@ export const columns = [
                         'SIEMENS_PLC',
                         'GENERIC_HTTP_DEVICE',
                       ].includes(type),
-                      transform: (value: string) => ({autoRequest: Boolean(value)}),
+                      transform: (value: string) => ({autoRequest: boolMap[value]}),
                       convertValue: (value: boolean) => value?.toString(),
                     },
                     {
@@ -75,7 +76,7 @@ export const columns = [
                       valueType: 'segmented',
                       required: true,
                       hideInForm: type !== 'GENERIC_AIS_RECEIVER',
-                      transform: (value: string) => ({ parseAis: Boolean(value) }),
+                      transform: (value: string) => ({ parseAis: boolMap[value] }),
                       convertValue: (value: boolean) => value?.toString(),
                     },
                     {

@@ -22,6 +22,17 @@ type EnhancedProDescriptionsProps = ProDescriptionsProps & {
   show?: boolean;
 };
 
+const parseAisEnum = {
+  true: {
+    text: '解析',
+    color: 'processing'
+  },
+  false: {
+    text: '不解析',
+    color: 'default'
+  },
+};
+
 const EnhancedProDescriptions = ({
   labelStyle = { justifyContent: 'flex-end', minWidth: 130 },
   loading = false,
@@ -97,7 +108,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
         dataIndex: 'parseAis',
         hideInDescriptions: type !== 'GENERIC_AIS_RECEIVER',
         renderText: (parseAis) => (
-          <Tag color={parseAis ? 'processing' : 'default'}>{parseAis ? '解析' : '不解析'}</Tag>
+          <Tag color={parseAisEnum[parseAis]?.color}>{parseAisEnum[parseAis]?.text}</Tag>
         ),
       },
       {

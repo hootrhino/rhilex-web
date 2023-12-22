@@ -5,6 +5,7 @@ import ProFormSubmitter from '@/components/ProFormSubmitter';
 import ProSegmented from '@/components/ProSegmented';
 import useGoBack from '@/hooks/useGoBack';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rulex/qingliangyingyong';
+import { boolMap } from '@/utils/enum';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
   PageContainer,
@@ -111,7 +112,7 @@ const UpdateForm = () => {
               label="是否自启"
               name="autoStart"
               required
-              transform={(value: string) => ({ autoStart: Boolean(value) })}
+              transform={(value: string) => ({ autoStart: boolMap[value] })}
               convertValue={(value: boolean) => value?.toString()}
             >
               <ProSegmented width="md" />
