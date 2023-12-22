@@ -7,6 +7,13 @@ declare global {
     __POWERED_BY_QIANKUN__: boolean | undefined;
   }
 
+  type TplVariables = {
+    name?: string;
+    type?: string;
+    label?: string;
+    value?: string;
+  };
+
   // 代码模板
   type TplItem = {
     label?: string;
@@ -15,6 +22,7 @@ declare global {
     detail?: string;
     gid?: string;
     uuid?: string;
+    variables?: TplVariables[];
   };
 
   type TplGroupItem = {

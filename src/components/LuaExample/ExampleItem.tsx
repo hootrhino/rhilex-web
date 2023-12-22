@@ -1,7 +1,17 @@
 import { CaretRightOutlined } from '@ant-design/icons';
+import type { ProFormInstance } from '@ant-design/pro-components';
+import {
+  ModalForm,
+  ProForm,
+  ProFormDigit,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-components';
 import type { CollapseProps } from 'antd';
-import { Collapse, theme } from 'antd';
+import { Button, Collapse, theme } from 'antd';
+import { useEffect, useRef, useState } from 'react';
 import CodeEditor from '../CodeEditor';
+import CopyButton from './CopyButton';
 import Extra from './Extra';
 import Label from './Label';
 
@@ -12,6 +22,11 @@ type ExampleItemProps = CollapseProps & {
 
 const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
   const { token } = theme.useToken();
+  const formRef = useRef<ProFormInstance>();
+  const [valModalConfig, setValConfig] = useState<{ open: boolean; data: TplItem }>({
+    open: false,
+    data: {},
+  });
 
   const panelStyle: React.CSSProperties = {
     marginBottom: 12,
@@ -26,7 +41,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
       label: <Label data={item} />,
       style: panelStyle,
       children: <CodeEditor value={item.apply} readOnly height="150px" />,
-      extra: <Extra data={item} />,
+      extra: <Extra data={item} handleOnCopy={() => setValConfig({ open: true, data: item })} />,
     }));
   };
 
@@ -37,6 +52,29 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
       style: panelStyle,
       children: <Collapse bordered={false} items={getItemsChildren(tpl.children)} />,
     }));
+
+  const handleOnCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setValConfig({ open: false, data: {} });
+  };
+
+  useEffect(() => {
+    if (valModalConfig.data) {
+      let newCode = valModalConfig.data?.apply;
+      valModalConfig.data?.variables?.forEach((item) => {
+        if (item.value) {
+          const source = item.name || '';
+          const target = item.type === 'string' ? `'${item.value}'` : item.value;
+          newCode = newCode?.replace(source, target);
+        }
+      });
+
+      formRef.current?.setFieldsValue({
+        variables: valModalConfig.data?.variables,
+        code: newCode,
+      });
+    }
+  }, [valModalConfig]);
 
   return (
     dataSource &&
@@ -54,6 +92,76 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
           expandIconPosition="end"
           {...props}
         />
+        <ModalForm
+          formRef={formRef}
+          title="设置变量"
+          layout="horizontal"
+          open={valModalConfig.open}
+          modalProps={{ onCancel: handleOnCancel }}
+          labelCol={{ span: 4 }}
+          onValuesChange={(changedValue) => {
+            if (changedValue) {
+              const newVal = valModalConfig?.data.variables?.map((item) =>
+                item.name === Object.keys(changedValue)?.[0]
+                  ? { ...item, value: changedValue[item.name] }
+                  : item,
+              );
+              setValConfig({
+                ...valModalConfig,
+                data: { ...valModalConfig.data, variables: newVal },
+              });
+            }
+          }}
+          submitter={{
+            render: () => {
+              return [
+                <Button key="cancel" onClick={handleOnCancel}>
+                  取消
+                </Button>,
+                <CopyButton data={valModalConfig?.data} key="copy" />,
+              ];
+            },
+          }}
+        >
+          {valModalConfig.data?.variables?.map(({ name, type, label }) => (
+            <>
+              {type === 'string' && (
+                <ProFormText
+                  key={name}
+                  label={`${label} (${name})`}
+                  name={name}
+                  width="md"
+                  placeholder="请输入变量值"
+                />
+              )}
+              {type === 'number' && (
+                <ProFormDigit
+                  key={name}
+                  label={`${label} (${name})`}
+                  name={name}
+                  width="md"
+                  placeholder="请输入变量值"
+                />
+              )}
+              {type === 'boolean' && (
+                <ProFormSelect
+                  key={name}
+                  label={`${label} (${name})`}
+                  name={name}
+                  width="md"
+                  valueEnum={{
+                    true: 'true',
+                    false: 'false',
+                  }}
+                  placeholder="请选择变量值"
+                />
+              )}
+            </>
+          ))}
+          <ProForm.Item name="code">
+            <CodeEditor height="150px" />
+          </ProForm.Item>
+        </ModalForm>
       </>
     )
   );

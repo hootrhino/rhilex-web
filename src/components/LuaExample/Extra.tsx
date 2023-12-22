@@ -1,37 +1,33 @@
-import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import { useState } from 'react';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import CopyButton from './CopyButton';
+import { FormOutlined } from '@ant-design/icons';
 
 type ExtraProps = {
   data: TplItem;
+  handleOnCopy: () => void;
 };
 
-const Extra = ({ data }: ExtraProps) => {
-  const [copied, setCopied] = useState<string>('');
-  const { apply, label } = data;
+const Extra = ({ data, handleOnCopy }: ExtraProps) => {
+  const { variables } = data;
 
   return (
-    <CopyToClipboard
-      key={label}
-      text={apply || ''}
-      onCopy={(text, result) => {
-        setCopied(result ? text : '');
-        setTimeout(() => {
-          setCopied('');
-        }, 1500);
-      }}
-    >
-      <Button
-        type="primary"
-        size="small"
-        ghost
-        onClick={(e) => e.stopPropagation()}
-        icon={copied === apply ? <CheckOutlined /> : <CopyOutlined />}
-      >
-        复制 Lua
-      </Button>
-    </CopyToClipboard>
+    <>
+      {variables && variables?.length > 0 ? (
+        <Button
+          type="primary"
+          size="small"
+          ghost
+          onClick={(e) => {e.stopPropagation();handleOnCopy()}}
+          icon={<FormOutlined />}
+        >
+          使用 Lua
+        </Button>
+      ) : (
+        <CopyButton data={data} size="small" ghost />
+      )}
+
+
+    </>
   );
 };
 

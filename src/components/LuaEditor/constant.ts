@@ -56,7 +56,7 @@ const dataToList = [
 
 export const dataFuncs = dataToList?.map((data) => {
   const code = `
-local err1 = data:To${data.target}('uuid', arg)
+local err1 = data:To${data.target}(UUID, arg)
 if err1 ~= nil then
   stdlib:Log(err)
 end
@@ -75,17 +75,17 @@ export const stdlibFuncs = [
 
 // time 函数
 const timeList = [
-  { target: 'Time', detail: '当前时间' },
-  { target: 'TimeMs', detail: '当前通用时间戳' },
-  { target: 'TsUnix', detail: '当前 Unix 时间戳' },
-  { target: 'TsUnixNano', detail: '当前纳秒级时间戳' },
-  { target: 'NtpTime', detail: 'NTP 时间' },
-  { target: 'Sleep', detail: '休眠', extra: '时间单位是毫秒' },
+  { target: 'Time', detail: '当前时间', variables: [] },
+  { target: 'TimeMs', detail: '当前通用时间戳', variables: [] },
+  { target: 'TsUnix', detail: '当前 Unix 时间戳', variables: [] },
+  { target: 'TsUnixNano', detail: '当前纳秒级时间戳', variables: [] },
+  { target: 'NtpTime', detail: 'NTP 时间', variables: [] },
+  { target: 'Sleep', detail: '休眠', extra: 'ms', variables: [{label: '休眠时间', name: 'ms', value: '', type: 'number'}] },
 ];
 
 export const timeFuncs = timeList?.map((time) => {
-  const code = `local ts = time:${time.target}(${time.extra})`;
-  return { label: `time:Time${time.target}`, apply: code, type: 'function', detail: time.detail };
+  const code = time.extra ? `local ts = time:${time.target}(${time.extra})` : `local ts = time:${time.target}`;
+  return { ...time, label: `time:Time${time.target}`, apply: code, type: 'function', detail: time.detail };
 });
 
 // kv 函数
@@ -138,7 +138,7 @@ const mathTFloat = `local Value = json:TFloat(3.1415, 2)`;
 const jqExecute = `local Value = jq:Execute(somedata, "Jq Expresssion" ))`;
 
 // rpc 函数
-const rpcRequest = `local Value = rpc:Request('uuid', "cmd", "arg")`;
+const rpcRequest = `local Value = rpc:Request(UUID, "cmd", "arg")`;
 
 export const otherFuncs = [
   { label: 'math:TFloat', apply: mathTFloat, type: 'function', detail: '截取浮点数' },
@@ -156,8 +156,8 @@ const deviceList = [
 export const deviceFuncs = deviceList?.map((device) => {
   const err1 =
     device.target === 'Read'
-      ? `local Data, err1 = device:${device.target}('uuid', "cmd", "args")`
-      : `local err1 = device:${device.target}('uuid', "cmd", "args")`;
+      ? `local Data, err1 = device:${device.target}(UUID, "cmd", "args")`
+      : `local err1 = device:${device.target}(UUID, "cmd", "args")`;
   const code = `
 ${err1}
 if err1 ~= nil then

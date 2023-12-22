@@ -10,6 +10,7 @@ export async function postUserluaCreate(
     type: string;
     apply: string;
     label: string;
+    variables: { name?: string; type?: string; label?: string; value?: string }[];
   },
   options?: { [key: string]: any },
 ) {
@@ -54,6 +55,7 @@ export async function getUserluaDetail(
       apply?: string;
       type?: string;
       detail?: string;
+      variables?: { name?: string; type?: string; label?: string; value?: string }[];
     };
   }>('/api/v1/userlua/detail', {
     method: 'GET',
@@ -92,6 +94,7 @@ export async function getUserluaListByGroup(
       apply?: string;
       type?: string;
       detail?: string;
+      variables?: { name?: string; type?: string; label?: string; value?: string }[];
     }[];
   }>('/api/v1/userlua/listByGroup', {
     method: 'GET',
@@ -137,6 +140,7 @@ export async function putUserluaUpdate(
     type: string;
     apply: string;
     label: string;
+    variables: { name?: string; type?: string; label?: string; value?: string }[];
   },
   options?: { [key: string]: any },
 ) {

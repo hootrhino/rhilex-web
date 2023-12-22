@@ -9934,6 +9934,33 @@
                           },
                           "detail": {
                             "type": "string"
+                          },
+                          "variables": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "label": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "x-apifox-ignore-properties": [],
+                              "x-apifox-orders": [
+                                "name",
+                                "type",
+                                "label",
+                                "value"
+                              ]
+                            }
                           }
                         },
                         "x-apifox-ignore-properties": [],
@@ -9943,7 +9970,8 @@
                           "label",
                           "apply",
                           "type",
-                          "detail"
+                          "detail",
+                          "variables"
                         ]
                       }
                     }
@@ -9969,11 +9997,19 @@
                       "data": [
                         {
                           "gid": "ULTROOT",
-                          "uuid": "USERLUADQNHGX",
-                          "label": "11111111111111111111111",
+                          "uuid": "USERLUA9VULO5RN",
+                          "label": "labellabellabellabellabel",
                           "apply": "apply",
                           "type": "function",
-                          "detail": ""
+                          "detail": "string",
+                          "variables": [
+                            {
+                              "name": "uuid",
+                              "type": "string",
+                              "label": "MQTT-UUID",
+                              "value": "127.0.0.1"
+                            }
+                          ]
                         }
                       ]
                     }
@@ -10018,6 +10054,38 @@
                   },
                   "label": {
                     "type": "string"
+                  },
+                  "variables": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "name",
+                        "type",
+                        "label",
+                        "value"
+                      ],
+                      "required": [
+                        "name",
+                        "type",
+                        "label"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
                   }
                 },
                 "required": [
@@ -10025,18 +10093,34 @@
                   "detail",
                   "type",
                   "apply",
-                  "label"
+                  "label",
+                  "variables"
                 ],
-                "x-apifox-ignore-properties": [],
                 "x-apifox-orders": [
                   "gid",
                   "detail",
                   "type",
                   "apply",
-                  "label"
-                ]
+                  "label",
+                  "variables"
+                ],
+                "x-apifox-ignore-properties": []
               },
-              "example": ""
+              "example": {
+                "gid": "ULTROOT",
+                "detail": "string",
+                "type": "function",
+                "apply": "apply",
+                "label": "labellabellabellabellabel",
+                "variables": [
+                  {
+                    "name": "uuid",
+                    "type": "string",
+                    "label": "MQTT-UUID",
+                    "value": "127.0.0.1"
+                  }
+                ]
+              }
             }
           }
         },
@@ -10209,6 +10293,38 @@
                   },
                   "label": {
                     "type": "string"
+                  },
+                  "variables": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "name",
+                        "type",
+                        "label",
+                        "value"
+                      ],
+                      "required": [
+                        "name",
+                        "type",
+                        "label"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
                   }
                 },
                 "required": [
@@ -10217,19 +10333,36 @@
                   "detail",
                   "type",
                   "apply",
-                  "label"
+                  "label",
+                  "variables"
                 ],
-                "x-apifox-ignore-properties": [],
                 "x-apifox-orders": [
                   "uuid",
                   "gid",
                   "detail",
                   "type",
                   "apply",
-                  "label"
-                ]
+                  "label",
+                  "variables"
+                ],
+                "x-apifox-ignore-properties": []
               },
-              "example": ""
+              "example": {
+                "uuid": "USERLUADQNHGX",
+                "gid": "ULTROOT",
+                "detail": "string",
+                "type": "function",
+                "apply": "apply",
+                "label": "123",
+                "variables": [
+                  {
+                    "name": "uuid",
+                    "type": "string",
+                    "label": "MQTT-UUID",
+                    "value": "127.0.0.1"
+                  }
+                ]
+              }
             }
           }
         },
@@ -10441,6 +10574,33 @@
                         },
                         "detail": {
                           "type": "string"
+                        },
+                        "variables": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "name",
+                              "type",
+                              "label",
+                              "value"
+                            ]
+                          }
                         }
                       },
                       "required": [
@@ -10449,7 +10609,8 @@
                         "label",
                         "apply",
                         "type",
-                        "detail"
+                        "detail",
+                        "variables"
                       ],
                       "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
@@ -10458,7 +10619,8 @@
                         "label",
                         "apply",
                         "type",
-                        "detail"
+                        "detail",
+                        "variables"
                       ]
                     }
                   },
@@ -10482,11 +10644,19 @@
                       "msg": "Success",
                       "data": {
                         "gid": "ULTROOT",
-                        "uuid": "USERLUADQNHGX",
-                        "label": "11111111111111111111111",
+                        "uuid": "USERLUA9VULO5RN",
+                        "label": "labellabellabellabellabel",
                         "apply": "apply",
                         "type": "function",
-                        "detail": ""
+                        "detail": "string",
+                        "variables": [
+                          {
+                            "name": "uuid",
+                            "type": "string",
+                            "label": "MQTT-UUID",
+                            "value": "127.0.0.1"
+                          }
+                        ]
                       }
                     }
                   }
@@ -12305,10 +12475,5 @@
     },
     "securitySchemes": {}
   },
-  "servers": [
-    {
-      "url": "http://127.0.0.1:2580",
-      "description": "本机环境"
-    }
-  ]
+  "servers": []
 }
