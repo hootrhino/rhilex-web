@@ -4,6 +4,7 @@ import {
   ModalForm,
   ProForm,
   ProFormDigit,
+  ProFormList,
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
@@ -27,6 +28,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
     open: false,
     data: {},
   });
+  const [copyData, setCopyData] = useState<TplItem>({});
 
   const panelStyle: React.CSSProperties = {
     marginBottom: 12,
@@ -41,7 +43,12 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
       label: <Label data={item} />,
       style: panelStyle,
       children: <CodeEditor value={item.apply} readOnly height="150px" />,
-      extra: <Extra data={item} handleOnCopy={() => setValConfig({ open: true, data: item })} />,
+      extra: (
+        <Extra
+          data={item}
+          handleOnCopy={() => setValConfig({ open: true, data: item })}
+        />
+      ),
     }));
   };
 
@@ -59,9 +66,10 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
   };
 
   useEffect(() => {
-    if (valModalConfig.data) {
+    if (valModalConfig.data.variables) {
       let newCode = valModalConfig.data?.apply;
-      valModalConfig.data?.variables?.forEach((item) => {
+      const newVal = valModalConfig.data?.variables;
+      newVal?.forEach((item) => {
         if (item.value) {
           const source = item.name || '';
           const target = item.type === 'string' ? `'${item.value}'` : item.value;
@@ -70,9 +78,10 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
       });
 
       formRef.current?.setFieldsValue({
-        variables: valModalConfig.data?.variables,
+        variables: newVal,
         code: newCode,
       });
+      setCopyData({ ...valModalConfig.data, apply: newCode });
     }
   }, [valModalConfig]);
 
@@ -96,19 +105,20 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
           formRef={formRef}
           title="设置变量"
           layout="horizontal"
+          labelWrap={true}
           open={valModalConfig.open}
           modalProps={{ onCancel: handleOnCancel }}
-          labelCol={{ span: 4 }}
           onValuesChange={(changedValue) => {
-            if (changedValue) {
-              const newVal = valModalConfig?.data.variables?.map((item) =>
-                item.name === Object.keys(changedValue)?.[0]
-                  ? { ...item, value: changedValue[item.name] }
-                  : item,
-              );
+            if (changedValue?.variables) {
+              const newVariables = valModalConfig?.data.variables?.map((origItem, index) => {
+                const changedVar = changedValue.variables[index];
+
+                return changedVar ? { ...origItem, value: changedVar.value } : origItem;
+              });
+
               setValConfig({
                 ...valModalConfig,
-                data: { ...valModalConfig.data, variables: newVal },
+                data: { ...valModalConfig.data, variables: newVariables },
               });
             }
           }}
@@ -118,46 +128,51 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
                 <Button key="cancel" onClick={handleOnCancel}>
                   取消
                 </Button>,
-                <CopyButton data={valModalConfig?.data} key="copy" />,
+                <CopyButton data={copyData} key="copy" />,
               ];
             },
           }}
         >
-          {valModalConfig.data?.variables?.map(({ name, type, label }) => (
-            <>
-              {type === 'string' && (
-                <ProFormText
-                  key={name}
-                  label={`${label} (${name})`}
-                  name={name}
-                  width="md"
-                  placeholder="请输入变量值"
-                />
-              )}
-              {type === 'number' && (
-                <ProFormDigit
-                  key={name}
-                  label={`${label} (${name})`}
-                  name={name}
-                  width="md"
-                  placeholder="请输入变量值"
-                />
-              )}
-              {type === 'boolean' && (
-                <ProFormSelect
-                  key={name}
-                  label={`${label} (${name})`}
-                  name={name}
-                  width="md"
-                  valueEnum={{
-                    true: 'true',
-                    false: 'false',
-                  }}
-                  placeholder="请选择变量值"
-                />
-              )}
-            </>
-          ))}
+          <ProFormList
+            name="variables"
+            min={1}
+            creatorButtonProps={false}
+            actionRender={() => []}
+            alwaysShowItemLabel={true}
+          >
+            {({ key }) => {
+              const { name, label, type } = formRef.current?.getFieldValue('variables')[key];
+
+              const commonConfig = {
+                key: key,
+                label: `${label} (${name})`,
+                name: 'value',
+                width: 'md',
+                placeholder: '请输入变量值',
+                labelCol: { flex: '130px' },
+              };
+              const config =
+                type === 'boolean'
+                  ? {
+                      ...commonConfig,
+                      valueEnum: {
+                        true: 'true',
+                        false: 'false',
+                      },
+                      placeholder: '请选择变量值',
+                    }
+                  : commonConfig;
+              const typeMap = {
+                number: ProFormDigit,
+                boolean: ProFormSelect,
+                string: ProFormText,
+              };
+
+              const ComponentType = typeMap[type];
+
+              return <ComponentType {...config} />;
+            }}
+          </ProFormList>
           <ProForm.Item name="code">
             <CodeEditor height="150px" />
           </ProForm.Item>
