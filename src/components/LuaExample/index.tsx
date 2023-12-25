@@ -41,7 +41,7 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
       }
 
       // 搜索内层
-      matchItem.children = item.children.filter(
+      matchItem.children = item.children?.filter(
         (child) => child.label.match(regex) || child.detail.match(regex),
       );
       return matchItem.children?.length > 0 ? matchItem : null;

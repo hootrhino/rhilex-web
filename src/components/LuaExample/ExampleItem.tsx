@@ -43,12 +43,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
       label: <Label data={item} />,
       style: panelStyle,
       children: <CodeEditor value={item.apply} readOnly height="150px" />,
-      extra: (
-        <Extra
-          data={item}
-          handleOnCopy={() => setValConfig({ open: true, data: item })}
-        />
-      ),
+      extra: <Extra data={item} handleOnCopy={() => setValConfig({ open: true, data: item })} />,
     }));
   };
 
@@ -65,16 +60,22 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
     setValConfig({ open: false, data: {} });
   };
 
+  const getTargetValue = (type: string, value: any) => {
+    if (type === 'string') {
+      return `'${value}'`;
+    }
+
+    return value;
+  };
+
   useEffect(() => {
     if (valModalConfig.data.variables) {
       let newCode = valModalConfig.data?.apply;
       const newVal = valModalConfig.data?.variables;
       newVal?.forEach((item) => {
-        if (item.value) {
-          const source = item.name || '';
-          const target = item.type === 'string' ? `'${item.value}'` : item.value;
-          newCode = newCode?.replace(source, target);
-        }
+        const source = item.name || '';
+        const target = getTargetValue(item.type || 'string', item.value);
+        newCode = newCode?.replace(source, target);
       });
 
       formRef.current?.setFieldsValue({
@@ -139,19 +140,21 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
             creatorButtonProps={false}
             actionRender={() => []}
             alwaysShowItemLabel={true}
+            className="mb-[0]"
           >
             {({ key }) => {
               const { name, label, type } = formRef.current?.getFieldValue('variables')[key];
 
-              const commonConfig = {
+              let commonConfig = {
                 key: key,
                 label: `${label} (${name})`,
                 name: 'value',
                 width: 'md',
                 placeholder: '请输入变量值',
                 labelCol: { flex: '130px' },
-              };
-              const config =
+              } as any;
+
+              commonConfig =
                 type === 'boolean'
                   ? {
                       ...commonConfig,
@@ -170,11 +173,11 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
 
               const ComponentType = typeMap[type];
 
-              return <ComponentType {...config} />;
+              return <ComponentType {...commonConfig} />;
             }}
           </ProFormList>
           <ProForm.Item name="code">
-            <CodeEditor height="150px" />
+            <CodeEditor height="150px" readOnly className="cursor-not-allowed" />
           </ProForm.Item>
         </ModalForm>
       </>

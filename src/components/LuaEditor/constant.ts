@@ -56,21 +56,43 @@ const dataToList = [
 
 export const dataFuncs = dataToList?.map((data) => {
   const code = `
-local err1 = data:To${data.target}(UUID, arg)
-if err1 ~= nil then
-  stdlib:Log(err)
+local err = data:To${data.target}(arg1, arg2)
+if err ~= nil then
+  stdlib:Throw(err)
+  return true, args
 end
 `;
-  return { label: `data:To${data.target}`, apply: code, type: 'function', detail: data.detail };
+  return {
+    label: `data:To${data.target}`,
+    apply: code,
+    type: 'function',
+    detail: data.detail,
+    variables: [
+      { label: `${data.target.toUpperCase()}资源`, name: 'arg1', value: '', type: 'string' },
+      { label: '数据', name: 'arg2', value: '', type: 'string' },
+    ],
+  };
 });
 
 // stdlib 函数
-const stdlibDebug = `stdlib:Debug('字符串会被输出到 Websocket 日志')`;
-const stdlibThrow = `stdlib:Throw('字符串会被输出到 Websocket 日志')`;
+const stdlibDebug = `stdlib:Debug(arg)`;
+const stdlibThrow = `stdlib:Throw(arg)`;
 
 export const stdlibFuncs = [
-  { label: 'stdlib:Debug', apply: stdlibDebug, type: 'function', detail: '打印日志' },
-  { label: 'stdlib:Throw', apply: stdlibThrow, type: 'function', detail: '抛出异常' },
+  {
+    label: 'stdlib:Debug',
+    apply: stdlibDebug,
+    type: 'function',
+    detail: '打印日志',
+    variables: [{ label: '输出内容', name: 'arg', value: '', type: 'string' }],
+  },
+  {
+    label: 'stdlib:Throw',
+    apply: stdlibThrow,
+    type: 'function',
+    detail: '抛出异常',
+    variables: [{ label: '异常消息', name: 'arg', value: '', type: 'string' }],
+  },
 ];
 
 // time 函数
@@ -80,23 +102,57 @@ const timeList = [
   { target: 'TsUnix', detail: '当前 Unix 时间戳', variables: [] },
   { target: 'TsUnixNano', detail: '当前纳秒级时间戳', variables: [] },
   { target: 'NtpTime', detail: 'NTP 时间', variables: [] },
-  { target: 'Sleep', detail: '休眠', extra: 'ms', variables: [{label: '休眠时间', name: 'ms', value: '', type: 'number'}] },
+  {
+    target: 'Sleep',
+    detail: '休眠',
+    extra: 'arg',
+    variables: [{ label: '休眠时间', name: 'arg', value: '', type: 'number' }],
+  },
 ];
 
 export const timeFuncs = timeList?.map((time) => {
-  const code = time.extra ? `local ts = time:${time.target}(${time.extra})` : `local ts = time:${time.target}`;
-  return { ...time, label: `time:Time${time.target}`, apply: code, type: 'function', detail: time.detail };
+  const code = time.extra
+    ? `local ts = time:${time.target}(${time.extra})`
+    : `local ts = time:${time.target}()`;
+  return {
+    ...time,
+    label: `time:Time${time.target}`,
+    apply: code,
+    type: 'function',
+    detail: time.detail,
+  };
 });
 
 // kv 函数
-const kvSet = `kv:Set("K", "value")`;
-const kvGet = `local value = kv:Get("K")`;
-const kvDel = `kv:Del("K")`;
+const kvSet = `kv:Set(arg1, arg2)`;
+const kvGet = `local value = kv:Get(arg)`;
+const kvDel = `kv:Del(arg)`;
 
 export const kvFuncs = [
-  { label: 'kv:Set', apply: kvSet, type: 'function', detail: '全局缓存设置值' },
-  { label: 'kv:Get', apply: kvGet, type: 'function', detail: '全局缓存取值' },
-  { label: 'kv:Del', apply: kvDel, type: 'function', detail: '全局缓存删除值' },
+  {
+    label: 'kv:Set',
+    apply: kvSet,
+    type: 'function',
+    detail: '全局缓存设置值',
+    variables: [
+      { label: 'Key', name: 'arg1', value: '', type: 'string' },
+      { label: 'Value', name: 'arg2', value: '', type: 'string' },
+    ],
+  },
+  {
+    label: 'kv:Get',
+    apply: kvGet,
+    type: 'function',
+    detail: '全局缓存取值',
+    variables: [{ label: 'Key', name: 'arg', value: '', type: 'string' }],
+  },
+  {
+    label: 'kv:Del',
+    apply: kvDel,
+    type: 'function',
+    detail: '全局缓存删除值',
+    variables: [{ label: 'Key', name: 'arg', value: '', type: 'string' }],
+  },
 ];
 
 // localdb 函数
@@ -105,7 +161,7 @@ for i, v in ipairs(Table) do
   stdlib:Log(err)
 end`;
 
-const localdbExecute = `local error = localdb:Query('insert into tb1')`;
+const localdbExecute = `local error = localdb:Query(arg)`;
 
 export const localdbFuncs = [
   {
@@ -119,31 +175,72 @@ export const localdbFuncs = [
     apply: localdbExecute,
     type: 'function',
     detail: '本地数据库执行(无返回值)',
+    variables: [{ label: 'SQL 语句', name: 'arg', value: '', type: 'string' }],
   },
 ];
 
 // json 函数
-const jsonT2J = `local Value = json:T2J(LuaTable)`;
-const jsonJ2T = `local Value = json:J2T(jsonStr)`;
+const jsonT2J = `local Value = json:T2J(arg)`;
+const jsonJ2T = `local Value = json:J2T(arg)`;
 
 export const jsonFuncs = [
-  { label: 'json:T2J', apply: jsonT2J, type: 'function', detail: 'LuaTable 转 JSON 字符串' },
-  { label: 'json:J2T', apply: jsonJ2T, type: 'function', detail: 'JSON 字符串转 LuaTable' },
+  {
+    label: 'json:T2J',
+    apply: jsonT2J,
+    type: 'function',
+    detail: 'LuaTable 转 JSON 字符串',
+    variables: [{ label: 'Lua 表变量', name: 'arg', value: '', type: 'string' }],
+  },
+  {
+    label: 'json:J2T',
+    apply: jsonJ2T,
+    type: 'function',
+    detail: 'JSON 字符串转 LuaTable',
+    variables: [{ label: 'JSON字符串', name: 'arg', value: '', type: 'string' }],
+  },
 ];
 
 // math 函数
-const mathTFloat = `local Value = json:TFloat(3.1415, 2)`;
+const mathTFloat = `local Value = json:TFloat(arg1, arg2)`;
 
 // jq 函数
-const jqExecute = `local Value = jq:Execute(somedata, "Jq Expresssion" ))`;
+const jqExecute = `local Value = jq:Execute(arg1, arg2 ))`;
 
 // rpc 函数
-const rpcRequest = `local Value = rpc:Request(UUID, "cmd", "arg")`;
+const rpcRequest = `local Value = rpc:Request(arg1, arg2, arg3)`;
 
 export const otherFuncs = [
-  { label: 'math:TFloat', apply: mathTFloat, type: 'function', detail: '截取浮点数' },
-  { label: 'jq:Execute', apply: jqExecute, type: 'function', detail: 'JQ 筛选数据' },
-  { label: 'rpc:Request', apply: rpcRequest, type: 'function', detail: 'RPC 调用' },
+  {
+    label: 'math:TFloat',
+    apply: mathTFloat,
+    type: 'function',
+    detail: '截取浮点数',
+    variables: [
+      { label: '数值', name: 'arg1', value: 0, type: 'number' },
+      { label: '取小数位数', name: 'arg2', value: 2, type: 'number' },
+    ],
+  },
+  {
+    label: 'jq:Execute',
+    apply: jqExecute,
+    type: 'function',
+    detail: 'JQ 筛选数据',
+    variables: [
+      { label: 'JSON 字符串', name: 'arg1', value: '', type: 'string' },
+      { label: 'JQ 表达式', name: 'arg2', value: '', type: 'string' },
+    ],
+  },
+  {
+    label: 'rpc:Request',
+    apply: rpcRequest,
+    type: 'function',
+    detail: 'RPC 调用',
+    variables: [
+      { label: 'RPC 资源', name: 'arg1', value: '', type: 'string' },
+      { label: 'RPC 指令', name: 'arg2', value: '', type: 'string' },
+      { label: 'RPC 参数', name: 'arg2', value: '', type: 'string' },
+    ],
+  },
 ];
 
 // device 函数
@@ -156,15 +253,25 @@ const deviceList = [
 export const deviceFuncs = deviceList?.map((device) => {
   const err1 =
     device.target === 'Read'
-      ? `local Data, err1 = device:${device.target}(UUID, "cmd", "args")`
-      : `local err1 = device:${device.target}(UUID, "cmd", "args")`;
+      ? `local Data, err1 = device:${device.target}(arg1, arg2, arg3)`
+      : `local err1 = device:${device.target}(arg1, arg2, arg3)`;
   const code = `
 ${err1}
 if err1 ~= nil then
   stdlib:Log(err)
 end
 `;
-  return { label: `device:${device.target}`, apply: code, type: 'function', detail: device.detail };
+  return {
+    label: `device:${device.target}`,
+    apply: code,
+    type: 'function',
+    detail: device.detail,
+    variables: [
+      { label: '设备资源', name: 'arg1', value: '', type: 'string' },
+      { label: '设备指令', name: 'arg2', value: '', type: 'string' },
+      { label: '设备参数', name: 'arg2', value: '', type: 'string' },
+    ],
+  };
 });
 
 // rhinopi 函数
@@ -180,7 +287,7 @@ const rhinopiList = [
 
 export const rhinopiFuncs = rhinopiList?.map((rhinopi) => {
   const code = `
-local err1 = rhinopi:${rhinopi.target}(0)
+local err1 = rhinopi:${rhinopi.target}(arg)
 if err1 ~= nil then
     stdlib:Log(err)
 end
@@ -190,28 +297,56 @@ end
     apply: code,
     type: 'function',
     detail: rhinopi.detail,
+    variables: [{ label: '犀牛网关GPIO编号', name: 'arg', value: 0, type: 'number' }],
   };
 });
 
 // modbus 函数
 const modbusList = [
-  { target: 'F5', detail: '写单个线圈', extra: '00' },
-  { target: 'F6', detail: '写单个寄存器', extra: 'AABB' },
-  { target: 'F15', detail: '写多个线圈', extra: 'AA', params: 8 },
-  { target: 'F16', detail: '写多个寄存器', extra: 'AABBCCDD', params: 2 },
+  { target: 'F5', detail: '写单个线圈' },
+  { target: 'F6', detail: '写单个寄存器' },
+  { target: 'F15', detail: '写多个线圈' },
+  { target: 'F16', detail: '写多个寄存器' },
 ];
 
 export const modbusFuncs = modbusList?.map((modbus) => {
-  const err1 = modbus?.params
-    ? `local err1 = modbus:${modbus.target}(UUID, 1, 0, ${modbus?.params}, ${modbus.extra})`
-    : `local err1 = modbus:${modbus.target}(UUID, 1, 0, ${modbus.extra})`;
+  let err1 = '';
+  let variables = [
+    { label: 'Modbus 设备资源', name: 'arg1', value: '', type: 'string' },
+    { label: 'Modbus ID', name: 'arg2', value: '', type: 'number' },
+  ] as TplVariables[];
+
+  if (['F15', 'F16'].includes(modbus?.target)) {
+    err1 = `local err1 = modbus:${modbus.target}(arg1, arg2, arg3, arg4, arg5)`;
+    variables = [
+      ...variables,
+      { label: '起始地址', name: 'arg3', value: 0, type: 'number' },
+      { label: '写入数量', name: 'arg4', value: 1, type: 'number' },
+      { label: '写入数据', name: 'arg5', value: '', type: 'string' },
+    ];
+  } else {
+    err1 = `local err1 = modbus:${modbus.target}(arg1, arg2, arg3, arg4)`;
+    variables = [
+      ...variables,
+      { label: '线圈值', name: 'arg3', value: 0, type: 'number' },
+      { label: '写入数据', name: 'arg4', value: '00', type: 'string' },
+    ];
+  }
+
   const code = `
 ${err1}
 if err1 ~= nil then
     stdlib:Log(err)
 end
 `;
-  return { label: `modbus:${modbus.target}`, apply: code, type: 'function', detail: modbus.detail };
+
+  return {
+    label: `modbus:${modbus.target}`,
+    apply: code,
+    type: 'function',
+    detail: modbus.detail,
+    variables,
+  };
 });
 
 export const luaGlobFuncs = [

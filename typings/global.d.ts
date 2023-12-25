@@ -11,7 +11,7 @@ declare global {
     name?: string;
     type?: string;
     label?: string;
-    value?: string;
+    value?: any;
   };
 
   // 代码模板
