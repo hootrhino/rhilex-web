@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
+import { DownOutlined, PlusOutlined, PoweroffOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button, Dropdown, Popconfirm } from 'antd';
@@ -98,7 +98,9 @@ const Outends = () => {
         <Dropdown
           key="advance-action"
           menu={{
-            items: [{ key: 'restart', label: '重启资源' }],
+            items: [
+              { key: 'restart', label: '重启资源', icon: <PoweroffOutlined />, danger: true },
+            ],
             onClick: ({ key }) => {
               switch (key) {
                 case 'restart':

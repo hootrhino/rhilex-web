@@ -2,9 +2,7 @@ import { cn } from '@/utils/utils';
 import { ProCard } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { Space, Statistic } from 'antd';
-import type { valueType } from 'antd/es/statistic/utils';
 import sum from 'lodash/sum';
-import CountUp from 'react-countup';
 
 const StatisticCard = () => {
   const { dataSource } = useModel('useSystem');
@@ -39,13 +37,11 @@ const StatisticCard = () => {
 
   const total = statisticData?.map((data) => Number(data?.value));
 
-  const formatter = (value: valueType) => typeof value === 'number' ? <CountUp end={value} separator="," /> : value;
-
   return (
     <ProCard bodyStyle={{ padding: 0 }} className="dashboard-card">
       <ProCard layout="center" direction="column" type="inner" colSpan="25%">
         <div className="text-[#585858]">输入/输出总数</div>
-        <Statistic value={sum(total)} formatter={formatter} />
+        <Statistic value={sum(total)} />
       </ProCard>
       <ProCard gutter={[16, 16]} wrap bodyStyle={{ paddingInline: 14 }}>
         {statisticData?.map((item) => (
@@ -67,7 +63,7 @@ const StatisticCard = () => {
               />
               <div className="text-[#585858] text-[13px]">{item.label}</div>
             </Space>
-            <Statistic value={item.value} formatter={formatter} />
+            <Statistic value={item.value} />
           </ProCard>
         ))}
       </ProCard>

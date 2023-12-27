@@ -8,8 +8,6 @@ import ExportIcon from '@/assets/fontIcons/export.svg';
 import ImportIcon from '@/assets/fontIcons/import.svg';
 import PluginIcon from '@/assets/fontIcons/plugin.svg';
 import RuleIcon from '@/assets/fontIcons/rule.svg';
-import CountUp from 'react-countup';
-import type { valueType } from 'antd/es/statistic/utils';
 
 type SourceCountCardProps = {
   responsive: boolean;
@@ -18,8 +16,6 @@ type SourceCountCardProps = {
 const SourceCountCard = ({ responsive }: SourceCountCardProps) => {
   const { dataSource } = useModel('useSystem');
   const { inends, outends, rules, plugins, apps, devices } = dataSource?.sourceCount || {};
-
-  const formatter = (value: valueType) => typeof value === 'number' ? <CountUp end={value} separator="," /> : value;
 
   const sourceCountData = [
     {
@@ -75,7 +71,6 @@ const SourceCountCard = ({ responsive }: SourceCountCardProps) => {
           statistic={{
             title: <div className="text-[#585858]">{item.title}</div>,
             value: item.value,
-            formatter,
             icon:
               typeof item.icon === 'string' ? (
                 <img src={item.icon} alt={item.title} className="w-[42px] h-[42px]" />
