@@ -1,7 +1,7 @@
 import type { ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 
-import { getPlugins } from '@/services/rulex/chajianguanli';
+import { getPlugwareList } from '@/services/rulex/chajianguanli';
 import { useModel } from '@umijs/max';
 import { Space } from 'antd';
 import Detail from './Detail';
@@ -134,7 +134,7 @@ const Plugins = () => {
           rowKey="uuid"
           columns={columns}
           request={async () => {
-            const res = await getPlugins();
+            const res = await getPlugwareList();
 
             return Promise.resolve({
               data: (res as any)?.data,

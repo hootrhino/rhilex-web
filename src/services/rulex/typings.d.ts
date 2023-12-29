@@ -139,7 +139,7 @@ declare namespace API {
     uuid: string;
   };
 
-  type getPluginsDetailParams = {
+  type getPlugwareDetailParams = {
     uuid: string;
   };
 

@@ -107,7 +107,7 @@ const Detail = () => {
 
   useEffect(() => {
     if (latestMessage !== undefined) {
-      const newLog = JSON.parse(latestMessage?.data);
+      const newLog = latestMessage?.data === 'Connected' ? latestMessage?.data : JSON.parse(latestMessage?.data);
       setLogData(logData.concat(newLog));
     }
   }, [latestMessage]);

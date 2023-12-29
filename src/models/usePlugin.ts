@@ -1,5 +1,5 @@
 import { message } from '@/components/PopupHack';
-import { postPluginService } from '@/services/rulex/chajianguanli';
+import { postPlugwareService } from '@/services/rulex/chajianguanli';
 import { useRequest } from '@umijs/max';
 import { isEmpty } from 'lodash';
 import { useState } from 'react';
@@ -58,7 +58,7 @@ const usePlugin = () => {
   };
 
   const { run, data, refresh } = useRequest(
-    (params: PluginParams) => postPluginService({ ...params }),
+    (params: PluginParams) => postPlugwareService({ ...params }),
     {
       manual: true,
       onSuccess: (res) => {

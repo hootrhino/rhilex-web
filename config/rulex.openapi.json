@@ -2433,7 +2433,7 @@
         "security": []
       }
     },
-    "/api/v1/plugins": {
+    "/api/v1/plugware/list": {
       "get": {
         "summary": "插件列表",
         "x-apifox-folder": "插件管理",
@@ -3336,7 +3336,7 @@
         "security": []
       }
     },
-    "/api/v1/plugin/service": {
+    "/api/v1/plugware/service": {
       "post": {
         "summary": "请求插件提供的接口",
         "x-apifox-folder": "插件管理",
@@ -3980,7 +3980,7 @@
         "security": []
       }
     },
-    "/api/v1/plugins/detail": {
+    "/api/v1/plugware/detail": {
       "get": {
         "summary": "插件详情",
         "x-apifox-folder": "插件管理",
