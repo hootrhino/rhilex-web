@@ -15,7 +15,7 @@ export type PluginItem = {
 };
 
 const Plugins = () => {
-  const { setDetailConfig, run, detailConfig } = useModel('usePlugin');
+  const { setDetailConfig, run } = useModel('usePlugin');
 
   const handleOption = (uuid: string) => {
     if (uuid === 'ICMPSender') {
@@ -58,12 +58,12 @@ const Plugins = () => {
             key="start"
             onClick={() => {
               run({ uuid, name: 'start', args: '' }).then(() => {
-                setDetailConfig({ open: false, uuid, name: 'start', title: '终端', args: '' });
                 // 启动并打开终端
                 message.success('启动成功');
-                setTimeout(() => {
-                  setDetailConfig({ ...detailConfig, open: true });
-                }, 1000);
+                setDetailConfig({ open: true, uuid, name: 'start', title: '终端', args: '' });
+                // setTimeout(() => {
+                //   setDetailConfig({ ...detailConfig, open: true });
+                // }, 1000);
               });
             }}
           >
