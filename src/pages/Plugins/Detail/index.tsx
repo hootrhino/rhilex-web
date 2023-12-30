@@ -17,11 +17,21 @@ const Detail = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
 
-  const handleOnClose = () => {
+  const handleOnReset = () => {
     setDetailConfig({ open: false, name: '', uuid: '', args: '', title: '' });
     setDisabled(false);
     setLoading(false);
     setShowOutput(false);
+  }
+
+  const handleOnClose = () => {
+    if (detailConfig.name === 'start' && detailConfig.title === '终端') {
+      // after close terminal
+      run({ uuid: detailConfig.uuid, name: 'stop', args: '' });
+      handleOnReset();
+    } else {
+      handleOnReset()
+    }
   };
 
   // 开始扫描

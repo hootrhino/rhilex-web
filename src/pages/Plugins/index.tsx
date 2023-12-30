@@ -61,9 +61,6 @@ const Plugins = () => {
                 // 启动并打开终端
                 message.success('启动成功');
                 setDetailConfig({ open: true, uuid, name: 'start', title: '终端', args: '' });
-                // setTimeout(() => {
-                //   setDetailConfig({ ...detailConfig, open: true });
-                // }, 1000);
               });
             }}
           >
