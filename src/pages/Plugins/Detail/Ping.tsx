@@ -1,4 +1,4 @@
-import CodeEditor from '@/components/CodeEditor';
+import ProOutputList from '@/components/ProOutputList';
 import { validateIPv4 } from '@/utils/utils';
 import { ProForm } from '@ant-design/pro-components';
 import { Button, Input } from 'antd';
@@ -6,20 +6,18 @@ import { useState } from 'react';
 import { useModel } from 'umi';
 
 type PingProps = {
-  onLoading: (value: string) => void;
+  showOutput: boolean;
+  uuid: string;
+  handleShow: (value: boolean) => void;
 };
 
-const Ping = ({ onLoading }: PingProps) => {
-  const { run, detailConfig, loading, setLoading } = useModel('usePlugin');
+const Ping = ({ showOutput, uuid, handleShow }: PingProps) => {
+  const { run, detailConfig } = useModel('usePlugin');
+  const {
+    topicData: { pingLog },
+  } = useModel('useWebsocket');
   const [disabled, setDisabled] = useState<boolean>(true);
-
-  // 测速
-  const handleOnSearch = (ip: string) => {
-    onLoading(`PING ${ip}...`);
-    setTimeout(() => {
-      run({ name: 'ping', args: [ip], uuid: detailConfig.uuid });
-    }, 2000);
-  };
+  const [loading, setLoading] = useState<boolean>(false);
 
   return (
     <>
@@ -58,13 +56,19 @@ const Ping = ({ onLoading }: PingProps) => {
           size="large"
           onSearch={(value: string) => {
             setLoading(true);
-            handleOnSearch(value);
+            run({ name: 'ping', args: [value], uuid: detailConfig.uuid }).then(() => {
+              handleShow(true);
+              setLoading(false);
+              setDisabled(false);
+            });
           }}
         />
       </ProForm.Item>
-      <ProForm.Item name="output" label="输出">
-        <CodeEditor readOnly />
-      </ProForm.Item>
+      <ProOutputList
+        showOutput={showOutput}
+        data={pingLog}
+        topic={`plugin/ICMPSenderPing/${uuid}`}
+      />
     </>
   );
 };

@@ -1,10 +1,9 @@
-import { LogItem } from '@/models/useWebsocket';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
-import { Button, Modal, Space } from 'antd';
+import { Button, message, Modal, Space } from 'antd';
 import omit from 'lodash/omit';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import ClientList from './ClientList';
 import Ping from './Ping';
 import Scan from './Scan';
@@ -12,34 +11,17 @@ import Terminal from './Terminal';
 
 const Detail = () => {
   const formRef = useRef<ProFormInstance>();
-  const {
-    run,
-    errorData,
-    setDetailConfig,
-    detailConfig,
-    setLoading,
-    loading,
-    disabled,
-    setDisabled,
-  } = useModel('usePlugin');
-  const { latestMessage } = useModel('useWebsocket');
+  const { run, setDetailConfig, detailConfig } = useModel('usePlugin');
 
-  const [logData, setLogData] = useState<LogItem[]>([]);
-
-  const handleOnLoading = (output: string) => {
-    setLogData([]);
-    setTimeout(() => {
-      formRef.current?.setFieldsValue({
-        output,
-      });
-    }, 200);
-  };
+  const [showOutput, setShowOutput] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   const handleOnClose = () => {
     setDetailConfig({ open: false, name: '', uuid: '', args: '', title: '' });
     setDisabled(false);
     setLoading(false);
-    setLogData([]);
+    setShowOutput(false);
   };
 
   // 开始扫描
@@ -55,17 +37,19 @@ const Detail = () => {
       args: JSON.stringify(formValues),
     };
     setLoading(true);
-    handleOnLoading(`SCANNING...`);
-    setTimeout(() => {
-      run(params);
-    }, 2000);
+    run(params).then(() => {
+      setLoading(false);
+      setShowOutput(true);
+    });
   };
 
   // 停止扫描
   const onStop = () => {
     setLoading(false);
-    run({ uuid: detailConfig.uuid, name: 'stop', args: '' });
-    setDetailConfig({ ...detailConfig, open: true, name: 'stop', args: '' });
+    run({ uuid: detailConfig.uuid, name: 'stop', args: '' }).then(() => {
+      setDetailConfig({ ...detailConfig, open: true, name: 'stop', args: '' });
+      message.success('停止成功');
+    });
   };
 
   const renderSubmitter = () => {
@@ -81,36 +65,6 @@ const Detail = () => {
       </Space>
     );
   };
-
-  const getTopic = (name: string) => {
-    let topic = '';
-    if (name === 'ping') {
-      topic = `plugin/ICMPSenderPing/${detailConfig.uuid}`;
-    }
-    if (name === 'scan') {
-      topic = `plugin/ModbusScanner/${detailConfig.uuid}`;
-    }
-    return topic;
-  };
-
-  useEffect(() => {
-    const topic = getTopic(detailConfig.name);
-
-    const filterLogs = logData
-      ?.filter((log) => log?.topic === topic)
-      ?.map((item: LogItem) => item?.msg);
-    formRef.current?.setFieldsValue({
-      output:
-        errorData?.length > 0 ? errorData.concat(filterLogs).join('\n') : filterLogs?.join('/n'),
-    });
-  }, [logData, errorData, detailConfig.name]);
-
-  useEffect(() => {
-    if (latestMessage !== undefined) {
-      const newLog = latestMessage?.data === 'Connected' ? latestMessage?.data : JSON.parse(latestMessage?.data);
-      setLogData(logData.concat(newLog));
-    }
-  }, [latestMessage]);
 
   return ['clients', 'start'].includes(detailConfig.name) ? (
     <Modal
@@ -142,8 +96,16 @@ const Detail = () => {
       }}
       onOpenChange={(visible) => setDetailConfig({ ...detailConfig, open: visible })}
     >
-      {detailConfig.name === 'ping' && <Ping onLoading={handleOnLoading} />}
-      {['scan', 'stop'].includes(detailConfig.name) && <Scan />}
+      {detailConfig.name === 'ping' && (
+        <Ping
+          showOutput={showOutput}
+          uuid={detailConfig.uuid}
+          handleShow={(value) => setShowOutput(value)}
+        />
+      )}
+      {['scan', 'stop'].includes(detailConfig.name) && (
+        <Scan showOutput={showOutput} uuid={detailConfig.uuid} />
+      )}
     </ModalForm>
   );
 };

@@ -16,16 +16,21 @@ import omit from 'lodash/omit';
 
 import { message } from '@/components/PopupHack';
 import ProSegmented from '@/components/ProSegmented';
-import { getDevicesDetail, postDevicesCreate, putDevicesUpdate } from '@/services/rulex/shebeiguanli';
+import {
+  getDevicesDetail,
+  postDevicesCreate,
+  putDevicesUpdate,
+} from '@/services/rulex/shebeiguanli';
 
+import ProFormSubmitter from '@/components/ProFormSubmitter';
+import { getHwifaceList } from '@/services/rulex/jiekouguanli';
+import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
 import cloneDeep from 'lodash/cloneDeep';
 import { columns } from './columns';
 import Title from './FormTitle';
 import './index.less';
 import { defaultConfig, defaultHostConfig, defaultModelConfig } from './initialValue';
-import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
-import ProFormSubmitter from '@/components/ProFormSubmitter';
 
 const DefaultListUrl = '/device/list';
 
@@ -91,7 +96,7 @@ const SchemaForm = ({}: ProFormProps) => {
   const { showModal } = useGoBack();
   const { deviceId, groupId } = useParams();
   const { groupList, setActiveGroupKey } = useModel('useDevice');
-  const { data: portList, run: getPort } = useModel('usePort');
+  // const { data: portList, run: getPort } = useModel('usePort');
   const [loading, setLoading] = useState<boolean>(false);
 
   const initialValues = {
@@ -117,27 +122,38 @@ const SchemaForm = ({}: ProFormProps) => {
       renderFormItem: (_: any, props: any) => (
         <ProFormSelect
           width="md"
-          options={portList?.map((item) => ({
-            label: (
-              <Space>
-                <span>{item?.name}</span>
-                <span className="text-[12px] text-[#000000A6]">{item?.alias}</span>
-              </Space>
-            ),
-            value: item.uuid,
-          }))}
+          request={async () => {
+            const { data } = await getHwifaceList();
+
+            return data?.map((item) => ({
+              label: (
+                <Space>
+                  <span>{item?.name}</span>
+                  <span className="text-[12px] text-[#000000A6]">{item?.alias}</span>
+                </Space>
+              ),
+              value: item.uuid,
+            }));
+          }}
+          // options={portList?.map((item) => ({
+          //   label: (
+          //     <Space>
+          //       <span>{item?.name}</span>
+          //       <span className="text-[12px] text-[#000000A6]">{item?.alias}</span>
+          //     </Space>
+          //   ),
+          //   value: item.uuid,
+          // }))}
           {...props?.fieldProps}
         />
       ),
     },
   };
 
-    // 设备详情
-    const {
-      data: detail,
-    } = useRequest(() => getDevicesDetail({ uuid: deviceId || '' }), {
-      ready: !!deviceId
-    });
+  // 设备详情
+  const { data: detail } = useRequest(() => getDevicesDetail({ uuid: deviceId || '' }), {
+    ready: !!deviceId,
+  });
 
   const handleOnFinish = async (values: any) => {
     setLoading(true);
@@ -145,7 +161,7 @@ const SchemaForm = ({}: ProFormProps) => {
       let params = cloneDeep(values);
       const commonConfigParams = params.config.commonConfig;
       const hostConfigParams = params?.config?.hostConfig?.[0];
-      const httpConfigParams = params?.config?.httpConfig?.[0]
+      const httpConfigParams = params?.config?.httpConfig?.[0];
 
       let newConfig = {
         ...params.config,
@@ -164,9 +180,12 @@ const SchemaForm = ({}: ProFormProps) => {
           ...newConfig,
           httpConfig: {
             ...httpConfigParams,
-            headers: httpConfigParams?.headers?.length > 0 ? formatHeaders2Obj(httpConfigParams?.headers) : {}
-          }
-        }
+            headers:
+              httpConfigParams?.headers?.length > 0
+                ? formatHeaders2Obj(httpConfigParams?.headers)
+                : {},
+          },
+        };
       }
 
       params = {
@@ -193,7 +212,7 @@ const SchemaForm = ({}: ProFormProps) => {
       return true;
     } catch (error) {
       setLoading(false);
-     history.push(DefaultListUrl);
+      history.push(DefaultListUrl);
       return false;
     }
   };
@@ -211,11 +230,13 @@ const SchemaForm = ({}: ProFormProps) => {
     if (type === 'GENERIC_HTTP_DEVICE') {
       newConfig = {
         ...newConfig,
-        httpConfig: [{
-          ...newConfig.httpConfig,
-          headers: formatHeaders2Arr(newConfig?.httpConfig?.headers)
-        }]
-      }
+        httpConfig: [
+          {
+            ...newConfig.httpConfig,
+            headers: formatHeaders2Arr(newConfig?.httpConfig?.headers),
+          },
+        ],
+      };
     }
 
     return newConfig;
@@ -256,9 +277,9 @@ const SchemaForm = ({}: ProFormProps) => {
     handleOnReset();
   }, [detail]);
 
-  useEffect(() => {
-    getPort();
-  }, []);
+  // useEffect(() => {
+  //   getPort();
+  // }, []);
 
   return (
     <PageContainer

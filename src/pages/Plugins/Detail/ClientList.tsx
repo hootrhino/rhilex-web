@@ -3,7 +3,7 @@ import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
-import { Tag } from 'antd';
+import { message, Tag } from 'antd';
 import { omit } from 'lodash';
 import { useEffect } from 'react';
 
@@ -19,17 +19,17 @@ const cleanSessionEnum = {
   true: {
     text: 'true',
     color: 'success',
-    icon: <CheckCircleOutlined />
+    icon: <CheckCircleOutlined />,
   },
   false: {
     text: 'false',
     color: 'error',
-    icon: <CloseCircleOutlined />
-  }
-}
+    icon: <CloseCircleOutlined />,
+  },
+};
 
 const ClientList = () => {
-  const { data, run, setDetailConfig, detailConfig } = useModel('usePlugin');
+  const { data, run, setDetailConfig, detailConfig, refresh } = useModel('usePlugin');
 
   const columns: ProColumns<DetailItem>[] = [
     {
@@ -68,8 +68,11 @@ const ClientList = () => {
           key="offline"
           onClick={() => {
             const params = { uuid: detailConfig.uuid, name: 'kickout', args: [id] };
-            run(params);
-            setDetailConfig({ ...params, title: '', open: false } as PluginConfig);
+            run(params).then(() => {
+              setDetailConfig({ ...params, title: '', open: false } as PluginConfig);
+              message.success('下线成功');
+              refresh();
+            });
           }}
         >
           下线

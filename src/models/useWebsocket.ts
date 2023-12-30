@@ -13,6 +13,8 @@ type TopicData = {
   ruleTest: string[];
   appConsole: string[];
   goodsConsole: string[];
+  pingLog: string[];
+  scanLog: string[];
 };
 
 const useWebsocket = () => {
@@ -23,6 +25,8 @@ const useWebsocket = () => {
     ruleTest: [],
     appConsole: [],
     goodsConsole: [],
+    pingLog: [],
+    scanLog: [],
   });
 
   const { sendMessage, readyState, latestMessage } = useWebSocket(sockUrl, {
@@ -45,7 +49,7 @@ const useWebsocket = () => {
   useMemo(() => {
     if (latestMessage?.data && latestMessage?.data !== 'Connected') {
       if (JSON.parse(latestMessage?.data)?.topic) {
-        const { ruleLog, ruleTest, appConsole, goodsConsole } = topicData;
+        const { ruleLog, ruleTest, appConsole, goodsConsole, pingLog, scanLog } = topicData;
         // TODO getLogData(ruleTest, 'rule/test/', 10),
 
         const newTopicData = {
@@ -53,7 +57,10 @@ const useWebsocket = () => {
           ruleTest: getLogData(ruleTest, 'rule/log/', 10),
           appConsole: getLogData(appConsole, 'app/console/'),
           goodsConsole: getLogData(goodsConsole, 'goods/console/'),
+          pingLog: getLogData(pingLog, 'plugin/ICMPSenderPing/'),
+          scanLog: getLogData(scanLog, 'plugin/ModbusScanner/'),
         };
+
         setTopicData(newTopicData);
       }
 

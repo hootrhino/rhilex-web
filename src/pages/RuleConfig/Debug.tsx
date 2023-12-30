@@ -1,11 +1,10 @@
 import CodeEditor from '@/components/CodeEditor';
+import ProOutputList from '@/components/ProOutputList';
 import { postRulesTestDevice } from '@/services/rulex/guizeguanli';
-import { filterLogByTopic } from '@/utils/utils';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
-import { ModalForm, ProForm, ProList } from '@ant-design/pro-components';
+import { ModalForm, ProForm } from '@ant-design/pro-components';
 import { useParams } from '@umijs/max';
-import { Button, Tag } from 'antd';
-import dayjs from 'dayjs';
+import { Button } from 'antd';
 import { useRef, useState } from 'react';
 import { useModel } from 'umi';
 
@@ -70,25 +69,7 @@ const Debug = ({ uuid, ...props }: DebugProps) => {
       >
         <CodeEditor autoFocus />
       </ProForm.Item>
-
-      <ProForm.Item name="output" label="输出结果" className="h-[300px]">
-        <ProList
-          className="h-[250px] overflow-y-auto"
-          rowKey={(record) => `testLog-${record.ts}-${Math.random()}`}
-          dataSource={showOutput ? filterLogByTopic(ruleTest, `rule/log/${uuid}`) : []}
-          metas={{
-            title: {
-              dataIndex: 'time',
-              render: (_, row) => dayjs(row.time).format('YYYY-MM-DD hh:mm:ss'),
-            },
-            description: { dataIndex: 'msg' },
-            subTitle: {
-              dataIndex: 'level',
-              render: (_, row) => <Tag color="blue">{row.level}</Tag>,
-            },
-          }}
-        />
-      </ProForm.Item>
+      <ProOutputList showOutput={showOutput} data={ruleTest} topic={`rule/log/${uuid}`} />
     </ModalForm>
   );
 };

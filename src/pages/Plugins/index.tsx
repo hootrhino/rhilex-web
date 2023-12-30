@@ -1,6 +1,7 @@
 import type { ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 
+import { message } from '@/components/PopupHack';
 import { getPlugwareList } from '@/services/rulex/chajianguanli';
 import { useModel } from '@umijs/max';
 import { Space } from 'antd';
@@ -14,7 +15,7 @@ export type PluginItem = {
 };
 
 const Plugins = () => {
-  const { setDetailConfig, run } = useModel('usePlugin');
+  const { setDetailConfig, run, detailConfig } = useModel('usePlugin');
 
   const handleOption = (uuid: string) => {
     if (uuid === 'ICMPSender') {
@@ -56,8 +57,14 @@ const Plugins = () => {
           <a
             key="start"
             onClick={() => {
-              run({ uuid, name: 'start', args: '' });
-              setDetailConfig({ open: false, uuid, name: 'start', title: '终端', args: '' });
+              run({ uuid, name: 'start', args: '' }).then(() => {
+                setDetailConfig({ open: false, uuid, name: 'start', title: '终端', args: '' });
+                // 启动并打开终端
+                message.success('启动成功');
+                setTimeout(() => {
+                  setDetailConfig({ ...detailConfig, open: true });
+                }, 1000);
+              });
             }}
           >
             启动
@@ -65,8 +72,10 @@ const Plugins = () => {
           <a
             key="stop"
             onClick={() => {
-              run({ uuid, name: 'stop', args: '' });
-              setDetailConfig({ open: false, uuid, name: 'stop', title: '', args: '' });
+              run({ uuid, name: 'stop', args: '' }).then(() => {
+                message.success('停止成功');
+                setDetailConfig({ open: false, uuid, name: 'stop', title: '', args: '' });
+              });
             }}
           >
             停止
