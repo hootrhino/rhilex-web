@@ -59,9 +59,15 @@
       {
         path: '/device/:groupId/:deviceId/specific-sheet/:deviceType',
         name: '点位表配置',
-        component: './Devices/SpecificSheet'
-      }
+        component: './Devices/SpecificSheet',
+      },
     ],
+  },
+  {
+    path: '/schema',
+    name: '数据模型',
+    icon: 'apartment',
+    component: './Schema',
   },
   // {
   //   path: '/screen-mgt',
@@ -221,7 +227,7 @@
     path: '/port',
     name: '端口设置',
     icon: 'nodeIndex',
-    component: './PortMgt'
+    component: './PortMgt',
   },
   {
     path: '/system-mgt',
@@ -259,7 +265,7 @@
         name: '编辑自定义模板',
         component: './CustomTpl/Update',
       },
-    ]
+    ],
   },
   {
     path: '/',

@@ -1,6 +1,6 @@
 {
   "name": "hootrhino-eekit-web",
-  "version": "0.5.3",
+  "version": "0.6.5",
   "private": true,
   "description": "轻量级边缘计算框架",
   "scripts": {

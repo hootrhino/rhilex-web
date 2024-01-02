@@ -30,6 +30,7 @@ import * as zhanneitongzhi from './zhanneitongzhi'
 import * as yonghuLUApianduan from './yonghuLUApianduan'
 import * as Modbusdianweiguanli from './Modbusdianweiguanli'
 import * as ximenzidianweiguanli from './ximenzidianweiguanli'
+import * as shujumoxing from './shujumoxing'
 export default {
   shebeiguanli,
   yonghuguanli,
@@ -59,4 +60,5 @@ export default {
   yonghuLUApianduan,
   Modbusdianweiguanli,
   ximenzidianweiguanli,
+  shujumoxing,
   }

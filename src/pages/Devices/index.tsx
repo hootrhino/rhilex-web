@@ -5,7 +5,13 @@ import StateTag from '@/components/StateTag';
 import { deleteDevicesDel, putDevicesRestart } from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
 import { getName } from '@/utils/utils';
-import { DownOutlined, PlusOutlined, PoweroffOutlined, SettingOutlined } from '@ant-design/icons';
+import {
+  ControlOutlined,
+  DownOutlined,
+  PlusOutlined,
+  PoweroffOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProCard, ProTable } from '@ant-design/pro-components';
 import { history, useModel, useRequest } from '@umijs/max';
@@ -74,7 +80,7 @@ const Devices = () => {
     ] as ItemType[];
 
     if (showSheet) {
-      items = [...items, { key: 'specific-sheet', label: '点位表配置' }];
+      items = [...items, { key: 'specific-sheet', label: '点位表配置', icon: <ControlOutlined /> }];
     }
 
     return items;

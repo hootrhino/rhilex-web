@@ -1,6 +1,8 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
 import StateTag from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
+import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
+import { boolEnum } from '@/utils/enum';
 import { getName } from '@/utils/utils';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
@@ -9,10 +11,8 @@ import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from '../SchemaForm/initialValue';
-import ModbusTable from './ModbusTable';
-import PlcTable from './PlcTable';
-import { boolEnum } from '@/utils/enum';
-import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
+import ModbusSheet from '../SpecificSheet/ModbusSheet';
+import PlcSheet from '../SpecificSheet/PlcSheet';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -25,11 +25,11 @@ type EnhancedProDescriptionsProps = ProDescriptionsProps & {
 const parseAisEnum = {
   true: {
     text: '解析',
-    color: 'processing'
+    color: 'processing',
   },
   false: {
     text: '不解析',
-    color: 'default'
+    color: 'default',
   },
 };
 
@@ -51,12 +51,12 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     getDetail: getPortDetail,
   } = useModel('usePort');
 
-  const {
-    data: detail,
-    run: getDeviceDetail,
-  } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
-    manual: true,
-  });
+  const { data: detail, run: getDeviceDetail } = useRequest(
+    (params: API.getDevicesDetailParams) => getDevicesDetail(params),
+    {
+      manual: true,
+    },
+  );
 
   const { type = 'GENERIC_PROTOCOL', config } = detail || {};
   const { commonConfig, hostConfig, portUuid, httpConfig } = config || {};
@@ -98,7 +98,9 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
       {
         title: '是否启动轮询',
         dataIndex: 'autoRequest',
-        hideInDescriptions: !['GENERIC_MODBUS', 'SIEMENS_PLC', 'GENERIC_HTTP_DEVICE'].includes(type),
+        hideInDescriptions: !['GENERIC_MODBUS', 'SIEMENS_PLC', 'GENERIC_HTTP_DEVICE'].includes(
+          type,
+        ),
         renderText: (autoRequest) => (
           <Tag color={boolEnum[autoRequest]?.color}>{boolEnum[autoRequest]?.text}</Tag>
         ),
@@ -197,7 +199,15 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
   }, [uuid, open]);
 
   return (
-    <Drawer open={open} title="设备详情" placement="right" width="50%" destroyOnClose {...props}>
+    <Drawer
+      open={open}
+      title="设备详情"
+      placement="right"
+      width="50%"
+      destroyOnClose
+      maskClosable={false}
+      {...props}
+    >
       <>
         <EnhancedProDescriptions
           title="基本配置"
@@ -246,10 +256,23 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
               />
             )}
             {type === 'GENERIC_HTTP_DEVICE' && <HeadersDetail data={httpConfig?.headers} />}
-            {['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type) && (
+            {detail?.uuid && ['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type) && (
               <>
-                <ProDescriptions title="点位表配置" />
-                {type === 'GENERIC_MODBUS' ? <ModbusTable deviceId={detail?.uuid || ''} /> : <PlcTable deviceId={detail?.uuid || ''} />}
+                <ProDescriptions
+                  title={
+                    <>
+                      <span>点位表配置</span>
+                      <span className="text-[12px] opacity-[.8] pl-[5px] font-normal">
+                        (横向滚动查看更多)
+                      </span>
+                    </>
+                  }
+                />
+                {type === 'GENERIC_MODBUS' ? (
+                  <ModbusSheet deviceUuid={detail?.uuid} readOnly={true} />
+                ) : (
+                  <PlcSheet deviceUuid={detail?.uuid} readOnly={true} />
+                )}
               </>
             )}
           </>

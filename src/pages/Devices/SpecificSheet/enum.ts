@@ -1,0 +1,84 @@
+// 1个字节-字节序
+const byte1Options = [
+  {
+    value: 'A',
+    label: 'A',
+  },
+];
+
+// 2个字节-字节序
+const byte2Options = [
+  {
+    value: 'AB',
+    label: 'AB',
+  },
+  {
+    value: 'BA',
+    label: 'BA',
+  },
+];
+
+// 4个字节-字节序
+const byte4Options = [
+  {
+    value: 'ABCD',
+    label: 'ABCD',
+  },
+  {
+    value: 'DCBA',
+    label: 'DCBA',
+  },
+  {
+    value: 'CDAB',
+    label: 'CDAB',
+  },
+];
+
+// plc 数据类型
+export const cascaderOptions = [
+  {
+    value: 'BYTE',
+    label: 'Byte（1字节）',
+    children: byte1Options,
+  },
+  {
+    value: 'I',
+    label: 'I（1字节）',
+    children: byte1Options,
+  },
+  {
+    value: 'Q',
+    label: 'Q（1字节）',
+    children: byte1Options,
+  },
+  {
+    value: 'SHORT',
+    label: 'Short（2字节）',
+    children: byte2Options,
+  },
+  {
+    value: 'INT',
+    label: 'Int（4字节）',
+    children: byte4Options,
+  },
+  {
+    value: 'FLOAT',
+    label: 'Float（4字节）',
+    children: byte4Options,
+  },
+  {
+    value: 'USHORT',
+    label: 'UShort（2字节）',
+    children: byte2Options,
+  },
+  {
+    value: 'UINT',
+    label: 'UInt（4字节）',
+    children: byte4Options,
+  },
+  {
+    value: 'UFLOAT',
+    label: 'UFloat（4字节）',
+    children: byte4Options,
+  },
+];

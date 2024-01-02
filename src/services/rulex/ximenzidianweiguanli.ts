@@ -113,14 +113,16 @@ export async function postS1200DataSheetUpdate(
   body: {
     device_uuid: string;
     siemens_data_points: {
+      uuid?: string;
       device_uuid?: string;
       tag?: string;
-      alias?: string;
-      type?: string;
       frequency?: number;
-      address?: number;
-      start?: number;
-      size?: number;
+      siemensAddress?: string;
+      addressType?: string;
+      dataBlockType?: string;
+      dataBlockNumber?: number;
+      elementNumber?: number;
+      bitNumber?: number;
     }[];
   },
   options?: { [key: string]: any },

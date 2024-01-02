@@ -1,23 +1,30 @@
+import { getName } from '@/utils/utils';
 import { PageContainer } from '@ant-design/pro-components';
 import { history, useModel, useParams } from '@umijs/max';
+import { useEffect, useState } from 'react';
 import ModbusSheet from './ModbusSheet';
 import PlcSheet from './PlcSheet';
-import { useEffect, useState } from 'react';
 
 const SpecificSheet = () => {
-  const { deviceType, deviceId } = useParams();
-  const {data: deviceList} = useModel('useDevice');
-  const [deviceName, setName] = useState<string>('');
+  const { run: getDeviceList } = useModel('useDevice');
+  const { deviceType, deviceId, groupId } = useParams();
+  const { data: deviceList } = useModel('useDevice');
+  const [title, setTitle] = useState<string>('点位表配置');
 
- useEffect(() => {
-  const device = deviceList?.find(item => item?.uuid === deviceId);
-  setName(device?.name || '');
- }, [deviceId, deviceList]);
+  useEffect(() => {
+    const pageTitle = deviceList && deviceId && getName(deviceList, deviceId);
+
+    setTitle(pageTitle ? `${pageTitle} 点位表配置` : '点位表配置');
+  }, [deviceId, deviceList]);
+
+  useEffect(() => {
+    getDeviceList({ uuid: groupId || '' });
+  }, [groupId]);
 
   return (
-    <PageContainer title={deviceName ? `${deviceName} 点位表配置` : '点位表配置'} onBack={() => history.push('/device/list')}>
-      {deviceType === 'GENERIC_MODBUS' && <ModbusSheet />}
-      {deviceType === 'SIEMENS_PLC' && <PlcSheet />}
+    <PageContainer title={title} onBack={() => history.push('/device/list')}>
+      {deviceType === 'GENERIC_MODBUS' && deviceId && <ModbusSheet deviceUuid={deviceId} />}
+      {deviceType === 'SIEMENS_PLC' && deviceId && <PlcSheet deviceUuid={deviceId} />}
     </PageContainer>
   );
 };

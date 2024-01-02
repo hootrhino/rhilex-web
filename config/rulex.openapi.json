@@ -92,6 +92,9 @@
     },
     {
       "name": "西门子点位管理"
+    },
+    {
+      "name": "数据模型"
     }
   ],
   "paths": {
@@ -11785,41 +11788,49 @@
                     "items": {
                       "type": "object",
                       "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
                         "device_uuid": {
                           "type": "string"
                         },
                         "tag": {
                           "type": "string"
                         },
-                        "alias": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "string"
-                        },
                         "frequency": {
                           "type": "integer"
                         },
-                        "address": {
+                        "siemensAddress": {
+                          "type": "string"
+                        },
+                        "addressType": {
+                          "type": "string"
+                        },
+                        "dataBlockType": {
+                          "type": "string"
+                        },
+                        "dataBlockNumber": {
                           "type": "integer"
                         },
-                        "start": {
+                        "elementNumber": {
                           "type": "integer"
                         },
-                        "size": {
+                        "bitNumber": {
                           "type": "integer"
                         }
                       },
                       "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
+                        "uuid",
                         "device_uuid",
                         "tag",
-                        "alias",
-                        "type",
                         "frequency",
-                        "address",
-                        "start",
-                        "size"
+                        "siemensAddress",
+                        "addressType",
+                        "dataBlockType",
+                        "dataBlockNumber",
+                        "elementNumber",
+                        "bitNumber"
                       ]
                     }
                   }
@@ -11838,14 +11849,16 @@
                 "device_uuid": "DEVICER27H4F7Q",
                 "siemens_data_points": [
                   {
-                    "device_uuid": "DEVICER27H4F7Q",
-                    "tag": "a111",
-                    "alias": "a111",
-                    "type": "ABC",
+                    "uuid": "S7KJKA5RQT",
+                    "device_uuid": "123",
+                    "tag": "温度",
                     "frequency": 100,
-                    "address": 0,
-                    "start": 0,
-                    "size": 1
+                    "siemensAddress": "DB4900.DBD1000",
+                    "addressType": "DB",
+                    "dataBlockType": "DB",
+                    "dataBlockNumber": 4900,
+                    "elementNumber": 1000,
+                    "bitNumber": 0
                   }
                 ]
               }
@@ -12346,6 +12359,1006 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-135485403-run",
+        "security": []
+      }
+    },
+    "/api/v1/schema/list": {
+      "get": {
+        "summary": "模型列表",
+        "x-apifox-folder": "数据模型",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据模型"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "uuid": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "schema": {
+                            "type": "object",
+                            "properties": {
+                              "iotProperties": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "label": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "description": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string"
+                                    },
+                                    "rw": {
+                                      "type": "string"
+                                    },
+                                    "unit": {
+                                      "type": "string"
+                                    },
+                                    "rule": {
+                                      "type": "object",
+                                      "properties": {
+                                        "defaultValue": {
+                                          "type": "integer"
+                                        },
+                                        "max": {
+                                          "type": "integer"
+                                        },
+                                        "min": {
+                                          "type": "integer"
+                                        },
+                                        "round": {
+                                          "type": "integer"
+                                        },
+                                        "trueLabel": {
+                                          "type": "string"
+                                        },
+                                        "falseLabel": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "defaultValue"
+                                      ],
+                                      "x-apifox-ignore-properties": [],
+                                      "x-apifox-orders": [
+                                        "defaultValue",
+                                        "max",
+                                        "min",
+                                        "round",
+                                        "trueLabel",
+                                        "falseLabel"
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "label",
+                                    "name",
+                                    "description",
+                                    "type",
+                                    "rw",
+                                    "unit",
+                                    "rule"
+                                  ],
+                                  "x-apifox-ignore-properties": [],
+                                  "x-apifox-orders": [
+                                    "label",
+                                    "name",
+                                    "description",
+                                    "type",
+                                    "rw",
+                                    "unit",
+                                    "rule"
+                                  ]
+                                }
+                              }
+                            },
+                            "required": [
+                              "iotProperties"
+                            ],
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "iotProperties"
+                            ]
+                          }
+                        },
+                        "x-apifox-ignore-properties": [],
+                        "x-apifox-orders": [
+                          "uuid",
+                          "name",
+                          "schema"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "uuid": "SCHEMA87HDSFC4",
+                          "name": "测试物模型: 机场大厅数据统计",
+                          "schema": {
+                            "iotProperties": [
+                              {
+                                "label": "整形：今天进出人数统计",
+                                "name": "peopleCount",
+                                "description": "今天进出人数统计",
+                                "type": "INTEGER",
+                                "rw": "R",
+                                "unit": "人",
+                                "rule": {
+                                  "defaultValue": 0,
+                                  "max": 100
+                                }
+                              },
+                              {
+                                "label": "浮点型：温度",
+                                "name": "temp",
+                                "description": "浮点型：温度",
+                                "type": "FLOAT",
+                                "rw": "R",
+                                "unit": "摄氏度",
+                                "rule": {
+                                  "defaultValue": 0,
+                                  "max": 100,
+                                  "min": -100,
+                                  "round": 2
+                                }
+                              },
+                              {
+                                "label": "浮点型：湿度",
+                                "name": "humi",
+                                "description": "浮点型：湿度",
+                                "type": "FLOAT",
+                                "rw": "R",
+                                "unit": "摄氏度",
+                                "rule": {
+                                  "defaultValue": 0,
+                                  "max": 100,
+                                  "round": 2
+                                }
+                              },
+                              {
+                                "label": "布尔型：灯开关-1",
+                                "name": "switcher1",
+                                "description": "布尔型：灯开关-1",
+                                "type": "BOOL",
+                                "rw": "RW",
+                                "unit": "",
+                                "rule": {
+                                  "defaultValue": false,
+                                  "trueLabel": "开启",
+                                  "falseLabel": "关闭"
+                                }
+                              },
+                              {
+                                "label": "文本型：滚动显示屏幕文本",
+                                "name": "string1",
+                                "description": "文本型：滚动显示屏幕文本",
+                                "type": "STRING",
+                                "rw": "R",
+                                "unit": "",
+                                "rule": {
+                                  "defaultValue": "Hello, 大牛"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-137847630-run",
+        "security": []
+      }
+    },
+    "/api/v1/schema/create": {
+      "post": {
+        "summary": "新建模型",
+        "x-apifox-folder": "数据模型",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据模型"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "iotProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "rw": {
+                              "type": "string"
+                            },
+                            "unit": {
+                              "type": "string"
+                            },
+                            "rule": {
+                              "type": "object",
+                              "properties": {
+                                "defaultValue": {
+                                  "type": "integer"
+                                },
+                                "max": {
+                                  "type": "integer"
+                                },
+                                "min": {
+                                  "type": "integer"
+                                },
+                                "round": {
+                                  "type": "integer"
+                                },
+                                "trueLabel": {
+                                  "type": "string"
+                                },
+                                "falseLabel": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "defaultValue"
+                              ],
+                              "x-apifox-ignore-properties": [],
+                              "x-apifox-orders": [
+                                "defaultValue",
+                                "max",
+                                "min",
+                                "round",
+                                "trueLabel",
+                                "falseLabel"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "label",
+                            "name",
+                            "description",
+                            "type",
+                            "rw",
+                            "unit",
+                            "rule"
+                          ],
+                          "x-apifox-ignore-properties": [],
+                          "x-apifox-orders": [
+                            "label",
+                            "name",
+                            "description",
+                            "type",
+                            "rw",
+                            "unit",
+                            "rule"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "iotProperties"
+                    ],
+                    "x-apifox-ignore-properties": [],
+                    "x-apifox-orders": [
+                      "iotProperties"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "schema"
+                ],
+                "x-apifox-ignore-properties": [],
+                "x-apifox-orders": [
+                  "name",
+                  "schema"
+                ]
+              },
+              "example": {
+                "name": "测试物模型: 机场大厅数据统计",
+                "schema": {
+                  "iotProperties": [
+                    {
+                      "label": "整形：今天进出人数统计",
+                      "name": "peopleCount",
+                      "description": "今天进出人数统计",
+                      "type": "INTEGER",
+                      "rw": "R",
+                      "unit": "人",
+                      "rule": {
+                        "defaultValue": 0,
+                        "max": 100
+                      }
+                    },
+                    {
+                      "label": "浮点型：温度",
+                      "name": "temp",
+                      "description": "浮点型：温度",
+                      "type": "FLOAT",
+                      "rw": "R",
+                      "unit": "摄氏度",
+                      "rule": {
+                        "defaultValue": 0,
+                        "max": 100,
+                        "min": -100,
+                        "round": 2
+                      }
+                    },
+                    {
+                      "label": "浮点型：湿度",
+                      "name": "humi",
+                      "description": "浮点型：湿度",
+                      "type": "FLOAT",
+                      "rw": "R",
+                      "unit": "摄氏度",
+                      "rule": {
+                        "defaultValue": 0,
+                        "max": 100,
+                        "round": 2
+                      }
+                    },
+                    {
+                      "label": "布尔型：灯开关-1",
+                      "name": "switcher1",
+                      "description": "布尔型：灯开关-1",
+                      "type": "BOOL",
+                      "rw": "RW",
+                      "unit": "",
+                      "rule": {
+                        "defaultValue": false,
+                        "trueLabel": "开启",
+                        "falseLabel": "关闭"
+                      }
+                    },
+                    {
+                      "label": "文本型：滚动显示屏幕文本",
+                      "name": "string1",
+                      "description": "文本型：滚动显示屏幕文本",
+                      "type": "STRING",
+                      "rw": "R",
+                      "unit": "",
+                      "rule": {
+                        "defaultValue": "Hello, 大牛"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-137847640-run",
+        "security": []
+      }
+    },
+    "/api/v1/schema/update": {
+      "put": {
+        "summary": "更新模型",
+        "x-apifox-folder": "数据模型",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据模型"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "iotProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "rw": {
+                              "type": "string"
+                            },
+                            "unit": {
+                              "type": "string"
+                            },
+                            "rule": {
+                              "type": "object",
+                              "properties": {
+                                "defaultValue": {
+                                  "type": "integer"
+                                },
+                                "max": {
+                                  "type": "integer"
+                                },
+                                "min": {
+                                  "type": "integer"
+                                },
+                                "round": {
+                                  "type": "integer"
+                                },
+                                "trueLabel": {
+                                  "type": "string"
+                                },
+                                "falseLabel": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "defaultValue"
+                              ],
+                              "x-apifox-ignore-properties": [],
+                              "x-apifox-orders": [
+                                "defaultValue",
+                                "max",
+                                "min",
+                                "round",
+                                "trueLabel",
+                                "falseLabel"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "label",
+                            "name",
+                            "description",
+                            "type",
+                            "rw",
+                            "unit",
+                            "rule"
+                          ],
+                          "x-apifox-ignore-properties": [],
+                          "x-apifox-orders": [
+                            "label",
+                            "name",
+                            "description",
+                            "type",
+                            "rw",
+                            "unit",
+                            "rule"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "iotProperties"
+                    ],
+                    "x-apifox-ignore-properties": [],
+                    "x-apifox-orders": [
+                      "iotProperties"
+                    ]
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "name",
+                  "schema"
+                ],
+                "x-apifox-ignore-properties": [],
+                "x-apifox-orders": [
+                  "uuid",
+                  "name",
+                  "schema"
+                ]
+              },
+              "example": {
+                "uuid": "SCHEMA87HDSFC4",
+                "name": "测试物模型: 机场大厅数据统计",
+                "schema": {
+                  "iotProperties": [
+                    {
+                      "label": "整形：今天进出人数统计",
+                      "name": "peopleCount",
+                      "description": "今天进出人数统计",
+                      "type": "INTEGER",
+                      "rw": "R",
+                      "unit": "人",
+                      "rule": {
+                        "defaultValue": 0,
+                        "max": 100
+                      }
+                    },
+                    {
+                      "label": "浮点型：温度",
+                      "name": "temp",
+                      "description": "浮点型：温度",
+                      "type": "FLOAT",
+                      "rw": "R",
+                      "unit": "摄氏度",
+                      "rule": {
+                        "defaultValue": 0,
+                        "max": 100,
+                        "min": -100,
+                        "round": 2
+                      }
+                    },
+                    {
+                      "label": "浮点型：湿度",
+                      "name": "humi",
+                      "description": "浮点型：湿度",
+                      "type": "FLOAT",
+                      "rw": "R",
+                      "unit": "摄氏度",
+                      "rule": {
+                        "defaultValue": 0,
+                        "max": 100,
+                        "round": 2
+                      }
+                    },
+                    {
+                      "label": "布尔型：灯开关-1",
+                      "name": "switcher1",
+                      "description": "布尔型：灯开关-1",
+                      "type": "BOOL",
+                      "rw": "RW",
+                      "unit": "",
+                      "rule": {
+                        "defaultValue": false,
+                        "trueLabel": "开启",
+                        "falseLabel": "关闭"
+                      }
+                    },
+                    {
+                      "label": "文本型：滚动显示屏幕文本",
+                      "name": "string1",
+                      "description": "文本型：滚动显示屏幕文本",
+                      "type": "STRING",
+                      "rw": "R",
+                      "unit": "",
+                      "rule": {
+                        "defaultValue": "Hello, 大牛"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-137847644-run",
+        "security": []
+      }
+    },
+    "/api/v1/schema/del": {
+      "delete": {
+        "summary": "删除模型",
+        "x-apifox-folder": "数据模型",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据模型"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "12324567",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-137847645-run",
+        "security": []
+      }
+    },
+    "/api/v1/schema/detail": {
+      "get": {
+        "summary": "模型详情",
+        "x-apifox-folder": "数据模型",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据模型"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "123456",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "schema": {
+                          "type": "object",
+                          "properties": {
+                            "iotProperties": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "label": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string"
+                                  },
+                                  "rw": {
+                                    "type": "string"
+                                  },
+                                  "unit": {
+                                    "type": "string"
+                                  },
+                                  "rule": {
+                                    "type": "object",
+                                    "properties": {
+                                      "defaultValue": {
+                                        "type": "integer"
+                                      },
+                                      "max": {
+                                        "type": "integer"
+                                      },
+                                      "min": {
+                                        "type": "integer"
+                                      },
+                                      "round": {
+                                        "type": "integer"
+                                      },
+                                      "trueLabel": {
+                                        "type": "string"
+                                      },
+                                      "falseLabel": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "defaultValue"
+                                    ],
+                                    "x-apifox-ignore-properties": [],
+                                    "x-apifox-orders": [
+                                      "defaultValue",
+                                      "max",
+                                      "min",
+                                      "round",
+                                      "trueLabel",
+                                      "falseLabel"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "name",
+                                  "description",
+                                  "type",
+                                  "rw",
+                                  "unit",
+                                  "rule"
+                                ],
+                                "x-apifox-ignore-properties": [],
+                                "x-apifox-orders": [
+                                  "label",
+                                  "name",
+                                  "description",
+                                  "type",
+                                  "rw",
+                                  "unit",
+                                  "rule"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "iotProperties"
+                          ],
+                          "x-apifox-ignore-properties": [],
+                          "x-apifox-orders": [
+                            "iotProperties"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "uuid",
+                        "name",
+                        "schema"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "uuid",
+                        "name",
+                        "schema"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "uuid": "SCHEMA87HDSFC4",
+                        "name": "测试物模型: 机场大厅数据统计",
+                        "schema": {
+                          "iotProperties": [
+                            {
+                              "label": "整形：今天进出人数统计",
+                              "name": "peopleCount",
+                              "description": "今天进出人数统计",
+                              "type": "INTEGER",
+                              "rw": "R",
+                              "unit": "人",
+                              "rule": {
+                                "defaultValue": 0,
+                                "max": 100
+                              }
+                            },
+                            {
+                              "label": "浮点型：温度",
+                              "name": "temp",
+                              "description": "浮点型：温度",
+                              "type": "FLOAT",
+                              "rw": "R",
+                              "unit": "摄氏度",
+                              "rule": {
+                                "defaultValue": 0,
+                                "max": 100,
+                                "min": -100,
+                                "round": 2
+                              }
+                            },
+                            {
+                              "label": "浮点型：湿度",
+                              "name": "humi",
+                              "description": "浮点型：湿度",
+                              "type": "FLOAT",
+                              "rw": "R",
+                              "unit": "摄氏度",
+                              "rule": {
+                                "defaultValue": 0,
+                                "max": 100,
+                                "round": 2
+                              }
+                            },
+                            {
+                              "label": "布尔型：灯开关-1",
+                              "name": "switcher1",
+                              "description": "布尔型：灯开关-1",
+                              "type": "BOOL",
+                              "rw": "RW",
+                              "unit": "",
+                              "rule": {
+                                "defaultValue": false,
+                                "trueLabel": "开启",
+                                "falseLabel": "关闭"
+                              }
+                            },
+                            {
+                              "label": "文本型：滚动显示屏幕文本",
+                              "name": "string1",
+                              "description": "文本型：滚动显示屏幕文本",
+                              "type": "STRING",
+                              "rw": "R",
+                              "unit": "",
+                              "rule": {
+                                "defaultValue": "Hello, 大牛"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-137847657-run",
         "security": []
       }
     }

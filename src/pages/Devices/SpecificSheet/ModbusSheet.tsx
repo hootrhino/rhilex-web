@@ -11,16 +11,25 @@ import { IconFont } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { EditableProTable } from '@ant-design/pro-components';
-import { useParams, useRequest } from '@umijs/max';
+import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Upload } from 'antd';
 import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
 import { funcEnum } from '../SchemaForm/initialValue';
-import { defaultModbusConfig } from './initialValue';
 import UploadRule from './UploadRule';
 
-import '../index.less';
 import { statusEnum } from '@/utils/enum';
+import '../index.less';
+
+const defaultModbusConfig = {
+  tag: '',
+  alias: '',
+  function: 3,
+  frequency: 1000,
+  slaverId: 1,
+  address: 0,
+  quantity: 1,
+};
 
 export type ModbusSheetItem = {
   uuid?: string;
@@ -52,8 +61,12 @@ type UpdateParams = {
   modbus_data_points: Point[];
 };
 
-const ModbusSheet = () => {
-  const { deviceId } = useParams();
+type ModbusSheetProps = {
+  deviceUuid: string;
+  readOnly?: boolean;
+};
+
+const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
   const actionRef = useRef<ActionType>();
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -94,14 +107,14 @@ const ModbusSheet = () => {
     const updateData = dataSource?.filter(
       (row) => row?.uuid && selectedRowKeys.includes(row?.uuid),
     );
-    update({ device_uuid: deviceId || '', modbus_data_points: updateData });
+    update({ device_uuid: deviceUuid, modbus_data_points: updateData });
   };
 
   // 单个更新
   const handleOnSave = async (rowKey: RecordKey, data: Partial<ModbusSheetItem>) => {
     let params = {
       ...omit(data, ['index']),
-      device_uuid: deviceId,
+      device_uuid: deviceUuid,
     };
 
     if (rowKey === 'new') {
@@ -109,15 +122,15 @@ const ModbusSheet = () => {
         ...omit(params, ['uuid']),
       };
     }
-    update({ device_uuid: deviceId || '', modbus_data_points: [params] });
+    update({ device_uuid: deviceUuid, modbus_data_points: [params] });
   };
 
   // 批量删除
   const handleOnBatchDelete = () => {
     const uuids = selectedRowKeys as string[];
-    if (uuids && deviceId) {
+    if (uuids && deviceUuid) {
       const params = {
-        device_uuid: deviceId,
+        device_uuid: deviceUuid,
         uuids,
       };
       remove(params);
@@ -126,7 +139,7 @@ const ModbusSheet = () => {
 
   // 导入点位表
   const { run: upload } = useRequest(
-    (file: File) => postModbusDataSheetSheetImport({ device_uuid: deviceId || '' }, file),
+    (file: File) => postModbusDataSheetSheetImport({ device_uuid: deviceUuid }, file),
     {
       manual: true,
       onSuccess: () => {
@@ -142,11 +155,15 @@ const ModbusSheet = () => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
+      fixed: readOnly ? 'left' : false,
       render: (text, record, index) => <IndexBorder serial={index} />,
     },
     {
       title: '数据标签',
       dataIndex: 'tag',
+      fixed: readOnly ? 'left' : false,
+      width: 120,
+      ellipsis: true,
       formItemProps: () => {
         return {
           rules: [{ required: true, message: '此项为必填项' }],
@@ -270,7 +287,11 @@ const ModbusSheet = () => {
       width: 80,
       editable: false,
       renderText(_, record) {
-        return <Tag color={statusEnum[record?.status || 0]?.color}>{statusEnum[record?.status || 0]?.text}</Tag>;
+        return (
+          <Tag color={statusEnum[record?.status || 0]?.color}>
+            {statusEnum[record?.status || 0]?.text}
+          </Tag>
+        );
       },
     },
     {
@@ -283,6 +304,7 @@ const ModbusSheet = () => {
       title: '操作',
       valueType: 'option',
       width: 150,
+      hideInTable: readOnly,
       render: (text, record, _, action) => [
         <EditableProTable.RecordCreator
           key="copy"
@@ -305,8 +327,8 @@ const ModbusSheet = () => {
         <Popconfirm
           title="确定要删除该点位?"
           onConfirm={() => {
-            if (deviceId && record?.uuid) {
-              remove({ device_uuid: deviceId, uuids: [record?.uuid] });
+            if (deviceUuid && record?.uuid) {
+              remove({ device_uuid: deviceUuid, uuids: [record?.uuid] });
             }
           }}
           okText="是"
@@ -319,6 +341,63 @@ const ModbusSheet = () => {
     },
   ];
 
+  const toolBar = [
+    <Upload
+      key="upload"
+      accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+      showUploadList={false}
+      beforeUpload={(file) => {
+        modal.confirm({
+          title: '导入点位表',
+          width: '50%',
+          content: <UploadRule fileName={file?.name} />,
+          onOk: () => upload(file),
+        });
+        return Upload.LIST_IGNORE;
+      }}
+    >
+      <Button type="primary" icon={<DownloadOutlined />}>
+        导入点位表
+      </Button>
+    </Upload>,
+    <Button
+      key="batch-update"
+      type="primary"
+      icon={
+        <IconFont
+          type={disabled ? 'icon-batch-create-disabled' : 'icon-batch-create'}
+          className="text-[16px]"
+        />
+      }
+      onClick={handleOnBatchUpdate}
+      disabled={disabled}
+    >
+      批量更新
+    </Button>,
+    <Button
+      key="batch-remove"
+      danger
+      icon={<DeleteOutlined />}
+      disabled={disabled}
+      onClick={() =>
+        modal.confirm({
+          title: '批量删除点位',
+          content: '该操作会一次性删除多个点位，请谨慎处理!',
+          onOk: handleOnBatchDelete,
+        })
+      }
+    >
+      批量删除
+    </Button>,
+    <Button
+      key="download"
+      icon={<UploadOutlined />}
+      onClick={() => (window.location.href = '/api/v1/modbus_data_sheet/sheetExport')}
+    >
+      导出点位表
+    </Button>,
+  ];
+
   return (
     <EditableProTable<Partial<ModbusSheetItem>>
       controlled
@@ -328,79 +407,32 @@ const ModbusSheet = () => {
       value={dataSource}
       onChange={setDataSource}
       rootClassName="sheet-table"
-      recordCreatorProps={{
-        position: 'top',
-        creatorButtonText: '添加点位',
-        record: () => ({
-          ...defaultModbusConfig,
-          uuid: 'new',
-        }),
-      }}
-      rowSelection={{
-        selectedRowKeys: selectedRowKeys,
-        onChange: (keys) => {
-          setSelectedRowKeys(keys);
-        },
-      }}
-      toolBarRender={() => [
-        <Upload
-          key="upload"
-          accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-          showUploadList={false}
-          beforeUpload={(file) => {
-            modal.confirm({
-              title: '导入点位表',
-              width: '50%',
-              content: <UploadRule fileName={file?.name} />,
-              onOk: () => upload(file),
-            });
-            return Upload.LIST_IGNORE;
-          }}
-        >
-          <Button type="primary" icon={<DownloadOutlined />}>
-            导入点位表
-          </Button>
-        </Upload>,
-        <Button
-          key="batch-update"
-          type="primary"
-          icon={
-            <IconFont
-              type={disabled ? 'icon-batch-create-disabled' : 'icon-batch-create'}
-              className="text-[16px]"
-            />
-          }
-          onClick={handleOnBatchUpdate}
-          disabled={disabled}
-        >
-          批量更新
-        </Button>,
-        <Button
-          key="batch-remove"
-          danger
-          icon={<DeleteOutlined />}
-          disabled={disabled}
-          onClick={() =>
-            modal.confirm({
-              title: '批量删除点位',
-              content: '该操作会一次性删除多个点位，请谨慎处理!',
-              onOk: handleOnBatchDelete,
-            })
-          }
-        >
-          批量删除
-        </Button>,
-        <Button
-          key="download"
-          icon={<UploadOutlined />}
-          onClick={() => (window.location.href = '/api/v1/modbus_data_sheet/sheetExport')}
-        >
-          导出点位表
-        </Button>,
-      ]}
+      recordCreatorProps={
+        readOnly
+          ? false
+          : {
+              position: 'top',
+              creatorButtonText: '添加点位',
+              record: () => ({
+                ...defaultModbusConfig,
+                uuid: 'new',
+              }),
+            }
+      }
+      rowSelection={
+        readOnly
+          ? false
+          : {
+              selectedRowKeys: selectedRowKeys,
+              onChange: (keys) => {
+                setSelectedRowKeys(keys);
+              },
+            }
+      }
+      toolBarRender={readOnly ? false : () => toolBar}
       request={async ({ current = 1, pageSize = 10 }) => {
         const { data } = await getModbusDataSheetList({
-          device_uuid: deviceId,
+          device_uuid: deviceUuid,
           current,
           size: pageSize,
         });
@@ -415,13 +447,14 @@ const ModbusSheet = () => {
         defaultPageSize: 10,
         hideOnSinglePage: true,
       }}
-      options={{}}
+      options={readOnly ? false : {}}
       editable={{
         type: 'multiple',
         editableKeys,
         onSave: handleOnSave,
         onChange: setEditableRowKeys,
       }}
+      scroll={{ x: readOnly ? 1400 : undefined }}
     />
   );
 };

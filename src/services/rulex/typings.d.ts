@@ -62,6 +62,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type deleteSchemaDelParams = {
+    uuid: string;
+  };
+
   type deleteUserluaDelParams = {
     uuid: string;
   };
@@ -167,6 +171,10 @@ declare namespace API {
 
   type getS1200DataSheetSheetExportParams = {
     device_uuid: string;
+  };
+
+  type getSchemaDetailParams = {
+    uuid: string;
   };
 
   type getUserluaDetailParams = {
