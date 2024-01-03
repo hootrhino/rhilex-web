@@ -32,7 +32,7 @@ type Rule = {
   falseLabel?: string;
 };
 
-type Property = {
+export type Property = {
   label?: string;
   name?: string;
   type?: string;
@@ -336,6 +336,10 @@ const Schema = () => {
         activeSchema={activeSchema}
         open={openProperty}
         onOpenChange={(visible) => setOpenProperty(visible)}
+        onFinish={async (values) => {
+          // TODO 编辑/新增属性
+          console.log(values);
+        }}
       />
     </>
   );

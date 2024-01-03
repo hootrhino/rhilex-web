@@ -36,13 +36,12 @@ export async function getS1200DataSheetList(
       records?: {
         uuid?: string;
         device_uuid?: string;
+        siemensAddress?: string;
         tag?: string;
         alias?: string;
-        type?: string;
+        dataOrder?: string;
+        dataType?: string;
         frequency?: number;
-        address?: number;
-        start?: any;
-        size?: any;
         status?: number;
         lastFetchTime?: number;
         value?: string;
@@ -115,14 +114,12 @@ export async function postS1200DataSheetUpdate(
     siemens_data_points: {
       uuid?: string;
       device_uuid?: string;
-      tag?: string;
-      frequency?: number;
       siemensAddress?: string;
-      addressType?: string;
-      dataBlockType?: string;
-      dataBlockNumber?: number;
-      elementNumber?: number;
-      bitNumber?: number;
+      tag?: string;
+      alias?: string;
+      dataOrder?: string;
+      dataType?: string;
+      frequency?: number;
     }[];
   },
   options?: { [key: string]: any },

@@ -11509,26 +11509,23 @@
                               "device_uuid": {
                                 "type": "string"
                               },
+                              "siemensAddress": {
+                                "type": "string"
+                              },
                               "tag": {
                                 "type": "string"
                               },
                               "alias": {
                                 "type": "string"
                               },
-                              "type": {
+                              "dataOrder": {
+                                "type": "string"
+                              },
+                              "dataType": {
                                 "type": "string"
                               },
                               "frequency": {
                                 "type": "integer"
-                              },
-                              "address": {
-                                "type": "integer"
-                              },
-                              "start": {
-                                "type": "null"
-                              },
-                              "size": {
-                                "type": "null"
                               },
                               "status": {
                                 "type": "integer"
@@ -11543,13 +11540,12 @@
                             "required": [
                               "uuid",
                               "device_uuid",
+                              "siemensAddress",
                               "tag",
                               "alias",
-                              "type",
+                              "dataOrder",
+                              "dataType",
                               "frequency",
-                              "address",
-                              "start",
-                              "size",
                               "status",
                               "lastFetchTime",
                               "value"
@@ -11558,13 +11554,12 @@
                             "x-apifox-orders": [
                               "uuid",
                               "device_uuid",
+                              "siemensAddress",
                               "tag",
                               "alias",
-                              "type",
+                              "dataOrder",
+                              "dataType",
                               "frequency",
-                              "address",
-                              "start",
-                              "size",
                               "status",
                               "lastFetchTime",
                               "value"
@@ -11608,147 +11603,137 @@
                       "data": {
                         "current": 1,
                         "size": 10,
-                        "total": 59,
+                        "total": 10,
                         "records": [
                           {
-                            "uuid": "SIMTBHYDCYKBL",
-                            "device_uuid": "DEVICER27H4F7Q",
-                            "tag": "a1",
-                            "alias": "a1",
-                            "type": "",
+                            "uuid": "SIMTBKDONJIUK",
+                            "device_uuid": "DEVICEMJOE28KR",
+                            "siemensAddress": "DB4900.DBD1000",
+                            "tag": "R0",
+                            "alias": "新砂轮直径（mm）",
+                            "dataOrder": "ABCD",
+                            "dataType": "FLOAT",
                             "frequency": 100,
-                            "address": 0,
-                            "start": null,
-                            "size": null,
                             "status": 1,
-                            "lastFetchTime": 1702284745550,
-                            "value": "00000000"
+                            "lastFetchTime": 0,
+                            "value": "0"
                           },
                           {
-                            "uuid": "SIMTBBCRWHBGM",
-                            "device_uuid": "DEVICER27H4F7Q",
-                            "tag": "a2",
-                            "alias": "a2",
-                            "type": "",
+                            "uuid": "SIMTB6YDRFMIX",
+                            "device_uuid": "DEVICEMJOE28KR",
+                            "siemensAddress": "DB4900.DBD1004",
+                            "tag": "R1",
+                            "alias": "砂轮现在直径（mm）",
+                            "dataOrder": "ABCD",
+                            "dataType": "FLOAT",
                             "frequency": 100,
-                            "address": 1,
-                            "start": null,
-                            "size": null,
                             "status": 1,
-                            "lastFetchTime": 1702284745550,
-                            "value": "00000000"
+                            "lastFetchTime": 0,
+                            "value": "0"
                           },
                           {
-                            "uuid": "SIMTBCCZKYKIX",
-                            "device_uuid": "DEVICER27H4F7Q",
-                            "tag": "a3",
-                            "alias": "a3",
-                            "type": "",
+                            "uuid": "SIMTBKWD3YNEV",
+                            "device_uuid": "DEVICEMJOE28KR",
+                            "siemensAddress": "DB4900.DBD1008",
+                            "tag": "R2",
+                            "alias": "砂轮最小直径（mm）",
+                            "dataOrder": "ABCD",
+                            "dataType": "FLOAT",
                             "frequency": 100,
-                            "address": 2,
-                            "start": null,
-                            "size": null,
                             "status": 1,
-                            "lastFetchTime": 1702284745550,
-                            "value": "00000000"
+                            "lastFetchTime": 0,
+                            "value": "0"
                           },
                           {
-                            "uuid": "SIMTBK9EAMQTM",
-                            "device_uuid": "DEVICER27H4F7Q",
-                            "tag": "a4",
-                            "alias": "a4",
-                            "type": "",
+                            "uuid": "SIMTBZBJFJ3TX",
+                            "device_uuid": "DEVICEMJOE28KR",
+                            "siemensAddress": "DB4900.DBD1012",
+                            "tag": "R3",
+                            "alias": "砂轮线速度(m/s)",
+                            "dataOrder": "ABCD",
+                            "dataType": "FLOAT",
                             "frequency": 100,
-                            "address": 3,
-                            "start": null,
-                            "size": null,
                             "status": 1,
-                            "lastFetchTime": 1702284745550,
-                            "value": "00000000"
+                            "lastFetchTime": 0,
+                            "value": "0"
                           },
                           {
-                            "uuid": "SIMTBVKQYH2VG",
-                            "device_uuid": "DEVICER27H4F7Q",
-                            "tag": "a5",
-                            "alias": "a5",
-                            "type": "",
+                            "uuid": "SIMTB4URZCYF7",
+                            "device_uuid": "DEVICEMJOE28KR",
+                            "siemensAddress": "DB4900.DBD1016",
+                            "tag": "R4",
+                            "alias": "新砂轮修整量（mm）",
+                            "dataOrder": "ABCD",
+                            "dataType": "FLOAT",
                             "frequency": 100,
-                            "address": 4,
-                            "start": null,
-                            "size": null,
                             "status": 1,
-                            "lastFetchTime": 1702284745550,
-                            "value": "00000000"
+                            "lastFetchTime": 0,
+                            "value": "0"
                           },
                           {
-                            "uuid": "SIMTBRYGSTEXA",
-                            "device_uuid": "DEVICER27H4F7Q",
-                            "tag": "a6",
-                            "alias": "a6",
-                            "type": "",
+                            "uuid": "SIMTBB6MXUD26",
+                            "device_uuid": "DEVICEMJOE28KR",
+                            "siemensAddress": "DB4900.DBD1020",
+                            "tag": "R5",
+                            "alias": "砂轮每次修整的修整量（mm）",
+                            "dataOrder": "ABCD",
+                            "dataType": "FLOAT",
                             "frequency": 100,
-                            "address": 5,
-                            "start": null,
-                            "size": null,
                             "status": 1,
-                            "lastFetchTime": 1702284745550,
-                            "value": "00000000"
+                            "lastFetchTime": 0,
+                            "value": "0"
                           },
                           {
-                            "uuid": "SIMTBQRRHKNFC",
-                            "device_uuid": "DEVICER27H4F7Q",
-                            "tag": "a7",
-                            "alias": "a7",
-                            "type": "",
+                            "uuid": "SIMTBAOWQJ3SK",
+                            "device_uuid": "DEVICEMJOE28KR",
+                            "siemensAddress": "DB4900.DBD1024",
+                            "tag": "R6",
+                            "alias": "修整间隔（个）",
+                            "dataOrder": "ABCD",
+                            "dataType": "FLOAT",
                             "frequency": 100,
-                            "address": 6,
-                            "start": null,
-                            "size": null,
                             "status": 1,
-                            "lastFetchTime": 1702284745550,
-                            "value": "00000000"
+                            "lastFetchTime": 0,
+                            "value": "0"
                           },
                           {
-                            "uuid": "SIMTBOAJIEEXK",
-                            "device_uuid": "DEVICER27H4F7Q",
-                            "tag": "a8",
-                            "alias": "a8",
-                            "type": "",
+                            "uuid": "SIMTBCVKTJVDW",
+                            "device_uuid": "DEVICEMJOE28KR",
+                            "siemensAddress": "DB4900.DBD1032",
+                            "tag": "R8",
+                            "alias": "修整跳进量（mm）",
+                            "dataOrder": "ABCD",
+                            "dataType": "FLOAT",
                             "frequency": 100,
-                            "address": 7,
-                            "start": null,
-                            "size": null,
                             "status": 1,
-                            "lastFetchTime": 1702284745550,
-                            "value": "00000000"
+                            "lastFetchTime": 0,
+                            "value": "0"
                           },
                           {
-                            "uuid": "SIMTB2QTDHORW",
-                            "device_uuid": "DEVICER27H4F7Q",
-                            "tag": "a9",
-                            "alias": "a9",
-                            "type": "",
+                            "uuid": "SIMTB2E5ZSU4B",
+                            "device_uuid": "DEVICEMJOE28KR",
+                            "siemensAddress": "DB4900.DBD1036",
+                            "tag": "R9",
+                            "alias": "修整速度（mm/min）",
+                            "dataOrder": "ABCD",
+                            "dataType": "FLOAT",
                             "frequency": 100,
-                            "address": 8,
-                            "start": null,
-                            "size": null,
                             "status": 1,
-                            "lastFetchTime": 1702284745550,
-                            "value": "00000000"
+                            "lastFetchTime": 0,
+                            "value": "0"
                           },
                           {
-                            "uuid": "SIMTBKMLLVVRV",
-                            "device_uuid": "DEVICER27H4F7Q",
-                            "tag": "a10",
-                            "alias": "a10",
-                            "type": "",
+                            "uuid": "SIMTBCDVRVCAG",
+                            "device_uuid": "DEVICEMJOE28KR",
+                            "siemensAddress": "DB4900.DBD1040",
+                            "tag": "R10",
+                            "alias": "新砂轮U轴起始加工位/新砂轮X轴起始加工位(mm)",
+                            "dataOrder": "ABCD",
+                            "dataType": "FLOAT",
                             "frequency": 100,
-                            "address": 9,
-                            "start": null,
-                            "size": null,
                             "status": 1,
-                            "lastFetchTime": 1702284745550,
-                            "value": "00000000"
+                            "lastFetchTime": 0,
+                            "value": "0"
                           }
                         ]
                       }
@@ -11794,28 +11779,22 @@
                         "device_uuid": {
                           "type": "string"
                         },
-                        "tag": {
-                          "type": "string"
-                        },
-                        "frequency": {
-                          "type": "integer"
-                        },
                         "siemensAddress": {
                           "type": "string"
                         },
-                        "addressType": {
+                        "tag": {
                           "type": "string"
                         },
-                        "dataBlockType": {
+                        "alias": {
                           "type": "string"
                         },
-                        "dataBlockNumber": {
-                          "type": "integer"
+                        "dataOrder": {
+                          "type": "string"
                         },
-                        "elementNumber": {
-                          "type": "integer"
+                        "dataType": {
+                          "type": "string"
                         },
-                        "bitNumber": {
+                        "frequency": {
                           "type": "integer"
                         }
                       },
@@ -11823,14 +11802,12 @@
                       "x-apifox-orders": [
                         "uuid",
                         "device_uuid",
-                        "tag",
-                        "frequency",
                         "siemensAddress",
-                        "addressType",
-                        "dataBlockType",
-                        "dataBlockNumber",
-                        "elementNumber",
-                        "bitNumber"
+                        "tag",
+                        "alias",
+                        "dataOrder",
+                        "dataType",
+                        "frequency"
                       ]
                     }
                   }
@@ -11846,19 +11823,17 @@
                 ]
               },
               "example": {
-                "device_uuid": "DEVICER27H4F7Q",
+                "device_uuid": "DEVICEMJOE28KR",
                 "siemens_data_points": [
                   {
-                    "uuid": "S7KJKA5RQT",
-                    "device_uuid": "123",
-                    "tag": "温度",
-                    "frequency": 100,
+                    "uuid": "SIMTBKDONJIUK",
+                    "device_uuid": "DEVICEMJOE28KR",
                     "siemensAddress": "DB4900.DBD1000",
-                    "addressType": "DB",
-                    "dataBlockType": "DB",
-                    "dataBlockNumber": 4900,
-                    "elementNumber": 1000,
-                    "bitNumber": 0
+                    "tag": "温度",
+                    "alias": "温度参数",
+                    "dataOrder": "ABCD",
+                    "dataType": "UINT",
+                    "frequency": 100
                   }
                 ]
               }
