@@ -22,18 +22,21 @@ import '../index.less';
 
 const defaultPlcConfig = {
   tag: '',
-  type: 'Int',
   alias: '',
-  order: 'ABCD',
-  address: '',
+  dataType: 'INT',
+  dataOrder: 'ABCD',
+  siemensAddress: '',
+  frequency: 1000,
 };
 
 export type PlcSheetItem = {
   uuid?: string;
   tag: string;
   alias: string;
-  type: string;
-  address: string;
+  dataOrder?: string;
+  dataType?: string;
+  frequency?: number;
+  siemensAddress?: string;
   status: number;
   lastFetchTime: number;
   value: string;
@@ -64,7 +67,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly Partial<PlcSheetItem>[]>([]);
-  const [type, setType] = useState<string>();
+  const [type, setType] = useState<string>('INT');
 
   const disabled = selectedRowKeys?.length === 0;
 
@@ -106,12 +109,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       ...omit(data, ['index', 'status', 'lastFetchTime', 'value']),
       device_uuid: deviceUuid,
     };
-
-    // if (params?.type === 'MB') {
-    //   params = {
-    //     ...omit(params, ['address']),
-    //   };
-    // }
 
     if (rowKey === 'new') {
       params = {
@@ -172,7 +169,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
     },
     {
       title: '数据类型',
-      dataIndex: 'type',
+      dataIndex: 'dataType',
       renderFormItem: (item, { type, ...rest }) => {
         if (type === 'form') {
           return (
@@ -196,19 +193,19 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
         );
       },
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
-      // search: {
-      //   // 格式化搜索值
-      //   transform: (value) => {
-      //     return {
-      //       startTime: value[0],
-      //       endTime: value[1],
-      //     };
-      //   },
-      // },
+      search: {
+        // 格式化搜索值
+        transform: (value) => {
+          return {
+            dataType: value[0],
+            dataOrder: value[1],
+          };
+        },
+      },
     },
     {
       title: '字节序',
-      dataIndex: 'order',
+      dataIndex: 'dataOrder',
       valueType: 'select',
       hideInSearch: true,
       fieldProps: {
@@ -219,7 +216,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
     },
     {
       title: '地址',
-      dataIndex: 'address',
+      dataIndex: 'siemensAddress',
       hideInSearch: true,
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
       fieldProps: {
@@ -245,6 +242,12 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
           </Tag>
         );
       },
+    },
+    {
+      title: '采集频率',
+      dataIndex: 'frequency',
+      valueType: 'digit',
+      hideInSearch: true,
     },
     {
       title: '采集时间',
@@ -383,11 +386,12 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
             }
       }
       toolBarRender={readOnly ? false : () => toolBar}
-      request={async ({ current = 1, pageSize = 10 }) => {
+      request={async ({ current = 1, pageSize = 10, ...keyword }) => {
         const { data } = await getS1200DataSheetList({
           device_uuid: deviceUuid,
           current,
           size: pageSize,
+          ...keyword,
         });
 
         return Promise.resolve({

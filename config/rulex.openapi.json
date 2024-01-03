@@ -11470,6 +11470,26 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "dataType",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "FLOAT",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dataOrder",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "DCBA",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -11606,134 +11626,134 @@
                         "total": 10,
                         "records": [
                           {
-                            "uuid": "SIMTBKDONJIUK",
-                            "device_uuid": "DEVICEMJOE28KR",
-                            "siemensAddress": "DB4900.DBD1000",
+                            "uuid": "SIMTBDNJLQXRN",
+                            "device_uuid": "DEVICEEDN8ZR9Z",
+                            "siemensAddress": "DB1.DBD1000",
                             "tag": "R0",
                             "alias": "新砂轮直径（mm）",
                             "dataOrder": "ABCD",
                             "dataType": "FLOAT",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 0,
-                            "value": "0"
+                            "lastFetchTime": 1704263696039,
+                            "value": "0.000000"
                           },
                           {
-                            "uuid": "SIMTB6YDRFMIX",
-                            "device_uuid": "DEVICEMJOE28KR",
-                            "siemensAddress": "DB4900.DBD1004",
+                            "uuid": "SIMTBVIMCFVWY",
+                            "device_uuid": "DEVICEEDN8ZR9Z",
+                            "siemensAddress": "DB1.DBD1004",
                             "tag": "R1",
                             "alias": "砂轮现在直径（mm）",
                             "dataOrder": "ABCD",
                             "dataType": "FLOAT",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 0,
-                            "value": "0"
+                            "lastFetchTime": 1704263696442,
+                            "value": "0.000000"
                           },
                           {
-                            "uuid": "SIMTBKWD3YNEV",
-                            "device_uuid": "DEVICEMJOE28KR",
-                            "siemensAddress": "DB4900.DBD1008",
+                            "uuid": "SIMTBX4WIXD5C",
+                            "device_uuid": "DEVICEEDN8ZR9Z",
+                            "siemensAddress": "DB1.DBD1008",
                             "tag": "R2",
                             "alias": "砂轮最小直径（mm）",
                             "dataOrder": "ABCD",
                             "dataType": "FLOAT",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 0,
-                            "value": "0"
+                            "lastFetchTime": 1704263696139,
+                            "value": "0.000000"
                           },
                           {
-                            "uuid": "SIMTBZBJFJ3TX",
-                            "device_uuid": "DEVICEMJOE28KR",
-                            "siemensAddress": "DB4900.DBD1012",
+                            "uuid": "SIMTBJUCMYS4P",
+                            "device_uuid": "DEVICEEDN8ZR9Z",
+                            "siemensAddress": "DB1.DBD1012",
                             "tag": "R3",
                             "alias": "砂轮线速度(m/s)",
                             "dataOrder": "ABCD",
                             "dataType": "FLOAT",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 0,
-                            "value": "0"
+                            "lastFetchTime": 1704263696240,
+                            "value": "0.000000"
                           },
                           {
-                            "uuid": "SIMTB4URZCYF7",
-                            "device_uuid": "DEVICEMJOE28KR",
-                            "siemensAddress": "DB4900.DBD1016",
+                            "uuid": "SIMTB3XSQBJJ2",
+                            "device_uuid": "DEVICEEDN8ZR9Z",
+                            "siemensAddress": "DB1.DBD1016",
                             "tag": "R4",
                             "alias": "新砂轮修整量（mm）",
                             "dataOrder": "ABCD",
                             "dataType": "FLOAT",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 0,
-                            "value": "0"
+                            "lastFetchTime": 1704263695438,
+                            "value": "0.000000"
                           },
                           {
-                            "uuid": "SIMTBB6MXUD26",
-                            "device_uuid": "DEVICEMJOE28KR",
-                            "siemensAddress": "DB4900.DBD1020",
+                            "uuid": "SIMTBEGRQ8NKG",
+                            "device_uuid": "DEVICEEDN8ZR9Z",
+                            "siemensAddress": "DB1.DBD1020",
                             "tag": "R5",
                             "alias": "砂轮每次修整的修整量（mm）",
                             "dataOrder": "ABCD",
                             "dataType": "FLOAT",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 0,
-                            "value": "0"
+                            "lastFetchTime": 1704263695538,
+                            "value": "0.000000"
                           },
                           {
-                            "uuid": "SIMTBAOWQJ3SK",
-                            "device_uuid": "DEVICEMJOE28KR",
-                            "siemensAddress": "DB4900.DBD1024",
+                            "uuid": "SIMTBKM2CNJ5F",
+                            "device_uuid": "DEVICEEDN8ZR9Z",
+                            "siemensAddress": "DB1.DBD1024",
                             "tag": "R6",
                             "alias": "修整间隔（个）",
                             "dataOrder": "ABCD",
                             "dataType": "FLOAT",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 0,
-                            "value": "0"
+                            "lastFetchTime": 1704263695638,
+                            "value": "0.000000"
                           },
                           {
-                            "uuid": "SIMTBCVKTJVDW",
-                            "device_uuid": "DEVICEMJOE28KR",
-                            "siemensAddress": "DB4900.DBD1032",
+                            "uuid": "SIMTBOASYFXYT",
+                            "device_uuid": "DEVICEEDN8ZR9Z",
+                            "siemensAddress": "DB1.DBD1032",
                             "tag": "R8",
                             "alias": "修整跳进量（mm）",
                             "dataOrder": "ABCD",
                             "dataType": "FLOAT",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 0,
-                            "value": "0"
+                            "lastFetchTime": 1704263695739,
+                            "value": "0.000000"
                           },
                           {
-                            "uuid": "SIMTB2E5ZSU4B",
-                            "device_uuid": "DEVICEMJOE28KR",
-                            "siemensAddress": "DB4900.DBD1036",
+                            "uuid": "SIMTB5HV7H9UG",
+                            "device_uuid": "DEVICEEDN8ZR9Z",
+                            "siemensAddress": "DB1.DBD1036",
                             "tag": "R9",
                             "alias": "修整速度（mm/min）",
                             "dataOrder": "ABCD",
                             "dataType": "FLOAT",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 0,
-                            "value": "0"
+                            "lastFetchTime": 1704263695839,
+                            "value": "0.000000"
                           },
                           {
-                            "uuid": "SIMTBCDVRVCAG",
-                            "device_uuid": "DEVICEMJOE28KR",
-                            "siemensAddress": "DB4900.DBD1040",
+                            "uuid": "SIMTBBMB6O7TK",
+                            "device_uuid": "DEVICEEDN8ZR9Z",
+                            "siemensAddress": "DB1.DBD1040",
                             "tag": "R10",
                             "alias": "新砂轮U轴起始加工位/新砂轮X轴起始加工位(mm)",
                             "dataOrder": "ABCD",
                             "dataType": "FLOAT",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 0,
-                            "value": "0"
+                            "lastFetchTime": 1704263696341,
+                            "value": "0.000000"
                           }
                         ]
                       }
