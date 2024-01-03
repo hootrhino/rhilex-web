@@ -168,6 +168,15 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       fieldProps: { placeholder: '请输入数据别名' },
     },
     {
+      title: '地址',
+      dataIndex: 'siemensAddress',
+      hideInSearch: true,
+      formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
+      fieldProps: {
+        placeholder: '请输入地址',
+      },
+    },
+    {
       title: '数据类型',
       dataIndex: 'dataType',
       renderFormItem: (item, { type, ...rest }) => {
@@ -213,15 +222,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
         placeholder: '请选择字节序',
       },
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
-    },
-    {
-      title: '地址',
-      dataIndex: 'siemensAddress',
-      hideInSearch: true,
-      formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
-      fieldProps: {
-        placeholder: '请输入地址',
-      },
     },
     {
       title: '当前值',
