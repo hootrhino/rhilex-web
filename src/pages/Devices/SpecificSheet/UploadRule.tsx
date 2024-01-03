@@ -14,13 +14,12 @@ const dataSource = {
   ],
   plc: [
     {
-      tag: '标签',
-      alias: '别名',
-      type: 'DB',
+      address: 'DB4900.DBD1000',
+      tag: 'R0',
+      alias: '新砂轮直径（mm）',
+      type: 'FLOAT',
+      order: 'ABCD',
       frequency: 1000,
-      address: 1,
-      start: 100,
-      size: 16,
     },
   ],
 };
@@ -58,6 +57,10 @@ const columnsMap = {
   ],
   plc: [
     {
+      title: 'address',
+      dataIndex: 'address',
+    },
+    {
       title: 'tag',
       dataIndex: 'tag',
     },
@@ -70,20 +73,12 @@ const columnsMap = {
       dataIndex: 'type',
     },
     {
+      title: 'order',
+      dataIndex: 'order',
+    },
+    {
       title: 'frequency',
       dataIndex: 'frequency',
-    },
-    {
-      title: 'address',
-      dataIndex: 'address',
-    },
-    {
-      title: 'start',
-      dataIndex: 'start',
-    },
-    {
-      title: 'size',
-      dataIndex: 'size',
     },
   ],
 };
