@@ -11,34 +11,43 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { AutoComplete } from 'antd';
-import { useRef, useState } from 'react';
-import type { ActiveSchema, Property } from '.';
-import { rwEnum, typeEnum, unitOptions } from './enum';
+import { useEffect, useRef } from 'react';
+import type { Property } from '..';
+import { rwEnum, typeEnum, unitOptions } from '../enum';
 
-type PropertyFormProps = ModalFormProps & {
-  activeSchema: ActiveSchema;
+const defaultProperty = {
+  rw: 'R',
+  type: 'STRING',
+  rule: { latitude: 0, longitude: 0, max: 0, range: [0, 0], round: 0 },
 };
 
-const PropertyForm = ({ activeSchema, ...props }: PropertyFormProps) => {
+type PropertyFormProps = ModalFormProps & {
+  initialValue: Partial<Property>;
+};
+
+const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
   const formRef = useRef<ProFormInstance>();
-  const [initialValue, setInitialValue] = useState<Partial<Property>>();
+
+  useEffect(() => {
+    formRef.current?.setFieldsValue(
+      initialValue?.uuid
+        ? {
+            ...initialValue,
+            rule: {
+              ...initialValue?.rule,
+              range: [initialValue?.rule?.min, initialValue?.rule?.max],
+            },
+          }
+        : defaultProperty,
+    );
+  }, [initialValue]);
 
   return (
     <ModalForm
-      // title={initialValue?.uuid ? '更新物模型' : '新建物模型'}
-      title="新增属性"
+      title={initialValue?.uuid ? '更新属性' : '新增属性'}
       formRef={formRef}
       width="50%"
-      modalProps={{
-        destroyOnClose: true,
-        maskClosable: false,
-        // afterOpenChange(open) {
-        //   if (!open) {
-        //     setInitialValue({});
-        //   }
-        // },
-      }}
-      initialValues={{ rw: 'R', type: 'STRING', rule: { latitude: 0, longitude: 0 } }}
+      initialValues={defaultProperty}
       {...props}
     >
       <ProForm.Group>
@@ -72,7 +81,7 @@ const PropertyForm = ({ activeSchema, ...props }: PropertyFormProps) => {
           if (type === 'STRING') {
             dom = (
               <ProFormDigit
-                name={['rule', 'maxLength']}
+                name={['rule', 'max']}
                 width="lg"
                 label="最大长度"
                 placeholder="请输入最大长度"
@@ -88,6 +97,10 @@ const PropertyForm = ({ activeSchema, ...props }: PropertyFormProps) => {
                 placeholder={['最小值', '最大值']}
                 separatorWidth={60}
                 rules={[{ required: true, message: '请输入取值范围' }]}
+                transform={(values) => ({
+                  min: values?.[0],
+                  max: values?.[1],
+                })}
               />
             );
           }
@@ -102,6 +115,10 @@ const PropertyForm = ({ activeSchema, ...props }: PropertyFormProps) => {
                     placeholder={['最小值', '最大值']}
                     separatorWidth={30}
                     rules={[{ required: true, message: '请输入取值范围' }]}
+                    transform={(values) => ({
+                      min: values?.[0],
+                      max: values?.[1],
+                    })}
                   />
                 </div>
 

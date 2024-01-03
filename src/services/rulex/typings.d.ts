@@ -66,6 +66,11 @@ declare namespace API {
     uuid: string;
   };
 
+  type deleteSchemaPropertiesDelParams = {
+    uuid: string;
+    schemaId: string;
+  };
+
   type deleteUserluaDelParams = {
     uuid: string;
   };
@@ -177,6 +182,16 @@ declare namespace API {
 
   type getSchemaDetailParams = {
     uuid: string;
+  };
+
+  type getSchemaPropertiesDetailParams = {
+    uuid: string;
+  };
+
+  type getSchemaPropertiesListParams = {
+    current?: number;
+    size?: number;
+    schema_uuid: string;
   };
 
   type getUserluaDetailParams = {

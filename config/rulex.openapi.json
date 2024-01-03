@@ -12393,104 +12393,20 @@
                           "name": {
                             "type": "string"
                           },
-                          "schema": {
-                            "type": "object",
-                            "properties": {
-                              "iotProperties": {
-                                "type": "array",
-                                "items": {
-                                  "type": "object",
-                                  "properties": {
-                                    "label": {
-                                      "type": "string"
-                                    },
-                                    "name": {
-                                      "type": "string"
-                                    },
-                                    "description": {
-                                      "type": "string"
-                                    },
-                                    "type": {
-                                      "type": "string"
-                                    },
-                                    "rw": {
-                                      "type": "string"
-                                    },
-                                    "unit": {
-                                      "type": "string"
-                                    },
-                                    "rule": {
-                                      "type": "object",
-                                      "properties": {
-                                        "defaultValue": {
-                                          "type": "integer"
-                                        },
-                                        "max": {
-                                          "type": "integer"
-                                        },
-                                        "min": {
-                                          "type": "integer"
-                                        },
-                                        "round": {
-                                          "type": "integer"
-                                        },
-                                        "trueLabel": {
-                                          "type": "string"
-                                        },
-                                        "falseLabel": {
-                                          "type": "string"
-                                        }
-                                      },
-                                      "required": [
-                                        "defaultValue"
-                                      ],
-                                      "x-apifox-ignore-properties": [],
-                                      "x-apifox-orders": [
-                                        "defaultValue",
-                                        "max",
-                                        "min",
-                                        "round",
-                                        "trueLabel",
-                                        "falseLabel"
-                                      ]
-                                    }
-                                  },
-                                  "required": [
-                                    "label",
-                                    "name",
-                                    "description",
-                                    "type",
-                                    "rw",
-                                    "unit",
-                                    "rule"
-                                  ],
-                                  "x-apifox-ignore-properties": [],
-                                  "x-apifox-orders": [
-                                    "label",
-                                    "name",
-                                    "description",
-                                    "type",
-                                    "rw",
-                                    "unit",
-                                    "rule"
-                                  ]
-                                }
-                              }
-                            },
-                            "required": [
-                              "iotProperties"
-                            ],
-                            "x-apifox-ignore-properties": [],
-                            "x-apifox-orders": [
-                              "iotProperties"
-                            ]
+                          "description": {
+                            "type": "string"
                           }
                         },
+                        "required": [
+                          "uuid",
+                          "name",
+                          "description"
+                        ],
                         "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
                           "uuid",
                           "name",
-                          "schema"
+                          "description"
                         ]
                       }
                     }
@@ -12515,75 +12431,19 @@
                       "msg": "Success",
                       "data": [
                         {
-                          "uuid": "SCHEMA87HDSFC4",
+                          "uuid": "SCHEMAKWFA8WBL",
                           "name": "测试物模型: 机场大厅数据统计",
-                          "schema": {
-                            "iotProperties": [
-                              {
-                                "label": "整形：今天进出人数统计",
-                                "name": "peopleCount",
-                                "description": "今天进出人数统计",
-                                "type": "INTEGER",
-                                "rw": "R",
-                                "unit": "人",
-                                "rule": {
-                                  "defaultValue": 0,
-                                  "max": 100
-                                }
-                              },
-                              {
-                                "label": "浮点型：温度",
-                                "name": "temp",
-                                "description": "浮点型：温度",
-                                "type": "FLOAT",
-                                "rw": "R",
-                                "unit": "摄氏度",
-                                "rule": {
-                                  "defaultValue": 0,
-                                  "max": 100,
-                                  "min": -100,
-                                  "round": 2
-                                }
-                              },
-                              {
-                                "label": "浮点型：湿度",
-                                "name": "humi",
-                                "description": "浮点型：湿度",
-                                "type": "FLOAT",
-                                "rw": "R",
-                                "unit": "摄氏度",
-                                "rule": {
-                                  "defaultValue": 0,
-                                  "max": 100,
-                                  "round": 2
-                                }
-                              },
-                              {
-                                "label": "布尔型：灯开关-1",
-                                "name": "switcher1",
-                                "description": "布尔型：灯开关-1",
-                                "type": "BOOL",
-                                "rw": "RW",
-                                "unit": "",
-                                "rule": {
-                                  "defaultValue": false,
-                                  "trueLabel": "开启",
-                                  "falseLabel": "关闭"
-                                }
-                              },
-                              {
-                                "label": "文本型：滚动显示屏幕文本",
-                                "name": "string1",
-                                "description": "文本型：滚动显示屏幕文本",
-                                "type": "STRING",
-                                "rw": "R",
-                                "unit": "",
-                                "rule": {
-                                  "defaultValue": "Hello, 大牛"
-                                }
-                              }
-                            ]
-                          }
+                          "description": "测试物模型: 机场大厅数据统计"
+                        },
+                        {
+                          "uuid": "SCHEMA56WQTGTT",
+                          "name": "测试物模型: 机场大厅数据统计",
+                          "description": "测试物模型: 机场大厅数据统计"
+                        },
+                        {
+                          "uuid": "SCHEMAK6JEXYVR",
+                          "name": "测试物模型: 机场大厅数据统计",
+                          "description": "测试物模型: 机场大厅数据统计"
                         }
                       ]
                     }
@@ -12617,178 +12477,22 @@
                   "name": {
                     "type": "string"
                   },
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "iotProperties": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "label": {
-                              "type": "string"
-                            },
-                            "name": {
-                              "type": "string"
-                            },
-                            "description": {
-                              "type": "string"
-                            },
-                            "type": {
-                              "type": "string"
-                            },
-                            "rw": {
-                              "type": "string"
-                            },
-                            "unit": {
-                              "type": "string"
-                            },
-                            "rule": {
-                              "type": "object",
-                              "properties": {
-                                "defaultValue": {
-                                  "type": "integer"
-                                },
-                                "max": {
-                                  "type": "integer"
-                                },
-                                "min": {
-                                  "type": "integer"
-                                },
-                                "round": {
-                                  "type": "integer"
-                                },
-                                "trueLabel": {
-                                  "type": "string"
-                                },
-                                "falseLabel": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": [
-                                "defaultValue"
-                              ],
-                              "x-apifox-ignore-properties": [],
-                              "x-apifox-orders": [
-                                "defaultValue",
-                                "max",
-                                "min",
-                                "round",
-                                "trueLabel",
-                                "falseLabel"
-                              ]
-                            }
-                          },
-                          "required": [
-                            "label",
-                            "name",
-                            "description",
-                            "type",
-                            "rw",
-                            "unit",
-                            "rule"
-                          ],
-                          "x-apifox-ignore-properties": [],
-                          "x-apifox-orders": [
-                            "label",
-                            "name",
-                            "description",
-                            "type",
-                            "rw",
-                            "unit",
-                            "rule"
-                          ]
-                        }
-                      }
-                    },
-                    "required": [
-                      "iotProperties"
-                    ],
-                    "x-apifox-ignore-properties": [],
-                    "x-apifox-orders": [
-                      "iotProperties"
-                    ]
+                  "description": {
+                    "type": "string"
                   }
                 },
                 "required": [
-                  "name",
-                  "schema"
+                  "name"
                 ],
-                "x-apifox-ignore-properties": [],
                 "x-apifox-orders": [
                   "name",
-                  "schema"
-                ]
+                  "description"
+                ],
+                "x-apifox-ignore-properties": []
               },
               "example": {
                 "name": "测试物模型: 机场大厅数据统计",
-                "schema": {
-                  "iotProperties": [
-                    {
-                      "label": "整形：今天进出人数统计",
-                      "name": "peopleCount",
-                      "description": "今天进出人数统计",
-                      "type": "INTEGER",
-                      "rw": "R",
-                      "unit": "人",
-                      "rule": {
-                        "defaultValue": 0,
-                        "max": 100
-                      }
-                    },
-                    {
-                      "label": "浮点型：温度",
-                      "name": "temp",
-                      "description": "浮点型：温度",
-                      "type": "FLOAT",
-                      "rw": "R",
-                      "unit": "摄氏度",
-                      "rule": {
-                        "defaultValue": 0,
-                        "max": 100,
-                        "min": -100,
-                        "round": 2
-                      }
-                    },
-                    {
-                      "label": "浮点型：湿度",
-                      "name": "humi",
-                      "description": "浮点型：湿度",
-                      "type": "FLOAT",
-                      "rw": "R",
-                      "unit": "摄氏度",
-                      "rule": {
-                        "defaultValue": 0,
-                        "max": 100,
-                        "round": 2
-                      }
-                    },
-                    {
-                      "label": "布尔型：灯开关-1",
-                      "name": "switcher1",
-                      "description": "布尔型：灯开关-1",
-                      "type": "BOOL",
-                      "rw": "RW",
-                      "unit": "",
-                      "rule": {
-                        "defaultValue": false,
-                        "trueLabel": "开启",
-                        "falseLabel": "关闭"
-                      }
-                    },
-                    {
-                      "label": "文本型：滚动显示屏幕文本",
-                      "name": "string1",
-                      "description": "文本型：滚动显示屏幕文本",
-                      "type": "STRING",
-                      "rw": "R",
-                      "unit": "",
-                      "rule": {
-                        "defaultValue": "Hello, 大牛"
-                      }
-                    }
-                  ]
-                }
+                "description": "测试物模型: 机场大厅数据统计"
               }
             }
           }
@@ -12825,6 +12529,16 @@
                     "msg",
                     "data"
                   ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
                 }
               }
             }
@@ -12857,181 +12571,25 @@
                   "name": {
                     "type": "string"
                   },
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "iotProperties": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "label": {
-                              "type": "string"
-                            },
-                            "name": {
-                              "type": "string"
-                            },
-                            "description": {
-                              "type": "string"
-                            },
-                            "type": {
-                              "type": "string"
-                            },
-                            "rw": {
-                              "type": "string"
-                            },
-                            "unit": {
-                              "type": "string"
-                            },
-                            "rule": {
-                              "type": "object",
-                              "properties": {
-                                "defaultValue": {
-                                  "type": "integer"
-                                },
-                                "max": {
-                                  "type": "integer"
-                                },
-                                "min": {
-                                  "type": "integer"
-                                },
-                                "round": {
-                                  "type": "integer"
-                                },
-                                "trueLabel": {
-                                  "type": "string"
-                                },
-                                "falseLabel": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": [
-                                "defaultValue"
-                              ],
-                              "x-apifox-ignore-properties": [],
-                              "x-apifox-orders": [
-                                "defaultValue",
-                                "max",
-                                "min",
-                                "round",
-                                "trueLabel",
-                                "falseLabel"
-                              ]
-                            }
-                          },
-                          "required": [
-                            "label",
-                            "name",
-                            "description",
-                            "type",
-                            "rw",
-                            "unit",
-                            "rule"
-                          ],
-                          "x-apifox-ignore-properties": [],
-                          "x-apifox-orders": [
-                            "label",
-                            "name",
-                            "description",
-                            "type",
-                            "rw",
-                            "unit",
-                            "rule"
-                          ]
-                        }
-                      }
-                    },
-                    "required": [
-                      "iotProperties"
-                    ],
-                    "x-apifox-ignore-properties": [],
-                    "x-apifox-orders": [
-                      "iotProperties"
-                    ]
+                  "description": {
+                    "type": "string"
                   }
                 },
                 "required": [
                   "uuid",
-                  "name",
-                  "schema"
+                  "name"
                 ],
-                "x-apifox-ignore-properties": [],
                 "x-apifox-orders": [
                   "uuid",
                   "name",
-                  "schema"
-                ]
+                  "description"
+                ],
+                "x-apifox-ignore-properties": []
               },
               "example": {
-                "uuid": "SCHEMA87HDSFC4",
+                "uuid": "SCHEMAKWFA8WBL",
                 "name": "测试物模型: 机场大厅数据统计",
-                "schema": {
-                  "iotProperties": [
-                    {
-                      "label": "整形：今天进出人数统计",
-                      "name": "peopleCount",
-                      "description": "今天进出人数统计",
-                      "type": "INTEGER",
-                      "rw": "R",
-                      "unit": "人",
-                      "rule": {
-                        "defaultValue": 0,
-                        "max": 100
-                      }
-                    },
-                    {
-                      "label": "浮点型：温度",
-                      "name": "temp",
-                      "description": "浮点型：温度",
-                      "type": "FLOAT",
-                      "rw": "R",
-                      "unit": "摄氏度",
-                      "rule": {
-                        "defaultValue": 0,
-                        "max": 100,
-                        "min": -100,
-                        "round": 2
-                      }
-                    },
-                    {
-                      "label": "浮点型：湿度",
-                      "name": "humi",
-                      "description": "浮点型：湿度",
-                      "type": "FLOAT",
-                      "rw": "R",
-                      "unit": "摄氏度",
-                      "rule": {
-                        "defaultValue": 0,
-                        "max": 100,
-                        "round": 2
-                      }
-                    },
-                    {
-                      "label": "布尔型：灯开关-1",
-                      "name": "switcher1",
-                      "description": "布尔型：灯开关-1",
-                      "type": "BOOL",
-                      "rw": "RW",
-                      "unit": "",
-                      "rule": {
-                        "defaultValue": false,
-                        "trueLabel": "开启",
-                        "falseLabel": "关闭"
-                      }
-                    },
-                    {
-                      "label": "文本型：滚动显示屏幕文本",
-                      "name": "string1",
-                      "description": "文本型：滚动显示屏幕文本",
-                      "type": "STRING",
-                      "rw": "R",
-                      "unit": "",
-                      "rule": {
-                        "defaultValue": "Hello, 大牛"
-                      }
-                    }
-                  ]
-                }
+                "description": "测试物模型: 机场大厅数据统计"
               }
             }
           }
@@ -13043,9 +12601,41 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {},
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
                   "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
                 }
               }
             }
@@ -13151,109 +12741,20 @@
                         "name": {
                           "type": "string"
                         },
-                        "schema": {
-                          "type": "object",
-                          "properties": {
-                            "iotProperties": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "label": {
-                                    "type": "string"
-                                  },
-                                  "name": {
-                                    "type": "string"
-                                  },
-                                  "description": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  },
-                                  "rw": {
-                                    "type": "string"
-                                  },
-                                  "unit": {
-                                    "type": "string"
-                                  },
-                                  "rule": {
-                                    "type": "object",
-                                    "properties": {
-                                      "defaultValue": {
-                                        "type": "integer"
-                                      },
-                                      "max": {
-                                        "type": "integer"
-                                      },
-                                      "min": {
-                                        "type": "integer"
-                                      },
-                                      "round": {
-                                        "type": "integer"
-                                      },
-                                      "trueLabel": {
-                                        "type": "string"
-                                      },
-                                      "falseLabel": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": [
-                                      "defaultValue"
-                                    ],
-                                    "x-apifox-ignore-properties": [],
-                                    "x-apifox-orders": [
-                                      "defaultValue",
-                                      "max",
-                                      "min",
-                                      "round",
-                                      "trueLabel",
-                                      "falseLabel"
-                                    ]
-                                  }
-                                },
-                                "required": [
-                                  "label",
-                                  "name",
-                                  "description",
-                                  "type",
-                                  "rw",
-                                  "unit",
-                                  "rule"
-                                ],
-                                "x-apifox-ignore-properties": [],
-                                "x-apifox-orders": [
-                                  "label",
-                                  "name",
-                                  "description",
-                                  "type",
-                                  "rw",
-                                  "unit",
-                                  "rule"
-                                ]
-                              }
-                            }
-                          },
-                          "required": [
-                            "iotProperties"
-                          ],
-                          "x-apifox-ignore-properties": [],
-                          "x-apifox-orders": [
-                            "iotProperties"
-                          ]
+                        "description": {
+                          "type": "string"
                         }
                       },
                       "required": [
                         "uuid",
                         "name",
-                        "schema"
+                        "description"
                       ],
                       "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "uuid",
                         "name",
-                        "schema"
+                        "description"
                       ]
                     }
                   },
@@ -13276,75 +12777,9 @@
                       "code": 200,
                       "msg": "Success",
                       "data": {
-                        "uuid": "SCHEMA87HDSFC4",
+                        "uuid": "SCHEMAKWFA8WBL",
                         "name": "测试物模型: 机场大厅数据统计",
-                        "schema": {
-                          "iotProperties": [
-                            {
-                              "label": "整形：今天进出人数统计",
-                              "name": "peopleCount",
-                              "description": "今天进出人数统计",
-                              "type": "INTEGER",
-                              "rw": "R",
-                              "unit": "人",
-                              "rule": {
-                                "defaultValue": 0,
-                                "max": 100
-                              }
-                            },
-                            {
-                              "label": "浮点型：温度",
-                              "name": "temp",
-                              "description": "浮点型：温度",
-                              "type": "FLOAT",
-                              "rw": "R",
-                              "unit": "摄氏度",
-                              "rule": {
-                                "defaultValue": 0,
-                                "max": 100,
-                                "min": -100,
-                                "round": 2
-                              }
-                            },
-                            {
-                              "label": "浮点型：湿度",
-                              "name": "humi",
-                              "description": "浮点型：湿度",
-                              "type": "FLOAT",
-                              "rw": "R",
-                              "unit": "摄氏度",
-                              "rule": {
-                                "defaultValue": 0,
-                                "max": 100,
-                                "round": 2
-                              }
-                            },
-                            {
-                              "label": "布尔型：灯开关-1",
-                              "name": "switcher1",
-                              "description": "布尔型：灯开关-1",
-                              "type": "BOOL",
-                              "rw": "RW",
-                              "unit": "",
-                              "rule": {
-                                "defaultValue": false,
-                                "trueLabel": "开启",
-                                "falseLabel": "关闭"
-                              }
-                            },
-                            {
-                              "label": "文本型：滚动显示屏幕文本",
-                              "name": "string1",
-                              "description": "文本型：滚动显示屏幕文本",
-                              "type": "STRING",
-                              "rw": "R",
-                              "unit": "",
-                              "rule": {
-                                "defaultValue": "Hello, 大牛"
-                              }
-                            }
-                          ]
-                        }
+                        "description": "测试物模型: 机场大厅数据统计"
                       }
                     }
                   }
@@ -13354,6 +12789,762 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-137847657-run",
+        "security": []
+      }
+    },
+    "/api/v1/schema/properties/list": {
+      "get": {
+        "summary": "属性列表",
+        "x-apifox-folder": "数据模型",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据模型"
+        ],
+        "parameters": [
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "10",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schema_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "SCHEMAKWFA8WBL",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "schemaId": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "rw": {
+                                "type": "string"
+                              },
+                              "unit": {
+                                "type": "string"
+                              },
+                              "rule": {
+                                "type": "object",
+                                "properties": {
+                                  "defaultValue": {
+                                    "type": "string"
+                                  },
+                                  "max": {
+                                    "type": "integer"
+                                  },
+                                  "min": {
+                                    "type": "integer"
+                                  },
+                                  "trueLabel": {
+                                    "type": "string"
+                                  },
+                                  "falseLabel": {
+                                    "type": "string"
+                                  },
+                                  "round": {
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [
+                                  "defaultValue",
+                                  "max",
+                                  "min",
+                                  "trueLabel",
+                                  "falseLabel",
+                                  "round"
+                                ],
+                                "x-apifox-orders": [
+                                  "defaultValue",
+                                  "max",
+                                  "min",
+                                  "trueLabel",
+                                  "falseLabel",
+                                  "round"
+                                ],
+                                "x-apifox-ignore-properties": []
+                              }
+                            },
+                            "x-apifox-orders": [
+                              "uuid",
+                              "schemaId",
+                              "label",
+                              "name",
+                              "description",
+                              "type",
+                              "rw",
+                              "unit",
+                              "rule"
+                            ],
+                            "x-apifox-ignore-properties": []
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 10,
+                        "total": 1,
+                        "records": [
+                          {
+                            "uuid": "PROPER25C5JMSE",
+                            "schemaId": "SCHEMA5DPUNHSG",
+                            "label": "整形：今天进出人数统计",
+                            "name": "peopleCount",
+                            "description": "",
+                            "type": "INTEGER",
+                            "rw": "R",
+                            "unit": "人",
+                            "rule": {
+                              "defaultValue": "",
+                              "max": 0,
+                              "min": 0,
+                              "trueLabel": "",
+                              "falseLabel": "",
+                              "round": 0
+                            },
+                            "value": "TODO"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-138509431-run",
+        "security": []
+      }
+    },
+    "/api/v1/schema/properties/create": {
+      "post": {
+        "summary": "新建属性",
+        "x-apifox-folder": "数据模型",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据模型"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "rw": {
+                    "type": "string"
+                  },
+                  "unit": {
+                    "type": "string"
+                  },
+                  "rule": {
+                    "type": "object",
+                    "properties": {
+                      "defaultValue": {
+                        "type": "string"
+                      },
+                      "max": {
+                        "type": "integer"
+                      },
+                      "min": {
+                        "type": "integer"
+                      },
+                      "trueLabel": {
+                        "type": "string"
+                      },
+                      "falseLabel": {
+                        "type": "string"
+                      },
+                      "round": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "defaultValue",
+                      "max",
+                      "min",
+                      "trueLabel",
+                      "falseLabel",
+                      "round"
+                    ],
+                    "x-apifox-orders": [
+                      "defaultValue",
+                      "max",
+                      "min",
+                      "trueLabel",
+                      "falseLabel",
+                      "round"
+                    ],
+                    "x-apifox-ignore-properties": []
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schemaId",
+                  "label",
+                  "name",
+                  "type",
+                  "rw",
+                  "unit",
+                  "rule"
+                ],
+                "x-apifox-orders": [
+                  "schemaId",
+                  "label",
+                  "name",
+                  "type",
+                  "rw",
+                  "unit",
+                  "rule",
+                  "description"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "schemaId": "SCHEMAWJS98BL3",
+                "label": "整形：今天进出人数统计",
+                "name": "peopleCount",
+                "type": "INTEGER",
+                "description": "description",
+                "rw": "R",
+                "unit": "人",
+                "rule": {
+                  "defaultValue": "",
+                  "max": 0,
+                  "min": 0,
+                  "trueLabel": "",
+                  "falseLabel": "",
+                  "round": 0
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-138511026-run",
+        "security": []
+      }
+    },
+    "/api/v1/schema/properties/update": {
+      "put": {
+        "summary": "更新属性",
+        "x-apifox-folder": "数据模型",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据模型"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "schemaId": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "rw": {
+                    "type": "string"
+                  },
+                  "unit": {
+                    "type": "string"
+                  },
+                  "rule": {
+                    "type": "object",
+                    "properties": {
+                      "defaultValue": {
+                        "type": "string"
+                      },
+                      "max": {
+                        "type": "integer"
+                      },
+                      "min": {
+                        "type": "integer"
+                      },
+                      "trueLabel": {
+                        "type": "string"
+                      },
+                      "falseLabel": {
+                        "type": "string"
+                      },
+                      "round": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "defaultValue",
+                      "max",
+                      "min",
+                      "trueLabel",
+                      "falseLabel",
+                      "round"
+                    ],
+                    "x-apifox-orders": [
+                      "defaultValue",
+                      "max",
+                      "min",
+                      "trueLabel",
+                      "falseLabel",
+                      "round"
+                    ],
+                    "x-apifox-ignore-properties": []
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "schemaId",
+                  "label",
+                  "name",
+                  "type",
+                  "rw",
+                  "unit",
+                  "rule"
+                ],
+                "x-apifox-orders": [
+                  "uuid",
+                  "schemaId",
+                  "label",
+                  "name",
+                  "type",
+                  "rw",
+                  "unit",
+                  "rule",
+                  "description"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "uuid": "12345678",
+                "schemaId": "SCHEMAKWFA8WBL",
+                "label": "整形：今天进出人数统计",
+                "name": "peopleCount",
+                "type": "INTEGER",
+                "description": "description",
+                "rw": "R",
+                "unit": "人",
+                "rule": {
+                  "defaultValue": "",
+                  "max": 0,
+                  "min": 0,
+                  "trueLabel": "",
+                  "falseLabel": "",
+                  "round": 0
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-138576607-run",
+        "security": []
+      }
+    },
+    "/api/v1/schema/properties/del": {
+      "delete": {
+        "summary": "删除属性",
+        "x-apifox-folder": "数据模型",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据模型"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "12345678",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "1223",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-138576665-run",
+        "security": []
+      }
+    },
+    "/api/v1/schema/properties/detail": {
+      "get": {
+        "summary": "属性详情",
+        "x-apifox-folder": "数据模型",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据模型"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "112233445566",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "schemaId": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "rw": {
+                          "type": "string"
+                        },
+                        "unit": {
+                          "type": "string"
+                        },
+                        "rule": {
+                          "type": "object",
+                          "properties": {
+                            "defaultValue": {
+                              "type": "string"
+                            },
+                            "max": {
+                              "type": "integer"
+                            },
+                            "min": {
+                              "type": "integer"
+                            },
+                            "trueLabel": {
+                              "type": "string"
+                            },
+                            "falseLabel": {
+                              "type": "string"
+                            },
+                            "round": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "defaultValue",
+                            "max",
+                            "min",
+                            "trueLabel",
+                            "falseLabel",
+                            "round"
+                          ],
+                          "x-apifox-ignore-properties": [],
+                          "x-apifox-orders": [
+                            "defaultValue",
+                            "max",
+                            "min",
+                            "trueLabel",
+                            "falseLabel",
+                            "round"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "uuid",
+                        "schemaId",
+                        "label",
+                        "name",
+                        "description",
+                        "type",
+                        "rw",
+                        "unit",
+                        "rule"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "uuid",
+                        "schemaId",
+                        "label",
+                        "name",
+                        "description",
+                        "type",
+                        "rw",
+                        "unit",
+                        "rule"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "uuid": "PROPERJKXSPGRF",
+                        "schemaId": "SCHEMAWJS98BL3",
+                        "label": "整形：今天进出人数统计",
+                        "name": "peopleCount",
+                        "description": "",
+                        "type": "INTEGER",
+                        "rw": "R",
+                        "unit": "人",
+                        "rule": {
+                          "defaultValue": "",
+                          "max": 0,
+                          "min": 0,
+                          "trueLabel": "",
+                          "falseLabel": "",
+                          "round": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-138577951-run",
         "security": []
       }
     }
