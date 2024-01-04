@@ -121,13 +121,30 @@
                   "type": {
                     "type": "string"
                   },
+                  "schemaId": {
+                    "type": "string"
+                  },
                   "gid": {
                     "type": "string"
                   },
                   "config": {
                     "type": "object",
-                    "properties": {},
-                    "x-apifox-orders": [],
+                    "properties": {
+                      "host": {
+                        "type": "string"
+                      },
+                      "port": {
+                        "type": "integer"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "host",
+                      "port"
+                    ],
+                    "required": [
+                      "host",
+                      "port"
+                    ],
                     "x-apifox-ignore-properties": []
                   },
                   "description": {
@@ -138,12 +155,14 @@
                   "name",
                   "type",
                   "gid",
+                  "schemaId",
                   "config",
                   "description"
                 ],
                 "x-apifox-orders": [
                   "name",
                   "type",
+                  "schemaId",
                   "gid",
                   "config",
                   "description"
@@ -151,18 +170,15 @@
                 "x-apifox-ignore-properties": []
               },
               "example": {
-                "type": "MQTT",
-                "name": "MQTT",
-                "description": "MQTT",
+                "name": "GENERIC_AIS",
+                "type": "GENERIC_AIS",
+                "gid": "GROUPKNIFF8",
+                "schemaId": "123456",
                 "config": {
-                  "host": "127.0.0.1",
-                  "port": 1883,
-                  "clientId": "d021c10445c3142af979e4decdd22a797",
-                  "username": "d021c10445c3142af979e4decdd22a797",
-                  "password": "da2b04e6b03c4aa587b3c43486e6ab2d",
-                  "productId": "pe6a5a5889f2b449d97110965fa95e91f",
-                  "deviceName": "d021c10445c3142af979e4decdd22a797"
-                }
+                  "host": "0.0.0.0",
+                  "port": 6007
+                },
+                "description": "GENERIC_AIS"
               }
             }
           }
@@ -238,6 +254,26 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "10",
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
@@ -255,46 +291,86 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "uuid": {
-                            "type": "string"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
-                          },
-                          "actionScript": {
-                            "type": "string"
-                          },
-                          "description": {
-                            "type": "string"
-                          },
-                          "state": {
-                            "type": "integer"
-                          },
-                          "config": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
                             "type": "object",
-                            "properties": {},
-                            "x-apifox-orders": [],
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "gid": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "schemaId": {
+                                "type": "string"
+                              },
+                              "state": {
+                                "type": "integer"
+                              },
+                              "config": {
+                                "type": "object",
+                                "properties": {},
+                                "x-apifox-orders": [],
+                                "x-apifox-ignore-properties": []
+                              },
+                              "description": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "uuid",
+                              "gid",
+                              "name",
+                              "type",
+                              "schemaId",
+                              "state",
+                              "config"
+                            ],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "gid",
+                              "name",
+                              "type",
+                              "schemaId",
+                              "state",
+                              "config",
+                              "description"
+                            ],
                             "x-apifox-ignore-properties": []
                           }
-                        },
-                        "x-apifox-orders": [
-                          "uuid",
-                          "name",
-                          "type",
-                          "actionScript",
-                          "description",
-                          "state",
-                          "config"
-                        ],
-                        "x-apifox-ignore-properties": []
-                      }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -314,42 +390,59 @@
                     "summary": "成功示例",
                     "value": {
                       "code": 200,
-                      "msg": "操作成功",
-                      "data": [
-                        {
-                          "uuid": "DEVICE:911002d2b53044dcb101ea333da08e8b",
-                          "name": "GENERIC_MODBUS",
-                          "type": "GENERIC_MODBUS",
-                          "actionScript": "",
-                          "description": "GENERIC_MODBUS",
-                          "state": 0,
-                          "config": {}
-                        }
-                      ]
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 2,
+                        "total": 2,
+                        "records": [
+                          {
+                            "uuid": "DEVICE4OFIDHZS",
+                            "gid": "DROOT",
+                            "name": "GENERIC_AIS_RECEIVER",
+                            "type": "GENERIC_AIS_RECEIVER",
+                            "schemaId": "PROPERDRAR6PAY",
+                            "state": 1,
+                            "config": {
+                              "commonConfig": {
+                                "mode": "TCP",
+                                "parseAis": false
+                              },
+                              "hostConfig": {
+                                "host": "0.0.0.0",
+                                "port": 6006,
+                                "timeout": 3000
+                              },
+                              "portUuid": "COM12"
+                            },
+                            "description": "GENERIC_AIS_RECEIVER"
+                          },
+                          {
+                            "uuid": "DEVICE8EWNMGZA",
+                            "gid": "DROOT",
+                            "name": "GENERIC_AIS_RECEIVER",
+                            "type": "GENERIC_AIS_RECEIVER",
+                            "schemaId": "",
+                            "state": 1,
+                            "config": {
+                              "commonConfig": {
+                                "mode": "TCP",
+                                "parseAis": false
+                              },
+                              "hostConfig": {
+                                "host": "0.0.0.0",
+                                "port": 6005,
+                                "timeout": 3000
+                              },
+                              "portUuid": "COM12"
+                            },
+                            "description": "GENERIC_AIS_RECEIVER"
+                          }
+                        ]
+                      }
                     }
                   },
                   "2": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": [
-                        {
-                          "uuid": "DEVICENSOWWG",
-                          "name": "GENERIC_AIS",
-                          "type": "GENERIC_AIS",
-                          "autoRestart": true,
-                          "description": "GENERIC_AIS",
-                          "state": 1,
-                          "config": {
-                            "host": "0.0.0.0",
-                            "port": 6005
-                          }
-                        }
-                      ]
-                    }
-                  },
-                  "3": {
                     "summary": "成功示例",
                     "value": {
                       "code": 200,
@@ -476,6 +569,12 @@
                   "type": {
                     "type": "string"
                   },
+                  "schemaId": {
+                    "type": "string"
+                  },
+                  "gid": {
+                    "type": "string"
+                  },
                   "autoRestart": {
                     "type": "boolean"
                   },
@@ -484,8 +583,22 @@
                   },
                   "config": {
                     "type": "object",
-                    "properties": {},
-                    "x-apifox-orders": [],
+                    "properties": {
+                      "host": {
+                        "type": "string"
+                      },
+                      "port": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "host",
+                      "port"
+                    ],
+                    "x-apifox-orders": [
+                      "host",
+                      "port"
+                    ],
                     "x-apifox-ignore-properties": []
                   }
                 },
@@ -493,7 +606,9 @@
                   "uuid",
                   "name",
                   "type",
+                  "schemaId",
                   "autoRestart",
+                  "gid",
                   "description",
                   "config"
                 ],
@@ -501,6 +616,8 @@
                   "uuid",
                   "name",
                   "type",
+                  "schemaId",
+                  "gid",
                   "autoRestart",
                   "description",
                   "config"
@@ -508,33 +625,16 @@
                 "x-apifox-ignore-properties": []
               },
               "example": {
-                "uuid": "DEVICE:5306c1b94de14ce782d04543e4dc73f0",
-                "name": "GENERIC_MODBUS-NEW333",
-                "type": "GENERIC_MODBUS",
-                "actionScript": "",
-                "description": "GENERIC_MODBUS-NEW333",
+                "uuid": "DEVICENSOWWG",
+                "name": "GENERIC_AIS",
+                "type": "GENERIC_AIS",
+                "schemaId": "123456",
+                "autoRestart": true,
+                "gid": "DROOT",
+                "description": "GENERIC_AIS",
                 "config": {
-                  "config": {
-                    "baudRate": 4800,
-                    "dataBits": 8,
-                    "ip": "127.0.0.1",
-                    "parity": "N",
-                    "port": 502,
-                    "stopBits": 1,
-                    "uart": "COM5"
-                  },
-                  "frequency": 5,
-                  "mode": "TCP",
-                  "registers": [
-                    {
-                      "address": 0,
-                      "function": 3,
-                      "quantity": 1,
-                      "slaverId": 1,
-                      "tag": "d1"
-                    }
-                  ],
-                  "timeout": 10
+                  "host": "0.0.0.0",
+                  "port": 6005
                 }
               }
             }
@@ -3911,6 +4011,9 @@
                         "type": {
                           "type": "string"
                         },
+                        "schemaId": {
+                          "type": "string"
+                        },
                         "state": {
                           "type": "integer"
                         },
@@ -3931,13 +4034,15 @@
                         "type",
                         "state",
                         "config",
-                        "description"
+                        "description",
+                        "schemaId"
                       ],
                       "x-apifox-orders": [
                         "uuid",
                         "gid",
                         "name",
                         "type",
+                        "schemaId",
                         "state",
                         "config",
                         "description"
@@ -12447,6 +12552,81 @@
                         }
                       ]
                     }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "uuid": "AABBCCDDEEFFTT",
+                          "name": "测试物模型: 机场大厅数据统计",
+                          "schema": {
+                            "iotProperties": [
+                              {
+                                "label": "整形：今天进出人数统计",
+                                "name": "peopleCount",
+                                "type": "INTEGER",
+                                "rw": "R",
+                                "unit": "人",
+                                "rule": {
+                                  "defaultValue": 0,
+                                  "max": 100
+                                }
+                              },
+                              {
+                                "label": "浮点型：温度",
+                                "name": "temp",
+                                "type": "FLOAT",
+                                "rw": "R",
+                                "unit": "摄氏度",
+                                "rule": {
+                                  "defaultValue": 0,
+                                  "max": 100,
+                                  "min": -100,
+                                  "round": 2
+                                }
+                              },
+                              {
+                                "label": "浮点型：湿度",
+                                "name": "humi",
+                                "type": "FLOAT",
+                                "rw": "R",
+                                "unit": "摄氏度",
+                                "rule": {
+                                  "defaultValue": 0,
+                                  "max": 100,
+                                  "round": 2
+                                }
+                              },
+                              {
+                                "label": "布尔型：灯开关-1",
+                                "name": "switcher1",
+                                "type": "BOOL",
+                                "rw": "RW",
+                                "unit": "",
+                                "rule": {
+                                  "defaultValue": false,
+                                  "trueLabel": "开启",
+                                  "falseLabel": "关闭"
+                                }
+                              },
+                              {
+                                "label": "文本型：滚动显示屏幕文本",
+                                "name": "string1",
+                                "type": "STRING",
+                                "rw": "R",
+                                "unit": "",
+                                "rule": {
+                                  "defaultValue": "Hello, 大牛"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
                   }
                 }
               }
@@ -13545,6 +13725,174 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-138577951-run",
+        "security": []
+      }
+    },
+    "/api/v1/devices/properties": {
+      "get": {
+        "summary": "设备的物模型属性",
+        "x-apifox-folder": "设备管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "设备管理"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "12345678",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "10",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "label": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "rw": {
+                                "type": "string"
+                              },
+                              "unit": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "label",
+                              "name",
+                              "description",
+                              "type",
+                              "rw",
+                              "unit",
+                              "value"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 25,
+                        "total": 1,
+                        "records": [
+                          {
+                            "label": "a1",
+                            "name": "a1",
+                            "description": "",
+                            "type": "INTEGER",
+                            "rw": "R",
+                            "unit": "ºC",
+                            "value": ""
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-138781110-run",
         "security": []
       }
     }

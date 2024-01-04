@@ -6,6 +6,7 @@ import {
   postSchemaCreate,
   putSchemaUpdate,
 } from '@/services/rulex/shujumoxing';
+import { cn } from '@/utils/utils';
 import { DeleteOutlined, EditOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import type { ActionType, ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProList } from '@ant-design/pro-components';
@@ -16,7 +17,7 @@ import { useEffect, useRef, useState } from 'react';
 type SchemaItem = {
   uuid: string;
   name: string;
-  description: string;
+  description?: string;
 };
 
 type ActiveSchema = Omit<SchemaItem, 'description'>;
@@ -89,11 +90,23 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
         metas={{
           title: {
             dataIndex: 'name',
-            render: (dom) => <Tooltip title={dom}><div className="w-[120px] truncate">{dom}</div></Tooltip>,
+            render: (dom, { name }) => (
+              <Tooltip title={name}>
+                <div className="w-[120px] truncate">{name}</div>
+              </Tooltip>
+            ),
           },
           description: {
             dataIndex: 'description',
-            render: (dom) => <Tooltip title={dom}><div className="w-[150px] truncate">{dom}</div></Tooltip>,
+            render: (dom, { description }) => {
+              return (
+                <Tooltip title={description ? description : ''}>
+                  <div className={cn('w-[150px] truncate ', !description && 'hidden')}>
+                    {description}
+                  </div>
+                </Tooltip>
+              );
+            },
           },
           avatar: {
             render: () => <FolderOpenOutlined className="pl-[10px]" />,
@@ -134,6 +147,7 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
         formRef={formRef}
         width="30%"
         layout="horizontal"
+        labelCol={{ span: 3 }}
         onOpenChange={(visible) => changeOpen(visible)}
         modalProps={{
           destroyOnClose: true,
@@ -163,12 +177,7 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
           placeholder="请输入物模型名称"
           rules={[{ required: true, message: '请输入物模型名称' }]}
         />
-        <ProFormText
-          name="description"
-          label="描述"
-          placeholder="请输入物模型描述"
-          rules={[{ required: true, message: '请输入物模型描述' }]}
-        />
+        <ProFormText name="description" label="描述" placeholder="请输入物模型描述" />
       </ModalForm>
     </>
   );

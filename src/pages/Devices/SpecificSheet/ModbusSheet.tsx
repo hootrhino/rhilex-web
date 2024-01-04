@@ -15,7 +15,7 @@ import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Upload } from 'antd';
 import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
-import { funcEnum } from '../SchemaForm/initialValue';
+import { funcEnum } from '../UpdateForm/initialValue';
 import UploadRule from './UploadRule';
 
 import { statusEnum } from '@/utils/enum';

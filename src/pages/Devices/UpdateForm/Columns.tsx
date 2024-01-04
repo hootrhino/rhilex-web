@@ -1,7 +1,7 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
 import UnitTitle from '@/components/UnitTitle';
-import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from './initialValue';
 import { boolMap } from '@/utils/enum';
+import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from './initialValue';
 
 export const columns = [
   {
@@ -24,6 +24,11 @@ export const columns = [
         dataIndex: 'gid',
         valueType: 'groupSelect',
         required: true,
+      },
+      {
+        title: '数据模型',
+        dataIndex: 'schemaId',
+        valueType: 'schemaSelect',
       },
       {
         title: '备注',
@@ -67,7 +72,7 @@ export const columns = [
                         'SIEMENS_PLC',
                         'GENERIC_HTTP_DEVICE',
                       ].includes(type),
-                      transform: (value: string) => ({autoRequest: boolMap[value]}),
+                      transform: (value: string) => ({ autoRequest: boolMap[value] }),
                       convertValue: (value: boolean) => value?.toString(),
                     },
                     {

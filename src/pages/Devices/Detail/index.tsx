@@ -2,6 +2,7 @@ import HeadersDetail from '@/components/HttpHeaders/Detail';
 import StateTag from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
+import { getSchemaList } from '@/services/rulex/shujumoxing';
 import { boolEnum } from '@/utils/enum';
 import { getName } from '@/utils/utils';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
@@ -10,9 +11,9 @@ import { history, useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps, Tag } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
-import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from '../SchemaForm/initialValue';
 import ModbusSheet from '../SpecificSheet/ModbusSheet';
 import PlcSheet from '../SpecificSheet/PlcSheet';
+import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from '../UpdateForm/initialValue';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -51,12 +52,11 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     getDetail: getPortDetail,
   } = useModel('usePort');
 
-  const { data: detail, run: getDeviceDetail } = useRequest(
-    (params: API.getDevicesDetailParams) => getDevicesDetail(params),
-    {
-      manual: true,
-    },
-  );
+  const { data: detail } = useRequest(() => getDevicesDetail({ uuid }), {
+    //  manual: true,
+    ready: !!uuid,
+    refreshDeps: [uuid],
+  });
 
   const { type = 'GENERIC_PROTOCOL', config } = detail || {};
   const { commonConfig, hostConfig, portUuid, httpConfig } = config || {};
@@ -83,6 +83,18 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
         title: '设备状态',
         dataIndex: 'state',
         renderText: (state) => <StateTag state={state} />,
+      },
+      {
+        title: '数据模型',
+        dataIndex: 'schemaId',
+        request: async () => {
+          const { data } = await getSchemaList();
+
+          return data?.map((item) => ({
+            label: item?.name,
+            value: item.uuid,
+          }));
+        },
       },
       {
         title: '备注',
@@ -193,7 +205,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
 
   useEffect(() => {
     if (uuid && open) {
-      getDeviceDetail({ uuid });
+      // getDeviceDetail({ uuid });
       getPort();
     }
   }, [uuid, open]);

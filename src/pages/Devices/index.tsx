@@ -2,29 +2,37 @@ import GroupList, { DEFAULT_CONFIG } from '@/components/GroupList';
 import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
 import StateTag from '@/components/StateTag';
-import { deleteDevicesDel, putDevicesRestart } from '@/services/rulex/shebeiguanli';
+import {
+  deleteDevicesDel,
+  getDevicesListByGroup,
+  getDevicesProperties,
+  putDevicesRestart,
+} from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
 import { getName } from '@/utils/utils';
 import {
+  ApartmentOutlined,
   ControlOutlined,
   DownOutlined,
   PlusOutlined,
   PoweroffOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
-import type { ProColumns } from '@ant-design/pro-components';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProCard, ProTable } from '@ant-design/pro-components';
 import { history, useModel, useRequest } from '@umijs/max';
-import { Button, Dropdown, Popconfirm, Space } from 'antd';
+import { Button, Drawer, Dropdown, Popconfirm, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/hooks/useItems';
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
+import { getBaseColumns } from '../Schema/Property';
 import Detail from './Detail';
-import { typeEnum } from './SchemaForm/initialValue';
+import { typeEnum } from './UpdateForm/initialValue';
 
 export type DeviceItem = {
   name: string;
   type: string;
   state: number;
+  schemaId: string;
   description: string;
   config: Record<string, any>;
   [key: string]: any;
@@ -32,9 +40,6 @@ export type DeviceItem = {
 
 const Devices = () => {
   const {
-    run: getDeviceList,
-    refresh: refresh,
-    data: deviceList,
     groupList,
     getGroupList,
     detailConfig,
@@ -45,7 +50,11 @@ const Devices = () => {
 
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(DEFAULT_CONFIG);
   const [open, setOpen] = useState<boolean>(false);
-  const [restartDeviceId, setDeviceId] = useState<string>('');
+  const actionRef = useRef<ActionType>();
+  const [total, setTotal] = useState<number>(0);
+  const [openSchema, setOpenSchema] = useState<boolean>(false);
+  const [activeDevice, setActiveDevice] = useState<string>('');
+  const [activeDeviceName, setActiveDeviceName] = useState<string>('');
 
   // 重置分组表单
   const handleOnReset = () => {
@@ -66,7 +75,7 @@ const Devices = () => {
     {
       manual: true,
       onSuccess: () => {
-        getDeviceList({ uuid: activeGroupKey });
+        actionRef.current?.reload();
         message.success('删除成功');
       },
     },
@@ -77,6 +86,7 @@ const Devices = () => {
     let items = [
       { key: 'restart', label: '重启设备', icon: <PoweroffOutlined />, danger: true },
       { key: 'rule', label: '规则配置', icon: <SettingOutlined /> },
+      { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> },
     ] as ItemType[];
 
     if (showSheet) {
@@ -86,7 +96,7 @@ const Devices = () => {
     return items;
   };
 
-  const columns: ProColumns<DeviceItem>[] = [
+  const columns: ProColumns<Partial<DeviceItem>>[] = [
     {
       title: 'UUID',
       dataIndex: 'uuid',
@@ -94,17 +104,17 @@ const Devices = () => {
       copyable: true,
     },
     {
-      title: '名称',
+      title: '设备名称',
       dataIndex: 'name',
       ellipsis: true,
     },
     {
-      title: '类型',
+      title: '设备类型',
       dataIndex: 'type',
       valueEnum: typeEnum,
     },
     {
-      title: '状态',
+      title: '设备状态',
       dataIndex: 'state',
       width: 120,
       renderText: (state) => <StateTag state={state} />,
@@ -120,7 +130,7 @@ const Devices = () => {
       fixed: 'right',
       key: 'option',
       valueType: 'option',
-      render: (_, { uuid, gid, type }) => {
+      render: (_, { uuid, gid, type, name }) => {
         return (
           <Space>
             <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
@@ -140,18 +150,23 @@ const Devices = () => {
             </Popconfirm>
             <Dropdown
               menu={{
-                items: getMenuItems(type),
+                items: getMenuItems(type || ''),
                 onClick: ({ key }) => {
                   switch (key) {
                     case 'restart':
                       setOpen(true);
-                      setDeviceId(uuid);
+                      setActiveDevice(uuid);
                       break;
                     case 'rule':
                       history.push(`/device/${gid}/${uuid}/rule`);
                       break;
                     case 'specific-sheet':
                       history.push(`/device/${gid}/${uuid}/specific-sheet/${type}`);
+                      break;
+                    case 'schema':
+                      setOpenSchema(true);
+                      setActiveDevice(uuid);
+                      setActiveDeviceName(name || '');
                       break;
                     default:
                       break;
@@ -168,12 +183,6 @@ const Devices = () => {
       },
     },
   ];
-
-  useEffect(() => {
-    if (activeGroupKey) {
-      getDeviceList({ uuid: activeGroupKey });
-    }
-  }, [activeGroupKey]);
 
   return (
     <>
@@ -201,7 +210,7 @@ const Devices = () => {
             <GroupList
               dataSource={groupList || []}
               activeGroup={activeGroupKey}
-              itemCount={deviceList?.length || 0}
+              itemCount={total}
               config={groupConfig}
               groupRoot={DEFAULT_GROUP_KEY_DEVICE}
               groupType={GROUP_TYPE_DEVICE}
@@ -211,14 +220,30 @@ const Devices = () => {
               updateConfig={setGroupConfig}
             />
           </ProCard>
-          <ProCard title={getName(groupList || [], activeGroupKey)}>
+          <ProCard title={`${getName(groupList || [], activeGroupKey)} - 设备列表`}>
             <ProTable
+              actionRef={actionRef}
               rowKey="uuid"
               columns={columns}
-              dataSource={deviceList as DeviceItem[]}
               search={false}
-              pagination={false}
-              options={{ reload: () => refresh() }}
+              params={{ uuid: activeGroupKey }}
+              request={async ({ current, pageSize, ...keyword }) => {
+                const { data } = await getDevicesListByGroup({
+                  current,
+                  size: pageSize,
+                  ...keyword,
+                });
+                setTotal(data?.total || 0);
+                return Promise.resolve({
+                  data: data?.records || [],
+                  total: data?.total || 0,
+                  success: true,
+                });
+              }}
+              pagination={{
+                defaultPageSize: 10,
+                hideOnSinglePage: true,
+              }}
               toolBarRender={() => [
                 <Button
                   key="new"
@@ -242,14 +267,48 @@ const Devices = () => {
         afterOkText="重启"
         content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"
         handleOnEnd={() => {
-          getDeviceList({ uuid: activeGroupKey });
+          actionRef.current?.reload();
           message.success('重启成功');
           setOpen(false);
         }}
         handleOnOk={async () => {
-          await putDevicesRestart({ uuid: restartDeviceId });
+          await putDevicesRestart({ uuid: activeDevice });
         }}
       />
+      <Drawer
+        open={openSchema}
+        title={activeDeviceName ? `设备 ${activeDeviceName} - 数据模型` : '数据模型'}
+        placement="right"
+        width="50%"
+        destroyOnClose
+        maskClosable={false}
+        onClose={() => setOpenSchema(false)}
+      >
+        <ProTable
+          rowKey="uuid"
+          search={false}
+          options={false}
+          columns={getBaseColumns(true)}
+          params={{ uuid: activeDevice }}
+          request={async ({ current, pageSize, ...keyword }) => {
+            const { data } = await getDevicesProperties({
+              current,
+              size: pageSize,
+              ...keyword,
+            });
+
+            return Promise.resolve({
+              data: data?.records || [],
+              total: data?.total || 0,
+              success: true,
+            });
+          }}
+          pagination={{
+            defaultPageSize: 10,
+            hideOnSinglePage: true,
+          }}
+        />
+      </Drawer>
     </>
   );
 };

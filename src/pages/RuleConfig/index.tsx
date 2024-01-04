@@ -6,7 +6,6 @@ import { useState } from 'react';
 
 import { message } from '@/components/PopupHack';
 import { deleteRulesDel } from '@/services/rulex/guizeguanli';
-import { getName } from '@/utils/utils';
 import { history, useParams, useRequest } from '@umijs/max';
 import Debug from './Debug';
 import Detail from './Detail';
@@ -25,11 +24,11 @@ type RuleConfigProps = {
   dataSource: RuleItem[];
   type: RuleType;
   typeId: string;
-  pageTitleData: Record<string, any>[];
+  pageTitle: string;
   refresh: () => void;
 };
 
-const RuleConfig = ({ dataSource, pageTitleData, type, typeId, refresh }: RuleConfigProps) => {
+const RuleConfig = ({ dataSource, pageTitle, type, typeId, refresh }: RuleConfigProps) => {
   const { groupId } = useParams();
   const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({
     open: false,
@@ -62,6 +61,14 @@ const RuleConfig = ({ dataSource, pageTitleData, type, typeId, refresh }: RuleCo
 
     return url;
   };
+
+  const getTitle = () => {
+    let title = '规则配置';
+    if (pageTitle) {
+      title = type === 'device' ? `设备 ${pageTitle} - 规则配置` : `资源 ${pageTitle} - 规则配置`;
+    }
+    return title;
+  }
 
   const columns: ProColumns<RuleItem>[] = [
     {
@@ -125,18 +132,12 @@ const RuleConfig = ({ dataSource, pageTitleData, type, typeId, refresh }: RuleCo
     },
   ];
 
-  const getTitle = () => {
-    const title = getName(pageTitleData, typeId);
-    if (title) {
-      return `${title} 规则配置`;
-    } else {
-      return '规则配置';
-    }
-  };
-
   return (
     <>
-      <PageContainer onBack={() => history.push(`/${type}/list`)} title={getTitle()}>
+      <PageContainer
+        onBack={() => history.push(`/${type}/list`)}
+        title={getTitle()}
+      >
         <ProTable
           rowKey="uuid"
           columns={columns}

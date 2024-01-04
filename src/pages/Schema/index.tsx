@@ -62,7 +62,7 @@ const Schema = () => {
             changeActiveItem={setActiveSchema}
           />
         </ProCard>
-        <ProCard title={activeSchema.name ? `${activeSchema.name}-属性列表` : '属性列表'}>
+        <ProCard title={activeSchema.name ? `物模型 ${activeSchema.name} - 属性列表` : '属性列表'}>
           <PropertyList schemaId={activeSchema.uuid} />
         </ProCard>
       </ProCard>

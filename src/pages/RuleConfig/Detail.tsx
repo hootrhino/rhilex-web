@@ -1,12 +1,12 @@
 import LogTable from '@/components/LogTable';
 import { getRulesDetail } from '@/services/rulex/guizeguanli';
+import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { getInendsList } from '@/services/rulex/shuruziyuanguanli';
-import { filterLogByTopic } from '@/utils/utils';
+import { filterLogByTopic, getName } from '@/utils/utils';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { history, useParams, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
-import { useEffect } from 'react';
 import { useModel } from 'umi';
 
 type DetailProps = DrawerProps & {
@@ -15,9 +15,9 @@ type DetailProps = DrawerProps & {
 };
 
 const Detail = ({ uuid, type, ...props }: DetailProps) => {
-  const { groupId } = useParams();
+  const { deviceId } = useParams();
   const { setConfig: setSourceDetail } = useModel('useSource');
-  const { data: devices, run: getDeviceList, setDeviceConfig } = useModel('useDevice');
+  const { setDeviceConfig } = useModel('useDevice');
   const {
     topicData: { ruleLog },
   } = useModel('useWebsocket');
@@ -25,22 +25,22 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
   // 获取资源
   const { data: sources } = useRequest(() => getInendsList());
 
-  const getSourceName = (data: any[], key: string) => {
-    const current = (data || [])?.find((item) => item?.uuid === key);
-
-    return current?.name || '';
-  };
+  // 获取设备详情
+  const { data: deviceDetail } = useRequest(() => getDevicesDetail({ uuid: deviceId || '' }), {
+    ready: !!deviceId,
+    refreshDeps: [deviceId],
+  });
 
   const renderSourceName = (fromSource: string[], fromDevice: string[]) => {
-    let name: string = '';
-    let url: string = '';
+    let name: string;
+    let url: string;
     const isSource = fromSource?.length > 0;
 
     if (isSource) {
-      name = getSourceName(sources as any, fromSource?.[0]);
+      name = getName(sources as any, fromSource?.[0]);
       url = '/inends/list';
     } else {
-      name = getSourceName(devices || [], fromDevice?.[0]);
+      name = deviceDetail?.name || '';
       url = '/device/list';
     }
 
@@ -95,11 +95,6 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       valueType: 'code',
     },
   ];
-
-  useEffect(() => {
-    if (!groupId) return;
-    getDeviceList({ uuid: groupId });
-  }, [groupId]);
 
   return (
     <Drawer

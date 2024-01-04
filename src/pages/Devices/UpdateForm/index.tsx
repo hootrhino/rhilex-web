@@ -24,10 +24,11 @@ import {
 
 import ProFormSubmitter from '@/components/ProFormSubmitter';
 import { getHwifaceList } from '@/services/rulex/jiekouguanli';
+import { getSchemaList } from '@/services/rulex/shujumoxing';
 import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
 import cloneDeep from 'lodash/cloneDeep';
-import { columns } from './columns';
+import { columns } from './Columns';
 import Title from './FormTitle';
 import './index.less';
 import { defaultConfig, defaultHostConfig, defaultModelConfig } from './initialValue';
@@ -91,12 +92,11 @@ export const processColumns = (columns: any) => {
   });
 };
 
-const SchemaForm = ({}: ProFormProps) => {
+const UpdateForm = ({}: ProFormProps) => {
   const formRef = useRef<ProFormInstance>();
   const { showModal } = useGoBack();
   const { deviceId, groupId } = useParams();
   const { groupList, setActiveGroupKey } = useModel('useDevice');
-  // const { data: portList, run: getPort } = useModel('usePort');
   const [loading, setLoading] = useState<boolean>(false);
 
   const initialValues = {
@@ -135,15 +135,22 @@ const SchemaForm = ({}: ProFormProps) => {
               value: item.uuid,
             }));
           }}
-          // options={portList?.map((item) => ({
-          //   label: (
-          //     <Space>
-          //       <span>{item?.name}</span>
-          //       <span className="text-[12px] text-[#000000A6]">{item?.alias}</span>
-          //     </Space>
-          //   ),
-          //   value: item.uuid,
-          // }))}
+          {...props?.fieldProps}
+        />
+      ),
+    },
+    schemaSelect: {
+      renderFormItem: (_: any, props: any) => (
+        <ProFormSelect
+          width="md"
+          request={async () => {
+            const { data } = await getSchemaList();
+
+            return data?.map((item) => ({
+              label: item?.name,
+              value: item.uuid,
+            }));
+          }}
           {...props?.fieldProps}
         />
       ),
@@ -190,6 +197,7 @@ const SchemaForm = ({}: ProFormProps) => {
 
       params = {
         ...params,
+        schemaId: params?.schemaId || '',
         config: newConfig,
       };
 
@@ -277,10 +285,6 @@ const SchemaForm = ({}: ProFormProps) => {
     handleOnReset();
   }, [detail]);
 
-  // useEffect(() => {
-  //   getPort();
-  // }, []);
-
   return (
     <PageContainer
       header={{ title: <Title deviceId={deviceId} /> }}
@@ -315,4 +319,4 @@ const SchemaForm = ({}: ProFormProps) => {
   );
 };
 
-export default SchemaForm;
+export default UpdateForm;

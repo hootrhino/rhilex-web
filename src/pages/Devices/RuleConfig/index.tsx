@@ -1,19 +1,30 @@
-import { getRulesByDevice } from '@/services/rulex/shebeiguanli';
-import { useModel, useParams, useRequest } from '@umijs/max';
+import { getDevicesDetail, getRulesByDevice } from '@/services/rulex/shebeiguanli';
+import { useParams, useRequest } from '@umijs/max';
 import RuleConfig from '../../RuleConfig';
 
 const RuleConfigList = () => {
   const { deviceId } = useParams();
-  const {data: deviceList} = useModel('useDevice');
 
-  const { data, refresh } = useRequest(
-    () => getRulesByDevice({ deviceId: deviceId || '' }),
-    {
-      ready: !!deviceId
-    },
+  const { data, refresh } = useRequest(() => getRulesByDevice({ deviceId: deviceId || '' }), {
+    ready: !!deviceId,
+    refreshDeps: [deviceId],
+  });
+
+  // 获取设备详情
+  const { data: deviceDetail } = useRequest(() => getDevicesDetail({ uuid: deviceId || '' }), {
+    ready: !!deviceId,
+    refreshDeps: [deviceId],
+  });
+
+  return (
+    <RuleConfig
+      dataSource={data}
+      pageTitle={deviceDetail?.name || ''}
+      type="device"
+      typeId={deviceId || ''}
+      refresh={refresh}
+    />
   );
-
-  return <RuleConfig dataSource={data} pageTitleData={deviceList as Record<string, any>[]} type="device" typeId={deviceId || ''} refresh={refresh} />;
 };
 
 export default RuleConfigList;

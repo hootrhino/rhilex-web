@@ -116,6 +116,14 @@ declare namespace API {
 
   type getDevicesListByGroupParams = {
     uuid: string;
+    current?: number;
+    size?: number;
+  };
+
+  type getDevicesPropertiesParams = {
+    uuid: string;
+    current?: number;
+    size?: number;
   };
 
   type getGoodsDetailParams = {

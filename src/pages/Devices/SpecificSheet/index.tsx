@@ -1,25 +1,23 @@
-import { getName } from '@/utils/utils';
+import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { PageContainer } from '@ant-design/pro-components';
-import { history, useModel, useParams } from '@umijs/max';
+import { history, useParams, useRequest } from '@umijs/max';
 import { useEffect, useState } from 'react';
 import ModbusSheet from './ModbusSheet';
 import PlcSheet from './PlcSheet';
 
 const SpecificSheet = () => {
-  const { run: getDeviceList } = useModel('useDevice');
-  const { deviceType, deviceId, groupId } = useParams();
-  const { data: deviceList } = useModel('useDevice');
+  const { deviceType, deviceId } = useParams();
   const [title, setTitle] = useState<string>('点位表配置');
 
-  useEffect(() => {
-    const pageTitle = deviceList && deviceId && getName(deviceList, deviceId);
+  // 设备详情
+  const { data: deviceDetail } = useRequest(() => getDevicesDetail({ uuid: deviceId || '' }), {
+    ready: !!deviceId,
+    refreshDeps: [deviceId],
+  });
 
-    setTitle(pageTitle ? `${pageTitle} 点位表配置` : '点位表配置');
-  }, [deviceId, deviceList]);
-
   useEffect(() => {
-    getDeviceList({ uuid: groupId || '' });
-  }, [groupId]);
+    setTitle(deviceDetail?.name ? `${deviceDetail?.name} 点位表配置` : '点位表配置');
+  }, [deviceDetail]);
 
   return (
     <PageContainer title={title} onBack={() => history.push('/device/list')}>

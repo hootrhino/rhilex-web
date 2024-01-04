@@ -15,6 +15,7 @@ import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import { rwEnum, typeEnum } from '../enum';
 import PropertyForm from './UpdateForm';
+import UnitTitle from '@/components/UnitTitle';
 
 type Rule = {
   defaultValue?: string;
@@ -35,38 +36,14 @@ export type Property = {
   unit: string;
   rule: Rule;
   description?: string;
+  value?: string;
 };
 
 type PropertyListProps = {
   schemaId: string;
 };
-
-const PropertyList = ({ schemaId }: PropertyListProps) => {
-  const actionRef = useRef<ActionType>();
-  const [open, setOpen] = useState<boolean>(false);
-  const [initialValue, setInitialValue] = useState<Partial<Property>>({});
-
-  // 详情
-  const { run: getDetail } = useRequest(
-    (params: API.getSchemaPropertiesDetailParams) => getSchemaPropertiesDetail(params),
-    {
-      manual: true,
-    },
-  );
-
-  // 删除属性
-  const { run: remove } = useRequest(
-    (params: API.deleteSchemaPropertiesDelParams) => deleteSchemaPropertiesDel(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        message.success('删除成功');
-        actionRef.current?.reload();
-      },
-    },
-  );
-
-  const columns: ProColumns<Partial<Property>>[] = [
+export const getBaseColumns = (readOnly?: boolean) => {
+  const baseColumns: ProColumns<Partial<Property>>[] = [
     {
       title: '序号',
       dataIndex: 'index',
@@ -95,6 +72,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
       title: '单位',
       dataIndex: 'unit',
       width: 100,
+      hideInTable: readOnly,
     },
     {
       title: '读写',
@@ -107,13 +85,52 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
       title: '数据定义',
       dataIndex: 'rule',
       ellipsis: true,
+      hideInTable: readOnly,
       renderText: (rule) => rule && JSON.stringify(rule),
+    },
+    {
+      title: '当前值',
+      dataIndex: 'value',
+      ellipsis: true,
+      hideInTable: !readOnly,
+      render: (dom, {value, unit}) => value ? <UnitTitle title={value} unit={unit}  /> : '-'
     },
     {
       title: '描述',
       dataIndex: 'description',
       ellipsis: true,
     },
+  ];
+
+  return baseColumns;
+};
+
+const PropertyList = ({ schemaId }: PropertyListProps) => {
+  const actionRef = useRef<ActionType>();
+  const [open, setOpen] = useState<boolean>(false);
+  const [initialValue, setInitialValue] = useState<Partial<Property>>({});
+
+  // 详情
+  const { run: getDetail } = useRequest(
+    (params: API.getSchemaPropertiesDetailParams) => getSchemaPropertiesDetail(params),
+    {
+      manual: true,
+    },
+  );
+
+  // 删除属性
+  const { run: remove } = useRequest(
+    (params: API.deleteSchemaPropertiesDelParams) => deleteSchemaPropertiesDel(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('删除成功');
+        actionRef.current?.reload();
+      },
+    },
+  );
+
+  const columns: ProColumns<Partial<Property>>[] = getBaseColumns().concat([
     {
       title: '操作',
       valueType: 'option',
@@ -140,7 +157,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
         </Popconfirm>,
       ],
     },
-  ];
+  ]);
 
   return (
     <>

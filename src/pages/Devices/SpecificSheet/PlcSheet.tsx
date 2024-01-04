@@ -163,6 +163,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
     {
       title: '数据别名',
       dataIndex: 'alias',
+      ellipsis: true,
       hideInSearch: true,
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
       fieldProps: { placeholder: '请输入数据别名' },

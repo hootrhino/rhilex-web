@@ -7,8 +7,9 @@ export async function postDevicesCreate(
   body: {
     name: string;
     type: string;
+    schemaId: string;
     gid: string;
-    config: Record<string, any>;
+    config: { host?: string; port?: number };
     description: string;
   },
   options?: { [key: string]: any },
@@ -52,6 +53,7 @@ export async function getDevicesDetail(
       gid?: string;
       name?: string;
       type?: string;
+      schemaId?: string;
       state?: number;
       config?: Record<string, any>;
       description?: string;
@@ -87,15 +89,53 @@ export async function getDevicesListByGroup(
     code: number;
     msg: string;
     data: {
-      uuid?: string;
-      name?: string;
-      type?: string;
-      actionScript?: string;
-      description?: string;
-      state?: number;
-      config?: Record<string, any>;
-    }[];
+      current?: number;
+      size?: number;
+      total?: number;
+      records?: {
+        uuid?: string;
+        gid?: string;
+        name?: string;
+        type?: string;
+        schemaId?: string;
+        state?: number;
+        config?: Record<string, any>;
+        description?: string;
+      }[];
+    };
   }>('/api/v1/devices/listByGroup', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 设备的物模型属性 GET /api/v1/devices/properties */
+export async function getDevicesProperties(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getDevicesPropertiesParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      current?: number;
+      size?: number;
+      total?: number;
+      records?: {
+        label?: string;
+        name?: string;
+        description?: string;
+        type?: string;
+        rw?: string;
+        unit?: string;
+        value?: string;
+      }[];
+    };
+  }>('/api/v1/devices/properties', {
     method: 'GET',
     params: {
       ...params,
@@ -125,9 +165,11 @@ export async function putDevicesUpdate(
     uuid: string;
     name: string;
     type: string;
+    schemaId: string;
+    gid: string;
     autoRestart: boolean;
     description: string;
-    config: Record<string, any>;
+    config: { host?: string; port?: number };
   },
   options?: { [key: string]: any },
 ) {
