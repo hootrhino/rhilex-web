@@ -29,9 +29,3 @@ export const unitOptions = [
   { value: 'kg', label: 'kg (千克)' },
   { value: 't', label: 't (吨)' },
 ];
-
-export const updateMessage = {
-  new: '新增成功',
-  edit: '更新成功',
-  remove: '删除成功',
-};

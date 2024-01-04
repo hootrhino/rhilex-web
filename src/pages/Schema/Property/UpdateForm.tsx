@@ -1,24 +1,24 @@
-import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
+import type { ModalFormProps,ProFormInstance } from '@ant-design/pro-components';
 import {
-  ModalForm,
-  ProCard,
-  ProForm,
-  ProFormDependency,
-  ProFormDigit,
-  ProFormDigitRange,
-  ProFormRadio,
-  ProFormSelect,
-  ProFormText,
+ModalForm,
+ProCard,
+ProForm,
+ProFormDependency,
+ProFormDigit,
+ProFormDigitRange,
+ProFormRadio,
+ProFormSelect,
+ProFormText
 } from '@ant-design/pro-components';
 import { AutoComplete } from 'antd';
-import { useEffect, useRef } from 'react';
+import { useEffect,useRef } from 'react';
 import type { Property } from '..';
-import { rwEnum, typeEnum, unitOptions } from '../enum';
+import { rwEnum,typeEnum,unitOptions } from '../enum';
 
 const defaultProperty = {
   rw: 'R',
   type: 'STRING',
-  rule: { latitude: 0, longitude: 0, max: 0, range: [0, 0], round: 0 },
+  rule: { latitude: 0, longitude: 0, max: 0, range: [0, 0], round: 2 },
 };
 
 type PropertyFormProps = ModalFormProps & {
@@ -48,6 +48,14 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
       formRef={formRef}
       width="50%"
       initialValues={defaultProperty}
+      onValuesChange={(changedValue) => {
+        if (['INTEGER', 'FLOAT'].includes(changedValue?.type)) {
+          formRef.current?.setFieldsValue({ rule: { defaultValue: 0 } });
+        }
+        if (changedValue?.type === 'BOOL') {
+          formRef.current?.setFieldsValue({ rule: { defaultValue: false } });
+        }
+      }}
       {...props}
     >
       <ProForm.Group>
@@ -136,13 +144,13 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
             dom = (
               <>
                 <ProFormText
-                  label="布尔值-true"
+                  label="true"
                   name={['rule', 'trueLabel']}
                   placeholder="比如：开启"
                   width="sm"
                 />
                 <ProFormText
-                  label="布尔值-false"
+                  label="false"
                   name={['rule', 'falseLabel']}
                   placeholder="比如：关闭"
                   width="sm"
@@ -172,12 +180,15 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
           return (
             <ProCard bordered ghost>
               <ProForm.Group style={{ padding: 10 }}>
-                <ProFormText
-                  name={['rule', 'defaultValue']}
-                  width="md"
-                  label="默认值"
-                  placeholder="请输入默认值"
-                />
+                {['STRING', 'INTEGER', 'FLOAT', 'BOOL'].includes(type) && (
+                  <ProFormText
+                    name={['rule', 'defaultValue']}
+                    width="md"
+                    label="默认值"
+                    placeholder="请输入默认值"
+                  />
+                )}
+
                 {dom}
               </ProForm.Group>
             </ProCard>
