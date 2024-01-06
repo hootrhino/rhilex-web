@@ -1,5 +1,5 @@
 import { App } from 'antd';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { history } from 'umi';
 
 type ModalProps = {
@@ -9,7 +9,7 @@ type ModalProps = {
 };
 
 function useGoBack() {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  // const [isModalVisible, setIsModalVisible] = useState(false);
   const { modal } = App.useApp();
 
   function showModal({
@@ -21,17 +21,17 @@ function useGoBack() {
       title,
       content,
       onOk() {
-        setIsModalVisible(false);
+        //  setIsModalVisible(false);
         history.push(url);
       },
-      onCancel() {
-        setIsModalVisible(false);
-      },
+      // onCancel() {
+      //   setIsModalVisible(false);
+      // },
     });
-    setIsModalVisible(true);
+    // setIsModalVisible(true);
   }
 
-  return { showModal, isModalVisible };
+  return { showModal };
 }
 
 export default useGoBack;

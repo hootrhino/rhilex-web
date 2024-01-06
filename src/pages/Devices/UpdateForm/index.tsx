@@ -27,7 +27,6 @@ import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { getSchemaList } from '@/services/rulex/shujumoxing';
 import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
-import cloneDeep from 'lodash/cloneDeep';
 import { columns } from './Columns';
 import Title from './FormTitle';
 import './index.less';
@@ -165,7 +164,7 @@ const UpdateForm = ({}: ProFormProps) => {
   const handleOnFinish = async (values: any) => {
     setLoading(true);
     try {
-      let params = cloneDeep(values);
+      let params = {...values};
       const commonConfigParams = params.config.commonConfig;
       const hostConfigParams = params?.config?.hostConfig?.[0];
       const httpConfigParams = params?.config?.httpConfig?.[0];

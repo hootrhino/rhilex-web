@@ -17,7 +17,7 @@ import {
 } from '@/services/rulex/shuruziyuanguanli';
 import { useModel, useRequest } from '@umijs/max';
 import Detail from './components/Detail';
-import { typeEnum } from './components/initialValue';
+import { typeEnum } from './components/enum';
 
 export type InendsItem = {
   name: string;

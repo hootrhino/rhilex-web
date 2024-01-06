@@ -2,6 +2,7 @@ import { history, Link } from '@umijs/max';
 
 import type { RunTimeLayoutConfig } from 'umi';
 
+import { modal } from '@/components/PopupHack';
 import RightContent from '@/components/RightContent';
 import { COPYRIGHT, LOGIN_PATH } from '@/utils/constant';
 import { DefaultFooter } from '@ant-design/pro-components';
@@ -28,6 +29,27 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
     },
     footerRender: () => <DefaultFooter copyright={COPYRIGHT} />,
     menuHeaderRender: undefined,
+    menuItemRender(item, defaultDom) {
+      const currentPath = window.location?.pathname;
+      const regex = /(?:inends|outends|app-stack|device\/[^/]+)\/(?:new|edit)[^/]*/;
+
+      if (regex.test(currentPath)) {
+        return (
+          <a
+            onClick={() => {
+              modal.confirm({
+                title: '离开可能会丢失数据，确定要返回列表吗？',
+                onOk: () => history.push(item?.path || '/'),
+              });
+            }}
+          >
+            {defaultDom}
+          </a>
+        );
+      } else {
+        return <a onClick={() => history.push(item?.path || '/')}>{defaultDom}</a>;
+      }
+    },
     childrenRender: (children) => {
       return <>{children}</>;
     },

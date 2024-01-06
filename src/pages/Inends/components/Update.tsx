@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 
 import { message } from '@/components/PopupHack';
+import ProFormSubmitter from '@/components/ProFormSubmitter';
 import useGoBack from '@/hooks/useGoBack';
 import {
   getInendsDetail,
@@ -21,10 +22,54 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import random from 'lodash/random';
-import { defaultConfig, eventEnum, modeEnum, typeEnum } from './initialValue';
-import ProFormSubmitter from '@/components/ProFormSubmitter';
+import { eventEnum, modeEnum, typeEnum } from './enum';
 
 const DefaultListUrl = '/inends/list';
+
+const defaultConfig = {
+  COAP: [
+    {
+      port: 2582,
+      host: '127.0.0.1',
+    },
+  ],
+  RULEX_UDP: [
+    {
+      port: 2583,
+      host: '127.0.0.1',
+    },
+  ],
+  HTTP: [
+    {
+      port: 2584,
+      host: '127.0.0.1',
+    },
+  ],
+  NATS_SERVER: [
+    {
+      port: 4222,
+      host: '127.0.0.1',
+    },
+  ],
+  GRPC: [
+    {
+      port: 2585,
+      host: '127.0.0.1',
+    },
+  ],
+  INTERNAL_EVENT: [
+    {
+      type: 'ALL',
+    },
+  ],
+  GENERIC_IOT_HUB: [
+    {
+      host: '127.0.0.1',
+      port: 1883,
+      mode: 'DC',
+    },
+  ],
+};
 
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
