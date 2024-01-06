@@ -23,6 +23,7 @@ import {
 } from '@ant-design/pro-components';
 import random from 'lodash/random';
 import { eventEnum, modeEnum, typeEnum } from './enum';
+import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 
 const DefaultListUrl = '/inends/list';
 
@@ -114,6 +115,8 @@ const UpdateForm = () => {
     }
   };
 
+
+
   useEffect(() => {
     if (detail) {
       formRef.current?.setFieldsValue({ ...detail, config: [detail?.config] });
@@ -121,6 +124,8 @@ const UpdateForm = () => {
       formRef.current?.setFieldsValue(defaultValue);
     }
   }, [detail]);
+
+  useBeforeUnloadConfirm();
 
   return (
     <PageContainer

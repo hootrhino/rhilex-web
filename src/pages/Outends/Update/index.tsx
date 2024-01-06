@@ -29,6 +29,7 @@ import { defaultConfig, modeEnum, typeEnum } from './initialValue';
 import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
 import { boolMap } from '@/utils/enum';
+import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 
 type UpdateFormItem = {
   name: string;
@@ -134,6 +135,8 @@ const UpdateForm = () => {
   useEffect(() => {
     handleOnReset();
   }, [detail]);
+
+  useBeforeUnloadConfirm();
 
   return (
     <PageContainer

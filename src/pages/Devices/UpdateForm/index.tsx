@@ -31,6 +31,7 @@ import { columns } from './Columns';
 import Title from './FormTitle';
 import './index.less';
 import { defaultConfig, defaultHostConfig, defaultModelConfig } from './initialValue';
+import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 
 const DefaultListUrl = '/device/list';
 
@@ -283,6 +284,8 @@ const UpdateForm = ({}: ProFormProps) => {
   useEffect(() => {
     handleOnReset();
   }, [detail]);
+
+  useBeforeUnloadConfirm();
 
   return (
     <PageContainer

@@ -3,6 +3,7 @@ import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
 import ProSegmented from '@/components/ProSegmented';
+import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import useGoBack from '@/hooks/useGoBack';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rulex/qingliangyingyong';
 import { boolMap } from '@/utils/enum';
@@ -68,6 +69,8 @@ const UpdateForm = () => {
       formRef.current?.setFieldsValue(defaultValue);
     }
   }, [detail]);
+
+  useBeforeUnloadConfirm();
 
   return (
     <PageContainer
