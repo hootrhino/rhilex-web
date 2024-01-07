@@ -26,7 +26,7 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { Tooltip } from 'antd';
-import random from 'lodash/random';
+// import random from 'lodash/random';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { defaultConfig, modeEnum, typeEnum } from './enum';
@@ -43,7 +43,7 @@ const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { uuid } = useParams();
   const { showModal } = useGoBack();
-  const randomNumber = random(1000, 9999);
+  const randomNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
   const [loading, setLoading] = useState<boolean>(false);
 
   // 获取详情

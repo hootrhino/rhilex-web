@@ -9,7 +9,6 @@ import { Button, Dropdown, Popconfirm } from 'antd';
 
 import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
-import StateTag from '@/components/StateTag';
 import {
   deleteInendsDel,
   getInendsList,
@@ -17,7 +16,7 @@ import {
 } from '@/services/rulex/shuruziyuanguanli';
 import { useModel, useRequest } from '@umijs/max';
 import Detail from './Detail';
-import { typeEnum } from './enum';
+import { baseColumns } from './columns';
 
 export type InendsItem = {
   name: string;
@@ -46,34 +45,7 @@ const Inends = () => {
     },
   );
 
-  const columns: ProColumns<InendsItem>[] = [
-    {
-      title: 'UUID',
-      dataIndex: 'uuid',
-      ellipsis: true,
-      copyable: true,
-    },
-    {
-      title: '名称',
-      dataIndex: 'name',
-      ellipsis: true,
-    },
-    {
-      title: '类型',
-      dataIndex: 'type',
-      valueEnum: typeEnum,
-    },
-    {
-      title: '状态',
-      dataIndex: 'state',
-      width: 100,
-      renderText: (state) => <StateTag state={state} />,
-    },
-    {
-      title: '备注',
-      dataIndex: 'description',
-      ellipsis: true,
-    },
+  const columns: ProColumns<InendsItem>[] = baseColumns.concat([
     {
       title: '操作',
       width: 210,
@@ -124,7 +96,7 @@ const Inends = () => {
         </Dropdown>,
       ],
     },
-  ];
+  ]);
 
   return (
     <>
