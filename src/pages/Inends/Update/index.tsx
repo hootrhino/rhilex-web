@@ -13,8 +13,9 @@ import {
 } from '@/services/rulex/shuruziyuanguanli';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { BetaSchemaForm, PageContainer, ProCard } from '@ant-design/pro-components';
-import { columns, defaultConfig } from './columns';
-import type { InendsItem } from '.';
+import { columns, defaultConfig } from '../columns';
+import type { InendsItem } from '..';
+import { processColumns } from '@/utils/utils';
 
 const DefaultListUrl = '/inends/list';
 
@@ -80,7 +81,7 @@ const UpdateForm = () => {
         <BetaSchemaForm
           layoutType="Form"
           formRef={formRef}
-          columns={columns as ProFormColumnsType<InendsItem>[]}
+          columns={processColumns(columns) as ProFormColumnsType<InendsItem>[]}
           onFinish={handleOnFinish}
           onValuesChange={(changedValue) => {
             if (!changedValue?.type) return;

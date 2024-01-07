@@ -4,8 +4,8 @@ import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { Drawer, DrawerProps } from 'antd';
 import omit from 'lodash/omit';
 import { useRequest } from 'umi';
-import { baseColumns, configColumns } from './columns';
-import { typeEnum } from './enum';
+import { baseColumns, configColumns } from '../columns';
+import { typeEnum } from '../enum';
 
 type DetailProps = DrawerProps & {
   uuid: string;

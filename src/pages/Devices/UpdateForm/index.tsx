@@ -12,7 +12,6 @@ import {
 
 import useGoBack from '@/hooks/useGoBack';
 import { Space } from 'antd';
-import omit from 'lodash/omit';
 
 import { message } from '@/components/PopupHack';
 import ProSegmented from '@/components/ProSegmented';
@@ -25,7 +24,7 @@ import {
 import ProFormSubmitter from '@/components/ProFormSubmitter';
 import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { getSchemaList } from '@/services/rulex/shujumoxing';
-import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
+import { formatHeaders2Arr, formatHeaders2Obj, processColumns } from '@/utils/utils';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
 import { columns } from './Columns';
 import Title from './FormTitle';
@@ -34,63 +33,6 @@ import { defaultConfig, defaultHostConfig, defaultModelConfig } from './initialV
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 
 const DefaultListUrl = '/device/list';
-
-export const processColumns = (columns: any) => {
-  return columns.map((col: any) => {
-    if (col.valueType === 'group') {
-      return { ...col, columns: processColumns(col.columns) };
-    }
-
-    if (col.valueType === 'dependency') {
-      return {
-        ...col,
-        columns: (params: any) => {
-          return processColumns(col.columns(params));
-        },
-      };
-    }
-    if (col.valueType === 'formList') {
-      if (col.mode === 'single') {
-        return {
-          ...omit(col, ['mode']),
-          columns: processColumns(col.columns),
-          fieldProps: {
-            creatorButtonProps: false,
-            copyIconProps: false,
-            deleteIconProps: false,
-          },
-        };
-      } else {
-        return {
-          ...omit(col, ['mode']),
-          columns: processColumns(col.columns),
-          fieldProps: {
-            creatorButtonProps: {
-              position: 'top',
-            },
-            creatorRecord: col?.initialValue,
-          },
-        };
-      }
-    }
-
-    return {
-      ...omit(col, ['required']),
-      width: col?.width || 'md',
-      fieldProps: {
-        placeholder: col?.valueType === 'select' ? `请选择${col?.title}` : `请输入${col?.title}`,
-      },
-      formItemProps: {
-        rules: [
-          {
-            required: col?.required,
-            message: col?.valueType === 'select' ? `请选择${col?.title}` : `请输入${col?.title}`,
-          },
-        ],
-      },
-    };
-  });
-};
 
 const UpdateForm = ({}: ProFormProps) => {
   const formRef = useRef<ProFormInstance>();

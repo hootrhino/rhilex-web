@@ -1,8 +1,7 @@
 import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
-import { orderBy } from 'lodash';
-import isEmpty from 'lodash/isEmpty';
+import { omit, orderBy, isEmpty } from 'lodash';
 import luamin from 'lua-format';
 import { twMerge } from 'tailwind-merge';
 
@@ -114,4 +113,61 @@ export const filterLogByTopic = (data: string[], topic?: string) => {
   }
 
   return orderBy(newData, 'time', 'desc');
+};
+
+export const processColumns = (columns: any) => {
+  return columns?.map((col: any) => {
+    if (col.valueType === 'group') {
+      return { ...col, columns: processColumns(col.columns) };
+    }
+
+    if (col.valueType === 'dependency') {
+      return {
+        ...col,
+        columns: (params: any) => {
+          return processColumns(col.columns(params));
+        },
+      };
+    }
+    if (col.valueType === 'formList') {
+      if (col.mode === 'single') {
+        return {
+          ...omit(col, ['mode']),
+          columns: processColumns(col.columns),
+          fieldProps: {
+            creatorButtonProps: false,
+            copyIconProps: false,
+            deleteIconProps: false,
+          },
+        };
+      } else {
+        return {
+          ...omit(col, ['mode']),
+          columns: processColumns(col.columns),
+          fieldProps: {
+            creatorButtonProps: {
+              position: 'top',
+            },
+            creatorRecord: col?.initialValue,
+          },
+        };
+      }
+    }
+
+    return {
+      ...omit(col, ['required']),
+      width: col?.width || 'md',
+      fieldProps: {
+        placeholder: col?.valueType === 'select' ? `请选择${col?.title}` : `请输入${col?.title}`,
+      },
+      formItemProps: {
+        rules: [
+          {
+            required: col?.required,
+            message: col?.valueType === 'select' ? `请选择${col?.title}` : `请输入${col?.title}`,
+          },
+        ],
+      },
+    };
+  });
 };

@@ -1,6 +1,4 @@
 import StateTag from '@/components/StateTag';
-import type { ProColumns } from '@ant-design/pro-components';
-import type { InendsItem } from '.';
 import { eventEnum, modeEnum, typeEnum } from './enum';
 
 export const defaultConfig = {
@@ -48,7 +46,7 @@ export const defaultConfig = {
   ],
 };
 
-export const baseColumns: ProColumns<InendsItem>[] = [
+export const baseColumns = [
   {
     title: 'UUID',
     dataIndex: 'uuid',
@@ -60,37 +58,15 @@ export const baseColumns: ProColumns<InendsItem>[] = [
   {
     title: '资源名称',
     dataIndex: 'name',
-    width: 'md',
     ellipsis: true,
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '请输入资源名称',
-        },
-      ],
-    },
-    fieldProps: {
-      placeholder: '请输入资源名称',
-    },
+    required: true,
   },
   {
     title: '资源类型',
     dataIndex: 'type',
     valueType: 'select',
-    width: 'md',
     valueEnum: typeEnum,
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '请选择资源类型',
-        },
-      ],
-    },
-    fieldProps: {
-      placeholder: '请选择资源类型',
-    },
+    required: true,
   },
   {
     title: '资源状态',
@@ -100,48 +76,22 @@ export const baseColumns: ProColumns<InendsItem>[] = [
   },
   {
     title: '备注',
-    width: 'md',
     dataIndex: 'description',
     ellipsis: true,
-    fieldProps: {
-      placeholder: '请输入备注',
-    },
-    renderText: (description) => description || '-'
+    renderText: (description: string) => description || '-'
   },
 ];
 
 const defaultConfigColumns = [
   {
     title: '服务地址',
-    width: 'md',
     dataIndex: 'host',
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '请输入服务地址',
-        },
-      ],
-    },
-    fieldProps: {
-      placeholder: '请输入服务地址',
-    },
+    required: true,
   },
   {
     title: '端口',
-    width: 'md',
     dataIndex: 'port',
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '请输入端口',
-        },
-      ],
-    },
-    fieldProps: {
-      placeholder: '请输入端口',
-    },
+    required: true,
   },
 ];
 
@@ -152,101 +102,36 @@ export const configColumns = {
     {
       title: '模式',
       dataIndex: 'mode',
-      width: 'md',
+      valueType: 'select',
       valueEnum: modeEnum,
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '请选择模式',
-          },
-        ],
-      },
-      fieldProps: {
-        placeholder: '请选择模式',
-      },
+      required: true,
     },
     {
       title: '产品 ID',
       dataIndex: 'productId',
-      width: 'md',
       copyable: true,
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '请输入产品 ID',
-          },
-        ],
-      },
-      fieldProps: {
-        placeholder: '请输入产品 ID',
-      },
+      required: true,
     },
     {
       title: '设备名称',
       dataIndex: 'deviceName',
-      width: 'md',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '请输入设备名称',
-          },
-        ],
-      },
-      fieldProps: {
-        placeholder: '请输入设备名称',
-      },
+      required: true,
     },
     {
       title: '客户端 ID',
       dataIndex: 'clientId',
-      width: 'md',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '请输入客户端 ID',
-          },
-        ],
-      },
-      fieldProps: {
-        placeholder: '请输入客户端 ID',
-      },
+      required: true,
     },
     {
       title: '用户名称',
       dataIndex: 'username',
-      width: 'md',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '请输入用户名称',
-          },
-        ],
-      },
-      fieldProps: {
-        placeholder: '请输入用户名称',
-      },
+      required: true,
     },
     {
       title: '用户密码',
       dataIndex: 'password',
       valueType: 'password',
-      width: 'md',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '请输入用户密码',
-          },
-        ],
-      },
-      fieldProps: {
-        placeholder: '请输入用户密码',
-      },
+      required: true,
     },
   ],
   RULEX_UDP: defaultConfigColumns,
@@ -256,18 +141,7 @@ export const configColumns = {
     {
       title: '主题',
       dataIndex: 'topic',
-      width: 'md',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '请输入主题',
-          },
-        ],
-      },
-      fieldProps: {
-        placeholder: '请输入主题',
-      },
+      required: true,
     },
   ],
   GRPC: defaultConfigColumns,
@@ -276,19 +150,8 @@ export const configColumns = {
       title: '事件类型',
       dataIndex: 'type',
       valueType: 'select',
-      width: 'md',
+      required: true,
       valueEnum: eventEnum,
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '请选择事件类型',
-          },
-        ],
-      },
-      fieldProps: {
-        placeholder: '请选择事件类型',
-      },
     },
   ],
 };
@@ -310,11 +173,7 @@ export const columns = [
             {
               valueType: 'formList',
               dataIndex: 'config',
-              fieldProps: {
-                creatorButtonProps: false,
-                copyIconProps: false,
-                deleteIconProps: false,
-              },
+              mode: 'single',
               columns: [
                 {
                   valueType: 'group',

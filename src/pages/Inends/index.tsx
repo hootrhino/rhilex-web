@@ -45,7 +45,7 @@ const Inends = () => {
     },
   );
 
-  const columns: ProColumns<InendsItem>[] = baseColumns.concat([
+  const columns: ProColumns<InendsItem>[] = (baseColumns as ProColumns<InendsItem>[]).concat([
     {
       title: '操作',
       width: 210,
