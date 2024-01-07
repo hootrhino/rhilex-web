@@ -49,6 +49,8 @@ export async function getModbusDataSheetList(
         status?: number;
         lastFetchTime?: number;
         value?: string;
+        type?: string;
+        order?: string;
       }[];
     };
   }>('/api/v1/modbus_data_sheet/list', {
@@ -122,6 +124,8 @@ export async function postModbusDataSheetUpdate(
       address?: number;
       frequency?: number;
       quantity?: number;
+      type?: string;
+      order?: string;
     }[];
   },
   options?: { [key: string]: any },

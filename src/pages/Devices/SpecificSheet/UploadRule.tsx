@@ -3,13 +3,15 @@ import { Table } from 'antd';
 const dataSource = {
   modbus: [
     {
-      tag: '标签',
-      alias: '别名',
+      tag: 'a1',
+      alias: 'a1',
       function: 3,
       frequency: 1000,
       slaverId: 1,
       address: 0,
-      quantity: 1,
+      quantity: 2,
+      type: 'FLOAT',
+      order: 'DCBA'
     },
   ],
   plc: [
@@ -53,6 +55,14 @@ const columnsMap = {
     {
       title: 'quantity',
       dataIndex: 'quantity',
+    },
+    {
+      title: 'type',
+      dataIndex: 'type',
+    },
+    {
+      title: 'order',
+      dataIndex: 'order',
     },
   ],
   plc: [

@@ -34,7 +34,15 @@ const byte4Options = [
   },
 ];
 
-// plc 数据类型
+// 不转换-字节序
+const orderRawOption = [
+  {
+    value: 'DCBA',
+    label: 'DCBA',
+  },
+];
+
+// 基本数据类型
 export const cascaderOptions = [
   {
     value: 'BYTE',
@@ -81,4 +89,14 @@ export const cascaderOptions = [
     label: 'UFloat（4字节）',
     children: byte4Options,
   },
+];
+
+// modbus 数据类型
+export const modbusTypeOptions = [
+  {
+    value: 'RAW',
+    label: '不转换（4字节）',
+    children: orderRawOption,
+  },
+  ...cascaderOptions,
 ];

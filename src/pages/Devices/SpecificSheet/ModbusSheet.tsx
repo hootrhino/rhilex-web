@@ -10,7 +10,7 @@ import {
 import { IconFont } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { EditableProTable } from '@ant-design/pro-components';
+import { EditableProTable, ProFormCascader, ProFormSelect } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Upload } from 'antd';
 import omit from 'lodash/omit';
@@ -20,6 +20,7 @@ import UploadRule from './UploadRule';
 
 import { statusEnum } from '@/utils/enum';
 import '../index.less';
+import { modbusTypeOptions } from './enum';
 
 const defaultModbusConfig = {
   tag: '',
@@ -29,6 +30,8 @@ const defaultModbusConfig = {
   slaverId: 1,
   address: 0,
   quantity: 1,
+  type: 'RAW',
+  order: 'DCBA',
 };
 
 export type ModbusSheetItem = {
@@ -45,6 +48,8 @@ export type ModbusSheetItem = {
   status: number;
   lastFetchTime: number;
   value: string;
+  type: string;
+  order: string;
 };
 
 type removeParams = {
@@ -72,6 +77,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly Partial<ModbusSheetItem>[]>([]);
+  const [type, setType] = useState<string>('RAW');
 
   const disabled = selectedRowKeys?.length === 0;
 
@@ -155,13 +161,13 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed: readOnly ? 'left' : false,
+      fixed: 'left',
       render: (text, record, index) => <IndexBorder serial={index} />,
     },
     {
       title: '数据标签',
       dataIndex: 'tag',
-      fixed: readOnly ? 'left' : false,
+      fixed: 'left',
       width: 120,
       ellipsis: true,
       formItemProps: () => {
@@ -193,6 +199,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: 'Modbus 功能',
       dataIndex: 'function',
       valueType: 'select',
+      width: 150,
       valueEnum: funcEnum,
       formItemProps: () => {
         return {
@@ -247,6 +254,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '起始地址',
       dataIndex: 'address',
       valueType: 'digit',
+      width: 120,
       fieldProps: () => {
         return {
           style: { width: '100%' },
@@ -277,6 +285,54 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       },
     },
     {
+      title: '数据类型',
+      dataIndex: 'type',
+      renderFormItem: (item, { type, ...rest }) => {
+        if (type === 'form') {
+          return (
+            <ProFormSelect
+              {...rest}
+              options={modbusTypeOptions?.map((item) => omit(item, 'children'))}
+              noStyle
+              fieldProps={{ placeholder: '请选择数据类型', onChange: (value) => setType(value) }}
+            />
+          );
+        }
+
+        return (
+          <ProFormCascader
+            {...rest}
+            fieldProps={{
+              placeholder: '请选择数据类型',
+              options: modbusTypeOptions,
+            }}
+          />
+        );
+      },
+      formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
+      search: {
+        // 格式化搜索值
+        transform: (value) => {
+          return {
+            dataType: value[0],
+            dataOrder: value[1],
+          };
+        },
+      },
+    },
+    {
+      title: '字节序',
+      dataIndex: 'order',
+      valueType: 'select',
+      width: 120,
+      hideInSearch: true,
+      fieldProps: {
+        options: modbusTypeOptions?.find((item) => item.value === type)?.children || [],
+        placeholder: '请选择字节序',
+      },
+      formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
+    },
+    {
       title: '最新值',
       dataIndex: 'value',
       editable: false,
@@ -304,6 +360,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '操作',
       valueType: 'option',
       width: 150,
+      fixed: 'right',
       hideInTable: readOnly,
       render: (text, record, _, action) => [
         <EditableProTable.RecordCreator
@@ -454,7 +511,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
         onSave: handleOnSave,
         onChange: setEditableRowKeys,
       }}
-      scroll={{ x: readOnly ? 1400 : undefined }}
+      scroll={{ x: readOnly ? 1600 : 1800 }}
     />
   );
 };

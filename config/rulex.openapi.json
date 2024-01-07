@@ -11049,6 +11049,12 @@
                               },
                               "value": {
                                 "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "order": {
+                                "type": "string"
                               }
                             },
                             "required": [
@@ -11063,9 +11069,10 @@
                               "quantity",
                               "status",
                               "lastFetchTime",
-                              "value"
+                              "value",
+                              "type",
+                              "order"
                             ],
-                            "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "uuid",
                               "device_uuid",
@@ -11078,8 +11085,11 @@
                               "quantity",
                               "status",
                               "lastFetchTime",
-                              "value"
-                            ]
+                              "value",
+                              "type",
+                              "order"
+                            ],
+                            "x-apifox-ignore-properties": []
                           }
                         }
                       },
@@ -11089,13 +11099,13 @@
                         "total",
                         "records"
                       ],
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "current",
                         "size",
                         "total",
                         "records"
-                      ]
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -11103,12 +11113,12 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
                 },
                 "examples": {
                   "1": {
@@ -11213,9 +11223,14 @@
                         },
                         "quantity": {
                           "type": "integer"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "order": {
+                          "type": "string"
                         }
                       },
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "uuid",
                         "device_uuid",
@@ -11225,8 +11240,15 @@
                         "slaverId",
                         "address",
                         "frequency",
-                        "quantity"
-                      ]
+                        "quantity",
+                        "type",
+                        "order"
+                      ],
+                      "required": [
+                        "type",
+                        "order"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   }
                 },
@@ -11234,11 +11256,11 @@
                   "device_uuid",
                   "modbus_data_points"
                 ],
-                "x-apifox-ignore-properties": [],
                 "x-apifox-orders": [
                   "device_uuid",
                   "modbus_data_points"
-                ]
+                ],
+                "x-apifox-ignore-properties": []
               },
               "example": {
                 "device_uuid": "DEVICETWRRCW",
