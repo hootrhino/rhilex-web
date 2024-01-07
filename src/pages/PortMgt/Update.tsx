@@ -14,7 +14,7 @@ import { useModel } from '@umijs/max';
 import { Card } from 'antd';
 import { useEffect, useRef } from 'react';
 import type { InterfaceItem } from '.';
-import { baudRateEnum, dataBitsEnum, parityEnum, stopBitsEnum, typeOptions } from './constant';
+import { baudRateEnum, dataBitsEnum, parityEnum, stopBitsEnum, typeOptions } from './enum';
 
 type UpdateProps = ModalFormProps<any> & {
   uuid: string;

@@ -24,7 +24,7 @@ import { history, useModel, useRequest } from '@umijs/max';
 import { Button, Drawer, Dropdown, Popconfirm, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/hooks/useItems';
 import { useRef, useState } from 'react';
-import { getBaseColumns } from '../Schema/Property';
+import { getBaseColumns } from '../SchemaMgt/Property';
 import Detail from './Detail';
 import { typeEnum } from './UpdateForm/initialValue';
 

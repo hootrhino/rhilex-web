@@ -16,8 +16,8 @@ import {
   putInendsRestart,
 } from '@/services/rulex/shuruziyuanguanli';
 import { useModel, useRequest } from '@umijs/max';
-import Detail from './components/Detail';
-import { typeEnum } from './components/enum';
+import Detail from './Detail';
+import { typeEnum } from './enum';
 
 export type InendsItem = {
   name: string;

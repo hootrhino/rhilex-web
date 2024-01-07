@@ -67,7 +67,7 @@
     path: '/schema',
     name: '数据模型',
     icon: 'apartment',
-    component: './Schema',
+    component: './SchemaMgt',
   },
   // {
   //   path: '/screen-mgt',
@@ -100,12 +100,12 @@
       {
         path: '/inends/new',
         name: '新建资源',
-        component: './Inends/components/Update',
+        component: './Inends/Update',
       },
       {
         path: '/inends/edit/:uuid',
         name: '编辑资源',
-        component: './Inends/components/Update',
+        component: './Inends/Update',
       },
       {
         path: '/inends/:inendId/rule',
@@ -169,12 +169,12 @@
       {
         path: '/app-stack/new',
         name: '新建应用',
-        component: './AppStack/components/Update',
+        component: './AppStack/Update',
       },
       {
         path: '/app-stack/edit/:uuid',
         name: '编辑应用',
-        component: './AppStack/components/Update',
+        component: './AppStack/Update',
       },
     ],
   },

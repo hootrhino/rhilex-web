@@ -16,7 +16,7 @@ const SpecificSheet = () => {
   });
 
   useEffect(() => {
-    setTitle(deviceDetail?.name ? `${deviceDetail?.name} 点位表配置` : '点位表配置');
+    setTitle(deviceDetail?.name ? `设备 ${deviceDetail?.name} - 点位表配置` : '点位表配置');
   }, [deviceDetail]);
 
   return (

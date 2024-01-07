@@ -3,7 +3,7 @@ import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { Button } from 'antd';
 import { useState } from 'react';
 import PropertyList from './Property';
-import SchemaList from './SchemaList';
+import SchemaList from './Schema';
 
 type Rule = {
   defaultValue?: string;
@@ -36,7 +36,7 @@ export type SchemaItem = {
 
 export type ActiveSchema = Omit<SchemaItem, 'schema'>;
 
-const Schema = () => {
+const SchemaMgt = () => {
   const [activeSchema, setActiveSchema] = useState<ActiveSchema>({
     uuid: '',
     name: '',
@@ -70,4 +70,4 @@ const Schema = () => {
   );
 };
 
-export default Schema;
+export default SchemaMgt;

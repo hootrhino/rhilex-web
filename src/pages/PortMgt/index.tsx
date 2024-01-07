@@ -5,7 +5,7 @@ import { PageContainer, ProDescriptions, ProTable } from '@ant-design/pro-compon
 import { useModel, useRequest } from '@umijs/max';
 import { Button, Card, Descriptions, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
-import { parityEnum, typeOptions } from './constant';
+import { parityEnum, typeOptions } from './enum';
 import Update from './Update';
 import UnitTitle from '@/components/UnitTitle';
 

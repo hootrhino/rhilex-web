@@ -7,7 +7,7 @@ import { ProDescriptions } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import type { DrawerProps } from 'antd';
 import { Drawer, Tag } from 'antd';
-import { AppStackItem, appStateEnum } from '..';
+import { AppStackItem, appStateEnum } from '.';
 
 type DetailProps = DrawerProps & {
   uuid: string;

@@ -4,6 +4,7 @@ import { history, useParams, useRequest } from 'umi';
 
 import { message } from '@/components/PopupHack';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
+import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import useGoBack from '@/hooks/useGoBack';
 import {
   getInendsDetail,
@@ -21,9 +22,7 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import random from 'lodash/random';
 import { eventEnum, modeEnum, typeEnum } from './enum';
-import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 
 const DefaultListUrl = '/inends/list';
 
@@ -77,7 +76,7 @@ const UpdateForm = () => {
   const { uuid } = useParams();
   const { showModal } = useGoBack();
   const [loading, setLoading] = useState<boolean>(false);
-  const randomNumber = random(1000, 9999);
+  const randomNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
   const defaultValue = { type: 'COAP', config: defaultConfig['COAP'] };
 
   // 获取详情
@@ -114,8 +113,6 @@ const UpdateForm = () => {
       return false;
     }
   };
-
-
 
   useEffect(() => {
     if (detail) {

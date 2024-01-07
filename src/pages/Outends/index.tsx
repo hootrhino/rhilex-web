@@ -15,7 +15,7 @@ import {
   putOutendsRestart,
 } from '@/services/rulex/shuchuziyuanguanli';
 import Detail from './Detail';
-import { typeEnum } from './Update/initialValue';
+import { typeEnum } from './enum';
 
 export type OutendsItem = {
   name: string;

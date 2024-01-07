@@ -108,7 +108,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         column={1}
         columns={columnsMap['COMMON']}
         labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
-        title="基本信息"
+        title="基本配置"
         dataSource={omit(data, 'config')}
         loading={loading}
       />

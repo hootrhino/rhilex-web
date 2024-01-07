@@ -6,9 +6,13 @@ import {
 
 import HeadersTitle from '@/components/HttpHeaders/Title';
 import { message } from '@/components/PopupHack';
+import ProFormSubmitter from '@/components/ProFormSubmitter';
 import ProSegmented from '@/components/ProSegmented';
 import UnitTitle from '@/components/UnitTitle';
+import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import useGoBack from '@/hooks/useGoBack';
+import { boolMap } from '@/utils/enum';
+import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -25,11 +29,7 @@ import { Tooltip } from 'antd';
 import random from 'lodash/random';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
-import { defaultConfig, modeEnum, typeEnum } from './initialValue';
-import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
-import ProFormSubmitter from '@/components/ProFormSubmitter';
-import { boolMap } from '@/utils/enum';
-import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
+import { defaultConfig, modeEnum, typeEnum } from './enum';
 
 type UpdateFormItem = {
   name: string;
@@ -282,8 +282,6 @@ const UpdateForm = () => {
                               },
                             ]}
                           />
-                        </ProForm.Group>
-                        <ProForm.Group>
                           <ProFormText
                             label="连接账户"
                             name="username"
@@ -356,7 +354,7 @@ const UpdateForm = () => {
                             required
                             label="开启心跳"
                             name="allowPing"
-                            transform={(value: string) => ({allowPing: boolMap[value]})}
+                            transform={(value: string) => ({ allowPing: boolMap[value] })}
                             convertValue={(value: boolean) => value?.toString()}
                           >
                             <ProSegmented width="md" />
@@ -380,8 +378,6 @@ const UpdateForm = () => {
                             placeholder="请输入超时时间（毫秒）"
                             rules={[{ required: true, message: '请输入超时时间（毫秒）' }]}
                           />
-                        </ProForm.Group>
-                        <ProForm.Group>
                           <ProFormText
                             label="主机地址"
                             name="host"
@@ -445,8 +441,6 @@ const UpdateForm = () => {
                               },
                             ]}
                           />
-                        </ProForm.Group>
-                        <ProForm.Group>
                           <ProFormText
                             label="数据库名"
                             name="dbName"

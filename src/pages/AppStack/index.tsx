@@ -14,7 +14,7 @@ import { boolEnum } from '@/utils/enum';
 import { useRequest } from '@umijs/max';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
-import Detail from './components/Detail';
+import Detail from './Detail';
 
 export type AppStackItem = {
   uuid?: string;
