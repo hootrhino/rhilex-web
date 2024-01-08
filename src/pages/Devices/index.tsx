@@ -258,7 +258,7 @@ const Devices = () => {
           </ProCard>
         </ProCard>
       </PageContainer>
-      <Detail {...detailConfig} onClose={() => setDeviceConfig({ ...detailConfig, open: false })} />
+      <Detail {...detailConfig} onClose={() => setDeviceConfig({ uuid: '', open: false })} />
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}

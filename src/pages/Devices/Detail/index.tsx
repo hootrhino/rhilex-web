@@ -52,10 +52,8 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     getDetail: getPortDetail,
   } = useModel('usePort');
 
-  const { data: detail } = useRequest(() => getDevicesDetail({ uuid }), {
-    //  manual: true,
-    ready: !!uuid,
-    refreshDeps: [uuid],
+  const { data: detail, run: getDetail } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
+    manual: true,
   });
 
   const { type = 'GENERIC_PROTOCOL', config } = detail || {};
@@ -205,7 +203,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
 
   useEffect(() => {
     if (uuid && open) {
-      // getDeviceDetail({ uuid });
+      getDetail({ uuid });
       getPort();
     }
   }, [uuid, open]);
