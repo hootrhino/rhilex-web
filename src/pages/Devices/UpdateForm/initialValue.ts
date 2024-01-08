@@ -1,10 +1,10 @@
 // 设备类型
 export const typeEnum = {
-  GENERIC_PROTOCOL: '通用时间片中断协议串口类设备',
-  GENERIC_MODBUS: '通用 Modbus Slaver 设备',
-  GENERIC_AIS_RECEIVER: '通用船舶 AIS 报文解析网关',
-  SIEMENS_PLC: '西门子 S7 系列 PLC 设备',
-  GENERIC_HTTP_DEVICE: '通用 HTTP 协议类设备',
+  GENERIC_PROTOCOL: '通用时间片中断串口采集网关',
+  GENERIC_MODBUS: '通用 modbus 采集网关',
+  GENERIC_AIS_RECEIVER: '通用船载 AIS 数据解析网关',
+  SIEMENS_PLC: '通用西门子 S7 系列 PLC 采集网关',
+  GENERIC_HTTP_DEVICE: '通用 HTTP 协议数据采集网关',
 };
 
 // 模式
