@@ -1,7 +1,7 @@
 import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
-import { omit, orderBy, isEmpty } from 'lodash';
+import { isEmpty, omit, orderBy } from 'lodash';
 import luamin from 'lua-format';
 import { twMerge } from 'tailwind-merge';
 
@@ -159,6 +159,7 @@ export const processColumns = (columns: any) => {
       width: col?.width || 'md',
       fieldProps: {
         placeholder: col?.valueType === 'select' ? `请选择${col?.title}` : `请输入${col?.title}`,
+        ...col?.fieldProps,
       },
       formItemProps: {
         rules: [
@@ -167,6 +168,7 @@ export const processColumns = (columns: any) => {
             message: col?.valueType === 'select' ? `请选择${col?.title}` : `请输入${col?.title}`,
           },
         ],
+        ...col?.formItemProps,
       },
     };
   });

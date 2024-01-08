@@ -8,14 +8,15 @@ import { history } from 'umi';
 
 import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
-import StateTag from '@/components/StateTag';
+// import StateTag from '@/components/StateTag';
 import {
   deleteOutendsDel,
   getOutendsList,
   putOutendsRestart,
 } from '@/services/rulex/shuchuziyuanguanli';
 import Detail from './Detail';
-import { typeEnum } from './enum';
+// import { typeEnum } from './enum';
+import { baseColumns } from './columns';
 
 export type OutendsItem = {
   name: string;
@@ -47,34 +48,7 @@ const Outends = () => {
     }
   };
 
-  const columns: ProColumns<OutendsItem>[] = [
-    {
-      title: 'UUID',
-      dataIndex: 'uuid',
-      ellipsis: true,
-      copyable: true,
-    },
-    {
-      title: '名称',
-      dataIndex: 'name',
-      ellipsis: true,
-    },
-    {
-      title: '类型',
-      dataIndex: 'type',
-      valueEnum: typeEnum,
-    },
-    {
-      title: '状态',
-      dataIndex: 'state',
-      width: 100,
-      renderText: (state) => <StateTag state={state} />,
-    },
-    {
-      title: '备注',
-      dataIndex: 'description',
-      ellipsis: true,
-    },
+  const columns: ProColumns<OutendsItem>[] = (baseColumns as ProColumns<OutendsItem>[]).concat([
     {
       title: '操作',
       valueType: 'option',
@@ -119,7 +93,7 @@ const Outends = () => {
         </Dropdown>,
       ],
     },
-  ];
+  ]);
 
   return (
     <>
