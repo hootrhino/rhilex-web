@@ -1,22 +1,16 @@
 import { message } from '@/components/PopupHack';
-
 import ProCodeEditor from '@/components/ProCodeEditor';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
-import ProSegmented from '@/components/ProSegmented';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import useGoBack from '@/hooks/useGoBack';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rulex/qingliangyingyong';
-import { boolMap } from '@/utils/enum';
-import type { ProFormInstance } from '@ant-design/pro-components';
-import {
-  PageContainer,
-  ProCard,
-  ProForm,
-  ProFormDependency,
-  ProFormText,
-} from '@ant-design/pro-components';
+import { processColumns } from '@/utils/utils';
+import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
+import { BetaSchemaForm, PageContainer, ProCard } from '@ant-design/pro-components';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
+import { AppStackItem } from '..';
+import { baseColumns } from '../columns';
 
 const DefaultListUrl = '/app-stack/list';
 
@@ -34,6 +28,36 @@ const UpdateForm = () => {
   const { showModal } = useGoBack();
   const formRef = useRef<ProFormInstance>();
   const [loading, setLoading] = useState<boolean>(false);
+
+  const columns = [
+    {
+      valueType: 'group',
+      columns: baseColumns,
+    },
+    {
+      valueType: 'dependency',
+      name: ['type'],
+      columns: ({ type }: any) => {
+        if (type !== 'lua') return [];
+        return [
+          {
+            title: '',
+            dataIndex: 'luaSource',
+            hideInForm: !uuid,
+            renderFormItem: () => (
+              <ProCodeEditor
+                label="Lua 源码"
+                name="luaSource"
+                ref={formRef}
+                required
+                style={{ width: '100%' }}
+              />
+            ),
+          },
+        ];
+      },
+    },
+  ];
 
   // 获取详情
   const { data: detail } = useRequest(() => getAppDetail({ uuid: uuid || '' }), {
@@ -78,8 +102,10 @@ const UpdateForm = () => {
       onBack={() => showModal({ url: DefaultListUrl })}
     >
       <ProCard>
-        <ProForm
+        <BetaSchemaForm
+          layoutType="Form"
           formRef={formRef}
+          columns={processColumns(columns) as ProFormColumnsType<AppStackItem>[]}
           onFinish={handleOnFinish}
           submitter={{
             render: ({ reset, submit }) => (
@@ -95,42 +121,7 @@ const UpdateForm = () => {
               />
             ),
           }}
-        >
-          <ProForm.Group>
-            <ProFormText
-              label="APP 名称"
-              name="name"
-              width="md"
-              placeholder="请输入 APP 名称"
-              rules={[{ required: true, message: '请输入 APP 名称' }]}
-            />
-            <ProFormText
-              label="APP 版本"
-              name="version"
-              width="md"
-              placeholder="请输入 APP 版本"
-              rules={[{ required: true, message: '请输入 APP 版本' }]}
-            />
-            <ProForm.Item
-              label="是否自启"
-              name="autoStart"
-              required
-              transform={(value: string) => ({ autoStart: boolMap[value] })}
-              convertValue={(value: boolean) => value?.toString()}
-            >
-              <ProSegmented width="md" />
-            </ProForm.Item>
-            <ProFormText label="备注" name="description" width="md" placeholder="请输入备注" />
-          </ProForm.Group>
-          <ProFormDependency name={['type']}>
-            {({ type }) => {
-              if (type !== 'lua') return;
-              return (
-                uuid && <ProCodeEditor label="Lua 源码" name="luaSource" ref={formRef} required />
-              );
-            }}
-          </ProFormDependency>
-        </ProForm>
+        />
       </ProCard>
     </PageContainer>
   );

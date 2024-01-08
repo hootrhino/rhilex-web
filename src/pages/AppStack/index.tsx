@@ -5,15 +5,14 @@ import {
   putAppStart,
   putAppStop,
 } from '@/services/rulex/qingliangyingyong';
-import { MinusCircleOutlined, PlusOutlined, SyncOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Button, Popconfirm, Tag } from 'antd';
-
-import { boolEnum } from '@/utils/enum';
 import { useRequest } from '@umijs/max';
+import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
+import { baseColumns } from './columns';
 import Detail from './Detail';
 
 export type AppStackItem = {
@@ -25,19 +24,6 @@ export type AppStackItem = {
   filepath?: string;
   luaSource?: string;
   [key: string]: any;
-};
-
-export const appStateEnum = {
-  1: {
-    text: '正在运行',
-    color: 'processing',
-    icon: <SyncOutlined spin />,
-  },
-  0: {
-    text: '已结束',
-    color: 'default',
-    icon: <MinusCircleOutlined />,
-  },
 };
 
 const AppStack = () => {
@@ -75,38 +61,7 @@ const AppStack = () => {
     },
   });
 
-  const columns: ProColumns<AppStackItem>[] = [
-    {
-      title: 'APP 名称',
-      dataIndex: 'name',
-      ellipsis: true,
-      width: 150,
-    },
-    {
-      title: 'APP 版本',
-      dataIndex: 'version',
-    },
-    {
-      title: '是否自启',
-      dataIndex: 'autoStart',
-      renderText: (autoStart) => (
-        <Tag color={boolEnum[autoStart]?.color}>{boolEnum[autoStart]?.text}</Tag>
-      ),
-    },
-    {
-      title: 'APP 状态',
-      dataIndex: 'appState',
-      renderText: (appState) => (
-        <Tag icon={appStateEnum[appState]?.icon} color={appStateEnum[appState]?.color}>
-          {appStateEnum[appState]?.text}
-        </Tag>
-      ),
-    },
-    {
-      title: '备注',
-      dataIndex: 'description',
-      ellipsis: true,
-    },
+  const actions: ProColumns<AppStackItem>[] = [
     {
       title: '操作',
       width: 200,
@@ -115,15 +70,6 @@ const AppStack = () => {
       valueType: 'option',
       render: (_, { uuid, appState }) => [
         <a
-          key="log"
-          onClick={() => {
-            if (!uuid) return;
-            setConfig({ uuid, open: true, type: 'log' });
-          }}
-        >
-          日志
-        </a>,
-        <a
           key="detail"
           onClick={() => {
             if (!uuid) return;
@@ -131,6 +77,15 @@ const AppStack = () => {
           }}
         >
           详情
+        </a>,
+        <a
+          key="log"
+          onClick={() => {
+            if (!uuid) return;
+            setConfig({ uuid, open: true, type: 'log' });
+          }}
+        >
+          日志
         </a>,
         <a
           key="start"
@@ -168,7 +123,7 @@ const AppStack = () => {
         <ProTable
           rowKey="uuid"
           actionRef={actionRef}
-          columns={columns}
+          columns={[...baseColumns, ...actions] as ProColumns<AppStackItem>[]}
           search={false}
           pagination={false}
           request={async () => {

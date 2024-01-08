@@ -1,13 +1,13 @@
 import LogTable from '@/components/LogTable';
 import { getAppDetail } from '@/services/rulex/qingliangyingyong';
-import { boolEnum } from '@/utils/enum';
 import { filterLogByTopic } from '@/utils/utils';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import type { DrawerProps } from 'antd';
-import { Drawer, Tag } from 'antd';
-import { AppStackItem, appStateEnum } from '.';
+import { Drawer } from 'antd';
+import type { AppStackItem } from '..';
+import { baseColumns } from '../columns';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -19,51 +19,6 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     topicData: { appConsole },
   } = useModel('useWebsocket');
 
-  const columns: ProDescriptionsItemProps<AppStackItem>[] = [
-    {
-      title: 'APP 名称',
-      dataIndex: 'name',
-      ellipsis: true,
-    },
-    {
-      title: 'APP 版本',
-      dataIndex: 'version',
-    },
-    {
-      title: '是否自启',
-      dataIndex: 'autoStart',
-      renderText: (autoStart) => (
-        <Tag color={boolEnum[autoStart]?.color}>{boolEnum[autoStart]?.text}</Tag>
-      ),
-    },
-    {
-      title: 'APP 状态',
-      dataIndex: 'appState',
-      renderText: (appState) => (
-        <Tag icon={appStateEnum[appState]?.icon} color={appStateEnum[appState]?.color}>
-          {appStateEnum[appState]?.text}
-        </Tag>
-      ),
-    },
-    {
-      title: '脚本类型',
-      dataIndex: 'type',
-      valueType: 'select',
-      valueEnum: {
-        lua: 'LUA 脚本',
-      },
-    },
-    {
-      title: 'Lua 源码',
-      dataIndex: 'luaSource',
-      valueType: 'code',
-    },
-    {
-      title: '备注',
-      dataIndex: 'description',
-    },
-  ];
-
   return (
     <Drawer
       title={type === 'detail' ? '轻量应用详情' : '轻量应用日志'}
@@ -74,10 +29,11 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       {type === 'detail' ? (
         <ProDescriptions
           column={1}
-          columns={columns}
+          columns={baseColumns as ProDescriptionsItemProps<AppStackItem>[]}
           labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
-          request={async () => {
-            const res = await getAppDetail({ uuid });
+          params={{ uuid }}
+          request={async (params) => {
+            const res = await getAppDetail(params as API.getAppDetailParams);
 
             return Promise.resolve({
               success: true,
