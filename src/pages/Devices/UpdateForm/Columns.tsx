@@ -1,7 +1,7 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
 import UnitTitle from '@/components/UnitTitle';
 import { boolMap } from '@/utils/enum';
-import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from './initialValue';
+import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from './enum';
 
 export const columns = [
   {

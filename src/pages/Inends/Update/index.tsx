@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { history, useParams, useRequest } from 'umi';
 
+import Title from '@/components/FormTitle';
 import { message } from '@/components/PopupHack';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
@@ -11,11 +12,11 @@ import {
   postInendsCreate,
   putInendsUpdate,
 } from '@/services/rulex/shuruziyuanguanli';
+import { processColumns } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { BetaSchemaForm, PageContainer, ProCard } from '@ant-design/pro-components';
-import { columns, defaultConfig } from '../columns';
 import type { InendsItem } from '..';
-import { processColumns } from '@/utils/utils';
+import { columns, defaultConfig } from '../columns';
 
 const DefaultListUrl = '/inends/list';
 
@@ -74,7 +75,7 @@ const UpdateForm = () => {
 
   return (
     <PageContainer
-      header={{ title: uuid ? '编辑资源' : '新建资源' }}
+      header={{ title: <Title title={uuid ? '编辑资源' : '新建资源'} /> }}
       onBack={() => showModal({ url: DefaultListUrl })}
     >
       <ProCard>

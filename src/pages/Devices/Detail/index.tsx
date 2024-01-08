@@ -13,7 +13,7 @@ import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import ModbusSheet from '../SpecificSheet/ModbusSheet';
 import PlcSheet from '../SpecificSheet/PlcSheet';
-import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from '../UpdateForm/initialValue';
+import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from '../UpdateForm/enum';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -52,9 +52,12 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     getDetail: getPortDetail,
   } = useModel('usePort');
 
-  const { data: detail, run: getDetail } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
-    manual: true,
-  });
+  const { data: detail, run: getDetail } = useRequest(
+    (params: API.getDevicesDetailParams) => getDevicesDetail(params),
+    {
+      manual: true,
+    },
+  );
 
   const { type = 'GENERIC_PROTOCOL', config } = detail || {};
   const { commonConfig, hostConfig, portUuid, httpConfig } = config || {};

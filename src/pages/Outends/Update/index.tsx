@@ -4,6 +4,7 @@ import {
   putOutendsUpdate,
 } from '@/services/rulex/shuchuziyuanguanli';
 
+import Title from '@/components/FormTitle';
 import { message } from '@/components/PopupHack';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
@@ -125,7 +126,7 @@ const UpdateForm = () => {
 
   return (
     <PageContainer
-      header={{ title: uuid ? '编辑资源' : '新建资源' }}
+      header={{ title: <Title title={uuid ? '编辑资源' : '新建资源'} /> }}
       onBack={() => showModal({ url: DefaultListUrl })}
     >
       <ProCard>

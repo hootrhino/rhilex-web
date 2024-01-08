@@ -26,7 +26,7 @@ import type { ItemType } from 'antd/es/menu/hooks/useItems';
 import { useRef, useState } from 'react';
 import { getBaseColumns } from '../SchemaMgt/Property';
 import Detail from './Detail';
-import { typeEnum } from './UpdateForm/initialValue';
+import { typeEnum } from './UpdateForm/enum';
 
 export type DeviceItem = {
   name: string;

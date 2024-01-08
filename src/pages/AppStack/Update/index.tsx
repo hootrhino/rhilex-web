@@ -1,3 +1,4 @@
+import Title from '@/components/FormTitle';
 import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
@@ -98,7 +99,7 @@ const UpdateForm = () => {
 
   return (
     <PageContainer
-      header={{ title: uuid ? '更新应用' : '新建应用' }}
+      header={{ title: <Title title={uuid ? '更新应用' : '新建应用'} /> }}
       onBack={() => showModal({ url: DefaultListUrl })}
     >
       <ProCard>

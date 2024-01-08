@@ -21,18 +21,109 @@ import {
   putDevicesUpdate,
 } from '@/services/rulex/shebeiguanli';
 
+import Title from '@/components/FormTitle';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
+import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { getSchemaList } from '@/services/rulex/shujumoxing';
 import { formatHeaders2Arr, formatHeaders2Obj, processColumns } from '@/utils/utils';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
-import { columns } from './Columns';
-import Title from './FormTitle';
+import { columns } from './columns';
 import './index.less';
-import { defaultConfig, defaultHostConfig, defaultModelConfig } from './initialValue';
-import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 
 const DefaultListUrl = '/device/list';
+
+// TCP 配置
+export const defaultHostConfig = [
+  {
+    port: 3399,
+    host: '127.0.0.1',
+    timeout: 3000,
+  },
+];
+
+export const defaultConfig = {
+  GENERIC_PROTOCOL: {
+    commonConfig: [
+      {
+        retryTime: 5,
+        mode: 'UART',
+      },
+    ],
+    hostConfig: defaultHostConfig,
+  },
+  GENERIC_MODBUS: {
+    commonConfig: [
+      {
+        autoRequest: 'false',
+        mode: 'UART',
+      },
+    ],
+    hostConfig: defaultHostConfig,
+  },
+  GENERIC_AIS_RECEIVER: {
+    commonConfig: [
+      {
+        parseAis: 'false',
+        gwsn: 'HR0001',
+        mode: 'UART',
+      },
+    ],
+    hostConfig: [
+      {
+        port: 6005,
+        host: '0.0.0.0',
+        timeout: 3000,
+      },
+    ],
+  },
+  SIEMENS_PLC: {
+    commonConfig: [
+      {
+        autoRequest: 'false',
+        host: '127.0.0.1:102',
+        model: 'S71200',
+        rack: 0,
+        slot: 1,
+        timeout: 3000,
+        idleTimeout: 5000,
+      },
+    ],
+  },
+  GENERIC_HTTP_DEVICE: {
+    commonConfig: [
+      {
+        autoRequest: 'false',
+        timeout: 3000,
+        frequency: 1000,
+      },
+    ],
+    httpConfig: [
+      {
+        url: 'http://127.0.0.1:8080',
+      },
+    ],
+  },
+};
+
+// 根据 PLC 型号改变 rack&slot 默认值
+export const defaultModelConfig = {
+  S7200: {
+    slot: 2,
+  },
+  S7300: {
+    slot: 2,
+  },
+  S7400: {
+    slot: 2,
+  },
+  S71200: {
+    slot: 1,
+  },
+  S71500: {
+    slot: 1,
+  },
+};
 
 const UpdateForm = ({}: ProFormProps) => {
   const formRef = useRef<ProFormInstance>();
@@ -107,7 +198,7 @@ const UpdateForm = ({}: ProFormProps) => {
   const handleOnFinish = async (values: any) => {
     setLoading(true);
     try {
-      let params = {...values};
+      let params = { ...values };
       const commonConfigParams = params.config.commonConfig;
       const hostConfigParams = params?.config?.hostConfig?.[0];
       const httpConfigParams = params?.config?.httpConfig?.[0];
@@ -231,7 +322,7 @@ const UpdateForm = ({}: ProFormProps) => {
 
   return (
     <PageContainer
-      header={{ title: <Title deviceId={deviceId} /> }}
+      header={{ title: <Title title={deviceId ? '编辑设备' : '新建设备'} /> }}
       onBack={() => showModal({ url: DefaultListUrl })}
     >
       <ProConfigProvider valueTypeMap={customizeValueType} hashed={false}>
