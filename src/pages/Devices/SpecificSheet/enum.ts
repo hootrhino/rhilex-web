@@ -43,22 +43,7 @@ const orderRawOption = [
 ];
 
 // 基本数据类型
-export const cascaderOptions = [
-  {
-    value: 'BYTE',
-    label: 'Byte（1字节）',
-    children: byte1Options,
-  },
-  {
-    value: 'I',
-    label: 'I（1字节）',
-    children: byte1Options,
-  },
-  {
-    value: 'Q',
-    label: 'Q（1字节）',
-    children: byte1Options,
-  },
+export const baseOptions = [
   {
     value: 'SHORT',
     label: 'Short（2字节）',
@@ -91,12 +76,37 @@ export const cascaderOptions = [
   },
 ];
 
+// 基本数据类型
+export const plcDataTypeOptions = [
+  {
+    value: 'BYTE',
+    label: 'Byte（1字节）',
+    children: byte1Options,
+  },
+  {
+    value: 'I',
+    label: 'I（1字节）',
+    children: byte1Options,
+  },
+  {
+    value: 'Q',
+    label: 'Q（1字节）',
+    children: byte1Options,
+  },
+  ...baseOptions,
+];
+
 // modbus 数据类型
-export const modbusTypeOptions = [
+export const modbusDataTypeOptions = [
   {
     value: 'RAW',
     label: '不转换（4字节）',
     children: orderRawOption,
   },
-  ...cascaderOptions,
+  {
+    value: 'BYTE',
+    label: 'Byte（1字节）',
+    children: byte1Options,
+  },
+  ...baseOptions,
 ];

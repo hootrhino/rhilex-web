@@ -20,7 +20,7 @@ import UploadRule from './UploadRule';
 
 import { statusEnum } from '@/utils/enum';
 import '../index.less';
-import { modbusTypeOptions } from './enum';
+import { modbusDataTypeOptions } from './enum';
 
 const defaultModbusConfig = {
   tag: '',
@@ -292,7 +292,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
           return (
             <ProFormSelect
               {...rest}
-              options={modbusTypeOptions?.map((item) => omit(item, 'children'))}
+              options={modbusDataTypeOptions?.map((item) => omit(item, 'children'))}
               noStyle
               fieldProps={{ placeholder: '请选择数据类型', onChange: (value) => setType(value) }}
             />
@@ -304,7 +304,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
             {...rest}
             fieldProps={{
               placeholder: '请选择数据类型',
-              options: modbusTypeOptions,
+              options: modbusDataTypeOptions,
             }}
           />
         );
@@ -327,7 +327,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       width: 120,
       hideInSearch: true,
       fieldProps: {
-        options: modbusTypeOptions?.find((item) => item.value === type)?.children || [],
+        options: modbusDataTypeOptions?.find((item) => item.value === type)?.children || [],
         placeholder: '请选择字节序',
       },
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },

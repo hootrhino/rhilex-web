@@ -14,7 +14,7 @@ import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Upload } from 'antd';
 import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
-import { cascaderOptions } from './enum';
+import { plcDataTypeOptions } from './enum';
 import UploadRule from './UploadRule';
 
 import { statusEnum } from '@/utils/enum';
@@ -185,7 +185,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
           return (
             <ProFormSelect
               {...rest}
-              options={cascaderOptions?.map((item) => omit(item, 'children'))}
+              options={plcDataTypeOptions?.map((item) => omit(item, 'children'))}
               noStyle
               fieldProps={{ placeholder: '请选择数据类型', onChange: (value) => setType(value) }}
             />
@@ -197,7 +197,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
             {...rest}
             fieldProps={{
               placeholder: '请选择数据类型',
-              options: cascaderOptions,
+              options: plcDataTypeOptions,
             }}
           />
         );
@@ -219,7 +219,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       valueType: 'select',
       hideInSearch: true,
       fieldProps: {
-        options: cascaderOptions?.find((item) => item.value === type)?.children || [],
+        options: plcDataTypeOptions?.find((item) => item.value === type)?.children || [],
         placeholder: '请选择字节序',
       },
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
