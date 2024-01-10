@@ -10,7 +10,7 @@ import {
 import { IconFont } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { EditableProTable, ProFormCascader, ProFormSelect } from '@ant-design/pro-components';
+import { EditableProTable, ProFormCascader } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Upload } from 'antd';
 import omit from 'lodash/omit';
@@ -30,8 +30,7 @@ const defaultModbusConfig = {
   slaverId: 1,
   address: 0,
   quantity: 1,
-  type: 'RAW',
-  order: 'DCBA',
+  dataType: ['RAW', 'DCBA'],
 };
 
 export type ModbusSheetItem = {
@@ -50,6 +49,7 @@ export type ModbusSheetItem = {
   value: string;
   type: string;
   order: string;
+  [key: string]: any;
 };
 
 type removeParams = {
@@ -77,7 +77,6 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly Partial<ModbusSheetItem>[]>([]);
-  const [type, setType] = useState<string>('RAW');
 
   const disabled = selectedRowKeys?.length === 0;
 
@@ -119,8 +118,10 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
   // 单个更新
   const handleOnSave = async (rowKey: RecordKey, data: Partial<ModbusSheetItem>) => {
     let params = {
-      ...omit(data, ['index']),
+      ...omit(data, ['index', 'dataType']),
       device_uuid: deviceUuid,
+      type: data?.dataType?.[0],
+      order: data?.dataType?.[1],
     };
 
     if (rowKey === 'new') {
@@ -128,6 +129,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
         ...omit(params, ['uuid']),
       };
     }
+
     update({ device_uuid: deviceUuid, modbus_data_points: [params] });
   };
 
@@ -161,14 +163,11 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      // fixed: 'left',
       render: (text, record, index) => <IndexBorder serial={index} />,
     },
     {
       title: '数据标签',
       dataIndex: 'tag',
-      // fixed: 'left',
-      width: 120,
       ellipsis: true,
       formItemProps: () => {
         return {
@@ -184,6 +183,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
     {
       title: '数据别名',
       dataIndex: 'alias',
+      ellipsis: true,
       formItemProps: () => {
         return {
           rules: [{ required: true, message: '此项为必填项' }],
@@ -285,23 +285,14 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       },
     },
     {
-      title: '数据类型',
-      dataIndex: 'type',
-      renderFormItem: (item, { type, ...rest }) => {
-        if (type === 'form') {
-          return (
-            <ProFormSelect
-              {...rest}
-              options={modbusDataTypeOptions?.map((item) => omit(item, 'children'))}
-              noStyle
-              fieldProps={{ placeholder: '请选择数据类型', onChange: (value) => setType(value) }}
-            />
-          );
-        }
-
+      title: '数据类型（字节序）',
+      dataIndex: 'dataType',
+      width: 150,
+      renderFormItem: (item, { ...rest }) => {
         return (
           <ProFormCascader
             {...rest}
+            noStyle
             fieldProps={{
               placeholder: '请选择数据类型',
               options: modbusDataTypeOptions,
@@ -310,32 +301,22 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
         );
       },
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
-      search: {
-        // 格式化搜索值
-        transform: (value) => {
-          return {
-            dataType: value[0],
-            dataOrder: value[1],
-          };
-        },
+      render: (_, { type, order }) => {
+        const currentType = modbusDataTypeOptions?.find((item) => item?.value === type);
+        const typeLabel = currentType?.label?.split('（')?.[0];
+
+        return (
+          <>
+            {typeLabel}（{order}）
+          </>
+        );
       },
-    },
-    {
-      title: '字节序',
-      dataIndex: 'order',
-      valueType: 'select',
-      width: 100,
-      hideInSearch: true,
-      fieldProps: {
-        options: modbusDataTypeOptions?.find((item) => item.value === type)?.children || [],
-        placeholder: '请选择字节序',
-      },
-      formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
     },
     {
       title: '最新值',
       dataIndex: 'value',
       editable: false,
+      ellipsis: true,
     },
     {
       title: '点位状态',
@@ -355,12 +336,12 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'lastFetchTime',
       valueType: 'dateTime',
       editable: false,
+      ellipsis: true,
     },
     {
       title: '操作',
       valueType: 'option',
-      width: 150,
-      // fixed: 'right',
+      width: 120,
       hideInTable: readOnly,
       render: (text, record, _, action) => [
         <EditableProTable.RecordCreator
@@ -511,7 +492,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
         onSave: handleOnSave,
         onChange: setEditableRowKeys,
       }}
-      scroll={{ x: readOnly ? 1600 : undefined }}
+      scroll={{ x: readOnly ? 1200 : undefined }}
     />
   );
 };
