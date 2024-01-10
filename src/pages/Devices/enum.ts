@@ -5,6 +5,7 @@ export const typeEnum = {
   GENERIC_AIS_RECEIVER: '通用船载 AIS 数据解析网关',
   SIEMENS_PLC: '通用西门子 S7 系列 PLC 采集网关',
   GENERIC_HTTP_DEVICE: '通用 HTTP 协议数据采集网关',
+  GENERIC_CAMERA: '通用摄像机流处理网关',
 };
 
 // 模式
@@ -65,6 +66,30 @@ export const slotEnum = new Map([
   [10, '10'],
   [11, '11'],
 ]);
+
+// 视频输入模式
+export const inputModeEnum = {
+  RTSP: 'RTSP 流',
+  LOCAL: '本地设备',
+};
+
+// 视频输出模式
+export const outputModeEnum = {
+  JPEG_STREAM: 'JPEG 流',
+  H264_STREAM: 'H264 流',
+};
+
+// 是否解析 AIS 报文
+export const parseAisEnum = {
+  true: {
+    text: '解析',
+    color: 'processing',
+  },
+  false: {
+    text: '不解析',
+    color: 'default',
+  },
+};
 
 /** SNMP */
 // 协议分隔符

@@ -1,7 +1,6 @@
 import GroupList, { DEFAULT_CONFIG } from '@/components/GroupList';
 import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
-import StateTag from '@/components/StateTag';
 import {
   deleteDevicesDel,
   getDevicesListByGroup,
@@ -25,8 +24,8 @@ import { Button, Drawer, Dropdown, Popconfirm, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/hooks/useItems';
 import { useRef, useState } from 'react';
 import { getBaseColumns } from '../SchemaMgt/Property';
+import { baseColumns } from './columns';
 import Detail from './Detail';
-import { typeEnum } from './UpdateForm/enum';
 
 export type DeviceItem = {
   name: string;
@@ -96,34 +95,7 @@ const Devices = () => {
     return items;
   };
 
-  const columns: ProColumns<Partial<DeviceItem>>[] = [
-    {
-      title: 'UUID',
-      dataIndex: 'uuid',
-      ellipsis: true,
-      copyable: true,
-    },
-    {
-      title: '设备名称',
-      dataIndex: 'name',
-      ellipsis: true,
-    },
-    {
-      title: '设备类型',
-      dataIndex: 'type',
-      valueEnum: typeEnum,
-    },
-    {
-      title: '设备状态',
-      dataIndex: 'state',
-      width: 120,
-      renderText: (state) => <StateTag state={state} />,
-    },
-    {
-      title: '备注',
-      dataIndex: 'description',
-      ellipsis: true,
-    },
+  const actionColumns: ProColumns<Partial<DeviceItem>>[] = [
     {
       title: '操作',
       width: 210,
@@ -220,11 +192,17 @@ const Devices = () => {
               updateConfig={setGroupConfig}
             />
           </ProCard>
-          <ProCard title={`${getName(groupList || [], activeGroupKey)} - 设备列表`}>
+          <ProCard
+            title={
+              getName(groupList || [], activeGroupKey)
+                ? `${getName(groupList || [], activeGroupKey)} - 设备列表`
+                : '设备列表'
+            }
+          >
             <ProTable
               actionRef={actionRef}
               rowKey="uuid"
-              columns={columns}
+              columns={[...baseColumns, ...actionColumns] as ProColumns<Partial<DeviceItem>>[]}
               search={false}
               params={{ uuid: activeGroupKey }}
               request={async ({ current, pageSize, ...keyword }) => {

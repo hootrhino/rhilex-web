@@ -158,14 +158,18 @@ export const processColumns = (columns: any) => {
       ...omit(col, ['required']),
       width: col?.width || 'md',
       fieldProps: {
-        placeholder: col?.valueType === 'select' ? `请选择${col?.title}` : `请输入${col?.title}`,
+        placeholder: ['groupSelect', 'schemaSelect', 'select'].includes(col?.valueType)
+          ? `请选择${col?.title}`
+          : `请输入${col?.title}`,
         ...col?.fieldProps,
       },
       formItemProps: {
         rules: [
           {
             required: col?.required,
-            message: col?.valueType === 'select' ? `请选择${col?.title}` : `请输入${col?.title}`,
+            message: ['groupSelect', 'schemaSelect', 'select'].includes(col?.valueType)
+              ? `请选择${col?.title}`
+              : `请输入${col?.title}`,
           },
         ],
         ...col?.formItemProps,

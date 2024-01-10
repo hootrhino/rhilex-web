@@ -15,7 +15,7 @@ import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Upload } from 'antd';
 import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
-import { funcEnum } from '../UpdateForm/enum';
+import { funcEnum } from '../enum';
 import UploadRule from './UploadRule';
 
 import { statusEnum } from '@/utils/enum';
@@ -161,13 +161,13 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      fixed: 'left',
+      // fixed: 'left',
       render: (text, record, index) => <IndexBorder serial={index} />,
     },
     {
       title: '数据标签',
       dataIndex: 'tag',
-      fixed: 'left',
+      // fixed: 'left',
       width: 120,
       ellipsis: true,
       formItemProps: () => {
@@ -233,7 +233,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '从设备 ID',
       dataIndex: 'slaverId',
       valueType: 'digit',
-      width: 100,
+      width: 80,
       fieldProps: () => {
         return {
           style: { width: '100%' },
@@ -254,7 +254,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '起始地址',
       dataIndex: 'address',
       valueType: 'digit',
-      width: 120,
+      width: 80,
       fieldProps: () => {
         return {
           style: { width: '100%' },
@@ -324,7 +324,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '字节序',
       dataIndex: 'order',
       valueType: 'select',
-      width: 120,
+      width: 100,
       hideInSearch: true,
       fieldProps: {
         options: modbusDataTypeOptions?.find((item) => item.value === type)?.children || [],
@@ -360,7 +360,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '操作',
       valueType: 'option',
       width: 150,
-      fixed: 'right',
+      // fixed: 'right',
       hideInTable: readOnly,
       render: (text, record, _, action) => [
         <EditableProTable.RecordCreator
@@ -511,7 +511,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
         onSave: handleOnSave,
         onChange: setEditableRowKeys,
       }}
-      scroll={{ x: readOnly ? 1600 : 1800 }}
+      scroll={{ x: readOnly ? 1600 : undefined }}
     />
   );
 };

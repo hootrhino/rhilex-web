@@ -1,19 +1,18 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
-import StateTag from '@/components/StateTag';
-import UnitTitle from '@/components/UnitTitle';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
-import { getSchemaList } from '@/services/rulex/shujumoxing';
-import { boolEnum } from '@/utils/enum';
 import { getName } from '@/utils/utils';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { history, useModel, useRequest } from '@umijs/max';
-import { Drawer, DrawerProps, Tag } from 'antd';
+import { Drawer, DrawerProps } from 'antd';
+import { flatten } from 'lodash';
 import omit from 'lodash/omit';
 import { useEffect } from 'react';
+import type { DeviceItem } from '..';
+import { baseColumns, typeConfigColumns } from '../columns';
+import { typeEnum } from '../enum';
 import ModbusSheet from '../SpecificSheet/ModbusSheet';
 import PlcSheet from '../SpecificSheet/PlcSheet';
-import { modeEnum, plcModelEnum, rackEnum, slotEnum, typeEnum } from '../UpdateForm/enum';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -23,19 +22,8 @@ type EnhancedProDescriptionsProps = ProDescriptionsProps & {
   show?: boolean;
 };
 
-const parseAisEnum = {
-  true: {
-    text: '解析',
-    color: 'processing',
-  },
-  false: {
-    text: '不解析',
-    color: 'default',
-  },
-};
-
 const EnhancedProDescriptions = ({
-  labelStyle = { justifyContent: 'flex-end', minWidth: 130 },
+  labelStyle = { justifyContent: 'flex-end', minWidth: 135 },
   loading = false,
   column = 3,
   ...props
@@ -44,7 +32,6 @@ const EnhancedProDescriptions = ({
 };
 
 const Detail = ({ uuid, open, ...props }: DetailProps) => {
-  const { groupList } = useModel('useDevice');
   const {
     run: getPort,
     data: portList,
@@ -60,148 +47,44 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
   );
 
   const { type = 'GENERIC_PROTOCOL', config } = detail || {};
-  const { commonConfig, hostConfig, portUuid, httpConfig } = config || {};
-  const { mode, model } = commonConfig || {};
 
-  const columnsMap: Record<string, ProDescriptionsItemProps<Record<string, any>>[]> = {
-    BASE: [
-      {
-        title: '设备名称',
-        dataIndex: 'name',
-        ellipsis: true,
-      },
-      {
-        title: '设备类型',
-        dataIndex: 'type',
-        valueEnum: typeEnum,
-      },
-      {
-        title: '设备分组',
-        dataIndex: 'gid',
-        renderText: (value) => getName(groupList || [], value),
-      },
-      {
-        title: '设备状态',
-        dataIndex: 'state',
-        renderText: (state) => <StateTag state={state} />,
-      },
-      {
-        title: '数据模型',
-        dataIndex: 'schemaId',
-        request: async () => {
-          const { data } = await getSchemaList();
+  const renderDescription = (data: Record<string, any>[]) => {
+    return data?.map((item, index) => {
+      let formatColumns = item.columns;
+      if (item?.key === 'portConfig') {
+        formatColumns = item?.columns?.map((c: any) => ({
+          ...c,
+          render: (_: any, { portUuid }: DeviceItem) => (
+            <a
+              onClick={() => {
+                history.push('/port');
+                setDetailConfig({ open: true, uuid: portUuid });
+                getPortDetail({ uuid: portUuid });
+                props?.onClose();
+              }}
+            >
+              {getName(portList || [], portUuid)}
+            </a>
+          ),
+        }));
+      }
+      return (
+        <EnhancedProDescriptions
+          key={`description-${index}`}
+          title={item?.title}
+          dataSource={config}
+          columns={formatColumns}
+        />
+      );
+    });
+  };
 
-          return data?.map((item) => ({
-            label: item?.name,
-            value: item.uuid,
-          }));
-        },
-      },
-      {
-        title: '备注',
-        dataIndex: 'description',
-      },
-    ],
-    COMMON: [
-      {
-        title: '重试次数',
-        dataIndex: 'retryTime',
-        hideInDescriptions: type !== 'GENERIC_PROTOCOL',
-      },
-      {
-        title: '是否启动轮询',
-        dataIndex: 'autoRequest',
-        hideInDescriptions: !['GENERIC_MODBUS', 'SIEMENS_PLC', 'GENERIC_HTTP_DEVICE'].includes(
-          type,
-        ),
-        renderText: (autoRequest) => (
-          <Tag color={boolEnum[autoRequest]?.color}>{boolEnum[autoRequest]?.text}</Tag>
-        ),
-      },
-      {
-        title: '是否解析 AIS 报文',
-        dataIndex: 'parseAis',
-        hideInDescriptions: type !== 'GENERIC_AIS_RECEIVER',
-        renderText: (parseAis) => (
-          <Tag color={parseAisEnum[parseAis]?.color}>{parseAisEnum[parseAis]?.text}</Tag>
-        ),
-      },
-      {
-        title: '主机序列号',
-        dataIndex: 'gwsn',
-        hideInDescriptions: type !== 'GENERIC_AIS_RECEIVER',
-      },
-      {
-        title: '工作模式',
-        dataIndex: 'mode',
-        valueEnum: modeEnum,
-        hideInDescriptions: ['SIEMENS_PLC', 'GENERIC_HTTP_DEVICE'].includes(type),
-      },
-      {
-        title: '型号',
-        dataIndex: 'model',
-        valueEnum: plcModelEnum,
-        hideInDescriptions: type !== 'SIEMENS_PLC',
-      },
-      {
-        title: 'PLC 地址',
-        dataIndex: 'host',
-        hideInDescriptions: type !== 'SIEMENS_PLC',
-      },
-      {
-        title: <UnitTitle title="连接超时时间" />,
-        dataIndex: 'timeout',
+  const formatColumns = (sourceColumns: any[]) => {
+    const formatData = sourceColumns
+      ?.map((item) => (item?.valueType === 'dependency' && detail ? item?.columns(detail) : item))
+      ?.filter((item) => item);
 
-        hideInDescriptions: !['SIEMENS_PLC', 'GENERIC_HTTP_DEVICE'].includes(type),
-      },
-      {
-        title: <UnitTitle title="心跳超时时间" />,
-        dataIndex: 'idleTimeout',
-        hideInDescriptions: type !== 'SIEMENS_PLC',
-      },
-      {
-        title: '机架号',
-        dataIndex: 'rack',
-        valueEnum: rackEnum,
-        hideInDescriptions: type !== 'SIEMENS_PLC' || model === 'S7200',
-      },
-      {
-        title: '插槽号',
-        dataIndex: 'slot',
-        valueEnum: slotEnum,
-        hideInDescriptions: type !== 'SIEMENS_PLC',
-      },
-      {
-        title: <UnitTitle title="采集频率" />,
-        dataIndex: 'frequency',
-        hideInDescriptions: !['GENERIC_HTTP_DEVICE'].includes(type),
-      },
-    ],
-    HOST: [
-      {
-        title: <UnitTitle title="超时时间" />,
-        dataIndex: 'timeout',
-      },
-      {
-        title: '服务地址',
-        dataIndex: 'host',
-      },
-      {
-        title: '端口',
-        dataIndex: 'port',
-      },
-    ],
-    HTTP: [
-      {
-        title: '请求地址',
-        dataIndex: 'url',
-      },
-      {
-        title: 'HTTP Headers',
-        dataIndex: 'headers',
-        renderText: (headers) => (Object.keys(headers)?.length > 0 ? <div /> : null),
-      },
-    ],
+    return flatten(formatData);
   };
 
   useEffect(() => {
@@ -225,50 +108,27 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
         <EnhancedProDescriptions
           title="基本配置"
           dataSource={omit(detail, 'config')}
-          columns={columnsMap['BASE']}
+          columns={formatColumns(baseColumns) as ProDescriptionsItemProps<Record<string, any>>[]}
         />
-        {type && Object.keys(typeEnum).includes(type) && (
+        {detail && type && Object.keys(typeEnum).includes(type) && (
           <>
-            <EnhancedProDescriptions
-              title="通用配置"
-              dataSource={commonConfig}
-              columns={columnsMap['COMMON']}
-            />
-            {mode === 'UART' && (
-              <ProDescriptions
-                column={1}
-                title="串口配置"
-                labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
-              >
-                <ProDescriptions.Item label="系统串口">
-                  <a
-                    onClick={() => {
-                      history.push('/port');
-                      setDetailConfig({ open: true, uuid: portUuid });
-                      getPortDetail({ uuid: portUuid });
-                    }}
-                  >
-                    {getName(portList || [], portUuid)}
-                  </a>
-                </ProDescriptions.Item>
-              </ProDescriptions>
-            )}
-            {mode === 'TCP' && (
-              <EnhancedProDescriptions
-                title="TCP 配置"
-                dataSource={hostConfig}
-                columns={columnsMap['HOST']}
-              />
-            )}
-            {type === 'GENERIC_HTTP_DEVICE' && (
-              <EnhancedProDescriptions
-                title="HTTP 配置"
-                dataSource={httpConfig}
-                columns={columnsMap['HTTP']}
-                column={1}
-              />
-            )}
-            {type === 'GENERIC_HTTP_DEVICE' && <HeadersDetail data={httpConfig?.headers} />}
+            {typeConfigColumns[type]?.map((item: any, index: number) => {
+              if (item.valueType === 'dependency') {
+                return renderDescription(item?.columns(detail));
+              } else {
+                return (
+                  <EnhancedProDescriptions
+                    key={`description-${index}`}
+                    title={item?.title}
+                    dataSource={detail.config}
+                    columns={formatColumns(item?.columns)}
+                    column={item?.key === 'http' ? 1 : 3}
+                  />
+                );
+              }
+            })}
+
+            {type === 'GENERIC_HTTP_DEVICE' && <HeadersDetail data={config?.httpConfig?.headers} />}
             {detail?.uuid && ['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type) && (
               <>
                 <ProDescriptions
