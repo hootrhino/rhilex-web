@@ -288,18 +288,15 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '数据类型（字节序）',
       dataIndex: 'dataType',
       width: 150,
-      renderFormItem: (item, { ...rest }) => {
-        return (
-          <ProFormCascader
-            {...rest}
-            noStyle
-            fieldProps={{
-              placeholder: '请选择数据类型',
-              options: modbusDataTypeOptions,
-            }}
-          />
-        );
-      },
+      renderFormItem: () => (
+        <ProFormCascader
+          noStyle
+          fieldProps={{
+            placeholder: '请选择数据类型',
+            options: modbusDataTypeOptions,
+          }}
+        />
+      ),
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
       render: (_, { type, order }) => {
         const currentType = modbusDataTypeOptions?.find((item) => item?.value === type);

@@ -9,7 +9,7 @@ import {
 import { IconFont } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { EditableProTable, ProFormCascader, ProFormSelect } from '@ant-design/pro-components';
+import { EditableProTable, ProFormCascader } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Upload } from 'antd';
 import omit from 'lodash/omit';
@@ -23,8 +23,7 @@ import '../index.less';
 const defaultPlcConfig = {
   tag: '',
   alias: '',
-  dataType: 'INT',
-  dataOrder: 'ABCD',
+  type: ['INT', 'ABCD'],
   siemensAddress: '',
   frequency: 1000,
 };
@@ -33,13 +32,12 @@ export type PlcSheetItem = {
   uuid?: string;
   tag: string;
   alias: string;
-  dataOrder?: string;
-  dataType?: string;
   frequency?: number;
   siemensAddress?: string;
   status: number;
   lastFetchTime: number;
   value: string;
+  [key: string]: any;
 };
 
 type removeParams = {
@@ -67,7 +65,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly Partial<PlcSheetItem>[]>([]);
-  const [type, setType] = useState<string>('INT');
 
   const disabled = selectedRowKeys?.length === 0;
 
@@ -106,8 +103,10 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
   // 单个更新
   const handleOnSave = async (rowKey: RecordKey, data: Partial<PlcSheetItem>) => {
     let params = {
-      ...omit(data, ['index', 'status', 'lastFetchTime', 'value']),
+      ...omit(data, ['index', 'status', 'lastFetchTime', 'value', 'type']),
       device_uuid: deviceUuid,
+      dataType: data?.type?.[0],
+      dataOrder: data?.type?.[1],
     };
 
     if (rowKey === 'new') {
@@ -171,6 +170,8 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
     {
       title: '地址',
       dataIndex: 'siemensAddress',
+      width: 150,
+      ellipsis: true,
       hideInSearch: true,
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
       fieldProps: {
@@ -178,28 +179,26 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       },
     },
     {
-      title: '数据类型',
-      dataIndex: 'dataType',
-      renderFormItem: (item, { type, ...rest }) => {
-        if (type === 'form') {
-          return (
-            <ProFormSelect
-              {...rest}
-              options={plcDataTypeOptions?.map((item) => omit(item, 'children'))}
-              noStyle
-              fieldProps={{ placeholder: '请选择数据类型', onChange: (value) => setType(value) }}
-            />
-          );
-        }
+      title: '数据类型（字节序）',
+      dataIndex: 'type',
+      width: 150,
+      renderFormItem: () => (
+        <ProFormCascader
+          noStyle
+          fieldProps={{
+            placeholder: '请选择数据类型和字节序',
+            options: plcDataTypeOptions,
+          }}
+        />
+      ),
+      render: (_, { dataType, dataOrder }) => {
+        const currentType = plcDataTypeOptions?.find((item) => item?.value === dataType);
+        const typeLabel = currentType?.label?.split('（')?.[0];
 
         return (
-          <ProFormCascader
-            {...rest}
-            fieldProps={{
-              placeholder: '请选择数据类型',
-              options: plcDataTypeOptions,
-            }}
-          />
+          <>
+            {typeLabel}（{dataOrder}）
+          </>
         );
       },
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
@@ -212,17 +211,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
           };
         },
       },
-    },
-    {
-      title: '字节序',
-      dataIndex: 'dataOrder',
-      valueType: 'select',
-      hideInSearch: true,
-      fieldProps: {
-        options: plcDataTypeOptions?.find((item) => item.value === type)?.children || [],
-        placeholder: '请选择字节序',
-      },
-      formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
     },
     {
       title: '当前值',
@@ -406,7 +394,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
         hideOnSinglePage: true,
       }}
       options={readOnly ? false : {}}
-      search={readOnly ? false : {}}
+      search={readOnly ? false : { labelWidth: 150 }}
       editable={{
         type: 'multiple',
         editableKeys,

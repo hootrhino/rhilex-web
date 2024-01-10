@@ -100,7 +100,7 @@ export const plcDataTypeOptions = [
 export const modbusDataTypeOptions = [
   {
     value: 'RAW',
-    label: '不转换（4字节）',
+    label: 'RAW（4字节）',
     children: orderRawOption,
   },
   {
