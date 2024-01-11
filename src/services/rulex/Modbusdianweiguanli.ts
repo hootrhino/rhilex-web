@@ -51,6 +51,7 @@ export async function getModbusDataSheetList(
         value?: string;
         type?: string;
         order?: string;
+        weight?: number;
       }[];
     };
   }>('/api/v1/modbus_data_sheet/list', {
@@ -126,6 +127,7 @@ export async function postModbusDataSheetUpdate(
       quantity?: number;
       type?: string;
       order?: string;
+      weight?: number;
     }[];
   },
   options?: { [key: string]: any },

@@ -11055,6 +11055,9 @@
                               },
                               "order": {
                                 "type": "string"
+                              },
+                              "weight": {
+                                "type": "number"
                               }
                             },
                             "required": [
@@ -11071,7 +11074,8 @@
                               "lastFetchTime",
                               "value",
                               "type",
-                              "order"
+                              "order",
+                              "weight"
                             ],
                             "x-apifox-orders": [
                               "uuid",
@@ -11087,7 +11091,8 @@
                               "lastFetchTime",
                               "value",
                               "type",
-                              "order"
+                              "order",
+                              "weight"
                             ],
                             "x-apifox-ignore-properties": []
                           }
@@ -11229,6 +11234,9 @@
                         },
                         "order": {
                           "type": "string"
+                        },
+                        "weight": {
+                          "type": "number"
                         }
                       },
                       "x-apifox-orders": [
@@ -11242,11 +11250,13 @@
                         "frequency",
                         "quantity",
                         "type",
-                        "order"
+                        "order",
+                        "weight"
                       ],
                       "required": [
                         "type",
-                        "order"
+                        "order",
+                        "weight"
                       ],
                       "x-apifox-ignore-properties": []
                     }
@@ -11671,6 +11681,9 @@
                               "dataType": {
                                 "type": "string"
                               },
+                              "weight": {
+                                "type": "number"
+                              },
                               "frequency": {
                                 "type": "integer"
                               },
@@ -11695,9 +11708,9 @@
                               "frequency",
                               "status",
                               "lastFetchTime",
-                              "value"
+                              "value",
+                              "weight"
                             ],
-                            "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "uuid",
                               "device_uuid",
@@ -11706,11 +11719,13 @@
                               "alias",
                               "dataOrder",
                               "dataType",
+                              "weight",
                               "frequency",
                               "status",
                               "lastFetchTime",
                               "value"
-                            ]
+                            ],
+                            "x-apifox-ignore-properties": []
                           }
                         }
                       },
@@ -11720,13 +11735,13 @@
                         "total",
                         "records"
                       ],
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "current",
                         "size",
                         "total",
                         "records"
-                      ]
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -11734,12 +11749,12 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
                 },
                 "examples": {
                   "1": {
@@ -11941,11 +11956,13 @@
                         "dataType": {
                           "type": "string"
                         },
+                        "weight": {
+                          "type": "number"
+                        },
                         "frequency": {
                           "type": "integer"
                         }
                       },
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "uuid",
                         "device_uuid",
@@ -11954,8 +11971,13 @@
                         "alias",
                         "dataOrder",
                         "dataType",
+                        "weight",
                         "frequency"
-                      ]
+                      ],
+                      "required": [
+                        "weight"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   }
                 },
@@ -11963,11 +11985,11 @@
                   "device_uuid",
                   "siemens_data_points"
                 ],
-                "x-apifox-ignore-properties": [],
                 "x-apifox-orders": [
                   "device_uuid",
                   "siemens_data_points"
-                ]
+                ],
+                "x-apifox-ignore-properties": []
               },
               "example": {
                 "device_uuid": "DEVICEMJOE28KR",

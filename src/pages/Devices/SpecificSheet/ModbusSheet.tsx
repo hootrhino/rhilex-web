@@ -10,7 +10,7 @@ import {
 import { IconFont } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { EditableProTable, ProFormCascader } from '@ant-design/pro-components';
+import { EditableProTable, ProFormCascader, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Upload } from 'antd';
 import omit from 'lodash/omit';
@@ -19,6 +19,7 @@ import { funcEnum } from '../enum';
 import UploadRule from './UploadRule';
 
 import { statusEnum } from '@/utils/enum';
+import inRange from 'lodash/inRange';
 import '../index.less';
 import { modbusDataTypeOptions } from './enum';
 
@@ -31,6 +32,7 @@ const defaultModbusConfig = {
   address: 0,
   quantity: 1,
   dataType: ['RAW', 'DCBA'],
+  weight: '1',
 };
 
 export type ModbusSheetItem = {
@@ -49,6 +51,7 @@ export type ModbusSheetItem = {
   value: string;
   type: string;
   order: string;
+  weight: number;
   [key: string]: any;
 };
 
@@ -77,6 +80,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly Partial<ModbusSheetItem>[]>([]);
+  const [type, setType] = useState<string>('RAW');
 
   const disabled = selectedRowKeys?.length === 0;
 
@@ -122,6 +126,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       device_uuid: deviceUuid,
       type: data?.dataType?.[0],
       order: data?.dataType?.[1],
+      weight: Number(data?.weight),
     };
 
     if (rowKey === 'new') {
@@ -292,8 +297,9 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
         <ProFormCascader
           noStyle
           fieldProps={{
-            placeholder: '请选择数据类型',
+            placeholder: '请选择数据类型和字节序',
             options: modbusDataTypeOptions,
+            onChange: (value) => setType(value?.[0]),
           }}
         />
       ),
@@ -307,6 +313,25 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
             {typeLabel}（{order}）
           </>
         );
+      },
+    },
+    {
+      title: '权重系数',
+      dataIndex: 'weight',
+      valueType: 'digit',
+      renderFormItem: () => <ProFormText noStyle disabled={['RAW', 'BYTE'].includes(type)} />,
+      formItemProps: {
+        rules: [
+          { required: true, message: '此项为必填项' },
+          {
+            validator: (_, value) => {
+              if (inRange(value, -0.0001, 100000)) {
+                return Promise.resolve();
+              }
+              return Promise.reject('值必须在 -0.0001 到 100000 范围内');
+            },
+          },
+        ],
       },
     },
     {

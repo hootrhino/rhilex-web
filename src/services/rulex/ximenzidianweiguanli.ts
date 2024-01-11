@@ -41,6 +41,7 @@ export async function getS1200DataSheetList(
         alias?: string;
         dataOrder?: string;
         dataType?: string;
+        weight?: number;
         frequency?: number;
         status?: number;
         lastFetchTime?: number;
@@ -119,6 +120,7 @@ export async function postS1200DataSheetUpdate(
       alias?: string;
       dataOrder?: string;
       dataType?: string;
+      weight?: number;
       frequency?: number;
     }[];
   },

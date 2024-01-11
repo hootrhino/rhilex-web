@@ -9,7 +9,7 @@ import {
 import { IconFont } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { EditableProTable, ProFormCascader } from '@ant-design/pro-components';
+import { EditableProTable, ProFormCascader, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Upload } from 'antd';
 import omit from 'lodash/omit';
@@ -18,6 +18,7 @@ import { plcDataTypeOptions } from './enum';
 import UploadRule from './UploadRule';
 
 import { statusEnum } from '@/utils/enum';
+import inRange from 'lodash/inRange';
 import '../index.less';
 
 const defaultPlcConfig = {
@@ -26,6 +27,7 @@ const defaultPlcConfig = {
   type: ['INT', 'ABCD'],
   siemensAddress: '',
   frequency: 1000,
+  weight: '1',
 };
 
 export type PlcSheetItem = {
@@ -37,6 +39,7 @@ export type PlcSheetItem = {
   status: number;
   lastFetchTime: number;
   value: string;
+  weight: number;
   [key: string]: any;
 };
 
@@ -65,6 +68,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly Partial<PlcSheetItem>[]>([]);
+  const [type, setType] = useState<string>('RAW');
 
   const disabled = selectedRowKeys?.length === 0;
 
@@ -188,6 +192,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
           fieldProps={{
             placeholder: '请选择数据类型和字节序',
             options: plcDataTypeOptions,
+            onChange: (value) => setType(value?.[0]),
           }}
         />
       ),
@@ -210,6 +215,27 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
             dataOrder: value[1],
           };
         },
+      },
+    },
+    {
+      title: '权重系数',
+      dataIndex: 'weight',
+      valueType: 'digit',
+      renderFormItem: () => (
+        <ProFormText noStyle disabled={['RAW', 'BYTE', 'I', 'Q'].includes(type)} />
+      ),
+      formItemProps: {
+        rules: [
+          { required: true, message: '此项为必填项' },
+          {
+            validator: (_, value) => {
+              if (inRange(value, -0.0001, 100000)) {
+                return Promise.resolve();
+              }
+              return Promise.reject('值必须在 -0.0001 到 100000 范围内');
+            },
+          },
+        ],
       },
     },
     {
