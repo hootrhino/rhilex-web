@@ -10,14 +10,17 @@ const SpecificSheet = () => {
   const [title, setTitle] = useState<string>('点位表配置');
 
   // 设备详情
-  const { data: deviceDetail } = useRequest(() => getDevicesDetail({ uuid: deviceId || '' }), {
-    ready: !!deviceId,
-    refreshDeps: [deviceId],
+  const { run } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
+    manual: true,
+    onSuccess: (record) =>
+      setTitle(record?.name ? `设备 ${record?.name} - 点位表配置` : '点位表配置'),
   });
 
   useEffect(() => {
-    setTitle(deviceDetail?.name ? `设备 ${deviceDetail?.name} - 点位表配置` : '点位表配置');
-  }, [deviceDetail]);
+    if (deviceId) {
+      run({ uuid: deviceId });
+    }
+  }, [deviceId]);
 
   return (
     <PageContainer title={title} onBack={() => history.push('/device/list')}>

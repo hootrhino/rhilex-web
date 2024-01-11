@@ -9,8 +9,14 @@ import {
 } from '@/services/rulex/Modbusdianweiguanli';
 import { IconFont } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { EditableProTable, ProFormCascader, ProFormText } from '@ant-design/pro-components';
+import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
+import {
+  EditableProTable,
+  ProFormCascader,
+  ProFormDigit,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Upload } from 'antd';
 import omit from 'lodash/omit';
@@ -21,7 +27,7 @@ import UploadRule from './UploadRule';
 import { statusEnum } from '@/utils/enum';
 import inRange from 'lodash/inRange';
 import '../index.less';
-import { modbusDataTypeOptions } from './enum';
+import { byteTypeOptions, modbusDataTypeOptions } from './enum';
 
 const defaultModbusConfig = {
   tag: '',
@@ -76,17 +82,18 @@ type ModbusSheetProps = {
 
 const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
   const actionRef = useRef<ActionType>();
+  const editorFormRef = useRef<EditableFormInstance<ModbusSheetItem>>();
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [editableRows, setEditableRows] = useState<Partial<ModbusSheetItem>[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
-  const [dataSource, setDataSource] = useState<readonly Partial<ModbusSheetItem>[]>([]);
-  const [type, setType] = useState<string>('RAW');
 
   const disabled = selectedRowKeys?.length === 0;
 
   const handleOnReset = () => {
     actionRef.current?.reload();
     setSelectedRowKeys([]);
+    setEditableRows([]);
   };
 
   // 删除点位表
@@ -111,28 +118,32 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
     },
   });
 
+  const formatUpdateParams = (params: Partial<ModbusSheetItem>) => {
+    let newParams = {
+      ...omit(params, ['dataType']),
+      type: params?.dataType?.[0],
+      order: params?.dataType?.[1],
+      weight: Number(params?.weight),
+    };
+
+    return newParams;
+  };
+
   // 批量更新
   const handleOnBatchUpdate = () => {
-    const updateData = dataSource?.filter(
-      (row) => row?.uuid && selectedRowKeys.includes(row?.uuid),
-    );
+    const updateData = editableRows?.map((item) => formatUpdateParams(item));
     update({ device_uuid: deviceUuid, modbus_data_points: updateData });
   };
 
   // 单个更新
   const handleOnSave = async (rowKey: RecordKey, data: Partial<ModbusSheetItem>) => {
-    let params = {
-      ...omit(data, ['index', 'dataType']),
-      device_uuid: deviceUuid,
-      type: data?.dataType?.[0],
-      order: data?.dataType?.[1],
-      weight: Number(data?.weight),
-    };
+    let params = formatUpdateParams(data);
 
     if (rowKey === 'new') {
       params = {
         ...omit(params, ['uuid']),
-      };
+        device_uuid: deviceUuid,
+      } as any;
     }
 
     update({ device_uuid: deviceUuid, modbus_data_points: [params] });
@@ -174,30 +185,22 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '数据标签',
       dataIndex: 'tag',
       ellipsis: true,
-      formItemProps: () => {
-        return {
-          rules: [{ required: true, message: '此项为必填项' }],
-        };
+      formItemProps: {
+        rules: [{ required: true, message: '此项为必填项' }],
       },
-      fieldProps: () => {
-        return {
-          placeholder: '请输入数据标签',
-        };
+      fieldProps: {
+        placeholder: '请输入数据标签',
       },
     },
     {
       title: '数据别名',
       dataIndex: 'alias',
       ellipsis: true,
-      formItemProps: () => {
-        return {
-          rules: [{ required: true, message: '此项为必填项' }],
-        };
+      formItemProps: {
+        rules: [{ required: true, message: '此项为必填项' }],
       },
-      fieldProps: () => {
-        return {
-          placeholder: '请输入数据别名',
-        };
+      fieldProps: {
+        placeholder: '请输入数据别名',
       },
     },
     {
@@ -206,32 +209,41 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       valueType: 'select',
       width: 150,
       valueEnum: funcEnum,
-      formItemProps: () => {
-        return {
-          rules: [{ required: true, message: '此项为必填项' }],
-        };
-      },
-      fieldProps: () => {
-        return {
-          placeholder: '请选择 Modbus 功能',
-        };
-      },
+      renderFormItem: (_, { record }) => (
+        <ProFormSelect
+          noStyle
+          fieldProps={{
+            allowClear: false,
+            placeholder: '请选择 Modbus 功能',
+            onChange: (value) => {
+              if (value === 1) {
+                editorFormRef.current?.setRowData?.(record?.uuid as string, {
+                  dataType: ['BYTE', 'A'],
+                  quantity: 1,
+                });
+              } else {
+                editorFormRef.current?.setRowData?.(record?.uuid as string, {
+                  dataType: ['RAW', 'DCBA'],
+                });
+              }
+            },
+          }}
+          valueEnum={funcEnum}
+          rules={[{ required: true, message: '此项为必填项' }]}
+        />
+      ),
     },
     {
       title: <UnitTitle title="采集频率" />,
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
-      fieldProps: () => {
-        return {
-          style: { width: '100%' },
-          placeholder: '请输入采集频率',
-        };
+      fieldProps: {
+        style: { width: '100%' },
+        placeholder: '请输入采集频率',
       },
-      formItemProps: () => {
-        return {
-          rules: [{ required: true, message: '此项为必填项' }],
-        };
+      formItemProps: {
+        rules: [{ required: true, message: '此项为必填项' }],
       },
     },
     {
@@ -239,20 +251,16 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'slaverId',
       valueType: 'digit',
       width: 80,
-      fieldProps: () => {
-        return {
-          style: { width: '100%' },
-          placeholder: '请输入从设备 ID',
-        };
+      fieldProps: {
+        style: { width: '100%' },
+        placeholder: '请输入从设备 ID',
       },
-      formItemProps: () => {
-        return {
-          rules: [
-            { required: true, message: '此项为必填项' },
-            { max: 255, type: 'integer', message: '从设备 ID 在 1-255 之间' },
-            { min: 1, type: 'integer', message: '从设备 ID 在 1-255 之间' },
-          ],
-        };
+      formItemProps: {
+        rules: [
+          { required: true, message: '此项为必填项' },
+          { max: 255, type: 'integer', message: '从设备 ID 在 1-255 之间' },
+          { min: 1, type: 'integer', message: '从设备 ID 在 1-255 之间' },
+        ],
       },
     },
     {
@@ -260,16 +268,52 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'address',
       valueType: 'digit',
       width: 80,
-      fieldProps: () => {
-        return {
-          style: { width: '100%' },
-          placeholder: '请输入起始地址',
-        };
+      fieldProps: {
+        style: { width: '100%' },
+        placeholder: '请输入起始地址',
       },
-      formItemProps: () => {
-        return {
-          rules: [{ required: true, message: '此项为必填项' }],
-        };
+      formItemProps: {
+        rules: [{ required: true, message: '此项为必填项' }],
+      },
+    },
+    {
+      title: '数据类型（字节序）',
+      dataIndex: 'dataType',
+      width: 150,
+      renderFormItem: (_, { record }) => {
+        const isDisabled = record?.function === 1;
+        const options = isDisabled ? byteTypeOptions : modbusDataTypeOptions;
+
+        return (
+          <ProFormCascader
+            noStyle
+            disabled={isDisabled}
+            fieldProps={{
+              allowClear: false,
+              placeholder: '请选择数据类型和字节序',
+              onChange: (value: any) => {
+                const type = value?.[0];
+                editorFormRef.current?.setRowData?.(record?.uuid as string, {
+                  quantity: ['SHORT', 'USHORT', 'RAW'].includes(type) ? 1 : 2,
+                });
+              },
+              options,
+            }}
+            rules={[{ required: true, message: '此项为必填项' }]}
+          />
+        );
+      },
+      render: (_, { type, order }) => {
+        const currentType = modbusDataTypeOptions?.find((item) => item?.value === type);
+        const typeLabel = currentType?.label?.split('（')?.[0];
+
+        return typeLabel && order ? (
+          <>
+            {typeLabel}（{order}）
+          </>
+        ) : (
+          '-'
+        );
       },
     },
     {
@@ -277,61 +321,45 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'quantity',
       valueType: 'digit',
       width: 100,
-      fieldProps: () => {
-        return {
-          style: { width: '100%' },
-          placeholder: '请输入读取数量',
-        };
-      },
-      formItemProps: () => {
-        return {
-          rules: [{ required: true, message: '此项为必填项' }],
-        };
-      },
-    },
-    {
-      title: '数据类型（字节序）',
-      dataIndex: 'dataType',
-      width: 150,
-      renderFormItem: () => (
-        <ProFormCascader
+      renderFormItem: (_, { record }) => (
+        <ProFormDigit
           noStyle
-          fieldProps={{
-            placeholder: '请选择数据类型和字节序',
-            options: modbusDataTypeOptions,
-            onChange: (value) => setType(value?.[0]),
-          }}
+          disabled={record?.dataType?.[0] !== 'RAW'}
+          fieldProps={{ style: { width: '100%' }, placeholder: '请输入读取数量' }}
+          rules={[
+            { required: true, message: '此项为必填项' },
+            { min: 1, type: 'integer', message: '读取数量范围在 1-256 之间' },
+            { max: 256, type: 'integer', message: '读取数量范围在 1-256 之间' },
+          ]}
         />
       ),
-      formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
-      render: (_, { type, order }) => {
-        const currentType = modbusDataTypeOptions?.find((item) => item?.value === type);
-        const typeLabel = currentType?.label?.split('（')?.[0];
-
-        return (
-          <>
-            {typeLabel}（{order}）
-          </>
-        );
-      },
     },
+
     {
       title: '权重系数',
       dataIndex: 'weight',
       valueType: 'digit',
-      renderFormItem: () => <ProFormText noStyle disabled={['RAW', 'BYTE'].includes(type)} />,
-      formItemProps: {
-        rules: [
-          { required: true, message: '此项为必填项' },
-          {
-            validator: (_, value) => {
-              if (inRange(value, -0.0001, 100000)) {
-                return Promise.resolve();
-              }
-              return Promise.reject('值必须在 -0.0001 到 100000 范围内');
-            },
-          },
-        ],
+      renderFormItem: (_, { record }) => {
+        const type = record?.dataType?.[0];
+
+        return (
+          <ProFormText
+            noStyle
+            disabled={['RAW', 'BYTE'].includes(type)}
+            fieldProps={{ placeholder: '请输入权重系数' }}
+            rules={[
+              { required: true, message: '此项为必填项' },
+              {
+                validator: (_, value) => {
+                  if (inRange(value, -0.0001, 100000)) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject('值必须在 -0.0001 到 100000 范围内');
+                },
+              },
+            ]}
+          />
+        );
       },
     },
     {
@@ -345,13 +373,11 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'status',
       width: 80,
       editable: false,
-      renderText(_, record) {
-        return (
-          <Tag color={statusEnum[record?.status || 0]?.color}>
-            {statusEnum[record?.status || 0]?.text}
-          </Tag>
-        );
-      },
+      renderText: (_, record) => (
+        <Tag color={statusEnum[record?.status || 0]?.color}>
+          {statusEnum[record?.status || 0]?.text}
+        </Tag>
+      ),
     },
     {
       title: '采集时间',
@@ -463,9 +489,8 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       controlled
       rowKey="uuid"
       actionRef={actionRef}
+      editableFormRef={editorFormRef}
       columns={columns}
-      value={dataSource}
-      onChange={setDataSource}
       rootClassName="sheet-table"
       recordCreatorProps={
         readOnly
@@ -484,9 +509,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
           ? false
           : {
               selectedRowKeys: selectedRowKeys,
-              onChange: (keys) => {
-                setSelectedRowKeys(keys);
-              },
+              onChange: setSelectedRowKeys,
             }
       }
       toolBarRender={readOnly ? false : () => toolBar}
@@ -498,7 +521,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
         });
 
         return Promise.resolve({
-          data: data?.records,
+          data: data?.records?.map((item) => ({ ...item, dataType: [item?.type, item?.order] })),
           total: data?.total,
           success: true,
         });
@@ -513,6 +536,9 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
         editableKeys,
         onSave: handleOnSave,
         onChange: setEditableRowKeys,
+        onValuesChange: (record, dataSource) => {
+          setEditableRows(dataSource);
+        },
       }}
       scroll={{ x: readOnly ? 1200 : undefined }}
     />

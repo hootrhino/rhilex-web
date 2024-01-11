@@ -24,7 +24,7 @@ import '../index.less';
 const defaultPlcConfig = {
   tag: '',
   alias: '',
-  type: ['INT', 'ABCD'],
+  type: ['FLOAT', 'DCBA'],
   siemensAddress: '',
   frequency: 1000,
   weight: '1',
@@ -67,14 +67,14 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
-  const [dataSource, setDataSource] = useState<readonly Partial<PlcSheetItem>[]>([]);
-  const [type, setType] = useState<string>('RAW');
+  const [editableRows, setEditableRows] = useState<Partial<PlcSheetItem>[]>([]);
 
   const disabled = selectedRowKeys?.length === 0;
 
   const handleOnReset = () => {
     actionRef.current?.reload();
     setSelectedRowKeys([]);
+    setEditableRows([]);
   };
 
   // 删除点位表
@@ -96,27 +96,33 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
     },
   });
 
+  const formatUpdateParams = (params: Partial<PlcSheetItem>) => {
+    let newParams = {
+      // ...omit(params, ['index', 'status', 'lastFetchTime', 'value', 'type']),
+      ...omit(params, ['type']),
+      dataType: params?.type?.[0],
+      dataOrder: params?.type?.[1],
+      weight: Number(params?.weight),
+    };
+
+    return newParams;
+  };
+
   // 批量更新
   const handleOnBatchUpdate = () => {
-    const updateData = dataSource?.filter(
-      (row) => row?.uuid && selectedRowKeys.includes(row?.uuid),
-    );
+    const updateData = editableRows?.map((item) => formatUpdateParams(item));
     update({ device_uuid: deviceUuid, siemens_data_points: updateData });
   };
 
   // 单个更新
   const handleOnSave = async (rowKey: RecordKey, data: Partial<PlcSheetItem>) => {
-    let params = {
-      ...omit(data, ['index', 'status', 'lastFetchTime', 'value', 'type']),
-      device_uuid: deviceUuid,
-      dataType: data?.type?.[0],
-      dataOrder: data?.type?.[1],
-    };
+    let params = formatUpdateParams(data);
 
     if (rowKey === 'new') {
       params = {
         ...omit(params, ['uuid']),
-      };
+        device_uuid: deviceUuid,
+      } as any;
     }
     update({ device_uuid: deviceUuid, siemens_data_points: [params] });
   };
@@ -190,52 +196,59 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
         <ProFormCascader
           noStyle
           fieldProps={{
+            allowClear: false,
             placeholder: '请选择数据类型和字节序',
             options: plcDataTypeOptions,
-            onChange: (value) => setType(value?.[0]),
           }}
+          rules={[{ required: true, message: '此项为必填项' }]}
         />
       ),
       render: (_, { dataType, dataOrder }) => {
         const currentType = plcDataTypeOptions?.find((item) => item?.value === dataType);
         const typeLabel = currentType?.label?.split('（')?.[0];
 
-        return (
+        return typeLabel && dataOrder ? (
           <>
             {typeLabel}（{dataOrder}）
           </>
+        ) : (
+          '-'
         );
       },
-      formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
       search: {
         // 格式化搜索值
-        transform: (value) => {
-          return {
-            dataType: value[0],
-            dataOrder: value[1],
-          };
-        },
+        transform: (value) => ({
+          dataType: value[0],
+          dataOrder: value[1],
+        }),
       },
     },
     {
       title: '权重系数',
       dataIndex: 'weight',
       valueType: 'digit',
-      renderFormItem: () => (
-        <ProFormText noStyle disabled={['RAW', 'BYTE', 'I', 'Q'].includes(type)} />
-      ),
-      formItemProps: {
-        rules: [
-          { required: true, message: '此项为必填项' },
-          {
-            validator: (_, value) => {
-              if (inRange(value, -0.0001, 100000)) {
-                return Promise.resolve();
-              }
-              return Promise.reject('值必须在 -0.0001 到 100000 范围内');
-            },
-          },
-        ],
+      hideInSearch: true,
+      renderFormItem: (_, { record }) => {
+        const type = record?.type?.[0];
+
+        return (
+          <ProFormText
+            noStyle
+            disabled={['RAW', 'BYTE', 'I', 'Q'].includes(type)}
+            fieldProps={{ placeholder: '请输入权重系数' }}
+            rules={[
+              { required: true, message: '此项为必填项' },
+              {
+                validator: (_, value) => {
+                  if (inRange(value, -0.0001, 100000)) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject('值必须在 -0.0001 到 100000 范围内');
+                },
+              },
+            ]}
+          />
+        );
       },
     },
     {
@@ -250,13 +263,11 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       editable: false,
       hideInSearch: true,
       width: 80,
-      renderText(_, record) {
-        return (
-          <Tag color={statusEnum[record?.status || 0]?.color}>
-            {statusEnum[record?.status || 0]?.text}
-          </Tag>
-        );
-      },
+      renderText: (_, record) => (
+        <Tag color={statusEnum[record?.status || 0]?.color}>
+          {statusEnum[record?.status || 0]?.text}
+        </Tag>
+      ),
     },
     {
       title: '采集频率',
@@ -375,8 +386,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       rowKey="uuid"
       actionRef={actionRef}
       columns={columns}
-      value={dataSource}
-      onChange={setDataSource}
       rootClassName="sheet-table"
       recordCreatorProps={
         readOnly
@@ -410,7 +419,10 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
         });
 
         return Promise.resolve({
-          data: data?.records,
+          data: data?.records?.map((item) => ({
+            ...item,
+            type: [item?.dataType, item?.dataOrder],
+          })),
           total: data?.total,
           success: true,
         });
@@ -426,6 +438,9 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
         editableKeys,
         onSave: handleOnSave,
         onChange: setEditableRowKeys,
+        onValuesChange: (record, dataSource) => {
+          setEditableRows(dataSource);
+        },
       }}
     />
   );

@@ -103,10 +103,18 @@ export const modbusDataTypeOptions = [
     label: 'RAW（4字节）',
     children: orderRawOption,
   },
+  // {
+  //   value: 'BYTE',
+  //   label: 'Byte（1字节）',
+  //   children: byte1Options,
+  // },
+  ...baseOptions,
+];
+
+export const byteTypeOptions = [
   {
     value: 'BYTE',
     label: 'Byte（1字节）',
     children: byte1Options,
   },
-  ...baseOptions,
 ];

@@ -121,6 +121,7 @@ const hostPortConfig = [
   {
     title: '端口',
     dataIndex: 'port',
+    valueType: 'digit',
     required: true,
   },
 ];
@@ -206,6 +207,7 @@ export const configColumns = {
     {
       title: '端口',
       dataIndex: 'port',
+      valueType: 'digit',
       required: true,
     },
     {
