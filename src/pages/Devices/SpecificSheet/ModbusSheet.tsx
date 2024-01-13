@@ -27,7 +27,7 @@ import UploadRule from './UploadRule';
 import { statusEnum } from '@/utils/enum';
 import inRange from 'lodash/inRange';
 import '../index.less';
-import { byteTypeOptions, modbusDataTypeOptions, utf8TypeOptions } from './enum';
+import { modbusDataTypeOptions } from './enum';
 
 const defaultModbusConfig = {
   tag: '',
@@ -38,7 +38,7 @@ const defaultModbusConfig = {
   address: 0,
   quantity: 1,
   dataType: ['RAW', 'DCBA'],
-  weight: '1',
+  weight: 1,
 };
 
 export type ModbusSheetItem = {
@@ -92,8 +92,10 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
 
   const handleOnReset = () => {
     actionRef.current?.reload();
+    editorFormRef.current?.setRowData?.('new', { ...defaultModbusConfig, uuid: 'new' });
     setSelectedRowKeys([]);
     setEditableRows([]);
+    setEditableRowKeys([]);
   };
 
   // 删除点位表
@@ -113,7 +115,6 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
     manual: true,
     onSuccess: () => {
       handleOnReset();
-      setEditableRowKeys([]);
       message.success('更新成功');
     },
   });
@@ -255,14 +256,18 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '数据类型（字节序）',
       dataIndex: 'dataType',
       width: 150,
+      ellipsis: true,
       renderFormItem: (_, { record }) => {
         let options = modbusDataTypeOptions;
 
         if (record?.function === 1) {
-          options = byteTypeOptions;
+          options = options?.filter((item) => item.value === 'BYTE');
+        }
+        if (record?.function === 2) {
+          options = options?.filter((item) => !['BYTE', 'UTF8'].includes(item.value));
         }
         if (record?.function && [3, 4].includes(record.function)) {
-          options = modbusDataTypeOptions.concat(utf8TypeOptions);
+          options = options?.filter((item) => item.value !== 'BYTE');
         }
 
         return (

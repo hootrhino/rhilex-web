@@ -8,7 +8,7 @@ import {
 } from '@/services/rulex/ximenzidianweiguanli';
 import { IconFont } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { EditableProTable, ProFormCascader, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Upload } from 'antd';
@@ -27,7 +27,7 @@ const defaultPlcConfig = {
   type: ['FLOAT', 'DCBA'],
   siemensAddress: '',
   frequency: 1000,
-  weight: '1',
+  weight: 1,
 };
 
 export type PlcSheetItem = {
@@ -64,6 +64,7 @@ type PlcSheetProps = {
 
 const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
   const actionRef = useRef<ActionType>();
+  const editorFormRef = useRef<EditableFormInstance<PlcSheetItem>>();
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
@@ -73,8 +74,10 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
 
   const handleOnReset = () => {
     actionRef.current?.reload();
+    editorFormRef.current?.setRowData?.('new', { ...defaultPlcConfig, uuid: 'new' });
     setSelectedRowKeys([]);
     setEditableRows([]);
+    setEditableRowKeys([]);
   };
 
   // 删除点位表
@@ -91,7 +94,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
     manual: true,
     onSuccess: () => {
       handleOnReset();
-      setEditableRowKeys([]);
       message.success('更新成功');
     },
   });
@@ -387,6 +389,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       controlled
       rowKey="uuid"
       actionRef={actionRef}
+      editableFormRef={editorFormRef}
       columns={columns}
       rootClassName="sheet-table"
       recordCreatorProps={
