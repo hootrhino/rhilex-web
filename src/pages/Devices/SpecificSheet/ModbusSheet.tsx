@@ -27,7 +27,7 @@ import UploadRule from './UploadRule';
 import { statusEnum } from '@/utils/enum';
 import inRange from 'lodash/inRange';
 import '../index.less';
-import { byteTypeOptions, modbusDataTypeOptions } from './enum';
+import { byteTypeOptions, modbusDataTypeOptions, utf8TypeOptions } from './enum';
 
 const defaultModbusConfig = {
   tag: '',
@@ -224,6 +224,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
               } else {
                 editorFormRef.current?.setRowData?.(record?.uuid as string, {
                   dataType: ['RAW', 'DCBA'],
+                  weight: 1,
                 });
               }
             },
@@ -281,20 +282,28 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'dataType',
       width: 150,
       renderFormItem: (_, { record }) => {
-        const isDisabled = record?.function === 1;
-        const options = isDisabled ? byteTypeOptions : modbusDataTypeOptions;
+        let options = modbusDataTypeOptions;
+
+        if (record?.function === 1) {
+          options = byteTypeOptions;
+        }
+        if (record?.function && [3, 4].includes(record.function)) {
+          options = modbusDataTypeOptions.concat(utf8TypeOptions);
+        }
 
         return (
           <ProFormCascader
             noStyle
-            disabled={isDisabled}
+            disabled={record?.function === 1}
             fieldProps={{
               allowClear: false,
               placeholder: '请选择数据类型和字节序',
               onChange: (value: any) => {
                 const type = value?.[0];
+
                 editorFormRef.current?.setRowData?.(record?.uuid as string, {
-                  quantity: ['SHORT', 'USHORT', 'RAW'].includes(type) ? 1 : 2,
+                  quantity: ['SHORT', 'USHORT', 'RAW', 'UTF8'].includes(type) ? 1 : 2,
+                  weight: type === 'UTF8' ? 0 : 1,
                 });
               },
               options,
@@ -324,7 +333,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       renderFormItem: (_, { record }) => (
         <ProFormDigit
           noStyle
-          disabled={record?.dataType?.[0] !== 'RAW'}
+          disabled={!['RAW', 'UTF8'].includes(record?.dataType?.[0])}
           fieldProps={{ style: { width: '100%' }, placeholder: '请输入读取数量' }}
           rules={[
             { required: true, message: '此项为必填项' },
@@ -345,7 +354,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
         return (
           <ProFormText
             noStyle
-            disabled={['RAW', 'BYTE'].includes(type)}
+            disabled={['RAW', 'BYTE', 'UTF8'].includes(type)}
             fieldProps={{ placeholder: '请输入权重系数' }}
             rules={[
               { required: true, message: '此项为必填项' },

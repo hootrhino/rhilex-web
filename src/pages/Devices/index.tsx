@@ -4,7 +4,6 @@ import ProConfirmModal from '@/components/ProConfirmModal';
 import {
   deleteDevicesDel,
   getDevicesListByGroup,
-  getDevicesProperties,
   putDevicesRestart,
 } from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
@@ -13,6 +12,7 @@ import {
   ApartmentOutlined,
   ControlOutlined,
   DownOutlined,
+  PlayCircleOutlined,
   PlusOutlined,
   PoweroffOutlined,
   SettingOutlined,
@@ -20,12 +20,13 @@ import {
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProCard, ProTable } from '@ant-design/pro-components';
 import { history, useModel, useRequest } from '@umijs/max';
-import { Button, Drawer, Dropdown, Popconfirm, Space } from 'antd';
+import { Button, Dropdown, Popconfirm, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/hooks/useItems';
 import { useRef, useState } from 'react';
-import { getBaseColumns } from '../SchemaMgt/Property';
 import { baseColumns } from './columns';
 import Detail from './Detail';
+import SchemaDetail from './SchemaDetail';
+import VideoDetail from './VideoDetail';
 
 export type DeviceItem = {
   name: string;
@@ -38,6 +39,8 @@ export type DeviceItem = {
 };
 
 const Devices = () => {
+  const actionRef = useRef<ActionType>();
+
   const {
     groupList,
     getGroupList,
@@ -49,11 +52,14 @@ const Devices = () => {
 
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(DEFAULT_CONFIG);
   const [open, setOpen] = useState<boolean>(false);
-  const actionRef = useRef<ActionType>();
-  const [total, setTotal] = useState<number>(0);
   const [openSchema, setOpenSchema] = useState<boolean>(false);
+  const [openVideo, setOpenVideo] = useState<boolean>(false);
+
+  const [total, setTotal] = useState<number>(0);
+
   const [activeDevice, setActiveDevice] = useState<string>('');
   const [activeDeviceName, setActiveDeviceName] = useState<string>('');
+  const [liveUrl, setLiveUrl] = useState<string>('');
 
   // 重置分组表单
   const handleOnReset = () => {
@@ -82,17 +88,26 @@ const Devices = () => {
 
   const getMenuItems = (type: string) => {
     const showSheet = ['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type);
-    let items = [
+
+    let baseItems = [
       { key: 'restart', label: '重启设备', icon: <PoweroffOutlined />, danger: true },
       { key: 'rule', label: '规则配置', icon: <SettingOutlined /> },
-      { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> },
     ] as ItemType[];
 
-    if (showSheet) {
-      items = [...items, { key: 'specific-sheet', label: '点位表配置', icon: <ControlOutlined /> }];
+    if (type === 'GENERIC_CAMERA') {
+      baseItems = [...baseItems, { key: 'video', label: '查看视频', icon: <PlayCircleOutlined /> }];
+    } else {
+      baseItems = [...baseItems, { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> }];
+
+      if (showSheet) {
+        baseItems = [
+          ...baseItems,
+          { key: 'specific-sheet', label: '点位表配置', icon: <ControlOutlined /> },
+        ];
+      }
     }
 
-    return items;
+    return baseItems;
   };
 
   const actionColumns: ProColumns<Partial<DeviceItem>>[] = [
@@ -102,7 +117,7 @@ const Devices = () => {
       fixed: 'right',
       key: 'option',
       valueType: 'option',
-      render: (_, { uuid, gid, type, name }) => {
+      render: (_, { uuid, gid, type, name, config }) => {
         return (
           <Space>
             <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
@@ -139,6 +154,10 @@ const Devices = () => {
                       setOpenSchema(true);
                       setActiveDevice(uuid);
                       setActiveDeviceName(name || '');
+                      break;
+                    case 'video':
+                      setOpenVideo(true);
+                      setLiveUrl(config?.inputMode === 'RTSP' ? config?.rtspUrl : config?.device);
                       break;
                     default:
                       break;
@@ -237,6 +256,16 @@ const Devices = () => {
         </ProCard>
       </PageContainer>
       <Detail {...detailConfig} onClose={() => setDeviceConfig({ uuid: '', open: false })} />
+      <SchemaDetail
+        activeDevice={activeDevice}
+        activeDeviceName={activeDeviceName}
+        open={openSchema}
+        onClose={() => {
+          setOpenSchema(false);
+          setActiveDevice('');
+        }}
+      />
+      <VideoDetail open={openVideo} onCancel={() => setOpenVideo(false)} liveUrl={liveUrl}/>
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}
@@ -248,45 +277,12 @@ const Devices = () => {
           actionRef.current?.reload();
           message.success('重启成功');
           setOpen(false);
+          setActiveDevice('');
         }}
         handleOnOk={async () => {
           await putDevicesRestart({ uuid: activeDevice });
         }}
       />
-      <Drawer
-        open={openSchema}
-        title={activeDeviceName ? `设备 ${activeDeviceName} - 数据模型` : '数据模型'}
-        placement="right"
-        width="50%"
-        destroyOnClose
-        maskClosable={false}
-        onClose={() => setOpenSchema(false)}
-      >
-        <ProTable
-          rowKey="uuid"
-          search={false}
-          options={false}
-          columns={getBaseColumns(true)}
-          params={{ uuid: activeDevice }}
-          request={async ({ current, pageSize, ...keyword }) => {
-            const { data } = await getDevicesProperties({
-              current,
-              size: pageSize,
-              ...keyword,
-            });
-
-            return Promise.resolve({
-              data: data?.records || [],
-              total: data?.total || 0,
-              success: true,
-            });
-          }}
-          pagination={{
-            defaultPageSize: 10,
-            hideOnSinglePage: true,
-          }}
-        />
-      </Drawer>
     </>
   );
 };
