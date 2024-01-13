@@ -161,6 +161,17 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       render: (text, record, index) => <IndexBorder serial={index} />,
     },
     {
+      title: '地址',
+      dataIndex: 'siemensAddress',
+      width: 150,
+      ellipsis: true,
+      hideInSearch: true,
+      formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
+      fieldProps: {
+        placeholder: '请输入地址',
+      },
+    },
+    {
       title: '数据标签',
       dataIndex: 'tag',
       hideInSearch: true,
@@ -176,17 +187,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       hideInSearch: true,
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
       fieldProps: { placeholder: '请输入数据别名' },
-    },
-    {
-      title: '地址',
-      dataIndex: 'siemensAddress',
-      width: 150,
-      ellipsis: true,
-      hideInSearch: true,
-      formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
-      fieldProps: {
-        placeholder: '请输入地址',
-      },
     },
     {
       title: '数据类型（字节序）',
@@ -228,6 +228,19 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       dataIndex: 'weight',
       valueType: 'digit',
       hideInSearch: true,
+      formItemProps: {
+        rules: [
+          { required: true, message: '此项为必填项' },
+          {
+            validator: (_, value) => {
+              if (inRange(value, -0.0001, 100000)) {
+                return Promise.resolve();
+              }
+              return Promise.reject('值必须在 -0.0001 到 100000 范围内');
+            },
+          },
+        ],
+      },
       renderFormItem: (_, { record }) => {
         const type = record?.type?.[0];
 
@@ -236,20 +249,15 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
             noStyle
             disabled={['RAW', 'BYTE', 'I', 'Q'].includes(type)}
             fieldProps={{ placeholder: '请输入权重系数' }}
-            rules={[
-              { required: true, message: '此项为必填项' },
-              {
-                validator: (_, value) => {
-                  if (inRange(value, -0.0001, 100000)) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject('值必须在 -0.0001 到 100000 范围内');
-                },
-              },
-            ]}
           />
         );
       },
+    },
+    {
+      title: '采集频率',
+      dataIndex: 'frequency',
+      valueType: 'digit',
+      hideInSearch: true,
     },
     {
       title: '当前值',
@@ -268,12 +276,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
           {statusEnum[record?.status || 0]?.text}
         </Tag>
       ),
-    },
-    {
-      title: '采集频率',
-      dataIndex: 'frequency',
-      valueType: 'digit',
-      hideInSearch: true,
     },
     {
       title: '采集时间',

@@ -182,6 +182,23 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       render: (text, record, index) => <IndexBorder serial={index} />,
     },
     {
+      title: '从设备 ID',
+      dataIndex: 'slaverId',
+      valueType: 'digit',
+      width: 80,
+      fieldProps: {
+        style: { width: '100%' },
+        placeholder: '请输入从设备 ID',
+      },
+      formItemProps: {
+        rules: [
+          { required: true, message: '此项为必填项' },
+          { max: 255, type: 'integer', message: '从设备 ID 在 1-255 之间' },
+          { min: 1, type: 'integer', message: '从设备 ID 在 1-255 之间' },
+        ],
+      },
+    },
+    {
       title: '数据标签',
       dataIndex: 'tag',
       ellipsis: true,
@@ -235,49 +252,6 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       ),
     },
     {
-      title: <UnitTitle title="采集频率" />,
-      dataIndex: 'frequency',
-      valueType: 'digit',
-      width: 120,
-      fieldProps: {
-        style: { width: '100%' },
-        placeholder: '请输入采集频率',
-      },
-      formItemProps: {
-        rules: [{ required: true, message: '此项为必填项' }],
-      },
-    },
-    {
-      title: '从设备 ID',
-      dataIndex: 'slaverId',
-      valueType: 'digit',
-      width: 80,
-      fieldProps: {
-        style: { width: '100%' },
-        placeholder: '请输入从设备 ID',
-      },
-      formItemProps: {
-        rules: [
-          { required: true, message: '此项为必填项' },
-          { max: 255, type: 'integer', message: '从设备 ID 在 1-255 之间' },
-          { min: 1, type: 'integer', message: '从设备 ID 在 1-255 之间' },
-        ],
-      },
-    },
-    {
-      title: '起始地址',
-      dataIndex: 'address',
-      valueType: 'digit',
-      width: 80,
-      fieldProps: {
-        style: { width: '100%' },
-        placeholder: '请输入起始地址',
-      },
-      formItemProps: {
-        rules: [{ required: true, message: '此项为必填项' }],
-      },
-    },
-    {
       title: '数据类型（字节序）',
       dataIndex: 'dataType',
       width: 150,
@@ -326,20 +300,39 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       },
     },
     {
+      title: '起始地址',
+      dataIndex: 'address',
+      valueType: 'digit',
+      width: 80,
+      fieldProps: {
+        style: { width: '100%' },
+        placeholder: '请输入起始地址',
+      },
+      formItemProps: {
+        rules: [
+          { required: true, message: '此项为必填项' },
+          { min: 0, type: 'integer', message: '起始地址范围在 0-65535 之间' },
+          { max: 65535, type: 'integer', message: '起始地址范围在 0-65535 之间' },
+        ],
+      },
+    },
+    {
       title: '读取数量',
       dataIndex: 'quantity',
       valueType: 'digit',
       width: 100,
+      formItemProps: {
+        rules: [
+          { required: true, message: '此项为必填项' },
+          { min: 1, type: 'integer', message: '读取数量范围在 1-256 之间' },
+          { max: 256, type: 'integer', message: '读取数量范围在 1-256 之间' },
+        ],
+      },
       renderFormItem: (_, { record }) => (
         <ProFormDigit
           noStyle
           disabled={!['RAW', 'UTF8'].includes(record?.dataType?.[0])}
           fieldProps={{ style: { width: '100%' }, placeholder: '请输入读取数量' }}
-          rules={[
-            { required: true, message: '此项为必填项' },
-            { min: 1, type: 'integer', message: '读取数量范围在 1-256 之间' },
-            { max: 256, type: 'integer', message: '读取数量范围在 1-256 之间' },
-          ]}
         />
       ),
     },
@@ -348,6 +341,19 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '权重系数',
       dataIndex: 'weight',
       valueType: 'digit',
+      formItemProps: {
+        rules: [
+          { required: true, message: '此项为必填项' },
+          {
+            validator: (_, value) => {
+              if (inRange(value, -0.0001, 100000)) {
+                return Promise.resolve();
+              }
+              return Promise.reject('值必须在 -0.0001 到 100000 范围内');
+            },
+          },
+        ],
+      },
       renderFormItem: (_, { record }) => {
         const type = record?.dataType?.[0];
 
@@ -356,19 +362,21 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
             noStyle
             disabled={['RAW', 'BYTE', 'UTF8'].includes(type)}
             fieldProps={{ placeholder: '请输入权重系数' }}
-            rules={[
-              { required: true, message: '此项为必填项' },
-              {
-                validator: (_, value) => {
-                  if (inRange(value, -0.0001, 100000)) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject('值必须在 -0.0001 到 100000 范围内');
-                },
-              },
-            ]}
           />
         );
+      },
+    },
+    {
+      title: <UnitTitle title="采集频率" />,
+      dataIndex: 'frequency',
+      valueType: 'digit',
+      width: 120,
+      fieldProps: {
+        style: { width: '100%' },
+        placeholder: '请输入采集频率',
+      },
+      formItemProps: {
+        rules: [{ required: true, message: '此项为必填项' }],
       },
     },
     {
