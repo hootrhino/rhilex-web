@@ -11,4 +11,3 @@ declare module '*.gif';
 declare module '*.bmp';
 declare module '*.tiff';
 declare module 'lua-format';
-declare module 'react-transition-group';

@@ -69,19 +69,6 @@
     icon: 'apartment',
     component: './SchemaMgt',
   },
-  // {
-  //   path: '/screen-mgt',
-  //   name: '数据大屏',
-  //   icon: 'fundProjectionScreen',
-  //   component: './ScreenMgt',
-  // },
-  // {
-  //   path: '/screen-mgt/edit/:uuid',
-  //   name: '编辑大屏',
-  //   component: './ScreenMgt/components/Editor',
-  //   hideInMenu: true,
-  //   layout: false,
-  // },
   {
     path: '/inends',
     name: '南向资源',
