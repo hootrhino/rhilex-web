@@ -48,10 +48,10 @@ const SchemaMgt = () => {
       <ProCard split="vertical">
         <ProCard
           colSpan="300px"
-          title="物模型列表"
+          title="数据模型列表"
           extra={
             <Button key="add" type="primary" icon={<PlusOutlined />} onClick={() => setOpen(true)}>
-              新建物模型
+              新建模型
             </Button>
           }
         >
@@ -62,7 +62,7 @@ const SchemaMgt = () => {
             changeActiveItem={setActiveSchema}
           />
         </ProCard>
-        <ProCard title={activeSchema.name ? `物模型 ${activeSchema.name} - 属性列表` : '属性列表'}>
+        <ProCard title={activeSchema.name ? `数据模型 ${activeSchema.name} - 属性列表` : '属性列表'}>
           <PropertyList schemaId={activeSchema.uuid} />
         </ProCard>
       </ProCard>

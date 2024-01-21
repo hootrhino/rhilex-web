@@ -114,7 +114,7 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
           actions: {
             render: (dom, { uuid }) => (
               <Space size="middle">
-                <Tooltip title="重命名物模型">
+                <Tooltip title="重命名模型">
                   <a
                     key="edit"
                     onClick={() => {
@@ -126,9 +126,9 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
                     <EditOutlined />
                   </a>
                 </Tooltip>
-                <Tooltip title="删除物模型">
+                <Tooltip title="删除模型">
                   <Popconfirm
-                    title="确定要删除该物模型？"
+                    title="确定要删除该数据模型？"
                     onConfirm={() => uuid && remove({ uuid })}
                   >
                     <a key="remove">
@@ -143,7 +143,7 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
       />
       <ModalForm
         open={open}
-        title={initialValue?.uuid ? '更新物模型' : '新建物模型'}
+        title={initialValue?.uuid ? '更新数据模型' : '新建数据模型'}
         formRef={formRef}
         width="30%"
         layout="horizontal"
@@ -174,10 +174,10 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
         <ProFormText
           name="name"
           label="名称"
-          placeholder="请输入物模型名称"
-          rules={[{ required: true, message: '请输入物模型名称' }]}
+          placeholder="请输入数据模型名称"
+          rules={[{ required: true, message: '请输入数据模型名称' }]}
         />
-        <ProFormText name="description" label="描述" placeholder="请输入物模型描述" />
+        <ProFormText name="description" label="描述" placeholder="请输入数据模型描述" />
       </ModalForm>
     </>
   );
