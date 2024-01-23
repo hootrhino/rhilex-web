@@ -7,51 +7,39 @@ import { Tag } from 'antd';
 import { modeEnum, typeEnum } from './enum';
 
 export const defaultConfig = {
-  MQTT: [
-    {
-      port: 1883,
-      host: '127.0.0.1',
-    },
-  ],
-  MONGO_SINGLE: [
-    {
-      mongoUrl: 'mongodb://root:root@127.0.0.1:27017/?connect=direct',
-      database: 'rulexdb',
-      collection: 'rulex',
-    },
-  ],
-  UDP_TARGET: [
-    {
-      port: 2599,
-      host: '127.0.0.1',
-      timeout: 3000,
-    },
-  ],
-  TCP_TRANSPORT: [
-    {
-      dataMode: 'RAW_STRING',
-      allowPing: 'false',
-      pingPacket: 'HR0001',
-      port: 6005,
-      host: '127.0.0.1',
-      timeout: 3000,
-    },
-  ],
-  TDENGINE: [
-    {
-      port: 6041,
-      fqdn: '127.0.0.1',
-      username: 'root',
-      password: 'taosdata',
-      dbName: 'RULEX',
-    },
-  ],
-  HTTP: [
-    {
-      url: 'http://127.0.0.1:8080',
-      headers: [{ k: '', v: '' }],
-    },
-  ],
+  MQTT: {
+    port: 1883,
+    host: '127.0.0.1',
+  },
+  MONGO_SINGLE: {
+    mongoUrl: 'mongodb://root:root@127.0.0.1:27017/?connect=direct',
+    database: 'rulexdb',
+    collection: 'rulex',
+  },
+  UDP_TARGET: {
+    port: 2599,
+    host: '127.0.0.1',
+    timeout: 3000,
+  },
+  TCP_TRANSPORT: {
+    dataMode: 'RAW_STRING',
+    allowPing: 'false',
+    pingPacket: 'HR0001',
+    port: 6005,
+    host: '127.0.0.1',
+    timeout: 3000,
+  },
+  TDENGINE: {
+    port: 6041,
+    fqdn: '127.0.0.1',
+    username: 'root',
+    password: 'taosdata',
+    dbName: 'RULEX',
+  },
+  HTTP: {
+    url: 'http://127.0.0.1:8080',
+    headers: [{ k: '', v: '' }],
+  },
 };
 
 export const baseColumns = [
@@ -96,7 +84,7 @@ export const baseColumns = [
 const timeoutConfig = [
   {
     title: <UnitTitle title="超时时间" />,
-    dataIndex: 'timeout',
+    dataIndex: ['config', 'timeout'],
     fieldProps: {
       placeholder: '请输入超时时间（毫秒）',
     },
@@ -114,13 +102,13 @@ const timeoutConfig = [
 const hostPortConfig = [
   {
     title: '主机地址',
-    dataIndex: 'host',
+    dataIndex: ['config', 'host'],
     required: true,
     copyable: true,
   },
   {
     title: '端口',
-    dataIndex: 'port',
+    dataIndex: ['config', 'port'],
     valueType: 'digit',
     required: true,
   },
@@ -132,17 +120,17 @@ export const configColumns = {
   MONGO_SINGLE: [
     {
       title: 'MongoDB URL',
-      dataIndex: 'mongoUrl',
+      dataIndex: ['config', 'mongoUrl'],
       required: true,
     },
     {
       title: 'MongoDB 数据库',
-      dataIndex: 'database',
+      dataIndex: ['config', 'database'],
       required: true,
     },
     {
       title: 'MongoDB 集合',
-      dataIndex: 'collection',
+      dataIndex: ['config', 'collection'],
       required: true,
     },
   ],
@@ -150,22 +138,22 @@ export const configColumns = {
     ...hostPortConfig,
     {
       title: '客户端 ID',
-      dataIndex: 'clientId',
+      dataIndex: ['config', 'clientId'],
       required: true,
     },
     {
       title: '上报 TOPIC',
-      dataIndex: 'pubTopic',
+      dataIndex: ['config', 'pubTopic'],
       required: true,
     },
     {
       title: '连接账户',
-      dataIndex: 'username',
+      dataIndex: ['config', 'username'],
       required: true,
     },
     {
       title: '连接密码',
-      dataIndex: 'password',
+      dataIndex: ['config', 'password'],
       valueType: 'password',
       required: true,
     },
@@ -174,17 +162,22 @@ export const configColumns = {
   TCP_TRANSPORT: [
     {
       title: '传输模式',
-      dataIndex: 'dataMode',
+      dataIndex: ['config', 'dataMode'],
       valueEnum: modeEnum,
       valueType: 'select',
       required: true,
     },
     {
       title: '开启心跳',
-      dataIndex: 'allowPing',
+      dataIndex: ['config', 'allowPing'],
       required: true,
+      transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
+        config: {
+          ...allValue,
+          allowPing: boolMap[value],
+        },
+      }),
       convertValue: (value: boolean) => value?.toString(),
-      transform: (value: string) => ({ allowPing: boolMap[value] }),
       renderFormItem: () => <ProSegmented width="md" />,
       renderText: (allowPing: boolean) => {
         const key = allowPing ? 'true' : 'false';
@@ -193,7 +186,7 @@ export const configColumns = {
     },
     {
       title: '心跳包内容',
-      dataIndex: 'pingPacket',
+      dataIndex: ['config', 'pingPacket'],
       required: true,
     },
     ...udpConfig,
@@ -201,41 +194,41 @@ export const configColumns = {
   TDENGINE: [
     {
       title: 'FQDN',
-      dataIndex: 'fqdn',
+      dataIndex: ['config', 'fqdn'],
       required: true,
     },
     {
       title: '端口',
-      dataIndex: 'port',
+      dataIndex: ['config', 'port'],
       valueType: 'digit',
       required: true,
     },
     {
       title: '用户名',
-      dataIndex: 'username',
+      dataIndex: ['config', 'username'],
       required: true,
     },
     {
       title: '密码',
-      dataIndex: 'password',
+      dataIndex: ['config', 'password'],
       valueType: 'password',
       required: true,
     },
     {
       title: '数据库名',
-      dataIndex: 'dbName',
+      dataIndex: ['config', 'dbName'],
       required: true,
     },
   ],
   HTTP: [
     {
       title: '请求地址',
-      dataIndex: 'url',
+      dataIndex: ['config', 'url'],
       required: true,
     },
     {
       valueType: 'formList',
-      dataIndex: 'headers',
+      dataIndex: ['config', 'headers'],
       title: <HeadersTitle />,
       columns: [
         {
@@ -294,22 +287,15 @@ export const columns = [
         {
           title: '资源配置',
           valueType: 'group',
-          columns: [
-            {
-              valueType: 'formList',
-              dataIndex: 'config',
-              mode: 'single',
-              columns:
-                type === 'HTTP'
-                  ? configColumns['HTTP']
-                  : [
-                      {
-                        valueType: 'group',
-                        columns: configColumns[type],
-                      },
-                    ],
-            },
-          ],
+          columns:
+            type === 'HTTP'
+              ? configColumns['HTTP']
+              : [
+                  {
+                    valueType: 'group',
+                    columns: configColumns[type],
+                  },
+                ],
         },
       ];
     },

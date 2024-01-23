@@ -17,7 +17,7 @@ import { history, useParams, useRequest } from 'umi';
 import type { OutendsItem } from '..';
 import { columns, defaultConfig } from '../columns';
 
-type UpdateFormItem = {
+export type UpdateFormItem = {
   name: string;
   type: string;
   config: Record<string, any>[];
@@ -41,18 +41,18 @@ const UpdateForm = () => {
     setLoading(true);
 
     try {
-      const formatConfig = values?.config?.[0];
+      // const formatConfig = values?.config?.[0];
       let params = {
         ...values,
-        config: formatConfig,
+        // config: formatConfig,
       };
 
       if (params.type === 'HTTP') {
         params = {
           ...params,
           config: {
-            ...formatConfig,
-            headers: formatHeaders2Obj(formatConfig?.headers),
+            ...params.config,
+            headers: formatHeaders2Obj(params.config?.headers),
           },
         };
       }
@@ -83,13 +83,10 @@ const UpdateForm = () => {
       if (detail?.type === 'HTTP') {
         formRef.current?.setFieldsValue({
           ...detail,
-          config: [{ ...detail?.config, headers: formatHeaders2Arr(detail?.config?.headers) }],
+          config: { ...detail?.config, headers: formatHeaders2Arr(detail?.config?.headers) },
         });
       } else {
-        formRef.current?.setFieldsValue({
-          ...detail,
-          config: [detail?.config],
-        });
+        formRef.current?.setFieldsValue(detail);
       }
     } else {
       formRef.current?.setFieldsValue({
@@ -104,17 +101,17 @@ const UpdateForm = () => {
     let config: any = [];
 
     if (changedValue?.type === 'MQTT') {
-      config = defaultConfig['MQTT']?.map((item) => ({
-        ...item,
+      config = {
+        ...defaultConfig['MQTT'],
         clientId: `eekit${randomNumber}`,
         pubTopic: `eekit${randomNumber}`,
-      }));
+      };
     } else {
       config = defaultConfig[changedValue?.type];
     }
 
     formRef.current?.setFieldsValue({
-      config: changedValue?.type === detail?.type ? [detail?.config] : config,
+      config: changedValue?.type === detail?.type ? detail?.config : config,
     });
   };
 
