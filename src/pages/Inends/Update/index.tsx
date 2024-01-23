@@ -40,7 +40,7 @@ const UpdateForm = () => {
     try {
       const params = {
         ...values,
-        config: values?.config?.[0],
+        // config: values?.config,
       };
       if (uuid) {
         await putInendsUpdate({ ...params, uuid });
@@ -65,7 +65,7 @@ const UpdateForm = () => {
 
   useEffect(() => {
     if (detail) {
-      formRef.current?.setFieldsValue({ ...detail, config: [detail?.config] });
+      formRef.current?.setFieldsValue(detail);
     } else {
       formRef.current?.setFieldsValue(defaultValue);
     }
@@ -89,23 +89,23 @@ const UpdateForm = () => {
 
             let config;
             if (changedValue?.type === 'GENERIC_IOT_HUB') {
-              config = defaultConfig['GENERIC_IOT_HUB']?.map((item) => ({
-                ...item,
+              config = {
+                ...defaultConfig['GENERIC_IOT_HUB'],
                 productId: `eekit${randomNumber}`,
                 deviceName: `eekit${randomNumber}`,
                 clientId: `eekit${randomNumber}`,
-              }));
+              };
             } else if (changedValue?.type === 'GENERIC_MQTT') {
-              config = defaultConfig['GENERIC_MQTT']?.map((item) => ({
-                ...item,
+              config = {
+                ...defaultConfig['GENERIC_MQTT'],
                 clientId: `eekit${randomNumber}`,
-              }));
+              };
             } else {
               config = defaultConfig[changedValue?.type];
             }
 
             formRef.current?.setFieldsValue({
-              config: changedValue?.type === detail?.type ? [detail?.config] : config,
+              config: changedValue?.type === detail?.type ? detail?.config : config,
             });
           }}
           submitter={{
@@ -114,9 +114,7 @@ const UpdateForm = () => {
                 handleOnSubmit={submit}
                 handleOnReset={() => {
                   reset();
-                  formRef.current?.setFieldsValue(
-                    uuid ? { ...detail, config: [detail?.config] } : defaultValue,
-                  );
+                  formRef.current?.setFieldsValue(uuid ? detail : defaultValue);
                 }}
                 loading={loading}
               />

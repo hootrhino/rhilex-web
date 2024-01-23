@@ -2,58 +2,42 @@ import StateTag from '@/components/StateTag';
 import { eventEnum, modeEnum, qosEnum, typeEnum } from './enum';
 
 export const defaultConfig = {
-  COAP: [
-    {
-      port: 2582,
-      host: '127.0.0.1',
-    },
-  ],
-  RULEX_UDP: [
-    {
-      port: 2583,
-      host: '127.0.0.1',
-    },
-  ],
-  HTTP: [
-    {
-      port: 2584,
-      host: '127.0.0.1',
-    },
-  ],
-  NATS_SERVER: [
-    {
-      port: 4222,
-      host: '127.0.0.1',
-    },
-  ],
-  GRPC: [
-    {
-      port: 2585,
-      host: '127.0.0.1',
-    },
-  ],
-  INTERNAL_EVENT: [
-    {
-      type: 'ALL',
-    },
-  ],
-  GENERIC_IOT_HUB: [
-    {
-      host: '127.0.0.1',
-      port: 1883,
-      mode: 'DC',
-    },
-  ],
-  GENERIC_MQTT: [
-    {
-      host: '127.0.0.1',
-      port: 1883,
-      username: 'rhino',
-      password: 'rhino',
-      qos: 1,
-      subTopics: '/device/rulex-eekit1',
-    },
-  ],
+  COAP: {
+    port: 2582,
+    host: '127.0.0.1',
+  },
+  RULEX_UDP: {
+    port: 2583,
+    host: '127.0.0.1',
+  },
+  HTTP: {
+    port: 2584,
+    host: '127.0.0.1',
+  },
+  NATS_SERVER: {
+    port: 4222,
+    host: '127.0.0.1',
+  },
+  GRPC: {
+    port: 2585,
+    host: '127.0.0.1',
+  },
+  INTERNAL_EVENT: {
+    type: 'ALL',
+  },
+  GENERIC_IOT_HUB: {
+    host: '127.0.0.1',
+    port: 1883,
+    mode: 'DC',
+  },
+  GENERIC_MQTT: {
+    host: '127.0.0.1',
+    port: 1883,
+    username: 'rhino',
+    password: 'rhino',
+    qos: 1,
+    subTopics: '/device/rulex-eekit1',
+  },
 };
 
 export const baseColumns = [
@@ -95,12 +79,32 @@ export const baseColumns = [
 const defaultConfigColumns = [
   {
     title: '服务地址',
-    dataIndex: 'host',
+    dataIndex: ['config', 'host'],
     required: true,
   },
   {
     title: '端口',
-    dataIndex: 'port',
+    dataIndex: ['config', 'port'],
+    required: true,
+  },
+];
+
+const defaultGenericColumns = [
+  ...defaultConfigColumns,
+  {
+    title: '客户端 ID',
+    dataIndex: ['config', 'clientId'],
+    required: true,
+  },
+  {
+    title: '用户名称',
+    dataIndex: ['config', 'username'],
+    required: true,
+  },
+  {
+    title: '用户密码',
+    dataIndex: ['config', 'password'],
+    valueType: 'password',
     required: true,
   },
 ];
@@ -108,39 +112,23 @@ const defaultConfigColumns = [
 export const configColumns = {
   COAP: defaultConfigColumns,
   GENERIC_IOT_HUB: [
-    ...defaultConfigColumns,
+    ...defaultGenericColumns,
     {
       title: '模式',
-      dataIndex: 'mode',
+      dataIndex: ['config', 'mode'],
       valueType: 'select',
       valueEnum: modeEnum,
       required: true,
     },
     {
-      title: '产品 ID',
-      dataIndex: 'productId',
-      copyable: true,
-      required: true,
-    },
-    {
       title: '设备名称',
-      dataIndex: 'deviceName',
+      dataIndex: ['config', 'deviceName'],
       required: true,
     },
     {
-      title: '客户端 ID',
-      dataIndex: 'clientId',
-      required: true,
-    },
-    {
-      title: '用户名称',
-      dataIndex: 'username',
-      required: true,
-    },
-    {
-      title: '用户密码',
-      dataIndex: 'password',
-      valueType: 'password',
+      title: '产品 ID',
+      dataIndex: ['config', 'productId'],
+      copyable: true,
       required: true,
     },
   ],
@@ -150,7 +138,7 @@ export const configColumns = {
     ...defaultConfigColumns,
     {
       title: '主题',
-      dataIndex: 'topic',
+      dataIndex: ['config', 'topic'],
       required: true,
     },
   ],
@@ -158,40 +146,24 @@ export const configColumns = {
   INTERNAL_EVENT: [
     {
       title: '事件类型',
-      dataIndex: 'type',
+      dataIndex: ['config', 'type'],
       valueType: 'select',
       required: true,
       valueEnum: eventEnum,
     },
   ],
   GENERIC_MQTT: [
-    {
-      title: '客户端 ID',
-      dataIndex: 'clientId',
-      required: true,
-    },
-    ...defaultConfigColumns,
-    {
-      title: '用户名称',
-      dataIndex: 'username',
-      required: true,
-    },
-    {
-      title: '用户密码',
-      dataIndex: 'password',
-      valueType: 'password',
-      required: true,
-    },
+    ...defaultGenericColumns,
     {
       title: '数据质量',
-      dataIndex: 'qos',
+      dataIndex: ['config', 'qos'],
       valueType: 'select',
       required: true,
       valueEnum: qosEnum,
     },
     {
       title: '订阅 topic 表',
-      dataIndex: 'subTopics',
+      dataIndex: ['config', 'subTopics'],
       required: true,
     },
   ],
@@ -212,15 +184,8 @@ export const columns = [
           valueType: 'group',
           columns: [
             {
-              valueType: 'formList',
-              dataIndex: 'config',
-              mode: 'single',
-              columns: [
-                {
-                  valueType: 'group',
-                  columns: configColumns[type],
-                },
-              ],
+              valueType: 'group',
+              columns: configColumns[type],
             },
           ],
         },
