@@ -36,7 +36,7 @@ export const defaultConfig = {
     username: 'rhino',
     password: 'rhino',
     qos: 1,
-    subTopics: '/device/rulex-eekit1',
+    subTopics: [{ k: '/device/rulex-eekit1' }],
   },
 };
 
@@ -160,11 +160,44 @@ export const configColumns = {
       valueType: 'select',
       required: true,
       valueEnum: qosEnum,
+      // renderText: record =>
     },
     {
-      title: '订阅 topic 表',
+      valueType: 'formList',
       dataIndex: ['config', 'subTopics'],
-      required: true,
+      title: '订阅 topic 表',
+      fieldProps: {
+        required: true,
+        min: 1,
+      },
+      columns: [
+        {
+          valueType: 'group',
+          columns: [
+            {
+              title: '',
+              dataIndex: 'k',
+              fieldProps: {
+                placeholder: '请输入订阅 tipic',
+              },
+              formItemProps: {
+                rules: [
+                  {
+                    required: true,
+                    validator: async (_: any, value: string) => {
+                      if (value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject('订阅 topic 表至少要有一项！');
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+      renderText: (record: string[]) => record.join(','),
     },
   ],
 };

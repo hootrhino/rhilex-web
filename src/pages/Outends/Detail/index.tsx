@@ -40,7 +40,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
             columns={configColumns[data?.type]}
             labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
             title="资源配置"
-            dataSource={data?.config}
+            dataSource={data}
             loading={loading}
           />
           {data?.type === 'HTTP' && <HeadersDetail data={data?.config?.headers} />}

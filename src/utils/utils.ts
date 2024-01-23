@@ -149,6 +149,7 @@ export const processColumns = (columns: any) => {
               position: 'top',
             },
             creatorRecord: col?.initialValue,
+            ...col.fieldProps,
           },
         };
       }

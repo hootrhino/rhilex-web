@@ -1,6 +1,6 @@
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
-import { ProDescriptions } from '@ant-design/pro-components';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
+import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps } from 'antd';
 import omit from 'lodash/omit';
 import { useRequest } from 'umi';
@@ -33,7 +33,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
           columns={configColumns[data?.type]}
           labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
           title="资源配置"
-          dataSource={data?.config}
+          dataSource={data}
           loading={loading}
         />
       )}

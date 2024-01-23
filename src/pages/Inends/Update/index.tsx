@@ -38,10 +38,21 @@ const UpdateForm = () => {
   const handleOnFinish = async (values: any) => {
     setLoading(true);
     try {
-      const params = {
+      let params = {
         ...values,
-        // config: values?.config,
       };
+      if (params.type === 'GENERIC_MQTT') {
+        const newSubTopics = params?.config?.subTopics?.map(({ k }: { k: string }) => k);
+
+        params = {
+          ...params,
+          config: {
+            ...params.config,
+            subTopics: newSubTopics,
+          },
+        };
+      }
+
       if (uuid) {
         await putInendsUpdate({ ...params, uuid });
         message.success('更新成功');
@@ -63,9 +74,21 @@ const UpdateForm = () => {
     }
   };
 
+  const formatDetailConfig = () => {
+    const newConfig =
+      detail?.type === 'GENERIC_MQTT'
+        ? {
+            ...detail?.config,
+            subTopics: detail?.config?.subTopics?.map((topic: string) => ({ k: topic })),
+          }
+        : detail?.config;
+
+    return newConfig;
+  };
+
   useEffect(() => {
     if (detail) {
-      formRef.current?.setFieldsValue(detail);
+      formRef.current?.setFieldsValue({ ...detail, config: formatDetailConfig() });
     } else {
       formRef.current?.setFieldsValue(defaultValue);
     }
@@ -105,7 +128,7 @@ const UpdateForm = () => {
             }
 
             formRef.current?.setFieldsValue({
-              config: changedValue?.type === detail?.type ? detail?.config : config,
+              config: changedValue?.type === detail?.type ? formatDetailConfig() : config,
             });
           }}
           submitter={{
@@ -114,7 +137,9 @@ const UpdateForm = () => {
                 handleOnSubmit={submit}
                 handleOnReset={() => {
                   reset();
-                  formRef.current?.setFieldsValue(uuid ? detail : defaultValue);
+                  formRef.current?.setFieldsValue(
+                    uuid ? { ...detail, config: formatDetailConfig() } : defaultValue,
+                  );
                 }}
                 loading={loading}
               />
