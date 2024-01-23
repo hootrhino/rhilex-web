@@ -95,6 +95,11 @@ const UpdateForm = () => {
                 deviceName: `eekit${randomNumber}`,
                 clientId: `eekit${randomNumber}`,
               }));
+            } else if (changedValue?.type === 'GENERIC_MQTT') {
+              config = defaultConfig['GENERIC_MQTT']?.map((item) => ({
+                ...item,
+                clientId: `eekit${randomNumber}`,
+              }));
             } else {
               config = defaultConfig[changedValue?.type];
             }

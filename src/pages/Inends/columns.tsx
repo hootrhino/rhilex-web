@@ -1,5 +1,5 @@
 import StateTag from '@/components/StateTag';
-import { eventEnum, modeEnum, typeEnum } from './enum';
+import { eventEnum, modeEnum, qosEnum, typeEnum } from './enum';
 
 export const defaultConfig = {
   COAP: [
@@ -44,6 +44,16 @@ export const defaultConfig = {
       mode: 'DC',
     },
   ],
+  GENERIC_MQTT: [
+    {
+      host: '127.0.0.1',
+      port: 1883,
+      username: 'rhino',
+      password: 'rhino',
+      qos: 1,
+      subTopics: '/device/rulex-eekit1',
+    },
+  ],
 };
 
 export const baseColumns = [
@@ -78,7 +88,7 @@ export const baseColumns = [
     title: '备注',
     dataIndex: 'description',
     ellipsis: true,
-    renderText: (description: string) => description || '-'
+    renderText: (description: string) => description || '-',
   },
 ];
 
@@ -152,6 +162,37 @@ export const configColumns = {
       valueType: 'select',
       required: true,
       valueEnum: eventEnum,
+    },
+  ],
+  GENERIC_MQTT: [
+    {
+      title: '客户端 ID',
+      dataIndex: 'clientId',
+      required: true,
+    },
+    ...defaultConfigColumns,
+    {
+      title: '用户名称',
+      dataIndex: 'username',
+      required: true,
+    },
+    {
+      title: '用户密码',
+      dataIndex: 'password',
+      valueType: 'password',
+      required: true,
+    },
+    {
+      title: '数据质量',
+      dataIndex: 'qos',
+      valueType: 'select',
+      required: true,
+      valueEnum: qosEnum,
+    },
+    {
+      title: '订阅 topic 表',
+      dataIndex: 'subTopics',
+      required: true,
     },
   ],
 };

@@ -6,6 +6,7 @@ export const typeEnum = {
   HTTP: 'HTTP 协议支持',
   NATS_SERVER: 'Nats 中间件支持',
   GRPC: 'GRPC 协议支持',
+  GENERIC_MQTT: 'MQTT 协议支持',
   INTERNAL_EVENT: '内部事件源',
 };
 
@@ -23,4 +24,11 @@ export const eventEnum = {
   TARGET: '北向事件',
   SYSTEM: '系统事件',
   HARDWARE: '硬件事件',
+};
+
+// 数据质量
+export const qosEnum = {
+  0: '0',
+  1: '1',
+  2: '2',
 };
