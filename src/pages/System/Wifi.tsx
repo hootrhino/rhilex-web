@@ -89,7 +89,7 @@ const WIFIConfig = () => {
       >
         <ProForm.Item name="ssid" label="SSID" rules={[{ required: true, message: '请输入 SSID' }]}>
           <AutoComplete
-            options={wifiList?.map((item) => ({ label: item, value: item }))}
+            options={wifiList?.map((item) => ({ label: item, value: item, key: `${item}-${Math.random()}` }))}
             style={{ width: 550 }}
             // onSelect={onSelect}
             // onSearch={(text) => setOptions(getPanelValue(text))}
