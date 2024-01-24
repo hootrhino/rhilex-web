@@ -64,3 +64,15 @@ export async function postSettingsEth(
     ...(options || {}),
   });
 }
+
+/** 获取网络状态 GET /api/v1/settings/netStatus */
+export async function getSettingsNetStatus(options?: { [key: string]: any }) {
+  return request<{
+    code: number;
+    msg: string;
+    data: { device?: string; type?: string; state?: string; connection?: string }[];
+  }>('/api/v1/settings/netStatus', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}

@@ -6,6 +6,7 @@ import APNConfig from './Apn';
 import DataBackupConfig from './DataBackup';
 import FirmwareConfig from './Firmware';
 import NetworkConfig from './Network';
+import NetworkStatus from './NetworkStatus';
 import RoutingConfig from './Routing';
 import SiteConfig from './Site';
 import TimeConfig from './Time';
@@ -34,6 +35,11 @@ const System = () => {
   const DefaultConfig = isWindows
     ? []
     : [
+        {
+          label: '网络状态',
+          key: 'netStatus',
+          children: <NetworkStatus />,
+        },
         {
           label: '网卡配置',
           key: 'network',
