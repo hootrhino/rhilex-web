@@ -202,6 +202,10 @@ declare namespace API {
     schema_uuid: string;
   };
 
+  type getSettingsNetDetailsParams = {
+    iface: string;
+  };
+
   type getUserluaDetailParams = {
     uuid: string;
   };

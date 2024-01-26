@@ -65,6 +65,38 @@ export async function postSettingsEth(
   });
 }
 
+/** 获取网络详情 GET /api/v1/settings/netDetails */
+export async function getSettingsNetDetails(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getSettingsNetDetailsParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      device?: string;
+      type?: string;
+      hwAddr?: string;
+      mtu?: number;
+      state?: string;
+      connection?: string;
+      carrier?: string;
+      ipv4Addr?: string;
+      ipv4Gateway?: string;
+      ipv4Dns?: string;
+      ipv6Addr?: string;
+      ipv6Gateway?: string;
+    };
+  }>('/api/v1/settings/netDetails', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 获取网络状态 GET /api/v1/settings/netStatus */
 export async function getSettingsNetStatus(options?: { [key: string]: any }) {
   return request<{
