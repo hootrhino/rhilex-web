@@ -177,6 +177,7 @@ const Devices = () => {
                     case 'video':
                       setOpenVideo(true);
                       setLiveUrl(config?.inputMode === 'RTSP' ? config?.rtspUrl : config?.device);
+                      break;
                     case 'unbind':
                       handleOnUnbind(uuid);
                       break;
