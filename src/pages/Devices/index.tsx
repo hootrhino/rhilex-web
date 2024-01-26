@@ -92,9 +92,10 @@ const Devices = () => {
   // 解绑数据模型
   const handleOnUnbind = async (uuid: string) => {
     const { data } = await getDevicesDetail({ uuid });
-
-    await putDevicesUpdate({ ...data, schemaId: '' }).then(() => message.success('解绑成功'));
-    actionRef.current?.reload();
+    if (data) {
+      await putDevicesUpdate({ ...data, schemaId: '' } as any).then(() => message.success('解绑成功'));
+      actionRef.current?.reload();
+    }
   };
 
   const getMenuItems = (type: string, schemaId?: string) => {

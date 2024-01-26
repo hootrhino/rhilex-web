@@ -575,9 +575,6 @@
                   "gid": {
                     "type": "string"
                   },
-                  "autoRestart": {
-                    "type": "boolean"
-                  },
                   "description": {
                     "type": "string"
                   },
@@ -607,7 +604,6 @@
                   "name",
                   "type",
                   "schemaId",
-                  "autoRestart",
                   "gid",
                   "description",
                   "config"
@@ -618,7 +614,6 @@
                   "type",
                   "schemaId",
                   "gid",
-                  "autoRestart",
                   "description",
                   "config"
                 ],
@@ -629,7 +624,6 @@
                 "name": "GENERIC_AIS",
                 "type": "GENERIC_AIS",
                 "schemaId": "123456",
-                "autoRestart": true,
                 "gid": "DROOT",
                 "description": "GENERIC_AIS",
                 "config": {

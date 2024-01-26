@@ -167,7 +167,6 @@ export async function putDevicesUpdate(
     type: string;
     schemaId: string;
     gid: string;
-    autoRestart: boolean;
     description: string;
     config: { host?: string; port?: number };
   },
