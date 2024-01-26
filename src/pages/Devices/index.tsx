@@ -97,7 +97,7 @@ const Devices = () => {
     actionRef.current?.reload();
   };
 
-  const getMenuItems = (type: string) => {
+  const getMenuItems = (type: string, schemaId?: string) => {
     const showSheet = ['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type);
 
     let baseItems = [
@@ -108,11 +108,14 @@ const Devices = () => {
     if (type === 'GENERIC_CAMERA') {
       baseItems = [...baseItems, { key: 'video', label: '查看视频', icon: <PlayCircleOutlined /> }];
     } else {
-      baseItems = [
-        ...baseItems,
-        { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> },
-        { key: 'unbind', label: '解绑数据模型', icon: <DisconnectOutlined /> },
-      ];
+      baseItems = [...baseItems, { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> }];
+
+      if (schemaId) {
+        baseItems = [
+          ...baseItems,
+          { key: 'unbind', label: '解绑数据模型', icon: <DisconnectOutlined /> },
+        ];
+      }
 
       if (showSheet) {
         baseItems = [
@@ -132,7 +135,7 @@ const Devices = () => {
       fixed: 'right',
       key: 'option',
       valueType: 'option',
-      render: (_, { uuid, gid, type, name, config }) => {
+      render: (_, { uuid, gid, type, name, config, schemaId }) => {
         return (
           <Space>
             <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
@@ -152,7 +155,7 @@ const Devices = () => {
             </Popconfirm>
             <Dropdown
               menu={{
-                items: getMenuItems(type || ''),
+                items: getMenuItems(type || '', schemaId),
                 onClick: ({ key }) => {
                   switch (key) {
                     case 'restart':
