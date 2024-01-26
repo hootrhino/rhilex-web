@@ -3,14 +3,17 @@ import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
 import {
   deleteDevicesDel,
+  getDevicesDetail,
   getDevicesListByGroup,
   putDevicesRestart,
+  putDevicesUpdate,
 } from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
 import { getName } from '@/utils/utils';
 import {
   ApartmentOutlined,
   ControlOutlined,
+  DisconnectOutlined,
   DownOutlined,
   PlayCircleOutlined,
   PlusOutlined,
@@ -86,6 +89,14 @@ const Devices = () => {
     },
   );
 
+  // 解绑数据模型
+  const handleOnUnbind = async (uuid: string) => {
+    const { data } = await getDevicesDetail({ uuid });
+
+    await putDevicesUpdate({ ...data, schemaId: '' }).then(() => message.success('解绑成功'));
+    actionRef.current?.reload();
+  };
+
   const getMenuItems = (type: string) => {
     const showSheet = ['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type);
 
@@ -97,7 +108,11 @@ const Devices = () => {
     if (type === 'GENERIC_CAMERA') {
       baseItems = [...baseItems, { key: 'video', label: '查看视频', icon: <PlayCircleOutlined /> }];
     } else {
-      baseItems = [...baseItems, { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> }];
+      baseItems = [
+        ...baseItems,
+        { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> },
+        { key: 'unbind', label: '解绑数据模型', icon: <DisconnectOutlined /> },
+      ];
 
       if (showSheet) {
         baseItems = [
@@ -158,6 +173,8 @@ const Devices = () => {
                     case 'video':
                       setOpenVideo(true);
                       setLiveUrl(config?.inputMode === 'RTSP' ? config?.rtspUrl : config?.device);
+                    case 'unbind':
+                      handleOnUnbind(uuid);
                       break;
                     default:
                       break;
@@ -265,7 +282,7 @@ const Devices = () => {
           setActiveDevice('');
         }}
       />
-      <VideoDetail open={openVideo} onCancel={() => setOpenVideo(false)} liveUrl={liveUrl}/>
+      <VideoDetail open={openVideo} onCancel={() => setOpenVideo(false)} liveUrl={liveUrl} />
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}
