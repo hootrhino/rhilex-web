@@ -107,7 +107,9 @@ const Devices = () => {
     ] as ItemType[];
 
     if (type === 'GENERIC_CAMERA') {
-      baseItems = [...baseItems, { key: 'video', label: '查看视频', icon: <PlayCircleOutlined /> }];
+      // TODO 暂时隐藏查看监控功能
+      // baseItems = [...baseItems, { key: 'video', label: '查看视频', icon: <PlayCircleOutlined /> }];
+      baseItems = [...baseItems];
     } else {
       baseItems = [...baseItems, { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> }];
 
