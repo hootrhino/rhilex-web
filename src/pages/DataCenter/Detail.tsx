@@ -130,7 +130,6 @@ const DataCenter = () => {
               theme="light"
               value={code}
               onChange={(value) => setCode(value)}
-              height="100%"
             />
           </Card>
         </div>

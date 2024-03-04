@@ -41,6 +41,95 @@ export const luaKeywords = [
 ];
 
 /** Lua 内置方法函数 **/
+export const builtInFuncs = [
+  {
+    label: 'then .. end',
+    apply: `then
+
+    end`,
+    type: 'snippet',
+  },
+  {
+    label: 'do .. end',
+    apply: `do
+
+    end`,
+    type: 'snippet',
+  },
+  {
+    label: 'if .. then',
+    apply: `if  then
+
+    end`,
+    type: 'snippet',
+  },
+  {
+    label: 'elseif .. then',
+    apply: `elseif  then`,
+    type: 'snippet',
+  },
+  {
+    label: 'for .. ipairs',
+    apply: `for index, value in ipairs(t) do
+
+    end`,
+    type: 'snippet',
+  },
+  {
+    label: 'for .. pairs',
+    apply: `for key, value in pairs(t) do
+
+    end`,
+    type: 'snippet',
+  },
+  {
+    label: 'in ..',
+    apply: `in pairs(t) do
+
+    end`,
+    type: 'snippet',
+  },
+  {
+    label: 'for i = ..',
+    apply: `for i = 1, 10, 1 do
+
+    end`,
+    type: 'snippet',
+  },
+  {
+    label: 'function ()',
+    apply: `function ()
+
+    end`,
+    type: 'snippet',
+  },
+  {
+    label: 'local function',
+    apply: `local function ()
+
+    end`,
+    type: 'snippet',
+  },
+  {
+    label: 'repeat .. until',
+    apply: `repeat
+
+    until`,
+    type: 'snippet',
+  },
+  {
+    label: 'do return end',
+    apply: `do return end`,
+    type: 'snippet',
+  },
+  {
+    label: 'while .. do',
+    apply: `while true do
+
+    end`,
+    type: 'snippet',
+  },
+];
 
 // data 函数
 const dataToList = [
@@ -55,13 +144,11 @@ const dataToList = [
 ];
 
 export const dataFuncs = dataToList?.map((data) => {
-  const code = `
-local err = data:To${data.target}(arg1, arg2)
+  const code = `local err = data:To${data.target}(arg1, arg2)
 if err ~= nil then
   stdlib:Throw(err)
   return true, args
-end
-`;
+end`;
   return {
     label: `data:To${data.target}`,
     apply: code,
@@ -255,12 +342,10 @@ export const deviceFuncs = deviceList?.map((device) => {
     device.target === 'Read'
       ? `local Data, err1 = device:${device.target}(arg1, arg2, arg3)`
       : `local err1 = device:${device.target}(arg1, arg2, arg3)`;
-  const code = `
-${err1}
+  const code = `${err1}
 if err1 ~= nil then
   stdlib:Log(err)
-end
-`;
+end`;
   return {
     label: `device:${device.target}`,
     apply: code,
@@ -333,12 +418,10 @@ export const modbusFuncs = modbusList?.map((modbus) => {
     ];
   }
 
-  const code = `
-${err1}
+  const code = `${err1}
 if err1 ~= nil then
     stdlib:Log(err)
-end
-`;
+end`;
 
   return {
     label: `modbus:${modbus.target}`,

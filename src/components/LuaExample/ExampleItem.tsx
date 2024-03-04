@@ -42,7 +42,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
       key: item.label,
       label: <Label data={item} />,
       style: panelStyle,
-      children: <CodeEditor value={item.apply} readOnly height="150px" />,
+      children: <CodeEditor readOnly value={item.apply} mode='lua' />,
       extra: <Extra data={item} handleOnCopy={() => setValConfig({ open: true, data: item })} />,
     }));
   };
@@ -177,7 +177,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
             }}
           </ProFormList>
           <ProForm.Item name="code">
-            <CodeEditor height="150px" readOnly className="cursor-not-allowed" />
+            <CodeEditor readOnly mode='lua' />
           </ProForm.Item>
         </ModalForm>
       </>
