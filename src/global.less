@@ -19,10 +19,10 @@ body,
 // }
 
 @font-face {
-  font-family: 'DingTalk';
-  src: url('@/assets/font/DingTalk_JinBuTi_Regular.woff2') format('woff2');
   font-weight: normal;
+  font-family: 'DingTalk';
   font-style: normal;
+  src: url('@/assets/font/DingTalk_JinBuTi_Regular.woff2') format('woff2');
   font-display: swap;
 }
 
@@ -168,8 +168,43 @@ ol {
 }
 
 // lua editor
+.cm-editor {
+  //height: auto;
+}
+.cm-completionIcon-function,
+.cm-completionIcon-keyword,
+.cm-completionIcon-snippet,
+.cm-completionIcon-variable {
+  display: none !important;
+}
+
+.cm-completionDetail {
+  display: none !important;
+}
+
 .cm-editor.cm-focused {
   outline: none;
+}
+
+.customize-autocomplete-tooltip {
+  width: 30%;
+  ul {
+    li {
+      position: relative;
+      .autocomplete-icon {
+        width: 12px;
+        margin-right: 5px;
+      }
+      .autocomplete-detail {
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        color: #969697;
+        font-size: 10px;
+        transform: translateY(-50%);
+      }
+    }
+  }
 }
 
 // 系统 logo
@@ -189,7 +224,7 @@ ol {
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #44475A;
+    background: #44475a;
     border-radius: 50px;
   }
 
@@ -200,8 +235,8 @@ ol {
 
 .editor-card {
   .ant-pro-card-title {
-    font-size: 14px;
     font-weight: 400;
+    font-size: 14px;
   }
 }
 
@@ -230,7 +265,7 @@ ol {
 
 .none-header-border {
   .ant-modal-header {
-    border-bottom: none;
     padding: 16px 24px 0 24px;
+    border-bottom: none;
   }
 }

@@ -5,16 +5,22 @@ import type { ReactCodeMirrorProps } from '@uiw/react-codemirror';
 import CodeMirror from '@uiw/react-codemirror';
 
 type CodeEditorProps = ReactCodeMirrorProps & {
-  mode?: 'shell' | 'sql';
+  mode?: 'shell' | 'sql' | 'lua';
 };
 
+const modes = {
+  shell: langs.shell,
+  sql: langs.sql,
+  lua: langs.lua
+}
+
 const CodeEditor = ({ mode = 'shell', theme = 'dark', ...props }: CodeEditorProps) => {
+
   return (
     <CodeMirror
-      extensions={[mode === 'shell' ? langs.shell() : langs.sql()]}
-      height="200px"
+      extensions={[modes[mode]()]}
       theme={theme === 'dark' ? darcula : bbedit}
-      autoFocus={false}
+      className={props?.readOnly ? 'cursor-not-allowed' : ''}
       {...props}
     />
   );

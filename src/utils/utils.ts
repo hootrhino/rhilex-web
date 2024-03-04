@@ -2,7 +2,7 @@ import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
 import { isEmpty, omit, orderBy } from 'lodash';
-import luamin from 'lua-format';
+import luamin from './luamin';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -65,13 +65,13 @@ export const FormatCode = (code: string) => {
     SolveMath: true,
   });
 
-  let formattedCode = formatCode
-    .toString()
-    .replace(/--discord\.gg\/boronide, code generated using luamin\.js™\n?/g, '');
+  // let formattedCode = formatCode
+  //   .toString()
+  //   .replace(/--discord\.gg\/boronide, code generated using luamin\.js™\n?/g, '');
 
-  formattedCode = formattedCode.replace(/^\s*\n/gm, '');
+  // const formattedCode = formatCode.replace(/^\s*\n/gm, '');
 
-  return formattedCode;
+  return formatCode;
 };
 
 // 获取名称
