@@ -2,8 +2,9 @@ import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
 import { isEmpty, omit, orderBy } from 'lodash';
-import luamin from './luamin';
+
 import { twMerge } from 'tailwind-merge';
+import { Beautify } from './luafmt/luamin';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -59,7 +60,7 @@ export const validateGateway = (ip: string) => {
 
 // 格式化 lua 代码
 export const FormatCode = (code: string) => {
-  const formatCode = luamin.Beautify(code, {
+  const formatCode = Beautify(code, {
     RenameVariables: false,
     RenameGlobals: false,
     SolveMath: true,
