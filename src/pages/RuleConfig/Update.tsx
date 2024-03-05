@@ -51,6 +51,8 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
         ...values,
         fromSource: type === 'inends' ? [typeId] : [],
         fromDevice: type === 'device' ? [typeId] : [],
+        success: DefaultSuccess,
+        failed: DefaultFailed,
       };
 
       if (ruleId) {
@@ -111,8 +113,8 @@ const UpdateForm = ({ type, typeId }: UpdateFormProps) => {
             <ProFormText label="备注" name="description" width="lg" placeholder="请输入备注" />
           </ProForm.Group>
           <ProCodeEditor label="规则回调" name="actions" ref={formRef} required />
-          <ProCodeEditor label="成功回调" name="success" ref={formRef} required defaultCollapsed />
-          <ProCodeEditor label="失败回调" name="failed" ref={formRef} required defaultCollapsed />
+          {/* <ProCodeEditor label="成功回调" name="success" ref={formRef} required defaultCollapsed />
+          <ProCodeEditor label="失败回调" name="failed" ref={formRef} required defaultCollapsed /> */}
         </ProForm>
       </ProCard>
     </PageContainer>
