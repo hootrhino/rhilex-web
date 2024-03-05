@@ -1176,7 +1176,7 @@ export const CreateLuaParser = (text: string) => {
     }
   }
 
-  const block = (a, b) => {
+  const block = (a = [], b = []) => {
     const statements: any[] = [];
     let semicolons: any[] = [];
 
@@ -1294,5 +1294,5 @@ export const CreateLuaParser = (text: string) => {
     };
   };
 
-  return block([], []);
+  return block();
 };
