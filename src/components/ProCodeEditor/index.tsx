@@ -1,11 +1,11 @@
 import LuaEditor from '@/components/LuaEditor';
-import { FormatCode } from '@/utils/utils';
 import { CodeOutlined } from '@ant-design/icons';
 import type { ProFormItemProps } from '@ant-design/pro-components';
 import { ProCard, ProForm } from '@ant-design/pro-components';
 import { Button, Space } from 'antd';
 import { forwardRef, useState } from 'react';
 import LuaExample from '../LuaExample';
+import { Beautify } from '@/utils/luafmt/luamin';
 
 type ProCodeEditorProps = Omit<ProFormItemProps, 'children'> & {
   defaultCollapsed?: boolean;
@@ -30,7 +30,7 @@ const ProCodeEditor = forwardRef(
     const handleOnFormatCode = () => {
       const code = ref.current?.getFieldValue(name);
 
-      ref.current?.setFieldsValue({ [name]: FormatCode(code) });
+      ref.current?.setFieldsValue({ [name]: Beautify(code) });
     };
 
     return (

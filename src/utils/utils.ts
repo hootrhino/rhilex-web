@@ -4,7 +4,6 @@ import { clsx, type ClassValue } from 'clsx';
 import { isEmpty, omit, orderBy } from 'lodash';
 
 import { twMerge } from 'tailwind-merge';
-import { Beautify } from './luafmt/luamin';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -56,23 +55,6 @@ export const validateMask = (ip: string) => {
 export const validateGateway = (ip: string) => {
   const pattern = /^(192\.168(\.(\d|([1-9]\d)|(1\d{2})|(2[0-4]\d)|(25[0-5]))){2})$/;
   return pattern.test(ip);
-};
-
-// 格式化 lua 代码
-export const FormatCode = (code: string) => {
-  const formatCode = Beautify(code, {
-    RenameVariables: false,
-    RenameGlobals: false,
-    SolveMath: true,
-  });
-
-  // let formattedCode = formatCode
-  //   .toString()
-  //   .replace(/--discord\.gg\/boronide, code generated using luamin\.js™\n?/g, '');
-
-  // const formattedCode = formatCode.replace(/^\s*\n/gm, '');
-
-  return formatCode;
 };
 
 // 获取名称
