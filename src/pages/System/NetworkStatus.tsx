@@ -3,7 +3,7 @@ import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Descriptions, Modal } from 'antd';
-import { omit } from 'lodash';
+import { pick } from 'lodash';
 import { useState } from 'react';
 import Title from './components/Title';
 
@@ -50,7 +50,7 @@ const NetworkStatus = () => {
     {
       manual: true,
       formatResult: (res) =>
-        omit(res, ['state', 'carrier', 'ipv4Gateway', 'ipv4Dns', 'ipv6Gateway']),
+        pick(res.data, ['device', 'type', 'hwAddr', 'mtu', 'connection', 'ipv4Addr', 'ipv6Addr']),
     },
   );
 
