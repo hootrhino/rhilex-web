@@ -134,6 +134,16 @@ declare namespace API {
     uuid: string;
   };
 
+  type getHnc8DataSheetListParams = {
+    device_uuid?: string;
+    current?: number;
+    size?: number;
+  };
+
+  type getHnc8DataSheetSheetExportParams = {
+    device_uuid: string;
+  };
+
   type getHwifaceDetailParams = {
     uuid: string;
   };

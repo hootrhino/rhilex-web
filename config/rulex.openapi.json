@@ -94,6 +94,9 @@
       "name": "西门子点位管理"
     },
     {
+      "name": "华中数控点位管理"
+    },
+    {
       "name": "数据模型"
     }
   ],
@@ -14180,6 +14183,775 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-144638587-run",
         "security": []
       }
+    },
+    "/api/v1/hnc8_data_sheet/sheetImport": {
+      "post": {
+        "summary": "导入点位表",
+        "x-apifox-folder": "华中数控点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "华中数控点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string",
+                    "example": "DEVICEPGCZHKFU"
+                  },
+                  "file": {
+                    "type": "string",
+                    "example": "file://C:\\Users\\wangwenhai\\workspace\\rulex\\test\\data\\test-modbus-sheet.xlsx",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-151192733-run",
+        "security": []
+      }
+    },
+    "/api/v1/hnc8_data_sheet/list": {
+      "get": {
+        "summary": "分页查看点位表",
+        "x-apifox-folder": "华中数控点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "华中数控点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "DEVICEDQNLO8",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "6",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "2",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "device_uuid": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "alias": {
+                                "type": "string"
+                              },
+                              "apiFunction": {
+                                "type": "string"
+                              },
+                              "group": {
+                                "type": "integer"
+                              },
+                              "address": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "integer"
+                              },
+                              "lastFetchTime": {
+                                "type": "integer"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "uuid",
+                              "device_uuid",
+                              "name",
+                              "alias",
+                              "apiFunction",
+                              "group",
+                              "address",
+                              "status",
+                              "lastFetchTime",
+                              "value"
+                            ],
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "device_uuid",
+                              "name",
+                              "alias",
+                              "apiFunction",
+                              "group",
+                              "address",
+                              "status",
+                              "lastFetchTime",
+                              "value"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 10,
+                        "total": 11,
+                        "records": [
+                          {
+                            "uuid": "HNC86YYVT8V8",
+                            "device_uuid": "DEVICEHELKBOTX",
+                            "name": "机床状态",
+                            "alias": "机床状态",
+                            "apiFunction": "/MACHINE/STATUS",
+                            "group": 10,
+                            "address": "value.0.0",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "HNC8E4L7FHZD",
+                            "device_uuid": "DEVICEHELKBOTX",
+                            "name": "报警信息",
+                            "alias": "报警信息",
+                            "apiFunction": "/MACHINE/CONTROLLER/WARNING",
+                            "group": 10,
+                            "address": "value.0.0",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "HNC8XYVEFVJ8",
+                            "device_uuid": "DEVICEHELKBOTX",
+                            "name": "进给速度",
+                            "alias": "进给速度",
+                            "apiFunction": "/MACHINE/FEED_SPEED",
+                            "group": 10,
+                            "address": "value.0.0",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "HNC8BO4NTAZE",
+                            "device_uuid": "DEVICEHELKBOTX",
+                            "name": "进给倍率",
+                            "alias": "进给倍率",
+                            "apiFunction": "/MACHINE/FEED_OVERRIDE",
+                            "group": 10,
+                            "address": "value.0.0",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "HNC8KRYBYB6K",
+                            "device_uuid": "DEVICEHELKBOTX",
+                            "name": "主轴倍率",
+                            "alias": "主轴倍率",
+                            "apiFunction": "/MACHINE/SPDL_OVERRIDE",
+                            "group": 10,
+                            "address": "value.0.0",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "HNC8P9BWUYZT",
+                            "device_uuid": "DEVICEHELKBOTX",
+                            "name": "加工件数",
+                            "alias": "加工件数",
+                            "apiFunction": "/MACHINE/PART_COUNT",
+                            "group": 10,
+                            "address": "value.0.0",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "HNC8IPVH7V3H",
+                            "device_uuid": "DEVICEHELKBOTX",
+                            "name": "程序名",
+                            "alias": "程序名",
+                            "apiFunction": "/MACHINE/CONTROLLER/PROGRAM",
+                            "group": 10,
+                            "address": "value.0.0",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "HNC89MU7AYNO",
+                            "device_uuid": "DEVICEHELKBOTX",
+                            "name": "刀具长度",
+                            "alias": "刀具长度",
+                            "apiFunction": "/MACHINE/CONTROLLER/TOOL_PARAM",
+                            "group": 10,
+                            "address": "value.0.length",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "HNC8BF2MDV4S",
+                            "device_uuid": "DEVICEHELKBOTX",
+                            "name": "刀具半径",
+                            "alias": "刀具半径",
+                            "apiFunction": "/MACHINE/CONTROLLER/TOOL_PARAM",
+                            "group": 10,
+                            "address": "value.0.radius",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "HNC8W99Z887D",
+                            "device_uuid": "DEVICEHELKBOTX",
+                            "name": "刀具磨损长度",
+                            "alias": "刀具磨损长度",
+                            "apiFunction": "/MACHINE/CONTROLLER/TOOL_PARAM",
+                            "group": 10,
+                            "address": "value.0.length_abrasion",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-151192734-run",
+        "security": []
+      }
+    },
+    "/api/v1/hnc8_data_sheet/update": {
+      "post": {
+        "summary": "更新点位表",
+        "x-apifox-folder": "华中数控点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "华中数控点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "Hnc8_data_points": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "device_uuid": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "alias": {
+                          "type": "string"
+                        },
+                        "apiFunction": {
+                          "type": "string"
+                        },
+                        "group": {
+                          "type": "integer"
+                        },
+                        "address": {
+                          "type": "string"
+                        }
+                      },
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "uuid",
+                        "device_uuid",
+                        "name",
+                        "alias",
+                        "apiFunction",
+                        "group",
+                        "address"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "Hnc8_data_points"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "Hnc8_data_points"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICEHELKBOTX",
+                "Hnc8_data_points": [
+                  {
+                    "uuid": "HNC8BO4NTAZE",
+                    "device_uuid": "DEVICEHELKBOTX",
+                    "name": "进给倍率",
+                    "alias": "进给倍率",
+                    "apiFunction": "/MACHINE/FEED_OVERRIDE",
+                    "group": 10,
+                    "address": "value.0.0"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-151192735-run",
+        "security": []
+      }
+    },
+    "/api/v1/hnc8_data_sheet/delIds": {
+      "delete": {
+        "summary": "多行删除",
+        "x-apifox-folder": "华中数控点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "华中数控点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "uuids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICEDQNLO8",
+                "uuids": [
+                  "MDTBJJMDUX",
+                  "MDTBC4TT8B"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-151192736-run",
+        "security": []
+      }
+    },
+    "/api/v1/hnc8_data_sheet/sheetExport": {
+      "get": {
+        "summary": "导出点表",
+        "x-apifox-folder": "华中数控点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "华中数控点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "AABBCCDD",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-151192737-run",
+        "security": []
+      }
+    },
+    "/api/v1/rules/getCanUsedResources": {
+      "get": {
+        "summary": "获取可用资源",
+        "x-apifox-folder": "规则管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "规则管理"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "devices": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "name"
+                            ]
+                          }
+                        },
+                        "outEnds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "devices",
+                        "outEnds"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "devices",
+                        "outEnds"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "devices": [
+                          {
+                            "uuid": "DEVICEON55TFKJ",
+                            "name": "本地摄像头推到本地JpegStreamServer"
+                          }
+                        ],
+                        "outEnds": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-152687699-run",
+        "security": []
+      }
     }
   },
   "components": {
@@ -14307,5 +15079,10 @@
     },
     "securitySchemes": {}
   },
-  "servers": []
+  "servers": [
+    {
+      "url": "http://127.0.0.1:2580",
+      "description": "本机环境"
+    }
+  ]
 }
