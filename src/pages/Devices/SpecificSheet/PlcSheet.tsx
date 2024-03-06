@@ -17,7 +17,7 @@ import {
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { EditableProTable, ProFormCascader, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button, Popconfirm, Tag, Upload } from 'antd';
+import { Button, Popconfirm, Tag, Tooltip, Upload } from 'antd';
 import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
 import { plcDataTypeOptions } from './enum';
@@ -306,7 +306,9 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
             uuid: 'new',
           }}
         >
-          <a>复制</a>
+          <Tooltip title="以当前行为模板新建一行数据">
+            <a>复制</a>
+          </Tooltip>
         </EditableProTable.RecordCreator>,
         <a
           key="editable"
