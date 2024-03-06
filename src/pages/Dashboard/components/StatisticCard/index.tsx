@@ -1,3 +1,5 @@
+import { message } from '@/components/PopupHack';
+import { postOsResetInterMetric } from '@/services/rulex/xitongshuju';
 import { cn } from '@/utils/utils';
 import { ReloadOutlined } from '@ant-design/icons';
 import { ProCard } from '@ant-design/pro-components';
@@ -6,7 +8,7 @@ import { Button, Space, Statistic } from 'antd';
 import sum from 'lodash/sum';
 
 const StatisticCard = () => {
-  const { dataSource } = useModel('useSystem');
+  const { dataSource, run } = useModel('useSystem');
   const { inSuccess, inFailed, outSuccess, outFailed } = dataSource?.statistic || {};
 
   const statisticData = [
@@ -46,9 +48,12 @@ const StatisticCard = () => {
         ghost
         className="absolute top-[8px] left-[8px]"
         icon={<ReloadOutlined />}
-        onClick={() => {
-          // TODO
-        }}
+        onClick={async () =>
+          await postOsResetInterMetric().then(() => {
+            message.success('重置成功');
+            run();
+          })
+        }
       >
         重置统计数据
       </Button>

@@ -22,6 +22,14 @@ export async function getOsOsRelease(options?: { [key: string]: any }) {
   });
 }
 
+/** 重置度量值 POST /api/v1/os/resetInterMetric */
+export async function postOsResetInterMetric(options?: { [key: string]: any }) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/os/resetInterMetric', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
 /** 开机时间 GET /api/v1/os/startedAt */
 export async function getOsStartedAt(options?: { [key: string]: any }) {
   return request<{ code: number; msg: string; data: string }>('/api/v1/os/startedAt', {
