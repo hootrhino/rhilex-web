@@ -1,3 +1,5 @@
+import { dataQuickTpl } from "./quickTpl";
+
 /** 规则默认值 **/
 export const DefaultActions = `Actions = {
   function(args)
@@ -154,6 +156,7 @@ end`;
     apply: code,
     type: 'function',
     detail: data.detail,
+    quickTpl: dataQuickTpl[data.target],
     variables: [
       { label: `${data.target.toUpperCase()}资源`, name: 'arg1', value: '', type: 'string' },
       { label: '数据', name: 'arg2', value: '', type: 'string' },
@@ -163,7 +166,7 @@ end`;
 
 // stdlib 函数
 const stdlibDebug = `stdlib:Debug(arg)`;
-const stdlibThrow = `stdlib:Throw(arg)`;
+const stdlibThrow = `stdlib:Throw(err)`;
 
 export const stdlibFuncs = [
   {
@@ -171,14 +174,15 @@ export const stdlibFuncs = [
     apply: stdlibDebug,
     type: 'function',
     detail: '打印日志',
-    variables: [{ label: '输出内容', name: 'arg', value: '', type: 'string' }],
+    quickTpl: dataQuickTpl['Debug'],
+    // variables: [{ label: '输出内容', name: 'arg', value: '', type: 'string' }],
   },
   {
     label: 'stdlib:Throw',
     apply: stdlibThrow,
     type: 'function',
     detail: '抛出异常',
-    variables: [{ label: '异常消息', name: 'arg', value: '', type: 'string' }],
+    // variables: [{ label: '异常消息', name: 'arg', value: '', type: 'string' }],
   },
 ];
 

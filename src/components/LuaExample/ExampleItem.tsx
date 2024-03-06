@@ -17,8 +17,14 @@ import Extra from './Extra';
 import Label from './Label';
 
 type ExampleItemProps = CollapseProps & {
-  type: 'built-in' | 'custom';
+  type: 'built-in' | 'custom' | 'quick';
   dataSource: TplGroupItem[];
+};
+
+const title = {
+  'built-in': '内置模板',
+  custom: '自定义模板',
+  quick: '快捷模板',
 };
 
 const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
@@ -38,11 +44,29 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
   };
 
   const getItemsChildren = (data: TplItem[]) => {
-    return data.map((item) => ({
+    return data?.map((item) => ({
       key: item.label,
       label: <Label data={item} />,
       style: panelStyle,
-      children: <CodeEditor readOnly value={item.apply} mode='lua' />,
+      children: (
+        <div>
+          <CodeEditor readOnly value={item.apply} mode="lua" />
+          {item?.quickTpl && item?.quickTpl?.length > 0 && (
+            <>
+              <div className="my-[10px] font-bold">快捷模板</div>
+              {item?.quickTpl?.map((q) => (
+                <div key={q.label}>
+                  <div className="flex justify-between w-full mb-[5px]">
+                    <span>{q.detail}</span>
+                    <Extra data={q} handleOnCopy={() => setValConfig({ open: true, data: q })} />
+                  </div>
+                  <CodeEditor readOnly value={q.apply} mode="lua" />
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      ),
       extra: <Extra data={item} handleOnCopy={() => setValConfig({ open: true, data: item })} />,
     }));
   };
@@ -90,18 +114,23 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
     dataSource &&
     dataSource?.length > 0 && (
       <>
-        <div className="mb-[16px] text-[18px]">
-          {type === 'built-in' ? '内置模板' : '自定义模板'}
-        </div>
-        <Collapse
-          accordion
-          bordered={false}
-          expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-          style={{ background: token.colorBgContainer }}
-          items={getItems()}
-          expandIconPosition="end"
-          {...props}
-        />
+        <div className="mb-[16px] text-[18px]">{title[type]}</div>
+        {type === 'quick' ? (
+          <div>
+            <Collapse bordered={false} items={getItemsChildren(dataSource?.[0].children)} />
+          </div>
+        ) : (
+          <Collapse
+            accordion
+            bordered={false}
+            expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+            style={{ background: token.colorBgContainer }}
+            items={getItems()}
+            expandIconPosition="end"
+            {...props}
+          />
+        )}
+
         <ModalForm
           formRef={formRef}
           title="设置变量"
@@ -177,7 +206,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
             }}
           </ProFormList>
           <ProForm.Item name="code">
-            <CodeEditor readOnly mode='lua' />
+            <CodeEditor readOnly mode="lua" />
           </ProForm.Item>
         </ModalForm>
       </>

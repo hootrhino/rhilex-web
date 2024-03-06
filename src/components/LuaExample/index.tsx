@@ -9,6 +9,7 @@ import type { DrawerProps } from 'antd';
 import { Button, Divider, Drawer, Input, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import { luaTemplates } from '../LuaEditor/constant';
+import { luaQuickTpls } from '../LuaEditor/quickTpl';
 import ExampleItem from './ExampleItem';
 
 type LuaExampleProps = DrawerProps;
@@ -32,21 +33,22 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
 
   // 搜索内置模板
   const searchBuiltInTpl = (regex: RegExp) => {
-    const newData = luaTemplates.map((item) => {
-      let matchItem = { ...item };
+    const newData = luaTemplates
+      .map((item) => {
+        let matchItem = { ...item };
 
-      // 搜索标题
-      if (matchItem.name.match(regex)) {
-        return matchItem;
-      }
+        // 搜索标题
+        if (matchItem.name.match(regex)) {
+          return matchItem;
+        }
 
-      // 搜索内层
-      matchItem.children = item.children?.filter(
-        (child) => child.label.match(regex) || child.detail.match(regex),
-      );
-      return matchItem.children?.length > 0 ? matchItem : null;
-    })
-    .filter((item) => item);
+        // 搜索内层
+        matchItem.children = item.children?.filter(
+          (child) => child.label.match(regex) || child.detail.match(regex),
+        );
+        return matchItem.children?.length > 0 ? matchItem : null;
+      })
+      .filter((item) => item);
 
     setBuiltInTplData(newData as TplGroupItem[]);
   };
@@ -146,6 +148,12 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
       <ExampleItem
         type="custom"
         dataSource={customTplData as TplGroupItem[]}
+        onChange={handleOnChange}
+      />
+      {luaQuickTpls && luaQuickTpls.length > 0 && <Divider />}
+      <ExampleItem
+        type="quick"
+        dataSource={luaQuickTpls as TplGroupItem[]}
         onChange={handleOnChange}
       />
     </Drawer>

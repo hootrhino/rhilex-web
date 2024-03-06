@@ -1,6 +1,6 @@
+import { FormOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import CopyButton from './CopyButton';
-import { FormOutlined } from '@ant-design/icons';
 
 type ExtraProps = {
   data: TplItem;
@@ -17,16 +17,17 @@ const Extra = ({ data, handleOnCopy }: ExtraProps) => {
           type="primary"
           size="small"
           ghost
-          onClick={(e) => {e.stopPropagation();handleOnCopy()}}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleOnCopy();
+          }}
           icon={<FormOutlined />}
         >
-          使用 Lua
+          立即使用
         </Button>
       ) : (
         <CopyButton data={data} size="small" ghost />
       )}
-
-
     </>
   );
 };

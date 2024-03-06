@@ -98,6 +98,9 @@
     },
     {
       "name": "数据模型"
+    },
+    {
+      "name": "流媒体管理"
     }
   ],
   "paths": {
@@ -15012,6 +15015,178 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-152830607-run",
+        "security": []
+      }
+    },
+    "/api/v1/jpeg_stream/list": {
+      "get": {
+        "summary": "获取当前所有的流",
+        "x-apifox-folder": "流媒体管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "流媒体管理"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "type": "JPEG_STREAM",
+                          "liveId": "a97607e47c81d43dba8ef6fa48a2cd45",
+                          "pulled": false,
+                          "resolution": {
+                            "width": 640,
+                            "height": 480
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-152923210-run",
+        "security": []
+      }
+    },
+    "/api/v1/jpeg_stream/detail": {
+      "get": {
+        "summary": "获取详情",
+        "x-apifox-folder": "流媒体管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "流媒体管理"
+        ],
+        "parameters": [
+          {
+            "name": "liveId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "a97607e47c81d43dba8ef6fa48a2cd45",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "liveId": {
+                          "type": "string"
+                        },
+                        "pulled": {
+                          "type": "boolean"
+                        },
+                        "resolution": {
+                          "type": "object",
+                          "properties": {
+                            "width": {
+                              "type": "integer"
+                            },
+                            "height": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "width",
+                            "height"
+                          ],
+                          "x-apifox-ignore-properties": [],
+                          "x-apifox-orders": [
+                            "width",
+                            "height"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "liveId",
+                        "pulled",
+                        "resolution"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "type",
+                        "liveId",
+                        "pulled",
+                        "resolution"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "type": "JPEG_STREAM",
+                        "liveId": "a97607e47c81d43dba8ef6fa48a2cd45",
+                        "pulled": false,
+                        "resolution": {
+                          "width": 640,
+                          "height": 480
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-152928280-run",
         "security": []
       }
     }

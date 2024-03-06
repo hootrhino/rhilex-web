@@ -1,4 +1,4 @@
-export {};
+export { };
 
 declare global {
   declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
@@ -14,8 +14,7 @@ declare global {
     value?: any;
   };
 
-  // 代码模板
-  type TplItem = {
+  type baseTplItem = {
     label?: string;
     apply?: string;
     type?: string;
@@ -23,6 +22,11 @@ declare global {
     gid?: string;
     uuid?: string;
     variables?: TplVariables[];
+  };
+
+  // 代码模板
+  type TplItem = baseTplItem & {
+    quickTpl?: baseTplItem[];
   };
 
   type TplGroupItem = {

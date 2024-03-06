@@ -20,7 +20,7 @@ const CodeEditor = ({ mode = 'shell', theme = 'dark', ...props }: CodeEditorProp
     <CodeMirror
       extensions={[modes[mode]()]}
       theme={theme === 'dark' ? darcula : bbedit}
-      className={props?.readOnly ? 'cursor-not-allowed' : ''}
+      // className={props?.readOnly ? 'cursor-not-allowed' : ''}
       {...props}
     />
   );
