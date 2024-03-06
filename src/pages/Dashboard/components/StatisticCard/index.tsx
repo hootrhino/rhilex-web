@@ -1,7 +1,8 @@
 import { cn } from '@/utils/utils';
+import { ReloadOutlined } from '@ant-design/icons';
 import { ProCard } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
-import { Space, Statistic } from 'antd';
+import { Button, Space, Statistic } from 'antd';
 import sum from 'lodash/sum';
 
 const StatisticCard = () => {
@@ -39,6 +40,18 @@ const StatisticCard = () => {
 
   return (
     <ProCard bodyStyle={{ padding: 0 }} className="dashboard-card">
+      <Button
+        size="small"
+        type="primary"
+        ghost
+        className="absolute top-[8px] left-[8px]"
+        icon={<ReloadOutlined />}
+        onClick={() => {
+          // TODO
+        }}
+      >
+        重置统计数据
+      </Button>
       <ProCard layout="center" direction="column" type="inner" colSpan="25%">
         <div className="text-[#585858]">输入/输出总数</div>
         <Statistic value={sum(total)} />
