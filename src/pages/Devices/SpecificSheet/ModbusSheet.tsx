@@ -8,7 +8,13 @@ import {
   postModbusDataSheetUpdate,
 } from '@/services/rulex/Modbusdianweiguanli';
 import { IconFont } from '@/utils/utils';
-import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  DownloadOutlined,
+  LoadingOutlined,
+  ReloadOutlined,
+  UploadOutlined,
+} from '@ant-design/icons';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import {
   EditableProTable,
@@ -87,6 +93,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableRows, setEditableRows] = useState<Partial<ModbusSheetItem>[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
+  const [polling, setPolling] = useState<number>(3000);
 
   const disabled = selectedRowKeys?.length === 0;
 
@@ -450,6 +457,21 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
   ];
 
   const toolBar = [
+    <Button
+      key="polling"
+      type="primary"
+      ghost={!polling}
+      onClick={() => {
+        if (polling) {
+          setPolling(0);
+          return;
+        }
+        setPolling(2000);
+      }}
+      icon={polling ? <LoadingOutlined /> : <ReloadOutlined />}
+    >
+      {polling ? '停止刷新' : '开始刷新'}
+    </Button>,
     <Upload
       key="upload"
       accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
@@ -513,6 +535,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       actionRef={actionRef}
       editableFormRef={editorFormRef}
       columns={columns}
+      polling={polling}
       rootClassName="sheet-table"
       recordCreatorProps={
         readOnly

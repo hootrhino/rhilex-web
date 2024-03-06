@@ -7,7 +7,13 @@ import {
   postS1200DataSheetUpdate,
 } from '@/services/rulex/ximenzidianweiguanli';
 import { IconFont } from '@/utils/utils';
-import { DeleteOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  DownloadOutlined,
+  LoadingOutlined,
+  ReloadOutlined,
+  UploadOutlined,
+} from '@ant-design/icons';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { EditableProTable, ProFormCascader, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
@@ -69,6 +75,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [editableRows, setEditableRows] = useState<Partial<PlcSheetItem>[]>([]);
+  const [polling, setPolling] = useState<number>(3000);
 
   const disabled = selectedRowKeys?.length === 0;
 
@@ -328,6 +335,21 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
   ];
 
   const toolBar = [
+    <Button
+      key="polling"
+      type="primary"
+      ghost={!polling}
+      onClick={() => {
+        if (polling) {
+          setPolling(0);
+          return;
+        }
+        setPolling(2000);
+      }}
+      icon={polling ? <LoadingOutlined /> : <ReloadOutlined />}
+    >
+      {polling ? '停止刷新' : '开始刷新'}
+    </Button>,
     <Upload
       key="upload"
       accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
@@ -391,6 +413,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       actionRef={actionRef}
       editableFormRef={editorFormRef}
       columns={columns}
+      polling={polling}
       rootClassName="sheet-table"
       recordCreatorProps={
         readOnly
