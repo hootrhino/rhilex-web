@@ -83,6 +83,7 @@ const UpdateForm = () => {
       history.push(DefaultListUrl);
       return true;
     } catch (error) {
+      setLoading(false);
       return false;
     }
   };
