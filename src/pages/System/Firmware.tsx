@@ -1,13 +1,16 @@
 import CodeEditor from '@/components/CodeEditor';
 import { message } from '@/components/PopupHack';
+import ProConfirmModal from '@/components/ProConfirmModal';
 import {
   getFirmwareUpgradeLog,
   getFirmwareVendorKey,
   postFirmwareReboot,
   postFirmwareRecoverNew,
+  postFirmwareRestartRulex,
   postFirmwareUpgrade,
   postFirmwareUpload,
 } from '@/services/rulex/gujiancaozuo';
+import { IconFont } from '@/utils/utils';
 import { CloudUploadOutlined, PoweroffOutlined, SyncOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -22,7 +25,6 @@ import type { UploadFile } from 'antd/es/upload/interface';
 import endsWith from 'lodash/endsWith';
 import { useRef, useState } from 'react';
 import Title from './components/Title';
-import ProConfirmModal from '@/components/ProConfirmModal';
 
 type ConfirmCofig = {
   title: string;
@@ -138,6 +140,27 @@ const FirmwareConfig = () => {
                     icon={<PoweroffOutlined />}
                   >
                     重启设备
+                  </Button>
+                  <Button
+                    key="restartRulex"
+                    type="primary"
+                    className="flex items-center"
+                    danger
+                    onClick={() => {
+                      setOpen(true);
+                      setConfirmConfig({
+                        ...defaultRebootConfig,
+                        handleOnOk: async () => {
+                          const { data } = await postFirmwareRestartRulex();
+                          setMsg(data);
+                          cancel();
+                        },
+                        handleOnEnd,
+                      });
+                    }}
+                    icon={<IconFont type="icon-restart-rulex" className="text-[16px]" />}
+                  >
+                    重启固件
                   </Button>
                   <Button
                     key="recover"
