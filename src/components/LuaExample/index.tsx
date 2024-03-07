@@ -118,7 +118,7 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
     <Drawer
       destroyOnClose
       maskClosable={false}
-      title="常用 Lua 示例"
+      title="常用规则示例"
       placement="right"
       size="large"
       extra={

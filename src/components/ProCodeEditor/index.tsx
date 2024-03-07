@@ -56,7 +56,7 @@ const ProCodeEditor = forwardRef(
                     setOpen(true);
                   }}
                 >
-                  Lua 示例
+                  规则示例
                 </Button>
               )}
 

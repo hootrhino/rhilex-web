@@ -29,7 +29,7 @@ const CopyButton = ({ data: { label, apply }, ...props }: CopyButtonProps) => {
         icon={copied === apply ? <CheckOutlined /> : <CopyOutlined />}
         {...props}
       >
-        复制 Lua
+        复制规则
       </Button>
     </CopyToClipboard>
   );
