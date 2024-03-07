@@ -4464,13 +4464,6 @@
     "@replit/codemirror-lang-svelte" "^6.0.0"
     codemirror-lang-mermaid "^0.5.0"
 
-"@uiw/codemirror-theme-bbedit@^4.21.20":
-  version "4.21.20"
-  resolved "https://registry.npmmirror.com/@uiw/codemirror-theme-bbedit/-/codemirror-theme-bbedit-4.21.20.tgz#b658c7e8420cfc1c55b4716715ff2140ff2e3f52"
-  integrity sha512-XRi7YK00bmojfqgKJesVvUxjTGvWP1fwpFyYsmVJImrXHAXvPKAEStR4fIwjQxo4rUWyPl996uzqkcTvIegPlQ==
-  dependencies:
-    "@uiw/codemirror-themes" "4.21.20"
-
 "@uiw/codemirror-theme-darcula@^4.21.20":
   version "4.21.20"
   resolved "https://registry.npmmirror.com/@uiw/codemirror-theme-darcula/-/codemirror-theme-darcula-4.21.20.tgz#d4b558906cc5c109ad93b448ff0e68e731504614"
@@ -4478,10 +4471,26 @@
   dependencies:
     "@uiw/codemirror-themes" "4.21.20"
 
+"@uiw/codemirror-theme-github@^4.21.24":
+  version "4.21.24"
+  resolved "https://registry.npmmirror.com/@uiw/codemirror-theme-github/-/codemirror-theme-github-4.21.24.tgz#c4da58417cdb5e9c84a8090041e6080219f52a1c"
+  integrity sha512-BggG0qiLpg5j9ijY4DJDnANefLADKh8FseH28J1ljvwtnvlR1GGnO+RZzOl11gLpDqb2DUM5xIaxmbLcKWljUg==
+  dependencies:
+    "@uiw/codemirror-themes" "4.21.24"
+
 "@uiw/codemirror-themes@4.21.20":
   version "4.21.20"
   resolved "https://registry.npmmirror.com/@uiw/codemirror-themes/-/codemirror-themes-4.21.20.tgz#d7770af97a9240fb49b50e2f10e31080eac73972"
   integrity sha512-/Ncc88v5RroeDAOfhao5lmkobmH4aJZqlSAJJTxXE7AzM85BjuCnnUYXVT7VFeEslFtfTiIgriyLmJQoGOi2mA==
+  dependencies:
+    "@codemirror/language" "^6.0.0"
+    "@codemirror/state" "^6.0.0"
+    "@codemirror/view" "^6.0.0"
+
+"@uiw/codemirror-themes@4.21.24":
+  version "4.21.24"
+  resolved "https://registry.npmmirror.com/@uiw/codemirror-themes/-/codemirror-themes-4.21.24.tgz#69b83d1d77f8ad40a2a8689e8bf54e4b445b88f3"
+  integrity sha512-InY24KWP8YArDBACWHKFZ6ZU+WCvRHf3ZB2cCVxMVN35P1ANUmRzpAP2ernZQ5OIriL1/A/kXgD0Zg3Y65PNgg==
   dependencies:
     "@codemirror/language" "^6.0.0"
     "@codemirror/state" "^6.0.0"

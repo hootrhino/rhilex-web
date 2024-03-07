@@ -1,10 +1,24 @@
 import RuleForm from '@/pages/RuleConfig/Update';
-import { useParams } from '@umijs/max';
+import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
+import { useParams, useRequest } from '@umijs/max';
+import { useEffect } from 'react';
 
 const RuleConfigUpdate = () => {
   const { deviceId } = useParams();
+  const { data: detail, run: getDetail } = useRequest(
+    (params: API.getDevicesDetailParams) => getDevicesDetail(params),
+    {
+      manual: true,
+    },
+  );
 
-  return <RuleForm type="device" typeId={deviceId || ''} />;
+  useEffect(() => {
+    if (deviceId) {
+      getDetail({ uuid: deviceId });
+    }
+  }, [deviceId]);
+
+  return <RuleForm type="device" typeId={deviceId || ''} deviceType={detail?.type} />;
 };
 
 export default RuleConfigUpdate;
