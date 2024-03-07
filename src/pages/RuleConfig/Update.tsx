@@ -8,12 +8,16 @@ import ProCodeEditor from '@/components/ProCodeEditor';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
 import useGoBack from '@/hooks/useGoBack';
 import { getRulesDetail, postRulesCreate, putRulesUpdate } from '@/services/rulex/guizeguanli';
+import { NotificationOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { PageContainer, ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
+import { Alert } from 'antd';
 import { useRequest } from 'umi';
 import { RuleType } from '.';
-import { typeEnum } from '../Devices/enum';
+import { typeEnum as deviceTypeEnum } from '../Devices/enum';
+import { typeEnum as inendsTypeEnum } from '../Inends/enum';
 import { device_ais_ds, device_ds } from './deviceDS';
+import { inends_ds, inends_event_ds, links } from './inendsDS';
 
 type FormParams = {
   name: string;
@@ -27,6 +31,7 @@ type UpdateFormProps = {
   type: RuleType;
   typeId: string;
   deviceType?: string;
+  inendsType?: string;
 };
 
 const initialValue = {
@@ -36,13 +41,14 @@ const initialValue = {
   name: '',
 };
 
-const UpdateForm = ({ type, typeId, deviceType = '' }: UpdateFormProps) => {
+const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) => {
   const formRef = useRef<ProFormInstance>();
   const { ruleId, groupId } = useParams();
   const { showModal } = useGoBack();
   const [loading, setLoading] = useState<boolean>(false);
   const DefaultListUrl = groupId ? `/${type}/${groupId}/${typeId}/rule` : `/${type}/${typeId}/rule`;
-  const hasDS = deviceType && Object.keys(typeEnum).includes(deviceType);
+  const hasDeviceDS = deviceType && Object.keys(deviceTypeEnum).includes(deviceType);
+  const hasInendsDS = inendsType && Object.keys(inendsTypeEnum).includes(inendsType);
 
   // 获取详情
   const { data: detail } = useRequest(() => getRulesDetail({ uuid: ruleId || '' }), {
@@ -80,14 +86,91 @@ const UpdateForm = ({ type, typeId, deviceType = '' }: UpdateFormProps) => {
   const getDeviceDS = () => {
     if (deviceType === 'GENERIC_AIS_RECEIVER') {
       return device_ais_ds.map(({ key, title, json }) => (
-        <div key={key} className='mb-[20px]'>
-          <div className='mb-[5px]'>{title}</div>
-          <CodeEditor mode="json" readOnly value={json} theme="light" />
+        <div key={key} className="mb-[20px]">
+          <div className="mb-[5px]">{title}</div>
+          <CodeEditor mode="json" readOnly value={json} theme="light" className='json-editor-wrapper'/>
         </div>
       ));
     } else {
-      return <CodeEditor mode="json" readOnly value={device_ds[deviceType]} theme="light" />;
+      return (
+        <CodeEditor
+          mode="json"
+          readOnly
+          value={deviceType ? device_ds[deviceType] : ''}
+          theme="light"
+          className='json-editor-wrapper'
+        />
+      );
     }
+  };
+
+  // 获取南向资源数据结构
+  const getInendsDS = () => {
+    if (!inendsType) return;
+    if (['COAP', 'HTTP', 'RULEX_UDP', 'GRPC', 'NATS_SERVER'].includes(inendsType)) {
+      return (
+        <CodeEditor
+          mode="json"
+          readOnly
+          value={inendsType ? inends_ds[inendsType] : ''}
+          theme="light"
+          className='json-editor-wrapper'
+        />
+      );
+    } else if (['GENERIC_IOT_HUB', 'GENERIC_MQTT'].includes(inendsType)) {
+      let message: React.ReactNode =
+        'Mqtt 消息来自 Publish 方，而此处规则只做原始数据转发，不对数据做任何更改，因此回调函数的参数就是原始的 Mqtt Message，其具体格式需要开发者自行决定。';
+      if (inendsType === 'GENERIC_IOT_HUB') {
+        message = (
+          <>
+            <div>
+              不同的 IoTHub
+              有不同的数据格式，而此处规则只做原始数据转发，不对数据做任何更改，因此回调函数的参数就是原始的
+              IoTHub 协议 JSON，其具体格式可以参考对应的云服务商文档。
+            </div>
+            <ul className="list-disc">
+              {links.map((l) => (
+                <li key={l.key}>
+                  <span>{l.label}</span>
+                  <a href={l.link} target="_blank">
+                    {l.link}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        );
+      }
+
+      return (
+        <Alert
+          icon={<NotificationOutlined className="pt-[5px]" />}
+          showIcon
+          message={message}
+          type="warning"
+          className="flex items-start"
+        />
+      );
+    } else {
+      // 内部事件源
+      return inends_event_ds.map(({ key, title, json }) => (
+        <div key={key} className="mb-[20px]">
+          <div className="mb-[5px]">{title}</div>
+          <CodeEditor mode="json" readOnly value={json} theme="light" className='json-editor-wrapper' />
+        </div>
+      ));
+    }
+  };
+
+  // 获取数据结构 title
+  const getDSTitle = () => {
+    if (type === 'device') {
+      return `${hasDeviceDS ? deviceTypeEnum[deviceType] : '设备'} - 输出数据的结构及其示例`;
+    }
+    if (type === 'inends') {
+      return `${hasInendsDS ? inendsTypeEnum[inendsType] : '资源'} - 输出数据的结构及其示例`;
+    }
+    return null;
   };
 
   useEffect(() => {
@@ -133,12 +216,11 @@ const UpdateForm = ({ type, typeId, deviceType = '' }: UpdateFormProps) => {
               <ProFormText label="备注" name="description" width="lg" placeholder="请输入备注" />
             </ProForm.Group>
             <ProCodeEditor label="规则回调" name="actions" ref={formRef} required />
-            {/* <ProCodeEditor label="成功回调" name="success" ref={formRef} required defaultCollapsed />
-          <ProCodeEditor label="失败回调" name="failed" ref={formRef} required defaultCollapsed /> */}
           </ProForm>
         </ProCard>
-        <ProCard title={hasDS ? `${typeEnum[deviceType]}数据结构` : `${type === 'device' ? '设备' : '资源'}数据结构`}>
-          {hasDS && getDeviceDS()}
+        <ProCard title={getDSTitle()}>
+          {hasDeviceDS && getDeviceDS()}
+          {hasInendsDS && getInendsDS()}
         </ProCard>
       </ProCard>
     </PageContainer>

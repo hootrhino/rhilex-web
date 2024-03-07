@@ -81,12 +81,12 @@ export const device_ds = {
 
 export const device_ais_ds = [
   {
-    title: 'RMC 数据结构',
+    title: 'VDRMC 报文格式',
     json: device_ais_rmc_ds,
     key: 'rmc',
   },
   {
-    title: 'VDM 数据结构',
+    title: 'VDM/O 报文格式',
     json: device_ais_vdm_ds,
     key: 'vdm',
   },
