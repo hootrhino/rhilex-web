@@ -43,6 +43,10 @@ const device_camera_ds = `{
 }`;
 
 // GENERIC_AIS_RECEIVER - 通用船载 AIS 数据解析网关
+// 原始数据
+const device_ais_origin_ds = `{
+  "ais_data":"!AIVDM..............."
+}`;
 // RMC
 const device_ais_rmc_ds = `{
   "type": "RMC",                     // 消息类型
@@ -80,6 +84,11 @@ export const device_ds = {
 };
 
 export const device_ais_ds = [
+  {
+    title: '原始 AIS 数据',
+    json: device_ais_origin_ds,
+    key: 'origin'
+  },
   {
     title: 'VDRMC 报文格式',
     json: device_ais_rmc_ds,
