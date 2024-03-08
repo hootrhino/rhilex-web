@@ -229,32 +229,6 @@
     hideInMenu: true,
   },
   {
-    path: '/custom-tpl',
-    name: '自定义模板',
-    hideInMenu: true,
-    routes: [
-      {
-        path: '/custom-tpl',
-        redirect: '/custom-tpl/list',
-      },
-      {
-        path: '/custom-tpl/list',
-        name: '自定义模板列表',
-        component: './CustomTpl',
-      },
-      {
-        path: '/custom-tpl/:groupId/new',
-        name: '新增自定义模板',
-        component: './CustomTpl/Update',
-      },
-      {
-        path: '/custom-tpl/:groupId/edit/:tplId',
-        name: '编辑自定义模板',
-        component: './CustomTpl/Update',
-      },
-    ],
-  },
-  {
     path: '/',
     redirect: '/dashboard',
   },

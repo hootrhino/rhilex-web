@@ -449,7 +449,7 @@ export const luaGlobFuncs = [
   ...otherFuncs,
 ];
 
-export const luaTemplates = [
+export const builtInLuaTplData = [
   {
     name: 'data 函数',
     children: dataFuncs,

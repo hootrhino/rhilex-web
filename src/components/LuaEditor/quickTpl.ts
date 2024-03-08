@@ -107,7 +107,7 @@ const luaQuickTpl1Code1 = `Actions = {
 // 自定义快捷模板
 export const luaQuickTpls = [
   {
-    name: '自定义快捷模板',
+    name: '默认分组',
     children: [
       {
         label: '温湿度传感器数据推送到 MQTT Server',
@@ -116,6 +116,6 @@ export const luaQuickTpls = [
         variables: [{ label: `mqtt 资源`, name: 'uuid', value: '', type: 'string' }],
       },
     ],
-    uuid: 'luaQuickTpl1',
+    uuid: 'default_luaQuickTpl',
   },
 ];
