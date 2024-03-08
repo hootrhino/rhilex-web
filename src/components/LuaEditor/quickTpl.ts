@@ -95,7 +95,7 @@ const luaQuickTpl1Code1 = `Actions = {
               method = "thing.event.property.post",
               params = params
           })
-          local err = data:ToMqtt('$UUID', json)
+          local err = data:ToMqtt(uuid, json)
           if err ~= nil then
               Throw(err)
           end
@@ -113,7 +113,9 @@ export const luaQuickTpls = [
         label: '温湿度传感器数据推送到 MQTT Server',
         apply: luaQuickTpl1Code1,
         type: 'function',
-        variables: [{ label: `mqtt 资源`, name: 'uuid', value: '', type: 'string' }],
+        variables: [
+          { label: 'MQTT 资源', name: 'uuid', type: 'select', dataSource: 'outends' },
+        ],
       },
     ],
     uuid: 'default_luaQuickTpl',

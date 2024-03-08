@@ -89,7 +89,7 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
         min={1}
         creatorButtonProps={false}
         creatorRecord={initialVariable}
-        actionRender={(props, action, defaultActionDom) => {
+        actionRender={(_, action, defaultActionDom) => {
           return [
             <Tooltip key="add" title="新建变量">
               <PlusCircleOutlined onClick={() => action.add()} className="ml-[10px]" />

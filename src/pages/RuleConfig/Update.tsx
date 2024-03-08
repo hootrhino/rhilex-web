@@ -88,7 +88,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
       return device_ais_ds.map(({ key, title, json }) => (
         <div key={key} className="mb-[20px]">
           <div className="mb-[5px]">{title}</div>
-          <CodeEditor mode="json" readOnly value={json} theme="light" className='json-editor-wrapper'/>
+          <CodeEditor mode="json" readOnly value={json} theme="light" />
         </div>
       ));
     } else {
@@ -98,7 +98,6 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
           readOnly
           value={deviceType ? device_ds[deviceType] : ''}
           theme="light"
-          className='json-editor-wrapper'
         />
       );
     }
@@ -114,7 +113,6 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
           readOnly
           value={inendsType ? inends_ds[inendsType] : ''}
           theme="light"
-          className='json-editor-wrapper'
         />
       );
     } else if (['GENERIC_IOT_HUB', 'GENERIC_MQTT'].includes(inendsType)) {
@@ -156,7 +154,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
       return inends_event_ds.map(({ key, title, json }) => (
         <div key={key} className="mb-[20px]">
           <div className="mb-[5px]">{title}</div>
-          <CodeEditor mode="json" readOnly value={json} theme="light" className='json-editor-wrapper' />
+          <CodeEditor mode="json" readOnly value={json} theme="light" />
         </div>
       ));
     }

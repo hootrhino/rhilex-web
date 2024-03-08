@@ -14900,21 +14900,34 @@
                             ]
                           }
                         },
-                        "outEnds": {
+                        "outends": {
                           "type": "array",
                           "items": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "name"
+                            ]
                           }
                         }
                       },
                       "required": [
                         "devices",
-                        "outEnds"
+                        "outends"
                       ],
                       "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "devices",
-                        "outEnds"
+                        "outends"
                       ]
                     }
                   },
@@ -14939,11 +14952,16 @@
                       "data": {
                         "devices": [
                           {
-                            "uuid": "DEVICEON55TFKJ",
-                            "name": "本地摄像头推到本地JpegStreamServer"
+                            "uuid": "DEVICEWKHPPMSZ",
+                            "name": "22222"
                           }
                         ],
-                        "outEnds": []
+                        "outends": [
+                          {
+                            "uuid": "OUTZYNUTXRW",
+                            "name": "http1"
+                          }
+                        ]
                       }
                     }
                   }
@@ -15316,5 +15334,10 @@
     },
     "securitySchemes": {}
   },
-  "servers": []
+  "servers": [
+    {
+      "url": "http://127.0.0.1:2580",
+      "description": "本机环境"
+    }
+  ]
 }

@@ -60,7 +60,10 @@ export async function getRulesGetCanUsedResources(options?: { [key: string]: any
   return request<{
     code: number;
     msg: string;
-    data: { devices?: { uuid?: string; name?: string }[]; outEnds?: string[] };
+    data: {
+      devices?: { uuid?: string; name?: string }[];
+      outends?: { uuid?: string; name?: string }[];
+    };
   }>('/api/v1/rules/getCanUsedResources', {
     method: 'GET',
     ...(options || {}),

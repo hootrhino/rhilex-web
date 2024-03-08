@@ -146,7 +146,7 @@ const dataToList = [
 ];
 
 export const dataFuncs = dataToList?.map((data) => {
-  const code = `local err = data:To${data.target}(arg1, arg2)
+  const code = `local err = data:To${data.target}(arg1, args)
 if err ~= nil then
   stdlib:Throw(err)
   return true, args
@@ -158,8 +158,7 @@ end`;
     detail: data.detail,
     quickTpl: dataQuickTpl[data.target],
     variables: [
-      { label: `${data.target.toUpperCase()}资源`, name: 'arg1', value: '', type: 'string' },
-      { label: '数据', name: 'arg2', value: '', type: 'string' },
+      { label: `${data.target.toUpperCase()}资源`, name: 'arg1', type: 'select', dataSource: 'outends' },
     ],
   };
 });
@@ -356,9 +355,9 @@ end`;
     type: 'function',
     detail: device.detail,
     variables: [
-      { label: '设备资源', name: 'arg1', value: '', type: 'string' },
+      { label: '设备资源', name: 'arg1', value: '', type: 'select', dataSource: 'devices' },
       { label: '设备指令', name: 'arg2', value: '', type: 'string' },
-      { label: '设备参数', name: 'arg2', value: '', type: 'string' },
+      { label: '设备参数', name: 'arg3', value: '', type: 'string' },
     ],
   };
 });
@@ -402,7 +401,7 @@ export const modbusFuncs = modbusList?.map((modbus) => {
   let err1 = '';
   let variables = [
     { label: 'Modbus 设备资源', name: 'arg1', value: '', type: 'string' },
-    { label: 'Modbus ID', name: 'arg2', value: '', type: 'number' },
+    { label: 'Modbus ID', name: 'arg2', value: 1, type: 'number' },
   ] as TplVariables[];
 
   if (['F15', 'F16'].includes(modbus?.target)) {

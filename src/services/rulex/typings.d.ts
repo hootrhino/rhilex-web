@@ -152,6 +152,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type getJpegStreamDetailParams = {
+    liveId: string;
+  };
+
   type getModbusDataSheetListParams = {
     device_uuid?: string;
     current?: number;

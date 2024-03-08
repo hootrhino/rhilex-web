@@ -12,6 +12,7 @@ declare global {
     type?: string;
     label?: string;
     value?: any;
+    dataSource?: 'devices' | 'outends'
   };
 
   type baseTplItem = {

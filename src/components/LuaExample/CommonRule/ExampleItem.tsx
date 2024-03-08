@@ -1,3 +1,4 @@
+import { getRulesGetCanUsedResources } from '@/services/rulex/guizeguanli';
 import { CaretRightOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -8,6 +9,7 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
+import { useRequest } from '@umijs/max';
 import type { CollapseProps } from 'antd';
 import { Button, Collapse, Divider, theme } from 'antd';
 import { useEffect, useRef, useState } from 'react';
@@ -43,6 +45,8 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
     border: 'none',
   };
 
+  const { data: resourceData } = useRequest(() => getRulesGetCanUsedResources());
+
   const getItemsChildren = (data: TplItem[]) => {
     return data?.map((item) => ({
       key: item.label,
@@ -68,20 +72,85 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
 
   const getTargetValue = (type: string, value: any) => {
     if (type === 'string') {
-      return `'${value}'`;
+      return `"${value}"`;
+    }
+    if (type === 'select') {
+      return value ? `"${value}"` : `""`;
     }
 
     return value;
   };
 
+  const renderFormList = (key: number) => {
+    const { name, label, type, dataSource } = formRef.current?.getFieldValue('variables')[key];
+
+    let commonConfig = {
+      key: key,
+      label: `${label} (${name})`,
+      name: 'value',
+      width: 'md',
+      placeholder: '请输入变量值',
+      labelCol: { flex: '130px' },
+    } as any;
+
+    const optionData = () => {
+      if (type === 'boolean') {
+        return [
+          { label: 'true', value: true },
+          { label: 'false', value: false },
+        ];
+      } else {
+        return resourceData
+          ? resourceData[dataSource]?.map((item) => ({
+              label: (
+                <>
+                  <span>{item?.name}</span>
+                  <Divider type="vertical" />
+                  <span className="text-[12px] text-[#000000A6]">{item?.uuid}</span>
+                </>
+              ),
+              value: item.uuid,
+            }))
+          : [];
+      }
+    };
+
+    if (['boolean', 'select'].includes(type)) {
+      commonConfig = {
+        ...commonConfig,
+        options: optionData(),
+        placeholder: '请选择变量值',
+        allowClear: false,
+      };
+    }
+
+    const typeMap = {
+      number: ProFormDigit,
+      boolean: ProFormSelect,
+      string: ProFormText,
+      select: ProFormSelect,
+    };
+
+    const ComponentType = typeMap[type];
+
+    return <ComponentType {...commonConfig} />;
+  };
+
   useEffect(() => {
     if (valModalConfig.data.variables) {
-      let newCode = valModalConfig.data?.apply;
+      const originCode = valModalConfig.data?.apply
+      let newCode = originCode;
       const newVal = valModalConfig.data?.variables;
       newVal?.forEach((item) => {
         const source = item.name || '';
-        const target = getTargetValue(item.type || 'string', item.value);
-        newCode = newCode?.replace(source, target);
+        const target = getTargetValue(item.type || 'string', item?.value);
+
+        if (type === 'select') {
+          newCode = item?.value ? newCode?.replace(source, target) : originCode;
+        } else {
+          newCode = newCode?.replace(source, target)
+        }
+
       });
 
       formRef.current?.setFieldsValue({
@@ -144,39 +213,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
           alwaysShowItemLabel={true}
           className="mb-[0]"
         >
-          {({ key }) => {
-            const { name, label, type } = formRef.current?.getFieldValue('variables')[key];
-
-            let commonConfig = {
-              key: key,
-              label: `${label} (${name})`,
-              name: 'value',
-              width: 'md',
-              placeholder: '请输入变量值',
-              labelCol: { flex: '130px' },
-            } as any;
-
-            commonConfig =
-              type === 'boolean'
-                ? {
-                    ...commonConfig,
-                    valueEnum: {
-                      true: 'true',
-                      false: 'false',
-                    },
-                    placeholder: '请选择变量值',
-                  }
-                : commonConfig;
-            const typeMap = {
-              number: ProFormDigit,
-              boolean: ProFormSelect,
-              string: ProFormText,
-            };
-
-            const ComponentType = typeMap[type];
-
-            return <ComponentType {...commonConfig} />;
-          }}
+          {({ key }) => renderFormList(key)}
         </ProFormList>
         <ProForm.Item name="code">
           <CodeEditor readOnly mode="lua" />
