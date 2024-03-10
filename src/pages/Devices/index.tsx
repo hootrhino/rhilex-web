@@ -25,6 +25,7 @@ import { PageContainer, ProCard, ProTable } from '@ant-design/pro-components';
 import { history, useModel, useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/hooks/useItems';
+import CryptoJS from 'crypto-js';
 import { useRef, useState } from 'react';
 import { baseColumns } from './columns';
 import Detail from './Detail';
@@ -62,7 +63,7 @@ const Devices = () => {
 
   const [activeDevice, setActiveDevice] = useState<string>('');
   const [activeDeviceName, setActiveDeviceName] = useState<string>('');
-  const [liveUrl, setLiveUrl] = useState<string>('');
+  const [liveId, setLiveId] = useState<string>('');
 
   // 重置分组表单
   const handleOnReset = () => {
@@ -93,7 +94,9 @@ const Devices = () => {
   const handleOnUnbind = async (uuid: string) => {
     const { data } = await getDevicesDetail({ uuid });
     if (data) {
-      await putDevicesUpdate({ ...data, schemaId: '' } as any).then(() => message.success('解绑成功'));
+      await putDevicesUpdate({ ...data, schemaId: '' } as any).then(() =>
+        message.success('解绑成功'),
+      );
       actionRef.current?.reload();
     }
   };
@@ -108,7 +111,7 @@ const Devices = () => {
 
     if (type === 'GENERIC_CAMERA') {
       // TODO 暂时隐藏查看监控功能
-      // baseItems = [...baseItems, { key: 'video', label: '查看视频', icon: <PlayCircleOutlined /> }];
+      baseItems = [...baseItems, { key: 'video', label: '查看视频', icon: <PlayCircleOutlined /> }];
       baseItems = [...baseItems];
     } else {
       baseItems = [...baseItems, { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> }];
@@ -177,8 +180,9 @@ const Devices = () => {
                       setActiveDeviceName(name || '');
                       break;
                     case 'video':
+                      const hash = config?.inputAddr && CryptoJS.MD5(config?.inputAddr).toString();
                       setOpenVideo(true);
-                      setLiveUrl(config?.inputMode === 'RTSP' ? config?.rtspUrl : config?.device);
+                      setLiveId(hash);
                       break;
                     case 'unbind':
                       handleOnUnbind(uuid);
@@ -289,7 +293,7 @@ const Devices = () => {
           setActiveDevice('');
         }}
       />
-      <VideoDetail open={openVideo} onCancel={() => setOpenVideo(false)} liveUrl={liveUrl} />
+      <VideoDetail open={openVideo} onCancel={() => setOpenVideo(false)} liveId={liveId} />
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}

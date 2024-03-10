@@ -2,15 +2,17 @@ import HeadersTitle from '@/components/HttpHeaders/Title';
 import ProSegmented from '@/components/ProSegmented';
 import StateTag from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
-import { getHwifaceList } from '@/services/rulex/jiekouguanli';
+import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
 import { getSchemaList } from '@/services/rulex/shujumoxing';
 import { boolEnum, boolMap } from '@/utils/enum';
+import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { Space, Tag } from 'antd';
 import type { DeviceItem } from '.';
 import {
   inputModeEnum,
   modeEnum,
+  outputEncodeEnum,
   outputModeEnum,
   parseAisEnum,
   plcModelEnum,
@@ -217,26 +219,6 @@ export const modeColumns = {
     },
   ],
   '': [],
-};
-
-// inputMode 输入模式
-export const inputModeConfig = {
-  RTSP: [
-    {
-      title: '远程视频设备地址',
-      dataIndex: ['config', 'rtspUrl'],
-      required: true,
-      render: (_: any, { rtspUrl }: DeviceItem) => rtspUrl,
-    },
-  ],
-  LOCAL: [
-    {
-      title: '本地视频设备路径',
-      dataIndex: ['config', 'device'],
-      required: true,
-      render: (_: any, { device }: DeviceItem) => device,
-    },
-  ],
 };
 
 export const typeConfigColumns = {
@@ -468,12 +450,41 @@ export const typeConfigColumns = {
           valueType: 'select',
           valueEnum: inputModeEnum,
           required: true,
+          fieldProps: {
+            allowClear: false,
+          },
           render: (_: any, { inputMode }: DeviceItem) => inputModeEnum[inputMode],
         },
         {
           valueType: 'dependency',
           name: ['config'],
-          columns: ({ config }: DeviceItem) => inputModeConfig[config?.inputMode] || [],
+          columns: ({ config }: DeviceItem) => [
+            {
+              title: '视频采集源',
+              dataIndex: ['config', 'inputAddr'],
+              required: true,
+              request: async () => {
+                const { data } = await getOsGetVideos();
+
+                return data?.map((item) => ({
+                  label: (
+                    <Space>
+                      <span>{item?.name}</span>
+                      <span className="text-[12px] text-[#000000A6]">{item?.deviceId}</span>
+                    </Space>
+                  ),
+                  value: item.name,
+                }));
+              },
+              renderFormItem: () =>
+                config.inputMode === 'LOCAL_CAMERA' ? (
+                  <ProFormSelect options={[]} noStyle />
+                ) : (
+                  <ProFormText width="md" noStyle />
+                ),
+              render: (_: any, { inputAddr }: DeviceItem) => inputAddr,
+            },
+          ],
         },
         {
           title: '输出模式',
@@ -481,7 +492,37 @@ export const typeConfigColumns = {
           valueType: 'select',
           valueEnum: outputModeEnum,
           required: true,
+          fieldProps: {
+            allowClear: false,
+          },
           render: (_: any, { outputMode }: DeviceItem) => outputModeEnum[outputMode],
+        },
+        {
+          title: '输出编码',
+          dataIndex: ['config', 'outputEncode'],
+          valueType: 'select',
+          valueEnum: outputEncodeEnum,
+          required: true,
+          fieldProps: {
+            allowClear: false,
+          },
+          render: (_: any, { outputEncode }: DeviceItem) => outputEncodeEnum[outputEncode],
+        },
+        {
+          valueType: 'dependency',
+          name: ['config'],
+          columns: ({ config }: DeviceItem) => {
+            const mode = config?.outputMode;
+
+            return [
+              {
+                title: '输出地址',
+                dataIndex: ['config', 'outputAddr'],
+                hideInForm: mode !== 'REMOTE_STREAM_SERVER',
+                render: (_: any, { outputAddr }: DeviceItem) => outputAddr,
+              },
+            ];
+          },
         },
       ],
     },

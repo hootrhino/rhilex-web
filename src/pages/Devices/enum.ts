@@ -69,14 +69,21 @@ export const slotEnum = new Map([
 
 // 视频输入模式
 export const inputModeEnum = {
-  RTSP: 'RTSP 流',
-  LOCAL: '本地设备',
+  REMOTE_STREAM_RTSP: '远程RTSP流地址',
+  LOCAL_CAMERA: '本地相机设备',
 };
 
 // 视频输出模式
 export const outputModeEnum = {
-  JPEG_STREAM: 'JPEG 流',
-  H264_STREAM: 'H264 流',
+  LOCAL_H264_STREAM_SERVER: '本地 FLV 流服务器',
+  LOCAL_JPEG_STREAM_SERVER: '本地 JpegStream 服务器',
+  REMOTE_STREAM_SERVER: '远程流媒体服务器',
+};
+
+// 视频输出编码
+export const outputEncodeEnum = {
+  // H264_STREAM: 'H264 编码',
+  JPEG_STREAM: 'JPEG 编码',
 };
 
 // 是否解析 AIS 报文

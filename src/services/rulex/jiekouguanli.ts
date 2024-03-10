@@ -74,3 +74,15 @@ export async function postHwifaceUpdate(
     ...(options || {}),
   });
 }
+
+/** 获取摄像头 GET /api/v1/os/getVideos */
+export async function getOsGetVideos(options?: { [key: string]: any }) {
+  return request<{
+    code: number;
+    msg: string;
+    data: { node?: string; deviceId?: string; name?: string }[];
+  }>('/api/v1/os/getVideos', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}

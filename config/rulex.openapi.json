@@ -15207,6 +15207,91 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-152928280-run",
         "security": []
       }
+    },
+    "/api/v1/os/getVideos": {
+      "get": {
+        "summary": "获取摄像头",
+        "x-apifox-folder": "接口管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "接口管理"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "node": {
+                            "type": "string"
+                          },
+                          "deviceId": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "x-apifox-ignore-properties": [],
+                        "x-apifox-orders": [
+                          "node",
+                          "deviceId",
+                          "name"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "node": "DESKTOP-EMD3M3C",
+                          "deviceId": "USB\\VID_1908&amp;PID_2311&amp;MI_00\\6&amp;1666943&amp;0&amp;0000",
+                          "name": "USB2.0 PC CAMERA"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-153863195-run",
+        "security": []
+      }
     }
   },
   "components": {
@@ -15334,10 +15419,5 @@
     },
     "securitySchemes": {}
   },
-  "servers": [
-    {
-      "url": "http://127.0.0.1:2580",
-      "description": "本机环境"
-    }
-  ]
+  "servers": []
 }

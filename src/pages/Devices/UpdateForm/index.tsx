@@ -16,8 +16,8 @@ import {
 import { formatHeaders2Arr, formatHeaders2Obj, processColumns } from '@/utils/utils';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
 import { columns } from '../columns';
-import { inputModeEnum } from '../enum';
-import { defaultConfig, defaultModelConfig } from './initialValues';
+// import { inputModeEnum } from '../enum';
+import { defaultConfig, defaultModelConfig, defaultOutputConfig } from './initialValues';
 
 import './index.less';
 
@@ -47,7 +47,9 @@ const UpdateForm = ({}: ProFormProps) => {
       let params = { ...values };
       const type = params.type;
       const mode = params.config.commonConfig?.mode;
-      const inputMode = params.config?.inputMode;
+      const outputMode = params?.config?.outputMode;
+      const inputAddr = params?.config?.inputAddr;
+      // const inputMode = params.config?.inputMode;
 
       if (type !== 'GENERIC_CAMERA') {
         params = {
@@ -56,25 +58,35 @@ const UpdateForm = ({}: ProFormProps) => {
         };
       }
 
-      if (inputMode && Object.keys(inputModeEnum).includes(inputMode)) {
-        if (inputMode === 'RTSP') {
-          params = {
-            ...params,
-            config: {
-              ...params?.config,
-              device: '',
-            },
-          };
-        } else {
-          params = {
-            ...params,
-            config: {
-              ...params?.config,
-              rtspUrl: '',
-            },
-          };
-        }
+      if (outputMode !== 'REMOTE_STREAM_SERVER') {
+        params = {
+          ...params,
+          config: {
+            ...params.config,
+            outputAddr: `http://${window?.location?.hostname}:9400/jpeg_stream/push?liveId=MD5Hash(${inputAddr})`,
+          },
+        };
       }
+
+      // if (inputMode && Object.keys(inputModeEnum).includes(inputMode)) {
+      //   if (inputMode === 'RTSP') {
+      //     params = {
+      //       ...params,
+      //       config: {
+      //         ...params?.config,
+      //         device: '',
+      //       },
+      //     };
+      //   } else {
+      //     params = {
+      //       ...params,
+      //       config: {
+      //         ...params?.config,
+      //         rtspUrl: '',
+      //       },
+      //     };
+      //   }
+      // }
 
       if (mode === 'TCP') {
         const hostConfigParams = params?.config?.hostConfig;
@@ -157,6 +169,8 @@ const UpdateForm = ({}: ProFormProps) => {
   const handleOnValuesChange = (changedValue: any) => {
     const type = changedValue?.type;
     const model = changedValue?.config?.commonConfig?.model;
+    const outputMode = changedValue?.config?.outputMode;
+    const inputMode = changedValue?.config?.inputMode;
 
     if (type) {
       formRef.current?.setFieldsValue({
@@ -166,6 +180,23 @@ const UpdateForm = ({}: ProFormProps) => {
     if (model) {
       formRef.current?.setFieldsValue({
         config: defaultModelConfig[model],
+      });
+    }
+    if (outputMode === 'REMOTE_STREAM_SERVER') {
+      formRef.current?.setFieldsValue({
+        config: {
+          ...defaultOutputConfig[outputMode],
+        },
+      });
+    }
+    if (inputMode) {
+      formRef.current?.setFieldsValue({
+        config: {
+          inputAddr:
+            inputMode === 'REMOTE_STREAM_RTSP'
+              ? `http://${window.location.hostname}:345`
+              : undefined,
+        },
       });
     }
   };
