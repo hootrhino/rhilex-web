@@ -21,7 +21,7 @@ import {
   SettingOutlined,
 } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProCard, ProTable } from '@ant-design/pro-components';
+import { ProCard, ProTable } from '@ant-design/pro-components';
 import { history, useModel, useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/hooks/useItems';
@@ -31,6 +31,7 @@ import { baseColumns } from './columns';
 import Detail from './Detail';
 import SchemaDetail from './SchemaDetail';
 import VideoDetail from './VideoDetail';
+import PageContainer from '@/components/PageContainer';
 
 export type DeviceItem = {
   name: string;

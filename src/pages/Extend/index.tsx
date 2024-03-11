@@ -8,12 +8,13 @@ putGoodsStop
 import { IconFont } from '@/utils/utils';
 import { MinusCircleOutlined,PlusOutlined,SyncOutlined } from '@ant-design/icons';
 import type { ActionType,ProColumns } from '@ant-design/pro-components';
-import { PageContainer,ProTable } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button,Popconfirm,Tag } from 'antd';
 import { useRef,useState } from 'react';
 import Detail from './Detail';
 import UpdateForm from './Update';
+import PageContainer from '@/components/PageContainer';
 
 export type ExtendItem = {
   uuid?: string;

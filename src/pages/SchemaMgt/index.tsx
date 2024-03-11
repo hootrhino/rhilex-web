@@ -1,9 +1,10 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { PageContainer, ProCard } from '@ant-design/pro-components';
+import { ProCard } from '@ant-design/pro-components';
 import { Button } from 'antd';
 import { useState } from 'react';
 import PropertyList from './Property';
 import SchemaList from './Schema';
+import PageContainer from '@/components/PageContainer';
 
 type Rule = {
   defaultValue?: string;

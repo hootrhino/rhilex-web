@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useModel } from 'umi';
 
-import { PageContainer, ProCard, StatisticCard } from '@ant-design/pro-components';
+import { ProCard, StatisticCard } from '@ant-design/pro-components';
 import RcResizeObserver from 'rc-resize-observer';
 
 import LogTable from '@/components/LogTable';
@@ -13,6 +13,7 @@ import { Col, Descriptions, Row, Space } from 'antd';
 import HardWareInfoCard from './components/hardWareInfoCard';
 import SourceCountCard from './components/SourceCountCard';
 import ProStatisticCard from './components/StatisticCard';
+import PageContainer from '@/components/PageContainer';
 
 const { Divider } = StatisticCard;
 

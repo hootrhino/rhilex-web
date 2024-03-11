@@ -1,4 +1,4 @@
-import { PageContainer, ProCard } from '@ant-design/pro-components';
+import { ProCard } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { useEffect } from 'react';
 import FourGConfig from './4G';
@@ -12,6 +12,7 @@ import SiteConfig from './Site';
 import TimeConfig from './Time';
 import UserConfig from './User';
 import WIFIConfig from './Wifi';
+import PageContainer from '@/components/PageContainer';
 
 const System = () => {
   const { activeKey, setActiveKey } = useModel('useSetting');

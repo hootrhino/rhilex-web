@@ -7,13 +7,14 @@ import {
 } from '@/services/rulex/qingliangyingyong';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
 import { baseColumns } from './columns';
 import Detail from './Detail';
+import PageContainer from '@/components/PageContainer';
 
 export type AppStackItem = {
   uuid?: string;

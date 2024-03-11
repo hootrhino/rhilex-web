@@ -32,7 +32,7 @@ export const getBase64 = (file: RcFile): Promise<string> =>
   });
 
 export const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/c/font_4195235_bq77d5qgpxe.js', // 在 iconfont.cn 上生成
+  scriptUrl: '//at.alicdn.com/t/c/font_4195235_prigcy40cr.js', // 在 iconfont.cn 上生成
 });
 
 // 校验IPv4

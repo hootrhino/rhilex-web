@@ -1,3 +1,4 @@
+import CodeEditor from '@/components/CodeEditor';
 import { getRulesGetCanUsedResources } from '@/services/rulex/guizeguanli';
 import { CaretRightOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
@@ -13,7 +14,6 @@ import { useRequest } from '@umijs/max';
 import type { CollapseProps } from 'antd';
 import { Button, Collapse, Divider, theme } from 'antd';
 import { useEffect, useRef, useState } from 'react';
-import CodeEditor from '../../CodeEditor';
 import CopyButton from './CopyButton';
 import Extra from './Extra';
 import Label from './Label';
@@ -52,7 +52,26 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
       key: item.label,
       label: <Label data={item} />,
       style: panelStyle,
-      children: <CodeEditor readOnly value={item.apply} mode="lua" />,
+      // children: <CodeEditor readOnly value={item.apply} lang="lua" />,
+      children: (
+        <div>
+          <CodeEditor readOnly value={item.apply} lang="lua" />
+          {item?.quickTpl && item?.quickTpl?.length > 0 && (
+            <>
+              <div className="my-[10px] font-bold">快捷模板</div>
+              {item?.quickTpl?.map((q) => (
+                <div key={q.label}>
+                  <div className="flex justify-between w-full mb-[5px]">
+                    <span>{q.detail}</span>
+                    <Extra data={q} handleOnCopy={() => setValConfig({ open: true, data: q })} />
+                  </div>
+                  <CodeEditor readOnly value={q.apply} lang="lua" />
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      ),
       extra: <Extra data={item} handleOnCopy={() => setValConfig({ open: true, data: item })} />,
     }));
   };
@@ -138,7 +157,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
 
   useEffect(() => {
     if (valModalConfig.data.variables) {
-      const originCode = valModalConfig.data?.apply
+      const originCode = valModalConfig.data?.apply;
       let newCode = originCode;
       const newVal = valModalConfig.data?.variables;
       newVal?.forEach((item) => {
@@ -148,9 +167,8 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
         if (type === 'select') {
           newCode = item?.value ? newCode?.replace(source, target) : originCode;
         } else {
-          newCode = newCode?.replace(source, target)
+          newCode = newCode?.replace(source, target);
         }
-
       });
 
       formRef.current?.setFieldsValue({
@@ -216,7 +234,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
           {({ key }) => renderFormList(key)}
         </ProFormList>
         <ProForm.Item name="code">
-          <CodeEditor readOnly mode="lua" />
+          <CodeEditor readOnly lang="lua" />
         </ProForm.Item>
       </ModalForm>
     </>

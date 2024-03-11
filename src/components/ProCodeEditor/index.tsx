@@ -1,4 +1,4 @@
-import LuaEditor from '@/components/LuaEditor';
+import LuaEditor from '@/components/CodeEditor';
 import { CodeOutlined } from '@ant-design/icons';
 import type { ProFormItemProps } from '@ant-design/pro-components';
 import { ProCard, ProForm } from '@ant-design/pro-components';
@@ -82,7 +82,7 @@ const ProCodeEditor = forwardRef(
             label={false}
             rules={[{ required: true, message: `请输入${label}` }]}
           >
-            <LuaEditor key={name} />
+            <LuaEditor key={name} minHeight='400px' lang='lua' />
           </ProForm.Item>
         </ProCard>
         <LuaExample open={open} onClose={() => setOpen(false)} />

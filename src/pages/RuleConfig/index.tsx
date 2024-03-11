@@ -1,6 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 import { useState } from 'react';
 
@@ -9,6 +9,7 @@ import { deleteRulesDel } from '@/services/rulex/guizeguanli';
 import { history, useParams, useRequest } from '@umijs/max';
 import Debug from './Debug';
 import Detail from './Detail';
+import PageContainer from '@/components/PageContainer';
 
 export type RuleItem = {
   uuid: string;
@@ -135,7 +136,7 @@ const RuleConfig = ({ dataSource, pageTitle, type, typeId, refresh }: RuleConfig
   return (
     <>
       <PageContainer
-        onBack={() => history.push(`/${type}/list`)}
+        backUrl={`/${type}/list`}
         title={getTitle()}
       >
         <ProTable

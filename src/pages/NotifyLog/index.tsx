@@ -1,8 +1,9 @@
+import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import { getNotifyList, putNotifyClear, putNotifyRead } from '@/services/rulex/zhanneitongzhi';
 import { ClearOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
 import { Button, Tag } from 'antd';
 import { useRef } from 'react';

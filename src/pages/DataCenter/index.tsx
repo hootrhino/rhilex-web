@@ -1,6 +1,7 @@
+import PageContainer from '@/components/PageContainer';
 import { getDataCenterSchemaList } from '@/services/rulex/shujuzhongxin';
 import type { ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
 import { history } from '@umijs/max';
 
 type DataCenterItem = {

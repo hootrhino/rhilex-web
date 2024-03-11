@@ -1,4 +1,3 @@
-import CodeEditor from '@/components/CodeEditor';
 import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
 import {
@@ -25,6 +24,7 @@ import type { UploadFile } from 'antd/es/upload/interface';
 import endsWith from 'lodash/endsWith';
 import { useRef, useState } from 'react';
 import Title from './components/Title';
+import CodeEditor from '@/components/CodeEditor';
 
 type ConfirmCofig = {
   title: string;
@@ -227,7 +227,7 @@ const FirmwareConfig = () => {
           </ProForm>
         </ProCard>
         <ProCard title="固件升级日志" colSpan="50%">
-          <CodeEditor readOnly value={logData} className="w-full" theme="light" />
+          <CodeEditor readOnly value={logData} className="w-full" theme="light" lang='shell' />
         </ProCard>
       </ProCard>
       <ProConfirmModal open={open} onCancel={() => setOpen(false)} {...confirmConfig} />

@@ -1,17 +1,15 @@
+import PageContainer from '@/components/PageContainer';
+import { message } from '@/components/PopupHack';
+import ProFormSubmitter from '@/components/ProFormSubmitter';
+import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import {
   getOutendsDetail,
   postOutendsCreate,
   putOutendsUpdate,
 } from '@/services/rulex/shuchuziyuanguanli';
-
-import Title from '@/components/FormTitle';
-import { message } from '@/components/PopupHack';
-import ProFormSubmitter from '@/components/ProFormSubmitter';
-import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
-import useGoBack from '@/hooks/useGoBack';
 import { formatHeaders2Arr, formatHeaders2Obj, processColumns } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
-import { BetaSchemaForm, PageContainer, ProCard } from '@ant-design/pro-components';
+import { BetaSchemaForm, ProCard } from '@ant-design/pro-components';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import type { OutendsItem } from '..';
@@ -28,7 +26,6 @@ const DefaultListUrl = '/outends/list';
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { uuid } = useParams();
-  const { showModal } = useGoBack();
   const randomNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -122,10 +119,7 @@ const UpdateForm = () => {
   useBeforeUnloadConfirm();
 
   return (
-    <PageContainer
-      header={{ title: <Title title={uuid ? '编辑资源' : '新建资源'} /> }}
-      onBack={() => showModal({ url: DefaultListUrl })}
-    >
+    <PageContainer showExtra title={uuid ? '编辑资源' : '新建资源'} backUrl={DefaultListUrl}>
       <ProCard>
         <BetaSchemaForm
           layoutType="Form"

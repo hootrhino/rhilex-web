@@ -1,5 +1,5 @@
-import { builtInLuaTplData } from '@/components/LuaEditor/constant';
-import { luaQuickTpls } from '@/components/LuaEditor/quickTpl';
+import { builtInLuaTplData } from '@/components/CodeEditor/buildInLua';
+import { luaQuickTpls } from '@/components/CodeEditor/quickLuaTpl';
 import { getUserluaListByGroup } from '@/services/rulex/yonghuLUApianduan';
 import { DEFAULT_GROUP_KEY_LUA_TPL } from '@/utils/constant';
 import { useRequest } from '@umijs/max';
@@ -35,7 +35,7 @@ const CommonRule = ({ activeTabKey }: CommonRuleProps) => {
     },
     {
       type: 'custom',
-      dataSource: customTplData as TplGroupItem[],
+      dataSource: customTplData,
     },
     {
       type: 'quick',
@@ -43,7 +43,9 @@ const CommonRule = ({ activeTabKey }: CommonRuleProps) => {
     },
   ];
 
-  return data.map((item) => <ExampleItem {...item} key={item.type} />);
+  return data.map(({ type, dataSource }) => (
+    <ExampleItem type={type} dataSource={dataSource as TplGroupItem[]} key={type} />
+  ));
 };
 
 export default CommonRule;

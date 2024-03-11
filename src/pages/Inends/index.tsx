@@ -4,7 +4,7 @@ import { history } from 'umi';
 
 import { DownOutlined, PlusOutlined, PoweroffOutlined, SettingOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
 import { Button, Dropdown, Popconfirm } from 'antd';
 
 import { message } from '@/components/PopupHack';
@@ -17,6 +17,7 @@ import {
 import { useModel, useRequest } from '@umijs/max';
 import Detail from './Detail';
 import { baseColumns } from './columns';
+import PageContainer from '@/components/PageContainer';
 
 export type InendsItem = {
   name: string;

@@ -1,23 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
-import { history, useParams } from 'umi';
-
 import CodeEditor from '@/components/CodeEditor';
-import { DefaultActions, DefaultFailed, DefaultSuccess } from '@/components/LuaEditor/constant';
+import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
-import useGoBack from '@/hooks/useGoBack';
 import { getRulesDetail, postRulesCreate, putRulesUpdate } from '@/services/rulex/guizeguanli';
 import { NotificationOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { PageContainer, ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
+import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
 import { Alert } from 'antd';
-import { useRequest } from 'umi';
+import { useEffect, useRef, useState } from 'react';
+import { history, useParams, useRequest } from 'umi';
 import { RuleType } from '.';
 import { typeEnum as deviceTypeEnum } from '../Devices/enum';
 import { typeEnum as inendsTypeEnum } from '../Inends/enum';
 import { device_ais_ds, device_ds } from './deviceDS';
 import { inends_ds, inends_event_ds, links } from './inendsDS';
+import { DefaultActions, DefaultFailed, DefaultSuccess } from './initialValue';
 
 type FormParams = {
   name: string;
@@ -44,7 +42,6 @@ const initialValue = {
 const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) => {
   const formRef = useRef<ProFormInstance>();
   const { ruleId, groupId } = useParams();
-  const { showModal } = useGoBack();
   const [loading, setLoading] = useState<boolean>(false);
   const DefaultListUrl = groupId ? `/${type}/${groupId}/${typeId}/rule` : `/${type}/${typeId}/rule`;
   const hasDeviceDS = deviceType && Object.keys(deviceTypeEnum).includes(deviceType);
@@ -88,13 +85,13 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
       return device_ais_ds.map(({ key, title, json }) => (
         <div key={key} className="mb-[20px]">
           <div className="mb-[5px]">{title}</div>
-          <CodeEditor mode="json" readOnly value={json} theme="light" />
+          <CodeEditor lang="json" readOnly value={json} theme="light" />
         </div>
       ));
     } else {
       return (
         <CodeEditor
-          mode="json"
+          lang="json"
           readOnly
           value={deviceType ? device_ds[deviceType] : ''}
           theme="light"
@@ -109,7 +106,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
     if (['COAP', 'HTTP', 'RULEX_UDP', 'GRPC', 'NATS_SERVER'].includes(inendsType)) {
       return (
         <CodeEditor
-          mode="json"
+          lang="json"
           readOnly
           value={inendsType ? inends_ds[inendsType] : ''}
           theme="light"
@@ -154,7 +151,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
       return inends_event_ds.map(({ key, title, json }) => (
         <div key={key} className="mb-[20px]">
           <div className="mb-[5px]">{title}</div>
-          <CodeEditor mode="json" readOnly value={json} theme="light" />
+          <CodeEditor lang="json" readOnly value={json} theme="light" />
         </div>
       ));
     }
@@ -176,10 +173,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
   }, [detail]);
 
   return (
-    <PageContainer
-      header={{ title: ruleId ? '编辑规则' : '新建规则' }}
-      onBack={() => showModal({ url: DefaultListUrl })}
-    >
+    <PageContainer showExtra title={ruleId ? '编辑规则' : '新建规则'} backUrl={DefaultListUrl}>
       <ProCard split="vertical">
         <ProCard colSpan="60%">
           <ProForm

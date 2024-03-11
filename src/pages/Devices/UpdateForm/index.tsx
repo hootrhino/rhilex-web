@@ -1,10 +1,3 @@
-import type { ProFormInstance } from '@ant-design/pro-components';
-import { BetaSchemaForm, PageContainer, ProCard, ProFormProps } from '@ant-design/pro-components';
-import { useEffect, useRef, useState } from 'react';
-
-import useGoBack from '@/hooks/useGoBack';
-
-import Title from '@/components/FormTitle';
 import { message } from '@/components/PopupHack';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
@@ -14,18 +7,20 @@ import {
   putDevicesUpdate,
 } from '@/services/rulex/shebeiguanli';
 import { formatHeaders2Arr, formatHeaders2Obj, processColumns } from '@/utils/utils';
+import type { ProFormInstance } from '@ant-design/pro-components';
+import { BetaSchemaForm, ProCard, ProFormProps } from '@ant-design/pro-components';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
+import { useEffect, useRef, useState } from 'react';
 import { columns } from '../columns';
-// import { inputModeEnum } from '../enum';
 import { defaultConfig, defaultModelConfig, defaultOutputConfig } from './initialValues';
 
+import PageContainer from '@/components/PageContainer';
 import './index.less';
 
 const DefaultListUrl = '/device/list';
 
 const UpdateForm = ({}: ProFormProps) => {
   const formRef = useRef<ProFormInstance>();
-  const { showModal } = useGoBack();
   const { deviceId, groupId } = useParams();
   const { setActiveGroupKey } = useModel('useDevice');
   const [loading, setLoading] = useState<boolean>(false);
@@ -208,10 +203,7 @@ const UpdateForm = ({}: ProFormProps) => {
   useBeforeUnloadConfirm();
 
   return (
-    <PageContainer
-      header={{ title: <Title title={deviceId ? '编辑设备' : '新建设备'} /> }}
-      onBack={() => showModal({ url: DefaultListUrl })}
-    >
+    <PageContainer showExtra title={deviceId ? '编辑设备' : '新建设备'} backUrl={DefaultListUrl}>
       <ProCard>
         <BetaSchemaForm
           layoutType="Form"

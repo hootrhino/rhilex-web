@@ -67,7 +67,7 @@ const Debug = ({ uuid, ...props }: DebugProps) => {
         label="输入数据"
         rules={[{ required: true, message: '请输入数据' }]}
       >
-        <CodeEditor autoFocus />
+        <CodeEditor autoFocus lang='shell' />
       </ProForm.Item>
       <ProOutputList showOutput={showOutput} data={ruleTest} topic={`rule/log/${uuid}`} />
     </ModalForm>

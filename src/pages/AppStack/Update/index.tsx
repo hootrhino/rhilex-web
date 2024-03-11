@@ -1,13 +1,12 @@
-import Title from '@/components/FormTitle';
+import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
-import useGoBack from '@/hooks/useGoBack';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rulex/qingliangyingyong';
 import { processColumns } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
-import { BetaSchemaForm, PageContainer, ProCard } from '@ant-design/pro-components';
+import { BetaSchemaForm, ProCard } from '@ant-design/pro-components';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { AppStackItem } from '..';
@@ -26,7 +25,6 @@ const defaultValue = {
 
 const UpdateForm = () => {
   const { uuid } = useParams();
-  const { showModal } = useGoBack();
   const formRef = useRef<ProFormInstance>();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -99,10 +97,7 @@ const UpdateForm = () => {
   useBeforeUnloadConfirm();
 
   return (
-    <PageContainer
-      header={{ title: <Title title={uuid ? '更新应用' : '新建应用'} /> }}
-      onBack={() => showModal({ url: DefaultListUrl })}
-    >
+    <PageContainer showExtra title={uuid ? '更新应用' : '新建应用'} backUrl={DefaultListUrl}>
       <ProCard>
         <BetaSchemaForm
           layoutType="Form"

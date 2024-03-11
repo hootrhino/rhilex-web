@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 
 import { DownOutlined, PlusOutlined, PoweroffOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
 import { Button, Dropdown, Popconfirm } from 'antd';
 import { history } from 'umi';
 
@@ -17,6 +17,7 @@ import {
 import Detail from './Detail';
 // import { typeEnum } from './enum';
 import { baseColumns } from './columns';
+import PageContainer from '@/components/PageContainer';
 
 export type OutendsItem = {
   name: string;

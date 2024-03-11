@@ -9,8 +9,9 @@ import { useEffect, useState } from 'react';
 import { cn, filterLogByTopic } from '@/utils/utils';
 import dayjs from 'dayjs';
 
+import { ProTable } from '@ant-design/pro-components';
 import CodeEditor from '@/components/CodeEditor';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
+import PageContainer from '@/components/PageContainer';
 
 const DataCenter = () => {
   const { uuid } = useParams();
@@ -126,7 +127,7 @@ const DataCenter = () => {
             bodyStyle={{ height: 'calc(100% - 56px)', padding: '6px 0 0 0', overflowY: 'auto' }}
           >
             <CodeEditor
-              mode="sql"
+              lang="sql"
               theme="light"
               value={code}
               onChange={(value) => setCode(value)}

@@ -1,9 +1,9 @@
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
-import { PageContainer } from '@ant-design/pro-components';
-import { history, useParams, useRequest } from '@umijs/max';
+import { useParams, useRequest } from '@umijs/max';
 import { useEffect, useState } from 'react';
 import ModbusSheet from './ModbusSheet';
 import PlcSheet from './PlcSheet';
+import PageContainer from '@/components/PageContainer';
 
 const SpecificSheet = () => {
   const { deviceType, deviceId } = useParams();
@@ -23,7 +23,7 @@ const SpecificSheet = () => {
   }, [deviceId]);
 
   return (
-    <PageContainer title={title} onBack={() => history.push('/device/list')}>
+    <PageContainer title={title} backUrl='/device/list'>
       {deviceType === 'GENERIC_MODBUS' && deviceId && <ModbusSheet deviceUuid={deviceId} />}
       {deviceType === 'SIEMENS_PLC' && deviceId && <PlcSheet deviceUuid={deviceId} />}
     </PageContainer>

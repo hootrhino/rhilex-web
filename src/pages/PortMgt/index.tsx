@@ -1,13 +1,14 @@
 import { getHwifaceList, getHwifaceRefresh } from '@/services/rulex/jiekouguanli';
 import { ScanOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProDescriptions, ProTable } from '@ant-design/pro-components';
+import { ProDescriptions, ProTable } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
 import { Button, Card, Descriptions, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
 import { parityEnum, typeOptions } from './enum';
 import Update from './Update';
 import UnitTitle from '@/components/UnitTitle';
+import PageContainer from '@/components/PageContainer';
 
 export type InterfaceItem = {
   uuid?: string;
