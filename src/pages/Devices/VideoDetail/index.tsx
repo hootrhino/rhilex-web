@@ -33,7 +33,14 @@ const VideoDetail = ({ onCancel, liveId, ...props }: VideoDetailProps) => {
       centered
       maskClosable={false}
       onCancel={onCancel}
-      bodyStyle={{ display: 'flex', justifyContent: 'center', background: '#000', margin: 24, padding: 0, height: 500 }}
+      bodyStyle={{
+        display: 'flex',
+        justifyContent: 'center',
+        background: '#000',
+        margin: 24,
+        padding: 0,
+        height: '100%',
+      }}
       footer={
         <Button type="primary" onClick={onCancel}>
           关闭
@@ -41,11 +48,15 @@ const VideoDetail = ({ onCancel, liveId, ...props }: VideoDetailProps) => {
       }
       {...props}
     >
-      {!isError && <img
+      {!isError && (
+        <img
           src={`http://${window.location.hostname}:9401/jpeg_stream/pull?liveId=${liveId}`}
-          width={detail?.resolution?.width}
+          //  width={detail?.resolution?.width}
+          width="100%"
           onError={() => setError(true)}
-        />}
+          className="object-cover"
+        />
+      )}
     </Modal>
   );
 };
