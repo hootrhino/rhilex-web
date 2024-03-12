@@ -1,7 +1,7 @@
-import { IconFont } from '@/utils/utils';
-import { LoadingOutlined } from '@ant-design/icons';
+import { getJpegStreamDetail } from '@/services/rulex/liumeitiguanli';
+import { useRequest } from '@umijs/max';
 import type { ModalProps } from 'antd';
-import { Button, Modal, Spin } from 'antd';
+import { Button, Modal } from 'antd';
 import { useEffect, useState } from 'react';
 
 type VideoDetailProps = ModalProps & {
@@ -12,16 +12,16 @@ const VideoDetail = ({ onCancel, liveId, ...props }: VideoDetailProps) => {
   const [isError, setError] = useState<boolean>(false);
 
   // 视频详情
-  // const { run: getVideoDetail, data: detail } = useRequest(
-  //   (params: API.getJpegStreamDetailParams) => getJpegStreamDetail(params),
-  //   {
-  //     manual: true,
-  //   },
-  // );
+  const { run: getVideoDetail, data: detail } = useRequest(
+    (params: API.getJpegStreamDetailParams) => getJpegStreamDetail(params),
+    {
+      manual: true,
+    },
+  );
 
   useEffect(() => {
     if (liveId) {
-      // getVideoDetail({ liveId });
+      getVideoDetail({ liveId });
     }
   }, [liveId]);
 
@@ -33,7 +33,7 @@ const VideoDetail = ({ onCancel, liveId, ...props }: VideoDetailProps) => {
       centered
       maskClosable={false}
       onCancel={onCancel}
-      bodyStyle={{ display: 'flex', justifyContent: 'center' }}
+      bodyStyle={{ display: 'flex', justifyContent: 'center', background: '#000', margin: 24, padding: 0, minHeight: 500 }}
       footer={
         <Button type="primary" onClick={onCancel}>
           关闭
@@ -41,19 +41,11 @@ const VideoDetail = ({ onCancel, liveId, ...props }: VideoDetailProps) => {
       }
       {...props}
     >
-      {isError ? (
-        <div className="h-[240px] w-[360px] bg-[#f5f5f5] flex justify-center items-center">
-          <Spin indicator={<LoadingOutlined />}>
-            <IconFont type="icon-fallback" className="text-[60px]" />
-          </Spin>
-        </div>
-      ) : (
-        <img
-          src={`http://${window.location.hostname}:9401/h264_stream/push?liveId=${liveId}`}
-          className="max-h-[720px] w-full"
+      {!isError && <img
+          src={`http://${window.location.hostname}:9401/jpeg_stream/pull?liveId=${liveId}`}
+          width={detail?.resolution?.width}
           onError={() => setError(true)}
-        />
-      )}
+        />}
     </Modal>
   );
 };

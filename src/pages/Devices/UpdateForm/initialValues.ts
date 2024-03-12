@@ -8,21 +8,28 @@ export const defaultHostConfig = {
 // 根据输出模式改变输出编码&输出地址默认值
 export const defaultOutputConfig = {
   LOCAL_H264_STREAM_SERVER: {
-    outputMode: 'LOCAL_H264_STREAM_SERVER',
-    outputEncode: 'JPEG_STREAM',
-   // outputAddr: 'http://${本机 IP}:9400/jpeg_stream/push?liveId=MD5Hash(InputAddr)',
+    // outputMode: 'LOCAL_H264_STREAM_SERVER',
+    outputEncode: 'H264_STREAM',
   },
   LOCAL_JPEG_STREAM_SERVER: {
-    outputMode: 'LOCAL_JPEG_STREAM_SERVER',
+    // outputMode: 'LOCAL_JPEG_STREAM_SERVER',
     outputEncode: 'JPEG_STREAM',
-    // outputAddr: 'http://${本机 IP}:9401/jpeg_stream/push?liveId=MD5Hash(InputAddr)',
   },
   REMOTE_STREAM_SERVER: {
-    outputMode: 'REMOTE_STREAM_SERVER',
-    outputEncode: 'JPEG_STREAM',
+    // outputMode: 'REMOTE_STREAM_SERVER',
+    outputEncode: 'H264_STREAM',
     outputAddr: 'rtmp://127.0.0.1/stream/live1',
   },
 };
+
+export const defaultInputModeConfig = {
+  REMOTE_STREAM_RTSP: {
+    inputAddr: `http://${window.location.hostname}:345`
+  },
+  LOCAL_CAMERA: {
+    inputAddr: undefined
+  }
+}
 
 export const defaultConfig = {
   GENERIC_PROTOCOL: {
@@ -74,7 +81,7 @@ export const defaultConfig = {
   },
   GENERIC_CAMERA: {
     inputMode: 'LOCAL_CAMERA',
-    ...defaultOutputConfig['LOCAL_H264_STREAM_SERVER'],
+    ...defaultOutputConfig['LOCAL_JPEG_STREAM_SERVER'],
   },
 };
 

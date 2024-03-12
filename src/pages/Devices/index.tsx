@@ -1,5 +1,6 @@
 import GroupList, { DEFAULT_CONFIG } from '@/components/GroupList';
-import { message } from '@/components/PopupHack';
+import PageContainer from '@/components/PageContainer';
+import { message, modal } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
 import {
   deleteDevicesDel,
@@ -31,7 +32,6 @@ import { baseColumns } from './columns';
 import Detail from './Detail';
 import SchemaDetail from './SchemaDetail';
 import VideoDetail from './VideoDetail';
-import PageContainer from '@/components/PageContainer';
 
 export type DeviceItem = {
   name: string;
@@ -181,9 +181,19 @@ const Devices = () => {
                       setActiveDeviceName(name || '');
                       break;
                     case 'video':
-                      const hash = config?.inputAddr && CryptoJS.MD5(config?.inputAddr).toString();
-                      setOpenVideo(true);
-                      setLiveId(hash);
+                      if (config?.outputMode === 'REMOTE_STREAM_SERVER') {
+                        modal.info({
+                          title: '查看视频',
+                          content: `该模式下流媒体被中转到第三方地址，当前${config?.inputAddr}已经成功推送到${config?.outputAddr}，请在对应的平台上查看或者播放。`,
+                          width: 500,
+                        });
+                      } else {
+                        const hash =
+                          config?.inputAddr && CryptoJS.MD5(config?.inputAddr).toString();
+                        setOpenVideo(true);
+                        setLiveId(hash);
+                      }
+
                       break;
                     case 'unbind':
                       handleOnUnbind(uuid);

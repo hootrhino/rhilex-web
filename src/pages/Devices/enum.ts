@@ -75,14 +75,14 @@ export const inputModeEnum = {
 
 // 视频输出模式
 export const outputModeEnum = {
-  LOCAL_H264_STREAM_SERVER: '本地 FLV 流服务器',
-  LOCAL_JPEG_STREAM_SERVER: '本地 JpegStream 服务器',
+  // LOCAL_H264_STREAM_SERVER: '本地 FLV 流服务器',
+  LOCAL_JPEG_STREAM_SERVER: '本地 Jpeg 流服务器',
   REMOTE_STREAM_SERVER: '远程流媒体服务器',
 };
 
 // 视频输出编码
 export const outputEncodeEnum = {
-  // H264_STREAM: 'H264 编码',
+  H264_STREAM: 'H264 编码',
   JPEG_STREAM: 'JPEG 编码',
 };
 

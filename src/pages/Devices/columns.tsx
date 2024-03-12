@@ -20,6 +20,7 @@ import {
   slotEnum,
   typeEnum,
 } from './enum';
+import { pick } from 'lodash';
 
 export const baseColumns = [
   {
@@ -463,22 +464,24 @@ export const typeConfigColumns = {
               title: '视频采集源',
               dataIndex: ['config', 'inputAddr'],
               required: true,
-              request: async () => {
-                const { data } = await getOsGetVideos();
-
-                return data?.map((item) => ({
-                  label: (
-                    <Space>
-                      <span>{item?.name}</span>
-                      <span className="text-[12px] text-[#000000A6]">{item?.deviceId}</span>
-                    </Space>
-                  ),
-                  value: item.name,
-                }));
-              },
               renderFormItem: () =>
                 config.inputMode === 'LOCAL_CAMERA' ? (
-                  <ProFormSelect options={[]} noStyle />
+                  <ProFormSelect
+                    noStyle
+                    request={async () => {
+                      const { data } = await getOsGetVideos();
+
+                      return data?.map((item) => ({
+                        label: (
+                          <Space>
+                            <span>{item?.name}</span>
+                            <span className="text-[12px] text-[#000000A6]">{item?.deviceId}</span>
+                          </Space>
+                        ),
+                        value: item.name,
+                      }));
+                    }}
+                  />
                 ) : (
                   <ProFormText width="md" noStyle />
                 ),
@@ -498,15 +501,25 @@ export const typeConfigColumns = {
           render: (_: any, { outputMode }: DeviceItem) => outputModeEnum[outputMode],
         },
         {
-          title: '输出编码',
-          dataIndex: ['config', 'outputEncode'],
-          valueType: 'select',
-          valueEnum: outputEncodeEnum,
-          required: true,
-          fieldProps: {
-            allowClear: false,
+          valueType: 'dependency',
+          name: ['config'],
+          columns: ({ config }: DeviceItem) => {
+            const mode = config?.outputMode;
+
+            return [
+              {
+                title: '输出编码',
+                dataIndex: ['config', 'outputEncode'],
+                valueType: 'select',
+                valueEnum: mode === 'REMOTE_STREAM_SERVER' ? pick(outputEncodeEnum, 'H264_STREAM'): pick(outputEncodeEnum, 'JPEG_STREAM'),
+                required: true,
+                fieldProps: {
+                  allowClear: false,
+                },
+                render: (_: any, { outputEncode }: DeviceItem) => outputEncodeEnum[outputEncode],
+              },
+            ];
           },
-          render: (_: any, { outputEncode }: DeviceItem) => outputEncodeEnum[outputEncode],
         },
         {
           valueType: 'dependency',

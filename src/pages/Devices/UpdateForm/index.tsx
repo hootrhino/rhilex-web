@@ -12,7 +12,8 @@ import { BetaSchemaForm, ProCard, ProFormProps } from '@ant-design/pro-component
 import { history, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { columns } from '../columns';
-import { defaultConfig, defaultModelConfig, defaultOutputConfig } from './initialValues';
+import { defaultConfig, defaultInputModeConfig, defaultModelConfig, defaultOutputConfig } from './initialValues';
+import CryptoJS from 'crypto-js';
 
 import PageContainer from '@/components/PageContainer';
 import './index.less';
@@ -54,11 +55,12 @@ const UpdateForm = ({}: ProFormProps) => {
       }
 
       if (outputMode !== 'REMOTE_STREAM_SERVER') {
+        const hash = inputAddr && CryptoJS.MD5(inputAddr).toString();
         params = {
           ...params,
           config: {
             ...params.config,
-            outputAddr: `http://${window?.location?.hostname}:9400/jpeg_stream/push?liveId=MD5Hash(${inputAddr})`,
+            outputAddr: `http://${window?.location?.hostname}:9400/jpeg_stream/push?liveId=${hash}`,
           },
         };
       }
@@ -177,7 +179,7 @@ const UpdateForm = ({}: ProFormProps) => {
         config: defaultModelConfig[model],
       });
     }
-    if (outputMode === 'REMOTE_STREAM_SERVER') {
+    if (outputMode) {
       formRef.current?.setFieldsValue({
         config: {
           ...defaultOutputConfig[outputMode],
@@ -186,12 +188,7 @@ const UpdateForm = ({}: ProFormProps) => {
     }
     if (inputMode) {
       formRef.current?.setFieldsValue({
-        config: {
-          inputAddr:
-            inputMode === 'REMOTE_STREAM_RTSP'
-              ? `http://${window.location.hostname}:345`
-              : undefined,
-        },
+        config: inputMode === detail?.config?.inputMode ? {inputAddr: detail?.config?.inputAddr} : defaultInputModeConfig[inputMode]
       });
     }
   };
