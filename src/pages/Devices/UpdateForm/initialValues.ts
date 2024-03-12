@@ -8,15 +8,15 @@ export const defaultHostConfig = {
 // 根据输出模式改变输出编码&输出地址默认值
 export const defaultOutputConfig = {
   LOCAL_H264_STREAM_SERVER: {
-    // outputMode: 'LOCAL_H264_STREAM_SERVER',
+    outputMode: 'LOCAL_H264_STREAM_SERVER',
     outputEncode: 'H264_STREAM',
   },
   LOCAL_JPEG_STREAM_SERVER: {
-    // outputMode: 'LOCAL_JPEG_STREAM_SERVER',
+    outputMode: 'LOCAL_JPEG_STREAM_SERVER',
     outputEncode: 'JPEG_STREAM',
   },
   REMOTE_STREAM_SERVER: {
-    // outputMode: 'REMOTE_STREAM_SERVER',
+    outputMode: 'REMOTE_STREAM_SERVER',
     outputEncode: 'H264_STREAM',
     outputAddr: 'rtmp://127.0.0.1/stream/live1',
   },
