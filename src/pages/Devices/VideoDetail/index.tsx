@@ -33,7 +33,7 @@ const VideoDetail = ({ onCancel, liveId, ...props }: VideoDetailProps) => {
       centered
       maskClosable={false}
       onCancel={onCancel}
-      bodyStyle={{ display: 'flex', justifyContent: 'center', background: '#000', margin: 24, padding: 0, minHeight: 500 }}
+      bodyStyle={{ display: 'flex', justifyContent: 'center', background: '#000', margin: 24, padding: 0, height: 500 }}
       footer={
         <Button type="primary" onClick={onCancel}>
           关闭
