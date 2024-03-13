@@ -2,38 +2,20 @@
 // import { useRequest } from '@umijs/max';
 import type { ModalProps } from 'antd';
 import { Button, Modal } from 'antd';
-import { useEffect, useState } from 'react';
 
 type VideoDetailProps = ModalProps & {
-  liveId: string;
+  playUrl: string;
+  showImg: boolean;
+  changeOnShowImg: (value: boolean) => void;
 };
 
-const VideoDetail = ({ onCancel, liveId, ...props }: VideoDetailProps) => {
-  const [isError, setError] = useState<boolean>(false);
-  const [imgSrc, setSrc] = useState<string>('');
-
-  // 视频详情
-  // const { run: getVideoDetail, data: detail } = useRequest(
-  //   (params: API.getJpegStreamDetailParams) => getJpegStreamDetail(params),
-  //   {
-  //     manual: true,
-  //   },
-  // );
-
-  const handleOnClose = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (onCancel) {
-      onCancel(e);
-    }
-    setSrc('');
-  }
-
-  useEffect(() => {
-    if (liveId && window.location.hostname) {
-      // getVideoDetail({ liveId });
-      setSrc(`http://${window.location.hostname}:9401/jpeg_stream/pull?liveId=${liveId}`)
-    }
-  }, [liveId]);
-
+const VideoDetail = ({
+  playUrl,
+  showImg,
+  changeOnShowImg,
+  onCancel,
+  ...props
+}: VideoDetailProps) => {
   return (
     <Modal
       destroyOnClose
@@ -41,29 +23,29 @@ const VideoDetail = ({ onCancel, liveId, ...props }: VideoDetailProps) => {
       width="50%"
       centered
       maskClosable={false}
-      onCancel={handleOnClose}
+      onCancel={onCancel}
       bodyStyle={{
         display: 'flex',
         justifyContent: 'center',
+        alignItems: 'center',
         background: '#000',
         margin: 24,
         padding: 0,
-        // height: '100%',
+        height: 480,
       }}
       footer={
-        <Button type="primary" onClick={handleOnClose}>
+        <Button type="primary" onClick={onCancel}>
           关闭
         </Button>
       }
       {...props}
     >
-      {!isError && (
+      {playUrl && showImg && (
         <img
-          src={imgSrc}
-          //  width={detail?.resolution?.width}
+          src={playUrl}
           width={640}
-          onError={() => setError(true)}
-          className="object-cover"
+          onError={() => changeOnShowImg(false)}
+          className="h-full object-cover"
         />
       )}
     </Modal>

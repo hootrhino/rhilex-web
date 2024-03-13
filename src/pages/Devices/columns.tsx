@@ -6,8 +6,10 @@ import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
 import { getSchemaList } from '@/services/rulex/shujumoxing';
 import { boolEnum, boolMap } from '@/utils/enum';
+import { getPlayAddress } from '@/utils/utils';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { Space, Tag } from 'antd';
+import { Space, Tag, Typography } from 'antd';
+import pick from 'lodash/pick';
 import type { DeviceItem } from '.';
 import {
   inputModeEnum,
@@ -20,7 +22,6 @@ import {
   slotEnum,
   typeEnum,
 } from './enum';
-import { pick } from 'lodash';
 
 export const baseColumns = [
   {
@@ -444,6 +445,7 @@ export const typeConfigColumns = {
     {
       title: '通用配置',
       valueType: 'group',
+      key: 'camera',
       columns: [
         {
           title: '输入模式',
@@ -511,7 +513,10 @@ export const typeConfigColumns = {
                 title: '输出编码',
                 dataIndex: ['config', 'outputEncode'],
                 valueType: 'select',
-                valueEnum: mode === 'REMOTE_STREAM_SERVER' ? pick(outputEncodeEnum, 'H264_STREAM'): pick(outputEncodeEnum, 'JPEG_STREAM'),
+                valueEnum:
+                  mode === 'REMOTE_STREAM_SERVER'
+                    ? pick(outputEncodeEnum, 'H264_STREAM')
+                    : pick(outputEncodeEnum, 'JPEG_STREAM'),
                 required: true,
                 fieldProps: {
                   allowClear: false,
@@ -526,6 +531,7 @@ export const typeConfigColumns = {
           name: ['config'],
           columns: ({ config }: DeviceItem) => {
             const mode = config?.outputMode;
+            const playUrl = getPlayAddress(config?.inputAddr, mode, 'pull');
 
             return [
               {
@@ -533,6 +539,28 @@ export const typeConfigColumns = {
                 dataIndex: ['config', 'outputAddr'],
                 hideInForm: mode !== 'REMOTE_STREAM_SERVER',
                 render: (_: any, { outputAddr }: DeviceItem) => outputAddr,
+              },
+              {
+                title: (
+                  <Typography.Paragraph
+                    copyable={{
+                      text: `<img src="${playUrl}" width="640" height="480" alt="视频监控" />`,
+                    }}
+                    className="text-[#00000073]"
+                  >
+                    外部播放地址
+                  </Typography.Paragraph>
+                ),
+                dataIndex: ['config', 'playAddr'],
+                hideInForm: true,
+                hideInDescriptions: mode === 'REMOTE_STREAM_SERVER',
+                render: (_: any, { inputAddr, outputMode }: DeviceItem) => {
+                  return (
+                    <pre className="bg-[#9696961A] p-[16px] text-[#2a2e36a6] rounded-[3px] whitespace-pre-wrap break-all">
+                      &lt;img src="{playUrl}" width="640" height="480" alt="视频监控" /&gt;
+                    </pre>
+                  );
+                },
               },
             ];
           },

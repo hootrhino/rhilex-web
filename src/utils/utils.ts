@@ -1,8 +1,8 @@
 import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
+import CryptoJS from 'crypto-js';
 import { isEmpty, omit, orderBy } from 'lodash';
-
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -160,4 +160,26 @@ export const processColumns = (columns: any) => {
       },
     };
   });
+};
+
+// 获取设备通用摄像机流处理网关播放地址
+export const getPlayAddress = (
+  address: string,
+  mode: 'LOCAL_H264_STREAM_SERVER' | 'LOCAL_JPEG_STREAM_SERVER',
+  serviceType: 'pull' | 'push',
+) => {
+  const params = {
+    LOCAL_H264_STREAM_SERVER: {
+      steam: 'h264_stream',
+      port: 9400,
+    },
+    LOCAL_JPEG_STREAM_SERVER: {
+      steam: 'jpeg_stream',
+      port: 9401,
+    },
+  };
+  const hash = address && CryptoJS.MD5(address).toString();
+  const playAddress = `http://${window?.location?.hostname}:${params[mode].port}/${params[mode].steam}/${serviceType}?liveId=${hash}`;
+
+  return playAddress;
 };

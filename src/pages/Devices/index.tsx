@@ -10,7 +10,7 @@ import {
   putDevicesUpdate,
 } from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
-import { getName } from '@/utils/utils';
+import { getName, getPlayAddress } from '@/utils/utils';
 import {
   ApartmentOutlined,
   ControlOutlined,
@@ -26,7 +26,6 @@ import { ProCard, ProTable } from '@ant-design/pro-components';
 import { history, useModel, useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/hooks/useItems';
-import CryptoJS from 'crypto-js';
 import { useRef, useState } from 'react';
 import { baseColumns } from './columns';
 import Detail from './Detail';
@@ -64,7 +63,8 @@ const Devices = () => {
 
   const [activeDevice, setActiveDevice] = useState<string>('');
   const [activeDeviceName, setActiveDeviceName] = useState<string>('');
-  const [liveId, setLiveId] = useState<string>('');
+  const [playUrl, setPlayUrl] = useState<string>('');
+  const [showPlayImg, setShowPlayImg] = useState<boolean>(true);
 
   // 重置分组表单
   const handleOnReset = () => {
@@ -111,7 +111,6 @@ const Devices = () => {
     ] as ItemType[];
 
     if (type === 'GENERIC_CAMERA') {
-      // TODO 暂时隐藏查看监控功能
       baseItems = [...baseItems, { key: 'video', label: '查看视频', icon: <PlayCircleOutlined /> }];
       baseItems = [...baseItems];
     } else {
@@ -184,14 +183,17 @@ const Devices = () => {
                       if (config?.outputMode === 'REMOTE_STREAM_SERVER') {
                         modal.info({
                           title: '查看视频',
-                          content: `该模式下流媒体被中转到第三方地址，当前${config?.inputAddr}已经成功推送到${config?.outputAddr}，请在对应的平台上查看或者播放。`,
+                          content: (
+                            <div className="break-all">
+                              该模式下流媒体被中转到第三方地址，当前{config?.inputAddr}
+                              已经成功推送到{config?.outputAddr}，请在对应的平台上查看或者播放。
+                            </div>
+                          ),
                           width: 500,
                         });
                       } else {
-                        const hash =
-                          config?.inputAddr && CryptoJS.MD5(config?.inputAddr).toString();
                         setOpenVideo(true);
-                        setLiveId(hash);
+                        setPlayUrl(getPlayAddress(config?.inputAddr, config?.outputMode, 'pull'));
                       }
 
                       break;
@@ -304,7 +306,17 @@ const Devices = () => {
           setActiveDevice('');
         }}
       />
-      <VideoDetail open={openVideo} onCancel={() => setOpenVideo(false)} liveId={liveId} />
+      <VideoDetail
+        open={openVideo}
+        changeOnShowImg={setShowPlayImg}
+        showImg={showPlayImg}
+        onCancel={() => {
+          setOpenVideo(false);
+          setShowPlayImg(false);
+          setPlayUrl('');
+        }}
+        playUrl={playUrl}
+      />
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}

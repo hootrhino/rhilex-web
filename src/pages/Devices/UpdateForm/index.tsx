@@ -6,14 +6,23 @@ import {
   postDevicesCreate,
   putDevicesUpdate,
 } from '@/services/rulex/shebeiguanli';
-import { formatHeaders2Arr, formatHeaders2Obj, processColumns } from '@/utils/utils';
+import {
+  formatHeaders2Arr,
+  formatHeaders2Obj,
+  getPlayAddress,
+  processColumns,
+} from '@/utils/utils';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { BetaSchemaForm, ProCard, ProFormProps } from '@ant-design/pro-components';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { columns } from '../columns';
-import { defaultConfig, defaultInputModeConfig, defaultModelConfig, defaultOutputConfig } from './initialValues';
-import CryptoJS from 'crypto-js';
+import {
+  defaultConfig,
+  defaultInputModeConfig,
+  defaultModelConfig,
+  defaultOutputConfig,
+} from './initialValues';
 
 import PageContainer from '@/components/PageContainer';
 import './index.less';
@@ -45,71 +54,51 @@ const UpdateForm = ({}: ProFormProps) => {
       const mode = params.config.commonConfig?.mode;
       const outputMode = params?.config?.outputMode;
       const inputAddr = params?.config?.inputAddr;
-      // const inputMode = params.config?.inputMode;
+      const outputAddr = params?.config?.outputAddr;
 
-      if (type !== 'GENERIC_CAMERA') {
-        params = {
-          ...params,
-          schemaId: params?.schemaId || '',
-        };
-      }
-
-      if (outputMode !== 'REMOTE_STREAM_SERVER') {
-        const hash = inputAddr && CryptoJS.MD5(inputAddr).toString();
+      if (type === 'GENERIC_CAMERA') {
         params = {
           ...params,
           config: {
             ...params.config,
-            outputAddr: `http://${window?.location?.hostname}:9400/jpeg_stream/push?liveId=${hash}`,
+            outputAddr:
+              outputMode === 'REMOTE_STREAM_SERVER'
+                ? outputAddr
+                : getPlayAddress(inputAddr, outputMode, 'push'),
           },
         };
-      }
+      } else {
+        if (type === 'GENERIC_HTTP_DEVICE') {
+          const httpConfig = params?.config?.httpConfig;
+          const newHeaders =
+            httpConfig?.headers?.length > 0 ? formatHeaders2Obj(httpConfig?.headers) : {};
 
-      // if (inputMode && Object.keys(inputModeEnum).includes(inputMode)) {
-      //   if (inputMode === 'RTSP') {
-      //     params = {
-      //       ...params,
-      //       config: {
-      //         ...params?.config,
-      //         device: '',
-      //       },
-      //     };
-      //   } else {
-      //     params = {
-      //       ...params,
-      //       config: {
-      //         ...params?.config,
-      //         rtspUrl: '',
-      //       },
-      //     };
-      //   }
-      // }
-
-      if (mode === 'TCP') {
-        const hostConfigParams = params?.config?.hostConfig;
-        params = {
-          ...params,
-          config: {
-            ...params?.config,
-            hostConfig: hostConfigParams,
-          },
-        };
-      }
-
-      if (type === 'GENERIC_HTTP_DEVICE') {
-        const httpConfig = params?.config?.httpConfig;
-        const newHeaders =
-          httpConfig?.headers?.length > 0 ? formatHeaders2Obj(httpConfig?.headers) : {};
-
-        params = {
-          ...params,
-          config: {
-            ...params?.config,
-            httpConfig: {
-              ...httpConfig,
-              headers: newHeaders,
+          params = {
+            ...params,
+            config: {
+              ...params?.config,
+              httpConfig: {
+                ...httpConfig,
+                headers: newHeaders,
+              },
             },
-          },
+          };
+        }
+
+        if (mode === 'TCP') {
+          const hostConfigParams = params?.config?.hostConfig;
+          params = {
+            ...params,
+            config: {
+              ...params?.config,
+              hostConfig: hostConfigParams,
+            },
+          };
+        }
+
+        params = {
+          ...params,
+          schemaId: params?.schemaId || '',
         };
       }
 
@@ -188,7 +177,10 @@ const UpdateForm = ({}: ProFormProps) => {
     }
     if (inputMode) {
       formRef.current?.setFieldsValue({
-        config: inputMode === detail?.config?.inputMode ? {inputAddr: detail?.config?.inputAddr} : defaultInputModeConfig[inputMode]
+        config:
+          inputMode === detail?.config?.inputMode
+            ? { inputAddr: detail?.config?.inputAddr }
+            : defaultInputModeConfig[inputMode],
       });
     }
   };

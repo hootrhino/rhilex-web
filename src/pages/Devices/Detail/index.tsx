@@ -56,11 +56,13 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
           ...c,
           render: (_: any, { portUuid }: DeviceItem) => (
             <a
-              onClick={() => {
+              onClick={(e) => {
                 history.push('/port');
                 setDetailConfig({ open: true, uuid: portUuid });
                 getPortDetail({ uuid: portUuid });
-                props?.onClose();
+                if (props?.onClose) {
+                  props.onClose(e);
+                }
               }}
             >
               {getName(portList || [], portUuid)}
@@ -116,13 +118,26 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
               if (item.valueType === 'dependency') {
                 return renderDescription(item?.columns(detail));
               } else {
+                let column = 3;
+                switch (item?.key) {
+                  case 'http':
+                    column = 1;
+                    break;
+                  case 'camera':
+                    column = 2;
+                    break;
+                  default:
+                    column = 3;
+                    break;
+                }
+
                 return (
                   <EnhancedProDescriptions
                     key={`description-${index}`}
                     title={item?.title}
                     dataSource={detail.config}
                     columns={formatColumns(item?.columns)}
-                    column={item?.key === 'http' ? 1 : 3}
+                    column={column}
                   />
                 );
               }
