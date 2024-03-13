@@ -193,6 +193,7 @@ const Devices = () => {
                         });
                       } else {
                         setOpenVideo(true);
+                        setShowPlayImg(true);
                         setPlayUrl(getPlayAddress(config?.inputAddr, config?.outputMode, 'pull'));
                       }
 
