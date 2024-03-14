@@ -19,7 +19,7 @@ import { EditableProTable, ProFormCascader, ProFormText } from '@ant-design/pro-
 import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag, Tooltip, Upload } from 'antd';
 import omit from 'lodash/omit';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { plcDataTypeOptions } from './enum';
 import UploadRule from './UploadRule';
 
@@ -76,6 +76,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [editableRows, setEditableRows] = useState<Partial<PlcSheetItem>[]>([]);
   const [polling, setPolling] = useState<number>(3000);
+  const [stopPolling, setStopPolling] = useState<boolean>(false);
 
   const disabled = selectedRowKeys?.length === 0;
 
@@ -159,6 +160,17 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       },
     },
   );
+
+  // 刷新
+  const handleOnPolling = () => {
+    if (polling) {
+      setPolling(0);
+      setStopPolling(true);
+      return;
+    }
+    setPolling(3000);
+    setStopPolling(false);
+  }
 
   const columns: ProColumns<Partial<PlcSheetItem>>[] = [
     {
@@ -341,13 +353,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       key="polling"
       type="primary"
       ghost={!polling}
-      onClick={() => {
-        if (polling) {
-          setPolling(0);
-          return;
-        }
-        setPolling(2000);
-      }}
+      onClick={handleOnPolling}
       icon={polling ? <LoadingOutlined /> : <ReloadOutlined />}
     >
       {polling ? '停止刷新' : '开始刷新'}
@@ -407,6 +413,17 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       导出点位表
     </Button>,
   ];
+
+  useEffect(() => {
+    if (editableKeys.length > 0) {
+      // 正在操作
+      setPolling(0);
+      return;
+    } else {
+      setPolling(stopPolling ? 0 : 3000);
+    }
+
+  }, [editableKeys])
 
   return (
     <EditableProTable<Partial<PlcSheetItem>>
