@@ -1,3 +1,5 @@
+import PageContainer from '@/components/PageContainer';
+import UnitTitle from '@/components/UnitTitle';
 import { getHwifaceList, getHwifaceRefresh } from '@/services/rulex/jiekouguanli';
 import { ScanOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
@@ -7,8 +9,6 @@ import { Button, Card, Descriptions, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
 import { parityEnum, typeOptions } from './enum';
 import Update from './Update';
-import UnitTitle from '@/components/UnitTitle';
-import PageContainer from '@/components/PageContainer';
 
 export type InterfaceItem = {
   uuid?: string;
@@ -78,9 +78,11 @@ const Interface = () => {
         const { timeout, baudRate, dataBits, parity, stopBits, uart } = config;
 
         return (
-          <Card bodyStyle={{ padding: '16px 18px' }}>
+          <Card styles={{ body: { padding: '16px 18px' } }}>
             <Descriptions column={1} labelStyle={{ width: 130, justifyContent: 'flex-end' }}>
-              <Descriptions.Item label={<UnitTitle title='超时时间' />}>{timeout}</Descriptions.Item>
+              <Descriptions.Item label={<UnitTitle title="超时时间" />}>
+                {timeout}
+              </Descriptions.Item>
               <Descriptions.Item label="波特率">{baudRate}</Descriptions.Item>
               <Descriptions.Item label="数据位">{dataBits}</Descriptions.Item>
               <Descriptions.Item label="奇偶校验">{parityEnum[parity]}</Descriptions.Item>

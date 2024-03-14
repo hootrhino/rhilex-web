@@ -1,4 +1,3 @@
-import loginBg from '@/assets/images/loginBg.svg';
 import loginIcon from '@/assets/images/loginLogo.png';
 import { message } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
@@ -49,10 +48,9 @@ const Login: React.FC = () => {
     <div
       className="flex flex-col h-[100vh] overflow-auto bg-[#f0f2f5]"
       style={{
-        backgroundImage: `url(${loginBg})`,
+        backgroundImage: `url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')`,
         backgroundSize: '100%',
         backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center 110px',
       }}
     >
       <Helmet>

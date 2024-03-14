@@ -1,5 +1,6 @@
 import type { PluginConfig, PluginParams } from '@/models/usePlugin';
-import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { IconFont } from '@/utils/utils';
+import { CheckCircleOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
@@ -24,7 +25,7 @@ const cleanSessionEnum = {
   false: {
     text: 'false',
     color: 'error',
-    icon: <CloseCircleOutlined />,
+    icon: <IconFont type='icon-close-circle' />,
   },
 };
 

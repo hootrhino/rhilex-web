@@ -24,14 +24,16 @@ const VideoDetail = ({
       centered
       maskClosable={false}
       onCancel={onCancel}
-      bodyStyle={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: '#000',
-        margin: 24,
-        padding: 0,
-        height: 480,
+      styles={{
+        body: {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          background: '#000',
+          margin: 24,
+          padding: 0,
+          height: 480,
+        },
       }}
       footer={
         <Button type="primary" onClick={onCancel}>

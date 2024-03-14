@@ -9,9 +9,9 @@ import { useEffect, useState } from 'react';
 import { cn, filterLogByTopic } from '@/utils/utils';
 import dayjs from 'dayjs';
 
-import { ProTable } from '@ant-design/pro-components';
 import CodeEditor from '@/components/CodeEditor';
 import PageContainer from '@/components/PageContainer';
+import { ProTable } from '@ant-design/pro-components';
 
 const DataCenter = () => {
   const { uuid } = useParams();
@@ -103,7 +103,9 @@ const DataCenter = () => {
             <Card
               title="Table"
               className={cn('w-full h-full overflow-y-auto', 'data-center-scrollbar')}
-              bodyStyle={{ height: 'calc(100% - 56px)', padding: '6px 0 0 0', overflowY: 'auto' }}
+              styles={{
+                body: { height: 'calc(100% - 56px)', padding: '6px 0 0 0', overflowY: 'auto' },
+              }}
             >
               <Tree
                 showLine
@@ -124,7 +126,9 @@ const DataCenter = () => {
             }
             title="查询编辑器"
             className="w-full h-full min-w-[1px] ml-[12px]"
-            bodyStyle={{ height: 'calc(100% - 56px)', padding: '6px 0 0 0', overflowY: 'auto' }}
+            styles={{
+              body: { height: 'calc(100% - 56px)', padding: '6px 0 0 0', overflowY: 'auto' },
+            }}
           >
             <CodeEditor
               lang="sql"
@@ -183,7 +187,7 @@ const DataCenter = () => {
               </Space>
             }
             className="h-full"
-            bodyStyle={{ padding: '0 24px 24px 24px' }}
+            styles={{ body: { padding: '0 24px 24px 24px' } }}
           >
             <List
               header={false}

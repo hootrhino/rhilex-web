@@ -107,7 +107,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
         copyIconProps={false}
         deleteIconProps={false}
         itemContainerRender={(doms) => (
-          <Card type="inner" bodyStyle={{ padding: '16px 18px' }}>
+          <Card type="inner" styles={{ body: { padding: '16px 18px' } }}>
             {doms}
           </Card>
         )}

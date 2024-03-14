@@ -27,8 +27,10 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
       <Drawer
         destroyOnClose
         maskClosable={false}
-        headerStyle={{ border: 'none', padding: '16px 24px 10px 24px' }}
-        bodyStyle={{ padding: '0px 24px 24px 24px' }}
+        styles={{
+          body: { padding: '0px 24px 24px 24px' },
+          header: { border: 'none', padding: '16px 24px 10px 24px' },
+        }}
         placement="right"
         size="large"
         {...props}
