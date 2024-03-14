@@ -101,11 +101,11 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
   };
 
   const renderFormList = (key: number) => {
-    const { name, label, type, dataSource } = formRef.current?.getFieldValue('variables')[key];
+    const { label, type, dataSource } = formRef.current?.getFieldValue('variables')[key];
 
     let commonConfig = {
-      key: key,
-      label: `${label} (${name})`,
+      key,
+      label,
       name: 'value',
       width: 'md',
       placeholder: '请输入变量值',
