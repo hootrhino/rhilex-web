@@ -555,10 +555,11 @@ export const typeConfigColumns = {
                 hideInForm: true,
                 hideInDescriptions: mode === 'REMOTE_STREAM_SERVER',
                 render: (_: any, { inputAddr, outputMode }: DeviceItem) => {
+                  const htmlCode = `<img src="${playUrl}" width="640" height="480" alt="视频监控" />`;
                   return (
-                    <pre className="bg-[#9696961A] p-[16px] text-[#2a2e36a6] rounded-[3px] whitespace-pre-wrap break-all">
-                      &lt;img src="{playUrl}" width="640" height="480" alt="视频监控" /&gt;
-                    </pre>
+                    <div className="bg-[#9696961A] p-[16px] text-[#2a2e36a6] rounded-[3px] whitespace-pre-wrap break-all">
+                      {htmlCode}
+                    </div>
                   );
                 },
               },
