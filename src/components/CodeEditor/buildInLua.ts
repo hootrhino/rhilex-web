@@ -132,7 +132,7 @@ const dataToList = [
 export const dataFuncs = dataToList?.map((data) => {
   const code = `local err = data:To${data.target}(arg1, args)
 if err ~= nil then
-  stdlib:Throw(err)
+  Throw(err)
   return true, args
 end`;
   return {
@@ -148,12 +148,12 @@ end`;
 });
 
 // stdlib 函数
-const stdlibDebug = `stdlib:Debug(arg)`;
-const stdlibThrow = `stdlib:Throw(err)`;
+const stdlibDebug = `Debug(arg)`;
+const stdlibThrow = `Throw(err)`;
 
 export const stdlibFuncs = [
   {
-    label: 'stdlib:Debug',
+    label: 'Debug',
     apply: stdlibDebug,
     type: 'function',
     detail: '打印日志',
@@ -161,7 +161,7 @@ export const stdlibFuncs = [
     // variables: [{ label: '输出内容', name: 'arg', value: '', type: 'string' }],
   },
   {
-    label: 'stdlib:Throw',
+    label: 'Throw',
     apply: stdlibThrow,
     type: 'function',
     detail: '抛出异常',
@@ -232,7 +232,7 @@ export const kvFuncs = [
 // localdb 函数
 const localdbQuery = `local Table = localdb:Query('select * from db1')
 for i, v in ipairs(Table) do
-  stdlib:Log(err)
+  Debug(err)
 end`;
 
 const localdbExecute = `local error = localdb:Query(arg)`;
@@ -278,7 +278,7 @@ export const jsonFuncs = [
 const mathTFloat = `local Value = json:TFloat(arg1, arg2)`;
 
 // jq 函数
-const jqExecute = `local Value = jq:Execute(arg1, arg2 ))`;
+const jqExecute = `local Value = jq:Execute(arg1, arg2 )`;
 
 // rpc 函数
 const rpcRequest = `local Value = rpc:Request(arg1, arg2, arg3)`;
@@ -331,7 +331,7 @@ export const deviceFuncs = deviceList?.map((device) => {
       : `local err1 = device:${device.target}(arg1, arg2, arg3)`;
   const code = `${err1}
 if err1 ~= nil then
-  stdlib:Log(err)
+  Debug(err)
 end`;
   return {
     label: `device:${device.target}`,
@@ -361,7 +361,7 @@ export const rhinopiFuncs = rhinopiList?.map((rhinopi) => {
   const code = `
 local err1 = rhinopi:${rhinopi.target}(arg)
 if err1 ~= nil then
-    stdlib:Log(err)
+    Debug(err)
 end
 `;
   return {
@@ -407,7 +407,7 @@ export const modbusFuncs = modbusList?.map((modbus) => {
 
   const code = `${err1}
 if err1 ~= nil then
-    stdlib:Log(err)
+    Debug(err)
 end`;
 
   return {
@@ -464,7 +464,7 @@ export const builtInLuaTplData = [
     uuid: 'kv',
   },
   {
-    name: 'stdlib 函数',
+    name: '标准库函数',
     children: stdlibFuncs,
     uuid: 'stdlib',
   },
