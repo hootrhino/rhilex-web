@@ -53,7 +53,7 @@ const UpdateForm = ({}: ProFormProps) => {
       const type = params.type;
       const mode = params.config.commonConfig?.mode;
       const outputMode = params?.config?.outputMode;
-      const inputAddr = params?.config?.inputAddr;
+      // const inputAddr = params?.config?.inputAddr;
       const outputAddr = params?.config?.outputAddr;
 
       if (type === 'GENERIC_CAMERA') {
@@ -64,7 +64,7 @@ const UpdateForm = ({}: ProFormProps) => {
             outputAddr:
               outputMode === 'REMOTE_STREAM_SERVER'
                 ? outputAddr
-                : getPlayAddress(inputAddr, outputMode, 'push'),
+                : getPlayAddress(params?.name, outputMode, 'push'),
           },
         };
       } else {

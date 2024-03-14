@@ -164,7 +164,7 @@ export const processColumns = (columns: any) => {
 
 // 获取设备通用摄像机流处理网关播放地址
 export const getPlayAddress = (
-  address: string,
+  deviceName: string,
   mode: 'LOCAL_H264_STREAM_SERVER' | 'LOCAL_JPEG_STREAM_SERVER',
   serviceType: 'pull' | 'push',
 ) => {
@@ -178,7 +178,7 @@ export const getPlayAddress = (
       port: 9401,
     },
   };
-  const hash = address && CryptoJS.MD5(address).toString();
+  const hash = deviceName && CryptoJS.MD5(deviceName).toString();
   const playAddress = `http://${window?.location?.hostname}:${params[mode]?.port}/${params[mode]?.steam}/${serviceType}?liveId=${hash}`;
 
   return playAddress;

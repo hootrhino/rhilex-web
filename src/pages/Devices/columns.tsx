@@ -528,10 +528,10 @@ export const typeConfigColumns = {
         },
         {
           valueType: 'dependency',
-          name: ['config'],
-          columns: ({ config }: DeviceItem) => {
+          name: ['name', 'config'],
+          columns: ({ config, name }: DeviceItem) => {
             const mode = config?.outputMode;
-            const playUrl = getPlayAddress(config?.inputAddr, mode, 'pull');
+            const playUrl = getPlayAddress(name, mode, 'pull');
 
             return [
               {
