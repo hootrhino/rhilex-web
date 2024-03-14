@@ -179,7 +179,7 @@ export const getPlayAddress = (
     },
   };
   const hash = address && CryptoJS.MD5(address).toString();
-  const playAddress = `http://${window?.location?.hostname}:${params[mode].port}/${params[mode].steam}/${serviceType}?liveId=${hash}`;
+  const playAddress = `http://${window?.location?.hostname}:${params[mode]?.port}/${params[mode]?.steam}/${serviceType}?liveId=${hash}`;
 
   return playAddress;
 };
