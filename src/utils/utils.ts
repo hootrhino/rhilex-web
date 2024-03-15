@@ -183,3 +183,6 @@ export const getPlayAddress = (
 
   return playAddress;
 };
+
+// 首字母大写
+export const firstUpperCase = (value: string) => value.replace(/^\w/, (c) => c.toUpperCase());

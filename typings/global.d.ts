@@ -27,7 +27,7 @@ declare global {
 
   // 代码模板
   type TplItem = baseTplItem & {
-    quickTpl?: baseTplItem[];
+    usage?: baseTplItem;
   };
 
   type TplGroupItem = {

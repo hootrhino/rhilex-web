@@ -15,7 +15,7 @@ import type { CollapseProps } from 'antd';
 import { Button, Collapse, Divider, theme } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import CopyButton from './CopyButton';
-import Extra from './Extra';
+import ExampleItemChild from './ExampleItemChild';
 import Label from './Label';
 
 type ExampleItemProps = CollapseProps & {
@@ -47,34 +47,30 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
 
   const { data: resourceData } = useRequest(() => getRulesGetCanUsedResources());
 
-  const getItemsChildren = (data: TplItem[]) => {
-    return data?.map((item) => ({
-      key: item.label,
+  const getItemsChildren = (data: TplItem[]) =>
+    data?.map((item) => ({
+      key: item.detail,
       label: <Label data={item} />,
       style: panelStyle,
-      // children: <CodeEditor readOnly value={item.apply} lang="lua" />,
       children: (
-        <div>
-          <CodeEditor readOnly value={item.apply} lang="lua" />
-          {item?.quickTpl && item?.quickTpl?.length > 0 && (
-            <>
-              <div className="my-[10px] font-bold">快捷模板</div>
-              {item?.quickTpl?.map((q) => (
-                <div key={q.label}>
-                  <div className="flex justify-between w-full mb-[5px]">
-                    <span>{q.detail}</span>
-                    <Extra data={q} handleOnCopy={() => setValConfig({ open: true, data: q })} />
-                  </div>
-                  <CodeEditor readOnly value={q.apply} lang="lua" />
-                </div>
-              ))}
-            </>
+        <>
+          <ExampleItemChild
+            type={type}
+            data={item}
+            handleOnCopy={() => setValConfig({ open: true, data: item })}
+            className="pb-[20px]"
+          />
+          {item?.usage && (
+            <ExampleItemChild
+              isUsage
+              type={type}
+              data={item.usage}
+              handleOnCopy={() => setValConfig({ open: true, data: item.usage || {} })}
+            />
           )}
-        </div>
+        </>
       ),
-      extra: <Extra data={item} handleOnCopy={() => setValConfig({ open: true, data: item })} />,
     }));
-  };
 
   const getItems = () =>
     dataSource.map((tpl: TplGroupItem) => ({
