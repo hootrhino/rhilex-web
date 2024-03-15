@@ -41,7 +41,7 @@ const debugCode1 = `Actions = {
   end
 }`;
 
-// 温湿度传感器数据推送到 MQTT Server 快捷模板
+// Modbus 数据解析并推向 MqttServer 快捷模板
 const luaQuickTpl1Code1 = `Actions = {
   function(args)
       local dataT, err = json:J2T(args)
@@ -110,7 +110,7 @@ export const luaQuickTpls = [
     name: '默认分组',
     children: [
       {
-        label: '温湿度传感器数据推送到 MQTT Server',
+        label: 'Modbus 数据解析并推向 MqttServer',
         apply: luaQuickTpl1Code1,
         type: 'function',
         variables: [
@@ -128,7 +128,7 @@ export const quickSnippet = [
     label: 'temp & hum data .. ToMqtt',
     apply: luaQuickTpl1Code1,
     type: 'snippet',
-    detail: '温湿度传感器数据推送到 MQTT Server'
+    detail: 'Modbus 数据解析并推向 MqttServer'
   },
   {
     label: 'data .. ToHttp',
