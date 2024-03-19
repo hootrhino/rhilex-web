@@ -39,7 +39,7 @@ const initialValue = {
   netmask: '255.255.255.0',
   gateway: '192.168.199.1',
   dnsList: [{ dns: '8.8.8.8' }, { dns: '114.114.114.114' }],
-}
+};
 
 const NetworkConfig = () => {
   const formRef = useRef<ProFormInstance>();
@@ -75,7 +75,7 @@ const NetworkConfig = () => {
 
   return (
     <>
-      <Title name='网卡配置' />
+      <Title name="网卡配置" />
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
@@ -93,7 +93,7 @@ const NetworkConfig = () => {
         <ProFormSelect
           options={[
             { label: 'eth0', value: 'eth0' },
-            { label: 'eth1', value: 'eth1' },
+            // { label: 'eth1', value: 'eth1' },
           ]}
           name="interface"
           label="网卡选择"
