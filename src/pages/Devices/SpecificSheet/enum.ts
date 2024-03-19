@@ -50,8 +50,18 @@ export const baseOptions = [
     children: byte2Options,
   },
   {
+    value: 'INT16',
+    label: 'Int16（2字节）',
+    children: byte2Options,
+  },
+  {
     value: 'INT',
     label: 'Int（4字节）',
+    children: byte4Options,
+  },
+  {
+    value: 'INT32',
+    label: 'Int32（4字节）',
     children: byte4Options,
   },
   {
@@ -60,8 +70,18 @@ export const baseOptions = [
     children: byte4Options,
   },
   {
+    value: 'FLOAT32',
+    label: 'Float32（4字节）',
+    children: byte4Options,
+  },
+  {
     value: 'USHORT',
     label: 'UShort（2字节）',
+    children: byte2Options,
+  },
+  {
+    value: 'UINT16',
+    label: 'UInt16（2字节）',
     children: byte2Options,
   },
   {
@@ -70,8 +90,18 @@ export const baseOptions = [
     children: byte4Options,
   },
   {
+    value: 'UINT32',
+    label: 'UInt32（4字节）',
+    children: byte4Options,
+  },
+  {
     value: 'UFLOAT',
     label: 'UFloat（4字节）',
+    children: byte4Options,
+  },
+  {
+    value: 'UFLOAT32',
+    label: 'UFloat32（4字节）',
     children: byte4Options,
   },
 ];
