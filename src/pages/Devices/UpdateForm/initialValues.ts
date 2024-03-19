@@ -24,12 +24,12 @@ export const defaultOutputConfig = {
 
 export const defaultInputModeConfig = {
   REMOTE_STREAM_RTSP: {
-    inputAddr: `http://${window.location.hostname}:345`
+    inputAddr: `http://${window.location.hostname}:345`,
   },
   LOCAL_CAMERA: {
-    inputAddr: undefined
-  }
-}
+    inputAddr: undefined,
+  },
+};
 
 export const defaultConfig = {
   GENERIC_PROTOCOL: {
@@ -41,8 +41,8 @@ export const defaultConfig = {
   },
   GENERIC_MODBUS: {
     commonConfig: {
-      autoRequest: false,
-      mode: 'TCP',
+      // autoRequest: false,
+      mode: 'UART',
     },
     hostConfig: defaultHostConfig,
   },
