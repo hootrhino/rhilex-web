@@ -170,7 +170,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
     }
     setPolling(3000);
     setStopPolling(false);
-  }
+  };
 
   const columns: ProColumns<Partial<PlcSheetItem>>[] = [
     {
@@ -315,7 +315,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
           key="copy"
           record={{
             ...record,
-            uuid: 'new',
+            uuid: 'copy',
           }}
         >
           <Tooltip title="以当前行为模板新建一行数据">
@@ -422,8 +422,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
     } else {
       setPolling(stopPolling ? 0 : 3000);
     }
-
-  }, [editableKeys])
+  }, [editableKeys]);
 
   return (
     <EditableProTable<Partial<PlcSheetItem>>

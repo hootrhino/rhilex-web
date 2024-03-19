@@ -191,7 +191,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
     }
     setPolling(3000);
     setStopPolling(false);
-  }
+  };
 
   const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
     {
@@ -437,7 +437,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
           key="copy"
           record={{
             ...record,
-            uuid: 'new',
+            uuid: 'copy',
           }}
         >
           <Tooltip title="以当前行为模板新建一行数据">
@@ -544,8 +544,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
     } else {
       setPolling(stopPolling ? 0 : 3000);
     }
-
-  }, [editableKeys])
+  }, [editableKeys]);
 
   return (
     <EditableProTable<Partial<ModbusSheetItem>>
