@@ -30,6 +30,7 @@ import { useEffect, useRef, useState } from 'react';
 import { funcEnum } from '../enum';
 import UploadRule from './UploadRule';
 
+import { getDevicesPointErrMsg } from '@/services/rulex/shebeiguanli';
 import { statusEnum } from '@/utils/enum';
 import inRange from 'lodash/inRange';
 import '../index.less';
@@ -192,6 +193,19 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
     setPolling(3000);
     setStopPolling(false);
   };
+
+  // 查看异常弹窗
+  const { run: getErrorMsg } = useRequest(
+    (params: API.getDevicesPointErrMsgParams) => getDevicesPointErrMsg(params),
+    {
+      manual: true,
+      onSuccess: (res) =>
+        modal.error({
+          title: '点位异常信息',
+          content: <div className="flex flex-wrap">{res}</div>,
+        }),
+    },
+  );
 
   const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
     {
@@ -430,43 +444,52 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
     {
       title: '操作',
       valueType: 'option',
-      width: 120,
+      width: 150,
       hideInTable: readOnly,
-      render: (text, record, _, action) => [
-        <EditableProTable.RecordCreator
-          key="copy"
-          record={{
-            ...record,
-            uuid: 'copy',
-          }}
-        >
-          <Tooltip title="以当前行为模板新建一行数据">
-            <a>复制</a>
-          </Tooltip>
-        </EditableProTable.RecordCreator>,
-        <a
-          key="editable"
-          onClick={() => {
-            if (!record?.uuid) return;
-            action?.startEditable?.(record?.uuid);
-          }}
-        >
-          编辑
-        </a>,
-        <Popconfirm
-          title="确定要删除该点位?"
-          onConfirm={() => {
-            if (deviceUuid && record?.uuid) {
-              remove({ device_uuid: deviceUuid, uuids: [record?.uuid] });
-            }
-          }}
-          okText="是"
-          cancelText="否"
-          key="remove"
-        >
-          <a>删除</a>
-        </Popconfirm>,
-      ],
+      render: (text, record, _, action) => {
+        return (
+          <>
+            <EditableProTable.RecordCreator
+              key="copy"
+              record={{
+                ...record,
+                uuid: 'copy',
+              }}
+            >
+              <Tooltip title="以当前行为模板新建一行数据">
+                <a>复制</a>
+              </Tooltip>
+            </EditableProTable.RecordCreator>
+            <a
+              key="editable"
+              onClick={() => {
+                if (!record?.uuid) return;
+                action?.startEditable?.(record?.uuid);
+              }}
+            >
+              编辑
+            </a>
+            <Popconfirm
+              title="确定要删除该点位?"
+              onConfirm={() => {
+                if (deviceUuid && record?.uuid) {
+                  remove({ device_uuid: deviceUuid, uuids: [record?.uuid] });
+                }
+              }}
+              okText="是"
+              cancelText="否"
+              key="remove"
+            >
+              <a>删除</a>
+            </Popconfirm>
+            {record?.status === 0 && (
+              <a key="error" onClick={() => record?.uuid && getErrorMsg({ uuid: record.uuid })}>
+                查看异常
+              </a>
+            )}
+          </>
+        );
+      },
     },
   ];
 

@@ -114,10 +114,18 @@ declare namespace API {
     uuid: string;
   };
 
+  type getDevicesDeviceErrMsgParams = {
+    uuid: string;
+  };
+
   type getDevicesListByGroupParams = {
     uuid: string;
     current?: number;
     size?: number;
+  };
+
+  type getDevicesPointErrMsgParams = {
+    uuid: string;
   };
 
   type getDevicesPropertiesParams = {

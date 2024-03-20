@@ -1,4 +1,5 @@
 import { message } from '@/components/PopupHack';
+import ProConfirmModal from '@/components/ProConfirmModal';
 import { postBackupUpload } from '@/services/rulex/shujubeifen';
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
@@ -8,7 +9,6 @@ import { Button, Space } from 'antd';
 import endsWith from 'lodash/endsWith';
 import { useEffect, useRef, useState } from 'react';
 import Title from './components/Title';
-import ProConfirmModal from '@/components/ProConfirmModal';
 
 const DataBackupConfig = () => {
   const { activeKey } = useModel('useSetting');
@@ -64,11 +64,11 @@ const DataBackupConfig = () => {
                 icon={<DownloadOutlined />}
                 onClick={() => (window.location.href = '/api/v1/backup/snapshot')}
               >
-                快照下载
+                运行快照
               </Button>
               <Button
-               ghost
-               type='primary'
+                ghost
+                type="primary"
                 icon={<DownloadOutlined />}
                 onClick={() => (window.location.href = '/api/v1/backup/download')}
               >

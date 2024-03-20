@@ -67,6 +67,21 @@ export async function getDevicesDetail(
   });
 }
 
+/** 设备异常信息 GET /api/v1/devices/deviceErrMsg */
+export async function getDevicesDeviceErrMsg(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getDevicesDeviceErrMsgParams,
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string }>('/api/v1/devices/deviceErrMsg', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 获取设备的分组列表 GET /api/v1/devices/group */
 export async function getDevicesGroup(options?: { [key: string]: any }) {
   return request<{
@@ -104,6 +119,21 @@ export async function getDevicesListByGroup(
       }[];
     };
   }>('/api/v1/devices/listByGroup', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 点位异常信息 GET /api/v1/devices/pointErrMsg */
+export async function getDevicesPointErrMsg(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getDevicesPointErrMsgParams,
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string }>('/api/v1/devices/pointErrMsg', {
     method: 'GET',
     params: {
       ...params,

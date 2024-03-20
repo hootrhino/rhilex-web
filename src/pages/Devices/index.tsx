@@ -5,12 +5,13 @@ import ProConfirmModal from '@/components/ProConfirmModal';
 import {
   deleteDevicesDel,
   getDevicesDetail,
+  getDevicesDeviceErrMsg,
   getDevicesListByGroup,
   putDevicesRestart,
   putDevicesUpdate,
 } from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
-import { getName, getPlayAddress } from '@/utils/utils';
+import { getName, getPlayAddress, IconFont } from '@/utils/utils';
 import {
   ApartmentOutlined,
   ControlOutlined,
@@ -102,7 +103,20 @@ const Devices = () => {
     }
   };
 
-  const getMenuItems = (type: string, schemaId?: string) => {
+  // 查看异常弹窗
+  const { run: getErrorMsg } = useRequest(
+    (params: API.getDevicesDeviceErrMsgParams) => getDevicesDeviceErrMsg(params),
+    {
+      manual: true,
+      onSuccess: (res) =>
+        modal.error({
+          title: '设备异常信息',
+          content: <div className="flex flex-wrap">{res}</div>,
+        }),
+    },
+  );
+
+  const getMenuItems = ({ type = '', schemaId = '', state }) => {
     const showSheet = ['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type);
 
     let baseItems = [
@@ -131,6 +145,17 @@ const Devices = () => {
       }
     }
 
+    if (state === 0) {
+      baseItems = [
+        ...baseItems,
+        {
+          key: 'error',
+          label: '查看异常',
+          icon: <IconFont type="icon-error" className="text-[16px]" />,
+        },
+      ];
+    }
+
     return baseItems;
   };
 
@@ -141,7 +166,7 @@ const Devices = () => {
       fixed: 'right',
       key: 'option',
       valueType: 'option',
-      render: (_, { uuid, gid, type, name, config, schemaId }) => {
+      render: (_, { uuid, gid, type, name, config, schemaId, state }) => {
         return (
           <Space>
             <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
@@ -161,7 +186,7 @@ const Devices = () => {
             </Popconfirm>
             <Dropdown
               menu={{
-                items: getMenuItems(type || '', schemaId),
+                items: getMenuItems({ type, schemaId, state }),
                 onClick: ({ key }) => {
                   switch (key) {
                     case 'restart':
@@ -200,6 +225,9 @@ const Devices = () => {
                       break;
                     case 'unbind':
                       handleOnUnbind(uuid);
+                      break;
+                    case 'error':
+                      getErrorMsg({ uuid });
                       break;
                     default:
                       break;
