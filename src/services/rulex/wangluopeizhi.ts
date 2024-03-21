@@ -14,6 +14,24 @@ export async function getSettingsConnection(options?: { [key: string]: any }) {
   });
 }
 
+/** 获取设置面板支持的设备树 GET /api/v1/settings/ctrlTree */
+export async function getSettingsCtrlTree(options?: { [key: string]: any }) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      network?: { name?: string; type?: string; status?: number }[];
+      wlan?: { name?: string; type?: string; status?: number }[];
+      net4g?: { name?: string; type?: string; status?: number }[];
+      net5g?: string[];
+      soft_router?: { name?: string; type?: string; status?: number }[];
+    };
+  }>('/api/v1/settings/ctrlTree', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** 获取ETH0网口参数 GET /api/v1/settings/eth */
 export async function getSettingsEth(options?: { [key: string]: any }) {
   return request<{
