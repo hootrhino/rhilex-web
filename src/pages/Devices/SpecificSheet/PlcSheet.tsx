@@ -200,7 +200,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       dataIndex: 'siemensAddress',
       width: 150,
       ellipsis: true,
-      hideInSearch: true,
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
       fieldProps: {
         placeholder: '请输入地址',
@@ -209,7 +208,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
     {
       title: '数据标签',
       dataIndex: 'tag',
-      hideInSearch: true,
       width: 120,
       fixed: readOnly ? 'left' : false,
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
@@ -219,7 +217,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       title: '数据别名',
       dataIndex: 'alias',
       ellipsis: true,
-      hideInSearch: true,
       formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
       fieldProps: { placeholder: '请输入数据别名' },
     },
@@ -262,7 +259,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       title: '权重系数',
       dataIndex: 'weight',
       valueType: 'digit',
-      hideInSearch: true,
       formItemProps: {
         rules: [
           { required: true, message: '此项为必填项' },
@@ -293,7 +289,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
-      hideInSearch: true,
       fieldProps: {
         style: { width: '100%' },
         placeholder: '请输入采集频率',
@@ -307,13 +302,11 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       dataIndex: 'value',
       editable: false,
       ellipsis: true,
-      hideInSearch: true,
     },
     {
       title: '点位状态',
       dataIndex: 'status',
       editable: false,
-      hideInSearch: true,
       width: 80,
       renderText: (_, record) => <StateTag state={record?.status || 0} type="point" />,
     },
@@ -322,7 +315,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       dataIndex: 'lastFetchTime',
       valueType: 'dateTime',
       editable: false,
-      hideInSearch: true,
     },
     {
       title: '操作',
@@ -506,7 +498,6 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
         hideOnSinglePage: true,
       }}
       options={readOnly ? false : {}}
-      search={readOnly ? false : { labelWidth: 150 }}
       editable={{
         type: 'multiple',
         editableKeys,
