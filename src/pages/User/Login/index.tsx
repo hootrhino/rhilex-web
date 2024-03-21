@@ -1,5 +1,5 @@
 import loginIcon from '@/assets/images/loginLogo.png';
-import { message } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
 import { COPYRIGHT, DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -101,11 +101,14 @@ const Login: React.FC = () => {
             </ProFormCheckbox>
             <a
               className="float-right"
-              href="https://hootrhino.github.io/"
-              target="_blank"
-              rel="noreferrer"
+              onClick={() => {
+                modal.info({
+                  title: '忘记密码？',
+                  content: '如果忘记密码，请按照当前设备的手册进行重置。',
+                });
+              }}
             >
-              忘记密码
+              忘记密码 ？
             </a>
           </div>
         </LoginForm>
