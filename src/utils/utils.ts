@@ -150,3 +150,12 @@ export const getPlayAddress = (
 
 // 首字母大写
 export const firstUpperCase = (value: string) => value.replace(/^\w/, (c) => c.toUpperCase());
+
+export const stringToBool = (value: string) => {
+  const valueMap = {
+    true: true,
+    false: false,
+  };
+
+  return valueMap[value];
+};

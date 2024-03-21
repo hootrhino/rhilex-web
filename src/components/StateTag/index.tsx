@@ -6,25 +6,168 @@ import {
   SyncOutlined,
 } from '@ant-design/icons';
 import { Tag } from 'antd';
+import { useEffect, useState } from 'react';
 
 type StateTagProps = {
-  state: number;
+  state: number | boolean | string;
+  type?: 'point' | 'appStack' | 'bool' | 'parse' | 'notice' | 'level' | 'running' | 'default';
 };
 
-const StateTag = ({ state }: StateTagProps) => {
-  const valueEnum = {
-    0: { text: '故障', color: 'error', icon: <IconFont type="icon-close-circle" /> },
-    1: { text: '启用', color: 'success', icon: <CheckCircleOutlined /> },
-    2: { text: '暂停', color: 'warning', icon: <ClockCircleOutlined /> },
-    3: { text: '停止', color: 'default', icon: <MinusCircleOutlined /> },
-    4: { text: '加载中', color: 'processing', icon: <SyncOutlined spin /> },
-  };
+const defaultStateEnum = {
+  0: { text: '故障', color: 'error', icon: <IconFont type="icon-close-circle" /> },
+  1: { text: '启用', color: 'success', icon: <CheckCircleOutlined /> },
+  2: { text: '暂停', color: 'warning', icon: <ClockCircleOutlined /> },
+  3: { text: '停止', color: 'default', icon: <MinusCircleOutlined /> },
+  4: { text: '加载中', color: 'processing', icon: <SyncOutlined spin /> },
+};
 
-  return (
-    <Tag icon={valueEnum[state]?.icon} color={valueEnum[state]?.color}>
-      {valueEnum[state]?.text}
-    </Tag>
-  );
+const pointStateEnum = {
+  1: {
+    text: '正常',
+    color: 'success',
+    icon: <CheckCircleOutlined />,
+  },
+  0: {
+    text: '异常',
+    color: 'error',
+    icon: <IconFont type="icon-close-circle" />,
+  },
+};
+
+const appStackStateEnum = {
+  1: {
+    text: '正在运行',
+    color: 'processing',
+    icon: <SyncOutlined spin />,
+  },
+  0: {
+    text: '已结束',
+    color: 'default',
+    icon: <MinusCircleOutlined />,
+  },
+};
+
+const boolStateEnum = {
+  true: {
+    text: '开启',
+    color: 'success',
+  },
+  false: {
+    text: '关闭',
+    color: 'error',
+  },
+};
+
+const parseStateEnum = {
+  true: {
+    text: '解析',
+    color: 'processing',
+  },
+  false: {
+    text: '不解析',
+    color: 'default',
+  },
+};
+
+const noticeStateEnum = {
+  INFO: {
+    text: '信息',
+    color: 'processing',
+  },
+  ERROR: {
+    text: '错误',
+    color: 'error',
+  },
+  WARNING: {
+    text: '报警',
+    color: 'warning',
+  },
+};
+
+export const levelStateEnum = {
+  fatal: { text: 'Fatal', status: 'Error' },
+  error: {
+    text: 'Error',
+    status: 'Error',
+  },
+  warn: {
+    text: 'Warn',
+    status: 'Warning',
+  },
+  debug: {
+    text: 'Debug',
+    status: 'Default',
+  },
+  info: {
+    text: 'Info',
+    status: 'Processing',
+  },
+};
+
+const runningStateEnum = {
+  true: {
+    text: '运行中',
+    color: 'processing',
+    icon: <SyncOutlined spin />,
+  },
+  false: {
+    text: '停止',
+    color: 'error',
+    icon: <MinusCircleOutlined />,
+  },
+};
+
+const StateTag = ({ state, type = 'default' }: StateTagProps) => {
+  const [activeState, setActiveState] = useState<number | string>(0);
+  const [dataSource, setDataSource] = useState<Record<number | string, any>>(defaultStateEnum);
+
+  const props = ['default', 'point', 'appStack', 'running'].includes(type)
+    ? {
+        icon: dataSource[activeState]?.icon,
+        color: dataSource[activeState]?.color,
+      }
+    : {
+        color: dataSource[activeState]?.color,
+      };
+
+  useEffect(() => {
+    switch (type) {
+      case 'point':
+        setDataSource(pointStateEnum);
+        break;
+      case 'appStack':
+        setDataSource(appStackStateEnum);
+        break;
+      case 'bool':
+        setDataSource(boolStateEnum);
+        break;
+      case 'notice':
+        setDataSource(noticeStateEnum);
+        break;
+      case 'parse':
+        setDataSource(parseStateEnum);
+        break;
+      case 'level':
+        setDataSource(levelStateEnum);
+        break;
+      case 'running':
+        setDataSource(runningStateEnum);
+        break;
+      case 'default':
+        setDataSource(defaultStateEnum);
+        break;
+    }
+  }, [type]);
+
+  useEffect(() => {
+    if (typeof state === 'boolean') {
+      setActiveState(state ? 'true' : 'false');
+    } else {
+      setActiveState(state);
+    }
+  }, [state]);
+
+  return <Tag {...props}>{dataSource[activeState]?.text}</Tag>;
 };
 
 export default StateTag;

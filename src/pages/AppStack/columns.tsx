@@ -1,20 +1,6 @@
 import ProSegmented from '@/components/ProSegmented';
-import { boolEnum, boolMap } from '@/utils/enum';
-import { MinusCircleOutlined, SyncOutlined } from '@ant-design/icons';
-import { Tag } from 'antd';
-
-export const appStateEnum = {
-  1: {
-    text: '正在运行',
-    color: 'processing',
-    icon: <SyncOutlined spin />,
-  },
-  0: {
-    text: '已结束',
-    color: 'default',
-    icon: <MinusCircleOutlined />,
-  },
-};
+import StateTag from '@/components/StateTag';
+import { stringToBool } from '@/utils/utils';
 
 export const baseColumns = [
   {
@@ -33,22 +19,15 @@ export const baseColumns = [
     dataIndex: 'autoStart',
     required: true,
     convertValue: (value: boolean) => value?.toString(),
-    transform: (value: string) => ({ autoStart: boolMap[value] }),
+    transform: (value: string) => ({ autoStart: stringToBool(value) }),
     renderFormItem: () => <ProSegmented width="md" />,
-    renderText: (autoStart: boolean) => {
-      const key = autoStart ? 'true' : 'false';
-      return <Tag color={boolEnum[key]?.color}>{boolEnum[key]?.text}</Tag>;
-    },
+    renderText: (autoStart: boolean) => <StateTag state={autoStart} type="bool" />,
   },
   {
     title: 'APP 状态',
     dataIndex: 'appState',
     hideInForm: true,
-    renderText: (appState: number) => (
-      <Tag icon={appStateEnum[appState]?.icon} color={appStateEnum[appState]?.color}>
-        {appStateEnum[appState]?.text}
-      </Tag>
-    ),
+    renderText: (appState: number) => <StateTag state={appState} type="appStack" />,
   },
   {
     title: '脚本类型',

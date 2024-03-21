@@ -1,11 +1,12 @@
 import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
+import StateTag from '@/components/StateTag';
 import { getNotifyList, putNotifyClear, putNotifyRead } from '@/services/rulex/zhanneitongzhi';
 import { ClearOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
-import { Button, Tag } from 'antd';
+import { Button } from 'antd';
 import { useRef } from 'react';
 
 export type NotifyLogItem = {
@@ -18,21 +19,6 @@ export type NotifyLogItem = {
   status: number;
 };
 
-export const typeEnum = {
-  INFO: {
-    text: '信息',
-    color: 'processing',
-  },
-  ERROR: {
-    text: '错误',
-    color: 'error',
-  },
-  WARNING: {
-    text: '报警',
-    color: 'warning',
-  },
-};
-
 const NotifyLog = () => {
   const actionRef = useRef<ActionType>();
   const { refresh } = useModel('useNotify');
@@ -41,7 +27,7 @@ const NotifyLog = () => {
     actionRef.current?.reload();
     refresh();
     message.success('设置成功');
-  }
+  };
 
   // 已读
   const { run: read } = useRequest((params: API.putNotifyReadParams) => putNotifyRead(params), {
@@ -52,7 +38,7 @@ const NotifyLog = () => {
   // 全部已读
   const { run: clear } = useRequest(() => putNotifyClear(), {
     manual: true,
-    onSuccess: () => handleOnSuccess()
+    onSuccess: () => handleOnSuccess(),
   });
 
   const columns: ProColumns<Partial<NotifyLogItem>>[] = [
@@ -63,7 +49,7 @@ const NotifyLog = () => {
     {
       title: '类型',
       dataIndex: 'type',
-      renderText: (type: string) => <Tag color={typeEnum[type].color}>{typeEnum[type].text}</Tag>,
+      renderText: (type: string) => <StateTag state={type || 'INFO'} type="notice" />,
     },
     {
       title: '概览',

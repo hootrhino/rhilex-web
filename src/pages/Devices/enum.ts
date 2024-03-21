@@ -87,16 +87,16 @@ export const outputEncodeEnum = {
 };
 
 // 是否解析 AIS 报文
-export const parseAisEnum = {
-  true: {
-    text: '解析',
-    color: 'processing',
-  },
-  false: {
-    text: '不解析',
-    color: 'default',
-  },
-};
+// export const parseAisEnum = {
+//   true: {
+//     text: '解析',
+//     color: 'processing',
+//   },
+//   false: {
+//     text: '不解析',
+//     color: 'default',
+//   },
+// };
 
 /** SNMP */
 // 协议分隔符

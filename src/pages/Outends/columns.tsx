@@ -2,8 +2,7 @@ import HeadersTitle from '@/components/HttpHeaders/Title';
 import ProSegmented from '@/components/ProSegmented';
 import StateTag from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
-import { boolEnum, boolMap } from '@/utils/enum';
-import { Tag } from 'antd';
+import { stringToBool } from '@/utils/utils';
 import { modeEnum, typeEnum } from './enum';
 
 export const defaultConfig = {
@@ -174,15 +173,12 @@ export const configColumns = {
       transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
         config: {
           ...allValue,
-          allowPing: boolMap[value],
+          allowPing: stringToBool(value),
         },
       }),
       convertValue: (value: boolean) => value?.toString(),
       renderFormItem: () => <ProSegmented width="md" />,
-      renderText: (allowPing: boolean) => {
-        const key = allowPing ? 'true' : 'false';
-        return <Tag color={boolEnum[key]?.color}>{boolEnum[key]?.text}</Tag>;
-      },
+      renderText: (allowPing: boolean) => <StateTag state={allowPing} type="bool" />,
     },
     {
       title: '心跳包内容',

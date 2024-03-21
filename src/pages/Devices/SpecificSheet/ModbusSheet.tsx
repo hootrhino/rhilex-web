@@ -24,14 +24,14 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button, Popconfirm, Tag, Tooltip, Upload } from 'antd';
+import { Button, Popconfirm, Tooltip, Upload } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect, useRef, useState } from 'react';
 import { funcEnum } from '../enum';
 import UploadRule from './UploadRule';
 
+import StateTag from '@/components/StateTag';
 import { getDevicesPointErrMsg } from '@/services/rulex/shebeiguanli';
-import { statusEnum } from '@/utils/enum';
 import inRange from 'lodash/inRange';
 import { modbusDataTypeOptions } from './enum';
 
@@ -219,6 +219,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'slaverId',
       valueType: 'digit',
       width: 80,
+      hideInSearch: true,
       fieldProps: {
         style: { width: '100%' },
         placeholder: '请输入从设备 ID',
@@ -235,6 +236,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '数据标签',
       dataIndex: 'tag',
       ellipsis: true,
+      hideInSearch: true,
       formItemProps: {
         rules: [{ required: true, message: '此项为必填项' }],
       },
@@ -246,6 +248,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '数据别名',
       dataIndex: 'alias',
       ellipsis: true,
+      hideInSearch: true,
       formItemProps: {
         rules: [{ required: true, message: '此项为必填项' }],
       },
@@ -258,6 +261,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'function',
       valueType: 'select',
       width: 150,
+      hideInSearch: true,
       valueEnum: funcEnum,
       renderFormItem: (_, { record }) => (
         <ProFormSelect
@@ -341,6 +345,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'address',
       valueType: 'digit',
       width: 80,
+      hideInSearch: true,
       fieldProps: {
         style: { width: '100%' },
         placeholder: '请输入起始地址',
@@ -358,6 +363,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'quantity',
       valueType: 'digit',
       width: 100,
+      hideInSearch: true,
       formItemProps: {
         rules: [
           { required: true, message: '此项为必填项' },
@@ -378,6 +384,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '权重系数',
       dataIndex: 'weight',
       valueType: 'digit',
+      hideInSearch: true,
       formItemProps: {
         rules: [
           { required: true, message: '此项为必填项' },
@@ -408,6 +415,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
+      hideInSearch: true,
       fieldProps: {
         style: { width: '100%' },
         placeholder: '请输入采集频率',
@@ -421,17 +429,15 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'value',
       editable: false,
       ellipsis: true,
+      hideInSearch: true,
     },
     {
       title: '点位状态',
       dataIndex: 'status',
       width: 80,
       editable: false,
-      renderText: (_, record) => (
-        <Tag color={statusEnum[record?.status || 0]?.color}>
-          {statusEnum[record?.status || 0]?.text}
-        </Tag>
-      ),
+      hideInSearch: true,
+      renderText: (_, record) => <StateTag state={record?.status || 0} type="point" />,
     },
     {
       title: '采集时间',
@@ -439,6 +445,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       valueType: 'dateTime',
       editable: false,
       ellipsis: true,
+      hideInSearch: true,
     },
     {
       title: '操作',
@@ -625,6 +632,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
           setEditableRows(dataSource);
         },
       }}
+      search={readOnly ? false : { labelWidth: 150 }}
       scroll={{ x: readOnly ? 1200 : undefined }}
     />
   );

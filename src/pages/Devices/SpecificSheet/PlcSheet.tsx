@@ -17,14 +17,15 @@ import {
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { EditableProTable, ProFormCascader, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button, Popconfirm, Tag, Tooltip, Upload } from 'antd';
+import { Button, Popconfirm, Tooltip, Upload } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect, useRef, useState } from 'react';
 import { plcDataTypeOptions } from './enum';
 import UploadRule from './UploadRule';
 
+import StateTag from '@/components/StateTag';
+import UnitTitle from '@/components/UnitTitle';
 import { getDevicesPointErrMsg } from '@/services/rulex/shebeiguanli';
-import { statusEnum } from '@/utils/enum';
 import inRange from 'lodash/inRange';
 
 const defaultPlcConfig = {
@@ -288,15 +289,24 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       },
     },
     {
-      title: '采集频率',
+      title: <UnitTitle title="采集频率" />,
       dataIndex: 'frequency',
       valueType: 'digit',
+      width: 120,
       hideInSearch: true,
+      fieldProps: {
+        style: { width: '100%' },
+        placeholder: '请输入采集频率',
+      },
+      formItemProps: {
+        rules: [{ required: true, message: '此项为必填项' }],
+      },
     },
     {
-      title: '当前值',
+      title: '最新值',
       dataIndex: 'value',
       editable: false,
+      ellipsis: true,
       hideInSearch: true,
     },
     {
@@ -305,11 +315,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       editable: false,
       hideInSearch: true,
       width: 80,
-      renderText: (_, record) => (
-        <Tag color={statusEnum[record?.status || 0]?.color}>
-          {statusEnum[record?.status || 0]?.text}
-        </Tag>
-      ),
+      renderText: (_, record) => <StateTag state={record?.status || 0} type="point" />,
     },
     {
       title: '采集时间',

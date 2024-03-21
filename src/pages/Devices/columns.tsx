@@ -5,10 +5,9 @@ import UnitTitle from '@/components/UnitTitle';
 import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
 import { getSchemaList } from '@/services/rulex/shujumoxing';
-import { boolEnum, boolMap } from '@/utils/enum';
-import { getPlayAddress } from '@/utils/utils';
+import { getPlayAddress, stringToBool } from '@/utils/utils';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { Space, Tag, Typography } from 'antd';
+import { Space, Typography } from 'antd';
 import pick from 'lodash/pick';
 import type { DeviceItem } from '.';
 import {
@@ -16,7 +15,6 @@ import {
   modeEnum,
   outputEncodeEnum,
   outputModeEnum,
-  parseAisEnum,
   plcModelEnum,
   rackEnum,
   slotEnum,
@@ -103,15 +101,13 @@ export const autoRequestConfig = [
     required: true,
     transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
       config: {
-        commonConfig: { ...allValue, autoRequest: boolMap[value] },
+        commonConfig: { ...allValue, autoRequest: stringToBool(value) },
       },
     }),
     convertValue: (value: boolean) => value?.toString(),
     renderFormItem: () => <ProSegmented width="md" />,
     render: (_: any, { commonConfig }: DeviceItem) => (
-      <Tag color={boolEnum[commonConfig?.autoRequest]?.color}>
-        {boolEnum[commonConfig?.autoRequest]?.text}
-      </Tag>
+      <StateTag state={commonConfig?.autoRequest} type="bool" />
     ),
   },
 ];
@@ -268,15 +264,13 @@ export const typeConfigColumns = {
           required: true,
           transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
             config: {
-              commonConfig: { ...allValue, parseAis: boolMap[value] },
+              commonConfig: { ...allValue, parseAis: stringToBool(value) },
             },
           }),
           convertValue: (value: boolean) => value?.toString(),
           renderFormItem: () => <ProSegmented width="md" />,
           render: (_: any, { commonConfig }: DeviceItem) => (
-            <Tag color={parseAisEnum[commonConfig?.parseAis]?.color}>
-              {parseAisEnum[commonConfig?.parseAis]?.text}
-            </Tag>
+            <StateTag state={commonConfig?.parseAis} type="parse" />
           ),
         },
         {
@@ -554,7 +548,7 @@ export const typeConfigColumns = {
                 dataIndex: ['config', 'playAddr'],
                 hideInForm: true,
                 hideInDescriptions: mode === 'REMOTE_STREAM_SERVER',
-                render: (_: any, { inputAddr, outputMode }: DeviceItem) => {
+                render: () => {
                   const htmlCode = `<img src="${playUrl}" width="640" height="480" alt="视频监控" />`;
                   return (
                     <div className="bg-[#9696961A] p-[16px] text-[#2a2e36a6] rounded-[3px] whitespace-pre-wrap break-all">

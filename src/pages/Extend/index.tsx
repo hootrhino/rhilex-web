@@ -1,20 +1,21 @@
+import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
+import StateTag from '@/components/StateTag';
 import {
-deleteGoods,
-getGoodsList,
-putGoodsStart,
-putGoodsStop
+  deleteGoods,
+  getGoodsList,
+  putGoodsStart,
+  putGoodsStop,
 } from '@/services/rulex/kuozhanxieyi';
 import { IconFont } from '@/utils/utils';
-import { MinusCircleOutlined,PlusOutlined,SyncOutlined } from '@ant-design/icons';
-import type { ActionType,ProColumns } from '@ant-design/pro-components';
+import { PlusOutlined } from '@ant-design/icons';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button,Popconfirm,Tag } from 'antd';
-import { useRef,useState } from 'react';
+import { Button, Popconfirm, Tag } from 'antd';
+import { useRef, useState } from 'react';
 import Detail from './Detail';
 import UpdateForm from './Update';
-import PageContainer from '@/components/PageContainer';
 
 export type ExtendItem = {
   uuid?: string;
@@ -25,19 +26,6 @@ export type ExtendItem = {
   description?: string;
   [key: string]: any;
 };
-
-const runningEnum = {
-  true: {
-    text: '运行中',
-    color: 'processing',
-    icon: <SyncOutlined spin />
-  },
-  false: {
-    text: '停止',
-    color: 'error',
-    icon: <MinusCircleOutlined />
-  }
-}
 
 export const baseColumns = [
   {
@@ -97,14 +85,7 @@ export const baseColumns = [
     title: '运行状态',
     dataIndex: 'running',
     width: 100,
-    renderText: (running: any) => (
-      <Tag
-        icon={runningEnum[running]?.icon}
-        color={runningEnum[running]?.color}
-      >
-        {runningEnum[running]?.text}
-      </Tag>
-    ),
+    renderText: (running: string) => <StateTag state={running} type="running" />,
   },
   {
     title: '备注',

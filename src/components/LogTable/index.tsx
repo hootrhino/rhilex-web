@@ -9,17 +9,8 @@ type LogTableProps = ProTableProps<any, any, any> & {
 };
 
 import { LogItem } from '@/models/useWebsocket';
-import { Tag } from 'antd';
 import { useEffect, useState } from 'react';
-
-enum levelColor {
-  fatal = 'error',
-  error = 'error',
-  warn = 'warning',
-  warning = 'warning',
-  debug = 'default',
-  info = 'blue',
-}
+import StateTag, { levelStateEnum } from '../StateTag';
 
 const LogTable = ({ filters = false, options, logData, ...props }: LogTableProps) => {
   const { latestMessage } = useModel('useWebsocket');
@@ -35,30 +26,12 @@ const LogTable = ({ filters = false, options, logData, ...props }: LogTableProps
     {
       title: '等级',
       dataIndex: 'level',
-      renderText: (level: string) => <Tag color={levelColor[level]}>{level}</Tag>,
+      renderText: (level: string) => <StateTag state={level} type="level" />,
       width: 80,
       filters,
       onFilter: filters,
       hideInTable: !filters,
-      valueEnum: {
-        fatal: { text: 'Fatal', status: 'Error' },
-        error: {
-          text: 'Error',
-          status: 'Error',
-        },
-        warn: {
-          text: 'Warn',
-          status: 'Warning',
-        },
-        debug: {
-          text: 'Debug',
-          status: 'Default',
-        },
-        info: {
-          text: 'Info',
-          status: 'Processing',
-        },
-      },
+      valueEnum: levelStateEnum,
     },
     {
       title: '内容',

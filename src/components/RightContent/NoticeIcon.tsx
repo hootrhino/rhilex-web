@@ -1,10 +1,9 @@
-import { typeEnum } from '@/pages/NotifyLog';
+import { BellOutlined } from '@ant-design/icons';
 import { ProList } from '@ant-design/pro-components';
 import { history, useModel } from '@umijs/max';
-import { Badge, Popover, Tag } from 'antd';
-
-import { BellOutlined } from '@ant-design/icons';
+import { Badge, Popover } from 'antd';
 import dayjs from 'dayjs';
+import StateTag from '../StateTag';
 
 const NoticeIcon = () => {
   const { data } = useModel('useNotify');
@@ -32,9 +31,7 @@ const NoticeIcon = () => {
           },
         },
         subTitle: {
-          render: (_, { type }) => {
-            return type && <Tag color={typeEnum[type].color}>{typeEnum[type].text}</Tag>;
-          },
+          render: (_, { type }) => <StateTag state={type || 'INFO'} type="notice" />,
         },
       }}
       className="notification-list"
