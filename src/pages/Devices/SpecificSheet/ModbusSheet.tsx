@@ -33,7 +33,6 @@ import UploadRule from './UploadRule';
 import { getDevicesPointErrMsg } from '@/services/rulex/shebeiguanli';
 import { statusEnum } from '@/utils/enum';
 import inRange from 'lodash/inRange';
-import '../index.less';
 import { modbusDataTypeOptions } from './enum';
 
 const defaultModbusConfig = {

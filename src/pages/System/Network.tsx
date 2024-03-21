@@ -1,6 +1,6 @@
 import { message } from '@/components/PopupHack';
 import { getSettingsEth, postSettingsEth } from '@/services/rulex/wangluopeizhi';
-import { validateGateway, validateIPv4, validateMask } from '@/utils/utils';
+import { validateGateway, validateIPv4, validateMask } from '@/utils/regExp';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import type { FormListActionType, ProFormInstance } from '@ant-design/pro-components';
 import {

@@ -69,7 +69,7 @@ const StatisticCard = () => {
             direction="column"
             type="inner"
             colSpan="50%"
-            style={{ backgroundColor: 'rgba(42, 46, 54, 0.04)' }}
+            className="bg-[rgba(42,46,54,0.04)]"
             bodyStyle={{ paddingBlock: 14, paddingInline: 14 }}
           >
             <Space>

@@ -49,7 +49,7 @@ const UpdateForm = () => {
                 name="luaSource"
                 ref={formRef}
                 required
-                style={{ width: '100%' }}
+                className="w-full"
               />
             ),
           },

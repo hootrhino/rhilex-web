@@ -1,12 +1,12 @@
 import loginIcon from '@/assets/images/loginLogo.png';
 import { message } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
+import { COPYRIGHT, DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { DefaultFooter, LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { Helmet, useModel } from '@umijs/max';
 import { flushSync } from 'react-dom';
 import { history } from 'umi';
-import { COPYRIGHT, DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';
 
 export type CurrentUser = {
   username: string;
@@ -45,14 +45,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div
-      className="flex flex-col h-[100vh] overflow-auto bg-[#f0f2f5]"
-      style={{
-        backgroundImage: `url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')`,
-        backgroundSize: '100%',
-        backgroundRepeat: 'no-repeat',
-      }}
-    >
+    <div className="flex flex-col h-[100vh] overflow-auto bg-[#f0f2f5] bg-no-repeat bg-cover bg-[url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')]">
       <Helmet>
         <title>登录页 - {initialState?.settings?.title || DEFAULT_TITLE}</title>
       </Helmet>

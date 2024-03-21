@@ -10,70 +10,6 @@ body,
   overscroll-behavior: none;
 }
 
-// @font-face {
-//   font-family: 'AlibabaPuHuiTi';
-//   src: url('@/assets/font/AlibabaPuHuiTi-2-55-Regular.woff2') format('woff2');
-//   font-weight: normal;
-//   font-style: normal;
-//   font-display: swap;
-// }
-
-@font-face {
-  font-weight: normal;
-  font-family: 'DingTalk';
-  font-style: normal;
-  src: url('@/assets/font/DingTalk_JinBuTi_Regular.woff2') format('woff2');
-  font-display: swap;
-}
-
-#root {
-  --text-base: 12px;
-
-  --panel-card-bg: #242424;
-  --panel-card-hover: #363636;
-  --panel-card-click: #2d2d2d;
-  --panel-bg: #1a1a1a;
-  --panel-hover: #2c2c2c;
-  --panel-click: #232323;
-  --panel-divider-color: #333;
-  --panel-shadow-outer-color: #000;
-  --panel-shadow-inner-color: rgba(61, 61, 61, 0.6);
-
-  --primary-color: #1f6aff;
-  --primary-color-hover: #4281ff;
-  --primary-color-active: #0d52db;
-
-  --editor-icon: #adadad;
-  --icon-weak: #7a7a7a;
-  --icon-hover: #dbdbdb;
-  --icon-selected: #f7f7f7;
-  --icon-highlight: var(--primary-color);
-
-  --text-color-highlight-1: #fff;
-  --text-color-highlight-2: #f7f7f7;
-  --text-color-highlight-3: #dbdbdb;
-  --text-color-disabled: #525252;
-  --text-color: #adadad;
-
-  --success-color: #29a64e;
-  --success-color-hover: #219644;
-  --success-color-light: #eafff0;
-
-  --badge-color: #eb2f2f;
-  --badge-color-hover: #d12a2a;
-  --badge-color-light: #ffecec;
-}
-
-.ant-pro-form-login-header {
-  height: 50px;
-  line-height: 50px;
-}
-
-.ant-pro-form-login-logo {
-  width: 50px;
-  height: 50px;
-}
-
 canvas {
   display: block;
 }
@@ -83,94 +19,7 @@ ol {
   list-style: none;
 }
 
-// 滚动条
-.editor-scrollbar {
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #5e5e5e;
-    border-radius: 50px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-}
-
-// box-shadow inner
-.editor-box-shadow-1 {
-  box-shadow: inset -1px 0 0 0 var(--panel-shadow-inner-color);
-}
-
-.editor-box-shadow-2 {
-  box-shadow: inset 1px 0 0 0 var(--panel-shadow-inner-color);
-}
-
-.editor-box-shadow-3 {
-  box-shadow: inset 0 -1px 0 0 var(--panel-shadow-inner-color);
-}
-
-.editor-box-shadow-4 {
-  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.4);
-}
-
-.editor-box-shadow-5 {
-  box-shadow: inset 0 1px 0 0 var(--panel-shadow-inner-color);
-}
-
-// box-shadow outer
-.editor-shadow-outer-t {
-  border-top: 1px solid var(--panel-shadow-outer-color);
-}
-
-.editor-shadow-outer-b {
-  border-bottom: 1px solid var(--panel-shadow-outer-color);
-}
-
-.editor-shadow-outer-r {
-  border-right: 1px solid var(--panel-shadow-outer-color);
-}
-
-.editor-shadow-outer-l {
-  border-left: 1px solid var(--panel-shadow-outer-color);
-}
-
-// divide
-.editor-divider-l {
-  border-left: 1px solid var(--panel-divider-color);
-}
-
-.editor-divider-b {
-  border-bottom: 1px solid var(--panel-divider-color);
-}
-
-.editor-divider-t {
-  border-top: 1px solid var(--panel-divider-color);
-}
-
-// border
-.box-border-thin {
-  border: 0.5px solid #141414;
-}
-
-.border-transparent {
-  border: 1px solid transparent;
-
-  &:hover {
-    border: 1px solid transparent;
-  }
-
-  &:focus {
-    border: 1px solid #206aff;
-  }
-}
-
 // lua editor
-.cm-editor {
-  //height: auto;
-}
 .cm-completionIcon-function,
 .cm-completionIcon-keyword,
 .cm-completionIcon-snippet,
@@ -240,20 +89,6 @@ ol {
   }
 }
 
-// login footer
-.ant-pro-global-footer-copyright {
-  color: rgba(0, 0, 0, 0.45);
-}
-
-// pageContainer
-.ant-page-header-content {
-  padding-block-start: 0;
-}
-
-.ant-pro-page-container-children-container {
-  padding-block-start: 0;
-}
-
 .dashboard-card {
   position: relative;
   .ant-pro-card-body {
@@ -272,7 +107,8 @@ ol {
 }
 
 .readonly-editor-wrapper {
-  .cm-activeLine, .cm-activeLineGutter {
+  .cm-activeLine,
+  .cm-activeLineGutter {
     background-color: transparent;
   }
 }
@@ -283,5 +119,25 @@ ol {
   }
   .ant-pro-card-body {
     padding-inline: 0;
+  }
+}
+
+// 点位表
+.sheet-table {
+  .ant-table-tbody {
+    .ant-table-row:nth-child(even) {
+      background: #fafafa;
+    }
+    .ant-form-item-margin-offset {
+      margin-bottom: 0 !important;
+    }
+  }
+}
+
+// 设备
+.device-form {
+  .@{ant-prefix}-pro-form-group-title {
+    font-weight: 400;
+    margin-block-end: 24px;
   }
 }

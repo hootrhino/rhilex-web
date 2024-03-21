@@ -1,10 +1,9 @@
 import { GithubFilled, QuestionCircleOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 
-import Avatar from './AvatarDropdown';
-import './index.less';
-import NoticeIcon from './NoticeIcon';
 import { DOC_URL } from '@/utils/constant';
+import Avatar from './AvatarDropdown';
+import NoticeIcon from './NoticeIcon';
 
 export type SiderTheme = 'light' | 'dark';
 

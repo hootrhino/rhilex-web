@@ -25,7 +25,6 @@ import {
 } from './initialValues';
 
 import PageContainer from '@/components/PageContainer';
-import './index.less';
 
 const DefaultListUrl = '/device/list';
 

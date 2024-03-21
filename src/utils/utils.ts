@@ -1,5 +1,5 @@
 import { createFromIconfontCN } from '@ant-design/icons';
-import type { RcFile, UploadFile } from 'antd/es/upload';
+import type { RcFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
 import CryptoJS from 'crypto-js';
 import { isEmpty, omit, orderBy } from 'lodash';
@@ -8,20 +8,6 @@ import { twMerge } from 'tailwind-merge';
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-
-export const tryToJSON = (val: string) => {
-  try {
-    return JSON.parse(val);
-  } catch (error) {
-    return val;
-  }
-};
-
-export const getBlob = (file: UploadFile) => {
-  const blobFile = new Blob([file?.originFileObj as RcFile], { type: file.type });
-
-  return blobFile;
-};
 
 export const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -34,28 +20,6 @@ export const getBase64 = (file: RcFile): Promise<string> =>
 export const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4195235_n3ktgdssna.js', // 在 iconfont.cn 上生成
 });
-
-// 校验IPv4
-export const IpPattern =
-  /^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/;
-
-export const validateIPv4 = (ip: string) => {
-  return IpPattern.test(ip);
-};
-
-// 子网掩码
-export const MaskPattern =
-  /^(?:\d{1,2}|1\d{2}|2[0-4]\d|25[0-5])(?:\.(?:\d{1,2}|1\d{2}|2[0-4]\d|25[0-5])){3}$/;
-
-export const validateMask = (ip: string) => {
-  return MaskPattern.test(ip);
-};
-
-// 网关
-export const validateGateway = (ip: string) => {
-  const pattern = /^(192\.168(\.(\d|([1-9]\d)|(1\d{2})|(2[0-4]\d)|(25[0-5]))){2})$/;
-  return pattern.test(ip);
-};
 
 // 获取名称
 export const getName = (list: Record<string, any>[], key: string) => {

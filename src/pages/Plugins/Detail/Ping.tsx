@@ -1,5 +1,5 @@
 import ProOutputList from '@/components/ProOutputList';
-import { validateIPv4 } from '@/utils/utils';
+import { validateIPv4 } from '@/utils/regExp';
 import { ProForm } from '@ant-design/pro-components';
 import { Button, Input } from 'antd';
 import { useState } from 'react';

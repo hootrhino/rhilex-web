@@ -1,5 +1,5 @@
 import { getSoftRouterDhcp, postSoftRouterDhcp } from '@/services/rulex/luyoupeizhi';
-import { IpPattern, MaskPattern } from '@/utils/utils';
+import { IpPattern, MaskPattern } from '@/utils/regExp';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
@@ -24,7 +24,7 @@ const initialValue = {
   ip: '192.168.64.100',
   ip_pool_begin: '192.168.64.100',
   ip_pool_end: '192.168.64.130',
-}
+};
 
 const DHCPConfig = () => {
   const formRef = useRef<ProFormInstance>();
@@ -40,7 +40,7 @@ const DHCPConfig = () => {
         iface: 'eth1',
         gateway: '192.168.64.100',
       };
-      await postSoftRouterDhcp(params)
+      await postSoftRouterDhcp(params);
       return true;
     } catch (error) {
       return false;

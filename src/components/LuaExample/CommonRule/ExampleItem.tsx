@@ -12,11 +12,10 @@ import {
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import type { CollapseProps } from 'antd';
-import { Button, Collapse, Divider, theme } from 'antd';
+import { Button, Collapse, Divider, Space, theme } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import CopyButton from './CopyButton';
 import ExampleItemChild from './ExampleItemChild';
-import Label from './Label';
 
 type ExampleItemProps = CollapseProps & {
   type: string; // 'built-in' | 'custom' | 'quick'
@@ -50,7 +49,12 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
   const getItemsChildren = (data: TplItem[]) =>
     data?.map((item) => ({
       key: item.detail,
-      label: <Label data={item} />,
+      label: (
+        <Space>
+          <span>{item.detail}</span>
+          <span className="text-[12px] text-[#000000A6]">{item.label}</span>
+        </Space>
+      ),
       style: panelStyle,
       children: (
         <>
