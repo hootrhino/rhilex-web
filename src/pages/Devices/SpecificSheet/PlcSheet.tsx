@@ -10,6 +10,7 @@ import { IconFont } from '@/utils/utils';
 import {
   DeleteOutlined,
   DownloadOutlined,
+  DownOutlined,
   LoadingOutlined,
   ReloadOutlined,
   UploadOutlined,
@@ -17,7 +18,7 @@ import {
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { EditableProTable, ProFormCascader, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button, Popconfirm, Tooltip, Upload } from 'antd';
+import { Button, Dropdown, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect, useRef, useState } from 'react';
 import { plcDataTypeOptions } from './enum';
@@ -323,7 +324,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       width: 150,
       render: (text, record, _, action) => {
         return (
-          <>
+          <Space>
             <EditableProTable.RecordCreator
               key="copy"
               record={{
@@ -358,11 +359,22 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
               <a>删除</a>
             </Popconfirm>
             {record?.status === 0 && (
-              <a key="error" onClick={() => record?.uuid && getErrorMsg({ uuid: record.uuid })}>
-                查看异常
-              </a>
+              <Dropdown
+                menu={{
+                  items: [{ key: 'error', label: '查看异常' }],
+                  onClick: ({ key }) => {
+                    if (key === 'error' && record?.uuid) {
+                      getErrorMsg({ uuid: record.uuid });
+                    }
+                  },
+                }}
+              >
+                <a onClick={(e) => e.preventDefault()}>
+                  <DownOutlined />
+                </a>
+              </Dropdown>
             )}
-          </>
+          </Space>
         );
       },
     },

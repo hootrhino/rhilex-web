@@ -11100,10 +11100,10 @@
                               "value": {
                                 "type": "string"
                               },
-                              "type": {
+                              "dataType": {
                                 "type": "string"
                               },
-                              "order": {
+                              "dataOrder": {
                                 "type": "string"
                               },
                               "weight": {
@@ -11123,8 +11123,8 @@
                               "status",
                               "lastFetchTime",
                               "value",
-                              "type",
-                              "order",
+                              "dataType",
+                              "dataOrder",
                               "weight"
                             ],
                             "x-apifox-orders": [
@@ -11140,8 +11140,8 @@
                               "status",
                               "lastFetchTime",
                               "value",
-                              "type",
-                              "order",
+                              "dataType",
+                              "dataOrder",
                               "weight"
                             ],
                             "x-apifox-ignore-properties": []
@@ -11279,10 +11279,10 @@
                         "quantity": {
                           "type": "integer"
                         },
-                        "type": {
+                        "dataType": {
                           "type": "string"
                         },
-                        "order": {
+                        "dataOrder": {
                           "type": "string"
                         },
                         "weight": {
@@ -11299,13 +11299,13 @@
                         "address",
                         "frequency",
                         "quantity",
-                        "type",
-                        "order",
+                        "dataType",
+                        "dataOrder",
                         "weight"
                       ],
                       "required": [
-                        "type",
-                        "order",
+                        "dataType",
+                        "dataOrder",
                         "weight"
                       ],
                       "x-apifox-ignore-properties": []

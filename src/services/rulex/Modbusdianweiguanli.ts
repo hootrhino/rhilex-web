@@ -49,8 +49,8 @@ export async function getModbusDataSheetList(
         status?: number;
         lastFetchTime?: number;
         value?: string;
-        type?: string;
-        order?: string;
+        dataType?: string;
+        dataOrder?: string;
         weight?: number;
       }[];
     };
@@ -125,8 +125,8 @@ export async function postModbusDataSheetUpdate(
       address?: number;
       frequency?: number;
       quantity?: number;
-      type?: string;
-      order?: string;
+      dataType?: string;
+      dataOrder?: string;
       weight?: number;
     }[];
   },

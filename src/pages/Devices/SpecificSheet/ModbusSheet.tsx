@@ -11,6 +11,7 @@ import { IconFont } from '@/utils/utils';
 import {
   DeleteOutlined,
   DownloadOutlined,
+  DownOutlined,
   LoadingOutlined,
   ReloadOutlined,
   UploadOutlined,
@@ -24,7 +25,7 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button, Popconfirm, Tooltip, Upload } from 'antd';
+import { Button, Dropdown, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import omit from 'lodash/omit';
 import { useEffect, useRef, useState } from 'react';
 import { funcEnum } from '../enum';
@@ -43,7 +44,7 @@ const defaultModbusConfig = {
   slaverId: 1,
   address: 0,
   quantity: 1,
-  dataType: ['RAW', 'DCBA'],
+  type: ['RAW', 'DCBA'],
   weight: 1,
 };
 
@@ -61,8 +62,8 @@ export type ModbusSheetItem = {
   status: number;
   lastFetchTime: number;
   value: string;
-  type: string;
-  order: string;
+  dataType: string;
+  dataOrder: string;
   weight: number;
   [key: string]: any;
 };
@@ -129,9 +130,9 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
 
   const formatUpdateParams = (params: Partial<ModbusSheetItem>) => {
     let newParams = {
-      ...omit(params, ['dataType']),
-      type: params?.dataType?.[0],
-      order: params?.dataType?.[1],
+      ...omit(params, ['type']),
+      dataType: params?.type?.[0],
+      dataOrder: params?.type?.[1],
       weight: Number(params?.weight),
     };
 
@@ -268,12 +269,12 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
             onChange: (value) => {
               if (value === 1) {
                 editorFormRef.current?.setRowData?.(record?.uuid as string, {
-                  dataType: ['BYTE', 'A'],
+                  type: ['BYTE', 'A'],
                   quantity: 1,
                 });
               } else {
                 editorFormRef.current?.setRowData?.(record?.uuid as string, {
-                  dataType: ['RAW', 'DCBA'],
+                  type: ['RAW', 'DCBA'],
                   weight: 1,
                 });
               }
@@ -286,7 +287,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
     },
     {
       title: '数据类型（字节序）',
-      dataIndex: 'dataType',
+      dataIndex: 'type',
       width: 150,
       ellipsis: true,
       renderFormItem: (_, { record }) => {
@@ -310,11 +311,11 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
               allowClear: false,
               placeholder: '请选择数据类型和字节序',
               onChange: (value: any) => {
-                const type = value?.[0];
+                const dataType = value?.[0];
 
                 editorFormRef.current?.setRowData?.(record?.uuid as string, {
-                  quantity: ['SHORT', 'USHORT', 'RAW', 'UTF8'].includes(type) ? 1 : 2,
-                  weight: type === 'UTF8' ? 0 : 1,
+                  quantity: ['SHORT', 'USHORT', 'RAW', 'UTF8'].includes(dataType) ? 1 : 2,
+                  weight: dataType === 'UTF8' ? 0 : 1,
                 });
               },
               options,
@@ -323,13 +324,13 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
           />
         );
       },
-      render: (_, { type, order }) => {
-        const currentType = modbusDataTypeOptions?.find((item) => item?.value === type);
+      render: (_, { dataType, dataOrder }) => {
+        const currentType = modbusDataTypeOptions?.find((item) => item?.value === dataType);
         const typeLabel = currentType?.label?.split('（')?.[0];
 
-        return typeLabel && order ? (
+        return typeLabel && dataOrder ? (
           <>
-            {typeLabel}（{order}）
+            {typeLabel}（{dataOrder}）
           </>
         ) : (
           '-'
@@ -368,7 +369,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       renderFormItem: (_, { record }) => (
         <ProFormDigit
           noStyle
-          disabled={!['RAW', 'UTF8'].includes(record?.dataType?.[0])}
+          disabled={!['RAW', 'UTF8'].includes(record?.type?.[0])}
           fieldProps={{ style: { width: '100%' }, placeholder: '请输入读取数量' }}
         />
       ),
@@ -392,12 +393,12 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
         ],
       },
       renderFormItem: (_, { record }) => {
-        const type = record?.dataType?.[0];
+        const dataType = record?.type?.[0];
 
         return (
           <ProFormText
             noStyle
-            disabled={['RAW', 'BYTE', 'UTF8'].includes(type)}
+            disabled={['RAW', 'BYTE', 'UTF8'].includes(dataType)}
             fieldProps={{ placeholder: '请输入权重系数' }}
           />
         );
@@ -443,7 +444,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       hideInTable: readOnly,
       render: (text, record, _, action) => {
         return (
-          <>
+          <Space align="end">
             <EditableProTable.RecordCreator
               key="copy"
               record={{
@@ -478,11 +479,22 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
               <a>删除</a>
             </Popconfirm>
             {record?.status === 0 && (
-              <a key="error" onClick={() => record?.uuid && getErrorMsg({ uuid: record.uuid })}>
-                查看异常
-              </a>
+              <Dropdown
+                menu={{
+                  items: [{ key: 'error', label: '查看异常' }],
+                  onClick: ({ key }) => {
+                    if (key === 'error' && record?.uuid) {
+                      getErrorMsg({ uuid: record.uuid });
+                    }
+                  },
+                }}
+              >
+                <a onClick={(e) => e.preventDefault()}>
+                  <DownOutlined />
+                </a>
+              </Dropdown>
             )}
-          </>
+          </Space>
         );
       },
     },
@@ -602,7 +614,10 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
         });
 
         return Promise.resolve({
-          data: data?.records?.map((item) => ({ ...item, dataType: [item?.type, item?.order] })),
+          data: data?.records?.map((item) => ({
+            ...item,
+            type: [item?.dataType, item?.dataOrder],
+          })),
           total: data?.total,
           success: true,
         });
