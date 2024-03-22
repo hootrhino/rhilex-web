@@ -1,13 +1,12 @@
 import { getDataCenterSchemaDefine, postDataCenterDataQuery } from '@/services/rulex/shujuzhongxin';
 import { CodeOutlined, PlayCircleOutlined, TableOutlined } from '@ant-design/icons';
-import { history, useModel, useParams, useRequest } from '@umijs/max';
-import { Button, Card, List, Space, Tree, Typography } from 'antd';
+import { history, useParams, useRequest } from '@umijs/max';
+import { Button, Card, Space, Tree } from 'antd';
 import type { DataNode } from 'antd/es/tree';
 import { Resizable } from 're-resizable';
 import { useEffect, useState } from 'react';
 
-import { cn, filterLogByTopic } from '@/utils/utils';
-import dayjs from 'dayjs';
+import { cn } from '@/utils/utils';
 
 import CodeEditor from '@/components/CodeEditor';
 import PageContainer from '@/components/PageContainer';
@@ -15,7 +14,7 @@ import { ProTable } from '@ant-design/pro-components';
 
 const DataCenter = () => {
   const { uuid } = useParams();
-  const { messageHistory } = useModel('useWebsocket');
+  // const { messageHistory } = useModel('useWebsocket');
 
   const [height, setHeight] = useState<number>(500);
   const [logHeight, setLogHeight] = useState<number>(100);
@@ -189,7 +188,7 @@ const DataCenter = () => {
             className="h-full"
             styles={{ body: { padding: '0 24px 24px 24px' } }}
           >
-            <List
+            {/* <List
               header={false}
               footer={false}
               dataSource={filterLogByTopic(messageHistory.current)}
@@ -203,7 +202,7 @@ const DataCenter = () => {
                   <span className="truncate">{item?.msg}</span>
                 </List.Item>
               )}
-            />
+            /> */}
           </Card>
         </Resizable>
       </div>

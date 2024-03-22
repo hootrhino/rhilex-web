@@ -8,7 +8,7 @@ type LogTableProps = ProTableProps<any, any, any> & {
   filters?: boolean;
 };
 
-import { LogItem } from '@/models/useWebsocket';
+import type { LogItem } from '@/models/useWebsocket';
 import { useEffect, useState } from 'react';
 import StateTag, { levelStateEnum } from '../StateTag';
 

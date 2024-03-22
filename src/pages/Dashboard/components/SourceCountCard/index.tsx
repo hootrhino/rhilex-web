@@ -19,13 +19,13 @@ const SourceCountCard = ({ responsive }: SourceCountCardProps) => {
 
   const sourceCountData = [
     {
-      title: '入口总数',
+      title: '南向总数',
       value: inends,
       icon: ImportIcon,
       key: 'inends',
     },
     {
-      title: '出口总数',
+      title: '北向总数',
       value: outends,
       icon: ExportIcon,
       key: 'outends',

@@ -1,5 +1,5 @@
 import { useWebSocket } from 'ahooks';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export type LogItem = {
   time: number;
@@ -18,7 +18,6 @@ type TopicData = {
 };
 
 const useWebsocket = () => {
-  const messageHistory = useRef<string[]>([]);
   const [sockUrl, setUrl] = useState<string>('');
   const [topicData, setTopicData] = useState<TopicData>({
     ruleLog: [],
@@ -29,7 +28,7 @@ const useWebsocket = () => {
     scanLog: [],
   });
 
-  const { sendMessage, readyState, latestMessage } = useWebSocket(sockUrl, {
+  const { sendMessage, readyState, latestMessage, disconnect, connect } = useWebSocket(sockUrl, {
     reconnectInterval: 1000,
   });
 
@@ -63,11 +62,6 @@ const useWebsocket = () => {
 
         setTopicData(newTopicData);
       }
-
-      messageHistory.current = messageHistory.current.concat(latestMessage?.data);
-      if (messageHistory.current?.length > 50) {
-        messageHistory.current.shift();
-      }
     }
   }, [latestMessage]);
 
@@ -88,7 +82,8 @@ const useWebsocket = () => {
 
   return {
     latestMessage,
-    messageHistory,
+    connect,
+    disconnect,
     topicData,
   };
 };
