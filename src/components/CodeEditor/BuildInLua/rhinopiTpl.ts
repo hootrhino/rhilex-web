@@ -13,8 +13,8 @@ const rhinopiList = [
 ];
 
 export const rhinopiTpl = rhinopiList?.map((rhinopi) => {
-  const code = `local err1 = rhinopi:${rhinopi.target}(arg)
-if err1 ~= nil then
+  const code = `local err = rhinopi:${rhinopi.target}(arg)
+if err ~= nil then
     Debug(err)
 end`;
 

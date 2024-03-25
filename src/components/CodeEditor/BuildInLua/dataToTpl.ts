@@ -23,7 +23,7 @@ const getUsageTpl = (server: string) => {
   const code = `Actions = {
   function(args)
       local err = data:To${firstUpperCase(server)}(uuid, args)
-      if err1 ~= nil then
+      if err ~= nil then
           Throw(err)
       end
       return true, args

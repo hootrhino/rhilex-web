@@ -17,7 +17,7 @@ const getVariables = (target: string) => {
   ];
 
   if (['F15', 'F16'].includes(target)) {
-    err = `local err1 = modbus:${target}(arg1, arg2, arg3, arg4, arg5)`;
+    err = `local err = modbus:${target}(arg1, arg2, arg3, arg4, arg5)`;
     variables = [
       ...variables,
       { label: '起始地址', name: 'arg3', value: 0, type: 'number' },
@@ -25,7 +25,7 @@ const getVariables = (target: string) => {
       { label: '写入数据', name: 'arg5', value: '', type: 'string' },
     ];
   } else {
-    err = `local err1 = modbus:${target}(arg1, arg2, arg3, arg4)`;
+    err = `local err = modbus:${target}(arg1, arg2, arg3, arg4)`;
     variables = [
       ...variables,
       { label: '线圈值', name: 'arg3', value: 0, type: 'number' },
@@ -40,7 +40,7 @@ export const modbusTpl = modbusList?.map((modbus) => {
   const { err, variables } = getVariables(modbus.target);
 
   const code = `${err}
-if err1 ~= nil then
+if err ~= nil then
     Debug(err)
 end`;
 

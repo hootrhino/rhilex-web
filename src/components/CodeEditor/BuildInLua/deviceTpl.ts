@@ -9,13 +9,13 @@ const deviceList = [
 ];
 
 const getCode = (target: string) => {
-  const err1 =
+  const err =
     target === 'Read'
-      ? `local Data, err1 = device:${target}(arg1, arg2, arg3)`
-      : `local err1 = device:${target}(arg1, arg2, arg3)`;
+      ? `local Data, err = device:${target}(arg1, arg2, arg3)`
+      : `local err = device:${target}(arg1, arg2, arg3)`;
 
-  return `${err1}
-if err1 ~= nil then
+  return `${err}
+if err ~= nil then
   Debug(err)
 end`;
 };
