@@ -2,8 +2,9 @@ import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
 import CryptoJS from 'crypto-js';
-import { isEmpty, omit, orderBy } from 'lodash';
+import orderBy from 'lodash/orderBy';
 import { twMerge } from 'tailwind-merge';
+import { isEmpty, omit } from './redash';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

@@ -1,11 +1,11 @@
 import type { PluginConfig, PluginParams } from '@/models/usePlugin';
+import { omit } from '@/utils/redash';
 import { IconFont } from '@/utils/utils';
 import { CheckCircleOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { message, Tag } from 'antd';
-import { omit } from 'lodash';
 import { useEffect } from 'react';
 
 type DetailItem = {
@@ -25,7 +25,7 @@ const cleanSessionEnum = {
   false: {
     text: 'false',
     color: 'error',
-    icon: <IconFont type='icon-close-circle' />,
+    icon: <IconFont type="icon-close-circle" />,
   },
 };
 

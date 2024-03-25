@@ -1,5 +1,6 @@
 import { message } from '@/components/PopupHack';
 import { getSettingsEth, postSettingsEth } from '@/services/rulex/wangluopeizhi';
+import { omit } from '@/utils/redash';
 import { validateGateway, validateIPv4, validateMask } from '@/utils/regExp';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import type { FormListActionType, ProFormInstance } from '@ant-design/pro-components';
@@ -12,7 +13,6 @@ import {
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Tooltip } from 'antd';
-import { omit } from 'lodash';
 import { useRef } from 'react';
 import Title from './components/Title';
 
@@ -52,7 +52,7 @@ const NetworkConfig = () => {
         formRef.current?.setFieldsValue(initialValue);
       } else {
         const dnsList = data['eth0'].dns?.map((item) => ({ dns: item }));
-        formRef.current?.setFieldsValue({ ...omit(data['eth0'], 'dns'), dnsList });
+        formRef.current?.setFieldsValue({ ...omit(data['eth0'], ['dns']), dnsList });
       }
     },
   });

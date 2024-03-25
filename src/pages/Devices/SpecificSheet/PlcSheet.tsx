@@ -6,6 +6,7 @@ import {
   postS1200DataSheetSheetImport,
   postS1200DataSheetUpdate,
 } from '@/services/rulex/ximenzidianweiguanli';
+import { omit } from '@/utils/redash';
 import { IconFont } from '@/utils/utils';
 import {
   DeleteOutlined,
@@ -19,7 +20,6 @@ import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/p
 import { EditableProTable, ProFormCascader, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space, Tooltip, Upload } from 'antd';
-import omit from 'lodash/omit';
 import { useEffect, useRef, useState } from 'react';
 import { plcDataTypeOptions } from './enum';
 import UploadRule from './UploadRule';
@@ -27,7 +27,7 @@ import UploadRule from './UploadRule';
 import StateTag from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { getDevicesPointErrMsg } from '@/services/rulex/shebeiguanli';
-import inRange from 'lodash/inRange';
+import { inRange } from '@/utils/redash';
 
 const defaultPlcConfig = {
   tag: '',

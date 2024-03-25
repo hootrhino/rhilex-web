@@ -1,11 +1,11 @@
 import { message } from '@/components/PopupHack';
 import { postOsResetInterMetric } from '@/services/rulex/xitongshuju';
+import { sum } from '@/utils/redash';
 import { cn } from '@/utils/utils';
 import { ReloadOutlined } from '@ant-design/icons';
 import { ProCard } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { Button, Space, Statistic } from 'antd';
-import sum from 'lodash/sum';
 
 const StatisticCard = () => {
   const { dataSource, run } = useModel('useSystem');
@@ -38,8 +38,6 @@ const StatisticCard = () => {
     },
   ];
 
-  const total = statisticData?.map((data) => Number(data?.value));
-
   return (
     <ProCard bodyStyle={{ padding: 0 }} className="dashboard-card">
       <Button
@@ -59,7 +57,7 @@ const StatisticCard = () => {
       </Button>
       <ProCard layout="center" direction="column" type="inner" colSpan="25%">
         <div className="text-[#585858]">输入/输出总数</div>
-        <Statistic value={sum(total)} />
+        <Statistic value={sum(statisticData, (s) => s.value || 0)} />
       </ProCard>
       <ProCard gutter={[16, 16]} wrap bodyStyle={{ paddingInline: 14 }}>
         {statisticData?.map((item) => (

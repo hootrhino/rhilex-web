@@ -1,12 +1,12 @@
 import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
 import { postBackupUpload } from '@/services/rulex/shujubeifen';
+import { endsWith } from '@/utils/redash';
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormUploadDragger } from '@ant-design/pro-components';
 import { history, useModel } from '@umijs/max';
-import { Button, Space } from 'antd';
-import endsWith from 'lodash/endsWith';
+import { Button, Space, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import Title from './components/Title';
 
@@ -94,6 +94,7 @@ const DataBackupConfig = () => {
 
               if (!isSql) {
                 message.error('仅支持 .db 格式的文件，请检查上传文件格式');
+                return Upload.LIST_IGNORE;
               }
 
               return new Promise((resolve) => {

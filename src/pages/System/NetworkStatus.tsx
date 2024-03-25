@@ -1,9 +1,9 @@
 import { getSettingsNetDetails, getSettingsNetStatus } from '@/services/rulex/wangluopeizhi';
+import { pick } from '@/utils/redash';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Descriptions, Modal } from 'antd';
-import { pick } from 'lodash';
 import { useState } from 'react';
 import Title from './components/Title';
 

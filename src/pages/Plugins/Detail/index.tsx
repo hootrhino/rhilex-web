@@ -1,8 +1,8 @@
+import { omit } from '@/utils/redash';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { Button, message, Modal, Space } from 'antd';
-import omit from 'lodash/omit';
 import { useRef, useState } from 'react';
 import ClientList from './ClientList';
 import Ping from './Ping';
@@ -22,7 +22,7 @@ const Detail = () => {
     setDisabled(false);
     setLoading(false);
     setShowOutput(false);
-  }
+  };
 
   const handleOnClose = () => {
     if (detailConfig.name === 'start' && detailConfig.title === '终端') {
@@ -30,7 +30,7 @@ const Detail = () => {
       run({ uuid: detailConfig.uuid, name: 'stop', args: '' });
       handleOnReset();
     } else {
-      handleOnReset()
+      handleOnReset();
     }
   };
 

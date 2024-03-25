@@ -1,8 +1,8 @@
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
+import { omit } from '@/utils/redash';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps } from 'antd';
-import omit from 'lodash/omit';
 import { useRequest } from 'umi';
 import { baseColumns, configColumns } from '../columns';
 import { typeEnum } from '../enum';
@@ -24,7 +24,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         columns={baseColumns as ProDescriptionsItemProps<Record<string, any>>[]}
         labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
         title="基本配置"
-        dataSource={omit(data, 'config')}
+        dataSource={data && omit(data, ['config'])}
         loading={loading}
       />
       {data?.type && Object.keys(typeEnum).includes(data?.type) && (

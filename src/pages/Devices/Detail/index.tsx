@@ -1,12 +1,11 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
+import { flatten, omit } from '@/utils/redash';
 import { getName } from '@/utils/utils';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { history, useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
-import { flatten } from 'lodash';
-import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import type { DeviceItem } from '..';
 import { baseColumns, typeConfigColumns } from '../columns';
@@ -109,7 +108,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
       <>
         <EnhancedProDescriptions
           title="基本配置"
-          dataSource={omit(detail, 'config')}
+          dataSource={detail && omit(detail, ['config'])}
           columns={formatColumns(baseColumns) as ProDescriptionsItemProps<Record<string, any>>[]}
         />
         {detail && type && Object.keys(typeEnum).includes(type) && (
@@ -136,7 +135,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
                     key={`description-${index}`}
                     title={item?.title}
                     dataSource={detail.config}
-                    columns={formatColumns(item?.columns)}
+                    columns={item?.columns && formatColumns(item?.columns)}
                     column={column}
                   />
                 );

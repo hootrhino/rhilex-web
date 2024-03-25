@@ -9,6 +9,7 @@ import {
   postFirmwareUpgrade,
   postFirmwareUpload,
 } from '@/services/rulex/gujiancaozuo';
+import { endsWith } from '@/utils/redash';
 import { IconFont } from '@/utils/utils';
 import {
   CloudUploadOutlined,
@@ -19,7 +20,6 @@ import {
 import { ProCard, ProDescriptions } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
 import { Button, Modal, Progress, Space, Upload } from 'antd';
-import endsWith from 'lodash/endsWith';
 import { useState } from 'react';
 import Title from './components/Title';
 
@@ -124,6 +124,7 @@ const FirmwareConfig = () => {
 
                 if (!isZip) {
                   message.error('仅支持 zip 格式文件，请检查上传文件格式');
+                  return Upload.LIST_IGNORE;
                 }
 
                 return new Promise((resolve) => {

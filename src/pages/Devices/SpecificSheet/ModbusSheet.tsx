@@ -7,6 +7,7 @@ import {
   postModbusDataSheetSheetImport,
   postModbusDataSheetUpdate,
 } from '@/services/rulex/Modbusdianweiguanli';
+import { omit } from '@/utils/redash';
 import { IconFont } from '@/utils/utils';
 import {
   DeleteOutlined,
@@ -26,14 +27,13 @@ import {
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space, Tooltip, Upload } from 'antd';
-import omit from 'lodash/omit';
 import { useEffect, useRef, useState } from 'react';
 import { funcEnum } from '../enum';
 import UploadRule from './UploadRule';
 
 import StateTag from '@/components/StateTag';
 import { getDevicesPointErrMsg } from '@/services/rulex/shebeiguanli';
-import inRange from 'lodash/inRange';
+import { inRange } from '@/utils/redash';
 import { modbusDataTypeOptions } from './enum';
 
 const defaultModbusConfig = {

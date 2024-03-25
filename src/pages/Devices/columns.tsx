@@ -5,10 +5,10 @@ import UnitTitle from '@/components/UnitTitle';
 import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
 import { getSchemaList } from '@/services/rulex/shujumoxing';
+import { pick } from '@/utils/redash';
 import { getPlayAddress, stringToBool } from '@/utils/utils';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { Space, Typography } from 'antd';
-import pick from 'lodash/pick';
 import type { DeviceItem } from '.';
 import {
   inputModeEnum,
@@ -509,8 +509,8 @@ export const typeConfigColumns = {
                 valueType: 'select',
                 valueEnum:
                   mode === 'REMOTE_STREAM_SERVER'
-                    ? pick(outputEncodeEnum, 'H264_STREAM')
-                    : pick(outputEncodeEnum, 'JPEG_STREAM'),
+                    ? pick(outputEncodeEnum, ['H264_STREAM'])
+                    : pick(outputEncodeEnum, ['JPEG_STREAM']),
                 required: true,
                 fieldProps: {
                   allowClear: false,

@@ -1,15 +1,15 @@
 import { message } from '@/components/PopupHack';
-import { getGoodsDetail,postGoodsCreate,putGoodsUpdate } from '@/services/rulex/kuozhanxieyi';
-import type { ModalFormProps,ProFormInstance } from '@ant-design/pro-components';
+import { getGoodsDetail, postGoodsCreate, putGoodsUpdate } from '@/services/rulex/kuozhanxieyi';
+import { omit } from '@/utils/redash';
+import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {
-ModalForm,
-ProFormText,
-ProFormTextArea,
-ProFormUploadDragger
+  ModalForm,
+  ProFormText,
+  ProFormTextArea,
+  ProFormUploadDragger,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import type { UploadFile } from 'antd/es/upload/interface';
-import omit from 'lodash/omit';
 import { useEffect, useRef, useState } from 'react';
 
 type FormParams = {
@@ -73,12 +73,12 @@ const UpdateForm = ({ uuid, reload, onOpenChange, ...props }: UpdateFormProps) =
 
       if (formData?.uuid) {
         await putGoodsUpdate(
-          { ...omit(params, 'upload'), uuid: formData?.uuid } as any,
+          { ...omit(params, ['upload']), uuid: formData?.uuid } as any,
           uploadFile as File,
         );
         message.success('更新成功');
       } else {
-        await postGoodsCreate(omit(params, 'upload') as any, uploadFile as File);
+        await postGoodsCreate(omit(params, ['upload']) as any, uploadFile as File);
         message.success('新建成功');
       }
 

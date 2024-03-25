@@ -1,4 +1,5 @@
 import { getSiteDetail, putSiteReset, putSiteUpdate } from '@/services/rulex/zhandianpeizhi';
+import { startsWith } from '@/utils/redash';
 import { getBase64 } from '@/utils/utils';
 import { SyncOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
@@ -7,7 +8,6 @@ import { useModel, useRequest } from '@umijs/max';
 import type { UploadFile } from 'antd';
 import { Button, Image, message, Modal, Space, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload';
-import { startsWith } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import Title from './components/Title';
 
@@ -20,16 +20,17 @@ const SiteConfig = () => {
 
   // site setting
   const { data: detail, run: getDetail } = useRequest(() => getSiteDetail(), {
-    onSuccess: res => {
+    onSuccess: (res) => {
       setInitialState({
         ...initialState,
         settings: {
           ...initialState.settings,
           title: res?.appName,
-          logo: res?.logo === '/logo.png' ? res?.logo : `${window?.location?.origin}/api/v1/site/logo`,
+          logo:
+            res?.logo === '/logo.png' ? res?.logo : `${window?.location?.origin}/api/v1/site/logo`,
         },
       });
-    }
+    },
   });
 
   const handleOnFinish = async (values: { appName: string }) => {
@@ -63,7 +64,7 @@ const SiteConfig = () => {
     onSuccess: () => {
       message.success('恢复成功');
       getDetail();
-    }
+    },
   });
 
   useEffect(() => {
@@ -101,7 +102,7 @@ const SiteConfig = () => {
         />
 
         <ProFormUploadButton
-        required
+          required
           label="系统 Logo"
           name="logo"
           accept="image/*"

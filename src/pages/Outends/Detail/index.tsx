@@ -1,8 +1,8 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
 import { getOutendsDetail } from '@/services/rulex/shuchuziyuanguanli';
+import { omit } from '@/utils/redash';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps } from 'antd';
-import omit from 'lodash/omit';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
 import { baseColumns, configColumns } from '../columns';
@@ -30,7 +30,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         columns={baseColumns}
         labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
         title="基本配置"
-        dataSource={omit(data, 'config')}
+        dataSource={data && omit(data, ['config'])}
         loading={loading}
       />
       {data?.type && Object.keys(typeEnum).includes(data?.type) && (
