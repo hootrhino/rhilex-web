@@ -62,29 +62,11 @@ export const flatten = <T>(arrays: T[][]): T[] => {
  * * Ending number is exclusive.
  * * The start and the end of the range can be ascending OR descending order.
  *
- * @param {number} number The number to check.
+ * @param {number} value The number to check.
  * @param {number} start The start of the range. Inclusive.
  * @param {number} end The end of the range. Exclusive.
  * @returns {boolean} Returns `true` if `number` is in the range, else `false`.
  */
-// export function inRange(number: number, start: number, end: number): boolean;
-// export const inRange = (value: number, start: number, end?: number): boolean => {
-//   const isTypeSafe =
-//     typeof value === 'number' &&
-//     typeof start === 'number' &&
-//     (typeof end === 'undefined' || typeof end === 'number');
-
-//   if (!isTypeSafe) {
-//     return false;
-//   }
-
-//   if (typeof end === 'undefined') {
-//     end = start;
-//     start = 0;
-//   }
-
-//   return value >= Math.min(start, end) && value < Math.max(start, end);
-// }
 export const inRange = (value: number, start: number, end: number = start): boolean => {
   return value >= Math.min(start, end) && value < Math.max(start, end);
 };
@@ -134,30 +116,6 @@ export const endsWith = (str: string, suffix: string): boolean => {
   return str.substring(len - suffixLen) === suffix;
 };
 
-// export const endsWith = (source: string, target: string, pos?: number) => {
-//   const { length } = source;
-//   pos = pos === undefined ? length : +pos;
-//   if (pos < 0 || pos !== pos) {
-//     pos = 0;
-//   } else if (pos > length) {
-//     pos = length;
-//   }
-//   const end = pos;
-//   pos -= target.length;
-//   return pos >= 0 && source.slice(pos, end) === target;
-// };
-
-// export const startsWith = (source: string, target: string, pos = 0) => {
-//   const { length } = source;
-//   pos = pos === null ? 0 : pos;
-//   if (pos < 0) {
-//     pos = 0;
-//   } else if (pos > length) {
-//     pos = length;
-//   }
-//   target = `${target}`;
-//   return source.slice(pos, pos + target.length) === target;
-// };
 export const startsWith = (str: string, prefix: string): boolean => {
   return str.indexOf(prefix) === 0;
 };
