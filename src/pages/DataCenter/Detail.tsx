@@ -14,7 +14,6 @@ import { ProTable } from '@ant-design/pro-components';
 
 const DataCenter = () => {
   const { uuid } = useParams();
-  // const { messageHistory } = useModel('useWebsocket');
 
   const [height, setHeight] = useState<number>(500);
   const [logHeight, setLogHeight] = useState<number>(100);
@@ -188,21 +187,9 @@ const DataCenter = () => {
             className="h-full"
             styles={{ body: { padding: '0 24px 24px 24px' } }}
           >
-            {/* <List
-              header={false}
-              footer={false}
-              dataSource={filterLogByTopic(messageHistory.current)}
-              size="small"
-              style={{ maxHeight: logHeight - 56, overflowY: 'auto' }}
-              renderItem={(item) => (
-                <List.Item>
-                  <Typography.Text mark>
-                    [{dayjs(item?.time).format('YYYY-MM-DD HH:mm:ss')}]
-                  </Typography.Text>
-                  <span className="truncate">{item?.msg}</span>
-                </List.Item>
-              )}
-            /> */}
+            {
+              // TODO 输出日志
+            }
           </Card>
         </Resizable>
       </div>

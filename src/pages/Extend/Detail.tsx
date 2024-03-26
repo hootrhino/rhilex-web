@@ -1,10 +1,11 @@
-import LogTable from '@/components/LogTable';
+import ProLog from '@/components/ProLog';
 import { getGoodsDetail } from '@/services/rulex/kuozhanxieyi';
-import { filterLogByTopic } from '@/utils/utils';
+import { handleNewMessage } from '@/utils/utils';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
+import { useLocalStorageState } from 'ahooks';
 import type { DrawerProps } from 'antd';
-import { Drawer } from 'antd';
+import { Button, Drawer, Modal } from 'antd';
 import { useEffect } from 'react';
 import { baseColumns } from '.';
 
@@ -13,10 +14,12 @@ type DetailProps = DrawerProps & {
 };
 
 const Detail = ({ config, onClose, ...props }: DetailProps) => {
-  const {
-    topicData: { goodsConsole },
-  } = useModel('useWebsocket');
   const { uuid, type, open } = config;
+  const { latestMessage } = useModel('useWebsocket');
+  const [goodsConsole, setConsole] = useLocalStorageState<string[]>('goods-console', {
+    defaultValue: [],
+  });
+
   const { run: getDetail, data: detail } = useRequest(
     (params: API.getGoodsDetailParams) => getGoodsDetail(params),
     {
@@ -30,9 +33,14 @@ const Detail = ({ config, onClose, ...props }: DetailProps) => {
     }
   }, [uuid]);
 
-  return (
+  useEffect(() => {
+    const newData = handleNewMessage(goodsConsole, latestMessage?.data, `goods/console/${uuid}`);
+    setConsole(newData);
+  }, [latestMessage]);
+
+  return type === 'detail' ? (
     <Drawer
-      title={`扩展协议${type === 'detail' ? '详情' : '日志'}`}
+      title="扩展协议详情"
       open={open}
       width={type === 'detail' ? '30%' : '40%'}
       placement="right"
@@ -40,23 +48,30 @@ const Detail = ({ config, onClose, ...props }: DetailProps) => {
       maskClosable={false}
       {...props}
     >
-      {type === 'detail' ? (
-        <ProDescriptions
-          dataSource={detail}
-          columns={baseColumns.filter((col) => col.dataIndex !== 'args')}
-          column={1}
-          labelStyle={{ width: 120, justifyContent: 'end', paddingRight: 10 }}
-        >
-          <ProDescriptions.Item label="协议参数">{detail?.args}</ProDescriptions.Item>
-        </ProDescriptions>
-      ) : (
-        <LogTable
-          options={false}
-          headerTitle={undefined}
-          logData={filterLogByTopic(goodsConsole, `goods/console/${uuid}`)}
-        />
-      )}
+      <ProDescriptions
+        dataSource={detail}
+        columns={baseColumns.filter((col) => col.dataIndex !== 'args')}
+        column={1}
+        labelStyle={{ width: 120, justifyContent: 'end', paddingRight: 10 }}
+      >
+        <ProDescriptions.Item label="协议参数">{detail?.args}</ProDescriptions.Item>
+      </ProDescriptions>
     </Drawer>
+  ) : (
+    <Modal
+      title="扩展协议日志"
+      width="50%"
+      open={props.open}
+      footer={
+        <Button type="primary" onClick={onClose}>
+          关闭
+        </Button>
+      }
+      onCancel={onClose}
+      styles={{ body: { padding: 0 } }}
+    >
+      <ProLog topic={`goods/console/${uuid}`} dataSource={goodsConsole} />
+    </Modal>
   );
 };
 

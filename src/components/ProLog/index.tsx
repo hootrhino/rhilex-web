@@ -1,0 +1,157 @@
+import { cn } from '@/utils/utils';
+import {
+  DeleteOutlined,
+  DownloadOutlined,
+  PauseCircleOutlined,
+  PlayCircleOutlined,
+} from '@ant-design/icons';
+import type { ProCardTabsProps } from '@ant-design/pro-components';
+import { ProCard } from '@ant-design/pro-components';
+import { useModel } from '@umijs/max';
+import { FitAddon } from '@xterm/addon-fit';
+import { Terminal } from '@xterm/xterm';
+import '@xterm/xterm/css/xterm.css';
+import { Button, Space } from 'antd';
+import dayjs from 'dayjs';
+import { useEffect, useRef, useState } from 'react';
+
+type cardProps = Pick<ProCardTabsProps, 'cardProps'>;
+
+type ProLogProps = Omit<cardProps, 'extra'> &
+  React.HTMLAttributes<HTMLDivElement> & {
+    dataSource: string[] | undefined;
+    topic?: string;
+    extra?: boolean;
+    hidePadding?: boolean;
+    handleOnReset?: () => void;
+  };
+
+// text color 30-37
+const ansiColorCode = {
+  fatal: '\u001b[38;2;255;77;79m', // red
+  error: '\u001b[38;2;255;77;79m', // red
+  warn: '\u001b[38;2;250;173;20m', // yellow
+  debug: '\u001b[38;2;89;156;211m', // blue
+  info: '\u001b[38;2;182;206;171m', // green
+};
+
+const ProLog = ({
+  dataSource = [],
+  extra = false,
+  topic = 'all',
+  hidePadding = false,
+  handleOnReset,
+  className,
+  ...props
+}: ProLogProps) => {
+  const { disconnect, connect } = useModel('useWebsocket');
+  const logRef = useRef<any>(null);
+  const [play, setPlay] = useState<boolean>(true);
+
+  const handleOutput = (inputValue: Record<string, any>) => {
+    const time = dayjs(inputValue.time).format('YYYY-MM-DD HH:mm:ss');
+    const level = inputValue.level;
+    const msg = inputValue.msg;
+
+    const timeColor = '\u001b[38;2;56;158;13m';
+    const msgColor = '\u001b[37m';
+    const levelColor = ansiColorCode[level];
+
+    return `${timeColor}${time} ${levelColor}[${level}] ${msgColor}${msg}\r\n`;
+  };
+
+  useEffect(() => {
+    const term = new Terminal({
+      disableStdin: true, // 禁止输入
+      cursorStyle: 'underline',
+      cursorBlink: true,
+      cursorInactiveStyle: 'underline',
+    });
+    const fitAddon = new FitAddon();
+    term.loadAddon(fitAddon);
+
+    const terminalContainer = document.getElementById('terminal');
+    if (terminalContainer) {
+      term.open(terminalContainer);
+    }
+    fitAddon.fit();
+
+    window.addEventListener('resize', () => fitAddon.fit());
+    logRef.current = term;
+  }, []);
+
+  useEffect(() => {
+    dataSource?.forEach((msg) => {
+      const parsedItem = msg && JSON.parse(msg);
+      const output = handleOutput(parsedItem);
+      logRef.current.write(output);
+    });
+  }, [dataSource, topic]);
+
+  return (
+    <ProCard
+      className={cn(className, 'overflow-y-auto')}
+      bodyStyle={hidePadding ? { paddingBlock: 0, paddingInline: 0 } : {}}
+      extra={
+        extra ? (
+          <Space>
+            <Button
+              key="download"
+              type="primary"
+              icon={<DownloadOutlined />}
+              size="small"
+              onClick={() => (window.location.href = '/api/v1/backup/runningLog')}
+            >
+              下载日志
+            </Button>
+            <Button
+              ghost
+              key="stop"
+              type="primary"
+              icon={<PauseCircleOutlined />}
+              size="small"
+              onClick={() => {
+                setPlay(false);
+                disconnect();
+              }}
+              disabled={!play}
+            >
+              停止
+            </Button>
+            <Button
+              ghost
+              key="play"
+              type="primary"
+              icon={<PlayCircleOutlined />}
+              size="small"
+              disabled={play}
+              onClick={() => {
+                setPlay(true);
+                connect();
+              }}
+            >
+              恢复
+            </Button>
+            <Button
+              danger
+              key="reload"
+              icon={<DeleteOutlined />}
+              size="small"
+              onClick={() => {
+                handleOnReset?.();
+                logRef.current.clear();
+              }}
+            >
+              清空
+            </Button>
+          </Space>
+        ) : null
+      }
+      {...props}
+    >
+      <div id="terminal" ref={logRef} />
+    </ProCard>
+  );
+};
+
+export default ProLog;

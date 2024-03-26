@@ -1,4 +1,4 @@
-import ProOutputList from '@/components/ProOutputList';
+import ProLog from '@/components/ProLog';
 import { validateIPv4 } from '@/utils/regExp';
 import { ProForm } from '@ant-design/pro-components';
 import { Button, Input } from 'antd';
@@ -6,16 +6,12 @@ import { useState } from 'react';
 import { useModel } from 'umi';
 
 type PingProps = {
-  showOutput: boolean;
+  dataSource: string[];
   uuid: string;
-  handleShow: (value: boolean) => void;
 };
 
-const Ping = ({ showOutput, uuid, handleShow }: PingProps) => {
+const Ping = ({ uuid, dataSource }: PingProps) => {
   const { run, detailConfig } = useModel('usePlugin');
-  const {
-    topicData: { pingLog },
-  } = useModel('useWebsocket');
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -57,18 +53,15 @@ const Ping = ({ showOutput, uuid, handleShow }: PingProps) => {
           onSearch={(value: string) => {
             setLoading(true);
             run({ name: 'ping', args: [value], uuid: detailConfig.uuid }).then(() => {
-              handleShow(true);
               setLoading(false);
               setDisabled(false);
             });
           }}
         />
       </ProForm.Item>
-      <ProOutputList
-        showOutput={showOutput}
-        data={pingLog}
-        topic={`plugin/ICMPSenderPing/${uuid}`}
-      />
+      <ProForm.Item name="output" label="输出结果">
+        <ProLog hidePadding topic={`plugin/ICMPSenderPing/${uuid}`} dataSource={dataSource} />
+      </ProForm.Item>
     </>
   );
 };

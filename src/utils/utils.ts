@@ -2,7 +2,6 @@ import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
 import CryptoJS from 'crypto-js';
-import orderBy from 'lodash/orderBy';
 import { twMerge } from 'tailwind-merge';
 import { isEmpty, omit } from './redash';
 
@@ -51,16 +50,6 @@ export const formatHeaders2Arr = (data: Record<string, any>) => {
     : [{ k: '', v: '' }];
 
   return newData;
-};
-
-export const filterLogByTopic = (data: string[], topic?: string) => {
-  let newData = data?.map((item) => JSON.parse(item));
-
-  if (topic) {
-    newData = newData?.filter((log) => log?.topic === topic);
-  }
-
-  return orderBy(newData, 'time', 'desc');
 };
 
 export const processColumns = (columns: any) => {
@@ -159,4 +148,25 @@ export const stringToBool = (value: string) => {
   };
 
   return valueMap[value];
+};
+
+export const ensureArrayLength = (arr: string[], maxLength = 50) => {
+  if (arr.length > maxLength) {
+    // 当数组长度超出最大长度时，从数组头部移除元素
+    arr.shift(); // 移除数组的第一个元素
+  }
+};
+
+export const handleNewMessage = (source: string[] | undefined, target: string, topic: string) => {
+  const newData = [...(source || [])]; // Clone the existing array or create a new one if it's undefined
+
+  if (target && target !== 'Connected') {
+    const parsedNewMsg = target && JSON.parse(target);
+    if (parsedNewMsg?.topic === topic) {
+      newData.push(target);
+      ensureArrayLength(newData); // Ensure the array doesn't exceed the maximum length
+    }
+  }
+
+  return newData; // Return the updated array
 };

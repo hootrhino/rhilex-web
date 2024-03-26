@@ -1,12 +1,14 @@
-import LogTable from '@/components/LogTable';
+import ProLog from '@/components/ProLog';
 import { getRulesDetail } from '@/services/rulex/guizeguanli';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { getInendsList } from '@/services/rulex/shuruziyuanguanli';
-import { filterLogByTopic, getName } from '@/utils/utils';
+import { getName, handleNewMessage } from '@/utils/utils';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { history, useParams, useRequest } from '@umijs/max';
-import { Drawer, DrawerProps } from 'antd';
+import { useLocalStorageState } from 'ahooks';
+import { Button, Drawer, DrawerProps, Modal } from 'antd';
+import { useEffect } from 'react';
 import { useModel } from 'umi';
 
 type DetailProps = DrawerProps & {
@@ -18,9 +20,10 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
   const { deviceId } = useParams();
   const { setConfig: setSourceDetail } = useModel('useSource');
   const { setDeviceConfig } = useModel('useDevice');
-  const {
-    topicData: { ruleLog },
-  } = useModel('useWebsocket');
+  const { latestMessage } = useModel('useWebsocket');
+  const [ruleLog, setLog] = useLocalStorageState<string[]>('rule-logs', {
+    defaultValue: [],
+  });
 
   // 获取资源
   const { data: sources } = useRequest(() => getInendsList());
@@ -84,51 +87,66 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       dataIndex: 'actions',
       valueType: 'code',
     },
-    {
-      title: '成功回调',
-      dataIndex: 'success',
-      valueType: 'code',
-    },
-    {
-      title: '失败回调',
-      dataIndex: 'failed',
-      valueType: 'code',
-    },
+    // {
+    //   title: '成功回调',
+    //   dataIndex: 'success',
+    //   valueType: 'code',
+    // },
+    // {
+    //   title: '失败回调',
+    //   dataIndex: 'failed',
+    //   valueType: 'code',
+    // },
   ];
 
-  return (
+  useEffect(() => {
+    const newData = handleNewMessage(ruleLog, latestMessage?.data, `rule/log/${uuid}`);
+    setLog(newData);
+  }, [latestMessage]);
+
+  return type === 'detail' ? (
     <Drawer
-      title={type === 'detail' ? '规则详情' : '规则日志'}
+      title="规则详情"
       placement="right"
       width={type === 'detail' ? '35%' : '40%'}
       destroyOnClose
       maskClosable={false}
       {...props}
     >
-      {type === 'detail' ? (
-        <ProDescriptions
-          column={1}
-          columns={columns}
-          labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
-          request={async () => {
-            const res = await getRulesDetail({ uuid });
+      <ProDescriptions
+        column={1}
+        columns={columns}
+        labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
+        request={async () => {
+          const res = await getRulesDetail({ uuid });
 
-            return Promise.resolve({
-              success: true,
-              data: {
-                ...res?.data,
-                sourceType:
-                  res?.data?.fromDevice && res?.data?.fromDevice?.length > 0
-                    ? 'fromDevice'
-                    : 'fromSource',
-              },
-            });
-          }}
-        />
-      ) : (
-        <LogTable options={false} logData={filterLogByTopic(ruleLog, `rule/log/${uuid}`)} />
-      )}
+          return Promise.resolve({
+            success: true,
+            data: {
+              ...res?.data,
+              sourceType:
+                res?.data?.fromDevice && res?.data?.fromDevice?.length > 0
+                  ? 'fromDevice'
+                  : 'fromSource',
+            },
+          });
+        }}
+      />
     </Drawer>
+  ) : (
+    <Modal
+      title="规则日志"
+      width="50%"
+      open={props.open}
+      footer={
+        <Button type="primary" onClick={props?.onClose}>
+          关闭
+        </Button>
+      }
+      onCancel={props?.onClose}
+    >
+      <ProLog hidePadding topic={`rule/log/${uuid}`} dataSource={ruleLog} />
+    </Modal>
   );
 };
 
