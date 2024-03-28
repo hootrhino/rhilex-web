@@ -86,7 +86,7 @@ const System = () => {
   useEffect(() => {
     const filteredItems = tabItems.filter((item) => {
       if (isWindows) {
-        return ['backup', 'user', 'site'].includes(item.key);
+        return ['firmware', 'backup', 'user', 'site'].includes(item.key);
       } else {
         if (!isH3) {
           return !['4g', 'apn'].includes(item.key);

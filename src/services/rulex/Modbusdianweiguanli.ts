@@ -46,12 +46,13 @@ export async function getModbusDataSheetList(
         address?: number;
         frequency?: number;
         quantity?: number;
-        status?: number;
-        lastFetchTime?: number;
-        value?: string;
         dataType?: string;
         dataOrder?: string;
         weight?: number;
+        status?: number;
+        lastFetchTime?: number;
+        value?: string;
+        errMsg?: string;
       }[];
     };
   }>('/api/v1/modbus_data_sheet/list', {

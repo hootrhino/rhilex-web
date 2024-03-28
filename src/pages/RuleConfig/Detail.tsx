@@ -136,7 +136,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
   ) : (
     <Modal
       title="规则日志"
-      width="50%"
+      width="65%"
       open={props.open}
       footer={
         <Button type="primary" onClick={props?.onClose}>

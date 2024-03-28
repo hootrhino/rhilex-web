@@ -32,7 +32,6 @@ import { funcEnum } from '../enum';
 import UploadRule from './UploadRule';
 
 import StateTag from '@/components/StateTag';
-import { getDevicesPointErrMsg } from '@/services/rulex/shebeiguanli';
 import { inRange } from '@/utils/redash';
 import { modbusDataTypeOptions } from './enum';
 
@@ -193,19 +192,6 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
     setPolling(3000);
     setStopPolling(false);
   };
-
-  // 查看异常弹窗
-  const { run: getErrorMsg } = useRequest(
-    (params: API.getDevicesPointErrMsgParams) => getDevicesPointErrMsg(params),
-    {
-      manual: true,
-      onSuccess: (res) =>
-        modal.error({
-          title: '点位异常信息',
-          content: <div className="flex flex-wrap">{res}</div>,
-        }),
-    },
-  );
 
   const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
     {
@@ -482,9 +468,12 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
               <Dropdown
                 menu={{
                   items: [{ key: 'error', label: '查看异常' }],
-                  onClick: ({ key }) => {
-                    if (key === 'error' && record?.uuid) {
-                      getErrorMsg({ uuid: record.uuid });
+                  onClick: () => {
+                    if (record?.errMsg) {
+                      modal.error({
+                        title: '点位异常信息',
+                        content: <div className="flex flex-wrap">{record?.errMsg}</div>,
+                      });
                     }
                   },
                 }}

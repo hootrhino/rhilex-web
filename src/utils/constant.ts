@@ -5,7 +5,7 @@ export const LOGIN_PATH = '/user/login';
 export const COPYRIGHT = '2023-2033 By Hootrhino Team';
 
 // 登录页默认 title
-export const DEFAULT_TITLE = 'Rhino EEKit';
+export const DEFAULT_TITLE = 'Rhilex';
 
 export const DEFAULT_SUBTITLE = '轻量级边缘计算框架';
 

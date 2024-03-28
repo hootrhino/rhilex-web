@@ -1,19 +1,19 @@
-import type { ModalFormProps,ProFormInstance } from '@ant-design/pro-components';
+import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {
-ModalForm,
-ProCard,
-ProForm,
-ProFormDependency,
-ProFormDigit,
-ProFormDigitRange,
-ProFormRadio,
-ProFormSelect,
-ProFormText
+  ModalForm,
+  ProCard,
+  ProForm,
+  ProFormDependency,
+  ProFormDigit,
+  ProFormDigitRange,
+  ProFormRadio,
+  ProFormSelect,
+  ProFormText,
 } from '@ant-design/pro-components';
 import { AutoComplete } from 'antd';
-import { useEffect,useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import type { Property } from '..';
-import { rwEnum,typeEnum,unitOptions } from '../enum';
+import { rwEnum, typeEnum, unitOptions } from '../enum';
 
 const defaultProperty = {
   rw: 'R',
@@ -80,6 +80,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
         label="数据类型"
         valueEnum={typeEnum}
         placeholder="请选择标志符"
+        width="lg"
         rules={[{ required: true, message: '请选择标志符' }]}
       />
       <ProFormDependency name={['type']} labelCol={{ span: 4 }}>
@@ -90,7 +91,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
             dom = (
               <ProFormDigit
                 name={['rule', 'max']}
-                width="lg"
+                width="md"
                 label="最大长度"
                 placeholder="请输入最大长度"
               />
@@ -106,8 +107,10 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
                 separatorWidth={60}
                 rules={[{ required: true, message: '请输入取值范围' }]}
                 transform={(values) => ({
-                  min: values?.[0],
-                  max: values?.[1],
+                  rule: {
+                    min: values?.[0],
+                    max: values?.[1],
+                  },
                 })}
               />
             );
@@ -124,8 +127,10 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
                     separatorWidth={30}
                     rules={[{ required: true, message: '请输入取值范围' }]}
                     transform={(values) => ({
-                      min: values?.[0],
-                      max: values?.[1],
+                      rule: {
+                        min: values?.[0],
+                        max: values?.[1],
+                      },
                     })}
                   />
                 </div>
@@ -165,21 +170,25 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
                   label="经度"
                   name={['rule', 'latitude']}
                   placeholder="请输入经度"
-                  width="sm"
+                  width="md"
                 />
                 <ProFormDigit
                   label="纬度"
                   name={['rule', 'longitude']}
                   placeholder="请输入维度"
-                  width="sm"
+                  width="md"
                 />
               </>
             );
           }
 
           return (
-            <ProCard bordered ghost>
-              <ProForm.Group style={{ padding: 10 }}>
+            <ProCard
+              ghost
+              title={<div className="text-[14px] font-normal">数据定义</div>}
+              headStyle={{ paddingBlockStart: 0 }}
+            >
+              <ProForm.Group style={{ padding: 10, border: '1px solid #0505050f' }}>
                 {['STRING', 'INTEGER', 'FLOAT', 'BOOL'].includes(type) && (
                   <ProFormText
                     name={['rule', 'defaultValue']}
@@ -195,17 +204,19 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
           );
         }}
       </ProFormDependency>
+      <ProForm.Group style={{ marginTop: 24 }}>
+        <ProForm.Item name="unit" label="单位" className="w-[440px]">
+          <AutoComplete options={unitOptions} style={{ width: '100%' }} placeholder="请输入单位" />
+        </ProForm.Item>
 
-      <ProForm.Item name="unit" label="单位" className="mt-[16px]">
-        <AutoComplete options={unitOptions} style={{ width: '100%' }} placeholder="请输入单位" />
-      </ProForm.Item>
+        <ProFormRadio.Group
+          name="rw"
+          label="读写"
+          valueEnum={rwEnum}
+          rules={[{ required: true, message: '请选择读写' }]}
+        />
+      </ProForm.Group>
 
-      <ProFormRadio.Group
-        name="rw"
-        label="读写"
-        valueEnum={rwEnum}
-        rules={[{ required: true, message: '请选择读写' }]}
-      />
       <ProFormText name="description" label="描述" placeholder="请输入描述" />
     </ModalForm>
   );

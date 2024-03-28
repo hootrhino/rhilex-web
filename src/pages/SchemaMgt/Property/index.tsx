@@ -1,5 +1,6 @@
 import IndexBorder from '@/components/IndexBorder';
 import { message } from '@/components/PopupHack';
+import UnitTitle from '@/components/UnitTitle';
 import {
   deleteSchemaPropertiesDel,
   getSchemaPropertiesDetail,
@@ -7,15 +8,16 @@ import {
   postSchemaPropertiesCreate,
   putSchemaPropertiesUpdate,
 } from '@/services/rulex/shujumoxing';
+import { isEmpty } from '@/utils/redash';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button, Popconfirm } from 'antd';
+import type { DescriptionsProps } from 'antd';
+import { Button, Descriptions, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import { rwEnum, typeEnum } from '../enum';
 import PropertyForm from './UpdateForm';
-import UnitTitle from '@/components/UnitTitle';
 
 type Rule = {
   defaultValue?: string;
@@ -28,13 +30,13 @@ type Rule = {
 
 export type Property = {
   uuid?: string;
-  schemaId: string;
-  label: string;
-  name: string;
-  type: string;
-  rw: string;
-  unit: string;
-  rule: Rule;
+  schemaId?: string;
+  label?: string;
+  name?: string;
+  type?: string;
+  rw?: string;
+  unit?: string;
+  rule?: Rule;
   description?: string;
   value?: string;
 };
@@ -43,7 +45,7 @@ type PropertyListProps = {
   schemaId: string;
 };
 export const getBaseColumns = (readOnly?: boolean) => {
-  const baseColumns: ProColumns<Partial<Property>>[] = [
+  const baseColumns: ProColumns<Property>[] = [
     {
       title: '序号',
       dataIndex: 'index',
@@ -81,19 +83,19 @@ export const getBaseColumns = (readOnly?: boolean) => {
       valueEnum: rwEnum,
       width: 80,
     },
-    {
-      title: '数据定义',
-      dataIndex: 'rule',
-      ellipsis: true,
-      hideInTable: readOnly,
-      renderText: (rule) => rule && JSON.stringify(rule),
-    },
+    // {
+    //   title: '数据定义',
+    //   dataIndex: 'rule',
+    //   ellipsis: true,
+    //   hideInTable: readOnly,
+    //   renderText: (rule) => rule && JSON.stringify(rule),
+    // },
     {
       title: '当前值',
       dataIndex: 'value',
       ellipsis: true,
       hideInTable: !readOnly,
-      render: (dom, {value, unit}) => value ? <UnitTitle title={value} unit={unit}  /> : '-'
+      render: (dom, { value, unit }) => (value ? <UnitTitle title={value} unit={unit} /> : '-'),
     },
     {
       title: '描述',
@@ -105,10 +107,18 @@ export const getBaseColumns = (readOnly?: boolean) => {
   return baseColumns;
 };
 
+const ruleFilterData = {
+  STRING: ['defaultValue', 'max'],
+  INTEGER: ['defaultValue', 'range'],
+  FLOAT: ['defaultValue', 'range', 'round'],
+  BOOL: ['defaultValue', 'trueLabel', 'falseLabel'],
+  GEO: ['defaultValue', 'latitude', 'longitude'],
+};
+
 const PropertyList = ({ schemaId }: PropertyListProps) => {
   const actionRef = useRef<ActionType>();
   const [open, setOpen] = useState<boolean>(false);
-  const [initialValue, setInitialValue] = useState<Partial<Property>>({});
+  const [initialValue, setInitialValue] = useState<Property>({});
 
   // 详情
   const { run: getDetail } = useRequest(
@@ -130,7 +140,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
     },
   );
 
-  const columns: ProColumns<Partial<Property>>[] = getBaseColumns().concat([
+  const columns: ProColumns<Property>[] = getBaseColumns().concat([
     {
       title: '操作',
       valueType: 'option',
@@ -159,6 +169,74 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
     },
   ]);
 
+  const items = [
+    {
+      key: 'defaultValue',
+      label: '默认值',
+    },
+    {
+      key: 'falseLabel',
+      label: 'false',
+    },
+    {
+      key: 'trueLabel',
+      label: 'true',
+    },
+    {
+      key: 'round',
+      label: '小数位',
+    },
+    {
+      key: 'max',
+      label: '最大长度',
+    },
+    {
+      key: 'min',
+      label: '最小值',
+    },
+    {
+      key: 'latitude',
+      label: '经度',
+    },
+    {
+      key: 'longitude',
+      label: '纬度',
+    },
+    {
+      key: 'range',
+      label: '取值范围',
+    },
+  ];
+
+  const expandedRowRender = (record: Property) => {
+    const type = record?.type || 'STRING';
+    const data = record?.rule;
+
+    const ruleItems = items
+      .filter((r) => ruleFilterData[type].includes(r.key))
+      .map((item) => {
+        let children = data?.[item.key];
+        switch (item.key) {
+          case 'range':
+            children = `${data?.min}~${data?.max}`;
+            break;
+          case 'defaultValue':
+            children = data?.defaultValue?.toString();
+            break;
+          default:
+            children = data?.[item.key];
+        }
+        return {
+          ...item,
+          children,
+        };
+      });
+
+    return (
+      <Descriptions title="数据定义" items={ruleItems as DescriptionsProps['items']} column={4} />
+    );
+  };
+
   return (
     <>
       <ProTable
@@ -179,6 +257,11 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
         pagination={{
           defaultPageSize: 10,
           hideOnSinglePage: true,
+        }}
+        expandable={{
+          expandedRowRender,
+          indentSize: 0,
+          rowExpandable: (record) => !isEmpty(record?.rule),
         }}
         toolBarRender={() => [
           <Button

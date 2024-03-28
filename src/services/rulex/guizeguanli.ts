@@ -55,6 +55,21 @@ export async function getRulesDetail(
   });
 }
 
+/** 格式化lua POST /api/v1/rules/formatLua */
+export async function postRulesFormatLua(body: {}, options?: { [key: string]: any }) {
+  return request<{ code: number; msg: string; data: { source?: string } }>(
+    '/api/v1/rules/formatLua',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: body,
+      ...(options || {}),
+    },
+  );
+}
+
 /** 获取可用资源 GET /api/v1/rules/getCanUsedResources */
 export async function getRulesGetCanUsedResources(options?: { [key: string]: any }) {
   return request<{

@@ -11091,6 +11091,15 @@
                               "quantity": {
                                 "type": "integer"
                               },
+                              "dataType": {
+                                "type": "string"
+                              },
+                              "dataOrder": {
+                                "type": "string"
+                              },
+                              "weight": {
+                                "type": "integer"
+                              },
                               "status": {
                                 "type": "integer"
                               },
@@ -11100,14 +11109,8 @@
                               "value": {
                                 "type": "string"
                               },
-                              "dataType": {
+                              "errMsg": {
                                 "type": "string"
-                              },
-                              "dataOrder": {
-                                "type": "string"
-                              },
-                              "weight": {
-                                "type": "number"
                               }
                             },
                             "required": [
@@ -11120,13 +11123,15 @@
                               "address",
                               "frequency",
                               "quantity",
+                              "dataType",
+                              "dataOrder",
+                              "weight",
                               "status",
                               "lastFetchTime",
                               "value",
-                              "dataType",
-                              "dataOrder",
-                              "weight"
+                              "errMsg"
                             ],
+                            "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "uuid",
                               "device_uuid",
@@ -11137,14 +11142,14 @@
                               "address",
                               "frequency",
                               "quantity",
+                              "dataType",
+                              "dataOrder",
+                              "weight",
                               "status",
                               "lastFetchTime",
                               "value",
-                              "dataType",
-                              "dataOrder",
-                              "weight"
-                            ],
-                            "x-apifox-ignore-properties": []
+                              "errMsg"
+                            ]
                           }
                         }
                       },
@@ -11154,13 +11159,13 @@
                         "total",
                         "records"
                       ],
+                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "current",
                         "size",
                         "total",
                         "records"
-                      ],
-                      "x-apifox-ignore-properties": []
+                      ]
                     }
                   },
                   "required": [
@@ -11168,12 +11173,12 @@
                     "msg",
                     "data"
                   ],
+                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ],
-                  "x-apifox-ignore-properties": []
+                  ]
                 },
                 "examples": {
                   "1": {
@@ -11184,35 +11189,43 @@
                       "data": {
                         "current": 1,
                         "size": 2,
-                        "total": 18,
+                        "total": 7,
                         "records": [
                           {
-                            "uuid": "MDTB5RMGMESG",
-                            "device_uuid": "DEVICETWRRCW",
-                            "tag": "a11-new11111111",
-                            "alias": "a111",
-                            "function": 3,
+                            "uuid": "MDTBHACW7UDY",
+                            "device_uuid": "DEVICEI8XFYHN9",
+                            "tag": "ph_value",
+                            "alias": "PH传感器值",
+                            "function": 1,
                             "slaverId": 10,
-                            "address": 10,
+                            "address": 1,
                             "frequency": 100,
-                            "quantity": 2,
-                            "status": 1,
-                            "lastFetchTime": 1702279278512,
-                            "value": "00000000"
+                            "quantity": 1,
+                            "dataType": "BYTE",
+                            "dataOrder": "A",
+                            "weight": 1,
+                            "status": 0,
+                            "lastFetchTime": 1711445359218,
+                            "value": "",
+                            "errMsg": "serial: timeout"
                           },
                           {
-                            "uuid": "MDTB5ZAZZHWC",
-                            "device_uuid": "DEVICETWRRCW",
-                            "tag": "a11-new1111111",
-                            "alias": "a111",
+                            "uuid": "MDTBUCJUUUQQ",
+                            "device_uuid": "DEVICEI8XFYHN9",
+                            "tag": "t1",
+                            "alias": "PH传感器温度",
                             "function": 3,
                             "slaverId": 10,
-                            "address": 10,
+                            "address": 3,
                             "frequency": 100,
                             "quantity": 2,
+                            "dataType": "FLOAT",
+                            "dataOrder": "CDAB",
+                            "weight": 1,
                             "status": 1,
-                            "lastFetchTime": 1702279278512,
-                            "value": "00000000"
+                            "lastFetchTime": 1711445359249,
+                            "value": "23.2337",
+                            "errMsg": ""
                           }
                         ]
                       }
@@ -15654,6 +15667,77 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-157856403-run",
+        "security": []
+      }
+    },
+    "/api/v1/rules/formatLua": {
+      "post": {
+        "summary": "格式化lua",
+        "x-apifox-folder": "规则管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "规则管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "source": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "source"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "source"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-159772577-run",
         "security": []
       }
     }

@@ -33,7 +33,24 @@ export const baseColumns = [
   {
     title: '设备名称',
     dataIndex: 'name',
-    required: true,
+    formItemProps: {
+      rules: [
+        {
+          required: true,
+          message: '名称不能为空',
+        },
+        {
+          validator: (_, value) => {
+            const regex = /^[a-zA-Z0-9_]{6,14}$/;
+
+            if (!value || regex.test(value)) {
+              return Promise.resolve();
+            }
+            return Promise.reject('名称仅支持字母、数字或下划线，长度在 6-14 个字符之间');
+          },
+        },
+      ],
+    },
   },
   {
     title: '设备类型',
