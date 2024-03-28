@@ -1,11 +1,11 @@
 import LuaEditor from '@/components/CodeEditor';
+import { postRulesFormatLua } from '@/services/rulex/guizeguanli';
 import { CodeOutlined } from '@ant-design/icons';
 import type { ProFormItemProps } from '@ant-design/pro-components';
 import { ProCard, ProForm } from '@ant-design/pro-components';
 import { Button, Space } from 'antd';
 import { forwardRef, useState } from 'react';
 import LuaExample from '../LuaExample';
-import { Beautify } from '@/utils/luafmt/luamin';
 
 type ProCodeEditorProps = Omit<ProFormItemProps, 'children'> & {
   defaultCollapsed?: boolean;
@@ -27,10 +27,11 @@ const ProCodeEditor = forwardRef(
   ) => {
     const [open, setOpen] = useState<boolean>(false);
 
-    const handleOnFormatCode = () => {
+    const handleOnFormatCode = async () => {
       const code = ref.current?.getFieldValue(name);
+      const { data } = await postRulesFormatLua({ source: code });
 
-      ref.current?.setFieldsValue({ [name]: Beautify(code) });
+      ref.current?.setFieldsValue({ [name]: data.source });
     };
 
     return (
@@ -82,7 +83,7 @@ const ProCodeEditor = forwardRef(
             label={false}
             rules={[{ required: true, message: `请输入${label}` }]}
           >
-            <LuaEditor key={name} minHeight='400px' lang='lua' />
+            <LuaEditor key={name} minHeight="400px" lang="lua" />
           </ProForm.Item>
         </ProCard>
         <LuaExample open={open} onClose={() => setOpen(false)} />
