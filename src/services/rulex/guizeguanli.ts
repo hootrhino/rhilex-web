@@ -56,7 +56,12 @@ export async function getRulesDetail(
 }
 
 /** 格式化lua POST /api/v1/rules/formatLua */
-export async function postRulesFormatLua(body: {}, options?: { [key: string]: any }) {
+export async function postRulesFormatLua(
+  body: {
+    source: string;
+  },
+  options?: { [key: string]: any },
+) {
   return request<{ code: number; msg: string; data: { source?: string } }>(
     '/api/v1/rules/formatLua',
     {

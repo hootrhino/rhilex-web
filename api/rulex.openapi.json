@@ -11758,6 +11758,9 @@
                               },
                               "value": {
                                 "type": "string"
+                              },
+                              "errMsg": {
+                                "type": "string"
                               }
                             },
                             "required": [
@@ -11772,7 +11775,8 @@
                               "status",
                               "lastFetchTime",
                               "value",
-                              "weight"
+                              "weight",
+                              "errMsg"
                             ],
                             "x-apifox-orders": [
                               "uuid",
@@ -11786,7 +11790,8 @@
                               "frequency",
                               "status",
                               "lastFetchTime",
-                              "value"
+                              "value",
+                              "errMsg"
                             ],
                             "x-apifox-ignore-properties": []
                           }
@@ -15686,8 +15691,20 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {}
-              }
+                "properties": {
+                  "source": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source"
+                ],
+                "x-apifox-ignore-properties": [],
+                "x-apifox-orders": [
+                  "source"
+                ]
+              },
+              "example": ""
             }
           }
         },

@@ -46,6 +46,7 @@ export async function getS1200DataSheetList(
         status?: number;
         lastFetchTime?: number;
         value?: string;
+        errMsg?: string;
       }[];
     };
   }>('/api/v1/s1200_data_sheet/list', {
