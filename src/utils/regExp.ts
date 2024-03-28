@@ -22,3 +22,9 @@ export const validateGateway = (ip: string) => {
   const pattern = /^(192\.168(\.(\d|([1-9]\d)|(1\d{2})|(2[0-4]\d)|(25[0-5]))){2})$/;
   return pattern.test(ip);
 };
+
+// 名称
+export const validateName = (name: string) => {
+  const pattern = /^[a-zA-Z0-9_]{6,14}$/;
+  return pattern.test(name);
+};

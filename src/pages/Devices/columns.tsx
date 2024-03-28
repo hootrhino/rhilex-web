@@ -6,6 +6,7 @@ import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
 import { getSchemaList } from '@/services/rulex/shujumoxing';
 import { pick } from '@/utils/redash';
+import { validateName } from '@/utils/regExp';
 import { getPlayAddress, stringToBool } from '@/utils/utils';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { Space, Typography } from 'antd';
@@ -41,9 +42,7 @@ export const baseColumns = [
         },
         {
           validator: (_, value) => {
-            const regex = /^[a-zA-Z0-9_]{6,14}$/;
-
-            if (!value || regex.test(value)) {
+            if (!value || validateName(value)) {
               return Promise.resolve();
             }
             return Promise.reject('名称仅支持字母、数字或下划线，长度在 6-14 个字符之间');

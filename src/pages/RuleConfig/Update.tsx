@@ -4,6 +4,7 @@ import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
 import ProFormSubmitter from '@/components/ProFormSubmitter';
 import { getRulesDetail, postRulesCreate, putRulesUpdate } from '@/services/rulex/guizeguanli';
+import { validateName } from '@/utils/regExp';
 import { NotificationOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
@@ -127,7 +128,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
               {links.map((l) => (
                 <li key={l.key}>
                   <span>{l.label}</span>
-                  <a href={l.link} target="_blank">
+                  <a href={l.link} target="_blank" rel="noreferrer">
                     {l.link}
                   </a>
                 </li>
@@ -201,6 +202,14 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
                   {
                     required: true,
                     message: '请输入规则名称',
+                  },
+                  {
+                    validator: (_, value) => {
+                      if (!value || validateName(value)) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject('名称仅支持字母、数字或下划线，长度在 6-14 个字符之间');
+                    },
                   },
                 ]}
                 width="lg"

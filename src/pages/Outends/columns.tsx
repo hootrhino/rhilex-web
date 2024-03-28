@@ -2,6 +2,7 @@ import HeadersTitle from '@/components/HttpHeaders/Title';
 import ProSegmented from '@/components/ProSegmented';
 import StateTag from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
+import { validateName } from '@/utils/regExp';
 import { stringToBool } from '@/utils/utils';
 import { modeEnum, typeEnum } from './enum';
 
@@ -54,7 +55,22 @@ export const baseColumns = [
     title: '资源名称',
     dataIndex: 'name',
     ellipsis: true,
-    required: true,
+    formItemProps: {
+      rules: [
+        {
+          required: true,
+          message: '名称不能为空',
+        },
+        {
+          validator: (_, value) => {
+            if (!value || validateName(value)) {
+              return Promise.resolve();
+            }
+            return Promise.reject('名称仅支持字母、数字或下划线，长度在 6-14 个字符之间');
+          },
+        },
+      ],
+    },
   },
   {
     title: '资源类型',
