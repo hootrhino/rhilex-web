@@ -1,21 +1,40 @@
-// import { getJpegStreamDetail } from '@/services/rulex/liumeitiguanli';
-// import { useRequest } from '@umijs/max';
+import { cn, getPlayAddress } from '@/utils/utils';
+import { SyncOutlined } from '@ant-design/icons';
 import type { ModalProps } from 'antd';
 import { Button, Modal } from 'antd';
+import { useEffect, useState } from 'react';
+import { OutputModeEnum } from '../enum';
 
 type VideoDetailProps = ModalProps & {
-  playUrl: string;
-  showImg: boolean;
-  changeOnShowImg: (value: boolean) => void;
+  deviceName: string | undefined;
+  outputMode: OutputModeEnum;
 };
 
-const VideoDetail = ({
-  playUrl,
-  showImg,
-  changeOnShowImg,
-  onCancel,
-  ...props
-}: VideoDetailProps) => {
+const VideoDetail = ({ deviceName = '', outputMode, onCancel, ...props }: VideoDetailProps) => {
+  const [error, setError] = useState(true);
+  const [playUrl, setPlayUrl] = useState<string>('');
+
+  const getAddress = () => {
+    const address = getPlayAddress(deviceName || '', outputMode, 'pull');
+    return address;
+  };
+
+  const handleOnCancel = (e) => {
+    onCancel!(e);
+    setPlayUrl('');
+    setError(false);
+  };
+
+  useEffect(() => {
+    if (error) {
+      setPlayUrl(getAddress());
+    }
+  }, [error]);
+
+  useEffect(() => {
+    setPlayUrl(getAddress());
+  }, [deviceName, outputMode]);
+
   return (
     <Modal
       destroyOnClose
@@ -23,7 +42,7 @@ const VideoDetail = ({
       width="50%"
       centered
       maskClosable={false}
-      onCancel={onCancel}
+      onCancel={handleOnCancel}
       styles={{
         body: {
           display: 'flex',
@@ -36,19 +55,27 @@ const VideoDetail = ({
         },
       }}
       footer={
-        <Button type="primary" onClick={onCancel}>
+        <Button type="primary" onClick={handleOnCancel}>
           关闭
         </Button>
       }
       {...props}
     >
-      {playUrl && showImg && (
-        <img
-          src={playUrl}
-          width={640}
-          onError={() => changeOnShowImg(false)}
-          className="h-full object-cover"
-        />
+      <img
+        key={playUrl}
+        src={playUrl}
+        onError={() => {
+          setError(true);
+          setPlayUrl('');
+        }}
+        onLoad={() => setError(false)}
+        className={cn('h-[480px] w-[640px] object-cover', error ? 'hidden' : 'block')}
+      />
+      {error && (
+        <div className="w-full h-full flex justify-center items-center text-[#fff]">
+          <SyncOutlined spin />
+          <span className="pl-[10px]">视频正在加载...</span>
+        </div>
       )}
     </Modal>
   );

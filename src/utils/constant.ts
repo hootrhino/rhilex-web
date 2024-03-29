@@ -21,3 +21,6 @@ export const GROUP_TYPE_LUA_TPL = 'USER_LUA_TEMPLATE';
 export const DEFAULT_GROUP_KEY_DEVICE = 'DROOT';
 export const DEFAULT_GROUP_KEY_SCREEN = 'VROOT';
 export const DEFAULT_GROUP_KEY_LUA_TPL = 'ULTROOT';
+
+// 其他
+export const isDev = process.env.NODE_ENV === 'development';

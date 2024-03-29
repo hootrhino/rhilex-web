@@ -11,7 +11,7 @@ import {
   putDevicesUpdate,
 } from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
-import { getName, getPlayAddress, IconFont } from '@/utils/utils';
+import { getName, IconFont } from '@/utils/utils';
 import {
   ApartmentOutlined,
   ControlOutlined,
@@ -30,6 +30,7 @@ import type { ItemType } from 'antd/es/menu/hooks/useItems';
 import { useRef, useState } from 'react';
 import { baseColumns } from './columns';
 import Detail from './Detail';
+import { OutputModeEnum } from './enum';
 import SchemaDetail from './SchemaDetail';
 import VideoDetail from './VideoDetail';
 
@@ -64,8 +65,11 @@ const Devices = () => {
 
   const [activeDevice, setActiveDevice] = useState<string>('');
   const [activeDeviceName, setActiveDeviceName] = useState<string>('');
-  const [playUrl, setPlayUrl] = useState<string>('');
-  const [showPlayImg, setShowPlayImg] = useState<boolean>(true);
+  const [videoConfig, setVideoConfig] = useState<{
+    deviceName: string | undefined;
+    outputMode: OutputModeEnum;
+  }>({ deviceName: '', outputMode: OutputModeEnum.LOCAL_JPEG_STREAM_SERVER });
+  // const [playUrl, setPlayUrl] = useState<string>('');
 
   // 重置分组表单
   const handleOnReset = () => {
@@ -218,8 +222,8 @@ const Devices = () => {
                         });
                       } else {
                         setOpenVideo(true);
-                        setShowPlayImg(true);
-                        setPlayUrl(getPlayAddress(name || '', config?.outputMode, 'pull'));
+                        setVideoConfig({ deviceName: name, outputMode: config?.outputMode });
+                        // setPlayUrl(getPlayAddress(name || '', config?.outputMode, 'pull'));
                       }
 
                       break;
@@ -337,14 +341,12 @@ const Devices = () => {
       />
       <VideoDetail
         open={openVideo}
-        changeOnShowImg={setShowPlayImg}
-        showImg={showPlayImg}
         onCancel={() => {
           setOpenVideo(false);
-          setShowPlayImg(false);
-          setPlayUrl('');
+          // setPlayUrl('');
         }}
-        playUrl={playUrl}
+        {...videoConfig}
+        // playUrl={playUrl}
       />
       <ProConfirmModal
         open={open}

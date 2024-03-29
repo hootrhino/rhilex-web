@@ -15,7 +15,7 @@ import {
   inputModeEnum,
   modeEnum,
   outputEncodeEnum,
-  outputModeEnum,
+  OutputModeEnum,
   plcModelEnum,
   rackEnum,
   slotEnum,
@@ -505,12 +505,12 @@ export const typeConfigColumns = {
           title: '输出模式',
           dataIndex: ['config', 'outputMode'],
           valueType: 'select',
-          valueEnum: outputModeEnum,
+          valueEnum: OutputModeEnum,
           required: true,
           fieldProps: {
             allowClear: false,
           },
-          render: (_: any, { outputMode }: DeviceItem) => outputModeEnum[outputMode],
+          render: (_: any, { outputMode }: DeviceItem) => OutputModeEnum[outputMode],
         },
         {
           valueType: 'dependency',
