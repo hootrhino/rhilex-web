@@ -27,12 +27,17 @@ type ProLogProps = Omit<cardProps, 'extra'> &
   };
 
 // text color 30-37
-const ansiColorCode = {
-  fatal: '\u001b[38;2;255;77;79m', // red
-  error: '\u001b[38;2;255;77;79m', // red
-  warn: '\u001b[38;2;250;173;20m', // yellow
-  debug: '\u001b[38;2;89;156;211m', // blue
-  info: '\u001b[38;2;182;206;171m', // green
+export const getAnsiColor = (level: string) => {
+  const colorMap = {
+    fatal: '\u001b[38;2;255;77;79m',
+    error: '\u001b[38;2;255;77;79m',
+    warn: '\u001b[38;2;250;173;20m',
+    warning: '\u001b[38;2;250;173;20m',
+    debug: '\u001b[38;2;89;156;211m',
+    info: '\u001b[38;2;182;206;171m',
+  };
+
+  return colorMap[level] || '\u001b[37m';
 };
 
 const ProLog = ({
@@ -55,7 +60,7 @@ const ProLog = ({
 
     const timeColor = '\u001b[38;2;56;158;13m';
     const msgColor = '\u001b[37m';
-    const levelColor = ansiColorCode[level];
+    const levelColor = getAnsiColor(level);
 
     return `${timeColor}${time} ${levelColor}[${level}] ${msgColor}${msg}\r\n`;
   };
