@@ -11,12 +11,12 @@ type VideoDetailProps = ModalProps & {
 };
 
 const VideoDetail = ({ deviceName = '', outputMode, onCancel, ...props }: VideoDetailProps) => {
-  const [error, setError] = useState(true);
+  const [error, setError] = useState(false);
   const [playUrl, setPlayUrl] = useState<string>('');
 
   const getAddress = () => {
     const address = getPlayAddress(deviceName || '', outputMode, 'pull');
-    return address;
+    return `${address}&t=${new Date().getTime()}`;
   };
 
   const handleOnCancel = (e) => {
@@ -26,10 +26,15 @@ const VideoDetail = ({ deviceName = '', outputMode, onCancel, ...props }: VideoD
   };
 
   useEffect(() => {
-    if (error) {
-      setPlayUrl(getAddress());
+    if (error || !playUrl) {
+      // 重试机制
+      // setPlayUrl(getAddress())
+      const iframe = document.getElementById('jpegVideo') as HTMLImageElement | null;
+      if (iframe) {
+        iframe.src = getAddress(); // 重新设置src属性以重新加载视频
+      }
     }
-  }, [error]);
+  }, [error, playUrl]);
 
   useEffect(() => {
     setPlayUrl(getAddress());
@@ -62,6 +67,7 @@ const VideoDetail = ({ deviceName = '', outputMode, onCancel, ...props }: VideoD
       {...props}
     >
       <img
+        id="jpegVideo"
         key={playUrl}
         src={playUrl}
         onError={() => {
