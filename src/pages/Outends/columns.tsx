@@ -20,11 +20,13 @@ export const defaultConfig = {
     port: 2599,
     host: '127.0.0.1',
     timeout: 3000,
+    allowPing: 'false',
+    pingPacket: 'rhilex',
   },
   TCP_TRANSPORT: {
     dataMode: 'RAW_STRING',
     allowPing: 'false',
-    pingPacket: 'HR0001',
+    pingPacket: 'rhilex',
     port: 6005,
     host: '127.0.0.1',
     timeout: 3000,
@@ -39,6 +41,9 @@ export const defaultConfig = {
   HTTP: {
     url: 'http://127.0.0.1:8080',
     headers: [{ k: '', v: '' }],
+    allowPing: 'false',
+    pingPacket: 'rhilex',
+    timeout: 3000,
   },
 };
 
@@ -173,7 +178,28 @@ export const configColumns = {
       required: true,
     },
   ],
-  UDP_TARGET: udpConfig,
+  UDP_TARGET: [
+    {
+      title: '开启心跳',
+      dataIndex: ['config', 'allowPing'],
+      required: true,
+      transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
+        config: {
+          ...allValue,
+          allowPing: stringToBool(value),
+        },
+      }),
+      convertValue: (value: boolean) => value?.toString(),
+      renderFormItem: () => <ProSegmented width="md" />,
+      renderText: (allowPing: boolean) => <StateTag state={allowPing} type="bool" />,
+    },
+    {
+      title: '心跳包内容',
+      dataIndex: ['config', 'pingPacket'],
+      required: true,
+    },
+    ...udpConfig,
+  ],
   TCP_TRANSPORT: [
     {
       title: '传输模式',
@@ -234,6 +260,26 @@ export const configColumns = {
   ],
   HTTP: [
     {
+      title: '开启心跳',
+      dataIndex: ['config', 'allowPing'],
+      required: true,
+      transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
+        config: {
+          ...allValue,
+          allowPing: stringToBool(value),
+        },
+      }),
+      convertValue: (value: boolean) => value?.toString(),
+      renderFormItem: () => <ProSegmented width="md" />,
+      renderText: (allowPing: boolean) => <StateTag state={allowPing} type="bool" />,
+    },
+    {
+      title: '心跳包内容',
+      dataIndex: ['config', 'pingPacket'],
+      required: true,
+    },
+    ...timeoutConfig,
+    {
       title: '请求地址',
       dataIndex: ['config', 'url'],
       required: true,
@@ -242,6 +288,12 @@ export const configColumns = {
       valueType: 'formList',
       dataIndex: ['config', 'headers'],
       title: <HeadersTitle />,
+      fieldProps: {
+        creatorButtonProps: {
+          creatorButtonText: '新增 Header',
+          position: 'top',
+        },
+      },
       columns: [
         {
           valueType: 'group',

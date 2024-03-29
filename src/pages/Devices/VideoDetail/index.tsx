@@ -11,7 +11,6 @@ type VideoDetailProps = ModalProps & {
 };
 
 const VideoDetail = ({ deviceName = '', outputMode, onCancel, ...props }: VideoDetailProps) => {
-  const [error, setError] = useState(false);
   const [playUrl, setPlayUrl] = useState<string>('');
 
   const getAddress = () => {
@@ -22,19 +21,7 @@ const VideoDetail = ({ deviceName = '', outputMode, onCancel, ...props }: VideoD
   const handleOnCancel = (e) => {
     onCancel!(e);
     setPlayUrl('');
-    setError(false);
   };
-
-  useEffect(() => {
-    if (error || !playUrl) {
-      // 重试机制
-      // setPlayUrl(getAddress())
-      const iframe = document.getElementById('jpegVideo') as HTMLImageElement | null;
-      if (iframe) {
-        iframe.src = getAddress(); // 重新设置src属性以重新加载视频
-      }
-    }
-  }, [error, playUrl]);
 
   useEffect(() => {
     setPlayUrl(getAddress());
@@ -68,16 +55,11 @@ const VideoDetail = ({ deviceName = '', outputMode, onCancel, ...props }: VideoD
     >
       <img
         id="jpegVideo"
-        key={playUrl}
+        key={new Date().getTime()}
         src={playUrl}
-        onError={() => {
-          setError(true);
-          setPlayUrl('');
-        }}
-        onLoad={() => setError(false)}
-        className={cn('h-[480px] w-[640px] object-cover', error ? 'hidden' : 'block')}
+        className={cn('h-[480px] w-[640px] object-cover', !playUrl ? 'hidden' : 'block')}
       />
-      {error && (
+      {!playUrl && (
         <div className="w-full h-full flex justify-center items-center text-[#fff]">
           <SyncOutlined spin />
           <span className="pl-[10px]">视频正在加载...</span>

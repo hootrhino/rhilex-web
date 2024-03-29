@@ -91,7 +91,7 @@ const FirmwareConfig = () => {
 
   return (
     <>
-      <Title name="固件升级" />
+      <Title name="固件配置" />
       <ProCard split="vertical">
         <ProCard colSpan="50%">
           <ProDescriptions

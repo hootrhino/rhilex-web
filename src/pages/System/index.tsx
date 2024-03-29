@@ -102,7 +102,7 @@ const System = () => {
     });
 
     setItems(filteredItems);
-    setActiveKey(isWindows ? 'backup' : 'netStatus');
+    setActiveKey(isWindows ? 'firmware' : 'netStatus');
   }, [isWindows, isH3, hasRoute, hasWifi]);
 
   return (

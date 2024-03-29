@@ -510,6 +510,7 @@ export const typeConfigColumns = {
           fieldProps: {
             allowClear: false,
           },
+          tooltip: '注意：因为传输格式原因，Jpeg Stream 模式下仅保存了图像信息，没有原始声音。',
           render: (_: any, { outputMode }: DeviceItem) => OutputModeEnum[outputMode],
         },
         {
