@@ -71,7 +71,7 @@ export const baseColumns = [
             if (!value || validateName(value)) {
               return Promise.resolve();
             }
-            return Promise.reject('名称仅支持字母、数字或下划线，长度在 6-14 个字符之间');
+            return Promise.reject('名称仅支持中文、字母、数字或下划线，长度在 6-14 个字符之间');
           },
         },
       ],

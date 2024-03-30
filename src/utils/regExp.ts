@@ -25,6 +25,6 @@ export const validateGateway = (ip: string) => {
 
 // 名称
 export const validateName = (name: string) => {
-  const pattern = /^[a-zA-Z0-9_]{6,14}$/;
+  const pattern = /^[a-zA-Z0-9_\u4e00-\u9fa5]{6,14}$/;
   return pattern.test(name);
 };
