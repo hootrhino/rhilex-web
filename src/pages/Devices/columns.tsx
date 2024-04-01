@@ -5,7 +5,7 @@ import UnitTitle from '@/components/UnitTitle';
 import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
 import { getSchemaList } from '@/services/rulex/shujumoxing';
-import { pick } from '@/utils/redash';
+import { omit, pick } from '@/utils/redash';
 import { validateName } from '@/utils/regExp';
 import { getPlayAddress, stringToBool } from '@/utils/utils';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
@@ -117,7 +117,11 @@ export const autoRequestConfig = [
     required: true,
     transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
       config: {
-        commonConfig: { ...allValue, autoRequest: stringToBool(value) },
+        commonConfig: {
+          ...omit(allValue, ['autoRequest', 'enableOptimize']),
+          autoRequest: stringToBool(value),
+          enableOptimize: stringToBool(allValue.enableOptimize),
+        },
       },
     }),
     convertValue: (value: boolean) => value?.toString(),
@@ -269,7 +273,11 @@ export const typeConfigColumns = {
           required: true,
           transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
             config: {
-              commonConfig: { ...allValue, enableOptimize: stringToBool(value) },
+              commonConfig: {
+                ...omit(allValue, ['autoRequest', 'enableOptimize']),
+                enableOptimize: stringToBool(value),
+                autoRequest: stringToBool(allValue.autoRequest),
+              },
             },
           }),
           convertValue: (value: boolean) => value?.toString(),
