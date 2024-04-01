@@ -69,7 +69,7 @@ const NotifyLog = () => {
       fixed: 'right',
       render: (_, { uuid }) => [
         <a key="read" onClick={() => uuid && read({ uuid })}>
-          设置已读
+          已读
         </a>,
       ],
     },
