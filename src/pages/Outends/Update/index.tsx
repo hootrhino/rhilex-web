@@ -12,6 +12,7 @@ import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-compon
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { columns, defaultConfig } from '../columns';
+import { OutendsType } from '../enum';
 
 export type UpdateFormItem = {
   name: string;
@@ -36,13 +37,11 @@ const UpdateForm = () => {
     setLoading(true);
 
     try {
-      // const formatConfig = values?.config?.[0];
       let params = {
         ...values,
-        // config: formatConfig,
       };
 
-      if (params.type === 'HTTP') {
+      if (params.type === OutendsType.HTTP) {
         params = {
           ...params,
           config: {
@@ -75,7 +74,7 @@ const UpdateForm = () => {
 
   const handleOnReset = () => {
     if (detail) {
-      if (detail?.type === 'HTTP') {
+      if (detail?.type === OutendsType.HTTP) {
         formRef.current?.setFieldsValue({
           ...detail,
           config: { ...detail?.config, headers: formatHeaders2Arr(detail?.config?.headers) },
@@ -85,8 +84,8 @@ const UpdateForm = () => {
       }
     } else {
       formRef.current?.setFieldsValue({
-        type: 'MONGO_SINGLE',
-        config: defaultConfig['MONGO_SINGLE'],
+        type: OutendsType.MONGO_SINGLE,
+        config: defaultConfig[OutendsType.MONGO_SINGLE],
       });
     }
   };
@@ -95,9 +94,9 @@ const UpdateForm = () => {
     if (!changedValue?.type) return;
     let config: any = [];
 
-    if (changedValue?.type === 'MQTT') {
+    if (changedValue?.type === OutendsType.MQTT) {
       config = {
-        ...defaultConfig['MQTT'],
+        ...defaultConfig[OutendsType.MQTT],
         clientId: `eekit${randomNumber}`,
         pubTopic: `eekit${randomNumber}`,
       };

@@ -4,7 +4,7 @@ import StateTag from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { validateName } from '@/utils/regExp';
 import { stringToBool } from '@/utils/utils';
-import { modeEnum, typeEnum } from './enum';
+import { DataMode, dataModeOption, outendsTypeOption } from './enum';
 
 export const defaultConfig = {
   MQTT: {
@@ -24,7 +24,7 @@ export const defaultConfig = {
     pingPacket: 'rhilex',
   },
   TCP_TRANSPORT: {
-    dataMode: 'RAW_STRING',
+    dataMode: DataMode.RAW_STRING,
     allowPing: 'false',
     pingPacket: 'rhilex',
     port: 6005,
@@ -81,7 +81,7 @@ export const baseColumns = [
     title: '资源类型',
     dataIndex: 'type',
     valueType: 'select',
-    valueEnum: typeEnum,
+    valueEnum: outendsTypeOption,
     required: true,
     fieldProps: {
       allowClear: false,
@@ -204,7 +204,7 @@ export const configColumns = {
     {
       title: '传输模式',
       dataIndex: ['config', 'dataMode'],
-      valueEnum: modeEnum,
+      valueEnum: dataModeOption,
       valueType: 'select',
       required: true,
     },

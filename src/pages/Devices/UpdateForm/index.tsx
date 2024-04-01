@@ -20,7 +20,7 @@ import {
 
 import PageContainer from '@/components/PageContainer';
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
-import { DeviceMode } from '../enum';
+import { DeviceMode, DeviceType, OutputMode } from '../enum';
 
 const DefaultListUrl = '/device/list';
 
@@ -31,9 +31,9 @@ const UpdateForm = ({}: ProFormProps) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const initialValues = {
-    type: 'GENERIC_PROTOCOL',
+    type: DeviceType.GENERIC_PROTOCOL,
     gid: groupId,
-    config: defaultConfig['GENERIC_PROTOCOL'],
+    config: defaultConfig[DeviceType.GENERIC_PROTOCOL],
   };
 
   // 设备详情
@@ -51,19 +51,19 @@ const UpdateForm = ({}: ProFormProps) => {
       // const inputAddr = params?.config?.inputAddr;
       const outputAddr = params?.config?.outputAddr;
 
-      if (type === 'GENERIC_CAMERA') {
+      if (type === DeviceType.GENERIC_CAMERA) {
         params = {
           ...params,
           config: {
             ...params.config,
             outputAddr:
-              outputMode === 'REMOTE_STREAM_SERVER'
+              outputMode === OutputMode.REMOTE_STREAM_SERVER
                 ? outputAddr
                 : getPlayAddress(params?.name, outputMode, 'push'),
           },
         };
       } else {
-        if (type === 'GENERIC_HTTP_DEVICE') {
+        if (type === DeviceType.GENERIC_HTTP_DEVICE) {
           const httpConfig = params?.config?.httpConfig;
           const newHeaders =
             httpConfig?.headers?.length > 0 ? formatHeaders2Obj(httpConfig?.headers) : {};
@@ -126,7 +126,7 @@ const UpdateForm = ({}: ProFormProps) => {
       ...config,
     };
 
-    if (type === 'GENERIC_HTTP_DEVICE') {
+    if (type === DeviceType.GENERIC_HTTP_DEVICE) {
       newConfig = {
         ...config,
         httpConfig: {

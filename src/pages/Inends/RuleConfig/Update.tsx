@@ -1,3 +1,4 @@
+import { RuleType } from '@/pages/RuleConfig';
 import RuleForm from '@/pages/RuleConfig/Update';
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { useParams, useRequest } from '@umijs/max';
@@ -19,7 +20,7 @@ const RuleConfigUpdate = () => {
     }
   }, [inendId]);
 
-  return <RuleForm type="inends" typeId={inendId || ''} inendsType={detail?.type} />;
+  return <RuleForm type={RuleType.Inends} typeId={inendId || ''} inendsType={detail?.type} />;
 };
 
 export default RuleConfigUpdate;

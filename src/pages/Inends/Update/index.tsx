@@ -11,6 +11,7 @@ import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-compon
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { columns, defaultConfig } from '../columns';
+import { InendsType } from '../enum';
 
 const DefaultListUrl = '/inends/list';
 
@@ -19,7 +20,7 @@ const UpdateForm = () => {
   const { uuid } = useParams();
   const [loading, setLoading] = useState<boolean>(false);
   const randomNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
-  const defaultValue = { type: 'COAP', config: defaultConfig['COAP'] };
+  const defaultValue = { type: InendsType.COAP, config: defaultConfig[InendsType.COAP] };
 
   // 获取详情
   const { data: detail } = useRequest(() => getInendsDetail({ uuid: uuid || '' }), {
@@ -34,7 +35,7 @@ const UpdateForm = () => {
       let params = {
         ...values,
       };
-      if (params.type === 'GENERIC_MQTT') {
+      if (params.type === InendsType.GENERIC_MQTT) {
         const newSubTopics = params?.config?.subTopics?.map(({ k }: { k: string }) => k);
 
         params = {
@@ -69,7 +70,7 @@ const UpdateForm = () => {
 
   const formatDetailConfig = () => {
     const newConfig =
-      detail?.type === 'GENERIC_MQTT'
+      detail?.type === InendsType.GENERIC_MQTT
         ? {
             ...detail?.config,
             subTopics: detail?.config?.subTopics?.map((topic: string) => ({ k: topic })),
@@ -83,16 +84,16 @@ const UpdateForm = () => {
     if (!changedValue?.type) return;
 
     let config;
-    if (changedValue?.type === 'GENERIC_IOT_HUB') {
+    if (changedValue?.type === InendsType.GENERIC_IOT_HUB) {
       config = {
-        ...defaultConfig['GENERIC_IOT_HUB'],
+        ...defaultConfig[InendsType.GENERIC_IOT_HUB],
         productId: `eekit${randomNumber}`,
         deviceName: `eekit${randomNumber}`,
         clientId: `eekit${randomNumber}`,
       };
-    } else if (changedValue?.type === 'GENERIC_MQTT') {
+    } else if (changedValue?.type === InendsType.GENERIC_MQTT) {
       config = {
-        ...defaultConfig['GENERIC_MQTT'],
+        ...defaultConfig[InendsType.GENERIC_MQTT],
         clientId: `eekit${randomNumber}`,
       };
     } else {

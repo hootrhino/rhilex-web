@@ -1,6 +1,6 @@
 import { getDevicesDetail, getRulesByDevice } from '@/services/rulex/shebeiguanli';
 import { useParams, useRequest } from '@umijs/max';
-import RuleConfig from '../../RuleConfig';
+import RuleConfig, { RuleType } from '../../RuleConfig';
 
 const RuleConfigList = () => {
   const { deviceId } = useParams();
@@ -20,7 +20,7 @@ const RuleConfigList = () => {
     <RuleConfig
       dataSource={data}
       pageTitle={deviceDetail?.name || ''}
-      type="device"
+      type={RuleType.Device}
       typeId={deviceId || ''}
       refresh={refresh}
     />

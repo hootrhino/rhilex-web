@@ -7,7 +7,7 @@ import { ProDescriptions, ProTable } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
 import { Button, Card, Descriptions, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
-import { parityEnum, typeOptions } from './enum';
+import { parityEnum, typeOption } from './enum';
 import Update from './Update';
 
 export type InterfaceItem = {
@@ -49,7 +49,7 @@ const Interface = () => {
       dataIndex: 'type',
       valueType: 'select',
       fieldProps: {
-        options: typeOptions,
+        options: typeOption,
       },
     },
     {

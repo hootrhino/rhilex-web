@@ -9,7 +9,7 @@ import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import type { DeviceItem } from '..';
 import { baseColumns, typeConfigColumns } from '../columns';
-import { deviceTypeOptions } from '../enum';
+import { DeviceType } from '../enum';
 import ModbusSheet from '../SpecificSheet/ModbusSheet';
 import PlcSheet from '../SpecificSheet/PlcSheet';
 
@@ -111,7 +111,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
           dataSource={detail && omit(detail, ['config'])}
           columns={formatColumns(baseColumns) as ProDescriptionsItemProps<Record<string, any>>[]}
         />
-        {detail && type && Object.keys(deviceTypeOptions).includes(type) && (
+        {detail && type && Object.keys(DeviceType).includes(type) && (
           <>
             {typeConfigColumns[type]?.map((item: any, index: number) => {
               if (item.valueType === 'dependency') {

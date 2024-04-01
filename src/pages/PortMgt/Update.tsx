@@ -14,7 +14,7 @@ import { useModel } from '@umijs/max';
 import { Card } from 'antd';
 import { useEffect, useRef } from 'react';
 import type { InterfaceItem } from '.';
-import { baudRateEnum, dataBitsEnum, parityEnum, stopBitsEnum, typeOptions } from './enum';
+import { baudRateEnum, dataBitsEnum, parityEnum, stopBitsEnum, typeOption } from './enum';
 
 type UpdateProps = ModalFormProps<any> & {
   uuid: string;
@@ -90,7 +90,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
           width="sm"
           disabled
           required
-          options={typeOptions}
+          options={typeOption}
         />
         <ProFormText
           name="alias"

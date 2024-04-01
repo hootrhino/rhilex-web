@@ -6,7 +6,7 @@ import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
 import { baseColumns, configColumns } from '../columns';
-import { typeEnum } from '../enum';
+import { OutendsType } from '../enum';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -33,7 +33,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         dataSource={data && omit(data, ['config'])}
         loading={loading}
       />
-      {data?.type && Object.keys(typeEnum).includes(data?.type) && (
+      {data?.type && Object.keys(OutendsType).includes(data?.type) && (
         <>
           <ProDescriptions
             column={1}

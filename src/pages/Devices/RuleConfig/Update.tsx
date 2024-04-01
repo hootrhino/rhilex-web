@@ -1,3 +1,4 @@
+import { RuleType } from '@/pages/RuleConfig';
 import RuleForm from '@/pages/RuleConfig/Update';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { useParams, useRequest } from '@umijs/max';
@@ -18,7 +19,7 @@ const RuleConfigUpdate = () => {
     }
   }, [deviceId]);
 
-  return <RuleForm type="device" typeId={deviceId || ''} deviceType={detail?.type} />;
+  return <RuleForm type={RuleType.Device} typeId={deviceId || ''} deviceType={detail?.type} />;
 };
 
 export default RuleConfigUpdate;

@@ -1,6 +1,6 @@
 import { getInendsDetail, getRulesByInend } from '@/services/rulex/shuruziyuanguanli';
 import { useParams, useRequest } from '@umijs/max';
-import RuleConfig from '../../RuleConfig';
+import RuleConfig, { RuleType } from '../../RuleConfig';
 
 const RuleConfigList = () => {
   const { inendId } = useParams();
@@ -18,7 +18,7 @@ const RuleConfigList = () => {
     <RuleConfig
       dataSource={data}
       pageTitle={inendsDetail?.name || ''}
-      type="inends"
+      type={RuleType.Inends}
       typeId={inendId || ''}
       refresh={refresh}
     />

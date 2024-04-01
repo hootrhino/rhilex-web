@@ -11,8 +11,8 @@ import { Alert, Button, Popconfirm } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { RuleType } from '.';
-import { deviceTypeOptions } from '../Devices/enum';
-import { typeEnum as inendsTypeEnum } from '../Inends/enum';
+import { DeviceType } from '../Devices/enum';
+import { InendsType } from '../Inends/enum';
 import { device_ais_ds, device_ds } from './deviceDS';
 import { inends_ds, inends_event_ds, links } from './inendsDS';
 import { DefaultActions, DefaultFailed, DefaultSuccess } from './initialValue';
@@ -44,8 +44,8 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
   const { ruleId, groupId } = useParams();
   const [loading, setLoading] = useState<boolean>(false);
   const DefaultListUrl = groupId ? `/${type}/${groupId}/${typeId}/rule` : `/${type}/${typeId}/rule`;
-  const hasDeviceDS = deviceType && Object.keys(deviceTypeOptions).includes(deviceType);
-  const hasInendsDS = inendsType && Object.keys(inendsTypeEnum).includes(inendsType);
+  const hasDeviceDS = deviceType && Object.keys(DeviceType).includes(deviceType);
+  const hasInendsDS = inendsType && Object.keys(InendsType).includes(inendsType);
 
   // 获取详情
   const { data: detail } = useRequest(() => getRulesDetail({ uuid: ruleId || '' }), {
@@ -160,10 +160,10 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
   // 获取数据结构 title
   const getDSTitle = () => {
     if (type === RuleType.Device) {
-      return `${hasDeviceDS ? deviceTypeOptions[deviceType] : '设备'} - 输出数据的结构及其示例`;
+      return `${hasDeviceDS ? DeviceType[deviceType] : '设备'} - 输出数据的结构及其示例`;
     }
     if (type === RuleType.Inends) {
-      return `${hasInendsDS ? inendsTypeEnum[inendsType] : '资源'} - 输出数据的结构及其示例`;
+      return `${hasInendsDS ? InendsType[inendsType] : '资源'} - 输出数据的结构及其示例`;
     }
     return null;
   };

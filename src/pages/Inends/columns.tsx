@@ -1,6 +1,6 @@
 import StateTag from '@/components/StateTag';
 import { validateName } from '@/utils/regExp';
-import { eventEnum, modeEnum, qosEnum, typeEnum } from './enum';
+import { EventType, eventTypeOption, inendsTypeOption, Mode, modeOption, qosEnum } from './enum';
 
 export const defaultConfig = {
   COAP: {
@@ -24,12 +24,12 @@ export const defaultConfig = {
     host: '127.0.0.1',
   },
   INTERNAL_EVENT: {
-    type: 'ALL',
+    type: EventType.ALL,
   },
   GENERIC_IOT_HUB: {
     host: '127.0.0.1',
     port: 1883,
-    mode: 'DC',
+    mode: Mode.DC,
   },
   GENERIC_MQTT: {
     host: '127.0.0.1',
@@ -61,7 +61,7 @@ export const baseColumns = [
           message: '名称不能为空',
         },
         {
-          validator: (_, value) => {
+          validator: (_: any, value: string) => {
             if (!value || validateName(value)) {
               return Promise.resolve();
             }
@@ -75,7 +75,7 @@ export const baseColumns = [
     title: '资源类型',
     dataIndex: 'type',
     valueType: 'select',
-    valueEnum: typeEnum,
+    valueEnum: inendsTypeOption,
     required: true,
   },
   {
@@ -133,7 +133,7 @@ export const configColumns = {
       title: '模式',
       dataIndex: ['config', 'mode'],
       valueType: 'select',
-      valueEnum: modeEnum,
+      valueEnum: modeOption,
       required: true,
     },
     {
@@ -165,7 +165,7 @@ export const configColumns = {
       dataIndex: ['config', 'type'],
       valueType: 'select',
       required: true,
-      valueEnum: eventEnum,
+      valueEnum: eventTypeOption,
     },
   ],
   GENERIC_MQTT: [
@@ -176,7 +176,6 @@ export const configColumns = {
       valueType: 'select',
       required: true,
       valueEnum: qosEnum,
-      // renderText: record =>
     },
     {
       valueType: 'formList',

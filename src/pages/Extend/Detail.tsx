@@ -49,11 +49,11 @@ const Detail = ({ config, onClose, ...props }: DetailProps) => {
     setConsole(newData);
   }, [latestMessage]);
 
-  return type === 'detail' ? (
+  return type === DetailModalType.Detail ? (
     <Drawer
       title="扩展协议详情"
       open={open}
-      width={type === 'detail' ? '30%' : '40%'}
+      width={type === DetailModalType.Detail ? '30%' : '40%'}
       placement="right"
       onClose={onClose}
       maskClosable={false}

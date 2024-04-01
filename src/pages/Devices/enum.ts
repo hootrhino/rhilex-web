@@ -1,13 +1,22 @@
 /**
  * 设备类型枚举
  */
+export enum DeviceType {
+  GENERIC_PROTOCOL = 'GENERIC_PROTOCOL',
+  GENERIC_MODBUS = 'GENERIC_MODBUS',
+  GENERIC_AIS_RECEIVER = 'GENERIC_AIS_RECEIVER',
+  SIEMENS_PLC = 'SIEMENS_PLC',
+  GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
+  GENERIC_CAMERA = 'GENERIC_CAMERA',
+}
+
 export const deviceTypeOptions = {
-  GENERIC_PROTOCOL: '通用时间片中断串口采集网关',
-  GENERIC_MODBUS: '通用 modbus 采集网关',
-  GENERIC_AIS_RECEIVER: '通用船载 AIS 数据解析网关',
-  SIEMENS_PLC: '通用西门子 S7 系列 PLC 采集网关',
-  GENERIC_HTTP_DEVICE: '通用 HTTP 协议数据采集网关',
-  GENERIC_CAMERA: '通用摄像机流处理网关',
+  [DeviceType.GENERIC_PROTOCOL]: '通用时间片中断串口采集网关',
+  [DeviceType.GENERIC_MODBUS]: '通用 modbus 采集网关',
+  [DeviceType.GENERIC_AIS_RECEIVER]: '通用船载 AIS 数据解析网关',
+  [DeviceType.SIEMENS_PLC]: '通用西门子 S7 系列 PLC 采集网关',
+  [DeviceType.GENERIC_HTTP_DEVICE]: '通用 HTTP 协议数据采集网关',
+  [DeviceType.GENERIC_CAMERA]: '通用摄像机流处理网关',
 };
 
 /**

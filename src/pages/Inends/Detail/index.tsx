@@ -5,7 +5,7 @@ import { ProDescriptions } from '@ant-design/pro-components';
 import { Drawer, DrawerProps } from 'antd';
 import { useRequest } from 'umi';
 import { baseColumns, configColumns } from '../columns';
-import { typeEnum } from '../enum';
+import { InendsType } from '../enum';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -27,7 +27,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         dataSource={data && omit(data, ['config'])}
         loading={loading}
       />
-      {data?.type && Object.keys(typeEnum).includes(data?.type) && (
+      {data?.type && Object.keys(InendsType).includes(data?.type) && (
         <ProDescriptions
           column={1}
           columns={configColumns[data?.type]}

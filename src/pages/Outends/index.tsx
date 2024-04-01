@@ -6,18 +6,16 @@ import { ProTable } from '@ant-design/pro-components';
 import { Button, Dropdown, Popconfirm } from 'antd';
 import { history } from 'umi';
 
+import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
-// import StateTag from '@/components/StateTag';
 import {
   deleteOutendsDel,
   getOutendsList,
   putOutendsRestart,
 } from '@/services/rulex/shuchuziyuanguanli';
-import Detail from './Detail';
-// import { typeEnum } from './enum';
-import PageContainer from '@/components/PageContainer';
 import { baseColumns } from './columns';
+import Detail from './Detail';
 
 export type OutendsItem = {
   name: string;
