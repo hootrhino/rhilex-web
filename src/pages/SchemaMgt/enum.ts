@@ -1,16 +1,32 @@
-// 数据类型
-export const typeEnum = {
-  STRING: '字符串',
-  INTEGER: '整数',
-  FLOAT: '浮点数',
-  BOOL: '布尔量',
-  GEO: '地理坐标',
+/**
+ * 数据模型-类型枚举&option
+ */
+export enum Type {
+  STRING = 'STRING',
+  INTEGER = 'INTEGER',
+  FLOAT = 'FLOAT',
+  BOOL = 'BOOL',
+  GEO = 'GEO',
+}
+export const typeOption = {
+  [Type.STRING]: '字符串',
+  [Type.INTEGER]: '整数',
+  [Type.FLOAT]: '浮点数',
+  [Type.BOOL]: '布尔量',
+  [Type.GEO]: '地理坐标',
 };
 
 // 读写
-export const rwEnum = {
-  R: '只读',
-  RW: '读写',
+/**
+ * 数据模型-读写枚举&option
+ */
+export enum RW {
+  R = 'R',
+  RW = 'RW',
+}
+export const rwOption = {
+  [RW.R]: '只读',
+  [RW.RW]: '读写',
 };
 
 // 单位

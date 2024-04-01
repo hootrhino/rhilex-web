@@ -1,4 +1,4 @@
-import CodeEditor from '@/components/CodeEditor';
+import CodeEditor, { Lang } from '@/components/CodeEditor';
 import { getRulesGetCanUsedResources } from '@/services/rulex/guizeguanli';
 import { CaretRightOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
@@ -16,6 +16,35 @@ import { Button, Collapse, Divider, Space, theme } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import CopyButton from './CopyButton';
 import ExampleItemChild from './ExampleItemChild';
+
+type TplVariables = {
+  name?: string;
+  type?: string;
+  label?: string;
+  value?: number | string;
+  dataSource?: 'devices' | 'outends';
+};
+
+type baseTplItem = {
+  label?: string;
+  apply?: string;
+  type?: string;
+  detail?: string;
+  gid?: string;
+  uuid?: string;
+  variables?: TplVariables[];
+};
+
+// 代码模板
+export type TplItem = baseTplItem & {
+  usage?: baseTplItem;
+};
+
+export type TplGroupItem = {
+  uuid: string;
+  name: string;
+  children: TplItem[];
+};
 
 type ExampleItemProps = CollapseProps & {
   type: string; // 'built-in' | 'custom' | 'quick'
@@ -234,7 +263,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
           {({ key }) => renderFormList(key)}
         </ProFormList>
         <ProForm.Item name="code">
-          <CodeEditor readOnly lang="lua" />
+          <CodeEditor readOnly lang={Lang.Lua} />
         </ProForm.Item>
       </ModalForm>
     </>

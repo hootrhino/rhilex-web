@@ -16,7 +16,7 @@ import { useRequest } from '@umijs/max';
 import type { DescriptionsProps } from 'antd';
 import { Button, Descriptions, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
-import { rwEnum, typeEnum } from '../enum';
+import { rwOption, Type, typeOption } from '../enum';
 import PropertyForm from './UpdateForm';
 
 type Rule = {
@@ -67,7 +67,7 @@ export const getBaseColumns = (readOnly?: boolean) => {
       title: '数据类型',
       dataIndex: 'type',
       valueType: 'select',
-      valueEnum: typeEnum,
+      valueEnum: typeOption,
       width: 100,
     },
     {
@@ -80,7 +80,7 @@ export const getBaseColumns = (readOnly?: boolean) => {
       title: '读写',
       dataIndex: 'rw',
       valueType: 'select',
-      valueEnum: rwEnum,
+      valueEnum: rwOption,
       width: 80,
     },
     // {
@@ -209,7 +209,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
   ];
 
   const expandedRowRender = (record: Property) => {
-    const type = record?.type || 'STRING';
+    const type = record?.type || Type.STRING;
     const data = record?.rule;
 
     const ruleItems = items
@@ -218,7 +218,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
         let children = data?.[item.key];
         switch (item.key) {
           case 'range':
-            children = `${data?.min}~${data?.max}`;
+            children = `${data?.min} ~ ${data?.max}`;
             break;
           case 'defaultValue':
             children = data?.defaultValue?.toString();

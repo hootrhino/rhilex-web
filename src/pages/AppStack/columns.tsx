@@ -1,5 +1,6 @@
 import ProSegmented from '@/components/ProSegmented';
 import StateTag from '@/components/StateTag';
+import { validateName } from '@/utils/regExp';
 import { stringToBool } from '@/utils/utils';
 
 export const baseColumns = [
@@ -7,7 +8,22 @@ export const baseColumns = [
     title: 'APP 名称',
     dataIndex: 'name',
     ellipsis: true,
-    required: true,
+    formItemProps: {
+      rules: [
+        {
+          required: true,
+          message: '名称不能为空',
+        },
+        {
+          validator: (_, value) => {
+            if (!value || validateName(value)) {
+              return Promise.resolve();
+            }
+            return Promise.reject('名称仅支持中文、字母、数字或下划线，长度在 6-14 个字符之间');
+          },
+        },
+      ],
+    },
   },
   {
     title: 'APP 版本',

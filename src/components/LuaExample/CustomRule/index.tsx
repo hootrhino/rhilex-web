@@ -11,14 +11,8 @@ import type { ActionType } from '@ant-design/pro-components';
 import { ProList } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
+import type { TplItem } from '../CommonRule/ExampleItem';
 import UpdateForm from './Update';
-
-type TplItem = {
-  uuid?: string;
-  label?: string;
-  detail?: string;
-  [key: string]: any;
-};
 
 const CustomRule = () => {
   const actionRef = useRef<ActionType>();
@@ -88,7 +82,7 @@ const CustomRule = () => {
             dataIndex: 'detail',
           },
           actions: {
-            render: (_, row, _index, action) => [
+            render: (_, row) => [
               <a
                 onClick={() => {
                   setOpen(true);

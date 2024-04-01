@@ -19,6 +19,11 @@ export type InterfaceItem = {
   config?: Record<string, any>;
 };
 
+type DetailModalConfig = {
+  open: boolean;
+  uuid: string;
+};
+
 const Interface = () => {
   const actionRef = useRef<ActionType>();
   const [formConfig, setFormConfig] = useState<DetailModalConfig>({ open: false, uuid: '' });

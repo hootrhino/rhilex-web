@@ -1,5 +1,7 @@
-// 设备类型
-export const typeEnum = {
+/**
+ * 设备类型枚举
+ */
+export const deviceTypeOptions = {
   GENERIC_PROTOCOL: '通用时间片中断串口采集网关',
   GENERIC_MODBUS: '通用 modbus 采集网关',
   GENERIC_AIS_RECEIVER: '通用船载 AIS 数据解析网关',
@@ -8,13 +10,17 @@ export const typeEnum = {
   GENERIC_CAMERA: '通用摄像机流处理网关',
 };
 
-// 模式
-export const modeEnum = {
-  UART: 'UART',
-  TCP: 'TCP',
-};
+/**
+ * 设备工作模式枚举
+ */
+export enum DeviceMode {
+  UART = 'UART',
+  TCP = 'TCP',
+}
 
-// Modbus 功能
+/**
+ * Modbus 设备功能
+ */
 export const funcEnum = new Map([
   [1, '01 读线圈状态'],
   [2, '02 读离散输入状态'],
@@ -26,15 +32,10 @@ export const funcEnum = new Map([
   // [16, '16 写多个保持寄存器'],
 ]);
 
-// 块类型
-export const blockTypeEnum = {
-  MB: 'MB',
-  DB: 'DB',
-  FB: 'FB',
-};
-
-// PLC Model
-export const plcModelEnum = {
+/**
+ * 西门子设备 PLC 型号
+ */
+export const plcModelOptions = {
   S7200: '西门子 S7-200 系列 PLC',
   S7300: '西门子 S7-300 系列 PLC',
   S7400: '西门子 S7-400 系列 PLC',
@@ -67,36 +68,30 @@ export const slotEnum = new Map([
   [11, '11'],
 ]);
 
-// 视频输入模式
-export const inputModeEnum = {
-  REMOTE_STREAM_RTSP: '远程RTSP流地址',
-  LOCAL_CAMERA: '本地相机设备',
-};
+/**
+ * 视频输入模式
+ */
+export enum InputMode {
+  REMOTE_STREAM_RTSP = '远程RTSP流地址',
+  LOCAL_CAMERA = '本地相机设备',
+}
 
-// 视频输出模式
-export enum OutputModeEnum {
+/**
+ * 视频输出模式
+ */
+export enum OutputMode {
   // LOCAL_H264_STREAM_SERVER = '本地 FLV 流服务器',
   LOCAL_JPEG_STREAM_SERVER = '本地 Jpeg 流服务器',
   REMOTE_STREAM_SERVER = '远程流媒体服务器',
 }
 
-// 视频输出编码
-export const outputEncodeEnum = {
-  H264_STREAM: 'H264 编码',
-  JPEG_STREAM: 'JPEG 编码',
-};
-
-// 是否解析 AIS 报文
-// export const parseAisEnum = {
-//   true: {
-//     text: '解析',
-//     color: 'processing',
-//   },
-//   false: {
-//     text: '不解析',
-//     color: 'default',
-//   },
-// };
+/**
+ * 视频输出编码
+ */
+export enum OutputEncode {
+  H264_STREAM = 'H264 编码',
+  JPEG_STREAM = 'JPEG 编码',
+}
 
 /** SNMP */
 // 协议分隔符

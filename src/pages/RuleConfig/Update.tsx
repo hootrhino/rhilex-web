@@ -1,18 +1,17 @@
-import CodeEditor from '@/components/CodeEditor';
+import CodeEditor, { Lang, Theme } from '@/components/CodeEditor';
 import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
-import ProFormSubmitter from '@/components/ProFormSubmitter';
 import { getRulesDetail, postRulesCreate, putRulesUpdate } from '@/services/rulex/guizeguanli';
 import { validateName } from '@/utils/regExp';
 import { NotificationOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
-import { Alert } from 'antd';
+import { FooterToolbar, ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
+import { Alert, Button, Popconfirm } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { RuleType } from '.';
-import { typeEnum as deviceTypeEnum } from '../Devices/enum';
+import { deviceTypeOptions } from '../Devices/enum';
 import { typeEnum as inendsTypeEnum } from '../Inends/enum';
 import { device_ais_ds, device_ds } from './deviceDS';
 import { inends_ds, inends_event_ds, links } from './inendsDS';
@@ -45,7 +44,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
   const { ruleId, groupId } = useParams();
   const [loading, setLoading] = useState<boolean>(false);
   const DefaultListUrl = groupId ? `/${type}/${groupId}/${typeId}/rule` : `/${type}/${typeId}/rule`;
-  const hasDeviceDS = deviceType && Object.keys(deviceTypeEnum).includes(deviceType);
+  const hasDeviceDS = deviceType && Object.keys(deviceTypeOptions).includes(deviceType);
   const hasInendsDS = inendsType && Object.keys(inendsTypeEnum).includes(inendsType);
 
   // 获取详情
@@ -58,8 +57,8 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
     try {
       const params = {
         ...values,
-        fromSource: type === 'inends' ? [typeId] : [],
-        fromDevice: type === 'device' ? [typeId] : [],
+        fromSource: type === RuleType.Inends ? [typeId] : [],
+        fromDevice: type === RuleType.Device ? [typeId] : [],
         success: DefaultSuccess,
         failed: DefaultFailed,
       };
@@ -86,16 +85,16 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
       return device_ais_ds.map(({ key, title, json }) => (
         <div key={key} className="mb-[20px]">
           <div className="mb-[5px]">{title}</div>
-          <CodeEditor lang="json" readOnly value={json} theme="light" />
+          <CodeEditor lang={Lang.Json} readOnly value={json} theme={Theme.Light} />
         </div>
       ));
     } else {
       return (
         <CodeEditor
-          lang="json"
+          lang={Lang.Json}
           readOnly
           value={deviceType ? device_ds[deviceType] : ''}
-          theme="light"
+          theme={Theme.Light}
         />
       );
     }
@@ -107,10 +106,10 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
     if (['COAP', 'HTTP', 'RULEX_UDP', 'GRPC', 'NATS_SERVER'].includes(inendsType)) {
       return (
         <CodeEditor
-          lang="json"
+          lang={Lang.Json}
           readOnly
           value={inendsType ? inends_ds[inendsType] : ''}
-          theme="light"
+          theme={Theme.Light}
         />
       );
     } else if (['GENERIC_IOT_HUB', 'GENERIC_MQTT'].includes(inendsType)) {
@@ -152,7 +151,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
       return inends_event_ds.map(({ key, title, json }) => (
         <div key={key} className="mb-[20px]">
           <div className="mb-[5px]">{title}</div>
-          <CodeEditor lang="json" readOnly value={json} theme="light" />
+          <CodeEditor lang={Lang.Json} readOnly value={json} theme={Theme.Light} />
         </div>
       ));
     }
@@ -160,10 +159,10 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
 
   // 获取数据结构 title
   const getDSTitle = () => {
-    if (type === 'device') {
-      return `${hasDeviceDS ? deviceTypeEnum[deviceType] : '设备'} - 输出数据的结构及其示例`;
+    if (type === RuleType.Device) {
+      return `${hasDeviceDS ? deviceTypeOptions[deviceType] : '设备'} - 输出数据的结构及其示例`;
     }
-    if (type === 'inends') {
+    if (type === RuleType.Inends) {
       return `${hasInendsDS ? inendsTypeEnum[inendsType] : '资源'} - 输出数据的结构及其示例`;
     }
     return null;
@@ -181,14 +180,22 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
             formRef={formRef}
             submitter={{
               render: ({ reset, submit }) => (
-                <ProFormSubmitter
-                  handleOnSubmit={submit}
-                  handleOnReset={() => {
-                    reset();
-                    formRef.current?.setFieldsValue(detail ? detail : initialValue);
-                  }}
-                  loading={loading}
-                />
+                <FooterToolbar>
+                  <Popconfirm
+                    key="reset"
+                    title="重置可能会丢失数据，确定要重置吗？"
+                    onConfirm={() => {
+                      reset();
+                      formRef.current?.setFieldsValue(detail ? detail : initialValue);
+                    }}
+                  >
+                    <Button>重置</Button>
+                  </Popconfirm>
+
+                  <Button key="submit" type="primary" onClick={submit} loading={loading}>
+                    提交
+                  </Button>
+                </FooterToolbar>
               ),
             }}
             onFinish={handleOnFinish}

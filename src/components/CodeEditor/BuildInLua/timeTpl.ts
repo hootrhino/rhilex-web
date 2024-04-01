@@ -17,17 +17,19 @@ const timeList = [
   },
 ];
 
-export const timeTpl = timeList?.map((time) => {
+export const timeTpl = timeList.map((time) => {
   const code =
     time.target === 'sleep'
       ? `local ts = time:${time.target}(arg)`
       : `local ts = time:${time.target}()`;
+  const label = `time:Time${firstUpperCase(time.target)}`;
+  const variables = time?.variables && time.variables.length > 0 ? time.variables : [];
 
   return {
     ...time,
-    label: `time:Time${firstUpperCase(time.target)}`,
+    label,
     apply: code,
     type: 'function',
-    variables: time?.variables ? time?.variables : [],
+    variables,
   };
 });

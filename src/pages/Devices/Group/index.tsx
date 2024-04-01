@@ -6,6 +6,17 @@ import { useModel } from '@umijs/max';
 import { Space, Tooltip } from 'antd';
 import { useEffect, useRef } from 'react';
 
+export enum GroupModalType {
+  Edit = 'edit',
+  New = 'new',
+}
+
+export type GroupConfig = {
+  open: boolean;
+  title: string;
+  type: GroupModalType;
+};
+
 export type GroupItem = {
   uuid: string;
   name: string;
@@ -26,7 +37,11 @@ type GroupListProps = {
   updateConfig: (values: GroupConfig) => void;
 };
 
-export const DEFAULT_CONFIG: GroupConfig = { open: false, type: 'new', title: '新建分组' };
+export const DEFAULT_CONFIG: GroupConfig = {
+  open: false,
+  type: GroupModalType.New,
+  title: '新建分组',
+};
 
 const GroupList = ({
   dataSource,
@@ -117,7 +132,7 @@ const GroupList = ({
                     <a
                       key="edit"
                       onClick={() => {
-                        updateConfig({ open: true, title: '编辑分组', type: 'edit' });
+                        updateConfig({ open: true, title: '编辑分组', type: GroupModalType.Edit });
                         getGroupDetail({ uuid });
                       }}
                     >

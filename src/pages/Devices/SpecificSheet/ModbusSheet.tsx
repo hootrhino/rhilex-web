@@ -47,6 +47,8 @@ const defaultModbusConfig = {
   weight: 1,
 };
 
+type RecordKey = React.Key | React.Key[];
+
 export type ModbusSheetItem = {
   uuid?: string;
   id?: number;

@@ -13,11 +13,11 @@ import {
 import { AutoComplete } from 'antd';
 import { useEffect, useRef } from 'react';
 import type { Property } from '..';
-import { rwEnum, typeEnum, unitOptions } from '../enum';
+import { RW, rwOption, Type, typeOption, unitOptions } from '../enum';
 
 const defaultProperty = {
-  rw: 'R',
-  type: 'STRING',
+  rw: RW.R,
+  type: Type.STRING,
   rule: { latitude: 0, longitude: 0, max: 0, range: [0, 0], round: 2 },
 };
 
@@ -52,7 +52,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
         if (['INTEGER', 'FLOAT'].includes(changedValue?.type)) {
           formRef.current?.setFieldsValue({ rule: { defaultValue: 0 } });
         }
-        if (changedValue?.type === 'BOOL') {
+        if (changedValue?.type === Type.BOOL) {
           formRef.current?.setFieldsValue({ rule: { defaultValue: false } });
         }
       }}
@@ -78,16 +78,16 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
       <ProFormSelect
         name="type"
         label="数据类型"
-        valueEnum={typeEnum}
-        placeholder="请选择标志符"
+        valueEnum={typeOption}
+        placeholder="请选择数据类型"
         width="lg"
-        rules={[{ required: true, message: '请选择标志符' }]}
+        rules={[{ required: true, message: '请选择数据类型' }]}
       />
       <ProFormDependency name={['type']} labelCol={{ span: 4 }}>
         {({ type }) => {
           if (!type) return null;
           let dom: React.ReactNode;
-          if (type === 'STRING') {
+          if (type === Type.STRING) {
             dom = (
               <ProFormDigit
                 name={['rule', 'max']}
@@ -97,7 +97,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
               />
             );
           }
-          if (type === 'INTEGER') {
+          if (type === Type.INTEGER) {
             dom = (
               <ProFormDigitRange
                 label="取值范围"
@@ -115,7 +115,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
               />
             );
           }
-          if (type === 'FLOAT') {
+          if (type === Type.FLOAT) {
             dom = (
               <>
                 <div className="w-[250px]">
@@ -145,7 +145,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
               </>
             );
           }
-          if (type === 'BOOL') {
+          if (type === Type.BOOL) {
             dom = (
               <>
                 <ProFormText
@@ -163,7 +163,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
               </>
             );
           }
-          if (type === 'GEO') {
+          if (type === Type.GEO) {
             dom = (
               <>
                 <ProFormDigit
@@ -212,7 +212,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
         <ProFormRadio.Group
           name="rw"
           label="读写"
-          valueEnum={rwEnum}
+          valueEnum={rwOption}
           rules={[{ required: true, message: '请选择读写' }]}
         />
       </ProForm.Group>

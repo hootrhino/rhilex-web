@@ -3,6 +3,11 @@ import { DEFAULT_GROUP_KEY_DEVICE } from '@/utils/constant';
 import { useState } from 'react';
 import { useRequest } from 'umi';
 
+type DetailModalConfig = {
+  open: boolean;
+  uuid: string;
+};
+
 const defaultDeviceConfig = {
   uuid: '',
   open: false,

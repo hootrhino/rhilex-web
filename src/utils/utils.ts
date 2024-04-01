@@ -1,11 +1,11 @@
-import { OutputModeEnum } from '@/pages/Devices/enum';
+import { OutputMode } from '@/pages/Devices/enum';
 import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
 import CryptoJS from 'crypto-js';
 import { twMerge } from 'tailwind-merge';
 import { isDev } from './constant';
-import { isEmpty, omit } from './redash';
+import { isEmpty } from './redash';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -54,74 +54,10 @@ export const formatHeaders2Arr = (data: Record<string, any>) => {
   return newData;
 };
 
-export const processColumns = (columns: any) => {
-  return columns?.map((col: any) => {
-    if (col.valueType === 'group') {
-      return { ...col, columns: processColumns(col.columns) };
-    }
-
-    if (col.valueType === 'dependency') {
-      return {
-        ...col,
-        columns: (params: any) => {
-          return processColumns(col.columns(params));
-        },
-      };
-    }
-    if (col.valueType === 'formList') {
-      if (col.mode === 'single') {
-        return {
-          ...omit(col, ['mode']),
-          columns: processColumns(col.columns),
-          fieldProps: {
-            creatorButtonProps: false,
-            copyIconProps: false,
-            deleteIconProps: false,
-          },
-        };
-      } else {
-        return {
-          ...omit(col, ['mode']),
-          columns: processColumns(col.columns),
-          fieldProps: {
-            creatorButtonProps: {
-              position: 'top',
-            },
-            creatorRecord: col?.initialValue,
-            ...col.fieldProps,
-          },
-        };
-      }
-    }
-
-    return {
-      ...omit(col, ['required']),
-      width: col?.width || 'md',
-      fieldProps: {
-        placeholder: ['groupSelect', 'schemaSelect', 'select'].includes(col?.valueType)
-          ? `请选择${col?.title}`
-          : `请输入${col?.title}`,
-        ...col?.fieldProps,
-      },
-      formItemProps: {
-        rules: [
-          {
-            required: col?.required,
-            message: ['groupSelect', 'schemaSelect', 'select'].includes(col?.valueType)
-              ? `请选择${col?.title}`
-              : `请输入${col?.title}`,
-          },
-        ],
-        ...col?.formItemProps,
-      },
-    };
-  });
-};
-
 // 获取设备通用摄像机流处理网关播放地址
 export const getPlayAddress = (
   deviceName: string,
-  mode: OutputModeEnum,
+  mode: OutputMode,
   serviceType: 'pull' | 'push',
 ) => {
   const params = {
@@ -161,6 +97,7 @@ export const ensureArrayLength = (arr: string[], maxLength = 50) => {
   }
 };
 
+// log
 export const handleNewMessage = (source: string[] | undefined, target: string, topic: string) => {
   const newData = [...(source || [])]; // Clone the existing array or create a new one if it's undefined
 

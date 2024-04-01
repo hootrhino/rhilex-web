@@ -1,19 +1,13 @@
 import { message } from '@/components/PopupHack';
-import ProFormSubmitter from '@/components/ProFormSubmitter';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import {
   getDevicesDetail,
   postDevicesCreate,
   putDevicesUpdate,
 } from '@/services/rulex/shebeiguanli';
-import {
-  formatHeaders2Arr,
-  formatHeaders2Obj,
-  getPlayAddress,
-  processColumns,
-} from '@/utils/utils';
-import type { ProFormInstance } from '@ant-design/pro-components';
-import { BetaSchemaForm, ProCard, ProFormProps } from '@ant-design/pro-components';
+import { formatHeaders2Arr, formatHeaders2Obj, getPlayAddress } from '@/utils/utils';
+import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
+import { ProFormProps } from '@ant-design/pro-components';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { columns } from '../columns';
@@ -25,6 +19,8 @@ import {
 } from './initialValues';
 
 import PageContainer from '@/components/PageContainer';
+import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
+import { DeviceMode } from '../enum';
 
 const DefaultListUrl = '/device/list';
 
@@ -84,7 +80,7 @@ const UpdateForm = ({}: ProFormProps) => {
           };
         }
 
-        if (mode === 'TCP') {
+        if (mode === DeviceMode.TCP) {
           const hostConfigParams = params?.config?.hostConfig;
           params = {
             ...params,
@@ -145,7 +141,11 @@ const UpdateForm = ({}: ProFormProps) => {
 
   const handleOnReset = () => {
     if (deviceId && detail) {
-      formRef.current?.setFieldsValue({ ...detail, config: handleOnUpdateValue(detail) });
+      formRef.current?.setFieldsValue({
+        ...detail,
+        schemaId: detail?.schemaId || undefined,
+        config: handleOnUpdateValue(detail),
+      });
     } else {
       formRef.current?.setFieldsValue(initialValues);
     }
@@ -192,28 +192,15 @@ const UpdateForm = ({}: ProFormProps) => {
 
   return (
     <PageContainer showExtra title={deviceId ? '编辑设备' : '新建设备'} backUrl={DefaultListUrl}>
-      <ProCard>
-        <BetaSchemaForm
-          layoutType="Form"
-          formRef={formRef}
-          columns={processColumns(columns)}
-          onFinish={handleOnFinish}
-          onValuesChange={handleOnValuesChange}
-          rootClassName="device-form"
-          submitter={{
-            render: ({ reset, submit }) => (
-              <ProFormSubmitter
-                handleOnSubmit={submit}
-                handleOnReset={() => {
-                  reset();
-                  handleOnReset();
-                }}
-                loading={loading}
-              />
-            ),
-          }}
-        />
-      </ProCard>
+      <ProBetaSchemaForm
+        formRef={formRef}
+        onFinish={handleOnFinish}
+        columns={columns as ProFormColumnsType<Record<string, any>>[]}
+        loading={loading}
+        handleOnReset={handleOnReset}
+        onValuesChange={handleOnValuesChange}
+        rootClassName="device-form"
+      />
     </PageContainer>
   );
 };

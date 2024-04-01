@@ -1,4 +1,3 @@
-import GroupList, { DEFAULT_CONFIG } from '@/components/GroupList';
 import PageContainer from '@/components/PageContainer';
 import { message, modal } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
@@ -30,7 +29,9 @@ import type { ItemType } from 'antd/es/menu/hooks/useItems';
 import { useRef, useState } from 'react';
 import { baseColumns } from './columns';
 import Detail from './Detail';
-import { OutputModeEnum } from './enum';
+import { OutputMode } from './enum';
+import type { GroupConfig } from './Group';
+import GroupList, { DEFAULT_CONFIG } from './Group';
 import SchemaDetail from './SchemaDetail';
 import VideoDetail from './VideoDetail';
 
@@ -67,9 +68,8 @@ const Devices = () => {
   const [activeDeviceName, setActiveDeviceName] = useState<string>('');
   const [videoConfig, setVideoConfig] = useState<{
     deviceName: string | undefined;
-    outputMode: OutputModeEnum;
-  }>({ deviceName: '', outputMode: OutputModeEnum.LOCAL_JPEG_STREAM_SERVER });
-  // const [playUrl, setPlayUrl] = useState<string>('');
+    outputMode: OutputMode;
+  }>({ deviceName: '', outputMode: OutputMode.LOCAL_JPEG_STREAM_SERVER });
 
   // 重置分组表单
   const handleOnReset = () => {
@@ -223,7 +223,6 @@ const Devices = () => {
                       } else {
                         setOpenVideo(true);
                         setVideoConfig({ deviceName: name, outputMode: config?.outputMode });
-                        // setPlayUrl(getPlayAddress(name || '', config?.outputMode, 'pull'));
                       }
 
                       break;
@@ -343,10 +342,8 @@ const Devices = () => {
         open={openVideo}
         onCancel={() => {
           setOpenVideo(false);
-          // setPlayUrl('');
         }}
         {...videoConfig}
-        // playUrl={playUrl}
       />
       <ProConfirmModal
         open={open}

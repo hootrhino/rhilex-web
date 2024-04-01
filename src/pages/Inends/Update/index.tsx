@@ -1,18 +1,15 @@
 import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
-import ProFormSubmitter from '@/components/ProFormSubmitter';
+import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import {
   getInendsDetail,
   postInendsCreate,
   putInendsUpdate,
 } from '@/services/rulex/shuruziyuanguanli';
-import { processColumns } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
-import { BetaSchemaForm, ProCard } from '@ant-design/pro-components';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
-import type { InendsItem } from '..';
 import { columns, defaultConfig } from '../columns';
 
 const DefaultListUrl = '/inends/list';
@@ -82,6 +79,31 @@ const UpdateForm = () => {
     return newConfig;
   };
 
+  const handleOnValuesChange = (changedValue) => {
+    if (!changedValue?.type) return;
+
+    let config;
+    if (changedValue?.type === 'GENERIC_IOT_HUB') {
+      config = {
+        ...defaultConfig['GENERIC_IOT_HUB'],
+        productId: `eekit${randomNumber}`,
+        deviceName: `eekit${randomNumber}`,
+        clientId: `eekit${randomNumber}`,
+      };
+    } else if (changedValue?.type === 'GENERIC_MQTT') {
+      config = {
+        ...defaultConfig['GENERIC_MQTT'],
+        clientId: `eekit${randomNumber}`,
+      };
+    } else {
+      config = defaultConfig[changedValue?.type];
+    }
+
+    formRef.current?.setFieldsValue({
+      config: changedValue?.type === detail?.type ? formatDetailConfig() : config,
+    });
+  };
+
   useEffect(() => {
     if (detail) {
       formRef.current?.setFieldsValue({ ...detail, config: formatDetailConfig() });
@@ -94,52 +116,18 @@ const UpdateForm = () => {
 
   return (
     <PageContainer showExtra title={uuid ? '编辑资源' : '新建资源'} backUrl={DefaultListUrl}>
-      <ProCard>
-        <BetaSchemaForm
-          layoutType="Form"
-          formRef={formRef}
-          columns={processColumns(columns) as ProFormColumnsType<InendsItem>[]}
-          onFinish={handleOnFinish}
-          onValuesChange={(changedValue) => {
-            if (!changedValue?.type) return;
-
-            let config;
-            if (changedValue?.type === 'GENERIC_IOT_HUB') {
-              config = {
-                ...defaultConfig['GENERIC_IOT_HUB'],
-                productId: `eekit${randomNumber}`,
-                deviceName: `eekit${randomNumber}`,
-                clientId: `eekit${randomNumber}`,
-              };
-            } else if (changedValue?.type === 'GENERIC_MQTT') {
-              config = {
-                ...defaultConfig['GENERIC_MQTT'],
-                clientId: `eekit${randomNumber}`,
-              };
-            } else {
-              config = defaultConfig[changedValue?.type];
-            }
-
-            formRef.current?.setFieldsValue({
-              config: changedValue?.type === detail?.type ? formatDetailConfig() : config,
-            });
-          }}
-          submitter={{
-            render: ({ reset, submit }) => (
-              <ProFormSubmitter
-                handleOnSubmit={submit}
-                handleOnReset={() => {
-                  reset();
-                  formRef.current?.setFieldsValue(
-                    uuid ? { ...detail, config: formatDetailConfig() } : defaultValue,
-                  );
-                }}
-                loading={loading}
-              />
-            ),
-          }}
-        />
-      </ProCard>
+      <ProBetaSchemaForm
+        formRef={formRef}
+        onFinish={handleOnFinish}
+        onValuesChange={handleOnValuesChange}
+        columns={columns as ProFormColumnsType<Record<string, any>>[]}
+        loading={loading}
+        handleOnReset={() =>
+          formRef.current?.setFieldsValue(
+            uuid ? { ...detail, config: formatDetailConfig() } : defaultValue,
+          )
+        }
+      />
     </PageContainer>
   );
 };

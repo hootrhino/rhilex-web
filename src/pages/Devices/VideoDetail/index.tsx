@@ -3,11 +3,11 @@ import { SyncOutlined } from '@ant-design/icons';
 import type { ModalProps } from 'antd';
 import { Button, Modal } from 'antd';
 import { useEffect, useState } from 'react';
-import { OutputModeEnum } from '../enum';
+import { OutputMode } from '../enum';
 
 type VideoDetailProps = ModalProps & {
   deviceName: string | undefined;
-  outputMode: OutputModeEnum;
+  outputMode: OutputMode;
 };
 
 const VideoDetail = ({ deviceName = '', outputMode, onCancel, ...props }: VideoDetailProps) => {

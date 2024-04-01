@@ -4,12 +4,13 @@ import { ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 import { useState } from 'react';
 
+import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import { deleteRulesDel } from '@/services/rulex/guizeguanli';
 import { history, useParams, useRequest } from '@umijs/max';
 import Debug from './Debug';
-import Detail from './Detail';
-import PageContainer from '@/components/PageContainer';
+import type { DetailLogModalConfig } from './Detail';
+import Detail, { DetailModalType } from './Detail';
 
 export type RuleItem = {
   uuid: string;
@@ -19,7 +20,15 @@ export type RuleItem = {
   [key: string]: any;
 };
 
-export type RuleType = 'device' | 'inends';
+export enum RuleType {
+  Device = 'device',
+  Inends = 'inends',
+}
+
+type DetailModalConfig = {
+  open: boolean;
+  uuid: string;
+};
 
 type RuleConfigProps = {
   dataSource: RuleItem[];
@@ -33,7 +42,7 @@ const RuleConfig = ({ dataSource, pageTitle, type, typeId, refresh }: RuleConfig
   const { groupId } = useParams();
   const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({
     open: false,
-    type: 'detail',
+    type: DetailModalType.Detail,
     uuid: '',
   });
   const [debugConfig, setDebugConfig] = useState<DetailModalConfig>({
@@ -66,10 +75,11 @@ const RuleConfig = ({ dataSource, pageTitle, type, typeId, refresh }: RuleConfig
   const getTitle = () => {
     let title = '规则配置';
     if (pageTitle) {
-      title = type === 'device' ? `设备 ${pageTitle} - 规则配置` : `资源 ${pageTitle} - 规则配置`;
+      title =
+        type === RuleType.Device ? `设备 ${pageTitle} - 规则配置` : `资源 ${pageTitle} - 规则配置`;
     }
     return title;
-  }
+  };
 
   const columns: ProColumns<RuleItem>[] = [
     {
@@ -107,13 +117,16 @@ const RuleConfig = ({ dataSource, pageTitle, type, typeId, refresh }: RuleConfig
         <a key="debug" onClick={() => setDebugConfig({ open: true, uuid })}>
           测试
         </a>,
-        <a key="log" onClick={() => setDetailConfig({ open: true, type: 'log', uuid })}>
+        <a
+          key="log"
+          onClick={() => setDetailConfig({ open: true, type: DetailModalType.Log, uuid })}
+        >
           日志
         </a>,
         <a
           key="detail"
           onClick={() => {
-            setDetailConfig({ open: true, type: 'detail', uuid });
+            setDetailConfig({ open: true, type: DetailModalType.Detail, uuid });
           }}
         >
           详情
@@ -135,10 +148,7 @@ const RuleConfig = ({ dataSource, pageTitle, type, typeId, refresh }: RuleConfig
 
   return (
     <>
-      <PageContainer
-        backUrl={`/${type}/list`}
-        title={getTitle()}
-      >
+      <PageContainer backUrl={`/${type}/list`} title={getTitle()}>
         <ProTable
           rowKey="uuid"
           columns={columns}

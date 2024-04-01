@@ -9,6 +9,17 @@ import { Button, Drawer, Modal } from 'antd';
 import { useEffect } from 'react';
 import { baseColumns } from '.';
 
+export enum DetailModalType {
+  Detail = 'detail',
+  Log = 'log',
+}
+
+export type DetailLogModalConfig = {
+  open: boolean;
+  type: DetailModalType;
+  uuid: string;
+};
+
 type DetailProps = DrawerProps & {
   config: DetailLogModalConfig;
 };

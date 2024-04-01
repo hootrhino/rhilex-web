@@ -14,7 +14,8 @@ import { ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag } from 'antd';
 import { useRef, useState } from 'react';
-import Detail from './Detail';
+import type { DetailLogModalConfig } from './Detail';
+import Detail, { DetailModalType } from './Detail';
 import UpdateForm from './Update';
 
 export type ExtendItem = {
@@ -25,6 +26,11 @@ export type ExtendItem = {
   local_path: string;
   description?: string;
   [key: string]: any;
+};
+
+type DetailModalConfig = {
+  open: boolean;
+  uuid: string;
 };
 
 export const baseColumns = [
@@ -100,7 +106,7 @@ const ExtendedProtocol = () => {
 
   const [formConfig, setFormConfig] = useState<DetailModalConfig>({ open: false, uuid: '' });
   const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({
-    type: 'detail',
+    type: DetailModalType.Detail,
     open: false,
     uuid: '',
   });
@@ -145,7 +151,7 @@ const ExtendedProtocol = () => {
           key="log"
           onClick={() => {
             if (!uuid) return;
-            setDetailConfig({ type: 'log', open: true, uuid });
+            setDetailConfig({ type: DetailModalType.Log, open: true, uuid });
           }}
         >
           日志
@@ -154,7 +160,7 @@ const ExtendedProtocol = () => {
           key="detail"
           onClick={() => {
             if (!uuid) return;
-            setDetailConfig({ type: 'detail', open: true, uuid });
+            setDetailConfig({ type: DetailModalType.Detail, open: true, uuid });
           }}
         >
           详情

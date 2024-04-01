@@ -1,18 +1,16 @@
 import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
-import ProFormSubmitter from '@/components/ProFormSubmitter';
+import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import {
   getOutendsDetail,
   postOutendsCreate,
   putOutendsUpdate,
 } from '@/services/rulex/shuchuziyuanguanli';
-import { formatHeaders2Arr, formatHeaders2Obj, processColumns } from '@/utils/utils';
+import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
-import { BetaSchemaForm, ProCard } from '@ant-design/pro-components';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
-import type { OutendsItem } from '..';
 import { columns, defaultConfig } from '../columns';
 
 export type UpdateFormItem = {
@@ -120,27 +118,14 @@ const UpdateForm = () => {
 
   return (
     <PageContainer showExtra title={uuid ? '编辑资源' : '新建资源'} backUrl={DefaultListUrl}>
-      <ProCard>
-        <BetaSchemaForm
-          layoutType="Form"
-          formRef={formRef}
-          columns={processColumns(columns) as ProFormColumnsType<OutendsItem>[]}
-          onFinish={handleOnFinish}
-          onValuesChange={handleOnValuesChange}
-          submitter={{
-            render: ({ reset, submit }) => (
-              <ProFormSubmitter
-                handleOnSubmit={submit}
-                handleOnReset={() => {
-                  reset();
-                  handleOnReset();
-                }}
-                loading={loading}
-              />
-            ),
-          }}
-        />
-      </ProCard>
+      <ProBetaSchemaForm
+        formRef={formRef}
+        onFinish={handleOnFinish}
+        onValuesChange={handleOnValuesChange}
+        columns={columns as ProFormColumnsType<Record<string, any>>[]}
+        loading={loading}
+        handleOnReset={handleOnReset}
+      />
     </PageContainer>
   );
 };

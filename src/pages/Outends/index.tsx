@@ -16,8 +16,8 @@ import {
 } from '@/services/rulex/shuchuziyuanguanli';
 import Detail from './Detail';
 // import { typeEnum } from './enum';
-import { baseColumns } from './columns';
 import PageContainer from '@/components/PageContainer';
+import { baseColumns } from './columns';
 
 export type OutendsItem = {
   name: string;
@@ -26,6 +26,11 @@ export type OutendsItem = {
   description: string;
   uuid: string;
   [key: string]: any;
+};
+
+type DetailModalConfig = {
+  open: boolean;
+  uuid: string;
 };
 
 const Outends = () => {

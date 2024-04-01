@@ -1,3 +1,4 @@
+import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import {
   deleteAppDel,
@@ -13,8 +14,7 @@ import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
 import { baseColumns } from './columns';
-import Detail from './Detail';
-import PageContainer from '@/components/PageContainer';
+import Detail, { DetailModalType } from './Detail';
 
 export type AppStackItem = {
   uuid?: string;
@@ -27,12 +27,18 @@ export type AppStackItem = {
   [key: string]: any;
 };
 
+type DetailLogModalConfig = {
+  open: boolean;
+  type: DetailModalType;
+  uuid: string;
+};
+
 const AppStack = () => {
   const actionRef = useRef<ActionType>();
   const [detailConfig, setConfig] = useState<DetailLogModalConfig>({
     uuid: '',
     open: false,
-    type: 'detail',
+    type: DetailModalType.Detail,
   });
 
   // 删除
@@ -74,7 +80,7 @@ const AppStack = () => {
           key="detail"
           onClick={() => {
             if (!uuid) return;
-            setConfig({ uuid, open: true, type: 'detail' });
+            setConfig({ uuid, open: true, type: DetailModalType.Detail });
           }}
         >
           详情
@@ -83,7 +89,7 @@ const AppStack = () => {
           key="log"
           onClick={() => {
             if (!uuid) return;
-            setConfig({ uuid, open: true, type: 'log' });
+            setConfig({ uuid, open: true, type: DetailModalType.Log });
           }}
         >
           日志

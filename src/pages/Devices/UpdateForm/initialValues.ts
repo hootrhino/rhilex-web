@@ -1,3 +1,5 @@
+import { DeviceMode, InputMode, OutputEncode, OutputMode } from '../enum';
+
 // TCP 配置
 export const defaultHostConfig = {
   port: 3399,
@@ -9,15 +11,15 @@ export const defaultHostConfig = {
 export const defaultOutputConfig = {
   LOCAL_H264_STREAM_SERVER: {
     outputMode: 'LOCAL_H264_STREAM_SERVER',
-    outputEncode: 'H264_STREAM',
+    outputEncode: OutputEncode.H264_STREAM,
   },
   LOCAL_JPEG_STREAM_SERVER: {
-    outputMode: 'LOCAL_JPEG_STREAM_SERVER',
-    outputEncode: 'JPEG_STREAM',
+    outputMode: OutputMode.LOCAL_JPEG_STREAM_SERVER,
+    outputEncode: OutputEncode.JPEG_STREAM,
   },
   REMOTE_STREAM_SERVER: {
-    outputMode: 'REMOTE_STREAM_SERVER',
-    outputEncode: 'H264_STREAM',
+    outputMode: OutputMode.REMOTE_STREAM_SERVER,
+    outputEncode: OutputEncode.H264_STREAM,
     outputAddr: 'rtmp://127.0.0.1/stream/live1',
   },
 };
@@ -35,7 +37,7 @@ export const defaultConfig = {
   GENERIC_PROTOCOL: {
     commonConfig: {
       retryTime: 5,
-      mode: 'TCP',
+      mode: DeviceMode.TCP,
     },
     hostConfig: defaultHostConfig,
   },
@@ -43,7 +45,7 @@ export const defaultConfig = {
     commonConfig: {
       autoRequest: false,
       enableOptimize: false,
-      mode: 'UART',
+      mode: DeviceMode.UART,
     },
     hostConfig: defaultHostConfig,
   },
@@ -51,7 +53,7 @@ export const defaultConfig = {
     commonConfig: {
       parseAis: false,
       gwsn: 'HR0001',
-      mode: 'TCP',
+      mode: DeviceMode.TCP,
     },
     hostConfig: {
       port: 6005,
@@ -81,7 +83,7 @@ export const defaultConfig = {
     },
   },
   GENERIC_CAMERA: {
-    inputMode: 'LOCAL_CAMERA',
+    inputMode: InputMode.LOCAL_CAMERA,
     ...defaultOutputConfig['LOCAL_JPEG_STREAM_SERVER'],
   },
 };

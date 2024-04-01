@@ -2,6 +2,11 @@ import { getHwifaceDetail, getHwifaceList } from '@/services/rulex/jiekouguanli'
 import { useRequest } from '@umijs/max';
 import { useState } from 'react';
 
+type DetailModalConfig = {
+  open: boolean;
+  uuid: string;
+};
+
 const usePort = () => {
   const [detailConfig, setDetailConfig] = useState<DetailModalConfig>({
     open: false,

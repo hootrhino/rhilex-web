@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 import { cn } from '@/utils/utils';
 
-import CodeEditor from '@/components/CodeEditor';
+import CodeEditor, { Lang, Theme } from '@/components/CodeEditor';
 import PageContainer from '@/components/PageContainer';
 import { ProTable } from '@ant-design/pro-components';
 
@@ -129,8 +129,8 @@ const DataCenter = () => {
             }}
           >
             <CodeEditor
-              lang="sql"
-              theme="light"
+              lang={Lang.Sql}
+              theme={Theme.Light}
               value={code}
               onChange={(value) => setCode(value)}
             />

@@ -12,9 +12,21 @@ import { useRequest } from '@umijs/max';
 import { funcIcon, keywordIcon, snippetIcon, variableIcon } from '@/assets/images/autocomplete';
 import { autoCompletions, createDetailEl, createIconEl, luaLinter } from './utils';
 
+export enum Lang {
+  Shell = 'shell',
+  Sql = 'sql',
+  Lua = 'lua',
+  Json = 'json',
+}
+
+export enum Theme {
+  Dark = 'dark',
+  Light = 'light',
+}
+
 type CodeEditorProps = {
-  lang: 'shell' | 'sql' | 'lua' | 'json';
-  theme?: 'dark' | 'light';
+  lang: Lang;
+  theme?: Theme;
 } & Omit<ReactCodeMirrorProps, 'theme'>;
 
 const iconMap = {
@@ -49,12 +61,12 @@ const basicSetupSetting = {
   syntaxHighlighting: true,
 };
 
-const CodeEditor = ({ lang, theme = 'dark', ...props }: CodeEditorProps) => {
+const CodeEditor = ({ lang, theme = Theme.Dark, ...props }: CodeEditorProps) => {
   const { data: inends } = useRequest(() => getInendsList());
   const { data: outends } = useRequest(() => getOutendsList());
 
   const getEditorConfig = () => {
-    if (lang !== 'lua') return [];
+    if (lang !== Lang.Lua) return [];
 
     return [
       autocompletion({
@@ -87,7 +99,7 @@ const CodeEditor = ({ lang, theme = 'dark', ...props }: CodeEditorProps) => {
   };
 
   const getTheme = () => {
-    if (theme === 'dark') {
+    if (theme === Theme.Dark) {
       return darculaInit({
         settings: {
           ...themeSetting,

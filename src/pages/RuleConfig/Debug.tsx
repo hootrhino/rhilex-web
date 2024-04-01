@@ -1,4 +1,4 @@
-import CodeEditor from '@/components/CodeEditor';
+import CodeEditor, { Lang } from '@/components/CodeEditor';
 import ProLog from '@/components/ProLog';
 import { postRulesTestDevice } from '@/services/rulex/guizeguanli';
 import { handleNewMessage } from '@/utils/utils';
@@ -71,7 +71,7 @@ const Debug = ({ uuid, ...props }: DebugProps) => {
         label="输入数据"
         rules={[{ required: true, message: '请输入数据' }]}
       >
-        <CodeEditor autoFocus lang="shell" />
+        <CodeEditor autoFocus lang={Lang.Shell} />
       </ProForm.Item>
       <ProForm.Item name="output" label="输出结果" className="h-[300px]">
         <ProLog hidePadding topic={`rule/log/${uuid}`} dataSource={debugLog} />

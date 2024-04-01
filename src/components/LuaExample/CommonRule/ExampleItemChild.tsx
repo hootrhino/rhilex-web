@@ -1,4 +1,4 @@
-import CodeEditor from '@/components/CodeEditor';
+import CodeEditor, { Lang } from '@/components/CodeEditor';
 import { FormOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import CopyButton from './CopyButton';
@@ -27,7 +27,7 @@ const ExampleItemChild = ({ type, data, handleOnCopy, isUsage = false, ...props 
           <CopyButton data={data} size="small" ghost />
         )}
       </div>
-      <CodeEditor readOnly value={data.apply} lang="lua" />
+      <CodeEditor readOnly value={data.apply} lang={Lang.Lua} />
     </div>
   );
 };

@@ -1,12 +1,10 @@
 import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
+import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
 import ProCodeEditor from '@/components/ProCodeEditor';
-import ProFormSubmitter from '@/components/ProFormSubmitter';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rulex/qingliangyingyong';
-import { processColumns } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
-import { BetaSchemaForm, ProCard } from '@ant-design/pro-components';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { AppStackItem } from '..';
@@ -98,28 +96,15 @@ const UpdateForm = () => {
 
   return (
     <PageContainer showExtra title={uuid ? '更新应用' : '新建应用'} backUrl={DefaultListUrl}>
-      <ProCard>
-        <BetaSchemaForm
-          layoutType="Form"
-          formRef={formRef}
-          columns={processColumns(columns) as ProFormColumnsType<AppStackItem>[]}
-          onFinish={handleOnFinish}
-          submitter={{
-            render: ({ reset, submit }) => (
-              <ProFormSubmitter
-                handleOnSubmit={submit}
-                handleOnReset={() => {
-                  reset();
-                  formRef.current?.setFieldsValue(
-                    uuid ? { ...defaultValue, ...detail } : defaultValue,
-                  );
-                }}
-                loading={loading}
-              />
-            ),
-          }}
-        />
-      </ProCard>
+      <ProBetaSchemaForm
+        formRef={formRef}
+        onFinish={handleOnFinish}
+        columns={columns as ProFormColumnsType<AppStackItem>[]}
+        loading={loading}
+        handleOnReset={() =>
+          formRef.current?.setFieldsValue(uuid ? { ...defaultValue, ...detail } : defaultValue)
+        }
+      />
     </PageContainer>
   );
 };

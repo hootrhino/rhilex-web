@@ -10,6 +10,11 @@ export type PluginParams = {
   args: any;
 };
 
+type DetailModalConfig = {
+  open: boolean;
+  uuid: string;
+};
+
 export type PluginConfig = DetailModalConfig & {
   name: PluginName;
   title?: string;

@@ -12,14 +12,14 @@ import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { Space, Typography } from 'antd';
 import type { DeviceItem } from '.';
 import {
-  inputModeEnum,
-  modeEnum,
-  outputEncodeEnum,
-  OutputModeEnum,
-  plcModelEnum,
+  DeviceMode,
+  deviceTypeOptions,
+  InputMode,
+  OutputEncode,
+  OutputMode,
+  plcModelOptions,
   rackEnum,
   slotEnum,
-  typeEnum,
 } from './enum';
 
 export const baseColumns = [
@@ -56,7 +56,7 @@ export const baseColumns = [
     dataIndex: 'type',
     valueType: 'select',
     required: true,
-    valueEnum: typeEnum,
+    valueEnum: deviceTypeOptions,
   },
   {
     title: '设备分组',
@@ -134,7 +134,7 @@ export const modeConfig = [
     title: '工作模式',
     dataIndex: ['config', 'commonConfig', 'mode'],
     valueType: 'select',
-    valueEnum: modeEnum,
+    valueEnum: DeviceMode,
     required: true,
     render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.mode,
   },
@@ -358,8 +358,8 @@ export const typeConfigColumns = {
           dataIndex: ['config', 'commonConfig', 'model'],
           required: true,
           valueType: 'select',
-          valueEnum: plcModelEnum,
-          render: (_: any, { commonConfig }: DeviceItem) => plcModelEnum[commonConfig?.model],
+          valueEnum: plcModelOptions,
+          render: (_: any, { commonConfig }: DeviceItem) => plcModelOptions[commonConfig?.model],
         },
         {
           title: '机架号',
@@ -479,12 +479,12 @@ export const typeConfigColumns = {
           title: '输入模式',
           dataIndex: ['config', 'inputMode'],
           valueType: 'select',
-          valueEnum: inputModeEnum,
+          valueEnum: InputMode,
           required: true,
           fieldProps: {
             allowClear: false,
           },
-          render: (_: any, { inputMode }: DeviceItem) => inputModeEnum[inputMode],
+          render: (_: any, { inputMode }: DeviceItem) => InputMode[inputMode],
         },
         {
           valueType: 'dependency',
@@ -495,7 +495,7 @@ export const typeConfigColumns = {
               dataIndex: ['config', 'inputAddr'],
               required: true,
               renderFormItem: () =>
-                config.inputMode === 'LOCAL_CAMERA' ? (
+                config.inputMode === InputMode.LOCAL_CAMERA ? (
                   <ProFormSelect
                     noStyle
                     request={async () => {
@@ -523,13 +523,13 @@ export const typeConfigColumns = {
           title: '输出模式',
           dataIndex: ['config', 'outputMode'],
           valueType: 'select',
-          valueEnum: OutputModeEnum,
+          valueEnum: OutputMode,
           required: true,
           fieldProps: {
             allowClear: false,
           },
           tooltip: '注意：因为传输格式原因，Jpeg Stream 模式下仅保存了图像信息，没有原始声音。',
-          render: (_: any, { outputMode }: DeviceItem) => OutputModeEnum[outputMode],
+          render: (_: any, { outputMode }: DeviceItem) => OutputMode[outputMode],
         },
         {
           valueType: 'dependency',
@@ -544,13 +544,13 @@ export const typeConfigColumns = {
                 valueType: 'select',
                 valueEnum:
                   mode === 'REMOTE_STREAM_SERVER'
-                    ? pick(outputEncodeEnum, ['H264_STREAM'])
-                    : pick(outputEncodeEnum, ['JPEG_STREAM']),
+                    ? pick(OutputEncode, ['H264_STREAM'])
+                    : pick(OutputEncode, ['JPEG_STREAM']),
                 required: true,
                 fieldProps: {
                   allowClear: false,
                 },
-                render: (_: any, { outputEncode }: DeviceItem) => outputEncodeEnum[outputEncode],
+                render: (_: any, { outputEncode }: DeviceItem) => OutputEncode[outputEncode],
               },
             ];
           },

@@ -11,9 +11,20 @@ import { Button, Drawer, DrawerProps, Modal } from 'antd';
 import { useEffect } from 'react';
 import { useModel } from 'umi';
 
-type DetailProps = DrawerProps & {
+export enum DetailModalType {
+  Detail = 'detail',
+  Log = 'log',
+}
+
+export type DetailProps = DrawerProps & {
   uuid: string;
-  type: 'detail' | 'log';
+  type: DetailModalType;
+};
+
+export type DetailLogModalConfig = {
+  open: boolean;
+  type: DetailModalType;
+  uuid: string;
 };
 
 const Detail = ({ uuid, type, ...props }: DetailProps) => {
@@ -104,11 +115,11 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     setLog(newData);
   }, [latestMessage]);
 
-  return type === 'detail' ? (
+  return type === DetailModalType.Detail ? (
     <Drawer
       title="规则详情"
       placement="right"
-      width={type === 'detail' ? '35%' : '40%'}
+      width={type === DetailModalType.Detail ? '35%' : '40%'}
       destroyOnClose
       maskClosable={false}
       {...props}

@@ -37,6 +37,8 @@ const defaultPlcConfig = {
   weight: 1,
 };
 
+type RecordKey = React.Key | React.Key[];
+
 export type PlcSheetItem = {
   uuid?: string;
   tag: string;
@@ -499,6 +501,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
         hideOnSinglePage: true,
       }}
       options={readOnly ? false : {}}
+      scroll={{ x: readOnly ? 1100 : undefined }}
       editable={{
         type: 'multiple',
         editableKeys,

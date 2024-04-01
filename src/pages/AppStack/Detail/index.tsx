@@ -11,9 +11,14 @@ import { useEffect } from 'react';
 import type { AppStackItem } from '..';
 import { baseColumns } from '../columns';
 
+export enum DetailModalType {
+  Detail = 'detail',
+  Log = 'log',
+}
+
 type DetailProps = DrawerProps & {
   uuid: string;
-  type: 'detail' | 'log';
+  type: DetailModalType;
 };
 
 const Detail = ({ uuid, type, ...props }: DetailProps) => {
@@ -27,11 +32,11 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     setConsole(newData);
   }, [latestMessage]);
 
-  return type === 'detail' ? (
+  return type === DetailModalType.Detail ? (
     <Drawer
       title="轻量应用详情"
       placement="right"
-      width={type === 'detail' ? '35%' : '40%'}
+      width={type === DetailModalType.Detail ? '35%' : '40%'}
       {...props}
     >
       <ProDescriptions
