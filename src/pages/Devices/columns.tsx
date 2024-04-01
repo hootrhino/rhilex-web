@@ -261,7 +261,25 @@ export const typeConfigColumns = {
     {
       title: '通用配置',
       valueType: 'group',
-      columns: [...autoRequestConfig, ...modeConfig],
+      columns: [
+        ...autoRequestConfig,
+        {
+          title: '开启性能优化',
+          dataIndex: ['config', 'commonConfig', 'enableOptimize'],
+          required: true,
+          transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
+            config: {
+              commonConfig: { ...allValue, enableOptimize: stringToBool(value) },
+            },
+          }),
+          convertValue: (value: boolean) => value?.toString(),
+          renderFormItem: () => <ProSegmented width="md" />,
+          render: (_: any, { commonConfig }: DeviceItem) => (
+            <StateTag state={commonConfig?.enableOptimize} type="bool" />
+          ),
+        },
+        ...modeConfig,
+      ],
     },
     {
       valueType: 'dependency',

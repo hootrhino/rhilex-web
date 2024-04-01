@@ -42,6 +42,7 @@ export const defaultConfig = {
   GENERIC_MODBUS: {
     commonConfig: {
       autoRequest: false,
+      enableOptimize: false,
       mode: 'UART',
     },
     hostConfig: defaultHostConfig,

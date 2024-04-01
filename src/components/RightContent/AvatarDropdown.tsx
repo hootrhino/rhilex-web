@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { history, useModel } from '@umijs/max';
 import { App, Avatar, Spin } from 'antd';
-import type { MenuInfo } from 'rc-menu/lib/interface';
+import type { MenuInfo } from 'rc-menu/es/interface';
 import React, { useCallback } from 'react';
 import HeaderDropdown from '../HeaderDropdown';
 

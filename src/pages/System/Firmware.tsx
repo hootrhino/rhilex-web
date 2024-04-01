@@ -106,13 +106,12 @@ const FirmwareConfig = () => {
             }}
             labelStyle={{ justifyContent: 'flex-end', minWidth: 135 }}
           >
-            <ProDescriptions.Item label="设备生产序列号" dataIndex="device_id" />
-            <ProDescriptions.Item label="设备硬件 MAC 地址" dataIndex="mac" />
-            <ProDescriptions.Item label="许可证" dataIndex="license" />
-            <ProDescriptions.Item label="证书签发者" dataIndex="authorize_admin" />
-            <ProDescriptions.Item label="证书签发者密钥" dataIndex="authorize_password" />
-            <ProDescriptions.Item label="证书授权开始时间" dataIndex="begin_authorize" />
-            <ProDescriptions.Item label="证书授权结束时间" dataIndex="end_authorize" />
+            <ProDescriptions.Item label="设备序列号" dataIndex="device_id" />
+            <ProDescriptions.Item label="设备 MAC 地址" dataIndex="mac" />
+            <ProDescriptions.Item label="设备许可证" dataIndex="license" />
+            <ProDescriptions.Item label="证书签发方" dataIndex="authorize_admin" />
+            <ProDescriptions.Item label="授权起始时间" dataIndex="begin_authorize" />
+            <ProDescriptions.Item label="授权结束时间" dataIndex="end_authorize" />
           </ProDescriptions>
 
           <Space className="mt-[30px]">
