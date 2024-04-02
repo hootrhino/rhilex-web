@@ -11,7 +11,7 @@ import {
   ProFormSwitch,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useModel, useRequest } from '@umijs/max';
 import { Tooltip } from 'antd';
 import { useRef } from 'react';
 import Title from './components/Title';
@@ -44,6 +44,7 @@ const initialValue = {
 const NetworkConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const actionRef = useRef<FormListActionType>();
+  const { interfaceOption } = useModel('useSetting');
 
   // 详情
   const { data: detail } = useRequest(() => getSettingsEth(), {
@@ -91,10 +92,7 @@ const NetworkConfig = () => {
         }}
       >
         <ProFormSelect
-          options={[
-            { label: 'eth0', value: 'eth0' },
-            // { label: 'eth1', value: 'eth1' },
-          ]}
+          options={interfaceOption}
           name="interface"
           label="网卡选择"
           width="xl"

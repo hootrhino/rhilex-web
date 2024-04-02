@@ -16,7 +16,7 @@ import ProStatisticCard from './components/StatisticCard';
 
 const Dashboard = () => {
   const { dataSource } = useModel('useSystem');
-  const { version, osUpTime, osArch } = dataSource?.hardWareInfo || {};
+  const { version, osUpTime, osArch, product } = dataSource?.hardWareInfo || {};
   const [responsive, setResponsive] = useState(false);
   const { runningLogs, setLogs } = useModel('useWebsocket');
 
@@ -49,7 +49,8 @@ const Dashboard = () => {
       className="overflow-x-hidden"
       content={
         <Space split={<StatisticCard.Divider type="vertical" className="h-[12px]" />}>
-          <span className="text-[#585858] text-[13px]">当前版本 {version}</span>
+          <span className="text-[#585858] text-[13px]">产品 {product}</span>
+          <span className="text-[#585858] text-[13px]">当前版本 {version || 'v0.0.0'}</span>
           <span className="text-[#585858] text-[13px]">运行时长 {osUpTime}</span>
           <span className="text-[#585858] text-[13px]">
             操作系统 {osArch}

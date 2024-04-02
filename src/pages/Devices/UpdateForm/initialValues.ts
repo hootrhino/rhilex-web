@@ -46,6 +46,7 @@ export const defaultConfig = {
       autoRequest: false,
       enableOptimize: false,
       mode: DeviceMode.UART,
+      maxRegNum: 64,
     },
     hostConfig: defaultHostConfig,
   },

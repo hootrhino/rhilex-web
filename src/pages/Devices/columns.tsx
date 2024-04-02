@@ -150,7 +150,6 @@ export const timeoutConfig = [
     title: <UnitTitle title="连接超时" />,
     dataIndex: ['config', 'commonConfig', 'timeout'],
     valueType: 'digit',
-    required: true,
     fieldProps: {
       placeholder: '请输入连接超时时间（毫秒）',
     },
@@ -206,7 +205,6 @@ export const modeColumns = {
           title: <UnitTitle title="请求超时" />,
           dataIndex: ['config', 'hostConfig', 'timeout'],
           valueType: 'digit',
-          required: true,
           fieldProps: {
             placeholder: '请输入请求超时时间（毫秒）',
           },
@@ -268,7 +266,7 @@ export const typeConfigColumns = {
       columns: [
         ...autoRequestConfig,
         {
-          title: '开启性能优化',
+          title: '批量采集',
           dataIndex: ['config', 'commonConfig', 'enableOptimize'],
           required: true,
           transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
@@ -285,6 +283,23 @@ export const typeConfigColumns = {
           render: (_: any, { commonConfig }: DeviceItem) => (
             <StateTag state={commonConfig?.enableOptimize} type="bool" />
           ),
+        },
+        {
+          title: '最大点位数',
+          dataIndex: ['config', 'commonConfig', 'maxRegNum'],
+          valueType: 'digit',
+          fieldProps: {
+            placeholder: '请输入最大点位数',
+          },
+          formItemProps: {
+            rules: [
+              {
+                required: true,
+                message: '请输入最大点位数',
+              },
+            ],
+          },
+          render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.maxRegNum,
         },
         ...modeConfig,
       ],
@@ -341,7 +356,6 @@ export const typeConfigColumns = {
           title: <UnitTitle title="心跳超时时间" />,
           dataIndex: ['config', 'commonConfig', 'idleTimeout'],
           valueType: 'digit',
-          required: true,
           fieldProps: {
             placeholder: '请输入心跳超时时间（毫秒）',
           },
@@ -399,7 +413,6 @@ export const typeConfigColumns = {
           title: <UnitTitle title="采集频率" />,
           dataIndex: ['config', 'commonConfig', 'frequency'],
           valueType: 'digit',
-          required: true,
           fieldProps: {
             placeholder: '请输入采集频率（毫秒）',
           },

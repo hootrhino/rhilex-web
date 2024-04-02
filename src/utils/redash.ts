@@ -41,10 +41,15 @@ export const omit = <T extends Record<string, unknown>>(obj: T, fields: string[]
 // export function sum<T extends number>(array: readonly T[]): number;
 // export function sum<T extends object>(array: readonly T[], fn: (item: T) => number): number;
 export function sum<T extends object | number>(
-  array: readonly any[],
+  array: readonly T[],
   fn?: (item: T) => number,
 ): number {
-  return (array || []).reduce((acc, item) => acc + (fn ? fn(item) : item), 0);
+  return (array || []).reduce((acc, item) => {
+    // 确保 fn 或者 item 是数字类型
+    const num = fn ? (typeof fn === 'function' ? fn(item) : 0) : item;
+    const numAcc = Number(acc);
+    return numAcc + Number(num);
+  }, 0);
 }
 
 export const flatten = <T>(arrays: T[][]): T[] => {

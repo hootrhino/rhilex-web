@@ -78,8 +78,8 @@ const ProLog = ({
     const terminalContainer = document.getElementById('terminal');
     if (terminalContainer) {
       term.open(terminalContainer);
+      fitAddon.fit();
     }
-    fitAddon.fit();
 
     window.addEventListener('resize', () => fitAddon.fit());
     logRef.current = term;

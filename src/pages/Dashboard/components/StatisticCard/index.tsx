@@ -56,7 +56,7 @@ const StatisticCard = () => {
         重置统计数据
       </Button>
       <ProCard layout="center" direction="column" type="inner" colSpan="25%">
-        <div className="text-[#585858]">输入/输出总数</div>
+        <div className="text-[#585858]">数据输入 / 输出总数</div>
         <Statistic value={sum(statisticData, (s) => s.value || 0)} />
       </ProCard>
       <ProCard gutter={[16, 16]} wrap bodyStyle={{ paddingInline: 14 }}>
