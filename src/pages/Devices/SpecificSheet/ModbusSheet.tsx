@@ -204,19 +204,19 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       render: (text, record, index) => <IndexBorder serial={index} />,
     },
     {
-      title: '从设备 ID',
+      title: '从设备地址',
       dataIndex: 'slaverId',
       valueType: 'digit',
-      width: 80,
+      width: 100,
       fieldProps: {
         style: { width: '100%' },
-        placeholder: '请输入从设备 ID',
+        placeholder: '请输入从设备地址',
       },
       formItemProps: {
         rules: [
           { required: true, message: '此项为必填项' },
-          { max: 255, type: 'integer', message: '从设备 ID 在 1-255 之间' },
-          { min: 1, type: 'integer', message: '从设备 ID 在 1-255 之间' },
+          { max: 255, type: 'integer', message: '从设备地址 在 1-255 之间' },
+          { min: 1, type: 'integer', message: '从设备地址 在 1-255 之间' },
         ],
       },
     },
