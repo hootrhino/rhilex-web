@@ -110,8 +110,16 @@ const FirmwareConfig = () => {
             <ProDescriptions.Item label="设备 MAC 地址" dataIndex="mac" />
             <ProDescriptions.Item label="设备许可证" dataIndex="license" />
             <ProDescriptions.Item label="证书签发方" dataIndex="authorize_admin" />
-            <ProDescriptions.Item label="授权起始时间" dataIndex="begin_authorize" />
-            <ProDescriptions.Item label="授权结束时间" dataIndex="end_authorize" />
+            <ProDescriptions.Item
+              label="授权起始时间"
+              dataIndex="begin_authorize"
+              valueType="dateTime"
+            />
+            <ProDescriptions.Item
+              label="授权结束时间"
+              dataIndex="end_authorize"
+              valueType="dateTime"
+            />
           </ProDescriptions>
 
           <Space className="mt-[30px]">
