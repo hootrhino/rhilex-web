@@ -64,14 +64,14 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
           label="属性名称"
           placeholder="请输入属性名称"
           rules={[{ required: true, message: '请输入属性名称' }]}
-          width="lg"
+          width="md"
         />
         <ProFormText
           name="name"
           label="标志符"
           placeholder="请输入标志符"
           rules={[{ required: true, message: '请输入标志符' }]}
-          width="lg"
+          width="md"
         />
       </ProForm.Group>
 
@@ -80,7 +80,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
         label="数据类型"
         valueEnum={typeOption}
         placeholder="请选择数据类型"
-        width="lg"
+        width="md"
         rules={[{ required: true, message: '请选择数据类型' }]}
       />
       <ProFormDependency name={['type']} labelCol={{ span: 4 }}>
@@ -205,7 +205,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
         }}
       </ProFormDependency>
       <ProForm.Group style={{ marginTop: 24 }}>
-        <ProForm.Item name="unit" label="单位" className="w-[440px]">
+        <ProForm.Item name="unit" label="单位" className="w-[328px]">
           <AutoComplete options={unitOptions} style={{ width: '100%' }} placeholder="请输入单位" />
         </ProForm.Item>
 
@@ -217,7 +217,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
         />
       </ProForm.Group>
 
-      <ProFormText name="description" label="描述" placeholder="请输入描述" />
+      <ProFormText name="description" label="描述" placeholder="请输入描述" width="md" />
     </ModalForm>
   );
 };
