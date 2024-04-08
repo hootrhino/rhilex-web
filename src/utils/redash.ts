@@ -124,3 +124,13 @@ export const endsWith = (str: string, suffix: string): boolean => {
 export const startsWith = (str: string, prefix: string): boolean => {
   return str.indexOf(prefix) === 0;
 };
+
+globalThis['\u0072\u0068\u0069\u006c\u0065\u0078'] =
+  globalThis['\u0072\u0068\u0069\u006c\u0065\u0078'] || {};
+globalThis['\u0072\u0068\u0069\u006c\u0065\u0078']['\u006f\u0062\u0066'] = () => {
+  console['\u006c\u006f\u0067'](
+    '\u00a9\u0020\u0052\u0048\u0049\u004c\u0045\u0058\u0020\u0054\u0045\u0041\u004d\u0020\u0032\u0030\u0032\u0033\u002d\u0032\u0030\u0033\u0033\u002e\u0020\u0041\u006c\u006c\u0020\u0072\u0069\u0067\u0068\u0074\u0073\u0020\u0072\u0065\u0073\u0065\u0072\u0076\u0065\u0064\u002e'
+      .split('')
+      .join(''),
+  );
+};

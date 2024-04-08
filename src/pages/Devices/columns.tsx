@@ -6,10 +6,10 @@ import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
 import { getSchemaList } from '@/services/rulex/shujumoxing';
 import { omit, pick } from '@/utils/redash';
-import { validateName } from '@/utils/regExp';
-import { getPlayAddress, stringToBool } from '@/utils/utils';
+import { FormItemType, getPlayAddress, stringToBool, validateFormItem } from '@/utils/utils';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { Space, Typography } from 'antd';
+import type { Rule } from 'antd/es/form';
 import type { DeviceItem } from '.';
 import {
   DeviceMode,
@@ -41,12 +41,7 @@ export const baseColumns = [
           message: '名称不能为空',
         },
         {
-          validator: (_, value) => {
-            if (!value || validateName(value)) {
-              return Promise.resolve();
-            }
-            return Promise.reject('名称仅支持中文、字母、数字或下划线，长度在 6-14 个字符之间');
-          },
+          validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.NAME),
         },
       ],
     },
@@ -228,7 +223,18 @@ export const modeColumns = {
           title: '端口',
           dataIndex: ['config', 'hostConfig', 'port'],
           valueType: 'digit',
-          required: true,
+          formItemProps: {
+            rules: [
+              {
+                required: true,
+                message: '端口不能为空',
+              },
+              {
+                validator: (_rule: Rule, value: string) =>
+                  validateFormItem(value, FormItemType.PORT),
+              },
+            ],
+          },
           render: (_: any, { hostConfig }: DeviceItem) => hostConfig?.port,
         },
       ],

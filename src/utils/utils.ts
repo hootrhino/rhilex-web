@@ -6,6 +6,7 @@ import CryptoJS from 'crypto-js';
 import { twMerge } from 'tailwind-merge';
 import { isDev } from './constant';
 import { isEmpty } from './redash';
+import { validateGateway, validateIPv4, validateMask, validateName, validatePort } from './regExp';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -23,7 +24,12 @@ export const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4195235_n3ktgdssna.js', // 在 iconfont.cn 上生成
 });
 
-// 获取名称
+/**
+ * 获取名称
+ * @param list
+ * @param key
+ * @returns
+ */
 export const getName = (list: Record<string, any>[], key: string) => {
   const currentItem = list?.find((item: Record<string, any>) => item.uuid === key);
 
@@ -110,4 +116,51 @@ export const handleNewMessage = (source: string[] | undefined, target: string, t
   }
 
   return newData; // Return the updated array
+};
+
+export enum FormItemType {
+  NAME = 'name', // 名称
+  PORT = 'port', // 端口
+  ADDRESS = 'address', // 起始地址
+  IP = 'ip', // IPv4
+  NETMASK = 'netmask', // 子网掩码
+  GATEWAY = 'gateway', // 网关
+}
+/**
+ * 校验表单字段
+ * @param value 校验字段的值
+ * @param type FormItemType 表单字段的类型
+ * @returns Promise<boolean> 异步解析为布尔值，表示校验是否通过
+ */
+export const validateFormItem = (value: string | number, type: FormItemType) => {
+  if (!value) {
+    return Promise.resolve();
+  }
+  switch (type) {
+    case FormItemType.NAME:
+      return typeof value === 'string' && validateName(value)
+        ? Promise.resolve()
+        : Promise.reject('名称仅支持中文、字母、数字或下划线，长度在 6-14 个字符之间');
+    case FormItemType.PORT:
+    case FormItemType.ADDRESS:
+      return typeof value === 'number' && validatePort(value)
+        ? Promise.resolve()
+        : Promise.reject(
+            `${type === FormItemType.PORT ? '端口' : '起始地址'}的值应在 0 到 65535 之间`,
+          );
+    case FormItemType.IP:
+      return typeof value === 'string' && validateIPv4(value)
+        ? Promise.resolve()
+        : Promise.reject('IP 地址格式不正确');
+    case FormItemType.NETMASK:
+      return typeof value === 'string' && validateMask(value)
+        ? Promise.resolve()
+        : Promise.reject('子网掩码格式不正确');
+    case FormItemType.GATEWAY:
+      return typeof value === 'string' && validateGateway(value)
+        ? Promise.resolve()
+        : Promise.reject('网关格式不正确');
+    default:
+      return Promise.reject('格式不正确');
+  }
 };

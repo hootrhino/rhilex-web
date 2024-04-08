@@ -11,7 +11,8 @@ const dataSource = {
       address: 0,
       quantity: 2,
       type: 'FLOAT',
-      order: 'DCBA'
+      order: 'DCBA',
+      weight: 1,
     },
   ],
   plc: [
@@ -21,6 +22,7 @@ const dataSource = {
       alias: '新砂轮直径（mm）',
       type: 'FLOAT',
       order: 'ABCD',
+      weight: 1,
       frequency: 1000,
     },
   ],
@@ -64,6 +66,10 @@ const columnsMap = {
       title: 'order',
       dataIndex: 'order',
     },
+    {
+      title: 'weight',
+      dataIndex: 'weight',
+    },
   ],
   plc: [
     {
@@ -85,6 +91,10 @@ const columnsMap = {
     {
       title: 'order',
       dataIndex: 'order',
+    },
+    {
+      title: 'weight',
+      dataIndex: 'weight',
     },
     {
       title: 'frequency',

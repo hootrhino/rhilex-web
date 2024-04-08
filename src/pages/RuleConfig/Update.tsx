@@ -3,11 +3,12 @@ import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
 import { getRulesDetail, postRulesCreate, putRulesUpdate } from '@/services/rulex/guizeguanli';
-import { validateName } from '@/utils/regExp';
+import { FormItemType, validateFormItem } from '@/utils/utils';
 import { NotificationOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { FooterToolbar, ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
 import { Alert, Button, Popconfirm } from 'antd';
+import type { Rule } from 'antd/es/form';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { RuleType } from '.';
@@ -211,14 +212,8 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
                     message: '请输入规则名称',
                   },
                   {
-                    validator: (_, value) => {
-                      if (!value || validateName(value)) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(
-                        '名称仅支持中文、字母、数字或下划线，长度在 6-14 个字符之间',
-                      );
-                    },
+                    validator: (_rule: Rule, value: string) =>
+                      validateFormItem(value, FormItemType.NAME),
                   },
                 ]}
                 width="lg"

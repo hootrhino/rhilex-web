@@ -1,9 +1,10 @@
 import { getSoftRouterDhcp, postSoftRouterDhcp } from '@/services/rulex/luyoupeizhi';
-import { IpPattern, MaskPattern } from '@/utils/regExp';
+import { FormItemType, validateFormItem } from '@/utils/utils';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Space } from 'antd';
+import { Rule } from 'antd/es/form';
 import { useEffect, useRef } from 'react';
 
 type DHCPUpdateParams = {
@@ -70,7 +71,10 @@ const DHCPConfig = () => {
         name="netmask"
         rules={[
           { required: true, message: '请输入子网掩码' },
-          { pattern: MaskPattern, message: '子网掩码格式不正确，请检查' },
+          {
+            validator: (_rule: Rule, value: string) =>
+              validateFormItem(value, FormItemType.NETMASK),
+          },
         ]}
         width="xl"
       />
@@ -82,7 +86,7 @@ const DHCPConfig = () => {
         placeholder="请输入管理地址"
         rules={[
           { required: true, message: '请输入管理地址' },
-          { pattern: IpPattern, message: 'IP 格式不正确，请检查' },
+          { validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.IP) },
         ]}
       />
       <ProForm.Item
@@ -98,7 +102,9 @@ const DHCPConfig = () => {
             fieldProps={{ style: { width: 260 } }}
             rules={[
               { required: true, message: '请输入 DHCP 起始地址' },
-              { pattern: IpPattern, message: 'IP 格式不正确，请检查' },
+              {
+                validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.IP),
+              },
             ]}
           />
           <div className="h-[32px] leading-[32px] mx-[12px]">~</div>
@@ -107,7 +113,9 @@ const DHCPConfig = () => {
             fieldProps={{ style: { width: 260 } }}
             rules={[
               { required: true, message: '请输入 DHCP 结束地址' },
-              { pattern: IpPattern, message: 'IP 格式不正确，请检查' },
+              {
+                validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.IP),
+              },
             ]}
           />
         </Space.Compact>

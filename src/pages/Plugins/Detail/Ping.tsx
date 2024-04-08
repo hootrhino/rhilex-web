@@ -1,7 +1,8 @@
 import ProLog from '@/components/ProLog';
-import { validateIPv4 } from '@/utils/regExp';
+import { FormItemType, validateFormItem } from '@/utils/utils';
 import { ProForm } from '@ant-design/pro-components';
 import { Button, Input } from 'antd';
+import { Rule } from 'antd/es/form';
 import { useState } from 'react';
 import { useModel } from 'umi';
 
@@ -21,25 +22,9 @@ const Ping = ({ uuid, dataSource }: PingProps) => {
         name="ip"
         label="地址"
         rules={[
-          () => ({
-            validator(_, value) {
-              if (!value) {
-                setDisabled(true);
-                return Promise.resolve();
-              } else {
-                try {
-                  if (!validateIPv4(value)) {
-                    return Promise.reject(new Error('IP格式不正确，请检查'));
-                  } else {
-                    setDisabled(false);
-                    return Promise.resolve();
-                  }
-                } catch (error) {
-                  return Promise.reject(new Error('IP格式不正确，请检查'));
-                }
-              }
-            },
-          }),
+          {
+            validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.IP),
+          },
         ]}
       >
         <Input.Search

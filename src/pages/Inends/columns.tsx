@@ -1,5 +1,6 @@
 import StateTag from '@/components/StateTag';
-import { validateName } from '@/utils/regExp';
+import { FormItemType, validateFormItem } from '@/utils/utils';
+import type { Rule } from 'antd/es/form';
 import { EventType, eventTypeOption, inendsTypeOption, Mode, modeOption, qosEnum } from './enum';
 
 export const defaultConfig = {
@@ -61,12 +62,7 @@ export const baseColumns = [
           message: '名称不能为空',
         },
         {
-          validator: (_: any, value: string) => {
-            if (!value || validateName(value)) {
-              return Promise.resolve();
-            }
-            return Promise.reject('名称仅支持中文、字母、数字或下划线，长度在 6-14 个字符之间');
-          },
+          validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.NAME),
         },
       ],
     },
@@ -101,7 +97,18 @@ const defaultConfigColumns = [
   {
     title: '端口',
     dataIndex: ['config', 'port'],
-    required: true,
+    valueType: 'digit',
+    formItemProps: {
+      rules: [
+        {
+          required: true,
+          message: '端口不能为空',
+        },
+        {
+          validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.PORT),
+        },
+      ],
+    },
   },
 ];
 

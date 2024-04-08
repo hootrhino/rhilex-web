@@ -2,8 +2,8 @@ import HeadersTitle from '@/components/HttpHeaders/Title';
 import ProSegmented from '@/components/ProSegmented';
 import StateTag from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
-import { validateName } from '@/utils/regExp';
-import { stringToBool } from '@/utils/utils';
+import { FormItemType, stringToBool, validateFormItem } from '@/utils/utils';
+import type { Rule } from 'antd/es/form';
 import { DataMode, dataModeOption, outendsTypeOption } from './enum';
 
 export const defaultConfig = {
@@ -67,12 +67,7 @@ export const baseColumns = [
           message: '名称不能为空',
         },
         {
-          validator: (_, value) => {
-            if (!value || validateName(value)) {
-              return Promise.resolve();
-            }
-            return Promise.reject('名称仅支持中文、字母、数字或下划线，长度在 6-14 个字符之间');
-          },
+          validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.NAME),
         },
       ],
     },
@@ -130,7 +125,17 @@ const hostPortConfig = [
     title: '端口',
     dataIndex: ['config', 'port'],
     valueType: 'digit',
-    required: true,
+    formItemProps: {
+      rules: [
+        {
+          required: true,
+          message: '端口不能为空',
+        },
+        {
+          validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.PORT),
+        },
+      ],
+    },
   },
 ];
 
@@ -239,7 +244,17 @@ export const configColumns = {
       title: '端口',
       dataIndex: ['config', 'port'],
       valueType: 'digit',
-      required: true,
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: '端口不能为空',
+          },
+          {
+            validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.PORT),
+          },
+        ],
+      },
     },
     {
       title: '用户名',

@@ -1,7 +1,7 @@
 import ProSegmented from '@/components/ProSegmented';
 import StateTag from '@/components/StateTag';
-import { validateName } from '@/utils/regExp';
-import { stringToBool } from '@/utils/utils';
+import { FormItemType, stringToBool, validateFormItem } from '@/utils/utils';
+import type { Rule } from 'antd/es/form';
 
 export const baseColumns = [
   {
@@ -15,12 +15,7 @@ export const baseColumns = [
           message: '名称不能为空',
         },
         {
-          validator: (_, value) => {
-            if (!value || validateName(value)) {
-              return Promise.resolve();
-            }
-            return Promise.reject('名称仅支持中文、字母、数字或下划线，长度在 6-14 个字符之间');
-          },
+          validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.NAME),
         },
       ],
     },
