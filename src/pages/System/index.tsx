@@ -10,7 +10,6 @@ import FirmwareConfig from './Firmware';
 import NetworkConfig from './Network';
 import NetworkStatus from './NetworkStatus';
 import RoutingConfig from './Routing';
-import SiteConfig from './Site';
 import TimeConfig from './Time';
 import UserConfig from './User';
 import WIFIConfig from './Wifi';
@@ -70,11 +69,6 @@ const baseItems = [
     label: '用户配置',
     key: 'user',
     children: <UserConfig />,
-  },
-  {
-    label: '站点配置',
-    key: 'site',
-    children: <SiteConfig />,
   },
 ];
 

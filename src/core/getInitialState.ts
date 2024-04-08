@@ -1,4 +1,4 @@
-import { history } from 'umi';
+import { history } from '@umijs/max';
 
 import { CurrentUser } from '@/pages/User/Login';
 import { LOGIN_PATH } from '@/utils/constant';
