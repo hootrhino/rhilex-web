@@ -2,7 +2,7 @@
 export const LOGIN_PATH = '/user/login';
 
 // 登录页默认 footer
-export const COPYRIGHT = '2023-2033 By Hootrhino Team';
+export const COPYRIGHT = 'RHILEX TEAM 2023-2033. 所有权利保留。';
 
 // 登录页默认 title
 export const DEFAULT_TITLE = 'Rhilex';
