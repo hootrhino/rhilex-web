@@ -1,4 +1,4 @@
-import { GithubFilled, QuestionCircleOutlined } from '@ant-design/icons';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
 
 import { DOC_URL } from '@/utils/constant';
@@ -26,14 +26,14 @@ const GlobalHeaderRight = () => {
       </span>
       <NoticeIcon />
       <Avatar />
-      <GithubFilled
+      {/* <GithubFilled
         style={{
           fontSize: 20,
           color: 'rgba(255, 255, 255, 0.95)',
         }}
         className="cursor-pointer pl-[12px] pr-[12px] h-[56px] hover:bg-[#32393F]"
         onClick={() => window.open('https://github.com/hootrhino')}
-      />
+      /> */}
     </div>
   );
 };

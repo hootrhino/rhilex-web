@@ -87,7 +87,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
       <span className="flex items-center h-[56px] ml-auto px-[12px] cursor-pointer rounded-[2px] hover:bg-[#32393F]">
         <Avatar
           size="small"
-          className="mr-[8px] text-[#1e1e1e] align-top bg-[#fff] bg-opacity-95 md:m-0"
+          className="mr-[8px] text-[#fff] border border-[#fff] align-top md:m-0"
           src={undefined}
           icon={<UserOutlined />}
           alt="avatar"
