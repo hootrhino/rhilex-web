@@ -11,7 +11,7 @@ async function getInitialState(): Promise<{
 }> {
   if (history.location.pathname !== LOGIN_PATH) {
     return {
-      currentUser: { username: 'hootrhino', password: '12345678' },
+      currentUser: { username: 'rhilex', password: '12345678' },
 
       settings: defaultSettings as Partial<LayoutSettings>,
     };

@@ -34,7 +34,7 @@ export default defineConfig({
     strategy: 'normal',
   },
   requestRecord: {},
-  favicons: ['/favicon.png'],
+  favicons: ['/favicon.svg'],
   esbuildMinifyIIFE: true,
   inlineLimit: 100000, // 配置图片文件是否走 base64 编译的阈值 100k
   // jsMinifier: 'uglifyJs', // 配置构建时压缩 JavaScript 的工具

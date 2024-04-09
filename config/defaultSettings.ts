@@ -1,4 +1,3 @@
-import { DEFAULT_TITLE } from '../src/utils/constant';
 import { ProLayoutProps } from '@ant-design/pro-components';
 
 /**
@@ -15,9 +14,9 @@ const Settings: ProLayoutProps & {
   fixSiderbar: true,
   colorWeak: false,
   splitMenus: false,
-  title: DEFAULT_TITLE,
+  title: '',
   pwa: false,
-  logo: '/logo.png',
+  logo: '/logo.svg',
   iconfontUrl: '',
   menu: { locale: false },
   token: {

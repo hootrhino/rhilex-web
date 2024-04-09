@@ -1,4 +1,4 @@
-import loginIcon from '@/assets/images/loginLogo.png';
+import loginIcon from '@/assets/images/loginLogo.svg';
 import { message, modal } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
 import { COPYRIGHT, DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';
@@ -55,8 +55,7 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          logo={<img alt="logo" src={loginIcon} />}
-          title={DEFAULT_TITLE}
+          title={<img alt="logo" src={loginIcon} style={{ width: 160 }} />}
           subTitle={DEFAULT_SUBTITLE}
           initialValues={{
             autoLogin: true,
