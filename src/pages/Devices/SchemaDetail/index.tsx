@@ -23,12 +23,13 @@ const SchemaDetail = ({ activeDevice, activeDeviceName, ...props }: SchemaDetail
         rowKey="uuid"
         search={false}
         options={false}
+        polling={5000}
         columns={getBaseColumns(true)}
         request={async ({ current, pageSize }) => {
           const { data } = await getDevicesProperties({
             current,
             size: pageSize,
-            uuid: activeDevice
+            uuid: activeDevice,
           });
 
           return Promise.resolve({
