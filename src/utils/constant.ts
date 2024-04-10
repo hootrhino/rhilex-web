@@ -7,7 +7,7 @@ export const COPYRIGHT = 'RHILEX TEAM 2023-2033. 所有权利保留。';
 // 登录页默认 title
 export const DEFAULT_TITLE = 'RHILEX';
 
-export const DEFAULT_SUBTITLE = '轻量级边缘计算框架';
+export const DEFAULT_SUBTITLE = '大象无形 数据无边';
 
 // 官方文档地址
 export const DOC_URL = 'http://www.hootrhino.com/';
