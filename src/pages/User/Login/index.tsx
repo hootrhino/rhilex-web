@@ -2,9 +2,11 @@ import loginIcon from '@/assets/images/loginLogo.svg';
 import { message, modal } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
 import { COPYRIGHT, DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { DefaultFooter, LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
+import { DefaultFooter, LoginForm, ProFormText } from '@ant-design/pro-components';
 import { Helmet, useModel } from '@umijs/max';
+import { Rule } from 'antd/es/form';
+import type { ValidateStatus } from 'antd/es/form/FormItem';
+import { useState } from 'react';
 import { flushSync } from 'react-dom';
 import { history } from 'umi';
 
@@ -16,6 +18,10 @@ export type CurrentUser = {
 const Login: React.FC = () => {
   const { setInitialState, initialState } = useModel('@@initialState');
   const { run: getOsSystem } = useModel('useSystem');
+  const [validateStatus, setValidateStatus] = useState<{
+    username: ValidateStatus;
+    password: ValidateStatus;
+  }>({ username: '', password: '' });
 
   const handleSubmit = async (values: CurrentUser) => {
     try {
@@ -49,57 +55,70 @@ const Login: React.FC = () => {
       <Helmet>
         <title>登录页 - {initialState?.settings?.title || DEFAULT_TITLE}</title>
       </Helmet>
-      <div className="flex-1 py-32">
-        <LoginForm
-          contentStyle={{
-            minWidth: 280,
-            maxWidth: '75vw',
-          }}
-          title={<img alt="logo" src={loginIcon} style={{ width: 160 }} />}
-          subTitle={DEFAULT_SUBTITLE}
-          initialValues={{
-            autoLogin: true,
-          }}
-          onFinish={handleSubmit}
-        >
-          <>
-            <ProFormText
-              name="username"
-              fieldProps={{
-                size: 'large',
-                prefix: <UserOutlined />,
-              }}
-              placeholder="请输入用户名"
-              rules={[
-                {
-                  required: true,
-                  message: '请输入用户名',
-                },
-              ]}
-            />
-            <ProFormText.Password
-              allowClear
-              name="password"
-              fieldProps={{
-                size: 'large',
-                prefix: <LockOutlined />,
-              }}
-              placeholder="请输入密码"
-              rules={[
-                {
-                  required: true,
-                  message: '请输入密码',
-                },
-              ]}
-            />
-          </>
-
-          <div className="mb-6">
-            <ProFormCheckbox noStyle name="autoLogin">
-              自动登录
-            </ProFormCheckbox>
+      <div className="flex justify-center flex-1 py-32">
+        <div className="rhilex-login-form-wrapper">
+          <LoginForm
+            requiredMark={false}
+            contentStyle={{
+              minWidth: 280,
+              maxWidth: '75vw',
+            }}
+            title={<img alt="logo" src={loginIcon} style={{ width: 160 }} />}
+            subTitle={DEFAULT_SUBTITLE}
+            onFinish={handleSubmit}
+          >
+            <>
+              <ProFormText
+                name="username"
+                label={<span className="opacity-70">用户名</span>}
+                fieldProps={{
+                  size: 'large',
+                  variant: 'filled',
+                }}
+                hasFeedback
+                validateStatus={validateStatus.username}
+                placeholder="请输入用户名"
+                rules={[
+                  {
+                    validator: (_rule: Rule, value: string) => {
+                      console.log(_rule, value);
+                      if (value) {
+                        setValidateStatus({ ...validateStatus, username: '' });
+                      } else {
+                        setValidateStatus({ ...validateStatus, username: 'error' });
+                      }
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
+              />
+              <ProFormText.Password
+                name="password"
+                label={<span className="opacity-70">密码</span>}
+                fieldProps={{
+                  size: 'large',
+                  variant: 'filled',
+                }}
+                hasFeedback
+                validateStatus={validateStatus.password}
+                placeholder="请输入密码"
+                rules={[
+                  {
+                    validator: (_rule: Rule, value: string) => {
+                      console.log(_rule, value);
+                      if (value) {
+                        setValidateStatus({ ...validateStatus, password: '' });
+                      } else {
+                        setValidateStatus({ ...validateStatus, password: 'error' });
+                      }
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
+              />
+            </>
             <a
-              className="float-right"
+              className="float-right mb-6"
               onClick={() => {
                 modal.info({
                   title: '忘记密码？',
@@ -109,8 +128,8 @@ const Login: React.FC = () => {
             >
               忘记密码 ？
             </a>
-          </div>
-        </LoginForm>
+          </LoginForm>
+        </div>
       </div>
       <DefaultFooter copyright={COPYRIGHT} className="bg-[#f0f2f5]" />
     </div>
