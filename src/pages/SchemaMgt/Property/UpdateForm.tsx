@@ -183,40 +183,50 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
           }
 
           return (
-            <ProCard
-              ghost
-              title={<div className="text-[14px] font-normal">数据定义</div>}
-              headStyle={{ paddingBlockStart: 0 }}
-            >
-              <ProForm.Group style={{ padding: 10, border: '1px solid #0505050f' }}>
-                {['STRING', 'INTEGER', 'FLOAT', 'BOOL'].includes(type) && (
-                  <ProFormText
-                    name={['rule', 'defaultValue']}
-                    width="md"
-                    label="默认值"
-                    placeholder="请输入默认值"
-                  />
-                )}
+            <>
+              <ProCard
+                ghost
+                title={<div className="text-[14px] font-normal">数据定义</div>}
+                headStyle={{ paddingBlockStart: 0 }}
+              >
+                <ProForm.Group style={{ padding: 10, border: '1px solid #0505050f' }}>
+                  {['STRING', 'INTEGER', 'FLOAT', 'BOOL'].includes(type) && (
+                    <ProFormText
+                      name={['rule', 'defaultValue']}
+                      width="md"
+                      label="默认值"
+                      placeholder="请输入默认值"
+                    />
+                  )}
 
-                {dom}
+                  {dom}
+                </ProForm.Group>
+              </ProCard>
+              <ProForm.Group style={{ marginTop: 24 }}>
+                <ProForm.Item
+                  name="unit"
+                  label="单位"
+                  className="w-[328px]"
+                  hidden={type === Type.BOOL}
+                >
+                  <AutoComplete
+                    options={unitOptions}
+                    style={{ width: '100%' }}
+                    placeholder="请输入单位"
+                  />
+                </ProForm.Item>
+
+                <ProFormRadio.Group
+                  name="rw"
+                  label="读写"
+                  valueEnum={rwOption}
+                  rules={[{ required: true, message: '请选择读写' }]}
+                />
               </ProForm.Group>
-            </ProCard>
+            </>
           );
         }}
       </ProFormDependency>
-      <ProForm.Group style={{ marginTop: 24 }}>
-        <ProForm.Item name="unit" label="单位" className="w-[328px]">
-          <AutoComplete options={unitOptions} style={{ width: '100%' }} placeholder="请输入单位" />
-        </ProForm.Item>
-
-        <ProFormRadio.Group
-          name="rw"
-          label="读写"
-          valueEnum={rwOption}
-          rules={[{ required: true, message: '请选择读写' }]}
-        />
-      </ProForm.Group>
-
       <ProFormText name="description" label="描述" placeholder="请输入描述" width="md" />
     </ModalForm>
   );
