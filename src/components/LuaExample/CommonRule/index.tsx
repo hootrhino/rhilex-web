@@ -1,6 +1,6 @@
 import { builtInLuaTpl } from '@/components/CodeEditor/BuildInLua';
 import { quickLuaTpl } from '@/components/CodeEditor/quickLua';
-import { getUserluaListByGroup } from '@/services/rulex/yonghuLUApianduan';
+import { getUserluaListByGroup } from '@/services/rulex/yonghuLuApianduan';
 import { DEFAULT_GROUP_KEY_LUA_TPL } from '@/utils/constant';
 import { useRequest } from '@umijs/max';
 import type { TplGroupItem } from './ExampleItem';

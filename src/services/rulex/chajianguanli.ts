@@ -23,14 +23,14 @@ export async function getPlugwareList(options?: { [key: string]: any }) {
     code: number;
     msg: string;
     data: {
-      uuid?: string;
-      name?: string;
-      version?: string;
-      homepage?: string;
-      helpLink?: string;
-      author?: string;
-      email?: string;
-      license?: string;
+      uuid: string;
+      name: string;
+      version: string;
+      homepage: string;
+      helpLink: string;
+      author: string;
+      email: string;
+      license: string;
     }[];
   }>('/api/v1/plugware/list', {
     method: 'GET',
@@ -43,7 +43,7 @@ export async function postPlugwareService(
   body: {
     uuid: string;
     name: string;
-    args?: string;
+    args?: any;
   },
   options?: { [key: string]: any },
 ) {

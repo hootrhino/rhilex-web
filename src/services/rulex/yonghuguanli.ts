@@ -10,7 +10,7 @@ export async function postLogin(
   },
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: string }>('/api/v1/login', {
+  return request<{ code: number; msg: string; data: any }>('/api/v1/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export async function postLogin(
 
 /** 用户注销 POST /api/v1/logout */
 export async function postLogout(options?: { [key: string]: any }) {
-  return request<{ code: number; msg: string; data: string }>('/api/v1/logout', {
+  return request<{ code: number; msg: string; data: any }>('/api/v1/logout', {
     method: 'POST',
     ...(options || {}),
   });
@@ -66,7 +66,7 @@ export async function deleteUsers(
   },
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: string }>('/api/v1/users', {
+  return request<{ code: number; msg: string; data: any }>('/api/v1/users', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

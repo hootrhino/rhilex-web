@@ -7,7 +7,7 @@ export async function getSettingsWifi(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { wlan0: { interface?: string; ssid?: string; password?: string; security?: string } };
+    data: { wlan0: { interface: string; ssid: string; password: string; security: string } };
   }>('/api/v1/settings/wifi', {
     method: 'GET',
     ...(options || {}),

@@ -29,7 +29,7 @@ export async function getDataCenterSchemaDefine(
   return request<{
     code: number;
     msg: string;
-    data: { uuid?: string; columns?: { name?: string; type?: string; description?: string }[] };
+    data: { uuid: string; columns: { name: string; type: string; description: string }[] };
   }>('/api/v1/dataCenter/schema/define', {
     method: 'GET',
     params: {
@@ -49,14 +49,14 @@ export async function getDataCenterSchemaDetail(
     code: number;
     msg: string;
     data: {
-      uuid?: string;
-      name?: string;
-      local_path?: string;
-      net_addr?: string;
-      create_ts?: number;
-      size?: number;
-      store_path?: string;
-      description?: string;
+      uuid: string;
+      name: string;
+      local_path: string;
+      net_addr: string;
+      create_ts: number;
+      size: number;
+      store_path: string;
+      description: string;
     };
   }>('/api/v1/dataCenter/schema/detail', {
     method: 'GET',

@@ -62,7 +62,7 @@ export async function postRulesFormatLua(
   },
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: { source?: string } }>(
+  return request<{ code: number; msg: string; data: { source: string } }>(
     '/api/v1/rules/formatLua',
     {
       method: 'POST',
@@ -81,8 +81,8 @@ export async function getRulesGetCanUsedResources(options?: { [key: string]: any
     code: number;
     msg: string;
     data: {
-      devices?: { uuid?: string; name?: string }[];
-      outends?: { uuid?: string; name?: string }[];
+      devices: { uuid?: string; name?: string }[];
+      outends: { uuid?: string; name?: string }[];
     };
   }>('/api/v1/rules/getCanUsedResources', {
     method: 'GET',
@@ -96,13 +96,16 @@ export async function getRulesList(
   params: API.getRulesListParams,
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: any }>('/api/v1/rules/list', {
-    method: 'GET',
-    params: {
-      ...params,
+  return request<{ code: number; msg: string; data: Record<string, any>[] | Record<string, any> }>(
+    '/api/v1/rules/list',
+    {
+      method: 'GET',
+      params: {
+        ...params,
+      },
+      ...(options || {}),
     },
-    ...(options || {}),
-  });
+  );
 }
 
 /** 测试规则 POST /api/v1/rules/testDevice */

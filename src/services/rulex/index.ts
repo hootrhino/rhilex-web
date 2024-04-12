@@ -20,15 +20,15 @@ import * as kuozhanxieyi from './kuozhanxieyi'
 import * as wangluopeizhi from './wangluopeizhi'
 import * as gujiancaozuo from './gujiancaozuo'
 import * as shijianpeizhi from './shijianpeizhi'
-import * as WIFIpeizhi from './WIFIpeizhi'
+import * as wifIpeizhi from './wifIpeizhi'
 import * as 4Gshezhi from './4Gshezhi'
 import * as zhandianpeizhi from './zhandianpeizhi'
 import * as luyoupeizhi from './luyoupeizhi'
 import * as shujubeifen from './shujubeifen'
 import * as jiekouguanli from './jiekouguanli'
 import * as zhanneitongzhi from './zhanneitongzhi'
-import * as yonghuLUApianduan from './yonghuLUApianduan'
-import * as Modbusdianweiguanli from './Modbusdianweiguanli'
+import * as yonghuLuApianduan from './yonghuLuApianduan'
+import * as modbusdianweiguanli from './modbusdianweiguanli'
 import * as ximenzidianweiguanli from './ximenzidianweiguanli'
 import * as shujumoxing from './shujumoxing'
 import * as huazhongshukongdianweiguanli from './huazhongshukongdianweiguanli'
@@ -52,15 +52,15 @@ export default {
   wangluopeizhi,
   gujiancaozuo,
   shijianpeizhi,
-  WIFIpeizhi,
+  wifIpeizhi,
   4Gshezhi,
   zhandianpeizhi,
   luyoupeizhi,
   shujubeifen,
   jiekouguanli,
   zhanneitongzhi,
-  yonghuLUApianduan,
-  Modbusdianweiguanli,
+  yonghuLuApianduan,
+  modbusdianweiguanli,
   ximenzidianweiguanli,
   shujumoxing,
   huazhongshukongdianweiguanli,

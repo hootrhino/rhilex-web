@@ -12,21 +12,21 @@ export async function getHwifaceDetail(
     code: number;
     msg: string;
     data: {
-      uuid?: string;
-      name?: string;
-      type?: string;
-      alias?: string;
+      uuid: string;
+      name: string;
+      type: string;
+      alias: string;
       config: {
-        Timeout?: number;
-        Uart?: string;
-        BaudRate?: number;
-        DataBits?: number;
-        Parity?: string;
-        StopBits?: number;
+        Timeout: number;
+        Uart: string;
+        BaudRate: number;
+        DataBits: number;
+        Parity: string;
+        StopBits: number;
       };
-      busy?: boolean;
-      occupyBy: { uuid?: string; type?: string };
-      description?: string;
+      busy: boolean;
+      occupyBy: { uuid: string; type: string };
+      description: string;
     };
   }>('/api/v1/hwiface/detail', {
     method: 'GET',
@@ -42,7 +42,7 @@ export async function getHwifaceList(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { uuid?: string; name?: string; type?: string; alias?: string; description?: string }[];
+    data: { uuid: string; name: string; type: string; alias: string; description: string }[];
   }>('/api/v1/hwiface/list', {
     method: 'GET',
     ...(options || {}),

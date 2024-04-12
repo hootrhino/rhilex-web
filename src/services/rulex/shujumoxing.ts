@@ -44,7 +44,7 @@ export async function getSchemaDetail(
   return request<{
     code: number;
     msg: string;
-    data: { uuid?: string; name?: string; description?: string };
+    data: { uuid: string; name: string; description: string };
   }>('/api/v1/schema/detail', {
     method: 'GET',
     params: {
@@ -59,7 +59,7 @@ export async function getSchemaList(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { uuid?: string; name?: string; description?: string }[];
+    data: { uuid: string; name: string; description: string }[];
   }>('/api/v1/schema/list', {
     method: 'GET',
     ...(options || {}),
@@ -76,12 +76,12 @@ export async function postSchemaPropertiesCreate(
     rw: string;
     unit: string;
     rule: {
-      defaultValue?: string;
-      max?: number;
-      min?: number;
-      trueLabel?: string;
-      falseLabel?: string;
-      round?: number;
+      defaultValue: string;
+      max: number;
+      min: number;
+      trueLabel: string;
+      falseLabel: string;
+      round: number;
     };
     description?: string;
   },
@@ -125,21 +125,21 @@ export async function getSchemaPropertiesDetail(
     code: number;
     msg: string;
     data: {
-      uuid?: string;
-      schemaId?: string;
-      label?: string;
-      name?: string;
-      description?: string;
-      type?: string;
-      rw?: string;
-      unit?: string;
+      uuid: string;
+      schemaId: string;
+      label: string;
+      name: string;
+      description: string;
+      type: string;
+      rw: string;
+      unit: string;
       rule: {
-        defaultValue?: string;
-        max?: number;
-        min?: number;
-        trueLabel?: string;
-        falseLabel?: string;
-        round?: number;
+        defaultValue: string;
+        max: number;
+        min: number;
+        trueLabel: string;
+        falseLabel: string;
+        round: number;
       };
     };
   }>('/api/v1/schema/properties/detail', {
@@ -161,10 +161,10 @@ export async function getSchemaPropertiesList(
     code: number;
     msg: string;
     data: {
-      current?: number;
-      size?: number;
-      total?: number;
-      records?: {
+      current: number;
+      size: number;
+      total: number;
+      records: {
         uuid?: string;
         schemaId?: string;
         label?: string;
@@ -174,12 +174,12 @@ export async function getSchemaPropertiesList(
         rw?: string;
         unit?: string;
         rule: {
-          defaultValue?: string;
-          max?: number;
-          min?: number;
-          trueLabel?: string;
-          falseLabel?: string;
-          round?: number;
+          defaultValue: string;
+          max: number;
+          min: number;
+          trueLabel: string;
+          falseLabel: string;
+          round: number;
         };
       }[];
     };
@@ -203,12 +203,12 @@ export async function putSchemaPropertiesUpdate(
     rw: string;
     unit: string;
     rule: {
-      defaultValue?: string;
-      max?: number;
-      min?: number;
-      trueLabel?: string;
-      falseLabel?: string;
-      round?: number;
+      defaultValue: string;
+      max: number;
+      min: number;
+      trueLabel: string;
+      falseLabel: string;
+      round: number;
     };
     description?: string;
   },

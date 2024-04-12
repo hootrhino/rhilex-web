@@ -30,20 +30,20 @@ export async function getHnc8DataSheetList(
     code: number;
     msg: string;
     data: {
-      current?: number;
-      size?: number;
-      total?: number;
-      records?: {
-        uuid?: string;
-        device_uuid?: string;
-        name?: string;
-        alias?: string;
-        apiFunction?: string;
-        group?: number;
-        address?: string;
-        status?: number;
-        lastFetchTime?: number;
-        value?: string;
+      current: number;
+      size: number;
+      total: number;
+      records: {
+        uuid: string;
+        device_uuid: string;
+        name: string;
+        alias: string;
+        apiFunction: string;
+        group: number;
+        address: string;
+        status: number;
+        lastFetchTime: number;
+        value: string;
       }[];
     };
   }>('/api/v1/hnc8_data_sheet/list', {
@@ -88,10 +88,15 @@ export async function postHnc8DataSheetSheetImport(
     const item = (body as any)[ele];
 
     if (item !== undefined && item !== null) {
-      formData.append(
-        ele,
-        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
-      );
+      if (typeof item === 'object' && !(item instanceof File)) {
+        if (item instanceof Array) {
+          item.forEach((f) => formData.append(ele, f || ''));
+        } else {
+          formData.append(ele, JSON.stringify(item));
+        }
+      } else {
+        formData.append(ele, item);
+      }
     }
   });
 

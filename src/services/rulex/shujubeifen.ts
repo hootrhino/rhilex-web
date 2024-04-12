@@ -38,10 +38,15 @@ export async function postBackupUpload(body: {}, file?: File, options?: { [key: 
     const item = (body as any)[ele];
 
     if (item !== undefined && item !== null) {
-      formData.append(
-        ele,
-        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
-      );
+      if (typeof item === 'object' && !(item instanceof File)) {
+        if (item instanceof Array) {
+          item.forEach((f) => formData.append(ele, f || ''));
+        } else {
+          formData.append(ele, JSON.stringify(item));
+        }
+      } else {
+        formData.append(ele, item);
+      }
     }
   });
 

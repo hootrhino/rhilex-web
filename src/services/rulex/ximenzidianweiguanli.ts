@@ -30,23 +30,23 @@ export async function getS1200DataSheetList(
     code: number;
     msg: string;
     data: {
-      current?: number;
-      size?: number;
-      total?: number;
-      records?: {
-        uuid?: string;
-        device_uuid?: string;
-        siemensAddress?: string;
-        tag?: string;
-        alias?: string;
-        dataOrder?: string;
-        dataType?: string;
-        weight?: number;
-        frequency?: number;
-        status?: number;
-        lastFetchTime?: number;
-        value?: string;
-        errMsg?: string;
+      current: number;
+      size: number;
+      total: number;
+      records: {
+        uuid: string;
+        device_uuid: string;
+        siemensAddress: string;
+        tag: string;
+        alias: string;
+        dataOrder: string;
+        dataType: string;
+        weight: number;
+        frequency: number;
+        status: number;
+        lastFetchTime: number;
+        value: string;
+        errMsg: string;
       }[];
     };
   }>('/api/v1/s1200_data_sheet/list', {
@@ -91,10 +91,15 @@ export async function postS1200DataSheetSheetImport(
     const item = (body as any)[ele];
 
     if (item !== undefined && item !== null) {
-      formData.append(
-        ele,
-        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
-      );
+      if (typeof item === 'object' && !(item instanceof File)) {
+        if (item instanceof Array) {
+          item.forEach((f) => formData.append(ele, f || ''));
+        } else {
+          formData.append(ele, JSON.stringify(item));
+        }
+      } else {
+        formData.append(ele, item);
+      }
     }
   });
 
@@ -121,7 +126,7 @@ export async function postS1200DataSheetUpdate(
       alias?: string;
       dataOrder?: string;
       dataType?: string;
-      weight?: number;
+      weight: number;
       frequency?: number;
     }[];
   },

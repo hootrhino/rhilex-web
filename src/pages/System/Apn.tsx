@@ -1,5 +1,5 @@
 import { message } from '@/components/PopupHack';
-import { get4gApn, post4gApn } from '@/services/rulex/4Gshezhi';
+import { get4GApn, post4GApn } from '@/services/rulex/4Gshezhi';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
@@ -23,16 +23,16 @@ const initialValue = {
   cdmapwd: 0,
   apn_username: undefined,
   apn_password: undefined,
-}
+};
 
 const APNConfig = () => {
   const formRef = useRef<ProFormInstance>();
 
-  const { data: detail } = useRequest(() => get4gApn());
+  const { data: detail } = useRequest(() => get4GApn());
 
   const handleOnFinish = async (values: UpdateParams) => {
     try {
-      await post4gApn({ ...values });
+      await post4GApn({ ...values });
       message.success('更新成功');
       return true;
     } catch (error) {
@@ -50,7 +50,7 @@ const APNConfig = () => {
 
   return (
     <>
-    <Title name="APN 配置" tips='该配置项属于高级网络功能，配置不当会造成设备断网，请谨慎操作'/>
+      <Title name="APN 配置" tips="该配置项属于高级网络功能，配置不当会造成设备断网，请谨慎操作" />
       <ProForm
         formRef={formRef}
         layout="horizontal"

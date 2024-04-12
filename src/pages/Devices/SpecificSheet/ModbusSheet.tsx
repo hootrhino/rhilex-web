@@ -6,7 +6,7 @@ import {
   getModbusDataSheetList,
   postModbusDataSheetSheetImport,
   postModbusDataSheetUpdate,
-} from '@/services/rulex/Modbusdianweiguanli';
+} from '@/services/rulex/modbusdianweiguanli';
 import { omit } from '@/utils/redash';
 import { IconFont } from '@/utils/utils';
 import {
@@ -74,8 +74,19 @@ type removeParams = {
   uuids: string[];
 };
 
-type Point = Partial<ModbusSheetItem> & {
+type Point = {
+  uuid?: string;
   device_uuid?: string;
+  tag?: string;
+  alias?: string;
+  function?: number;
+  slaverId?: number;
+  address?: number;
+  frequency?: number;
+  quantity?: number;
+  dataType: string;
+  dataOrder: string;
+  weight: number;
 };
 
 type UpdateParams = {

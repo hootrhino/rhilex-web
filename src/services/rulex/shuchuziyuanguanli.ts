@@ -9,13 +9,13 @@ export async function postOutendsCreate(
     name: string;
     description: string;
     config: {
-      host?: string;
-      port?: number;
-      clientId?: string;
-      username?: string;
-      password?: string;
-      productId?: string;
-      deviceName?: string;
+      host: string;
+      port: number;
+      clientId: string;
+      username: string;
+      password: string;
+      productId: string;
+      deviceName: string;
     };
   },
   options?: { [key: string]: any },
@@ -104,7 +104,7 @@ export async function putOutendsUpdate(
     type: string;
     name: string;
     description: string;
-    config: { server?: string; port?: number };
+    config: { server: string; port: number };
   },
   options?: { [key: string]: any },
 ) {

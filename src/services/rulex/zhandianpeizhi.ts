@@ -7,7 +7,7 @@ export async function getSiteDetail(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { siteName?: string; logo?: string; appName?: string };
+    data: { siteName: string; logo: string; appName: string };
   }>('/api/v1/site/detail', {
     method: 'GET',
     ...(options || {}),
@@ -34,10 +34,15 @@ export async function postSiteLogo(body: {}, file?: File, options?: { [key: stri
     const item = (body as any)[ele];
 
     if (item !== undefined && item !== null) {
-      formData.append(
-        ele,
-        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
-      );
+      if (typeof item === 'object' && !(item instanceof File)) {
+        if (item instanceof Array) {
+          item.forEach((f) => formData.append(ele, f || ''));
+        } else {
+          formData.append(ele, JSON.stringify(item));
+        }
+      } else {
+        formData.append(ele, item);
+      }
     }
   });
 

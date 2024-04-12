@@ -44,7 +44,7 @@ export async function getGroupDetail(
   return request<{
     code: number;
     msg: string;
-    data: { uuid?: string; name?: string; type?: string; parent?: string };
+    data: { uuid: string; name: string; type: string; parent: string };
   }>('/api/v1/group/detail', {
     method: 'GET',
     params: {
@@ -59,7 +59,7 @@ export async function getGroupList(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { uuid?: string; name?: string; type?: string; parent?: string }[];
+    data: { uuid: string; name: string; type: string; parent: string }[];
   }>('/api/v1/group/list', {
     method: 'GET',
     ...(options || {}),

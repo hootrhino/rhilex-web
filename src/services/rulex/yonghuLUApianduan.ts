@@ -10,11 +10,11 @@ export async function postUserluaCreate(
     type: string;
     apply: string;
     label: string;
-    variables: { name?: string; type?: string; label?: string; value?: string }[];
+    variables: { name: string; type: string; label: string; value?: any }[];
   },
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: { uuid?: string } }>('/api/v1/userlua/create', {
+  return request<{ code: number; msg: string; data: { uuid: string } }>('/api/v1/userlua/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -49,13 +49,13 @@ export async function getUserluaDetail(
     code: number;
     msg: string;
     data: {
-      gid?: string;
-      uuid?: string;
-      label?: string;
-      apply?: string;
-      type?: string;
-      detail?: string;
-      variables?: { name?: string; type?: string; label?: string; value?: string }[];
+      gid: string;
+      uuid: string;
+      label: string;
+      apply: string;
+      type: string;
+      detail: string;
+      variables: { name?: string; type?: string; label?: string; value?: string }[];
     };
   }>('/api/v1/userlua/detail', {
     method: 'GET',
@@ -140,11 +140,11 @@ export async function putUserluaUpdate(
     type: string;
     apply: string;
     label: string;
-    variables: { name?: string; type?: string; label?: string; value?: string }[];
+    variables: { name: string; type: string; label: string; value?: string }[];
   },
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: { uuid?: string } }>('/api/v1/userlua/update', {
+  return request<{ code: number; msg: string; data: { uuid: string } }>('/api/v1/userlua/update', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

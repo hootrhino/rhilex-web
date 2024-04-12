@@ -37,10 +37,15 @@ export async function postGoodsCreate(
     const item = (body as any)[ele];
 
     if (item !== undefined && item !== null) {
-      formData.append(
-        ele,
-        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
-      );
+      if (typeof item === 'object' && !(item instanceof File)) {
+        if (item instanceof Array) {
+          item.forEach((f) => formData.append(ele, f || ''));
+        } else {
+          formData.append(ele, JSON.stringify(item));
+        }
+      } else {
+        formData.append(ele, item);
+      }
     }
   });
 
@@ -62,22 +67,17 @@ export async function getGoodsDetail(
     code: number;
     msg: string;
     data: {
-      uuid?: string;
-      pid?: number;
-      running?: boolean;
-      autoStart?: boolean;
-      goodsType?: string;
-      executeType?: string;
-      local_path?: string;
-      net_addr?: string;
-      description?: string;
-      args?: string[];
-      processDetail: {
-        ImageName?: string;
-        PID?: string;
-        SessionName?: string;
-        SessionNum?: string;
-      };
+      uuid: string;
+      pid: number;
+      running: boolean;
+      autoStart: boolean;
+      goodsType: string;
+      executeType: string;
+      local_path: string;
+      net_addr: string;
+      description: string;
+      args: string[];
+      processDetail: { ImageName: string; PID: string; SessionName: string; SessionNum: string };
     };
   }>('/api/v1/goods/detail', {
     method: 'GET',
@@ -104,7 +104,7 @@ export async function getGoodsList(options?: { [key: string]: any }) {
       net_addr?: string;
       description?: string;
       args?: string[];
-      processDetail?: any;
+      processDetail?: null;
     }[];
   }>('/api/v1/goods/list', {
     method: 'GET',
@@ -163,10 +163,15 @@ export async function putGoodsUpdate(
     const item = (body as any)[ele];
 
     if (item !== undefined && item !== null) {
-      formData.append(
-        ele,
-        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
-      );
+      if (typeof item === 'object' && !(item instanceof File)) {
+        if (item instanceof Array) {
+          item.forEach((f) => formData.append(ele, f || ''));
+        } else {
+          formData.append(ele, JSON.stringify(item));
+        }
+      } else {
+        formData.append(ele, item);
+      }
     }
   });
 

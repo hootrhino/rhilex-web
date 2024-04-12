@@ -9,7 +9,7 @@ export async function postDevicesCreate(
     type: string;
     schemaId: string;
     gid: string;
-    config: { host?: string; port?: number };
+    config: { host: string; port: number };
     description: string;
   },
   options?: { [key: string]: any },
@@ -49,14 +49,14 @@ export async function getDevicesDetail(
     code: number;
     msg: string;
     data: {
-      uuid?: string;
-      gid?: string;
-      name?: string;
-      type?: string;
-      schemaId?: string;
-      state?: number;
-      config?: Record<string, any>;
-      description?: string;
+      uuid: string;
+      gid: string;
+      name: string;
+      type: string;
+      schemaId: string;
+      state: number;
+      config: Record<string, any>;
+      description: string;
     };
   }>('/api/v1/devices/detail', {
     method: 'GET',
@@ -94,7 +94,49 @@ export async function getDevicesGroup(options?: { [key: string]: any }) {
   });
 }
 
-/** 设备列表 设备列表 GET /api/v1/devices/listByGroup */
+/** 设备不带分组列表 设备列表 GET /api/v1/devices/list */
+export async function getDevicesList(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getDevicesListParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      current: number;
+      size: number;
+      total: number;
+      records: {
+        uuid?: string;
+        gid?: string;
+        name?: string;
+        type?: string;
+        schemaId?: string;
+        state?: number;
+        errMsg?: string;
+        config: {
+          commonConfig: {
+            autoRequest: boolean;
+            enableOptimize: boolean;
+            maxRegNum: number;
+            mode: string;
+          };
+          portUuid: string;
+        };
+        description?: string;
+      }[];
+    };
+  }>('/api/v1/devices/list', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 设备带分组列表 设备列表 GET /api/v1/devices/listByGroup */
 export async function getDevicesListByGroup(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getDevicesListByGroupParams,
@@ -104,17 +146,17 @@ export async function getDevicesListByGroup(
     code: number;
     msg: string;
     data: {
-      current?: number;
-      size?: number;
-      total?: number;
-      records?: {
-        uuid?: string;
-        gid?: string;
-        name?: string;
-        type?: string;
-        schemaId?: string;
-        state?: number;
-        config?: Record<string, any>;
+      current: number;
+      size: number;
+      total: number;
+      records: {
+        uuid: string;
+        gid: string;
+        name: string;
+        type: string;
+        schemaId: string;
+        state: number;
+        config: Record<string, any>;
         description?: string;
       }[];
     };
@@ -152,10 +194,10 @@ export async function getDevicesProperties(
     code: number;
     msg: string;
     data: {
-      current?: number;
-      size?: number;
-      total?: number;
-      records?: {
+      current: number;
+      size: number;
+      total: number;
+      records: {
         label?: string;
         name?: string;
         description?: string;
@@ -198,7 +240,7 @@ export async function putDevicesUpdate(
     schemaId: string;
     gid: string;
     description: string;
-    config: { host?: string; port?: number };
+    config: { host: string; port: number };
   },
   options?: { [key: string]: any },
 ) {

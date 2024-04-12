@@ -7,7 +7,7 @@ export async function getSettingsConnection(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { device?: string; type?: string; state?: string; connection?: string }[];
+    data: { device: string; type: string; state: string; connection: string }[];
   }>('/api/v1/settings/connection', {
     method: 'GET',
     ...(options || {}),
@@ -20,11 +20,11 @@ export async function getSettingsCtrlTree(options?: { [key: string]: any }) {
     code: number;
     msg: string;
     data: {
-      network?: { name?: string; type?: string; status?: number }[];
-      wlan?: { name?: string; type?: string; status?: number }[];
-      net4g?: { name?: string; type?: string; status?: number }[];
-      net5g?: string[];
-      soft_router?: { name?: string; type?: string; status?: number }[];
+      network: { name: string; type: string; status: number }[];
+      wlan: { name?: string; type?: string; status?: number }[];
+      net4g: { name?: string; type?: string; status?: number }[];
+      net5g: string[];
+      soft_router: { name: string; type: string; status: number }[];
     };
   }>('/api/v1/settings/ctrlTree', {
     method: 'GET',
@@ -39,20 +39,20 @@ export async function getSettingsEth(options?: { [key: string]: any }) {
     msg: string;
     data: {
       eth0: {
-        interface?: string;
-        address?: string;
-        netmask?: string;
-        gateway?: string;
-        dns?: string[];
-        dhcp_enabled?: boolean;
+        interface: string;
+        address: string;
+        netmask: string;
+        gateway: string;
+        dns: string[];
+        dhcp_enabled: boolean;
       };
       eth1: {
-        interface?: string;
-        address?: string;
-        netmask?: string;
-        gateway?: string;
-        dns?: string[];
-        dhcp_enabled?: boolean;
+        interface: string;
+        address: string;
+        netmask: string;
+        gateway: string;
+        dns: string[];
+        dhcp_enabled: boolean;
       };
     };
   }>('/api/v1/settings/eth', {
@@ -93,18 +93,18 @@ export async function getSettingsNetDetails(
     code: number;
     msg: string;
     data: {
-      device?: string;
-      type?: string;
-      hwAddr?: string;
-      mtu?: number;
-      state?: string;
-      connection?: string;
-      carrier?: string;
-      ipv4Addr?: string;
-      ipv4Gateway?: string;
-      ipv4Dns?: string;
-      ipv6Addr?: string;
-      ipv6Gateway?: string;
+      device: string;
+      type: string;
+      hwAddr: string;
+      mtu: number;
+      state: string;
+      connection: string;
+      carrier: string;
+      ipv4Addr: string;
+      ipv4Gateway: string;
+      ipv4Dns: string;
+      ipv6Addr: string;
+      ipv6Gateway: string;
     };
   }>('/api/v1/settings/netDetails', {
     method: 'GET',
@@ -120,7 +120,7 @@ export async function getSettingsNetStatus(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { device?: string; type?: string; state?: string; connection?: string }[];
+    data: { device: string; type: string; state: string; connection: string }[];
   }>('/api/v1/settings/netStatus', {
     method: 'GET',
     ...(options || {}),

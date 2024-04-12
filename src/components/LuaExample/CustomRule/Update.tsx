@@ -1,5 +1,5 @@
 import ProCodeEditor from '@/components/ProCodeEditor';
-import { getUserluaDetail } from '@/services/rulex/yonghuLUApianduan';
+import { getUserluaDetail } from '@/services/rulex/yonghuLuApianduan';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {

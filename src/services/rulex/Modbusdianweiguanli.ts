@@ -33,26 +33,26 @@ export async function getModbusDataSheetList(
     code: number;
     msg: string;
     data: {
-      current?: number;
-      size?: number;
-      total?: number;
-      records?: {
-        uuid?: string;
-        device_uuid?: string;
-        tag?: string;
-        alias?: string;
-        function?: number;
-        slaverId?: number;
-        address?: number;
-        frequency?: number;
-        quantity?: number;
-        dataType?: string;
-        dataOrder?: string;
-        weight?: number;
-        status?: number;
-        lastFetchTime?: number;
-        value?: string;
-        errMsg?: string;
+      current: number;
+      size: number;
+      total: number;
+      records: {
+        uuid: string;
+        device_uuid: string;
+        tag: string;
+        alias: string;
+        function: number;
+        slaverId: number;
+        address: number;
+        frequency: number;
+        quantity: number;
+        dataType: string;
+        dataOrder: string;
+        weight: number;
+        status: number;
+        lastFetchTime: number;
+        value: string;
+        errMsg: string;
       }[];
     };
   }>('/api/v1/modbus_data_sheet/list', {
@@ -97,10 +97,15 @@ export async function postModbusDataSheetSheetImport(
     const item = (body as any)[ele];
 
     if (item !== undefined && item !== null) {
-      formData.append(
-        ele,
-        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
-      );
+      if (typeof item === 'object' && !(item instanceof File)) {
+        if (item instanceof Array) {
+          item.forEach((f) => formData.append(ele, f || ''));
+        } else {
+          formData.append(ele, JSON.stringify(item));
+        }
+      } else {
+        formData.append(ele, item);
+      }
     }
   });
 
@@ -126,9 +131,9 @@ export async function postModbusDataSheetUpdate(
       address?: number;
       frequency?: number;
       quantity?: number;
-      dataType?: string;
-      dataOrder?: string;
-      weight?: number;
+      dataType: string;
+      dataOrder: string;
+      weight: number;
     }[];
   },
   options?: { [key: string]: any },

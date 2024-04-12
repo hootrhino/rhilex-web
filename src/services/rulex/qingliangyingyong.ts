@@ -58,13 +58,13 @@ export async function getAppList(options?: { [key: string]: any }) {
     code: number;
     msg: string;
     data: {
-      uuid?: string;
-      name?: string;
-      version?: string;
-      autoStart?: boolean;
-      appState?: number;
-      filepath?: string;
-      luaSource?: string;
+      uuid: string;
+      name: string;
+      version: string;
+      autoStart: boolean;
+      appState: number;
+      filepath: string;
+      luaSource: string;
     }[];
   }>('/api/v1/app/list', {
     method: 'GET',
@@ -82,13 +82,13 @@ export async function putAppStart(
     code: number;
     msg: string;
     data: {
-      uuid?: string;
-      name?: string;
-      version?: string;
-      autoStart?: boolean;
-      appState?: number;
-      filepath?: string;
-      luaSource?: string;
+      uuid: string;
+      name: string;
+      version: string;
+      autoStart: boolean;
+      appState: number;
+      filepath: string;
+      luaSource: string;
     };
   }>('/api/v1/app/start', {
     method: 'PUT',
@@ -109,13 +109,13 @@ export async function putAppStop(
     code: number;
     msg: string;
     data: {
-      uuid?: string;
-      name?: string;
-      version?: string;
-      autoStart?: boolean;
-      appState?: number;
-      filepath?: string;
-      luaSource?: string;
+      uuid: string;
+      name: string;
+      version: string;
+      autoStart: boolean;
+      appState: number;
+      filepath: string;
+      luaSource: string;
     };
   }>('/api/v1/app/stop', {
     method: 'PUT',

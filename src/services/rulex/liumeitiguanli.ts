@@ -12,10 +12,10 @@ export async function getJpegStreamDetail(
     code: number;
     msg: string;
     data: {
-      type?: string;
-      liveId?: string;
-      pulled?: boolean;
-      resolution: { width?: number; height?: number };
+      type: string;
+      liveId: string;
+      pulled: boolean;
+      resolution: { width: number; height: number };
     };
   }>('/api/v1/jpeg_stream/detail', {
     method: 'GET',

@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.1.0",
   "info": {
     "title": "rulex&eekit-restful-api",
     "description": "RULEX 核心关键API接口",
@@ -242,7 +242,7 @@
     },
     "/api/v1/devices/listByGroup": {
       "get": {
-        "summary": "设备列表",
+        "summary": "设备带分组列表",
         "x-apifox-folder": "设备管理",
         "x-apifox-status": "developing",
         "deprecated": false,
@@ -745,7 +745,15 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "integer",
+                        "boolean",
+                        "array",
+                        "object",
+                        "number",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -1993,7 +2001,15 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "integer",
+                        "boolean",
+                        "array",
+                        "object",
+                        "number",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -3406,7 +3422,15 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "integer",
+                        "boolean",
+                        "array",
+                        "object",
+                        "number",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -3463,7 +3487,15 @@
                     "type": "string"
                   },
                   "args": {
-                    "type": "string"
+                    "type": [
+                      "string",
+                      "integer",
+                      "boolean",
+                      "array",
+                      "object",
+                      "number",
+                      "null"
+                    ]
                   }
                 },
                 "required": [
@@ -10228,7 +10260,15 @@
                           "type": "string"
                         },
                         "value": {
-                          "type": "string"
+                          "type": [
+                            "string",
+                            "integer",
+                            "boolean",
+                            "array",
+                            "object",
+                            "number",
+                            "null"
+                          ]
                         }
                       },
                       "x-apifox-orders": [
@@ -15757,6 +15797,191 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-159772577-run",
         "security": []
       }
+    },
+    "/api/v1/devices/list": {
+      "get": {
+        "summary": "设备不带分组列表",
+        "x-apifox-folder": "设备管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "设备列表",
+        "tags": [
+          "设备管理"
+        ],
+        "parameters": [
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "10",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "gid": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "schemaId": {
+                                "type": "string"
+                              },
+                              "state": {
+                                "type": "integer"
+                              },
+                              "errMsg": {
+                                "type": "string"
+                              },
+                              "config": {
+                                "type": "object",
+                                "properties": {
+                                  "commonConfig": {
+                                    "type": "object",
+                                    "properties": {
+                                      "autoRequest": {
+                                        "type": "boolean"
+                                      },
+                                      "enableOptimize": {
+                                        "type": "boolean"
+                                      },
+                                      "maxRegNum": {
+                                        "type": "integer"
+                                      },
+                                      "mode": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "autoRequest",
+                                      "enableOptimize",
+                                      "maxRegNum",
+                                      "mode"
+                                    ],
+                                    "x-apifox-ignore-properties": [],
+                                    "x-apifox-orders": [
+                                      "autoRequest",
+                                      "enableOptimize",
+                                      "maxRegNum",
+                                      "mode"
+                                    ]
+                                  },
+                                  "portUuid": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "commonConfig",
+                                  "portUuid"
+                                ],
+                                "x-apifox-ignore-properties": [],
+                                "x-apifox-orders": [
+                                  "commonConfig",
+                                  "portUuid"
+                                ]
+                              },
+                              "description": {
+                                "type": "string"
+                              }
+                            },
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "gid",
+                              "name",
+                              "type",
+                              "schemaId",
+                              "state",
+                              "errMsg",
+                              "config",
+                              "description"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-164362781-run",
+        "security": []
+      }
     }
   },
   "components": {
@@ -15884,5 +16109,10 @@
     },
     "securitySchemes": {}
   },
-  "servers": []
+  "servers": [
+    {
+      "url": "http://127.0.0.1:2580",
+      "description": "本机环境"
+    }
+  ]
 }

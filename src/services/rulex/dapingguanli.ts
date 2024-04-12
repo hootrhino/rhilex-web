@@ -28,7 +28,7 @@ export async function postVisualCreate(
   },
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: { uuid?: string } }>('/api/v1/visual/create', {
+  return request<{ code: number; msg: string; data: { uuid: string } }>('/api/v1/visual/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -115,22 +115,24 @@ export async function postVisualThumbnail(body: {}, file?: File, options?: { [ke
     const item = (body as any)[ele];
 
     if (item !== undefined && item !== null) {
-      formData.append(
-        ele,
-        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
-      );
+      if (typeof item === 'object' && !(item instanceof File)) {
+        if (item instanceof Array) {
+          item.forEach((f) => formData.append(ele, f || ''));
+        } else {
+          formData.append(ele, JSON.stringify(item));
+        }
+      } else {
+        formData.append(ele, item);
+      }
     }
   });
 
-  return request<{ code: number; msg: string; data: { url?: string } }>(
-    '/api/v1/visual/thumbnail',
-    {
-      method: 'POST',
-      data: formData,
-      requestType: 'form',
-      ...(options || {}),
-    },
-  );
+  return request<{ code: number; msg: string; data: { url: string } }>('/api/v1/visual/thumbnail', {
+    method: 'POST',
+    data: formData,
+    requestType: 'form',
+    ...(options || {}),
+  });
 }
 
 /** 更新大屏 PUT /api/v1/visual/update */
@@ -144,7 +146,7 @@ export async function putVisualUpdate(
   },
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: { uuid?: string } }>('/api/v1/visual/update', {
+  return request<{ code: number; msg: string; data: { uuid: string } }>('/api/v1/visual/update', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

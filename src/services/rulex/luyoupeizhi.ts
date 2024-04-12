@@ -8,15 +8,15 @@ export async function getSoftRouterDhcp(options?: { [key: string]: any }) {
     code: number;
     msg: string;
     data: {
-      iface?: string;
-      ip?: string;
-      gateway?: string;
-      network?: string;
-      netmask?: string;
-      ip_pool_begin?: string;
-      ip_pool_end?: string;
-      iface_from?: string;
-      iface_to?: string;
+      iface: string;
+      ip: string;
+      gateway: string;
+      network: string;
+      netmask: string;
+      ip_pool_begin: string;
+      ip_pool_end: string;
+      iface_from: string;
+      iface_to: string;
     };
   }>('/api/v1/softRouter/dhcp', {
     method: 'GET',
@@ -64,7 +64,7 @@ export async function getSoftRouterDhcpClients(options?: { [key: string]: any })
   return request<{
     code: number;
     msg: string;
-    data: { mac_address?: string; ip_address?: string; hostname?: string }[];
+    data: { mac_address: string; ip_address: string; hostname: string }[];
   }>('/api/v1/softRouter/dhcp/clients', {
     method: 'GET',
     ...(options || {}),

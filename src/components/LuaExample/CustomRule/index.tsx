@@ -4,7 +4,7 @@ import {
   getUserluaListByGroup,
   postUserluaCreate,
   putUserluaUpdate,
-} from '@/services/rulex/yonghuLUApianduan';
+} from '@/services/rulex/yonghuLuApianduan';
 import { DEFAULT_GROUP_KEY_LUA_TPL } from '@/utils/constant';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-components';
@@ -19,7 +19,7 @@ const CustomRule = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [tplId, setTplId] = useState<string>('');
 
-  const handleOnFinish = async (values) => {
+  const handleOnFinish = async (values: any) => {
     const params = {
       ...values,
       gid: DEFAULT_GROUP_KEY_LUA_TPL,
@@ -33,7 +33,7 @@ const CustomRule = () => {
       // 新增
       await postUserluaCreate({
         ...params,
-        variables: params.variables?.map((val) => ({ ...val, value: '' })),
+        variables: params.variables?.map((val: any) => ({ ...val, value: '' })),
       });
       message.success('新建成功');
     }

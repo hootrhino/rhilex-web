@@ -54,10 +54,15 @@ export async function postFirmwareUpload(body: {}, file?: File, options?: { [key
     const item = (body as any)[ele];
 
     if (item !== undefined && item !== null) {
-      formData.append(
-        ele,
-        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
-      );
+      if (typeof item === 'object' && !(item instanceof File)) {
+        if (item instanceof Array) {
+          item.forEach((f) => formData.append(ele, f || ''));
+        } else {
+          formData.append(ele, JSON.stringify(item));
+        }
+      } else {
+        formData.append(ele, item);
+      }
     }
   });
 
@@ -75,13 +80,13 @@ export async function getFirmwareVendorKey(options?: { [key: string]: any }) {
     code: number;
     msg: string;
     data: {
-      device_id?: string;
-      authorize_admin?: string;
-      authorize_password?: string;
-      begin_authorize?: number;
-      end_authorize?: number;
-      mac?: string;
-      license?: string;
+      device_id: string;
+      authorize_admin: string;
+      authorize_password: string;
+      begin_authorize: number;
+      end_authorize: number;
+      mac: string;
+      license: string;
     };
   }>('/api/v1/firmware/vendorKey', {
     method: 'GET',

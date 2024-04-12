@@ -7,7 +7,7 @@ export async function getOsNetInterfaces(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { name?: string; addr?: string; mac?: string }[];
+    data: { name: string; addr: string; mac: string }[];
   }>('/api/v1/os/netInterfaces', {
     method: 'GET',
     ...(options || {}),
@@ -45,26 +45,26 @@ export async function getOsSystem(options?: { [key: string]: any }) {
     msg: string;
     data: {
       hardWareInfo: {
-        cpuPercent?: number;
-        diskInfo?: number;
-        memPercent?: number;
-        osArch?: string;
-        osDist?: string;
-        osUpTime?: string;
-        product?: string;
-        startedAt?: string;
-        version?: string;
+        cpuPercent: number;
+        diskInfo: number;
+        memPercent: number;
+        osArch: string;
+        osDist: string;
+        osUpTime: string;
+        product: string;
+        startedAt: string;
+        version: string;
       };
       sourceCount: {
-        apps?: number;
-        devices?: number;
-        goods?: number;
-        inends?: number;
-        outends?: number;
-        plugins?: number;
-        rules?: number;
+        apps: number;
+        devices: number;
+        goods: number;
+        inends: number;
+        outends: number;
+        plugins: number;
+        rules: number;
       };
-      statistic: { inSuccess?: number; outSuccess?: number; inFailed?: number; outFailed?: number };
+      statistic: { inSuccess: number; outSuccess: number; inFailed: number; outFailed: number };
     };
   }>('/api/v1/os/system', {
     method: 'GET',
