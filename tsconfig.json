@@ -18,11 +18,11 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "strict": true,
-    "noImplicitAny": false, // 暂时设置为 false， 兼容luamin
+    "noImplicitAny": true,
     "paths": {
       "@/*": ["./src/*"],
       "@@/*": ["./src/.umi/*"]
-    },
+    }
   },
   "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.tsx"]
 }

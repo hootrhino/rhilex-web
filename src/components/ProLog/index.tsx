@@ -47,6 +47,7 @@ const ProLog = ({
   hidePadding = false,
   handleOnReset,
   className,
+  title,
   ...props
 }: ProLogProps) => {
   const { disconnect, connect } = useModel('useWebsocket');
@@ -96,6 +97,7 @@ const ProLog = ({
   return (
     <ProCard
       className={cn(className, 'overflow-y-auto')}
+      title={<span className="text-[14px]">{title}</span>}
       bodyStyle={hidePadding ? { paddingBlock: 0, paddingInline: 0 } : {}}
       extra={
         extra ? (
