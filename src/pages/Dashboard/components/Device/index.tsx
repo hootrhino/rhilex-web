@@ -1,7 +1,9 @@
 import deviceIcon from '@/assets/images/device.svg';
 import { DeviceType } from '@/pages/Devices/enum';
+import { getDevicesList } from '@/services/rulex/shebeiguanli';
 import { cn } from '@/utils/utils';
 import { ProList } from '@ant-design/pro-components';
+import { useRequest } from '@umijs/max';
 import { Avatar, Badge } from 'antd';
 import { useState } from 'react';
 
@@ -43,6 +45,10 @@ export const deviceAvatar = {
 
 const DeviceList = () => {
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
+
+  const { data } = useRequest(() => getDevicesList({ current: 1, size: 999 }));
+
+  console.log(data?.records);
 
   return (
     <div className={cn('h-full bg-[#fff]')}>

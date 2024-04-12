@@ -9,6 +9,7 @@ import DataBackupConfig from './DataBackup';
 import FirmwareConfig from './Firmware';
 import NetworkConfig from './Network';
 import NetworkStatus from './NetworkStatus';
+import Resource from './Resource';
 import RoutingConfig from './Routing';
 import TimeConfig from './Time';
 import UserConfig from './User';
@@ -20,6 +21,11 @@ type TabItem = Omit<TabPaneProps, 'tab'> & {
 };
 
 const baseItems = [
+  {
+    label: '系统资源',
+    key: 'resource',
+    children: <Resource />,
+  },
   {
     label: '网络状态',
     key: 'netStatus',
@@ -96,7 +102,7 @@ const System = () => {
     });
 
     setItems(filteredItems);
-    setActiveKey(isWindows ? 'firmware' : 'netStatus');
+    setActiveKey('resource');
   }, [isWindows, isH3, hasRoute, hasWifi]);
 
   return (

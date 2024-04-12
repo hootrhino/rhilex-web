@@ -8,7 +8,7 @@ type OptionItem = {
 };
 
 const useSetting = () => {
-  const [activeKey, setActiveKey] = useState<string>('netStatus');
+  const [activeKey, setActiveKey] = useState<string>('resource');
   const [hasWifi, setwifi] = useState<boolean>(false);
   const [hasRoute, setRoute] = useState<boolean>(false);
   const [interfaceOption, setInterfaceOption] = useState<OptionItem[]>([]);
