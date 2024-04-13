@@ -1,4 +1,3 @@
-import deviceIcon from '@/assets/images/device.svg';
 import { DeviceType } from '@/pages/Devices/enum';
 import { getDevicesList } from '@/services/rulex/shebeiguanli';
 import { cn } from '@/utils/utils';
@@ -6,33 +5,6 @@ import { ProList } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Avatar, Badge } from 'antd';
 import { useState } from 'react';
-
-const defaultData = [
-  {
-    uuid: 'UUID_123445ffffff',
-    name: '语雀的天空',
-    image: deviceIcon,
-    desc: '我是一条测试的描述我是一条测试的描述我是一条测试的描述我是一条测试的描述我是一条测试的描述我是一条测试的描述我是一条测试的描述我是一条测试的描述',
-  },
-  {
-    uuid: 'UUID_2dhhdhdhd',
-    name: 'Ant Design',
-    image: deviceIcon,
-    desc: '我是一条测试的描述',
-  },
-  {
-    uuid: 'UUID_dhdhdnddhhddh',
-    name: '蚂蚁金服体验科技',
-    image: deviceIcon,
-    desc: '我是一条测试的描述',
-  },
-  {
-    uuid: 'UUID_4sjsjjsjjs',
-    name: 'TechUI',
-    image: deviceIcon,
-    desc: '我是一条测试的描述',
-  },
-];
 
 export const deviceAvatar = {
   [DeviceType.GENERIC_PROTOCOL]: 'PROT',
@@ -48,15 +20,13 @@ const DeviceList = () => {
 
   const { data } = useRequest(() => getDevicesList({ current: 1, size: 999 }));
 
-  console.log(data?.records);
-
   return (
     <div className={cn('h-full bg-[#fff]')}>
       <ProList
         rowKey="uuid"
         size="small"
         headerTitle={<span className="text-[14px]">设备状态</span>}
-        dataSource={defaultData}
+        dataSource={data?.records}
         expandable={{ expandedRowKeys, onExpandedRowsChange: setExpandedRowKeys }}
         metas={{
           title: {
@@ -66,13 +36,20 @@ const DeviceList = () => {
             dataIndex: 'uuid',
           },
           avatar: {
-            render: () => <Avatar className="w-[18px] h-[18px]">AIS</Avatar>,
+            render: (_, { type }) => (
+              <Avatar className="w-[18px] h-[18px]">{deviceAvatar[type]}</Avatar>
+            ),
           },
           description: {
-            render: (_, { desc }) => <div className="truncate">{desc}</div>,
+            render: (_, { description }) => <div className="truncate">{description}</div>,
           },
           actions: {
-            render: () => <Badge status="success" text="在线" />,
+            render: (_, { state }) => (
+              <Badge
+                status={state === 0 ? 'error' : 'success'}
+                text={state === 0 ? '离线' : '在线'}
+              />
+            ),
           },
         }}
         className="device-card"

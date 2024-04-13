@@ -108,23 +108,14 @@ export async function getDevicesList(
       size: number;
       total: number;
       records: {
-        uuid?: string;
-        gid?: string;
-        name?: string;
-        type?: string;
-        schemaId?: string;
-        state?: number;
-        errMsg?: string;
-        config: {
-          commonConfig: {
-            autoRequest: boolean;
-            enableOptimize: boolean;
-            maxRegNum: number;
-            mode: string;
-          };
-          portUuid: string;
-        };
-        description?: string;
+        uuid: string;
+        gid: string;
+        name: string;
+        type: string;
+        schemaId: string;
+        state: number;
+        errMsg: string;
+        description: string;
       }[];
     };
   }>('/api/v1/devices/list', {

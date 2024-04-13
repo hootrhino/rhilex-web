@@ -15842,58 +15842,20 @@
                               "errMsg": {
                                 "type": "string"
                               },
-                              "config": {
-                                "type": "object",
-                                "properties": {
-                                  "commonConfig": {
-                                    "type": "object",
-                                    "properties": {
-                                      "autoRequest": {
-                                        "type": "boolean"
-                                      },
-                                      "enableOptimize": {
-                                        "type": "boolean"
-                                      },
-                                      "maxRegNum": {
-                                        "type": "integer"
-                                      },
-                                      "mode": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": [
-                                      "autoRequest",
-                                      "enableOptimize",
-                                      "maxRegNum",
-                                      "mode"
-                                    ],
-                                    "x-apifox-ignore-properties": [],
-                                    "x-apifox-orders": [
-                                      "autoRequest",
-                                      "enableOptimize",
-                                      "maxRegNum",
-                                      "mode"
-                                    ]
-                                  },
-                                  "portUuid": {
-                                    "type": "string"
-                                  }
-                                },
-                                "required": [
-                                  "commonConfig",
-                                  "portUuid"
-                                ],
-                                "x-apifox-ignore-properties": [],
-                                "x-apifox-orders": [
-                                  "commonConfig",
-                                  "portUuid"
-                                ]
-                              },
                               "description": {
                                 "type": "string"
                               }
                             },
-                            "x-apifox-ignore-properties": [],
+                            "required": [
+                              "uuid",
+                              "gid",
+                              "name",
+                              "type",
+                              "schemaId",
+                              "state",
+                              "errMsg",
+                              "description"
+                            ],
                             "x-apifox-orders": [
                               "uuid",
                               "gid",
@@ -15902,9 +15864,9 @@
                               "schemaId",
                               "state",
                               "errMsg",
-                              "config",
                               "description"
-                            ]
+                            ],
+                            "x-apifox-ignore-properties": []
                           }
                         }
                       },
@@ -15914,13 +15876,13 @@
                         "total",
                         "records"
                       ],
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "current",
                         "size",
                         "total",
                         "records"
-                      ]
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -15928,12 +15890,91 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 2,
+                        "total": 2,
+                        "records": [
+                          {
+                            "uuid": "DEVICE4OFIDHZS",
+                            "gid": "DROOT",
+                            "name": "GENERIC_AIS_RECEIVER",
+                            "type": "GENERIC_AIS_RECEIVER",
+                            "schemaId": "PROPERDRAR6PAY",
+                            "state": 1,
+                            "config": {
+                              "commonConfig": {
+                                "mode": "TCP",
+                                "parseAis": false
+                              },
+                              "hostConfig": {
+                                "host": "0.0.0.0",
+                                "port": 6006,
+                                "timeout": 3000
+                              },
+                              "portUuid": "COM12"
+                            },
+                            "description": "GENERIC_AIS_RECEIVER"
+                          },
+                          {
+                            "uuid": "DEVICE8EWNMGZA",
+                            "gid": "DROOT",
+                            "name": "GENERIC_AIS_RECEIVER",
+                            "type": "GENERIC_AIS_RECEIVER",
+                            "schemaId": "",
+                            "state": 1,
+                            "config": {
+                              "commonConfig": {
+                                "mode": "TCP",
+                                "parseAis": false
+                              },
+                              "hostConfig": {
+                                "host": "0.0.0.0",
+                                "port": 6005,
+                                "timeout": 3000
+                              },
+                              "portUuid": "COM12"
+                            },
+                            "description": "GENERIC_AIS_RECEIVER"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "uuid": "DEVICEV7XKMT",
+                          "gid": "DROOT",
+                          "name": "GENERIC_AIS",
+                          "type": "GENERIC_AIS",
+                          "state": 1,
+                          "config": {
+                            "host": "0.0.0.0",
+                            "port": 6005
+                          },
+                          "description": "GENERIC_AIS"
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }
