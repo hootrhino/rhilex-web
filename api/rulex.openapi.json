@@ -1,5 +1,5 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.1",
   "info": {
     "title": "rulex&eekit-restful-api",
     "description": "RULEX 核心关键API接口",
@@ -64,7 +64,7 @@
       "name": "系统配置/WIFI配置"
     },
     {
-      "name": "系统配置/4G设置"
+      "name": "系统配置/移动网络4G设置"
     },
     {
       "name": "系统配置/时间配置"
@@ -745,15 +745,7 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": [
-                        "string",
-                        "integer",
-                        "boolean",
-                        "array",
-                        "object",
-                        "number",
-                        "null"
-                      ]
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -2001,15 +1993,7 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": [
-                        "string",
-                        "integer",
-                        "boolean",
-                        "array",
-                        "object",
-                        "number",
-                        "null"
-                      ]
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -3422,15 +3406,7 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": [
-                        "string",
-                        "integer",
-                        "boolean",
-                        "array",
-                        "object",
-                        "number",
-                        "null"
-                      ]
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -3487,15 +3463,7 @@
                     "type": "string"
                   },
                   "args": {
-                    "type": [
-                      "string",
-                      "integer",
-                      "boolean",
-                      "array",
-                      "object",
-                      "number",
-                      "null"
-                    ]
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -7505,15 +7473,15 @@
         "security": []
       }
     },
-    "/api/v1/4g/info": {
+    "/api/v1/mn4g/info": {
       "get": {
-        "summary": "4G参数获取",
-        "x-apifox-folder": "系统配置/4G设置",
+        "summary": "移动网络4G参数获取",
+        "x-apifox-folder": "系统配置/移动网络4G设置",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "系统配置/4G设置"
+          "系统配置/移动网络4G设置"
         ],
         "parameters": [],
         "responses": {
@@ -7590,15 +7558,15 @@
         "security": []
       }
     },
-    "/api/v1/settings/4g/restart": {
+    "/api/v1/settings/mn4g/restart": {
       "post": {
         "summary": "重启4G",
-        "x-apifox-folder": "系统配置/4G设置",
+        "x-apifox-folder": "系统配置/移动网络4G设置",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "系统配置/4G设置"
+          "系统配置/移动网络4G设置"
         ],
         "parameters": [],
         "responses": {
@@ -8238,15 +8206,15 @@
         "security": []
       }
     },
-    "/api/v1/4g/apn": {
+    "/api/v1/mn4g/apn": {
       "post": {
         "summary": "设置APN参数",
-        "x-apifox-folder": "系统配置/4G设置",
+        "x-apifox-folder": "系统配置/移动网络4G设置",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "系统配置/4G设置"
+          "系统配置/移动网络4G设置"
         ],
         "parameters": [],
         "requestBody": {
@@ -8329,12 +8297,12 @@
       },
       "get": {
         "summary": "获取APN参数",
-        "x-apifox-folder": "系统配置/4G设置",
+        "x-apifox-folder": "系统配置/移动网络4G设置",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "系统配置/4G设置"
+          "系统配置/移动网络4G设置"
         ],
         "parameters": [],
         "responses": {
@@ -10260,15 +10228,7 @@
                           "type": "string"
                         },
                         "value": {
-                          "type": [
-                            "string",
-                            "integer",
-                            "boolean",
-                            "array",
-                            "object",
-                            "number",
-                            "null"
-                          ]
+                          "type": "string"
                         }
                       },
                       "x-apifox-orders": [
@@ -16109,10 +16069,5 @@
     },
     "securitySchemes": {}
   },
-  "servers": [
-    {
-      "url": "http://127.0.0.1:2580",
-      "description": "本机环境"
-    }
-  ]
+  "servers": []
 }

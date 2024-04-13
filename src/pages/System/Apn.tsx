@@ -1,5 +1,5 @@
 import { message } from '@/components/PopupHack';
-import { get4GApn, post4GApn } from '@/services/rulex/4Gshezhi';
+import { getMn4GApn, postMn4GApn } from '@/services/rulex/yidongwangluo4Gshezhi';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
@@ -28,11 +28,11 @@ const initialValue = {
 const APNConfig = () => {
   const formRef = useRef<ProFormInstance>();
 
-  const { data: detail } = useRequest(() => get4GApn());
+  const { data: detail } = useRequest(() => getMn4GApn());
 
   const handleOnFinish = async (values: UpdateParams) => {
     try {
-      await post4GApn({ ...values });
+      await postMn4GApn({ ...values });
       message.success('更新成功');
       return true;
     } catch (error) {

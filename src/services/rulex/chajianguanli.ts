@@ -43,7 +43,7 @@ export async function postPlugwareService(
   body: {
     uuid: string;
     name: string;
-    args?: any;
+    args?: string;
   },
   options?: { [key: string]: any },
 ) {

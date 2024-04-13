@@ -10,7 +10,7 @@ export async function postUserluaCreate(
     type: string;
     apply: string;
     label: string;
-    variables: { name: string; type: string; label: string; value?: any }[];
+    variables: { name: string; type: string; label: string; value?: string }[];
   },
   options?: { [key: string]: any },
 ) {

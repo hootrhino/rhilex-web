@@ -1,5 +1,5 @@
 import { message, modal } from '@/components/PopupHack';
-import { get4GInfo, postSettings4GRestart } from '@/services/rulex/4Gshezhi';
+import { getMn4GInfo, postSettingsMn4GRestart } from '@/services/rulex/yidongwangluo4Gshezhi';
 import { green } from '@ant-design/colors';
 import { PoweroffOutlined, ReloadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
@@ -17,14 +17,14 @@ const FourGConfig = () => {
     data: detail,
     run: getDetail,
     loading: detailLoading,
-  } = useRequest(() => get4GInfo(), {
+  } = useRequest(() => getMn4GInfo(), {
     onSuccess: (data) => {
       formRef.current?.setFieldsValue({ ...data });
     },
   });
 
   // 重启4G
-  const { run: restart } = useRequest(() => postSettings4GRestart(), {
+  const { run: restart } = useRequest(() => postSettingsMn4GRestart(), {
     manual: true,
     onSuccess: () => {
       message.success('重启成功');
