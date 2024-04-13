@@ -4,7 +4,7 @@
 
 import { firstUpperCase } from '@/utils/utils';
 
-const dataToServers = [
+export const dataToServers = [
   { target: 'http', detail: '数据推送到 HTTP 服务' },
   { target: 'mqtt', detail: '数据推送到 MQTT 服务' },
   { target: 'udp', detail: '数据推送到 UDP 服务' },
@@ -14,7 +14,7 @@ const dataToServers = [
   { target: 'nats', detail: '数据推送到 Nats' },
 ];
 
-const getVariables = (server: string) => [
+export const getVariables = (server: string) => [
   { label: `${server.toUpperCase()} 资源`, name: 'uuid', type: 'select', dataSource: 'outends' },
 ];
 
@@ -59,7 +59,7 @@ end`;
 
 // 完整示例（快捷模板）
 // Modbus 数据解析并推向 MqttServer 快捷模板
-const getQuickCode = (server: string) => `Actions = {
+export const getQuickCode = (server: string) => `Actions = {
   function(args)
       local dataT, err = json:J2T(args)
       if (err ~= nil) then
@@ -82,11 +82,3 @@ const getQuickCode = (server: string) => `Actions = {
       return true, args
   end
 }`;
-
-export const dataToQuickTpl = dataToServers.map((item) => ({
-  label: '',
-  detail: `Modbus 数据解析并推向 ${firstUpperCase(item.target)}Server`,
-  apply: getQuickCode(item.target),
-  type: 'function',
-  variables: getVariables(item.target),
-}));

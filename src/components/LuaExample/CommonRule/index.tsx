@@ -1,8 +1,8 @@
 import { builtInLuaTpl } from '@/components/CodeEditor/BuildInLua';
-import { quickLuaTpl } from '@/components/CodeEditor/quickLua';
+import { quickLuaTpl } from '@/components/CodeEditor/QuickLua';
 import { getUserluaListByGroup } from '@/services/rulex/yonghuLuApianduan';
 import { DEFAULT_GROUP_KEY_LUA_TPL } from '@/utils/constant';
-import { useRequest } from '@umijs/max';
+import { useModel, useRequest } from '@umijs/max';
 import type { TplGroupItem } from './ExampleItem';
 import ExampleItem from './ExampleItem';
 
@@ -11,6 +11,7 @@ type CommonRuleProps = {
 };
 
 const CommonRule = ({ activeTabKey }: CommonRuleProps) => {
+  const { isH3 } = useModel('useSystem');
   const { data: customTplData } = useRequest(
     () => getUserluaListByGroup({ uuid: DEFAULT_GROUP_KEY_LUA_TPL }),
     {
@@ -40,7 +41,7 @@ const CommonRule = ({ activeTabKey }: CommonRuleProps) => {
     },
     {
       type: 'quick',
-      dataSource: quickLuaTpl,
+      dataSource: quickLuaTpl(isH3),
     },
   ];
 
