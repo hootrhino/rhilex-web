@@ -16,7 +16,7 @@ export type CurrentUser = {
 };
 
 const Login: React.FC = () => {
-  const { setInitialState, initialState } = useModel('@@initialState');
+  const { setInitialState } = useModel('@@initialState');
   const { run: getOsSystem } = useModel('useSystem');
   const [validateStatus, setValidateStatus] = useState<{
     username: ValidateStatus;
@@ -53,7 +53,7 @@ const Login: React.FC = () => {
   return (
     <div className="flex flex-col h-[100vh] overflow-auto bg-[#f0f2f5] bg-no-repeat bg-cover bg-[url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')]">
       <Helmet>
-        <title>登录页 - {initialState?.settings?.title || DEFAULT_TITLE}</title>
+        <title>登录页 - {DEFAULT_TITLE}</title>
       </Helmet>
       <div className="flex justify-center flex-1 py-32">
         <div className="rhilex-login-form-wrapper">
