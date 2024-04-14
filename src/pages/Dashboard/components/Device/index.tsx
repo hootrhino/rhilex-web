@@ -25,7 +25,7 @@ const DeviceList = () => {
       <ProList
         rowKey="uuid"
         size="small"
-        headerTitle={<span className="text-[14px]">设备状态</span>}
+        headerTitle={<span className="text-[14px]">活跃设备</span>}
         dataSource={data?.records}
         expandable={{ expandedRowKeys, onExpandedRowsChange: setExpandedRowKeys }}
         metas={{
