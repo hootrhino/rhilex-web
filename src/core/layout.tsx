@@ -6,6 +6,8 @@ import { modal } from '@/components/PopupHack';
 import RightContent from '@/components/RightContent';
 import { COPYRIGHT, LOGIN_PATH } from '@/utils/constant';
 import { DefaultFooter } from '@ant-design/pro-components';
+import { MacScrollbar } from 'mac-scrollbar';
+import 'mac-scrollbar/dist/mac-scrollbar.css';
 
 const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
@@ -51,7 +53,7 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
       }
     },
     childrenRender: (children) => {
-      return <>{children}</>;
+      return <MacScrollbar>{children}</MacScrollbar>;
     },
     className: 'h-[100vh]',
     ...initialState?.settings,
