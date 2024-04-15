@@ -16,7 +16,7 @@ const Settings: ProLayoutProps & {
   splitMenus: false,
   title: '',
   pwa: false,
-  logo: '/logo.png',
+  logo: '/logo.svg',
   iconfontUrl: '',
   menu: { locale: false },
   token: {
