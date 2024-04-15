@@ -7,21 +7,23 @@ import { ModalForm, ProForm } from '@ant-design/pro-components';
 import { useModel, useParams } from '@umijs/max';
 import { Button } from 'antd';
 import { useEffect, useRef, useState } from 'react';
+import type { RuleType } from '.';
 
 type DebugProps = ModalFormProps & {
   uuid: string;
+  type: RuleType;
 };
 
-const Debug = ({ uuid, ...props }: DebugProps) => {
+const Debug = ({ uuid, type, ...props }: DebugProps) => {
   const { latestMessage } = useModel('useWebsocket');
   const { deviceId } = useParams();
   const formRef = useRef<ProFormInstance>();
   const [debugLog, setDebugLog] = useState<string[]>([]);
 
   useEffect(() => {
-    const newData = handleNewMessage(debugLog, latestMessage?.data, `rule/log/${uuid}`);
+    const newData = handleNewMessage(debugLog, latestMessage?.data, `${type}/rule/log/${uuid}`);
     setDebugLog(newData);
-  }, [latestMessage]);
+  }, [latestMessage, type]);
 
   return (
     <ModalForm
@@ -74,7 +76,12 @@ const Debug = ({ uuid, ...props }: DebugProps) => {
         <CodeEditor autoFocus lang={Lang.Shell} />
       </ProForm.Item>
       <ProForm.Item name="output" label="输出结果" className="h-[300px]">
-        <ProLog hidePadding topic={`rule/log/${uuid}`} dataSource={debugLog} />
+        <ProLog
+          hidePadding
+          topic={`${type}/rule/test/${uuid}`}
+          dataSource={debugLog}
+          headStyle={{ paddingBlock: 0 }}
+        />
       </ProForm.Item>
     </ModalForm>
   );

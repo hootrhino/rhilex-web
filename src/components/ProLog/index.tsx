@@ -23,6 +23,7 @@ type ProLogProps = Omit<cardProps, 'extra'> &
     topic?: string;
     extra?: boolean;
     hidePadding?: boolean;
+    headStyle?: React.CSSProperties;
     handleOnReset?: () => void;
   };
 

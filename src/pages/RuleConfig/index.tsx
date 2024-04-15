@@ -173,6 +173,7 @@ const RuleConfig = ({ dataSource, pageTitle, type, typeId, refresh }: RuleConfig
       <Detail onClose={() => setDetailConfig({ ...detailConfig, open: false })} {...detailConfig} />
       <Debug
         onOpenChange={(visible: boolean) => setDebugConfig({ ...debugConfig, open: visible })}
+        type={type}
         {...debugConfig}
       />
     </>
