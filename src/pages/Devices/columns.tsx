@@ -13,6 +13,7 @@ import type { Rule } from 'antd/es/form';
 import type { DeviceItem } from '.';
 import {
   DeviceMode,
+  DeviceType,
   deviceTypeOptions,
   InputMode,
   OutputEncode,
@@ -79,7 +80,13 @@ export const baseColumns = [
     name: ['type'],
     hideInTable: true,
     columns: ({ type }: DeviceItem) => {
-      if (type === 'GENERIC_CAMERA') return [];
+      if (
+        type &&
+        [DeviceType.GENERIC_CAMERA, DeviceType.SHELLY_GEN1_PROXY_SERVER].includes(
+          type as DeviceType,
+        )
+      )
+        return [];
 
       return [
         {
@@ -244,7 +251,7 @@ export const modeColumns = {
 };
 
 export const typeConfigColumns = {
-  GENERIC_PROTOCOL: [
+  [DeviceType.GENERIC_PROTOCOL]: [
     {
       title: '通用配置',
       valueType: 'group',
@@ -265,7 +272,7 @@ export const typeConfigColumns = {
       columns: ({ config }: DeviceItem) => modeColumns[config?.commonConfig?.mode] || [],
     },
   ],
-  GENERIC_MODBUS: [
+  [DeviceType.GENERIC_MODBUS]: [
     {
       title: '通用配置',
       valueType: 'group',
@@ -316,7 +323,7 @@ export const typeConfigColumns = {
       columns: ({ config }: DeviceItem) => modeColumns[config?.commonConfig?.mode] || [],
     },
   ],
-  GENERIC_AIS_RECEIVER: [
+  [DeviceType.GENERIC_AIS_RECEIVER]: [
     {
       title: '通用配置',
       valueType: 'group',
@@ -351,7 +358,7 @@ export const typeConfigColumns = {
       columns: ({ config }: DeviceItem) => modeColumns[config?.commonConfig?.mode] || [],
     },
   ],
-  SIEMENS_PLC: [
+  [DeviceType.SIEMENS_PLC]: [
     {
       title: '通用配置',
       valueType: 'group',
@@ -408,7 +415,7 @@ export const typeConfigColumns = {
       ],
     },
   ],
-  GENERIC_HTTP_DEVICE: [
+  [DeviceType.GENERIC_HTTP_DEVICE]: [
     {
       title: '通用配置',
       valueType: 'group',
@@ -496,7 +503,7 @@ export const typeConfigColumns = {
       ],
     },
   ],
-  GENERIC_CAMERA: [
+  [DeviceType.GENERIC_CAMERA]: [
     {
       title: '通用配置',
       valueType: 'group',
@@ -620,6 +627,66 @@ export const typeConfigColumns = {
                 },
               },
             ];
+          },
+        },
+      ],
+    },
+  ],
+  [DeviceType.SHELLY_GEN1_PROXY_SERVER]: [
+    {
+      valueType: 'group',
+      columns: [
+        {
+          title: 'CIDR',
+          required: true,
+          dataIndex: ['config', 'networkCidr'],
+        },
+        {
+          title: '自动扫描',
+          dataIndex: ['config', 'autoScan'],
+          required: true,
+          transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
+            config: {
+              commonConfig: {
+                ...omit(allValue, ['autoScan']),
+                autoScan: stringToBool(value),
+              },
+            },
+          }),
+          convertValue: (value: boolean) => value?.toString(),
+          renderFormItem: () => <ProSegmented width="md" />,
+          render: (_: any, { autoScan }: DeviceItem) => <StateTag state={autoScan} type="bool" />,
+        },
+        {
+          title: <UnitTitle title="扫描超时" />,
+          dataIndex: ['config', 'timeout'],
+          valueType: 'digit',
+          fieldProps: {
+            placeholder: '请输入扫描超时时间（毫秒）',
+          },
+          formItemProps: {
+            rules: [
+              {
+                required: true,
+                message: '请输入扫描超时时间（毫秒）',
+              },
+            ],
+          },
+        },
+        {
+          title: <UnitTitle title="扫描频率" />,
+          dataIndex: ['config', 'frequency'],
+          valueType: 'digit',
+          fieldProps: {
+            placeholder: '请输入扫描频率（毫秒）',
+          },
+          formItemProps: {
+            rules: [
+              {
+                required: true,
+                message: '请输入扫描频率（毫秒）',
+              },
+            ],
           },
         },
       ],

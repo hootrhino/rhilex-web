@@ -8,6 +8,7 @@ export enum DeviceType {
   SIEMENS_PLC = 'SIEMENS_PLC',
   GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
   GENERIC_CAMERA = 'GENERIC_CAMERA',
+  SHELLY_GEN1_PROXY_SERVER = 'SHELLY_GEN1_PROXY_SERVER',
 }
 
 export const deviceTypeOptions = {
@@ -17,6 +18,7 @@ export const deviceTypeOptions = {
   [DeviceType.SIEMENS_PLC]: '通用西门子 S7 系列 PLC 采集网关',
   [DeviceType.GENERIC_HTTP_DEVICE]: '通用 HTTP 协议数据采集网关',
   [DeviceType.GENERIC_CAMERA]: '通用摄像机流处理网关',
+  [DeviceType.SHELLY_GEN1_PROXY_SERVER]: 'Shelly 智能家居管理网关',
 };
 
 /**

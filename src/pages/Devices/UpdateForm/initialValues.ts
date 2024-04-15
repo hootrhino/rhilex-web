@@ -1,4 +1,4 @@
-import { DeviceMode, InputMode, OutputEncode, OutputMode } from '../enum';
+import { DeviceMode, DeviceType, InputMode, OutputEncode, OutputMode } from '../enum';
 
 // TCP 配置
 export const defaultHostConfig = {
@@ -34,14 +34,14 @@ export const defaultInputModeConfig = {
 };
 
 export const defaultConfig = {
-  GENERIC_PROTOCOL: {
+  [DeviceType.GENERIC_PROTOCOL]: {
     commonConfig: {
       retryTime: 5,
       mode: DeviceMode.TCP,
     },
     hostConfig: defaultHostConfig,
   },
-  GENERIC_MODBUS: {
+  [DeviceType.GENERIC_MODBUS]: {
     commonConfig: {
       autoRequest: false,
       enableOptimize: false,
@@ -50,7 +50,7 @@ export const defaultConfig = {
     },
     hostConfig: defaultHostConfig,
   },
-  GENERIC_AIS_RECEIVER: {
+  [DeviceType.GENERIC_AIS_RECEIVER]: {
     commonConfig: {
       parseAis: false,
       gwsn: 'HR0001',
@@ -62,7 +62,7 @@ export const defaultConfig = {
       timeout: 3000,
     },
   },
-  SIEMENS_PLC: {
+  [DeviceType.SIEMENS_PLC]: {
     commonConfig: {
       autoRequest: false,
       host: '127.0.0.1:102',
@@ -73,7 +73,7 @@ export const defaultConfig = {
       idleTimeout: 5000,
     },
   },
-  GENERIC_HTTP_DEVICE: {
+  [DeviceType.GENERIC_HTTP_DEVICE]: {
     commonConfig: {
       autoRequest: false,
       timeout: 3000,
@@ -83,9 +83,15 @@ export const defaultConfig = {
       url: 'http://127.0.0.1:8080',
     },
   },
-  GENERIC_CAMERA: {
+  [DeviceType.GENERIC_CAMERA]: {
     inputMode: InputMode.LOCAL_CAMERA,
     ...defaultOutputConfig['LOCAL_JPEG_STREAM_SERVER'],
+  },
+  [DeviceType.SHELLY_GEN1_PROXY_SERVER]: {
+    networkCidr: '192.168.1.1/24',
+    autoScan: true,
+    timeout: 3000,
+    frequency: 5000,
   },
 };
 

@@ -101,6 +101,9 @@
     },
     {
       "name": "流媒体管理"
+    },
+    {
+      "name": "Shelly设备"
     }
   ],
   "paths": {
@@ -15981,6 +15984,440 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-164362781-run",
+        "security": []
+      }
+    },
+    "/api/v1/shelly_gen1/list": {
+      "get": {
+        "summary": "Shelly设备列表",
+        "x-apifox-folder": "Shelly设备",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Shelly设备"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ip": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "mac": {
+                            "type": "string"
+                          },
+                          "slot": {
+                            "type": "integer"
+                          },
+                          "model": {
+                            "type": "string"
+                          },
+                          "gen": {
+                            "type": "integer"
+                          },
+                          "fw_id": {
+                            "type": "string"
+                          },
+                          "ver": {
+                            "type": "string"
+                          },
+                          "app": {
+                            "type": "string"
+                          },
+                          "auth_en": {
+                            "type": "boolean"
+                          },
+                          "auth_domain": {
+                            "type": "null"
+                          }
+                        },
+                        "x-apifox-ignore-properties": [],
+                        "x-apifox-orders": [
+                          "ip",
+                          "name",
+                          "id",
+                          "mac",
+                          "slot",
+                          "model",
+                          "gen",
+                          "fw_id",
+                          "ver",
+                          "app",
+                          "auth_en",
+                          "auth_domain"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "ip": "192.168.1.106",
+                          "name": "UNKNOWN",
+                          "id": "shellypro1-30c6f78474c0",
+                          "mac": "30C6F78474C0",
+                          "slot": 0,
+                          "model": "SPSW-001XE16EU",
+                          "gen": 2,
+                          "fw_id": "20240223-142004/1.2.2-g7c39781",
+                          "ver": "1.2.2",
+                          "app": "Pro1",
+                          "auth_en": false,
+                          "auth_domain": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-165070242-run",
+        "security": []
+      }
+    },
+    "/api/v1/shelly_gen1/scan": {
+      "post": {
+        "summary": "Shelly设备扫描",
+        "x-apifox-folder": "Shelly设备",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Shelly设备"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-165073175-run",
+        "security": []
+      }
+    },
+    "/api/v1/shelly_gen1/detail": {
+      "get": {
+        "summary": "Shelly设备详情",
+        "x-apifox-folder": "Shelly设备",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Shelly设备"
+        ],
+        "parameters": [
+          {
+            "name": "mac",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "123435656",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "DEVICENNYXUF82",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-165073184-run",
+        "security": []
+      }
+    },
+    "/api/v1/shelly_gen1/status": {
+      "get": {
+        "summary": "Shelly设备状态",
+        "x-apifox-folder": "Shelly设备",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Shelly设备"
+        ],
+        "parameters": [
+          {
+            "name": "ip",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "192.168.1.106",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "mac": {
+                          "type": "string"
+                        },
+                        "restart_required": {
+                          "type": "boolean"
+                        },
+                        "time": {
+                          "type": "string"
+                        },
+                        "unixtime": {
+                          "type": "integer"
+                        },
+                        "uptime": {
+                          "type": "integer"
+                        },
+                        "ram_size": {
+                          "type": "integer"
+                        },
+                        "ram_free": {
+                          "type": "integer"
+                        },
+                        "fs_size": {
+                          "type": "integer"
+                        },
+                        "fs_free": {
+                          "type": "integer"
+                        },
+                        "cfg_rev": {
+                          "type": "integer"
+                        },
+                        "kvs_rev": {
+                          "type": "integer"
+                        },
+                        "schedule_rev": {
+                          "type": "integer"
+                        },
+                        "webhook_rev": {
+                          "type": "integer"
+                        },
+                        "available_updates": {
+                          "type": "object",
+                          "properties": {
+                            "stable": {
+                              "type": "object",
+                              "properties": {
+                                "version": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "version"
+                              ],
+                              "x-apifox-ignore-properties": [],
+                              "x-apifox-orders": [
+                                "version"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "stable"
+                          ],
+                          "x-apifox-ignore-properties": [],
+                          "x-apifox-orders": [
+                            "stable"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "mac",
+                        "restart_required",
+                        "time",
+                        "unixtime",
+                        "uptime",
+                        "ram_size",
+                        "ram_free",
+                        "fs_size",
+                        "fs_free",
+                        "cfg_rev",
+                        "kvs_rev",
+                        "schedule_rev",
+                        "webhook_rev",
+                        "available_updates"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "mac",
+                        "restart_required",
+                        "time",
+                        "unixtime",
+                        "uptime",
+                        "ram_size",
+                        "ram_free",
+                        "fs_size",
+                        "fs_free",
+                        "cfg_rev",
+                        "kvs_rev",
+                        "schedule_rev",
+                        "webhook_rev",
+                        "available_updates"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "mac": "30C6F78474C0",
+                        "restart_required": false,
+                        "time": "22:21",
+                        "unixtime": 1713187285,
+                        "uptime": 78006,
+                        "ram_size": 258932,
+                        "ram_free": 113212,
+                        "fs_size": 524288,
+                        "fs_free": 217088,
+                        "cfg_rev": 3,
+                        "kvs_rev": 0,
+                        "schedule_rev": 0,
+                        "webhook_rev": 0,
+                        "available_updates": {
+                          "stable": {
+                            "version": ""
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-165138168-run",
         "security": []
       }
     }

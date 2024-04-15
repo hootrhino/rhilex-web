@@ -18,6 +18,7 @@ import * as qingliangyingyong from './qingliangyingyong';
 import * as qudongguanli from './qudongguanli';
 import * as rizhiguanli from './rizhiguanli';
 import * as shebeiguanli from './shebeiguanli';
+import * as shellyshebei from './shellyshebei';
 import * as shijianpeizhi from './shijianpeizhi';
 import * as shuchuziyuanguanli from './shuchuziyuanguanli';
 import * as shujubeifen from './shujubeifen';
@@ -65,4 +66,5 @@ export default {
   shujumoxing,
   huazhongshukongdianweiguanli,
   liumeitiguanli,
+  shellyshebei,
 };

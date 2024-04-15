@@ -233,6 +233,19 @@ declare namespace API {
     iface: string;
   };
 
+  type getShellyGen1DetailParams = {
+    mac: string;
+    deviceId: string;
+  };
+
+  type getShellyGen1ListParams = {
+    uuid: string;
+  };
+
+  type getShellyGen1StatusParams = {
+    ip: string;
+  };
+
   type getUserluaDetailParams = {
     uuid: string;
   };

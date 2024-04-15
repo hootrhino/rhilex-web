@@ -120,7 +120,7 @@ const Devices = () => {
     },
   );
 
-  const getMenuItems = ({ type = '', schemaId = '', state }) => {
+  const getMenuItems = ({ type = '', schemaId = '', state = 0 }) => {
     const showSheet = ['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type);
 
     let baseItems = [

@@ -7,7 +7,6 @@ import {
 } from '@/services/rulex/shebeiguanli';
 import { formatHeaders2Arr, formatHeaders2Obj, getPlayAddress } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
-import { ProFormProps } from '@ant-design/pro-components';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { columns } from '../columns';
@@ -24,7 +23,7 @@ import { DeviceMode, DeviceType, OutputMode } from '../enum';
 
 const DefaultListUrl = '/device/list';
 
-const UpdateForm = ({}: ProFormProps) => {
+const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { deviceId, groupId } = useParams();
   const { setActiveGroupKey } = useModel('useDevice');
