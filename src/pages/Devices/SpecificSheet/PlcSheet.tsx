@@ -57,13 +57,21 @@ type removeParams = {
   uuids: string[];
 };
 
-type Point = Omit<PlcSheetItem, 'status' | 'lastFetchTime' | 'value'> & {
+type Point = {
+  uuid?: string;
   device_uuid?: string;
+  siemensAddress?: string;
+  tag?: string;
+  alias?: string;
+  dataOrder?: string;
+  dataType?: string;
+  weight: number;
+  frequency?: number;
 };
 
 type UpdateParams = {
   device_uuid: string;
-  siemens_data_points: Partial<Point>[];
+  siemens_data_points: Point[];
 };
 
 type PlcSheetProps = {
@@ -189,7 +197,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       dataIndex: 'siemensAddress',
       width: 150,
       ellipsis: true,
-      formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
+      formItemProps: { rules: [{ required: true, message: '请输入地址' }] },
       fieldProps: {
         placeholder: '请输入地址',
       },
@@ -199,14 +207,14 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       dataIndex: 'tag',
       width: 120,
       fixed: readOnly ? 'left' : false,
-      formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
+      formItemProps: { rules: [{ required: true, message: '请输入数据标签' }] },
       fieldProps: { placeholder: '请输入数据标签' },
     },
     {
       title: '数据别名',
       dataIndex: 'alias',
       ellipsis: true,
-      formItemProps: { rules: [{ required: true, message: '此项为必填项' }] },
+      formItemProps: { rules: [{ required: true, message: '请输入数据别名' }] },
       fieldProps: { placeholder: '请输入数据别名' },
     },
     {
@@ -221,7 +229,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
             placeholder: '请选择数据类型和字节序',
             options: plcDataTypeOptions,
           }}
-          rules={[{ required: true, message: '此项为必填项' }]}
+          rules={[{ required: true, message: '请选择数据类型和字节序' }]}
         />
       ),
       render: (_, { dataType, dataOrder }) => {
@@ -250,7 +258,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       valueType: 'digit',
       formItemProps: {
         rules: [
-          { required: true, message: '此项为必填项' },
+          { required: true, message: '请输入权重系数' },
           {
             validator: (_, value) => {
               if (inRange(value, -0.0001, 100000)) {
@@ -283,7 +291,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
         placeholder: '请输入采集频率',
       },
       formItemProps: {
-        rules: [{ required: true, message: '此项为必填项' }],
+        rules: [{ required: true, message: '请输入采集频率' }],
       },
     },
     {

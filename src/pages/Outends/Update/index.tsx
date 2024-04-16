@@ -97,8 +97,8 @@ const UpdateForm = () => {
     if (changedValue?.type === OutendsType.MQTT) {
       config = {
         ...defaultConfig[OutendsType.MQTT],
-        clientId: `eekit${randomNumber}`,
-        pubTopic: `eekit${randomNumber}`,
+        clientId: `rhilex${randomNumber}`,
+        pubTopic: `rhilex${randomNumber}`,
       };
     } else {
       config = defaultConfig[changedValue?.type];

@@ -43,7 +43,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
             dataSource={data}
             loading={loading}
           />
-          {data?.type === 'HTTP' && <HeadersDetail data={data?.config?.headers} />}
+          {data?.type === OutendsType.HTTP && <HeadersDetail data={data?.config?.headers} />}
         </>
       )}
     </Drawer>

@@ -1,5 +1,4 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
-import ProSegmented from '@/components/ProSegmented';
 import StateTag from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
@@ -8,115 +7,33 @@ import { getSchemaList } from '@/services/rulex/shujumoxing';
 import { omit, pick } from '@/utils/redash';
 import { FormItemType, getPlayAddress, stringToBool, validateFormItem } from '@/utils/utils';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { Space, Typography } from 'antd';
-import type { Rule } from 'antd/es/form';
+import { AutoComplete, Space, Typography } from 'antd';
+import { Rule } from 'antd/es/form';
 import type { DeviceItem } from '.';
 import {
   DeviceMode,
   DeviceType,
   deviceTypeOptions,
   InputMode,
+  InputModeOption,
   OutputEncode,
+  OutputEncodeOption,
   OutputMode,
+  OutputModeOption,
   plcModelOptions,
   rackEnum,
   slotEnum,
 } from './enum';
 
-export const baseColumns = [
-  {
-    title: 'UUID',
-    dataIndex: 'uuid',
-    ellipsis: true,
-    copyable: true,
-    hideInForm: true,
-    hideInDescriptions: true,
-  },
-  {
-    title: '设备名称',
-    dataIndex: 'name',
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '名称不能为空',
-        },
-        {
-          validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.NAME),
-        },
-      ],
-    },
-  },
-  {
-    title: '设备类型',
-    dataIndex: 'type',
-    valueType: 'select',
-    required: true,
-    valueEnum: deviceTypeOptions,
-  },
-  {
-    title: '设备分组',
-    dataIndex: 'gid',
-    valueType: 'select',
-    required: true,
-    hideInTable: true,
-    request: async () => {
-      const { data } = await getDevicesGroup();
-
-      return data?.map((item) => ({
-        label: item?.name,
-        value: item.uuid,
-      }));
-    },
-  },
-  {
-    title: '设备状态',
-    dataIndex: 'state',
-    hideInForm: true,
-    renderText: (state: number) => <StateTag state={state} />,
-  },
-  {
-    valueType: 'dependency',
-    name: ['type'],
-    hideInTable: true,
-    columns: ({ type }: DeviceItem) => {
-      if (
-        type &&
-        [DeviceType.GENERIC_CAMERA, DeviceType.SHELLY_GEN1_PROXY_SERVER].includes(
-          type as DeviceType,
-        )
-      )
-        return [];
-
-      return [
-        {
-          title: '数据模型',
-          dataIndex: 'schemaId',
-          valueType: 'select',
-          request: async () => {
-            const { data } = await getSchemaList();
-
-            return data?.map((item) => ({
-              label: item?.name,
-              value: item.uuid,
-            }));
-          },
-        },
-      ];
-    },
-  },
-  {
-    title: '备注',
-    dataIndex: 'description',
-  },
-];
-
-// autoRequest 是否启动轮询
+/**
+ * autoRequest 是否启动轮询配置
+ */
 export const autoRequestConfig = [
   {
     title: '是否启动轮询',
     dataIndex: ['config', 'commonConfig', 'autoRequest'],
     required: true,
+    valueType: 'state',
     transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
       config: {
         commonConfig: {
@@ -127,14 +44,15 @@ export const autoRequestConfig = [
       },
     }),
     convertValue: (value: boolean) => value?.toString(),
-    renderFormItem: () => <ProSegmented width="md" />,
     render: (_: any, { commonConfig }: DeviceItem) => (
       <StateTag state={commonConfig?.autoRequest} type="bool" />
     ),
   },
 ];
 
-// mode 工作模式
+/**
+ * mode 工作模式配置
+ */
 export const modeConfig = [
   {
     title: '工作模式',
@@ -146,28 +64,22 @@ export const modeConfig = [
   },
 ];
 
-// timeout 超时时间
+/**
+ * timeout 超时时间配置
+ */
 export const timeoutConfig = [
   {
     title: <UnitTitle title="连接超时" />,
     dataIndex: ['config', 'commonConfig', 'timeout'],
     valueType: 'digit',
-    fieldProps: {
-      placeholder: '请输入连接超时时间（毫秒）',
-    },
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '请输入连接超时时间（毫秒）',
-        },
-      ],
-    },
+    required: true,
     render: (_: any, { commonConfig }: DeviceItem) => commonConfig.timeout,
   },
 ];
 
-// TCP & UART Config
+/**
+ * TCP & UART 配置
+ */
 export const modeColumns = {
   UART: [
     {
@@ -207,17 +119,7 @@ export const modeColumns = {
           title: <UnitTitle title="请求超时" />,
           dataIndex: ['config', 'hostConfig', 'timeout'],
           valueType: 'digit',
-          fieldProps: {
-            placeholder: '请输入请求超时时间（毫秒）',
-          },
-          formItemProps: {
-            rules: [
-              {
-                required: true,
-                message: '请输入请求超时时间（毫秒）',
-              },
-            ],
-          },
+          required: true,
           render: (_: any, { hostConfig }: DeviceItem) => hostConfig?.timeout,
         },
         {
@@ -230,18 +132,7 @@ export const modeColumns = {
           title: '端口',
           dataIndex: ['config', 'hostConfig', 'port'],
           valueType: 'digit',
-          formItemProps: {
-            rules: [
-              {
-                required: true,
-                message: '端口不能为空',
-              },
-              {
-                validator: (_rule: Rule, value: string) =>
-                  validateFormItem(value, FormItemType.PORT),
-              },
-            ],
-          },
+          required: true,
           render: (_: any, { hostConfig }: DeviceItem) => hostConfig?.port,
         },
       ],
@@ -250,6 +141,89 @@ export const modeColumns = {
   '': [],
 };
 
+/**
+ * 基本配置
+ */
+export const baseColumns = [
+  {
+    title: 'UUID',
+    dataIndex: 'uuid',
+    ellipsis: true,
+    copyable: true,
+    hideInForm: true,
+    hideInDescriptions: true,
+  },
+  {
+    title: '设备名称',
+    dataIndex: 'name',
+    required: true,
+  },
+  {
+    title: '设备类型',
+    dataIndex: 'type',
+    valueType: 'select',
+    required: true,
+    valueEnum: deviceTypeOptions,
+  },
+  {
+    title: '设备分组',
+    dataIndex: 'gid',
+    valueType: 'select',
+    required: true,
+    hideInTable: true,
+    request: async () => {
+      const { data } = await getDevicesGroup();
+
+      return data?.map((item) => ({
+        label: item?.name,
+        value: item.uuid,
+      }));
+    },
+  },
+  {
+    title: '设备状态',
+    dataIndex: 'state',
+    hideInForm: true,
+    renderText: (state: number) => <StateTag state={state} />,
+  },
+  {
+    valueType: 'dependency',
+    name: ['type'],
+    hideInTable: true,
+    columns: ({ type }: DeviceItem) => {
+      if (
+        [DeviceType.GENERIC_CAMERA, DeviceType.SHELLY_GEN1_PROXY_SERVER].includes(
+          type as DeviceType,
+        )
+      )
+        return [];
+
+      return [
+        {
+          title: '数据模型',
+          dataIndex: 'schemaId',
+          valueType: 'select',
+          request: async () => {
+            const { data } = await getSchemaList();
+
+            return data?.map((item) => ({
+              label: item?.name,
+              value: item.uuid,
+            }));
+          },
+        },
+      ];
+    },
+  },
+  {
+    title: '备注',
+    dataIndex: 'description',
+  },
+];
+
+/**
+ * 类型配置
+ */
 export const typeConfigColumns = {
   [DeviceType.GENERIC_PROTOCOL]: [
     {
@@ -282,6 +256,7 @@ export const typeConfigColumns = {
           title: '批量采集',
           dataIndex: ['config', 'commonConfig', 'enableOptimize'],
           required: true,
+          valueType: 'state',
           transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
             config: {
               commonConfig: {
@@ -292,7 +267,6 @@ export const typeConfigColumns = {
             },
           }),
           convertValue: (value: boolean) => value?.toString(),
-          renderFormItem: () => <ProSegmented width="md" />,
           render: (_: any, { commonConfig }: DeviceItem) => (
             <StateTag state={commonConfig?.enableOptimize} type="bool" />
           ),
@@ -301,17 +275,7 @@ export const typeConfigColumns = {
           title: '最大点位数',
           dataIndex: ['config', 'commonConfig', 'maxRegNum'],
           valueType: 'digit',
-          fieldProps: {
-            placeholder: '请输入最大点位数',
-          },
-          formItemProps: {
-            rules: [
-              {
-                required: true,
-                message: '请输入最大点位数',
-              },
-            ],
-          },
+          required: true,
           render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.maxRegNum,
         },
         ...modeConfig,
@@ -332,13 +296,13 @@ export const typeConfigColumns = {
           title: '是否解析 AIS 报文',
           dataIndex: ['config', 'commonConfig', 'parseAis'],
           required: true,
+          valueType: 'state',
           transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
             config: {
               commonConfig: { ...allValue, parseAis: stringToBool(value) },
             },
           }),
           convertValue: (value: boolean) => value?.toString(),
-          renderFormItem: () => <ProSegmented width="md" />,
           render: (_: any, { commonConfig }: DeviceItem) => (
             <StateTag state={commonConfig?.parseAis} type="parse" />
           ),
@@ -369,17 +333,7 @@ export const typeConfigColumns = {
           title: <UnitTitle title="心跳超时时间" />,
           dataIndex: ['config', 'commonConfig', 'idleTimeout'],
           valueType: 'digit',
-          fieldProps: {
-            placeholder: '请输入心跳超时时间（毫秒）',
-          },
-          formItemProps: {
-            rules: [
-              {
-                required: true,
-                message: '请输入心跳超时时间（毫秒）',
-              },
-            ],
-          },
+          required: true,
           render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.idleTimeout,
         },
         {
@@ -426,17 +380,7 @@ export const typeConfigColumns = {
           title: <UnitTitle title="采集频率" />,
           dataIndex: ['config', 'commonConfig', 'frequency'],
           valueType: 'digit',
-          fieldProps: {
-            placeholder: '请输入采集频率（毫秒）',
-          },
-          formItemProps: {
-            rules: [
-              {
-                required: true,
-                message: '请输入采集频率（毫秒）',
-              },
-            ],
-          },
+          required: true,
           render: (_: any, { commonConfig }: DeviceItem) => commonConfig.frequency,
         },
       ],
@@ -513,12 +457,9 @@ export const typeConfigColumns = {
           title: '输入模式',
           dataIndex: ['config', 'inputMode'],
           valueType: 'select',
-          valueEnum: InputMode,
+          valueEnum: InputModeOption,
           required: true,
-          fieldProps: {
-            allowClear: false,
-          },
-          render: (_: any, { inputMode }: DeviceItem) => InputMode[inputMode],
+          render: (_: any, { inputMode }: DeviceItem) => InputModeOption[inputMode],
         },
         {
           valueType: 'dependency',
@@ -557,13 +498,10 @@ export const typeConfigColumns = {
           title: '输出模式',
           dataIndex: ['config', 'outputMode'],
           valueType: 'select',
-          valueEnum: OutputMode,
+          valueEnum: OutputModeOption,
           required: true,
-          fieldProps: {
-            allowClear: false,
-          },
           tooltip: '注意：因为传输格式原因，Jpeg Stream 模式下仅保存了图像信息，没有原始声音。',
-          render: (_: any, { outputMode }: DeviceItem) => OutputMode[outputMode],
+          render: (_: any, { outputMode }: DeviceItem) => OutputModeOption[outputMode],
         },
         {
           valueType: 'dependency',
@@ -577,14 +515,11 @@ export const typeConfigColumns = {
                 dataIndex: ['config', 'outputEncode'],
                 valueType: 'select',
                 valueEnum:
-                  mode === 'REMOTE_STREAM_SERVER'
-                    ? pick(OutputEncode, ['H264_STREAM'])
-                    : pick(OutputEncode, ['JPEG_STREAM']),
+                  mode === OutputMode.REMOTE_STREAM_SERVER
+                    ? pick(OutputEncodeOption, [OutputEncode.H264_STREAM])
+                    : pick(OutputEncodeOption, [OutputEncode.JPEG_STREAM]),
                 required: true,
-                fieldProps: {
-                  allowClear: false,
-                },
-                render: (_: any, { outputEncode }: DeviceItem) => OutputEncode[outputEncode],
+                render: (_: any, { outputEncode }: DeviceItem) => OutputEncodeOption[outputEncode],
               },
             ];
           },
@@ -600,7 +535,7 @@ export const typeConfigColumns = {
               {
                 title: '输出地址',
                 dataIndex: ['config', 'outputAddr'],
-                hideInForm: mode !== 'REMOTE_STREAM_SERVER',
+                hideInForm: mode !== OutputMode.REMOTE_STREAM_SERVER,
                 render: (_: any, { outputAddr }: DeviceItem) => outputAddr,
               },
               {
@@ -616,7 +551,7 @@ export const typeConfigColumns = {
                 ),
                 dataIndex: ['config', 'playAddr'],
                 hideInForm: true,
-                hideInDescriptions: mode === 'REMOTE_STREAM_SERVER',
+                hideInDescriptions: mode === OutputMode.REMOTE_STREAM_SERVER,
                 render: () => {
                   const htmlCode = `<img src="${playUrl}" width="640" height="480" alt="视频监控" />`;
                   return (
@@ -640,60 +575,65 @@ export const typeConfigColumns = {
           title: 'CIDR',
           required: true,
           dataIndex: ['config', 'networkCidr'],
+          renderFormItem: () => (
+            <AutoComplete
+              options={[
+                { value: '10.0.0.0/16', label: '10.0.0.0/16' },
+                { value: '172.168.1.0/24', label: '172.168.1.0/24' },
+                { value: '172.168.0.0/16', label: '172.168.0.0/16' },
+                { value: '192.168.1.0/24', label: '192.168.1.0/24' },
+                { value: '192.168.0.0/16', label: '192.168.0.0/16' },
+              ]}
+              style={{ width: 328 }}
+            />
+          ),
+          formItemProps: {
+            rules: [
+              {
+                required: true,
+                message: '请输入 CIDR',
+              },
+              {
+                validator: (_rule: Rule, value: string) =>
+                  validateFormItem(value, FormItemType.CIDR),
+              },
+            ],
+          },
         },
         {
           title: '自动扫描',
           dataIndex: ['config', 'autoScan'],
           required: true,
+          valueType: 'state',
           transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
             config: {
-              commonConfig: {
-                ...omit(allValue, ['autoScan']),
-                autoScan: stringToBool(value),
-              },
+              ...omit(allValue, [namePath]),
+              autoScan: stringToBool(value),
             },
           }),
           convertValue: (value: boolean) => value?.toString(),
-          renderFormItem: () => <ProSegmented width="md" />,
-          render: (_: any, { autoScan }: DeviceItem) => <StateTag state={autoScan} type="bool" />,
+          renderText: (autoScan: boolean) => <StateTag state={autoScan} type="bool" />,
         },
         {
           title: <UnitTitle title="扫描超时" />,
           dataIndex: ['config', 'timeout'],
           valueType: 'digit',
-          fieldProps: {
-            placeholder: '请输入扫描超时时间（毫秒）',
-          },
-          formItemProps: {
-            rules: [
-              {
-                required: true,
-                message: '请输入扫描超时时间（毫秒）',
-              },
-            ],
-          },
+          required: true,
         },
         {
           title: <UnitTitle title="扫描频率" />,
           dataIndex: ['config', 'frequency'],
           valueType: 'digit',
-          fieldProps: {
-            placeholder: '请输入扫描频率（毫秒）',
-          },
-          formItemProps: {
-            rules: [
-              {
-                required: true,
-                message: '请输入扫描频率（毫秒）',
-              },
-            ],
-          },
+          required: true,
         },
       ],
     },
   ],
 };
 
+/**
+ * 设备配置
+ */
 export const columns = [
   {
     valueType: 'group',

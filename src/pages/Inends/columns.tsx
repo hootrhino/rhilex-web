@@ -1,44 +1,52 @@
 import StateTag from '@/components/StateTag';
-import { FormItemType, validateFormItem } from '@/utils/utils';
-import type { Rule } from 'antd/es/form';
-import { EventType, eventTypeOption, inendsTypeOption, Mode, modeOption, qosEnum } from './enum';
+import {
+  EventType,
+  eventTypeOption,
+  InendsType,
+  inendsTypeOption,
+  Mode,
+  modeOption,
+  qosEnum,
+} from './enum';
+
+const DEFAULT_HOST = '127.0.0.1';
 
 export const defaultConfig = {
-  COAP: {
+  [InendsType.COAP]: {
     port: 2582,
-    host: '127.0.0.1',
+    host: DEFAULT_HOST,
   },
-  RULEX_UDP: {
+  [InendsType.RULEX_UDP]: {
     port: 2583,
-    host: '127.0.0.1',
+    host: DEFAULT_HOST,
   },
-  HTTP: {
+  [InendsType.HTTP]: {
     port: 2584,
-    host: '127.0.0.1',
+    host: DEFAULT_HOST,
   },
-  NATS_SERVER: {
+  [InendsType.NATS_SERVER]: {
     port: 4222,
-    host: '127.0.0.1',
+    host: DEFAULT_HOST,
   },
-  GRPC: {
+  [InendsType.GRPC]: {
     port: 2585,
-    host: '127.0.0.1',
+    host: DEFAULT_HOST,
   },
-  INTERNAL_EVENT: {
+  [InendsType.INTERNAL_EVENT]: {
     type: EventType.ALL,
   },
-  GENERIC_IOT_HUB: {
-    host: '127.0.0.1',
+  [InendsType.GENERIC_IOT_HUB]: {
+    host: DEFAULT_HOST,
     port: 1883,
     mode: Mode.DC,
   },
-  GENERIC_MQTT: {
-    host: '127.0.0.1',
+  [InendsType.GENERIC_MQTT]: {
+    host: DEFAULT_HOST,
     port: 1883,
-    username: 'rhino',
-    password: 'rhino',
+    username: 'rhilex',
+    password: 'rhilex',
     qos: 1,
-    subTopics: [{ k: '/device/rulex-eekit1' }],
+    subTopics: [{ k: '/device/rulex-rhilex1' }],
   },
 };
 
@@ -55,17 +63,7 @@ export const baseColumns = [
     title: '资源名称',
     dataIndex: 'name',
     ellipsis: true,
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '名称不能为空',
-        },
-        {
-          validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.NAME),
-        },
-      ],
-    },
+    required: true,
   },
   {
     title: '资源类型',
@@ -98,17 +96,7 @@ const defaultConfigColumns = [
     title: '端口',
     dataIndex: ['config', 'port'],
     valueType: 'digit',
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '端口不能为空',
-        },
-        {
-          validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.PORT),
-        },
-      ],
-    },
+    required: true,
   },
 ];
 
@@ -133,8 +121,8 @@ const defaultGenericColumns = [
 ];
 
 export const configColumns = {
-  COAP: defaultConfigColumns,
-  GENERIC_IOT_HUB: [
+  [InendsType.COAP]: defaultConfigColumns,
+  [InendsType.GENERIC_IOT_HUB]: [
     ...defaultGenericColumns,
     {
       title: '模式',
@@ -155,9 +143,9 @@ export const configColumns = {
       required: true,
     },
   ],
-  RULEX_UDP: defaultConfigColumns,
-  HTTP: defaultConfigColumns,
-  NATS_SERVER: [
+  [InendsType.RULEX_UDP]: defaultConfigColumns,
+  [InendsType.HTTP]: defaultConfigColumns,
+  [InendsType.NATS_SERVER]: [
     ...defaultConfigColumns,
     {
       title: '主题',
@@ -165,8 +153,8 @@ export const configColumns = {
       required: true,
     },
   ],
-  GRPC: defaultConfigColumns,
-  INTERNAL_EVENT: [
+  [InendsType.GRPC]: defaultConfigColumns,
+  [InendsType.INTERNAL_EVENT]: [
     {
       title: '事件类型',
       dataIndex: ['config', 'type'],
@@ -175,7 +163,7 @@ export const configColumns = {
       valueEnum: eventTypeOption,
     },
   ],
-  GENERIC_MQTT: [
+  [InendsType.GENERIC_MQTT]: [
     ...defaultGenericColumns,
     {
       title: '数据质量',

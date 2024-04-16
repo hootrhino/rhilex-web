@@ -1,15 +1,16 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
-import ProSegmented from '@/components/ProSegmented';
 import StateTag from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
-import { FormItemType, stringToBool, validateFormItem } from '@/utils/utils';
-import type { Rule } from 'antd/es/form';
+import { stringToBool } from '@/utils/utils';
 import { DataMode, dataModeOption, outendsTypeOption } from './enum';
+
+const DEFAULT_TIMEOUT = 3000;
+const DEFAULT_HOST = '127.0.0.1';
 
 export const defaultConfig = {
   MQTT: {
     port: 1883,
-    host: '127.0.0.1',
+    host: DEFAULT_HOST,
   },
   MONGO_SINGLE: {
     mongoUrl: 'mongodb://root:root@127.0.0.1:27017/?connect=direct',
@@ -18,22 +19,22 @@ export const defaultConfig = {
   },
   UDP_TARGET: {
     port: 2599,
-    host: '127.0.0.1',
-    timeout: 3000,
-    allowPing: 'false',
+    host: DEFAULT_HOST,
+    timeout: DEFAULT_TIMEOUT,
+    allowPing: false,
     pingPacket: 'rhilex',
   },
   TCP_TRANSPORT: {
     dataMode: DataMode.RAW_STRING,
-    allowPing: 'false',
+    allowPing: false,
     pingPacket: 'rhilex',
     port: 6005,
-    host: '127.0.0.1',
-    timeout: 3000,
+    host: DEFAULT_HOST,
+    timeout: DEFAULT_TIMEOUT,
   },
   TDENGINE: {
     port: 6041,
-    fqdn: '127.0.0.1',
+    fqdn: DEFAULT_HOST,
     username: 'root',
     password: 'taosdata',
     dbName: 'RULEX',
@@ -41,9 +42,9 @@ export const defaultConfig = {
   HTTP: {
     url: 'http://127.0.0.1:8080',
     headers: [{ k: '', v: '' }],
-    allowPing: 'false',
+    allowPing: false,
     pingPacket: 'rhilex',
-    timeout: 3000,
+    timeout: DEFAULT_TIMEOUT,
   },
 };
 
@@ -60,17 +61,7 @@ export const baseColumns = [
     title: '资源名称',
     dataIndex: 'name',
     ellipsis: true,
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '名称不能为空',
-        },
-        {
-          validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.NAME),
-        },
-      ],
-    },
+    required: true,
   },
   {
     title: '资源类型',
@@ -78,9 +69,6 @@ export const baseColumns = [
     valueType: 'select',
     valueEnum: outendsTypeOption,
     required: true,
-    fieldProps: {
-      allowClear: false,
-    },
   },
   {
     title: '资源状态',
@@ -96,21 +84,43 @@ export const baseColumns = [
   },
 ];
 
+const pingConfig = [
+  {
+    title: '开启心跳',
+    dataIndex: ['config', 'allowPing'],
+    required: true,
+    valueType: 'state',
+    transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
+      config: {
+        ...allValue,
+        allowPing: stringToBool(value),
+      },
+    }),
+    convertValue: (value: boolean) => value?.toString(),
+    renderText: (allowPing: boolean) => <StateTag state={allowPing} type="bool" />,
+  },
+  {
+    title: '心跳包内容',
+    dataIndex: ['config', 'pingPacket'],
+    required: true,
+  },
+];
+
 const timeoutConfig = [
   {
     title: <UnitTitle title="超时时间" />,
     dataIndex: ['config', 'timeout'],
-    fieldProps: {
-      placeholder: '请输入超时时间（毫秒）',
-    },
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '请输入超时时间（毫秒）',
-        },
-      ],
-    },
+    required: true,
+    valueType: 'digit',
+  },
+];
+
+const portConfig = [
+  {
+    title: '端口',
+    dataIndex: ['config', 'port'],
+    valueType: 'digit',
+    required: true,
   },
 ];
 
@@ -121,25 +131,8 @@ const hostPortConfig = [
     required: true,
     copyable: true,
   },
-  {
-    title: '端口',
-    dataIndex: ['config', 'port'],
-    valueType: 'digit',
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '端口不能为空',
-        },
-        {
-          validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.PORT),
-        },
-      ],
-    },
-  },
+  ...portConfig,
 ];
-
-const udpConfig = [...timeoutConfig, ...hostPortConfig];
 
 export const configColumns = {
   MONGO_SINGLE: [
@@ -183,28 +176,7 @@ export const configColumns = {
       required: true,
     },
   ],
-  UDP_TARGET: [
-    {
-      title: '开启心跳',
-      dataIndex: ['config', 'allowPing'],
-      required: true,
-      transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
-        config: {
-          ...allValue,
-          allowPing: stringToBool(value),
-        },
-      }),
-      convertValue: (value: boolean) => value?.toString(),
-      renderFormItem: () => <ProSegmented width="md" />,
-      renderText: (allowPing: boolean) => <StateTag state={allowPing} type="bool" />,
-    },
-    {
-      title: '心跳包内容',
-      dataIndex: ['config', 'pingPacket'],
-      required: true,
-    },
-    ...udpConfig,
-  ],
+  UDP_TARGET: [...pingConfig, ...timeoutConfig, ...hostPortConfig],
   TCP_TRANSPORT: [
     {
       title: '传输模式',
@@ -213,26 +185,9 @@ export const configColumns = {
       valueType: 'select',
       required: true,
     },
-    {
-      title: '开启心跳',
-      dataIndex: ['config', 'allowPing'],
-      required: true,
-      transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
-        config: {
-          ...allValue,
-          allowPing: stringToBool(value),
-        },
-      }),
-      convertValue: (value: boolean) => value?.toString(),
-      renderFormItem: () => <ProSegmented width="md" />,
-      renderText: (allowPing: boolean) => <StateTag state={allowPing} type="bool" />,
-    },
-    {
-      title: '心跳包内容',
-      dataIndex: ['config', 'pingPacket'],
-      required: true,
-    },
-    ...udpConfig,
+    ...pingConfig,
+    ...timeoutConfig,
+    ...hostPortConfig,
   ],
   TDENGINE: [
     {
@@ -240,22 +195,7 @@ export const configColumns = {
       dataIndex: ['config', 'fqdn'],
       required: true,
     },
-    {
-      title: '端口',
-      dataIndex: ['config', 'port'],
-      valueType: 'digit',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '端口不能为空',
-          },
-          {
-            validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.PORT),
-          },
-        ],
-      },
-    },
+    ...portConfig,
     {
       title: '用户名',
       dataIndex: ['config', 'username'],
@@ -274,25 +214,7 @@ export const configColumns = {
     },
   ],
   HTTP: [
-    {
-      title: '开启心跳',
-      dataIndex: ['config', 'allowPing'],
-      required: true,
-      transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
-        config: {
-          ...allValue,
-          allowPing: stringToBool(value),
-        },
-      }),
-      convertValue: (value: boolean) => value?.toString(),
-      renderFormItem: () => <ProSegmented width="md" />,
-      renderText: (allowPing: boolean) => <StateTag state={allowPing} type="bool" />,
-    },
-    {
-      title: '心跳包内容',
-      dataIndex: ['config', 'pingPacket'],
-      required: true,
-    },
+    ...pingConfig,
     ...timeoutConfig,
     {
       title: '请求地址',

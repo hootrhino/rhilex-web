@@ -209,7 +209,7 @@ const Devices = () => {
                       setActiveDeviceName(name || '');
                       break;
                     case 'video':
-                      if (config?.outputMode === 'REMOTE_STREAM_SERVER') {
+                      if (config?.outputMode === OutputMode.REMOTE_STREAM_SERVER) {
                         modal.info({
                           title: '查看视频',
                           content: (

@@ -52,6 +52,19 @@ export const validatePort = (port: number): boolean => {
  * @returns 返回一个布尔值，指示名称是否通过校验
  */
 export const validateName = (name: string): boolean => {
-  const pattern = /^[a-zA-Z0-9_\u4e00-\u9fa5]{6,14}$/;
+  const pattern = /^[a-zA-Z0-9_\u4e00-\u9fa5]{4,64}$/;
   return pattern.test(name);
+};
+
+/**
+ * 校验 CIDR
+ * 此函数用于校验输入的字符串是否符合CIDR（无类别域间路由）表示法的IPv4地址。
+ * CIDR表示法包括一个IPv4地址和一个斜杠后面的子网掩码位数，子网掩码的范围限制在0到24之间。
+ * @param {string} value - 需要校验的CIDR表示法的字符串。
+ * @returns {boolean} - 如果字符串是有效的CIDR表示法，则返回true，否则返回false。
+ */
+export const validateCIDR = (value: string) => {
+  const pattern =
+    /^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\/([0-9]|1[0-9]|2[0-4])$/;
+  return pattern.test(value);
 };

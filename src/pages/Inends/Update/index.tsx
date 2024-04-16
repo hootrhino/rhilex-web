@@ -87,14 +87,14 @@ const UpdateForm = () => {
     if (changedValue?.type === InendsType.GENERIC_IOT_HUB) {
       config = {
         ...defaultConfig[InendsType.GENERIC_IOT_HUB],
-        productId: `eekit${randomNumber}`,
-        deviceName: `eekit${randomNumber}`,
-        clientId: `eekit${randomNumber}`,
+        productId: `rhilex${randomNumber}`,
+        deviceName: `rhilex${randomNumber}`,
+        clientId: `rhilex${randomNumber}`,
       };
     } else if (changedValue?.type === InendsType.GENERIC_MQTT) {
       config = {
         ...defaultConfig[InendsType.GENERIC_MQTT],
-        clientId: `eekit${randomNumber}`,
+        clientId: `rhilex${randomNumber}`,
       };
     } else {
       config = defaultConfig[changedValue?.type];

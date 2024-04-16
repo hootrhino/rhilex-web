@@ -83,13 +83,6 @@ export const getBaseColumns = (readOnly?: boolean) => {
       valueEnum: rwOption,
       width: 80,
     },
-    // {
-    //   title: '数据定义',
-    //   dataIndex: 'rule',
-    //   ellipsis: true,
-    //   hideInTable: readOnly,
-    //   renderText: (rule) => rule && JSON.stringify(rule),
-    // },
     {
       title: '当前值',
       dataIndex: 'value',

@@ -1,24 +1,12 @@
-import ProSegmented from '@/components/ProSegmented';
 import StateTag from '@/components/StateTag';
-import { FormItemType, stringToBool, validateFormItem } from '@/utils/utils';
-import type { Rule } from 'antd/es/form';
+import { stringToBool } from '@/utils/utils';
 
 export const baseColumns = [
   {
     title: 'APP 名称',
     dataIndex: 'name',
     ellipsis: true,
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '名称不能为空',
-        },
-        {
-          validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.NAME),
-        },
-      ],
-    },
+    required: true,
   },
   {
     title: 'APP 版本',
@@ -29,9 +17,9 @@ export const baseColumns = [
     title: '是否自启',
     dataIndex: 'autoStart',
     required: true,
+    valueType: 'state',
     convertValue: (value: boolean) => value?.toString(),
     transform: (value: string) => ({ autoStart: stringToBool(value) }),
-    renderFormItem: () => <ProSegmented width="md" />,
     renderText: (autoStart: boolean) => <StateTag state={autoStart} type="bool" />,
   },
   {

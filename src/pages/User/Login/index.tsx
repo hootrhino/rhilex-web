@@ -81,7 +81,6 @@ const Login: React.FC = () => {
                 rules={[
                   {
                     validator: (_rule: Rule, value: string) => {
-                      console.log(_rule, value);
                       if (value) {
                         setValidateStatus({ ...validateStatus, username: '' });
                       } else {
@@ -105,7 +104,6 @@ const Login: React.FC = () => {
                 rules={[
                   {
                     validator: (_rule: Rule, value: string) => {
-                      console.log(_rule, value);
                       if (value) {
                         setValidateStatus({ ...validateStatus, password: '' });
                       } else {

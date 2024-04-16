@@ -6,7 +6,14 @@ import CryptoJS from 'crypto-js';
 import { twMerge } from 'tailwind-merge';
 import { isDev } from './constant';
 import { isEmpty } from './redash';
-import { validateGateway, validateIPv4, validateMask, validateName, validatePort } from './regExp';
+import {
+  validateCIDR,
+  validateGateway,
+  validateIPv4,
+  validateMask,
+  validateName,
+  validatePort,
+} from './regExp';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -125,6 +132,7 @@ export enum FormItemType {
   IP = 'ip', // IPv4
   NETMASK = 'netmask', // 子网掩码
   GATEWAY = 'gateway', // 网关
+  CIDR = 'cidr', // CIDR
 }
 /**
  * 校验表单字段
@@ -140,7 +148,7 @@ export const validateFormItem = (value: string | number, type: FormItemType) => 
     case FormItemType.NAME:
       return typeof value === 'string' && validateName(value)
         ? Promise.resolve()
-        : Promise.reject('名称仅支持中文、字母、数字或下划线，长度在 6-14 个字符之间');
+        : Promise.reject('名称仅支持中文、字母、数字或下划线，长度在 4-64 个字符之间');
     case FormItemType.PORT:
     case FormItemType.ADDRESS:
       return typeof value === 'number' && validatePort(value)
@@ -160,6 +168,10 @@ export const validateFormItem = (value: string | number, type: FormItemType) => 
       return typeof value === 'string' && validateGateway(value)
         ? Promise.resolve()
         : Promise.reject('网关格式不正确');
+    case FormItemType.CIDR:
+      return typeof value === 'string' && validateCIDR(value)
+        ? Promise.resolve()
+        : Promise.reject('CIDR 格式不正确');
     default:
       return Promise.reject('格式不正确');
   }

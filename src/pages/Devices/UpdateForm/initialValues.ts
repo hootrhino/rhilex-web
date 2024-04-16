@@ -1,10 +1,12 @@
-import { DeviceMode, DeviceType, InputMode, OutputEncode, OutputMode } from '../enum';
+import { DeviceMode, DeviceType, InputMode, OutputEncode, OutputMode, PLCModel } from '../enum';
+
+const DEFAULT_TIMEOUT = 3000;
 
 // TCP 配置
 export const defaultHostConfig = {
   port: 3399,
   host: '127.0.0.1',
-  timeout: 3000,
+  timeout: DEFAULT_TIMEOUT,
 };
 
 // 根据输出模式改变输出编码&输出地址默认值
@@ -59,7 +61,7 @@ export const defaultConfig = {
     hostConfig: {
       port: 6005,
       host: '0.0.0.0',
-      timeout: 3000,
+      timeout: DEFAULT_TIMEOUT,
     },
   },
   [DeviceType.SIEMENS_PLC]: {
@@ -69,14 +71,14 @@ export const defaultConfig = {
       model: 'S71200',
       rack: 0,
       slot: 1,
-      timeout: 3000,
+      timeout: DEFAULT_TIMEOUT,
       idleTimeout: 5000,
     },
   },
   [DeviceType.GENERIC_HTTP_DEVICE]: {
     commonConfig: {
       autoRequest: false,
-      timeout: 3000,
+      timeout: DEFAULT_TIMEOUT,
       frequency: 1000,
     },
     httpConfig: {
@@ -90,34 +92,34 @@ export const defaultConfig = {
   [DeviceType.SHELLY_GEN1_PROXY_SERVER]: {
     networkCidr: '192.168.1.1/24',
     autoScan: true,
-    timeout: 3000,
+    timeout: DEFAULT_TIMEOUT,
     frequency: 5000,
   },
 };
 
 // 根据 PLC 型号改变 rack&slot 默认值
 export const defaultModelConfig = {
-  S7200: {
+  [PLCModel.S7200]: {
     commonConfig: {
       slot: 2,
     },
   },
-  S7300: {
+  [PLCModel.S7300]: {
     commonConfig: {
       slot: 2,
     },
   },
-  S7400: {
+  [PLCModel.S7400]: {
     commonConfig: {
       slot: 2,
     },
   },
-  S71200: {
+  [PLCModel.S71200]: {
     commonConfig: {
       slot: 1,
     },
   },
-  S71500: {
+  [PLCModel.S71500]: {
     commonConfig: {
       slot: 1,
     },

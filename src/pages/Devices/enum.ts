@@ -46,12 +46,20 @@ export const funcEnum = new Map([
 /**
  * 西门子设备 PLC 型号
  */
+export enum PLCModel {
+  S7200 = 'S7200',
+  S7300 = 'S7300',
+  S7400 = 'S7400',
+  S71200 = 'S71200',
+  S71500 = 'S71500',
+}
+
 export const plcModelOptions = {
-  S7200: '西门子 S7-200 系列 PLC',
-  S7300: '西门子 S7-300 系列 PLC',
-  S7400: '西门子 S7-400 系列 PLC',
-  S71200: '西门子 S7-1200 系列 PLC',
-  S71500: '西门子 S7-1500 系列 PLC',
+  [PLCModel.S7200]: '西门子 S7-200 系列 PLC',
+  [PLCModel.S7300]: '西门子 S7-300 系列 PLC',
+  [PLCModel.S7400]: '西门子 S7-400 系列 PLC',
+  [PLCModel.S71200]: '西门子 S7-1200 系列 PLC',
+  [PLCModel.S71500]: '西门子 S7-1500 系列 PLC',
 };
 
 // 机架号 rack
@@ -83,26 +91,42 @@ export const slotEnum = new Map([
  * 视频输入模式
  */
 export enum InputMode {
-  REMOTE_STREAM_RTSP = '远程RTSP流地址',
-  LOCAL_CAMERA = '本地相机设备',
+  REMOTE_STREAM_RTSP = 'REMOTE_STREAM_RTSP',
+  LOCAL_CAMERA = 'LOCAL_CAMERA',
 }
+
+export const InputModeOption = {
+  [InputMode.REMOTE_STREAM_RTSP]: '远程RTSP流地址',
+  [InputMode.LOCAL_CAMERA]: '本地相机设备',
+};
 
 /**
  * 视频输出模式
  */
 export enum OutputMode {
-  // LOCAL_H264_STREAM_SERVER = '本地 FLV 流服务器',
-  LOCAL_JPEG_STREAM_SERVER = '本地 Jpeg 流服务器',
-  REMOTE_STREAM_SERVER = '远程流媒体服务器',
+  // LOCAL_H264_STREAM_SERVER = 'LOCAL_H264_STREAM_SERVER',
+  LOCAL_JPEG_STREAM_SERVER = 'LOCAL_JPEG_STREAM_SERVER',
+  REMOTE_STREAM_SERVER = 'REMOTE_STREAM_SERVER',
 }
+
+export const OutputModeOption = {
+  // [OutputMode.LOCAL_H264_STREAM_SERVER]: '本地 FLV 流服务器',
+  [OutputMode.LOCAL_JPEG_STREAM_SERVER]: '本地 Jpeg 流服务器',
+  [OutputMode.REMOTE_STREAM_SERVER]: '远程流媒体服务器',
+};
 
 /**
  * 视频输出编码
  */
 export enum OutputEncode {
-  H264_STREAM = 'H264 编码',
-  JPEG_STREAM = 'JPEG 编码',
+  H264_STREAM = 'H264_STREAM',
+  JPEG_STREAM = 'JPEG_STREAM',
 }
+
+export const OutputEncodeOption = {
+  [OutputEncode.H264_STREAM]: 'H264 编码',
+  [OutputEncode.JPEG_STREAM]: 'JPEG 编码',
+};
 
 /** SNMP */
 // 协议分隔符

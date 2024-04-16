@@ -225,7 +225,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       },
       formItemProps: {
         rules: [
-          { required: true, message: '此项为必填项' },
+          { required: true, message: '请输入从设备地址' },
           { max: 255, type: 'integer', message: '从设备地址 在 1-255 之间' },
           { min: 1, type: 'integer', message: '从设备地址 在 1-255 之间' },
         ],
@@ -236,7 +236,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'tag',
       ellipsis: true,
       formItemProps: {
-        rules: [{ required: true, message: '此项为必填项' }],
+        rules: [{ required: true, message: '请输入数据标签' }],
       },
       fieldProps: {
         placeholder: '请输入数据标签',
@@ -247,7 +247,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'alias',
       ellipsis: true,
       formItemProps: {
-        rules: [{ required: true, message: '此项为必填项' }],
+        rules: [{ required: true, message: '请输入数据别名' }],
       },
       fieldProps: {
         placeholder: '请输入数据别名',
@@ -280,7 +280,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
             },
           }}
           valueEnum={funcEnum}
-          rules={[{ required: true, message: '此项为必填项' }]}
+          rules={[{ required: true, message: '请选择 Modbus 功能' }]}
         />
       ),
     },
@@ -319,7 +319,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
               },
               options,
             }}
-            rules={[{ required: true, message: '此项为必填项' }]}
+            rules={[{ required: true, message: '请选择数据类型和字节序' }]}
           />
         );
       },
@@ -347,7 +347,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       },
       formItemProps: {
         rules: [
-          { required: true, message: '此项为必填项' },
+          { required: true, message: '请输入起始地址' },
           { min: 0, type: 'integer', message: '起始地址范围在 0-65535 之间' },
           { max: 65535, type: 'integer', message: '起始地址范围在 0-65535 之间' },
         ],
@@ -360,7 +360,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       width: 100,
       formItemProps: {
         rules: [
-          { required: true, message: '此项为必填项' },
+          { required: true, message: '请输入读取数量' },
           { min: 1, type: 'integer', message: '读取数量范围在 1-256 之间' },
           { max: 256, type: 'integer', message: '读取数量范围在 1-256 之间' },
         ],
@@ -380,7 +380,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       valueType: 'digit',
       formItemProps: {
         rules: [
-          { required: true, message: '此项为必填项' },
+          { required: true, message: '请输入权重系数' },
           {
             validator: (_, value) => {
               if (inRange(value, -0.0001, 100000)) {
@@ -413,7 +413,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
         placeholder: '请输入采集频率',
       },
       formItemProps: {
-        rules: [{ required: true, message: '此项为必填项' }],
+        rules: [{ required: true, message: '请输入采集频率' }],
       },
     },
     {
