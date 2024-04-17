@@ -166,7 +166,7 @@ const ShellyDevice = () => {
                           if (item.mac && deviceId) {
                             modal.info({
                               title: `${item.name} 设备详情`,
-                              width: '40%',
+                              width: '45%',
                               content: <Detail mac={item.mac} deviceId={deviceId} ip={item.ip} />,
                               okText: '关闭',
                               closable: true,

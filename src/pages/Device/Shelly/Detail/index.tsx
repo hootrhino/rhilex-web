@@ -1,4 +1,5 @@
 import StateTag, { StateType } from '@/components/StateTag';
+import UnitTitle from '@/components/UnitTitle';
 import { getShellyGen1Detail, getShellyGen1Status } from '@/services/rulex/shellyshebei';
 import type { ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
@@ -17,6 +18,7 @@ const baseColumns = [
   {
     title: '设备 ID',
     dataIndex: 'id',
+    ellipsis: true,
   },
   {
     title: '设备名称',
@@ -25,14 +27,17 @@ const baseColumns = [
   {
     title: '设备 IP 地址',
     dataIndex: 'ip',
+    ellipsis: true,
   },
   {
     title: '设备 MAC 地址',
     dataIndex: 'mac',
+    ellipsis: true,
   },
   {
     title: '设备型号',
     dataIndex: 'model',
+    ellipsis: true,
   },
   {
     title: '设备硬件版本号',
@@ -42,6 +47,7 @@ const baseColumns = [
   {
     title: '设备固件版本 ID',
     dataIndex: 'fw_id',
+    ellipsis: true,
   },
   {
     title: '设备固件版本号',
@@ -88,24 +94,20 @@ const statusColumns = [
     dataIndex: 'uptime',
   },
   {
-    title: 'RAM 总大小',
+    title: <UnitTitle title="RAM 总大小" unit="字节" />,
     dataIndex: 'ram_size',
-    renderText: (ram_size: number) => `${ram_size}（字节）`,
   },
   {
-    title: '可用 RAM 大小',
+    title: <UnitTitle title="可用 RAM 大小" unit="字节" />,
     dataIndex: 'ram_free',
-    renderText: (ram_free: number) => `${ram_free}（字节）`,
   },
   {
-    title: '文件系统总大小',
+    title: <UnitTitle title="文件系统总大小" unit="字节" />,
     dataIndex: 'fs_size',
-    renderText: (fs_size: number) => `${fs_size}（字节）`,
   },
   {
-    title: '文件系统可用大小',
+    title: <UnitTitle title="文件系统可用大小" unit="字节" />,
     dataIndex: 'fs_free',
-    renderText: (fs_free: number) => `${fs_free}（字节）`,
   },
   {
     title: '配置版本号',
@@ -151,7 +153,7 @@ const Detail = ({ mac, deviceId, ip, ...props }: DetailProps) => {
       <ProDescriptions
         title="设备状态信息"
         column={2}
-        labelStyle={{ justifyContent: 'flex-end', minWidth: 140, marginRight: 10 }}
+        labelStyle={{ justifyContent: 'flex-end', minWidth: 170, marginRight: 10 }}
         params={{ ip }}
         request={async () => {
           const { data } = await getShellyGen1Status({ ip: ip || '' });

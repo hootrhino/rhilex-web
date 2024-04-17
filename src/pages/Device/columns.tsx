@@ -311,7 +311,7 @@ export const typeConfigColumns = {
           title: '主机序列号',
           dataIndex: ['config', 'commonConfig', 'gwsn'],
           required: true,
-          render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.gwsn,
+          render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.gwsn || '-',
         },
         ...modeConfig,
       ],
@@ -599,6 +599,7 @@ export const typeConfigColumns = {
               },
             ],
           },
+          render: (_: any, { networkCidr }: DeviceItem) => networkCidr,
         },
         {
           title: '自动扫描',
@@ -612,19 +613,23 @@ export const typeConfigColumns = {
             },
           }),
           convertValue: (value: boolean) => value?.toString(),
-          renderText: (autoScan: boolean) => <StateTag state={autoScan} type={StateType.Bool} />,
+          render: (_: any, { autoScan }: DeviceItem) => (
+            <StateTag state={autoScan} type={StateType.Bool} />
+          ),
         },
         {
           title: <UnitTitle title="扫描超时" />,
           dataIndex: ['config', 'timeout'],
           valueType: 'digit',
           required: true,
+          render: (_: any, { timeout }: DeviceItem) => timeout,
         },
         {
           title: <UnitTitle title="扫描频率" />,
           dataIndex: ['config', 'frequency'],
           valueType: 'digit',
           required: true,
+          render: (_: any, { frequency }: DeviceItem) => frequency,
         },
       ],
     },
