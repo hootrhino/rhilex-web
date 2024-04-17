@@ -1,4 +1,4 @@
-import loginIcon from '@/assets/images/loginLogo.svg';
+import loginIcon from '@/assets/loginLogo.svg';
 import { message, modal } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
 import { COPYRIGHT, DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';

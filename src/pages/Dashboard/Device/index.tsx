@@ -1,4 +1,4 @@
-import { DeviceType } from '@/pages/Devices/enum';
+import { DeviceType } from '@/pages/Device/enum';
 import { getDevicesList } from '@/services/rulex/shebeiguanli';
 import { cn } from '@/utils/utils';
 import { ProList } from '@ant-design/pro-components';

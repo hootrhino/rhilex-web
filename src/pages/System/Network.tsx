@@ -5,6 +5,7 @@ import { FormItemType, validateFormItem } from '@/utils/utils';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import type { FormListActionType, ProFormInstance } from '@ant-design/pro-components';
 import {
+  ProCard,
   ProForm,
   ProFormList,
   ProFormSelect,
@@ -15,7 +16,6 @@ import { useModel, useRequest } from '@umijs/max';
 import { Tooltip } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useRef } from 'react';
-import Title from './components/Title';
 
 type DnsListItem = {
   dns: string;
@@ -76,8 +76,7 @@ const NetworkConfig = () => {
   };
 
   return (
-    <>
-      <Title name="网卡配置" />
+    <ProCard title="网卡配置">
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
@@ -173,7 +172,7 @@ const NetworkConfig = () => {
           rules={[{ required: true }]}
         />
       </ProForm>
-    </>
+    </ProCard>
   );
 };
 

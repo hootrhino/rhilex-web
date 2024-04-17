@@ -1,11 +1,10 @@
 import { message, modal } from '@/components/PopupHack';
 import { putUsersUpdate } from '@/services/rulex/yonghuguanli';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { ProForm, ProFormText } from '@ant-design/pro-components';
+import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { Button, Space } from 'antd';
 import { useEffect, useRef } from 'react';
-import Title from './components/Title';
 
 type UpdateParams = {
   username: string;
@@ -36,8 +35,7 @@ const UserConfig = () => {
   }, [initialState]);
 
   return (
-    <>
-      <Title name="用户配置" />
+    <ProCard title="用户配置">
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
@@ -78,7 +76,7 @@ const UserConfig = () => {
           rules={[{ required: true, message: '请输入密码' }]}
         />
       </ProForm>
-    </>
+    </ProCard>
   );
 };
 

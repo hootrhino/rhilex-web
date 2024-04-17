@@ -2,9 +2,9 @@ import PageContainer from '@/components/PageContainer';
 import ProLog from '@/components/ProLog';
 import { Col, Row } from 'antd';
 import { useModel } from 'umi';
-import DeviceList from './components/Device';
-import SourceCountCard from './components/SourceCountCard';
-import ProStatisticCard from './components/StatisticCard';
+import DeviceList from './Device';
+import SourceCountCard from './SourceCountCard';
+import ProStatisticCard from './StatisticCard';
 
 const Dashboard = () => {
   const { runningLogs, setLogs } = useModel('useWebsocket');

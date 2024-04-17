@@ -84,9 +84,9 @@ const System = () => {
   const [tabItems, setItems] = useState<TabItem[]>(baseItems);
 
   useEffect(() => {
-    const filteredItems = tabItems.filter((item) => {
+    const filteredItems = baseItems.filter((item) => {
       if (isWindows) {
-        return ['firmware', 'backup', 'user', 'site'].includes(item.key);
+        return ['resource', 'firmware', 'backup', 'user'].includes(item.key);
       } else {
         if (!isH3) {
           return !['4g', 'apn'].includes(item.key);

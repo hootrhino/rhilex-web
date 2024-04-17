@@ -9,7 +9,12 @@ import type { ReactCodeMirrorProps } from '@uiw/react-codemirror';
 import CodeMirror, { basicSetup, keymap } from '@uiw/react-codemirror';
 import { useRequest } from '@umijs/max';
 
-import { funcIcon, keywordIcon, snippetIcon, variableIcon } from '@/assets/images/autocomplete';
+import {
+  funcIcon,
+  keywordIcon,
+  snippetIcon,
+  variableIcon,
+} from '@/components/CodeEditor/images/autocomplete';
 import { autoCompletions, createDetailEl, createIconEl, luaLinter } from './utils';
 
 export enum Lang {

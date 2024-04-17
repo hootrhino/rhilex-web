@@ -10,11 +10,7 @@ import { Button, Drawer, Modal } from 'antd';
 import { useEffect } from 'react';
 import type { AppStackItem } from '..';
 import { baseColumns } from '../columns';
-
-export enum DetailModalType {
-  Detail = 'detail',
-  Log = 'log',
-}
+import { DetailModalType } from '../enum';
 
 type DetailProps = DrawerProps & {
   uuid: string;

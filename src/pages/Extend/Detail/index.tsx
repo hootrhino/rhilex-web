@@ -7,7 +7,7 @@ import { useLocalStorageState } from 'ahooks';
 import type { DrawerProps } from 'antd';
 import { Button, Drawer, Modal } from 'antd';
 import { useEffect } from 'react';
-import { baseColumns } from '.';
+import { baseColumns } from '..';
 
 export enum DetailModalType {
   Detail = 'detail',

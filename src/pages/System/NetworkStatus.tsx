@@ -1,11 +1,10 @@
 import { getSettingsNetDetails, getSettingsNetStatus } from '@/services/rulex/wangluopeizhi';
 import { pick } from '@/utils/redash';
 import type { ProColumns } from '@ant-design/pro-components';
-import { ProTable } from '@ant-design/pro-components';
+import { ProCard, ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Descriptions, Modal } from 'antd';
 import { useState } from 'react';
-import Title from './components/Title';
 
 type NetStatusItem = {
   device: string;
@@ -94,8 +93,7 @@ const NetworkStatus = () => {
   ];
 
   return (
-    <>
-      <Title name="网络状态" />
+    <ProCard title="网络状态">
       <ProTable
         rowKey="device"
         columns={columns}
@@ -134,7 +132,7 @@ const NetworkStatus = () => {
             ))}
         </Descriptions>
       </Modal>
-    </>
+    </ProCard>
   );
 };
 

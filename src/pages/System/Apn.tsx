@@ -1,10 +1,11 @@
 import { message } from '@/components/PopupHack';
 import { getMn4GApn, postMn4GApn } from '@/services/rulex/yidongwangluo4Gshezhi';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
+import { ProCard, ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
+import { Space, Tag } from 'antd';
 import { useEffect, useRef } from 'react';
-import Title from './components/Title';
 
 type UpdateParams = {
   senceId: number;
@@ -49,8 +50,16 @@ const APNConfig = () => {
   }, [detail]);
 
   return (
-    <>
-      <Title name="APN 配置" tips="该配置项属于高级网络功能，配置不当会造成设备断网，请谨慎操作" />
+    <ProCard
+      title={
+        <Space>
+          <span>APN 配置</span>
+          <Tag icon={<ExclamationCircleOutlined />} color="warning">
+            该配置项属于高级网络功能，配置不当会造成设备断网，请谨慎操作
+          </Tag>
+        </Space>
+      }
+    >
       <ProForm
         formRef={formRef}
         layout="horizontal"
@@ -111,7 +120,7 @@ const APNConfig = () => {
           width="xl"
         />
       </ProForm>
-    </>
+    </ProCard>
   );
 };
 

@@ -14,7 +14,8 @@ import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
 import { baseColumns } from './columns';
-import Detail, { DetailModalType } from './Detail';
+import Detail from './Detail';
+import { DetailModalType } from './enum';
 
 export type AppStackItem = {
   uuid?: string;

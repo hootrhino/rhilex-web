@@ -11,12 +11,12 @@ import { Alert, Button, Popconfirm } from 'antd';
 import type { Rule } from 'antd/es/form';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
-import { RuleType } from '.';
-import { DeviceType } from '../Devices/enum';
-import { InendsType } from '../Inends/enum';
-import { device_ais_ds, device_ds } from './deviceDS';
-import { inends_ds, inends_event_ds, links } from './inendsDS';
-import { DefaultActions, DefaultFailed, DefaultSuccess } from './initialValue';
+import { RuleType } from '..';
+import { DeviceType } from '../../Device/enum';
+import { InendsType } from '../../Inends/enum';
+import { device_ais_ds, device_ds } from '../deviceDS';
+import { inends_ds, inends_event_ds, links } from '../inendsDS';
+import { DefaultActions, DefaultFailed, DefaultSuccess } from '../initialValue';
 
 type FormParams = {
   name: string;

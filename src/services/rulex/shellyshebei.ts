@@ -39,6 +39,13 @@ export async function getShellyGen1List(
       app?: string;
       auth_en?: boolean;
       auth_domain?: null;
+      input?: { id: number; status: boolean }[];
+      switch?: {
+        id?: number;
+        source?: string;
+        output?: boolean;
+        temperature: { tC: number; tF: number };
+      }[];
     }[];
   }>('/api/v1/shelly_gen1/list', {
     method: 'GET',
@@ -50,9 +57,16 @@ export async function getShellyGen1List(
 }
 
 /** Shelly设备扫描 POST /api/v1/shelly_gen1/scan */
-export async function postShellyGen1Scan(options?: { [key: string]: any }) {
+export async function postShellyGen1Scan(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.postShellyGen1ScanParams,
+  options?: { [key: string]: any },
+) {
   return request<{ code: number; msg: string; data: string[] }>('/api/v1/shelly_gen1/scan', {
     method: 'POST',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }

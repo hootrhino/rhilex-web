@@ -267,6 +267,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type postShellyGen1ScanParams = {
+    uuid: string;
+  };
+
   type putAppStartParams = {
     uuid: string;
   };

@@ -16,6 +16,7 @@ import {
   ControlOutlined,
   DisconnectOutlined,
   DownOutlined,
+  HddOutlined,
   PlayCircleOutlined,
   PlusOutlined,
   PoweroffOutlined,
@@ -26,10 +27,11 @@ import { ProCard, ProTable } from '@ant-design/pro-components';
 import { history, useModel, useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/hooks/useItems';
+import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useRef, useState } from 'react';
 import { baseColumns } from './columns';
 import Detail from './Detail';
-import { OutputMode } from './enum';
+import { DeviceType, OutputMode } from './enum';
 import type { GroupConfig } from './Group';
 import GroupList, { DEFAULT_CONFIG } from './Group';
 import SchemaDetail from './SchemaDetail';
@@ -125,14 +127,24 @@ const Devices = () => {
 
     let baseItems = [
       { key: 'restart', label: '重启设备', icon: <PoweroffOutlined />, danger: true },
-      { key: 'rule', label: '规则配置', icon: <SettingOutlined /> },
+      // { key: 'rule', label: '规则配置', icon: <SettingOutlined /> },
     ] as ItemType[];
 
-    if (type === 'GENERIC_CAMERA') {
+    if (type === DeviceType.GENERIC_CAMERA) {
       baseItems = [...baseItems, { key: 'video', label: '查看视频', icon: <PlayCircleOutlined /> }];
-      baseItems = [...baseItems];
+      // baseItems = [...baseItems];
+    } else if (type === DeviceType.SHELLY_GEN1_PROXY_SERVER) {
+      baseItems = [
+        ...baseItems,
+        { key: 'rule', label: '规则配置', icon: <SettingOutlined /> },
+        { key: 'shelly-device', label: '查看子设备', icon: <HddOutlined /> },
+      ];
     } else {
-      baseItems = [...baseItems, { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> }];
+      baseItems = [
+        ...baseItems,
+        { key: 'rule', label: '规则配置', icon: <SettingOutlined /> },
+        { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> },
+      ];
 
       if (schemaId) {
         baseItems = [
@@ -163,6 +175,58 @@ const Devices = () => {
     return baseItems;
   };
 
+  const handleOnMenu = (
+    { key }: MenuInfo,
+    { uuid, gid, type, name, config }: Partial<DeviceItem>,
+  ) => {
+    switch (key) {
+      case 'restart':
+        setOpen(true);
+        setActiveDevice(uuid);
+        break;
+      case 'rule':
+        history.push(`/device/${gid}/${uuid}/rule`);
+        break;
+      case 'specific-sheet':
+        history.push(`/device/${gid}/${uuid}/specific-sheet/${type}`);
+        break;
+      case 'schema':
+        setOpenSchema(true);
+        setActiveDevice(uuid);
+        setActiveDeviceName(name || '');
+        break;
+      case 'video':
+        if (config?.outputMode === OutputMode.REMOTE_STREAM_SERVER) {
+          modal.info({
+            title: '查看视频',
+            content: (
+              <div className="break-all">
+                该模式下流媒体被中转到第三方地址，当前{config?.inputAddr}
+                已经成功推送到{config?.outputAddr}，请在对应的平台上查看或者播放。
+              </div>
+            ),
+            width: 500,
+          });
+        } else {
+          setOpenVideo(true);
+          setVideoConfig({ deviceName: name, outputMode: config?.outputMode });
+        }
+
+        break;
+      case 'unbind':
+        handleOnUnbind(uuid);
+        break;
+      case 'error':
+        getErrorMsg({ uuid });
+        break;
+      case 'shelly-device':
+        history.push(`/device/${gid}/${uuid}/sub-device`);
+        break;
+      default:
+        break;
+    }
+  };
+
   const actionColumns: ProColumns<Partial<DeviceItem>>[] = [
     {
       title: '操作',
@@ -170,7 +234,8 @@ const Devices = () => {
       fixed: 'right',
       key: 'option',
       valueType: 'option',
-      render: (_, { uuid, gid, type, name, config, schemaId, state }) => {
+      render: (_, record) => {
+        const { uuid, gid, type, schemaId, state } = record;
         return (
           <Space>
             <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
@@ -191,51 +256,7 @@ const Devices = () => {
             <Dropdown
               menu={{
                 items: getMenuItems({ type, schemaId, state }),
-                onClick: ({ key }) => {
-                  switch (key) {
-                    case 'restart':
-                      setOpen(true);
-                      setActiveDevice(uuid);
-                      break;
-                    case 'rule':
-                      history.push(`/device/${gid}/${uuid}/rule`);
-                      break;
-                    case 'specific-sheet':
-                      history.push(`/device/${gid}/${uuid}/specific-sheet/${type}`);
-                      break;
-                    case 'schema':
-                      setOpenSchema(true);
-                      setActiveDevice(uuid);
-                      setActiveDeviceName(name || '');
-                      break;
-                    case 'video':
-                      if (config?.outputMode === OutputMode.REMOTE_STREAM_SERVER) {
-                        modal.info({
-                          title: '查看视频',
-                          content: (
-                            <div className="break-all">
-                              该模式下流媒体被中转到第三方地址，当前{config?.inputAddr}
-                              已经成功推送到{config?.outputAddr}，请在对应的平台上查看或者播放。
-                            </div>
-                          ),
-                          width: 500,
-                        });
-                      } else {
-                        setOpenVideo(true);
-                        setVideoConfig({ deviceName: name, outputMode: config?.outputMode });
-                      }
-
-                      break;
-                    case 'unbind':
-                      handleOnUnbind(uuid);
-                      break;
-                    case 'error':
-                      getErrorMsg({ uuid });
-                      break;
-                    default:
-                      break;
-                  }
-                },
+                onClick: (info: MenuInfo) => handleOnMenu(info, record),
               }}
             >
               <a>

@@ -7,7 +7,7 @@ import { ModalForm, ProForm } from '@ant-design/pro-components';
 import { useModel, useParams } from '@umijs/max';
 import { Button } from 'antd';
 import { useEffect, useRef, useState } from 'react';
-import type { RuleType } from '.';
+import type { RuleType } from '..';
 
 type DebugProps = ModalFormProps & {
   uuid: string;

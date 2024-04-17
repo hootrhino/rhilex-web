@@ -6,11 +6,10 @@ import {
 } from '@/services/rulex/wifIpeizhi';
 import { WifiOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
+import { ProCard, ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { AutoComplete, Button, Space } from 'antd';
 import { useRef } from 'react';
-import Title from './components/Title';
 
 type UpdateForm = {
   ssid: string;
@@ -64,8 +63,7 @@ const WIFIConfig = () => {
   };
 
   return (
-    <>
-      <Title name="WIFI 配置" />
+    <ProCard title="WIFI 配置">
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
@@ -118,7 +116,7 @@ const WIFIConfig = () => {
           rules={[{ required: true, message: '请选择加密方式' }]}
         />
       </ProForm>
-    </>
+    </ProCard>
   );
 };
 

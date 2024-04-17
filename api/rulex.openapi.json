@@ -16063,6 +16063,73 @@
                           },
                           "auth_domain": {
                             "type": "null"
+                          },
+                          "input": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer"
+                                },
+                                "status": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "status"
+                              ],
+                              "x-apifox-ignore-properties": [],
+                              "x-apifox-orders": [
+                                "id",
+                                "status"
+                              ]
+                            }
+                          },
+                          "switch": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer"
+                                },
+                                "source": {
+                                  "type": "string"
+                                },
+                                "output": {
+                                  "type": "boolean"
+                                },
+                                "temperature": {
+                                  "type": "object",
+                                  "properties": {
+                                    "tC": {
+                                      "type": "number"
+                                    },
+                                    "tF": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "tC",
+                                    "tF"
+                                  ],
+                                  "x-apifox-ignore-properties": [],
+                                  "x-apifox-orders": [
+                                    "tC",
+                                    "tF"
+                                  ]
+                                }
+                              },
+                              "x-apifox-ignore-properties": [],
+                              "x-apifox-orders": [
+                                "id",
+                                "source",
+                                "output",
+                                "temperature"
+                              ]
+                            }
                           }
                         },
                         "x-apifox-ignore-properties": [],
@@ -16078,7 +16145,9 @@
                           "ver",
                           "app",
                           "auth_en",
-                          "auth_domain"
+                          "auth_domain",
+                          "input",
+                          "switch"
                         ]
                       }
                     }
@@ -16114,7 +16183,28 @@
                           "ver": "1.2.2",
                           "app": "Pro1",
                           "auth_en": false,
-                          "auth_domain": null
+                          "auth_domain": null,
+                          "input": [
+                            {
+                              "id": 0,
+                              "status": false
+                            },
+                            {
+                              "id": 1,
+                              "status": false
+                            }
+                          ],
+                          "switch": [
+                            {
+                              "id": 0,
+                              "source": "WS_in",
+                              "output": true,
+                              "temperature": {
+                                "tC": 33.3,
+                                "tF": 91.9
+                              }
+                            }
+                          ]
                         }
                       ]
                     }
@@ -16138,7 +16228,18 @@
         "tags": [
           "Shelly设备"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "12345678",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "成功",

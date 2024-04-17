@@ -26,7 +26,7 @@ export const deviceTpl = deviceList?.map((device) => ({
   apply: getCode(device.target),
   type: 'function',
   variables: [
-    { label: '设备资源', name: 'arg1', value: '', type: 'select', dataSource: 'devices' },
+    { label: '设备资源', name: 'arg1', value: '', type: 'select', dataSource: 'device' },
     { label: '设备指令', name: 'arg2', value: '', type: 'string' },
     { label: '设备参数', name: 'arg3', value: '', type: 'string' },
   ],

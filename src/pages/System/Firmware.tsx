@@ -21,7 +21,6 @@ import { ProCard, ProDescriptions } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
 import { Button, Modal, Progress, Space, Upload } from 'antd';
 import { useState } from 'react';
-import Title from './components/Title';
 
 type ConfirmCofig = {
   title: string;
@@ -91,12 +90,11 @@ const FirmwareConfig = () => {
 
   return (
     <>
-      <Title name="固件配置" />
-      <ProCard split="vertical">
-        <ProCard colSpan="50%">
+      <ProCard split="vertical" title="固件配置" headStyle={{ paddingBlockEnd: 12 }}>
+        <ProCard colSpan="50%" title="设备授权信息">
           <ProDescriptions
             column={1}
-            title={<div className="font-normal text-[14px]">设备授权信息</div>}
+            // title={<div className="font-normal text-[14px]">设备授权信息</div>}
             request={async () => {
               const { data } = await getFirmwareVendorKey();
               return Promise.resolve({

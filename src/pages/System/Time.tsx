@@ -3,6 +3,7 @@ import { getSettingsTime, postSettingsTime, putSettingsNtp } from '@/services/ru
 import { SyncOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
+  ProCard,
   ProForm,
   ProFormDateTimePicker,
   ProFormSelect,
@@ -11,7 +12,6 @@ import {
 import { useRequest } from '@umijs/max';
 import { Button, Space } from 'antd';
 import { useRef } from 'react';
-import Title from './components/Title';
 
 type UpdateParams = {
   sysTime: string;
@@ -55,8 +55,7 @@ const TimeConfig = () => {
   };
 
   return (
-    <>
-      <Title name='时间配置' />
+    <ProCard title="时间配置">
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
@@ -99,7 +98,7 @@ const TimeConfig = () => {
           rules={[{ required: true }]}
         />
       </ProForm>
-    </>
+    </ProCard>
   );
 };
 

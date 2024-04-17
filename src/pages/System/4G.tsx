@@ -3,11 +3,10 @@ import { getMn4GInfo, postSettingsMn4GRestart } from '@/services/rulex/yidongwan
 import { green } from '@ant-design/colors';
 import { PoweroffOutlined, ReloadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { ProForm, ProFormText } from '@ant-design/pro-components';
+import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Progress, Space } from 'antd';
 import { useRef } from 'react';
-import Title from './components/Title';
 
 const FourGConfig = () => {
   const formRef = useRef<ProFormInstance>();
@@ -39,8 +38,7 @@ const FourGConfig = () => {
   };
 
   return (
-    <>
-      <Title name="4G 配置" />
+    <ProCard title="4G 配置">
       <ProForm
         formRef={formRef}
         layout="horizontal"
@@ -82,7 +80,7 @@ const FourGConfig = () => {
           <Progress steps={10} size={20} percent={getCsqPercent()} strokeColor={green[6]} />
         </ProForm.Item>
       </ProForm>
-    </>
+    </ProCard>
   );
 };
 

@@ -1,4 +1,4 @@
-import { OutputMode } from '@/pages/Devices/enum';
+import { OutputMode } from '@/pages/Device/enum';
 import { createFromIconfontCN } from '@ant-design/icons';
 import type { RcFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';

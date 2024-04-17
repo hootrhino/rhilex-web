@@ -1,10 +1,9 @@
 import { modal } from '@/components/PopupHack';
 import { getOsOsRelease } from '@/services/rulex/xitongshuju';
 import { RingProgress } from '@ant-design/plots';
-import { StatisticCard } from '@ant-design/pro-components';
+import { ProCard, StatisticCard } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
 import { Descriptions, Space } from 'antd';
-import Title from './components/Title';
 
 const Resource = () => {
   const { dataSource } = useModel('useSystem');
@@ -35,28 +34,6 @@ const Resource = () => {
     ),
   };
 
-  // const config = {
-  //   width: 200,
-  //   height: 60,
-  //   data: cpuData,
-  //   xField: 'index',
-  //   yField: 'value',
-  //   smooth: true,
-  //   guideLine: [
-  //     {
-  //       type: 'mean',
-  //       text: {
-  //         position: 'start',
-  //         content: '平均值',
-  //         style: {
-  //           stroke: 'white',
-  //           lineWidth: 2,
-  //         },
-  //       },
-  //     },
-  //   ],
-  // };
-
   const ringConfig = {
     height: 60,
     width: 60,
@@ -66,8 +43,7 @@ const Resource = () => {
   } as any;
 
   return (
-    <>
-      <Title name="系统资源" />
+    <ProCard title="系统资源">
       <Space split={<StatisticCard.Divider type="vertical" className="h-[12px]" />}>
         <span className="text-[#585858] text-[13px]">产品 {product}</span>
         <span className="text-[#585858] text-[13px]">当前版本 {version || 'v0.0.0'}</span>
@@ -111,7 +87,7 @@ const Resource = () => {
           chartPlacement="left"
         />
       </div>
-    </>
+    </ProCard>
   );
 };
 

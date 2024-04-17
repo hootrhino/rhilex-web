@@ -4,11 +4,10 @@ import { postBackupUpload } from '@/services/rulex/shujubeifen';
 import { endsWith } from '@/utils/redash';
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { ProForm, ProFormUploadDragger } from '@ant-design/pro-components';
+import { ProCard, ProForm, ProFormUploadDragger } from '@ant-design/pro-components';
 import { history, useModel } from '@umijs/max';
 import { Button, Space, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
-import Title from './components/Title';
 
 const DataBackupConfig = () => {
   const { activeKey } = useModel('useSetting');
@@ -37,8 +36,7 @@ const DataBackupConfig = () => {
   }, [activeKey]);
 
   return (
-    <>
-      <Title name="数据备份" />
+    <ProCard title="数据备份">
       <ProForm
         formRef={formRef}
         layout="vertical"
@@ -82,7 +80,7 @@ const DataBackupConfig = () => {
         }}
       >
         <ProFormUploadDragger
-          label="数据恢复"
+          // label="数据恢复"
           name="recovery"
           max={1}
           accept=".db"
@@ -119,7 +117,7 @@ const DataBackupConfig = () => {
           cancel();
         }}
       />
-    </>
+    </ProCard>
   );
 };
 
