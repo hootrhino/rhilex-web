@@ -4,3 +4,9 @@ import Pro4PM from './pro4PM.png';
 import DefaultImg from './shelly.png';
 
 export { Pro1, Pro4PM, Plus2PM, DefaultImg };
+
+export const avatar = {
+  Pro1: Pro1,
+  Plus2PM: Plus2PM,
+  Pro4PM: Pro4PM,
+};
