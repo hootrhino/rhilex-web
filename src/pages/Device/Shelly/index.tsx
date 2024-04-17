@@ -1,6 +1,7 @@
 import PageContainer from '@/components/PageContainer';
+import { message } from '@/components/PopupHack';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
-import { getShellyGen1List } from '@/services/rulex/shellyshebei';
+import { getShellyGen1List, postShellyGen1Scan } from '@/services/rulex/shellyshebei';
 import {
   CheckCircleOutlined,
   ControlOutlined,
@@ -8,11 +9,13 @@ import {
   FileSearchOutlined,
   MinusCircleOutlined,
   ReloadOutlined,
+  ScanOutlined,
+  SettingOutlined,
 } from '@ant-design/icons';
 import type { CheckGroupValueType } from '@ant-design/pro-card/es/components/CheckCard/Group';
 import { CheckCard } from '@ant-design/pro-components';
 import { useParams, useRequest } from '@umijs/max';
-import { Divider, Dropdown, Space, Switch, Tag } from 'antd';
+import { Button, Divider, Dropdown, Space, Switch, Tag } from 'antd';
 import { useState } from 'react';
 import { avatar, DefaultImg } from './images';
 
@@ -27,17 +30,51 @@ const ShellyDevice = () => {
   });
 
   // 获取 Shelly 子设备列表
-  const { data: subDeviceList } = useRequest(() => getShellyGen1List({ uuid: deviceId || '' }), {
-    pollingInterval: 5000,
-    ready: !!deviceId,
-    refreshDeps: [deviceId],
-  });
+  const { data: subDeviceList, run: getSubDeviceList } = useRequest(
+    () => getShellyGen1List({ uuid: deviceId || '' }),
+    {
+      pollingInterval: 5000,
+      ready: !!deviceId,
+      refreshDeps: [deviceId],
+    },
+  );
+
+  // 扫描设备
+  const { run: scan, loading: scanLoading } = useRequest(
+    (params: API.postShellyGen1ScanParams) => postShellyGen1Scan(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        getSubDeviceList();
+        message.success('扫描成功');
+      },
+    },
+  );
+
+  // TODO 详情
+  // TODO 批量配置
 
   return (
     <>
       <PageContainer
         backUrl={`/device/list`}
         title={`设备 ${deviceDetail?.name || ''} - 子设备列表`}
+        extra={
+          <Space>
+            <Button
+              key="scan"
+              type="primary"
+              icon={<ScanOutlined />}
+              onClick={() => deviceId && scan({ uuid: deviceId })}
+              loading={scanLoading}
+            >
+              扫描设备
+            </Button>
+            <Button ghost key="batch-config" type="primary" icon={<SettingOutlined />}>
+              批量配置
+            </Button>
+          </Space>
+        }
       >
         <CheckCard.Group multiple onChange={(value) => setCheckedItem(value)} value={checkedItem}>
           {subDeviceList?.map((item) => (
