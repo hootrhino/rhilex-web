@@ -18,7 +18,7 @@
   },
   {
     path: '/device',
-    name: '设备管理',
+    name: '设备接入',
     icon: 'group',
     hideChildrenInMenu: true,
     routes: [

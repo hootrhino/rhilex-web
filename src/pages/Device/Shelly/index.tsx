@@ -1,5 +1,5 @@
 import PageContainer from '@/components/PageContainer';
-import { message } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { getShellyGen1List, postShellyGen1Scan } from '@/services/rulex/shellyshebei';
 import {
@@ -17,6 +17,7 @@ import { CheckCard } from '@ant-design/pro-components';
 import { useParams, useRequest } from '@umijs/max';
 import { Button, Divider, Dropdown, Space, Switch, Tag } from 'antd';
 import { useState } from 'react';
+import Detail from './Detail';
 import { avatar, DefaultImg } from './images';
 
 const ShellyDevice = () => {
@@ -51,7 +52,6 @@ const ShellyDevice = () => {
     },
   );
 
-  // TODO 详情
   // TODO 批量配置
 
   return (
@@ -72,6 +72,15 @@ const ShellyDevice = () => {
             </Button>
             <Button ghost key="batch-config" type="primary" icon={<SettingOutlined />}>
               批量配置
+            </Button>
+            <Button
+              key="reload"
+              icon={<ReloadOutlined />}
+              onClick={() => {
+                getSubDeviceList().then(() => message.success('刷新成功'));
+              }}
+            >
+              刷新
             </Button>
           </Space>
         }
@@ -107,12 +116,12 @@ const ShellyDevice = () => {
                   <div className="mt-[10px] flex">
                     <div className="pr-[10px] w-[60px]">Output</div>
                     <Space>
-                      {item?.switch?.map((item) => (
+                      {item?.switch?.map((s) => (
                         <Switch
-                          key={item.id}
-                          checkedChildren={(item?.id || 0) + 1}
-                          unCheckedChildren={(item?.id || 0) + 1}
-                          checked={item?.output}
+                          key={s.id}
+                          checkedChildren={(s?.id || 0) + 1}
+                          unCheckedChildren={(s?.id || 0) + 1}
+                          checked={s?.output}
                           size="small"
                           onClick={(checked, e) => e.stopPropagation()}
                         />
@@ -125,15 +134,28 @@ const ShellyDevice = () => {
                 <Dropdown
                   placement="bottom"
                   menu={{
-                    onClick: ({ domEvent }) => {
+                    onClick: ({ domEvent, key }) => {
+                      switch (key) {
+                        case 'detail':
+                          if (item.mac && deviceId) {
+                            modal.info({
+                              title: `${item.name} 设备详情`,
+                              width: '40%',
+                              content: <Detail mac={item.mac} deviceId={deviceId} ip={item.ip} />,
+                              okText: '关闭',
+                              closable: true,
+                            });
+                          }
+                          break;
+                        case 'device-control':
+                          window.open(`http://${item?.ip}:80`, '_blank');
+                          break;
+                        default:
+                          break;
+                      }
                       domEvent.stopPropagation();
                     },
                     items: [
-                      {
-                        label: '刷新状态',
-                        key: 'refresh-status',
-                        icon: <ReloadOutlined />,
-                      },
                       {
                         label: '查看详情',
                         key: 'detail',
