@@ -24,7 +24,7 @@ import { useEffect, useRef, useState } from 'react';
 import { plcDataTypeOptions } from './enum';
 import UploadRule from './UploadRule';
 
-import StateTag from '@/components/StateTag';
+import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { inRange } from '@/utils/redash';
 
@@ -305,7 +305,7 @@ const PlcSheet = ({ deviceUuid, readOnly }: PlcSheetProps) => {
       dataIndex: 'status',
       editable: false,
       width: 80,
-      renderText: (_, record) => <StateTag state={record?.status || 0} type="point" />,
+      renderText: (_, record) => <StateTag state={record?.status || 0} type={StateType.Point} />,
     },
     {
       title: '采集时间',

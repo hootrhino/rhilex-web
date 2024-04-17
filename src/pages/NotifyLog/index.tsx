@@ -1,6 +1,6 @@
 import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
-import StateTag from '@/components/StateTag';
+import StateTag, { StateType } from '@/components/StateTag';
 import { getNotifyList, putNotifyClear, putNotifyRead } from '@/services/rulex/zhanneitongzhi';
 import { ClearOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
@@ -49,7 +49,7 @@ const NotifyLog = () => {
     {
       title: '类型',
       dataIndex: 'type',
-      renderText: (type: string) => <StateTag state={type || 'INFO'} type="notice" />,
+      renderText: (type: string) => <StateTag state={type || 'INFO'} type={StateType.Notice} />,
     },
     {
       title: '概览',

@@ -1,5 +1,5 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
-import StateTag from '@/components/StateTag';
+import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { stringToBool } from '@/utils/utils';
 import { DataMode, dataModeOption, outendsTypeOption } from './enum';
@@ -97,7 +97,7 @@ const pingConfig = [
       },
     }),
     convertValue: (value: boolean) => value?.toString(),
-    renderText: (allowPing: boolean) => <StateTag state={allowPing} type="bool" />,
+    renderText: (allowPing: boolean) => <StateTag state={allowPing} type={StateType.Bool} />,
   },
   {
     title: '心跳包内容',

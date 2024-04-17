@@ -1,8 +1,8 @@
+import StateTag, { StateType } from '@/components/StateTag';
 import { getShellyGen1Detail, getShellyGen1Status } from '@/services/rulex/shellyshebei';
-import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import type { ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { Divider, Tag } from 'antd';
+import { Divider } from 'antd';
 
 type DetailProps<RecordType = Record<string, any>, ValueType = 'text'> = ProDescriptionsProps<
   RecordType,
@@ -59,14 +59,7 @@ const baseColumns = [
   {
     title: '是否开启认证功能',
     dataIndex: 'auth_en',
-    renderText: (auth_en: boolean) => (
-      <Tag
-        color={auth_en ? 'success' : 'error'}
-        icon={auth_en ? <CheckCircleOutlined /> : <CloseCircleOutlined />}
-      >
-        {auth_en ? '开启' : '关闭'}
-      </Tag>
-    ),
+    renderText: (auth_en: boolean) => <StateTag state={auth_en} type={StateType.Bool} />,
   },
   {
     title: '设备认证域',
@@ -79,12 +72,7 @@ const statusColumns = [
     title: '是否需要重启设备',
     dataIndex: 'restart_required',
     renderText: (restart_required: boolean) => (
-      <Tag
-        color={restart_required ? 'success' : 'error'}
-        icon={restart_required ? <CheckCircleOutlined /> : <CloseCircleOutlined />}
-      >
-        {restart_required ? '开启' : '关闭'}
-      </Tag>
+      <StateTag state={restart_required} type={StateType.Bool} />
     ),
   },
   {

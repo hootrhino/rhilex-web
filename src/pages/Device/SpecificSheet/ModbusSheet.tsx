@@ -31,7 +31,7 @@ import { useEffect, useRef, useState } from 'react';
 import { funcEnum } from '../enum';
 import UploadRule from './UploadRule';
 
-import StateTag from '@/components/StateTag';
+import StateTag, { StateType } from '@/components/StateTag';
 import { inRange } from '@/utils/redash';
 import { modbusDataTypeOptions } from './enum';
 
@@ -427,7 +427,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       dataIndex: 'status',
       width: 80,
       editable: false,
-      renderText: (_, record) => <StateTag state={record?.status || 0} type="point" />,
+      renderText: (_, record) => <StateTag state={record?.status || 0} type={StateType.Point} />,
     },
     {
       title: '采集时间',

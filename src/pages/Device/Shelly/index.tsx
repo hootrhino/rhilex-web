@@ -24,6 +24,12 @@ import { useState } from 'react';
 import Detail from './Detail';
 import { avatar, DefaultImg } from './images';
 
+export enum AppType {
+  Pro1 = 'Pro1',
+  Plus2PM = 'Plus2PM',
+  Pro4PM = 'Pro4PM',
+}
+
 const ShellyDevice = () => {
   const { deviceId } = useParams();
   const [checkedItem, setCheckedItem] = useState<CheckGroupValueType>([]);
@@ -139,7 +145,7 @@ const ShellyDevice = () => {
                           checked={s?.output}
                           size="small"
                           onClick={(checked, e) => {
-                            if (item.app === 'Pro1' && item.ip) {
+                            if (item.app === AppType.Pro1 && item.ip) {
                               pro1Toggle({ ip: item.ip });
                             }
                             e.stopPropagation();

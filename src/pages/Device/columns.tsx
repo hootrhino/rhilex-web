@@ -1,5 +1,5 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
-import StateTag from '@/components/StateTag';
+import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
@@ -45,7 +45,7 @@ export const autoRequestConfig = [
     }),
     convertValue: (value: boolean) => value?.toString(),
     render: (_: any, { commonConfig }: DeviceItem) => (
-      <StateTag state={commonConfig?.autoRequest} type="bool" />
+      <StateTag state={commonConfig?.autoRequest} type={StateType.Bool} />
     ),
   },
 ];
@@ -268,7 +268,7 @@ export const typeConfigColumns = {
           }),
           convertValue: (value: boolean) => value?.toString(),
           render: (_: any, { commonConfig }: DeviceItem) => (
-            <StateTag state={commonConfig?.enableOptimize} type="bool" />
+            <StateTag state={commonConfig?.enableOptimize} type={StateType.Bool} />
           ),
         },
         {
@@ -304,7 +304,7 @@ export const typeConfigColumns = {
           }),
           convertValue: (value: boolean) => value?.toString(),
           render: (_: any, { commonConfig }: DeviceItem) => (
-            <StateTag state={commonConfig?.parseAis} type="parse" />
+            <StateTag state={commonConfig?.parseAis} type={StateType.Parse} />
           ),
         },
         {
@@ -612,7 +612,7 @@ export const typeConfigColumns = {
             },
           }),
           convertValue: (value: boolean) => value?.toString(),
-          renderText: (autoScan: boolean) => <StateTag state={autoScan} type="bool" />,
+          renderText: (autoScan: boolean) => <StateTag state={autoScan} type={StateType.Bool} />,
         },
         {
           title: <UnitTitle title="扫描超时" />,

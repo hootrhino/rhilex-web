@@ -1,20 +1,31 @@
-import { IconFont } from '@/utils/utils';
 import {
   CheckCircleOutlined,
   ClockCircleOutlined,
+  CloseCircleOutlined,
   MinusCircleOutlined,
   SyncOutlined,
 } from '@ant-design/icons';
 import { Tag } from 'antd';
 import { useEffect, useState } from 'react';
 
+export enum StateType {
+  Point = 'point',
+  AppStack = 'appStack',
+  Bool = 'bool',
+  Parse = 'parse',
+  Notice = 'notice',
+  Level = 'level',
+  Running = 'running',
+  Default = 'default',
+}
+
 type StateTagProps = {
   state: number | boolean | string;
-  type?: 'point' | 'appStack' | 'bool' | 'parse' | 'notice' | 'level' | 'running' | 'default';
+  type?: StateType;
 };
 
 const defaultStateEnum = {
-  0: { text: '故障', color: 'error', icon: <IconFont type="icon-close-circle" /> },
+  0: { text: '故障', color: 'error', icon: <CloseCircleOutlined /> },
   1: { text: '启用', color: 'success', icon: <CheckCircleOutlined /> },
   2: { text: '暂停', color: 'warning', icon: <ClockCircleOutlined /> },
   3: { text: '停止', color: 'default', icon: <MinusCircleOutlined /> },
@@ -30,7 +41,7 @@ const pointStateEnum = {
   0: {
     text: '异常',
     color: 'error',
-    icon: <IconFont type="icon-close-circle" />,
+    icon: <CloseCircleOutlined />,
   },
 };
 
@@ -51,10 +62,12 @@ const boolStateEnum = {
   true: {
     text: '开启',
     color: 'success',
+    icon: <CheckCircleOutlined />,
   },
   false: {
     text: '关闭',
     color: 'error',
+    icon: <CloseCircleOutlined />,
   },
 };
 
@@ -117,11 +130,11 @@ const runningStateEnum = {
   },
 };
 
-const StateTag = ({ state, type = 'default' }: StateTagProps) => {
+const StateTag = ({ state, type = StateType.Default }: StateTagProps) => {
   const [activeState, setActiveState] = useState<number | string>(0);
   const [dataSource, setDataSource] = useState<Record<number | string, any>>(defaultStateEnum);
 
-  const props = ['default', 'point', 'appStack', 'running'].includes(type)
+  const props = ['default', 'point', 'appStack', 'running', 'bool'].includes(type)
     ? {
         icon: dataSource[activeState]?.icon,
         color: dataSource[activeState]?.color,

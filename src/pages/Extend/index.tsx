@@ -1,6 +1,6 @@
 import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
-import StateTag from '@/components/StateTag';
+import StateTag, { StateType } from '@/components/StateTag';
 import {
   deleteGoods,
   getGoodsList,
@@ -91,7 +91,7 @@ export const baseColumns = [
     title: '运行状态',
     dataIndex: 'running',
     width: 100,
-    renderText: (running: string) => <StateTag state={running} type="running" />,
+    renderText: (running: string) => <StateTag state={running} type={StateType.Running} />,
   },
   {
     title: '备注',

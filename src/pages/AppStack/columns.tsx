@@ -1,4 +1,4 @@
-import StateTag from '@/components/StateTag';
+import StateTag, { StateType } from '@/components/StateTag';
 import { stringToBool } from '@/utils/utils';
 
 export const baseColumns = [
@@ -20,13 +20,13 @@ export const baseColumns = [
     valueType: 'state',
     convertValue: (value: boolean) => value?.toString(),
     transform: (value: string) => ({ autoStart: stringToBool(value) }),
-    renderText: (autoStart: boolean) => <StateTag state={autoStart} type="bool" />,
+    renderText: (autoStart: boolean) => <StateTag state={autoStart} type={StateType.Bool} />,
   },
   {
     title: 'APP 状态',
     dataIndex: 'appState',
     hideInForm: true,
-    renderText: (appState: number) => <StateTag state={appState} type="appStack" />,
+    renderText: (appState: number) => <StateTag state={appState} type={StateType.AppStack} />,
   },
   {
     title: '脚本类型',
