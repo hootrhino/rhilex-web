@@ -1,7 +1,11 @@
 import PageContainer from '@/components/PageContainer';
 import { message, modal } from '@/components/PopupHack';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
-import { getShellyGen1List, postShellyGen1Scan } from '@/services/rulex/shellyshebei';
+import {
+  getShellyGen1List,
+  getShellyGen1Pro1Switch1Toggle,
+  postShellyGen1Scan,
+} from '@/services/rulex/shellyshebei';
 import {
   CheckCircleOutlined,
   ControlOutlined,
@@ -48,6 +52,17 @@ const ShellyDevice = () => {
       onSuccess: () => {
         getSubDeviceList();
         message.success('扫描成功');
+      },
+    },
+  );
+
+  // Pro1 开关控制
+  const { run: pro1Toggle } = useRequest(
+    (params: API.getShellyGen1Pro1Switch1ToggleParams) => getShellyGen1Pro1Switch1Toggle(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        getSubDeviceList();
       },
     },
   );
@@ -123,7 +138,12 @@ const ShellyDevice = () => {
                           unCheckedChildren={(s?.id || 0) + 1}
                           checked={s?.output}
                           size="small"
-                          onClick={(checked, e) => e.stopPropagation()}
+                          onClick={(checked, e) => {
+                            if (item.app === 'Pro1' && item.ip) {
+                              pro1Toggle({ ip: item.ip });
+                            }
+                            e.stopPropagation();
+                          }}
                         />
                       ))}
                     </Space>

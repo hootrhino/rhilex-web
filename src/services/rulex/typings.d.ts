@@ -242,6 +242,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type getShellyGen1Pro1Switch1ToggleParams = {
+    ip: string;
+  };
+
   type getShellyGen1StatusParams = {
     ip: string;
   };

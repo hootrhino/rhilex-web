@@ -56,6 +56,24 @@ export async function getShellyGen1List(
   });
 }
 
+/** Pro1拨动开关 GET /api/v1/shelly_gen1/pro1/switch1/toggle */
+export async function getShellyGen1Pro1Switch1Toggle(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getShellyGen1Pro1Switch1ToggleParams,
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: { was_on: boolean } }>(
+    '/api/v1/shelly_gen1/pro1/switch1/toggle',
+    {
+      method: 'GET',
+      params: {
+        ...params,
+      },
+      ...(options || {}),
+    },
+  );
+}
+
 /** Shelly设备扫描 POST /api/v1/shelly_gen1/scan */
 export async function postShellyGen1Scan(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
