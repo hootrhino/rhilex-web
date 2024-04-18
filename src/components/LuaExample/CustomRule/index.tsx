@@ -4,7 +4,7 @@ import {
   getUserluaListByGroup,
   postUserluaCreate,
   putUserluaUpdate,
-} from '@/services/rulex/yonghuluapianduan';
+} from '@/services/rulex/yonghudingyiluamoban';
 import { DEFAULT_GROUP_KEY_LUA_TPL } from '@/utils/constant';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-components';

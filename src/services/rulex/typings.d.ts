@@ -250,6 +250,18 @@ declare namespace API {
     ip: string;
   };
 
+  type getSnmpOidsSheetListParams = {
+    device_uuid?: string;
+    current?: number;
+    size?: number;
+    dataType?: string;
+    dataOrder?: string;
+  };
+
+  type getSnmpOidsSheetSheetExportParams = {
+    device_uuid: string;
+  };
+
   type getUserluaDetailParams = {
     uuid: string;
   };

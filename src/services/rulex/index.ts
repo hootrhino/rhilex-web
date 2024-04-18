@@ -25,13 +25,14 @@ import * as shujubeifen from './shujubeifen';
 import * as shujumoxing from './shujumoxing';
 import * as shujuzhongxin from './shujuzhongxin';
 import * as shuruziyuanguanli from './shuruziyuanguanli';
+import * as snmpdianweiguanli from './snmpdianweiguanli';
 import * as wangluopeizhi from './wangluopeizhi';
 import * as wuxianwifipeizhi from './wuxianwifipeizhi';
 import * as ximenzidianweiguanli from './ximenzidianweiguanli';
 import * as xitongshuju from './xitongshuju';
 import * as yidongwangluo4Gshezhi from './yidongwangluo4Gshezhi';
+import * as yonghudingyiluamoban from './yonghudingyiluamoban';
 import * as yonghuguanli from './yonghuguanli';
-import * as yonghuluapianduan from './yonghuluapianduan';
 import * as zhandianpeizhi from './zhandianpeizhi';
 import * as zhanneitongzhi from './zhanneitongzhi';
 export default {
@@ -60,11 +61,12 @@ export default {
   shujubeifen,
   jiekouguanli,
   zhanneitongzhi,
-  yonghuluapianduan,
+  yonghudingyiluamoban,
   modbusdianweiguanli,
   ximenzidianweiguanli,
   shujumoxing,
   huazhongshukongdianweiguanli,
   liumeitiguanli,
   shellyshebei,
+  snmpdianweiguanli,
 };

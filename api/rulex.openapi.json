@@ -85,13 +85,16 @@
       "name": "站内通知"
     },
     {
-      "name": "用户lua片段"
+      "name": "用户定义lua模板"
     },
     {
-      "name": "Modbus点位管理"
+      "name": "modbus点位管理"
     },
     {
       "name": "西门子点位管理"
+    },
+    {
+      "name": "snmp点位管理 "
     },
     {
       "name": "华中数控点位管理"
@@ -10040,12 +10043,12 @@
     "/api/v1/userlua/listByGroup": {
       "get": {
         "summary": "列表查看",
-        "x-apifox-folder": "用户lua片段",
+        "x-apifox-folder": "用户定义lua模板",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户lua片段"
+          "用户定义lua模板"
         ],
         "parameters": [
           {
@@ -10187,12 +10190,12 @@
     "/api/v1/userlua/create": {
       "post": {
         "summary": "新建模板",
-        "x-apifox-folder": "用户lua片段",
+        "x-apifox-folder": "用户定义lua模板",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户lua片段"
+          "用户定义lua模板"
         ],
         "parameters": [],
         "requestBody": {
@@ -10350,12 +10353,12 @@
     "/api/v1/userlua/del": {
       "delete": {
         "summary": "删除模板",
-        "x-apifox-folder": "用户lua片段",
+        "x-apifox-folder": "用户定义lua模板",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户lua片段"
+          "用户定义lua模板"
         ],
         "parameters": [
           {
@@ -10423,12 +10426,12 @@
     "/api/v1/userlua/update": {
       "put": {
         "summary": "更新模板",
-        "x-apifox-folder": "用户lua片段",
+        "x-apifox-folder": "用户定义lua模板",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户lua片段"
+          "用户定义lua模板"
         ],
         "parameters": [],
         "requestBody": {
@@ -10592,12 +10595,12 @@
     "/api/v1/userlua/group": {
       "get": {
         "summary": "分组列表",
-        "x-apifox-folder": "用户lua片段",
+        "x-apifox-folder": "用户定义lua模板",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户lua片段"
+          "用户定义lua模板"
         ],
         "parameters": [],
         "responses": {
@@ -10682,12 +10685,12 @@
     "/api/v1/userlua/detail": {
       "get": {
         "summary": "获取详情",
-        "x-apifox-folder": "用户lua片段",
+        "x-apifox-folder": "用户定义lua模板",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户lua片段"
+          "用户定义lua模板"
         ],
         "parameters": [
           {
@@ -10833,12 +10836,12 @@
     "/api/v1/userlua/search": {
       "get": {
         "summary": "模糊搜索",
-        "x-apifox-folder": "用户lua片段",
+        "x-apifox-folder": "用户定义lua模板",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户lua片段"
+          "用户定义lua模板"
         ],
         "parameters": [
           {
@@ -10944,12 +10947,12 @@
     "/api/v1/modbus_data_sheet/sheetImport": {
       "post": {
         "summary": "导入点位表",
-        "x-apifox-folder": "Modbus点位管理",
+        "x-apifox-folder": "modbus点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "Modbus点位管理"
+          "modbus点位管理"
         ],
         "parameters": [],
         "requestBody": {
@@ -10997,12 +11000,12 @@
     "/api/v1/modbus_data_sheet/list": {
       "get": {
         "summary": "分页查看点位表",
-        "x-apifox-folder": "Modbus点位管理",
+        "x-apifox-folder": "modbus点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "Modbus点位管理"
+          "modbus点位管理"
         ],
         "parameters": [
           {
@@ -11246,12 +11249,12 @@
     "/api/v1/modbus_data_sheet/update": {
       "post": {
         "summary": "更新点位表",
-        "x-apifox-folder": "Modbus点位管理",
+        "x-apifox-folder": "modbus点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "Modbus点位管理"
+          "modbus点位管理"
         ],
         "parameters": [],
         "requestBody": {
@@ -11411,12 +11414,12 @@
     "/api/v1/modbus_data_sheet/delIds": {
       "delete": {
         "summary": "多行删除",
-        "x-apifox-folder": "Modbus点位管理",
+        "x-apifox-folder": "modbus点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "Modbus点位管理"
+          "modbus点位管理"
         ],
         "parameters": [],
         "requestBody": {
@@ -11509,12 +11512,12 @@
     "/api/v1/modbus_data_sheet/sheetExport": {
       "get": {
         "summary": "导出点表",
-        "x-apifox-folder": "Modbus点位管理",
+        "x-apifox-folder": "modbus点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "Modbus点位管理"
+          "modbus点位管理"
         ],
         "parameters": [
           {
@@ -16603,6 +16606,635 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-166063042-run",
+        "security": []
+      }
+    },
+    "/api/v1/snmp_oids_sheet/sheetImport": {
+      "post": {
+        "summary": "导入点位表",
+        "x-apifox-folder": "snmp点位管理 ",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "snmp点位管理 "
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string",
+                    "example": "DEVICEPGCZHKFU"
+                  },
+                  "file": {
+                    "type": "string",
+                    "example": "file://C:\\Users\\wangwenhai\\workspace\\rhilex\\test\\data\\test-snmp3-oids-sheet.xlsx",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-166280019-run",
+        "security": []
+      }
+    },
+    "/api/v1/snmp_oids_sheet/list": {
+      "get": {
+        "summary": "分页查看点位表",
+        "x-apifox-folder": "snmp点位管理 ",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "snmp点位管理 "
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "DEVICEDQNLO8",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "6",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "2",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "dataType",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "FLOAT",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dataOrder",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "DCBA",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "device_uuid": {
+                                "type": "string"
+                              },
+                              "oid": {
+                                "type": "string"
+                              },
+                              "tag": {
+                                "type": "string"
+                              },
+                              "alias": {
+                                "type": "string"
+                              },
+                              "frequency": {
+                                "type": "integer"
+                              },
+                              "status": {
+                                "type": "integer"
+                              },
+                              "lastFetchTime": {
+                                "type": "integer"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "uuid",
+                              "device_uuid",
+                              "oid",
+                              "tag",
+                              "alias",
+                              "frequency",
+                              "status",
+                              "lastFetchTime",
+                              "value"
+                            ],
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "device_uuid",
+                              "oid",
+                              "tag",
+                              "alias",
+                              "frequency",
+                              "status",
+                              "lastFetchTime",
+                              "value"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 10,
+                        "total": 7,
+                        "records": [
+                          {
+                            "uuid": "SNMPFD7SYFQD",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "Total Processes",
+                            "alias": "线程总数",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "SNMPY8EBZAPP",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "Users Count",
+                            "alias": "用户总数",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "SNMPJYQLMHX5",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "CPU",
+                            "alias": "CPU使用率",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "SNMPYYBS7EMD",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "Load",
+                            "alias": "负载力",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "1",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "SystemDescription",
+                            "alias": "SystemDescription",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "2",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "PCName",
+                            "alias": "PCName",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "3",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "sysServices",
+                            "alias": "sysServices",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-166280020-run",
+        "security": []
+      }
+    },
+    "/api/v1/snmp_oids_sheet/update": {
+      "post": {
+        "summary": "更新点位表",
+        "x-apifox-folder": "snmp点位管理 ",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "snmp点位管理 "
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "siemens_data_points": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "device_uuid": {
+                          "type": "string"
+                        },
+                        "siemensAddress": {
+                          "type": "string"
+                        },
+                        "tag": {
+                          "type": "string"
+                        },
+                        "alias": {
+                          "type": "string"
+                        },
+                        "dataOrder": {
+                          "type": "string"
+                        },
+                        "dataType": {
+                          "type": "string"
+                        },
+                        "weight": {
+                          "type": "number"
+                        },
+                        "frequency": {
+                          "type": "integer"
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "uuid",
+                        "device_uuid",
+                        "siemensAddress",
+                        "tag",
+                        "alias",
+                        "dataOrder",
+                        "dataType",
+                        "weight",
+                        "frequency"
+                      ],
+                      "required": [
+                        "weight"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "siemens_data_points"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "siemens_data_points"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICEMJOE28KR",
+                "siemens_data_points": [
+                  {
+                    "uuid": "SIMTBKDONJIUK",
+                    "device_uuid": "DEVICEMJOE28KR",
+                    "siemensAddress": "DB4900.DBD1000",
+                    "tag": "温度",
+                    "alias": "温度参数",
+                    "dataOrder": "ABCD",
+                    "dataType": "UINT",
+                    "frequency": 100
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-166280023-run",
+        "security": []
+      }
+    },
+    "/api/v1/snmp_oids_sheet/delIds": {
+      "delete": {
+        "summary": "多行删除",
+        "x-apifox-folder": "snmp点位管理 ",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "snmp点位管理 "
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "uuids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICEPY8DYMPM",
+                "uuids": [
+                  "SNMPFD7SYFQD"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-166280024-run",
+        "security": []
+      }
+    },
+    "/api/v1/snmp_oids_sheet/sheetExport": {
+      "get": {
+        "summary": "导出点表",
+        "x-apifox-folder": "snmp点位管理 ",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "snmp点位管理 "
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "AABBCCDD",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-166280025-run",
         "security": []
       }
     }
