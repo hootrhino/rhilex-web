@@ -2,19 +2,16 @@ import { Table } from 'antd';
 
 const dataSource = [
   {
-    address: 'DB4900.DBD1000',
-    tag: 'R0',
-    alias: '新砂轮直径（mm）',
-    type: 'FLOAT',
-    order: 'ABCD',
-    weight: 1,
+    oid: '.1.3.6.1.2.1.1.1.0',
+    tag: 'Total Processes',
+    alias: '线程总数',
     frequency: 1000,
   },
 ];
 
 const columns = [
   {
-    title: 'address',
+    title: 'oid',
     dataIndex: 'address',
   },
   {
@@ -24,18 +21,6 @@ const columns = [
   {
     title: 'alias',
     dataIndex: 'alias',
-  },
-  {
-    title: 'type',
-    dataIndex: 'type',
-  },
-  {
-    title: 'order',
-    dataIndex: 'order',
-  },
-  {
-    title: 'weight',
-    dataIndex: 'weight',
   },
   {
     title: 'frequency',

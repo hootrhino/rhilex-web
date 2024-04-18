@@ -10,8 +10,10 @@ import { useEffect } from 'react';
 import type { DeviceItem } from '..';
 import { baseColumns, typeConfigColumns } from '../columns';
 import { DeviceType } from '../enum';
-import ModbusSheet from '../Plc/ModbusSheet';
-import PlcSheet from '../Plc/PlcSheet';
+import ModbusSheet from '../Modbus';
+import { ModbusSheetType } from '../Modbus/enum';
+import PlcSheet from '../Plc';
+import { PlcSheetType } from '../Plc/enum';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -142,25 +144,14 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
               }
             })}
 
-            {type === 'GENERIC_HTTP_DEVICE' && <HeadersDetail data={config?.httpConfig?.headers} />}
-            {detail?.uuid && ['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type) && (
-              <>
-                <ProDescriptions
-                  title={
-                    <>
-                      <span>点位表配置</span>
-                      <span className="text-[12px] opacity-[.8] pl-[5px] font-normal">
-                        (横向滚动查看更多)
-                      </span>
-                    </>
-                  }
-                />
-                {type === 'GENERIC_MODBUS' ? (
-                  <ModbusSheet deviceUuid={detail?.uuid} readOnly={true} />
-                ) : (
-                  <PlcSheet deviceUuid={detail?.uuid} readOnly={true} />
-                )}
-              </>
+            {type === DeviceType.GENERIC_HTTP_DEVICE && (
+              <HeadersDetail data={config?.httpConfig?.headers} />
+            )}
+            {type === DeviceType.GENERIC_MODBUS && (
+              <ModbusSheet uuid={detail?.uuid} type={ModbusSheetType.DETAIL} />
+            )}
+            {type === DeviceType.SIEMENS_PLC && (
+              <PlcSheet uuid={detail?.uuid} type={PlcSheetType.DETAIL} />
             )}
           </>
         )}

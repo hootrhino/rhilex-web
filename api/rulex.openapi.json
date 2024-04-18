@@ -16796,6 +16796,9 @@
                               "frequency": {
                                 "type": "integer"
                               },
+                              "errMsg": {
+                                "type": "string"
+                              },
                               "status": {
                                 "type": "integer"
                               },
@@ -16813,6 +16816,7 @@
                               "tag",
                               "alias",
                               "frequency",
+                              "errMsg",
                               "status",
                               "lastFetchTime",
                               "value"
@@ -16825,6 +16829,7 @@
                               "tag",
                               "alias",
                               "frequency",
+                              "errMsg",
                               "status",
                               "lastFetchTime",
                               "value"
@@ -16858,99 +16863,6 @@
                     "msg",
                     "data"
                   ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "current": 1,
-                        "size": 10,
-                        "total": 7,
-                        "records": [
-                          {
-                            "uuid": "SNMPFD7SYFQD",
-                            "device_uuid": "DEVICEPY8DYMPM",
-                            "oid": "",
-                            "tag": "Total Processes",
-                            "alias": "线程总数",
-                            "frequency": 1000,
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "SNMPY8EBZAPP",
-                            "device_uuid": "DEVICEPY8DYMPM",
-                            "oid": "",
-                            "tag": "Users Count",
-                            "alias": "用户总数",
-                            "frequency": 1000,
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "SNMPJYQLMHX5",
-                            "device_uuid": "DEVICEPY8DYMPM",
-                            "oid": "",
-                            "tag": "CPU",
-                            "alias": "CPU使用率",
-                            "frequency": 1000,
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "SNMPYYBS7EMD",
-                            "device_uuid": "DEVICEPY8DYMPM",
-                            "oid": "",
-                            "tag": "Load",
-                            "alias": "负载力",
-                            "frequency": 1000,
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "1",
-                            "device_uuid": "DEVICEPY8DYMPM",
-                            "oid": "",
-                            "tag": "SystemDescription",
-                            "alias": "SystemDescription",
-                            "frequency": 1000,
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "2",
-                            "device_uuid": "DEVICEPY8DYMPM",
-                            "oid": "",
-                            "tag": "PCName",
-                            "alias": "PCName",
-                            "frequency": 1000,
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "3",
-                            "device_uuid": "DEVICEPY8DYMPM",
-                            "oid": "",
-                            "tag": "sysServices",
-                            "alias": "sysServices",
-                            "frequency": 1000,
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          }
-                        ]
-                      }
-                    }
-                  }
                 }
               }
             }
@@ -16980,7 +16892,7 @@
                   "device_uuid": {
                     "type": "string"
                   },
-                  "siemens_data_points": {
+                  "snmp_oids": {
                     "type": "array",
                     "items": {
                       "type": "object",
@@ -16991,7 +16903,7 @@
                         "device_uuid": {
                           "type": "string"
                         },
-                        "siemensAddress": {
+                        "oid": {
                           "type": "string"
                         },
                         "tag": {
@@ -17000,44 +16912,41 @@
                         "alias": {
                           "type": "string"
                         },
-                        "dataOrder": {
-                          "type": "string"
-                        },
-                        "dataType": {
-                          "type": "string"
-                        },
-                        "weight": {
-                          "type": "number"
-                        },
                         "frequency": {
                           "type": "integer"
+                        },
+                        "status": {
+                          "type": "integer"
+                        },
+                        "lastFetchTime": {
+                          "type": "integer"
+                        },
+                        "value": {
+                          "type": "string"
                         }
                       },
+                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "uuid",
                         "device_uuid",
-                        "siemensAddress",
+                        "oid",
                         "tag",
                         "alias",
-                        "dataOrder",
-                        "dataType",
-                        "weight",
-                        "frequency"
-                      ],
-                      "required": [
-                        "weight"
-                      ],
-                      "x-apifox-ignore-properties": []
+                        "frequency",
+                        "status",
+                        "lastFetchTime",
+                        "value"
+                      ]
                     }
                   }
                 },
                 "required": [
                   "device_uuid",
-                  "siemens_data_points"
+                  "snmp_oids"
                 ],
                 "x-apifox-orders": [
                   "device_uuid",
-                  "siemens_data_points"
+                  "snmp_oids"
                 ],
                 "x-apifox-ignore-properties": []
               },

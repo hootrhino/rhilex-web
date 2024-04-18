@@ -40,6 +40,7 @@ export async function getSnmpOidsSheetList(
         tag: string;
         alias: string;
         frequency: number;
+        errMsg: string;
         status: number;
         lastFetchTime: number;
         value: string;
@@ -114,16 +115,16 @@ export async function postSnmpOidsSheetSheetImport(
 export async function postSnmpOidsSheetUpdate(
   body: {
     device_uuid: string;
-    siemens_data_points: {
+    snmp_oids: {
       uuid?: string;
       device_uuid?: string;
-      siemensAddress?: string;
+      oid?: string;
       tag?: string;
       alias?: string;
-      dataOrder?: string;
-      dataType?: string;
-      weight: number;
       frequency?: number;
+      status?: number;
+      lastFetchTime?: number;
+      value?: string;
     }[];
   },
   options?: { [key: string]: any },

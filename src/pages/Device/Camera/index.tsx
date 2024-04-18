@@ -5,12 +5,12 @@ import { Button, Modal } from 'antd';
 import { useEffect, useState } from 'react';
 import { OutputMode } from '../enum';
 
-type VideoDetailProps = ModalProps & {
+type CameraDetailProps = ModalProps & {
   deviceName: string | undefined;
   outputMode: OutputMode;
 };
 
-const VideoDetail = ({ deviceName = '', outputMode, onCancel, ...props }: VideoDetailProps) => {
+const CameraDetail = ({ deviceName = '', outputMode, onCancel, ...props }: CameraDetailProps) => {
   const [playUrl, setPlayUrl] = useState<string>('');
 
   const getAddress = () => {
@@ -18,7 +18,7 @@ const VideoDetail = ({ deviceName = '', outputMode, onCancel, ...props }: VideoD
     return `${address}&t=${new Date().getTime()}`;
   };
 
-  const handleOnCancel = (e) => {
+  const handleOnCancel = (e: any) => {
     onCancel!(e);
     setPlayUrl('');
   };
@@ -69,4 +69,4 @@ const VideoDetail = ({ deviceName = '', outputMode, onCancel, ...props }: VideoD
   );
 };
 
-export default VideoDetail;
+export default CameraDetail;

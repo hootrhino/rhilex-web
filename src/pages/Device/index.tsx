@@ -10,12 +10,13 @@ import {
   putDevicesUpdate,
 } from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
-import { getName, IconFont } from '@/utils/utils';
+import { getName } from '@/utils/utils';
 import {
   ApartmentOutlined,
   ControlOutlined,
   DisconnectOutlined,
   DownOutlined,
+  ExceptionOutlined,
   HddOutlined,
   PlayCircleOutlined,
   PlusOutlined,
@@ -29,13 +30,13 @@ import { Button, Dropdown, Popconfirm, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/hooks/useItems';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useRef, useState } from 'react';
+import CameraDetail from './Camera';
 import { baseColumns } from './columns';
 import Detail from './Detail';
 import { DeviceType, OutputMode } from './enum';
 import type { GroupConfig } from './Group';
 import GroupList, { DEFAULT_CONFIG } from './Group';
 import SchemaDetail from './SchemaDetail';
-import VideoDetail from './VideoDetail';
 
 export type DeviceItem = {
   name: string;
@@ -118,67 +119,70 @@ const Devices = () => {
         modal.error({
           title: '设备异常信息',
           content: <div className="flex flex-wrap">{res}</div>,
+          okText: '关闭',
         }),
     },
   );
 
-  const getMenuItems = ({ type = '', schemaId = '', state = 0 }) => {
-    const showSheet = ['GENERIC_MODBUS', 'SIEMENS_PLC'].includes(type);
-
-    let baseItems = [
+  const getMenuItems = ({ type = DeviceType.GENERIC_PROTOCOL, schemaId = '', state = 0 }) => {
+    const baseItems = [
       { key: 'restart', label: '重启设备', icon: <PoweroffOutlined />, danger: true },
-      // { key: 'rule', label: '规则配置', icon: <SettingOutlined /> },
     ] as ItemType[];
+    const showErr = state === 0;
+    const errItem = { key: 'error', label: '查看异常', icon: <ExceptionOutlined /> };
+    const ruleItem = { key: 'rule', label: '规则配置', icon: <SettingOutlined /> };
+    const schemaItem = { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> };
+    const unbindItem = { key: 'unbind', label: '解绑数据模型', icon: <DisconnectOutlined /> };
 
-    if (type === DeviceType.GENERIC_CAMERA) {
-      baseItems = [...baseItems, { key: 'video', label: '查看视频', icon: <PlayCircleOutlined /> }];
-      // baseItems = [...baseItems];
-    } else if (type === DeviceType.SHELLY_GEN1_PROXY_SERVER) {
-      baseItems = [
-        ...baseItems,
-        { key: 'rule', label: '规则配置', icon: <SettingOutlined /> },
-        { key: 'shelly-device', label: '查看子设备', icon: <HddOutlined /> },
-      ];
-    } else {
-      baseItems = [
-        ...baseItems,
-        { key: 'rule', label: '规则配置', icon: <SettingOutlined /> },
-        { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> },
-      ];
+    let newItems = [...baseItems];
 
-      if (schemaId) {
-        baseItems = [
-          ...baseItems,
-          { key: 'unbind', label: '解绑数据模型', icon: <DisconnectOutlined /> },
+    switch (type) {
+      case DeviceType.GENERIC_CAMERA:
+        newItems = [...newItems, { key: 'video', label: '查看视频', icon: <PlayCircleOutlined /> }];
+        break;
+      case DeviceType.SHELLY_GEN1_PROXY_SERVER:
+        newItems = [
+          ...newItems,
+          ruleItem,
+          { key: 'shelly-device', label: '查看子设备', icon: <HddOutlined /> },
         ];
-      }
-
-      if (showSheet) {
-        baseItems = [
-          ...baseItems,
-          { key: 'specific-sheet', label: '点位表配置', icon: <ControlOutlined /> },
+        break;
+      case DeviceType.GENERIC_SNMP:
+        newItems = [
+          ...newItems,
+          ruleItem,
+          schemaItem,
+          schemaId ? unbindItem : null,
+          { key: 'snmp-sheet', label: 'SNMP 对象列表', icon: <ControlOutlined /> },
         ];
-      }
+        break;
+      case DeviceType.GENERIC_MODBUS:
+        newItems = [
+          ...newItems,
+          ruleItem,
+          schemaItem,
+          schemaId ? unbindItem : null,
+          { key: 'modbus-sheet', label: '点位表配置', icon: <ControlOutlined /> },
+        ];
+        break;
+      case DeviceType.SIEMENS_PLC:
+        newItems = [
+          ...newItems,
+          ruleItem,
+          schemaItem,
+          schemaId ? unbindItem : null,
+          { key: 'plc-sheet', label: '点位表配置', icon: <ControlOutlined /> },
+        ];
+        break;
+      default:
+        newItems = [...newItems, ruleItem, schemaItem, schemaId ? unbindItem : null];
+        break;
     }
 
-    if (state === 0) {
-      baseItems = [
-        ...baseItems,
-        {
-          key: 'error',
-          label: '查看异常',
-          icon: <IconFont type="icon-error" className="text-[16px]" />,
-        },
-      ];
-    }
-
-    return baseItems;
+    return [...newItems, showErr ? errItem : null];
   };
 
-  const handleOnMenu = (
-    { key }: MenuInfo,
-    { uuid, gid, type, name, config }: Partial<DeviceItem>,
-  ) => {
+  const handleOnMenu = ({ key }: MenuInfo, { uuid, gid, name, config }: Partial<DeviceItem>) => {
     switch (key) {
       case 'restart':
         setOpen(true);
@@ -187,8 +191,14 @@ const Devices = () => {
       case 'rule':
         history.push(`/device/${gid}/${uuid}/rule`);
         break;
-      case 'specific-sheet':
-        history.push(`/device/${gid}/${uuid}/specific-sheet/${type}`);
+      case 'snmp-sheet':
+        history.push(`/device/${gid}/${uuid}/snmp-sheet`);
+        break;
+      case 'plc-sheet':
+        history.push(`/device/${gid}/${uuid}/plc-sheet`);
+        break;
+      case 'modbus-sheet':
+        history.push(`/device/${gid}/${uuid}/modbus-sheet`);
         break;
       case 'schema':
         setOpenSchema(true);
@@ -359,7 +369,7 @@ const Devices = () => {
           setActiveDevice('');
         }}
       />
-      <VideoDetail
+      <CameraDetail
         open={openVideo}
         onCancel={() => {
           setOpenVideo(false);

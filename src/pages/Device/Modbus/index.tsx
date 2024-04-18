@@ -20,20 +20,24 @@ import {
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import {
   EditableProTable,
+  ProDescriptions,
   ProFormCascader,
   ProFormDigit,
   ProFormSelect,
   ProFormText,
+  ProTable,
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useParams, useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { funcEnum } from '../enum';
-import UploadRule from './UploadRule';
 
+import PageContainer from '@/components/PageContainer';
 import StateTag, { StateType } from '@/components/StateTag';
+import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { inRange } from '@/utils/redash';
-import { modbusDataTypeOptions } from './enum';
+import { modbusDataTypeOptions, ModbusSheetType } from './enum';
+import UploadRule from './UploadRule';
 
 const defaultModbusConfig = {
   tag: '',
@@ -49,23 +53,12 @@ const defaultModbusConfig = {
 
 type RecordKey = React.Key | React.Key[];
 
-export type ModbusSheetItem = {
-  uuid?: string;
+export type ModbusDataSheetItem = Point & {
   id?: number;
   created_at?: string;
-  tag: string;
-  alias: string;
-  function: number;
-  frequency: number;
-  slaverId: number;
-  address: number;
-  quantity: number;
   status: number;
   lastFetchTime: number;
   value: string;
-  dataType: string;
-  dataOrder: string;
-  weight: number;
   [key: string]: any;
 };
 
@@ -94,20 +87,23 @@ type UpdateParams = {
   modbus_data_points: Point[];
 };
 
-type ModbusSheetProps = {
-  deviceUuid: string;
-  readOnly?: boolean;
+type ModbusDataSheetProps = {
+  uuid?: string;
+  type: ModbusSheetType;
 };
 
-const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
+const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetProps) => {
   const actionRef = useRef<ActionType>();
-  const editorFormRef = useRef<EditableFormInstance<ModbusSheetItem>>();
+  const editorFormRef = useRef<EditableFormInstance<ModbusDataSheetItem>>();
+  const { deviceId } = useParams();
 
+  const [title, setTitle] = useState<string>('点位表配置');
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [editableRows, setEditableRows] = useState<Partial<ModbusSheetItem>[]>([]);
+  const [editableRows, setEditableRows] = useState<Partial<ModbusDataSheetItem>[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [polling, setPolling] = useState<number>(3000);
   const [stopPolling, setStopPolling] = useState<boolean>(false);
+  const [deviceUuid, setUuid] = useState<string>('');
 
   const disabled = selectedRowKeys?.length === 0;
 
@@ -140,7 +136,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
     },
   });
 
-  const formatUpdateParams = (params: Partial<ModbusSheetItem>) => {
+  const formatUpdateParams = (params: Partial<ModbusDataSheetItem>) => {
     let newParams = {
       ...omit(params, ['type']),
       dataType: params?.type?.[0],
@@ -158,7 +154,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
   };
 
   // 单个更新
-  const handleOnSave = async (rowKey: RecordKey, data: Partial<ModbusSheetItem>) => {
+  const handleOnSave = async (rowKey: RecordKey, data: Partial<ModbusDataSheetItem>) => {
     let params = formatUpdateParams(data);
 
     if (rowKey === 'new') {
@@ -206,7 +202,14 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
     setStopPolling(false);
   };
 
-  const columns: ProColumns<Partial<ModbusSheetItem>>[] = [
+  // 设备详情
+  const { run } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
+    manual: true,
+    onSuccess: (record) =>
+      setTitle(record?.name ? `设备 ${record?.name} - 点位表配置` : '点位表配置'),
+  });
+
+  const columns: ProColumns<Partial<ModbusDataSheetItem>>[] = [
     {
       title: '序号',
       dataIndex: 'index',
@@ -440,7 +443,7 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
       title: '操作',
       valueType: 'option',
       width: 150,
-      hideInTable: readOnly,
+      hideInTable: type === ModbusSheetType.DETAIL,
       render: (text, record, _, action) => {
         return (
           <Space align="end">
@@ -578,69 +581,116 @@ const ModbusSheet = ({ deviceUuid, readOnly }: ModbusSheetProps) => {
     }
   }, [editableKeys]);
 
-  return (
-    <EditableProTable<Partial<ModbusSheetItem>>
-      controlled
-      rowKey="uuid"
-      actionRef={actionRef}
-      editableFormRef={editorFormRef}
-      columns={columns}
-      polling={polling}
-      rootClassName="sheet-table"
-      recordCreatorProps={
-        readOnly
-          ? false
-          : {
-              position: 'top',
-              creatorButtonText: '添加点位',
-              record: () => ({
-                ...defaultModbusConfig,
-                uuid: 'new',
-              }),
-            }
-      }
-      rowSelection={
-        readOnly
-          ? false
-          : {
-              selectedRowKeys: selectedRowKeys,
-              onChange: setSelectedRowKeys,
-            }
-      }
-      toolBarRender={readOnly ? false : () => toolBar}
-      request={async ({ current = 1, pageSize = 10 }) => {
-        const { data } = await getModbusDataSheetList({
-          device_uuid: deviceUuid,
-          current,
-          size: pageSize,
-        });
+  useEffect(() => {
+    if (deviceId) {
+      run({ uuid: deviceId });
+    }
+  }, [deviceId]);
 
-        return Promise.resolve({
-          data: data?.records?.map((item) => ({
-            ...item,
-            type: [item?.dataType, item?.dataOrder],
-          })),
-          total: data?.total,
-          success: true,
-        });
-      }}
-      pagination={{
-        defaultPageSize: 10,
-        hideOnSinglePage: true,
-      }}
-      options={readOnly ? false : {}}
-      editable={{
-        type: 'multiple',
-        editableKeys,
-        onSave: handleOnSave,
-        onChange: setEditableRowKeys,
-        onValuesChange: (record, dataSource) => {
-          setEditableRows(dataSource);
-        },
-      }}
-      scroll={{ x: readOnly ? 1200 : undefined }}
-    />
+  useEffect(() => {
+    if (type === ModbusSheetType.LIST) {
+      setUuid(deviceId || '');
+    } else {
+      setUuid(uuid || '');
+    }
+  }, [type]);
+
+  return type === ModbusSheetType.LIST ? (
+    <PageContainer title={title} backUrl="/device/list">
+      <EditableProTable<Partial<ModbusDataSheetItem>>
+        controlled
+        rowKey="uuid"
+        actionRef={actionRef}
+        editableFormRef={editorFormRef}
+        columns={columns}
+        polling={polling}
+        rootClassName="sheet-table"
+        recordCreatorProps={{
+          position: 'top',
+          creatorButtonText: '添加点位',
+          record: () => ({
+            ...defaultModbusConfig,
+            uuid: 'new',
+          }),
+        }}
+        rowSelection={{
+          selectedRowKeys: selectedRowKeys,
+          onChange: setSelectedRowKeys,
+        }}
+        toolBarRender={() => toolBar}
+        request={async ({ current = 1, pageSize = 10 }) => {
+          const { data } = await getModbusDataSheetList({
+            device_uuid: deviceUuid,
+            current,
+            size: pageSize,
+          });
+
+          return Promise.resolve({
+            data: data?.records?.map((item) => ({
+              ...item,
+              type: [item?.dataType, item?.dataOrder],
+            })),
+            total: data?.total,
+            success: true,
+          });
+        }}
+        pagination={{
+          defaultPageSize: 10,
+          hideOnSinglePage: true,
+        }}
+        editable={{
+          type: 'multiple',
+          editableKeys,
+          onSave: handleOnSave,
+          onChange: setEditableRowKeys,
+          onValuesChange: (record, dataSource) => {
+            setEditableRows(dataSource);
+          },
+        }}
+      />
+    </PageContainer>
+  ) : (
+    <>
+      <ProDescriptions
+        title={
+          <>
+            <span>点位表配置</span>
+            <span className="text-[12px] opacity-[.8] pl-[5px] font-normal">
+              (横向滚动查看更多)
+            </span>
+          </>
+        }
+      />
+      <ProTable
+        rowKey="uuid"
+        columns={columns}
+        rootClassName="sheet-table"
+        request={async ({ current = 1, pageSize = 10 }) => {
+          const { data } = await getModbusDataSheetList({
+            device_uuid: deviceUuid,
+            current,
+            size: pageSize,
+          });
+
+          return Promise.resolve({
+            data: data?.records?.map((item) => ({
+              ...item,
+              type: [item?.dataType, item?.dataOrder],
+            })),
+            total: data?.total,
+            success: true,
+          });
+        }}
+        pagination={{
+          defaultPageSize: 10,
+          hideOnSinglePage: true,
+        }}
+        options={false}
+        search={false}
+        scroll={{ x: 1200 }}
+      />
+    </>
   );
 };
 
-export default ModbusSheet;
+export default ModbusDataSheet;

@@ -2,21 +2,20 @@ import { Table } from 'antd';
 
 const dataSource = [
   {
-    address: 'DB4900.DBD1000',
-    tag: 'R0',
-    alias: '新砂轮直径（mm）',
-    type: 'FLOAT',
-    order: 'ABCD',
-    weight: 1,
+    tag: 'a1',
+    alias: 'a1',
+    function: 3,
     frequency: 1000,
+    slaverId: 1,
+    address: 0,
+    quantity: 2,
+    type: 'FLOAT',
+    order: 'DCBA',
+    weight: 1,
   },
 ];
 
 const columns = [
-  {
-    title: 'address',
-    dataIndex: 'address',
-  },
   {
     title: 'tag',
     dataIndex: 'tag',
@@ -24,6 +23,26 @@ const columns = [
   {
     title: 'alias',
     dataIndex: 'alias',
+  },
+  {
+    title: 'function',
+    dataIndex: 'function',
+  },
+  {
+    title: 'frequency',
+    dataIndex: 'frequency',
+  },
+  {
+    title: 'slaverId',
+    dataIndex: 'slaverId',
+  },
+  {
+    title: 'address',
+    dataIndex: 'address',
+  },
+  {
+    title: 'quantity',
+    dataIndex: 'quantity',
   },
   {
     title: 'type',
@@ -36,10 +55,6 @@ const columns = [
   {
     title: 'weight',
     dataIndex: 'weight',
-  },
-  {
-    title: 'frequency',
-    dataIndex: 'frequency',
   },
 ];
 

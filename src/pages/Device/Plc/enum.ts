@@ -34,14 +34,6 @@ const byte4Options = [
   },
 ];
 
-// 不转换-字节序
-const orderRawOption = [
-  {
-    value: 'DCBA',
-    label: 'DCBA',
-  },
-];
-
 // 基本数据类型
 export const baseOptions = [
   {
@@ -126,31 +118,7 @@ export const plcDataTypeOptions = [
   ...baseOptions,
 ];
 
-// modbus 数据类型
-export const modbusDataTypeOptions = [
-  {
-    value: 'RAW',
-    label: 'RAW（4字节）',
-    children: orderRawOption,
-  },
-  {
-    value: 'BYTE',
-    label: 'Byte（1字节）',
-    children: byte1Options,
-  },
-  ...baseOptions,
-  {
-    value: 'UTF8',
-    label: 'UTF8（1-256字节）',
-    children: [
-      {
-        value: 'BIG_ENDIAN',
-        label: '大端',
-      },
-      {
-        value: 'LITTLE_ENDIAN',
-        label: '小端',
-      },
-    ],
-  },
-];
+export enum PlcSheetType {
+  DETAIL = 'detail',
+  LIST = 'list',
+}

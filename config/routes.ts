@@ -57,9 +57,19 @@
         component: './Device/RuleConfig/Update',
       },
       {
-        path: '/device/:groupId/:deviceId/specific-sheet/:deviceType',
+        path: '/device/:groupId/:deviceId/plc-sheet',
         name: '点位表配置',
         component: './Device/Plc',
+      },
+      {
+        path: '/device/:groupId/:deviceId/modbus-sheet',
+        name: '点位表配置',
+        component: './Device/Modbus',
+      },
+      {
+        path: '/device/:groupId/:deviceId/snmp-sheet',
+        name: 'SNMP 对象列表',
+        component: './Device/Snmp',
       },
       {
         path: '/device/:groupId/:deviceId/sub-device',
