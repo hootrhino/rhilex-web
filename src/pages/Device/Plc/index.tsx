@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import ModbusSheet from './ModbusSheet';
 import PlcSheet from './PlcSheet';
 
-const SpecificSheet = () => {
+const PlcDataSheet = () => {
   const { deviceType, deviceId } = useParams();
   const [title, setTitle] = useState<string>('点位表配置');
 
@@ -30,4 +30,4 @@ const SpecificSheet = () => {
   );
 };
 
-export default SpecificSheet;
+export default PlcDataSheet;

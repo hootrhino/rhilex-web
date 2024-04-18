@@ -59,7 +59,7 @@
       {
         path: '/device/:groupId/:deviceId/specific-sheet/:deviceType',
         name: '点位表配置',
-        component: './Device/SpecificSheet',
+        component: './Device/Plc',
       },
       {
         path: '/device/:groupId/:deviceId/sub-device',

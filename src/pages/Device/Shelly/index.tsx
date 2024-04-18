@@ -30,7 +30,7 @@ export enum AppType {
   Pro4PM = 'Pro4PM',
 }
 
-const ShellyDevice = () => {
+const ShellySubDevice = () => {
   const { deviceId } = useParams();
   const [checkedItem, setCheckedItem] = useState<CheckGroupValueType>([]);
 
@@ -209,4 +209,4 @@ const ShellyDevice = () => {
   );
 };
 
-export default ShellyDevice;
+export default ShellySubDevice;

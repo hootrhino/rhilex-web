@@ -10,8 +10,8 @@ import { useEffect } from 'react';
 import type { DeviceItem } from '..';
 import { baseColumns, typeConfigColumns } from '../columns';
 import { DeviceType } from '../enum';
-import ModbusSheet from '../SpecificSheet/ModbusSheet';
-import PlcSheet from '../SpecificSheet/PlcSheet';
+import ModbusSheet from '../Plc/ModbusSheet';
+import PlcSheet from '../Plc/PlcSheet';
 
 type DetailProps = DrawerProps & {
   uuid: string;
