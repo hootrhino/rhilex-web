@@ -23,6 +23,8 @@ import {
   plcModelOptions,
   rackEnum,
   slotEnum,
+  snmpVersionEnum,
+  Transport,
 } from './enum';
 
 /**
@@ -30,7 +32,7 @@ import {
  */
 export const autoRequestConfig = [
   {
-    title: '是否启动轮询',
+    title: '启动轮询',
     dataIndex: ['config', 'commonConfig', 'autoRequest'],
     required: true,
     valueType: 'state',
@@ -44,7 +46,7 @@ export const autoRequestConfig = [
       },
     }),
     convertValue: (value: boolean) => value?.toString(),
-    render: (_: any, { commonConfig }: DeviceItem) => (
+    render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
       <StateTag state={commonConfig?.autoRequest} type={StateType.Bool} />
     ),
   },
@@ -60,20 +62,33 @@ export const modeConfig = [
     valueType: 'select',
     valueEnum: DeviceMode,
     required: true,
-    render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.mode,
+    render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.mode,
   },
 ];
 
 /**
  * timeout 超时时间配置
  */
-export const timeoutConfig = [
+export const timeoutConfig = (title: string) => [
   {
-    title: <UnitTitle title="连接超时" />,
+    title: <UnitTitle title={title} />,
     dataIndex: ['config', 'commonConfig', 'timeout'],
     valueType: 'digit',
     required: true,
-    render: (_: any, { commonConfig }: DeviceItem) => commonConfig.timeout,
+    render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig.timeout,
+  },
+];
+
+/**
+ * frequency 请求频率
+ */
+export const frequencyConfig = (title: string) => [
+  {
+    title: <UnitTitle title={title} />,
+    dataIndex: ['config', 'commonConfig', 'frequency'],
+    valueType: 'digit',
+    required: true,
+    render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig.frequency,
   },
 ];
 
@@ -105,7 +120,7 @@ export const modeColumns = {
               value: item.uuid,
             }));
           },
-          render: (_: any, { portUuid }: DeviceItem) => portUuid,
+          render: (_dom: React.ReactNode, { portUuid }: DeviceItem) => portUuid,
         },
       ],
     },
@@ -120,20 +135,20 @@ export const modeColumns = {
           dataIndex: ['config', 'hostConfig', 'timeout'],
           valueType: 'digit',
           required: true,
-          render: (_: any, { hostConfig }: DeviceItem) => hostConfig?.timeout,
+          render: (_dom: React.ReactNode, { hostConfig }: DeviceItem) => hostConfig?.timeout,
         },
         {
           title: '服务地址',
           dataIndex: ['config', 'hostConfig', 'host'],
           required: true,
-          render: (_: any, { hostConfig }: DeviceItem) => hostConfig?.host,
+          render: (_dom: React.ReactNode, { hostConfig }: DeviceItem) => hostConfig?.host,
         },
         {
           title: '端口',
           dataIndex: ['config', 'hostConfig', 'port'],
           valueType: 'digit',
           required: true,
-          render: (_: any, { hostConfig }: DeviceItem) => hostConfig?.port,
+          render: (_dom: React.ReactNode, { hostConfig }: DeviceItem) => hostConfig?.port,
         },
       ],
     },
@@ -235,7 +250,7 @@ export const typeConfigColumns = {
           dataIndex: ['config', 'commonConfig', 'retryTime'],
           valueType: 'digit',
           required: true,
-          render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.retryTime,
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.retryTime,
         },
         ...modeConfig,
       ],
@@ -267,7 +282,7 @@ export const typeConfigColumns = {
             },
           }),
           convertValue: (value: boolean) => value?.toString(),
-          render: (_: any, { commonConfig }: DeviceItem) => (
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
             <StateTag state={commonConfig?.enableOptimize} type={StateType.Bool} />
           ),
         },
@@ -276,7 +291,7 @@ export const typeConfigColumns = {
           dataIndex: ['config', 'commonConfig', 'maxRegNum'],
           valueType: 'digit',
           required: true,
-          render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.maxRegNum,
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.maxRegNum,
         },
         ...modeConfig,
       ],
@@ -293,7 +308,7 @@ export const typeConfigColumns = {
       valueType: 'group',
       columns: [
         {
-          title: '是否解析 AIS 报文',
+          title: '解析 AIS 报文',
           dataIndex: ['config', 'commonConfig', 'parseAis'],
           required: true,
           valueType: 'state',
@@ -303,7 +318,7 @@ export const typeConfigColumns = {
             },
           }),
           convertValue: (value: boolean) => value?.toString(),
-          render: (_: any, { commonConfig }: DeviceItem) => (
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
             <StateTag state={commonConfig?.parseAis} type={StateType.Parse} />
           ),
         },
@@ -311,7 +326,8 @@ export const typeConfigColumns = {
           title: '主机序列号',
           dataIndex: ['config', 'commonConfig', 'gwsn'],
           required: true,
-          render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.gwsn || '-',
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) =>
+            commonConfig?.gwsn || '-',
         },
         ...modeConfig,
       ],
@@ -328,19 +344,20 @@ export const typeConfigColumns = {
       valueType: 'group',
       columns: [
         ...autoRequestConfig,
-        ...timeoutConfig,
+        ...timeoutConfig('连接超时'),
         {
-          title: <UnitTitle title="心跳超时时间" />,
+          title: <UnitTitle title="心跳超时" />,
           dataIndex: ['config', 'commonConfig', 'idleTimeout'],
           valueType: 'digit',
           required: true,
-          render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.idleTimeout,
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) =>
+            commonConfig?.idleTimeout,
         },
         {
           title: 'PLC 地址',
           dataIndex: ['config', 'commonConfig', 'host'],
           required: true,
-          render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.host,
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.host,
         },
         {
           title: '型号',
@@ -348,7 +365,8 @@ export const typeConfigColumns = {
           required: true,
           valueType: 'select',
           valueEnum: plcModelOptions,
-          render: (_: any, { commonConfig }: DeviceItem) => plcModelOptions[commonConfig?.model],
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) =>
+            plcModelOptions[commonConfig?.model],
         },
         {
           title: '机架号',
@@ -356,7 +374,7 @@ export const typeConfigColumns = {
           required: true,
           valueType: 'select',
           valueEnum: rackEnum,
-          render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.rack,
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.rack,
         },
         {
           title: '插槽号',
@@ -364,7 +382,7 @@ export const typeConfigColumns = {
           required: true,
           valueType: 'select',
           valueEnum: slotEnum,
-          render: (_: any, { commonConfig }: DeviceItem) => commonConfig?.slot,
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.slot,
         },
       ],
     },
@@ -373,17 +391,7 @@ export const typeConfigColumns = {
     {
       title: '通用配置',
       valueType: 'group',
-      columns: [
-        ...autoRequestConfig,
-        ...timeoutConfig,
-        {
-          title: <UnitTitle title="采集频率" />,
-          dataIndex: ['config', 'commonConfig', 'frequency'],
-          valueType: 'digit',
-          required: true,
-          render: (_: any, { commonConfig }: DeviceItem) => commonConfig.frequency,
-        },
-      ],
+      columns: [...autoRequestConfig, ...timeoutConfig('连接超时'), ...frequencyConfig('采集频率')],
     },
     {
       title: 'HTTP 配置',
@@ -397,7 +405,7 @@ export const typeConfigColumns = {
           title: '请求地址',
           dataIndex: ['config', 'httpConfig', 'url'],
           required: true,
-          render: (_: any, { httpConfig }: DeviceItem) => httpConfig.url,
+          render: (_dom: React.ReactNode, { httpConfig }: DeviceItem) => httpConfig.url,
         },
         {
           valueType: 'formList',
@@ -439,7 +447,7 @@ export const typeConfigColumns = {
               ],
             },
           ],
-          render: (_: any, { httpConfig }: DeviceItem) => {
+          render: (_dom: React.ReactNode, { httpConfig }: DeviceItem) => {
             const headers = httpConfig?.headers;
             return Object.keys(headers)?.length > 0 ? <div /> : null;
           },
@@ -459,7 +467,7 @@ export const typeConfigColumns = {
           valueType: 'select',
           valueEnum: InputModeOption,
           required: true,
-          render: (_: any, { inputMode }: DeviceItem) => InputModeOption[inputMode],
+          render: (_dom: React.ReactNode, { inputMode }: DeviceItem) => InputModeOption[inputMode],
         },
         {
           valueType: 'dependency',
@@ -490,7 +498,7 @@ export const typeConfigColumns = {
                 ) : (
                   <ProFormText width="md" noStyle />
                 ),
-              render: (_: any, { inputAddr }: DeviceItem) => inputAddr,
+              render: (_dom: React.ReactNode, { inputAddr }: DeviceItem) => inputAddr,
             },
           ],
         },
@@ -501,7 +509,8 @@ export const typeConfigColumns = {
           valueEnum: OutputModeOption,
           required: true,
           tooltip: '注意：因为传输格式原因，Jpeg Stream 模式下仅保存了图像信息，没有原始声音。',
-          render: (_: any, { outputMode }: DeviceItem) => OutputModeOption[outputMode],
+          render: (_dom: React.ReactNode, { outputMode }: DeviceItem) =>
+            OutputModeOption[outputMode],
         },
         {
           valueType: 'dependency',
@@ -519,7 +528,8 @@ export const typeConfigColumns = {
                     ? pick(OutputEncodeOption, [OutputEncode.H264_STREAM])
                     : pick(OutputEncodeOption, [OutputEncode.JPEG_STREAM]),
                 required: true,
-                render: (_: any, { outputEncode }: DeviceItem) => OutputEncodeOption[outputEncode],
+                render: (_dom: React.ReactNode, { outputEncode }: DeviceItem) =>
+                  OutputEncodeOption[outputEncode],
               },
             ];
           },
@@ -536,7 +546,7 @@ export const typeConfigColumns = {
                 title: '输出地址',
                 dataIndex: ['config', 'outputAddr'],
                 hideInForm: mode !== OutputMode.REMOTE_STREAM_SERVER,
-                render: (_: any, { outputAddr }: DeviceItem) => outputAddr,
+                render: (_dom: React.ReactNode, { outputAddr }: DeviceItem) => outputAddr,
               },
               {
                 title: (
@@ -569,8 +579,39 @@ export const typeConfigColumns = {
   ],
   [DeviceType.SHELLY_GEN1_PROXY_SERVER]: [
     {
+      title: '通用配置',
       valueType: 'group',
       columns: [
+        {
+          title: '自动扫描',
+          dataIndex: ['config', 'autoScan'],
+          required: true,
+          valueType: 'state',
+          transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
+            config: {
+              ...omit(allValue, [namePath]),
+              autoScan: stringToBool(value),
+            },
+          }),
+          convertValue: (value: boolean) => value?.toString(),
+          render: (_dom: React.ReactNode, { autoScan }: DeviceItem) => (
+            <StateTag state={autoScan} type={StateType.Bool} />
+          ),
+        },
+        {
+          title: <UnitTitle title="扫描超时" />,
+          dataIndex: ['config', 'timeout'],
+          valueType: 'digit',
+          required: true,
+          render: (_dom: React.ReactNode, { timeout }: DeviceItem) => timeout,
+        },
+        {
+          title: <UnitTitle title="扫描频率" />,
+          dataIndex: ['config', 'frequency'],
+          valueType: 'digit',
+          required: true,
+          render: (_dom: React.ReactNode, { frequency }: DeviceItem) => frequency,
+        },
         {
           title: 'CIDR',
           required: true,
@@ -599,37 +640,55 @@ export const typeConfigColumns = {
               },
             ],
           },
-          render: (_: any, { networkCidr }: DeviceItem) => networkCidr,
+          render: (_dom: React.ReactNode, { networkCidr }: DeviceItem) => networkCidr,
         },
+      ],
+    },
+  ],
+  [DeviceType.GENERIC_SNMP]: [
+    {
+      title: '通用配置',
+      valueType: 'group',
+      columns: [...autoRequestConfig, ...timeoutConfig('请求超时'), ...frequencyConfig('请求频率')],
+    },
+    {
+      title: 'SNMP 配置',
+      valueType: 'group',
+      columns: [
         {
-          title: '自动扫描',
-          dataIndex: ['config', 'autoScan'],
+          title: '目标设备',
+          dataIndex: ['config', 'snmpConfig', 'target'],
           required: true,
-          valueType: 'state',
-          transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
-            config: {
-              ...omit(allValue, [namePath]),
-              autoScan: stringToBool(value),
-            },
-          }),
-          convertValue: (value: boolean) => value?.toString(),
-          render: (_: any, { autoScan }: DeviceItem) => (
-            <StateTag state={autoScan} type={StateType.Bool} />
-          ),
+          render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.target,
         },
         {
-          title: <UnitTitle title="扫描超时" />,
-          dataIndex: ['config', 'timeout'],
+          title: '目标端口',
+          dataIndex: ['config', 'snmpConfig', 'port'],
           valueType: 'digit',
           required: true,
-          render: (_: any, { timeout }: DeviceItem) => timeout,
+          render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.port,
         },
         {
-          title: <UnitTitle title="扫描频率" />,
-          dataIndex: ['config', 'frequency'],
-          valueType: 'digit',
+          title: '传输协议',
+          dataIndex: ['config', 'snmpConfig', 'transport'],
           required: true,
-          render: (_: any, { frequency }: DeviceItem) => frequency,
+          valueType: 'select',
+          valueEnum: Transport,
+          render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.transport,
+        },
+        {
+          title: '社区名称',
+          dataIndex: ['config', 'snmpConfig', 'community'],
+          required: true,
+          render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.community,
+        },
+        {
+          title: '协议版本',
+          dataIndex: ['config', 'snmpConfig', 'version'],
+          required: true,
+          valueType: 'select',
+          valueEnum: snmpVersionEnum,
+          render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.version,
         },
       ],
     },

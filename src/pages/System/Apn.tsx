@@ -110,12 +110,12 @@ const APNConfig = () => {
         />
         <ProFormSelect
           name="cdmapwd"
-          label="CDMA 模式是否保存"
+          label="保存 CDMA 模式"
           options={[
             { label: '不保存', value: 0 },
             { label: '保存', value: 1 },
           ]}
-          tooltip="是否在 CDMA 网络下保存用户名和 密码"
+          tooltip="是否在 CDMA 网络下保存用户名和密码"
           placeholder="请选择"
           width="xl"
         />

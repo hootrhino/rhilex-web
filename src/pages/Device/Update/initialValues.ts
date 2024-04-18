@@ -1,11 +1,23 @@
-import { DeviceMode, DeviceType, InputMode, OutputEncode, OutputMode, PLCModel } from '../enum';
+import {
+  DeviceMode,
+  DeviceType,
+  InputMode,
+  OutputEncode,
+  OutputMode,
+  PLCModel,
+  SNMPVersion,
+  Transport,
+} from '../enum';
 
 const DEFAULT_TIMEOUT = 3000;
+const DEFAULT_HOST = '127.0.0.1';
+const DEFAULT_FREQUENCE = 5000;
+const DEFAULT_AUTOREQUEST = true;
 
 // TCP 配置
 export const defaultHostConfig = {
   port: 3399,
-  host: '127.0.0.1',
+  host: DEFAULT_HOST,
   timeout: DEFAULT_TIMEOUT,
 };
 
@@ -45,7 +57,7 @@ export const defaultConfig = {
   },
   [DeviceType.GENERIC_MODBUS]: {
     commonConfig: {
-      autoRequest: false,
+      autoRequest: DEFAULT_AUTOREQUEST,
       enableOptimize: false,
       mode: DeviceMode.UART,
       maxRegNum: 64,
@@ -66,23 +78,23 @@ export const defaultConfig = {
   },
   [DeviceType.SIEMENS_PLC]: {
     commonConfig: {
-      autoRequest: false,
-      host: '127.0.0.1:102',
+      autoRequest: DEFAULT_AUTOREQUEST,
+      host: `${DEFAULT_HOST}:102`,
       model: 'S71200',
       rack: 0,
       slot: 1,
       timeout: DEFAULT_TIMEOUT,
-      idleTimeout: 5000,
+      idleTimeout: DEFAULT_FREQUENCE,
     },
   },
   [DeviceType.GENERIC_HTTP_DEVICE]: {
     commonConfig: {
-      autoRequest: false,
+      autoRequest: DEFAULT_AUTOREQUEST,
       timeout: DEFAULT_TIMEOUT,
-      frequency: 1000,
+      frequency: DEFAULT_FREQUENCE,
     },
     httpConfig: {
-      url: 'http://127.0.0.1:8080',
+      url: `http://${DEFAULT_HOST}:8080`,
     },
   },
   [DeviceType.GENERIC_CAMERA]: {
@@ -93,7 +105,21 @@ export const defaultConfig = {
     networkCidr: '192.168.1.1/24',
     autoScan: true,
     timeout: DEFAULT_TIMEOUT,
-    frequency: 5000,
+    frequency: DEFAULT_FREQUENCE,
+  },
+  [DeviceType.GENERIC_SNMP]: {
+    commonConfig: {
+      autoRequest: DEFAULT_AUTOREQUEST,
+      timeout: DEFAULT_TIMEOUT,
+      frequency: DEFAULT_FREQUENCE,
+    },
+    snmpConfig: {
+      target: DEFAULT_HOST,
+      port: 161,
+      transport: Transport.UDP,
+      community: 'public',
+      version: SNMPVersion.V2,
+    },
   },
 };
 

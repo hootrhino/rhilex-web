@@ -9,11 +9,13 @@ export enum DeviceType {
   GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
   GENERIC_CAMERA = 'GENERIC_CAMERA',
   SHELLY_GEN1_PROXY_SERVER = 'SHELLY_GEN1_PROXY_SERVER',
+  GENERIC_SNMP = 'GENERIC_SNMP',
 }
 
 export const deviceTypeOptions = {
   [DeviceType.GENERIC_PROTOCOL]: '通用时间片中断串口采集网关',
-  [DeviceType.GENERIC_MODBUS]: '通用 modbus 采集网关',
+  [DeviceType.GENERIC_MODBUS]: '通用 Modbus 采集网关',
+  [DeviceType.GENERIC_SNMP]: '通用 SNMP 协议采集网关',
   [DeviceType.GENERIC_AIS_RECEIVER]: '通用船载 AIS 数据解析网关',
   [DeviceType.SIEMENS_PLC]: '通用西门子 S7 系列 PLC 采集网关',
   [DeviceType.GENERIC_HTTP_DEVICE]: '通用 HTTP 协议数据采集网关',
@@ -129,44 +131,19 @@ export const OutputEncodeOption = {
 };
 
 /** SNMP */
-// 协议分隔符
-// export const separatorEnum = {
-//   LF: 'LF',
-//   CRLF: 'CRLF',
-// };
+export enum Transport {
+  UDP = 'udp',
+  TCP = 'tcp',
+}
 
-// 安全模式
-// export const securityModelEnum = new Map([
-//   [0, '不认证'],
-//   [3, 'V3 认证'],
-// ]);
+export enum SNMPVersion {
+  V1 = 1,
+  V2 = 2,
+  V3 = 3,
+}
 
-// 消息选项
-// export const snmpV3MsgFlagsEnum = new Map([
-//   [0, 'NoAuthNoPriv'],
-//   [1, 'AuthNoPriv'],
-//   [2, 'AuthPriv'],
-//   [3, 'Reportable'],
-// ]);
-
-// SNMP 认证协议
-// export const snmpV3AuthProtocolEnum = new Map([
-//   [1, 'NoAuth'],
-//   [2, 'MD5'],
-//   [3, 'SHA'],
-//   [4, 'SHA224'],
-//   [5, 'SHA256'],
-//   [6, 'SHA384'],
-//   [7, 'SHA512'],
-// ]);
-
-// 私有认证协议
-// export const privacyProtocolEnum = new Map([
-//   [1, 'NoPriv'],
-//   [2, 'DES'],
-//   [3, 'AES'],
-//   [4, 'AES192'],
-//   [5, 'AES256'],
-//   [6, 'AES192C'],
-//   [7, 'AES256C'],
-// ]);
+export const snmpVersionEnum = new Map([
+  [1, '1'],
+  [2, '2'],
+  [3, '3'],
+]);

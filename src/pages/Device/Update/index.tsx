@@ -47,7 +47,6 @@ const UpdateForm = () => {
       const type = params.type;
       const mode = params.config.commonConfig?.mode;
       const outputMode = params?.config?.outputMode;
-      // const inputAddr = params?.config?.inputAddr;
       const outputAddr = params?.config?.outputAddr;
 
       if (type === DeviceType.GENERIC_CAMERA) {

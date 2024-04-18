@@ -14,7 +14,7 @@ export const baseColumns = [
     required: true,
   },
   {
-    title: '是否自启',
+    title: '自动启动',
     dataIndex: 'autoStart',
     required: true,
     valueType: 'state',
