@@ -61,7 +61,7 @@
       "name": "系统配置/网络配置"
     },
     {
-      "name": "系统配置/WIFI配置"
+      "name": "系统配置/无线wifi配置"
     },
     {
       "name": "系统配置/移动网络4G设置"
@@ -85,7 +85,7 @@
       "name": "站内通知"
     },
     {
-      "name": "用户LUA片段"
+      "name": "用户lua片段"
     },
     {
       "name": "Modbus点位管理"
@@ -103,7 +103,7 @@
       "name": "流媒体管理"
     },
     {
-      "name": "Shelly设备"
+      "name": "shelly设备"
     }
   ],
   "paths": {
@@ -7304,12 +7304,12 @@
     "/api/v1/settings/wifi": {
       "get": {
         "summary": "获取WIFI配置",
-        "x-apifox-folder": "系统配置/WIFI配置",
+        "x-apifox-folder": "系统配置/无线wifi配置",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "系统配置/WIFI配置"
+          "系统配置/无线wifi配置"
         ],
         "parameters": [],
         "responses": {
@@ -7407,12 +7407,12 @@
       },
       "post": {
         "summary": "配置WIFI参数",
-        "x-apifox-folder": "系统配置/WIFI配置",
+        "x-apifox-folder": "系统配置/无线wifi配置",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "系统配置/WIFI配置"
+          "系统配置/无线wifi配置"
         ],
         "parameters": [],
         "requestBody": {
@@ -8039,12 +8039,12 @@
     "/api/v1/settings/wifi/scan": {
       "get": {
         "summary": "扫描WIFI",
-        "x-apifox-folder": "系统配置/WIFI配置",
+        "x-apifox-folder": "系统配置/无线wifi配置",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "系统配置/WIFI配置"
+          "系统配置/无线wifi配置"
         ],
         "parameters": [],
         "responses": {
@@ -10040,12 +10040,12 @@
     "/api/v1/userlua/listByGroup": {
       "get": {
         "summary": "列表查看",
-        "x-apifox-folder": "用户LUA片段",
+        "x-apifox-folder": "用户lua片段",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户LUA片段"
+          "用户lua片段"
         ],
         "parameters": [
           {
@@ -10187,12 +10187,12 @@
     "/api/v1/userlua/create": {
       "post": {
         "summary": "新建模板",
-        "x-apifox-folder": "用户LUA片段",
+        "x-apifox-folder": "用户lua片段",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户LUA片段"
+          "用户lua片段"
         ],
         "parameters": [],
         "requestBody": {
@@ -10350,12 +10350,12 @@
     "/api/v1/userlua/del": {
       "delete": {
         "summary": "删除模板",
-        "x-apifox-folder": "用户LUA片段",
+        "x-apifox-folder": "用户lua片段",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户LUA片段"
+          "用户lua片段"
         ],
         "parameters": [
           {
@@ -10423,12 +10423,12 @@
     "/api/v1/userlua/update": {
       "put": {
         "summary": "更新模板",
-        "x-apifox-folder": "用户LUA片段",
+        "x-apifox-folder": "用户lua片段",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户LUA片段"
+          "用户lua片段"
         ],
         "parameters": [],
         "requestBody": {
@@ -10592,12 +10592,12 @@
     "/api/v1/userlua/group": {
       "get": {
         "summary": "分组列表",
-        "x-apifox-folder": "用户LUA片段",
+        "x-apifox-folder": "用户lua片段",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户LUA片段"
+          "用户lua片段"
         ],
         "parameters": [],
         "responses": {
@@ -10682,12 +10682,12 @@
     "/api/v1/userlua/detail": {
       "get": {
         "summary": "获取详情",
-        "x-apifox-folder": "用户LUA片段",
+        "x-apifox-folder": "用户lua片段",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户LUA片段"
+          "用户lua片段"
         ],
         "parameters": [
           {
@@ -10833,12 +10833,12 @@
     "/api/v1/userlua/search": {
       "get": {
         "summary": "模糊搜索",
-        "x-apifox-folder": "用户LUA片段",
+        "x-apifox-folder": "用户lua片段",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "用户LUA片段"
+          "用户lua片段"
         ],
         "parameters": [
           {
@@ -15990,12 +15990,12 @@
     "/api/v1/shelly_gen1/list": {
       "get": {
         "summary": "Shelly设备列表",
-        "x-apifox-folder": "Shelly设备",
+        "x-apifox-folder": "shelly设备",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "Shelly设备"
+          "shelly设备"
         ],
         "parameters": [
           {
@@ -16221,12 +16221,12 @@
     "/api/v1/shelly_gen1/scan": {
       "post": {
         "summary": "Shelly设备扫描",
-        "x-apifox-folder": "Shelly设备",
+        "x-apifox-folder": "shelly设备",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "Shelly设备"
+          "shelly设备"
         ],
         "parameters": [
           {
@@ -16284,12 +16284,12 @@
     "/api/v1/shelly_gen1/detail": {
       "get": {
         "summary": "Shelly设备详情",
-        "x-apifox-folder": "Shelly设备",
+        "x-apifox-folder": "shelly设备",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "Shelly设备"
+          "shelly设备"
         ],
         "parameters": [
           {
@@ -16335,12 +16335,12 @@
     "/api/v1/shelly_gen1/status": {
       "get": {
         "summary": "Shelly设备状态",
-        "x-apifox-folder": "Shelly设备",
+        "x-apifox-folder": "shelly设备",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "Shelly设备"
+          "shelly设备"
         ],
         "parameters": [
           {
@@ -16525,12 +16525,12 @@
     "/api/v1/shelly_gen1/pro1/switch1/toggle": {
       "get": {
         "summary": "Pro1拨动开关",
-        "x-apifox-folder": "Shelly设备",
+        "x-apifox-folder": "shelly设备",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "Shelly设备"
+          "shelly设备"
         ],
         "parameters": [
           {

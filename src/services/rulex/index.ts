@@ -26,12 +26,12 @@ import * as shujumoxing from './shujumoxing';
 import * as shujuzhongxin from './shujuzhongxin';
 import * as shuruziyuanguanli from './shuruziyuanguanli';
 import * as wangluopeizhi from './wangluopeizhi';
-import * as wifIpeizhi from './wifIpeizhi';
+import * as wuxianwifipeizhi from './wuxianwifipeizhi';
 import * as ximenzidianweiguanli from './ximenzidianweiguanli';
 import * as xitongshuju from './xitongshuju';
 import * as yidongwangluo4Gshezhi from './yidongwangluo4Gshezhi';
 import * as yonghuguanli from './yonghuguanli';
-import * as yonghuLuApianduan from './yonghuLuApianduan';
+import * as yonghuluapianduan from './yonghuluapianduan';
 import * as zhandianpeizhi from './zhandianpeizhi';
 import * as zhanneitongzhi from './zhanneitongzhi';
 export default {
@@ -53,14 +53,14 @@ export default {
   wangluopeizhi,
   gujiancaozuo,
   shijianpeizhi,
-  wifIpeizhi,
+  wuxianwifipeizhi,
   yidongwangluo4Gshezhi,
   zhandianpeizhi,
   luyoupeizhi,
   shujubeifen,
   jiekouguanli,
   zhanneitongzhi,
-  yonghuLuApianduan,
+  yonghuluapianduan,
   modbusdianweiguanli,
   ximenzidianweiguanli,
   shujumoxing,

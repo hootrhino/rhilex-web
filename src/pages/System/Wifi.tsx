@@ -3,7 +3,7 @@ import {
   getSettingsWifi,
   getSettingsWifiScan,
   postSettingsWifi,
-} from '@/services/rulex/wifIpeizhi';
+} from '@/services/rulex/wuxianwifipeizhi';
 import { WifiOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
