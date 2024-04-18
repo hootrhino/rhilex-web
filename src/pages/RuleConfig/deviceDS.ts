@@ -1,3 +1,4 @@
+import { DeviceType } from './../Device/enum';
 // GENERIC_PROTOCOL - 通用时间片中断串口采集网关
 const device_protocol_ds = `{
   "in":"0001020304ABCDEF", // 输入参数
@@ -75,19 +76,30 @@ const device_ais_vdm_ds = `{
   "timestamp": 35                    // 时间戳
 }`;
 
+// GENERIC_SNMP - 通用 SNMP 协议采集网关
+const device_snmp_ds = `[
+  {
+      "oid": ".1.3.6.1.2.1.1.7.0",   // 表示 SNMP 对象标志符
+      "tag": "SysServices",          // 标签，用于标识或分类 SNMP 对象
+      "alias": "SysServices",        // 别名，用于提供对象的另一个名称
+      "value": 0                     // 值，表示 SNMP 对象的值
+  }
+]`;
+
 export const device_ds = {
-  GENERIC_PROTOCOL: device_protocol_ds,
-  GENERIC_MODBUS: device_modbus_ds,
-  GENERIC_HTTP_DEVICE: device_http_ds,
-  SIEMENS_PLC: device_siemens_ds,
-  GENERIC_CAMERA: device_camera_ds
+  [DeviceType.GENERIC_PROTOCOL]: device_protocol_ds,
+  [DeviceType.GENERIC_MODBUS]: device_modbus_ds,
+  [DeviceType.GENERIC_HTTP_DEVICE]: device_http_ds,
+  [DeviceType.SIEMENS_PLC]: device_siemens_ds,
+  [DeviceType.GENERIC_CAMERA]: device_camera_ds,
+  [DeviceType.GENERIC_SNMP]: device_snmp_ds,
 };
 
 export const device_ais_ds = [
   {
     title: '原始 AIS 数据',
     json: device_ais_origin_ds,
-    key: 'origin'
+    key: 'origin',
   },
   {
     title: 'VDRMC 报文格式',
