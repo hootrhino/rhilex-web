@@ -6,7 +6,7 @@ import {
   getModbusDataSheetList,
   postModbusDataSheetSheetImport,
   postModbusDataSheetUpdate,
-} from '@/services/rulex/modbusdianweiguanli';
+} from '@/services/rulex/moddianweiguanli';
 import { omit } from '@/utils/redash';
 import { IconFont } from '@/utils/utils';
 import {

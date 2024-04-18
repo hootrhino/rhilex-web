@@ -13,7 +13,7 @@ import * as jiekouguanli from './jiekouguanli';
 import * as kuozhanxieyi from './kuozhanxieyi';
 import * as liumeitiguanli from './liumeitiguanli';
 import * as luyoupeizhi from './luyoupeizhi';
-import * as modbusdianweiguanli from './modbusdianweiguanli';
+import * as moddianweiguanli from './moddianweiguanli';
 import * as qingliangyingyong from './qingliangyingyong';
 import * as qudongguanli from './qudongguanli';
 import * as rizhiguanli from './rizhiguanli';
@@ -62,7 +62,7 @@ export default {
   jiekouguanli,
   zhanneitongzhi,
   yonghudingyiluamoban,
-  modbusdianweiguanli,
+  moddianweiguanli,
   ximenzidianweiguanli,
   shujumoxing,
   huazhongshukongdianweiguanli,

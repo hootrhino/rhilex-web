@@ -88,7 +88,7 @@
       "name": "用户定义lua模板"
     },
     {
-      "name": "modbus点位管理"
+      "name": "mod点位管理"
     },
     {
       "name": "西门子点位管理"
@@ -10947,12 +10947,12 @@
     "/api/v1/modbus_data_sheet/sheetImport": {
       "post": {
         "summary": "导入点位表",
-        "x-apifox-folder": "modbus点位管理",
+        "x-apifox-folder": "mod点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "modbus点位管理"
+          "mod点位管理"
         ],
         "parameters": [],
         "requestBody": {
@@ -11000,12 +11000,12 @@
     "/api/v1/modbus_data_sheet/list": {
       "get": {
         "summary": "分页查看点位表",
-        "x-apifox-folder": "modbus点位管理",
+        "x-apifox-folder": "mod点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "modbus点位管理"
+          "mod点位管理"
         ],
         "parameters": [
           {
@@ -11249,12 +11249,12 @@
     "/api/v1/modbus_data_sheet/update": {
       "post": {
         "summary": "更新点位表",
-        "x-apifox-folder": "modbus点位管理",
+        "x-apifox-folder": "mod点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "modbus点位管理"
+          "mod点位管理"
         ],
         "parameters": [],
         "requestBody": {
@@ -11414,12 +11414,12 @@
     "/api/v1/modbus_data_sheet/delIds": {
       "delete": {
         "summary": "多行删除",
-        "x-apifox-folder": "modbus点位管理",
+        "x-apifox-folder": "mod点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "modbus点位管理"
+          "mod点位管理"
         ],
         "parameters": [],
         "requestBody": {
@@ -11512,12 +11512,12 @@
     "/api/v1/modbus_data_sheet/sheetExport": {
       "get": {
         "summary": "导出点表",
-        "x-apifox-folder": "modbus点位管理",
+        "x-apifox-folder": "mod点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "modbus点位管理"
+          "mod点位管理"
         ],
         "parameters": [
           {
