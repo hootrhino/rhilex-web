@@ -86,6 +86,16 @@ const device_snmp_ds = `[
   }
 ]`;
 
+// SHELLY_GEN1_PROXY_SERVER - Shelly 智能家居管理网关
+const device_shelly_ds = `[
+  {
+      "event": "Input.Toggle",       // 事件
+      "mac": "AA:BB:CC:DD:EE",       // 设备MAC
+      "ip": "192.168.1.107",         // 设备IP
+      "data": {}                     // 数据
+  }
+]`;
+
 export const device_ds = {
   [DeviceType.GENERIC_PROTOCOL]: device_protocol_ds,
   [DeviceType.GENERIC_MODBUS]: device_modbus_ds,
@@ -93,6 +103,7 @@ export const device_ds = {
   [DeviceType.SIEMENS_PLC]: device_siemens_ds,
   [DeviceType.GENERIC_CAMERA]: device_camera_ds,
   [DeviceType.GENERIC_SNMP]: device_snmp_ds,
+  [DeviceType.SHELLY_GEN1_PROXY_SERVER]: device_shelly_ds,
 };
 
 export const device_ais_ds = [
