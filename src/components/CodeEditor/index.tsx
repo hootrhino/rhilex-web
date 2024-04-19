@@ -43,10 +43,10 @@ const iconMap = {
 };
 
 const modes = {
-  shell: langs.shell,
-  sql: langs.sql,
-  lua: langs.lua,
-  json: langs.json,
+  [Lang.SHELL]: langs.shell,
+  [Lang.SQL]: langs.sql,
+  [Lang.LUA]: langs.lua,
+  [Lang.JSON]: langs.json,
 };
 
 const themeSetting = {
