@@ -539,6 +539,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
         }}
         options={false}
         search={false}
+        toolBarRender={false}
         scroll={{ x: 1100 }}
       />
     </>

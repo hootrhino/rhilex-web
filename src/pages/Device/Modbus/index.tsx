@@ -647,6 +647,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
         options={false}
         search={false}
         scroll={{ x: 1200 }}
+        toolBarRender={false}
       />
     </>
   );

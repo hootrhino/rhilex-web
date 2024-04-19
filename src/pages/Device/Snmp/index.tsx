@@ -189,6 +189,7 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
     {
       title: '监控项标签',
       dataIndex: 'tag',
+      ellipsis: true,
       fieldProps: {
         placeholder: '请输入监控项标签',
       },
@@ -210,6 +211,7 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
       title: '数据采集频率',
       dataIndex: 'frequency',
       valueType: 'digit',
+      width: 100,
       fieldProps: {
         placeholder: '请输入数据采集频率',
       },
@@ -370,7 +372,7 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
     </Button>,
   ];
 
-  return SheetType.LIST ? (
+  return type === SheetType.LIST ? (
     <PageContainer title={title} backUrl="/device/list">
       <EditableProTable<Partial<SnmpDataSheetItem>>
         controlled
@@ -429,7 +431,6 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
         rowKey="uuid"
         columns={columns}
         rootClassName="sheet-table"
-        params={{ uuid }}
         request={async ({ current = 1, pageSize = 10 }) => {
           const { data } = await getSnmpOidsSheetList({
             device_uuid: uuid,
@@ -447,6 +448,7 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
           defaultPageSize: 10,
           hideOnSinglePage: true,
         }}
+        toolBarRender={false}
         options={false}
         search={false}
       />

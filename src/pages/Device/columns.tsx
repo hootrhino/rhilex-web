@@ -689,7 +689,7 @@ export const typeConfigColumns = {
           required: true,
           valueType: 'select',
           valueEnum: snmpVersionEnum,
-          render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.version,
+          render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => `v${snmpConfig?.version}`,
         },
       ],
     },
