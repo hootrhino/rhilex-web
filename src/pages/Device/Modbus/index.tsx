@@ -488,6 +488,8 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
           width: '50%',
           content: <UploadRule fileName={file?.name} />,
           onOk: () => deviceId && upload(deviceId, file),
+          okText: '确定',
+          cancelText: '取消',
         });
         return Upload.LIST_IGNORE;
       }}
@@ -520,6 +522,8 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
           title: '批量删除点位',
           content: '此操作会一次性删除多个点位，请谨慎处理!',
           onOk: handleOnBatchDelete,
+          okText: '确定',
+          cancelText: '取消',
         })
       }
     >

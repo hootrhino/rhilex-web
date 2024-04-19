@@ -72,6 +72,8 @@ const GroupList = ({
       width: 600,
       content: `分组中包含 ${itemCount} 个子项目，删除后将被移入默认分组中，请谨慎处理。`,
       onOk: () => removeGroup({ uuid: uuid }).then(() => onReset()),
+      okText: '确定',
+      cancelText: '取消',
     });
   };
 

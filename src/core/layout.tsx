@@ -2,7 +2,7 @@ import { history, Link } from '@umijs/max';
 
 import type { RunTimeLayoutConfig } from 'umi';
 
-import { modal } from '@/components/PopupHack';
+import { GoBackModal } from '@/components/PageContainer';
 import RightContent from '@/components/RightContent';
 import { COPYRIGHT, LOGIN_PATH } from '@/utils/constant';
 import { DefaultFooter } from '@ant-design/pro-components';
@@ -39,10 +39,7 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
         return (
           <a
             onClick={() => {
-              modal.confirm({
-                title: '离开可能会丢失数据，确定要返回列表吗？',
-                onOk: () => history.push(item?.path || '/'),
-              });
+              GoBackModal(item?.path || '/');
             }}
           >
             {defaultDom}

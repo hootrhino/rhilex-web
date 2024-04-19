@@ -31,6 +31,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
       icon: <ExclamationCircleOutlined />,
       content: '确定要退出登录吗?',
       onOk: logout,
+      okText: '确定',
+      cancelText: '取消',
     });
   };
 

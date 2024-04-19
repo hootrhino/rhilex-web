@@ -1,5 +1,4 @@
 import { defineConfig } from '@umijs/max';
-import zhCN from 'antd/locale/zh_CN';
 import defaultSettings from './defaultSettings';
 import openAPI from './openAPI';
 import proxy from './proxy';
@@ -24,8 +23,13 @@ export default defineConfig({
   antd: {
     configProvider: {
       theme: { token: theme },
-      locale: zhCN,
     },
+  },
+  locale: {
+    default: 'zh-CN',
+    baseSeparator: '-',
+    antd: true,
+    title: true,
   },
   request: {},
   presets: ['umi-presets-pro'],

@@ -62,8 +62,9 @@ const FourGConfig = () => {
                   modal.confirm({
                     title: '确定执行重启操作吗？',
                     content: '重启 4G 网卡会造成短时间内移动网络处于离线状态，请谨慎操作',
-                    okText: '确认重启',
                     onOk: restart,
+                    okText: '确认重启',
+                    cancelText: '取消',
                   })
                 }
                 icon={<PoweroffOutlined />}

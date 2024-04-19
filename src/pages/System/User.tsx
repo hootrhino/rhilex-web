@@ -51,6 +51,8 @@ const UserConfig = () => {
                   modal.confirm({
                     title: '确定修改用户名/密码并重新登录吗？',
                     onOk: submit,
+                    okText: '确定',
+                    cancelText: '取消',
                   })
                 }
               >

@@ -1,14 +1,24 @@
+import { modal } from '@/components/PopupHack';
 import { DOC_URL } from '@/utils/constant';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import type { PageContainerProps } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-components';
-import { App, Space } from 'antd';
+import { Space } from 'antd';
 import { history } from 'umi';
 
 type ProPageContainerProps = {
   showExtra?: boolean;
   backUrl?: string;
 } & PageContainerProps;
+
+export const GoBackModal = (url: string) => {
+  return modal.confirm({
+    title: '离开可能会丢失数据，确定要返回列表吗？',
+    onOk: () => history.push(url),
+    okText: '确定',
+    cancelText: '取消',
+  });
+};
 
 const ProPageContainer = ({
   showExtra = false,
@@ -18,8 +28,6 @@ const ProPageContainer = ({
   children,
   ...props
 }: ProPageContainerProps) => {
-  const { modal } = App.useApp();
-
   const getTitle = () => {
     return (
       <Space align="baseline">
@@ -33,37 +41,18 @@ const ProPageContainer = ({
   };
 
   const getHeader = () => {
-    if (showExtra) {
+    if (backUrl) {
       return {
-        title: getTitle(), onBack: () => backUrl && modal.confirm({
-          title: '离开可能会丢失数据，确定要返回列表吗？',
-          onOk() {
-            backUrl && history.push(backUrl);
-          },
-        })
-      }
+        title: showExtra ? getTitle() : title,
+        onBack: () => (onBack ? onBack() : GoBackModal(backUrl)),
+      };
     } else {
-      if (backUrl) {
-        return {
-          title,
-          onBack: () => backUrl && modal.confirm({
-            title: '离开可能会丢失数据，确定要返回列表吗？',
-            onOk() {
-              backUrl && history.push(backUrl);
-            },
-          })
-        }
-      } else {
-        return {}
-      }
+      return {};
     }
-  }
+  };
 
   return (
-    <PageContainer
-      header={getHeader()}
-      {...props}
-    >
+    <PageContainer header={getHeader()} {...props}>
       {children}
     </PageContainer>
   );

@@ -1,5 +1,5 @@
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { useModel } from '@umijs/max';
+import { SelectLang, useModel } from '@umijs/max';
 
 import { DOC_URL } from '@/utils/constant';
 import Avatar from './AvatarDropdown';
@@ -25,15 +25,11 @@ const GlobalHeaderRight = () => {
         <QuestionCircleOutlined style={{ color: '#fff', fontSize: 16, verticalAlign: 'middle' }} />
       </span>
       <NoticeIcon />
+      <SelectLang
+        style={{ padding: '0 12px', height: '100%', display: 'inline', color: '#fff' }}
+        className="hover:bg-[#32393F]"
+      />
       <Avatar />
-      {/* <GithubFilled
-        style={{
-          fontSize: 20,
-          color: 'rgba(255, 255, 255, 0.95)',
-        }}
-        className="cursor-pointer pl-[12px] pr-[12px] h-[56px] hover:bg-[#32393F]"
-        onClick={() => window.open('https://github.com/hootrhino')}
-      /> */}
     </div>
   );
 };
