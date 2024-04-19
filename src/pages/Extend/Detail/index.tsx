@@ -1,5 +1,6 @@
 import ProLog from '@/components/ProLog';
 import { getGoodsDetail } from '@/services/rulex/kuozhanxieyi';
+import { DetailModalType } from '@/utils/enum';
 import { handleNewMessage } from '@/utils/utils';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { useModel, useRequest } from '@umijs/max';
@@ -8,11 +9,6 @@ import type { DrawerProps } from 'antd';
 import { Button, Drawer, Modal } from 'antd';
 import { useEffect } from 'react';
 import { baseColumns } from '..';
-
-export enum DetailModalType {
-  Detail = 'detail',
-  Log = 'log',
-}
 
 export type DetailLogModalConfig = {
   open: boolean;
@@ -49,11 +45,11 @@ const Detail = ({ config, onClose, ...props }: DetailProps) => {
     setConsole(newData);
   }, [latestMessage]);
 
-  return type === DetailModalType.Detail ? (
+  return type === DetailModalType.DETAIL ? (
     <Drawer
       title="扩展协议详情"
       open={open}
-      width={type === DetailModalType.Detail ? '30%' : '40%'}
+      width={type === DetailModalType.DETAIL ? '30%' : '40%'}
       placement="right"
       onClose={onClose}
       maskClosable={false}

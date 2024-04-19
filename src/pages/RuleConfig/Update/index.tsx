@@ -3,7 +3,8 @@ import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
 import { getRulesDetail, postRulesCreate, putRulesUpdate } from '@/services/rulex/guizeguanli';
-import { FormItemType, validateFormItem } from '@/utils/utils';
+import { FormItemType } from '@/utils/enum';
+import { validateFormItem } from '@/utils/utils';
 import { NotificationOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { FooterToolbar, ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
@@ -58,8 +59,8 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
     try {
       const params = {
         ...values,
-        fromSource: type === RuleType.Inends ? [typeId] : [],
-        fromDevice: type === RuleType.Device ? [typeId] : [],
+        fromSource: type === RuleType.INENDS ? [typeId] : [],
+        fromDevice: type === RuleType.DEVICE ? [typeId] : [],
         success: DefaultSuccess,
         failed: DefaultFailed,
       };
@@ -86,16 +87,16 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
       return device_ais_ds.map(({ key, title, json }) => (
         <div key={key} className="mb-[20px]">
           <div className="mb-[5px]">{title}</div>
-          <CodeEditor lang={Lang.Json} readOnly value={json} theme={Theme.Light} />
+          <CodeEditor lang={Lang.JSON} readOnly value={json} theme={Theme.LIGHT} />
         </div>
       ));
     } else {
       return (
         <CodeEditor
-          lang={Lang.Json}
+          lang={Lang.JSON}
           readOnly
           value={deviceType ? device_ds[deviceType] : ''}
-          theme={Theme.Light}
+          theme={Theme.LIGHT}
         />
       );
     }
@@ -107,10 +108,10 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
     if (['COAP', 'HTTP', 'RULEX_UDP', 'GRPC', 'NATS_SERVER'].includes(inendsType)) {
       return (
         <CodeEditor
-          lang={Lang.Json}
+          lang={Lang.JSON}
           readOnly
           value={inendsType ? inends_ds[inendsType] : ''}
-          theme={Theme.Light}
+          theme={Theme.LIGHT}
         />
       );
     } else if (['GENERIC_IOT_HUB', 'GENERIC_MQTT'].includes(inendsType)) {
@@ -152,7 +153,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
       return inends_event_ds.map(({ key, title, json }) => (
         <div key={key} className="mb-[20px]">
           <div className="mb-[5px]">{title}</div>
-          <CodeEditor lang={Lang.Json} readOnly value={json} theme={Theme.Light} />
+          <CodeEditor lang={Lang.JSON} readOnly value={json} theme={Theme.LIGHT} />
         </div>
       ));
     }
@@ -160,10 +161,10 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
 
   // 获取数据结构 title
   const getDSTitle = () => {
-    if (type === RuleType.Device) {
+    if (type === RuleType.DEVICE) {
       return `${hasDeviceDS ? DeviceType[deviceType] : '设备'} - 输出数据的结构及其示例`;
     }
-    if (type === RuleType.Inends) {
+    if (type === RuleType.INENDS) {
       return `${hasInendsDS ? InendsType[inendsType] : '资源'} - 输出数据的结构及其示例`;
     }
     return null;

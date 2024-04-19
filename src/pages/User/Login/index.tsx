@@ -35,7 +35,7 @@ const Login: React.FC = () => {
         }));
       });
 
-      message.success('登录成功！');
+      message.success('登录成功');
 
       localStorage.setItem('accessToken', data);
       const urlParams = new URL(window.location.href).searchParams;

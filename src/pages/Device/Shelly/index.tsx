@@ -25,9 +25,9 @@ import Detail from './Detail';
 import { avatar, DefaultImg } from './images';
 
 export enum AppType {
-  Pro1 = 'Pro1',
-  Plus2PM = 'Plus2PM',
-  Pro4PM = 'Pro4PM',
+  PRO1 = 'Pro1',
+  PLUS2PM = 'Plus2PM',
+  PRO4PM = 'Pro4PM',
 }
 
 const ShellySubDevice = () => {
@@ -145,7 +145,7 @@ const ShellySubDevice = () => {
                           checked={s?.output}
                           size="small"
                           onClick={(checked, e) => {
-                            if (item.app === AppType.Pro1 && item.ip) {
+                            if (item.app === AppType.PRO1 && item.ip) {
                               pro1Toggle({ ip: item.ip });
                             }
                             e.stopPropagation();

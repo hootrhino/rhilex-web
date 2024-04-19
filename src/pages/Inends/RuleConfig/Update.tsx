@@ -20,7 +20,7 @@ const RuleConfigUpdate = () => {
     }
   }, [inendId]);
 
-  return <RuleForm type={RuleType.Inends} typeId={inendId || ''} inendsType={detail?.type} />;
+  return <RuleForm type={RuleType.INENDS} typeId={inendId || ''} inendsType={detail?.type} />;
 };
 
 export default RuleConfigUpdate;

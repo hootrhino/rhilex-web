@@ -9,6 +9,7 @@ import {
   postSnmpOidsSheetSheetImport,
   postSnmpOidsSheetUpdate,
 } from '@/services/rulex/snmpdianweiguanli';
+import { SheetType } from '@/utils/enum';
 import { omit } from '@/utils/redash';
 import { IconFont } from '@/utils/utils';
 import {
@@ -19,11 +20,12 @@ import {
   UploadOutlined,
 } from '@ant-design/icons';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
-import { EditableProTable } from '@ant-design/pro-components';
+import { EditableProTable, ProDescriptions, ProTable } from '@ant-design/pro-components';
 import { useParams, useRequest } from '@umijs/max';
 import { Button, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
-import { DEFAULT_TITLE, SnmpOidSheetType } from './enum';
+import { DEFAULT_TITLE } from './enum';
+import { removeParams, SnmpDataSheetItem, SnmpOidsSheetProps, UpdateParams } from './typings';
 import UploadRule from './UploadRule';
 
 const defaultSnmpConfig = {
@@ -31,40 +33,6 @@ const defaultSnmpConfig = {
   tag: '',
   alias: '',
   frequency: 1000,
-};
-
-type Point = {
-  uuid?: string;
-  device_uuid?: string;
-  siemensAddress?: string;
-  tag?: string;
-  alias?: string;
-  dataOrder?: string;
-  dataType?: string;
-  weight: number;
-  frequency?: number;
-};
-
-type SnmpDataSheetItem = Point & {
-  status: number;
-  lastFetchTime: number;
-  value: string;
-  [key: string]: any;
-};
-
-type removeParams = {
-  device_uuid: string;
-  uuids: string[];
-};
-
-type UpdateParams = {
-  device_uuid: string;
-  snmp_oids: Point[];
-};
-
-type SnmpOidsSheetProps = {
-  type: SnmpOidSheetType;
-  uuid?: string;
 };
 
 const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
@@ -76,7 +44,6 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [editableRows, setEditableRows] = useState<Partial<SnmpDataSheetItem>[]>([]);
-  const [deviceUuid, setUuid] = useState<string>('');
   const [polling, setPolling] = useState<number>(3000);
   const [stopPolling, setStopPolling] = useState<boolean>(false);
 
@@ -129,32 +96,32 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
   // 批量更新
   const handleOnBatchUpdate = () => {
     const updateData = editableRows?.map((item) => formatUpdateParams(item));
-    update({ device_uuid: deviceUuid, snmp_oids: updateData });
+    if (deviceId && updateData) {
+      update({ device_uuid: deviceId, snmp_oids: updateData });
+    }
   };
 
   // 单个更新
-  const handleOnSave = async (
-    rowKey: React.Key | React.Key[],
-    data: Partial<SnmpDataSheetItem>,
-  ) => {
+  const handleOnSave = async (rowKey: RecordKey, data: Partial<SnmpDataSheetItem>) => {
     let params = formatUpdateParams(data);
 
     if (rowKey === 'new') {
       params = {
         ...omit(params, ['uuid']),
-        device_uuid: deviceUuid,
+        device_uuid: deviceId,
       } as any;
     }
-
-    update({ device_uuid: deviceUuid, snmp_oids: [params] });
+    if (deviceId && params) {
+      update({ device_uuid: deviceId, snmp_oids: [params] });
+    }
   };
 
   // 批量删除
   const handleOnBatchDelete = () => {
     const uuids = selectedRowKeys as string[];
-    if (uuids && deviceUuid) {
+    if (uuids && deviceId) {
       const params = {
-        device_uuid: deviceUuid,
+        device_uuid: deviceId,
         uuids,
       };
       remove(params);
@@ -163,7 +130,7 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
 
   // 导入
   const { run: upload } = useRequest(
-    (file: File) => postSnmpOidsSheetSheetImport({ device_uuid: deviceUuid }, file),
+    (id: string, file: File) => postSnmpOidsSheetSheetImport({ device_uuid: id }, file),
     {
       manual: true,
       onSuccess: () => {
@@ -199,14 +166,6 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
       run({ uuid: deviceId });
     }
   }, [deviceId]);
-
-  useEffect(() => {
-    if (type === SnmpOidSheetType.LIST) {
-      setUuid(deviceId || '');
-    } else {
-      setUuid(uuid || '');
-    }
-  }, [type]);
 
   const columns: ProColumns<Partial<SnmpDataSheetItem>>[] = [
     {
@@ -269,7 +228,7 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
       dataIndex: 'status',
       width: 80,
       editable: false,
-      renderText: (_, record) => <StateTag state={record?.status || 0} type={StateType.Point} />,
+      renderText: (_, record) => <StateTag state={record?.status || 0} type={StateType.POINT} />,
     },
     {
       title: '采集时间',
@@ -282,7 +241,7 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
       title: '操作',
       valueType: 'option',
       width: 200,
-      hideInTable: type === SnmpOidSheetType.DETAIL,
+      hideInTable: type === SheetType.DETAIL,
       render: (text, record, _, action) => {
         return (
           <Space align="end">
@@ -307,10 +266,10 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
               编辑
             </a>
             <Popconfirm
-              title="确定要删除该对象?"
+              title="确定要删除此对象?"
               onConfirm={() => {
-                if (deviceUuid && record?.uuid) {
-                  remove({ device_uuid: deviceUuid, uuids: [record?.uuid] });
+                if (deviceId && record?.uuid) {
+                  remove({ device_uuid: deviceId, uuids: [record?.uuid] });
                 }
               }}
               okText="是"
@@ -360,7 +319,7 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
           title: '导入对象列表',
           width: '50%',
           content: <UploadRule fileName={file?.name} />,
-          onOk: () => upload(file),
+          onOk: () => deviceId && upload(deviceId, file),
         });
         return Upload.LIST_IGNORE;
       }}
@@ -391,7 +350,7 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
       onClick={() =>
         modal.confirm({
           title: '批量删除对象',
-          content: '该操作会一次性删除多个对象，请谨慎处理!',
+          content: '此操作会一次性删除多个对象，请谨慎处理!',
           onOk: handleOnBatchDelete,
         })
       }
@@ -406,7 +365,8 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
       导出对象列表
     </Button>,
   ];
-  return (
+
+  return SheetType.LIST ? (
     <PageContainer title={title} backUrl="/device/list">
       <EditableProTable<Partial<SnmpDataSheetItem>>
         controlled
@@ -429,9 +389,10 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
           onChange: setSelectedRowKeys,
         }}
         toolBarRender={() => toolBar}
+        params={{ deviceId }}
         request={async ({ current = 1, pageSize = 10 }) => {
           const { data } = await getSnmpOidsSheetList({
-            device_uuid: deviceUuid,
+            device_uuid: deviceId,
             current,
             size: pageSize,
           });
@@ -457,6 +418,35 @@ const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
         }}
       />
     </PageContainer>
+  ) : (
+    <>
+      <ProDescriptions title={DEFAULT_TITLE} />
+      <ProTable
+        rowKey="uuid"
+        columns={columns}
+        rootClassName="sheet-table"
+        params={{ uuid }}
+        request={async ({ current = 1, pageSize = 10 }) => {
+          const { data } = await getSnmpOidsSheetList({
+            device_uuid: uuid,
+            current,
+            size: pageSize,
+          });
+
+          return Promise.resolve({
+            data: data?.records,
+            total: data?.total,
+            success: true,
+          });
+        }}
+        pagination={{
+          defaultPageSize: 10,
+          hideOnSinglePage: true,
+        }}
+        options={false}
+        search={false}
+      />
+    </>
   );
 };
 

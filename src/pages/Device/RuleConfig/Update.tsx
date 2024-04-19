@@ -19,7 +19,7 @@ const RuleConfigUpdate = () => {
     }
   }, [deviceId]);
 
-  return <RuleForm type={RuleType.Device} typeId={deviceId || ''} deviceType={detail?.type} />;
+  return <RuleForm type={RuleType.DEVICE} typeId={deviceId || ''} deviceType={detail?.type} />;
 };
 
 export default RuleConfigUpdate;

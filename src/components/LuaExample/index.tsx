@@ -17,7 +17,7 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
     },
     {
       key: 'addRule',
-      label: '添加规则示例',
+      label: '新建规则示例',
       children: <CustomRule />,
     },
   ];

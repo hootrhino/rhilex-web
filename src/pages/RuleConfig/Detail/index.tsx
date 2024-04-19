@@ -2,6 +2,7 @@ import ProLog from '@/components/ProLog';
 import { getRulesDetail } from '@/services/rulex/guizeguanli';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { getInendsList } from '@/services/rulex/shuruziyuanguanli';
+import { DetailModalType } from '@/utils/enum';
 import { getName, handleNewMessage } from '@/utils/utils';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
@@ -10,11 +11,6 @@ import { useLocalStorageState } from 'ahooks';
 import { Button, Drawer, DrawerProps, Modal } from 'antd';
 import { useEffect } from 'react';
 import { useModel } from 'umi';
-
-export enum DetailModalType {
-  Detail = 'detail',
-  Log = 'log',
-}
 
 export type DetailProps = DrawerProps & {
   uuid: string;
@@ -98,16 +94,6 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       dataIndex: 'actions',
       valueType: 'code',
     },
-    // {
-    //   title: '成功回调',
-    //   dataIndex: 'success',
-    //   valueType: 'code',
-    // },
-    // {
-    //   title: '失败回调',
-    //   dataIndex: 'failed',
-    //   valueType: 'code',
-    // },
   ];
 
   useEffect(() => {
@@ -115,11 +101,11 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     setLog(newData);
   }, [latestMessage]);
 
-  return type === DetailModalType.Detail ? (
+  return type === DetailModalType.DETAIL ? (
     <Drawer
       title="规则详情"
       placement="right"
-      width={type === DetailModalType.Detail ? '35%' : '40%'}
+      width={type === DetailModalType.DETAIL ? '35%' : '40%'}
       destroyOnClose
       maskClosable={false}
       {...props}

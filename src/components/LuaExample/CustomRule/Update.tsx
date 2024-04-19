@@ -52,7 +52,7 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
 
   return (
     <ModalForm
-      title={tplId ? '编辑规则' : '添加规则'}
+      title={tplId ? '编辑规则' : '新建规则'}
       width="45%"
       formRef={formRef}
       initialValues={initialValue}

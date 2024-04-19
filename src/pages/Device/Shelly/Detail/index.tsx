@@ -65,7 +65,7 @@ const baseColumns = [
   {
     title: '开启认证功能',
     dataIndex: 'auth_en',
-    renderText: (auth_en: boolean) => <StateTag state={auth_en} type={StateType.Bool} />,
+    renderText: (auth_en: boolean) => <StateTag state={auth_en} type={StateType.BOOL} />,
   },
   {
     title: '设备认证域',
@@ -78,7 +78,7 @@ const statusColumns = [
     title: '重启设备',
     dataIndex: 'restart_required',
     renderText: (restart_required: boolean) => (
-      <StateTag state={restart_required} type={StateType.Bool} />
+      <StateTag state={restart_required} type={StateType.BOOL} />
     ),
   },
   {

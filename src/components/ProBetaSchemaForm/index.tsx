@@ -1,5 +1,6 @@
+import { FormItemType } from '@/utils/enum';
 import { omit } from '@/utils/redash';
-import { FormItemType, validateFormItem } from '@/utils/utils';
+import { validateFormItem } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import {
   BetaSchemaForm,

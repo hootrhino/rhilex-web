@@ -7,10 +7,11 @@ import { useState } from 'react';
 import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import { deleteRulesDel } from '@/services/rulex/guizeguanli';
+import { DetailModalType } from '@/utils/enum';
 import { history, useParams, useRequest } from '@umijs/max';
 import Debug from './Debug';
 import type { DetailLogModalConfig } from './Detail';
-import Detail, { DetailModalType } from './Detail';
+import Detail from './Detail';
 
 export type RuleItem = {
   uuid: string;
@@ -21,8 +22,8 @@ export type RuleItem = {
 };
 
 export enum RuleType {
-  Device = 'device',
-  Inends = 'inends',
+  DEVICE = 'device',
+  INENDS = 'inends',
 }
 
 type DetailModalConfig = {
@@ -42,7 +43,7 @@ const RuleConfig = ({ dataSource, pageTitle, type, typeId, refresh }: RuleConfig
   const { groupId } = useParams();
   const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({
     open: false,
-    type: DetailModalType.Detail,
+    type: DetailModalType.DETAIL,
     uuid: '',
   });
   const [debugConfig, setDebugConfig] = useState<DetailModalConfig>({
@@ -76,7 +77,7 @@ const RuleConfig = ({ dataSource, pageTitle, type, typeId, refresh }: RuleConfig
     let title = '规则配置';
     if (pageTitle) {
       title =
-        type === RuleType.Device ? `设备 ${pageTitle} - 规则配置` : `资源 ${pageTitle} - 规则配置`;
+        type === RuleType.DEVICE ? `设备 ${pageTitle} - 规则配置` : `资源 ${pageTitle} - 规则配置`;
     }
     return title;
   };
@@ -119,14 +120,14 @@ const RuleConfig = ({ dataSource, pageTitle, type, typeId, refresh }: RuleConfig
         </a>,
         <a
           key="log"
-          onClick={() => setDetailConfig({ open: true, type: DetailModalType.Log, uuid })}
+          onClick={() => setDetailConfig({ open: true, type: DetailModalType.LOG, uuid })}
         >
           日志
         </a>,
         <a
           key="detail"
           onClick={() => {
-            setDetailConfig({ open: true, type: DetailModalType.Detail, uuid });
+            setDetailConfig({ open: true, type: DetailModalType.DETAIL, uuid });
           }}
         >
           详情
@@ -139,7 +140,7 @@ const RuleConfig = ({ dataSource, pageTitle, type, typeId, refresh }: RuleConfig
         >
           编辑
         </a>,
-        <Popconfirm title="确定要删除该规则？" onConfirm={() => remove({ uuid })} key="remove">
+        <Popconfirm title="确定要删除此规则？" onConfirm={() => remove({ uuid })} key="remove">
           <a>删除</a>
         </Popconfirm>,
       ],

@@ -7,6 +7,7 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Button, Dropdown, Popconfirm } from 'antd';
 
+import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
 import {
@@ -15,9 +16,8 @@ import {
   putInendsRestart,
 } from '@/services/rulex/shuruziyuanguanli';
 import { useModel, useRequest } from '@umijs/max';
-import Detail from './Detail';
 import { baseColumns } from './columns';
-import PageContainer from '@/components/PageContainer';
+import Detail from './Detail';
 
 export type InendsItem = {
   name: string;
@@ -61,7 +61,7 @@ const Inends = () => {
           编辑
         </a>,
         <Popconfirm
-          title="确定要删除该资源?"
+          title="确定要删除此资源?"
           onConfirm={() => remove({ uuid })}
           okText="是"
           cancelText="否"

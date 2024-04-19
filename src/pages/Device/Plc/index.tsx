@@ -29,12 +29,14 @@ import {
 import { useParams, useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
-import { plcDataTypeOptions, PlcSheetType } from './enum';
+import { plcDataTypeOptions } from './enum';
 import UploadRule from './UploadRule';
 
 import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
+import { SheetType } from '@/utils/enum';
 import { inRange } from '@/utils/redash';
+import { PlcSheetItem, PlcSheetProps, removeParams, UpdateParams } from './typings';
 
 const defaultPlcConfig = {
   tag: '',
@@ -45,43 +47,7 @@ const defaultPlcConfig = {
   weight: 1,
 };
 
-type RecordKey = React.Key | React.Key[];
-
-export type PlcSheetItem = Point & {
-  status: number;
-  lastFetchTime: number;
-  value: string;
-  [key: string]: any;
-};
-
-type removeParams = {
-  device_uuid: string;
-  uuids: string[];
-};
-
-type Point = {
-  uuid?: string;
-  device_uuid?: string;
-  siemensAddress?: string;
-  tag?: string;
-  alias?: string;
-  dataOrder?: string;
-  dataType?: string;
-  weight: number;
-  frequency?: number;
-};
-
-type UpdateParams = {
-  device_uuid: string;
-  siemens_data_points: Point[];
-};
-
-type PlcSheetProps = {
-  type: PlcSheetType;
-  uuid?: string;
-};
-
-const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
+const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
   const { deviceId } = useParams();
   const [title, setTitle] = useState<string>('点位表配置');
   const actionRef = useRef<ActionType>();
@@ -92,7 +58,6 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
   const [editableRows, setEditableRows] = useState<Partial<PlcSheetItem>[]>([]);
   const [polling, setPolling] = useState<number>(3000);
   const [stopPolling, setStopPolling] = useState<boolean>(false);
-  const [deviceUuid, setUuid] = useState<string>('');
 
   const disabled = selectedRowKeys?.length === 0;
 
@@ -124,7 +89,6 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
 
   const formatUpdateParams = (params: Partial<PlcSheetItem>) => {
     let newParams = {
-      // ...omit(params, ['index', 'status', 'lastFetchTime', 'value', 'type']),
       ...omit(params, ['type']),
       dataType: params?.type?.[0],
       dataOrder: params?.type?.[1],
@@ -137,7 +101,9 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
   // 批量更新
   const handleOnBatchUpdate = () => {
     const updateData = editableRows?.map((item) => formatUpdateParams(item));
-    update({ device_uuid: deviceUuid, siemens_data_points: updateData });
+    if (deviceId && updateData) {
+      update({ device_uuid: deviceId, siemens_data_points: updateData });
+    }
   };
 
   // 单个更新
@@ -147,18 +113,20 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
     if (rowKey === 'new') {
       params = {
         ...omit(params, ['uuid']),
-        device_uuid: deviceUuid,
+        device_uuid: deviceId,
       } as any;
     }
-    update({ device_uuid: deviceUuid, siemens_data_points: [params] });
+    if (deviceId && params) {
+      update({ device_uuid: deviceId, siemens_data_points: [params] });
+    }
   };
 
   // 批量删除
   const handleOnBatchDelete = () => {
     const uuids = selectedRowKeys as string[];
-    if (uuids && deviceUuid) {
+    if (uuids && deviceId) {
       const params = {
-        device_uuid: deviceUuid,
+        device_uuid: deviceId,
         uuids,
       };
       remove(params);
@@ -167,7 +135,7 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
 
   // 导入点位表
   const { run: upload } = useRequest(
-    (file: File) => postS1200DataSheetSheetImport({ device_uuid: deviceUuid }, file),
+    (id: string, file: File) => postS1200DataSheetSheetImport({ device_uuid: id }, file),
     {
       manual: true,
       onSuccess: () => {
@@ -187,6 +155,29 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
     setPolling(3000);
     setStopPolling(false);
   };
+
+  // 设备详情
+  const { run } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
+    manual: true,
+    onSuccess: (record) =>
+      setTitle(record?.name ? `设备 ${record?.name} - 点位表配置` : '点位表配置'),
+  });
+
+  useEffect(() => {
+    if (editableKeys.length > 0) {
+      // 正在操作
+      setPolling(0);
+      return;
+    } else {
+      setPolling(stopPolling ? 0 : 3000);
+    }
+  }, [editableKeys]);
+
+  useEffect(() => {
+    if (deviceId) {
+      run({ uuid: deviceId });
+    }
+  }, [deviceId]);
 
   const columns: ProColumns<Partial<PlcSheetItem>>[] = [
     {
@@ -308,7 +299,7 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
       dataIndex: 'status',
       editable: false,
       width: 80,
-      renderText: (_, record) => <StateTag state={record?.status || 0} type={StateType.Point} />,
+      renderText: (_, record) => <StateTag state={record?.status || 0} type={StateType.POINT} />,
     },
     {
       title: '采集时间',
@@ -319,7 +310,7 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
     {
       title: '操作',
       valueType: 'option',
-      hideInTable: type === PlcSheetType.DETAIL,
+      hideInTable: type === SheetType.DETAIL,
       width: 150,
       render: (text, record, _, action) => {
         return (
@@ -345,10 +336,10 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
               编辑
             </a>
             <Popconfirm
-              title="确定要删除该点位?"
+              title="确定要删除此点位?"
               onConfirm={() => {
-                if (deviceUuid && record?.uuid) {
-                  remove({ device_uuid: deviceUuid, uuids: [record?.uuid] });
+                if (deviceId && record?.uuid) {
+                  remove({ device_uuid: deviceId, uuids: [record?.uuid] });
                 }
               }}
               okText="是"
@@ -400,8 +391,8 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
         modal.confirm({
           title: '导入点位表',
           width: '50%',
-          content: <UploadRule fileName={file?.name} type="plc" />,
-          onOk: () => upload(file),
+          content: <UploadRule fileName={file?.name} />,
+          onOk: () => deviceId && upload(deviceId, file),
         });
         return Upload.LIST_IGNORE;
       }}
@@ -432,7 +423,7 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
       onClick={() =>
         modal.confirm({
           title: '批量删除点位',
-          content: '该操作会一次性删除多个点位，请谨慎处理!',
+          content: '此操作会一次性删除多个点位，请谨慎处理!',
           onOk: handleOnBatchDelete,
         })
       }
@@ -448,38 +439,7 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
     </Button>,
   ];
 
-  useEffect(() => {
-    if (editableKeys.length > 0) {
-      // 正在操作
-      setPolling(0);
-      return;
-    } else {
-      setPolling(stopPolling ? 0 : 3000);
-    }
-  }, [editableKeys]);
-
-  // 设备详情
-  const { run } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
-    manual: true,
-    onSuccess: (record) =>
-      setTitle(record?.name ? `设备 ${record?.name} - 点位表配置` : '点位表配置'),
-  });
-
-  useEffect(() => {
-    if (deviceId) {
-      run({ uuid: deviceId });
-    }
-  }, [deviceId]);
-
-  useEffect(() => {
-    if (type === PlcSheetType.LIST) {
-      setUuid(deviceId || '');
-    } else {
-      setUuid(uuid || '');
-    }
-  }, [type]);
-
-  return type === PlcSheetType.LIST ? (
+  return type === SheetType.LIST ? (
     <PageContainer title={title} backUrl="/device/list">
       <EditableProTable<Partial<PlcSheetItem>>
         controlled
@@ -506,7 +466,7 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
         toolBarRender={() => toolBar}
         request={async ({ current = 1, pageSize = 10, ...keyword }) => {
           const { data } = await getS1200DataSheetList({
-            device_uuid: deviceUuid,
+            device_uuid: deviceId,
             current,
             size: pageSize,
             ...keyword,
@@ -554,7 +514,7 @@ const PlcDataSheet = ({ uuid, type = PlcSheetType.LIST }: PlcSheetProps) => {
         rootClassName="sheet-table"
         request={async ({ current = 1, pageSize = 10, ...keyword }) => {
           const { data } = await getS1200DataSheetList({
-            device_uuid: deviceUuid,
+            device_uuid: uuid,
             current,
             size: pageSize,
             ...keyword,

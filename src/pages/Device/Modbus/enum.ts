@@ -44,8 +44,3 @@ export const modbusDataTypeOptions = [
     ],
   },
 ];
-
-export enum ModbusSheetType {
-  DETAIL = 'detail',
-  LIST = 'list',
-}

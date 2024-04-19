@@ -18,7 +18,7 @@ const RuleConfigList = () => {
     <RuleConfig
       dataSource={data}
       pageTitle={inendsDetail?.name || ''}
-      type={RuleType.Inends}
+      type={RuleType.INENDS}
       typeId={inendId || ''}
       refresh={refresh}
     />

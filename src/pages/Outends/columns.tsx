@@ -97,7 +97,7 @@ const pingConfig = [
       },
     }),
     convertValue: (value: boolean) => value?.toString(),
-    renderText: (allowPing: boolean) => <StateTag state={allowPing} type={StateType.Bool} />,
+    renderText: (allowPing: boolean) => <StateTag state={allowPing} type={StateType.BOOL} />,
   },
   {
     title: '心跳包内容',
@@ -256,7 +256,7 @@ export const configColumns = {
                       rules: [
                         {
                           required: isSuccess ? false : true,
-                          message: 'value 不能为空',
+                          message: '请输入 value',
                         },
                       ],
                     },

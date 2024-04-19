@@ -129,8 +129,8 @@ const DataCenter = () => {
             }}
           >
             <CodeEditor
-              lang={Lang.Sql}
-              theme={Theme.Light}
+              lang={Lang.SQL}
+              theme={Theme.LIGHT}
               value={code}
               onChange={(value) => setCode(value)}
             />

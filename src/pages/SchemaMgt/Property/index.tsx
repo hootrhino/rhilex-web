@@ -150,7 +150,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
           编辑
         </a>,
         <Popconfirm
-          title="确定要删除该属性？"
+          title="确定要删除此属性？"
           onConfirm={() => uuid && schemaId && remove({ uuid, schemaId })}
           okText="是"
           cancelText="否"

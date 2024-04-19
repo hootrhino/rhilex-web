@@ -128,7 +128,7 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
                 </Tooltip>
                 <Tooltip title="删除模型">
                   <Popconfirm
-                    title="确定要删除该数据模型？"
+                    title="确定要删除此数据模型？"
                     onConfirm={() => uuid && remove({ uuid })}
                   >
                     <a key="remove">

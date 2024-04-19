@@ -9,14 +9,14 @@ import { Tag } from 'antd';
 import { useEffect, useState } from 'react';
 
 export enum StateType {
-  Point = 'point',
-  AppStack = 'appStack',
-  Bool = 'bool',
-  Parse = 'parse',
-  Notice = 'notice',
-  Level = 'level',
-  Running = 'running',
-  Default = 'default',
+  POINT = 'point',
+  APPSTACK = 'appStack',
+  BOOL = 'bool',
+  PARSE = 'parse',
+  NOTICE = 'notice',
+  LEVEL = 'level',
+  RUNNING = 'running',
+  DEFAULT = 'default',
 }
 
 type StateTagProps = {
@@ -130,7 +130,7 @@ const runningStateEnum = {
   },
 };
 
-const StateTag = ({ state, type = StateType.Default }: StateTagProps) => {
+const StateTag = ({ state, type = StateType.DEFAULT }: StateTagProps) => {
   const [activeState, setActiveState] = useState<number | string>(0);
   const [dataSource, setDataSource] = useState<Record<number | string, any>>(defaultStateEnum);
 

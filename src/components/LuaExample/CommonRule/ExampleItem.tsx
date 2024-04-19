@@ -149,7 +149,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
         ];
       } else {
         return resourceData
-          ? resourceData[dataSource]?.map((item) => ({
+          ? resourceData[dataSource]?.map((item: any) => ({
               label: (
                 <>
                   <span>{item?.name}</span>
@@ -263,7 +263,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
           {({ key }) => renderFormList(key)}
         </ProFormList>
         <ProForm.Item name="code">
-          <CodeEditor readOnly lang={Lang.Lua} />
+          <CodeEditor readOnly lang={Lang.LUA} />
         </ProForm.Item>
       </ModalForm>
     </>

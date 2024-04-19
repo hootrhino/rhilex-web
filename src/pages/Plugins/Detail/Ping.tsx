@@ -1,5 +1,6 @@
 import ProLog from '@/components/ProLog';
-import { FormItemType, validateFormItem } from '@/utils/utils';
+import { FormItemType } from '@/utils/enum';
+import { validateFormItem } from '@/utils/utils';
 import { ProForm } from '@ant-design/pro-components';
 import { Button, Input } from 'antd';
 import { Rule } from 'antd/es/form';

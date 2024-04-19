@@ -1,5 +1,6 @@
 import ProLog from '@/components/ProLog';
 import { getAppDetail } from '@/services/rulex/qingliangyingyong';
+import { DetailModalType } from '@/utils/enum';
 import { handleNewMessage } from '@/utils/utils';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
@@ -10,7 +11,6 @@ import { Button, Drawer, Modal } from 'antd';
 import { useEffect } from 'react';
 import type { AppStackItem } from '..';
 import { baseColumns } from '../columns';
-import { DetailModalType } from '../enum';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -28,11 +28,11 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     setConsole(newData);
   }, [latestMessage]);
 
-  return type === DetailModalType.Detail ? (
+  return type === DetailModalType.DETAIL ? (
     <Drawer
       title="轻量应用详情"
       placement="right"
-      width={type === DetailModalType.Detail ? '35%' : '40%'}
+      width={type === DetailModalType.DETAIL ? '35%' : '40%'}
       {...props}
     >
       <ProDescriptions

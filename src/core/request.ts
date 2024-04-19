@@ -30,9 +30,9 @@ type BizErrorInfo = {
 
 const codeMessage = {
   400: '请求参数错误',
-  401: '您的登录已失效，请重新登录',
+  401: '你的登录已失效，请重新登录',
   403: '权限验证不通过',
-  404: '找不到该接口',
+  404: '找不到此接口',
   405: '请求方法不被允许',
   406: '请求的资源特性不满足请求头条件',
   407: '需要在代理服务器进行身份验证',
@@ -52,7 +52,7 @@ const codeMessage = {
   431: '请求头字段太大',
   451: '请求了非法资源',
   500: '接口链路调用发生错误',
-  501: '服务器不支持该请求方法',
+  501: '服务器不支持此请求方法',
   502: '网关错误',
   503: '服务不可用',
   504: '网关超时',
@@ -131,7 +131,7 @@ const request: RequestConfig = {
     // 错误接收及处理
     errorHandler: (error: any, opts: any) => {
       if (opts?.skipErrorHandler) throw error;
-      // 我们的 errorThrower 抛出的错误。
+      // 我们的 errorThrower 抛出的错误
       if (error.name === 'BizError') {
         const errorInfo: ResponseStructure | undefined = error.info;
         if (errorInfo) {

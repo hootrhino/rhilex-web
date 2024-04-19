@@ -93,7 +93,7 @@ const CustomRule = () => {
                 编辑
               </a>,
               <Popconfirm
-                title="确定要删除该规则？"
+                title="确定要删除此规则？"
                 onConfirm={async () => {
                   if (!row?.uuid) return;
                   await deleteUserluaDel({ uuid: row.uuid });

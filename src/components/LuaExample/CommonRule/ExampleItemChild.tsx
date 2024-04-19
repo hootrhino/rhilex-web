@@ -3,7 +3,19 @@ import { FormOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import CopyButton from './CopyButton';
 
-const ExampleItemChild = ({ type, data, handleOnCopy, isUsage = false, ...props }) => {
+type ExampleItemChildProps = {
+  type: string;
+  isUsage?: boolean;
+  [key: string]: any;
+};
+
+const ExampleItemChild = ({
+  type,
+  data,
+  handleOnCopy,
+  isUsage = false,
+  ...props
+}: ExampleItemChildProps) => {
   return (
     <div {...props}>
       <div className="flex justify-between w-full mb-[6px]">
@@ -27,7 +39,7 @@ const ExampleItemChild = ({ type, data, handleOnCopy, isUsage = false, ...props 
           <CopyButton data={data} size="small" ghost />
         )}
       </div>
-      <CodeEditor readOnly value={data.apply} lang={Lang.Lua} />
+      <CodeEditor readOnly value={data.apply} lang={Lang.LUA} />
     </div>
   );
 };

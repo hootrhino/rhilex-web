@@ -5,6 +5,7 @@ import { clsx, type ClassValue } from 'clsx';
 import CryptoJS from 'crypto-js';
 import { twMerge } from 'tailwind-merge';
 import { isDev } from './constant';
+import { FormItemType } from './enum';
 import { isEmpty } from './redash';
 import {
   validateCIDR,
@@ -125,15 +126,6 @@ export const handleNewMessage = (source: string[] | undefined, target: string, t
   return newData; // Return the updated array
 };
 
-export enum FormItemType {
-  NAME = 'name', // 名称
-  PORT = 'port', // 端口
-  ADDRESS = 'address', // 起始地址
-  IP = 'ip', // IPv4
-  NETMASK = 'netmask', // 子网掩码
-  GATEWAY = 'gateway', // 网关
-  CIDR = 'cidr', // CIDR
-}
 /**
  * 校验表单字段
  * @param value 校验字段的值

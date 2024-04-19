@@ -40,7 +40,7 @@ import SchemaDetail from './SchemaDetail';
 
 export type DeviceItem = {
   name: string;
-  type: string;
+  type: DeviceType;
   state: number;
   schemaId: string;
   description: string;
@@ -211,7 +211,7 @@ const Devices = () => {
             title: '查看视频',
             content: (
               <div className="break-all">
-                该模式下流媒体被中转到第三方地址，当前{config?.inputAddr}
+                此模式下流媒体被中转到第三方地址，当前{config?.inputAddr}
                 已经成功推送到{config?.outputAddr}，请在对应的平台上查看或者播放。
               </div>
             ),
@@ -246,6 +246,7 @@ const Devices = () => {
       valueType: 'option',
       render: (_, record) => {
         const { uuid, gid, type, schemaId, state } = record;
+
         return (
           <Space>
             <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
@@ -255,7 +256,7 @@ const Devices = () => {
               编辑
             </a>
             <Popconfirm
-              title="确定要删除该设备?"
+              title="确定要删除此设备?"
               onConfirm={() => remove({ uuid })}
               okText="是"
               cancelText="否"

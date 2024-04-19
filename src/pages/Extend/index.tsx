@@ -7,6 +7,7 @@ import {
   putGoodsStart,
   putGoodsStop,
 } from '@/services/rulex/kuozhanxieyi';
+import { DetailModalType } from '@/utils/enum';
 import { IconFont } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
@@ -15,7 +16,7 @@ import { useRequest } from '@umijs/max';
 import { Button, Popconfirm, Tag } from 'antd';
 import { useRef, useState } from 'react';
 import type { DetailLogModalConfig } from './Detail';
-import Detail, { DetailModalType } from './Detail';
+import Detail from './Detail';
 import UpdateForm from './Update';
 
 export type ExtendItem = {
@@ -91,7 +92,7 @@ export const baseColumns = [
     title: '运行状态',
     dataIndex: 'running',
     width: 100,
-    renderText: (running: string) => <StateTag state={running} type={StateType.Running} />,
+    renderText: (running: string) => <StateTag state={running} type={StateType.RUNNING} />,
   },
   {
     title: '备注',
@@ -106,7 +107,7 @@ const ExtendedProtocol = () => {
 
   const [formConfig, setFormConfig] = useState<DetailModalConfig>({ open: false, uuid: '' });
   const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({
-    type: DetailModalType.Detail,
+    type: DetailModalType.DETAIL,
     open: false,
     uuid: '',
   });
@@ -151,7 +152,7 @@ const ExtendedProtocol = () => {
           key="log"
           onClick={() => {
             if (!uuid) return;
-            setDetailConfig({ type: DetailModalType.Log, open: true, uuid });
+            setDetailConfig({ type: DetailModalType.LOG, open: true, uuid });
           }}
         >
           日志
@@ -160,7 +161,7 @@ const ExtendedProtocol = () => {
           key="detail"
           onClick={() => {
             if (!uuid) return;
-            setDetailConfig({ type: DetailModalType.Detail, open: true, uuid });
+            setDetailConfig({ type: DetailModalType.DETAIL, open: true, uuid });
           }}
         >
           详情
@@ -188,7 +189,7 @@ const ExtendedProtocol = () => {
           编辑
         </a>,
         <Popconfirm
-          title="确定要删除该扩展协议？"
+          title="确定要删除此扩展协议？"
           onConfirm={() => uuid && remove({ uuid })}
           key="remove"
         >

@@ -49,7 +49,7 @@ const NotifyLog = () => {
     {
       title: '类型',
       dataIndex: 'type',
-      renderText: (type: string) => <StateTag state={type || 'INFO'} type={StateType.Notice} />,
+      renderText: (type: string) => <StateTag state={type || 'INFO'} type={StateType.NOTICE} />,
     },
     {
       title: '概览',

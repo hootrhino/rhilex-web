@@ -198,7 +198,7 @@ export const configColumns = {
                       if (value) {
                         return Promise.resolve();
                       }
-                      return Promise.reject('订阅 topic 表至少要有一项！');
+                      return Promise.reject('订阅 topic 表至少要有一项');
                     },
                   },
                 ],

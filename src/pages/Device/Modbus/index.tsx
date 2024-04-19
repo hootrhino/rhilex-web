@@ -35,8 +35,10 @@ import { funcEnum } from '../enum';
 import PageContainer from '@/components/PageContainer';
 import StateTag, { StateType } from '@/components/StateTag';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
+import { SheetType } from '@/utils/enum';
 import { inRange } from '@/utils/redash';
-import { modbusDataTypeOptions, ModbusSheetType } from './enum';
+import { modbusDataTypeOptions } from './enum';
+import { ModbusDataSheetItem, ModbusDataSheetProps, removeParams, UpdateParams } from './typings';
 import UploadRule from './UploadRule';
 
 const defaultModbusConfig = {
@@ -51,48 +53,7 @@ const defaultModbusConfig = {
   weight: 1,
 };
 
-type RecordKey = React.Key | React.Key[];
-
-export type ModbusDataSheetItem = Point & {
-  id?: number;
-  created_at?: string;
-  status: number;
-  lastFetchTime: number;
-  value: string;
-  [key: string]: any;
-};
-
-type removeParams = {
-  device_uuid: string;
-  uuids: string[];
-};
-
-type Point = {
-  uuid?: string;
-  device_uuid?: string;
-  tag?: string;
-  alias?: string;
-  function?: number;
-  slaverId?: number;
-  address?: number;
-  frequency?: number;
-  quantity?: number;
-  dataType: string;
-  dataOrder: string;
-  weight: number;
-};
-
-type UpdateParams = {
-  device_uuid: string;
-  modbus_data_points: Point[];
-};
-
-type ModbusDataSheetProps = {
-  uuid?: string;
-  type: ModbusSheetType;
-};
-
-const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetProps) => {
+const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<ModbusDataSheetItem>>();
   const { deviceId } = useParams();
@@ -103,7 +64,6 @@ const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetP
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [polling, setPolling] = useState<number>(3000);
   const [stopPolling, setStopPolling] = useState<boolean>(false);
-  const [deviceUuid, setUuid] = useState<string>('');
 
   const disabled = selectedRowKeys?.length === 0;
 
@@ -150,7 +110,9 @@ const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetP
   // 批量更新
   const handleOnBatchUpdate = () => {
     const updateData = editableRows?.map((item) => formatUpdateParams(item));
-    update({ device_uuid: deviceUuid, modbus_data_points: updateData });
+    if (deviceId && updateData) {
+      update({ device_uuid: deviceId, modbus_data_points: updateData });
+    }
   };
 
   // 单个更新
@@ -160,19 +122,20 @@ const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetP
     if (rowKey === 'new') {
       params = {
         ...omit(params, ['uuid']),
-        device_uuid: deviceUuid,
+        device_uuid: deviceId,
       } as any;
     }
-
-    update({ device_uuid: deviceUuid, modbus_data_points: [params] });
+    if (deviceId && params) {
+      update({ device_uuid: deviceId, modbus_data_points: [params] });
+    }
   };
 
   // 批量删除
   const handleOnBatchDelete = () => {
     const uuids = selectedRowKeys as string[];
-    if (uuids && deviceUuid) {
+    if (uuids && deviceId) {
       const params = {
-        device_uuid: deviceUuid,
+        device_uuid: deviceId,
         uuids,
       };
       remove(params);
@@ -181,7 +144,7 @@ const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetP
 
   // 导入点位表
   const { run: upload } = useRequest(
-    (file: File) => postModbusDataSheetSheetImport({ device_uuid: deviceUuid }, file),
+    (id: string, file: File) => postModbusDataSheetSheetImport({ device_uuid: id }, file),
     {
       manual: true,
       onSuccess: () => {
@@ -430,7 +393,7 @@ const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetP
       dataIndex: 'status',
       width: 80,
       editable: false,
-      renderText: (_, record) => <StateTag state={record?.status || 0} type={StateType.Point} />,
+      renderText: (_, record) => <StateTag state={record?.status || 0} type={StateType.POINT} />,
     },
     {
       title: '采集时间',
@@ -443,7 +406,7 @@ const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetP
       title: '操作',
       valueType: 'option',
       width: 150,
-      hideInTable: type === ModbusSheetType.DETAIL,
+      hideInTable: type === SheetType.DETAIL,
       render: (text, record, _, action) => {
         return (
           <Space align="end">
@@ -468,10 +431,10 @@ const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetP
               编辑
             </a>
             <Popconfirm
-              title="确定要删除该点位?"
+              title="确定要删除此点位?"
               onConfirm={() => {
-                if (deviceUuid && record?.uuid) {
-                  remove({ device_uuid: deviceUuid, uuids: [record?.uuid] });
+                if (deviceId && record?.uuid) {
+                  remove({ device_uuid: deviceId, uuids: [record?.uuid] });
                 }
               }}
               okText="是"
@@ -524,7 +487,7 @@ const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetP
           title: '导入点位表',
           width: '50%',
           content: <UploadRule fileName={file?.name} />,
-          onOk: () => upload(file),
+          onOk: () => deviceId && upload(deviceId, file),
         });
         return Upload.LIST_IGNORE;
       }}
@@ -555,7 +518,7 @@ const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetP
       onClick={() =>
         modal.confirm({
           title: '批量删除点位',
-          content: '该操作会一次性删除多个点位，请谨慎处理!',
+          content: '此操作会一次性删除多个点位，请谨慎处理!',
           onOk: handleOnBatchDelete,
         })
       }
@@ -587,15 +550,7 @@ const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetP
     }
   }, [deviceId]);
 
-  useEffect(() => {
-    if (type === ModbusSheetType.LIST) {
-      setUuid(deviceId || '');
-    } else {
-      setUuid(uuid || '');
-    }
-  }, [type]);
-
-  return type === ModbusSheetType.LIST ? (
+  return type === SheetType.LIST ? (
     <PageContainer title={title} backUrl="/device/list">
       <EditableProTable<Partial<ModbusDataSheetItem>>
         controlled
@@ -620,7 +575,7 @@ const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetP
         toolBarRender={() => toolBar}
         request={async ({ current = 1, pageSize = 10 }) => {
           const { data } = await getModbusDataSheetList({
-            device_uuid: deviceUuid,
+            device_uuid: deviceId,
             current,
             size: pageSize,
           });
@@ -667,7 +622,7 @@ const ModbusDataSheet = ({ uuid, type = ModbusSheetType.LIST }: ModbusDataSheetP
         rootClassName="sheet-table"
         request={async ({ current = 1, pageSize = 10 }) => {
           const { data } = await getModbusDataSheetList({
-            device_uuid: deviceUuid,
+            device_uuid: uuid,
             current,
             size: pageSize,
           });

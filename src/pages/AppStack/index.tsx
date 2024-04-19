@@ -6,6 +6,7 @@ import {
   putAppStart,
   putAppStop,
 } from '@/services/rulex/qingliangyingyong';
+import { DetailModalType } from '@/utils/enum';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
@@ -15,7 +16,6 @@ import { useRef, useState } from 'react';
 import { history } from 'umi';
 import { baseColumns } from './columns';
 import Detail from './Detail';
-import { DetailModalType } from './enum';
 
 export type AppStackItem = {
   uuid?: string;
@@ -39,7 +39,7 @@ const AppStack = () => {
   const [detailConfig, setConfig] = useState<DetailLogModalConfig>({
     uuid: '',
     open: false,
-    type: DetailModalType.Detail,
+    type: DetailModalType.DETAIL,
   });
 
   // 删除
@@ -81,7 +81,7 @@ const AppStack = () => {
           key="detail"
           onClick={() => {
             if (!uuid) return;
-            setConfig({ uuid, open: true, type: DetailModalType.Detail });
+            setConfig({ uuid, open: true, type: DetailModalType.DETAIL });
           }}
         >
           详情
@@ -90,7 +90,7 @@ const AppStack = () => {
           key="log"
           onClick={() => {
             if (!uuid) return;
-            setConfig({ uuid, open: true, type: DetailModalType.Log });
+            setConfig({ uuid, open: true, type: DetailModalType.LOG });
           }}
         >
           日志
@@ -113,7 +113,7 @@ const AppStack = () => {
           编辑
         </a>,
         <Popconfirm
-          title="确定要删除该应用?"
+          title="确定要删除此应用?"
           onConfirm={() => uuid && remove({ uuid })}
           okText="是"
           cancelText="否"

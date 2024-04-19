@@ -20,7 +20,7 @@ const RuleConfigList = () => {
     <RuleConfig
       dataSource={data}
       pageTitle={deviceDetail?.name || ''}
-      type={RuleType.Device}
+      type={RuleType.DEVICE}
       typeId={deviceId || ''}
       refresh={refresh}
     />

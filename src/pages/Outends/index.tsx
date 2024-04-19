@@ -67,7 +67,7 @@ const Outends = () => {
           编辑
         </a>,
         <Popconfirm
-          title="确定要删除该目标？"
+          title="确定要删除此目标？"
           onConfirm={() => handleOnDelete({ uuid })}
           key="remove"
         >

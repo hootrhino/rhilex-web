@@ -31,7 +31,7 @@ const NoticeIcon = () => {
           },
         },
         subTitle: {
-          render: (_, { type }) => <StateTag state={type || 'INFO'} type={StateType.Notice} />,
+          render: (_, { type }) => <StateTag state={type || 'INFO'} type={StateType.NOTICE} />,
         },
       }}
       className="notification-list"

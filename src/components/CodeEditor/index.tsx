@@ -18,15 +18,15 @@ import {
 import { autoCompletions, createDetailEl, createIconEl, luaLinter } from './utils';
 
 export enum Lang {
-  Shell = 'shell',
-  Sql = 'sql',
-  Lua = 'lua',
-  Json = 'json',
+  SHELL = 'shell',
+  SQL = 'sql',
+  LUA = 'lua',
+  JSON = 'json',
 }
 
 export enum Theme {
-  Dark = 'dark',
-  Light = 'light',
+  DARK = 'dark',
+  LIGHT = 'light',
 }
 
 type CodeEditorProps = {
@@ -43,10 +43,10 @@ const iconMap = {
 };
 
 const modes = {
-  shell: langs.shell,
-  sql: langs.sql,
-  lua: langs.lua,
-  json: langs.json,
+  [Lang.SHELL]: langs.shell,
+  [Lang.SQL]: langs.sql,
+  [Lang.LUA]: langs.lua,
+  [Lang.JSON]: langs.json,
 };
 
 const themeSetting = {
@@ -66,12 +66,12 @@ const basicSetupSetting = {
   syntaxHighlighting: true,
 };
 
-const CodeEditor = ({ lang, theme = Theme.Dark, ...props }: CodeEditorProps) => {
+const CodeEditor = ({ lang, theme = Theme.DARK, ...props }: CodeEditorProps) => {
   const { data: inends } = useRequest(() => getInendsList());
   const { data: outends } = useRequest(() => getOutendsList());
 
   const getEditorConfig = () => {
-    if (lang !== Lang.Lua) return [];
+    if (lang !== Lang.LUA) return [];
 
     return [
       autocompletion({
@@ -104,7 +104,7 @@ const CodeEditor = ({ lang, theme = Theme.Dark, ...props }: CodeEditorProps) => 
   };
 
   const getTheme = () => {
-    if (theme === Theme.Dark) {
+    if (theme === Theme.DARK) {
       return darculaInit({
         settings: {
           ...themeSetting,

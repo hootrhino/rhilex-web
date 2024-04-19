@@ -4,8 +4,9 @@ import UnitTitle from '@/components/UnitTitle';
 import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
 import { getSchemaList } from '@/services/rulex/shujumoxing';
+import { FormItemType } from '@/utils/enum';
 import { omit, pick } from '@/utils/redash';
-import { FormItemType, getPlayAddress, stringToBool, validateFormItem } from '@/utils/utils';
+import { getPlayAddress, stringToBool, validateFormItem } from '@/utils/utils';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { AutoComplete, Space, Typography } from 'antd';
 import { Rule } from 'antd/es/form';
@@ -47,7 +48,7 @@ export const autoRequestConfig = [
     }),
     convertValue: (value: boolean) => value?.toString(),
     render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
-      <StateTag state={commonConfig?.autoRequest} type={StateType.Bool} />
+      <StateTag state={commonConfig?.autoRequest} type={StateType.BOOL} />
     ),
   },
 ];
@@ -283,7 +284,7 @@ export const typeConfigColumns = {
           }),
           convertValue: (value: boolean) => value?.toString(),
           render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
-            <StateTag state={commonConfig?.enableOptimize} type={StateType.Bool} />
+            <StateTag state={commonConfig?.enableOptimize} type={StateType.BOOL} />
           ),
         },
         {
@@ -319,7 +320,7 @@ export const typeConfigColumns = {
           }),
           convertValue: (value: boolean) => value?.toString(),
           render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
-            <StateTag state={commonConfig?.parseAis} type={StateType.Parse} />
+            <StateTag state={commonConfig?.parseAis} type={StateType.PARSE} />
           ),
         },
         {
@@ -436,7 +437,7 @@ export const typeConfigColumns = {
                           rules: [
                             {
                               required: isSuccess ? false : true,
-                              message: 'value 不能为空',
+                              message: '请输入 value',
                             },
                           ],
                         },
@@ -508,7 +509,7 @@ export const typeConfigColumns = {
           valueType: 'select',
           valueEnum: OutputModeOption,
           required: true,
-          tooltip: '注意：因为传输格式原因，Jpeg Stream 模式下仅保存了图像信息，没有原始声音。',
+          tooltip: '注意：因为传输格式原因，Jpeg Stream 模式下仅保存了图像信息，没有原始声音',
           render: (_dom: React.ReactNode, { outputMode }: DeviceItem) =>
             OutputModeOption[outputMode],
         },
@@ -595,7 +596,7 @@ export const typeConfigColumns = {
           }),
           convertValue: (value: boolean) => value?.toString(),
           render: (_dom: React.ReactNode, { autoScan }: DeviceItem) => (
-            <StateTag state={autoScan} type={StateType.Bool} />
+            <StateTag state={autoScan} type={StateType.BOOL} />
           ),
         },
         {

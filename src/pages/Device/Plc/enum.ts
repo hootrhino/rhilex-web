@@ -117,8 +117,3 @@ export const plcDataTypeOptions = [
   },
   ...baseOptions,
 ];
-
-export enum PlcSheetType {
-  DETAIL = 'detail',
-  LIST = 'list',
-}

@@ -73,7 +73,7 @@ const Debug = ({ uuid, type, ...props }: DebugProps) => {
         label="输入数据"
         rules={[{ required: true, message: '请输入数据' }]}
       >
-        <CodeEditor autoFocus lang={Lang.Shell} />
+        <CodeEditor autoFocus lang={Lang.SHELL} />
       </ProForm.Item>
       <ProForm.Item name="output" label="输出结果" className="h-[300px]">
         <ProLog

@@ -7,8 +7,8 @@ import { Space, Tooltip } from 'antd';
 import { useEffect, useRef } from 'react';
 
 export enum GroupModalType {
-  Edit = 'edit',
-  New = 'new',
+  EDIT = 'edit',
+  NEW = 'new',
 }
 
 export type GroupConfig = {
@@ -39,7 +39,7 @@ type GroupListProps = {
 
 export const DEFAULT_CONFIG: GroupConfig = {
   open: false,
-  type: GroupModalType.New,
+  type: GroupModalType.NEW,
   title: '新建分组',
 };
 
@@ -132,7 +132,7 @@ const GroupList = ({
                     <a
                       key="edit"
                       onClick={() => {
-                        updateConfig({ open: true, title: '编辑分组', type: GroupModalType.Edit });
+                        updateConfig({ open: true, title: '编辑分组', type: GroupModalType.EDIT });
                         getGroupDetail({ uuid });
                       }}
                     >

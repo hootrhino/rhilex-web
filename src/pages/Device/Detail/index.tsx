@@ -1,5 +1,6 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
+import { SheetType } from '@/utils/enum';
 import { flatten, omit } from '@/utils/redash';
 import { getName } from '@/utils/utils';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
@@ -11,9 +12,8 @@ import type { DeviceItem } from '..';
 import { baseColumns, typeConfigColumns } from '../columns';
 import { DeviceType } from '../enum';
 import ModbusSheet from '../Modbus';
-import { ModbusSheetType } from '../Modbus/enum';
 import PlcSheet from '../Plc';
-import { PlcSheetType } from '../Plc/enum';
+import SnmpOidsSheet from '../Snmp';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -148,10 +148,13 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
               <HeadersDetail data={config?.httpConfig?.headers} />
             )}
             {type === DeviceType.GENERIC_MODBUS && (
-              <ModbusSheet uuid={detail?.uuid} type={ModbusSheetType.DETAIL} />
+              <ModbusSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
             )}
             {type === DeviceType.SIEMENS_PLC && (
-              <PlcSheet uuid={detail?.uuid} type={PlcSheetType.DETAIL} />
+              <PlcSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
+            )}
+            {type === DeviceType.GENERIC_SNMP && (
+              <SnmpOidsSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
             )}
           </>
         )}

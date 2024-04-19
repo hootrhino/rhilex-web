@@ -20,13 +20,13 @@ export const baseColumns = [
     valueType: 'state',
     convertValue: (value: boolean) => value?.toString(),
     transform: (value: string) => ({ autoStart: stringToBool(value) }),
-    renderText: (autoStart: boolean) => <StateTag state={autoStart} type={StateType.Bool} />,
+    renderText: (autoStart: boolean) => <StateTag state={autoStart} type={StateType.BOOL} />,
   },
   {
     title: 'APP 状态',
     dataIndex: 'appState',
     hideInForm: true,
-    renderText: (appState: number) => <StateTag state={appState} type={StateType.AppStack} />,
+    renderText: (appState: number) => <StateTag state={appState} type={StateType.APPSTACK} />,
   },
   {
     title: '脚本类型',

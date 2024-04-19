@@ -1,7 +1,8 @@
 import { message } from '@/components/PopupHack';
 import { getSettingsEth, postSettingsEth } from '@/services/rulex/wangluopeizhi';
+import { FormItemType } from '@/utils/enum';
 import { omit } from '@/utils/redash';
-import { FormItemType, validateFormItem } from '@/utils/utils';
+import { validateFormItem } from '@/utils/utils';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import type { FormListActionType, ProFormInstance } from '@ant-design/pro-components';
 import {

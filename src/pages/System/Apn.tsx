@@ -55,7 +55,7 @@ const APNConfig = () => {
         <Space>
           <span>APN 配置</span>
           <Tag icon={<ExclamationCircleOutlined />} color="warning">
-            该配置项属于高级网络功能，配置不当会造成设备断网，请谨慎操作
+            此配置项属于高级网络功能，配置不当会造成设备断网，请谨慎操作
           </Tag>
         </Space>
       }
