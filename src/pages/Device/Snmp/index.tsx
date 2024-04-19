@@ -284,13 +284,11 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
               <a
                 key="error"
                 onClick={() => {
-                  if (record?.errMsg) {
-                    modal.error({
-                      title: '对象异常信息',
-                      content: <div className="flex flex-wrap">{record?.errMsg}</div>,
-                      okText: '关闭',
-                    });
-                  }
+                  modal.error({
+                    title: '对象异常信息',
+                    content: <div className="flex flex-wrap">{record?.errMsg}</div>,
+                    okText: '关闭',
+                  });
                 }}
               >
                 查看异常

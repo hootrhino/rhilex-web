@@ -353,12 +353,10 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
                 menu={{
                   items: [{ key: 'error', label: '查看异常' }],
                   onClick: () => {
-                    if (record?.errMsg) {
-                      modal.error({
-                        title: '点位异常信息',
-                        content: <div className="flex flex-wrap">{record?.errMsg}</div>,
-                      });
-                    }
+                    modal.error({
+                      title: '点位异常信息',
+                      content: <div className="flex flex-wrap">{record?.errMsg}</div>,
+                    });
                   },
                 }}
               >
