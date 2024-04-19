@@ -44,7 +44,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
 
   return (
     <ModalForm
-      title={initialValue?.uuid ? '更新属性' : '新增属性'}
+      title={initialValue?.uuid ? '更新属性' : '新建属性'}
       formRef={formRef}
       width="50%"
       initialValues={defaultProperty}

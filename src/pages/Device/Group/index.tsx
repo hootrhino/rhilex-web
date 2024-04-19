@@ -77,7 +77,7 @@ const GroupList = ({
     });
   };
 
-  // 新增&编辑
+  // 新建&编辑
   const handleOnFinish = async ({ name }: { name: string }) => {
     if (type === 'new') {
       createGroup({ type: groupType, name }).then((value: any) => {

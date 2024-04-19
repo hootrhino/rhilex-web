@@ -25,7 +25,7 @@ const useGroup = () => {
     },
   );
 
-  // 新增分组
+  // 新建分组
   const { run: create } = useRequest((params: createGroupParams) => postGroupCreate(params), {
     manual: true,
     onSuccess: () => message.success('新建成功'),

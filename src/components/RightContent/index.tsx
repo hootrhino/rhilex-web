@@ -28,6 +28,7 @@ const GlobalHeaderRight = () => {
       <SelectLang
         style={{ padding: '0 12px', height: '100%', display: 'inline', color: '#fff' }}
         className="hover:bg-[#32393F]"
+        reload={false}
       />
       <Avatar />
     </div>

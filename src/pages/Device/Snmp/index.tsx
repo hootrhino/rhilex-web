@@ -35,7 +35,7 @@ const defaultSnmpConfig = {
   frequency: 1000,
 };
 
-const SnmpOidsSheet = ({ type, uuid }: SnmpOidsSheetProps) => {
+const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<SnmpDataSheetItem>>();
   const { deviceId } = useParams();

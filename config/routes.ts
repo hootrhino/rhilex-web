@@ -48,7 +48,7 @@
       },
       {
         path: '/device/:groupId/:deviceId/rule/new',
-        name: '新增规则配置',
+        name: '新建规则配置',
         component: './Device/RuleConfig/Update',
       },
       {
@@ -116,7 +116,7 @@
       },
       {
         path: '/inends/:inendId/rule/new',
-        name: '新增规则配置',
+        name: '新建规则配置',
         component: './Inends/RuleConfig/Update',
       },
       {

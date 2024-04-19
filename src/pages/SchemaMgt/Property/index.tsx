@@ -264,7 +264,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
             onClick={() => setOpen(true)}
             disabled={!schemaId}
           >
-            新增属性
+            新建属性
           </Button>,
         ]}
       />
@@ -273,7 +273,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
         onOpenChange={(visible) => setOpen(visible)}
         initialValue={initialValue}
         onFinish={async (values) => {
-          let info = '新增成功';
+          let info = '新建成功';
           let params = {
             ...values,
             unit: values?.unit || '',

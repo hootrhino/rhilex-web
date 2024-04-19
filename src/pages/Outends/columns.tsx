@@ -227,7 +227,7 @@ export const configColumns = {
       title: <HeadersTitle />,
       fieldProps: {
         creatorButtonProps: {
-          creatorButtonText: '新增 Header',
+          creatorButtonText: '新建 Header',
           position: 'top',
         },
       },

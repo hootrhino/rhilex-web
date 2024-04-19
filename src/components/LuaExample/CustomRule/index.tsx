@@ -30,7 +30,7 @@ const CustomRule = () => {
       await putUserluaUpdate({ ...params, uuid: tplId });
       message.success('更新成功');
     } else {
-      // 新增
+      // 新建
       await postUserluaCreate({
         ...params,
         variables: params.variables?.map((val: any) => ({ ...val, value: '' })),
