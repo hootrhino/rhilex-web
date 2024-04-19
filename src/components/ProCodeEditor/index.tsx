@@ -83,7 +83,7 @@ const ProCodeEditor = forwardRef(
             label={false}
             rules={[{ required: true, message: `请输入${label}` }]}
           >
-            <LuaEditor key={name} minHeight="400px" lang={Lang.Lua} />
+            <LuaEditor key={name} minHeight="400px" lang={Lang.LUA} />
           </ProForm.Item>
         </ProCard>
         <LuaExample open={open} onClose={() => setOpen(false)} />
