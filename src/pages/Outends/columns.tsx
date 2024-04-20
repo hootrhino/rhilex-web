@@ -1,4 +1,5 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
+import ProSegmented from '@/components/ProSegmented';
 import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { stringToBool } from '@/utils/utils';
@@ -89,7 +90,6 @@ const pingConfig = [
     title: '开启心跳',
     dataIndex: ['config', 'allowPing'],
     required: true,
-    valueType: 'state',
     transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
       config: {
         ...allValue,
@@ -97,6 +97,7 @@ const pingConfig = [
       },
     }),
     convertValue: (value: boolean) => value?.toString(),
+    renderFormItem: () => <ProSegmented width="md" />,
     renderText: (allowPing: boolean) => <StateTag state={allowPing} type={StateType.BOOL} />,
   },
   {

@@ -5,7 +5,7 @@ import {
   postDevicesCreate,
   putDevicesUpdate,
 } from '@/services/rulex/shebeiguanli';
-import { formatHeaders2Arr, formatHeaders2Obj, getPlayAddress } from '@/utils/utils';
+import { formatHeaders2Arr, formatHeaders2Obj, getPlayAddress, stringToBool } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
@@ -22,6 +22,21 @@ import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
 import { DeviceMode, DeviceType, OutputMode } from '../enum';
 
 const DefaultListUrl = '/device/list';
+
+const filterData = (obj: Record<string, any>) => {
+  const filteredObj = {};
+  Object.keys(obj).forEach((key) => {
+    if (
+      obj.hasOwnProperty(key) &&
+      obj[key] !== undefined &&
+      obj[key] !== '' &&
+      (typeof obj[key] !== 'object' || Object.keys(obj[key]).length > 0)
+    ) {
+      filteredObj[key] = obj[key];
+    }
+  });
+  return filteredObj;
+};
 
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
@@ -44,54 +59,51 @@ const UpdateForm = () => {
     setLoading(true);
     try {
       let params = { ...values };
+      let commonConfig = { ...params.config?.commonConfig };
+      let httpConfig = { ...params.config?.httpConfig };
+      let outputAddr = params?.config?.outputAddr;
+
+      const { autoRequest, enableOptimize, enableGroup, mode, parseAis } = commonConfig;
       const type = params.type;
-      const mode = params.config.commonConfig?.mode;
       const outputMode = params?.config?.outputMode;
-      const outputAddr = params?.config?.outputAddr;
 
       if (type === DeviceType.GENERIC_CAMERA) {
-        params = {
-          ...params,
-          config: {
-            ...params.config,
-            outputAddr:
-              outputMode === OutputMode.REMOTE_STREAM_SERVER
-                ? outputAddr
-                : getPlayAddress(params?.name, outputMode, 'push'),
-          },
-        };
+        outputAddr =
+          outputMode === OutputMode.REMOTE_STREAM_SERVER
+            ? outputAddr
+            : getPlayAddress(params?.name, outputMode, 'push');
       } else {
         if (type === DeviceType.GENERIC_HTTP_DEVICE) {
-          const httpConfig = params?.config?.httpConfig;
           const newHeaders =
             httpConfig?.headers?.length > 0 ? formatHeaders2Obj(httpConfig?.headers) : {};
-
-          params = {
-            ...params,
-            config: {
-              ...params?.config,
-              httpConfig: {
-                ...httpConfig,
-                headers: newHeaders,
-              },
-            },
+          httpConfig = {
+            ...httpConfig,
+            headers: newHeaders,
           };
         }
+        const options = {
+          autoRequest,
+          enableOptimize,
+          enableGroup,
+          parseAis,
+        };
 
-        if (mode === DeviceMode.TCP) {
-          const hostConfigParams = params?.config?.hostConfig;
-          params = {
-            ...params,
-            config: {
-              ...params?.config,
-              hostConfig: hostConfigParams,
-            },
-          };
-        }
+        Object.keys(options).forEach((key) => {
+          if (options[key]) {
+            commonConfig[key] = stringToBool(options[key]);
+          }
+        });
 
         params = {
           ...params,
           schemaId: params?.schemaId || '',
+          config: filterData({
+            ...params.config,
+            outputAddr,
+            commonConfig,
+            httpConfig,
+            hostConfig: mode === DeviceMode.TCP ? params?.config?.hostConfig : undefined,
+          }),
         };
       }
 
@@ -120,21 +132,37 @@ const UpdateForm = () => {
   };
 
   const handleOnUpdateValue = ({ config, type }: any) => {
-    let newConfig = {
-      ...config,
-    };
+    let httpConfig = config.httpConfig;
+    let commonConfig = config?.commonConfig;
 
     if (type === DeviceType.GENERIC_HTTP_DEVICE) {
-      newConfig = {
-        ...config,
-        httpConfig: {
-          ...newConfig.httpConfig,
-          headers: formatHeaders2Arr(newConfig?.httpConfig?.headers),
-        },
+      httpConfig = {
+        ...httpConfig,
+        headers: formatHeaders2Arr(config?.httpConfig?.headers),
       };
     }
 
-    return newConfig;
+    if (commonConfig) {
+      const { autoRequest, enableOptimize, enableGroup, parseAis } = commonConfig;
+      const options = {
+        autoRequest,
+        enableOptimize,
+        enableGroup,
+        parseAis,
+      };
+
+      Object.keys(options).forEach((key) => {
+        if (options[key] !== undefined) {
+          commonConfig[key] = options[key].toString();
+        }
+      });
+    }
+
+    return filterData({
+      ...config,
+      httpConfig,
+      commonConfig,
+    });
   };
 
   const handleOnReset = () => {

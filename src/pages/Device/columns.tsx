@@ -1,4 +1,5 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
+import ProSegmented from '@/components/ProSegmented';
 import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
@@ -29,29 +30,21 @@ import {
 } from './enum';
 
 /**
- * autoRequest 是否启动轮询配置
+ * 创建配置项 autoRequest/enableGroup/enableOptimize/parseAis
  */
-export const autoRequestConfig = [
-  {
-    title: '启动轮询',
-    dataIndex: ['config', 'commonConfig', 'autoRequest'],
-    required: true,
-    valueType: 'state',
-    transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
-      config: {
-        commonConfig: {
-          ...omit(allValue, ['autoRequest', 'enableOptimize']),
-          autoRequest: stringToBool(value),
-          enableOptimize: stringToBool(allValue.enableOptimize),
-        },
-      },
-    }),
-    convertValue: (value: boolean) => value?.toString(),
-    render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
-      <StateTag state={commonConfig?.autoRequest} type={StateType.BOOL} />
-    ),
-  },
-];
+const createBoolConfig = (title: string, dataIndex: string, type = StateType.BOOL) => {
+  return [
+    {
+      title,
+      dataIndex: ['config', 'commonConfig', dataIndex],
+      required: true,
+      renderFormItem: () => <ProSegmented width="md" />,
+      render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
+        <StateTag state={commonConfig[dataIndex]} type={type} key={dataIndex} />
+      ),
+    },
+  ];
+};
 
 /**
  * mode 工作模式配置
@@ -267,26 +260,8 @@ export const typeConfigColumns = {
       title: '通用配置',
       valueType: 'group',
       columns: [
-        ...autoRequestConfig,
-        {
-          title: '批量采集',
-          dataIndex: ['config', 'commonConfig', 'enableOptimize'],
-          required: true,
-          valueType: 'state',
-          transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
-            config: {
-              commonConfig: {
-                ...omit(allValue, ['autoRequest', 'enableOptimize']),
-                enableOptimize: stringToBool(value),
-                autoRequest: stringToBool(allValue.autoRequest),
-              },
-            },
-          }),
-          convertValue: (value: boolean) => value?.toString(),
-          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
-            <StateTag state={commonConfig?.enableOptimize} type={StateType.BOOL} />
-          ),
-        },
+        ...createBoolConfig('启动轮询', 'autoRequest'),
+        ...createBoolConfig('批量采集', 'enableOptimize'),
         {
           title: '最大点位数',
           dataIndex: ['config', 'commonConfig', 'maxRegNum'],
@@ -308,21 +283,7 @@ export const typeConfigColumns = {
       title: '通用配置',
       valueType: 'group',
       columns: [
-        {
-          title: '解析 AIS 报文',
-          dataIndex: ['config', 'commonConfig', 'parseAis'],
-          required: true,
-          valueType: 'state',
-          transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
-            config: {
-              commonConfig: { ...allValue, parseAis: stringToBool(value) },
-            },
-          }),
-          convertValue: (value: boolean) => value?.toString(),
-          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
-            <StateTag state={commonConfig?.parseAis} type={StateType.PARSE} />
-          ),
-        },
+        ...createBoolConfig('解析 AIS 报文', 'parseAis', StateType.PARSE),
         {
           title: '主机序列号',
           dataIndex: ['config', 'commonConfig', 'gwsn'],
@@ -344,7 +305,7 @@ export const typeConfigColumns = {
       title: '通用配置',
       valueType: 'group',
       columns: [
-        ...autoRequestConfig,
+        ...createBoolConfig('启动轮询', 'autoRequest'),
         ...timeoutConfig('连接超时'),
         {
           title: <UnitTitle title="心跳超时" />,
@@ -392,7 +353,11 @@ export const typeConfigColumns = {
     {
       title: '通用配置',
       valueType: 'group',
-      columns: [...autoRequestConfig, ...timeoutConfig('连接超时'), ...frequencyConfig('采集频率')],
+      columns: [
+        ...createBoolConfig('启动轮询', 'autoRequest'),
+        ...timeoutConfig('连接超时'),
+        ...frequencyConfig('采集频率'),
+      ],
     },
     {
       title: 'HTTP 配置',
@@ -587,7 +552,6 @@ export const typeConfigColumns = {
           title: '自动扫描',
           dataIndex: ['config', 'autoScan'],
           required: true,
-          valueType: 'state',
           transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
             config: {
               ...omit(allValue, [namePath]),
@@ -595,6 +559,7 @@ export const typeConfigColumns = {
             },
           }),
           convertValue: (value: boolean) => value?.toString(),
+          renderFormItem: () => <ProSegmented width="md" />,
           render: (_dom: React.ReactNode, { autoScan }: DeviceItem) => (
             <StateTag state={autoScan} type={StateType.BOOL} />
           ),
@@ -650,7 +615,12 @@ export const typeConfigColumns = {
     {
       title: '通用配置',
       valueType: 'group',
-      columns: [...autoRequestConfig, ...timeoutConfig('请求超时'), ...frequencyConfig('请求频率')],
+      columns: [
+        ...createBoolConfig('启动轮询', 'autoRequest'),
+        ...createBoolConfig('并发采集', 'enableGroup'),
+        ...timeoutConfig('请求超时'),
+        ...frequencyConfig('请求频率'),
+      ],
     },
     {
       title: 'SNMP 配置',

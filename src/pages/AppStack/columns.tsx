@@ -1,3 +1,4 @@
+import ProSegmented from '@/components/ProSegmented';
 import StateTag, { StateType } from '@/components/StateTag';
 import { stringToBool } from '@/utils/utils';
 
@@ -17,9 +18,9 @@ export const baseColumns = [
     title: '自动启动',
     dataIndex: 'autoStart',
     required: true,
-    valueType: 'state',
     convertValue: (value: boolean) => value?.toString(),
     transform: (value: string) => ({ autoStart: stringToBool(value) }),
+    renderFormItem: () => <ProSegmented width="md" />,
     renderText: (autoStart: boolean) => <StateTag state={autoStart} type={StateType.BOOL} />,
   },
   {

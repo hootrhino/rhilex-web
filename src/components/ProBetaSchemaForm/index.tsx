@@ -2,15 +2,9 @@ import { FormItemType } from '@/utils/enum';
 import { omit } from '@/utils/redash';
 import { validateFormItem } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
-import {
-  BetaSchemaForm,
-  FooterToolbar,
-  ProCard,
-  ProConfigProvider,
-} from '@ant-design/pro-components';
+import { BetaSchemaForm, FooterToolbar, ProCard } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 import type { Rule } from 'antd/es/form';
-import ProSegmented from '../ProSegmented';
 
 type FormFieldType = 'group' | 'formList' | 'formSet' | 'divider' | 'dependency';
 
@@ -133,12 +127,6 @@ const processColumns = (columns: ProColumnsType[]) =>
     };
   });
 
-const valueTypeMap = {
-  state: {
-    renderFormItem: () => <ProSegmented width="md" />,
-  },
-};
-
 const ProBetaSchemaForm = ({
   columns,
   loading,
@@ -146,35 +134,33 @@ const ProBetaSchemaForm = ({
   ...props
 }: ProBetaSchemaFormProps) => {
   return (
-    <ProConfigProvider valueTypeMap={valueTypeMap}>
-      <ProCard>
-        <BetaSchemaForm
-          layoutType="Form"
-          columns={processColumns(columns)}
-          submitter={{
-            render: ({ reset, submit }) => (
-              <FooterToolbar>
-                <Popconfirm
-                  key="reset"
-                  title="重置可能会丢失数据，确定要重置吗？"
-                  onConfirm={() => {
-                    reset();
-                    handleOnReset();
-                  }}
-                >
-                  <Button>重置</Button>
-                </Popconfirm>
+    <ProCard>
+      <BetaSchemaForm
+        layoutType="Form"
+        columns={processColumns(columns)}
+        submitter={{
+          render: ({ reset, submit }) => (
+            <FooterToolbar>
+              <Popconfirm
+                key="reset"
+                title="重置可能会丢失数据，确定要重置吗？"
+                onConfirm={() => {
+                  reset();
+                  handleOnReset();
+                }}
+              >
+                <Button>重置</Button>
+              </Popconfirm>
 
-                <Button key="submit" type="primary" onClick={submit} loading={loading}>
-                  提交
-                </Button>
-              </FooterToolbar>
-            ),
-          }}
-          {...props}
-        />
-      </ProCard>
-    </ProConfigProvider>
+              <Button key="submit" type="primary" onClick={submit} loading={loading}>
+                提交
+              </Button>
+            </FooterToolbar>
+          ),
+        }}
+        {...props}
+      />
+    </ProCard>
   );
 };
 

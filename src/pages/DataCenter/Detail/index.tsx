@@ -158,7 +158,7 @@ const DataCenter = () => {
                 columns={columns}
                 className="data-center-sheets"
                 tableClassName={cn('data-center-scrollbar')}
-                scroll={{ y: height - 220, x: columns?.length > 10 ? 2000 : false }}
+                // scroll={{ y: height - 220, x: columns?.length > 10 ? 2000 : false }}
                 pagination={false}
                 options={{ density: true, setting: true, reload: () => refresh() }}
               />

@@ -140,7 +140,7 @@ export const validateFormItem = (value: string | number, type: FormItemType) => 
     case FormItemType.NAME:
       return typeof value === 'string' && validateName(value)
         ? Promise.resolve()
-        : Promise.reject('名称仅支持中文、字母、数字或下划线，长度在 4-64 个字符之间');
+        : Promise.reject('请输入4-64个字符，支持中文、字母、数字或下划线');
     case FormItemType.PORT:
     case FormItemType.ADDRESS:
       return typeof value === 'number' && validatePort(value)

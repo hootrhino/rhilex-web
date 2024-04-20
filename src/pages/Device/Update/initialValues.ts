@@ -12,7 +12,7 @@ import {
 const DEFAULT_TIMEOUT = 3000;
 const DEFAULT_HOST = '127.0.0.1';
 const DEFAULT_FREQUENCE = 5000;
-const DEFAULT_AUTOREQUEST = true;
+const DEFAULT_AUTOREQUEST = 'true';
 
 // TCP 配置
 export const defaultHostConfig = {
@@ -58,7 +58,7 @@ export const defaultConfig = {
   [DeviceType.GENERIC_MODBUS]: {
     commonConfig: {
       autoRequest: DEFAULT_AUTOREQUEST,
-      enableOptimize: false,
+      enableOptimize: 'false',
       mode: DeviceMode.UART,
       maxRegNum: 64,
     },
@@ -66,7 +66,7 @@ export const defaultConfig = {
   },
   [DeviceType.GENERIC_AIS_RECEIVER]: {
     commonConfig: {
-      parseAis: false,
+      parseAis: 'false',
       gwsn: 'HR0001',
       mode: DeviceMode.TCP,
     },
@@ -110,6 +110,7 @@ export const defaultConfig = {
   [DeviceType.GENERIC_SNMP]: {
     commonConfig: {
       autoRequest: DEFAULT_AUTOREQUEST,
+      enableGroup: 'false',
       timeout: DEFAULT_TIMEOUT,
       frequency: DEFAULT_FREQUENCE,
     },
