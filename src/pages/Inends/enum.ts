@@ -12,14 +12,14 @@ export enum InendsType {
   INTERNAL_EVENT = 'INTERNAL_EVENT',
 }
 export const inendsTypeOption = {
-  [InendsType.COAP]: 'COAP 协议支持',
-  [InendsType.GENERIC_IOT_HUB]: 'IoTHUB 平台支持',
-  [InendsType.RULEX_UDP]: 'UUDP 协议支持',
-  [InendsType.HTTP]: 'HTTP 协议支持',
-  [InendsType.NATS_SERVER]: 'Nats 中间件支持',
-  [InendsType.GRPC]: 'GRPC 协议支持',
-  [InendsType.GENERIC_MQTT]: 'MQTT 协议支持',
-  [InendsType.INTERNAL_EVENT]: '内部事件源',
+  [InendsType.COAP]: '作为通用 COAP Server 提供接入服务',
+  [InendsType.GENERIC_IOT_HUB]: '作为通用 IoTHub 客户端订阅 Topic 接入',
+  [InendsType.RULEX_UDP]: '作为通用 UDP Server 提供接入服务',
+  [InendsType.HTTP]: '作为通用 HTTP Server 提供接入服务',
+  [InendsType.NATS_SERVER]: '作为通用 NATS Client 订阅 Subject 接入',
+  [InendsType.GRPC]: '作为通用 GRPC Server 提供接入服务',
+  [InendsType.GENERIC_MQTT]: '作为通用 MQTT客户端订阅 Topic 接入',
+  [InendsType.INTERNAL_EVENT]: 'RHILEX 内部事件源',
 };
 
 /**
