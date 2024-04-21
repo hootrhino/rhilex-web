@@ -3,6 +3,7 @@ import RuleForm from '@/pages/RuleConfig/Update';
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { useParams, useRequest } from '@umijs/max';
 import { useEffect } from 'react';
+import { InendsType } from '../enum';
 
 const RuleConfigUpdate = () => {
   const { inendId } = useParams();
@@ -20,7 +21,13 @@ const RuleConfigUpdate = () => {
     }
   }, [inendId]);
 
-  return <RuleForm type={RuleType.INENDS} typeId={inendId || ''} inendsType={detail?.type} />;
+  return (
+    <RuleForm
+      type={RuleType.INENDS}
+      typeId={inendId || ''}
+      inendsType={detail?.type as InendsType}
+    />
+  );
 };
 
 export default RuleConfigUpdate;

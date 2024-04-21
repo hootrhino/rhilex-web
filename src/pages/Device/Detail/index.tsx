@@ -47,7 +47,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     },
   );
 
-  const { type = 'GENERIC_PROTOCOL', config } = detail || {};
+  const { type = DeviceType.GENERIC_PROTOCOL, config } = detail || {};
 
   const renderDescription = (data: Record<string, any>[]) => {
     return data?.map((item, index) => {

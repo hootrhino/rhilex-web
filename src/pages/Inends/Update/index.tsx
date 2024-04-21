@@ -80,7 +80,7 @@ const UpdateForm = () => {
     return newConfig;
   };
 
-  const handleOnValuesChange = (changedValue) => {
+  const handleOnValuesChange = (changedValue: any) => {
     if (!changedValue?.type) return;
 
     let config;

@@ -49,7 +49,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
       width="50%"
       initialValues={defaultProperty}
       onValuesChange={(changedValue) => {
-        if (['INTEGER', 'FLOAT'].includes(changedValue?.type)) {
+        if ([Type.INTEGER, Type.FLOAT].includes(changedValue?.type)) {
           formRef.current?.setFieldsValue({ rule: { defaultValue: 0 } });
         }
         if (changedValue?.type === Type.BOOL) {
@@ -190,7 +190,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
                 headStyle={{ paddingBlockStart: 0 }}
               >
                 <ProForm.Group style={{ padding: 10, border: '1px solid #0505050f' }}>
-                  {['STRING', 'INTEGER', 'FLOAT', 'BOOL'].includes(type) && (
+                  {[Type.STRING, Type.INTEGER, Type.FLOAT, Type.BOOL].includes(type) && (
                     <ProFormText
                       name={['rule', 'defaultValue']}
                       width="md"

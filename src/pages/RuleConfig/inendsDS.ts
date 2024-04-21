@@ -1,14 +1,16 @@
+import { InendsType } from '../Inends/enum';
+
 const inends_coap_ds = `{
   "from": "ID00000",    // 数据来源
   "data": {}            // 数据体
 }`;
 
 export const inends_ds = {
-  COAP: inends_coap_ds,
-  HTTP: inends_coap_ds,
-  RULEX_UDP: inends_coap_ds,
-  GRPC: inends_coap_ds,
-  NATS_SERVER: inends_coap_ds,
+  [InendsType.COAP]: inends_coap_ds,
+  [InendsType.HTTP]: inends_coap_ds,
+  [InendsType.RULEX_UDP]: inends_coap_ds,
+  [InendsType.GRPC]: inends_coap_ds,
+  [InendsType.NATS_SERVER]: inends_coap_ds,
 };
 
 // 内部事件源

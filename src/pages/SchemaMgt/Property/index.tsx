@@ -101,11 +101,11 @@ export const getBaseColumns = (readOnly?: boolean) => {
 };
 
 const ruleFilterData = {
-  STRING: ['defaultValue', 'max'],
-  INTEGER: ['defaultValue', 'range'],
-  FLOAT: ['defaultValue', 'range', 'round'],
-  BOOL: ['defaultValue', 'trueLabel', 'falseLabel'],
-  GEO: ['defaultValue', 'latitude', 'longitude'],
+  [Type.STRING]: ['defaultValue', 'max'],
+  [Type.INTEGER]: ['defaultValue', 'range'],
+  [Type.FLOAT]: ['defaultValue', 'range', 'round'],
+  [Type.BOOL]: ['defaultValue', 'trueLabel', 'falseLabel'],
+  [Type.GEO]: ['defaultValue', 'latitude', 'longitude'],
 };
 
 const PropertyList = ({ schemaId }: PropertyListProps) => {

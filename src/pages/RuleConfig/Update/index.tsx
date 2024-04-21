@@ -30,8 +30,8 @@ type FormParams = {
 type UpdateFormProps = {
   type: RuleType;
   typeId: string;
-  deviceType?: string;
-  inendsType?: string;
+  deviceType?: DeviceType;
+  inendsType?: InendsType;
 };
 
 const initialValue = {
@@ -105,7 +105,15 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
   // 获取南向资源数据结构
   const getInendsDS = () => {
     if (!inendsType) return;
-    if (['COAP', 'HTTP', 'RULEX_UDP', 'GRPC', 'NATS_SERVER'].includes(inendsType)) {
+    if (
+      [
+        InendsType.COAP,
+        InendsType.HTTP,
+        InendsType.RULEX_UDP,
+        InendsType.GRPC,
+        InendsType.NATS_SERVER,
+      ].includes(inendsType)
+    ) {
       return (
         <CodeEditor
           lang={Lang.JSON}
@@ -114,10 +122,10 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
           theme={Theme.LIGHT}
         />
       );
-    } else if (['GENERIC_IOT_HUB', 'GENERIC_MQTT'].includes(inendsType)) {
+    } else if ([InendsType.GENERIC_IOT_HUB, InendsType.GENERIC_MQTT].includes(inendsType)) {
       let message: React.ReactNode =
         'Mqtt 消息来自 Publish 方，而此处规则只做原始数据转发，不对数据做任何更改，因此回调函数的参数就是原始的 Mqtt Message，其具体格式需要开发者自行决定。';
-      if (inendsType === 'GENERIC_IOT_HUB') {
+      if (inendsType === InendsType.GENERIC_IOT_HUB) {
         message = (
           <>
             <div>
