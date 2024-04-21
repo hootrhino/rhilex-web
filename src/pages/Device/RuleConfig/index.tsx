@@ -1,3 +1,4 @@
+import type { TestType } from '@/pages/RuleConfig/Debug';
 import { getDevicesDetail, getRulesByDevice } from '@/services/rulex/shebeiguanli';
 import { useParams, useRequest } from '@umijs/max';
 import RuleConfig, { RuleType } from '../../RuleConfig';
@@ -22,6 +23,7 @@ const RuleConfigList = () => {
       pageTitle={deviceDetail?.name || ''}
       type={RuleType.DEVICE}
       typeId={deviceId || ''}
+      testType={deviceDetail?.type as TestType}
       refresh={refresh}
     />
   );

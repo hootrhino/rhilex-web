@@ -1,3 +1,4 @@
+import type { TestType } from '@/pages/RuleConfig/Debug';
 import { getInendsDetail, getRulesByInend } from '@/services/rulex/shuruziyuanguanli';
 import { useParams, useRequest } from '@umijs/max';
 import RuleConfig, { RuleType } from '../../RuleConfig';
@@ -20,6 +21,7 @@ const RuleConfigList = () => {
       pageTitle={inendsDetail?.name || ''}
       type={RuleType.INENDS}
       typeId={inendId || ''}
+      testType={inendsDetail?.type as TestType}
       refresh={refresh}
     />
   );

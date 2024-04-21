@@ -1,5 +1,7 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
 import ProLog from '@/components/ProLog';
+import { DeviceType } from '@/pages/Device/enum';
+import { InendsType } from '@/pages/Inends/enum';
 import { postRulesTestDevice } from '@/services/rulex/guizeguanli';
 import { handleNewMessage } from '@/utils/utils';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
@@ -8,13 +10,17 @@ import { useModel, useParams } from '@umijs/max';
 import { Button } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import type { RuleType } from '..';
+import { default_test_data } from './testData';
+
+export type TestType = DeviceType & InendsType;
 
 type DebugProps = ModalFormProps & {
   uuid: string;
   type: RuleType;
+  testType: TestType;
 };
 
-const Debug = ({ uuid, type, ...props }: DebugProps) => {
+const Debug = ({ uuid, type, testType, ...props }: DebugProps) => {
   const { latestMessage } = useModel('useWebsocket');
   const { deviceId } = useParams();
   const formRef = useRef<ProFormInstance>();
@@ -66,6 +72,7 @@ const Debug = ({ uuid, type, ...props }: DebugProps) => {
           return false;
         }
       }}
+      initialValues={{ testData: testType ? default_test_data[testType] : '' }}
       {...props}
     >
       <ProForm.Item
@@ -75,12 +82,13 @@ const Debug = ({ uuid, type, ...props }: DebugProps) => {
       >
         <CodeEditor autoFocus lang={Lang.SHELL} />
       </ProForm.Item>
-      <ProForm.Item name="output" label="输出结果" className="h-[300px]">
+      <ProForm.Item name="output" label="输出结果" className="mb-0">
         <ProLog
           hidePadding
           topic={`${type}/rule/test/${uuid}`}
           dataSource={debugLog}
           headStyle={{ paddingBlock: 0 }}
+          className="h-[280px]"
         />
       </ProForm.Item>
     </ModalForm>

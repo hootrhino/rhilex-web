@@ -1,6 +1,6 @@
 const inends_coap_ds = `{
-  "from":"ID00000",    // 数据来源
-  "data":{}            // 数据体
+  "from": "ID00000",    // 数据来源
+  "data": {}            // 数据体
 }`;
 
 export const inends_ds = {
@@ -13,39 +13,39 @@ export const inends_ds = {
 
 // 内部事件源
 const event_connected_ds = `{
-  "type" :"DEVICE",                 // 事件类型
-  "event":"event.device.connected", // 事件名称
-  "ts":100000000,                   // 时间戳
-  "device_info":{
-      "uuid":"UUID1234567",         // 设备ID
-      "name":"test-device"          // 设备名称
+  "type": "DEVICE",                       // 事件类型
+  "event": "event.device.connected",      // 事件名称
+  "ts": 100000000,                        // 时间戳
+  "device_info": {
+      "uuid": "UUID1234567",              // 设备 ID
+      "name": "test-device"               // 设备名称
   }
 }`;
 const event_disconnected_ds = `{
-  "type" :"DEVICE",
-  "event":"event.device.disconnected",
-  "ts": 100000000,
-  "device_info":{
-      "uuid":"UUID1234567",
-      "name":"test-device"
+  "type": "DEVICE",                       // 事件类型
+  "event": "event.device.disconnected",   // 事件名称
+  "ts": 100000000,                        // 时间戳
+  "device_info": {
+      "uuid": "UUID1234567",              // 设备 ID
+      "name":"test-device"                // 设备名称
   }
 }`;
 const event_up_ds = `{
-  "type" :"SOURCE",
-  "event":"event.source.up",
-  "ts": 100000000,
-  "source_info":{
-      "uuid":"UUID1234567",          // 资源ID
-      "name":"test-source"           // 资源名称
+  "type": "SOURCE",                       // 事件类型
+  "event": "event.source.up",             // 事件名称
+  "ts": 100000000,                        // 时间戳
+  "source_info": {
+      "uuid": "UUID1234567",              // 资源 ID
+      "name": "test-source"               // 资源名称
   }
 }`;
 const event_down_ds = `{
-  "type" :"SOURCE",
-  "event":"event.source.down",
-  "ts": 100000000,
-  "source_info":{
-      "uuid":"UUID1234567",
-      "name":"test-source"
+  "type": "SOURCE",                       // 事件类型
+  "event": "event.source.down",           // 事件名称
+  "ts": 100000000,                        // 时间戳
+  "source_info": {
+      "uuid": "UUID1234567",              // 资源 ID
+      "name": "test-source"               // 资源名称
   }
 }`;
 

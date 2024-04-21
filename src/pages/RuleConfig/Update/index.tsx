@@ -17,7 +17,7 @@ import { DeviceType } from '../../Device/enum';
 import { InendsType } from '../../Inends/enum';
 import { device_ais_ds, device_ds } from '../deviceDS';
 import { inends_ds, inends_event_ds, links } from '../inendsDS';
-import { DefaultActions, DefaultFailed, DefaultSuccess } from '../initialValue';
+import { DefaultActions, DefaultFailed, DefaultSuccess } from './initialValue';
 
 type FormParams = {
   name: string;

@@ -38,15 +38,15 @@ const device_siemens_ds = `{
 
 // GENERIC_CAMERA - 通用摄像机流处理网关
 const device_camera_ds = `{
-  "width":1024,  // 单帧宽度
-  "height":512,  // 单帧高度
-  "extra":{}     // 视频融合数据
+  "width": 1024,  // 单帧宽度
+  "height": 512,  // 单帧高度
+  "extra": {}     // 视频融合数据
 }`;
 
 // GENERIC_AIS_RECEIVER - 通用船载 AIS 数据解析网关
 // 原始数据
 const device_ais_origin_ds = `{
-  "ais_data":"!AIVDM..............."
+  "ais_data": "!AIVDM..............."
 }`;
 // RMC
 const device_ais_rmc_ds = `{
@@ -104,6 +104,7 @@ export const device_ds = {
   [DeviceType.GENERIC_CAMERA]: device_camera_ds,
   [DeviceType.GENERIC_SNMP]: device_snmp_ds,
   [DeviceType.SHELLY_GEN1_PROXY_SERVER]: device_shelly_ds,
+  [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,
 };
 
 export const device_ais_ds = [

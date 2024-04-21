@@ -9,6 +9,7 @@ import { message } from '@/components/PopupHack';
 import { deleteRulesDel } from '@/services/rulex/guizeguanli';
 import { DetailModalType } from '@/utils/enum';
 import { history, useParams, useRequest } from '@umijs/max';
+import type { TestType } from './Debug';
 import Debug from './Debug';
 import type { DetailLogModalConfig } from './Detail';
 import Detail from './Detail';
@@ -36,10 +37,18 @@ type RuleConfigProps = {
   type: RuleType;
   typeId: string;
   pageTitle: string;
+  testType: TestType;
   refresh: () => void;
 };
 
-const RuleConfig = ({ dataSource, pageTitle, type, typeId, refresh }: RuleConfigProps) => {
+const RuleConfig = ({
+  dataSource,
+  pageTitle,
+  type,
+  typeId,
+  testType,
+  refresh,
+}: RuleConfigProps) => {
   const { groupId } = useParams();
   const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({
     open: false,
@@ -175,6 +184,7 @@ const RuleConfig = ({ dataSource, pageTitle, type, typeId, refresh }: RuleConfig
       <Debug
         onOpenChange={(visible: boolean) => setDebugConfig({ ...debugConfig, open: visible })}
         type={type}
+        testType={testType}
         {...debugConfig}
       />
     </>
