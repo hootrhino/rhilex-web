@@ -19,7 +19,7 @@ const en6400Code = `function Main(arg)
   return 0;
 end;`;
 
-const eekith3Code = `function Main(arg)
+const rhinopiCode = `function Main(arg)
   while true do
     local _, Error = network:Ping("114.114.114.114");
     if Error ~= nil then
@@ -40,11 +40,11 @@ const eekith3Code = `function Main(arg)
   return 0;
 end;`;
 
-export const H3Tpl = [
+export const RHINOPITpl = [
   {
     label: '当没有网络时，网关上的 LED 会快速闪烁 5 次',
-    detail: `EEKITH3 联网测试`,
-    apply: eekith3Code,
+    detail: `RHINOPI 联网测试`,
+    apply: rhinopiCode,
     type: 'function',
   },
 ];

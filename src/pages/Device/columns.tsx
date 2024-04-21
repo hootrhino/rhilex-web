@@ -5,7 +5,7 @@ import UnitTitle from '@/components/UnitTitle';
 import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
 import { getSchemaList } from '@/services/rulex/shujumoxing';
-import { FormItemType } from '@/utils/enum';
+import { FormItemType, Product } from '@/utils/enum';
 import { omit, pick } from '@/utils/redash';
 import { getPlayAddress, stringToBool, validateFormItem } from '@/utils/utils';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
@@ -153,7 +153,7 @@ export const modeColumns = {
 /**
  * 基本配置
  */
-export const baseColumns = [
+export const baseColumns = (product: Product) => [
   {
     title: 'UUID',
     dataIndex: 'uuid',
@@ -172,7 +172,7 @@ export const baseColumns = [
     dataIndex: 'type',
     valueType: 'select',
     required: true,
-    valueEnum: deviceTypeOptions,
+    valueEnum: deviceTypeOptions[product],
   },
   {
     title: '设备分组',
@@ -669,10 +669,10 @@ export const typeConfigColumns = {
 /**
  * 设备配置
  */
-export const columns = [
+export const columns = (product: Product) => [
   {
     valueType: 'group',
-    columns: baseColumns,
+    columns: baseColumns(product),
   },
   {
     valueType: 'dependency',

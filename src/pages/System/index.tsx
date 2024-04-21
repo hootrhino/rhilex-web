@@ -1,4 +1,5 @@
 import PageContainer from '@/components/PageContainer';
+import { Product } from '@/utils/enum';
 import { ProCard } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import type { TabPaneProps } from 'antd';
@@ -78,18 +79,23 @@ const baseItems = [
   },
 ];
 
+const defaultConfig = ['resource', 'firmware', 'backup', 'user'];
+
 const System = () => {
-  const { activeKey, setActiveKey, hasWifi, hasRoute } = useModel('useSetting');
-  const { isWindows, isH3 } = useModel('useSystem');
+  const { isWindows, product, activeKey, setActiveKey, hasWifi, hasRoute } = useModel('useSystem');
   const [tabItems, setItems] = useState<TabItem[]>(baseItems);
 
   useEffect(() => {
     const filteredItems = baseItems.filter((item) => {
       if (isWindows) {
-        return ['resource', 'firmware', 'backup', 'user'].includes(item.key);
+        return defaultConfig.includes(item.key);
       } else {
-        if (!isH3) {
+        // mac linux
+        if (product === Product.EN6400) {
           return !['4g', 'apn'].includes(item.key);
+        }
+        if ([Product.COMMON, Product.SHELLY].includes(product)) {
+          return defaultConfig.includes(item.key);
         }
         if (!hasRoute) {
           return !['routing'].includes(item.key);
@@ -103,7 +109,7 @@ const System = () => {
 
     setItems(filteredItems);
     setActiveKey('resource');
-  }, [isWindows, isH3, hasRoute, hasWifi]);
+  }, [isWindows, product, hasRoute, hasWifi]);
 
   return (
     <PageContainer>

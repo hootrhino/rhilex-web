@@ -4,7 +4,9 @@ import type { RunTimeLayoutConfig } from 'umi';
 
 import { GoBackModal } from '@/components/PageContainer';
 import RightContent from '@/components/RightContent';
+import { ProductMenuAccess } from '@/models/useSystem';
 import { COPYRIGHT, LOGIN_PATH } from '@/utils/constant';
+import { Product } from '@/utils/enum';
 import { DefaultFooter } from '@ant-design/pro-components';
 import { MacScrollbar } from 'mac-scrollbar';
 import 'mac-scrollbar/dist/mac-scrollbar.css';
@@ -31,6 +33,12 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
     },
     footerRender: () => <DefaultFooter copyright={COPYRIGHT} />,
     menuHeaderRender: undefined,
+    menuDataRender: (menuData) =>
+      menuData.filter((item) =>
+        initialState?.product && Product[initialState?.product]
+          ? ProductMenuAccess[initialState?.product].includes(item?.key)
+          : ['dashboard'].includes(item?.key || ''),
+      ),
     menuItemRender(item, defaultDom) {
       const currentPath = window.location?.pathname;
       const regex = /(?:inends|outends|app-stack|device\/[^/]+)\/(?:new|edit)[^/]*/;

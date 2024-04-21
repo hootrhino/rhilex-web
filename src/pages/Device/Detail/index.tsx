@@ -39,6 +39,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     setDetailConfig,
     getDetail: getPortDetail,
   } = useModel('usePort');
+  const { product } = useModel('useSystem');
 
   const { data: detail, run: getDetail } = useRequest(
     (params: API.getDevicesDetailParams) => getDevicesDetail(params),
@@ -111,7 +112,9 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
         <EnhancedProDescriptions
           title="基本配置"
           dataSource={detail && omit(detail, ['config'])}
-          columns={formatColumns(baseColumns) as ProDescriptionsItemProps<Record<string, any>>[]}
+          columns={
+            formatColumns(baseColumns(product)) as ProDescriptionsItemProps<Record<string, any>>[]
+          }
         />
         {detail && type && Object.keys(DeviceType).includes(type) && (
           <>

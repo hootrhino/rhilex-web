@@ -10,8 +10,7 @@ import { Button, Space, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
 const DataBackupConfig = () => {
-  const { activeKey } = useModel('useSetting');
-  const { run, cancel } = useModel('useSystem');
+  const { run, cancel, activeKey } = useModel('useSystem');
   const formRef = useRef<ProFormInstance>();
   const [open, setOpen] = useState<boolean>(false);
   const [uploadFile, setUploadFile] = useState<File>();

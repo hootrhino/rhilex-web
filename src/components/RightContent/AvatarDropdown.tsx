@@ -16,7 +16,7 @@ export type GlobalHeaderRightProps = {
 };
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
-  const { setActiveKey } = useModel('useSetting');
+  const { setActiveKey } = useModel('useSystem');
   const { logout } = useModel('useUser');
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};

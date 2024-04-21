@@ -1,3 +1,6 @@
+import { Product } from '@/utils/enum';
+import { pick } from '@/utils/redash';
+
 /**
  * 设备类型枚举
  */
@@ -12,7 +15,7 @@ export enum DeviceType {
   GENERIC_SNMP = 'GENERIC_SNMP',
 }
 
-export const deviceTypeOptions = {
+const baseTypeOption = {
   [DeviceType.GENERIC_PROTOCOL]: '通用时间片中断串口采集网关',
   [DeviceType.GENERIC_MODBUS]: '通用 Modbus 采集网关',
   [DeviceType.GENERIC_SNMP]: '通用 SNMP 协议采集网关',
@@ -21,6 +24,26 @@ export const deviceTypeOptions = {
   [DeviceType.GENERIC_HTTP_DEVICE]: '通用 HTTP 协议数据采集网关',
   [DeviceType.GENERIC_CAMERA]: '通用摄像机流处理网关',
   [DeviceType.SHELLY_GEN1_PROXY_SERVER]: 'Shelly 智能家居管理网关',
+};
+
+export const deviceTypeOptions = {
+  [Product.COMMON]: baseTypeOption,
+  [Product.EN6400]: pick(baseTypeOption, [
+    DeviceType.GENERIC_MODBUS,
+    DeviceType.GENERIC_SNMP,
+    DeviceType.SIEMENS_PLC,
+  ]),
+  [Product.RASPI4B]: baseTypeOption,
+  [Product.RHINOPI]: baseTypeOption,
+  [Product.SHELLY]: pick(baseTypeOption, [DeviceType.SHELLY_GEN1_PROXY_SERVER]),
+};
+
+export const defaultDeviceType = {
+  [Product.COMMON]: DeviceType.GENERIC_PROTOCOL,
+  [Product.EN6400]: DeviceType.GENERIC_MODBUS,
+  [Product.RASPI4B]: DeviceType.GENERIC_PROTOCOL,
+  [Product.RHINOPI]: DeviceType.GENERIC_PROTOCOL,
+  [Product.SHELLY]: DeviceType.SHELLY_GEN1_PROXY_SERVER,
 };
 
 /**

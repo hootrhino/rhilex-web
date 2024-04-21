@@ -15,12 +15,14 @@
     name: '系统首页',
     icon: 'dashboard',
     component: './Dashboard',
+    key: 'dashboard',
   },
   {
     path: '/device',
     name: '设备接入',
     icon: 'group',
     hideChildrenInMenu: true,
+    key: 'device',
     routes: [
       {
         path: '/device',
@@ -83,12 +85,14 @@
     name: '数据模型',
     icon: 'apartment',
     component: './SchemaMgt',
+    key: 'schema',
   },
   {
     path: '/inends',
     name: '南向资源',
     icon: 'medicineBox',
     hideChildrenInMenu: true,
+    key: 'inends',
     routes: [
       {
         path: '/inends',
@@ -131,6 +135,7 @@
     name: '北向资源',
     icon: 'api',
     hideChildrenInMenu: true,
+    key: 'outends',
     routes: [
       {
         path: '/outends',
@@ -158,6 +163,7 @@
     name: '轻量应用',
     icon: 'appstoreAdd',
     hideChildrenInMenu: true,
+    key: 'appStack',
     routes: [
       {
         path: '/app-stack',
@@ -207,12 +213,14 @@
     name: '扩展协议',
     icon: 'cluster',
     component: './Extend',
+    key: 'extend',
   },
   {
     path: '/plugins',
     name: '插件管理',
     icon: 'control',
     hideChildrenInMenu: true,
+    key: 'plugins',
     routes: [
       {
         path: '/plugins',
@@ -230,18 +238,21 @@
     name: '端口设置',
     icon: 'nodeIndex',
     component: './PortMgt',
+    key: 'port',
   },
   {
     path: '/system-mgt',
     name: '系统管理',
     icon: 'setting',
     component: './System',
+    key: 'system',
   },
   {
     path: '/notify-log',
     name: '站内日志',
     component: './NotifyLog',
     hideInMenu: true,
+    key: 'notify',
   },
   {
     path: '/',

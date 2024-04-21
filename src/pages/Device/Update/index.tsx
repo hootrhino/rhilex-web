@@ -19,7 +19,7 @@ import {
 
 import PageContainer from '@/components/PageContainer';
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
-import { DeviceMode, DeviceType, OutputMode } from '../enum';
+import { defaultDeviceType, DeviceMode, DeviceType, OutputMode } from '../enum';
 
 const DefaultListUrl = '/device/list';
 
@@ -42,12 +42,14 @@ const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { deviceId, groupId } = useParams();
   const { setActiveGroupKey } = useModel('useDevice');
+  const { product } = useModel('useSystem');
   const [loading, setLoading] = useState<boolean>(false);
+  const defaultType = defaultDeviceType[product];
 
   const initialValues = {
-    type: DeviceType.GENERIC_PROTOCOL,
+    type: defaultType,
     gid: groupId,
-    config: defaultConfig[DeviceType.GENERIC_PROTOCOL],
+    config: defaultConfig[defaultType],
   };
 
   // 设备详情
@@ -221,7 +223,7 @@ const UpdateForm = () => {
       <ProBetaSchemaForm
         formRef={formRef}
         onFinish={handleOnFinish}
-        columns={columns as ProFormColumnsType<Record<string, any>>[]}
+        columns={columns(product) as ProFormColumnsType<Record<string, any>>[]}
         loading={loading}
         handleOnReset={handleOnReset}
         onValuesChange={handleOnValuesChange}

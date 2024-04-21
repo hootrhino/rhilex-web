@@ -59,6 +59,7 @@ const Devices = () => {
     activeGroupKey,
     setActiveGroupKey,
   } = useModel('useDevice');
+  const { product } = useModel('useSystem');
 
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(DEFAULT_CONFIG);
   const [open, setOpen] = useState<boolean>(false);
@@ -326,7 +327,9 @@ const Devices = () => {
             <ProTable
               actionRef={actionRef}
               rowKey="uuid"
-              columns={[...baseColumns, ...actionColumns] as ProColumns<Partial<DeviceItem>>[]}
+              columns={
+                [...baseColumns(product), ...actionColumns] as ProColumns<Partial<DeviceItem>>[]
+              }
               search={false}
               params={{ uuid: activeGroupKey }}
               request={async ({ current, pageSize, ...keyword }) => {

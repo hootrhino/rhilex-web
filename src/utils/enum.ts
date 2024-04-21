@@ -26,3 +26,14 @@ export enum FormItemType {
   GATEWAY = 'gateway', // 网关
   CIDR = 'cidr', // CIDR
 }
+
+/**
+ * 产品类型
+ */
+export enum Product {
+  RHINOPI = 'RHINOPI',
+  EN6400 = 'EN6400',
+  COMMON = 'COMMON',
+  RASPI4B = 'RASPI4B',
+  SHELLY = 'SHELLY',
+}

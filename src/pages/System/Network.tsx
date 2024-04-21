@@ -46,7 +46,7 @@ const initialValue = {
 const NetworkConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const actionRef = useRef<FormListActionType>();
-  const { interfaceOption } = useModel('useSetting');
+  const { interfaceOption } = useModel('useSystem');
 
   // 详情
   const { data: detail } = useRequest(() => getSettingsEth(), {
