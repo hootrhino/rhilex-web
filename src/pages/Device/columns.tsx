@@ -6,8 +6,8 @@ import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
 import { getSchemaList } from '@/services/rulex/shujumoxing';
 import { FormItemType, Product } from '@/utils/enum';
-import { omit, pick } from '@/utils/redash';
-import { getPlayAddress, stringToBool, validateFormItem } from '@/utils/utils';
+import { pick } from '@/utils/redash';
+import { getPlayAddress, validateFormItem } from '@/utils/utils';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { AutoComplete, Space, Typography } from 'antd';
 import { Rule } from 'antd/es/form';
@@ -548,40 +548,13 @@ export const typeConfigColumns = {
       title: '通用配置',
       valueType: 'group',
       columns: [
-        {
-          title: '自动扫描',
-          dataIndex: ['config', 'autoScan'],
-          required: true,
-          transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
-            config: {
-              ...omit(allValue, [namePath]),
-              autoScan: stringToBool(value),
-            },
-          }),
-          convertValue: (value: boolean) => value?.toString(),
-          renderFormItem: () => <ProSegmented width="md" />,
-          render: (_dom: React.ReactNode, { autoScan }: DeviceItem) => (
-            <StateTag state={autoScan} type={StateType.BOOL} />
-          ),
-        },
-        {
-          title: <UnitTitle title="扫描超时" />,
-          dataIndex: ['config', 'timeout'],
-          valueType: 'digit',
-          required: true,
-          render: (_dom: React.ReactNode, { timeout }: DeviceItem) => timeout,
-        },
-        {
-          title: <UnitTitle title="扫描频率" />,
-          dataIndex: ['config', 'frequency'],
-          valueType: 'digit',
-          required: true,
-          render: (_dom: React.ReactNode, { frequency }: DeviceItem) => frequency,
-        },
+        ...createBoolConfig('自动扫描', 'autoScan'),
+        ...timeoutConfig('扫描超时'),
+        ...frequencyConfig('扫描频率'),
         {
           title: 'CIDR',
           required: true,
-          dataIndex: ['config', 'networkCidr'],
+          dataIndex: ['config', 'commonConfig', 'networkCidr'],
           renderFormItem: () => (
             <AutoComplete
               options={[

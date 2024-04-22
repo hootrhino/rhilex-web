@@ -65,7 +65,7 @@ const UpdateForm = () => {
       let httpConfig = { ...params.config?.httpConfig };
       let outputAddr = params?.config?.outputAddr;
 
-      const { autoRequest, enableOptimize, enableGroup, mode, parseAis } = commonConfig;
+      const { autoRequest, enableOptimize, enableGroup, mode, parseAis, autoScan } = commonConfig;
       const type = params.type;
       const outputMode = params?.config?.outputMode;
 
@@ -88,6 +88,7 @@ const UpdateForm = () => {
           enableOptimize,
           enableGroup,
           parseAis,
+          autoScan,
         };
 
         Object.keys(options).forEach((key) => {
@@ -145,12 +146,13 @@ const UpdateForm = () => {
     }
 
     if (commonConfig) {
-      const { autoRequest, enableOptimize, enableGroup, parseAis } = commonConfig;
+      const { autoRequest, enableOptimize, enableGroup, parseAis, autoScan } = commonConfig;
       const options = {
         autoRequest,
         enableOptimize,
         enableGroup,
         parseAis,
+        autoScan,
       };
 
       Object.keys(options).forEach((key) => {

@@ -327,9 +327,7 @@ const Devices = () => {
             <ProTable
               actionRef={actionRef}
               rowKey="uuid"
-              columns={
-                [...baseColumns(product), ...actionColumns] as ProColumns<Partial<DeviceItem>>[]
-              }
+              columns={[...baseColumns(product), ...actionColumns] as any}
               search={false}
               params={{ uuid: activeGroupKey }}
               request={async ({ current, pageSize, ...keyword }) => {
@@ -340,7 +338,7 @@ const Devices = () => {
                 });
                 setTotal(data?.total || 0);
                 return Promise.resolve({
-                  data: data?.records || [],
+                  data: data?.records,
                   total: data?.total || 0,
                   success: true,
                 });

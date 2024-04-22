@@ -102,10 +102,12 @@ export const defaultConfig = {
     ...defaultOutputConfig['LOCAL_JPEG_STREAM_SERVER'],
   },
   [DeviceType.SHELLY_GEN1_PROXY_SERVER]: {
-    networkCidr: '192.168.1.1/24',
-    autoScan: true,
-    timeout: DEFAULT_TIMEOUT,
-    frequency: DEFAULT_FREQUENCE,
+    commonConfig: {
+      networkCidr: '192.168.1.1/24',
+      autoScan: 'true',
+      timeout: DEFAULT_TIMEOUT,
+      frequency: DEFAULT_FREQUENCE,
+    },
   },
   [DeviceType.GENERIC_SNMP]: {
     commonConfig: {
