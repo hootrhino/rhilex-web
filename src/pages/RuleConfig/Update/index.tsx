@@ -15,7 +15,7 @@ import { history, useParams, useRequest } from 'umi';
 import { RuleType } from '..';
 import { DeviceType } from '../../Device/enum';
 import { InendsType } from '../../Inends/enum';
-import { device_ais_ds, device_ds } from '../deviceDS';
+import { device_ds } from '../deviceDS';
 import { inends_ds, inends_event_ds, links } from '../inendsDS';
 import { DefaultActions, DefaultFailed, DefaultSuccess } from './initialValue';
 
@@ -83,23 +83,31 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
 
   // 获取设备数据结构
   const getDeviceDS = () => {
-    if (deviceType === 'GENERIC_AIS_RECEIVER') {
-      return device_ais_ds.map(({ key, title, json }) => (
-        <div key={key} className="mb-[20px]">
-          <div className="mb-[5px]">{title}</div>
-          <CodeEditor lang={Lang.JSON} readOnly value={json} theme={Theme.LIGHT} />
-        </div>
-      ));
-    } else {
-      return (
-        <CodeEditor
-          lang={Lang.JSON}
-          readOnly
-          value={deviceType ? device_ds[deviceType] : ''}
-          theme={Theme.LIGHT}
-        />
-      );
-    }
+    // if (deviceType === 'GENERIC_AIS_RECEIVER') {
+    //   return device_ais_ds.map(({ key, title, json }) => (
+    //     <div key={key} className="mb-[20px]">
+    //       <div className="mb-[5px]">{title}</div>
+    //       <CodeEditor lang={Lang.JSON} readOnly value={json} theme={Theme.LIGHT} />
+    //     </div>
+    //   ));
+    // } else {
+    //   return (
+    //     <CodeEditor
+    //       lang={Lang.JSON}
+    //       readOnly
+    //       value={deviceType ? device_ds[deviceType] : ''}
+    //       theme={Theme.LIGHT}
+    //     />
+    //   );
+    // }
+    return (
+      <CodeEditor
+        lang={Lang.JSON}
+        readOnly
+        value={deviceType ? device_ds[deviceType] : ''}
+        theme={Theme.LIGHT}
+      />
+    );
   };
 
   // 获取南向资源数据结构

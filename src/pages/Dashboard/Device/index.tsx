@@ -9,7 +9,7 @@ import { useState } from 'react';
 export const deviceAvatar = {
   [DeviceType.GENERIC_PROTOCOL]: 'PROT',
   [DeviceType.GENERIC_MODBUS]: 'MB',
-  [DeviceType.GENERIC_AIS_RECEIVER]: 'AIS',
+  // [DeviceType.GENERIC_AIS_RECEIVER]: 'AIS', 暂无需求，先隐藏
   [DeviceType.SIEMENS_PLC]: 'PLC',
   [DeviceType.GENERIC_HTTP_DEVICE]: 'HTTP',
   [DeviceType.GENERIC_CAMERA]: 'CAM',

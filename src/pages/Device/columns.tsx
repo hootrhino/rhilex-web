@@ -278,28 +278,28 @@ export const typeConfigColumns = {
       columns: ({ config }: DeviceItem) => modeColumns[config?.commonConfig?.mode] || [],
     },
   ],
-  [DeviceType.GENERIC_AIS_RECEIVER]: [
-    {
-      title: '通用配置',
-      valueType: 'group',
-      columns: [
-        ...createBoolConfig('解析 AIS 报文', 'parseAis', StateType.PARSE),
-        {
-          title: '主机序列号',
-          dataIndex: ['config', 'commonConfig', 'gwsn'],
-          required: true,
-          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) =>
-            commonConfig?.gwsn || '-',
-        },
-        ...modeConfig,
-      ],
-    },
-    {
-      valueType: 'dependency',
-      name: ['config'],
-      columns: ({ config }: DeviceItem) => modeColumns[config?.commonConfig?.mode] || [],
-    },
-  ],
+  // [DeviceType.GENERIC_AIS_RECEIVER]: [
+  //   {
+  //     title: '通用配置',
+  //     valueType: 'group',
+  //     columns: [
+  //       ...createBoolConfig('解析 AIS 报文', 'parseAis', StateType.PARSE),
+  //       {
+  //         title: '主机序列号',
+  //         dataIndex: ['config', 'commonConfig', 'gwsn'],
+  //         required: true,
+  //         render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) =>
+  //           commonConfig?.gwsn || '-',
+  //       },
+  //       ...modeConfig,
+  //     ],
+  //   },
+  //   {
+  //     valueType: 'dependency',
+  //     name: ['config'],
+  //     columns: ({ config }: DeviceItem) => modeColumns[config?.commonConfig?.mode] || [],
+  //   },
+  // ],
   [DeviceType.SIEMENS_PLC]: [
     {
       title: '通用配置',

@@ -46,9 +46,9 @@ const device_camera_ds = `{
 
 // GENERIC_AIS_RECEIVER - 通用船载 AIS 数据解析网关
 // 原始数据
-const device_ais_origin_ds = `{
-  "ais_data": "!AIVDM..............."
-}`;
+// const device_ais_origin_ds = `{
+//   "ais_data": "!AIVDM..............."
+// }`;
 
 // GENERIC_SNMP - 通用 SNMP 协议采集网关
 const device_snmp_ds = `[
@@ -126,7 +126,7 @@ const device_test_data = {
   [DeviceType.GENERIC_CAMERA]: device_camera_ds,
   [DeviceType.GENERIC_SNMP]: device_snmp_ds,
   [DeviceType.SHELLY_GEN1_PROXY_SERVER]: device_shelly_ds,
-  [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,
+  // [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,
 };
 
 const inends_test_data = {

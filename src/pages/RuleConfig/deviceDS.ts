@@ -45,36 +45,36 @@ const device_camera_ds = `{
 
 // GENERIC_AIS_RECEIVER - 通用船载 AIS 数据解析网关
 // 原始数据
-const device_ais_origin_ds = `{
-  "ais_data": "!AIVDM..............."
-}`;
+// const device_ais_origin_ds = `{
+//   "ais_data": "!AIVDM..............."
+// }`;
 // RMC
-const device_ais_rmc_ds = `{
-  "type": "RMC",                     // 消息类型
-  "gwid": "HR0001",                  // 设备编号
-  "validity": "A",                   // 有效性
-  "latitude": 48.1173,               // 纬度
-  "longitude": 11.5167,              // 经度
-  "speed": 22.4,                     // 速度
-  "course": 84.4,                    // 路线
-  "date": "23-03-94 12:35:19.0000",  // 日期和时间
-  "nav_status": ""                   // 导航状态
-}`;
+// const device_ais_rmc_ds = `{
+//   "type": "RMC",                     // 消息类型
+//   "gwid": "HR0001",                  // 设备编号
+//   "validity": "A",                   // 有效性
+//   "latitude": 48.1173,               // 纬度
+//   "longitude": 11.5167,              // 经度
+//   "speed": 22.4,                     // 速度
+//   "course": 84.4,                    // 路线
+//   "date": "23-03-94 12:35:19.0000",  // 日期和时间
+//   "nav_status": ""                   // 导航状态
+// }`;
 
 // VDM
-const device_ais_vdm_ds = `{
-  "type": "VDM",                     // 消息类型
-  "gwid": "HR0001",                  // 网关编号
-  "message_id": 19,                  // 消息 ID
-  "user_id": 413825345,              // 用户 ID
-  "name": "testship",                // 船舶名称
-  "sog": 3.2,                        // 地面航速（节）
-  "longitude": 114.347,              // 经度
-  "latitude": 30.62909,              // 纬度
-  "cog": 226.3,                      // 航向（度）
-  "true_heading": 511,               // 真航向
-  "timestamp": 35                    // 时间戳
-}`;
+// const device_ais_vdm_ds = `{
+//   "type": "VDM",                     // 消息类型
+//   "gwid": "HR0001",                  // 网关编号
+//   "message_id": 19,                  // 消息 ID
+//   "user_id": 413825345,              // 用户 ID
+//   "name": "testship",                // 船舶名称
+//   "sog": 3.2,                        // 地面航速（节）
+//   "longitude": 114.347,              // 经度
+//   "latitude": 30.62909,              // 纬度
+//   "cog": 226.3,                      // 航向（度）
+//   "true_heading": 511,               // 真航向
+//   "timestamp": 35                    // 时间戳
+// }`;
 
 // GENERIC_SNMP - 通用 SNMP 协议采集网关
 const device_snmp_ds = `[
@@ -104,23 +104,23 @@ export const device_ds = {
   [DeviceType.GENERIC_CAMERA]: device_camera_ds,
   [DeviceType.GENERIC_SNMP]: device_snmp_ds,
   [DeviceType.SHELLY_GEN1_PROXY_SERVER]: device_shelly_ds,
-  [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,
+  // [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,
 };
 
-export const device_ais_ds = [
-  {
-    title: '原始 AIS 数据',
-    json: device_ais_origin_ds,
-    key: 'origin',
-  },
-  {
-    title: 'VDRMC 报文格式',
-    json: device_ais_rmc_ds,
-    key: 'rmc',
-  },
-  {
-    title: 'VDM/O 报文格式',
-    json: device_ais_vdm_ds,
-    key: 'vdm',
-  },
-];
+// export const device_ais_ds = [
+//   {
+//     title: '原始 AIS 数据',
+//     json: device_ais_origin_ds,
+//     key: 'origin',
+//   },
+//   {
+//     title: 'VDRMC 报文格式',
+//     json: device_ais_rmc_ds,
+//     key: 'rmc',
+//   },
+//   {
+//     title: 'VDM/O 报文格式',
+//     json: device_ais_vdm_ds,
+//     key: 'vdm',
+//   },
+// ];
