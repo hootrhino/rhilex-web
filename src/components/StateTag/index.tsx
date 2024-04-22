@@ -16,6 +16,7 @@ export enum StateType {
   NOTICE = 'notice',
   LEVEL = 'level',
   RUNNING = 'running',
+  DEVICE = 'device',
   DEFAULT = 'default',
 }
 
@@ -66,6 +67,19 @@ const boolStateEnum = {
   },
   false: {
     text: '关闭',
+    color: 'error',
+    icon: <CloseCircleOutlined />,
+  },
+};
+
+const deviceStateEnum = {
+  true: {
+    text: '在线',
+    color: 'success',
+    icon: <CheckCircleOutlined />,
+  },
+  false: {
+    text: '离线',
     color: 'error',
     icon: <CloseCircleOutlined />,
   },
@@ -134,7 +148,14 @@ const StateTag = ({ state, type = StateType.DEFAULT }: StateTagProps) => {
   const [activeState, setActiveState] = useState<number | string>(0);
   const [dataSource, setDataSource] = useState<Record<number | string, any>>(defaultStateEnum);
 
-  const props = ['default', 'point', 'appStack', 'running', 'bool'].includes(type)
+  const props = [
+    StateType.DEFAULT,
+    StateType.POINT,
+    StateType.APPSTACK,
+    StateType.RUNNING,
+    StateType.BOOL,
+    StateType.DEVICE,
+  ].includes(type)
     ? {
         icon: dataSource[activeState]?.icon,
         color: dataSource[activeState]?.color,
@@ -145,28 +166,31 @@ const StateTag = ({ state, type = StateType.DEFAULT }: StateTagProps) => {
 
   useEffect(() => {
     switch (type) {
-      case 'point':
+      case StateType.POINT:
         setDataSource(pointStateEnum);
         break;
-      case 'appStack':
+      case StateType.APPSTACK:
         setDataSource(appStackStateEnum);
         break;
-      case 'bool':
+      case StateType.BOOL:
         setDataSource(boolStateEnum);
         break;
-      case 'notice':
+      case StateType.NOTICE:
         setDataSource(noticeStateEnum);
         break;
-      case 'parse':
+      case StateType.PARSE:
         setDataSource(parseStateEnum);
         break;
-      case 'level':
+      case StateType.LEVEL:
         setDataSource(levelStateEnum);
         break;
-      case 'running':
+      case StateType.RUNNING:
         setDataSource(runningStateEnum);
         break;
-      case 'default':
+      case StateType.DEVICE:
+        setDataSource(deviceStateEnum);
+        break;
+      case StateType.DEFAULT:
         setDataSource(defaultStateEnum);
         break;
     }

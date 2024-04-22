@@ -36,7 +36,7 @@ const SubDeviceList = () => {
     {
       title: '设备状态',
       dataIndex: 'status',
-      renderText: (status) => status && <StateTag state={status} type={StateType.BOOL} />,
+      renderText: (status) => status && <StateTag state={status} type={StateType.DEVICE} />,
     },
     {
       title: '设备属性',
