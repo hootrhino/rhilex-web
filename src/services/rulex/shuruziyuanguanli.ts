@@ -2,6 +2,34 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
+/** 子设备列表 GET /api/v1/inends/clients */
+export async function getInendsClients(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getInendsClientsParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      current: number;
+      size: number;
+      total: number;
+      records: {
+        ip?: string;
+        status?: boolean;
+        properties: { observe: boolean; version: string };
+      }[];
+    };
+  }>('/api/v1/inends/clients', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 新建输入资源 新建资源 POST /api/v1/inends/create */
 export async function postInendsCreate(
   body: {

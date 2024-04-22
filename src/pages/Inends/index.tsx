@@ -2,7 +2,13 @@ import { useRef, useState } from 'react';
 
 import { history } from 'umi';
 
-import { DownOutlined, PlusOutlined, PoweroffOutlined, SettingOutlined } from '@ant-design/icons';
+import {
+  DownOutlined,
+  HddOutlined,
+  PlusOutlined,
+  PoweroffOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Button, Dropdown, Popconfirm } from 'antd';
@@ -18,10 +24,11 @@ import {
 import { useModel, useRequest } from '@umijs/max';
 import { baseColumns } from './columns';
 import Detail from './Detail';
+import { InendsType } from './enum';
 
 export type InendsItem = {
   name: string;
-  type: string;
+  type: InendsType;
   state: number;
   description: string;
   config: Record<string, any>;
@@ -46,6 +53,19 @@ const Inends = () => {
     },
   );
 
+  const getMenuItems = (type: InendsType) => {
+    let newItems = [
+      { key: 'restart', label: '重启资源', icon: <PoweroffOutlined />, danger: true },
+      { key: 'rule', label: '规则配置', icon: <SettingOutlined /> },
+    ];
+
+    if ([InendsType.COAP, InendsType.RULEX_UDP, InendsType.HTTP].includes(type)) {
+      newItems = [...newItems, { key: 'sub-device', label: '查看子设备', icon: <HddOutlined /> }];
+    }
+
+    return newItems;
+  };
+
   const columns: ProColumns<InendsItem>[] = (baseColumns as ProColumns<InendsItem>[]).concat([
     {
       title: '操作',
@@ -53,7 +73,7 @@ const Inends = () => {
       fixed: 'right',
       key: 'option',
       valueType: 'option',
-      render: (_, { uuid }) => [
+      render: (_, { uuid, type }) => [
         <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
           详情
         </a>,
@@ -72,10 +92,7 @@ const Inends = () => {
         <Dropdown
           key="advance-action"
           menu={{
-            items: [
-              { key: 'restart', label: '重启资源', icon: <PoweroffOutlined />, danger: true },
-              { key: 'rule', label: '规则配置', icon: <SettingOutlined /> },
-            ],
+            items: getMenuItems(type),
             onClick: ({ key }) => {
               switch (key) {
                 case 'restart':
@@ -84,6 +101,9 @@ const Inends = () => {
                   break;
                 case 'rule':
                   history.push(`/inends/${uuid}/rule`);
+                  break;
+                case 'sub-device':
+                  history.push(`/inends/${uuid}/sub-device`);
                   break;
                 default:
                   break;

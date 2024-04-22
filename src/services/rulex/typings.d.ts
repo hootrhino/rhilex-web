@@ -161,6 +161,12 @@ declare namespace API {
     uuid: string;
   };
 
+  type getInendsClientsParams = {
+    uuid: string;
+    current?: number;
+    size?: number;
+  };
+
   type getInendsDetailParams = {
     uuid: string;
   };
@@ -254,8 +260,6 @@ declare namespace API {
     device_uuid?: string;
     current?: number;
     size?: number;
-    dataType?: string;
-    dataOrder?: string;
   };
 
   type getSnmpOidsSheetSheetExportParams = {

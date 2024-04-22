@@ -16725,26 +16725,6 @@
             "schema": {
               "type": "integer"
             }
-          },
-          {
-            "name": "dataType",
-            "in": "query",
-            "description": "",
-            "required": false,
-            "example": "FLOAT",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "dataOrder",
-            "in": "query",
-            "description": "",
-            "required": false,
-            "example": "DCBA",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -17144,6 +17124,174 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-166280025-run",
+        "security": []
+      }
+    },
+    "/api/v1/inends/clients": {
+      "get": {
+        "summary": "子设备列表",
+        "x-apifox-folder": "输入资源管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "输入资源管理"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "12345678",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "10",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "ip": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "boolean"
+                              },
+                              "properties": {
+                                "type": "object",
+                                "properties": {
+                                  "observe": {
+                                    "type": "boolean"
+                                  },
+                                  "version": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "observe",
+                                  "version"
+                                ],
+                                "x-apifox-ignore-properties": [],
+                                "x-apifox-orders": [
+                                  "observe",
+                                  "version"
+                                ]
+                              }
+                            },
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "ip",
+                              "status",
+                              "properties"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 25,
+                        "total": 0,
+                        "records": [
+                          {
+                            "ip": "127.0.0.1",
+                            "status": true,
+                            "properties": {
+                              "observe": true,
+                              "version": "2.0"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-167318967-run",
         "security": []
       }
     }

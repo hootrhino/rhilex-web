@@ -128,6 +128,11 @@
         name: '编辑规则配置',
         component: './Inends/RuleConfig/Update',
       },
+      {
+        path: '/inends/:inendId/sub-device',
+        name: '子设备列表',
+        component: './Inends/SubDevice',
+      },
     ],
   },
   {
