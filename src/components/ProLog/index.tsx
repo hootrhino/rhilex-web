@@ -110,7 +110,7 @@ const ProLog = ({
               size="small"
               onClick={() => (window.location.href = '/api/v1/backup/runningLog')}
             >
-              下载日志
+              下载
             </Button>
             <Button
               ghost

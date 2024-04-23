@@ -579,7 +579,7 @@ export const typeConfigColumns = {
               },
             ],
           },
-          render: (_dom: React.ReactNode, { networkCidr }: DeviceItem) => networkCidr,
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig.networkCidr,
         },
       ],
     },

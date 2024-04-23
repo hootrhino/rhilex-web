@@ -264,7 +264,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
             onClick={() => setOpen(true)}
             disabled={!schemaId}
           >
-            新建属性
+            新建
           </Button>,
         ]}
       />
