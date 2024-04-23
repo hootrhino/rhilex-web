@@ -24,4 +24,5 @@ export default {
   'button.error': '查看异常',
   'button.subDevice': '查看子设备',
   'button.new.formList': '新增一行',
+  'button.forget': '忘记密码',
 };

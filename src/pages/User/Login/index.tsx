@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       const { data } = await postLogin(values);
 
       flushSync(() => {
-        setInitialState((s) => ({
+        setInitialState((s: any) => ({
           ...s,
           currentUser: values,
         }));
