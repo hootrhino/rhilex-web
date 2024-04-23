@@ -73,7 +73,7 @@ const ShellySubDevice = () => {
     },
   );
 
-  // TODO 批量配置
+  // TODO 快速接入网关
 
   return (
     <>
@@ -92,7 +92,7 @@ const ShellySubDevice = () => {
               扫描设备
             </Button>
             <Button ghost key="batch-config" type="primary" icon={<SettingOutlined />}>
-              批量配置
+              快速接入网关
             </Button>
             <Button
               key="reload"

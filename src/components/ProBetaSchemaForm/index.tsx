@@ -103,6 +103,8 @@ const processColumns = (columns: ProColumnsType[]) =>
               ...col.fieldProps,
               creatorButtonProps: {
                 position: 'top',
+                creatorButtonText: '新增一行',
+                ...col.creatorButtonProps,
               },
               creatorRecord: col?.initialValue,
             };

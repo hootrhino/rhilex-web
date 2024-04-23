@@ -1,19 +1,10 @@
-import { DeviceType } from '@/pages/Device/enum';
+import { deviceAvatar } from '@/pages/Device/enum';
 import { getDevicesList } from '@/services/rulex/shebeiguanli';
 import { cn } from '@/utils/utils';
 import { ProList } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Avatar, Badge } from 'antd';
 import { useState } from 'react';
-
-export const deviceAvatar = {
-  [DeviceType.GENERIC_PROTOCOL]: 'PROT',
-  [DeviceType.GENERIC_MODBUS]: 'MB',
-  // [DeviceType.GENERIC_AIS_RECEIVER]: 'AIS', 暂无需求，先隐藏
-  [DeviceType.SIEMENS_PLC]: 'PLC',
-  [DeviceType.GENERIC_HTTP_DEVICE]: 'HTTP',
-  [DeviceType.GENERIC_CAMERA]: 'CAM',
-};
 
 const DeviceList = () => {
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
