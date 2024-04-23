@@ -191,28 +191,6 @@
       },
     ],
   },
-  // {
-  //   path: '/data-center',
-  //   name: '数据中心',
-  //   icon: 'database',
-  //   hideChildrenInMenu: true,
-  //   routes: [
-  //     {
-  //       path: '/data-center',
-  //       redirect: '/data-center/list',
-  //     },
-  //     {
-  //       path: '/data-center/list',
-  //       name: '数据列表',
-  //       component: './DataCenter',
-  //     },
-  //     {
-  //       path: '/data-center/:uuid',
-  //       name: '数据详情',
-  //       component: './DataCenter/Detail',
-  //     },
-  //   ],
-  // },
   {
     path: '/extend',
     name: '扩展协议',
