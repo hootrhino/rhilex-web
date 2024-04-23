@@ -4,10 +4,12 @@ import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import {
   getShellyGen1List,
   getShellyGen1Pro1Switch1Toggle,
+  postShellyGen1Pro1ConfigWebHook,
   postShellyGen1Scan,
 } from '@/services/rulex/shellyshebei';
 import {
   CheckCircleOutlined,
+  ClearOutlined,
   ControlOutlined,
   EllipsisOutlined,
   FileSearchOutlined,
@@ -20,6 +22,7 @@ import type { CheckGroupValueType } from '@ant-design/pro-card/es/components/Che
 import { CheckCard } from '@ant-design/pro-components';
 import { useParams, useRequest } from '@umijs/max';
 import { Button, Divider, Dropdown, Space, Switch, Tag } from 'antd';
+import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useState } from 'react';
 import Detail from './Detail';
 import { avatar, DefaultImg } from './images';
@@ -29,6 +32,27 @@ export enum AppType {
   PLUS2PM = 'Plus2PM',
   PRO4PM = 'Pro4PM',
 }
+
+enum OpType {
+  SET_WEBHOOK = 'set_webhook',
+  CLEAR_WEBHOOK = 'clear_webhook',
+}
+
+type ShellyItem = {
+  ip?: string;
+  name?: string;
+  id?: string;
+  mac?: string;
+  slot?: number;
+  model?: string;
+  gen?: number;
+  fw_id?: string;
+  ver?: string;
+  app?: string;
+  auth_en?: boolean;
+  auth_domain?: null;
+  [key: string]: any;
+};
 
 const ShellySubDevice = () => {
   const { deviceId } = useParams();
@@ -73,7 +97,72 @@ const ShellySubDevice = () => {
     },
   );
 
-  // TODO 快速接入网关
+  // 快速接入&清除所有配置
+  const { run: pro1Config } = useRequest(
+    (params: API.postShellyGen1Pro1ConfigWebHookParams) => postShellyGen1Pro1ConfigWebHook(params),
+    {
+      manual: true,
+    },
+  );
+
+  const handleOnMenu = ({ domEvent, key }: MenuInfo, item: ShellyItem) => {
+    switch (key) {
+      case 'detail':
+        if (item.mac && deviceId) {
+          modal.info({
+            title: `${item.name} 设备详情`,
+            width: '45%',
+            content: <Detail mac={item.mac} deviceId={deviceId} ip={item.ip} />,
+            okText: '关闭',
+            closable: true,
+          });
+        }
+        break;
+      case 'device-control':
+        window.open(`http://${item?.ip}:80`, '_blank');
+        break;
+      case 'config-webhook':
+        if (item?.app === AppType.PRO1 && item.ip) {
+          pro1Config({ opType: OpType.SET_WEBHOOK, ip: item.ip }).then(() =>
+            message.success('配置成功'),
+          );
+        }
+        break;
+      case 'clear-webhook':
+        if (item?.app === AppType.PRO1 && item.ip) {
+          pro1Config({ opType: OpType.CLEAR_WEBHOOK, ip: item.ip }).then(() =>
+            message.success('清除成功'),
+          );
+        }
+        break;
+      default:
+        break;
+    }
+    domEvent.stopPropagation();
+  };
+
+  const renderMenuItem = [
+    {
+      label: '查看详情',
+      key: 'detail',
+      icon: <FileSearchOutlined />,
+    },
+    {
+      label: '设备控制台',
+      key: 'device-control',
+      icon: <ControlOutlined />,
+    },
+    {
+      label: '快速接入网关',
+      key: 'config-webhook',
+      icon: <SettingOutlined />,
+    },
+    {
+      label: '清除所有配置',
+      key: 'clear-webhook',
+      icon: <ClearOutlined />,
+    },
+  ];
 
   return (
     <>
@@ -91,11 +180,10 @@ const ShellySubDevice = () => {
             >
               扫描设备
             </Button>
-            <Button ghost key="batch-config" type="primary" icon={<SettingOutlined />}>
-              快速接入网关
-            </Button>
             <Button
+              ghost
               key="reload"
+              type="primary"
               icon={<ReloadOutlined />}
               onClick={() => {
                 getSubDeviceList().then(() => message.success('刷新成功'));
@@ -160,39 +248,8 @@ const ShellySubDevice = () => {
                 <Dropdown
                   placement="bottom"
                   menu={{
-                    onClick: ({ domEvent, key }) => {
-                      switch (key) {
-                        case 'detail':
-                          if (item.mac && deviceId) {
-                            modal.info({
-                              title: `${item.name} 设备详情`,
-                              width: '45%',
-                              content: <Detail mac={item.mac} deviceId={deviceId} ip={item.ip} />,
-                              okText: '关闭',
-                              closable: true,
-                            });
-                          }
-                          break;
-                        case 'device-control':
-                          window.open(`http://${item?.ip}:80`, '_blank');
-                          break;
-                        default:
-                          break;
-                      }
-                      domEvent.stopPropagation();
-                    },
-                    items: [
-                      {
-                        label: '查看详情',
-                        key: 'detail',
-                        icon: <FileSearchOutlined />,
-                      },
-                      {
-                        label: '设备控制台',
-                        key: 'device-control',
-                        icon: <ControlOutlined />,
-                      },
-                    ],
+                    onClick: (info) => handleOnMenu(info, item),
+                    items: renderMenuItem,
                   }}
                 >
                   <EllipsisOutlined

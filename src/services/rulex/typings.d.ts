@@ -287,6 +287,11 @@ declare namespace API {
     uuid: string;
   };
 
+  type postShellyGen1Pro1ConfigWebHookParams = {
+    opType?: string;
+    ip?: string;
+  };
+
   type postShellyGen1ScanParams = {
     uuid: string;
   };

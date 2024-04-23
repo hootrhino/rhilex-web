@@ -56,6 +56,24 @@ export async function getShellyGen1List(
   });
 }
 
+/** 移除WebHook POST /api/v1/shelly_gen1/pro1/configWebHook */
+export async function postShellyGen1Pro1ConfigWebHook(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.postShellyGen1Pro1ConfigWebHookParams,
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string[] }>(
+    '/api/v1/shelly_gen1/pro1/configWebHook',
+    {
+      method: 'POST',
+      params: {
+        ...params,
+      },
+      ...(options || {}),
+    },
+  );
+}
+
 /** Pro1拨动开关 GET /api/v1/shelly_gen1/pro1/switch1/toggle */
 export async function getShellyGen1Pro1Switch1Toggle(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
