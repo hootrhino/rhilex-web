@@ -1,9 +1,14 @@
 import button from './zh-CN/button';
 import component from './zh-CN/component';
-import pages from './zh-CN/pages';
+import status from './zh-CN/status';
+// pages
+import dashboard from './zh-CN/dashboard';
+import device from './zh-CN/device';
 
 export default {
   ...component,
   ...button,
-  ...pages,
+  ...status,
+  ...dashboard,
+  ...device,
 };

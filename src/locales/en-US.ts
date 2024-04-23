@@ -1,9 +1,14 @@
 import button from './en-US/button';
 import component from './en-US/component';
-import pages from './en-US/pages';
+import status from './en-US/status';
+// pages
+import dashboard from './en-US/dashboard';
+import device from './en-US/device';
 
 export default {
   ...component,
   ...button,
-  ...pages,
+  ...status,
+  ...dashboard,
+  ...device,
 };
