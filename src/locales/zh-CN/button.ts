@@ -14,7 +14,7 @@ export default {
   'button.new': '新建',
   'button.edit': '编辑',
   'button.detail': '详情',
-  'button.delete': '删除',
+  'button.remove': '删除',
   'button.ping': '测速',
   'button.config': '配置',
   'button.log': '日志',

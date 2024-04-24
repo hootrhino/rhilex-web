@@ -20,18 +20,15 @@ export default {
   /**
    * message
    */
-  'device.message.success.delete': '删除成功',
-  'device.message.success.update': '更新成功',
   'device.message.success.unbind': '解绑成功',
   'device.message.success.restart': '重启成功',
-
   /**
    * modal
    */
-  'device.modal.title.delete': '确定要删除此设备？',
+  'device.modal.title.remove': '确定要删除此设备？',
   'device.modal.title.camera': '查看视频',
-  'device.modal.group.title.delete': '确定要删除此分组？',
-  'device.modal.group.content.delete':
+  'device.modal.group.title.remove': '确定要删除此分组？',
+  'device.modal.group.content.remove':
     '分组中包含 {count} 个子项目，删除后将被移入默认分组中，请谨慎处理。',
   'device.modal.group.title.new': '新建分组',
   'device.modal.group.title.edit': '编辑分组',
@@ -109,7 +106,7 @@ export default {
   'device.tooltip.outputMode':
     '注意：因为传输格式原因，Jpeg Stream 模式下仅保存了图像信息，没有原始声音',
   'device.tooltip.group.edit': '重命名分组',
-  'device.tooltip.group.delete': '删除分组',
+  'device.tooltip.group.remove': '删除分组',
 
   /**
    * placeholder

@@ -9,10 +9,11 @@ import extend from './en-US/extend';
 import notifyLog from './en-US/notifyLog';
 import plugin from './en-US/plugin';
 import portMgt from './en-US/portMgt';
+import schemaMgt from './en-US/schemaMgt';
 
 export default {
   'message.success.upload': '上传成功',
-  'message.success.delete': '删除成功',
+  'message.success.remove': '删除成功',
   'message.success.start': '启动成功',
   'message.success.stop': '停止成功',
   'message.success.update': '更新成功',
@@ -22,6 +23,7 @@ export default {
   'placeholder.input': '请输入',
   'placeholder.select': '请选择',
   'placeholder.desc': '请输入备注',
+  'table.index': '序号',
   'table.desc': '备注',
   'table.option': '操作',
   'tab.title': '登录页',
@@ -41,4 +43,5 @@ export default {
   ...extend,
   ...plugin,
   ...portMgt,
+  ...schemaMgt,
 };

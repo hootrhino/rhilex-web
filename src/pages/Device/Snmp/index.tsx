@@ -117,7 +117,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
   };
 
   // 批量删除
-  const handleOnBatchDelete = () => {
+  const handleOnBatchRemove = () => {
     const uuids = selectedRowKeys as string[];
     if (uuids && deviceId) {
       const params = {
@@ -353,7 +353,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
         modal.confirm({
           title: '批量删除对象',
           content: '此操作会一次性删除多个对象，请谨慎处理!',
-          onOk: handleOnBatchDelete,
+          onOk: handleOnBatchRemove,
           okText: '确定',
           cancelText: '取消',
         })
