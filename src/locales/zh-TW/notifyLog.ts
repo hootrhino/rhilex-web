@@ -18,8 +18,8 @@ export default {
   /**
    * table
    */
-  'notifyLog.table.event': '事件',
-  'notifyLog.table.type': '类型',
-  'notifyLog.table.summary': '概览',
-  'notifyLog.table.ts': '时间',
+  'notifyLog.table.title.event': '事件',
+  'notifyLog.table.title.type': '类型',
+  'notifyLog.table.title.summary': '概览',
+  'notifyLog.table.title.ts': '时间',
 };

@@ -61,7 +61,7 @@ export const baseColumns = [
     ellipsis: true,
   },
   {
-    title: '参数',
+    title: '协议参数',
     dataIndex: 'args',
     ellipsis: true,
     renderText: (args: string[]) => args?.join(','),

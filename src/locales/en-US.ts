@@ -5,6 +5,7 @@ import status from './en-US/status';
 import appStack from './en-US/appStack';
 import dashboard from './en-US/dashboard';
 import device from './en-US/device';
+import extend from './en-US/extend';
 import notifyLog from './en-US/notifyLog';
 
 export default {
@@ -33,4 +34,5 @@ export default {
   ...device,
   ...notifyLog,
   ...appStack,
+  ...extend,
 };

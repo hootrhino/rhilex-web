@@ -2,13 +2,13 @@ export default {
   /**
    * table
    */
-  'appStack.table.name': 'APP 名称',
-  'appStack.table.version': 'APP 版本',
-  'appStack.table.autoStart': '自动启动',
-  'appStack.table.appState': 'APP 状态',
-  'appStack.table.type': '脚本类型',
-  'appStack.table.type.valueEnum': 'LUA 脚本',
-  'appStack.table.luaSource': 'Lua 源码',
+  'appStack.table.title.name': 'APP 名称',
+  'appStack.table.title.version': 'APP 版本',
+  'appStack.table.title.autoStart': '自动启动',
+  'appStack.table.title.appState': 'APP 状态',
+  'appStack.table.title.type': '脚本类型',
+  'appStack.table.title.type.valueEnum': 'LUA 脚本',
+  'appStack.table.title.luaSource': 'Lua 源码',
 
   /**
    * others
