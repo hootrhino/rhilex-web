@@ -25,4 +25,5 @@ export default {
   'button.subDevice': '查看子设备',
   'button.new.formList': '新增一行',
   'button.forget': '忘记密码',
+  'button.test': '测试',
 };

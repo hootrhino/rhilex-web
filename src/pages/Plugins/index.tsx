@@ -1,12 +1,12 @@
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 
+import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import { getPlugwareList } from '@/services/rulex/chajianguanli';
 import { useModel } from '@umijs/max';
 import { Space } from 'antd';
 import Detail from './Detail';
-import PageContainer from '@/components/PageContainer';
 
 export type PluginItem = {
   name: string;
@@ -15,11 +15,18 @@ export type PluginItem = {
   [key: string]: any;
 };
 
+export enum PluginOptionKey {
+  ICMP = 'ICMPSender',
+  MQTT = 'RULEX-MqttServer',
+  SCANNER = 'MODBUS_SCANNER',
+  TERMINAL = 'WEB_TTYD_TERMINAL',
+}
+
 const Plugins = () => {
   const { setDetailConfig, run } = useModel('usePlugin');
 
   const handleOption = (uuid: string) => {
-    if (uuid === 'ICMPSender') {
+    if (uuid === PluginOptionKey.ICMP) {
       return (
         <a
           key="ping"
@@ -30,7 +37,7 @@ const Plugins = () => {
           测速
         </a>
       );
-    } else if (uuid === 'RULEX-MqttServer') {
+    } else if (uuid === PluginOptionKey.MQTT) {
       return (
         <a
           key="detail"
@@ -41,7 +48,7 @@ const Plugins = () => {
           详情
         </a>
       );
-    } else if (uuid === 'MODBUS_SCANNER') {
+    } else if (uuid === PluginOptionKey.SCANNER) {
       return (
         <a
           key="config"
@@ -52,7 +59,7 @@ const Plugins = () => {
           配置
         </a>
       );
-    } else if (uuid === 'WEB_TTYD_TERMINAL') {
+    } else if (uuid === PluginOptionKey.TERMINAL) {
       return (
         <Space>
           <a

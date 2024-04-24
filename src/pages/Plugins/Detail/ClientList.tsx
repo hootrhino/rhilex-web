@@ -65,17 +65,17 @@ const ClientList = () => {
       key: 'option',
       render: (_, { id }) => [
         <a
-          key="offline"
+          key="kickout"
           onClick={() => {
             const params = { uuid: detailConfig.uuid, name: 'kickout', args: [id] };
             run(params).then(() => {
               setDetailConfig({ ...params, title: '', open: false } as PluginConfig);
-              message.success('下线成功');
+              message.success('离线成功');
               refresh();
             });
           }}
         >
-          下线
+          强制离线
         </a>,
       ],
     },

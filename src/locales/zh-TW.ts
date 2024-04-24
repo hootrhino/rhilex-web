@@ -7,6 +7,7 @@ import dashboard from './zh-TW/dashboard';
 import device from './zh-TW/device';
 import extend from './zh-TW/extend';
 import notifyLog from './zh-TW/notifyLog';
+import plugin from './zh-TW/plugin';
 
 export default {
   'message.success.upload': '上传成功',
@@ -35,4 +36,5 @@ export default {
   ...notifyLog,
   ...appStack,
   ...extend,
+  ...plugin,
 };
