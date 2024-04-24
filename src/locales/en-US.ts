@@ -8,6 +8,7 @@ import device from './en-US/device';
 import extend from './en-US/extend';
 import notifyLog from './en-US/notifyLog';
 import plugin from './en-US/plugin';
+import portMgt from './en-US/portMgt';
 
 export default {
   'message.success.upload': '上传成功',
@@ -17,8 +18,10 @@ export default {
   'message.success.update': '更新成功',
   'message.success.new': '新建成功',
   'message.success.login': '登录成功',
+  'message.success.scan': '扫描成功',
   'placeholder.input': '请输入',
   'placeholder.select': '请选择',
+  'placeholder.desc': '请输入备注',
   'table.desc': '备注',
   'table.option': '操作',
   'tab.title': '登录页',
@@ -37,4 +40,5 @@ export default {
   ...appStack,
   ...extend,
   ...plugin,
+  ...portMgt,
 };

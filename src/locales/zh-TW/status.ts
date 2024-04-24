@@ -19,4 +19,6 @@ export default {
   'status.alarm': '报警',
   'status.internal': '内部',
   'status.external': '外部',
+  'status.busy': '占用',
+  'status.free': '空闲',
 };
