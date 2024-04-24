@@ -105,7 +105,7 @@ const FirmwareConfig = () => {
             labelStyle={{ justifyContent: 'flex-end', minWidth: 135 }}
           >
             <ProDescriptions.Item label="设备序列号" dataIndex="device_id" />
-            <ProDescriptions.Item label="设备 MAC 地址" dataIndex="mac" />
+            <ProDescriptions.Item label="被授权 MAC" dataIndex="mac" />
             <ProDescriptions.Item label="设备许可证" dataIndex="license" />
             <ProDescriptions.Item label="证书签发方" dataIndex="authorize_admin" />
             <ProDescriptions.Item
