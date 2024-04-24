@@ -191,13 +191,13 @@
       },
     ],
   },
-  {
-    path: '/extend',
-    name: '扩展协议',
-    icon: 'cluster',
-    component: './Extend',
-    key: 'extend',
-  },
+  // {
+  //   path: '/extend',
+  //   name: '扩展协议',
+  //   icon: 'cluster',
+  //   component: './Extend',
+  //   key: 'extend',
+  // },
   {
     path: '/plugins',
     name: '插件管理',
