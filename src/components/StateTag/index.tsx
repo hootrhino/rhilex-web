@@ -49,7 +49,7 @@ const pointStateEnum = {
 
 const appStackStateEnum = {
   1: {
-    text: '正在运行',
+    text: '运行中',
     color: 'processing',
     icon: <SyncOutlined spin />,
   },
