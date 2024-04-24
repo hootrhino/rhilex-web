@@ -13,7 +13,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Button, Popconfirm, Tag } from 'antd';
+import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import type { DetailLogModalConfig } from './Detail';
 import Detail from './Detail';
@@ -45,10 +45,9 @@ export const baseColumns = [
     title: '扩展类型',
     dataIndex: 'goodsType',
     width: 80,
-    renderText: (goodsType: string) => {
-      const isLocal = goodsType === 'LOCAL';
-      return <Tag color={isLocal ? 'green' : 'purple'}>{isLocal ? '内部' : '外部'}</Tag>;
-    },
+    renderText: (goodsType: string) => (
+      <StateTag state={goodsType === 'LOCAL'} type={StateType.GOODSTYPE} />
+    ),
   },
   {
     title: '本地路径',

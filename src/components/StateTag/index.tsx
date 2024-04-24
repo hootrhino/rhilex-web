@@ -17,6 +17,7 @@ export enum StateType {
   LEVEL = 'level',
   RUNNING = 'running',
   DEVICE = 'device',
+  GOODSTYPE = 'goodsType',
   DEFAULT = 'default',
 }
 
@@ -144,57 +145,43 @@ const runningStateEnum = {
   },
 };
 
+const goodsTypeStateEnum = {
+  true: {
+    text: '内部',
+    color: 'green',
+  },
+  false: {
+    text: '外部',
+    color: 'purple',
+  },
+};
+
+const dataSource = {
+  [StateType.POINT]: pointStateEnum,
+  [StateType.APPSTACK]: appStackStateEnum,
+  [StateType.BOOL]: boolStateEnum,
+  [StateType.PARSE]: parseStateEnum,
+  [StateType.NOTICE]: noticeStateEnum,
+  [StateType.LEVEL]: levelStateEnum,
+  [StateType.RUNNING]: runningStateEnum,
+  [StateType.DEVICE]: deviceStateEnum,
+  [StateType.GOODSTYPE]: goodsTypeStateEnum,
+  [StateType.DEFAULT]: defaultStateEnum,
+};
+
 const StateTag = ({ state, type = StateType.DEFAULT }: StateTagProps) => {
   const [activeState, setActiveState] = useState<number | string>(0);
-  const [dataSource, setDataSource] = useState<Record<number | string, any>>(defaultStateEnum);
 
-  const props = [
-    StateType.DEFAULT,
-    StateType.POINT,
-    StateType.APPSTACK,
-    StateType.RUNNING,
-    StateType.BOOL,
-    StateType.DEVICE,
-  ].includes(type)
+  const props = [StateType.PARSE, StateType.LEVEL, StateType.NOTICE, StateType.GOODSTYPE].includes(
+    type,
+  )
     ? {
-        icon: dataSource[activeState]?.icon,
-        color: dataSource[activeState]?.color,
+        color: dataSource[type][activeState]?.color,
       }
     : {
-        color: dataSource[activeState]?.color,
+        icon: dataSource[type][activeState]?.icon,
+        color: dataSource[type][activeState]?.color,
       };
-
-  useEffect(() => {
-    switch (type) {
-      case StateType.POINT:
-        setDataSource(pointStateEnum);
-        break;
-      case StateType.APPSTACK:
-        setDataSource(appStackStateEnum);
-        break;
-      case StateType.BOOL:
-        setDataSource(boolStateEnum);
-        break;
-      case StateType.NOTICE:
-        setDataSource(noticeStateEnum);
-        break;
-      case StateType.PARSE:
-        setDataSource(parseStateEnum);
-        break;
-      case StateType.LEVEL:
-        setDataSource(levelStateEnum);
-        break;
-      case StateType.RUNNING:
-        setDataSource(runningStateEnum);
-        break;
-      case StateType.DEVICE:
-        setDataSource(deviceStateEnum);
-        break;
-      case StateType.DEFAULT:
-        setDataSource(defaultStateEnum);
-        break;
-    }
-  }, [type]);
 
   useEffect(() => {
     if (typeof state === 'boolean') {
@@ -204,7 +191,7 @@ const StateTag = ({ state, type = StateType.DEFAULT }: StateTagProps) => {
     }
   }, [state]);
 
-  return <Tag {...props}>{dataSource[activeState]?.text}</Tag>;
+  return <Tag {...props}>{dataSource[type][activeState]?.text}</Tag>;
 };
 
 export default StateTag;

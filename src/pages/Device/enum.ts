@@ -53,6 +53,7 @@ export const deviceAvatar = {
   [DeviceType.SIEMENS_PLC]: 'PLC',
   [DeviceType.GENERIC_HTTP_DEVICE]: 'HTTP',
   [DeviceType.GENERIC_CAMERA]: 'CAM',
+  [DeviceType.SHELLY_GEN1_PROXY_SERVER]: 'S',
 };
 
 /**
