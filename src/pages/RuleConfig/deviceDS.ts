@@ -86,8 +86,8 @@ const device_snmp_ds = `[
   }
 ]`;
 
-// SHELLY_GEN1_PROXY_SERVER - Shelly 智能家居管理网关
-const device_shelly_ds = `[
+// SMART_HOME_CONTROLLER - 全屋智能家居中心控制网关
+const device_smart_home_ds = `[
   {
       "event": "Input.Toggle",       // 事件
       "mac": "AA:BB:CC:DD:EE",       // 设备MAC
@@ -103,7 +103,7 @@ export const device_ds = {
   [DeviceType.SIEMENS_PLC]: device_siemens_ds,
   [DeviceType.GENERIC_CAMERA]: device_camera_ds,
   [DeviceType.GENERIC_SNMP]: device_snmp_ds,
-  [DeviceType.SHELLY_GEN1_PROXY_SERVER]: device_shelly_ds,
+  [DeviceType.SMART_HOME_CONTROLLER]: device_smart_home_ds,
   // [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,
 };
 

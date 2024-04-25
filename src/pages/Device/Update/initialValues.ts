@@ -101,7 +101,7 @@ export const defaultConfig = {
     inputMode: InputMode.LOCAL_CAMERA,
     ...defaultOutputConfig['LOCAL_JPEG_STREAM_SERVER'],
   },
-  [DeviceType.SHELLY_GEN1_PROXY_SERVER]: {
+  [DeviceType.SMART_HOME_CONTROLLER]: {
     commonConfig: {
       networkCidr: '192.168.1.1/24',
       autoScan: 'true',

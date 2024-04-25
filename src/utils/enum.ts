@@ -35,5 +35,4 @@ export enum Product {
   EN6400 = 'EN6400',
   COMMON = 'COMMON',
   RASPI4B = 'RASPI4B',
-  SHELLY = 'SHELLY',
 }

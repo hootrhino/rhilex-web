@@ -141,7 +141,7 @@ const Devices = () => {
       case DeviceType.GENERIC_CAMERA:
         newItems = [...newItems, { key: 'video', label: '查看视频', icon: <PlayCircleOutlined /> }];
         break;
-      case DeviceType.SHELLY_GEN1_PROXY_SERVER:
+      case DeviceType.SMART_HOME_CONTROLLER:
         newItems = [
           ...newItems,
           ruleItem,

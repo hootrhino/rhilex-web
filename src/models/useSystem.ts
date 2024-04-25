@@ -22,9 +22,6 @@ export const ProductMenuAccess = {
   [Product.EN6400]: allMenu.filter((menu) => !['extend', 'plugins'].includes(menu)),
   [Product.RASPI4B]: allMenu,
   [Product.RHINOPI]: allMenu,
-  [Product.SHELLY]: allMenu.filter((menu) =>
-    ['dashboard', 'device', 'outends', 'system'].includes(menu),
-  ),
 };
 
 const useSystem = () => {

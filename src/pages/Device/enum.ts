@@ -11,7 +11,7 @@ export enum DeviceType {
   SIEMENS_PLC = 'SIEMENS_PLC',
   GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
   GENERIC_CAMERA = 'GENERIC_CAMERA',
-  SHELLY_GEN1_PROXY_SERVER = 'SHELLY_GEN1_PROXY_SERVER',
+  SMART_HOME_CONTROLLER = 'SMART_HOME_CONTROLLER',
   GENERIC_SNMP = 'GENERIC_SNMP',
 }
 
@@ -23,7 +23,7 @@ const baseTypeOption = {
   [DeviceType.SIEMENS_PLC]: '通用西门子 S7 系列 PLC 采集网关',
   [DeviceType.GENERIC_HTTP_DEVICE]: '通用 HTTP 协议数据采集网关',
   [DeviceType.GENERIC_CAMERA]: '通用摄像机流处理网关',
-  [DeviceType.SHELLY_GEN1_PROXY_SERVER]: 'Shelly 智能家居管理网关',
+  [DeviceType.SMART_HOME_CONTROLLER]: '全屋智能家居中心控制网关',
 };
 
 export const deviceTypeOptions = {
@@ -35,7 +35,6 @@ export const deviceTypeOptions = {
   ]),
   [Product.RASPI4B]: baseTypeOption,
   [Product.RHINOPI]: baseTypeOption,
-  [Product.SHELLY]: pick(baseTypeOption, [DeviceType.SHELLY_GEN1_PROXY_SERVER]),
 };
 
 export const defaultDeviceType = {
@@ -43,7 +42,6 @@ export const defaultDeviceType = {
   [Product.EN6400]: DeviceType.GENERIC_MODBUS,
   [Product.RASPI4B]: DeviceType.GENERIC_PROTOCOL,
   [Product.RHINOPI]: DeviceType.GENERIC_PROTOCOL,
-  [Product.SHELLY]: DeviceType.SHELLY_GEN1_PROXY_SERVER,
 };
 
 export const deviceAvatar = {
@@ -53,7 +51,7 @@ export const deviceAvatar = {
   [DeviceType.SIEMENS_PLC]: 'PLC',
   [DeviceType.GENERIC_HTTP_DEVICE]: 'HTTP',
   [DeviceType.GENERIC_CAMERA]: 'CAM',
-  [DeviceType.SHELLY_GEN1_PROXY_SERVER]: 'S',
+  [DeviceType.SMART_HOME_CONTROLLER]: 'S',
   [DeviceType.GENERIC_SNMP]: 'SNMP',
 };
 

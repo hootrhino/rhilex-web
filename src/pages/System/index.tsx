@@ -94,7 +94,7 @@ const System = () => {
         if (product === Product.EN6400) {
           return !['4g', 'apn'].includes(item.key);
         }
-        if ([Product.COMMON, Product.SHELLY].includes(product)) {
+        if ([Product.COMMON].includes(product)) {
           return defaultConfig.includes(item.key);
         }
         if (!hasRoute) {

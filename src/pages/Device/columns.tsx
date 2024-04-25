@@ -201,9 +201,7 @@ export const baseColumns = (product: Product) => [
     hideInTable: true,
     columns: ({ type }: DeviceItem) => {
       if (
-        [DeviceType.GENERIC_CAMERA, DeviceType.SHELLY_GEN1_PROXY_SERVER].includes(
-          type as DeviceType,
-        )
+        [DeviceType.GENERIC_CAMERA, DeviceType.SMART_HOME_CONTROLLER].includes(type as DeviceType)
       )
         return [];
 
@@ -543,7 +541,7 @@ export const typeConfigColumns = {
       ],
     },
   ],
-  [DeviceType.SHELLY_GEN1_PROXY_SERVER]: [
+  [DeviceType.SMART_HOME_CONTROLLER]: [
     {
       title: '通用配置',
       valueType: 'group',
