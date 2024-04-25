@@ -7,6 +7,7 @@ import dashboard from './en-US/dashboard';
 import device from './en-US/device';
 import extend from './en-US/extend';
 import notifyLog from './en-US/notifyLog';
+import outends from './en-US/outends';
 import plugin from './en-US/plugin';
 import portMgt from './en-US/portMgt';
 import ruleConfig from './en-US/ruleConfig';
@@ -49,4 +50,5 @@ export default {
   ...schemaMgt,
   ...system,
   ...ruleConfig,
+  ...outends,
 };

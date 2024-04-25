@@ -132,7 +132,7 @@ const Outends = () => {
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}
-        title="确定执行设备重启操作吗？"
+        title="确定执行此操作吗？"
         okText="确定重启"
         afterOkText="重启"
         content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"
