@@ -76,7 +76,7 @@
       {
         path: '/device/:groupId/:deviceId/sub-device',
         name: '子设备列表',
-        component: './Device/Shelly',
+        component: './Device/SmartHome',
       },
     ],
   },

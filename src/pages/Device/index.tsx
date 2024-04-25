@@ -145,7 +145,7 @@ const Devices = () => {
         newItems = [
           ...newItems,
           ruleItem,
-          { key: 'shelly-device', label: '查看子设备', icon: <HddOutlined /> },
+          { key: 'sub-device', label: '查看子设备', icon: <HddOutlined /> },
         ];
         break;
       case DeviceType.GENERIC_SNMP:
@@ -230,7 +230,7 @@ const Devices = () => {
       case 'error':
         getErrorMsg({ uuid });
         break;
-      case 'shelly-device':
+      case 'sub-device':
         history.push(`/device/${gid}/${uuid}/sub-device`);
         break;
       default:
