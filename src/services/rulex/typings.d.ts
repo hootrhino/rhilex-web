@@ -288,8 +288,9 @@ declare namespace API {
   };
 
   type postShellyGen1Pro1ConfigWebHookParams = {
-    opType?: string;
-    ip?: string;
+    opType: string;
+    deviceIp: string;
+    gwIp: string;
   };
 
   type postShellyGen1ScanParams = {

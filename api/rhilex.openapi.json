@@ -17297,7 +17297,7 @@
     },
     "/api/v1/shelly_gen1/pro1/configWebHook": {
       "post": {
-        "summary": "移除WebHook",
+        "summary": "快速将设备接入网关",
         "x-apifox-folder": "shelly设备",
         "x-apifox-status": "developing",
         "deprecated": false,
@@ -17310,18 +17310,28 @@
             "name": "opType",
             "in": "query",
             "description": "",
-            "required": false,
-            "example": "clear_webhook",
+            "required": true,
+            "example": "set_webhook",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "ip",
+            "name": "deviceIp",
             "in": "query",
             "description": "",
-            "required": false,
+            "required": true,
             "example": "192.168.1.106",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gwIp",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "192.168.1.175",
             "schema": {
               "type": "string"
             }
@@ -17334,37 +17344,15 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
+                  "properties": {},
                   "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
+                  "x-apifox-orders": []
                 }
               }
             }
           }
         },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-167571253-run",
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-168752798-run",
         "security": []
       }
     }

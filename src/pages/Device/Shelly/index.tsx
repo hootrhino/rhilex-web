@@ -123,16 +123,20 @@ const ShellySubDevice = () => {
         break;
       case 'config-webhook':
         if (item?.app === AppType.PRO1 && item.ip) {
-          pro1Config({ opType: OpType.SET_WEBHOOK, ip: item.ip }).then(() =>
-            message.success('配置成功'),
-          );
+          pro1Config({
+            opType: OpType.SET_WEBHOOK,
+            deviceIp: item.ip,
+            gwIp: window.location.host,
+          }).then(() => message.success('配置成功'));
         }
         break;
       case 'clear-webhook':
         if (item?.app === AppType.PRO1 && item.ip) {
-          pro1Config({ opType: OpType.CLEAR_WEBHOOK, ip: item.ip }).then(() =>
-            message.success('清除成功'),
-          );
+          pro1Config({
+            opType: OpType.CLEAR_WEBHOOK,
+            deviceIp: item.ip,
+            gwIp: window.location.host,
+          }).then(() => message.success('清除成功'));
         }
         break;
       default:
