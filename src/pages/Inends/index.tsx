@@ -81,7 +81,7 @@ const Inends = () => {
           编辑
         </a>,
         <Popconfirm
-          title="确定要删除此资源?"
+          title="确定要删除此资源？"
           onConfirm={() => remove({ uuid })}
           okText="是"
           cancelText="否"
@@ -152,7 +152,7 @@ const Inends = () => {
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}
-        title="确定执行重启操作吗？"
+        title="确定执行此操作吗？"
         okText="确定重启"
         afterOkText="重启"
         content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"

@@ -6,6 +6,7 @@ import appStack from './zh-CN/appStack';
 import dashboard from './zh-CN/dashboard';
 import device from './zh-CN/device';
 import extend from './zh-CN/extend';
+import inends from './zh-CN/inends';
 import notifyLog from './zh-CN/notifyLog';
 import outends from './zh-CN/outends';
 import plugin from './zh-CN/plugin';
@@ -51,4 +52,5 @@ export default {
   ...system,
   ...ruleConfig,
   ...outends,
+  ...inends,
 };

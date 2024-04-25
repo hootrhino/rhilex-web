@@ -53,9 +53,9 @@ const UpdateForm = () => {
       } else {
         const { msg } = await postInendsCreate(params);
         if (msg === 'Success') {
-          message.success('创建成功');
+          message.success('新建成功');
         } else {
-          message.warning(`创建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：${msg}`);
+          message.warning(`新建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：${msg}`);
         }
       }
       setLoading(false);
