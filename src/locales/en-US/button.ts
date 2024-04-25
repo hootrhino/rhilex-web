@@ -29,4 +29,5 @@ export default {
   'button.test': '测试',
   'button.recover': '恢复',
   'button.checkDetail': '查看详情',
+  'button.homePage': '返回首页',
 };

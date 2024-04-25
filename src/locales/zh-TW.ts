@@ -38,6 +38,7 @@ export default {
   'login.password.placeholder': '请输入密码',
   'login.modal.title': '忘记密码？',
   'login.modal.content': '如果忘记密码，请按照当前设备的手册进行重置。',
+  'page.404.subTitle': '抱歉，你访问的页面不存在',
   ...component,
   ...button,
   ...status,
