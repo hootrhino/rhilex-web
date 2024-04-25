@@ -2,7 +2,6 @@ export default {
   // button
   'dashboard.button.reset': '統計重置數據',
   'dashboard.button.download': '下載',
-  'dashboard.button.restore': '恢復',
   'dashboard.button.clear': '清空',
 
   // title

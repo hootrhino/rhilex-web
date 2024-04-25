@@ -32,38 +32,33 @@ type ConfirmCofig = {
 };
 
 const defaultUpgradeConfig = {
-  title: '确定执行升级操作吗？',
+  title: '确定执行此操作吗？',
   content: '升级时请确认版本，版本错误会导致升级失败，有可能会引起设备故障，请谨慎操作',
   okText: '确认升级',
   afterOkText: '升级',
 };
 
 const defaultRebootConfig = {
-  title: '确定执行重启操作吗？',
+  title: '确定执行此操作吗？',
   content: '重启设备会停止当前所有任务，请谨慎操作',
   okText: '确认重启',
   afterOkText: '重启',
 };
 
 const defaultRecoverConfig = {
-  title: '确定执行恢复出厂操作吗？',
+  title: '确定执行此操作吗？',
   content: '恢复出厂设置会删除当前所有数据，停止所有正在进行的任务，请谨慎操作',
   okText: '确认恢复',
   afterOkText: '恢复',
 };
 
 const FirmwareConfig = () => {
-  // const formRef = useRef<ProFormInstance>();
   const { run, cancel } = useModel('useSystem');
   const [open, setOpen] = useState<boolean>(false);
   const [confirmConfig, setConfirmConfig] = useState<ConfirmCofig>(defaultUpgradeConfig);
   const [errorMsg, setMsg] = useState<string>('');
   const [showProgress, setShowProgress] = useState<boolean>(false);
   const [uploadProgress, setProgress] = useState<number>(0);
-
-  // const { run: getVendorKey } = useRequest(() => getFirmwareVendorKey(), {
-  //   onSuccess: (data: string) => formRef.current?.setFieldsValue({ vendorKey: data }),
-  // });
 
   // 上传固件
   const { run: uploadFile } = useRequest((params) => postFirmwareUpload({}, params), {
@@ -94,7 +89,6 @@ const FirmwareConfig = () => {
         <ProCard colSpan="50%" title="设备授权信息">
           <ProDescriptions
             column={1}
-            // title={<div className="font-normal text-[14px]">设备授权信息</div>}
             request={async () => {
               const { data } = await getFirmwareVendorKey();
               return Promise.resolve({

@@ -60,7 +60,7 @@ const FourGConfig = () => {
                 danger
                 onClick={() =>
                   modal.confirm({
-                    title: '确定执行重启操作吗？',
+                    title: '确定执行此操作吗？',
                     content: '重启 4G 网卡会造成短时间内移动网络处于离线状态，请谨慎操作',
                     onOk: restart,
                     okText: '确认重启',

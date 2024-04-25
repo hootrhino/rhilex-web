@@ -90,13 +90,7 @@ const DHCPConfig = () => {
           { validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.IP) },
         ]}
       />
-      <ProForm.Item
-        label="IP 分配范围"
-        // name="ip_pool"
-        // rules={[{ required: true, message: '请输入 IP 分配范围' }]}
-        required
-        className="mb-0"
-      >
+      <ProForm.Item label="IP 分配范围" required className="mb-0">
         <Space.Compact>
           <ProFormText
             name="ip_pool_begin"
@@ -125,9 +119,9 @@ const DHCPConfig = () => {
         label="LAN 网卡"
         name="iface_from"
         options={[{ label: 'eth1', value: 'eth1' }]}
-        placeholder="请选择路由网卡"
+        placeholder="请选择 LAN 网卡"
         width="xl"
-        rules={[{ required: true, message: '请选择路由网卡' }]}
+        rules={[{ required: true, message: '请选择 LAN 网卡' }]}
       />
       <ProFormSelect
         label="流量出口"

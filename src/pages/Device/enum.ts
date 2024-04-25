@@ -54,6 +54,7 @@ export const deviceAvatar = {
   [DeviceType.GENERIC_HTTP_DEVICE]: 'HTTP',
   [DeviceType.GENERIC_CAMERA]: 'CAM',
   [DeviceType.SHELLY_GEN1_PROXY_SERVER]: 'S',
+  [DeviceType.GENERIC_SNMP]: 'SNMP',
 };
 
 /**

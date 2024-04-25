@@ -84,7 +84,7 @@ const APNConfig = () => {
             { label: 'IPv6', value: 2 },
             { label: 'IPv4 和 IPv6', value: 3 },
           ]}
-          placeholder="请选择场景编号"
+          placeholder="请选择协议类型"
           width="xl"
         />
         <ProFormText name="apn" label="APN 名称" placeholder="请输入 APN 名称" width="xl" />

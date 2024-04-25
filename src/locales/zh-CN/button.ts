@@ -19,6 +19,7 @@ export default {
   'button.config': '配置',
   'button.log': '日志',
   'button.advancedOption': '高级操作',
+  'button.restartDevice': '重启设备',
   'button.restartSource': '重启资源',
   'button.ruleConfig': '规则配置',
   'button.error': '查看异常',
@@ -26,4 +27,6 @@ export default {
   'button.new.formList': '新增一行',
   'button.forget': '忘记密码',
   'button.test': '测试',
+  'button.recover': '恢复',
+  'button.checkDetail': '查看详情',
 };

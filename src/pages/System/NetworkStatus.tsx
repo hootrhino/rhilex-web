@@ -27,18 +27,13 @@ const stateEnum = {
 };
 
 const detailColumns = {
-  device: '接口名称',
-  type: '接口类型',
+  device: '网卡名称',
+  type: '网卡类型',
   hwAddr: '物理地址',
-  mtu: '接口 MTU',
-  // "state": "10",
+  mtu: '网络 MTU',
   connection: '当前网络',
-  // "carrier": "on",
   ipv4Addr: 'IPV4 地址',
-  // "ipv4Gateway": "172.28.0.1",
-  // "ipv4Dns": "",
   ipv6Addr: 'IPV6 地址',
-  // "ipv6Gateway": "--"
 };
 
 const NetworkStatus = () => {

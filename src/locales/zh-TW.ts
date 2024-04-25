@@ -10,6 +10,7 @@ import notifyLog from './zh-TW/notifyLog';
 import plugin from './zh-TW/plugin';
 import portMgt from './zh-TW/portMgt';
 import schemaMgt from './zh-TW/schemaMgt';
+import system from './zh-TW/system';
 
 export default {
   'message.success.upload': '上传成功',
@@ -20,6 +21,7 @@ export default {
   'message.success.new': '新建成功',
   'message.success.login': '登录成功',
   'message.success.scan': '扫描成功',
+  'message.success.restart': '重启成功',
   'placeholder.input': '请输入',
   'placeholder.select': '请选择',
   'placeholder.desc': '请输入备注',
@@ -44,4 +46,5 @@ export default {
   ...plugin,
   ...portMgt,
   ...schemaMgt,
+  ...system,
 };

@@ -79,7 +79,6 @@ const DataBackupConfig = () => {
         }}
       >
         <ProFormUploadDragger
-          // label="数据恢复"
           name="recovery"
           max={1}
           accept=".db"
@@ -105,8 +104,8 @@ const DataBackupConfig = () => {
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}
-        title="确定执行上传操作吗？"
-        okText="确定上传"
+        title="确定执行此操作吗？"
+        okText="确认上传"
         afterOkText="重启"
         content="上传时请确认版本，版本错误会导致失败，有可能会引起设备故障，请谨慎操作"
         handleOnEnd={handleOnEnd}
