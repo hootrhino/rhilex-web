@@ -9,6 +9,7 @@ import extend from './zh-CN/extend';
 import notifyLog from './zh-CN/notifyLog';
 import plugin from './zh-CN/plugin';
 import portMgt from './zh-CN/portMgt';
+import ruleConfig from './zh-CN/ruleConfig';
 import schemaMgt from './zh-CN/schemaMgt';
 import system from './zh-CN/system';
 
@@ -47,4 +48,5 @@ export default {
   ...portMgt,
   ...schemaMgt,
   ...system,
+  ...ruleConfig,
 };

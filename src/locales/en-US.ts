@@ -9,6 +9,7 @@ import extend from './en-US/extend';
 import notifyLog from './en-US/notifyLog';
 import plugin from './en-US/plugin';
 import portMgt from './en-US/portMgt';
+import ruleConfig from './en-US/ruleConfig';
 import schemaMgt from './en-US/schemaMgt';
 import system from './en-US/system';
 
@@ -47,4 +48,5 @@ export default {
   ...portMgt,
   ...schemaMgt,
   ...system,
+  ...ruleConfig,
 };
