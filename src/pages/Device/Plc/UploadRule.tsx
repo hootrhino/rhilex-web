@@ -54,7 +54,7 @@ const UploadRule = ({ fileName }: UploadRuleProps) => {
       <Table bordered dataSource={dataSource} columns={columns} pagination={false} size="small" />
       <div className="mt-[24px]">
         文件格式不正确可能会导致上传失败，你确定要上传
-        <span className="px-[5px] font-bold">{fileName}</span>文件吗？
+        <span className="px-[5px] font-bold">{fileName}</span>？
       </div>
     </>
   );

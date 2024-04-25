@@ -66,9 +66,9 @@ const GroupList = ({
   const { type, ...params } = config;
 
   // 删除分组
-  const handleOnRemoveGroup = ({ name, uuid }: { name: string; uuid: string }) => {
+  const handleOnRemoveGroup = (uuid: string) => {
     modal.confirm({
-      title: `确定要删除${name}吗？`,
+      title: `确定要删除此分组吗？`,
       width: 600,
       content: `分组中包含 ${itemCount} 个子项目，删除后将被移入默认分组中，请谨慎处理。`,
       onOk: () => removeGroup({ uuid: uuid }).then(() => onReset()),
@@ -127,7 +127,7 @@ const GroupList = ({
             render: () => <FolderOpenOutlined className="pl-[10px]" />,
           },
           actions: {
-            render: (dom, { uuid, name }) =>
+            render: (_dom, { uuid }) =>
               uuid === groupRoot ? null : (
                 <Space size="middle">
                   <Tooltip title="重命名分组">
@@ -142,7 +142,7 @@ const GroupList = ({
                     </a>
                   </Tooltip>
                   <Tooltip title="删除分组">
-                    <a key="remove" onClick={() => handleOnRemoveGroup({ uuid, name })}>
+                    <a key="remove" onClick={() => handleOnRemoveGroup(uuid)}>
                       <DeleteOutlined />
                     </a>
                   </Tooltip>

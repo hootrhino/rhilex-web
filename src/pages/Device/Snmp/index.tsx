@@ -183,40 +183,40 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
         placeholder: '请输入对象标识符',
       },
       formItemProps: {
-        rules: [{ required: true, message: '请输入监控项标签' }],
+        rules: [{ required: true, message: '请输入对象标识符' }],
       },
     },
     {
-      title: '监控项标签',
+      title: '数据标签',
       dataIndex: 'tag',
       ellipsis: true,
       fieldProps: {
-        placeholder: '请输入监控项标签',
+        placeholder: '请输入数据标签',
       },
       formItemProps: {
-        rules: [{ required: true, message: '请输入监控项标签' }],
+        rules: [{ required: true, message: '请输入数据标签' }],
       },
     },
     {
-      title: '监控项别名',
+      title: '数据别名',
       dataIndex: 'alias',
       fieldProps: {
-        placeholder: '请输入监控项别名',
+        placeholder: '请输入数据别名',
       },
       formItemProps: {
-        rules: [{ required: true, message: '请输入监控项别名' }],
+        rules: [{ required: true, message: '请输入数据别名' }],
       },
     },
     {
-      title: '数据采集频率',
+      title: '采集频率',
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 100,
       fieldProps: {
-        placeholder: '请输入数据采集频率',
+        placeholder: '请输入采集频率',
       },
       formItemProps: {
-        rules: [{ required: true, message: '请输入数据采集频率' }],
+        rules: [{ required: true, message: '请输入采集频率' }],
       },
     },
     {
@@ -352,7 +352,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       onClick={() =>
         modal.confirm({
           title: '批量删除对象',
-          content: '此操作会一次性删除多个对象，请谨慎处理!',
+          content: '此操作会一次性删除多个对象，需谨慎操作',
           onOk: handleOnBatchRemove,
           okText: '确定',
           cancelText: '取消',

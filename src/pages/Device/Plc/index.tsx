@@ -336,7 +336,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
               编辑
             </a>
             <Popconfirm
-              title="确定要删除此点位?"
+              title="确定要删除此点位？"
               onConfirm={() => {
                 if (deviceId && record?.uuid) {
                   remove({ device_uuid: deviceId, uuids: [record?.uuid] });
