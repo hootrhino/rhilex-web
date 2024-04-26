@@ -5,6 +5,7 @@ import {
   deleteDevicesDel,
   getDevicesDetail,
   getDevicesDeviceErrMsg,
+  getDevicesGroup,
   getDevicesListByGroup,
   putDevicesRestart,
   putDevicesUpdate,
@@ -51,14 +52,8 @@ export type DeviceItem = {
 const Devices = () => {
   const actionRef = useRef<ActionType>();
 
-  const {
-    groupList,
-    getGroupList,
-    detailConfig,
-    setDeviceConfig,
-    activeGroupKey,
-    setActiveGroupKey,
-  } = useModel('useDevice');
+  const { detailConfig, setDeviceConfig, activeGroupKey, setActiveGroupKey } =
+    useModel('useDevice');
   const { product } = useModel('useSystem');
 
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(DEFAULT_CONFIG);
@@ -74,6 +69,9 @@ const Devices = () => {
     deviceName: string | undefined;
     outputMode: OutputMode;
   }>({ deviceName: '', outputMode: OutputMode.LOCAL_JPEG_STREAM_SERVER });
+
+  // 设备分组列表
+  const { data: groupList, run: getGroupList } = useRequest(() => getDevicesGroup());
 
   // 重置分组表单
   const handleOnReset = () => {

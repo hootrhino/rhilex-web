@@ -1,8 +1,14 @@
-import { modal } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
+import {
+  deleteGroupDel,
+  getGroupDetail,
+  postGroupCreate,
+  putGroupUpdate,
+} from '@/services/rulex/fenzuguanli';
 import { DeleteOutlined, EditOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProList } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
+import { useRequest } from '@umijs/max';
 import { Space, Tooltip } from 'antd';
 import { useEffect, useRef } from 'react';
 
@@ -22,6 +28,15 @@ export type GroupItem = {
   name: string;
   type: string;
   [key: string]: any;
+};
+
+type createGroupParams = {
+  name: string;
+  type: string;
+};
+
+type updateGroupParams = createGroupParams & {
+  uuid: string;
 };
 
 type GroupListProps = {
@@ -55,27 +70,28 @@ const GroupList = ({
   updateActiveGroup,
   updateConfig,
 }: GroupListProps) => {
-  const {
-    remove: removeGroup,
-    create: createGroup,
-    update: updateGroup,
-    getDetail: getGroupDetail,
-    detail: groupDetail,
-  } = useModel('useGroup');
   const groupFormRef = useRef<ProFormInstance>();
   const { type, ...params } = config;
 
-  // 删除分组
-  const handleOnRemoveGroup = (uuid: string) => {
-    modal.confirm({
-      title: `确定要删除此分组吗？`,
-      width: 600,
-      content: `分组中包含 ${itemCount} 个子项目，删除后将被移入默认分组中，请谨慎处理。`,
-      onOk: () => removeGroup({ uuid: uuid }).then(() => onReset()),
-      okText: '确定',
-      cancelText: '取消',
-    });
-  };
+  // 分组详情
+  const { run: getDetail, data: groupDetail } = useRequest(
+    (params: API.getGroupDetailParams) => getGroupDetail(params),
+    {
+      manual: true,
+    },
+  );
+
+  // 新建分组
+  const { run: createGroup } = useRequest((params: createGroupParams) => postGroupCreate(params), {
+    manual: true,
+    onSuccess: () => message.success('新建成功'),
+  });
+
+  // 更新分组
+  const { run: updateGroup } = useRequest((params: updateGroupParams) => putGroupUpdate(params), {
+    manual: true,
+    onSuccess: () => message.success('更新成功'),
+  });
 
   // 新建&编辑
   const handleOnFinish = async ({ name }: { name: string }) => {
@@ -93,6 +109,26 @@ const GroupList = ({
         onRefresh();
       });
     }
+  };
+
+  // 删除分组
+  const { run: removeGroup } = useRequest(
+    (params: API.deleteGroupDelParams) => deleteGroupDel(params),
+    {
+      manual: true,
+      onSuccess: () => message.success('删除成功'),
+    },
+  );
+
+  const handleOnRemoveGroup = (uuid: string) => {
+    modal.confirm({
+      title: `确定要删除此分组吗？`,
+      width: 600,
+      content: `分组中包含 ${itemCount} 个子项目，删除后将被移入默认分组中，请谨慎处理。`,
+      onOk: () => removeGroup({ uuid: uuid }).then(() => onReset()),
+      okText: '确定',
+      cancelText: '取消',
+    });
   };
 
   useEffect(() => {
@@ -135,7 +171,7 @@ const GroupList = ({
                       key="edit"
                       onClick={() => {
                         updateConfig({ open: true, title: '编辑分组', type: GroupModalType.EDIT });
-                        getGroupDetail({ uuid });
+                        getDetail({ uuid });
                       }}
                     >
                       <EditOutlined />
