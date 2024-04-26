@@ -2,7 +2,7 @@ import { dataToTpl } from './dataToTpl';
 import { deviceTpl } from './deviceTpl';
 import { modbusTpl } from './modbusTpl';
 import { otherTpl } from './otherTpl';
-import { rhinopiTpl } from './rhinopiTpl';
+import { rhilexg1Tpl } from './rhilexg1Tpl';
 import { timeTpl } from './timeTpl';
 
 /** Lua 关键词 **/
@@ -219,7 +219,7 @@ export const jsonTpl = [
 export const buildInSnippet = [
   ...dataToTpl,
   ...timeTpl,
-  ...rhinopiTpl,
+  ...rhilexg1Tpl,
   ...deviceTpl,
   ...modbusTpl,
   ...kvTpl,
@@ -241,9 +241,9 @@ export const builtInLuaTpl = [
     uuid: 'time',
   },
   {
-    name: 'rhinopi 函数',
-    children: rhinopiTpl,
-    uuid: 'rhinopi',
+    name: 'rhilexg1 函数',
+    children: rhilexg1Tpl,
+    uuid: 'rhilexg1',
   },
   {
     name: 'device 函数',

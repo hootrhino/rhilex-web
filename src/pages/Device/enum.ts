@@ -34,14 +34,14 @@ export const deviceTypeOptions = {
     DeviceType.SIEMENS_PLC,
   ]),
   [Product.RASPI4B]: baseTypeOption,
-  [Product.RHINOPI]: baseTypeOption,
+  [Product.RHILEXG1]: baseTypeOption,
 };
 
 export const defaultDeviceType = {
   [Product.COMMON]: DeviceType.GENERIC_PROTOCOL,
   [Product.EN6400]: DeviceType.GENERIC_MODBUS,
   [Product.RASPI4B]: DeviceType.GENERIC_PROTOCOL,
-  [Product.RHINOPI]: DeviceType.GENERIC_PROTOCOL,
+  [Product.RHILEXG1]: DeviceType.GENERIC_PROTOCOL,
 };
 
 export const deviceAvatar = {

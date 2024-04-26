@@ -19,20 +19,20 @@ const en6400Code = `function Main(arg)
   return 0;
 end;`;
 
-const rhinopiCode = `function Main(arg)
+const rhilexg1Code = `function Main(arg)
   while true do
     local _, Error = network:Ping("114.114.114.114");
     if Error ~= nil then
         for i = 1, 5, 1 do
-            rhinopi:Led1On();
+            rhilexg1:Led1On();
             time:Sleep(50);
-            rhinopi:Led1Off();
+            rhilexg1:Led1Off();
             time:Sleep(50);
         end;
     else
-        rhinopi:Led1On();
+        rhilexg1:Led1On();
         time:Sleep(50);
-        rhinopi:Led1Off();
+        rhilexg1:Led1Off();
         time:Sleep(50);
     end;
     time:Sleep(5000);
@@ -40,11 +40,11 @@ const rhinopiCode = `function Main(arg)
   return 0;
 end;`;
 
-export const RHINOPITpl = [
+export const RHILEXG1Tpl = [
   {
     label: '当没有网络时，网关上的 LED 会快速闪烁 5 次',
-    detail: `RHINOPI 联网测试`,
-    apply: rhinopiCode,
+    detail: `RHILEXG1 联网测试`,
+    apply: rhilexg1Code,
     type: 'function',
   },
 ];

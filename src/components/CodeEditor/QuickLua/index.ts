@@ -1,9 +1,9 @@
-import { En6400Tpl, RHINOPITpl } from './appStackQuickTpl';
+import { En6400Tpl, RHILEXG1Tpl } from './appStackQuickTpl';
 import { dataToQuickTpl } from './dataToQuickTpl';
 
 // 自定义快捷模板
-export const quickLuaTpl = (isRHINOPI: boolean) => {
-  const appStackQuickTpl = isRHINOPI ? RHINOPITpl : En6400Tpl;
+export const quickLuaTpl = (isRHILEXG1: boolean) => {
+  const appStackQuickTpl = isRHILEXG1 ? RHILEXG1Tpl : En6400Tpl;
 
   return [
     {

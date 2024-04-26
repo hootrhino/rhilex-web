@@ -31,7 +31,7 @@ export enum FormItemType {
  * 产品类型
  */
 export enum Product {
-  RHINOPI = 'RHINOPI',
+  RHILEXG1 = 'RHILEXG1',
   EN6400 = 'EN6400',
   COMMON = 'COMMON',
   RASPI4B = 'RASPI4B',

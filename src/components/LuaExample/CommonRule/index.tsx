@@ -42,7 +42,7 @@ const CommonRule = ({ activeTabKey }: CommonRuleProps) => {
     },
     {
       type: 'quick',
-      dataSource: quickLuaTpl(product === Product.RHINOPI),
+      dataSource: quickLuaTpl(product === Product.RHILEXG1),
     },
   ];
 

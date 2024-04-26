@@ -21,7 +21,7 @@ export const ProductMenuAccess = {
   [Product.COMMON]: allMenu,
   [Product.EN6400]: allMenu.filter((menu) => !['extend', 'plugins'].includes(menu)),
   [Product.RASPI4B]: allMenu,
-  [Product.RHINOPI]: allMenu,
+  [Product.RHILEXG1]: allMenu,
 };
 
 const useSystem = () => {
