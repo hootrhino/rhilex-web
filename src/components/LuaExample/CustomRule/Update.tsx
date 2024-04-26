@@ -70,8 +70,8 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
           name="detail"
           label="备注"
           width="md"
-          placeholder="请输入模板描述"
-          rules={[{ required: true, message: '请输入模板描述' }]}
+          placeholder="请输入备注"
+          rules={[{ required: true, message: '请输入备注' }]}
         />
       </ProForm.Group>
       <ProCodeEditor

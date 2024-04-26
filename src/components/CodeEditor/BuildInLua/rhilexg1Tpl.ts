@@ -23,6 +23,6 @@ end`;
     label: `rhilexg1:${rhilexg1.target}`,
     apply: code,
     type: 'function',
-    variables: [{ label: '犀牛网关 GPIO 编号', name: 'arg', value: 0, type: 'number' }],
+    variables: [{ label: 'RHILEX 网关 GPIO 编号', name: 'arg', value: 0, type: 'number' }],
   };
 });

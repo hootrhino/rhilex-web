@@ -40,6 +40,8 @@ export default {
   'login.password.placeholder': '请输入密码',
   'login.modal.title': '忘记密码？',
   'login.modal.content': '如果忘记密码，请按照当前设备的手册进行重置。',
+  'logout.modal.title': '提示',
+  'logout.modal.content': '确定要退出登录吗？',
   'page.404.subTitle': '抱歉，你访问的页面不存在',
   'page.copyright': 'RHILEX TEAM 2023-2033. 所有权利保留。',
   'form.rules.name': '请输入4-64个字符，支持中文、字母、数字或下划线',
