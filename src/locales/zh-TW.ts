@@ -16,6 +16,9 @@ import schemaMgt from './zh-TW/schemaMgt';
 import system from './zh-TW/system';
 
 export default {
+  /**
+   * message
+   */
   'message.success.upload': '上传成功',
   'message.success.remove': '删除成功',
   'message.success.start': '启动成功',
@@ -27,13 +30,22 @@ export default {
   'message.success.restart': '重启成功',
   'message.error.request': '请求错误，请重试',
   'message.error.timeout': '客户端请求超时',
+  /**
+   * placeholder
+   */
   'placeholder.input': '请输入',
   'placeholder.select': '请选择',
   'placeholder.desc': '请输入备注',
+  /**
+   * table
+   */
   'table.index': '序号',
   'table.desc': '备注',
   'table.option': '操作',
-  'tab.title': '登录页',
+  /**
+   * login & logout
+   */
+  'login.title': '登录页',
   'login.username.label': '用户名',
   'login.username.placeholder': '请输入用户名',
   'login.password.label': '密码',
@@ -42,8 +54,14 @@ export default {
   'login.modal.content': '如果忘记密码，请按照当前设备的手册进行重置。',
   'logout.modal.title': '提示',
   'logout.modal.content': '确定要退出登录吗？',
+  /**
+   * page
+   */
   'page.404.subTitle': '抱歉，你访问的页面不存在',
-  'page.copyright': 'RHILEX TEAM 2023-2033. 所有权利保留。',
+  'page.copyright': 'RHILEX TEAM 2023-2033. All rights reserved.',
+  /**
+   * form
+   */
   'form.rules.name': '请输入4-64个字符，支持中文、字母、数字或下划线',
   'form.rules.port': '端口的值应在 0 到 65535 之间',
   'form.rules.address': '起始地址的值应在 0 到 65535 之间',
@@ -52,6 +70,9 @@ export default {
   'form.rules.gateway': '网关格式不正确',
   'form.rules.cidr': 'CIDR 格式不正确',
   'form.rules.default': '格式不正确',
+  /**
+   * menu
+   */
   'menu.dashboard': '系统首页',
   'menu.device': '设备接入',
   'menu.device.list': '设备列表',
