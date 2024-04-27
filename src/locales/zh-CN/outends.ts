@@ -22,16 +22,24 @@ export default {
   'outends.table.title.group': '资源配置',
 
   /**
-   * others
+   * title
    */
   'outends.title.new': '新建资源',
   'outends.title.edit': '编辑资源',
   'outends.title.detail': '资源详情',
   'outends.title.base': '基本配置',
   'outends.title.source': '资源配置',
-  'outends.popconfirm.title.remove': '确定要删除此目标？',
+
+  /**
+   * modal
+   */
   'outends.modal.title.remove': '确定要删除此目标？',
   'outends.modal.title.restart': '确定执行此操作吗？',
   'outends.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，需谨慎操作',
+
+  /**
+   * others
+   */
+  'outends.popconfirm.title.remove': '确定要删除此目标？',
   'outends.message.warning.new': '新建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：',
 };

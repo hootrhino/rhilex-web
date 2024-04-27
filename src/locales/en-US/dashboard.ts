@@ -1,15 +1,21 @@
 export default {
-  // button
+  /**
+   * button
+   */
   'dashboard.button.reset': '统计重置数据',
   'dashboard.button.download': '下载',
   'dashboard.button.clear': '清空',
 
-  // title
+  /**
+   * title
+   */
   'dashboard.title.log': '运行日志',
   'dashboard.title.device': '活跃设备',
   'dashboard.title.statistic': '数据输入 / 输出总数',
 
-  // count
+  /**
+   * count
+   */
   'dashboard.count.inends': '南向总数',
   'dashboard.count.outends': '北向总数',
   'dashboard.count.rule': '规则总数',
@@ -18,12 +24,16 @@ export default {
   'dashboard.count.device': '设备总数',
   'dashboard.count.extend': '扩展协议总数',
 
-  // statistic
+  /**
+   * statistic
+   */
   'dashboard.statistic.inSuccess': '输入成功',
   'dashboard.statistic.inFailed': '输入失败',
   'dashboard.statistic.outSuccess': '输出成功',
   'dashboard.statistic.outFailed': '输出失败',
 
-  // message
+  /**
+   * message
+   */
   'dashboard.message.reset.success': '重置成功',
 };

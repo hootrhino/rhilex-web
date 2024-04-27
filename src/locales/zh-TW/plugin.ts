@@ -8,6 +8,10 @@ export default {
   'plugin.table.title.author': '作者',
   'plugin.table.title.email': '邮箱',
   'plugin.table.title.license': '协议',
+
+  /**
+   * title
+   */
   'plugin.title.ping': '网络测速',
   'plugin.title.clients': '客户端列表',
   'plugin.title.scan': 'Modbus 扫描仪',

@@ -32,17 +32,25 @@ export default {
   'schemaMgt.form.placeholder.schemaName': '请输入数据模型名称',
 
   /**
-   * others
+   * modal
    */
-  'schemaMgt.title.schema': '数据模型列表',
-  'schemaMgt.title.property': '属性列表',
-  'schemaMgt.title.card': '数据定义',
-  'schemaMgt.tooltip.update': '重命名模型',
-  'schemaMgt.tooltip.remove': '删除模型',
-  'schemaMgt.popconfirm.remove': '确定要删除此数据模型？',
   'schemaMgt.modal.title.schema.new': '新建数据模型',
   'schemaMgt.modal.title.schema.update': '更新数据模型',
   'schemaMgt.modal.title.property.new': '新建属性',
   'schemaMgt.modal.title.property.update': '更新属性',
+
+  /**
+   * title
+   */
+  'schemaMgt.title.schema': '数据模型列表',
+  'schemaMgt.title.property': '属性列表',
+  'schemaMgt.title.card': '数据定义',
+
+  /**
+   * others
+   */
+  'schemaMgt.tooltip.update': '重命名模型',
+  'schemaMgt.tooltip.remove': '删除模型',
+  'schemaMgt.popconfirm.remove': '确定要删除此数据模型？',
   'schemaMgt.table.title.value': '当前值',
 };
