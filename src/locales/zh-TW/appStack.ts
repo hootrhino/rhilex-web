@@ -2,19 +2,24 @@ export default {
   /**
    * table
    */
-  'appStack.table.title.name': 'APP 名称',
-  'appStack.table.title.version': 'APP 版本',
-  'appStack.table.title.autoStart': '自动启动',
-  'appStack.table.title.appState': 'APP 状态',
-  'appStack.table.title.type': '脚本类型',
-  'appStack.table.title.type.valueEnum': 'LUA 脚本',
-  'appStack.table.title.luaSource': 'Lua 源码',
+  'appStack.table.title.name': '應用程式名稱',
+  'appStack.table.title.version': '應用程式版本',
+  'appStack.table.title.autoStart': '自動啟動',
+  'appStack.table.title.appState': '應用程式狀態',
+  'appStack.table.title.type': '腳本類型',
+  'appStack.table.title.type.valueEnum': 'LUA 腳本',
+  'appStack.table.title.luaSource': 'Lua 源碼',
+
+  /**
+   * title
+   */
+  'appStack.title.new': '新建應用程式',
+  'appStack.title.update': '更新應用程式',
+  'appStack.title.detail': '應用程式詳情',
+  'appStack.title.log': '應用程式日誌',
 
   /**
    * others
    */
-  'appStack.title.new': '新建应用',
-  'appStack.title.update': '更新应用',
-  'appStack.title.detail': '应用详情',
-  'appStack.title.log': '应用日志',
+  'appStack.popconfirm.title.remove': '確定要刪除此應用程式？',
 };

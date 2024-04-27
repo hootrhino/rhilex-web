@@ -5,6 +5,7 @@ import ProCodeEditor from '@/components/ProCodeEditor';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rulex/qingliangyingyong';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { AppStackItem } from '..';
@@ -24,6 +25,7 @@ const defaultValue = {
 const UpdateForm = () => {
   const { uuid } = useParams();
   const formRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
 
   const columns = [
@@ -43,7 +45,7 @@ const UpdateForm = () => {
             hideInForm: !uuid,
             renderFormItem: () => (
               <ProCodeEditor
-                label="Lua 源码"
+                label={formatMessage({ id: 'appStack.table.title.luaSource' })}
                 name="luaSource"
                 ref={formRef}
                 required
@@ -70,10 +72,10 @@ const UpdateForm = () => {
       };
       if (uuid) {
         await putAppUpdate({ ...params, uuid });
-        message.success('更新成功');
+        message.success(formatMessage({ id: 'message.success.update' }));
       } else {
         await postAppCreate(params);
-        message.success('新建成功');
+        message.success(formatMessage({ id: 'message.success.new' }));
       }
       setLoading(false);
       history.push(DefaultListUrl);
@@ -95,7 +97,15 @@ const UpdateForm = () => {
   useBeforeUnloadConfirm();
 
   return (
-    <PageContainer showExtra title={uuid ? '更新应用' : '新建应用'} backUrl={DefaultListUrl}>
+    <PageContainer
+      showExtra
+      title={
+        uuid
+          ? formatMessage({ id: 'appStack.title.update' })
+          : formatMessage({ id: 'appStack.title.new' })
+      }
+      backUrl={DefaultListUrl}
+    >
       <ProBetaSchemaForm
         formRef={formRef}
         onFinish={handleOnFinish}

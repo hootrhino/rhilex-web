@@ -19,46 +19,46 @@ export default {
   /**
    * message
    */
-  'message.success.upload': '上传成功',
-  'message.success.remove': '删除成功',
-  'message.success.start': '启动成功',
+  'message.success.upload': '上傳成功',
+  'message.success.remove': '刪除成功',
+  'message.success.start': '啟動成功',
   'message.success.stop': '停止成功',
   'message.success.update': '更新成功',
   'message.success.new': '新建成功',
-  'message.success.login': '登录成功',
-  'message.success.scan': '扫描成功',
-  'message.success.restart': '重启成功',
-  'message.error.request': '请求错误，请重试',
-  'message.error.timeout': '客户端请求超时',
+  'message.success.login': '登入成功',
+  'message.success.scan': '掃描成功',
+  'message.success.restart': '重新啟動成功',
+  'message.error.request': '請求錯誤，請重試',
+  'message.error.timeout': '客戶端請求超時',
   /**
    * placeholder
    */
-  'placeholder.input': '请输入',
-  'placeholder.select': '请选择',
-  'placeholder.desc': '请输入备注',
+  'placeholder.input': '請輸入',
+  'placeholder.select': '請選擇',
+  'placeholder.desc': '請輸入備註',
   /**
    * table
    */
-  'table.index': '序号',
-  'table.desc': '备注',
+  'table.index': '序號',
+  'table.desc': '備註',
   'table.option': '操作',
   /**
    * login & logout
    */
-  'login.title': '登录页',
-  'login.username.label': '用户名',
-  'login.username.placeholder': '请输入用户名',
-  'login.password.label': '密码',
-  'login.password.placeholder': '请输入密码',
-  'login.modal.title': '忘记密码？',
-  'login.modal.content': '如果忘记密码，请按照当前设备的手册进行重置。',
+  'login.title': '登入頁',
+  'login.username.label': '用戶名',
+  'login.username.placeholder': '請輸入用戶名',
+  'login.password.label': '密碼',
+  'login.password.placeholder': '請輸入密碼',
+  'login.modal.title': '忘記密碼？',
+  'login.modal.content': '如果忘記密碼，請按照當前設備的手冊進行重置。',
   'logout.modal.title': '提示',
-  'logout.modal.content': '确定要退出登录吗？',
+  'logout.modal.content': '確定要退出登入嗎？',
   /**
    * page
    */
-  'page.404.subTitle': '抱歉，你访问的页面不存在',
-  'page.copyright': 'RHILEX TEAM 2023-2033. All rights reserved.',
+  'page.404.subTitle': '對不起，你訪問的頁面不存在',
+  'page.copyright': 'RHILEX TEAM 2023-2033. 所有權利保留。',
   /**
    * form
    */

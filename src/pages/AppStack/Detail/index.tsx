@@ -4,7 +4,7 @@ import { DetailModalType } from '@/utils/enum';
 import { handleNewMessage } from '@/utils/utils';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import { useLocalStorageState } from 'ahooks';
 import type { DrawerProps } from 'antd';
 import { Button, Drawer, Modal } from 'antd';
@@ -22,6 +22,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
   const [appConsole, setConsole] = useLocalStorageState<string[]>('app-console', {
     defaultValue: [],
   });
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     const newData = handleNewMessage(appConsole, latestMessage?.data, `app/console/${uuid}`);
@@ -30,7 +31,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
 
   return type === DetailModalType.DETAIL ? (
     <Drawer
-      title="轻量应用详情"
+      title={formatMessage({ id: 'appStack.title.detail' })}
       placement="right"
       width={type === DetailModalType.DETAIL ? '35%' : '40%'}
       {...props}
@@ -54,12 +55,12 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     </Drawer>
   ) : (
     <Modal
-      title="轻量应用日志"
+      title={formatMessage({ id: 'appStack.title.log' })}
       width="50%"
       open={props.open}
       footer={
         <Button type="primary" onClick={props?.onClose}>
-          关闭
+          {formatMessage({ id: 'button.close' })}
         </Button>
       }
       onCancel={props?.onClose}

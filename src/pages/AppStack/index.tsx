@@ -10,7 +10,7 @@ import { DetailModalType } from '@/utils/enum';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
@@ -36,6 +36,7 @@ type DetailLogModalConfig = {
 
 const AppStack = () => {
   const actionRef = useRef<ActionType>();
+  const { formatMessage } = useIntl();
   const [detailConfig, setConfig] = useState<DetailLogModalConfig>({
     uuid: '',
     open: false,
@@ -46,7 +47,7 @@ const AppStack = () => {
   const { run: remove } = useRequest((params: API.deleteAppDelParams) => deleteAppDel(params), {
     manual: true,
     onSuccess: () => {
-      message.success('删除成功');
+      message.success(formatMessage({ id: 'message.success.remove' }));
       actionRef.current?.reload();
     },
   });
@@ -55,7 +56,7 @@ const AppStack = () => {
   const { run: start } = useRequest((params: API.putAppStartParams) => putAppStart(params), {
     manual: true,
     onSuccess: () => {
-      message.success('启动成功');
+      message.success(formatMessage({ id: 'message.success.start' }));
       actionRef.current?.reload();
     },
   });
@@ -64,15 +65,15 @@ const AppStack = () => {
   const { run: stop } = useRequest((params: API.putAppStopParams) => putAppStop(params), {
     manual: true,
     onSuccess: () => {
-      message.success('停止成功');
+      message.success(formatMessage({ id: 'message.success.stop' }));
       actionRef.current?.reload();
     },
   });
 
   const actions: ProColumns<AppStackItem>[] = [
     {
-      title: '操作',
-      width: 200,
+      title: formatMessage({ id: 'table.option' }),
+      width: 220,
       fixed: 'right',
       key: 'option',
       valueType: 'option',
@@ -84,7 +85,7 @@ const AppStack = () => {
             setConfig({ uuid, open: true, type: DetailModalType.DETAIL });
           }}
         >
-          详情
+          {formatMessage({ id: 'button.detail' })}
         </a>,
         <a
           key="log"
@@ -93,7 +94,7 @@ const AppStack = () => {
             setConfig({ uuid, open: true, type: DetailModalType.LOG });
           }}
         >
-          日志
+          {formatMessage({ id: 'button.log' })}
         </a>,
         <a
           key="start"
@@ -107,19 +108,21 @@ const AppStack = () => {
             }
           }}
         >
-          {appState === 1 ? '停止' : '启动'}
+          {appState === 1
+            ? formatMessage({ id: 'status.stop' })
+            : formatMessage({ id: 'status.start' })}
         </a>,
         <a key="edit" onClick={() => history.push(`/app-stack/edit/${uuid}`)}>
-          编辑
+          {formatMessage({ id: 'button.edit' })}
         </a>,
         <Popconfirm
-          title="确定要删除此应用?"
+          title={formatMessage({ id: 'appStack.popconfirm.title.remove' })}
           onConfirm={() => uuid && remove({ uuid })}
           okText="是"
           cancelText="否"
           key="remove"
         >
-          <a>删除</a>
+          <a>{formatMessage({ id: 'button.remove' })}</a>
         </Popconfirm>,
       ],
     },
@@ -149,7 +152,7 @@ const AppStack = () => {
               icon={<PlusOutlined />}
               onClick={() => history.push('/app-stack/new')}
             >
-              新建
+              {formatMessage({ id: 'button.new' })}
             </Button>,
           ]}
         />
