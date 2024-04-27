@@ -1,43 +1,44 @@
 import { IconFont } from '@/utils/utils';
-import { useModel } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 
 const SourceCountCard = () => {
   const { dataSource } = useModel('useSystem');
   const { inends, outends, rules, plugins, apps, devices } = dataSource?.sourceCount || {};
+  const { formatMessage } = useIntl();
 
   const sourceCountData = [
     {
-      title: '南向总数',
+      title: formatMessage({ id: 'dashboard.count.inend' }),
       value: inends,
       key: 'device-inends',
     },
     {
-      title: '北向总数',
+      title: formatMessage({ id: 'dashboard.count.outend' }),
       value: outends,
       key: 'device-outends',
     },
     {
-      title: '规则总数',
+      title: formatMessage({ id: 'dashboard.count.rule' }),
       value: rules,
       key: 'rule',
     },
     {
-      title: '插件总数',
+      title: formatMessage({ id: 'dashboard.count.plugin' }),
       value: plugins,
       key: 'plugin',
     },
     {
-      title: '应用总数',
+      title: formatMessage({ id: 'dashboard.count.app' }),
       value: apps,
       key: 'app',
     },
     {
-      title: '设备总数',
+      title: formatMessage({ id: 'dashboard.count.device' }),
       value: devices,
       key: 'device',
     },
     {
-      title: '扩展协议总数',
+      title: formatMessage({ id: 'dashboard.count.extend' }),
       value: 0,
       key: 'extend',
     },

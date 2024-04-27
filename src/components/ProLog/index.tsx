@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import type { ProCardTabsProps } from '@ant-design/pro-components';
 import { ProCard } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import { FitAddon } from '@xterm/addon-fit';
 import { Terminal } from '@xterm/xterm';
 import '@xterm/xterm/css/xterm.css';
@@ -53,6 +53,7 @@ const ProLog = ({
 }: ProLogProps) => {
   const { disconnect, connect } = useModel('useWebsocket');
   const logRef = useRef<any>(null);
+  const { formatMessage } = useIntl();
   const [play, setPlay] = useState<boolean>(true);
 
   const handleOutput = (inputValue: Record<string, any>) => {
@@ -110,7 +111,7 @@ const ProLog = ({
               size="small"
               onClick={() => (window.location.href = '/api/v1/backup/runningLog')}
             >
-              下载
+              {formatMessage({ id: 'dashboard.button.download' })}
             </Button>
             <Button
               ghost
@@ -124,7 +125,7 @@ const ProLog = ({
               }}
               disabled={!play}
             >
-              停止
+              {formatMessage({ id: 'button.stop' })}
             </Button>
             <Button
               ghost
@@ -138,7 +139,7 @@ const ProLog = ({
                 connect();
               }}
             >
-              恢复
+              {formatMessage({ id: 'button.recover' })}
             </Button>
             <Button
               danger
@@ -150,7 +151,7 @@ const ProLog = ({
                 logRef.current.clear();
               }}
             >
-              清空
+              {formatMessage({ id: 'dashboard.button.clear' })}
             </Button>
           </Space>
         ) : null

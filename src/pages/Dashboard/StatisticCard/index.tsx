@@ -4,34 +4,35 @@ import { sum } from '@/utils/redash';
 import { cn } from '@/utils/utils';
 import { ReloadOutlined } from '@ant-design/icons';
 import { ProCard } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import { Button, Space, Statistic } from 'antd';
 
 const StatisticCard = () => {
   const { dataSource, run } = useModel('useSystem');
   const { inSuccess, inFailed, outSuccess, outFailed } = dataSource?.statistic || {};
+  const { formatMessage } = useIntl();
 
   const statisticData = [
     {
-      label: '输入成功',
+      label: formatMessage({ id: 'dashboard.statistic.inSuccess' }),
       value: inSuccess,
       status: 'success',
       key: 'inSuccess',
     },
     {
-      label: '输入失败',
+      label: formatMessage({ id: 'dashboard.statistic.inFailed' }),
       value: inFailed,
       status: 'error',
       key: 'inFailed',
     },
     {
-      label: '输出成功',
+      label: formatMessage({ id: 'dashboard.statistic.outSuccess' }),
       value: outSuccess,
       status: 'success',
       key: 'outSuccess',
     },
     {
-      label: '输出失败',
+      label: formatMessage({ id: 'dashboard.statistic.outFailed' }),
       value: outFailed,
       status: 'error',
       key: 'outFailed',
@@ -48,15 +49,15 @@ const StatisticCard = () => {
         icon={<ReloadOutlined />}
         onClick={async () =>
           await postOsResetInterMetric().then(() => {
-            message.success('重置成功');
+            message.success(formatMessage({ id: 'dashboard.message.reset.success' }));
             run();
           })
         }
       >
-        重置统计数据
+        {formatMessage({ id: 'dashboard.button.reset' })}
       </Button>
       <ProCard layout="center" direction="column" type="inner" colSpan="25%">
-        <div className="text-[#585858]">数据输入 / 输出总数</div>
+        <div className="text-[#585858]">{formatMessage({ id: 'dashboard.title.statistic' })}</div>
         <Statistic value={sum(statisticData, (s) => s.value || 0)} />
       </ProCard>
       <ProCard gutter={[16, 16]} wrap bodyStyle={{ paddingInline: 14 }}>

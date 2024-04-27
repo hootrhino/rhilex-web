@@ -2,12 +2,13 @@ import { deviceAvatar } from '@/pages/Device/enum';
 import { getDevicesList } from '@/services/rulex/shebeiguanli';
 import { cn } from '@/utils/utils';
 import { ProList } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Avatar, Badge } from 'antd';
 import { useState } from 'react';
 
 const DeviceList = () => {
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
+  const { formatMessage } = useIntl();
 
   const { data } = useRequest(() => getDevicesList({ current: 1, size: 999 }));
 
@@ -16,7 +17,9 @@ const DeviceList = () => {
       <ProList
         rowKey="uuid"
         size="small"
-        headerTitle={<span className="text-[14px]">活跃设备</span>}
+        headerTitle={
+          <span className="text-[14px]">{formatMessage({ id: 'dashboard.title.device' })}</span>
+        }
         dataSource={data?.records}
         expandable={{ expandedRowKeys, onExpandedRowsChange: setExpandedRowKeys }}
         metas={{
@@ -38,7 +41,11 @@ const DeviceList = () => {
             render: (_, { state }) => (
               <Badge
                 status={state === 0 ? 'error' : 'success'}
-                text={state === 0 ? '离线' : '在线'}
+                text={
+                  state === 0
+                    ? formatMessage({ id: 'status.offline' })
+                    : formatMessage({ id: 'status.online' })
+                }
               />
             ),
           },

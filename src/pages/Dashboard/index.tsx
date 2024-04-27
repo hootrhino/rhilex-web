@@ -1,5 +1,6 @@
 import PageContainer from '@/components/PageContainer';
 import ProLog from '@/components/ProLog';
+import { useIntl } from '@umijs/max';
 import { Col, Row } from 'antd';
 import { useModel } from 'umi';
 import DeviceList from './Device';
@@ -8,6 +9,7 @@ import ProStatisticCard from './StatisticCard';
 
 const Dashboard = () => {
   const { runningLogs, setLogs } = useModel('useWebsocket');
+  const { formatMessage } = useIntl();
 
   return (
     <PageContainer className="overflow-x-hidden">
@@ -23,7 +25,7 @@ const Dashboard = () => {
       <ProLog
         extra
         className="mt-6"
-        title="运行日志"
+        title={formatMessage({ id: 'dashboard.title.log' })}
         dataSource={runningLogs}
         handleOnReset={() => setLogs([])}
       />
