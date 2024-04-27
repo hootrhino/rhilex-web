@@ -4,11 +4,10 @@ import { ProCard } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import type { TabPaneProps } from 'antd';
 import { useEffect, useState } from 'react';
-import FourGConfig from './4G';
-import APNConfig from './Apn';
 import DataBackupConfig from './DataBackup';
 import FirmwareConfig from './Firmware';
 import NetworkConfig from './Network';
+import Network4GConfig from './Network4g';
 import NetworkStatus from './NetworkStatus';
 import Resource from './Resource';
 import RoutingConfig from './Routing';
@@ -58,14 +57,9 @@ const baseItems = [
     children: <FirmwareConfig />,
   },
   {
-    label: <div>4G&nbsp;&nbsp;配置</div>,
-    key: '4g',
-    children: <FourGConfig />,
-  },
-  {
-    label: 'APN配置',
+    label: <div>4G&nbsp;&nbsp;网络</div>,
     key: 'apn',
-    children: <APNConfig />,
+    children: <Network4GConfig />,
   },
   {
     label: '数据备份',
@@ -92,7 +86,7 @@ const System = () => {
       } else {
         // mac linux
         if (product === Product.EN6400) {
-          return !['4g', 'apn'].includes(item.key);
+          return !['apn'].includes(item.key);
         }
         if ([Product.COMMON].includes(product)) {
           return defaultConfig.includes(item.key);
@@ -117,7 +111,7 @@ const System = () => {
         tabs={{
           tabPosition: 'left',
           activeKey,
-          className: 'min-h-[700px]',
+          className: 'min-h-[700px] overflow-hidden',
           items: tabItems,
           onChange: (key) => {
             setActiveKey(key);
