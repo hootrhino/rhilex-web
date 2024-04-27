@@ -24,7 +24,7 @@ export type RuleItem = {
 
 export enum RuleType {
   DEVICE = 'device',
-  INENDS = 'inends',
+  INEND = 'inend',
 }
 
 type DetailModalConfig = {

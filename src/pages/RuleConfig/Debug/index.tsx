@@ -1,7 +1,7 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
 import ProLog from '@/components/ProLog';
 import { DeviceType } from '@/pages/Device/enum';
-import { InendsType } from '@/pages/Inends/enum';
+import { InendType } from '@/pages/Inend/enum';
 import { postRulesTestDevice } from '@/services/rulex/guizeguanli';
 import { handleNewMessage } from '@/utils/utils';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { RuleType } from '..';
 import { default_test_data } from './testData';
 
-export type TestType = DeviceType & InendsType;
+export type TestType = DeviceType & InendType;
 
 type DebugProps = ModalFormProps & {
   uuid: string;

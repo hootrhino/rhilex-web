@@ -14,9 +14,9 @@ import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { RuleType } from '..';
 import { DeviceType } from '../../Device/enum';
-import { InendsType } from '../../Inends/enum';
+import { InendType } from '../../Inend/enum';
 import { device_ds } from '../deviceDS';
-import { inends_ds, inends_event_ds, links } from '../inendsDS';
+import { inend_ds, inend_event_ds, links } from '../inendDS';
 import { DefaultActions, DefaultFailed, DefaultSuccess } from './initialValue';
 
 type FormParams = {
@@ -31,7 +31,7 @@ type UpdateFormProps = {
   type: RuleType;
   typeId: string;
   deviceType?: DeviceType;
-  inendsType?: InendsType;
+  inendType?: InendType;
 };
 
 const initialValue = {
@@ -41,13 +41,13 @@ const initialValue = {
   name: '',
 };
 
-const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) => {
+const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) => {
   const formRef = useRef<ProFormInstance>();
   const { ruleId, groupId } = useParams();
   const [loading, setLoading] = useState<boolean>(false);
   const DefaultListUrl = groupId ? `/${type}/${groupId}/${typeId}/rule` : `/${type}/${typeId}/rule`;
   const hasDeviceDS = deviceType && Object.keys(DeviceType).includes(deviceType);
-  const hasInendsDS = inendsType && Object.keys(InendsType).includes(inendsType);
+  const hasInendDS = inendType && Object.keys(InendType).includes(inendType);
 
   // 获取详情
   const { data: detail } = useRequest(() => getRulesDetail({ uuid: ruleId || '' }), {
@@ -59,7 +59,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
     try {
       const params = {
         ...values,
-        fromSource: type === RuleType.INENDS ? [typeId] : [],
+        fromSource: type === RuleType.INEND ? [typeId] : [],
         fromDevice: type === RuleType.DEVICE ? [typeId] : [],
         success: DefaultSuccess,
         failed: DefaultFailed,
@@ -111,29 +111,29 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
   };
 
   // 获取南向资源数据结构
-  const getInendsDS = () => {
-    if (!inendsType) return;
+  const getInendDS = () => {
+    if (!inendType) return;
     if (
       [
-        InendsType.COAP,
-        InendsType.HTTP,
-        InendsType.RULEX_UDP,
-        InendsType.GRPC,
-        InendsType.NATS_SERVER,
-      ].includes(inendsType)
+        InendType.COAP,
+        InendType.HTTP,
+        InendType.RULEX_UDP,
+        InendType.GRPC,
+        InendType.NATS_SERVER,
+      ].includes(inendType)
     ) {
       return (
         <CodeEditor
           lang={Lang.JSON}
           readOnly
-          value={inendsType ? inends_ds[inendsType] : ''}
+          value={inendType ? inend_ds[inendType] : ''}
           theme={Theme.LIGHT}
         />
       );
-    } else if ([InendsType.GENERIC_IOT_HUB, InendsType.GENERIC_MQTT].includes(inendsType)) {
+    } else if ([InendType.GENERIC_IOT_HUB, InendType.GENERIC_MQTT].includes(inendType)) {
       let message: React.ReactNode =
         'Mqtt 消息来自 Publish 方，而此处规则只做原始数据转发，不对数据做任何更改，因此回调函数的参数就是原始的 Mqtt Message，其具体格式需要开发者自行决定。';
-      if (inendsType === InendsType.GENERIC_IOT_HUB) {
+      if (inendType === InendType.GENERIC_IOT_HUB) {
         message = (
           <>
             <div>
@@ -166,7 +166,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
       );
     } else {
       // 内部事件源
-      return inends_event_ds.map(({ key, title, json }) => (
+      return inend_event_ds.map(({ key, title, json }) => (
         <div key={key} className="mb-[20px]">
           <div className="mb-[5px]">{title}</div>
           <CodeEditor lang={Lang.JSON} readOnly value={json} theme={Theme.LIGHT} />
@@ -180,8 +180,8 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
     if (type === RuleType.DEVICE) {
       return `${hasDeviceDS ? DeviceType[deviceType] : '设备'} - 输出数据的结构及其示例`;
     }
-    if (type === RuleType.INENDS) {
-      return `${hasInendsDS ? InendsType[inendsType] : '资源'} - 输出数据的结构及其示例`;
+    if (type === RuleType.INEND) {
+      return `${hasInendDS ? InendType[inendType] : '资源'} - 输出数据的结构及其示例`;
     }
     return null;
   };
@@ -242,7 +242,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendsType }: UpdateFormProps) =
         </ProCard>
         <ProCard title={getDSTitle()}>
           {hasDeviceDS && getDeviceDS()}
-          {hasInendsDS && getInendsDS()}
+          {hasInendDS && getInendDS()}
         </ProCard>
       </ProCard>
     </PageContainer>

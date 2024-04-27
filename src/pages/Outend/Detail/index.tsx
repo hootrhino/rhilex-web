@@ -6,7 +6,7 @@ import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
 import { baseColumns, configColumns } from '../columns';
-import { OutendsType } from '../enum';
+import { OutendType } from '../enum';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -33,7 +33,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         dataSource={data && omit(data, ['config'])}
         loading={loading}
       />
-      {data?.type && Object.keys(OutendsType).includes(data?.type) && (
+      {data?.type && Object.keys(OutendType).includes(data?.type) && (
         <>
           <ProDescriptions
             column={1}
@@ -43,7 +43,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
             dataSource={data}
             loading={loading}
           />
-          {data?.type === OutendsType.HTTP && <HeadersDetail data={data?.config?.headers} />}
+          {data?.type === OutendType.HTTP && <HeadersDetail data={data?.config?.headers} />}
         </>
       )}
     </Drawer>

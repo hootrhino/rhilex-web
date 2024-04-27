@@ -41,7 +41,7 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
       ),
     menuItemRender(item, defaultDom) {
       const currentPath = window.location?.pathname;
-      const regex = /(?:inends|outends|app-stack|device\/[^/]+)\/(?:new|edit)[^/]*/;
+      const regex = /(?:inend|outend|app-stack|device\/[^/]+)\/(?:new|edit)[^/]*/;
 
       if (regex.test(currentPath)) {
         return (

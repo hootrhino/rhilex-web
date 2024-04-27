@@ -17,7 +17,7 @@ import {
 import { baseColumns } from './columns';
 import Detail from './Detail';
 
-export type OutendsItem = {
+export type OutendItem = {
   name: string;
   type: string;
   state: number;
@@ -31,7 +31,7 @@ type DetailModalConfig = {
   uuid: string;
 };
 
-const Outends = () => {
+const Outend = () => {
   const actionRef = useRef<ActionType>();
   const [detailConfig, setConfig] = useState<DetailModalConfig>({
     uuid: '',
@@ -52,7 +52,7 @@ const Outends = () => {
     }
   };
 
-  const columns: ProColumns<OutendsItem>[] = (baseColumns as ProColumns<OutendsItem>[]).concat([
+  const columns: ProColumns<OutendItem>[] = (baseColumns as ProColumns<OutendItem>[]).concat([
     {
       title: '操作',
       valueType: 'option',
@@ -63,7 +63,7 @@ const Outends = () => {
         <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
           详情
         </a>,
-        <a key="edit" onClick={() => history.push(`/outends/edit/${uuid}`)}>
+        <a key="edit" onClick={() => history.push(`/outend/edit/${uuid}`)}>
           编辑
         </a>,
         <Popconfirm
@@ -120,7 +120,7 @@ const Outends = () => {
             <Button
               type="primary"
               key="new"
-              onClick={() => history.push('/outends/new')}
+              onClick={() => history.push('/outend/new')}
               icon={<PlusOutlined />}
             >
               新建
@@ -149,4 +149,4 @@ const Outends = () => {
   );
 };
 
-export default Outends;
+export default Outend;

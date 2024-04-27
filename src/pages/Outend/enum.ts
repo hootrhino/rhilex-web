@@ -1,7 +1,7 @@
 /**
  * 北向资源类型
  */
-export enum OutendsType {
+export enum OutendType {
   MONGO_SINGLE = 'MONGO_SINGLE',
   MQTT = 'MQTT',
   UDP_TARGET = 'UDP_TARGET',
@@ -9,13 +9,13 @@ export enum OutendsType {
   TDENGINE = 'TDENGINE',
   HTTP = 'HTTP',
 }
-export const outendsTypeOption = {
-  [OutendsType.MONGO_SINGLE]: 'MongoDB 数据库',
-  [OutendsType.MQTT]: 'MQTT Broker',
-  [OutendsType.UDP_TARGET]: 'UDP 数据传输',
-  [OutendsType.TCP_TRANSPORT]: 'TCP 数据传输',
-  [OutendsType.TDENGINE]: 'Tdengine 数据库',
-  [OutendsType.HTTP]: 'HTTP 数据推送',
+export const outendTypeOption = {
+  [OutendType.MONGO_SINGLE]: 'MongoDB 数据库',
+  [OutendType.MQTT]: 'MQTT Broker',
+  [OutendType.UDP_TARGET]: 'UDP 数据传输',
+  [OutendType.TCP_TRANSPORT]: 'TCP 数据传输',
+  [OutendType.TDENGINE]: 'Tdengine 数据库',
+  [OutendType.HTTP]: 'HTTP 数据推送',
 };
 
 /**

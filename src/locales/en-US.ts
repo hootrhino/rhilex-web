@@ -6,9 +6,9 @@ import appStack from './en-US/appStack';
 import dashboard from './en-US/dashboard';
 import device from './en-US/device';
 import extend from './en-US/extend';
-import inends from './en-US/inends';
+import inend from './en-US/inend';
 import notifyLog from './en-US/notifyLog';
-import outends from './en-US/outends';
+import outend from './en-US/outend';
 import plugin from './en-US/plugin';
 import portMgt from './en-US/portMgt';
 import ruleConfig from './en-US/ruleConfig';
@@ -82,11 +82,11 @@ export default {
   'menu.device.objectList': 'SNMP OID Sheet',
   'menu.device.subDevice': 'Subdevice List',
   'menu.schema': 'Schema Model',
-  'menu.inends': 'Inend Resources',
+  'menu.inend': 'Inend Resources',
   'menu.source.list': 'Resource List',
   'menu.source.new': 'New Resource',
   'menu.source.update': 'Edit Resource',
-  'menu.outends': 'Outend Resources',
+  'menu.outend': 'Outend Resources',
   'menu.appStack': 'AppStack',
   'menu.appStack.list': 'Application List',
   'menu.appStack.new': 'New Application',
@@ -112,6 +112,6 @@ export default {
   ...schemaMgt,
   ...system,
   ...ruleConfig,
-  ...outends,
-  ...inends,
+  ...outend,
+  ...inend,
 };

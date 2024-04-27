@@ -15,7 +15,7 @@ export const dataToServers = [
 ];
 
 export const getVariables = (server: string) => [
-  { label: `${server.toUpperCase()} 资源`, name: 'uuid', type: 'select', dataSource: 'outends' },
+  { label: `${server.toUpperCase()} 资源`, name: 'uuid', type: 'select', dataSource: 'outend' },
 ];
 
 // 函数使用示例

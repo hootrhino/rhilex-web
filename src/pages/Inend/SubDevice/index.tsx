@@ -50,7 +50,7 @@ const SubDeviceList = () => {
   ];
 
   return (
-    <PageContainer backUrl={`/inends/list`} title={`资源 ${inendsDetail?.name || ''} - 子设备列表`}>
+    <PageContainer backUrl={`/inend/list`} title={`资源 ${inendsDetail?.name || ''} - 子设备列表`}>
       <ProTable
         rowKey="ip"
         columns={columns}

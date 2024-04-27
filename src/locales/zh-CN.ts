@@ -6,9 +6,9 @@ import appStack from './zh-CN/appStack';
 import dashboard from './zh-CN/dashboard';
 import device from './zh-CN/device';
 import extend from './zh-CN/extend';
-import inends from './zh-CN/inends';
+import inend from './zh-CN/inend';
 import notifyLog from './zh-CN/notifyLog';
-import outends from './zh-CN/outends';
+import outend from './zh-CN/outend';
 import plugin from './zh-CN/plugin';
 import portMgt from './zh-CN/portMgt';
 import ruleConfig from './zh-CN/ruleConfig';
@@ -82,11 +82,11 @@ export default {
   'menu.device.objectList': 'SNMP 对象列表',
   'menu.device.subDevice': '子设备列表',
   'menu.schema': '数据模型',
-  'menu.inends': '南向资源',
+  'menu.inend': '南向资源',
   'menu.source.list': '资源列表',
   'menu.source.new': '新建资源',
   'menu.source.update': '编辑资源',
-  'menu.outends': '北向资源',
+  'menu.outend': '北向资源',
   'menu.appStack': '轻量应用',
   'menu.appStack.list': '应用列表',
   'menu.appStack.new': '新建应用',
@@ -112,6 +112,6 @@ export default {
   ...schemaMgt,
   ...system,
   ...ruleConfig,
-  ...outends,
-  ...inends,
+  ...outend,
+  ...inend,
 };

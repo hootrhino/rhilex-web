@@ -3,7 +3,7 @@ import ProSegmented from '@/components/ProSegmented';
 import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { stringToBool } from '@/utils/utils';
-import { DataMode, dataModeOption, outendsTypeOption } from './enum';
+import { DataMode, dataModeOption, outendTypeOption } from './enum';
 
 const DEFAULT_TIMEOUT = 3000;
 const DEFAULT_HOST = '127.0.0.1';
@@ -68,7 +68,7 @@ export const baseColumns = [
     title: '资源类型',
     dataIndex: 'type',
     valueType: 'select',
-    valueEnum: outendsTypeOption,
+    valueEnum: outendTypeOption,
     required: true,
   },
   {

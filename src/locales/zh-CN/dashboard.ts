@@ -16,8 +16,8 @@ export default {
   /**
    * count
    */
-  'dashboard.count.inends': '南向总数',
-  'dashboard.count.outends': '北向总数',
+  'dashboard.count.inend': '南向总数',
+  'dashboard.count.outend': '北向总数',
   'dashboard.count.rule': '规则总数',
   'dashboard.count.plugin': '插件总数',
   'dashboard.count.app': '应用总数',

@@ -15,6 +15,8 @@ import {
   snippetIcon,
   variableIcon,
 } from '@/components/CodeEditor/images/autocomplete';
+import type { InendItem } from '@/pages/Inend';
+import type { OutendItem } from '@/pages/Outend';
 import { autoCompletions, createDetailEl, createIconEl, luaLinter } from './utils';
 
 export enum Lang {
@@ -75,7 +77,9 @@ const CodeEditor = ({ lang, theme = Theme.DARK, ...props }: CodeEditorProps) => 
 
     return [
       autocompletion({
-        override: [(context) => autoCompletions(context, inends, outends)],
+        override: [
+          (context) => autoCompletions(context, inends as InendItem[], outends as OutendItem[]),
+        ],
         addToOptions: [
           {
             render: (completion: Completion) => {

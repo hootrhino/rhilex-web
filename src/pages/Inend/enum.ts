@@ -1,7 +1,7 @@
 /**
  * 南向资源类型
  */
-export enum InendsType {
+export enum InendType {
   COAP = 'COAP',
   GENERIC_IOT_HUB = 'GENERIC_IOT_HUB',
   RULEX_UDP = 'RULEX_UDP',
@@ -11,15 +11,15 @@ export enum InendsType {
   GENERIC_MQTT = 'GENERIC_MQTT',
   INTERNAL_EVENT = 'INTERNAL_EVENT',
 }
-export const inendsTypeOption = {
-  [InendsType.COAP]: '作为通用 COAP Server 提供接入服务',
-  [InendsType.GENERIC_IOT_HUB]: '作为通用 IoTHub 客户端订阅 Topic 接入',
-  [InendsType.RULEX_UDP]: '作为通用 UDP Server 提供接入服务',
-  [InendsType.HTTP]: '作为通用 HTTP Server 提供接入服务',
-  [InendsType.NATS_SERVER]: '作为通用 NATS Client 订阅 Subject 接入',
-  [InendsType.GRPC]: '作为通用 GRPC Server 提供接入服务',
-  [InendsType.GENERIC_MQTT]: '作为通用 MQTT客户端订阅 Topic 接入',
-  [InendsType.INTERNAL_EVENT]: 'RHILEX 内部事件源',
+export const inendTypeOption = {
+  [InendType.COAP]: '作为通用 COAP Server 提供接入服务',
+  [InendType.GENERIC_IOT_HUB]: '作为通用 IoTHub 客户端订阅 Topic 接入',
+  [InendType.RULEX_UDP]: '作为通用 UDP Server 提供接入服务',
+  [InendType.HTTP]: '作为通用 HTTP Server 提供接入服务',
+  [InendType.NATS_SERVER]: '作为通用 NATS Client 订阅 Subject 接入',
+  [InendType.GRPC]: '作为通用 GRPC Server 提供接入服务',
+  [InendType.GENERIC_MQTT]: '作为通用 MQTT客户端订阅 Topic 接入',
+  [InendType.INTERNAL_EVENT]: 'RHILEX 内部事件源',
 };
 
 /**

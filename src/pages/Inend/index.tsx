@@ -24,18 +24,18 @@ import {
 import { useModel, useRequest } from '@umijs/max';
 import { baseColumns } from './columns';
 import Detail from './Detail';
-import { InendsType } from './enum';
+import { InendType } from './enum';
 
-export type InendsItem = {
+export type InendItem = {
   name: string;
-  type: InendsType;
+  type: InendType;
   state: number;
   description: string;
   config: Record<string, any>;
   uuid: string;
 };
 
-const Inends = () => {
+const Inend = () => {
   const actionRef = useRef<ActionType>();
   const { detailConfig, setConfig } = useModel('useSource');
   const [open, setOpen] = useState<boolean>(false);
@@ -53,20 +53,20 @@ const Inends = () => {
     },
   );
 
-  const getMenuItems = (type: InendsType) => {
+  const getMenuItems = (type: InendType) => {
     let newItems = [
       { key: 'restart', label: '重启资源', icon: <PoweroffOutlined />, danger: true },
       { key: 'rule', label: '规则配置', icon: <SettingOutlined /> },
     ];
 
-    if ([InendsType.COAP, InendsType.RULEX_UDP, InendsType.HTTP].includes(type)) {
+    if ([InendType.COAP, InendType.RULEX_UDP, InendType.HTTP].includes(type)) {
       newItems = [...newItems, { key: 'sub-device', label: '查看子设备', icon: <HddOutlined /> }];
     }
 
     return newItems;
   };
 
-  const columns: ProColumns<InendsItem>[] = (baseColumns as ProColumns<InendsItem>[]).concat([
+  const columns: ProColumns<InendItem>[] = (baseColumns as ProColumns<InendItem>[]).concat([
     {
       title: '操作',
       width: 210,
@@ -77,7 +77,7 @@ const Inends = () => {
         <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
           详情
         </a>,
-        <a key="edit" onClick={() => history.push(`/inends/edit/${uuid}`)}>
+        <a key="edit" onClick={() => history.push(`/inend/edit/${uuid}`)}>
           编辑
         </a>,
         <Popconfirm
@@ -100,10 +100,10 @@ const Inends = () => {
                   setRestartId(uuid);
                   break;
                 case 'rule':
-                  history.push(`/inends/${uuid}/rule`);
+                  history.push(`/inend/${uuid}/rule`);
                   break;
                 case 'sub-device':
-                  history.push(`/inends/${uuid}/sub-device`);
+                  history.push(`/inend/${uuid}/sub-device`);
                   break;
                 default:
                   break;
@@ -141,7 +141,7 @@ const Inends = () => {
               key="new"
               type="primary"
               icon={<PlusOutlined />}
-              onClick={() => history.push('/inends/new')}
+              onClick={() => history.push('/inend/new')}
             >
               新建
             </Button>,
@@ -169,4 +169,4 @@ const Inends = () => {
   );
 };
 
-export default Inends;
+export default Inend;

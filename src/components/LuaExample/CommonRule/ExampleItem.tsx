@@ -22,7 +22,7 @@ type TplVariables = {
   type?: string;
   label?: string;
   value?: number | string;
-  dataSource?: 'device' | 'outends';
+  dataSource?: 'device' | 'outend';
 };
 
 type baseTplItem = {

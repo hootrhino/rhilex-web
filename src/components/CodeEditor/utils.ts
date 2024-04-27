@@ -2,6 +2,8 @@
  * lua 编辑器相关支持
  */
 
+import type { InendItem } from '@/pages/Inend';
+import type { OutendItem } from '@/pages/Outend';
 import { CompletionContext } from '@codemirror/autocomplete';
 import { Diagnostic, linter } from '@codemirror/lint';
 import luaparse from 'luaparse';
@@ -13,7 +15,11 @@ const fuzzySearch = (query: string) => {
 };
 
 // autocomplete 代码提示
-export const autoCompletions = (context: CompletionContext, inends, outends) => {
+export const autoCompletions = (
+  context: CompletionContext,
+  inends: InendItem[],
+  outends: OutendItem[],
+) => {
   const word = context.matchBefore(/\w*/);
 
   if (!word || word.from === word.to || word.text.trim().length <= 0) return null;

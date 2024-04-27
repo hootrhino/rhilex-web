@@ -2,8 +2,8 @@ import StateTag from '@/components/StateTag';
 import {
   EventType,
   eventTypeOption,
-  InendsType,
-  inendsTypeOption,
+  InendType,
+  inendTypeOption,
   Mode,
   modeOption,
   qosEnum,
@@ -12,35 +12,35 @@ import {
 const DEFAULT_HOST = '127.0.0.1';
 
 export const defaultConfig = {
-  [InendsType.COAP]: {
+  [InendType.COAP]: {
     port: 2582,
     host: DEFAULT_HOST,
   },
-  [InendsType.RULEX_UDP]: {
+  [InendType.RULEX_UDP]: {
     port: 2583,
     host: DEFAULT_HOST,
   },
-  [InendsType.HTTP]: {
+  [InendType.HTTP]: {
     port: 2584,
     host: DEFAULT_HOST,
   },
-  [InendsType.NATS_SERVER]: {
+  [InendType.NATS_SERVER]: {
     port: 4222,
     host: DEFAULT_HOST,
   },
-  [InendsType.GRPC]: {
+  [InendType.GRPC]: {
     port: 2585,
     host: DEFAULT_HOST,
   },
-  [InendsType.INTERNAL_EVENT]: {
+  [InendType.INTERNAL_EVENT]: {
     type: EventType.ALL,
   },
-  [InendsType.GENERIC_IOT_HUB]: {
+  [InendType.GENERIC_IOT_HUB]: {
     host: DEFAULT_HOST,
     port: 1883,
     mode: Mode.DC,
   },
-  [InendsType.GENERIC_MQTT]: {
+  [InendType.GENERIC_MQTT]: {
     host: DEFAULT_HOST,
     port: 1883,
     username: 'rhilex',
@@ -69,7 +69,7 @@ export const baseColumns = [
     title: '资源类型',
     dataIndex: 'type',
     valueType: 'select',
-    valueEnum: inendsTypeOption,
+    valueEnum: inendTypeOption,
     required: true,
   },
   {
@@ -121,8 +121,8 @@ const defaultGenericColumns = [
 ];
 
 export const configColumns = {
-  [InendsType.COAP]: defaultConfigColumns,
-  [InendsType.GENERIC_IOT_HUB]: [
+  [InendType.COAP]: defaultConfigColumns,
+  [InendType.GENERIC_IOT_HUB]: [
     ...defaultGenericColumns,
     {
       title: '模式',
@@ -143,9 +143,9 @@ export const configColumns = {
       required: true,
     },
   ],
-  [InendsType.RULEX_UDP]: defaultConfigColumns,
-  [InendsType.HTTP]: defaultConfigColumns,
-  [InendsType.NATS_SERVER]: [
+  [InendType.RULEX_UDP]: defaultConfigColumns,
+  [InendType.HTTP]: defaultConfigColumns,
+  [InendType.NATS_SERVER]: [
     ...defaultConfigColumns,
     {
       title: '主题',
@@ -153,8 +153,8 @@ export const configColumns = {
       required: true,
     },
   ],
-  [InendsType.GRPC]: defaultConfigColumns,
-  [InendsType.INTERNAL_EVENT]: [
+  [InendType.GRPC]: defaultConfigColumns,
+  [InendType.INTERNAL_EVENT]: [
     {
       title: '事件类型',
       dataIndex: ['config', 'type'],
@@ -163,7 +163,7 @@ export const configColumns = {
       valueEnum: eventTypeOption,
     },
   ],
-  [InendsType.GENERIC_MQTT]: [
+  [InendType.GENERIC_MQTT]: [
     ...defaultGenericColumns,
     {
       title: '数据质量',

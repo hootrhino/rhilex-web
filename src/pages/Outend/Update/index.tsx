@@ -3,55 +3,59 @@ import { message } from '@/components/PopupHack';
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import {
-  getInendsDetail,
-  postInendsCreate,
-  putInendsUpdate,
-} from '@/services/rulex/shuruziyuanguanli';
+  getOutendsDetail,
+  postOutendsCreate,
+  putOutendsUpdate,
+} from '@/services/rulex/shuchuziyuanguanli';
+import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { columns, defaultConfig } from '../columns';
-import { InendsType } from '../enum';
+import { OutendType } from '../enum';
 
-const DefaultListUrl = '/inends/list';
+export type UpdateFormItem = {
+  name: string;
+  type: string;
+  config: Record<string, any>[];
+};
+
+const DefaultListUrl = '/outend/list';
 
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { uuid } = useParams();
-  const [loading, setLoading] = useState<boolean>(false);
   const randomNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
-  const defaultValue = { type: InendsType.COAP, config: defaultConfig[InendsType.COAP] };
+  const [loading, setLoading] = useState<boolean>(false);
 
   // 获取详情
-  const { data: detail } = useRequest(() => getInendsDetail({ uuid: uuid || '' }), {
+  const { data: detail } = useRequest(() => getOutendsDetail({ uuid: uuid || '' }), {
     ready: !!uuid,
-    refreshDeps: [uuid],
   });
 
-  // 新建&编辑
   const handleOnFinish = async (values: any) => {
     setLoading(true);
+
     try {
       let params = {
         ...values,
       };
-      if (params.type === InendsType.GENERIC_MQTT) {
-        const newSubTopics = params?.config?.subTopics?.map(({ k }: { k: string }) => k);
 
+      if (params.type === OutendType.HTTP) {
         params = {
           ...params,
           config: {
             ...params.config,
-            subTopics: newSubTopics,
+            headers: formatHeaders2Obj(params.config?.headers),
           },
         };
       }
 
       if (uuid) {
-        await putInendsUpdate({ ...params, uuid });
+        await putOutendsUpdate({ ...params, uuid });
         message.success('更新成功');
       } else {
-        const { msg } = await postInendsCreate(params);
+        const { msg } = await postOutendsCreate(params);
         if (msg === 'Success') {
           message.success('新建成功');
         } else {
@@ -68,49 +72,45 @@ const UpdateForm = () => {
     }
   };
 
-  const formatDetailConfig = () => {
-    const newConfig =
-      detail?.type === InendsType.GENERIC_MQTT
-        ? {
-            ...detail?.config,
-            subTopics: detail?.config?.subTopics?.map((topic: string) => ({ k: topic })),
-          }
-        : detail?.config;
-
-    return newConfig;
+  const handleOnReset = () => {
+    if (detail) {
+      if (detail?.type === OutendType.HTTP) {
+        formRef.current?.setFieldsValue({
+          ...detail,
+          config: { ...detail?.config, headers: formatHeaders2Arr(detail?.config?.headers) },
+        });
+      } else {
+        formRef.current?.setFieldsValue(detail);
+      }
+    } else {
+      formRef.current?.setFieldsValue({
+        type: OutendType.MONGO_SINGLE,
+        config: defaultConfig[OutendType.MONGO_SINGLE],
+      });
+    }
   };
 
-  const handleOnValuesChange = (changedValue: any) => {
+  const handleOnValuesChange = (changedValue: UpdateFormItem) => {
     if (!changedValue?.type) return;
+    let config: any = [];
 
-    let config;
-    if (changedValue?.type === InendsType.GENERIC_IOT_HUB) {
+    if (changedValue?.type === OutendType.MQTT) {
       config = {
-        ...defaultConfig[InendsType.GENERIC_IOT_HUB],
-        productId: `rhilex${randomNumber}`,
-        deviceName: `rhilex${randomNumber}`,
+        ...defaultConfig[OutendType.MQTT],
         clientId: `rhilex${randomNumber}`,
-      };
-    } else if (changedValue?.type === InendsType.GENERIC_MQTT) {
-      config = {
-        ...defaultConfig[InendsType.GENERIC_MQTT],
-        clientId: `rhilex${randomNumber}`,
+        pubTopic: `rhilex${randomNumber}`,
       };
     } else {
       config = defaultConfig[changedValue?.type];
     }
 
     formRef.current?.setFieldsValue({
-      config: changedValue?.type === detail?.type ? formatDetailConfig() : config,
+      config: changedValue?.type === detail?.type ? detail?.config : config,
     });
   };
 
   useEffect(() => {
-    if (detail) {
-      formRef.current?.setFieldsValue({ ...detail, config: formatDetailConfig() });
-    } else {
-      formRef.current?.setFieldsValue(defaultValue);
-    }
+    handleOnReset();
   }, [detail]);
 
   useBeforeUnloadConfirm();
@@ -123,11 +123,7 @@ const UpdateForm = () => {
         onValuesChange={handleOnValuesChange}
         columns={columns as ProFormColumnsType<Record<string, any>>[]}
         loading={loading}
-        handleOnReset={() =>
-          formRef.current?.setFieldsValue(
-            uuid ? { ...detail, config: formatDetailConfig() } : defaultValue,
-          )
-        }
+        handleOnReset={handleOnReset}
       />
     </PageContainer>
   );

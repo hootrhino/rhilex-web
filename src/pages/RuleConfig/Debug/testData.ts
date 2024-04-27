@@ -1,5 +1,5 @@
 import { DeviceType } from '../../Device/enum';
-import { InendsType } from '../../Inends/enum';
+import { InendType } from '../../Inend/enum';
 // GENERIC_PROTOCOL - 通用时间片中断串口采集网关
 const device_protocol_ds = `{
   "in": "0001020304ABCDEF",
@@ -71,7 +71,7 @@ const device_smart_home_ds = `[
 ]`;
 
 // COAP
-const inends_coap_ds = `{
+const inend_coap_ds = `{
   "token": {},
   "options": {},
   "code": "success",
@@ -80,7 +80,7 @@ const inends_coap_ds = `{
 }`;
 
 // GENERIC_IOT_HUB
-const inends_iothub_ds = `{
+const inend_iothub_ds = `{
   "method": "control",
   "clientToken": "........",
   "params": {
@@ -91,14 +91,14 @@ const inends_iothub_ds = `{
 }`;
 
 // RULEX_UDP HTTP NATS_SERVER GRPC
-const inends_udp_ds = `{
+const inend_udp_ds = `{
   "k1": "v1",
   "k2": "v2",
   "kn": "vn"
 }`;
 
 // GENERIC_MQTT
-const inends_mqtt_ds = `{
+const inend_mqtt_ds = `{
   "topic": "control",
   "payload": {
     "power_switch": 1,
@@ -108,7 +108,7 @@ const inends_mqtt_ds = `{
 }`;
 
 // INTERNAL_EVENT
-const inends_event_ds = `{
+const inend_event_ds = `{
   "type": "DEVICE",
   "event": "event.connected",
   "ts": 121312431432,
@@ -129,18 +129,18 @@ const device_test_data = {
   // [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,
 };
 
-const inends_test_data = {
-  [InendsType.COAP]: inends_coap_ds,
-  [InendsType.GENERIC_IOT_HUB]: inends_iothub_ds,
-  [InendsType.RULEX_UDP]: inends_udp_ds,
-  [InendsType.HTTP]: inends_udp_ds,
-  [InendsType.NATS_SERVER]: inends_udp_ds,
-  [InendsType.GRPC]: inends_udp_ds,
-  [InendsType.GENERIC_MQTT]: inends_mqtt_ds,
-  [InendsType.INTERNAL_EVENT]: inends_event_ds,
+const inend_test_data = {
+  [InendType.COAP]: inend_coap_ds,
+  [InendType.GENERIC_IOT_HUB]: inend_iothub_ds,
+  [InendType.RULEX_UDP]: inend_udp_ds,
+  [InendType.HTTP]: inend_udp_ds,
+  [InendType.NATS_SERVER]: inend_udp_ds,
+  [InendType.GRPC]: inend_udp_ds,
+  [InendType.GENERIC_MQTT]: inend_mqtt_ds,
+  [InendType.INTERNAL_EVENT]: inend_event_ds,
 };
 
 export const default_test_data = {
   ...device_test_data,
-  ...inends_test_data,
+  ...inend_test_data,
 };
