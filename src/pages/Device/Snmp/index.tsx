@@ -364,7 +364,9 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
     <Button
       key="download"
       icon={<UploadOutlined />}
-      onClick={() => (window.location.href = '/api/v1/modbus_data_sheet/sheetExport')}
+      onClick={() =>
+        (window.location.href = `/api/v1/modbus_data_sheet/sheetExport?device_uuid=${deviceId}`)
+      }
     >
       导出对象列表
     </Button>,

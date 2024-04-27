@@ -435,7 +435,9 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
     <Button
       key="download"
       icon={<UploadOutlined />}
-      onClick={() => (window.location.href = '/api/v1/s1200_data_sheet/sheetExport')}
+      onClick={() =>
+        (window.location.href = `/api/v1/s1200_data_sheet/sheetExport?device_uuid=${deviceId}`)
+      }
     >
       导出点位表
     </Button>,

@@ -465,7 +465,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       },
     },
   ];
-
+  console.log(deviceId);
   const toolBar = [
     <Button
       key="polling"
@@ -530,7 +530,9 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
     <Button
       key="download"
       icon={<UploadOutlined />}
-      onClick={() => (window.location.href = '/api/v1/modbus_data_sheet/sheetExport')}
+      onClick={() =>
+        (window.location.href = `/api/v1/modbus_data_sheet/sheetExport?device_uuid=${deviceId}`)
+      }
     >
       导出点位表
     </Button>,
