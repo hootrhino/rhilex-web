@@ -14,6 +14,7 @@ import {
   getOutendsList,
   putOutendsRestart,
 } from '@/services/rulex/shuchuziyuanguanli';
+import { useIntl } from '@umijs/max';
 import { baseColumns } from './columns';
 import Detail from './Detail';
 
@@ -33,6 +34,7 @@ type DetailModalConfig = {
 
 const Outend = () => {
   const actionRef = useRef<ActionType>();
+  const { formatMessage } = useIntl();
   const [detailConfig, setConfig] = useState<DetailModalConfig>({
     uuid: '',
     open: false,
@@ -45,7 +47,7 @@ const Outend = () => {
     try {
       await deleteOutendsDel(values);
       actionRef?.current?.reload();
-      message.success('删除成功');
+      message.success(formatMessage({ id: 'message.success.remove' }));
       return true;
     } catch (error) {
       return false;
@@ -54,7 +56,7 @@ const Outend = () => {
 
   const columns: ProColumns<OutendItem>[] = (baseColumns as ProColumns<OutendItem>[]).concat([
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       key: 'option',
       width: 210,
@@ -138,7 +140,7 @@ const Outend = () => {
         content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"
         handleOnEnd={() => {
           actionRef.current?.reload();
-          message.success('重启成功');
+          message.success(formatMessage({ id: 'message.success.restart' }));
           setOpen(false);
         }}
         handleOnOk={async () => {

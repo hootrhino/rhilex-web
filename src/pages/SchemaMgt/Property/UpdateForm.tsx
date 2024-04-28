@@ -10,6 +10,7 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 import { AutoComplete } from 'antd';
 import { useEffect, useRef } from 'react';
 import type { Property } from '..';
@@ -27,6 +28,7 @@ type PropertyFormProps = ModalFormProps & {
 
 const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
   const formRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     formRef.current?.setFieldsValue(
@@ -227,7 +229,12 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
           );
         }}
       </ProFormDependency>
-      <ProFormText name="description" label="描述" placeholder="请输入描述" width="md" />
+      <ProFormText
+        name="description"
+        label={formatMessage({ id: 'table.desc' })}
+        placeholder="请输入描述"
+        width="md"
+      />
     </ModalForm>
   );
 };

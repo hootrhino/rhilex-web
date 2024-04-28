@@ -72,7 +72,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
         message.success(formatMessage({ id: 'message.success.update' }));
       } else {
         await postRulesCreate(params);
-        message.success('新建成功');
+        message.success(formatMessage({ id: 'message.success.new' }));
       }
       history.push(DefaultListUrl);
       setLoading(false);
@@ -237,7 +237,12 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
                 ]}
                 width="lg"
               />
-              <ProFormText label="备注" name="description" width="lg" placeholder="请输入备注" />
+              <ProFormText
+                label={formatMessage({ id: 'table.desc' })}
+                name="description"
+                width="lg"
+                placeholder="请输入备注"
+              />
             </ProForm.Group>
             <ProCodeEditor label="规则回调" name="actions" ref={formRef} required />
           </ProForm>

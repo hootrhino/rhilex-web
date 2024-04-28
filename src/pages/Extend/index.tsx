@@ -12,7 +12,7 @@ import { IconFont } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
 import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import type { DetailLogModalConfig } from './Detail';
@@ -94,7 +94,7 @@ export const baseColumns = [
     renderText: (running: string) => <StateTag state={running} type={StateType.RUNNING} />,
   },
   {
-    title: '备注',
+    title: <FormattedMessage id="table.desc" />,
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => description || '-',
@@ -103,6 +103,7 @@ export const baseColumns = [
 
 const ExtendedProtocol = () => {
   const actionRef = useRef<ActionType>();
+  const { formatMessage } = useIntl();
 
   const [formConfig, setFormConfig] = useState<DetailModalConfig>({ open: false, uuid: '' });
   const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({
@@ -115,7 +116,7 @@ const ExtendedProtocol = () => {
   const { run: remove } = useRequest((params: API.deleteGoodsParams) => deleteGoods(params), {
     manual: true,
     onSuccess: () => {
-      message.success('删除成功');
+      message.success(formatMessage({ id: 'message.success.remove' }));
       actionRef.current?.reload();
     },
   });
@@ -124,7 +125,7 @@ const ExtendedProtocol = () => {
   const { run: start } = useRequest((params: API.putGoodsStartParams) => putGoodsStart(params), {
     manual: true,
     onSuccess: () => {
-      message.success('启动成功');
+      message.success(formatMessage({ id: 'message.success.start' }));
       actionRef.current?.reload();
     },
   });
@@ -133,7 +134,7 @@ const ExtendedProtocol = () => {
   const { run: stop } = useRequest((params: API.putGoodsStopParams) => putGoodsStop(params), {
     manual: true,
     onSuccess: () => {
-      message.success('停止成功');
+      message.success(formatMessage({ id: 'message.success.stop' }));
       actionRef.current?.reload();
     },
   });
@@ -141,7 +142,7 @@ const ExtendedProtocol = () => {
   const columns: ProColumns<ExtendItem>[] = [
     ...baseColumns,
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       key: 'option',
       width: 200,

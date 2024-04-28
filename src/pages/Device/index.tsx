@@ -26,7 +26,7 @@ import {
 } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
-import { history, useModel, useRequest } from '@umijs/max';
+import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/hooks/useItems';
 import type { MenuInfo } from 'rc-menu/lib/interface';
@@ -55,6 +55,7 @@ const Devices = () => {
   const { detailConfig, setDeviceConfig, activeGroupKey, setActiveGroupKey } =
     useModel('useDevice');
   const { product } = useModel('useSystem');
+  const { formatMessage } = useIntl();
 
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(DEFAULT_CONFIG);
   const [open, setOpen] = useState<boolean>(false);
@@ -93,7 +94,7 @@ const Devices = () => {
       manual: true,
       onSuccess: () => {
         actionRef.current?.reload();
-        message.success('删除成功');
+        message.success(formatMessage({ id: 'message.success.remove' }));
       },
     },
   );
@@ -238,7 +239,7 @@ const Devices = () => {
 
   const actionColumns: ProColumns<Partial<DeviceItem>>[] = [
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       width: 210,
       fixed: 'right',
       key: 'option',
@@ -385,7 +386,7 @@ const Devices = () => {
         content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"
         handleOnEnd={() => {
           actionRef.current?.reload();
-          message.success('重启成功');
+          message.success(formatMessage({ id: 'message.success.restart' }));
           setOpen(false);
           setActiveDevice('');
         }}

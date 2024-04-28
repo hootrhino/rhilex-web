@@ -70,7 +70,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
     manual: true,
     onSuccess: () => {
       handleOnReset();
-      message.success('删除成功');
+      message.success(formatMessage({ id: 'message.success.remove' }));
     },
   });
 
@@ -135,7 +135,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
     {
       manual: true,
       onSuccess: () => {
-        message.success('上传成功');
+        message.success(formatMessage({ id: 'message.success.upload' }));
         actionRef.current?.reload();
       },
     },
@@ -170,7 +170,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
 
   const columns: ProColumns<Partial<SnmpDataSheetItem>>[] = [
     {
-      title: '序号',
+      title: formatMessage({ id: 'table.index' }),
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
@@ -241,7 +241,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       ellipsis: true,
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       width: 200,
       hideInTable: type === SheetType.DETAIL,

@@ -83,7 +83,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       manual: true,
       onSuccess: () => {
         handleOnReset();
-        message.success('删除成功');
+        message.success(formatMessage({ id: 'message.success.remove' }));
       },
     },
   );
@@ -149,7 +149,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
     {
       manual: true,
       onSuccess: () => {
-        message.success('上传成功');
+        message.success(formatMessage({ id: 'message.success.upload' }));
         actionRef.current?.reload();
       },
     },
@@ -175,7 +175,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
 
   const columns: ProColumns<Partial<ModbusDataSheetItem>>[] = [
     {
-      title: '序号',
+      title: formatMessage({ id: 'table.index' }),
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
@@ -404,7 +404,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       ellipsis: true,
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       width: 150,
       hideInTable: type === SheetType.DETAIL,

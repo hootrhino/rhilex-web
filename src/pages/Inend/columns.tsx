@@ -1,4 +1,5 @@
 import StateTag from '@/components/StateTag';
+import { FormattedMessage } from '@umijs/max';
 import {
   EventType,
   eventTypeOption,
@@ -79,7 +80,7 @@ export const baseColumns = [
     renderText: (state: number) => <StateTag state={state} />,
   },
   {
-    title: '备注',
+    title: <FormattedMessage id="table.desc" />,
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => description || '-',

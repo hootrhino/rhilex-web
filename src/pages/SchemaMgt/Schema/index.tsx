@@ -10,7 +10,7 @@ import { cn } from '@/utils/utils';
 import { DeleteOutlined, EditOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import type { ActionType, ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProList } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Popconfirm, Space, Tooltip } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
@@ -31,6 +31,7 @@ type SchemaListProps = ModalFormProps & {
 const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaListProps) => {
   const actionRef = useRef<ActionType>();
   const formRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
   const [initialValue, setInitialValue] = useState<Partial<SchemaItem>>();
 
   // 详情
@@ -47,7 +48,7 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
     {
       manual: true,
       onSuccess: () => {
-        message.success('删除成功');
+        message.success(formatMessage({ id: 'message.success.remove' }));
         actionRef.current?.reload();
       },
     },
@@ -159,9 +160,9 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
           },
         }}
         onFinish={async (values) => {
-          let info = '新建成功';
+          let info = formatMessage({ id: 'message.success.new' });
           if (initialValue?.uuid) {
-            info = '编辑成功';
+            info = formatMessage({ id: 'message.success.update' });
             await putSchemaUpdate({ ...values, uuid: initialValue?.uuid });
           } else {
             await postSchemaCreate(values);
@@ -177,7 +178,11 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
           placeholder="请输入数据模型名称"
           rules={[{ required: true, message: '请输入数据模型名称' }]}
         />
-        <ProFormText name="description" label="描述" placeholder="请输入数据模型描述" />
+        <ProFormText
+          name="description"
+          label={formatMessage({ id: 'table.desc' })}
+          placeholder="请输入数据模型描述"
+        />
       </ModalForm>
     </>
   );

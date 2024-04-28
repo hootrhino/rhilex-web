@@ -85,7 +85,7 @@ const GroupList = ({
   // 新建分组
   const { run: createGroup } = useRequest((params: createGroupParams) => postGroupCreate(params), {
     manual: true,
-    onSuccess: () => message.success('新建成功'),
+    onSuccess: () => message.success(formatMessage({ id: 'message.success.new' })),
   });
 
   // 更新分组
@@ -117,7 +117,7 @@ const GroupList = ({
     (params: API.deleteGroupDelParams) => deleteGroupDel(params),
     {
       manual: true,
-      onSuccess: () => message.success('删除成功'),
+      onSuccess: () => message.success(formatMessage({ id: 'message.success.remove' })),
     },
   );
 

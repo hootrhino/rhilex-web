@@ -80,7 +80,7 @@ const UpdateForm = ({ uuid, reload, onOpenChange, ...props }: UpdateFormProps) =
         message.success(formatMessage({ id: 'message.success.update' }));
       } else {
         await postGoodsCreate(omit(params, ['upload']) as any, uploadFile as File);
-        message.success('新建成功');
+        message.success(formatMessage({ id: 'message.success.new' }));
       }
 
       reload();
@@ -141,7 +141,11 @@ const UpdateForm = ({ uuid, reload, onOpenChange, ...props }: UpdateFormProps) =
         rules={[{ required: true, message: '请上传可执行包' }]}
         width="xl"
       />
-      <ProFormText name="description" label="备注" placeholder="请输入备注" />
+      <ProFormText
+        name="description"
+        label={formatMessage({ id: 'table.desc' })}
+        placeholder="请输入备注"
+      />
     </ModalForm>
   );
 };

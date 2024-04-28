@@ -37,7 +37,7 @@ const CustomRule = () => {
         ...params,
         variables: params.variables?.map((val: any) => ({ ...val, value: '' })),
       });
-      message.success('新建成功');
+      message.success(formatMessage({ id: 'message.success.new' }));
     }
     actionRef.current?.reload();
     return true;
@@ -100,7 +100,7 @@ const CustomRule = () => {
                   if (!row?.uuid) return;
                   await deleteUserluaDel({ uuid: row.uuid });
                   actionRef.current?.reload();
-                  message.success('删除成功');
+                  message.success(formatMessage({ id: 'message.success.remove' }));
                 }}
                 key="remove"
               >

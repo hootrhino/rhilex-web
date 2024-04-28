@@ -21,7 +21,7 @@ import {
   getInendsList,
   putInendsRestart,
 } from '@/services/rulex/shuruziyuanguanli';
-import { useModel, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { baseColumns } from './columns';
 import Detail from './Detail';
 import { InendType } from './enum';
@@ -38,6 +38,7 @@ export type InendItem = {
 const Inend = () => {
   const actionRef = useRef<ActionType>();
   const { detailConfig, setConfig } = useModel('useSource');
+  const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
   const [restartId, setRestartId] = useState<string>('');
 
@@ -48,7 +49,7 @@ const Inend = () => {
       manual: true,
       onSuccess: () => {
         actionRef.current?.reload();
-        message.success('删除成功');
+        message.success(formatMessage({ id: 'message.success.remove' }));
       },
     },
   );
@@ -68,7 +69,7 @@ const Inend = () => {
 
   const columns: ProColumns<InendItem>[] = (baseColumns as ProColumns<InendItem>[]).concat([
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       width: 210,
       fixed: 'right',
       key: 'option',
@@ -158,7 +159,7 @@ const Inend = () => {
         content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"
         handleOnEnd={() => {
           actionRef.current?.reload();
-          message.success('重启成功');
+          message.success(formatMessage({ id: 'message.success.restart' }));
           setOpen(false);
         }}
         handleOnOk={async () => {

@@ -4,7 +4,7 @@ import StateTag, { StateType } from '@/components/StateTag';
 import { getInendsClients, getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { useParams, useRequest } from '@umijs/max';
+import { useIntl, useParams, useRequest } from '@umijs/max';
 
 type SubDeviceItem = {
   ip?: string;
@@ -14,6 +14,7 @@ type SubDeviceItem = {
 
 const SubDeviceList = () => {
   const { inendId } = useParams();
+  const { formatMessage } = useIntl();
 
   // 获取资源详情
   const { data: inendsDetail } = useRequest(() => getInendsDetail({ uuid: inendId || '' }), {
@@ -23,7 +24,7 @@ const SubDeviceList = () => {
 
   const columns: ProColumns<SubDeviceItem>[] = [
     {
-      title: '序号',
+      title: formatMessage({ id: 'table.index' }),
       dataIndex: 'index',
       valueType: 'index',
       width: 80,

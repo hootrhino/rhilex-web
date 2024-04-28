@@ -3,6 +3,7 @@ import ProSegmented from '@/components/ProSegmented';
 import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { stringToBool } from '@/utils/utils';
+import { FormattedMessage } from '@umijs/max';
 import { DataMode, dataModeOption, outendTypeOption } from './enum';
 
 const DEFAULT_TIMEOUT = 3000;
@@ -78,7 +79,7 @@ export const baseColumns = [
     renderText: (state: number) => <StateTag state={state} />,
   },
   {
-    title: '备注',
+    title: <FormattedMessage id="table.desc" />,
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => description || '-',

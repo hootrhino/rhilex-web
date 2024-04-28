@@ -9,6 +9,7 @@ import { FormItemType, Product } from '@/utils/enum';
 import { pick } from '@/utils/redash';
 import { getPlayAddress, validateFormItem } from '@/utils/utils';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
+import { FormattedMessage } from '@umijs/max';
 import { AutoComplete, Space, Typography } from 'antd';
 import { Rule } from 'antd/es/form';
 import type { DeviceItem } from '.';
@@ -223,7 +224,7 @@ export const baseColumns = (product: Product) => [
     },
   },
   {
-    title: '备注',
+    title: <FormattedMessage id="table.desc" />,
     dataIndex: 'description',
   },
 ];

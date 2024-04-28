@@ -2,7 +2,7 @@ import { getSettingsNetDetails, getSettingsNetStatus } from '@/services/rulex/wa
 import { pick } from '@/utils/redash';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Button, Descriptions, Modal } from 'antd';
 import { useState } from 'react';
 
@@ -37,6 +37,7 @@ const detailColumns = {
 };
 
 const NetworkStatus = () => {
+  const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
 
   const { data: detail, run: getDetail } = useRequest(
@@ -70,7 +71,7 @@ const NetworkStatus = () => {
       dataIndex: 'connection',
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       width: 80,
       render: (_, { device }) => [

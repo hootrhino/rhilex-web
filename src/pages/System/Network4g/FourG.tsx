@@ -4,12 +4,13 @@ import { green } from '@ant-design/colors';
 import { PoweroffOutlined, ReloadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormText } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Button, Progress, Space } from 'antd';
 import { useRef } from 'react';
 
 const FourGConfig = () => {
   const formRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
 
   // 详情
   const {
@@ -26,7 +27,7 @@ const FourGConfig = () => {
   const { run: restart } = useRequest(() => postSettingsMn4GRestart(), {
     manual: true,
     onSuccess: () => {
-      message.success('重启成功');
+      message.success(formatMessage({ id: 'message.success.restart' }));
     },
   });
 

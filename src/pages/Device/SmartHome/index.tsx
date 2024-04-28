@@ -20,7 +20,7 @@ import {
 } from '@ant-design/icons';
 import type { CheckGroupValueType } from '@ant-design/pro-card/es/components/CheckCard/Group';
 import { CheckCard } from '@ant-design/pro-components';
-import { history, useParams, useRequest } from '@umijs/max';
+import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, Divider, Dropdown, Space, Switch, Tag } from 'antd';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useState } from 'react';
@@ -56,6 +56,7 @@ type ShellyItem = {
 
 const ShellySubDevice = () => {
   const { deviceId } = useParams();
+  const { formatMessage } = useIntl();
   const [checkedItem, setCheckedItem] = useState<CheckGroupValueType>([]);
 
   // 获取设备详情
@@ -81,7 +82,7 @@ const ShellySubDevice = () => {
       manual: true,
       onSuccess: () => {
         getSubDeviceList();
-        message.success('扫描成功');
+        message.success(formatMessage({ id: 'message.success.scan' }));
       },
     },
   );

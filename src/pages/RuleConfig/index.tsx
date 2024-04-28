@@ -8,7 +8,7 @@ import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import { deleteRulesDel } from '@/services/rulex/guizeguanli';
 import { DetailModalType } from '@/utils/enum';
-import { history, useParams, useRequest } from '@umijs/max';
+import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import type { TestType } from './Debug';
 import Debug from './Debug';
 import type { DetailLogModalConfig } from './Detail';
@@ -50,6 +50,7 @@ const RuleConfig = ({
   refresh,
 }: RuleConfigProps) => {
   const { groupId } = useParams();
+  const { formatMessage } = useIntl();
   const [detailConfig, setDetailConfig] = useState<DetailLogModalConfig>({
     open: false,
     type: DetailModalType.DETAIL,
@@ -65,7 +66,7 @@ const RuleConfig = ({
     manual: true,
     onSuccess: () => {
       refresh();
-      message.success('删除成功');
+      message.success(formatMessage({ id: 'message.success.remove' }));
     },
   });
 
@@ -113,12 +114,12 @@ const RuleConfig = ({
       },
     },
     {
-      title: '备注',
+      title: formatMessage({ id: 'table.desc' }),
       dataIndex: 'description',
       ellipsis: true,
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       key: 'option',
       width: 200,

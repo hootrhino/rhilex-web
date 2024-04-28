@@ -33,7 +33,7 @@ const Interface = () => {
   // 扫描端口
   const { run: refresh } = useRequest(() => getHwifaceRefresh(), {
     manual: true,
-    onSuccess: () => message.success('扫描成功'),
+    onSuccess: () => message.success(formatMessage({ id: 'message.success.scan' })),
   });
 
   const columns: ProColumns<InterfaceItem>[] = [

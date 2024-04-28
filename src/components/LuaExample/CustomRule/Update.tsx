@@ -9,7 +9,7 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Tooltip } from 'antd';
 import { useEffect, useRef } from 'react';
 
@@ -32,6 +32,7 @@ type RuleUpdateFormProps = ModalFormProps & {
 
 const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
   const formRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
 
   // 详情
   const { data: detail } = useRequest(() => getUserluaDetail({ uuid: tplId || '' }), {
@@ -68,7 +69,7 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
         />
         <ProFormText
           name="detail"
-          label="备注"
+          label={formatMessage({ id: 'table.desc' })}
           width="md"
           placeholder="请输入备注"
           rules={[{ required: true, message: '请输入备注' }]}

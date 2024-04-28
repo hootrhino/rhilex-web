@@ -75,7 +75,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
     manual: true,
     onSuccess: () => {
       handleOnReset();
-      message.success('删除成功');
+      message.success(formatMessage({ id: 'message.success.remove' }));
     },
   });
 
@@ -140,7 +140,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
     {
       manual: true,
       onSuccess: () => {
-        message.success('上传成功');
+        message.success(formatMessage({ id: 'message.success.upload' }));
         actionRef.current?.reload();
       },
     },
@@ -182,7 +182,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
 
   const columns: ProColumns<Partial<PlcSheetItem>>[] = [
     {
-      title: '序号',
+      title: formatMessage({ id: 'table.index' }),
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
@@ -309,7 +309,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       editable: false,
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       hideInTable: type === SheetType.DETAIL,
       width: 150,

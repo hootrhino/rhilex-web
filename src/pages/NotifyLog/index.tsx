@@ -5,7 +5,7 @@ import { getNotifyList, putNotifyClear, putNotifyRead } from '@/services/rulex/z
 import { ClearOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { useModel, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Button } from 'antd';
 import { useRef } from 'react';
 
@@ -22,6 +22,7 @@ export type NotifyLogItem = {
 const NotifyLog = () => {
   const actionRef = useRef<ActionType>();
   const { refresh } = useModel('useNotify');
+  const { formatMessage } = useIntl();
 
   const handleOnSuccess = () => {
     actionRef.current?.reload();
@@ -62,7 +63,7 @@ const NotifyLog = () => {
       valueType: 'dateTime',
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       key: 'option',
       width: 80,

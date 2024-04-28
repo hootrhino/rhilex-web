@@ -18,7 +18,7 @@ import {
   UploadOutlined,
 } from '@ant-design/icons';
 import { ProCard, ProDescriptions } from '@ant-design/pro-components';
-import { useModel, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Modal, Progress, Space, Upload } from 'antd';
 import { useState } from 'react';
 
@@ -54,6 +54,7 @@ const defaultRecoverConfig = {
 
 const FirmwareConfig = () => {
   const { run, cancel } = useModel('useSystem');
+  const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
   const [confirmConfig, setConfirmConfig] = useState<ConfirmCofig>(defaultUpgradeConfig);
   const [errorMsg, setMsg] = useState<string>('');
@@ -65,7 +66,7 @@ const FirmwareConfig = () => {
     manual: true,
     onSuccess: () => {
       setProgress(100);
-      message.success('上传成功');
+      message.success(formatMessage({ id: 'message.success.upload' }));
       setTimeout(() => {
         setShowProgress(false);
         setProgress(0);

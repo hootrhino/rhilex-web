@@ -12,7 +12,7 @@ import { isEmpty } from '@/utils/redash';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { useIntl, useRequest } from '@umijs/max';
+import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
 import type { DescriptionsProps } from 'antd';
 import { Button, Descriptions, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
@@ -47,7 +47,7 @@ type PropertyListProps = {
 export const getBaseColumns = (readOnly?: boolean) => {
   const baseColumns: ProColumns<Property>[] = [
     {
-      title: '序号',
+      title: <FormattedMessage id="table.index" />,
       dataIndex: 'index',
       valueType: 'index',
       width: 48,
@@ -91,7 +91,7 @@ export const getBaseColumns = (readOnly?: boolean) => {
       render: (dom, { value, unit }) => (value ? <UnitTitle title={value} unit={unit} /> : '-'),
     },
     {
-      title: '描述',
+      title: <FormattedMessage id="table.desc" />,
       dataIndex: 'description',
       ellipsis: true,
     },
@@ -128,7 +128,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
     {
       manual: true,
       onSuccess: () => {
-        message.success('删除成功');
+        message.success(formatMessage({ id: 'message.success.remove' }));
         actionRef.current?.reload();
       },
     },
@@ -136,7 +136,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
 
   const columns: ProColumns<Property>[] = getBaseColumns().concat([
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       width: 100,
       render: (_, { uuid }) => [
@@ -274,7 +274,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
         onOpenChange={(visible) => setOpen(visible)}
         initialValue={initialValue}
         onFinish={async (values) => {
-          let info = '新建成功';
+          let info = formatMessage({ id: 'message.success.new' });
           let params = {
             ...values,
             unit: values?.unit || '',
