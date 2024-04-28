@@ -7,7 +7,6 @@ import {
   postFirmwareRecoverNew,
   postFirmwareRestartRulex,
   postFirmwareUpgrade,
-  postFirmwareUpload,
 } from '@/services/rulex/gujiancaozuo';
 import { endsWith } from '@/utils/redash';
 import { IconFont } from '@/utils/utils';
@@ -19,7 +18,9 @@ import {
 } from '@ant-design/icons';
 import { ProCard, ProDescriptions } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
+import type { ProgressProps } from 'antd';
 import { Button, Modal, Progress, Space, Upload } from 'antd';
+import type { RcFile } from 'antd/es/upload';
 import { useState } from 'react';
 
 type ConfirmCofig = {
@@ -52,6 +53,11 @@ const defaultRecoverConfig = {
   afterOkText: '恢复',
 };
 
+export const twoColors: ProgressProps['strokeColor'] = {
+  '0%': '#1677FF',
+  '100%': '#52c41a',
+};
+
 const FirmwareConfig = () => {
   const { run, cancel } = useModel('useSystem');
   const { formatMessage } = useIntl();
@@ -61,19 +67,6 @@ const FirmwareConfig = () => {
   const [showProgress, setShowProgress] = useState<boolean>(false);
   const [uploadProgress, setProgress] = useState<number>(0);
 
-  // 上传固件
-  const { run: uploadFile } = useRequest((params) => postFirmwareUpload({}, params), {
-    manual: true,
-    onSuccess: () => {
-      setProgress(100);
-      message.success(formatMessage({ id: 'message.success.upload' }));
-      setTimeout(() => {
-        setShowProgress(false);
-        setProgress(0);
-      }, 500);
-    },
-  });
-
   // 查看日志
   const { data: logData } = useRequest(() => getFirmwareUpgradeLog());
 
@@ -82,6 +75,33 @@ const FirmwareConfig = () => {
     setOpen(false);
     run();
     message.success(errorMsg ? errorMsg : `${confirmConfig.afterOkText}成功`);
+  };
+
+  // 上传固件
+  const handleFileUpload = (file: RcFile | undefined) => {
+    if (!file) return;
+    const formData = new FormData();
+    formData.append('file', file);
+    fetch('/api/v1/firmware/upload', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then(({ code }) => {
+        if (code === 200) {
+          setProgress(100);
+          message.success(formatMessage({ id: 'message.success.upload' }));
+          setTimeout(() => {
+            setShowProgress(false);
+            setProgress(0);
+          }, 500);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setShowProgress(false);
+        setProgress(0);
+      });
   };
 
   return (
@@ -136,7 +156,7 @@ const FirmwareConfig = () => {
 
                 if (file?.percent === 100) {
                   if (file?.status === 'done') {
-                    uploadFile(file?.originFileObj);
+                    handleFileUpload(file?.originFileObj);
                   }
                   setProgress(99);
                 } else {
@@ -233,7 +253,12 @@ const FirmwareConfig = () => {
             </Button>
           </Space>
           <Modal title="上传固件" open={showProgress} footer={false}>
-            <Progress percent={uploadProgress} size="small" />
+            <Progress
+              percent={uploadProgress}
+              size="small"
+              status={uploadProgress === 100 ? 'success' : 'active'}
+              strokeColor={twoColors}
+            />
           </Modal>
         </ProCard>
         <ProCard title="固件升级日志" colSpan="50%">
