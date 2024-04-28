@@ -97,6 +97,7 @@ const defaultConfigColumns = [
     dataIndex: ['config', 'port'],
     valueType: 'digit',
     required: true,
+    render: (port: number) => port,
   },
 ];
 
