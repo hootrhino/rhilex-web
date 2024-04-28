@@ -107,6 +107,9 @@ const ShellySubDevice = () => {
   );
 
   const handleOnMenu = ({ domEvent, key }: MenuInfo, item: ShellyItem) => {
+    const port = deviceDetail?.config?.commonConfig?.webHookPort;
+    const ip = window.location.hostname;
+
     switch (key) {
       case 'detail':
         if (item.mac && deviceId) {
@@ -127,7 +130,8 @@ const ShellySubDevice = () => {
           pro1Config({
             opType: OpType.SET_WEBHOOK,
             deviceIp: item.ip,
-            gwIp: window.location.host,
+            gwIp: ip,
+            webHookPort: port,
           }).then(() => message.success('配置成功'));
         }
         break;
@@ -136,7 +140,8 @@ const ShellySubDevice = () => {
           pro1Config({
             opType: OpType.CLEAR_WEBHOOK,
             deviceIp: item.ip,
-            gwIp: window.location.host,
+            gwIp: ip,
+            webHookPort: port,
           }).then(() => message.success('清除成功'));
         }
         break;
