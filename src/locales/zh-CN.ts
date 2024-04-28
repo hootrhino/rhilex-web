@@ -58,7 +58,7 @@ export default {
    * page
    */
   'page.404.subTitle': '抱歉，你访问的页面不存在',
-  'page.copyright': 'RHILEX TEAM 2023-2033. 所有权利保留。',
+  'page.copyright': 'RHILEX TEAM 2023-2033。所有权利保留。',
   /**
    * form
    */
