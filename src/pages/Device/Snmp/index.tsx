@@ -266,7 +266,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
                 action?.startEditable?.(record?.uuid);
               }}
             >
-              编辑
+              {formatMessage({ id: 'button.edit' })}
             </a>
             <Popconfirm
               title="确定要删除此对象?"
@@ -279,7 +279,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
               cancelText="否"
               key="remove"
             >
-              <a>删除</a>
+              <a>{formatMessage({ id: 'button.remove' })}</a>
             </Popconfirm>
             {record?.status === 0 && (
               <a

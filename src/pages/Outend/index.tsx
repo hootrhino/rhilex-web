@@ -63,17 +63,17 @@ const Outend = () => {
       fixed: 'right',
       render: (_, { uuid }) => [
         <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
-          详情
+          {formatMessage({ id: 'button.detail' })}
         </a>,
         <a key="edit" onClick={() => history.push(`/outend/edit/${uuid}`)}>
-          编辑
+          {formatMessage({ id: 'button.edit' })}
         </a>,
         <Popconfirm
-          title="确定要删除此目标？"
+          title="确定要删除此资源？"
           onConfirm={() => handleOnDelete({ uuid })}
           key="remove"
         >
-          <a>删除</a>
+          <a>{formatMessage({ id: 'button.remove' })}</a>
         </Popconfirm>,
         <Dropdown
           key="advance-action"

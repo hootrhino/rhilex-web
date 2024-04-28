@@ -148,7 +148,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
             getDetail({ uuid }).then((values) => setInitialValue(values));
           }}
         >
-          编辑
+          {formatMessage({ id: 'button.edit' })}
         </a>,
         <Popconfirm
           title="确定要删除此属性？"
@@ -157,7 +157,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
           cancelText="否"
           key="remove"
         >
-          <a>删除</a>
+          <a>{formatMessage({ id: 'button.remove' })}</a>
         </Popconfirm>,
       ],
     },

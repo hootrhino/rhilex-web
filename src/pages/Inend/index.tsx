@@ -76,10 +76,10 @@ const Inend = () => {
       valueType: 'option',
       render: (_, { uuid, type }) => [
         <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
-          详情
+          {formatMessage({ id: 'button.detail' })}
         </a>,
         <a key="edit" onClick={() => history.push(`/inend/edit/${uuid}`)}>
-          编辑
+          {formatMessage({ id: 'button.edit' })}
         </a>,
         <Popconfirm
           title="确定要删除此资源？"
@@ -88,7 +88,7 @@ const Inend = () => {
           cancelText="否"
           key="remove"
         >
-          <a>删除</a>
+          <a>{formatMessage({ id: 'button.remove' })}</a>
         </Popconfirm>,
         <Dropdown
           key="advance-action"

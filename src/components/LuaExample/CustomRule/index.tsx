@@ -92,7 +92,7 @@ const CustomRule = () => {
                 }}
                 key="edit"
               >
-                编辑
+                {formatMessage({ id: 'button.edit' })}
               </a>,
               <Popconfirm
                 title="确定要删除此规则？"
@@ -104,7 +104,7 @@ const CustomRule = () => {
                 }}
                 key="remove"
               >
-                <a>删除</a>
+                <a>{formatMessage({ id: 'button.remove' })}</a>
               </Popconfirm>,
             ],
           },

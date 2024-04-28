@@ -164,7 +164,7 @@ const ExtendedProtocol = () => {
             setDetailConfig({ type: DetailModalType.DETAIL, open: true, uuid });
           }}
         >
-          详情
+          {formatMessage({ id: 'button.detail' })}
         </a>,
         <a
           key="run"
@@ -186,14 +186,14 @@ const ExtendedProtocol = () => {
             setFormConfig({ open: true, uuid });
           }}
         >
-          编辑
+          {formatMessage({ id: 'button.edit' })}
         </a>,
         <Popconfirm
           title="确定要删除此扩展协议？"
           onConfirm={() => uuid && remove({ uuid })}
           key="remove"
         >
-          <a>删除</a>
+          <a>{formatMessage({ id: 'button.remove' })}</a>
         </Popconfirm>,
       ],
     },

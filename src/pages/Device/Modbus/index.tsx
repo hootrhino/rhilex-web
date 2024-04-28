@@ -429,7 +429,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
                 action?.startEditable?.(record?.uuid);
               }}
             >
-              编辑
+              {formatMessage({ id: 'button.edit' })}
             </a>
             <Popconfirm
               title="确定要删除此点位？"
@@ -442,7 +442,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
               cancelText="否"
               key="remove"
             >
-              <a>删除</a>
+              <a>{formatMessage({ id: 'button.remove' })}</a>
             </Popconfirm>
             {record?.status === 0 && (
               <Dropdown

@@ -250,10 +250,10 @@ const Devices = () => {
         return (
           <Space>
             <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
-              详情
+              {formatMessage({ id: 'button.detail' })}
             </a>
             <a key="edit" onClick={() => history.push(`/device/${gid}/edit/${uuid}`)}>
-              编辑
+              {formatMessage({ id: 'button.edit' })}
             </a>
             <Popconfirm
               title="确定要删除此设备?"
@@ -262,7 +262,7 @@ const Devices = () => {
               cancelText="否"
               key="remove"
             >
-              <a>删除</a>
+              <a>{formatMessage({ id: 'button.remove' })}</a>
             </Popconfirm>
             <Dropdown
               menu={{

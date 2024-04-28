@@ -82,7 +82,7 @@ const NetworkStatus = () => {
             getDetail({ iface: device }).then(() => setOpen(true));
           }}
         >
-          详情
+          {formatMessage({ id: 'button.detail' })}
         </a>,
       ],
     },
