@@ -37,7 +37,7 @@ import StateTag, { StateType } from '@/components/StateTag';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { SheetType } from '@/utils/enum';
 import { inRange } from '@/utils/redash';
-import { modbusDataTypeOptions } from './enum';
+import { defaultQuantity, modbusDataTypeOptions } from './enum';
 import { ModbusDataSheetItem, ModbusDataSheetProps, removeParams, UpdateParams } from './typings';
 import UploadRule from './UploadRule';
 
@@ -179,7 +179,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
-      render: (text, record, index) => <IndexBorder serial={index} />,
+      render: (_text, _record, index) => <IndexBorder serial={index} />,
     },
     {
       title: '从设备地址',
@@ -280,7 +280,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
                 const dataType = value?.[0];
 
                 editorFormRef.current?.setRowData?.(record?.uuid as string, {
-                  quantity: ['SHORT', 'USHORT', 'RAW', 'UTF8'].includes(dataType) ? 1 : 2,
+                  quantity: Number(defaultQuantity[dataType]),
                   weight: dataType === 'UTF8' ? 0 : 1,
                 });
               },
@@ -332,10 +332,10 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
           { max: 256, type: 'integer', message: '读取数量范围在 1-256 之间' },
         ],
       },
-      renderFormItem: (_, { record }) => (
+      renderFormItem: () => (
         <ProFormDigit
           noStyle
-          disabled={!['RAW', 'UTF8'].includes(record?.type?.[0])}
+          disabled={true}
           fieldProps={{ style: { width: '100%' }, placeholder: '请输入读取数量' }}
         />
       ),
@@ -364,7 +364,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
         return (
           <ProFormText
             noStyle
-            disabled={['RAW', 'BYTE', 'UTF8'].includes(dataType)}
+            disabled={['RAW', 'UTF8'].includes(dataType)}
             fieldProps={{ placeholder: '请输入权重系数' }}
           />
         );
@@ -408,7 +408,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       valueType: 'option',
       width: 150,
       hideInTable: type === SheetType.DETAIL,
-      render: (text, record, _, action) => {
+      render: (_text, record, _, action) => {
         return (
           <Space align="end">
             <EditableProTable.RecordCreator
@@ -603,7 +603,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
           editableKeys,
           onSave: handleOnSave,
           onChange: setEditableRowKeys,
-          onValuesChange: (record, dataSource) => {
+          onValuesChange: (_record, dataSource) => {
             setEditableRows(dataSource);
           },
         }}
