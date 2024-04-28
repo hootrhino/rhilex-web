@@ -15,7 +15,7 @@ export default {
   'button.edit': '編輯',
   'button.detail': '詳細資料',
   'button.remove': '移除',
-  'button.ping': 'Ping',
+  'button.ping': '測速',
   'button.config': '設定',
   'button.log': '日誌',
   'button.advancedOption': '進階操作',

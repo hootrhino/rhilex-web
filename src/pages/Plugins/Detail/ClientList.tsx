@@ -3,7 +3,7 @@ import { omit } from '@/utils/redash';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import { message, Tag } from 'antd';
 import { useEffect } from 'react';
 
@@ -30,6 +30,7 @@ const cleanSessionEnum = {
 
 const ClientList = () => {
   const { data, run, setDetailConfig, detailConfig, refresh } = useModel('usePlugin');
+  const { formatMessage } = useIntl();
 
   const columns: ProColumns<DetailItem>[] = [
     {
@@ -38,11 +39,11 @@ const ClientList = () => {
       ellipsis: true,
     },
     {
-      title: '用户名',
+      title: formatMessage({ id: 'login.username.label' }),
       dataIndex: 'username',
     },
     {
-      title: '客户端地址',
+      title: formatMessage({ id: 'plugin.title.remote' }),
       dataIndex: 'remote',
     },
     {
@@ -58,7 +59,7 @@ const ClientList = () => {
       ),
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       width: 80,
       fixed: 'right',
@@ -70,12 +71,12 @@ const ClientList = () => {
             const params = { uuid: detailConfig.uuid, name: 'kickout', args: [id] };
             run(params).then(() => {
               setDetailConfig({ ...params, title: '', open: false } as PluginConfig);
-              message.success('离线成功');
+              message.success(formatMessage({ id: 'plugin.message.success.kickout' }));
               refresh();
             });
           }}
         >
-          强制离线
+          {formatMessage({ id: 'plugin.button.kickout' })}
         </a>,
       ],
     },

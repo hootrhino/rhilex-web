@@ -4,7 +4,7 @@ import { ProTable } from '@ant-design/pro-components';
 import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import { getPlugwareList } from '@/services/rulex/chajianguanli';
-import { useModel } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import { Space } from 'antd';
 import Detail from './Detail';
 
@@ -24,6 +24,7 @@ export enum PluginOptionKey {
 
 const Plugins = () => {
   const { setDetailConfig, run } = useModel('usePlugin');
+  const { formatMessage } = useIntl();
 
   const handleOption = (uuid: string) => {
     if (uuid === PluginOptionKey.ICMP) {
@@ -31,10 +32,15 @@ const Plugins = () => {
         <a
           key="ping"
           onClick={() => {
-            setDetailConfig({ open: true, uuid, name: 'ping', title: '网络测速' });
+            setDetailConfig({
+              open: true,
+              uuid,
+              name: 'ping',
+              title: formatMessage({ id: 'plugin.title.ping' }),
+            });
           }}
         >
-          测速
+          {formatMessage({ id: 'button.ping' })}
         </a>
       );
     } else if (uuid === PluginOptionKey.MQTT) {
@@ -42,10 +48,16 @@ const Plugins = () => {
         <a
           key="detail"
           onClick={() => {
-            setDetailConfig({ open: true, uuid, name: 'clients', title: '客户端列表', args: [] });
+            setDetailConfig({
+              open: true,
+              uuid,
+              name: 'clients',
+              title: formatMessage({ id: 'plugin.title.clients' }),
+              args: [],
+            });
           }}
         >
-          详情
+          {formatMessage({ id: 'button.detail' })}
         </a>
       );
     } else if (uuid === PluginOptionKey.SCANNER) {
@@ -53,10 +65,15 @@ const Plugins = () => {
         <a
           key="config"
           onClick={() => {
-            setDetailConfig({ open: true, uuid, name: 'scan', title: 'Modbus 扫描仪' });
+            setDetailConfig({
+              open: true,
+              uuid,
+              name: 'scan',
+              title: formatMessage({ id: 'plugin.title.scan' }),
+            });
           }}
         >
-          配置
+          {formatMessage({ id: 'button.config' })}
         </a>
       );
     } else if (uuid === PluginOptionKey.TERMINAL) {
@@ -67,23 +84,29 @@ const Plugins = () => {
             onClick={() => {
               run({ uuid, name: 'start', args: '' }).then(() => {
                 // 启动并打开终端
-                message.success('启动成功');
-                setDetailConfig({ open: true, uuid, name: 'start', title: '终端', args: '' });
+                message.success(formatMessage({ id: 'message.success.start' }));
+                setDetailConfig({
+                  open: true,
+                  uuid,
+                  name: 'start',
+                  title: formatMessage({ id: 'plugin.title.terminal' }),
+                  args: '',
+                });
               });
             }}
           >
-            启动
+            {formatMessage({ id: 'button.start' })}
           </a>
           <a
             key="stop"
             onClick={() => {
               run({ uuid, name: 'stop', args: '' }).then(() => {
-                message.success('停止成功');
+                message.success(formatMessage({ id: 'message.success.stop' }));
                 setDetailConfig({ open: false, uuid, name: 'stop', title: '', args: '' });
               });
             }}
           >
-            停止
+            {formatMessage({ id: 'button.stop' })}
           </a>
         </Space>
       );
@@ -94,18 +117,18 @@ const Plugins = () => {
 
   const columns: ProColumns<PluginItem>[] = [
     {
-      title: '插件名称',
+      title: formatMessage({ id: 'plugin.table.title.name' }),
       dataIndex: 'name',
       ellipsis: true,
       fixed: 'left',
     },
     {
-      title: '版本',
+      title: formatMessage({ id: 'plugin.table.title.version' }),
       dataIndex: 'version',
       width: 80,
     },
     {
-      title: '文档地址',
+      title: formatMessage({ id: 'plugin.table.title.helpLink' }),
       dataIndex: 'helpLink',
       ellipsis: true,
       width: 250,
@@ -116,23 +139,23 @@ const Plugins = () => {
       ),
     },
     {
-      title: '作者',
+      title: formatMessage({ id: 'plugin.table.title.author' }),
       dataIndex: 'author',
       width: 80,
     },
     {
-      title: '邮箱',
+      title: formatMessage({ id: 'plugin.table.title.email' }),
       dataIndex: 'email',
       ellipsis: true,
       width: 180,
     },
     {
-      title: '协议',
+      title: formatMessage({ id: 'plugin.table.title.license' }),
       dataIndex: 'license',
       width: 80,
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       width: 80,
       fixed: 'right',

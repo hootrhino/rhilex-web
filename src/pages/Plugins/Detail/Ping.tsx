@@ -2,6 +2,7 @@ import ProLog from '@/components/ProLog';
 import { FormItemType } from '@/utils/enum';
 import { validateFormItem } from '@/utils/utils';
 import { ProForm } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 import { Button, Input } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useState } from 'react';
@@ -14,6 +15,7 @@ type PingProps = {
 
 const Ping = ({ uuid, dataSource }: PingProps) => {
   const { run, detailConfig } = useModel('usePlugin');
+  const { formatMessage } = useIntl();
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -21,7 +23,7 @@ const Ping = ({ uuid, dataSource }: PingProps) => {
     <>
       <ProForm.Item
         name="ip"
-        label="地址"
+        label={formatMessage({ id: 'plugin.form.title.ip' })}
         rules={[
           {
             validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.IP),
@@ -29,10 +31,10 @@ const Ping = ({ uuid, dataSource }: PingProps) => {
         ]}
       >
         <Input.Search
-          placeholder="请输入地址"
+          placeholder={formatMessage({ id: 'plugin.form.placeholder.ip' })}
           enterButton={
             <Button type="primary" disabled={disabled} loading={loading}>
-              测试
+              {formatMessage({ id: 'button.test' })}
             </Button>
           }
           size="large"
@@ -45,7 +47,7 @@ const Ping = ({ uuid, dataSource }: PingProps) => {
           }}
         />
       </ProForm.Item>
-      <ProForm.Item name="output" label="输出结果">
+      <ProForm.Item name="output" label={formatMessage({ id: 'plugin.form.title.output' })}>
         <ProLog hidePadding topic={`plugin/ICMPSenderPing/${uuid}`} dataSource={dataSource} />
       </ProForm.Item>
     </>

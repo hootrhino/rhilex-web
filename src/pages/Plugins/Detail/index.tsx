@@ -4,7 +4,7 @@ import { omit } from '@/utils/redash';
 import { handleNewMessage } from '@/utils/utils';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProForm, ProFormSelect } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import { Button, message, Modal, Space } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import ClientList from './ClientList';
@@ -15,6 +15,7 @@ const Detail = () => {
   const formRef = useRef<ProFormInstance>();
   const { latestMessage } = useModel('useWebsocket');
   const { run, setDetailConfig, detailConfig } = useModel('usePlugin');
+  const { formatMessage } = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
 
@@ -30,7 +31,10 @@ const Detail = () => {
   };
 
   const handleOnClose = () => {
-    if (detailConfig.name === 'start' && detailConfig.title === '终端') {
+    if (
+      detailConfig.name === 'start' &&
+      detailConfig.title === formatMessage({ id: 'plugin.title.terminal' })
+    ) {
       // after close terminal
       run({ uuid: detailConfig.uuid, name: 'stop', args: '' });
       handleOnReset();
@@ -62,7 +66,7 @@ const Detail = () => {
     setLoading(false);
     run({ uuid: detailConfig.uuid, name: 'stop', args: '' }).then(() => {
       setDetailConfig({ ...detailConfig, open: true, name: 'stop', args: '' });
-      message.success('停止成功');
+      message.success(formatMessage({ id: 'message.success.stop' }));
     });
   };
 
@@ -71,10 +75,10 @@ const Detail = () => {
     return (
       <Space>
         <Button key="start" onClick={onStart} type="primary" loading={loading} disabled={disabled}>
-          开始扫描
+          {formatMessage({ id: 'plugin.button.scan.start' })}
         </Button>
         <Button key="stop" onClick={onStop}>
-          停止扫描
+          {formatMessage({ id: 'plugin.button.scan.stop' })}
         </Button>
       </Space>
     );
@@ -102,7 +106,7 @@ const Detail = () => {
       maskClosable={false}
       footer={
         <Button type="primary" onClick={handleOnClose}>
-          关闭
+          {formatMessage({ id: 'button.close' })}
         </Button>
       }
       onCancel={handleOnClose}
@@ -130,7 +134,7 @@ const Detail = () => {
         <>
           <ProFormSelect
             name="portUuid"
-            label="系统串口"
+            label={formatMessage({ id: 'plugin.form.title.portUuid' })}
             request={async () => {
               const { data } = await getHwifaceList();
 
@@ -145,7 +149,7 @@ const Detail = () => {
               }));
             }}
           />
-          <ProForm.Item name="output" label="输出结果">
+          <ProForm.Item name="output" label={formatMessage({ id: 'plugin.form.title.output' })}>
             <ProLog
               hidePadding
               topic={`plugin/ModbusScanner/${detailConfig.uuid}`}
