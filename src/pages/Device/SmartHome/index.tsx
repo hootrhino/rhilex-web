@@ -20,7 +20,7 @@ import {
 } from '@ant-design/icons';
 import type { CheckGroupValueType } from '@ant-design/pro-card/es/components/CheckCard/Group';
 import { CheckCard } from '@ant-design/pro-components';
-import { useParams, useRequest } from '@umijs/max';
+import { history, useParams, useRequest } from '@umijs/max';
 import { Button, Divider, Dropdown, Space, Switch, Tag } from 'antd';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useState } from 'react';
@@ -171,7 +171,7 @@ const ShellySubDevice = () => {
   return (
     <>
       <PageContainer
-        backUrl={`/device/list`}
+        onBack={() => history.push('/device/list')}
         title={`设备 ${deviceDetail?.name || ''} - 子设备列表`}
         extra={
           <Space>

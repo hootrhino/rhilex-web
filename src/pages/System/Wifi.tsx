@@ -7,7 +7,7 @@ import {
 import { WifiOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { AutoComplete, Button, Space } from 'antd';
 import { useRef } from 'react';
 
@@ -23,6 +23,7 @@ type UpdateParams = UpdateForm & {
 
 const WIFIConfig = () => {
   const formRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
 
   // 扫描 wifi
   const {
@@ -55,7 +56,7 @@ const WIFIConfig = () => {
         interface: detail?.wlan0?.interface,
       };
       await postSettingsWifi(params);
-      message.success('更新成功');
+      message.success(formatMessage({ id: 'message.success.update' }));
       return true;
     } catch (error) {
       return false;

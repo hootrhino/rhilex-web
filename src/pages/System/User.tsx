@@ -2,7 +2,7 @@ import { message, modal } from '@/components/PopupHack';
 import { putUsersUpdate } from '@/services/rulex/yonghuguanli';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import { Button, Space } from 'antd';
 import { useEffect, useRef } from 'react';
 
@@ -15,12 +15,13 @@ const UserConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const { initialState } = useModel('@@initialState');
   const { logout } = useModel('useUser');
+  const { formatMessage } = useIntl();
 
   const handleOnFinish = async (values: UpdateParams) => {
     try {
       await putUsersUpdate(values);
       logout();
-      message.success('更新成功');
+      message.success(formatMessage({ id: 'message.success.update' }));
       return true;
     } catch (error) {
       return false;

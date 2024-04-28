@@ -1,9 +1,11 @@
+import { getIntl, getLocale } from '@umijs/max';
+
 /**
  * 接口类型
  */
 export const typeOption = [
   {
-    label: '系统串口',
+    label: getIntl(getLocale()).formatMessage({ id: 'portMgt.option.uart' }),
     value: 'UART',
   },
 ];
@@ -44,7 +46,11 @@ export const dataBitsEnum = new Map([
 ]);
 
 // 奇偶校验
-export const parityEnum = { E: '奇校验', O: '偶校验', N: '不校验' };
+export const parityEnum = {
+  E: getIntl(getLocale()).formatMessage({ id: 'portMgt.option.e' }),
+  O: getIntl(getLocale()).formatMessage({ id: 'portMgt.option.o' }),
+  N: getIntl(getLocale()).formatMessage({ id: 'portMgt.option.n' }),
+};
 
 // 停止位
 export const stopBitsEnum = new Map([

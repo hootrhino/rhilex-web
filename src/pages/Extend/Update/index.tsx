@@ -8,7 +8,7 @@ import {
   ProFormTextArea,
   ProFormUploadDragger,
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { useEffect, useRef, useState } from 'react';
 
@@ -55,6 +55,7 @@ export const defaultValue = {
 
 const UpdateForm = ({ uuid, reload, onOpenChange, ...props }: UpdateFormProps) => {
   const formRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
   const [formData, setFormData] = useState<DetailItem>(defaultValue);
 
   // 详情
@@ -76,7 +77,7 @@ const UpdateForm = ({ uuid, reload, onOpenChange, ...props }: UpdateFormProps) =
           { ...omit(params, ['upload']), uuid: formData?.uuid } as any,
           uploadFile as File,
         );
-        message.success('更新成功');
+        message.success(formatMessage({ id: 'message.success.update' }));
       } else {
         await postGoodsCreate(omit(params, ['upload']) as any, uploadFile as File);
         message.success('新建成功');

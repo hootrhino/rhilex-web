@@ -8,6 +8,7 @@ import {
   putInendsUpdate,
 } from '@/services/rulex/shuruziyuanguanli';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { columns, defaultConfig } from '../columns';
@@ -18,6 +19,7 @@ const DefaultListUrl = '/inend/list';
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { uuid } = useParams();
+  const { formatMessage } = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
   const randomNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
   const defaultValue = { type: InendType.COAP, config: defaultConfig[InendType.COAP] };
@@ -49,7 +51,7 @@ const UpdateForm = () => {
 
       if (uuid) {
         await putInendsUpdate({ ...params, uuid });
-        message.success('更新成功');
+        message.success(formatMessage({ id: 'message.success.update' }));
       } else {
         const { msg } = await postInendsCreate(params);
         if (msg === 'Success') {

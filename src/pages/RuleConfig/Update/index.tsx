@@ -8,6 +8,7 @@ import { validateFormItem } from '@/utils/utils';
 import { NotificationOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { FooterToolbar, ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 import { Alert, Button, Popconfirm } from 'antd';
 import type { Rule } from 'antd/es/form';
 import { useEffect, useRef, useState } from 'react';
@@ -44,6 +45,7 @@ const initialValue = {
 const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) => {
   const formRef = useRef<ProFormInstance>();
   const { ruleId, groupId } = useParams();
+  const { formatMessage } = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
   const DefaultListUrl = groupId ? `/${type}/${groupId}/${typeId}/rule` : `/${type}/${typeId}/rule`;
   const hasDeviceDS = deviceType && Object.keys(DeviceType).includes(deviceType);
@@ -67,7 +69,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
 
       if (ruleId) {
         await putRulesUpdate({ ...params, uuid: ruleId });
-        message.success('更新成功');
+        message.success(formatMessage({ id: 'message.success.update' }));
       } else {
         await postRulesCreate(params);
         message.success('新建成功');

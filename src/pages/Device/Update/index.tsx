@@ -7,7 +7,7 @@ import {
 } from '@/services/rulex/shebeiguanli';
 import { formatHeaders2Arr, formatHeaders2Obj, getPlayAddress, stringToBool } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
-import { history, useModel, useParams, useRequest } from '@umijs/max';
+import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { columns } from '../columns';
 import {
@@ -43,6 +43,7 @@ const UpdateForm = () => {
   const { deviceId, groupId } = useParams();
   const { setActiveGroupKey } = useModel('useDevice');
   const { product } = useModel('useSystem');
+  const { formatMessage } = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
   const defaultType = defaultDeviceType[product];
 
@@ -112,7 +113,7 @@ const UpdateForm = () => {
 
       if (deviceId) {
         await putDevicesUpdate({ ...params, uuid: deviceId });
-        message.success('更新成功');
+        message.success(formatMessage({ id: 'message.success.update' }));
       } else {
         const { msg } = await postDevicesCreate(params);
 

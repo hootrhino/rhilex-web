@@ -13,7 +13,7 @@ import {
   ProFormSwitch,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useModel, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Tooltip } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useRef } from 'react';
@@ -47,6 +47,7 @@ const NetworkConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const actionRef = useRef<FormListActionType>();
   const { interfaceOption } = useModel('useSystem');
+  const { formatMessage } = useIntl();
 
   // 详情
   const { data: detail } = useRequest(() => getSettingsEth(), {
@@ -68,7 +69,7 @@ const NetworkConfig = () => {
         dns: dnsList?.map((item: { dns: string }) => item.dns),
       };
       await postSettingsEth(params as UpdateParams);
-      message.success('更新成功');
+      message.success(formatMessage({ id: 'message.success.update' }));
 
       return true;
     } catch (error) {

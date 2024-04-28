@@ -41,7 +41,12 @@ const ProPageContainer = ({
     if (backUrl) {
       return {
         title: showExtra ? getTitle() : title,
-        onBack: () => (onBack ? onBack() : GoBackModal(backUrl)),
+        onBack: () => GoBackModal(backUrl),
+      };
+    } else if (onBack) {
+      return {
+        title: showExtra ? getTitle() : title,
+        onBack: onBack,
       };
     } else {
       return {};

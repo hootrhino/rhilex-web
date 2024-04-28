@@ -158,7 +158,7 @@ const RuleConfig = ({
 
   return (
     <>
-      <PageContainer backUrl={`/${type}/list`} title={getTitle()}>
+      <PageContainer onBack={() => history.push(`/${type}/list`)} title={getTitle()}>
         <ProTable
           rowKey="uuid"
           columns={columns}

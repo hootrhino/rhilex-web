@@ -34,4 +34,12 @@ export default {
    */
   'portMgt.modal.title.detail': '接口详情',
   'portMgt.modal.title.update': '更新接口',
+
+  /**
+   * others
+   */
+  'portMgt.option.uart': '系统串口',
+  'portMgt.option.e': '奇校验',
+  'portMgt.option.o': '偶校验',
+  'portMgt.option.n': '不校验',
 };

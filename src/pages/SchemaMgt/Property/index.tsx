@@ -12,7 +12,7 @@ import { isEmpty } from '@/utils/redash';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import type { DescriptionsProps } from 'antd';
 import { Button, Descriptions, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
@@ -110,6 +110,7 @@ const ruleFilterData = {
 
 const PropertyList = ({ schemaId }: PropertyListProps) => {
   const actionRef = useRef<ActionType>();
+  const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
   const [initialValue, setInitialValue] = useState<Property>({});
 
@@ -281,7 +282,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
             schemaId,
           };
           if (initialValue?.uuid) {
-            info = '更新成功';
+            info = formatMessage({ id: 'message.success.update' });
             await putSchemaPropertiesUpdate({ ...params, uuid: initialValue.uuid } as any);
           } else {
             await postSchemaPropertiesCreate(params as any);

@@ -9,7 +9,7 @@ import {
   ProFormSelect,
   ProFormSwitch,
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Button, Space } from 'antd';
 import { useRef } from 'react';
 
@@ -21,6 +21,7 @@ type UpdateParams = {
 
 const TimeConfig = () => {
   const formRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
 
   // 详情
   useRequest(() => getSettingsTime(), {
@@ -47,7 +48,7 @@ const TimeConfig = () => {
   const handleOnFinish = async (values: UpdateParams) => {
     try {
       await postSettingsTime(values);
-      message.success('更新成功');
+      message.success(formatMessage({ id: 'message.success.update' }));
       return true;
     } catch (error) {
       return false;

@@ -9,6 +9,7 @@ import {
 } from '@/services/rulex/shuchuziyuanguanli';
 import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
 import { columns, defaultConfig } from '../columns';
@@ -25,6 +26,7 @@ const DefaultListUrl = '/outend/list';
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { uuid } = useParams();
+  const { formatMessage } = useIntl();
   const randomNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -53,7 +55,7 @@ const UpdateForm = () => {
 
       if (uuid) {
         await putOutendsUpdate({ ...params, uuid });
-        message.success('更新成功');
+        message.success(formatMessage({ id: 'message.success.update' }));
       } else {
         const { msg } = await postOutendsCreate(params);
         if (msg === 'Success') {

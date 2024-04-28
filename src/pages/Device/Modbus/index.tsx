@@ -27,7 +27,7 @@ import {
   ProFormText,
   ProTable,
 } from '@ant-design/pro-components';
-import { useParams, useRequest } from '@umijs/max';
+import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { funcEnum } from '../enum';
@@ -57,6 +57,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<ModbusDataSheetItem>>();
   const { deviceId } = useParams();
+  const { formatMessage } = useIntl();
 
   const [title, setTitle] = useState<string>('点位表配置');
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -92,7 +93,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
     manual: true,
     onSuccess: () => {
       handleOnReset();
-      message.success('更新成功');
+      message.success(formatMessage({ id: 'message.success.update' }));
     },
   });
 
@@ -465,7 +466,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       },
     },
   ];
-  console.log(deviceId);
+
   const toolBar = [
     <Button
       key="polling"
@@ -555,7 +556,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
   }, [deviceId]);
 
   return type === SheetType.LIST ? (
-    <PageContainer title={title} backUrl="/device/list">
+    <PageContainer title={title} onBack={() => history.push('/device/list')}>
       <EditableProTable<Partial<ModbusDataSheetItem>>
         controlled
         rowKey="uuid"

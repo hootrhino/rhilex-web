@@ -4,7 +4,7 @@ import { getHwifaceList, getHwifaceRefresh } from '@/services/rulex/jiekouguanli
 import { ScanOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProDescriptions, ProTable } from '@ant-design/pro-components';
-import { useModel, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Card, Descriptions, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
 import { parityEnum, typeOption } from './enum';
@@ -26,6 +26,7 @@ type DetailModalConfig = {
 
 const Interface = () => {
   const actionRef = useRef<ActionType>();
+  const { formatMessage } = useIntl();
   const [formConfig, setFormConfig] = useState<DetailModalConfig>({ open: false, uuid: '' });
   const { detailConfig, setDetailConfig, detail, getDetail } = useModel('usePort');
 
@@ -37,15 +38,15 @@ const Interface = () => {
 
   const columns: ProColumns<InterfaceItem>[] = [
     {
-      title: '接口名称',
+      title: formatMessage({ id: 'portMgt.form.title.name' }),
       dataIndex: 'name',
     },
     {
-      title: '别名',
+      title: formatMessage({ id: 'portMgt.form.title.alias' }),
       dataIndex: 'alias',
     },
     {
-      title: '接口类型',
+      title: formatMessage({ id: 'portMgt.form.title.type' }),
       dataIndex: 'type',
       valueType: 'select',
       fieldProps: {
@@ -53,28 +54,28 @@ const Interface = () => {
       },
     },
     {
-      title: '状态',
+      title: formatMessage({ id: 'portMgt.form.title.busy' }),
       dataIndex: 'busy',
       valueEnum: {
         true: {
-          text: '占用',
+          text: formatMessage({ id: 'status.busy' }),
           status: 'warning',
         },
         false: {
-          text: '空闲',
+          text: formatMessage({ id: 'status.free' }),
           status: 'success',
         },
       },
     },
     {
-      title: '占用设备',
+      title: formatMessage({ id: 'portMgt.form.title.occupyBy' }),
       dataIndex: 'occupyBy',
       renderText: (occupyBy) => {
         return occupyBy?.name;
       },
     },
     {
-      title: '接口配置',
+      title: formatMessage({ id: 'portMgt.form.title.config' }),
       dataIndex: 'config',
       valueType: 'formList',
       hideInTable: true,
@@ -85,25 +86,37 @@ const Interface = () => {
         return (
           <Card styles={{ body: { padding: '16px 18px' } }}>
             <Descriptions column={1} labelStyle={{ width: 130, justifyContent: 'flex-end' }}>
-              <Descriptions.Item label={<UnitTitle title="超时时间" />}>
+              <Descriptions.Item
+                label={<UnitTitle title={formatMessage({ id: 'portMgt.form.title.timeout' })} />}
+              >
                 {timeout}
               </Descriptions.Item>
-              <Descriptions.Item label="波特率">{baudRate}</Descriptions.Item>
-              <Descriptions.Item label="数据位">{dataBits}</Descriptions.Item>
-              <Descriptions.Item label="奇偶校验">{parityEnum[parity]}</Descriptions.Item>
-              <Descriptions.Item label="停止位">{stopBits}</Descriptions.Item>
-              <Descriptions.Item label="串口路径">{uart}</Descriptions.Item>
+              <Descriptions.Item label={formatMessage({ id: 'portMgt.form.title.baudRate' })}>
+                {baudRate}
+              </Descriptions.Item>
+              <Descriptions.Item label={formatMessage({ id: 'portMgt.form.title.dataBits' })}>
+                {dataBits}
+              </Descriptions.Item>
+              <Descriptions.Item label={formatMessage({ id: 'portMgt.form.title.parity' })}>
+                {parityEnum[parity]}
+              </Descriptions.Item>
+              <Descriptions.Item label={formatMessage({ id: 'portMgt.form.title.stopBits' })}>
+                {stopBits}
+              </Descriptions.Item>
+              <Descriptions.Item label={formatMessage({ id: 'portMgt.form.title.uart' })}>
+                {uart}
+              </Descriptions.Item>
             </Descriptions>
           </Card>
         );
       },
     },
     {
-      title: '备注',
+      title: formatMessage({ id: 'table.desc' }),
       dataIndex: 'description',
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       key: 'option',
       width: 120,
@@ -118,7 +131,7 @@ const Interface = () => {
             setDetailConfig({ open: true, uuid });
           }}
         >
-          详情
+          {formatMessage({ id: 'button.detail' })}
         </a>,
         <a
           key="edit"
@@ -127,7 +140,7 @@ const Interface = () => {
             setFormConfig({ open: true, uuid });
           }}
         >
-          编辑
+          {formatMessage({ id: 'button.edit' })}
         </a>,
       ],
     },
@@ -152,7 +165,7 @@ const Interface = () => {
           }}
           toolBarRender={() => [
             <Button key="refresh" type="primary" icon={<ScanOutlined />} onClick={refresh}>
-              扫描端口
+              {formatMessage({ id: 'portMgt.button.scan' })}
             </Button>,
           ]}
         />
@@ -163,14 +176,14 @@ const Interface = () => {
         reload={() => actionRef.current?.reload()}
       />
       <Modal
-        title="接口详情"
+        title={formatMessage({ id: 'portMgt.modal.title.detail' })}
         open={detailConfig.open}
         onCancel={() => setDetailConfig({ open: false, uuid: '' })}
         maskClosable={false}
         destroyOnClose
         footer={
           <Button type="primary" onClick={() => setDetailConfig({ open: false, uuid: '' })}>
-            关闭
+            {formatMessage({ id: 'button.close' })}
           </Button>
         }
       >

@@ -21,7 +21,7 @@ import {
 } from '@ant-design/icons';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { EditableProTable, ProDescriptions, ProTable } from '@ant-design/pro-components';
-import { useParams, useRequest } from '@umijs/max';
+import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { DEFAULT_TITLE } from './enum';
@@ -39,6 +39,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<SnmpDataSheetItem>>();
   const { deviceId } = useParams();
+  const { formatMessage } = useIntl();
 
   const [title, setTitle] = useState<string>(DEFAULT_TITLE);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -78,7 +79,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
     manual: true,
     onSuccess: () => {
       handleOnReset();
-      message.success('更新成功');
+      message.success(formatMessage({ id: 'message.success.update' }));
     },
   });
 
@@ -373,7 +374,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
   ];
 
   return type === SheetType.LIST ? (
-    <PageContainer title={title} backUrl="/device/list">
+    <PageContainer title={title} onBack={() => history.push('/device/list')}>
       <EditableProTable<Partial<SnmpDataSheetItem>>
         controlled
         rowKey="uuid"

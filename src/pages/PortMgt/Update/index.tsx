@@ -10,7 +10,7 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import { Card } from 'antd';
 import { useEffect, useRef } from 'react';
 import type { InterfaceItem } from '..';
@@ -40,6 +40,7 @@ type UpdateParams = {
 const Update = ({ reload, uuid, ...props }: UpdateProps) => {
   const formRef = useRef<ProFormInstance>();
   const { detail, getDetail } = useModel('usePort');
+  const { formatMessage } = useIntl();
 
   // 更新接口配置
   const handleOnFinish = async ({ config }: InterfaceFormParams) => {
@@ -50,7 +51,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
       };
 
       await postHwifaceUpdate(params);
-      message.success('更新成功');
+      message.success(formatMessage({ id: 'message.success.update' }));
       reload();
       return true;
     } catch (error) {
@@ -69,7 +70,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
   return (
     <ModalForm
       formRef={formRef}
-      title="更新接口"
+      title={formatMessage({ id: 'portMgt.modal.title.update' })}
       modalProps={{ destroyOnClose: true, maskClosable: false }}
       onFinish={handleOnFinish}
       {...props}
@@ -77,16 +78,16 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
       <ProForm.Group>
         <ProFormText
           name="name"
-          label="接口名称"
-          placeholder="请输入接口名称"
+          label={formatMessage({ id: 'portMgt.form.title.name' })}
+          placeholder={formatMessage({ id: 'portMgt.form.placeholder.name' })}
           width="sm"
           disabled
           required
         />
         <ProFormSelect
           name="type"
-          label="接口类型"
-          placeholder="请选择接口类型"
+          label={formatMessage({ id: 'portMgt.form.title.type' })}
+          placeholder={formatMessage({ id: 'portMgt.form.placeholder.type' })}
           width="sm"
           disabled
           required
@@ -94,15 +95,17 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
         />
         <ProFormText
           name="alias"
-          label="别名"
-          placeholder="请输入别名"
+          label={formatMessage({ id: 'portMgt.form.title.alias' })}
+          placeholder={formatMessage({ id: 'portMgt.form.placeholder.alias' })}
           width="sm"
-          rules={[{ required: true, message: '请输入别名' }]}
+          rules={[
+            { required: true, message: formatMessage({ id: 'portMgt.form.placeholder.alias' }) },
+          ]}
         />
       </ProForm.Group>
       <ProFormList
         name="config"
-        label="接口配置"
+        label={formatMessage({ id: 'portMgt.form.title.config' })}
         creatorButtonProps={false}
         copyIconProps={false}
         deleteIconProps={false}
@@ -115,56 +118,82 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
         <ProForm.Group>
           <ProFormDigit
             name="timeout"
-            label={<UnitTitle title="超时时间" />}
+            label={<UnitTitle title={formatMessage({ id: 'portMgt.form.title.timeout' })} />}
             width="sm"
-            placeholder="请输入超时时间"
-            rules={[{ required: true, message: '请输入超时时间' }]}
+            placeholder={formatMessage({ id: 'portMgt.form.placeholder.timeout' })}
+            rules={[
+              {
+                required: true,
+                message: formatMessage({ id: 'portMgt.form.placeholder.timeout' }),
+              },
+            ]}
           />
           <ProFormSelect
-            label="波特率"
+            label={formatMessage({ id: 'portMgt.form.title.baudRate' })}
             name="baudRate"
             width="sm"
             valueEnum={baudRateEnum}
-            placeholder="请选择波特率"
-            rules={[{ required: true, message: '请选择波特率' }]}
+            placeholder={formatMessage({ id: 'portMgt.form.placeholder.baudRate' })}
+            rules={[
+              {
+                required: true,
+                message: formatMessage({ id: 'portMgt.form.placeholder.baudRate' }),
+              },
+            ]}
           />
           <ProFormSelect
-            label="数据位"
+            label={formatMessage({ id: 'portMgt.form.title.dataBits' })}
             name="dataBits"
             width="sm"
             valueEnum={dataBitsEnum}
-            placeholder="请选择数据位"
-            rules={[{ required: true, message: '请选择数据位' }]}
+            placeholder={formatMessage({ id: 'portMgt.form.placeholder.dataBits' })}
+            rules={[
+              {
+                required: true,
+                message: formatMessage({ id: 'portMgt.form.placeholder.dataBits' }),
+              },
+            ]}
           />
         </ProForm.Group>
         <ProForm.Group>
           <ProFormSelect
-            label="奇偶校验"
+            label={formatMessage({ id: 'portMgt.form.title.parity' })}
             name="parity"
             width="sm"
             valueEnum={parityEnum}
-            placeholder="请选择奇偶校验"
-            rules={[{ required: true, message: '请选择奇偶校验' }]}
+            placeholder={formatMessage({ id: 'portMgt.form.placeholder.parity' })}
+            rules={[
+              { required: true, message: formatMessage({ id: 'portMgt.form.placeholder.parity' }) },
+            ]}
           />
           <ProFormSelect
-            label="停止位"
+            label={formatMessage({ id: 'portMgt.form.title.stopBits' })}
             name="stopBits"
             width="sm"
             valueEnum={stopBitsEnum}
-            placeholder="请选择停止位"
-            rules={[{ required: true, message: '请选择停止位' }]}
+            placeholder={formatMessage({ id: 'portMgt.form.placeholder.stopBits' })}
+            rules={[
+              {
+                required: true,
+                message: formatMessage({ id: 'portMgt.form.placeholder.stopBits' }),
+              },
+            ]}
           />
           <ProFormText
-            label="串口路径"
+            label={formatMessage({ id: 'portMgt.form.title.uart' })}
             name="uart"
             width="sm"
-            placeholder="请输入本地系统的串口路径"
+            placeholder={formatMessage({ id: 'portMgt.form.placeholder.uart' })}
             disabled
             required
           />
         </ProForm.Group>
       </ProFormList>
-      <ProFormText name="description" label="备注" placeholder="请输入备注" />
+      <ProFormText
+        name="description"
+        label={formatMessage({ id: 'table.desc' })}
+        placeholder={formatMessage({ id: 'placeholder.desc' })}
+      />
     </ModalForm>
   );
 };

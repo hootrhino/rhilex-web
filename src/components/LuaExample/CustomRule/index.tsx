@@ -9,6 +9,7 @@ import { DEFAULT_GROUP_KEY_LUA_TPL } from '@/utils/constant';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-components';
 import { ProList } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import type { TplItem } from '../CommonRule/ExampleItem';
@@ -16,6 +17,7 @@ import UpdateForm from './Update';
 
 const CustomRule = () => {
   const actionRef = useRef<ActionType>();
+  const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
   const [tplId, setTplId] = useState<string>('');
 
@@ -28,7 +30,7 @@ const CustomRule = () => {
     if (tplId) {
       // 编辑
       await putUserluaUpdate({ ...params, uuid: tplId });
-      message.success('更新成功');
+      message.success(formatMessage({ id: 'message.success.update' }));
     } else {
       // 新建
       await postUserluaCreate({

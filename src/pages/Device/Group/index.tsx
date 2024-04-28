@@ -8,7 +8,7 @@ import {
 import { DeleteOutlined, EditOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProList } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Space, Tooltip } from 'antd';
 import { useEffect, useRef } from 'react';
 
@@ -71,6 +71,7 @@ const GroupList = ({
   updateConfig,
 }: GroupListProps) => {
   const groupFormRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
   const { type, ...params } = config;
 
   // 分组详情
@@ -90,7 +91,7 @@ const GroupList = ({
   // 更新分组
   const { run: updateGroup } = useRequest((params: updateGroupParams) => putGroupUpdate(params), {
     manual: true,
-    onSuccess: () => message.success('更新成功'),
+    onSuccess: () => message.success(formatMessage({ id: 'message.success.update' })),
   });
 
   // 新建&编辑
