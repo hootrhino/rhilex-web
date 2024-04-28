@@ -163,7 +163,7 @@ const FirmwareConfig = () => {
                   if (file?.percent === 0) {
                     setShowProgress(true);
                   }
-                  setProgress(file?.percent || 0);
+                  setProgress(Number(file?.percent?.toFixed(2)) || 0);
                 }
               }}
             >
