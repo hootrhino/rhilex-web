@@ -118,6 +118,7 @@ export default {
   'device.form.title.transport': '传输协议',
   'device.form.title.community': '社区名称',
   'device.form.title.version': '协议版本',
+  'device.form.title.webHookPort': '监听端口',
 
   // group
   'device.form.title.group.name': '分组名称',

@@ -87,7 +87,7 @@ export default {
   'menu.source.new': 'New Resource',
   'menu.source.update': 'Edit Resource',
   'menu.outend': 'Outend Resources',
-  'menu.appStack': 'AppStack',
+  'menu.appStack': 'Application',
   'menu.appStack.list': 'Application List',
   'menu.appStack.new': 'New Application',
   'menu.appStack.update': 'Edit Application',
