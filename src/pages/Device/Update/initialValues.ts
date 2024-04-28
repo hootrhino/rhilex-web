@@ -107,6 +107,7 @@ export const defaultConfig = {
       autoScan: 'true',
       timeout: DEFAULT_TIMEOUT,
       frequency: DEFAULT_FREQUENCE,
+      webHookPort: 7000,
     },
   },
   [DeviceType.GENERIC_SNMP]: {

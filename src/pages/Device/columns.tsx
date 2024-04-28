@@ -579,6 +579,14 @@ export const typeConfigColumns = {
           },
           render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig.networkCidr,
         },
+        {
+          title: '监听端口',
+          dataIndex: ['config', 'commonConfig', 'webHookPort'],
+          valueType: 'digit',
+          required: true,
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) =>
+            commonConfig?.webHookPort,
+        },
       ],
     },
   ],
