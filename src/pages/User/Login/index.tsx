@@ -2,12 +2,13 @@ import loginIcon from '@/assets/loginLogo.svg';
 import { message, modal } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
 import { COPYRIGHT, DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';
+import { Product } from '@/utils/enum';
 import { DefaultFooter, LoginForm, ProFormText } from '@ant-design/pro-components';
 import { Helmet, useModel } from '@umijs/max';
 import { Rule } from 'antd/es/form';
 import type { ValidateStatus } from 'antd/es/form/FormItem';
+
 import { useState } from 'react';
-import { flushSync } from 'react-dom';
 import { history } from 'umi';
 
 export type CurrentUser = {
@@ -16,7 +17,7 @@ export type CurrentUser = {
 };
 
 const Login: React.FC = () => {
-  const { setInitialState } = useModel('@@initialState');
+  const { setInitialState, initialState } = useModel('@@initialState');
   const { run: getOsSystem } = useModel('useSystem');
   const [validateStatus, setValidateStatus] = useState<{
     username: ValidateStatus;
@@ -28,21 +29,20 @@ const Login: React.FC = () => {
       // 登录
       const { data } = await postLogin(values);
 
-      flushSync(() => {
-        setInitialState((s: any) => ({
-          ...s,
+      if (data) {
+        // 请求 Dashboard
+        const systemData = await getOsSystem();
+
+        message.success('登录成功');
+        localStorage.setItem('accessToken', data);
+        const urlParams = new URL(window.location.href).searchParams;
+        history.push(urlParams.get('redirect') || '/');
+        setInitialState({
+          ...initialState,
           currentUser: values,
-        }));
-      });
-
-      message.success('登录成功');
-
-      localStorage.setItem('accessToken', data);
-      const urlParams = new URL(window.location.href).searchParams;
-      history.push(urlParams.get('redirect') || '/');
-
-      // 请求 Dashboard
-      getOsSystem();
+          product: systemData.hardWareInfo.product || Product.COMMON,
+        });
+      }
 
       return true;
     } catch (error) {
