@@ -2,51 +2,72 @@ import loginIcon from '@/assets/loginLogo.svg';
 import { message, modal } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
 import { COPYRIGHT, DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';
-import { Product } from '@/utils/enum';
+import type { ProFormInstance, Settings as LayoutSettings } from '@ant-design/pro-components';
 import { DefaultFooter, LoginForm, ProFormText } from '@ant-design/pro-components';
-import { Helmet, useModel } from '@umijs/max';
+import { Helmet, history, useModel } from '@umijs/max';
 import { Rule } from 'antd/es/form';
 import type { ValidateStatus } from 'antd/es/form/FormItem';
 
-import { useState } from 'react';
-import { history } from 'umi';
+import { useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 
 export type CurrentUser = {
   username: string;
   password: string;
 };
 
+const defaultSettings = {
+  navTheme: 'light',
+  layout: 'mix',
+  contentWidth: 'Fluid',
+  fixedHeader: true,
+  fixSiderbar: true,
+  colorWeak: false,
+  splitMenus: false,
+  title: '',
+  // pwa: false,
+  logo: '/logo.svg',
+  iconfontUrl: '',
+  menu: { locale: false },
+  token: {
+    header: {
+      colorBgHeader: '#292f33',
+      colorHeaderTitle: '#fff',
+      colorTextMenuSelected: '#fff',
+      colorTextRightActionsItem: '#dfdfdf',
+      colorTextMenuActive: 'rgba(255,255,255,0.85)',
+      colorBgMenuItemSelected: '#22272b',
+      colorTextMenu: '#dfdfdf',
+      colorTextMenuSecondary: '#dfdfdf',
+    },
+  },
+};
+
 const Login: React.FC = () => {
-  const { setInitialState, initialState } = useModel('@@initialState');
-  const { run: getOsSystem } = useModel('useSystem');
+  const { setInitialState } = useModel('@@initialState');
+  const { product } = useModel('useSystem');
+  const formRef = useRef<ProFormInstance>();
   const [validateStatus, setValidateStatus] = useState<{
     username: ValidateStatus;
     password: ValidateStatus;
   }>({ username: '', password: '' });
 
-  const handleSubmit = async (values: CurrentUser) => {
+  const handleOnFinish = async (values: CurrentUser) => {
     try {
-      // 登录
       const { data } = await postLogin(values);
-
-      if (data) {
-        // 请求 Dashboard
-        const systemData = await getOsSystem();
-
-        message.success('登录成功');
-        localStorage.setItem('accessToken', data);
-        const urlParams = new URL(window.location.href).searchParams;
-        history.push(urlParams.get('redirect') || '/');
+      flushSync(() =>
         setInitialState({
-          ...initialState,
-          currentUser: values,
-          product: systemData.hardWareInfo.product || Product.COMMON,
-        });
-      }
+          currentUser: formRef.current?.getFieldsValue(),
+          product,
+          settings: defaultSettings as Partial<LayoutSettings>,
+        }),
+      );
 
-      return true;
+      history.push('/');
+      message.success('登录成功');
+      localStorage.setItem('accessToken', data);
     } catch (error) {
-      return false;
+      console.error(error);
     }
   };
 
@@ -58,6 +79,7 @@ const Login: React.FC = () => {
       <div className="flex justify-center flex-1 py-32">
         <div className="rhilex-login-form-wrapper">
           <LoginForm
+            formRef={formRef}
             requiredMark={false}
             contentStyle={{
               minWidth: 280,
@@ -65,7 +87,7 @@ const Login: React.FC = () => {
             }}
             title={<img alt="logo" src={loginIcon} style={{ width: 160 }} />}
             subTitle={DEFAULT_SUBTITLE}
-            onFinish={handleSubmit}
+            onFinish={handleOnFinish}
           >
             <>
               <ProFormText

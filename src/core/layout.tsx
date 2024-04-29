@@ -16,9 +16,8 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
     siderWidth: 208,
     rightContentRender: () => <RightContent />,
     onPageChange: () => {
-      const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== LOGIN_PATH) {
+      if (!initialState?.currentUser) {
         history.push(LOGIN_PATH);
       }
     },

@@ -252,7 +252,13 @@ const FirmwareConfig = () => {
               恢复出厂
             </Button>
           </Space>
-          <Modal title="上传固件" open={showProgress} footer={false}>
+          <Modal
+            title="上传固件"
+            open={showProgress}
+            footer={false}
+            onCancel={() => setOpen(false)}
+            destroyOnClose
+          >
             <Progress
               percent={uploadProgress}
               size="small"

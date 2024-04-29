@@ -12,10 +12,9 @@ async function getInitialState(): Promise<{
   currentUser?: CurrentUser;
   product?: Product | string;
 }> {
+  // 获取产品
+  const { data } = await getOsSystem();
   if (history.location.pathname !== LOGIN_PATH) {
-    // 获取产品
-    const { data } = await getOsSystem();
-
     return {
       currentUser: { username: 'rhilex', password: '12345678' },
       settings: defaultSettings as Partial<LayoutSettings>,
@@ -24,7 +23,7 @@ async function getInitialState(): Promise<{
   }
 
   return {
-    settings: defaultSettings as Partial<LayoutSettings>,
+    settings: {},
   };
 }
 

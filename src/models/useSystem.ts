@@ -37,7 +37,7 @@ const useSystem = () => {
   const { data, run, cancel } = useRequest(() => getOsSystem(), {
     formatResult: (res) => res.data,
     pollingInterval: 5000,
-    ready: !!accessToken,
+    // ready: !!accessToken,
     onSuccess: (res) => {
       if (!res) return;
       const { cpuPercent, osDist } = res?.hardWareInfo;
