@@ -209,11 +209,11 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
                       formRef.current?.setFieldsValue(detail ? detail : initialValue);
                     }}
                   >
-                    <Button>重置</Button>
+                    <Button>{formatMessage({ id: 'button.reset' })}</Button>
                   </Popconfirm>
 
                   <Button key="submit" type="primary" onClick={submit} loading={loading}>
-                    提交
+                    {formatMessage({ id: 'button.submit' })}
                   </Button>
                 </FooterToolbar>
               ),

@@ -59,7 +59,7 @@ const Outend = () => {
       title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       key: 'option',
-      width: 210,
+      width: 230,
       fixed: 'right',
       render: (_, { uuid }) => [
         <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
@@ -79,7 +79,12 @@ const Outend = () => {
           key="advance-action"
           menu={{
             items: [
-              { key: 'restart', label: '重启资源', icon: <PoweroffOutlined />, danger: true },
+              {
+                key: 'restart',
+                label: formatMessage({ id: 'button.restartSource' }),
+                icon: <PoweroffOutlined />,
+                danger: true,
+              },
             ],
             onClick: ({ key }) => {
               switch (key) {
@@ -94,7 +99,7 @@ const Outend = () => {
           }}
         >
           <a>
-            高级操作 <DownOutlined />
+            {formatMessage({ id: 'button.advancedOption' })} <DownOutlined />
           </a>
         </Dropdown>,
       ],
@@ -125,7 +130,7 @@ const Outend = () => {
               onClick={() => history.push('/outend/new')}
               icon={<PlusOutlined />}
             >
-              新建
+              {formatMessage({ id: 'button.new' })}
             </Button>,
           ]}
         />
@@ -135,8 +140,8 @@ const Outend = () => {
         open={open}
         onCancel={() => setOpen(false)}
         title="确定执行此操作吗？"
-        okText="确定重启"
-        afterOkText="重启"
+        okText={formatMessage({ id: 'button.restart.comfirm' })}
+        afterOkText={formatMessage({ id: 'button.restart' })}
         content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"
         handleOnEnd={() => {
           actionRef.current?.reload();

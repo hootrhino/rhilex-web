@@ -155,7 +155,7 @@ const ExtendedProtocol = () => {
             setDetailConfig({ type: DetailModalType.LOG, open: true, uuid });
           }}
         >
-          日志
+          {formatMessage({ id: 'button.log' })}
         </a>,
         <a
           key="detail"
@@ -177,7 +177,7 @@ const ExtendedProtocol = () => {
             }
           }}
         >
-          {running ? '停止' : '启动'}
+          {running ? formatMessage({ id: 'button.stop' }) : formatMessage({ id: 'button.start' })}
         </a>,
         <a
           key="edit"
@@ -225,7 +225,7 @@ const ExtendedProtocol = () => {
               }}
               icon={<PlusOutlined />}
             >
-              新建
+              {formatMessage({ id: 'button.new' })}
             </Button>,
           ]}
         />

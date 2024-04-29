@@ -119,18 +119,31 @@ const Devices = () => {
         modal.error({
           title: '设备异常信息',
           content: <div className="flex flex-wrap">{res}</div>,
-          okText: '关闭',
+          okText: formatMessage({ id: 'button.close' }),
         }),
     },
   );
 
   const getMenuItems = ({ type = DeviceType.GENERIC_PROTOCOL, schemaId = '', state = 0 }) => {
     const baseItems = [
-      { key: 'restart', label: '重启设备', icon: <PoweroffOutlined />, danger: true },
+      {
+        key: 'restart',
+        label: formatMessage({ id: 'button.restartDevice' }),
+        icon: <PoweroffOutlined />,
+        danger: true,
+      },
     ] as ItemType[];
     const showErr = state === 0;
-    const errItem = { key: 'error', label: '查看异常', icon: <ExceptionOutlined /> };
-    const ruleItem = { key: 'rule', label: '规则配置', icon: <SettingOutlined /> };
+    const errItem = {
+      key: 'error',
+      label: formatMessage({ id: 'button.error' }),
+      icon: <ExceptionOutlined />,
+    };
+    const ruleItem = {
+      key: 'rule',
+      label: formatMessage({ id: 'button.ruleConfig' }),
+      icon: <SettingOutlined />,
+    };
     const schemaItem = { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> };
     const unbindItem = { key: 'unbind', label: '解绑数据模型', icon: <DisconnectOutlined /> };
 
@@ -144,7 +157,11 @@ const Devices = () => {
         newItems = [
           ...newItems,
           ruleItem,
-          { key: 'sub-device', label: '查看子设备', icon: <HddOutlined /> },
+          {
+            key: 'sub-device',
+            label: formatMessage({ id: 'button.subDevice' }),
+            icon: <HddOutlined />,
+          },
         ];
         break;
       case DeviceType.GENERIC_SNMP:
@@ -240,7 +257,7 @@ const Devices = () => {
   const actionColumns: ProColumns<Partial<DeviceItem>>[] = [
     {
       title: formatMessage({ id: 'table.option' }),
-      width: 210,
+      width: 230,
       fixed: 'right',
       key: 'option',
       valueType: 'option',
@@ -258,8 +275,8 @@ const Devices = () => {
             <Popconfirm
               title="确定要删除此设备?"
               onConfirm={() => remove({ uuid })}
-              okText="是"
-              cancelText="否"
+              okText={formatMessage({ id: 'button.yes' })}
+              cancelText={formatMessage({ id: 'button.no' })}
               key="remove"
             >
               <a>{formatMessage({ id: 'button.remove' })}</a>
@@ -271,7 +288,7 @@ const Devices = () => {
               }}
             >
               <a>
-                高级操作 <DownOutlined />
+                {formatMessage({ id: 'button.advancedOption' })} <DownOutlined />
               </a>
             </Dropdown>
           </Space>
@@ -297,7 +314,7 @@ const Devices = () => {
                   setGroupConfig({ ...DEFAULT_CONFIG, open: true });
                 }}
               >
-                新建
+                {formatMessage({ id: 'button.new' })}
               </Button>
             }
             headStyle={{ paddingInline: 16 }}
@@ -353,7 +370,7 @@ const Devices = () => {
                   icon={<PlusOutlined />}
                   onClick={() => history.push(`/device/${activeGroupKey}/new`)}
                 >
-                  新建
+                  {formatMessage({ id: 'button.new' })}
                 </Button>,
               ]}
             />
@@ -381,8 +398,8 @@ const Devices = () => {
         open={open}
         onCancel={() => setOpen(false)}
         title="确定执行设备重启操作吗？"
-        okText="确定重启"
-        afterOkText="重启"
+        okText={formatMessage({ id: 'button.restart.comfirm' })}
+        afterOkText={formatMessage({ id: 'button.restart' })}
         content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"
         handleOnEnd={() => {
           actionRef.current?.reload();

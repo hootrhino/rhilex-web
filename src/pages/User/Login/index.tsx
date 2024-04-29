@@ -4,7 +4,7 @@ import { postLogin } from '@/services/rulex/yonghuguanli';
 import { COPYRIGHT, DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';
 import type { ProFormInstance, Settings as LayoutSettings } from '@ant-design/pro-components';
 import { DefaultFooter, LoginForm, ProFormText } from '@ant-design/pro-components';
-import { Helmet, history, useModel } from '@umijs/max';
+import { Helmet, history, useIntl, useModel } from '@umijs/max';
 import { Rule } from 'antd/es/form';
 import type { ValidateStatus } from 'antd/es/form/FormItem';
 
@@ -47,6 +47,7 @@ const Login: React.FC = () => {
   const { setInitialState } = useModel('@@initialState');
   const { product } = useModel('useSystem');
   const formRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
   const [validateStatus, setValidateStatus] = useState<{
     username: ValidateStatus;
     password: ValidateStatus;
@@ -146,7 +147,7 @@ const Login: React.FC = () => {
                 });
               }}
             >
-              忘记密码 ？
+              {formatMessage({ id: 'button.forget' })} ？
             </a>
           </LoginForm>
         </div>

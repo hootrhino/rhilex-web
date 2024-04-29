@@ -6,7 +6,7 @@ import { DetailModalType } from '@/utils/enum';
 import { getName, handleNewMessage } from '@/utils/utils';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { history, useParams, useRequest } from '@umijs/max';
+import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useLocalStorageState } from 'ahooks';
 import { Button, Drawer, DrawerProps, Modal } from 'antd';
 import { useEffect } from 'react';
@@ -31,6 +31,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
   const [ruleLog, setLog] = useLocalStorageState<string[]>('rule-logs', {
     defaultValue: [],
   });
+  const { formatMessage } = useIntl();
 
   // 获取资源
   const { data: sources } = useRequest(() => getInendsList());
@@ -137,7 +138,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       open={props.open}
       footer={
         <Button type="primary" onClick={props?.onClose}>
-          关闭
+          {formatMessage({ id: 'button.close' })}
         </Button>
       }
       onCancel={props?.onClose}

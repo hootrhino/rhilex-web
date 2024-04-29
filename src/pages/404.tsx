@@ -1,4 +1,4 @@
-import { history } from '@umijs/max';
+import { FormattedMessage, history } from '@umijs/max';
 import { Button, Result } from 'antd';
 import React from 'react';
 
@@ -9,7 +9,7 @@ const NoFoundPage: React.FC = () => (
     subTitle="抱歉，你访问的页面不存在"
     extra={
       <Button type="primary" onClick={() => history.push('/')}>
-        返回首页
+        <FormattedMessage id="button.homePage" />
       </Button>
     }
   />

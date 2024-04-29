@@ -1,6 +1,7 @@
 import PageContainer from '@/components/PageContainer';
 import { PlusOutlined } from '@ant-design/icons';
 import { ProCard } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 import { Button } from 'antd';
 import { useState } from 'react';
 import PropertyList from './Property';
@@ -38,6 +39,7 @@ export type SchemaItem = {
 export type ActiveSchema = Omit<SchemaItem, 'schema'>;
 
 const SchemaMgt = () => {
+  const { formatMessage } = useIntl();
   const [activeSchema, setActiveSchema] = useState<ActiveSchema>({
     uuid: '',
     name: '',
@@ -52,7 +54,7 @@ const SchemaMgt = () => {
           title="数据模型列表"
           extra={
             <Button key="add" type="primary" icon={<PlusOutlined />} onClick={() => setOpen(true)}>
-              新建
+              {formatMessage({ id: 'button.new' })}
             </Button>
           }
         >

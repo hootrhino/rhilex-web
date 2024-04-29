@@ -1,7 +1,7 @@
 export default {
-  'button.ok': '确定',
-  'button.cancel': '取消',
-  'button.reset': '重置',
+  'button.ok': 'OK',
+  'button.cancel': 'Cancel',
+  'button.reset': 'Reset',
   'button.submit': '提交',
   'button.stop': '停止',
   'button.start': '启动',

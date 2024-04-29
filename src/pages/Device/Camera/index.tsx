@@ -1,5 +1,6 @@
 import { cn, getPlayAddress } from '@/utils/utils';
 import { SyncOutlined } from '@ant-design/icons';
+import { useIntl } from '@umijs/max';
 import type { ModalProps } from 'antd';
 import { Button, Modal } from 'antd';
 import { useEffect, useState } from 'react';
@@ -12,6 +13,7 @@ type CameraDetailProps = ModalProps & {
 
 const CameraDetail = ({ deviceName = '', outputMode, onCancel, ...props }: CameraDetailProps) => {
   const [playUrl, setPlayUrl] = useState<string>('');
+  const { formatMessage } = useIntl();
 
   const getAddress = () => {
     const address = getPlayAddress(deviceName || '', outputMode, 'pull');
@@ -48,7 +50,7 @@ const CameraDetail = ({ deviceName = '', outputMode, onCancel, ...props }: Camer
       }}
       footer={
         <Button type="primary" onClick={handleOnCancel}>
-          关闭
+          {formatMessage({ id: 'button.close' })}
         </Button>
       }
       {...props}

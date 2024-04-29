@@ -5,7 +5,7 @@ import {
   SettingOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { history, useModel } from '@umijs/max';
+import { history, useIntl, useModel } from '@umijs/max';
 import { App, Avatar, Spin } from 'antd';
 import type { MenuInfo } from 'rc-menu/es/interface';
 import React, { useCallback } from 'react';
@@ -19,6 +19,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
   const { setActiveKey } = useModel('useSystem');
   const { logout } = useModel('useUser');
   const { initialState } = useModel('@@initialState');
+  const { formatMessage } = useIntl();
   const { currentUser } = initialState || {};
 
   const { modal } = App.useApp();
@@ -31,8 +32,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
       icon: <ExclamationCircleOutlined />,
       content: '确定要退出登录吗?',
       onOk: logout,
-      okText: '确定',
-      cancelText: '取消',
+      okText: formatMessage({ id: 'button.ok' }),
+      cancelText: formatMessage({ id: 'button.cancel' }),
     });
   };
 

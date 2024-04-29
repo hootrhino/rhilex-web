@@ -10,7 +10,7 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import type { CollapseProps } from 'antd';
 import { Button, Collapse, Divider, Space, theme } from 'antd';
 import { useEffect, useRef, useState } from 'react';
@@ -60,6 +60,7 @@ const title = {
 const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
   const { token } = theme.useToken();
   const formRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
   const [valModalConfig, setValConfig] = useState<{ open: boolean; data: TplItem }>({
     open: false,
     data: {},
@@ -245,7 +246,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
           render: () => {
             return [
               <Button key="cancel" onClick={handleOnCancel}>
-                取消
+                {formatMessage({ id: 'button.cancel' })}
               </Button>,
               <CopyButton data={copyData} key="copy" />,
             ];

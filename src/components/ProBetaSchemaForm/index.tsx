@@ -3,6 +3,7 @@ import { omit } from '@/utils/redash';
 import { validateFormItem } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { BetaSchemaForm, FooterToolbar, ProCard } from '@ant-design/pro-components';
+import { FormattedMessage, useIntl } from '@umijs/max';
 import { Button, Popconfirm } from 'antd';
 import type { Rule } from 'antd/es/form';
 
@@ -103,7 +104,7 @@ const processColumns = (columns: ProColumnsType[]) =>
               ...col.fieldProps,
               creatorButtonProps: {
                 position: 'top',
-                creatorButtonText: '新增一行',
+                creatorButtonText: <FormattedMessage id="button.new.formList" />,
                 ...col.creatorButtonProps,
               },
               creatorRecord: col?.initialValue,
@@ -135,6 +136,8 @@ const ProBetaSchemaForm = ({
   handleOnReset,
   ...props
 }: ProBetaSchemaFormProps) => {
+  const { formatMessage } = useIntl();
+
   return (
     <ProCard>
       <BetaSchemaForm
@@ -151,11 +154,11 @@ const ProBetaSchemaForm = ({
                   handleOnReset();
                 }}
               >
-                <Button>重置</Button>
+                <Button>{formatMessage({ id: 'button.reset' })}</Button>
               </Popconfirm>
 
               <Button key="submit" type="primary" onClick={submit} loading={loading}>
-                提交
+                {formatMessage({ id: 'button.submit' })}
               </Button>
             </FooterToolbar>
           ),

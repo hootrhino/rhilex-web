@@ -122,17 +122,17 @@ const RuleConfig = ({
       title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       key: 'option',
-      width: 200,
+      width: 230,
       fixed: 'right',
       render: (_, { uuid }) => [
         <a key="debug" onClick={() => setDebugConfig({ open: true, uuid })}>
-          测试
+          {formatMessage({ id: 'button.test' })}
         </a>,
         <a
           key="log"
           onClick={() => setDetailConfig({ open: true, type: DetailModalType.LOG, uuid })}
         >
-          日志
+          {formatMessage({ id: 'button.log' })}
         </a>,
         <a
           key="detail"
@@ -176,7 +176,7 @@ const RuleConfig = ({
               }}
               icon={<PlusOutlined />}
             >
-              新建
+              {formatMessage({ id: 'button.new' })}
             </Button>,
           ]}
         />

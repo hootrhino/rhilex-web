@@ -71,7 +71,7 @@ const CustomRule = () => {
                 setTplId('');
               }}
             >
-              新建
+              {formatMessage({ id: 'button.new' })}
             </Button>,
           ];
         }}

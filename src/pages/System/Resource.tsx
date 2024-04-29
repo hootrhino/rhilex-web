@@ -2,11 +2,12 @@ import { modal } from '@/components/PopupHack';
 import { getOsOsRelease } from '@/services/rulex/xitongshuju';
 import { RingProgress } from '@ant-design/plots';
 import { ProCard, StatisticCard } from '@ant-design/pro-components';
-import { useModel, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Descriptions, Space } from 'antd';
 
 const Resource = () => {
   const { dataSource } = useModel('useSystem');
+  const { formatMessage } = useIntl();
   const { memPercent, diskInfo, cpuPercent, version, osUpTime, osArch, product } =
     dataSource?.hardWareInfo || {};
 
@@ -51,7 +52,7 @@ const Resource = () => {
         <span className="text-[#585858] text-[13px]">
           操作系统 {osArch}
           <a className="pl-[5px]" onClick={() => modal.info(detailConfig)}>
-            查看详情
+            {formatMessage({ id: 'button.checkDetail' })}
           </a>
         </span>
       </Space>

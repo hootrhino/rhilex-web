@@ -45,19 +45,19 @@ const UserConfig = () => {
         submitter={{
           render: ({ reset, submit }) => (
             <Space>
-              <Button onClick={reset}>重置</Button>
+              <Button onClick={reset}>{formatMessage({ id: 'button.reset' })}</Button>
               <Button
                 type="primary"
                 onClick={() =>
                   modal.confirm({
                     title: '确定修改用户名/密码并重新登录吗？',
                     onOk: submit,
-                    okText: '确定',
-                    cancelText: '取消',
+                    okText: formatMessage({ id: 'button.ok' }),
+                    cancelText: formatMessage({ id: 'button.cancel' }),
                   })
                 }
               >
-                提交
+                {formatMessage({ id: 'button.submit' })}
               </Button>
             </Space>
           ),

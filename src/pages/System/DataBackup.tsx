@@ -5,13 +5,14 @@ import { endsWith } from '@/utils/redash';
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormUploadDragger } from '@ant-design/pro-components';
-import { history, useModel } from '@umijs/max';
+import { history, useIntl, useModel } from '@umijs/max';
 import { Button, Space, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
 const DataBackupConfig = () => {
   const { run, cancel, activeKey } = useModel('useSystem');
   const formRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
   const [uploadFile, setUploadFile] = useState<File>();
   const [errorMsg, setMsg] = useState<string>('');
@@ -111,7 +112,7 @@ const DataBackupConfig = () => {
         onCancel={() => setOpen(false)}
         title="确定执行此操作吗？"
         okText="确认上传"
-        afterOkText="重启"
+        afterOkText={formatMessage({ id: 'button.restart' })}
         content="上传时请确认版本，版本错误会导致失败，有可能会引起设备故障，请谨慎操作"
         handleOnEnd={handleOnEnd}
         handleOnOk={async () => {

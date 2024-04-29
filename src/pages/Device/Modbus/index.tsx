@@ -419,7 +419,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
               }}
             >
               <Tooltip title="以当前行为模板新建一行数据">
-                <a>复制</a>
+                <a>{formatMessage({ id: 'button.copy' })}</a>
               </Tooltip>
             </EditableProTable.RecordCreator>
             <a
@@ -438,8 +438,8 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
                   remove({ device_uuid: deviceId, uuids: [record?.uuid] });
                 }
               }}
-              okText="是"
-              cancelText="否"
+              okText={formatMessage({ id: 'button.yes' })}
+              cancelText={formatMessage({ id: 'button.no' })}
               key="remove"
             >
               <a>{formatMessage({ id: 'button.remove' })}</a>
@@ -447,7 +447,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
             {record?.status === 0 && (
               <Dropdown
                 menu={{
-                  items: [{ key: 'error', label: '查看异常' }],
+                  items: [{ key: 'error', label: formatMessage({ id: 'button.error' }) }],
                   onClick: () => {
                     modal.error({
                       title: '点位异常信息',
@@ -487,8 +487,8 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
           width: '50%',
           content: <UploadRule fileName={file?.name} />,
           onOk: () => deviceId && upload(deviceId, file),
-          okText: '确定',
-          cancelText: '取消',
+          okText: formatMessage({ id: 'button.ok' }),
+          cancelText: formatMessage({ id: 'button.cancel' }),
         });
         return Upload.LIST_IGNORE;
       }}
@@ -521,8 +521,8 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
           title: '批量删除点位',
           content: '此操作会一次性删除多个点位，请谨慎处理!',
           onOk: handleOnBatchRemove,
-          okText: '确定',
-          cancelText: '取消',
+          okText: formatMessage({ id: 'button.ok' }),
+          cancelText: formatMessage({ id: 'button.cancel' }),
         })
       }
     >

@@ -3,7 +3,7 @@ import { getGoodsDetail } from '@/services/rulex/kuozhanxieyi';
 import { DetailModalType } from '@/utils/enum';
 import { handleNewMessage } from '@/utils/utils';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { useModel, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { useLocalStorageState } from 'ahooks';
 import type { DrawerProps } from 'antd';
 import { Button, Drawer, Modal } from 'antd';
@@ -26,6 +26,7 @@ const Detail = ({ config, onClose, ...props }: DetailProps) => {
   const [goodsConsole, setConsole] = useLocalStorageState<string[]>('goods-console', {
     defaultValue: [],
   });
+  const { formatMessage } = useIntl();
 
   const { run: getDetail, data: detail } = useRequest(
     (params: API.getGoodsDetailParams) => getGoodsDetail(params),
@@ -71,7 +72,7 @@ const Detail = ({ config, onClose, ...props }: DetailProps) => {
       open={props.open}
       footer={
         <Button type="primary" onClick={onClose}>
-          关闭
+          {formatMessage({ id: 'button.close' })}
         </Button>
       }
       onCancel={onClose}

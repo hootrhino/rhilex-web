@@ -1,4 +1,5 @@
 import { ExclamationCircleFilled } from '@ant-design/icons';
+import { useIntl } from '@umijs/max';
 import { useCountDown } from 'ahooks';
 import type { ModalProps } from 'antd';
 import { Button, Modal, Space } from 'antd';
@@ -23,6 +24,7 @@ const ProConfirmModal = ({
   ...props
 }: ProConfirmModalProps) => {
   const [targetDate, setTargetDate] = useState<number>();
+  const { formatMessage } = useIntl();
 
   const [countdown] = useCountDown({
     targetDate,
@@ -47,7 +49,7 @@ const ProConfirmModal = ({
       width={400}
       footer={
         <Space>
-          <Button onClick={onCancel}>取消</Button>
+          <Button onClick={onCancel}>{formatMessage({ id: 'button.cancel' })}</Button>
           <Button
             type="primary"
             onClick={async () => {

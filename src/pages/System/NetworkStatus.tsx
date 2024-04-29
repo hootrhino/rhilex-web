@@ -110,7 +110,7 @@ const NetworkStatus = () => {
         destroyOnClose
         footer={
           <Button type="primary" onClick={() => setOpen(false)}>
-            关闭
+            {formatMessage({ id: 'button.close' })}
           </Button>
         }
         onCancel={() => setOpen(false)}

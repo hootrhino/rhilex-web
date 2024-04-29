@@ -117,7 +117,7 @@ const ShellySubDevice = () => {
             title: `${item.name} 设备详情`,
             width: '45%',
             content: <Detail mac={item.mac} deviceId={deviceId} ip={item.ip} />,
-            okText: '关闭',
+            okText: formatMessage({ id: 'button.close' }),
             closable: true,
           });
         }
@@ -153,7 +153,7 @@ const ShellySubDevice = () => {
 
   const renderMenuItem = [
     {
-      label: '查看详情',
+      label: formatMessage({ id: 'button.checkDetail' }),
       key: 'detail',
       icon: <FileSearchOutlined />,
     },

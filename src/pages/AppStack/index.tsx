@@ -118,8 +118,8 @@ const AppStack = () => {
         <Popconfirm
           title={formatMessage({ id: 'appStack.popconfirm.title.remove' })}
           onConfirm={() => uuid && remove({ uuid })}
-          okText="是"
-          cancelText="否"
+          okText={formatMessage({ id: 'button.yes' })}
+          cancelText={formatMessage({ id: 'button.no' })}
           key="remove"
         >
           <a>{formatMessage({ id: 'button.remove' })}</a>

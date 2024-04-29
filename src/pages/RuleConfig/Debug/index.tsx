@@ -6,7 +6,7 @@ import { postRulesTestDevice } from '@/services/rulex/guizeguanli';
 import { handleNewMessage } from '@/utils/utils';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProForm } from '@ant-design/pro-components';
-import { useModel, useParams } from '@umijs/max';
+import { useIntl, useModel, useParams } from '@umijs/max';
 import { Button } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import type { RuleType } from '..';
@@ -24,6 +24,7 @@ const Debug = ({ uuid, type, testType, ...props }: DebugProps) => {
   const { latestMessage } = useModel('useWebsocket');
   const { deviceId } = useParams();
   const formRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
   const [debugLog, setDebugLog] = useState<string[]>([]);
 
   useEffect(() => {
@@ -54,10 +55,10 @@ const Debug = ({ uuid, type, testType, ...props }: DebugProps) => {
                 setDebugLog([]);
               }}
             >
-              重置
+              {formatMessage({ id: 'button.reset' })}
             </Button>,
             <Button key="debug" type="primary" onClick={submit}>
-              测试
+              {formatMessage({ id: 'button.test' })}
             </Button>,
           ];
         },

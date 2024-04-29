@@ -66,7 +66,7 @@ const FourGConfig = () => {
                   content: '重启 4G 网卡会造成短时间内移动网络处于离线状态，请谨慎操作',
                   onOk: restart,
                   okText: '确认重启',
-                  cancelText: '取消',
+                  cancelText: formatMessage({ id: 'button.cancel' }),
                 })
               }
               icon={<PoweroffOutlined />}
