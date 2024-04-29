@@ -4,13 +4,14 @@ import { green } from '@ant-design/colors';
 import { PoweroffOutlined, ReloadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormText } from '@ant-design/pro-components';
-import { useIntl, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Progress, Space } from 'antd';
 import { useRef } from 'react';
 
 const FourGConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
+  const { activeKey } = useModel('useSystem');
 
   // 详情
   const {
@@ -18,6 +19,7 @@ const FourGConfig = () => {
     run: getDetail,
     loading: detailLoading,
   } = useRequest(() => getMn4GInfo(), {
+    refreshDeps: [activeKey],
     onSuccess: (data) => {
       formRef.current?.setFieldsValue({ ...data });
     },

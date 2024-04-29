@@ -2,7 +2,7 @@ import { message } from '@/components/PopupHack';
 import { getMn4GApn, postMn4GApn } from '@/services/rulex/yidongwangluo4Gshezhi';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { useIntl, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { useEffect, useRef } from 'react';
 
 type UpdateParams = {
@@ -27,8 +27,11 @@ const initialValue = {
 const APNConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
+  const { activeKey } = useModel('useSystem');
 
-  const { data: detail } = useRequest(() => getMn4GApn());
+  const { data: detail } = useRequest(() => getMn4GApn(), {
+    refreshDeps: [activeKey],
+  });
 
   const handleOnFinish = async (values: UpdateParams) => {
     try {
@@ -46,7 +49,7 @@ const APNConfig = () => {
     } else {
       formRef.current?.setFieldsValue(initialValue);
     }
-  }, [detail]);
+  }, [detail, activeKey]);
 
   return (
     <ProForm
