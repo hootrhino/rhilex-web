@@ -78,30 +78,81 @@ const FirmwareConfig = () => {
   };
 
   // 上传固件
+  // const handleFileUpload = (file: RcFile | undefined) => {
+  //   if (!file) return;
+  //   const formData = new FormData();
+  //   formData.append('file', file);
+  //   fetch('/api/v1/firmware/upload', {
+  //     method: 'POST',
+  //     body: formData,
+  //   })
+  //     .then((response) => response.json())
+  //     .then(({ code }) => {
+  //       if (code === 200) {
+  //         setProgress(100);
+  //         message.success(formatMessage({ id: 'message.success.upload' }));
+  //         setTimeout(() => {
+  //           setShowProgress(false);
+  //           setProgress(0);
+  //         }, 500);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error:', error);
+  //       setShowProgress(false);
+  //       setProgress(0);
+  //     });
+  // };
   const handleFileUpload = (file: RcFile | undefined) => {
     if (!file) return;
     const formData = new FormData();
     formData.append('file', file);
-    fetch('/api/v1/firmware/upload', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then(({ code }) => {
-        if (code === 200) {
-          setProgress(100);
-          message.success(formatMessage({ id: 'message.success.upload' }));
-          setTimeout(() => {
-            setShowProgress(false);
-            setProgress(0);
-          }, 500);
+
+    // 创建一个 XMLHttpRequest 对象
+    const xhr = new XMLHttpRequest();
+
+    // 设置上传的 URL
+    xhr.open('POST', '/api/v1/firmware/upload', true);
+    setShowProgress(true);
+
+    // 监听上传进度
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        // 计算上传进度
+        const progressPercentage = Math.round((event.loaded / event.total) * 100);
+        // 在这里更新进度条的显示
+        if (progressPercentage === 100 && xhr.status === 200) {
+          setProgress(progressPercentage);
+        } else {
+          setProgress(progressPercentage - 1);
         }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        setShowProgress(false);
-        setProgress(0);
-      });
+      }
+    };
+
+    // 设置请求头部
+    // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+
+    // 处理上传成功的逻辑
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        setProgress(100);
+        message.success(formatMessage({ id: 'message.success.upload' }));
+        setTimeout(() => {
+          setShowProgress(false);
+          setProgress(0);
+        }, 500);
+      }
+    };
+
+    // 处理上传错误的逻辑
+    xhr.onerror = () => {
+      console.error('上传失败，请稍后再试');
+      setShowProgress(false);
+      setProgress(0);
+    };
+
+    // 发送上传请求
+    xhr.send(formData);
   };
 
   return (
@@ -139,33 +190,18 @@ const FirmwareConfig = () => {
             <Upload
               accept="application/zip"
               showUploadList={false}
-              action="/usr/local/upload/Firmware/"
               beforeUpload={(file) => {
                 const isZip = file.type === 'application/zip' || endsWith(file?.name, '.zip');
 
                 if (!isZip) {
                   message.error('仅支持 zip 格式文件，请检查上传文件格式');
+                  // return false;
                   return Upload.LIST_IGNORE;
                 }
 
-                return new Promise((resolve) => {
-                  resolve(file);
-                });
-              }}
-              onChange={(info) => {
-                const file = info.file;
+                handleFileUpload(file);
 
-                if (file?.percent === 100) {
-                  if (file?.status === 'done') {
-                    handleFileUpload(file?.originFileObj);
-                  }
-                  setProgress(99);
-                } else {
-                  if (file?.percent === 0) {
-                    setShowProgress(true);
-                  }
-                  setProgress(Number(file?.percent?.toFixed(2)) || 0);
-                }
+                return false;
               }}
             >
               <Button key="upload" type="primary" icon={<UploadOutlined />}>
