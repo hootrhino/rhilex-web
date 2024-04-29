@@ -104,7 +104,7 @@ export default {
   'system.button.backup.runningLog': '日志下载',
   'system.button.backup.snapshot': '运行快照',
   'system.button.backup.download': '备份下载',
-  'system.button.backup.upload': '备份上传',
+  'system.button.backup.upload': '备份恢复',
   'system.button.firmware.upload': '上传固件',
   'system.button.firmware.upgrade': '确定升级',
   'system.button.firmware.restart': '重启固件',

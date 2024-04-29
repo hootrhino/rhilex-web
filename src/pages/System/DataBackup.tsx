@@ -71,8 +71,13 @@ const DataBackupConfig = () => {
               >
                 备份下载
               </Button>
-              <Button type="primary" onClick={() => setOpen(true)} icon={<UploadOutlined />}>
-                备份上传
+              <Button
+                type="primary"
+                onClick={() => setOpen(true)}
+                icon={<UploadOutlined />}
+                disabled={!uploadFile}
+              >
+                备份恢复
               </Button>
             </Space>
           ),

@@ -77,32 +77,6 @@ const FirmwareConfig = () => {
     message.success(errorMsg ? errorMsg : `${confirmConfig.afterOkText}成功`);
   };
 
-  // 上传固件
-  // const handleFileUpload = (file: RcFile | undefined) => {
-  //   if (!file) return;
-  //   const formData = new FormData();
-  //   formData.append('file', file);
-  //   fetch('/api/v1/firmware/upload', {
-  //     method: 'POST',
-  //     body: formData,
-  //   })
-  //     .then((response) => response.json())
-  //     .then(({ code }) => {
-  //       if (code === 200) {
-  //         setProgress(100);
-  //         message.success(formatMessage({ id: 'message.success.upload' }));
-  //         setTimeout(() => {
-  //           setShowProgress(false);
-  //           setProgress(0);
-  //         }, 500);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error:', error);
-  //       setShowProgress(false);
-  //       setProgress(0);
-  //     });
-  // };
   const handleFileUpload = (file: RcFile | undefined) => {
     if (!file) return;
     const formData = new FormData();
@@ -128,9 +102,6 @@ const FirmwareConfig = () => {
         }
       }
     };
-
-    // 设置请求头部
-    // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
 
     // 处理上传成功的逻辑
     xhr.onload = () => {
