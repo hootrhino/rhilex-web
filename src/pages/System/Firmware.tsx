@@ -139,6 +139,7 @@ const FirmwareConfig = () => {
             <Upload
               accept="application/zip"
               showUploadList={false}
+              action="/usr/local/upload/Firmware/"
               beforeUpload={(file) => {
                 const isZip = file.type === 'application/zip' || endsWith(file?.name, '.zip');
 
