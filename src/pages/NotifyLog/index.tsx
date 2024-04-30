@@ -1,13 +1,13 @@
 import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import StateTag, { StateType } from '@/components/StateTag';
-import { getNotifyList, putNotifyClear, putNotifyRead } from '@/services/rulex/zhanneitongzhi';
+import { putNotifyClear, putNotifyRead } from '@/services/rulex/zhanneitongzhi';
 import { ClearOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Button } from 'antd';
-import { useRef } from 'react';
+import { useEffect } from 'react';
 
 export type NotifyLogItem = {
   uuid: string;
@@ -20,12 +20,10 @@ export type NotifyLogItem = {
 };
 
 const NotifyLog = () => {
-  const actionRef = useRef<ActionType>();
-  const { refresh } = useModel('useNotify');
+  const { refresh, data, run } = useModel('useNotify');
   const { formatMessage } = useIntl();
 
   const handleOnSuccess = () => {
-    actionRef.current?.reload();
     refresh();
     message.success('设置成功');
   };
@@ -76,30 +74,26 @@ const NotifyLog = () => {
     },
   ];
 
+  useEffect(() => {
+    run();
+  }, []);
+
   return (
     <>
       <PageContainer>
         <ProTable
           rowKey="uuid"
-          actionRef={actionRef}
           columns={columns}
           search={false}
           pagination={false}
-          request={async () => {
-            const { data } = await getNotifyList();
-
-            return Promise.resolve({
-              data,
-              success: true,
-            });
-          }}
+          dataSource={data}
           toolBarRender={() => [
             <Button type="primary" key="clear" onClick={clear} icon={<ClearOutlined />}>
               全部已读
             </Button>,
           ]}
           expandable={{
-            expandedRowRender: ({ info }) => (
+            expandedRowRender: ({ info }: any) => (
               <>
                 <div>日志详情:</div>
                 <div>{info}</div>

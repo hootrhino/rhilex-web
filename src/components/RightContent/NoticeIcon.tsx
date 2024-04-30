@@ -3,10 +3,15 @@ import { ProList } from '@ant-design/pro-components';
 import { history, useModel } from '@umijs/max';
 import { Badge, Popover } from 'antd';
 import dayjs from 'dayjs';
+import { useEffect } from 'react';
 import StateTag, { StateType } from '../StateTag';
 
 const NoticeIcon = () => {
-  const { data } = useModel('useNotify');
+  const { data, run } = useModel('useNotify');
+
+  useEffect(() => {
+    run();
+  }, []);
 
   const content = (
     <ProList
@@ -24,6 +29,7 @@ const NoticeIcon = () => {
       metas={{
         title: {
           dataIndex: 'summary',
+          render: (_, { summary }) => <div className="w-[180px] truncate">{summary}</div>,
         },
         description: {
           render: (_, { ts }) => {
