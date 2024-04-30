@@ -46,7 +46,11 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
 
   return (
     <ModalForm
-      title={initialValue?.uuid ? '更新属性' : '新建属性'}
+      title={
+        initialValue?.uuid
+          ? formatMessage({ id: 'schemaMgt.modal.title.property.update' })
+          : formatMessage({ id: 'schemaMgt.modal.title.property.new' })
+      }
       formRef={formRef}
       width="50%"
       initialValues={defaultProperty}
@@ -63,27 +67,33 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
       <ProForm.Group>
         <ProFormText
           name="label"
-          label="属性名称"
-          placeholder="请输入属性名称"
-          rules={[{ required: true, message: '请输入属性名称' }]}
+          label={formatMessage({ id: 'schemaMgt.form.title.label' })}
+          placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.label' })}
+          rules={[
+            { required: true, message: formatMessage({ id: 'schemaMgt.form.placeholder.label' }) },
+          ]}
           width="md"
         />
         <ProFormText
           name="name"
-          label="标志符"
-          placeholder="请输入标志符"
-          rules={[{ required: true, message: '请输入标志符' }]}
+          label={formatMessage({ id: 'schemaMgt.form.title.name' })}
+          placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.name' })}
+          rules={[
+            { required: true, message: formatMessage({ id: 'schemaMgt.form.placeholder.name' }) },
+          ]}
           width="md"
         />
       </ProForm.Group>
 
       <ProFormSelect
         name="type"
-        label="数据类型"
+        label={formatMessage({ id: 'schemaMgt.form.title.type' })}
         valueEnum={typeOption}
-        placeholder="请选择数据类型"
+        placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.type' })}
         width="md"
-        rules={[{ required: true, message: '请选择数据类型' }]}
+        rules={[
+          { required: true, message: formatMessage({ id: 'schemaMgt.form.placeholder.type' }) },
+        ]}
       />
       <ProFormDependency name={['type']} labelCol={{ span: 4 }}>
         {({ type }) => {
@@ -94,20 +104,25 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
               <ProFormDigit
                 name={['rule', 'max']}
                 width="md"
-                label="最大长度"
-                placeholder="请输入最大长度"
+                label={formatMessage({ id: 'schemaMgt.form.title.max' })}
+                placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.max' })}
               />
             );
           }
           if (type === Type.INTEGER) {
             dom = (
               <ProFormDigitRange
-                label="取值范围"
+                label={formatMessage({ id: 'schemaMgt.form.title.range' })}
                 name={['rule', 'range']}
                 separator="~"
-                placeholder={['最小值', '最大值']}
+                placeholder={[
+                  formatMessage({ id: 'schemaMgt.form.title.range.min' }),
+                  formatMessage({ id: 'schemaMgt.form.title.range.max' }),
+                ]}
                 separatorWidth={60}
-                rules={[{ required: true, message: '请输入取值范围' }]}
+                rules={[
+                  { required: true, message: formatMessage({ id: 'schemaMgt.form.rules.range' }) },
+                ]}
                 transform={(values) => ({
                   rule: {
                     min: values?.[0],
@@ -122,12 +137,20 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
               <>
                 <div className="w-[250px]">
                   <ProFormDigitRange
-                    label="取值范围"
+                    label={formatMessage({ id: 'schemaMgt.form.title.range' })}
                     name={['rule', 'range']}
                     separator="~"
-                    placeholder={['最小值', '最大值']}
+                    placeholder={[
+                      formatMessage({ id: 'schemaMgt.form.title.range.min' }),
+                      formatMessage({ id: 'schemaMgt.form.title.range.max' }),
+                    ]}
                     separatorWidth={30}
-                    rules={[{ required: true, message: '请输入取值范围' }]}
+                    rules={[
+                      {
+                        required: true,
+                        message: formatMessage({ id: 'schemaMgt.form.rules.range' }),
+                      },
+                    ]}
                     transform={(values) => ({
                       rule: {
                         min: values?.[0],
@@ -140,9 +163,14 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
                 <ProFormDigit
                   name={['rule', 'round']}
                   width="sm"
-                  label="小数位"
-                  placeholder="请输入小数位"
-                  rules={[{ required: true, message: '请输入小数位' }]}
+                  label={formatMessage({ id: 'schemaMgt.form.title.round' })}
+                  placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.round' })}
+                  rules={[
+                    {
+                      required: true,
+                      message: formatMessage({ id: 'schemaMgt.form.placeholder.round' }),
+                    },
+                  ]}
                 />
               </>
             );
@@ -153,13 +181,13 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
                 <ProFormText
                   label="true"
                   name={['rule', 'trueLabel']}
-                  placeholder="比如：开启"
+                  placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.true' })}
                   width="sm"
                 />
                 <ProFormText
                   label="false"
                   name={['rule', 'falseLabel']}
-                  placeholder="比如：关闭"
+                  placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.false' })}
                   width="sm"
                 />
               </>
@@ -169,15 +197,15 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
             dom = (
               <>
                 <ProFormDigit
-                  label="经度"
+                  label={formatMessage({ id: 'schemaMgt.form.title.latitude' })}
                   name={['rule', 'latitude']}
-                  placeholder="请输入经度"
+                  placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.latitude' })}
                   width="md"
                 />
                 <ProFormDigit
-                  label="纬度"
+                  label={formatMessage({ id: 'schemaMgt.form.title.longitude' })}
                   name={['rule', 'longitude']}
-                  placeholder="请输入维度"
+                  placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.longitude' })}
                   width="md"
                 />
               </>
@@ -188,7 +216,11 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
             <>
               <ProCard
                 ghost
-                title={<div className="text-[14px] font-normal">数据定义</div>}
+                title={
+                  <div className="text-[14px] font-normal">
+                    {formatMessage({ id: 'schemaMgt.title.card' })}
+                  </div>
+                }
                 headStyle={{ paddingBlockStart: 0 }}
               >
                 <ProForm.Group style={{ padding: 10, border: '1px solid #0505050f' }}>
@@ -196,8 +228,8 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
                     <ProFormText
                       name={['rule', 'defaultValue']}
                       width="md"
-                      label="默认值"
-                      placeholder="请输入默认值"
+                      label={formatMessage({ id: 'schemaMgt.form.title.defaultValue' })}
+                      placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.defaultValue' })}
                     />
                   )}
 
@@ -207,22 +239,22 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
               <ProForm.Group style={{ marginTop: 24 }}>
                 <ProForm.Item
                   name="unit"
-                  label="单位"
+                  label={formatMessage({ id: 'schemaMgt.form.title.unit' })}
                   className="w-[328px]"
                   hidden={type === Type.BOOL}
                 >
                   <AutoComplete
                     options={unitOptions}
                     style={{ width: '100%' }}
-                    placeholder="请输入单位"
+                    placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.unit' })}
                   />
                 </ProForm.Item>
 
                 <ProFormRadio.Group
                   name="rw"
-                  label="读写"
+                  label={formatMessage({ id: 'schemaMgt.form.title.rw' })}
                   valueEnum={rwOption}
-                  rules={[{ required: true, message: '请选择读写' }]}
+                  // rules={[{ required: true, message: '请选择读写' }]}
                 />
               </ProForm.Group>
             </>
@@ -232,7 +264,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
       <ProFormText
         name="description"
         label={formatMessage({ id: 'table.desc' })}
-        placeholder="请输入描述"
+        placeholder={formatMessage({ id: 'placeholder.desc' })}
         width="md"
       />
     </ModalForm>

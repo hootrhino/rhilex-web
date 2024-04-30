@@ -154,7 +154,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
   const items = [
     {
       key: 'defaultValue',
-      label: '默认值',
+      label: formatMessage({ id: 'schemaMgt.form.title.defaultValue' }),
     },
     {
       key: 'falseLabel',
@@ -166,27 +166,27 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
     },
     {
       key: 'round',
-      label: '小数位',
+      label: formatMessage({ id: 'schemaMgt.form.title.round' }),
     },
     {
       key: 'max',
-      label: '最大长度',
+      label: formatMessage({ id: 'schemaMgt.form.title.range.max' }),
     },
     {
       key: 'min',
-      label: '最小值',
+      label: formatMessage({ id: 'schemaMgt.form.title.range.min' }),
     },
     {
       key: 'latitude',
-      label: '经度',
+      label: formatMessage({ id: 'schemaMgt.form.title.latitude' }),
     },
     {
       key: 'longitude',
-      label: '纬度',
+      label: formatMessage({ id: 'schemaMgt.form.title.longitude' }),
     },
     {
       key: 'range',
-      label: '取值范围',
+      label: formatMessage({ id: 'schemaMgt.form.title.range' }),
     },
   ];
 

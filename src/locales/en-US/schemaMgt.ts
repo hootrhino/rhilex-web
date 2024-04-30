@@ -29,7 +29,7 @@ export default {
   'schemaMgt.form.placeholder.defaultValue': '请输入默认值',
   'schemaMgt.form.placeholder.unit': '请输入单位',
   'schemaMgt.form.rules.range': '请输入取值范围',
-  'schemaMgt.form.placeholder.schemaName': '请输入数据模型名称',
+  'schemaMgt.form.placeholder.schemaName': '请输入名称',
 
   /**
    * modal
@@ -45,6 +45,32 @@ export default {
   'schemaMgt.title.schema': '数据模型列表',
   'schemaMgt.title.property': '属性列表',
   'schemaMgt.title.card': '数据定义',
+
+  /**
+   * options
+   */
+  'schemaMgt.type.string': '字符串',
+  'schemaMgt.type.int': '整数',
+  'schemaMgt.type.float': '浮点数',
+  'schemaMgt.type.bool': '布尔量',
+  'schemaMgt.type.geo': '地理坐标',
+
+  'schemaMgt.rw.r': '只读',
+  'schemaMgt.rw.rw': '读写',
+
+  'schemaMgt.unit.c': '摄氏度',
+  'schemaMgt.unit.f': '华氏度',
+  'schemaMgt.unit.k': '凯氏度',
+  'schemaMgt.unit.m': '米',
+  'schemaMgt.unit.s': '秒',
+  'schemaMgt.unit.min': '分钟',
+  'schemaMgt.unit.hour': '小时',
+  'schemaMgt.unit.week': '周',
+  'schemaMgt.unit.month': '月',
+  'schemaMgt.unit.year': '年',
+  'schemaMgt.unit.g': '克',
+  'schemaMgt.unit.kg': '千克',
+  'schemaMgt.unit.t': '吨',
 
   /**
    * others

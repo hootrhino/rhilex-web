@@ -178,14 +178,19 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
       >
         <ProFormText
           name="name"
-          label="名称"
-          placeholder="请输入数据模型名称"
-          rules={[{ required: true, message: '请输入数据模型名称' }]}
+          label={formatMessage({ id: 'schemaMgt.form.title.schemaName' })}
+          placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.schemaName' })}
+          rules={[
+            {
+              required: true,
+              message: formatMessage({ id: 'schemaMgt.form.placeholder.schemaName' }),
+            },
+          ]}
         />
         <ProFormText
           name="description"
           label={formatMessage({ id: 'table.desc' })}
-          placeholder="请输入数据模型描述"
+          placeholder={formatMessage({ id: 'placeholder.desc' })}
         />
       </ModalForm>
     </>

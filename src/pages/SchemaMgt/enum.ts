@@ -1,3 +1,5 @@
+import { getIntl, getLocale } from '@umijs/max';
+
 /**
  * 数据模型-类型枚举&option
  */
@@ -9,11 +11,11 @@ export enum Type {
   GEO = 'GEO',
 }
 export const typeOption = {
-  [Type.STRING]: '字符串',
-  [Type.INTEGER]: '整数',
-  [Type.FLOAT]: '浮点数',
-  [Type.BOOL]: '布尔量',
-  [Type.GEO]: '地理坐标',
+  [Type.STRING]: getIntl(getLocale()).formatMessage({ id: 'schemaMgt.type.string' }),
+  [Type.INTEGER]: getIntl(getLocale()).formatMessage({ id: 'schemaMgt.type.int' }),
+  [Type.FLOAT]: getIntl(getLocale()).formatMessage({ id: 'schemaMgt.type.float' }),
+  [Type.BOOL]: getIntl(getLocale()).formatMessage({ id: 'schemaMgt.type.bool' }),
+  [Type.GEO]: getIntl(getLocale()).formatMessage({ id: 'schemaMgt.type.geo' }),
 };
 
 // 读写
@@ -25,23 +27,35 @@ export enum RW {
   RW = 'RW',
 }
 export const rwOption = {
-  [RW.R]: '只读',
-  [RW.RW]: '读写',
+  [RW.R]: getIntl(getLocale()).formatMessage({ id: 'schemaMgt.rw.r' }),
+  [RW.RW]: getIntl(getLocale()).formatMessage({ id: 'schemaMgt.rw.rw' }),
 };
 
 // 单位
 export const unitOptions = [
-  { value: 'ºC', label: 'ºC (摄氏度)' },
-  { value: 'ºF', label: 'ºF (华氏度)' },
-  { value: 'ºK', label: 'ºK (凯氏度)' },
-  { value: 'm', label: 'm (米)' },
-  { value: 's', label: 's (秒)' },
-  { value: 'min', label: 'min (分钟)' },
-  { value: 'h', label: 'h (小时)' },
-  { value: 'week', label: 'week (周)' },
-  { value: 'month', label: 'month (月)' },
-  { value: 'year', label: 'year (年)' },
-  { value: 'g', label: 'g (克)' },
-  { value: 'kg', label: 'kg (千克)' },
-  { value: 't', label: 't (吨)' },
+  { value: 'ºC', label: `ºC (${getIntl(getLocale()).formatMessage({ id: 'schemaMgt.unit.c' })})` },
+  { value: 'ºF', label: `ºF (${getIntl(getLocale()).formatMessage({ id: 'schemaMgt.unit.f' })})` },
+  { value: 'ºK', label: `ºK (${getIntl(getLocale()).formatMessage({ id: 'schemaMgt.unit.k' })})` },
+  { value: 'm', label: `m (${getIntl(getLocale()).formatMessage({ id: 'schemaMgt.unit.m' })})` },
+  { value: 's', label: `s (${getIntl(getLocale()).formatMessage({ id: 'schemaMgt.unit.s' })})` },
+  {
+    value: 'min',
+    label: `min (${getIntl(getLocale()).formatMessage({ id: 'schemaMgt.unit.min' })})`,
+  },
+  { value: 'h', label: `h (${getIntl(getLocale()).formatMessage({ id: 'schemaMgt.unit.hour' })})` },
+  {
+    value: 'week',
+    label: `week (${getIntl(getLocale()).formatMessage({ id: 'schemaMgt.unit.week' })})`,
+  },
+  {
+    value: 'month',
+    label: `month (${getIntl(getLocale()).formatMessage({ id: 'schemaMgt.unit.month' })})`,
+  },
+  {
+    value: 'year',
+    label: `year (${getIntl(getLocale()).formatMessage({ id: 'schemaMgt.unit.year' })})`,
+  },
+  { value: 'g', label: `g (${getIntl(getLocale()).formatMessage({ id: 'schemaMgt.unit.g' })})` },
+  { value: 'kg', label: `kg (${getIntl(getLocale()).formatMessage({ id: 'schemaMgt.unit.kg' })})` },
+  { value: 't', label: `t (${getIntl(getLocale()).formatMessage({ id: 'schemaMgt.unit.t' })})` },
 ];

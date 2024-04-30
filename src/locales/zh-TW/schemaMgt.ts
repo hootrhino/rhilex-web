@@ -29,7 +29,7 @@ export default {
   'schemaMgt.form.placeholder.defaultValue': '請輸入預設值',
   'schemaMgt.form.placeholder.unit': '請輸入單位',
   'schemaMgt.form.rules.range': '請輸入取值範圍',
-  'schemaMgt.form.placeholder.schemaName': '請輸入數據模型名稱',
+  'schemaMgt.form.placeholder.schemaName': '請輸入名稱',
 
   /**
    * modal
@@ -47,9 +47,35 @@ export default {
   'schemaMgt.title.card': '數據定義',
 
   /**
+   * options
+   */
+  'schemaMgt.type.string': '字符串',
+  'schemaMgt.type.int': '整數',
+  'schemaMgt.type.float': '浮點數',
+  'schemaMgt.type.bool': '布爾量',
+  'schemaMgt.type.geo': '地理坐標',
+
+  'schemaMgt.rw.r': '只讀',
+  'schemaMgt.rw.rw': '讀寫',
+
+  'schemaMgt.unit.c': '攝氏度',
+  'schemaMgt.unit.f': '華氏度',
+  'schemaMgt.unit.k': '凱氏度',
+  'schemaMgt.unit.m': '米',
+  'schemaMgt.unit.s': '秒',
+  'schemaMgt.unit.min': '分鐘',
+  'schemaMgt.unit.hour': '小時',
+  'schemaMgt.unit.week': '星期',
+  'schemaMgt.unit.month': '月份',
+  'schemaMgt.unit.year': '年份',
+  'schemaMgt.unit.g': '克',
+  'schemaMgt.unit.kg': '千克',
+  'schemaMgt.unit.t': '噸',
+
+  /**
    * others
    */
-  'schemaMgt.tooltip.update': '重命名模型',
+  'schemaMgt.tooltip.update': '重新命名模型',
   'schemaMgt.tooltip.remove': '刪除模型',
   'schemaMgt.popconfirm.remove': '確定要刪除此數據模型？',
   'schemaMgt.popconfirm.remove.property': '確定要刪除此屬性？',
