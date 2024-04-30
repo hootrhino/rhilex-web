@@ -25,7 +25,7 @@ const NotifyLog = () => {
 
   const handleOnSuccess = () => {
     refresh();
-    message.success('设置成功');
+    message.success(formatMessage({ id: 'notifyLog.message.success' }));
   };
 
   // 已读
@@ -42,21 +42,21 @@ const NotifyLog = () => {
 
   const columns: ProColumns<Partial<NotifyLogItem>>[] = [
     {
-      title: '事件',
+      title: formatMessage({ id: 'notifyLog.table.title.event' }),
       dataIndex: 'event',
     },
     {
-      title: '类型',
+      title: formatMessage({ id: 'notifyLog.table.title.type' }),
       dataIndex: 'type',
       renderText: (type: string) => <StateTag state={type || 'INFO'} type={StateType.NOTICE} />,
     },
     {
-      title: '概览',
+      title: formatMessage({ id: 'notifyLog.table.title.summary' }),
       dataIndex: 'summary',
       ellipsis: true,
     },
     {
-      title: '时间',
+      title: formatMessage({ id: 'notifyLog.table.title.ts' }),
       dataIndex: 'ts',
       valueType: 'dateTime',
     },
@@ -68,7 +68,7 @@ const NotifyLog = () => {
       fixed: 'right',
       render: (_, { uuid }) => [
         <a key="read" onClick={() => uuid && read({ uuid })}>
-          已读
+          {formatMessage({ id: 'notifyLog.button.clear' })}
         </a>,
       ],
     },
@@ -90,13 +90,13 @@ const NotifyLog = () => {
           options={{ reload: refresh }}
           toolBarRender={() => [
             <Button type="primary" key="clear" onClick={clear} icon={<ClearOutlined />}>
-              全部已读
+              {formatMessage({ id: 'notifyLog.button.clear' })}
             </Button>,
           ]}
           expandable={{
             expandedRowRender: ({ info }: any) => (
               <>
-                <div>日志详情:</div>
+                <div>{formatMessage({ id: 'notifyLog.expanded' })}:</div>
                 <div>{info}</div>
               </>
             ),
