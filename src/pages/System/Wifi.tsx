@@ -31,7 +31,7 @@ const WIFIConfig = () => {
     run: GetWifiList,
     loading,
   } = useRequest(() => getSettingsWifiScan(), {
-    onSuccess: () => message.success('扫描完成'),
+    onSuccess: () => message.success(formatMessage({ id: 'system.message.success.scan' })),
   });
 
   // 详情
@@ -64,7 +64,7 @@ const WIFIConfig = () => {
   };
 
   return (
-    <ProCard title="WIFI 配置">
+    <ProCard title={formatMessage({ id: 'system.tab.wifi' })}>
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
@@ -80,13 +80,17 @@ const WIFIConfig = () => {
                 onClick={GetWifiList}
                 loading={loading}
               >
-                扫描 WIFI
+                {formatMessage({ id: 'system.button.wifi.ntp' })}
               </Button>
             </Space>
           ),
         }}
       >
-        <ProForm.Item name="ssid" label="SSID" rules={[{ required: true, message: '请输入 SSID' }]}>
+        <ProForm.Item
+          name="ssid"
+          label="SSID"
+          rules={[{ required: true, message: formatMessage({ id: 'system.form.rules.ssid' }) }]}
+        >
           <AutoComplete
             options={wifiList?.map((item) => ({
               label: item,
@@ -94,16 +98,18 @@ const WIFIConfig = () => {
               key: `${item}-${Math.random()}`,
             }))}
             style={{ width: 552 }}
-            placeholder="请输入 SSID"
+            placeholder={formatMessage({ id: 'system.form.rules.ssid' })}
           />
         </ProForm.Item>
         <ProFormText.Password
           name="password"
-          label="密码"
+          label={formatMessage({ id: 'system.form.title.password' })}
           width="xl"
           allowClear
-          placeholder="请输入密码"
-          rules={[{ required: true, message: '请输入密码' }]}
+          placeholder={formatMessage({ id: 'system.form.placeholder.password' })}
+          rules={[
+            { required: true, message: formatMessage({ id: 'system.form.placeholder.password' }) },
+          ]}
         />
         <ProFormSelect
           options={[
@@ -111,10 +117,10 @@ const WIFIConfig = () => {
             { label: 'wpa2-psk', value: 'wpa2-psk' },
           ]}
           name="security"
-          label="加密方式"
+          label={formatMessage({ id: 'system.form.title.security' })}
           width="xl"
-          placeholder="请选择加密方式"
-          rules={[{ required: true, message: '请选择加密方式' }]}
+          placeholder={formatMessage({ id: 'system.form.rules.security' })}
+          rules={[{ required: true, message: formatMessage({ id: 'system.form.rules.security' }) }]}
         />
       </ProForm>
     </ProCard>

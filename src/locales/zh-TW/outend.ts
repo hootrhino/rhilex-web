@@ -34,7 +34,6 @@ export default {
    * modal
    */
   'outend.modal.title.remove': '确定要删除此目标？',
-  'outend.modal.title.restart': '确定执行此操作吗？',
   'outend.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，需谨慎操作',
 
   /**

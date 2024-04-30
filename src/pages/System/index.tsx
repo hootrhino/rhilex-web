@@ -1,7 +1,7 @@
 import PageContainer from '@/components/PageContainer';
 import { Product } from '@/utils/enum';
 import { ProCard } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
+import { FormattedMessage, useModel } from '@umijs/max';
 import type { TabPaneProps } from 'antd';
 import { useEffect, useState } from 'react';
 import DataBackupConfig from './DataBackup';
@@ -22,52 +22,57 @@ type TabItem = Omit<TabPaneProps, 'tab'> & {
 
 const baseItems = [
   {
-    label: '系统资源',
+    label: <FormattedMessage id="system.tab.resource" />,
     key: 'resource',
     children: <Resource />,
   },
   {
-    label: '网络状态',
+    label: <FormattedMessage id="system.tab.netStatus" />,
     key: 'netStatus',
     children: <NetworkStatus />,
   },
   {
-    label: '网卡配置',
+    label: <FormattedMessage id="system.tab.network" />,
     key: 'network',
     children: <NetworkConfig />,
   },
   {
-    label: 'WIFI配置',
+    label: <FormattedMessage id="system.tab.wifi" />,
     key: 'wifi',
     children: <WIFIConfig />,
   },
   {
-    label: '时间配置',
+    label: <FormattedMessage id="system.tab.time" />,
     key: 'time',
     children: <TimeConfig />,
   },
   {
-    label: '路由设置',
+    label: <FormattedMessage id="system.tab.routing" />,
     key: 'routing',
     children: <RoutingConfig />,
   },
   {
-    label: '固件配置',
+    label: <FormattedMessage id="system.tab.firmware" />,
     key: 'firmware',
     children: <FirmwareConfig />,
   },
   {
-    label: <div>4G&nbsp;&nbsp;网络</div>,
+    label: (
+      <div>
+        4G&nbsp;&nbsp;
+        <FormattedMessage id="system.tab.4gNetwork" />
+      </div>
+    ),
     key: 'apn',
     children: <Network4GConfig />,
   },
   {
-    label: '数据备份',
+    label: <FormattedMessage id="system.tab.backup" />,
     key: 'backup',
     children: <DataBackupConfig />,
   },
   {
-    label: '用户配置',
+    label: <FormattedMessage id="system.tab.user" />,
     key: 'user',
     children: <UserConfig />,
   },

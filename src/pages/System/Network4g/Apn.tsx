@@ -63,52 +63,62 @@ const APNConfig = () => {
     >
       <ProFormSelect
         name="senceId"
-        label="场景编号"
+        label={formatMessage({ id: 'system.form.title.senceId' })}
         options={[{ label: '场景1', value: 1 }]}
-        placeholder="请选择场景编号"
+        placeholder={formatMessage({ id: 'system.form.placeholder.senceId' })}
         width="xl"
       />
       <ProFormSelect
         name="ptytpe"
-        label="协议类型"
+        label={formatMessage({ id: 'system.form.title.ptytpe' })}
         options={[
           { label: 'IPv4', value: 1 },
           { label: 'IPv6', value: 2 },
-          { label: 'IPv4 和 IPv6', value: 3 },
+          { label: `IPv4 ${formatMessage({ id: 'system.option.and' })} IPv6`, value: 3 },
         ]}
-        placeholder="请选择协议类型"
+        placeholder={formatMessage({ id: 'system.form.placeholder.ptytpe' })}
         width="xl"
       />
-      <ProFormText name="apn" label="APN 名称" placeholder="请输入 APN 名称" width="xl" />
-      <ProFormText name="apn_username" label="用户名" placeholder="请输入用户名" width="xl" />
+      <ProFormText
+        name="apn"
+        label={formatMessage({ id: 'system.form.title.apn' })}
+        placeholder={formatMessage({ id: 'system.form.placeholder.apn' })}
+        width="xl"
+      />
+      <ProFormText
+        name="apn_username"
+        label={formatMessage({ id: 'system.form.title.username' })}
+        placeholder={formatMessage({ id: 'system.form.placeholder.username' })}
+        width="xl"
+      />
       <ProFormText.Password
         name="apn_password"
-        label="密码"
-        placeholder="请输入密码"
+        label={formatMessage({ id: 'system.form.title.password' })}
+        placeholder={formatMessage({ id: 'system.form.placeholder.password' })}
         width="xl"
         allowClear
       />
       <ProFormSelect
         name="auth"
-        label="APN 鉴权"
+        label={formatMessage({ id: 'system.form.title.auth' })}
         options={[
           { label: 'NONE', value: 0 },
           { label: 'PAP', value: 1 },
           { label: 'CHAP', value: 2 },
-          { label: 'PAP 或 CHAP', value: 3 },
+          { label: `PAP ${formatMessage({ id: 'system.option.or' })} CHAP`, value: 3 },
         ]}
-        placeholder="请选择 APN 鉴权"
+        placeholder={formatMessage({ id: 'system.form.placeholder.auth' })}
         width="xl"
       />
       <ProFormSelect
         name="cdmapwd"
-        label="保存 CDMA 模式"
+        label={formatMessage({ id: 'system.form.title.cdmapwd' })}
         options={[
-          { label: '不保存', value: 0 },
-          { label: '保存', value: 1 },
+          { label: formatMessage({ id: 'system.option.unsave' }), value: 0 },
+          { label: formatMessage({ id: 'system.option.save' }), value: 1 },
         ]}
-        tooltip="是否在 CDMA 网络下保存用户名和密码"
-        placeholder="请选择"
+        tooltip={formatMessage({ id: 'system.tooltip.cdmapwd' })}
+        placeholder={formatMessage({ id: 'placeholder.select' })}
         width="xl"
       />
     </ProForm>

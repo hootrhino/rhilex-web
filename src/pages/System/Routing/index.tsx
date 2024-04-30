@@ -1,14 +1,16 @@
 import { ProCard } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 import { useState } from 'react';
 import Config from './Config';
 import List from './List';
 
 const RoutingConfig = () => {
+  const { formatMessage } = useIntl();
   const [activeKey, setActiveKey] = useState<string>('config');
 
   return (
     <ProCard
-      title="路由设置"
+      title={formatMessage({ id: 'system.tab.routing' })}
       className="mb-[12px]"
       tabs={{
         tabPosition: 'top',
@@ -17,12 +19,12 @@ const RoutingConfig = () => {
         indicator: { align: 'start' },
         items: [
           {
-            label: `DHCP 配置`,
+            label: formatMessage({ id: 'system.routing.tab.config' }),
             key: 'config',
             children: <Config />,
           },
           {
-            label: `DHCP 列表`,
+            label: formatMessage({ id: 'system.routing.tab.list' }),
             key: 'list',
             children: <List />,
           },

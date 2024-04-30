@@ -139,7 +139,7 @@ const Outend = () => {
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}
-        title="确定执行此操作吗？"
+        title={formatMessage({ id: 'modal.title.confirm' })}
         okText={formatMessage({ id: 'button.restart.comfirm' })}
         afterOkText={formatMessage({ id: 'button.restart' })}
         content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"

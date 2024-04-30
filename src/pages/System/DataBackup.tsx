@@ -36,7 +36,7 @@ const DataBackupConfig = () => {
   }, [activeKey]);
 
   return (
-    <ProCard title="数据备份">
+    <ProCard title={formatMessage({ id: 'system.tab.backup' })}>
       <ProForm
         formRef={formRef}
         layout="vertical"
@@ -56,13 +56,13 @@ const DataBackupConfig = () => {
                 icon={<DownloadOutlined />}
                 onClick={() => (window.location.href = '/api/v1/backup/runningLog')}
               >
-                日志下载
+                {formatMessage({ id: 'system.button.backup.runningLog' })}
               </Button>
               <Button
                 icon={<DownloadOutlined />}
                 onClick={() => (window.location.href = '/api/v1/backup/snapshot')}
               >
-                运行快照
+                {formatMessage({ id: 'system.button.backup.snapshot' })}
               </Button>
               <Button
                 ghost
@@ -70,7 +70,7 @@ const DataBackupConfig = () => {
                 icon={<DownloadOutlined />}
                 onClick={() => (window.location.href = '/api/v1/backup/download')}
               >
-                备份下载
+                {formatMessage({ id: 'system.button.backup.download' })}
               </Button>
               <Button
                 type="primary"
@@ -78,7 +78,7 @@ const DataBackupConfig = () => {
                 icon={<UploadOutlined />}
                 disabled={!uploadFile}
               >
-                备份恢复
+                {formatMessage({ id: 'system.button.backup.upload' })}
               </Button>
             </Space>
           ),
@@ -88,14 +88,14 @@ const DataBackupConfig = () => {
           name="recovery"
           max={1}
           accept=".db"
-          description="仅支持 db 文件"
+          description={formatMessage({ id: 'system.desc.recovery' })}
           fieldProps={{
             style: { maxWidth: 700 },
             beforeUpload: (file) => {
               const isSql = endsWith(file.name, '.db');
 
               if (!isSql) {
-                message.error('仅支持 .db 格式的文件，请检查上传文件格式');
+                message.error(formatMessage({ id: 'system.message.error.recovery' }));
                 return Upload.LIST_IGNORE;
               }
 
@@ -110,10 +110,10 @@ const DataBackupConfig = () => {
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}
-        title="确定执行此操作吗？"
-        okText="确认上传"
+        title={formatMessage({ id: 'modal.title.confirm' })}
+        okText={formatMessage({ id: 'system.button.confirm.upload' })}
         afterOkText={formatMessage({ id: 'button.restart' })}
-        content="上传时请确认版本，版本错误会导致失败，有可能会引起设备故障，请谨慎操作"
+        content={formatMessage({ id: 'system.modal.content.upload' })}
         handleOnEnd={handleOnEnd}
         handleOnOk={async () => {
           const { data } = await postBackupUpload({}, uploadFile);

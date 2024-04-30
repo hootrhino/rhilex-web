@@ -3,7 +3,7 @@ import { FormItemType } from '@/utils/enum';
 import { validateFormItem } from '@/utils/utils';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Space } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useEffect, useRef } from 'react';
@@ -30,6 +30,7 @@ const initialValue = {
 
 const DHCPConfig = () => {
   const formRef = useRef<ProFormInstance>();
+  const { formatMessage } = useIntl();
 
   // 获取详情
   const { data: detail } = useRequest(() => getSoftRouterDhcp());
@@ -68,10 +69,10 @@ const DHCPConfig = () => {
       }}
     >
       <ProFormText
-        label="子网掩码"
+        label={formatMessage({ id: 'system.form.title.netmask' })}
         name="netmask"
         rules={[
-          { required: true, message: '请输入子网掩码' },
+          { required: true, message: formatMessage({ id: 'system.form.rules.netmask' }) },
           {
             validator: (_rule: Rule, value: string) =>
               validateFormItem(value, FormItemType.NETMASK),
@@ -81,22 +82,26 @@ const DHCPConfig = () => {
       />
 
       <ProFormText
-        label="管理地址"
+        label={formatMessage({ id: 'system.form.title.ip' })}
         name="ip"
         width="xl"
-        placeholder="请输入管理地址"
+        placeholder={formatMessage({ id: 'system.form.rules.ip' })}
         rules={[
-          { required: true, message: '请输入管理地址' },
+          { required: true, message: formatMessage({ id: 'system.form.rules.ip' }) },
           { validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.IP) },
         ]}
       />
-      <ProForm.Item label="IP 分配范围" required className="mb-0">
+      <ProForm.Item
+        label={formatMessage({ id: 'system.form.title.ipPoolRange' })}
+        required
+        className="mb-0"
+      >
         <Space.Compact>
           <ProFormText
             name="ip_pool_begin"
             fieldProps={{ style: { width: 260 } }}
             rules={[
-              { required: true, message: '请输入 DHCP 起始地址' },
+              { required: true, message: formatMessage({ id: 'system.form.rules.ipPoolBegin' }) },
               {
                 validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.IP),
               },
@@ -107,7 +112,7 @@ const DHCPConfig = () => {
             name="ip_pool_end"
             fieldProps={{ style: { width: 260 } }}
             rules={[
-              { required: true, message: '请输入 DHCP 结束地址' },
+              { required: true, message: formatMessage({ id: 'system.form.rules.ipPoolEnd' }) },
               {
                 validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.IP),
               },
@@ -116,20 +121,20 @@ const DHCPConfig = () => {
         </Space.Compact>
       </ProForm.Item>
       <ProFormSelect
-        label="LAN 网卡"
+        label={formatMessage({ id: 'system.form.title.ifaceFrom' })}
         name="iface_from"
         options={[{ label: 'eth1', value: 'eth1' }]}
-        placeholder="请选择 LAN 网卡"
+        placeholder={formatMessage({ id: 'system.form.rules.ifaceFrom' })}
         width="xl"
-        rules={[{ required: true, message: '请选择 LAN 网卡' }]}
+        rules={[{ required: true, message: formatMessage({ id: 'system.form.rules.ifaceFrom' }) }]}
       />
       <ProFormSelect
-        label="流量出口"
+        label={formatMessage({ id: 'system.form.title.ifaceTo' })}
         name="iface_to"
         options={[{ label: '4G(usb1)', value: '4G(usb1)' }]}
-        placeholder="请选择流量出口"
+        placeholder={formatMessage({ id: 'system.form.rules.ifaceTo' })}
         width="xl"
-        rules={[{ required: true, message: '请选择流量出口' }]}
+        rules={[{ required: true, message: formatMessage({ id: 'system.form.rules.ifaceTo' }) }]}
       />
     </ProForm>
   );

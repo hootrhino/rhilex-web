@@ -5,13 +5,13 @@ export default {
   'system.tab.resource': '系统资源',
   'system.tab.netStatus': '网络状态',
   'system.tab.network': '网卡配置',
-  'system.tab.wifi': 'WIFI配置',
+  'system.tab.wifi': 'WIFI 配置',
   'system.tab.time': '时间配置',
   'system.tab.routing': '路由设置',
   'system.tab.firmware': '固件配置',
   'system.tab.4gConfig': '配置',
   'system.tab.4gNetwork': '网络',
-  'system.tab.apn': 'APN配置',
+  'system.tab.apn': 'APN 配置',
   'system.tab.backup': '数据备份',
   'system.tab.user': '用户配置',
 
@@ -96,7 +96,10 @@ export default {
    * button
    */
   'system.button.reload': '刷新状态',
-  'system.button.restart': '重启 4G 网卡',
+  'system.button.restart4g': '重启 4G 网卡',
+  'system.button.restart': '重启',
+  'system.button.upgrade': '升级',
+  'system.button.recover': '恢复',
   'system.button.confirm.restart': '确认重启',
   'system.button.confirm.upload': '确认上传',
   'system.button.confirm.upgrade': '确认升级',
@@ -115,7 +118,6 @@ export default {
   /**
    * modal
    */
-  'system.modal.title.restart': '确定执行此操作吗？',
   'system.modal.content.restart': '重启 4G 网卡会造成短时间内移动网络处于离线状态，请谨慎操作',
   'system.modal.content.upload':
     '上传时请确认版本，版本错误会导致失败，有可能会引起设备故障，请谨慎操作',
@@ -131,6 +133,7 @@ export default {
    */
   'system.title.firmware.auth': '设备授权信息',
   'system.title.firmware.log': '固件升级日志',
+  'system.title.firmware.upload': '上传固件',
   'system.title.network.detail': '网卡详情',
   'system.title.network.status': '网络状态',
   'system.title.resource.detail': '系统详情',
@@ -153,8 +156,17 @@ export default {
   'system.switch.checked': '开启',
   'system.switch.unchecked': '关闭',
 
+  'system.desc.recovery': '仅支持 db 文件',
   'system.message.error.recovery': '仅支持 .db 格式的文件，请检查上传文件格式',
   'system.message.error.upload': '仅支持 zip 格式文件，请检查上传文件格式',
   'system.message.success.ntp': 'NTP 时间更新成功',
   'system.message.success.scan': '扫描完成',
+
+  'system.type.ethernet': '以太网',
+  'system.type.bridge': '桥接设备',
+  'system.type.loopback': '本地回环口',
+  'system.state.connected': '已连接到',
+  'system.state.disconnected': '未连接',
+  'system.state.unmanaged': '系统默认',
+  'system.state.unavailable': '网络不可用',
 };

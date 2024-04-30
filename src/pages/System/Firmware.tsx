@@ -17,7 +17,7 @@ import {
   UploadOutlined,
 } from '@ant-design/icons';
 import { ProCard, ProDescriptions } from '@ant-design/pro-components';
-import { useIntl, useModel, useRequest } from '@umijs/max';
+import { getIntl, getLocale, useIntl, useModel, useRequest } from '@umijs/max';
 import type { ProgressProps } from 'antd';
 import { Button, Modal, Progress, Space, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload';
@@ -32,25 +32,29 @@ type ConfirmCofig = {
   handleOnEnd?: () => void;
 };
 
+const intl = getIntl(getLocale());
+
+const title = intl.formatMessage({ id: 'modal.title.confirm' });
+
 const defaultUpgradeConfig = {
-  title: '确定执行此操作吗？',
-  content: '升级时请确认版本，版本错误会导致升级失败，有可能会引起设备故障，请谨慎操作',
-  okText: '确认升级',
-  afterOkText: '升级',
+  title,
+  content: intl.formatMessage({ id: 'system.modal.content.upgrade' }),
+  okText: intl.formatMessage({ id: 'system.button.confirm.upgrade' }),
+  afterOkText: intl.formatMessage({ id: 'system.button.upgrade' }),
 };
 
 const defaultRebootConfig = {
-  title: '确定执行此操作吗？',
-  content: '重启设备会停止当前所有任务，请谨慎操作',
-  okText: '确认重启',
-  afterOkText: '重启',
+  title,
+  content: intl.formatMessage({ id: 'system.modal.content.restartDevice' }),
+  okText: intl.formatMessage({ id: 'system.button.confirm.restart' }),
+  afterOkText: intl.formatMessage({ id: 'system.button.restart' }),
 };
 
 const defaultRecoverConfig = {
-  title: '确定执行此操作吗？',
-  content: '恢复出厂设置会删除当前所有数据，停止所有正在进行的任务，请谨慎操作',
-  okText: '确认恢复',
-  afterOkText: '恢复',
+  title,
+  content: intl.formatMessage({ id: 'system.modal.content.recover' }),
+  okText: intl.formatMessage({ id: 'system.button.confirm.recover' }),
+  afterOkText: intl.formatMessage({ id: 'system.button.recover' }),
 };
 
 export const twoColors: ProgressProps['strokeColor'] = {
@@ -128,8 +132,12 @@ const FirmwareConfig = () => {
 
   return (
     <>
-      <ProCard split="vertical" title="固件配置" headStyle={{ paddingBlockEnd: 12 }}>
-        <ProCard colSpan="50%" title="设备授权信息">
+      <ProCard
+        split="vertical"
+        title={formatMessage({ id: 'system.tab.firmware' })}
+        headStyle={{ paddingBlockEnd: 12 }}
+      >
+        <ProCard colSpan="50%" title={formatMessage({ id: 'system.title.firmware.auth' })}>
           <ProDescriptions
             column={1}
             request={async () => {
@@ -141,17 +149,29 @@ const FirmwareConfig = () => {
             }}
             labelStyle={{ justifyContent: 'flex-end', minWidth: 135 }}
           >
-            <ProDescriptions.Item label="设备序列号" dataIndex="device_id" />
-            <ProDescriptions.Item label="被授权 MAC" dataIndex="mac" />
-            <ProDescriptions.Item label="设备许可证" dataIndex="license" />
-            <ProDescriptions.Item label="证书签发方" dataIndex="authorize_admin" />
             <ProDescriptions.Item
-              label="授权起始时间"
+              label={formatMessage({ id: 'system.table.title.deviceId' })}
+              dataIndex="device_id"
+            />
+            <ProDescriptions.Item
+              label={formatMessage({ id: 'system.table.title.mac' })}
+              dataIndex="mac"
+            />
+            <ProDescriptions.Item
+              label={formatMessage({ id: 'system.table.title.license' })}
+              dataIndex="license"
+            />
+            <ProDescriptions.Item
+              label={formatMessage({ id: 'system.table.title.authorizeAdmin' })}
+              dataIndex="authorize_admin"
+            />
+            <ProDescriptions.Item
+              label={formatMessage({ id: 'system.table.title.beginAuthorize' })}
               dataIndex="begin_authorize"
               valueType="dateTime"
             />
             <ProDescriptions.Item
-              label="授权结束时间"
+              label={formatMessage({ id: 'system.table.title.endAuthorize' })}
               dataIndex="end_authorize"
               valueType="dateTime"
             />
@@ -165,7 +185,7 @@ const FirmwareConfig = () => {
                 const isZip = file.type === 'application/zip' || endsWith(file?.name, '.zip');
 
                 if (!isZip) {
-                  message.error('仅支持 zip 格式文件，请检查上传文件格式');
+                  message.error(formatMessage({ id: 'system.message.error.upload' }));
                   // return false;
                   return Upload.LIST_IGNORE;
                 }
@@ -176,7 +196,7 @@ const FirmwareConfig = () => {
               }}
             >
               <Button key="upload" type="primary" icon={<UploadOutlined />}>
-                上传固件
+                {formatMessage({ id: 'system.button.firmware.upload' })}
               </Button>
             </Upload>
             <Button
@@ -196,7 +216,7 @@ const FirmwareConfig = () => {
               }}
               icon={<CloudUploadOutlined />}
             >
-              确定升级
+              {formatMessage({ id: 'system.button.firmware.upgrade' })}
             </Button>
             <Button
               key="reboot"
@@ -237,7 +257,7 @@ const FirmwareConfig = () => {
               }}
               icon={<IconFont type="icon-restart-rulex" className="text-[16px]" />}
             >
-              重启固件
+              {formatMessage({ id: 'system.button.firmware.restart' })}
             </Button>
             <Button
               key="recover"
@@ -257,11 +277,11 @@ const FirmwareConfig = () => {
               }}
               icon={<SyncOutlined />}
             >
-              恢复出厂
+              {formatMessage({ id: 'system.button.firmware.recover' })}
             </Button>
           </Space>
           <Modal
-            title="上传固件"
+            title={formatMessage({ id: 'system.title.firmware.upload' })}
             open={showProgress}
             footer={false}
             onCancel={() => setOpen(false)}
@@ -275,7 +295,7 @@ const FirmwareConfig = () => {
             />
           </Modal>
         </ProCard>
-        <ProCard title="固件升级日志" colSpan="50%">
+        <ProCard title={formatMessage({ id: 'system.title.firmware.log' })} colSpan="50%">
           <div className="w-full break-words whitespace-pre">{logData}</div>
         </ProCard>
       </ProCard>

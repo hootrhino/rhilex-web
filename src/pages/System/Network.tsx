@@ -78,7 +78,7 @@ const NetworkConfig = () => {
   };
 
   return (
-    <ProCard title="网卡配置">
+    <ProCard title={formatMessage({ id: 'system.tab.network' })}>
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
@@ -96,18 +96,20 @@ const NetworkConfig = () => {
         <ProFormSelect
           options={interfaceOption}
           name="interface"
-          label="网卡选择"
+          label={formatMessage({ id: 'system.form.title.interface' })}
           width="xl"
-          placeholder="请选择网卡"
-          rules={[{ required: true, message: '请选择网卡' }]}
+          placeholder={formatMessage({ id: 'system.form.rules.interface' })}
+          rules={[
+            { required: true, message: formatMessage({ id: 'system.form.rules.interface' }) },
+          ]}
         />
         <ProFormText
           name="address"
-          label="IP 地址"
+          label={formatMessage({ id: 'system.form.title.address' })}
           width="xl"
-          placeholder="请输入 IP 地址"
+          placeholder={formatMessage({ id: 'system.form.rules.address' })}
           rules={[
-            { required: true, message: '请输入 IP 地址' },
+            { required: true, message: formatMessage({ id: 'system.form.rules.address' }) },
             {
               validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.IP),
             },
@@ -115,11 +117,11 @@ const NetworkConfig = () => {
         />
         <ProFormText
           name="netmask"
-          label="子网掩码"
+          label={formatMessage({ id: 'system.form.title.netmask' })}
           width="xl"
-          placeholder="请输入子网掩码"
+          placeholder={formatMessage({ id: 'system.form.rules.netmask' })}
           rules={[
-            { required: true, message: '请输入子网掩码' },
+            { required: true, message: formatMessage({ id: 'system.form.rules.netmask' }) },
             {
               validator: (_rule: Rule, value: string) =>
                 validateFormItem(value, FormItemType.NETMASK),
@@ -128,11 +130,11 @@ const NetworkConfig = () => {
         />
         <ProFormText
           name="gateway"
-          label="默认网关"
+          label={formatMessage({ id: 'system.form.title.gateway' })}
           width="xl"
-          placeholder="请输入默认网关"
+          placeholder={formatMessage({ id: 'system.form.rules.gateway' })}
           rules={[
-            { required: true, message: '请输入默认网关' },
+            { required: true, message: formatMessage({ id: 'system.form.rules.gateway' }) },
             {
               validator: (_rule: Rule, value: string) =>
                 validateFormItem(value, FormItemType.GATEWAY),
@@ -143,7 +145,7 @@ const NetworkConfig = () => {
         <ProFormList
           actionRef={actionRef}
           name="dnsList"
-          label="DNS 服务器"
+          label={formatMessage({ id: 'system.form.title.dns' })}
           min={1}
           creatorButtonProps={false}
           creatorRecord={{
@@ -151,7 +153,7 @@ const NetworkConfig = () => {
           }}
           actionRender={(props, action, defaultActionDom) => {
             return [
-              <Tooltip key="add" title="新建一行">
+              <Tooltip key="add" title={formatMessage({ id: 'system.tooltip.new' })}>
                 <PlusCircleOutlined onClick={() => action.add()} className="ml-[10px]" />{' '}
               </Tooltip>,
               ...defaultActionDom,
@@ -162,15 +164,15 @@ const NetworkConfig = () => {
           <ProFormText
             name="dns"
             width="xl"
-            placeholder="请输入 DNS 服务器"
-            rules={[{ required: true, message: '请输入 DNS 服务器' }]}
+            placeholder={formatMessage({ id: 'system.form.rules.dns' })}
+            rules={[{ required: true, message: formatMessage({ id: 'system.form.rules.dns' }) }]}
           />
         </ProFormList>
         <ProFormSwitch
           name="dhcp_enabled"
-          label="开启 DHCP"
-          checkedChildren="开启"
-          unCheckedChildren="关闭"
+          label={formatMessage({ id: 'system.form.title.dhcpEnabled' })}
+          checkedChildren={formatMessage({ id: 'system.switch.checked' })}
+          unCheckedChildren={formatMessage({ id: 'system.switch.unchecked' })}
           rules={[{ required: true }]}
         />
       </ProForm>

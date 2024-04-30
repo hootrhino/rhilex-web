@@ -16,7 +16,7 @@ const Resource = () => {
 
   // 展示系统详情
   const detailConfig = {
-    title: '系统详情',
+    title: formatMessage({ id: 'system.title.resource.detail' }),
     width: 700,
     autoFocusButton: null,
     content: (
@@ -44,13 +44,19 @@ const Resource = () => {
   } as any;
 
   return (
-    <ProCard title="系统资源">
+    <ProCard title={formatMessage({ id: 'system.tab.resource' })}>
       <Space split={<StatisticCard.Divider type="vertical" className="h-[12px]" />}>
-        <span className="text-[#585858] text-[13px]">产品 {product}</span>
-        <span className="text-[#585858] text-[13px]">当前版本 {version || 'v0.0.0'}</span>
-        <span className="text-[#585858] text-[13px]">运行时长 {osUpTime}</span>
         <span className="text-[#585858] text-[13px]">
-          操作系统 {osArch}
+          {formatMessage({ id: 'system.table.title.product' })} {product}
+        </span>
+        <span className="text-[#585858] text-[13px]">
+          {formatMessage({ id: 'system.table.title.version' })} {version || 'v0.0.0'}
+        </span>
+        <span className="text-[#585858] text-[13px]">
+          {formatMessage({ id: 'system.table.title.osUpTime' })} {osUpTime}
+        </span>
+        <span className="text-[#585858] text-[13px]">
+          {formatMessage({ id: 'system.table.title.osArch' })} {osArch}
           <a className="pl-[5px]" onClick={() => modal.info(detailConfig)}>
             {formatMessage({ id: 'button.checkDetail' })}
           </a>
@@ -59,7 +65,7 @@ const Resource = () => {
       <div className="flex justify-between items-center mt-[12px]">
         <StatisticCard
           statistic={{
-            title: '内存使用',
+            title: formatMessage({ id: 'system.table.title.memPercent' }),
             value: memPercent,
             suffix: '%',
           }}
@@ -69,7 +75,7 @@ const Resource = () => {
         />
         <StatisticCard
           statistic={{
-            title: '磁盘使用',
+            title: formatMessage({ id: 'system.table.title.diskInfo' }),
             value: diskInfo,
             suffix: '%',
           }}
@@ -79,7 +85,7 @@ const Resource = () => {
         />
         <StatisticCard
           statistic={{
-            title: 'CPU 使用',
+            title: formatMessage({ id: 'system.table.title.cpuPercent' }),
             value: cpuPercent,
             suffix: '%',
           }}

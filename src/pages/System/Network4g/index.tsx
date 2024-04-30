@@ -1,26 +1,29 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { ProCard } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 import { Space, Tag } from 'antd';
 import APNConfig from './Apn';
 import FourGConfig from './FourG';
 
 const Network4GConfig = () => {
+  const { formatMessage } = useIntl();
+
   return (
-    <ProCard split="vertical" title="4G 网络">
+    <ProCard split="vertical" title={`4G ${formatMessage({ id: 'system.tab.4gNetwork' })}`}>
       <ProCard
         colSpan="60%"
         title={
           <Space>
-            <span>APN 配置</span>
+            <span>{formatMessage({ id: 'system.tab.apn' })}</span>
             <Tag icon={<ExclamationCircleOutlined />} color="warning">
-              此配置项属于高级网络功能，配置不当会造成设备断网，请谨慎操作
+              {formatMessage({ id: 'system.tips.apn' })}
             </Tag>
           </Space>
         }
       >
         <APNConfig />
       </ProCard>
-      <ProCard title="4G 配置" colSpan="40%">
+      <ProCard title={`4G ${formatMessage({ id: 'system.tab.4gConfig' })}`} colSpan="40%">
         <FourGConfig />
       </ProCard>
     </ProCard>

@@ -1,18 +1,21 @@
 import { getSoftRouterDhcpClients } from '@/services/rulex/luyoupeizhi';
 import { ProTable } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 
 const DHCPList = () => {
+  const { formatMessage } = useIntl();
+
   const columns = [
     {
-      title: 'IP 地址',
+      title: formatMessage({ id: 'system.table.title.ipAddress' }),
       dataIndex: 'ip_address',
     },
     {
-      title: '设备 MAC',
+      title: formatMessage({ id: 'system.table.title.macAddress' }),
       dataIndex: 'mac_address',
     },
     {
-      title: '设备名称',
+      title: formatMessage({ id: 'system.table.title.hostname' }),
       dataIndex: 'hostname',
     },
   ];

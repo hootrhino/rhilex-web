@@ -43,7 +43,6 @@ export default {
   'device.modal.title.remove.sheet': '确定要删除此点位？',
   'device.modal.title.remove.batchSheet': '批量删除点位',
   'device.modal.title.camera': '查看视频',
-  'device.modal.title.restart': '确定执行此操作吗？',
   'device.modal.title.group.new': '新建分组',
   'device.modal.title.group.edit': '编辑分组',
   'device.modal.title.group.remove': '确定要删除此分组？',

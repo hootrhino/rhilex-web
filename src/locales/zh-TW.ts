@@ -71,6 +71,10 @@ export default {
   'form.rules.cidr': 'CIDR 格式不正确',
   'form.rules.default': '格式不正确',
   /**
+   * modal
+   */
+  'modal.title.confirm': '確定執行此操作嗎？',
+  /**
    * menu
    */
   'menu.dashboard': '系統首頁',

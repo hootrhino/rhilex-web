@@ -55,31 +55,37 @@ const FourGConfig = () => {
               loading={detailLoading}
               icon={<ReloadOutlined />}
             >
-              刷新状态
+              {formatMessage({ id: 'system.button.reload' })}
             </Button>
             <Button
               type="primary"
               danger
               onClick={() =>
                 modal.confirm({
-                  title: '确定执行此操作吗？',
-                  content: '重启 4G 网卡会造成短时间内移动网络处于离线状态，请谨慎操作',
+                  title: formatMessage({ id: 'system.modal.title.restart' }),
+                  content: formatMessage({ id: 'system.modal.content.restart' }),
                   onOk: restart,
-                  okText: '确认重启',
+                  okText: formatMessage({ id: 'system.button.confirm.restart' }),
                   cancelText: formatMessage({ id: 'button.cancel' }),
                 })
               }
               icon={<PoweroffOutlined />}
             >
-              重启 4G 网卡
+              {formatMessage({ id: 'system.button.restart4g' })}
             </Button>
           </Space>
         ),
       }}
     >
-      <ProFormText name="cops" label="运营商" placeholder="" readonly width="xl" />
+      <ProFormText
+        name="cops"
+        label={formatMessage({ id: 'system.form.title.cops' })}
+        placeholder=""
+        readonly
+        width="xl"
+      />
       <ProFormText name="iccid" label="ICCID" placeholder="" readonly width="xl" />
-      <ProForm.Item name="csq" label="信号强度">
+      <ProForm.Item name="csq" label={formatMessage({ id: 'system.form.title.csq' })}>
         <Progress steps={10} size={20} percent={getCsqPercent()} strokeColor={green[6]} />
       </ProForm.Item>
     </ProForm>

@@ -36,7 +36,7 @@ const UserConfig = () => {
   }, [initialState]);
 
   return (
-    <ProCard title="用户配置">
+    <ProCard title={formatMessage({ id: 'system.tab.user' })}>
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
@@ -50,7 +50,7 @@ const UserConfig = () => {
                 type="primary"
                 onClick={() =>
                   modal.confirm({
-                    title: '确定修改用户名/密码并重新登录吗？',
+                    title: formatMessage({ id: 'system.modal.content.user' }),
                     onOk: submit,
                     okText: formatMessage({ id: 'button.ok' }),
                     cancelText: formatMessage({ id: 'button.cancel' }),
@@ -65,18 +65,22 @@ const UserConfig = () => {
       >
         <ProFormText
           name="username"
-          label="用户名"
-          placeholder="请输入用户名"
+          label={formatMessage({ id: 'system.form.title.username' })}
+          placeholder={formatMessage({ id: 'system.form.placeholder.username' })}
           width="xl"
-          rules={[{ required: true, message: '请输入用户名' }]}
+          rules={[
+            { required: true, message: formatMessage({ id: 'system.form.placeholder.username' }) },
+          ]}
         />
         <ProFormText.Password
           name="password"
-          label="密码"
-          placeholder="请输入密码"
+          label={formatMessage({ id: 'system.form.title.password' })}
+          placeholder={formatMessage({ id: 'system.form.placeholder.password' })}
           width="xl"
           allowClear
-          rules={[{ required: true, message: '请输入密码' }]}
+          rules={[
+            { required: true, message: formatMessage({ id: 'system.form.placeholder.password' }) },
+          ]}
         />
       </ProForm>
     </ProCard>

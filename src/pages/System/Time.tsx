@@ -41,7 +41,7 @@ const TimeConfig = () => {
   const { run: updateNtp, loading } = useRequest(() => putSettingsNtp(), {
     manual: true,
     onSuccess: () => {
-      message.success('NTP 时间更新成功');
+      message.success(formatMessage({ id: 'system.message.success.ntp' }));
     },
   });
 
@@ -56,7 +56,7 @@ const TimeConfig = () => {
   };
 
   return (
-    <ProCard title="时间配置">
+    <ProCard title={formatMessage({ id: 'system.tab.time' })}>
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
@@ -67,7 +67,7 @@ const TimeConfig = () => {
             <Space>
               {dom}
               <Button type="primary" onClick={updateNtp} icon={<SyncOutlined />} loading={loading}>
-                立即同步 NTP
+                {formatMessage({ id: 'system.button.time.ntp' })}
               </Button>
             </Space>
           ),
@@ -75,27 +75,34 @@ const TimeConfig = () => {
       >
         <ProFormSelect
           options={[
-            { label: '中国', value: 'Asia/Shanghai' },
-            { label: '日本', value: 'Asia/Tokyo' },
+            { label: formatMessage({ id: 'system.option.shanghai' }), value: 'Asia/Shanghai' },
+            { label: formatMessage({ id: 'system.option.tokyo' }), value: 'Asia/Tokyo' },
           ]}
           name="sysTimeZone"
-          label="时区选择"
+          label={formatMessage({ id: 'system.table.title.sysTimeZone' })}
           width="xl"
-          placeholder="请选择时区"
-          rules={[{ required: true, message: '请选择时区' }]}
+          placeholder={formatMessage({ id: 'system.table.placeholder.sysTimeZone' })}
+          rules={[
+            {
+              required: true,
+              message: formatMessage({ id: 'system.table.placeholder.sysTimeZone' }),
+            },
+          ]}
         />
         <ProFormDateTimePicker
           name="sysTime"
-          label="系统时间"
+          label={formatMessage({ id: 'system.table.title.sysTime' })}
           width="xl"
-          placeholder="请选择时间"
-          rules={[{ required: true, message: '请选择时间' }]}
+          placeholder={formatMessage({ id: 'system.table.placeholder.sysTime' })}
+          rules={[
+            { required: true, message: formatMessage({ id: 'system.table.placeholder.sysTime' }) },
+          ]}
         />
         <ProFormSwitch
           name="enableNtp"
-          label="NTP 同步"
-          checkedChildren="开启"
-          unCheckedChildren="关闭"
+          label={formatMessage({ id: 'system.table.title.enableNtp' })}
+          checkedChildren={formatMessage({ id: 'system.switch.checked' })}
+          unCheckedChildren={formatMessage({ id: 'system.switch.unchecked' })}
           rules={[{ required: true }]}
         />
       </ProForm>
