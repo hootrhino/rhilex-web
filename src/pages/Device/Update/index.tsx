@@ -100,7 +100,6 @@ const UpdateForm = () => {
 
         params = {
           ...params,
-          schemaId: params?.schemaId || '',
           config: filterData({
             ...params.config,
             outputAddr,
@@ -174,7 +173,6 @@ const UpdateForm = () => {
     if (deviceId && detail) {
       formRef.current?.setFieldsValue({
         ...detail,
-        schemaId: detail?.schemaId || undefined,
         config: handleOnUpdateValue(detail),
       });
     } else {

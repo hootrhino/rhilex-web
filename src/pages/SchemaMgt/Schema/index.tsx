@@ -113,9 +113,9 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
             render: () => <FolderOpenOutlined className="pl-[10px]" />,
           },
           actions: {
-            render: (dom, { uuid }) => (
+            render: (_dom, { uuid }) => (
               <Space size="middle">
-                <Tooltip title="重命名模型">
+                <Tooltip title={formatMessage({ id: 'schemaMgt.tooltip.update' })}>
                   <a
                     key="edit"
                     onClick={() => {
@@ -127,9 +127,9 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
                     <EditOutlined />
                   </a>
                 </Tooltip>
-                <Tooltip title="删除模型">
+                <Tooltip title={formatMessage({ id: 'schemaMgt.tooltip.remove' })}>
                   <Popconfirm
-                    title="确定要删除此数据模型？"
+                    title={formatMessage({ id: 'schemaMgt.popconfirm.remove' })}
                     onConfirm={() => uuid && remove({ uuid })}
                   >
                     <a key="remove">
@@ -144,7 +144,11 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
       />
       <ModalForm
         open={open}
-        title={initialValue?.uuid ? '更新数据模型' : '新建数据模型'}
+        title={
+          initialValue?.uuid
+            ? formatMessage({ id: 'schemaMgt.modal.title.schema.update' })
+            : formatMessage({ id: 'schemaMgt.modal.title.schema.new' })
+        }
         formRef={formRef}
         width="30%"
         layout="horizontal"

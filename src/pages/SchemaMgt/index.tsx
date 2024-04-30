@@ -51,7 +51,7 @@ const SchemaMgt = () => {
       <ProCard split="vertical">
         <ProCard
           colSpan="300px"
-          title="数据模型列表"
+          title={formatMessage({ id: 'schemaMgt.title.schema' })}
           extra={
             <Button key="add" type="primary" icon={<PlusOutlined />} onClick={() => setOpen(true)}>
               {formatMessage({ id: 'button.new' })}
@@ -65,7 +65,13 @@ const SchemaMgt = () => {
             changeActiveItem={setActiveSchema}
           />
         </ProCard>
-        <ProCard title={activeSchema.name ? `${activeSchema.name} - 属性列表` : '属性列表'}>
+        <ProCard
+          title={
+            activeSchema.name
+              ? `${activeSchema.name} - ${formatMessage({ id: 'schemaMgt.title.property' })}`
+              : formatMessage({ id: 'schemaMgt.title.property' })
+          }
+        >
           <PropertyList schemaId={activeSchema.uuid} />
         </ProCard>
       </ProCard>

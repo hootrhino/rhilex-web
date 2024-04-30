@@ -16,7 +16,7 @@ export default {
   'status.unparse': '不解析',
   'status.info': '資訊',
   'status.error': '錯誤',
-  'status.alarm': '報警',
+  'status.warning': '警告',
   'status.internal': '內部',
   'status.external': '外部',
   'status.busy': '占用中',

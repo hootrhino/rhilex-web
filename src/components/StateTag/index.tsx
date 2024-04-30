@@ -128,7 +128,7 @@ const noticeStateEnum = {
     color: 'error',
   },
   WARNING: {
-    text: <FormattedMessage id="status.alarm" />,
+    text: <FormattedMessage id="status.warning" />,
     color: 'warning',
   },
 };

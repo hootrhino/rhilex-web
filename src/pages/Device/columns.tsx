@@ -4,7 +4,6 @@ import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { getHwifaceList, getOsGetVideos } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
-import { getSchemaList } from '@/services/rulex/shujumoxing';
 import { FormItemType, Product } from '@/utils/enum';
 import { pick } from '@/utils/redash';
 import { getPlayAddress, validateFormItem } from '@/utils/utils';
@@ -195,33 +194,6 @@ export const baseColumns = (product: Product) => [
     dataIndex: 'state',
     hideInForm: true,
     renderText: (state: number) => <StateTag state={state} />,
-  },
-  {
-    valueType: 'dependency',
-    name: ['type'],
-    hideInTable: true,
-    columns: ({ type }: DeviceItem) => {
-      if (
-        [DeviceType.GENERIC_CAMERA, DeviceType.SMART_HOME_CONTROLLER].includes(type as DeviceType)
-      )
-        return [];
-
-      return [
-        {
-          title: '数据模型',
-          dataIndex: 'schemaId',
-          valueType: 'select',
-          request: async () => {
-            const { data } = await getSchemaList();
-
-            return data?.map((item) => ({
-              label: item?.name,
-              value: item.uuid,
-            }));
-          },
-        },
-      ];
-    },
   },
   {
     title: <FormattedMessage id="table.desc" />,

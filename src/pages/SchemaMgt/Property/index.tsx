@@ -1,6 +1,5 @@
 import IndexBorder from '@/components/IndexBorder';
 import { message } from '@/components/PopupHack';
-import UnitTitle from '@/components/UnitTitle';
 import {
   deleteSchemaPropertiesDel,
   getSchemaPropertiesDetail,
@@ -44,61 +43,50 @@ export type Property = {
 type PropertyListProps = {
   schemaId: string;
 };
-export const getBaseColumns = (readOnly?: boolean) => {
-  const baseColumns: ProColumns<Property>[] = [
-    {
-      title: <FormattedMessage id="table.index" />,
-      dataIndex: 'index',
-      valueType: 'index',
-      width: 48,
-      render: (text, record, index) => <IndexBorder serial={index} />,
-    },
-    {
-      title: '名称',
-      dataIndex: 'label',
-      ellipsis: true,
-    },
-    {
-      title: '标志符',
-      dataIndex: 'name',
-      ellipsis: true,
-    },
-    {
-      title: '数据类型',
-      dataIndex: 'type',
-      valueType: 'select',
-      valueEnum: typeOption,
-      width: 100,
-    },
-    {
-      title: '单位',
-      dataIndex: 'unit',
-      width: 100,
-      hideInTable: readOnly,
-    },
-    {
-      title: '读写',
-      dataIndex: 'rw',
-      valueType: 'select',
-      valueEnum: rwOption,
-      width: 80,
-    },
-    {
-      title: '当前值',
-      dataIndex: 'value',
-      ellipsis: true,
-      hideInTable: !readOnly,
-      render: (dom, { value, unit }) => (value ? <UnitTitle title={value} unit={unit} /> : '-'),
-    },
-    {
-      title: <FormattedMessage id="table.desc" />,
-      dataIndex: 'description',
-      ellipsis: true,
-    },
-  ];
 
-  return baseColumns;
-};
+const baseColumns: ProColumns<Property>[] = [
+  {
+    title: <FormattedMessage id="table.index" />,
+    dataIndex: 'index',
+    valueType: 'index',
+    width: 48,
+    render: (_text, _record, index) => <IndexBorder serial={index} />,
+  },
+  {
+    title: <FormattedMessage id="schemaMgt.form.title.schemaName" />,
+    dataIndex: 'label',
+    ellipsis: true,
+  },
+  {
+    title: <FormattedMessage id="schemaMgt.form.title.name" />,
+    dataIndex: 'name',
+    ellipsis: true,
+  },
+  {
+    title: <FormattedMessage id="schemaMgt.form.title.type" />,
+    dataIndex: 'type',
+    valueType: 'select',
+    valueEnum: typeOption,
+    width: 100,
+  },
+  {
+    title: <FormattedMessage id="schemaMgt.form.title.unit" />,
+    dataIndex: 'unit',
+    width: 100,
+  },
+  {
+    title: <FormattedMessage id="schemaMgt.form.title.rw" />,
+    dataIndex: 'rw',
+    valueType: 'select',
+    valueEnum: rwOption,
+    width: 80,
+  },
+  {
+    title: <FormattedMessage id="table.desc" />,
+    dataIndex: 'description',
+    ellipsis: true,
+  },
+];
 
 const ruleFilterData = {
   [Type.STRING]: ['defaultValue', 'max'],
@@ -134,7 +122,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
     },
   );
 
-  const columns: ProColumns<Property>[] = getBaseColumns().concat([
+  const columns: ProColumns<Property>[] = baseColumns.concat([
     {
       title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
@@ -151,7 +139,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
           {formatMessage({ id: 'button.edit' })}
         </a>,
         <Popconfirm
-          title="确定要删除此属性？"
+          title={formatMessage({ id: 'schemaMgt.popconfirm.remove.property' })}
           onConfirm={() => uuid && schemaId && remove({ uuid, schemaId })}
           okText={formatMessage({ id: 'button.yes' })}
           cancelText={formatMessage({ id: 'button.no' })}
@@ -227,7 +215,11 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
       });
 
     return (
-      <Descriptions title="数据定义" items={ruleItems as DescriptionsProps['items']} column={4} />
+      <Descriptions
+        title={formatMessage({ id: 'schemaMgt.title.card' })}
+        items={ruleItems as DescriptionsProps['items']}
+        column={4}
+      />
     );
   };
 

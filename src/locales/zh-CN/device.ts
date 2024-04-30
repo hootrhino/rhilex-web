@@ -3,8 +3,6 @@ export default {
    * button
    */
   'device.button.restartDevice': '重启设备',
-  'device.button.schema.bind': '数据模型',
-  'device.button.schema.unbind': '解绑数据模型',
   'device.button.camera': '查看视频',
   'device.button.snmp': 'SNMP 对象列表',
   'device.button.sheet': '点位表配置',
@@ -36,11 +34,6 @@ export default {
   'device.title.sheet': '点位表配置',
   'device.title.device': '设备',
   'device.title.subDevice': '设备 {name} - 子设备列表',
-
-  /**
-   * message
-   */
-  'device.message.success.unbind': '解绑成功',
 
   /**
    * modal
@@ -94,7 +87,6 @@ export default {
   'device.form.title.type': '设备类型',
   'device.form.title.gid': '设备分组',
   'device.form.title.state': '设备状态',
-  'device.form.title.schemaId': '数据模型',
   'device.form.title.retryTime': '重试次数',
   'device.form.title.autoRequest': '启动轮询',
   'device.form.title.enableOptimize': '批量采集',

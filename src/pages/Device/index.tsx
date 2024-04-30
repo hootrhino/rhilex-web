@@ -3,19 +3,15 @@ import { message, modal } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
 import {
   deleteDevicesDel,
-  getDevicesDetail,
   getDevicesDeviceErrMsg,
   getDevicesGroup,
   getDevicesListByGroup,
   putDevicesRestart,
-  putDevicesUpdate,
 } from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
 import { getName } from '@/utils/utils';
 import {
-  ApartmentOutlined,
   ControlOutlined,
-  DisconnectOutlined,
   DownOutlined,
   ExceptionOutlined,
   HddOutlined,
@@ -37,13 +33,11 @@ import Detail from './Detail';
 import { DeviceType, OutputMode } from './enum';
 import type { GroupConfig } from './Group';
 import GroupList, { DEFAULT_CONFIG } from './Group';
-import SchemaDetail from './SchemaDetail';
 
 export type DeviceItem = {
   name: string;
   type: DeviceType;
   state: number;
-  schemaId: string;
   description: string;
   config: Record<string, any>;
   [key: string]: any;
@@ -59,13 +53,11 @@ const Devices = () => {
 
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(DEFAULT_CONFIG);
   const [open, setOpen] = useState<boolean>(false);
-  const [openSchema, setOpenSchema] = useState<boolean>(false);
   const [openVideo, setOpenVideo] = useState<boolean>(false);
 
   const [total, setTotal] = useState<number>(0);
 
   const [activeDevice, setActiveDevice] = useState<string>('');
-  const [activeDeviceName, setActiveDeviceName] = useState<string>('');
   const [videoConfig, setVideoConfig] = useState<{
     deviceName: string | undefined;
     outputMode: OutputMode;
@@ -99,17 +91,6 @@ const Devices = () => {
     },
   );
 
-  // 解绑数据模型
-  const handleOnUnbind = async (uuid: string) => {
-    const { data } = await getDevicesDetail({ uuid });
-    if (data) {
-      await putDevicesUpdate({ ...data, schemaId: '' } as any).then(() =>
-        message.success('解绑成功'),
-      );
-      actionRef.current?.reload();
-    }
-  };
-
   // 查看异常弹窗
   const { run: getErrorMsg } = useRequest(
     (params: API.getDevicesDeviceErrMsgParams) => getDevicesDeviceErrMsg(params),
@@ -124,7 +105,7 @@ const Devices = () => {
     },
   );
 
-  const getMenuItems = ({ type = DeviceType.GENERIC_PROTOCOL, schemaId = '', state = 0 }) => {
+  const getMenuItems = ({ type = DeviceType.GENERIC_PROTOCOL, state = 0 }) => {
     const baseItems = [
       {
         key: 'restart',
@@ -144,8 +125,6 @@ const Devices = () => {
       label: formatMessage({ id: 'button.ruleConfig' }),
       icon: <SettingOutlined />,
     };
-    const schemaItem = { key: 'schema', label: '数据模型', icon: <ApartmentOutlined /> };
-    const unbindItem = { key: 'unbind', label: '解绑数据模型', icon: <DisconnectOutlined /> };
 
     let newItems = [...baseItems];
 
@@ -168,8 +147,6 @@ const Devices = () => {
         newItems = [
           ...newItems,
           ruleItem,
-          schemaItem,
-          schemaId ? unbindItem : null,
           { key: 'snmp-sheet', label: 'SNMP 对象列表', icon: <ControlOutlined /> },
         ];
         break;
@@ -177,8 +154,6 @@ const Devices = () => {
         newItems = [
           ...newItems,
           ruleItem,
-          schemaItem,
-          schemaId ? unbindItem : null,
           { key: 'modbus-sheet', label: '点位表配置', icon: <ControlOutlined /> },
         ];
         break;
@@ -186,13 +161,11 @@ const Devices = () => {
         newItems = [
           ...newItems,
           ruleItem,
-          schemaItem,
-          schemaId ? unbindItem : null,
           { key: 'plc-sheet', label: '点位表配置', icon: <ControlOutlined /> },
         ];
         break;
       default:
-        newItems = [...newItems, ruleItem, schemaItem, schemaId ? unbindItem : null];
+        newItems = [...newItems, ruleItem];
         break;
     }
 
@@ -217,11 +190,6 @@ const Devices = () => {
       case 'modbus-sheet':
         history.push(`/device/${gid}/${uuid}/modbus-sheet`);
         break;
-      case 'schema':
-        setOpenSchema(true);
-        setActiveDevice(uuid);
-        setActiveDeviceName(name || '');
-        break;
       case 'video':
         if (config?.outputMode === OutputMode.REMOTE_STREAM_SERVER) {
           modal.info({
@@ -239,9 +207,6 @@ const Devices = () => {
           setVideoConfig({ deviceName: name, outputMode: config?.outputMode });
         }
 
-        break;
-      case 'unbind':
-        handleOnUnbind(uuid);
         break;
       case 'error':
         getErrorMsg({ uuid });
@@ -262,7 +227,7 @@ const Devices = () => {
       key: 'option',
       valueType: 'option',
       render: (_, record) => {
-        const { uuid, gid, type, schemaId, state } = record;
+        const { uuid, gid, type, state } = record;
 
         return (
           <Space>
@@ -283,7 +248,7 @@ const Devices = () => {
             </Popconfirm>
             <Dropdown
               menu={{
-                items: getMenuItems({ type, schemaId, state }),
+                items: getMenuItems({ type, state }),
                 onClick: (info: MenuInfo) => handleOnMenu(info, record),
               }}
             >
@@ -378,15 +343,6 @@ const Devices = () => {
         </ProCard>
       </PageContainer>
       <Detail {...detailConfig} onClose={() => setDeviceConfig({ uuid: '', open: false })} />
-      <SchemaDetail
-        activeDevice={activeDevice}
-        activeDeviceName={activeDeviceName}
-        open={openSchema}
-        onClose={() => {
-          setOpenSchema(false);
-          setActiveDevice('');
-        }}
-      />
       <CameraDetail
         open={openVideo}
         onCancel={() => {

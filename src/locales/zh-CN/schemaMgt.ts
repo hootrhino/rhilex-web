@@ -15,6 +15,8 @@ export default {
   'schemaMgt.form.title.defaultValue': '默认值',
   'schemaMgt.form.title.unit': '单位',
   'schemaMgt.form.title.rw': '读写',
+  'schemaMgt.form.title.schemaName': '名称',
+
   'schemaMgt.form.placeholder.label': '请输入属性名称',
   'schemaMgt.form.placeholder.name': '请输入标志符',
   'schemaMgt.form.placeholder.type': '请选择数据类型',
@@ -27,8 +29,6 @@ export default {
   'schemaMgt.form.placeholder.defaultValue': '请输入默认值',
   'schemaMgt.form.placeholder.unit': '请输入单位',
   'schemaMgt.form.rules.range': '请输入取值范围',
-
-  'schemaMgt.form.title.schemaName': '名称',
   'schemaMgt.form.placeholder.schemaName': '请输入数据模型名称',
 
   /**
@@ -52,5 +52,5 @@ export default {
   'schemaMgt.tooltip.update': '重命名模型',
   'schemaMgt.tooltip.remove': '删除模型',
   'schemaMgt.popconfirm.remove': '确定要删除此数据模型？',
-  'schemaMgt.table.title.value': '当前值',
+  'schemaMgt.popconfirm.remove.property': '确定要删除此属性？',
 };
