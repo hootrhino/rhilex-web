@@ -150,11 +150,6 @@ const Plugins = () => {
       width: 180,
     },
     {
-      title: formatMessage({ id: 'plugin.table.title.license' }),
-      dataIndex: 'license',
-      width: 80,
-    },
-    {
       title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
       width: 80,

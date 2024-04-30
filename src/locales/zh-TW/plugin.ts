@@ -7,7 +7,6 @@ export default {
   'plugin.table.title.helpLink': '文檔地址',
   'plugin.table.title.author': '作者',
   'plugin.table.title.email': '電郵',
-  'plugin.table.title.license': '協議',
 
   /**
    * title
