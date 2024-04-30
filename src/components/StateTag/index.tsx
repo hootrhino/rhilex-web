@@ -89,8 +89,8 @@ const boolStateEnum = {
   },
   false: {
     text: <FormattedMessage id="status.close" />,
-    color: 'error',
-    icon: <CloseCircleOutlined />,
+    color: 'default',
+    icon: <MinusCircleOutlined />,
   },
 };
 
@@ -110,11 +110,13 @@ const deviceStateEnum = {
 const parseStateEnum = {
   true: {
     text: <FormattedMessage id="status.parse" />,
-    color: 'processing',
+    color: 'success',
+    icon: <CheckCircleOutlined />,
   },
   false: {
     text: <FormattedMessage id="status.unparse" />,
     color: 'default',
+    icon: <MinusCircleOutlined />,
   },
 };
 
@@ -161,7 +163,7 @@ const runningStateEnum = {
   },
   false: {
     text: <FormattedMessage id="status.stop" />,
-    color: 'error',
+    color: 'default',
     icon: <MinusCircleOutlined />,
   },
 };
@@ -193,9 +195,7 @@ const dataSource = {
 const StateTag = ({ state, type = StateType.DEFAULT }: StateTagProps) => {
   const [activeState, setActiveState] = useState<number | string>(0);
 
-  const props = [StateType.PARSE, StateType.LEVEL, StateType.NOTICE, StateType.GOODSTYPE].includes(
-    type,
-  )
+  const props = [StateType.LEVEL, StateType.NOTICE, StateType.GOODSTYPE].includes(type)
     ? {
         color: dataSource[type][activeState]?.color,
       }
