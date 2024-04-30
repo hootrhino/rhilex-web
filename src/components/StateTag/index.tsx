@@ -5,6 +5,7 @@ import {
   MinusCircleOutlined,
   SyncOutlined,
 } from '@ant-design/icons';
+import { FormattedMessage } from '@umijs/max';
 import { Tag } from 'antd';
 import { useEffect, useState } from 'react';
 
@@ -27,21 +28,41 @@ type StateTagProps = {
 };
 
 const defaultStateEnum = {
-  0: { text: '故障', color: 'error', icon: <CloseCircleOutlined /> },
-  1: { text: '启用', color: 'success', icon: <CheckCircleOutlined /> },
-  2: { text: '暂停', color: 'warning', icon: <ClockCircleOutlined /> },
-  3: { text: '停止', color: 'default', icon: <MinusCircleOutlined /> },
-  4: { text: '加载中', color: 'processing', icon: <SyncOutlined spin /> },
+  0: {
+    text: <FormattedMessage id="status.fault" />,
+    color: 'error',
+    icon: <CloseCircleOutlined />,
+  },
+  1: {
+    text: <FormattedMessage id="status.enable" />,
+    color: 'success',
+    icon: <CheckCircleOutlined />,
+  },
+  2: {
+    text: <FormattedMessage id="status.pause" />,
+    color: 'warning',
+    icon: <ClockCircleOutlined />,
+  },
+  3: {
+    text: <FormattedMessage id="status.stop" />,
+    color: 'default',
+    icon: <MinusCircleOutlined />,
+  },
+  4: {
+    text: <FormattedMessage id="status.loading" />,
+    color: 'processing',
+    icon: <SyncOutlined spin />,
+  },
 };
 
 const pointStateEnum = {
   1: {
-    text: '正常',
+    text: <FormattedMessage id="status.normal" />,
     color: 'success',
     icon: <CheckCircleOutlined />,
   },
   0: {
-    text: '异常',
+    text: <FormattedMessage id="status.exception" />,
     color: 'error',
     icon: <CloseCircleOutlined />,
   },
@@ -49,12 +70,12 @@ const pointStateEnum = {
 
 const appStackStateEnum = {
   1: {
-    text: '运行中',
+    text: <FormattedMessage id="status.running" />,
     color: 'processing',
     icon: <SyncOutlined spin />,
   },
   0: {
-    text: '已结束',
+    text: <FormattedMessage id="status.finished" />,
     color: 'default',
     icon: <MinusCircleOutlined />,
   },
@@ -62,12 +83,12 @@ const appStackStateEnum = {
 
 const boolStateEnum = {
   true: {
-    text: '开启',
+    text: <FormattedMessage id="status.open" />,
     color: 'success',
     icon: <CheckCircleOutlined />,
   },
   false: {
-    text: '关闭',
+    text: <FormattedMessage id="status.close" />,
     color: 'error',
     icon: <CloseCircleOutlined />,
   },
@@ -75,12 +96,12 @@ const boolStateEnum = {
 
 const deviceStateEnum = {
   true: {
-    text: '在线',
+    text: <FormattedMessage id="status.online" />,
     color: 'success',
     icon: <CheckCircleOutlined />,
   },
   false: {
-    text: '离线',
+    text: <FormattedMessage id="status.offline" />,
     color: 'error',
     icon: <CloseCircleOutlined />,
   },
@@ -88,26 +109,26 @@ const deviceStateEnum = {
 
 const parseStateEnum = {
   true: {
-    text: '解析',
+    text: <FormattedMessage id="status.parse" />,
     color: 'processing',
   },
   false: {
-    text: '不解析',
+    text: <FormattedMessage id="status.unparse" />,
     color: 'default',
   },
 };
 
 const noticeStateEnum = {
   INFO: {
-    text: '信息',
+    text: <FormattedMessage id="status.info" />,
     color: 'processing',
   },
   ERROR: {
-    text: '错误',
+    text: <FormattedMessage id="status.error" />,
     color: 'error',
   },
   WARNING: {
-    text: '报警',
+    text: <FormattedMessage id="status.alarm" />,
     color: 'warning',
   },
 };
@@ -134,12 +155,12 @@ export const levelStateEnum = {
 
 const runningStateEnum = {
   true: {
-    text: '运行中',
+    text: <FormattedMessage id="status.running" />,
     color: 'processing',
     icon: <SyncOutlined spin />,
   },
   false: {
-    text: '停止',
+    text: <FormattedMessage id="status.stop" />,
     color: 'error',
     icon: <MinusCircleOutlined />,
   },
@@ -147,11 +168,11 @@ const runningStateEnum = {
 
 const goodsTypeStateEnum = {
   true: {
-    text: '内部',
+    text: <FormattedMessage id="status.internal" />,
     color: 'green',
   },
   false: {
-    text: '外部',
+    text: <FormattedMessage id="status.external" />,
     color: 'purple',
   },
 };
