@@ -1,5 +1,6 @@
 import ProLog from '@/components/ProLog';
 import { FormItemType } from '@/utils/enum';
+import { validateIPv4 } from '@/utils/regExp';
 import { validateFormItem } from '@/utils/utils';
 import { ProForm } from '@ant-design/pro-components';
 import { useIntl } from '@umijs/max';
@@ -26,7 +27,11 @@ const Ping = ({ uuid, dataSource }: PingProps) => {
         label={formatMessage({ id: 'plugin.form.title.ip' })}
         rules={[
           {
-            validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.IP),
+            validator: (_rule: Rule, value: string) => {
+              setDisabled(!validateIPv4(value));
+
+              return validateFormItem(value, FormItemType.IP);
+            },
           },
         ]}
       >
