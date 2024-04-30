@@ -87,6 +87,7 @@ const NotifyLog = () => {
           search={false}
           pagination={false}
           dataSource={data}
+          options={{ reload: refresh }}
           toolBarRender={() => [
             <Button type="primary" key="clear" onClick={clear} icon={<ClearOutlined />}>
               全部已读
