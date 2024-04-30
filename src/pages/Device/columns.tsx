@@ -8,7 +8,7 @@ import { FormItemType, Product } from '@/utils/enum';
 import { pick } from '@/utils/redash';
 import { getPlayAddress, validateFormItem } from '@/utils/utils';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { FormattedMessage } from '@umijs/max';
+import { getIntl, getLocale } from '@umijs/max';
 import { AutoComplete, Space, Typography } from 'antd';
 import { Rule } from 'antd/es/form';
 import type { DeviceItem } from '.';
@@ -196,7 +196,7 @@ export const baseColumns = (product: Product) => [
     renderText: (state: number) => <StateTag state={state} />,
   },
   {
-    title: <FormattedMessage id="table.desc" />,
+    title: getIntl(getLocale()).formatMessage({ id: 'table.desc' }),
     dataIndex: 'description',
   },
 ];

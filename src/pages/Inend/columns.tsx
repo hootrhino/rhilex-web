@@ -1,5 +1,5 @@
 import StateTag from '@/components/StateTag';
-import { FormattedMessage } from '@umijs/max';
+import { getIntl, getLocale } from '@umijs/max';
 import {
   EventType,
   eventTypeOption,
@@ -80,7 +80,7 @@ export const baseColumns = [
     renderText: (state: number) => <StateTag state={state} />,
   },
   {
-    title: <FormattedMessage id="table.desc" />,
+    title: getIntl(getLocale()).formatMessage({ id: 'table.desc' }),
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => description || '-',
