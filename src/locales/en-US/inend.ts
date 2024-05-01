@@ -36,5 +36,30 @@ export default {
   'inend.title.source': '资源配置',
   'inend.popconfirm.title.remove': '确定要删除此资源？',
   'inend.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，需谨慎操作',
-  'inend.message.warning.new': '新建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：',
+  'inend.message.warning.new':
+    '新建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：{msg}',
+
+  /**
+   * type
+   */
+  'inend.type.serve': '作为通用 {type} 提供接入服务',
+  'inend.type.topic': '作為通用 {type} 客户端訂閲 Topic 接入',
+  'inend.type.subject': '作为通用 {type} 订阅 Subject 接入',
+  'inend.type.event': '{type} 内部事件源',
+
+  /**
+   * mode
+   */
+  'inend.mode.gw': '网关',
+  'inend.mode.dc': '直连',
+
+  /**
+   * event
+   */
+  'inend.event.all': '全部事件',
+  'inend.event.source': '南向事件',
+  'inend.event.device': '设备事件',
+  'inend.event.target': '北向事件',
+  'inend.event.system': '系统事件',
+  'inend.event.hardware': '硬件事件',
 };

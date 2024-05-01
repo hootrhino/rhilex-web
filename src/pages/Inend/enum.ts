@@ -1,3 +1,5 @@
+import { getIntl, getLocale } from '@umijs/max';
+
 /**
  * 南向资源类型
  */
@@ -11,15 +13,21 @@ export enum InendType {
   GENERIC_MQTT = 'GENERIC_MQTT',
   INTERNAL_EVENT = 'INTERNAL_EVENT',
 }
+
+const intl = getIntl(getLocale());
+
 export const inendTypeOption = {
-  [InendType.COAP]: '作为通用 COAP Server 提供接入服务',
-  [InendType.GENERIC_IOT_HUB]: '作为通用 IoTHub 客户端订阅 Topic 接入',
-  [InendType.RULEX_UDP]: '作为通用 UDP Server 提供接入服务',
-  [InendType.HTTP]: '作为通用 HTTP Server 提供接入服务',
-  [InendType.NATS_SERVER]: '作为通用 NATS Client 订阅 Subject 接入',
-  [InendType.GRPC]: '作为通用 GRPC Server 提供接入服务',
-  [InendType.GENERIC_MQTT]: '作为通用 MQTT客户端订阅 Topic 接入',
-  [InendType.INTERNAL_EVENT]: 'RHILEX 内部事件源',
+  [InendType.COAP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'COAP Server' }),
+  [InendType.GENERIC_IOT_HUB]: intl.formatMessage({ id: 'inend.type.topic' }, { type: 'IoTHub' }),
+  [InendType.RULEX_UDP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'UDP Server' }),
+  [InendType.HTTP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'HTTP Server' }),
+  [InendType.NATS_SERVER]: intl.formatMessage(
+    { id: 'inend.type.subject' },
+    { type: 'NATS Client' },
+  ),
+  [InendType.GRPC]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'GRPC Server' }),
+  [InendType.GENERIC_MQTT]: intl.formatMessage({ id: 'inend.type.topic' }, { type: 'MQTT' }),
+  [InendType.INTERNAL_EVENT]: intl.formatMessage({ id: 'inend.type.event' }, { type: 'RHILEX' }),
 };
 
 /**
@@ -30,8 +38,8 @@ export enum Mode {
   DC = 'DC',
 }
 export const modeOption = {
-  [Mode.GW]: '网关',
-  [Mode.DC]: '直连',
+  [Mode.GW]: intl.formatMessage({ id: 'inend.mode.gw' }),
+  [Mode.DC]: intl.formatMessage({ id: 'inend.mode.dc' }),
 };
 
 /**
@@ -46,12 +54,12 @@ export enum EventType {
   HARDWARE = 'HARDWARE',
 }
 export const eventTypeOption = {
-  [EventType.ALL]: '全部事件',
-  [EventType.SOURCE]: '南向事件',
-  [EventType.DEVICE]: '设备事件',
-  [EventType.TARGET]: '北向事件',
-  [EventType.SYSTEM]: '系统事件',
-  [EventType.HARDWARE]: '硬件事件',
+  [EventType.ALL]: intl.formatMessage({ id: 'inend.event.all' }),
+  [EventType.SOURCE]: intl.formatMessage({ id: 'inend.event.source' }),
+  [EventType.DEVICE]: intl.formatMessage({ id: 'inend.event.device' }),
+  [EventType.TARGET]: intl.formatMessage({ id: 'inend.event.target' }),
+  [EventType.SYSTEM]: intl.formatMessage({ id: 'inend.event.system' }),
+  [EventType.HARDWARE]: intl.formatMessage({ id: 'inend.event.hardware' }),
 };
 
 /**

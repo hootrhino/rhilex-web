@@ -31,16 +31,16 @@ const SubDeviceList = () => {
       render: (_text, _record, index) => <IndexBorder serial={index} />,
     },
     {
-      title: '设备 IP',
+      title: formatMessage({ id: 'inend.table.title.ip' }),
       dataIndex: 'ip',
     },
     {
-      title: '设备状态',
+      title: formatMessage({ id: 'inend.table.title.status' }),
       dataIndex: 'status',
       renderText: (status) => status && <StateTag state={status} type={StateType.DEVICE} />,
     },
     {
-      title: '设备属性',
+      title: formatMessage({ id: 'inend.table.title.properties' }),
       dataIndex: 'properties',
       renderText: (properties) => (
         <pre className="json-code">
@@ -51,7 +51,10 @@ const SubDeviceList = () => {
   ];
 
   return (
-    <PageContainer backUrl={`/inend/list`} title={`资源 ${inendsDetail?.name || ''} - 子设备列表`}>
+    <PageContainer
+      backUrl={`/inend/list`}
+      title={formatMessage({ id: 'inend.title.subDevice' }, { name: inendsDetail?.name || '' })}
+    >
       <ProTable
         rowKey="ip"
         columns={columns}

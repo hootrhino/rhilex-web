@@ -291,7 +291,7 @@ export const columns = [
 
       return [
         {
-          title: intl.formatMessage({ id: 'outend.table.title.group' }),
+          title: intl.formatMessage({ id: 'outend.title.source' }),
           valueType: 'group',
           columns:
             type === 'HTTP'

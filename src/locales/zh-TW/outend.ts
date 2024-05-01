@@ -18,7 +18,6 @@ export default {
   'outend.table.title.dataMode': '傳輸模式',
   'outend.table.title.dbName': '數據庫名',
   'outend.table.title.url': '請求地址',
-  'outend.table.title.group': '資源配置',
 
   /**
    * title

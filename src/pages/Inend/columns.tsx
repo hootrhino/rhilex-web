@@ -51,6 +51,8 @@ export const defaultConfig = {
   },
 };
 
+const intl = getIntl(getLocale());
+
 export const baseColumns = [
   {
     title: 'UUID',
@@ -61,26 +63,26 @@ export const baseColumns = [
     copyable: true,
   },
   {
-    title: '资源名称',
+    title: intl.formatMessage({ id: 'inend.table.title.name' }),
     dataIndex: 'name',
     ellipsis: true,
     required: true,
   },
   {
-    title: '资源类型',
+    title: intl.formatMessage({ id: 'inend.table.title.type' }),
     dataIndex: 'type',
     valueType: 'select',
     valueEnum: inendTypeOption,
     required: true,
   },
   {
-    title: '资源状态',
+    title: intl.formatMessage({ id: 'inend.table.title.state' }),
     dataIndex: 'state',
     hideInForm: true,
     renderText: (state: number) => <StateTag state={state} />,
   },
   {
-    title: getIntl(getLocale()).formatMessage({ id: 'table.desc' }),
+    title: intl.formatMessage({ id: 'table.desc' }),
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => description || '-',
@@ -89,12 +91,12 @@ export const baseColumns = [
 
 const defaultConfigColumns = [
   {
-    title: '服务地址',
+    title: intl.formatMessage({ id: 'inend.table.title.host' }),
     dataIndex: ['config', 'host'],
     required: true,
   },
   {
-    title: '端口',
+    title: intl.formatMessage({ id: 'inend.table.title.port' }),
     dataIndex: ['config', 'port'],
     valueType: 'digit',
     required: true,
@@ -105,17 +107,17 @@ const defaultConfigColumns = [
 const defaultGenericColumns = [
   ...defaultConfigColumns,
   {
-    title: '客户端 ID',
+    title: intl.formatMessage({ id: 'inend.table.title.clientId' }),
     dataIndex: ['config', 'clientId'],
     required: true,
   },
   {
-    title: '用户名称',
+    title: intl.formatMessage({ id: 'inend.table.title.username' }),
     dataIndex: ['config', 'username'],
     required: true,
   },
   {
-    title: '用户密码',
+    title: intl.formatMessage({ id: 'inend.table.title.password' }),
     dataIndex: ['config', 'password'],
     valueType: 'password',
     required: true,
@@ -127,19 +129,19 @@ export const configColumns = {
   [InendType.GENERIC_IOT_HUB]: [
     ...defaultGenericColumns,
     {
-      title: '模式',
+      title: intl.formatMessage({ id: 'inend.table.title.mode' }),
       dataIndex: ['config', 'mode'],
       valueType: 'select',
       valueEnum: modeOption,
       required: true,
     },
     {
-      title: '设备名称',
+      title: intl.formatMessage({ id: 'inend.table.title.deviceName' }),
       dataIndex: ['config', 'deviceName'],
       required: true,
     },
     {
-      title: '产品 ID',
+      title: intl.formatMessage({ id: 'inend.table.title.productId' }),
       dataIndex: ['config', 'productId'],
       copyable: true,
       required: true,
@@ -150,7 +152,7 @@ export const configColumns = {
   [InendType.NATS_SERVER]: [
     ...defaultConfigColumns,
     {
-      title: '主题',
+      title: intl.formatMessage({ id: 'inend.table.title.topic' }),
       dataIndex: ['config', 'topic'],
       required: true,
     },
@@ -158,7 +160,7 @@ export const configColumns = {
   [InendType.GRPC]: defaultConfigColumns,
   [InendType.INTERNAL_EVENT]: [
     {
-      title: '事件类型',
+      title: intl.formatMessage({ id: 'inend.table.title.eventType' }),
       dataIndex: ['config', 'type'],
       valueType: 'select',
       required: true,
@@ -168,7 +170,7 @@ export const configColumns = {
   [InendType.GENERIC_MQTT]: [
     ...defaultGenericColumns,
     {
-      title: '数据质量',
+      title: intl.formatMessage({ id: 'inend.table.title.qos' }),
       dataIndex: ['config', 'qos'],
       valueType: 'select',
       required: true,
@@ -177,7 +179,7 @@ export const configColumns = {
     {
       valueType: 'formList',
       dataIndex: ['config', 'subTopics'],
-      title: '订阅 topic 表',
+      title: intl.formatMessage({ id: 'inend.table.title.subTopics' }),
       fieldProps: {
         required: true,
         min: 1,
@@ -190,7 +192,7 @@ export const configColumns = {
               title: '',
               dataIndex: 'k',
               fieldProps: {
-                placeholder: '请输入订阅 tipic',
+                placeholder: intl.formatMessage({ id: 'inend.table.placeholder.subTopics' }),
               },
               formItemProps: {
                 rules: [
@@ -200,7 +202,9 @@ export const configColumns = {
                       if (value) {
                         return Promise.resolve();
                       }
-                      return Promise.reject('订阅 topic 表至少要有一项');
+                      return Promise.reject(
+                        intl.formatMessage({ id: 'inend.table.rules.subTopics' }),
+                      );
                     },
                   },
                 ],
@@ -225,7 +229,7 @@ export const columns = [
     columns: ({ type }: any) => {
       return [
         {
-          title: '资源配置',
+          title: intl.formatMessage({ id: 'inend.title.group' }),
           valueType: 'group',
           columns: [
             {

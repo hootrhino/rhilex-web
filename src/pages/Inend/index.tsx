@@ -94,7 +94,7 @@ const Inend = () => {
           {formatMessage({ id: 'button.edit' })}
         </a>,
         <Popconfirm
-          title="确定要删除此资源？"
+          title={formatMessage({ id: 'inend.popconfirm.title.remove' })}
           onConfirm={() => remove({ uuid })}
           okText={formatMessage({ id: 'button.yes' })}
           cancelText={formatMessage({ id: 'button.no' })}
@@ -168,7 +168,7 @@ const Inend = () => {
         title={formatMessage({ id: 'modal.title.confirm' })}
         okText={formatMessage({ id: 'button.restart.comfirm' })}
         afterOkText={formatMessage({ id: 'button.restart' })}
-        content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"
+        content={formatMessage({ id: 'inend.modal.content.restart' })}
         handleOnEnd={() => {
           actionRef.current?.reload();
           message.success(formatMessage({ id: 'message.success.restart' }));

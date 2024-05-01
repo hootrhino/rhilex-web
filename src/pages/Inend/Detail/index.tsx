@@ -2,6 +2,7 @@ import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { omit } from '@/utils/redash';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useRequest } from 'umi';
 import { baseColumns, configColumns } from '../columns';
@@ -12,18 +13,26 @@ type DetailProps = DrawerProps & {
 };
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
+  const { formatMessage } = useIntl();
+
   const { data, loading } = useRequest(() => getInendsDetail({ uuid }), {
     ready: !!uuid,
     refreshDeps: [uuid],
   });
 
   return (
-    <Drawer title="资源详情" placement="right" width="30%" destroyOnClose {...props}>
+    <Drawer
+      title={formatMessage({ id: 'inend.title.detail' })}
+      placement="right"
+      width="30%"
+      destroyOnClose
+      {...props}
+    >
       <ProDescriptions
         column={1}
         columns={baseColumns as ProDescriptionsItemProps<Record<string, any>>[]}
         labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
-        title="基本配置"
+        title={formatMessage({ id: 'inend.title.base' })}
         dataSource={data && omit(data, ['config'])}
         loading={loading}
       />
@@ -32,7 +41,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
           column={1}
           columns={configColumns[data?.type]}
           labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
-          title="资源配置"
+          title={formatMessage({ id: 'inend.title.group' })}
           dataSource={data}
           loading={loading}
         />

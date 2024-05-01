@@ -57,7 +57,7 @@ const UpdateForm = () => {
         if (msg === 'Success') {
           message.success(formatMessage({ id: 'message.success.new' }));
         } else {
-          message.warning(`新建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：${msg}`);
+          message.warning(formatMessage({ id: 'inend.message.warning.new' }, { msg: msg }));
         }
       }
       setLoading(false);
@@ -118,7 +118,15 @@ const UpdateForm = () => {
   useBeforeUnloadConfirm();
 
   return (
-    <PageContainer showExtra title={uuid ? '编辑资源' : '新建资源'} backUrl={DefaultListUrl}>
+    <PageContainer
+      showExtra
+      title={
+        uuid
+          ? formatMessage({ id: 'inend.title.update' })
+          : formatMessage({ id: 'inend.title.new' })
+      }
+      backUrl={DefaultListUrl}
+    >
       <ProBetaSchemaForm
         formRef={formRef}
         onFinish={handleOnFinish}
