@@ -51,7 +51,9 @@ export default {
   'device.modal.content.group.remove':
     '分组中包含 {count} 个子项目，删除后将被移入默认分组中，请谨慎处理。',
   'device.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，需谨慎操作',
-  'device.modal.content.camera': '视频正在加载...',
+  'device.modal.content.camera.loading': '视频正在加载...',
+  'device.modal.content.camera':
+    '此模式下流媒体被中转到第三方地址，当前{inputAddr}已经成功推送到{outputAddr}，请在对应的平台上查看或者播放。',
   'device.modal.content.upload': '文件格式不正确可能会导致上传失败，你确定要上传',
   'device.modal.content.remove.batchOid': '此操作会一次性删除多个对象，需谨慎操作',
 
@@ -171,5 +173,5 @@ export default {
   'device.tips.scroll': '横向滚动查看更多',
   'device.message.success.config': '配置成功',
   'device.message.success.clear': '清除成功',
-  'device.message.error.new': '创建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：',
+  'device.message.error.new': '创建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：{msg}',
 };

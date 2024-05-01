@@ -98,7 +98,7 @@ const Devices = () => {
       manual: true,
       onSuccess: (res) =>
         modal.error({
-          title: '设备异常信息',
+          title: formatMessage({ id: 'device.title.modal.error.device' }),
           content: <div className="flex flex-wrap">{res}</div>,
           okText: formatMessage({ id: 'button.close' }),
         }),
@@ -130,7 +130,14 @@ const Devices = () => {
 
     switch (type) {
       case DeviceType.GENERIC_CAMERA:
-        newItems = [...newItems, { key: 'video', label: '查看视频', icon: <PlayCircleOutlined /> }];
+        newItems = [
+          ...newItems,
+          {
+            key: 'video',
+            label: formatMessage({ id: 'device.button.camera' }),
+            icon: <PlayCircleOutlined />,
+          },
+        ];
         break;
       case DeviceType.SMART_HOME_CONTROLLER:
         newItems = [
@@ -147,21 +154,33 @@ const Devices = () => {
         newItems = [
           ...newItems,
           ruleItem,
-          { key: 'snmp-sheet', label: 'SNMP 对象列表', icon: <ControlOutlined /> },
+          {
+            key: 'snmp-sheet',
+            label: formatMessage({ id: 'device.button.snmp' }),
+            icon: <ControlOutlined />,
+          },
         ];
         break;
       case DeviceType.GENERIC_MODBUS:
         newItems = [
           ...newItems,
           ruleItem,
-          { key: 'modbus-sheet', label: '点位表配置', icon: <ControlOutlined /> },
+          {
+            key: 'modbus-sheet',
+            label: formatMessage({ id: 'device.button.sheet' }),
+            icon: <ControlOutlined />,
+          },
         ];
         break;
       case DeviceType.SIEMENS_PLC:
         newItems = [
           ...newItems,
           ruleItem,
-          { key: 'plc-sheet', label: '点位表配置', icon: <ControlOutlined /> },
+          {
+            key: 'plc-sheet',
+            label: formatMessage({ id: 'device.button.sheet' }),
+            icon: <ControlOutlined />,
+          },
         ];
         break;
       default:
@@ -193,11 +212,13 @@ const Devices = () => {
       case 'video':
         if (config?.outputMode === OutputMode.REMOTE_STREAM_SERVER) {
           modal.info({
-            title: '查看视频',
+            title: formatMessage({ id: 'device.modal.title.camera' }),
             content: (
               <div className="break-all">
-                此模式下流媒体被中转到第三方地址，当前{config?.inputAddr}
-                已经成功推送到{config?.outputAddr}，请在对应的平台上查看或者播放。
+                {formatMessage(
+                  { id: 'device.modal.content.camera' },
+                  { inputAddr: config?.inputAddr, outputAddr: config?.outputAddr },
+                )}
               </div>
             ),
             width: 500,
@@ -238,7 +259,7 @@ const Devices = () => {
               {formatMessage({ id: 'button.edit' })}
             </a>
             <Popconfirm
-              title="确定要删除此设备?"
+              title={formatMessage({ id: 'device.modal.title.remove' })}
               onConfirm={() => remove({ uuid })}
               okText={formatMessage({ id: 'button.yes' })}
               cancelText={formatMessage({ id: 'button.no' })}
@@ -268,7 +289,7 @@ const Devices = () => {
         <ProCard split="vertical">
           <ProCard
             headerBordered
-            title="设备分组"
+            title={formatMessage({ id: 'device.title.group' })}
             colSpan="270px"
             extra={
               <Button
@@ -301,8 +322,10 @@ const Devices = () => {
           <ProCard
             title={
               getName(groupList || [], activeGroupKey)
-                ? `${getName(groupList || [], activeGroupKey)} - 设备列表`
-                : '设备列表'
+                ? `${getName(groupList || [], activeGroupKey)} - ${formatMessage({
+                    id: 'device.title.list',
+                  })}`
+                : formatMessage({ id: 'device.title.list' })
             }
           >
             <ProTable
@@ -353,10 +376,10 @@ const Devices = () => {
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}
-        title="确定执行设备重启操作吗？"
+        title={formatMessage({ id: 'modal.title.confirm' })}
         okText={formatMessage({ id: 'button.restart.comfirm' })}
         afterOkText={formatMessage({ id: 'button.restart' })}
-        content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"
+        content={formatMessage({ id: 'device.modal.content.restart' })}
         handleOnEnd={() => {
           actionRef.current?.reload();
           message.success(formatMessage({ id: 'message.success.restart' }));
