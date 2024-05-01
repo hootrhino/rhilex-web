@@ -69,7 +69,7 @@ const Outend = () => {
           {formatMessage({ id: 'button.edit' })}
         </a>,
         <Popconfirm
-          title="确定要删除此资源？"
+          title={formatMessage({ id: 'outend.modal.title.remove' })}
           onConfirm={() => handleOnDelete({ uuid })}
           key="remove"
         >
@@ -142,7 +142,7 @@ const Outend = () => {
         title={formatMessage({ id: 'modal.title.confirm' })}
         okText={formatMessage({ id: 'button.restart.comfirm' })}
         afterOkText={formatMessage({ id: 'button.restart' })}
-        content="重启过程会短暂（5-10秒）断开资源连接，需谨慎操作"
+        content={formatMessage({ id: 'outend.modal.content.restart' })}
         handleOnEnd={() => {
           actionRef.current?.reload();
           message.success(formatMessage({ id: 'message.success.restart' }));

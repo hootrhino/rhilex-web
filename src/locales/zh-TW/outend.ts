@@ -2,43 +2,56 @@ export default {
   /**
    * table
    */
-  'outend.table.title.name': '资源名称',
-  'outend.table.title.type': '资源类型',
-  'outend.table.title.state': '资源状态',
-  'outend.table.title.allowPing': '开启心跳',
-  'outend.table.title.pingPacket': '心跳包内容',
-  'outend.table.title.timeout': '超时时间',
+  'outend.table.title.name': '資源名稱',
+  'outend.table.title.type': '資源類型',
+  'outend.table.title.state': '資源狀態',
+  'outend.table.title.allowPing': '開啓心跳',
+  'outend.table.title.pingPacket': '心跳包內容',
+  'outend.table.title.timeout': '超時時間',
   'outend.table.title.port': '端口',
-  'outend.table.title.host': '主机地址',
-  'outend.table.title.database': '数据库',
-  'outend.table.title.collection': '集合',
+  'outend.table.title.host': '主機地址',
+  'outend.table.title.collection': '{type} 集合',
   'outend.table.title.clientId': '客户端 ID',
-  'outend.table.title.pubTopic': '上报 TOPIC',
-  'outend.table.title.username': '连接账户',
-  'outend.table.title.password': '连接密码',
-  'outend.table.title.dataMode': '传输模式',
-  'outend.table.title.dbName': '数据库名',
-  'outend.table.title.url': '请求地址',
-  'outend.table.title.group': '资源配置',
+  'outend.table.title.pubTopic': '上報 TOPIC',
+  'outend.table.title.username': '連接賬户',
+  'outend.table.title.password': '連接密碼',
+  'outend.table.title.dataMode': '傳輸模式',
+  'outend.table.title.dbName': '數據庫名',
+  'outend.table.title.url': '請求地址',
+  'outend.table.title.group': '資源配置',
 
   /**
    * title
    */
-  'outend.title.new': '新建资源',
-  'outend.title.edit': '编辑资源',
-  'outend.title.detail': '资源详情',
+  'outend.title.new': '新建資源',
+  'outend.title.edit': '編輯資源',
+  'outend.title.detail': '資源詳情',
   'outend.title.base': '基本配置',
-  'outend.title.source': '资源配置',
+  'outend.title.source': '資源配置',
 
   /**
    * modal
    */
-  'outend.modal.title.remove': '确定要删除此目标？',
-  'outend.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，需谨慎操作',
+  'outend.modal.title.remove': '確定要刪除此資源？',
+  'outend.modal.content.restart': '重啓過程會短暫（5-10秒）斷開資源連接，需謹慎操作',
 
   /**
    * others
    */
-  'outend.popconfirm.title.remove': '确定要删除此目标？',
-  'outend.message.warning.new': '新建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：',
+  'outend.message.warning.new':
+    '新建成功，但是暫時無法正常工作，請及時調整配置參數。錯誤信息：{msg}',
+  'outend.button.new': '新建 Header',
+
+  /**
+   * type
+   */
+  'outend.type.tranport': '{type} 數據傳輸',
+  'outend.type.push': '{type} 數據推送',
+  'outend.type.database': '{type} 數據庫',
+
+  /**
+   * mode
+   */
+  'outend.mode.raw': '原始 ASIIC 傳輸',
+  'outend.mode.hex': '十六進制字符串',
 };

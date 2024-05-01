@@ -50,6 +50,8 @@ export const defaultConfig = {
   },
 };
 
+const intl = getIntl(getLocale());
+
 export const baseColumns = [
   {
     title: 'UUID',
@@ -60,26 +62,26 @@ export const baseColumns = [
     copyable: true,
   },
   {
-    title: '资源名称',
+    title: intl.formatMessage({ id: 'outend.table.title.name' }),
     dataIndex: 'name',
     ellipsis: true,
     required: true,
   },
   {
-    title: '资源类型',
+    title: intl.formatMessage({ id: 'outend.table.title.type' }),
     dataIndex: 'type',
     valueType: 'select',
     valueEnum: outendTypeOption,
     required: true,
   },
   {
-    title: '资源状态',
+    title: intl.formatMessage({ id: 'outend.table.title.state' }),
     dataIndex: 'state',
     hideInForm: true,
     renderText: (state: number) => <StateTag state={state} />,
   },
   {
-    title: getIntl(getLocale()).formatMessage({ id: 'table.desc' }),
+    title: intl.formatMessage({ id: 'table.desc' }),
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => description || '-',
@@ -88,7 +90,7 @@ export const baseColumns = [
 
 const pingConfig = [
   {
-    title: '开启心跳',
+    title: intl.formatMessage({ id: 'outend.table.title.allowPing' }),
     dataIndex: ['config', 'allowPing'],
     required: true,
     transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
@@ -102,7 +104,7 @@ const pingConfig = [
     renderText: (allowPing: boolean) => <StateTag state={allowPing} type={StateType.BOOL} />,
   },
   {
-    title: '心跳包内容',
+    title: intl.formatMessage({ id: 'outend.table.title.pingPacket' }),
     dataIndex: ['config', 'pingPacket'],
     required: true,
   },
@@ -110,7 +112,7 @@ const pingConfig = [
 
 const timeoutConfig = [
   {
-    title: <UnitTitle title="超时时间" />,
+    title: <UnitTitle title={intl.formatMessage({ id: 'outend.table.title.timeout' })} />,
     dataIndex: ['config', 'timeout'],
     required: true,
     valueType: 'digit',
@@ -119,7 +121,7 @@ const timeoutConfig = [
 
 const portConfig = [
   {
-    title: '端口',
+    title: intl.formatMessage({ id: 'outend.table.title.port' }),
     dataIndex: ['config', 'port'],
     valueType: 'digit',
     required: true,
@@ -129,7 +131,7 @@ const portConfig = [
 
 const hostPortConfig = [
   {
-    title: '主机地址',
+    title: intl.formatMessage({ id: 'outend.table.title.host' }),
     dataIndex: ['config', 'host'],
     required: true,
     copyable: true,
@@ -145,12 +147,12 @@ export const configColumns = {
       required: true,
     },
     {
-      title: 'MongoDB 数据库',
+      title: intl.formatMessage({ id: 'outend.type.database' }, { type: 'MongoDB' }),
       dataIndex: ['config', 'database'],
       required: true,
     },
     {
-      title: 'MongoDB 集合',
+      title: intl.formatMessage({ id: 'outend.table.title.collection' }, { type: 'MongoDB' }),
       dataIndex: ['config', 'collection'],
       required: true,
     },
@@ -158,22 +160,22 @@ export const configColumns = {
   MQTT: [
     ...hostPortConfig,
     {
-      title: '客户端 ID',
+      title: intl.formatMessage({ id: 'outend.table.title.clientId' }),
       dataIndex: ['config', 'clientId'],
       required: true,
     },
     {
-      title: '上报 TOPIC',
+      title: intl.formatMessage({ id: 'outend.table.title.pubTopic' }),
       dataIndex: ['config', 'pubTopic'],
       required: true,
     },
     {
-      title: '连接账户',
+      title: intl.formatMessage({ id: 'outend.table.title.username' }),
       dataIndex: ['config', 'username'],
       required: true,
     },
     {
-      title: '连接密码',
+      title: intl.formatMessage({ id: 'outend.table.title.password' }),
       dataIndex: ['config', 'password'],
       valueType: 'password',
       required: true,
@@ -182,7 +184,7 @@ export const configColumns = {
   UDP_TARGET: [...pingConfig, ...timeoutConfig, ...hostPortConfig],
   TCP_TRANSPORT: [
     {
-      title: '传输模式',
+      title: intl.formatMessage({ id: 'outend.table.title.dataMode' }),
       dataIndex: ['config', 'dataMode'],
       valueEnum: dataModeOption,
       valueType: 'select',
@@ -200,18 +202,18 @@ export const configColumns = {
     },
     ...portConfig,
     {
-      title: '用户名',
+      title: intl.formatMessage({ id: 'login.username.label' }),
       dataIndex: ['config', 'username'],
       required: true,
     },
     {
-      title: '密码',
+      title: intl.formatMessage({ id: 'login.password.label' }),
       dataIndex: ['config', 'password'],
       valueType: 'password',
       required: true,
     },
     {
-      title: '数据库名',
+      title: intl.formatMessage({ id: 'outend.table.title.dbName' }),
       dataIndex: ['config', 'dbName'],
       required: true,
     },
@@ -220,7 +222,7 @@ export const configColumns = {
     ...pingConfig,
     ...timeoutConfig,
     {
-      title: '请求地址',
+      title: intl.formatMessage({ id: 'outend.table.title.url' }),
       dataIndex: ['config', 'url'],
       required: true,
     },
@@ -230,8 +232,8 @@ export const configColumns = {
       title: <HeadersTitle />,
       fieldProps: {
         creatorButtonProps: {
-          creatorButtonText: '新建 Header',
-          position: 'top',
+          creatorButtonText: intl.formatMessage({ id: 'outend.button.new' }),
+          // position: 'top',
         },
       },
       columns: [
@@ -259,7 +261,7 @@ export const configColumns = {
                       rules: [
                         {
                           required: isSuccess ? false : true,
-                          message: '请输入 value',
+                          message: `${intl.formatMessage({ id: 'placeholder.input' })} value`,
                         },
                       ],
                     },
@@ -289,7 +291,7 @@ export const columns = [
 
       return [
         {
-          title: '资源配置',
+          title: intl.formatMessage({ id: 'outend.table.title.group' }),
           valueType: 'group',
           columns:
             type === 'HTTP'
