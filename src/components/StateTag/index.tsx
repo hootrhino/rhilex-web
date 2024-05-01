@@ -20,6 +20,7 @@ export enum StateType {
   DEVICE = 'device',
   GOODSTYPE = 'goodsType',
   DEFAULT = 'default',
+  RULE = 'rule',
 }
 
 type StateTagProps = {
@@ -81,6 +82,19 @@ const appStackStateEnum = {
   },
 };
 
+const ruleStateEnum = {
+  1: {
+    text: <FormattedMessage id="status.running" />,
+    color: 'processing',
+    icon: <SyncOutlined spin />,
+  },
+  0: {
+    text: <FormattedMessage id="status.stop" />,
+    color: 'default',
+    icon: <MinusCircleOutlined />,
+  },
+};
+
 const boolStateEnum = {
   true: {
     text: <FormattedMessage id="status.open" />,
@@ -135,7 +149,7 @@ const noticeStateEnum = {
   },
 };
 
-export const levelStateEnum = {
+const levelStateEnum = {
   fatal: { text: 'Fatal', status: 'Error' },
   error: {
     text: 'Error',
@@ -190,6 +204,7 @@ const dataSource = {
   [StateType.DEVICE]: deviceStateEnum,
   [StateType.GOODSTYPE]: goodsTypeStateEnum,
   [StateType.DEFAULT]: defaultStateEnum,
+  [StateType.RULE]: ruleStateEnum,
 };
 
 const StateTag = ({ state, type = StateType.DEFAULT }: StateTagProps) => {

@@ -16,8 +16,8 @@ import { history, useParams, useRequest } from 'umi';
 import { RuleType } from '..';
 import { DeviceType } from '../../Device/enum';
 import { InendType } from '../../Inend/enum';
-import { device_ds } from '../deviceDS';
-import { inend_ds, inend_event_ds, links } from '../inendDS';
+import { device_ds } from './deviceDS';
+import { inend_ds, inend_event_ds, links } from './inendDS';
 import { DefaultActions, DefaultFailed, DefaultSuccess } from './initialValue';
 
 type FormParams = {
@@ -133,16 +133,12 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
         />
       );
     } else if ([InendType.GENERIC_IOT_HUB, InendType.GENERIC_MQTT].includes(inendType)) {
-      let message: React.ReactNode =
-        'Mqtt 消息来自 Publish 方，而此处规则只做原始数据转发，不对数据做任何更改，因此回调函数的参数就是原始的 Mqtt Message，其具体格式需要开发者自行决定。';
+      let message: React.ReactNode = formatMessage({ id: 'ruleConfig.message.mqtt' });
+
       if (inendType === InendType.GENERIC_IOT_HUB) {
         message = (
           <>
-            <div>
-              不同的 IoTHub
-              有不同的数据格式，而此处规则只做原始数据转发，不对数据做任何更改，因此回调函数的参数就是原始的
-              IoTHub 协议 JSON，其具体格式可以参考对应的云服务商文档。
-            </div>
+            <div>{formatMessage({ id: 'ruleConfig.message.iothub' })}</div>
             <ul className="list-disc">
               {links.map((l) => (
                 <li key={l.key}>
@@ -180,10 +176,14 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
   // 获取数据结构 title
   const getDSTitle = () => {
     if (type === RuleType.DEVICE) {
-      return `${hasDeviceDS ? DeviceType[deviceType] : '设备'} - 输出数据的结构及其示例`;
+      return `${
+        hasDeviceDS ? DeviceType[deviceType] : formatMessage({ id: 'ruleConfig.title.device' })
+      } - ${formatMessage({ id: 'ruleConfig.title.tpl' })}`;
     }
     if (type === RuleType.INEND) {
-      return `${hasInendDS ? InendType[inendType] : '资源'} - 输出数据的结构及其示例`;
+      return `${
+        hasInendDS ? InendType[inendType] : formatMessage({ id: 'ruleConfig.title.source' })
+      } - ${formatMessage({ id: 'ruleConfig.title.tpl' })}`;
     }
     return null;
   };
@@ -193,7 +193,15 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
   }, [detail]);
 
   return (
-    <PageContainer showExtra title={ruleId ? '编辑规则' : '新建规则'} backUrl={DefaultListUrl}>
+    <PageContainer
+      showExtra
+      title={
+        ruleId
+          ? formatMessage({ id: 'ruleConfig.title.edit' })
+          : formatMessage({ id: 'ruleConfig.title.new' })
+      }
+      backUrl={DefaultListUrl}
+    >
       <ProCard split="vertical">
         <ProCard colSpan="60%">
           <ProForm
@@ -203,7 +211,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
                 <FooterToolbar>
                   <Popconfirm
                     key="reset"
-                    title="重置可能会丢失数据，确定要重置吗？"
+                    title={formatMessage({ id: 'ruleConfig.popconfirm.title.reset' })}
                     onConfirm={() => {
                       reset();
                       formRef.current?.setFieldsValue(detail ? detail : initialValue);
@@ -222,13 +230,13 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
           >
             <ProForm.Group>
               <ProFormText
-                label="规则名称"
+                label={formatMessage({ id: 'ruleConfig.form.title.name' })}
                 name="name"
-                placeholder="请输入规则名称"
+                placeholder={formatMessage({ id: 'ruleConfig.form.placeholder.name' })}
                 rules={[
                   {
                     required: true,
-                    message: '请输入规则名称',
+                    message: formatMessage({ id: 'ruleConfig.form.placeholder.name' }),
                   },
                   {
                     validator: (_rule: Rule, value: string) =>
@@ -241,10 +249,15 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
                 label={formatMessage({ id: 'table.desc' })}
                 name="description"
                 width="lg"
-                placeholder="请输入备注"
+                placeholder={formatMessage({ id: 'placeholder.desc' })}
               />
             </ProForm.Group>
-            <ProCodeEditor label="规则回调" name="actions" ref={formRef} required />
+            <ProCodeEditor
+              label={formatMessage({ id: 'ruleConfig.form.title.actions' })}
+              name="actions"
+              ref={formRef}
+              required
+            />
           </ProForm>
         </ProCard>
         <ProCard title={getDSTitle()}>

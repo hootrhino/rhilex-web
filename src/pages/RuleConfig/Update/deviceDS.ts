@@ -1,4 +1,4 @@
-import { DeviceType } from './../Device/enum';
+import { DeviceType } from '../../Device/enum';
 // GENERIC_PROTOCOL - 通用时间片中断串口采集网关
 const device_protocol_ds = `{
   "in":"0001020304ABCDEF", // 输入参数

@@ -73,25 +73,25 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
 
   const columns: ProDescriptionsItemProps<Record<string, any>>[] = [
     {
-      title: '规则名称',
+      title: formatMessage({ id: 'ruleConfig.form.title.name' }),
       dataIndex: 'name',
       ellipsis: true,
     },
     {
-      title: '数据来源',
+      title: formatMessage({ id: 'ruleConfig.form.title.sourceType' }),
       dataIndex: 'sourceType',
       valueEnum: {
-        fromSource: '输入资源',
-        fromDevice: '设备',
+        fromSource: formatMessage({ id: 'ruleConfig.form.title.fromSource' }),
+        fromDevice: formatMessage({ id: 'ruleConfig.title.device' }),
       },
     },
     {
-      title: '输入资源',
+      title: formatMessage({ id: 'ruleConfig.form.title.fromSource' }),
       dataIndex: 'fromSource',
       render: (_, { fromSource, fromDevice }) => renderSourceName(fromSource, fromDevice),
     },
     {
-      title: '规则回调',
+      title: formatMessage({ id: 'ruleConfig.form.title.actions' }),
       dataIndex: 'actions',
       valueType: 'code',
     },
@@ -104,7 +104,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
 
   return type === DetailModalType.DETAIL ? (
     <Drawer
-      title="规则详情"
+      title={formatMessage({ id: 'ruleConfig.title.detail' })}
       placement="right"
       width={type === DetailModalType.DETAIL ? '35%' : '40%'}
       destroyOnClose
@@ -133,7 +133,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
     </Drawer>
   ) : (
     <Modal
-      title="规则日志"
+      title={formatMessage({ id: 'ruleConfig.title.log' })}
       width="65%"
       open={props.open}
       footer={

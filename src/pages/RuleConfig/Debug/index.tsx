@@ -35,7 +35,7 @@ const Debug = ({ uuid, type, testType, ...props }: DebugProps) => {
   return (
     <ModalForm
       formRef={formRef}
-      title="测试脚本"
+      title={formatMessage({ id: 'ruleConfig.title.test' })}
       style={{ height: 500 }}
       modalProps={{
         maskClosable: false,
@@ -78,12 +78,21 @@ const Debug = ({ uuid, type, testType, ...props }: DebugProps) => {
     >
       <ProForm.Item
         name="testData"
-        label="输入数据"
-        rules={[{ required: true, message: '请输入数据' }]}
+        label={formatMessage({ id: 'ruleConfig.form.title.testData' })}
+        rules={[
+          {
+            required: true,
+            message: formatMessage({ id: 'ruleConfig.form.placeholder.testData' }),
+          },
+        ]}
       >
         <CodeEditor autoFocus lang={Lang.SHELL} />
       </ProForm.Item>
-      <ProForm.Item name="output" label="输出结果" className="mb-0">
+      <ProForm.Item
+        name="output"
+        label={formatMessage({ id: 'ruleConfig.form.title.output' })}
+        className="mb-0"
+      >
         <ProLog
           hidePadding
           topic={`${type}/rule/test/${uuid}`}

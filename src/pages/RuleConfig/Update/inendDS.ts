@@ -1,4 +1,5 @@
-import { InendType } from '../Inend/enum';
+import { getIntl, getLocale } from '@umijs/max';
+import { InendType } from '../../Inend/enum';
 
 const inend_coap_ds = `{
   "from": "ID00000",    // 数据来源
@@ -51,24 +52,26 @@ const event_down_ds = `{
   }
 }`;
 
+const intl = getIntl(getLocale());
+
 export const inend_event_ds = [
   {
-    title: '设备上线事件',
+    title: intl.formatMessage({ id: 'ruleConfig.inend.event.connected' }),
     json: event_connected_ds,
     key: 'device_connected',
   },
   {
-    title: '设备离线事件',
+    title: intl.formatMessage({ id: 'ruleConfig.inend.event.disconnected' }),
     json: event_disconnected_ds,
     key: 'device_disconnected',
   },
   {
-    title: '资源上线事件',
+    title: intl.formatMessage({ id: 'ruleConfig.inend.event.up' }),
     json: event_up_ds,
     key: 'source_up',
   },
   {
-    title: '资源离线事件',
+    title: intl.formatMessage({ id: 'ruleConfig.inend.event.down' }),
     json: event_down_ds,
     key: 'source_down',
   },
@@ -76,17 +79,17 @@ export const inend_event_ds = [
 
 export const links = [
   {
-    label: '阿里云：',
+    label: intl.formatMessage({ id: 'ruleConfig.inend.link.ali' }),
     link: 'https://help.aliyun.com/zh/iot/user-guide/what-is-a-tsl-model',
     key: 'aliyun',
   },
   {
-    label: '腾讯云：',
+    label: intl.formatMessage({ id: 'ruleConfig.inend.link.tencent' }),
     link: 'https://cloud.tencent.com/document/product/1081/34916',
     key: 'tencent',
   },
   {
-    label: 'W3C 规范：',
+    label: intl.formatMessage({ id: 'ruleConfig.inend.link.w3c' }),
     link: 'https://www.w3.org/TR/wot-architecture/#abstract',
     key: 'w3c',
   },

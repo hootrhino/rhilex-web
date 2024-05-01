@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
+import StateTag, { StateType } from '@/components/StateTag';
 import { deleteRulesDel } from '@/services/rulex/guizeguanli';
 import { DetailModalType } from '@/utils/enum';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
@@ -84,10 +85,12 @@ const RuleConfig = ({
   };
 
   const getTitle = () => {
-    let title = '规则配置';
+    let title = formatMessage({ id: 'ruleConfig.title' });
     if (pageTitle) {
       title =
-        type === RuleType.DEVICE ? `设备 ${pageTitle} - 规则配置` : `资源 ${pageTitle} - 规则配置`;
+        type === RuleType.DEVICE
+          ? formatMessage({ id: 'ruleConfig.title.deviceConfig' }, { title: pageTitle })
+          : formatMessage({ id: 'ruleConfig.title.sourceConfig' }, { title: pageTitle });
     }
     return title;
   };
@@ -100,18 +103,15 @@ const RuleConfig = ({
       copyable: true,
     },
     {
-      title: '名称',
+      title: formatMessage({ id: 'ruleConfig.table.title.name' }),
       dataIndex: 'name',
       ellipsis: true,
     },
     {
-      title: '状态',
+      title: formatMessage({ id: 'ruleConfig.table.title.status' }),
       dataIndex: 'status',
       width: 100,
-      valueEnum: {
-        0: { text: '停止', status: 'Error' },
-        1: { text: '运行中', status: 'Processing' },
-      },
+      renderText: (status) => <StateTag state={status} type={StateType.RULE} />,
     },
     {
       title: formatMessage({ id: 'table.desc' }),
@@ -150,7 +150,11 @@ const RuleConfig = ({
         >
           {formatMessage({ id: 'button.edit' })}
         </a>,
-        <Popconfirm title="确定要删除此规则？" onConfirm={() => remove({ uuid })} key="remove">
+        <Popconfirm
+          title={formatMessage({ id: 'ruleConfig.popconfirm.title.remove' })}
+          onConfirm={() => remove({ uuid })}
+          key="remove"
+        >
           <a>{formatMessage({ id: 'button.remove' })}</a>
         </Popconfirm>,
       ],
