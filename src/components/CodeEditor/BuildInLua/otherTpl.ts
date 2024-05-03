@@ -1,37 +1,75 @@
+import { getIntl, getLocale } from '@umijs/max';
+
 /**
  * 其他函数相关代码模板&示例
  */
+const intl = getIntl(getLocale());
 
 export const otherTpl = [
   {
     label: 'math:TFloat',
     apply: `local Value = json:TFloat(arg1, arg2)`,
     type: 'function',
-    detail: '截取浮点数',
+    detail: intl.formatMessage({ id: 'component.tpl.math.detail' }),
     variables: [
-      { label: '数值', name: 'arg1', value: 0, type: 'number' },
-      { label: '取小数位数', name: 'arg2', value: 2, type: 'number' },
+      {
+        label: intl.formatMessage({ id: 'component.tpl.math.arg1' }),
+        name: 'arg1',
+        value: 0,
+        type: 'number',
+      },
+      {
+        label: intl.formatMessage({ id: 'component.tpl.math.arg2' }),
+        name: 'arg2',
+        value: 2,
+        type: 'number',
+      },
     ],
   },
   {
     label: 'jq:Execute',
     apply: `local Value = jq:Execute(arg1, arg2 )`,
     type: 'function',
-    detail: 'JQ 筛选数据',
+    detail: intl.formatMessage({ id: 'component.tpl.jq.detail' }),
     variables: [
-      { label: 'JSON 字符串', name: 'arg1', value: '', type: 'string' },
-      { label: 'JQ 表达式', name: 'arg2', value: '', type: 'string' },
+      {
+        label: intl.formatMessage({ id: 'component.tpl.jq.arg1' }),
+        name: 'arg1',
+        value: '',
+        type: 'string',
+      },
+      {
+        label: intl.formatMessage({ id: 'component.tpl.jq.arg2' }),
+        name: 'arg2',
+        value: '',
+        type: 'string',
+      },
     ],
   },
   {
     label: 'rpc:Request',
     apply: `local Value = rpc:Request(arg1, arg2, arg3)`,
     type: 'function',
-    detail: 'RPC 调用',
+    detail: intl.formatMessage({ id: 'component.tpl.rpc.detail' }),
     variables: [
-      { label: 'RPC 资源', name: 'arg1', value: '', type: 'string' },
-      { label: 'RPC 指令', name: 'arg2', value: '', type: 'string' },
-      { label: 'RPC 参数', name: 'arg2', value: '', type: 'string' },
+      {
+        label: intl.formatMessage({ id: 'component.tpl.rpc.arg1' }),
+        name: 'arg1',
+        value: '',
+        type: 'string',
+      },
+      {
+        label: intl.formatMessage({ id: 'component.tpl.rpc.arg2' }),
+        name: 'arg2',
+        value: '',
+        type: 'string',
+      },
+      {
+        label: intl.formatMessage({ id: 'component.tpl.rpc.arg3' }),
+        name: 'arg2',
+        value: '',
+        type: 'string',
+      },
     ],
   },
 ];

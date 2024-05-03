@@ -118,7 +118,10 @@ const APNConfig = () => {
           { label: formatMessage({ id: 'system.option.save' }), value: 1 },
         ]}
         tooltip={formatMessage({ id: 'system.tooltip.cdmapwd' })}
-        placeholder={formatMessage({ id: 'placeholder.select' })}
+        placeholder={formatMessage(
+          { id: 'placeholder.select' },
+          { text: formatMessage({ id: 'system.form.title.cdmapwd' }) },
+        )}
         width="xl"
       />
     </ProForm>

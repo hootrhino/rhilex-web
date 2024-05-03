@@ -1,4 +1,5 @@
 import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
+import { useIntl } from '@umijs/max';
 import { Button } from 'antd';
 import type { BaseButtonProps } from 'antd/es/button/button';
 import { useState } from 'react';
@@ -11,6 +12,7 @@ type CopyButtonProps = {
 
 const CopyButton = ({ data: { label, apply }, ...props }: CopyButtonProps) => {
   const [copied, setCopied] = useState<string>('');
+  const { formatMessage } = useIntl();
 
   return (
     <CopyToClipboard
@@ -30,7 +32,7 @@ const CopyButton = ({ data: { label, apply }, ...props }: CopyButtonProps) => {
         icon={copied === apply ? <CheckOutlined /> : <CopyOutlined />}
         {...props}
       >
-        复制规则
+        {formatMessage({ id: 'component.button.copy' })}
       </Button>
     </CopyToClipboard>
   );

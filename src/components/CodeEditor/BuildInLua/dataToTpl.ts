@@ -3,19 +3,33 @@
  */
 
 import { firstUpperCase } from '@/utils/utils';
+import { getIntl, getLocale } from '@umijs/max';
+
+const intl = getIntl(getLocale());
 
 export const dataToServers = [
-  { target: 'http', detail: '数据推送到 HTTP 服务' },
-  { target: 'mqtt', detail: '数据推送到 MQTT 服务' },
-  { target: 'udp', detail: '数据推送到 UDP 服务' },
-  { target: 'tcp', detail: '数据推送到 TCP 服务' },
-  { target: 'tdEngine', detail: '数据推送到 Tdengine 数据库' },
-  { target: 'mongo', detail: '数据推送到 Mongodb 数据库' },
-  { target: 'nats', detail: '数据推送到 Nats' },
+  { target: 'http', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'HTTP' }) },
+  { target: 'mqtt', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'MQTT' }) },
+  { target: 'udp', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'UDP' }) },
+  { target: 'tcp', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'TCP' }) },
+  {
+    target: 'tdEngine',
+    detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'Tdengine' }),
+  },
+  {
+    target: 'mongo',
+    detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'Mongodb' }),
+  },
+  { target: 'nats', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'Nats' }) },
 ];
 
 export const getVariables = (server: string) => [
-  { label: `${server.toUpperCase()} 资源`, name: 'uuid', type: 'select', dataSource: 'outend' },
+  {
+    label: intl.formatMessage({ id: 'component.tpl.data.arg' }, { server: server.toUpperCase() }),
+    name: 'uuid',
+    type: 'select',
+    dataSource: 'outend',
+  },
 ];
 
 // 函数使用示例
@@ -31,7 +45,7 @@ const getUsageTpl = (server: string) => {
 }`;
 
   return {
-    label: '函数使用示例',
+    label: intl.formatMessage({ id: 'component.tpl.standard.debug.usage1' }),
     apply: code,
     type: 'function',
     variables: getVariables(server),

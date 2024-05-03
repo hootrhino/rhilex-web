@@ -389,7 +389,10 @@ export const typeConfigColumns = {
                           rules: [
                             {
                               required: isSuccess ? false : true,
-                              message: `${intl.formatMessage({ id: 'placeholder.input' })} value`,
+                              message: intl.formatMessage(
+                                { id: 'placeholder.input' },
+                                { text: 'value' },
+                              ),
                             },
                           ],
                         },

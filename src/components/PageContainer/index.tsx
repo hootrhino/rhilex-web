@@ -3,7 +3,7 @@ import { DOC_URL } from '@/utils/constant';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import type { PageContainerProps } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-components';
-import { history } from '@umijs/max';
+import { getIntl, getLocale, history } from '@umijs/max';
 import { Space } from 'antd';
 
 type ProPageContainerProps = {
@@ -13,10 +13,10 @@ type ProPageContainerProps = {
 
 export const GoBackModal = (url: string) =>
   modal.confirm({
-    title: '离开可能会丢失数据，确定要返回列表吗？',
+    title: getIntl(getLocale()).formatMessage({ id: 'component.modal.title.page' }),
     onOk: () => history.push(url),
-    okText: '确定',
-    cancelText: '取消',
+    okText: getIntl(getLocale()).formatMessage({ id: 'button.ok' }),
+    cancelText: getIntl(getLocale()).formatMessage({ id: 'button.cancel' }),
   });
 
 const ProPageContainer = ({
@@ -32,7 +32,7 @@ const ProPageContainer = ({
       <span>{title}</span>
       <a href={DOC_URL} target="_blank" rel="noreferrer" className="text-[12px]">
         <QuestionCircleOutlined className="pr-[2px]" />
-        前往官方文档主页查看更多帮助信息
+        {getIntl(getLocale()).formatMessage({ id: 'component.link.form' })}
       </a>
     </Space>
   );

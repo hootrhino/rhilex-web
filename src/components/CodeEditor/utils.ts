@@ -28,19 +28,19 @@ export const autoCompletions = (
   // 内置 keyword
   const buildInKeyword = queryData?.map((item) => ({ label: `${item}`, type: 'keyword' }));
 
-  // 输入资源 UUID
+  // 南向资源 UUID
   const inendsOptions = ((inends as any[]) || [])?.map((item: any) => ({
     label: `${item?.name}`,
     type: 'variable',
-    detail: `UUID 参数来自资源管理`,
+    detail: `UUID 参数来自南向资源管理`,
     apply: item.uuid,
   }));
 
-  // 输出资源 UUID
+  // 北向资源 UUID
   const outendsOptions = ((outends as any[]) || [])?.map((item: any) => ({
     label: `${item?.name}`,
     type: 'variable',
-    detail: `UUID 参数来自目标管理`,
+    detail: `UUID 参数来自北向资源管理`,
     apply: item.uuid,
   }));
 

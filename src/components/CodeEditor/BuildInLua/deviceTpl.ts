@@ -1,11 +1,14 @@
+import { getIntl, getLocale } from '@umijs/max';
+
 /**
  * device 函数相关代码模板&示例
  */
+const intl = getIntl(getLocale());
 
 const deviceList = [
-  { target: 'Write', detail: '向设备写入数据' },
-  { target: 'Read', detail: '从设备读取数据' },
-  { target: 'Ctrl', detail: '向设备发送控制指令' },
+  { target: 'Write', detail: intl.formatMessage({ id: 'component.tpl.device.write' }) },
+  { target: 'Read', detail: intl.formatMessage({ id: 'component.tpl.device.read' }) },
+  { target: 'Ctrl', detail: intl.formatMessage({ id: 'component.tpl.device.ctrl' }) },
 ];
 
 const getCode = (target: string) => {
@@ -26,8 +29,24 @@ export const deviceTpl = deviceList?.map((device) => ({
   apply: getCode(device.target),
   type: 'function',
   variables: [
-    { label: '设备资源', name: 'arg1', value: '', type: 'select', dataSource: 'device' },
-    { label: '设备指令', name: 'arg2', value: '', type: 'string' },
-    { label: '设备参数', name: 'arg3', value: '', type: 'string' },
+    {
+      label: intl.formatMessage({ id: 'component.tpl.device.arg1' }),
+      name: 'arg1',
+      value: '',
+      type: 'select',
+      dataSource: 'device',
+    },
+    {
+      label: intl.formatMessage({ id: 'component.tpl.device.arg2' }),
+      name: 'arg2',
+      value: '',
+      type: 'string',
+    },
+    {
+      label: intl.formatMessage({ id: 'component.tpl.device.arg3' }),
+      name: 'arg3',
+      value: '',
+      type: 'string',
+    },
   ],
 }));

@@ -1,6 +1,6 @@
 import { BellOutlined } from '@ant-design/icons';
 import { ProList } from '@ant-design/pro-components';
-import { history, useModel } from '@umijs/max';
+import { history, useIntl, useModel } from '@umijs/max';
 import { Badge, Popover } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
@@ -8,6 +8,7 @@ import StateTag, { StateType } from '../StateTag';
 
 const NoticeIcon = () => {
   const { data, run } = useModel('useNotify');
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     run();
@@ -16,12 +17,12 @@ const NoticeIcon = () => {
   const content = (
     <ProList
       rowKey="uuid"
-      headerTitle="站内日志通知"
+      headerTitle={formatMessage({ id: 'component.title.notify' })}
       pagination={false}
       footer={
         data && data?.length > 0 ? (
           <div className="cursor-pointer" onClick={() => history.push('/notify-log')}>
-            查看更多
+            {formatMessage({ id: 'component.button.more' })}
           </div>
         ) : null
       }

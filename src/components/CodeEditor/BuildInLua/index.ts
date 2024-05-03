@@ -1,9 +1,12 @@
+import { getIntl, getLocale } from '@umijs/max';
 import { dataToTpl } from './dataToTpl';
 import { deviceTpl } from './deviceTpl';
 import { modbusTpl } from './modbusTpl';
 import { otherTpl } from './otherTpl';
 import { rhilexg1Tpl } from './rhilexg1Tpl';
 import { timeTpl } from './timeTpl';
+
+const intl = getIntl(getLocale());
 
 /** Lua 关键词 **/
 export const buildInKeywords = [
@@ -128,7 +131,7 @@ export const standardTpl = [
     label: 'Debug',
     apply: 'Debug(arg)',
     type: 'function',
-    detail: '打印日志',
+    detail: intl.formatMessage({ id: 'component.tpl.standard.debug' }),
     usage: {
       label: 'debug-tpl1',
       apply: `Actions = {
@@ -138,14 +141,14 @@ export const standardTpl = [
   end
 }`,
       type: 'function',
-      detail: '函数使用示例',
+      detail: intl.formatMessage({ id: 'component.tpl.standard.debug.usage1' }),
     },
   },
   {
     label: 'Throw',
     apply: 'Throw(err)',
     type: 'function',
-    detail: '抛出异常',
+    detail: intl.formatMessage({ id: 'component.tpl.standard.debug.usage2' }),
   },
 ];
 
@@ -155,7 +158,7 @@ export const kvTpl = [
     label: 'kv:Set',
     apply: `kv:Set(arg1, arg2)`,
     type: 'function',
-    detail: '全局缓存设置值',
+    detail: intl.formatMessage({ id: 'component.tpl.kvSet.detail' }),
     variables: [
       { label: 'Key', name: 'arg1', value: '', type: 'string' },
       { label: 'Value', name: 'arg2', value: '', type: 'string' },
@@ -165,14 +168,14 @@ export const kvTpl = [
     label: 'kv:Get',
     apply: `local value = kv:Get(arg)`,
     type: 'function',
-    detail: '全局缓存取值',
+    detail: intl.formatMessage({ id: 'component.tpl.kvGet.detail' }),
     variables: [{ label: 'Key', name: 'arg', value: '', type: 'string' }],
   },
   {
     label: 'kv:Del',
     apply: `kv:Del(arg)`,
     type: 'function',
-    detail: '全局缓存删除值',
+    detail: intl.formatMessage({ id: 'component.tpl.kvDel.detail' }),
     variables: [{ label: 'Key', name: 'arg', value: '', type: 'string' }],
   },
 ];
@@ -186,14 +189,21 @@ for i, v in ipairs(Table) do
   Debug(err)
 end`,
     type: 'function',
-    detail: '本地数据库查询(有返回值)',
+    detail: intl.formatMessage({ id: 'component.tpl.query.detail' }),
   },
   {
     label: 'localdb:Execute',
     apply: `local error = localdb:Query(arg)`,
     type: 'function',
-    detail: '本地数据库执行(无返回值)',
-    variables: [{ label: 'SQL 语句', name: 'arg', value: '', type: 'string' }],
+    detail: intl.formatMessage({ id: 'component.tpl.execute.detail' }),
+    variables: [
+      {
+        label: intl.formatMessage({ id: 'component.tpl.query.arg' }),
+        name: 'arg',
+        value: '',
+        type: 'string',
+      },
+    ],
   },
 ];
 
@@ -203,15 +213,29 @@ export const jsonTpl = [
     label: 'json:T2J',
     apply: `local Value = json:T2J(arg)`,
     type: 'function',
-    detail: 'LuaTable 转 JSON 字符串',
-    variables: [{ label: 'Lua 表变量', name: 'arg', value: '', type: 'string' }],
+    detail: intl.formatMessage({ id: 'component.tpl.jsonT2J.detail' }),
+    variables: [
+      {
+        label: intl.formatMessage({ id: 'component.tpl.jsonT2J.arg' }),
+        name: 'arg',
+        value: '',
+        type: 'string',
+      },
+    ],
   },
   {
     label: 'json:J2T',
     apply: `local Value = json:J2T(arg)`,
     type: 'function',
-    detail: 'JSON 字符串转 LuaTable',
-    variables: [{ label: 'JSON字符串', name: 'arg', value: '', type: 'string' }],
+    detail: intl.formatMessage({ id: 'component.tpl.jsonJ2T.detail' }),
+    variables: [
+      {
+        label: intl.formatMessage({ id: 'component.tpl.jsonJ2T.arg' }),
+        name: 'arg',
+        value: '',
+        type: 'string',
+      },
+    ],
   },
 ];
 
@@ -231,52 +255,52 @@ export const buildInSnippet = [
 
 export const builtInLuaTpl = [
   {
-    name: 'data 函数',
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'data' }),
     children: dataToTpl,
     uuid: 'data',
   },
   {
-    name: 'time 函数',
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'time' }),
     children: timeTpl,
     uuid: 'time',
   },
   {
-    name: 'rhilexg1 函数',
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'rhilexg1' }),
     children: rhilexg1Tpl,
     uuid: 'rhilexg1',
   },
   {
-    name: 'device 函数',
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'device' }),
     children: deviceTpl,
     uuid: 'device',
   },
   {
-    name: 'modbus 函数',
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'modbus' }),
     children: modbusTpl,
     uuid: 'modbus',
   },
   {
-    name: 'kv 函数',
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'kv' }),
     children: kvTpl,
     uuid: 'kv',
   },
   {
-    name: '标准库函数',
+    name: intl.formatMessage({ id: 'component.tpl.name.standard' }),
     children: standardTpl,
     uuid: 'standard',
   },
   {
-    name: 'localdb 函数',
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'localdb' }),
     children: localdbTpl,
     uuid: 'localdb',
   },
   {
-    name: 'json 函数',
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'json' }),
     children: jsonTpl,
     uuid: 'json',
   },
   {
-    name: '其他函数',
+    name: intl.formatMessage({ id: 'component.tpl.name.other' }),
     children: otherTpl,
     uuid: 'other',
   },

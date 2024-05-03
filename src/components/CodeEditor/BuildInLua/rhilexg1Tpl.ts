@@ -1,15 +1,39 @@
+import { getIntl, getLocale } from '@umijs/max';
+
 /**
  * rhilexg1 函数相关代码模板&示例
  */
+const intl = getIntl(getLocale());
 
 const rhilexg1List = [
-  { target: 'DO1Set', detail: '设置 DO1 的值' },
-  { target: 'DO1Get', detail: '获取 DO1 的值' },
-  { target: 'DO2Set', detail: '设置 DO2 的值' },
-  { target: 'DO2Get', detail: '获取 DO2 的值' },
-  { target: 'DI1Get', detail: '获取 DI1 的值' },
-  { target: 'DI2Get', detail: '获取 DI2 的值' },
-  { target: 'DI3Get', detail: '获取 DI3 的值' },
+  {
+    target: 'DO1Set',
+    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.set' }, { target: 'DO1' }),
+  },
+  {
+    target: 'DO1Get',
+    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DO1' }),
+  },
+  {
+    target: 'DO2Set',
+    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.set' }, { target: 'DO2' }),
+  },
+  {
+    target: 'DO2Get',
+    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DO2' }),
+  },
+  {
+    target: 'DI1Get',
+    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DI1' }),
+  },
+  {
+    target: 'DI2Get',
+    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DI2' }),
+  },
+  {
+    target: 'DI3Get',
+    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DI3' }),
+  },
 ];
 
 export const rhilexg1Tpl = rhilexg1List?.map((rhilexg1) => {
@@ -23,6 +47,13 @@ end`;
     label: `rhilexg1:${rhilexg1.target}`,
     apply: code,
     type: 'function',
-    variables: [{ label: 'RHILEX 网关 GPIO 编号', name: 'arg', value: 0, type: 'number' }],
+    variables: [
+      {
+        label: intl.formatMessage({ id: 'component.tpl.rhilexg1.arg' }),
+        name: 'arg',
+        value: 0,
+        type: 'number',
+      },
+    ],
   };
 });

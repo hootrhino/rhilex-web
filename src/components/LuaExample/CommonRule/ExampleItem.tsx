@@ -51,12 +51,6 @@ type ExampleItemProps = CollapseProps & {
   dataSource: TplGroupItem[];
 };
 
-const title = {
-  'built-in': '内置模板',
-  custom: '自定义模板',
-  quick: '快捷模板',
-};
-
 const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
   const { token } = theme.useToken();
   const formRef = useRef<ProFormInstance>();
@@ -66,6 +60,12 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
     data: {},
   });
   const [copyData, setCopyData] = useState<TplItem>({});
+
+  const title = {
+    'built-in': formatMessage({ id: 'component.title.builtInTpl' }),
+    custom: formatMessage({ id: 'component.title.customTpl' }),
+    quick: formatMessage({ id: 'component.title.quickTpl' }),
+  };
 
   const panelStyle: React.CSSProperties = {
     marginBottom: 12,
@@ -138,7 +138,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
       label,
       name: 'value',
       width: 'md',
-      placeholder: '请输入变量值',
+      placeholder: formatMessage({ id: 'component.form.placeholder.varValue' }),
       labelCol: { flex: '130px' },
     } as any;
 
@@ -168,7 +168,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
       commonConfig = {
         ...commonConfig,
         options: optionData(),
-        placeholder: '请选择变量值',
+        placeholder: formatMessage({ id: 'component.form.placeholder.varValue' }),
         allowClear: false,
       };
     }
@@ -223,7 +223,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
       />
       <ModalForm
         formRef={formRef}
-        title="设置变量"
+        title={formatMessage({ id: 'component.modal.title.settingVar' })}
         layout="horizontal"
         labelWrap={true}
         open={valModalConfig.open}

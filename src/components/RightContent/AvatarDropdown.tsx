@@ -28,9 +28,9 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
    */
   const loginOut = async () => {
     modal.confirm({
-      title: '提示',
+      title: formatMessage({ id: 'logout.modal.title' }),
       icon: <ExclamationCircleOutlined />,
-      content: '确定要退出登录吗?',
+      content: formatMessage({ id: 'logout.modal.content' }),
       onOk: logout,
       okText: formatMessage({ id: 'button.ok' }),
       cancelText: formatMessage({ id: 'button.cancel' }),
@@ -64,7 +64,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
     {
       key: 'user',
       icon: <SettingOutlined />,
-      label: '个人设置',
+      label: formatMessage({ id: 'component.button.user' }),
     },
     {
       type: 'divider' as const,
@@ -72,7 +72,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
     {
       key: 'logout',
       icon: <LogoutOutlined />,
-      label: '退出登录',
+      label: formatMessage({ id: 'component.button.logout' }),
     },
   ];
 

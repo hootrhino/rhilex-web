@@ -1,3 +1,4 @@
+import { useIntl } from '@umijs/max';
 import type { DrawerProps, TabsProps } from 'antd';
 import { Drawer, Tabs } from 'antd';
 import { useState } from 'react';
@@ -7,17 +8,19 @@ import CustomRule from './CustomRule';
 type LuaExampleProps = DrawerProps;
 
 const LuaExample = ({ ...props }: LuaExampleProps) => {
+  const { formatMessage } = useIntl();
+
   const [activeTabKey, setActiveTabKey] = useState<string>('example');
 
   const items: TabsProps['items'] = [
     {
       key: 'example',
-      label: '常用规则示例',
+      label: formatMessage({ id: 'component.tab.example' }),
       children: <CommonRule activeTabKey={activeTabKey} />,
     },
     {
       key: 'addRule',
-      label: '新建规则示例',
+      label: formatMessage({ id: 'component.tab.addRule' }),
       children: <CustomRule />,
     },
   ];

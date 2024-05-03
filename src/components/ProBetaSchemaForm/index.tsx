@@ -3,7 +3,7 @@ import { omit } from '@/utils/redash';
 import { validateFormItem } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { BetaSchemaForm, FooterToolbar, ProCard } from '@ant-design/pro-components';
-import { FormattedMessage, useIntl } from '@umijs/max';
+import { FormattedMessage, getIntl, getLocale, useIntl } from '@umijs/max';
 import { Button, Popconfirm } from 'antd';
 import type { Rule } from 'antd/es/form';
 
@@ -26,9 +26,16 @@ type ProBetaSchemaFormProps<T = Record<string, any>, Values = any> = {
   onValuesChange?: (changedValues: any, values: Values) => void;
 };
 
+const intl = getIntl(getLocale());
+
 // 辅助函数：根据不同条件生成规则
 const getRules = (col: any) => {
-  const baseRule = [{ required: col.required, message: `请输入${col.title}` }];
+  const baseRule = [
+    {
+      required: col.required,
+      message: intl.formatMessage({ id: 'placeholder.input' }, { text: col.title }),
+    },
+  ];
 
   const activeKey =
     typeof col.dataIndex === 'object' &&
@@ -46,10 +53,20 @@ const getRules = (col: any) => {
     ];
   }
   if (['select'].includes(col.valueType)) {
-    return [{ required: col.required, message: `请选择${col.title}` }];
+    return [
+      {
+        required: col.required,
+        message: intl.formatMessage({ id: 'placeholder.select' }, { text: col.title }),
+      },
+    ];
   }
   if (['timeout', 'frequency', 'idleTimeout'].includes(activeKey)) {
-    return [{ required: col.required, message: `请输入${col.title.props.title}（毫秒）` }];
+    return [
+      {
+        required: col.required,
+        message: intl.formatMessage({ id: 'placeholder.input' }, { text: col.title.props.title }),
+      },
+    ];
   }
   return baseRule;
 };
@@ -63,17 +80,20 @@ const getFieldProps = (col: any) => {
 
   if (['select'].includes(col.valueType)) {
     return {
-      placeholder: `请选择${col.title}`,
+      placeholder: intl.formatMessage({ id: 'placeholder.select' }, { text: col.title }),
       allowClear: false,
     };
   }
   if (['timeout', 'frequency', 'idleTimeout'].includes(activeKey)) {
     return {
-      placeholder: `请输入${col.title.props.title}（毫秒）`,
+      placeholder: `${intl.formatMessage(
+        { id: 'placeholder.input' },
+        { text: col.title.props.title },
+      )}`,
     };
   }
   return {
-    placeholder: `请输入${col.title}`,
+    placeholder: intl.formatMessage({ id: 'placeholder.input' }, { text: col.title }),
   };
 };
 
@@ -148,7 +168,7 @@ const ProBetaSchemaForm = ({
             <FooterToolbar>
               <Popconfirm
                 key="reset"
-                title="重置可能会丢失数据，确定要重置吗？"
+                title={intl.formatMessage({ id: 'component.popconfirm.title.reset' })}
                 onConfirm={() => {
                   reset();
                   handleOnReset();

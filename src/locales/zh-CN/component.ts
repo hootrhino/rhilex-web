@@ -3,6 +3,8 @@ export default {
    * CodeEditor
    */
   'component.tpl.data': '数据推送到 {server} 服务',
+  'component.tpl.data.arg': '{server} 资源',
+  'component.tpl.data.quick.modbus': 'Modbus 数据解析并推向 {server}',
   'component.tpl.device.write': '向设备写入数据',
   'component.tpl.device.read': '从设备读取数据',
   'component.tpl.device.ctrl': '向设备发送控制指令',
@@ -14,10 +16,11 @@ export default {
   'component.tpl.tsUnix': '当前 Unix 时间戳',
   'component.tpl.tsUnixNano': '当前纳秒级时间戳',
   'component.tpl.ntp': 'NTP 时间',
-  'component.tpl.sleep': '休眠时间',
-  'component.tpl.sleep.detail': '休眠',
+  'component.tpl.sleep.arg': '休眠时间',
+  'component.tpl.sleep': '休眠',
   'component.tpl.rhilexg1.set': '设置 {target} 的值',
   'component.tpl.rhilexg1.get': '获取 {target} 的值',
+  'component.tpl.rhilexg1.arg': 'RHILEX 网关 GPIO 编号',
   'component.tpl.math.detail': '截取浮点数',
   'component.tpl.math.arg1': '数值',
   'component.tpl.math.arg2': '取小数位数',
@@ -31,6 +34,7 @@ export default {
   'component.tpl.f5': '写单个线圈',
   'component.tpl.f6': '写单个寄存器',
   'component.tpl.f15': '写多个线圈',
+  'component.tpl.f16': '写多个寄存器',
   'component.tpl.f15.arg1': 'Modbus 设备资源',
   'component.tpl.f15.arg2': '线圈值',
   'component.tpl.f15.arg3': '起始地址',
@@ -40,8 +44,11 @@ export default {
   'component.tpl.name.standard': '标准库函数',
   'component.tpl.name.other': '其他函数',
   'component.tpl.jsonT2J.detail': 'LuaTable 转 JSON 字符串',
+  'component.tpl.jsonT2J.arg': 'Lua 表变量',
   'component.tpl.jsonJ2T.detail': 'JSON 字符串转 LuaTable',
+  'component.tpl.jsonJ2T.arg': 'JSON 字符串',
   'component.tpl.query.detail': '本地数据库查询（有返回值）',
+  'component.tpl.query.arg': 'SQL 语句',
   'component.tpl.execute.detail': '本地数据库执行（无返回值）',
   'component.tpl.kvSet.detail': '全局缓存设置值',
   'component.tpl.kvGet.detail': '全局缓存取值',
@@ -49,6 +56,8 @@ export default {
   'component.tpl.standard.debug': '打印日志',
   'component.tpl.standard.debug.usage1': '函数使用示例',
   'component.tpl.standard.debug.usage2': '抛出异常',
+  'component.tpl.rhilex.label': '当没有网络时，网关上的 LED 会快速闪烁 5 次',
+  'component.tpl.rhilex.detail': '{name} 联网测试',
 
   /**
    * others
@@ -69,21 +78,30 @@ export default {
   'component.button.more': '查看更多',
   'component.button.copy': '复制规则',
   'component.button.use': '立即使用',
+  'component.button.rule': '规则示例',
+  'component.button.format': '代码格式化',
 
   'component.tab.example': '常用规则示例',
-  'component.tab.newRule': '新建规则示例',
+  'component.tab.addRule': '新建规则示例',
 
+  'component.form.title.rule': '规则名称',
   'component.form.title.name': '模板名称',
   'component.form.title.apply': '代码',
   'component.form.title.var': '变量设置',
   'component.form.placeholder.name': '请输入模板名称',
-  'component.form.placeholder.label': '请输入变量描述',
-  'component.form.placeholder.var': '请输入变量名',
-  'component.form.placeholder.type': '请选择变量类型',
-  'component.form.placeholder.value': '请输入变量值',
+  'component.form.placeholder.varDesc': '请输入变量描述',
+  'component.form.placeholder.varName': '请输入变量名',
+  'component.form.placeholder.varType': '请选择变量类型',
+  'component.form.placeholder.varValue': '请输入变量值',
 
   'component.unit.ms': '毫秒',
   'component.popconfirm.title.reset': '重置可能会丢失数据，确定要重置吗？',
+
   'component.modal.title.page': '离开可能会丢失数据，确定要返回列表吗？',
   'component.modal.title.settingVar': '设置变量',
+  'component.modal.title.removeRule': '确定要删除此规则？',
+  'component.modal.title.editRule': '编辑规则',
+  'component.modal.title.newRule': '新建规则',
+
+  'component.tooltip.newVar': '新建变量',
 };

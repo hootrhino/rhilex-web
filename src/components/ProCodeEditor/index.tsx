@@ -3,6 +3,7 @@ import { postRulesFormatLua } from '@/services/rulex/guizeguanli';
 import { CodeOutlined } from '@ant-design/icons';
 import type { ProFormItemProps } from '@ant-design/pro-components';
 import { ProCard, ProForm } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 import { Button, Space } from 'antd';
 import { forwardRef, useState } from 'react';
 import LuaExample from '../LuaExample';
@@ -25,6 +26,8 @@ const ProCodeEditor = forwardRef(
     }: ProCodeEditorProps,
     ref: any,
   ) => {
+    const { formatMessage } = useIntl();
+
     const [open, setOpen] = useState<boolean>(false);
 
     const handleOnFormatCode = async () => {
@@ -57,7 +60,7 @@ const ProCodeEditor = forwardRef(
                     setOpen(true);
                   }}
                 >
-                  规则示例
+                  {formatMessage({ id: 'component.button.rule' })}
                 </Button>
               )}
 
@@ -69,7 +72,7 @@ const ProCodeEditor = forwardRef(
                 }}
               >
                 <CodeOutlined className="pr-[8px]" />
-                <span>代码格式化</span>
+                <span>{formatMessage({ id: 'component.button.format' })}</span>
               </div>
             </Space>
           }
@@ -81,7 +84,12 @@ const ProCodeEditor = forwardRef(
             {...props}
             name={name}
             label={false}
-            rules={[{ required: true, message: `请输入${label}` }]}
+            rules={[
+              {
+                required: true,
+                message: formatMessage({ id: 'placeholder.input' }, { text: label as string }),
+              },
+            ]}
           >
             <LuaEditor key={name} minHeight="400px" lang={Lang.LUA} />
           </ProForm.Item>

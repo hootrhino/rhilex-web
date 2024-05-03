@@ -53,7 +53,11 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
 
   return (
     <ModalForm
-      title={tplId ? '编辑规则' : '新建规则'}
+      title={
+        tplId
+          ? formatMessage({ id: 'component.modal.title.editRule' })
+          : formatMessage({ id: 'component.modal.title.newRule' })
+      }
       width="45%"
       formRef={formRef}
       initialValues={initialValue}
@@ -62,22 +66,24 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
       <ProForm.Group>
         <ProFormText
           name="label"
-          label="模板名称"
+          label={formatMessage({ id: 'component.form.title.name' })}
           width="md"
-          placeholder="请输入模板名称"
-          rules={[{ required: true, message: '请输入模板名称' }]}
+          placeholder={formatMessage({ id: 'component.form.placeholder.name' })}
+          rules={[
+            { required: true, message: formatMessage({ id: 'component.form.placeholder.name' }) },
+          ]}
         />
         <ProFormText
           name="detail"
           label={formatMessage({ id: 'table.desc' })}
           width="md"
-          placeholder="请输入备注"
-          rules={[{ required: true, message: '请输入备注' }]}
+          placeholder={formatMessage({ id: 'placeholder.desc' })}
+          rules={[{ required: true, message: formatMessage({ id: 'placeholder.desc' }) }]}
         />
       </ProForm.Group>
       <ProCodeEditor
         name="apply"
-        label="代码"
+        label={formatMessage({ id: 'component.form.title.apply' })}
         ref={formRef}
         required
         showTpl={false}
@@ -86,13 +92,13 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
       <ProFormList
         required
         name="variables"
-        label="变量设置"
+        label={formatMessage({ id: 'component.form.title.var' })}
         min={1}
         creatorButtonProps={false}
         creatorRecord={initialVariable}
         actionRender={(_, action, defaultActionDom) => {
           return [
-            <Tooltip key="add" title="新建变量">
+            <Tooltip key="add" title={formatMessage({ id: 'component.tooltip.newVar' })}>
               <PlusCircleOutlined onClick={() => action.add()} className="ml-[10px]" />
             </Tooltip>,
             ...defaultActionDom,
@@ -100,12 +106,20 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
         }}
       >
         <ProForm.Group>
-          <ProFormText name="label" width="sm" placeholder="请输入变量描述" />
-          <ProFormText name="name" width="sm" placeholder="请输入变量名" />
+          <ProFormText
+            name="label"
+            width="sm"
+            placeholder={formatMessage({ id: 'component.form.placeholder.varDesc' })}
+          />
+          <ProFormText
+            name="name"
+            width="sm"
+            placeholder={formatMessage({ id: 'component.form.placeholder.varName' })}
+          />
           <ProFormSelect
             name="type"
             width="sm"
-            placeholder="请选择变量类型"
+            placeholder={formatMessage({ id: 'component.form.placeholder.varType' })}
             options={['string', 'number', 'boolean']}
           />
         </ProForm.Group>

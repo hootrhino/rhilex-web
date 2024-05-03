@@ -1,9 +1,15 @@
+import { getIntl, getLocale } from '@umijs/max';
+
 type UnitTitleProps = React.HTMLAttributes<HTMLDivElement> & {
   title: string;
   unit?: string;
 };
 
-const UnitTitle = ({ title, unit = '毫秒', ...props }: UnitTitleProps) => {
+const UnitTitle = ({
+  title,
+  unit = getIntl(getLocale()).formatMessage({ id: 'component.unit.ms' }),
+  ...props
+}: UnitTitleProps) => {
   return (
     <div {...props}>
       <span>{title}</span>

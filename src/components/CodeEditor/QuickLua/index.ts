@@ -1,3 +1,4 @@
+import { getIntl, getLocale } from '@umijs/max';
 import { En6400Tpl, RHILEXG1Tpl } from './appStackQuickTpl';
 import { dataToQuickTpl } from './dataToQuickTpl';
 
@@ -7,7 +8,7 @@ export const quickLuaTpl = (isRHILEXG1: boolean) => {
 
   return [
     {
-      name: '默认分组',
+      name: getIntl(getLocale()).formatMessage({ id: 'component.title.defaultGroup' }),
       children: [...dataToQuickTpl, ...appStackQuickTpl],
       uuid: 'default_luaQuickTpl',
     },

@@ -3,7 +3,7 @@ import { quickLuaTpl } from '@/components/CodeEditor/QuickLua';
 import { getUserluaListByGroup } from '@/services/rulex/yonghudingyiluamoban';
 import { DEFAULT_GROUP_KEY_LUA_TPL } from '@/utils/constant';
 import { Product } from '@/utils/enum';
-import { useModel, useRequest } from '@umijs/max';
+import { getIntl, getLocale, useModel, useRequest } from '@umijs/max';
 import type { TplGroupItem } from './ExampleItem';
 import ExampleItem from './ExampleItem';
 
@@ -13,6 +13,7 @@ type CommonRuleProps = {
 
 const CommonRule = ({ activeTabKey }: CommonRuleProps) => {
   const { product } = useModel('useSystem');
+
   const { data: customTplData } = useRequest(
     () => getUserluaListByGroup({ uuid: DEFAULT_GROUP_KEY_LUA_TPL }),
     {
@@ -21,7 +22,7 @@ const CommonRule = ({ activeTabKey }: CommonRuleProps) => {
         return data?.length > 0
           ? [
               {
-                name: '默认分组',
+                name: getIntl(getLocale()).formatMessage({ id: 'component.title.defaultGroup' }),
                 children: data,
                 uuid: 'default_luaCustomTpl',
               },

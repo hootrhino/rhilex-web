@@ -48,7 +48,7 @@ const CustomRule = () => {
       <ProList<TplItem>
         rowKey="uuid"
         showActions="hover"
-        headerTitle="自定义规则示例"
+        headerTitle={formatMessage({ id: 'component.title.customRule' })}
         className="custom-rule-wrapper"
         actionRef={actionRef}
         request={async () => {
@@ -78,7 +78,7 @@ const CustomRule = () => {
         metas={{
           title: {
             dataIndex: 'label',
-            title: '规则名称',
+            title: formatMessage({ id: 'component.form.title.rule' }),
           },
           description: {
             dataIndex: 'detail',
@@ -95,7 +95,7 @@ const CustomRule = () => {
                 {formatMessage({ id: 'button.edit' })}
               </a>,
               <Popconfirm
-                title="确定要删除此规则？"
+                title={formatMessage({ id: 'component.modal.title.removeRule' })}
                 onConfirm={async () => {
                   if (!row?.uuid) return;
                   await deleteUserluaDel({ uuid: row.uuid });

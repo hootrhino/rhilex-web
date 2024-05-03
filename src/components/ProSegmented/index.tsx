@@ -1,3 +1,4 @@
+import { useIntl } from '@umijs/max';
 import type { SegmentedProps } from 'antd';
 import { ConfigProvider, Segmented } from 'antd';
 
@@ -6,6 +7,8 @@ type ProSegmentedProps = Omit<SegmentedProps, 'options'> & {
 };
 
 const ProSegmented = ({ width, ...props }: ProSegmentedProps) => {
+  const { formatMessage } = useIntl();
+
   const getWidth = () => {
     let w = 328;
 
@@ -48,8 +51,8 @@ const ProSegmented = ({ width, ...props }: ProSegmentedProps) => {
         block
         style={{ width: getWidth() }}
         options={[
-          { label: '开启', value: 'true' },
-          { label: '关闭', value: 'false' },
+          { label: formatMessage({ id: 'status.open' }), value: 'true' },
+          { label: formatMessage({ id: 'status.close' }), value: 'false' },
         ]}
         {...props}
       />

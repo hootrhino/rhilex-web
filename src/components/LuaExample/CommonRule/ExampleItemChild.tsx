@@ -1,5 +1,6 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
 import { FormOutlined } from '@ant-design/icons';
+import { useIntl } from '@umijs/max';
 import { Button } from 'antd';
 import CopyButton from './CopyButton';
 
@@ -16,11 +17,13 @@ const ExampleItemChild = ({
   isUsage = false,
   ...props
 }: ExampleItemChildProps) => {
+  const { formatMessage } = useIntl();
+
   return (
     <div {...props}>
       <div className="flex justify-between w-full mb-[6px]">
         <span className={type === 'quick' ? 'invisible' : ''}>
-          {isUsage ? data?.label : '函数基本形式'}
+          {isUsage ? data?.label : formatMessage({ id: 'component.title.exampleChild' })}
         </span>
         {data?.variables && data?.variables?.length > 0 ? (
           <Button
@@ -33,7 +36,7 @@ const ExampleItemChild = ({
             }}
             icon={<FormOutlined />}
           >
-            立即使用
+            {formatMessage({ id: 'component.button.use' })}
           </Button>
         ) : (
           <CopyButton data={data} size="small" ghost />

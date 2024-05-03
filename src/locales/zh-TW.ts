@@ -33,8 +33,8 @@ export default {
   /**
    * placeholder
    */
-  'placeholder.input': '請輸入',
-  'placeholder.select': '請選擇',
+  'placeholder.input': '請輸入{text}',
+  'placeholder.select': '請選擇{text}',
   'placeholder.desc': '請輸入備註',
   /**
    * table

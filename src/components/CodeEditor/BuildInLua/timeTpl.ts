@@ -3,17 +3,26 @@
  */
 
 import { firstUpperCase } from '@/utils/utils';
+import { getIntl, getLocale } from '@umijs/max';
+const intl = getIntl(getLocale());
 
 const timeList = [
-  { target: 'Time', detail: '当前时间' },
-  { target: 'TimeMs', detail: '当前通用时间戳' },
-  { target: 'TsUnix', detail: '当前 Unix 时间戳' },
-  { target: 'TsUnixNano', detail: '当前纳秒级时间戳' },
-  { target: 'NtpTime', detail: 'NTP 时间' },
+  { target: 'Time', detail: intl.formatMessage({ id: 'component.tpl.time' }) },
+  { target: 'TimeMs', detail: intl.formatMessage({ id: 'component.tpl.timeMs' }) },
+  { target: 'TsUnix', detail: intl.formatMessage({ id: 'component.tpl.tsUnix' }) },
+  { target: 'TsUnixNano', detail: intl.formatMessage({ id: 'component.tpl.tsUnixNano' }) },
+  { target: 'NtpTime', detail: intl.formatMessage({ id: 'component.tpl.ntp' }) },
   {
     target: 'Sleep',
-    detail: '休眠',
-    variables: [{ label: '休眠时间', name: 'arg', value: 500, type: 'number' }],
+    detail: intl.formatMessage({ id: 'component.tpl.sleep' }),
+    variables: [
+      {
+        label: intl.formatMessage({ id: 'component.tpl.sleep.arg' }),
+        name: 'arg',
+        value: 500,
+        type: 'number',
+      },
+    ],
   },
 ];
 
