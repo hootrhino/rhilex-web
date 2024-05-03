@@ -18,7 +18,9 @@ export default {
   'device.button.scan': '扫描设备',
   'device.button.reload': '刷新',
   'device.button.export.oid': '导出对象列表',
+  'device.button.import.oid': '导入对象列表',
   'device.button.new.object': '添加对象',
+  'device.button.new.sheet': '添加点位',
 
   /**
    * title
@@ -26,26 +28,35 @@ export default {
   'device.title.group': '设备分组',
   'device.title.list': '设备列表',
   'device.title.detail': '设备详情',
+  'device.title.detail.smartHome': '{name} 设备详情',
   'device.title.new': '新建设备',
   'device.title.update': '编辑设备',
   'device.title.base': '基本配置',
   'device.title.modal.error.device': '设备异常信息',
   'device.title.modal.error.sheet': '点位异常信息',
+  'device.title.modal.error.oid': '对象异常信息',
   'device.title.sheet': '点位表配置',
-  'device.title.device': '设备',
+  'device.title.oid': 'SNMP 对象列表',
   'device.title.subDevice': '设备 {name} - 子设备列表',
+  'device.title.sheetList': '设备 {name} - 点位表配置',
+  'device.title.oidList': '设备 {name} - SNMP 对象列表',
+  'device.title.smartHome.detail.base': '设备基本信息',
+  'device.title.smartHome.detail.status': '设备状态信息',
 
   /**
    * modal
    */
   'device.modal.title.remove': '确定要删除此设备？',
-  'device.modal.title.remove.oid': '批量删除对象',
+  'device.modal.title.remove.batchOid': '批量删除对象',
+  'device.modal.title.remove.oid': '确定要删除此对象？',
   'device.modal.title.remove.sheet': '确定要删除此点位？',
   'device.modal.title.remove.batchSheet': '批量删除点位',
   'device.modal.title.camera': '查看视频',
   'device.modal.title.group.new': '新建分组',
   'device.modal.title.group.edit': '编辑分组',
   'device.modal.title.group.remove': '确定要删除此分组？',
+  'device.modal.title.upload.confirm': '导入点位表',
+  'device.modal.title.upload.confirm.oid': '导入对象列表',
   'device.modal.title.upload': '你应当确保上传的点位表必须遵守一定表头格式，例如：',
 
   'device.modal.content.group.remove':
@@ -56,6 +67,7 @@ export default {
     '此模式下流媒体被中转到第三方地址，当前{inputAddr}已经成功推送到{outputAddr}，请在对应的平台上查看或者播放。',
   'device.modal.content.upload': '文件格式不正确可能会导致上传失败，你确定要上传',
   'device.modal.content.remove.batchOid': '此操作会一次性删除多个对象，需谨慎操作',
+  'device.modal.content.remove.batchSheet': '此操作会一次性删除多个点位，需谨慎操作',
 
   /**
    * form
@@ -75,7 +87,7 @@ export default {
   'device.form.title.timeout.scan': '扫描超时',
 
   // frequency
-  'device.form.title.frequency.coll': '采集频率',
+  'device.form.title.frequency': '采集频率',
   'device.form.title.frequency.scan': '扫描频率',
   'device.form.title.frequency.request': '请求频率',
 
@@ -94,9 +106,11 @@ export default {
   'device.form.title.maxRegNum': '最大点位数',
   'device.form.title.host.plc': 'PLC 地址',
   'device.form.title.host.tcp': '服务地址',
-  'device.form.title.model': '型号',
+  'device.form.title.model': '设备型号',
+  'device.form.title.model.plc': 'PLC 型号',
   'device.form.title.rack': '机架号',
-  'device.form.title.slot': '插槽号',
+  'device.form.title.slot': '设备所在的插槽位置',
+  'device.form.title.slot.plc': '插槽号',
   'device.form.title.url': '请求地址',
   'device.form.title.inputMode': '输入模式',
   'device.form.title.inputAddr': '视频采集源',
@@ -125,7 +139,6 @@ export default {
   'device.form.title.address': '起始地址',
   'device.form.title.quantity': '读取数量',
   'device.form.title.weight': '权重系数',
-  'device.form.title.frequency': '采集频率',
   'device.form.title.value': '最新值',
   'device.form.title.status': '点位状态',
   'device.form.title.lastFetchTime': '采集时间',
@@ -135,6 +148,29 @@ export default {
 
   // snmp
   'device.form.title.oid': '对象标识符',
+
+  // smartHome
+  'device.form.title.id': '设备 ID',
+  'device.form.title.ip': '设备 IP 地址',
+  'device.form.title.mac': '设备 MAC 地址',
+  'device.form.title.gen': '设备硬件版本号',
+  'device.form.title.fwId': '设备固件版本 ID',
+  'device.form.title.ver': '设备固件版本号',
+  'device.form.title.app': '设备应用程序名称',
+  'device.form.title.authEn': '开启认证功能',
+  'device.form.title.authDomain': '设备认证域',
+  'device.form.title.restartRequired': '重启设备',
+  'device.form.title.time': '设备当前时间',
+  'device.form.title.unixtime': '设备 Unix 时间戳',
+  'device.form.title.uptime': '设备运行时间',
+  'device.form.title.ramSize': 'RAM 总大小',
+  'device.form.title.ramFree': '可用 RAM 大小',
+  'device.form.title.fsSize': '文件系统总大小',
+  'device.form.title.fsFree': '文件系统可用大小',
+  'device.form.title.cfgRev': '配置版本号',
+  'device.form.title.kvsRev': '键值存储版本号',
+  'device.form.title.scheduleRev': '计划任务版本号',
+  'device.form.title.webhookRev': 'Webhook 版本号',
 
   /**
    * tooltip
@@ -149,6 +185,7 @@ export default {
    * placeholder
    */
   'device.form.placeholder.group.name': '请输入分组名称',
+  'device.form.placeholder.slaverId': '请输入从设备地址',
   'device.form.placeholder.tag': '请输入数据标签',
   'device.form.placeholder.alias': '请输入数据别名',
   'device.form.placeholder.func': '请选择 Modbus 功能',
@@ -166,6 +203,8 @@ export default {
   'device.form.rules.address': '起始地址范围在 0-65535 之间',
   'device.form.rules.quantity': '读取数量范围在 1-256 之间',
   'device.form.rules.weight': '权重系数必须在 -0.0001 到 100000 范围内',
+  'device.form.rules.cidr': '请输入 CIDR',
+  'device.form.rules.slaverId': '从设备地址 在 1-255 之间',
 
   /**
    * others
@@ -173,5 +212,50 @@ export default {
   'device.tips.scroll': '横向滚动查看更多',
   'device.message.success.config': '配置成功',
   'device.message.success.clear': '清除成功',
+  'device.message.success.reload': '刷新成功',
   'device.message.error.new': '创建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：{msg}',
+  'device.unit.byte': '字节',
+  'device.bigEndian': '大端',
+  'device.littleEndian': '小端',
+
+  /**
+   * device type
+   */
+  'device.type.protocol': '通用时间片中断串口采集网关',
+  'device.type.modbus': '通用 Modbus 采集网关',
+  'device.type.snmp': '通用 SNMP 协议采集网关',
+  'device.type.plc': '通用西门子 S7 系列 PLC 采集网关',
+  'device.type.http': '通用 HTTP 协议数据采集网关',
+  'device.type.camera': '通用摄像机流处理网关',
+  'device.type.smartHome': '全屋智能家居中心控制网关',
+
+  /**
+   * modbus function
+   */
+  'device.modbus.func1': '01 读线圈状态',
+  'device.modbus.func2': '02 读离散输入状态',
+  'device.modbus.func3': '03 读保持寄存器',
+  'device.modbus.func4': '04 读输入寄存器',
+
+  /**
+   * plc model
+   */
+  'device.plc.model': '西门子 {model} 系列 PLC',
+
+  /**
+   * inputMode
+   */
+  'device.camera.inputMode.rtsp': '远程 RTSP 流地址',
+  'device.camera.inputMode.local': '本地相机设备',
+
+  /**
+   * outputMode
+   */
+  'device.camera.outputMode.jpeg': '本地 Jpeg 流服务器',
+  'device.camera.outputMode.stream': '远程流媒体服务器',
+
+  /**
+   * outputEncode
+   */
+  'device.camera.outputEncode': '{type} 编码',
 };

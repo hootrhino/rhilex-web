@@ -8,7 +8,7 @@ import {
 import { DeleteOutlined, EditOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProList } from '@ant-design/pro-components';
-import { useIntl, useRequest } from '@umijs/max';
+import { getIntl, getLocale, useIntl, useRequest } from '@umijs/max';
 import { Space, Tooltip } from 'antd';
 import { useEffect, useRef } from 'react';
 
@@ -55,7 +55,7 @@ type GroupListProps = {
 export const DEFAULT_CONFIG: GroupConfig = {
   open: false,
   type: GroupModalType.NEW,
-  title: '新建分组',
+  title: getIntl(getLocale()).formatMessage({ id: 'device.modal.title.group.new' }),
 };
 
 const GroupList = ({
@@ -123,9 +123,9 @@ const GroupList = ({
 
   const handleOnRemoveGroup = (uuid: string) => {
     modal.confirm({
-      title: `确定要删除此分组吗？`,
+      title: formatMessage({ id: 'device.modal.title.group.remove' }),
       width: 600,
-      content: `分组中包含 ${itemCount} 个子项目，删除后将被移入默认分组中，请谨慎处理。`,
+      content: formatMessage({ id: 'device.modal.content.group.remove' }, { count: itemCount }),
       onOk: () => removeGroup({ uuid: uuid }).then(() => onReset()),
       okText: formatMessage({ id: 'button.ok' }),
       cancelText: formatMessage({ id: 'button.cancel' }),
@@ -167,18 +167,22 @@ const GroupList = ({
             render: (_dom, { uuid }) =>
               uuid === groupRoot ? null : (
                 <Space size="middle">
-                  <Tooltip title="重命名分组">
+                  <Tooltip title={formatMessage({ id: 'device.tooltip.group.edit' })}>
                     <a
                       key="edit"
                       onClick={() => {
-                        updateConfig({ open: true, title: '编辑分组', type: GroupModalType.EDIT });
+                        updateConfig({
+                          open: true,
+                          title: formatMessage({ id: 'device.modal.title.group.edit' }),
+                          type: GroupModalType.EDIT,
+                        });
                         getDetail({ uuid });
                       }}
                     >
                       <EditOutlined />
                     </a>
                   </Tooltip>
-                  <Tooltip title="删除分组">
+                  <Tooltip title={formatMessage({ id: 'device.tooltip.group.remove' })}>
                     <a key="remove" onClick={() => handleOnRemoveGroup(uuid)}>
                       <DeleteOutlined />
                     </a>
@@ -197,7 +201,12 @@ const GroupList = ({
         layout="horizontal"
         width="30%"
       >
-        <ProFormText width="md" name="name" label="分组名称" placeholder="请输入分组名称" />
+        <ProFormText
+          width="md"
+          name="name"
+          label={formatMessage({ id: 'device.form.title.group.name' })}
+          placeholder={formatMessage({ id: 'device.form.placeholder.group.name' })}
+        />
       </ModalForm>
     </>
   );

@@ -5,7 +5,7 @@ import { flatten, omit } from '@/utils/redash';
 import { getName } from '@/utils/utils';
 import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { history, useModel, useRequest } from '@umijs/max';
+import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import type { DeviceItem } from '..';
@@ -40,6 +40,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     getDetail: getPortDetail,
   } = useModel('usePort');
   const { product } = useModel('useSystem');
+  const { formatMessage } = useIntl();
 
   const { data: detail, run: getDetail } = useRequest(
     (params: API.getDevicesDetailParams) => getDevicesDetail(params),
@@ -101,7 +102,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
   return (
     <Drawer
       open={open}
-      title="设备详情"
+      title={formatMessage({ id: 'device.title.detail' })}
       placement="right"
       width="50%"
       destroyOnClose
@@ -110,7 +111,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     >
       <>
         <EnhancedProDescriptions
-          title="基本配置"
+          title={formatMessage({ id: 'device.title.base' })}
           dataSource={detail && omit(detail, ['config'])}
           columns={
             formatColumns(baseColumns(product)) as ProDescriptionsItemProps<Record<string, any>>[]

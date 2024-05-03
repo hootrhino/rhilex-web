@@ -1,5 +1,8 @@
 import { Product } from '@/utils/enum';
 import { pick } from '@/utils/redash';
+import { getIntl, getLocale } from '@umijs/max';
+
+const intl = getIntl(getLocale());
 
 /**
  * 设备类型枚举
@@ -16,14 +19,14 @@ export enum DeviceType {
 }
 
 const baseTypeOption = {
-  [DeviceType.GENERIC_PROTOCOL]: '通用时间片中断串口采集网关',
-  [DeviceType.GENERIC_MODBUS]: '通用 Modbus 采集网关',
-  [DeviceType.GENERIC_SNMP]: '通用 SNMP 协议采集网关',
+  [DeviceType.GENERIC_PROTOCOL]: intl.formatMessage({ id: 'device.type.protocol' }),
+  [DeviceType.GENERIC_MODBUS]: intl.formatMessage({ id: 'device.type.modbus' }),
+  [DeviceType.GENERIC_SNMP]: intl.formatMessage({ id: 'device.type.snmp' }),
   // [DeviceType.GENERIC_AIS_RECEIVER]: '通用船载 AIS 数据解析网关', 暂无需求，先隐藏
-  [DeviceType.SIEMENS_PLC]: '通用西门子 S7 系列 PLC 采集网关',
-  [DeviceType.GENERIC_HTTP_DEVICE]: '通用 HTTP 协议数据采集网关',
-  [DeviceType.GENERIC_CAMERA]: '通用摄像机流处理网关',
-  [DeviceType.SMART_HOME_CONTROLLER]: '全屋智能家居中心控制网关',
+  [DeviceType.SIEMENS_PLC]: intl.formatMessage({ id: 'device.type.plc' }),
+  [DeviceType.GENERIC_HTTP_DEVICE]: intl.formatMessage({ id: 'device.type.http' }),
+  [DeviceType.GENERIC_CAMERA]: intl.formatMessage({ id: 'device.type.camera' }),
+  [DeviceType.SMART_HOME_CONTROLLER]: intl.formatMessage({ id: 'device.type.smartHome' }),
 };
 
 export const deviceTypeOptions = {
@@ -67,10 +70,10 @@ export enum DeviceMode {
  * Modbus 设备功能
  */
 export const funcEnum = new Map([
-  [1, '01 读线圈状态'],
-  [2, '02 读离散输入状态'],
-  [3, '03 读保持寄存器'],
-  [4, '04 读输入寄存器'],
+  [1, intl.formatMessage({ id: 'device.modbus.func1' })],
+  [2, intl.formatMessage({ id: 'device.modbus.func2' })],
+  [3, intl.formatMessage({ id: 'device.modbus.func3' })],
+  [4, intl.formatMessage({ id: 'device.modbus.func4' })],
   // [5, '05 写单个线圈'],
   // [6, '06 写单个保持寄存器'],
   // [15, '15 写多个线圈'],
@@ -89,11 +92,11 @@ export enum PLCModel {
 }
 
 export const plcModelOptions = {
-  [PLCModel.S7200]: '西门子 S7-200 系列 PLC',
-  [PLCModel.S7300]: '西门子 S7-300 系列 PLC',
-  [PLCModel.S7400]: '西门子 S7-400 系列 PLC',
-  [PLCModel.S71200]: '西门子 S7-1200 系列 PLC',
-  [PLCModel.S71500]: '西门子 S7-1500 系列 PLC',
+  [PLCModel.S7200]: intl.formatMessage({ id: 'device.plc.model' }, { model: 'S7-200' }),
+  [PLCModel.S7300]: intl.formatMessage({ id: 'device.plc.model' }, { model: 'S7-300' }),
+  [PLCModel.S7400]: intl.formatMessage({ id: 'device.plc.model' }, { model: 'S7-400' }),
+  [PLCModel.S71200]: intl.formatMessage({ id: 'device.plc.model' }, { model: 'S7-1200' }),
+  [PLCModel.S71500]: intl.formatMessage({ id: 'device.plc.model' }, { model: 'S7-1500' }),
 };
 
 // 机架号 rack
@@ -130,8 +133,8 @@ export enum InputMode {
 }
 
 export const InputModeOption = {
-  [InputMode.REMOTE_STREAM_RTSP]: '远程RTSP流地址',
-  [InputMode.LOCAL_CAMERA]: '本地相机设备',
+  [InputMode.REMOTE_STREAM_RTSP]: intl.formatMessage({ id: 'device.camera.inputMode.rtsp' }),
+  [InputMode.LOCAL_CAMERA]: intl.formatMessage({ id: 'device.camera.inputMode.local' }),
 };
 
 /**
@@ -145,8 +148,10 @@ export enum OutputMode {
 
 export const OutputModeOption = {
   // [OutputMode.LOCAL_H264_STREAM_SERVER]: '本地 FLV 流服务器',
-  [OutputMode.LOCAL_JPEG_STREAM_SERVER]: '本地 Jpeg 流服务器',
-  [OutputMode.REMOTE_STREAM_SERVER]: '远程流媒体服务器',
+  [OutputMode.LOCAL_JPEG_STREAM_SERVER]: intl.formatMessage({
+    id: 'device.camera.outputMode.jpeg',
+  }),
+  [OutputMode.REMOTE_STREAM_SERVER]: intl.formatMessage({ id: 'device.camera.outputMode.stream' }),
 };
 
 /**
@@ -158,8 +163,14 @@ export enum OutputEncode {
 }
 
 export const OutputEncodeOption = {
-  [OutputEncode.H264_STREAM]: 'H264 编码',
-  [OutputEncode.JPEG_STREAM]: 'JPEG 编码',
+  [OutputEncode.H264_STREAM]: intl.formatMessage(
+    { id: 'device.camera.outputEncode' },
+    { type: 'H264' },
+  ),
+  [OutputEncode.JPEG_STREAM]: intl.formatMessage(
+    { id: 'device.camera.outputEncode' },
+    { type: 'JPEG' },
+  ),
 };
 
 /** SNMP */

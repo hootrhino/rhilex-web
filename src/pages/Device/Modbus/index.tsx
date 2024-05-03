@@ -59,7 +59,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
   const { deviceId } = useParams();
   const { formatMessage } = useIntl();
 
-  const [title, setTitle] = useState<string>('点位表配置');
+  const [title, setTitle] = useState<string>(formatMessage({ id: 'device.title.sheet' }));
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableRows, setEditableRows] = useState<Partial<ModbusDataSheetItem>[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
@@ -170,7 +170,11 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
   const { run } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
     manual: true,
     onSuccess: (record) =>
-      setTitle(record?.name ? `设备 ${record?.name} - 点位表配置` : '点位表配置'),
+      setTitle(
+        record?.name
+          ? formatMessage({ id: 'device.title.sheetList' }, { name: record?.name })
+          : formatMessage({ id: 'device.title.sheet' }),
+      ),
   });
 
   const columns: ProColumns<Partial<ModbusDataSheetItem>>[] = [
@@ -182,46 +186,52 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       render: (_text, _record, index) => <IndexBorder serial={index} />,
     },
     {
-      title: '从设备地址',
+      title: formatMessage({ id: 'device.form.title.slaverId' }),
       dataIndex: 'slaverId',
       valueType: 'digit',
       width: 100,
       fieldProps: {
         style: { width: '100%' },
-        placeholder: '请输入从设备地址',
+        placeholder: formatMessage({ id: 'device.form.placeholder.slaverId' }),
       },
       formItemProps: {
         rules: [
-          { required: true, message: '请输入从设备地址' },
-          { max: 255, type: 'integer', message: '从设备地址 在 1-255 之间' },
-          { min: 1, type: 'integer', message: '从设备地址 在 1-255 之间' },
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.slaverId' }) },
+          {
+            max: 255,
+            type: 'integer',
+            message: formatMessage({ id: 'device.form.rules.slaverId' }),
+          },
+          { min: 1, type: 'integer', message: formatMessage({ id: 'device.form.rules.slaverId' }) },
         ],
       },
     },
     {
-      title: '数据标签',
+      title: formatMessage({ id: 'device.form.title.tag' }),
       dataIndex: 'tag',
       ellipsis: true,
       formItemProps: {
-        rules: [{ required: true, message: '请输入数据标签' }],
+        rules: [{ required: true, message: formatMessage({ id: 'device.form.placeholder.tag' }) }],
       },
       fieldProps: {
-        placeholder: '请输入数据标签',
+        placeholder: formatMessage({ id: 'device.form.placeholder.tag' }),
       },
     },
     {
-      title: '数据别名',
+      title: formatMessage({ id: 'device.form.title.alias' }),
       dataIndex: 'alias',
       ellipsis: true,
       formItemProps: {
-        rules: [{ required: true, message: '请输入数据别名' }],
+        rules: [
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.alias' }) },
+        ],
       },
       fieldProps: {
-        placeholder: '请输入数据别名',
+        placeholder: formatMessage({ id: 'device.form.placeholder.alias' }),
       },
     },
     {
-      title: 'Modbus 功能',
+      title: formatMessage({ id: 'device.form.title.func' }),
       dataIndex: 'function',
       valueType: 'select',
       width: 150,
@@ -231,7 +241,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
           noStyle
           fieldProps={{
             allowClear: false,
-            placeholder: '请选择 Modbus 功能',
+            placeholder: formatMessage({ id: 'device.form.placeholder.func' }),
             onChange: (value) => {
               if (value === 1) {
                 editorFormRef.current?.setRowData?.(record?.uuid as string, {
@@ -247,12 +257,14 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
             },
           }}
           valueEnum={funcEnum}
-          rules={[{ required: true, message: '请选择 Modbus 功能' }]}
+          rules={[
+            { required: true, message: formatMessage({ id: 'device.form.placeholder.func' }) },
+          ]}
         />
       ),
     },
     {
-      title: '数据类型（字节序）',
+      title: formatMessage({ id: 'device.form.title.dataType' }),
       dataIndex: 'type',
       width: 150,
       ellipsis: true,
@@ -275,7 +287,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
             disabled={record?.function === 1}
             fieldProps={{
               allowClear: false,
-              placeholder: '请选择数据类型和字节序',
+              placeholder: formatMessage({ id: 'device.form.placeholder.dataType' }),
               onChange: (value: any) => {
                 const dataType = value?.[0];
 
@@ -286,7 +298,12 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
               },
               options,
             }}
-            rules={[{ required: true, message: '请选择数据类型和字节序' }]}
+            rules={[
+              {
+                required: true,
+                message: formatMessage({ id: 'device.form.placeholder.dataType' }),
+              },
+            ]}
           />
         );
       },
@@ -304,56 +321,67 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       },
     },
     {
-      title: '起始地址',
+      title: formatMessage({ id: 'device.form.title.address' }),
       dataIndex: 'address',
       valueType: 'digit',
       width: 80,
       fieldProps: {
         style: { width: '100%' },
-        placeholder: '请输入起始地址',
+        placeholder: formatMessage({ id: 'device.form.placeholder.address' }),
       },
       formItemProps: {
         rules: [
-          { required: true, message: '请输入起始地址' },
-          { min: 0, type: 'integer', message: '起始地址范围在 0-65535 之间' },
-          { max: 65535, type: 'integer', message: '起始地址范围在 0-65535 之间' },
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.address' }) },
+          { min: 0, type: 'integer', message: formatMessage({ id: 'device.form.rules.address' }) },
+          {
+            max: 65535,
+            type: 'integer',
+            message: formatMessage({ id: 'device.form.rules.address' }),
+          },
         ],
       },
     },
     {
-      title: '读取数量',
+      title: formatMessage({ id: 'device.form.title.quantity' }),
       dataIndex: 'quantity',
       valueType: 'digit',
       width: 100,
       formItemProps: {
         rules: [
-          { required: true, message: '请输入读取数量' },
-          { min: 1, type: 'integer', message: '读取数量范围在 1-256 之间' },
-          { max: 256, type: 'integer', message: '读取数量范围在 1-256 之间' },
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.quantity' }) },
+          { min: 1, type: 'integer', message: formatMessage({ id: 'device.form.rules.quantity' }) },
+          {
+            max: 256,
+            type: 'integer',
+            message: formatMessage({ id: 'device.form.rules.quantity' }),
+          },
         ],
       },
       renderFormItem: () => (
         <ProFormDigit
           noStyle
           disabled={true}
-          fieldProps={{ style: { width: '100%' }, placeholder: '请输入读取数量' }}
+          fieldProps={{
+            style: { width: '100%' },
+            placeholder: formatMessage({ id: 'device.form.placeholder.quantity' }),
+          }}
         />
       ),
     },
 
     {
-      title: '权重系数',
+      title: formatMessage({ id: 'device.form.title.weight' }),
       dataIndex: 'weight',
       valueType: 'digit',
       formItemProps: {
         rules: [
-          { required: true, message: '请输入权重系数' },
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.weight' }) },
           {
             validator: (_, value) => {
               if (inRange(value, -0.0001, 100000)) {
                 return Promise.resolve();
               }
-              return Promise.reject('值必须在 -0.0001 到 100000 范围内');
+              return Promise.reject(formatMessage({ id: 'device.form.rules.weight' }));
             },
           },
         ],
@@ -365,39 +393,41 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
           <ProFormText
             noStyle
             disabled={['RAW', 'UTF8'].includes(dataType)}
-            fieldProps={{ placeholder: '请输入权重系数' }}
+            fieldProps={{ placeholder: formatMessage({ id: 'device.form.placeholder.weight' }) }}
           />
         );
       },
     },
     {
-      title: <UnitTitle title="采集频率" />,
+      title: <UnitTitle title={formatMessage({ id: 'device.form.title.frequency' })} />,
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
       fieldProps: {
         style: { width: '100%' },
-        placeholder: '请输入采集频率',
+        placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
       },
       formItemProps: {
-        rules: [{ required: true, message: '请输入采集频率' }],
+        rules: [
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.frequency' }) },
+        ],
       },
     },
     {
-      title: '最新值',
+      title: formatMessage({ id: 'device.form.title.value' }),
       dataIndex: 'value',
       editable: false,
       ellipsis: true,
     },
     {
-      title: '点位状态',
+      title: formatMessage({ id: 'device.form.title.status' }),
       dataIndex: 'status',
       width: 80,
       editable: false,
       renderText: (_, record) => <StateTag state={record?.status || 0} type={StateType.POINT} />,
     },
     {
-      title: '采集时间',
+      title: formatMessage({ id: 'device.form.title.lastFetchTime' }),
       dataIndex: 'lastFetchTime',
       valueType: 'dateTime',
       editable: false,
@@ -418,7 +448,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
                 uuid: 'copy',
               }}
             >
-              <Tooltip title="以当前行为模板新建一行数据">
+              <Tooltip title={formatMessage({ id: 'device.tooltip.copy' })}>
                 <a>{formatMessage({ id: 'button.copy' })}</a>
               </Tooltip>
             </EditableProTable.RecordCreator>
@@ -432,7 +462,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
               {formatMessage({ id: 'button.edit' })}
             </a>
             <Popconfirm
-              title="确定要删除此点位？"
+              title={formatMessage({ id: 'device.modal.title.remove.sheet' })}
               onConfirm={() => {
                 if (deviceId && record?.uuid) {
                   remove({ device_uuid: deviceId, uuids: [record?.uuid] });
@@ -450,7 +480,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
                   items: [{ key: 'error', label: formatMessage({ id: 'button.error' }) }],
                   onClick: () => {
                     modal.error({
-                      title: '点位异常信息',
+                      title: formatMessage({ id: 'device.title.modal.error.sheet' }),
                       content: <div className="flex flex-wrap">{record?.errMsg}</div>,
                     });
                   },
@@ -475,7 +505,9 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       onClick={handleOnPolling}
       icon={polling ? <LoadingOutlined /> : <ReloadOutlined />}
     >
-      {polling ? '停止刷新' : '开始刷新'}
+      {polling
+        ? formatMessage({ id: 'device.button.nonPolling' })
+        : formatMessage({ id: 'device.button.polling' })}
     </Button>,
     <Upload
       key="upload"
@@ -483,7 +515,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       showUploadList={false}
       beforeUpload={(file) => {
         modal.confirm({
-          title: '导入点位表',
+          title: formatMessage({ id: 'device.modal.title.upload.confirm' }),
           width: '50%',
           content: <UploadRule fileName={file?.name} />,
           onOk: () => deviceId && upload(deviceId, file),
@@ -494,7 +526,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       }}
     >
       <Button type="primary" icon={<DownloadOutlined />}>
-        导入点位表
+        {formatMessage({ id: 'device.button.import.sheet' })}
       </Button>
     </Upload>,
     <Button
@@ -509,7 +541,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       onClick={handleOnBatchUpdate}
       disabled={disabled}
     >
-      批量更新
+      {formatMessage({ id: 'device.button.update.batch' })}
     </Button>,
     <Button
       key="batch-remove"
@@ -518,15 +550,15 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       disabled={disabled}
       onClick={() =>
         modal.confirm({
-          title: '批量删除点位',
-          content: '此操作会一次性删除多个点位，请谨慎处理!',
+          title: formatMessage({ id: 'device.modal.title.remove.batchSheet' }),
+          content: formatMessage({ id: 'device.modal.content.remove.batchSheet' }),
           onOk: handleOnBatchRemove,
           okText: formatMessage({ id: 'button.ok' }),
           cancelText: formatMessage({ id: 'button.cancel' }),
         })
       }
     >
-      批量删除
+      {formatMessage({ id: 'device.button.remove.batch' })}
     </Button>,
     <Button
       key="download"
@@ -535,7 +567,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
         (window.location.href = `/api/v1/modbus_data_sheet/sheetExport?device_uuid=${deviceId}`)
       }
     >
-      导出点位表
+      {formatMessage({ id: 'device.button.export.sheet' })}
     </Button>,
   ];
 
@@ -567,7 +599,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
         rootClassName="sheet-table"
         recordCreatorProps={{
           position: 'top',
-          creatorButtonText: '添加点位',
+          creatorButtonText: formatMessage({ id: 'device.button.new.sheet' }),
           record: () => ({
             ...defaultModbusConfig,
             uuid: 'new',
@@ -614,9 +646,9 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       <ProDescriptions
         title={
           <>
-            <span>点位表配置</span>
+            <span>{formatMessage({ id: 'device.title.sheet' })}</span>
             <span className="text-[12px] opacity-[.8] pl-[5px] font-normal">
-              (横向滚动查看更多)
+              ({formatMessage({ id: 'device.tips.scroll' })})
             </span>
           </>
         }

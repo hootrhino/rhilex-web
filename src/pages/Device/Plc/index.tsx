@@ -49,10 +49,10 @@ const defaultPlcConfig = {
 
 const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
   const { deviceId } = useParams();
-  const [title, setTitle] = useState<string>('点位表配置');
+  const { formatMessage } = useIntl();
+  const [title, setTitle] = useState<string>(formatMessage({ id: 'device.title.sheet' }));
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<PlcSheetItem>>();
-  const { formatMessage } = useIntl();
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
@@ -161,7 +161,11 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
   const { run } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
     manual: true,
     onSuccess: (record) =>
-      setTitle(record?.name ? `设备 ${record?.name} - 点位表配置` : '点位表配置'),
+      setTitle(
+        record?.name
+          ? formatMessage({ id: 'device.title.sheetList' }, { name: record?.name })
+          : formatMessage({ id: 'device.title.sheet' }),
+      ),
   });
 
   useEffect(() => {
@@ -189,31 +193,44 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       render: (text, record, index) => <IndexBorder serial={index} />,
     },
     {
-      title: '地址',
+      title: formatMessage({ id: 'device.form.title.siemensAddress' }),
       dataIndex: 'siemensAddress',
       width: 150,
       ellipsis: true,
-      formItemProps: { rules: [{ required: true, message: '请输入地址' }] },
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: formatMessage({ id: 'device.form.placeholder.siemensAddress' }),
+          },
+        ],
+      },
       fieldProps: {
-        placeholder: '请输入地址',
+        placeholder: formatMessage({ id: 'device.form.placeholder.siemensAddress' }),
       },
     },
     {
-      title: '数据标签',
+      title: formatMessage({ id: 'device.form.title.tag' }),
       dataIndex: 'tag',
       width: 120,
-      formItemProps: { rules: [{ required: true, message: '请输入数据标签' }] },
-      fieldProps: { placeholder: '请输入数据标签' },
+      formItemProps: {
+        rules: [{ required: true, message: formatMessage({ id: 'device.form.placeholder.tag' }) }],
+      },
+      fieldProps: { placeholder: formatMessage({ id: 'device.form.placeholder.tag' }) },
     },
     {
-      title: '数据别名',
+      title: formatMessage({ id: 'device.form.title.alias' }),
       dataIndex: 'alias',
       ellipsis: true,
-      formItemProps: { rules: [{ required: true, message: '请输入数据别名' }] },
-      fieldProps: { placeholder: '请输入数据别名' },
+      formItemProps: {
+        rules: [
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.alias' }) },
+        ],
+      },
+      fieldProps: { placeholder: formatMessage({ id: 'device.form.placeholder.alias' }) },
     },
     {
-      title: '数据类型（字节序）',
+      title: formatMessage({ id: 'device.form.title.dataType' }),
       dataIndex: 'type',
       width: 150,
       renderFormItem: () => (
@@ -221,10 +238,12 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
           noStyle
           fieldProps={{
             allowClear: false,
-            placeholder: '请选择数据类型和字节序',
+            placeholder: formatMessage({ id: 'device.form.placeholder.dataType' }),
             options: plcDataTypeOptions,
           }}
-          rules={[{ required: true, message: '请选择数据类型和字节序' }]}
+          rules={[
+            { required: true, message: formatMessage({ id: 'device.form.placeholder.dataType' }) },
+          ]}
         />
       ),
       render: (_, { dataType, dataOrder }) => {
@@ -248,18 +267,18 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       },
     },
     {
-      title: '权重系数',
+      title: formatMessage({ id: 'device.form.title.weight' }),
       dataIndex: 'weight',
       valueType: 'digit',
       formItemProps: {
         rules: [
-          { required: true, message: '请输入权重系数' },
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.weight' }) },
           {
             validator: (_, value) => {
               if (inRange(value, -0.0001, 100000)) {
                 return Promise.resolve();
               }
-              return Promise.reject('值必须在 -0.0001 到 100000 范围内');
+              return Promise.reject(formatMessage({ id: 'device.form.rules.weight' }));
             },
           },
         ],
@@ -271,39 +290,41 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
           <ProFormText
             noStyle
             disabled={['RAW', 'BYTE', 'I', 'Q'].includes(type)}
-            fieldProps={{ placeholder: '请输入权重系数' }}
+            fieldProps={{ placeholder: formatMessage({ id: 'device.form.placeholder.weight' }) }}
           />
         );
       },
     },
     {
-      title: <UnitTitle title="采集频率" />,
+      title: <UnitTitle title={formatMessage({ id: 'device.form.title.frequency' })} />,
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
       fieldProps: {
         style: { width: '100%' },
-        placeholder: '请输入采集频率',
+        placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
       },
       formItemProps: {
-        rules: [{ required: true, message: '请输入采集频率' }],
+        rules: [
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.frequency' }) },
+        ],
       },
     },
     {
-      title: '最新值',
+      title: formatMessage({ id: 'device.form.title.value' }),
       dataIndex: 'value',
       editable: false,
       ellipsis: true,
     },
     {
-      title: '点位状态',
+      title: formatMessage({ id: 'device.form.title.status' }),
       dataIndex: 'status',
       editable: false,
       width: 80,
       renderText: (_, record) => <StateTag state={record?.status || 0} type={StateType.POINT} />,
     },
     {
-      title: '采集时间',
+      title: formatMessage({ id: 'device.form.title.lastFetchTime' }),
       dataIndex: 'lastFetchTime',
       valueType: 'dateTime',
       editable: false,
@@ -323,7 +344,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
                 uuid: 'copy',
               }}
             >
-              <Tooltip title="以当前行为模板新建一行数据">
+              <Tooltip title={formatMessage({ id: 'device.tooltip.copy' })}>
                 <a>{formatMessage({ id: 'button.copy' })}</a>
               </Tooltip>
             </EditableProTable.RecordCreator>
@@ -337,7 +358,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
               {formatMessage({ id: 'button.edit' })}
             </a>
             <Popconfirm
-              title="确定要删除此点位？"
+              title={formatMessage({ id: 'device.modal.title.remove.sheet' })}
               onConfirm={() => {
                 if (deviceId && record?.uuid) {
                   remove({ device_uuid: deviceId, uuids: [record?.uuid] });
@@ -355,7 +376,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
                   items: [{ key: 'error', label: formatMessage({ id: 'button.error' }) }],
                   onClick: () => {
                     modal.error({
-                      title: '点位异常信息',
+                      title: formatMessage({ id: 'device.title.modal.error.sheet' }),
                       content: <div className="flex flex-wrap">{record?.errMsg}</div>,
                     });
                   },
@@ -380,7 +401,9 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       onClick={handleOnPolling}
       icon={polling ? <LoadingOutlined /> : <ReloadOutlined />}
     >
-      {polling ? '停止刷新' : '开始刷新'}
+      {polling
+        ? formatMessage({ id: 'device.button.nonPolling' })
+        : formatMessage({ id: 'device.button.polling' })}
     </Button>,
     <Upload
       key="upload"
@@ -388,7 +411,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       showUploadList={false}
       beforeUpload={(file) => {
         modal.confirm({
-          title: '导入点位表',
+          title: formatMessage({ id: 'device.modal.title.upload.confirm' }),
           width: '50%',
           content: <UploadRule fileName={file?.name} />,
           onOk: () => deviceId && upload(deviceId, file),
@@ -399,7 +422,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       }}
     >
       <Button type="primary" icon={<DownloadOutlined />}>
-        导入点位表
+        {formatMessage({ id: 'device.button.import.sheet' })}
       </Button>
     </Upload>,
     <Button
@@ -414,7 +437,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       onClick={handleOnBatchUpdate}
       disabled={disabled}
     >
-      批量更新
+      {formatMessage({ id: 'device.button.update.batch' })}
     </Button>,
     <Button
       key="batch-remove"
@@ -423,15 +446,15 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       disabled={disabled}
       onClick={() =>
         modal.confirm({
-          title: '批量删除点位',
-          content: '此操作会一次性删除多个点位，请谨慎处理!',
+          title: formatMessage({ id: 'device.modal.title.remove.batchSheet' }),
+          content: formatMessage({ id: 'device.modal.content.remove.batchSheet' }),
           onOk: handleOnBatchRemove,
           okText: formatMessage({ id: 'button.ok' }),
           cancelText: formatMessage({ id: 'button.cancel' }),
         })
       }
     >
-      批量删除
+      {formatMessage({ id: 'device.button.remove.batch' })}
     </Button>,
     <Button
       key="download"
@@ -440,7 +463,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
         (window.location.href = `/api/v1/s1200_data_sheet/sheetExport?device_uuid=${deviceId}`)
       }
     >
-      导出点位表
+      {formatMessage({ id: 'device.button.export.sheet' })}
     </Button>,
   ];
 
@@ -456,7 +479,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
         rootClassName="sheet-table"
         recordCreatorProps={{
           position: 'top',
-          creatorButtonText: '添加点位',
+          creatorButtonText: formatMessage({ id: 'device.button.new.sheet' }),
           record: () => ({
             ...defaultPlcConfig,
             uuid: 'new',
@@ -506,9 +529,9 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       <ProDescriptions
         title={
           <>
-            <span>点位表配置</span>
+            <span>{formatMessage({ id: 'device.title.sheet' })}</span>
             <span className="text-[12px] opacity-[.8] pl-[5px] font-normal">
-              (横向滚动查看更多)
+              ({formatMessage({ id: 'device.tips.scroll' })})
             </span>
           </>
         }

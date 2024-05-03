@@ -114,7 +114,7 @@ const ShellySubDevice = () => {
       case 'detail':
         if (item.mac && deviceId) {
           modal.info({
-            title: `${item.name} 设备详情`,
+            title: formatMessage({ id: 'device.title.detail.smartHome' }, { name: item.name }),
             width: '45%',
             content: <Detail mac={item.mac} deviceId={deviceId} ip={item.ip} />,
             okText: formatMessage({ id: 'button.close' }),
@@ -132,7 +132,7 @@ const ShellySubDevice = () => {
             deviceIp: item.ip,
             gwIp: ip,
             webHookPort: port,
-          }).then(() => message.success('配置成功'));
+          }).then(() => message.success(formatMessage({ id: 'device.message.success.config' })));
         }
         break;
       case 'clear-webhook':
@@ -142,7 +142,7 @@ const ShellySubDevice = () => {
             deviceIp: item.ip,
             gwIp: ip,
             webHookPort: port,
-          }).then(() => message.success('清除成功'));
+          }).then(() => message.success(formatMessage({ id: 'device.message.success.clear' })));
         }
         break;
       default:
@@ -158,17 +158,17 @@ const ShellySubDevice = () => {
       icon: <FileSearchOutlined />,
     },
     {
-      label: '设备控制台',
+      label: formatMessage({ id: 'device.button.control' }),
       key: 'device-control',
       icon: <ControlOutlined />,
     },
     {
-      label: '快速接入网关',
+      label: formatMessage({ id: 'device.button.configWebhook' }),
       key: 'config-webhook',
       icon: <SettingOutlined />,
     },
     {
-      label: '清除所有配置',
+      label: formatMessage({ id: 'device.button.clearWebhook' }),
       key: 'clear-webhook',
       icon: <ClearOutlined />,
     },
@@ -178,7 +178,7 @@ const ShellySubDevice = () => {
     <>
       <PageContainer
         onBack={() => history.push('/device/list')}
-        title={`设备 ${deviceDetail?.name || ''} - 子设备列表`}
+        title={formatMessage({ id: 'device.title.subDevice' }, { name: deviceDetail?.name || '' })}
         extra={
           <Space>
             <Button
@@ -188,7 +188,7 @@ const ShellySubDevice = () => {
               onClick={() => deviceId && scan({ uuid: deviceId })}
               loading={scanLoading}
             >
-              扫描设备
+              {formatMessage({ id: 'device.button.scan' })}
             </Button>
             <Button
               ghost
@@ -196,10 +196,12 @@ const ShellySubDevice = () => {
               type="primary"
               icon={<ReloadOutlined />}
               onClick={() => {
-                getSubDeviceList().then(() => message.success('刷新成功'));
+                getSubDeviceList().then(() =>
+                  message.success(formatMessage({ id: 'device.button.reload' })),
+                );
               }}
             >
-              刷新
+              {formatMessage({ id: 'device.button.reload' })}
             </Button>
           </Space>
         }

@@ -32,7 +32,7 @@ const CameraDetail = ({ deviceName = '', outputMode, onCancel, ...props }: Camer
   return (
     <Modal
       destroyOnClose
-      title="查看视频"
+      title={formatMessage({ id: 'device.modal.title.camera' })}
       width="50%"
       centered
       maskClosable={false}
@@ -64,7 +64,9 @@ const CameraDetail = ({ deviceName = '', outputMode, onCancel, ...props }: Camer
       {!playUrl && (
         <div className="w-full h-full flex justify-center items-center text-[#fff]">
           <SyncOutlined spin />
-          <span className="pl-[10px]">视频正在加载...</span>
+          <span className="pl-[10px]">
+            {formatMessage({ id: 'device.modal.content.camera.loading' })}
+          </span>
         </div>
       )}
     </Modal>

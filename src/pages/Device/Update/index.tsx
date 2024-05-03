@@ -117,10 +117,10 @@ const UpdateForm = () => {
         const { msg } = await postDevicesCreate(params);
 
         if (msg === 'Success') {
-          message.success('创建成功');
+          message.success(formatMessage({ id: 'message.success.new' }));
           setActiveGroupKey(groupId ? groupId : 'DROOT');
         } else {
-          const info = `创建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：${msg}`;
+          const info = formatMessage({ id: 'device.message.error.new' }, { msg: msg });
           message.warning(info);
         }
       }
@@ -220,7 +220,15 @@ const UpdateForm = () => {
   useBeforeUnloadConfirm();
 
   return (
-    <PageContainer showExtra title={deviceId ? '编辑设备' : '新建设备'} backUrl={DefaultListUrl}>
+    <PageContainer
+      showExtra
+      title={
+        deviceId
+          ? formatMessage({ id: 'device.title.update' })
+          : formatMessage({ id: 'device.title.new' })
+      }
+      backUrl={DefaultListUrl}
+    >
       <ProBetaSchemaForm
         formRef={formRef}
         onFinish={handleOnFinish}

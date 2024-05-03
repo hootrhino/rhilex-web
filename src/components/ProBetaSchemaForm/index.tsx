@@ -105,7 +105,7 @@ const processColumns = (columns: ProColumnsType[]) =>
               creatorButtonProps: {
                 position: 'top',
                 creatorButtonText: <FormattedMessage id="button.new.formList" />,
-                ...col.fieldProps.creatorButtonProps,
+                ...col?.fieldProps?.creatorButtonProps,
               },
               creatorRecord: col?.initialValue,
             };

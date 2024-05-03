@@ -1,4 +1,7 @@
+import { getIntl, getLocale } from '@umijs/max';
 import { baseOptions } from '../Plc/enum';
+
+const intl = getIntl(getLocale());
 
 // 不转换-字节序
 const orderRawOption = [
@@ -20,26 +23,26 @@ const byte1Options = [
 export const modbusDataTypeOptions = [
   {
     value: 'RAW',
-    label: 'RAW（4字节）',
+    label: `RAW（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: orderRawOption,
   },
   {
     value: 'BYTE',
-    label: 'Byte（1字节）',
+    label: `Byte（1 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte1Options,
   },
   ...baseOptions,
   {
     value: 'UTF8',
-    label: 'UTF8（1-256字节）',
+    label: `UTF8（1-256 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: [
       {
         value: 'BIG_ENDIAN',
-        label: '大端',
+        label: intl.formatMessage({ id: 'device.bigEndian' }),
       },
       {
         value: 'LITTLE_ENDIAN',
-        label: '小端',
+        label: intl.formatMessage({ id: 'device.littleEndian' }),
       },
     ],
   },

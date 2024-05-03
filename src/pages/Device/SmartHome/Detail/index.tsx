@@ -1,9 +1,10 @@
-import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { getShellyGen1Detail, getShellyGen1Status } from '@/services/rulex/shellyshebei';
+import { CheckCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import type { ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { Divider } from 'antd';
+import { getIntl, getLocale } from '@umijs/max';
+import { Divider, Tag } from 'antd';
 
 type DetailProps<RecordType = Record<string, any>, ValueType = 'text'> = ProDescriptionsProps<
   RecordType,
@@ -14,118 +15,152 @@ type DetailProps<RecordType = Record<string, any>, ValueType = 'text'> = ProDesc
   ip: string | undefined;
 };
 
+const intl = getIntl(getLocale());
+
 const baseColumns = [
   {
-    title: '设备 ID',
+    title: intl.formatMessage({ id: 'device.form.title.id' }),
     dataIndex: 'id',
     ellipsis: true,
   },
   {
-    title: '设备名称',
+    title: intl.formatMessage({ id: 'device.form.title.name' }),
     dataIndex: 'name',
   },
   {
-    title: '设备 IP 地址',
+    title: intl.formatMessage({ id: 'device.form.title.ip' }),
     dataIndex: 'ip',
     ellipsis: true,
   },
   {
-    title: '设备 MAC 地址',
+    title: intl.formatMessage({ id: 'device.form.title.mac' }),
     dataIndex: 'mac',
     ellipsis: true,
   },
   {
-    title: '设备型号',
+    title: intl.formatMessage({ id: 'device.form.title.model' }),
     dataIndex: 'model',
     ellipsis: true,
   },
   {
-    title: '设备硬件版本号',
+    title: intl.formatMessage({ id: 'device.form.title.gen' }),
     dataIndex: 'gen',
     renderText: (gen: string) => `v${gen}`,
   },
   {
-    title: '设备固件版本 ID',
+    title: intl.formatMessage({ id: 'device.form.title.fwId' }),
     dataIndex: 'fw_id',
     ellipsis: true,
   },
   {
-    title: '设备固件版本号',
+    title: intl.formatMessage({ id: 'device.form.title.ver' }),
     dataIndex: 'ver',
     renderText: (ver: string) => `v${ver}`,
   },
   {
-    title: '设备所在的插槽位置',
+    title: intl.formatMessage({ id: 'device.form.title.slot' }),
     dataIndex: 'slot',
   },
   {
-    title: '设备应用程序名称',
+    title: intl.formatMessage({ id: 'device.form.title.app' }),
     dataIndex: 'app',
   },
   {
-    title: '开启认证功能',
+    title: intl.formatMessage({ id: 'device.form.title.authEn' }),
     dataIndex: 'auth_en',
-    renderText: (auth_en: boolean) => <StateTag state={auth_en} type={StateType.BOOL} />,
+    renderText: (auth_en: boolean) => (
+      <Tag
+        color={auth_en ? 'success' : 'default'}
+        icon={auth_en ? <CheckCircleOutlined /> : <MinusCircleOutlined />}
+      >
+        {auth_en ? '开启' : '关闭'}
+      </Tag>
+    ),
   },
   {
-    title: '设备认证域',
+    title: intl.formatMessage({ id: 'device.form.title.authDomain' }),
     dataIndex: 'auth_domain',
   },
 ];
 
 const statusColumns = [
   {
-    title: '重启设备',
+    title: intl.formatMessage({ id: 'device.form.title.restartRequired' }),
     dataIndex: 'restart_required',
     renderText: (restart_required: boolean) => (
-      <StateTag state={restart_required} type={StateType.BOOL} />
+      <Tag
+        color={restart_required ? 'success' : 'default'}
+        icon={restart_required ? <CheckCircleOutlined /> : <MinusCircleOutlined />}
+      >
+        {restart_required ? '开启' : '关闭'}
+      </Tag>
     ),
   },
   {
-    title: '设备当前时间',
+    title: intl.formatMessage({ id: 'device.form.title.time' }),
     dataIndex: 'time',
   },
   {
-    title: '设备 Unix 时间戳',
+    title: intl.formatMessage({ id: 'device.form.title.unixtime' }),
     dataIndex: 'unixtime',
   },
   {
-    title: '设备运行时间',
+    title: intl.formatMessage({ id: 'device.form.title.uptime' }),
     dataIndex: 'uptime',
   },
   {
-    title: <UnitTitle title="RAM 总大小" unit="字节" />,
+    title: (
+      <UnitTitle
+        title={intl.formatMessage({ id: 'device.form.title.ramSize' })}
+        unit={intl.formatMessage({ id: 'device.unit.byte' })}
+      />
+    ),
     dataIndex: 'ram_size',
   },
   {
-    title: <UnitTitle title="可用 RAM 大小" unit="字节" />,
+    title: (
+      <UnitTitle
+        title={intl.formatMessage({ id: 'device.form.title.ramFree' })}
+        unit={intl.formatMessage({ id: 'device.unit.byte' })}
+      />
+    ),
     dataIndex: 'ram_free',
   },
   {
-    title: <UnitTitle title="文件系统总大小" unit="字节" />,
+    title: (
+      <UnitTitle
+        title={intl.formatMessage({ id: 'device.form.title.fsSize' })}
+        unit={intl.formatMessage({ id: 'device.unit.byte' })}
+      />
+    ),
     dataIndex: 'fs_size',
   },
   {
-    title: <UnitTitle title="文件系统可用大小" unit="字节" />,
+    title: (
+      <UnitTitle
+        title={intl.formatMessage({ id: 'device.form.title.fsFree' })}
+        unit={intl.formatMessage({ id: 'device.unit.byte' })}
+      />
+    ),
     dataIndex: 'fs_free',
   },
   {
-    title: '配置版本号',
+    title: intl.formatMessage({ id: 'device.form.title.cfgRev' }),
     dataIndex: 'cfg_rev',
     renderText: (cfg_rev: string) => `v${cfg_rev}`,
   },
   {
-    title: '键值存储版本号',
+    title: intl.formatMessage({ id: 'device.form.title.kvsRev' }),
     dataIndex: 'kvs_rev',
     renderText: (kvs_rev: string) => `v${kvs_rev}`,
   },
   {
-    title: '计划任务版本号',
+    title: intl.formatMessage({ id: 'device.form.title.scheduleRev' }),
     dataIndex: 'schedule_rev',
     renderText: (schedule_rev: string) => `v${schedule_rev}`,
   },
   {
-    title: 'Webhook 版本号',
+    title: intl.formatMessage({ id: 'device.form.title.webhookRev' }),
     dataIndex: 'webhook_rev',
     renderText: (webhook_rev: string) => `v${webhook_rev}`,
   },
@@ -135,7 +170,7 @@ const Detail = ({ mac, deviceId, ip, ...props }: DetailProps) => {
   return (
     <>
       <ProDescriptions
-        title="设备基本信息"
+        title={intl.formatMessage({ id: 'device.title.smartHome.detail.base' })}
         column={2}
         labelStyle={{ justifyContent: 'flex-end', minWidth: 140, marginRight: 10 }}
         request={async () => {
@@ -151,7 +186,7 @@ const Detail = ({ mac, deviceId, ip, ...props }: DetailProps) => {
       />
       <Divider className="my-[10px]" />
       <ProDescriptions
-        title="设备状态信息"
+        title={intl.formatMessage({ id: 'device.title.smartHome.detail.status' })}
         column={2}
         labelStyle={{ justifyContent: 'flex-end', minWidth: 170, marginRight: 10 }}
         params={{ ip }}

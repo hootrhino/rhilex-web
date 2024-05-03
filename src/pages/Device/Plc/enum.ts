@@ -1,3 +1,7 @@
+import { getIntl, getLocale } from '@umijs/max';
+
+const intl = getIntl(getLocale());
+
 // 1个字节-字节序
 const byte1Options = [
   {
@@ -38,62 +42,62 @@ const byte4Options = [
 export const baseOptions = [
   {
     value: 'SHORT',
-    label: 'Short（2字节）',
+    label: `Short（2 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte2Options,
   },
   {
     value: 'INT16',
-    label: 'Int16（2字节）',
+    label: `Int16（2 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte2Options,
   },
   {
     value: 'INT',
-    label: 'Int（4字节）',
+    label: `Int（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte4Options,
   },
   {
     value: 'INT32',
-    label: 'Int32（4字节）',
+    label: `Int32（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte4Options,
   },
   {
     value: 'FLOAT',
-    label: 'Float（4字节）',
+    label: `Float（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte4Options,
   },
   {
     value: 'FLOAT32',
-    label: 'Float32（4字节）',
+    label: `Float32（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte4Options,
   },
   {
     value: 'USHORT',
-    label: 'UShort（2字节）',
+    label: `UShort（2 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte2Options,
   },
   {
     value: 'UINT16',
-    label: 'UInt16（2字节）',
+    label: `UInt16（2 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte2Options,
   },
   {
     value: 'UINT',
-    label: 'UInt（4字节）',
+    label: `UInt（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte4Options,
   },
   {
     value: 'UINT32',
-    label: 'UInt32（4字节）',
+    label: `UInt32（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte4Options,
   },
   {
     value: 'UFLOAT',
-    label: 'UFloat（4字节）',
+    label: `UFloat（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte4Options,
   },
   {
     value: 'UFLOAT32',
-    label: 'UFloat32（4字节）',
+    label: `UFloat32（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte4Options,
   },
 ];
@@ -102,17 +106,17 @@ export const baseOptions = [
 export const plcDataTypeOptions = [
   {
     value: 'BYTE',
-    label: 'Byte（1字节）',
+    label: `Byte（1 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte1Options,
   },
   {
     value: 'I',
-    label: 'I（1字节）',
+    label: `I（1 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte1Options,
   },
   {
     value: 'Q',
-    label: 'Q（1字节）',
+    label: `Q（1 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte1Options,
   },
   ...baseOptions,

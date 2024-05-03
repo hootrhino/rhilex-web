@@ -21,10 +21,9 @@ import {
 } from '@ant-design/icons';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { EditableProTable, ProDescriptions, ProTable } from '@ant-design/pro-components';
-import { history, useIntl, useParams, useRequest } from '@umijs/max';
+import { getIntl, getLocale, history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
-import { DEFAULT_TITLE } from './enum';
 import { removeParams, SnmpDataSheetItem, SnmpOidsSheetProps, UpdateParams } from './typings';
 import UploadRule from './UploadRule';
 
@@ -34,6 +33,8 @@ const defaultSnmpConfig = {
   alias: '',
   frequency: 1000,
 };
+
+const DEFAULT_TITLE = getIntl(getLocale()).formatMessage({ id: 'device.title.oid' });
 
 const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
   const actionRef = useRef<ActionType>();
@@ -54,7 +55,11 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
   const { run } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
     manual: true,
     onSuccess: (record) =>
-      setTitle(record?.name ? `设备 ${record?.name} - ${DEFAULT_TITLE}` : DEFAULT_TITLE),
+      setTitle(
+        record?.name
+          ? formatMessage({ id: 'device.title.oidList' }, { name: record?.name })
+          : DEFAULT_TITLE,
+      ),
   });
 
   const handleOnReset = () => {
@@ -177,64 +182,68 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       render: (text, record, index) => <IndexBorder serial={index} />,
     },
     {
-      title: '对象标识符',
+      title: formatMessage({ id: 'device.form.title.oid' }),
       dataIndex: 'oid',
       ellipsis: true,
       fieldProps: {
-        placeholder: '请输入对象标识符',
+        placeholder: formatMessage({ id: 'device.form.placeholder.oid' }),
       },
       formItemProps: {
-        rules: [{ required: true, message: '请输入对象标识符' }],
+        rules: [{ required: true, message: formatMessage({ id: 'device.form.placeholder.oid' }) }],
       },
     },
     {
-      title: '数据标签',
+      title: formatMessage({ id: 'device.form.title.tag' }),
       dataIndex: 'tag',
       ellipsis: true,
       fieldProps: {
-        placeholder: '请输入数据标签',
+        placeholder: formatMessage({ id: 'device.form.placeholder.tag' }),
       },
       formItemProps: {
-        rules: [{ required: true, message: '请输入数据标签' }],
+        rules: [{ required: true, message: formatMessage({ id: 'device.form.placeholder.tag' }) }],
       },
     },
     {
-      title: '数据别名',
+      title: formatMessage({ id: 'device.form.title.alias' }),
       dataIndex: 'alias',
       fieldProps: {
-        placeholder: '请输入数据别名',
+        placeholder: formatMessage({ id: 'device.form.placeholder.alias' }),
       },
       formItemProps: {
-        rules: [{ required: true, message: '请输入数据别名' }],
+        rules: [
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.alias' }) },
+        ],
       },
     },
     {
-      title: '采集频率',
+      title: formatMessage({ id: 'device.form.title.frequency' }),
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 100,
       fieldProps: {
-        placeholder: '请输入采集频率',
+        placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
       },
       formItemProps: {
-        rules: [{ required: true, message: '请输入采集频率' }],
+        rules: [
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.frequency' }) },
+        ],
       },
     },
     {
-      title: '最新值',
+      title: formatMessage({ id: 'device.form.title.value' }),
       dataIndex: 'value',
       editable: false,
       ellipsis: true,
     },
     {
-      title: '点位状态',
+      title: formatMessage({ id: 'device.form.title.status' }),
       dataIndex: 'status',
       width: 80,
       editable: false,
       renderText: (_, record) => <StateTag state={record?.status || 0} type={StateType.POINT} />,
     },
     {
-      title: '采集时间',
+      title: formatMessage({ id: 'device.form.title.lastFetchTime' }),
       dataIndex: 'lastFetchTime',
       valueType: 'dateTime',
       editable: false,
@@ -255,7 +264,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
                 uuid: 'copy',
               }}
             >
-              <Tooltip title="以当前行为模板新建一行数据">
+              <Tooltip title={formatMessage({ id: 'device.tooltip.copy' })}>
                 <a>{formatMessage({ id: 'button.copy' })}</a>
               </Tooltip>
             </EditableProTable.RecordCreator>
@@ -269,7 +278,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
               {formatMessage({ id: 'button.edit' })}
             </a>
             <Popconfirm
-              title="确定要删除此对象?"
+              title={formatMessage({ id: 'device.modal.title.remove.oid' })}
               onConfirm={() => {
                 if (deviceId && record?.uuid) {
                   remove({ device_uuid: deviceId, uuids: [record?.uuid] });
@@ -286,7 +295,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
                 key="error"
                 onClick={() => {
                   modal.error({
-                    title: '对象异常信息',
+                    title: formatMessage({ id: 'device.title.modal.error.oid' }),
                     content: <div className="flex flex-wrap">{record?.errMsg}</div>,
                     okText: formatMessage({ id: 'button.close' }),
                   });
@@ -309,7 +318,9 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       onClick={handleOnPolling}
       icon={polling ? <LoadingOutlined /> : <ReloadOutlined />}
     >
-      {polling ? '停止刷新' : '开始刷新'}
+      {polling
+        ? formatMessage({ id: 'device.button.nonPolling' })
+        : formatMessage({ id: 'device.button.polling' })}
     </Button>,
     <Upload
       key="upload"
@@ -317,7 +328,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       showUploadList={false}
       beforeUpload={(file) => {
         modal.confirm({
-          title: '导入对象列表',
+          title: formatMessage({ id: 'device.modal.title.upload.confirm.oid' }),
           width: '50%',
           content: <UploadRule fileName={file?.name} />,
           onOk: () => deviceId && upload(deviceId, file),
@@ -328,7 +339,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       }}
     >
       <Button type="primary" icon={<DownloadOutlined />}>
-        导入对象列表
+        {formatMessage({ id: 'device.button.import.oid' })}
       </Button>
     </Upload>,
     <Button
@@ -343,7 +354,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       onClick={handleOnBatchUpdate}
       disabled={disabled}
     >
-      批量更新
+      {formatMessage({ id: 'device.button.update.batch' })}
     </Button>,
     <Button
       key="batch-remove"
@@ -352,15 +363,15 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       disabled={disabled}
       onClick={() =>
         modal.confirm({
-          title: '批量删除对象',
-          content: '此操作会一次性删除多个对象，需谨慎操作',
+          title: formatMessage({ id: 'device.modal.title.remove.batchOid' }),
+          content: formatMessage({ id: 'device.modal.content.remove.batchOid' }),
           onOk: handleOnBatchRemove,
           okText: formatMessage({ id: 'button.ok' }),
           cancelText: formatMessage({ id: 'button.cancel' }),
         })
       }
     >
-      批量删除
+      {formatMessage({ id: 'device.button.remove.batch' })}
     </Button>,
     <Button
       key="download"
@@ -369,7 +380,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
         (window.location.href = `/api/v1/modbus_data_sheet/sheetExport?device_uuid=${deviceId}`)
       }
     >
-      导出对象列表
+      {formatMessage({ id: 'device.button.export.oid' })}
     </Button>,
   ];
 
@@ -385,7 +396,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
         rootClassName="sheet-table"
         recordCreatorProps={{
           position: 'top',
-          creatorButtonText: '添加对象',
+          creatorButtonText: formatMessage({ id: 'device.button.new.object' }),
           record: () => ({
             ...defaultSnmpConfig,
             uuid: 'new',

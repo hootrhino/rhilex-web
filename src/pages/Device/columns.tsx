@@ -29,6 +29,8 @@ import {
   Transport,
 } from './enum';
 
+const intl = getIntl(getLocale());
+
 /**
  * 创建配置项 autoRequest/enableGroup/enableOptimize/parseAis
  */
@@ -51,7 +53,7 @@ const createBoolConfig = (title: string, dataIndex: string, type = StateType.BOO
  */
 export const modeConfig = [
   {
-    title: '工作模式',
+    title: intl.formatMessage({ id: 'device.form.title.mode' }),
     dataIndex: ['config', 'commonConfig', 'mode'],
     valueType: 'select',
     valueEnum: DeviceMode,
@@ -92,12 +94,12 @@ export const frequencyConfig = (title: string) => [
 export const modeColumns = {
   UART: [
     {
-      title: '串口配置',
+      title: intl.formatMessage({ id: 'device.form.title.group.port' }),
       valueType: 'group',
       key: 'portConfig',
       columns: [
         {
-          title: '系统串口',
+          title: intl.formatMessage({ id: 'device.form.title.portUuid' }),
           dataIndex: ['config', 'portUuid'],
           valueType: 'select',
           required: true,
@@ -121,24 +123,26 @@ export const modeColumns = {
   ],
   TCP: [
     {
-      title: 'TCP 配置',
+      title: intl.formatMessage({ id: 'device.form.title.group.tcp' }),
       valueType: 'group',
       columns: [
         {
-          title: <UnitTitle title="请求超时" />,
+          title: (
+            <UnitTitle title={intl.formatMessage({ id: 'device.form.title.timeout.request' })} />
+          ),
           dataIndex: ['config', 'hostConfig', 'timeout'],
           valueType: 'digit',
           required: true,
           render: (_dom: React.ReactNode, { hostConfig }: DeviceItem) => hostConfig?.timeout,
         },
         {
-          title: '服务地址',
+          title: intl.formatMessage({ id: 'device.form.title.host' }),
           dataIndex: ['config', 'hostConfig', 'host'],
           required: true,
           render: (_dom: React.ReactNode, { hostConfig }: DeviceItem) => hostConfig?.host,
         },
         {
-          title: '端口',
+          title: intl.formatMessage({ id: 'device.form.title.port' }),
           dataIndex: ['config', 'hostConfig', 'port'],
           valueType: 'digit',
           required: true,
@@ -163,19 +167,19 @@ export const baseColumns = (product: Product) => [
     hideInDescriptions: true,
   },
   {
-    title: '设备名称',
+    title: intl.formatMessage({ id: 'device.form.title.name' }),
     dataIndex: 'name',
     required: true,
   },
   {
-    title: '设备类型',
+    title: intl.formatMessage({ id: 'device.form.title.type' }),
     dataIndex: 'type',
     valueType: 'select',
     required: true,
     valueEnum: deviceTypeOptions[product],
   },
   {
-    title: '设备分组',
+    title: intl.formatMessage({ id: 'device.form.title.gid' }),
     dataIndex: 'gid',
     valueType: 'select',
     required: true,
@@ -190,13 +194,13 @@ export const baseColumns = (product: Product) => [
     },
   },
   {
-    title: '设备状态',
+    title: intl.formatMessage({ id: 'device.form.title.state' }),
     dataIndex: 'state',
     hideInForm: true,
     renderText: (state: number) => <StateTag state={state} />,
   },
   {
-    title: getIntl(getLocale()).formatMessage({ id: 'table.desc' }),
+    title: intl.formatMessage({ id: 'table.desc' }),
     dataIndex: 'description',
   },
 ];
@@ -207,11 +211,11 @@ export const baseColumns = (product: Product) => [
 export const typeConfigColumns = {
   [DeviceType.GENERIC_PROTOCOL]: [
     {
-      title: '通用配置',
+      title: intl.formatMessage({ id: 'device.form.title.group.common' }),
       valueType: 'group',
       columns: [
         {
-          title: '重试次数',
+          title: intl.formatMessage({ id: 'device.form.title.retryTime' }),
           dataIndex: ['config', 'commonConfig', 'retryTime'],
           valueType: 'digit',
           required: true,
@@ -228,13 +232,19 @@ export const typeConfigColumns = {
   ],
   [DeviceType.GENERIC_MODBUS]: [
     {
-      title: '通用配置',
+      title: intl.formatMessage({ id: 'device.form.title.group.common' }),
       valueType: 'group',
       columns: [
-        ...createBoolConfig('启动轮询', 'autoRequest'),
-        ...createBoolConfig('批量采集', 'enableOptimize'),
+        ...createBoolConfig(
+          intl.formatMessage({ id: 'device.form.title.autoRequest' }),
+          'autoRequest',
+        ),
+        ...createBoolConfig(
+          intl.formatMessage({ id: 'device.form.title.enableOptimize' }),
+          'enableOptimize',
+        ),
         {
-          title: '最大点位数',
+          title: intl.formatMessage({ id: 'device.form.title.maxRegNum' }),
           dataIndex: ['config', 'commonConfig', 'maxRegNum'],
           valueType: 'digit',
           required: true,
@@ -273,13 +283,16 @@ export const typeConfigColumns = {
   // ],
   [DeviceType.SIEMENS_PLC]: [
     {
-      title: '通用配置',
+      title: intl.formatMessage({ id: 'device.form.title.group.common' }),
       valueType: 'group',
       columns: [
-        ...createBoolConfig('启动轮询', 'autoRequest'),
-        ...timeoutConfig('连接超时'),
+        ...createBoolConfig(
+          intl.formatMessage({ id: 'device.form.title.autoRequest' }),
+          'autoRequest',
+        ),
+        ...timeoutConfig(intl.formatMessage({ id: 'device.form.title.timeout.connect' })),
         {
-          title: <UnitTitle title="心跳超时" />,
+          title: <UnitTitle title={intl.formatMessage({ id: 'device.form.title.timeout.idle' })} />,
           dataIndex: ['config', 'commonConfig', 'idleTimeout'],
           valueType: 'digit',
           required: true,
@@ -287,13 +300,13 @@ export const typeConfigColumns = {
             commonConfig?.idleTimeout,
         },
         {
-          title: 'PLC 地址',
+          title: intl.formatMessage({ id: 'device.form.title.host.plc' }),
           dataIndex: ['config', 'commonConfig', 'host'],
           required: true,
           render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.host,
         },
         {
-          title: '型号',
+          title: intl.formatMessage({ id: 'device.form.title.model.plc' }),
           dataIndex: ['config', 'commonConfig', 'model'],
           required: true,
           valueType: 'select',
@@ -302,7 +315,7 @@ export const typeConfigColumns = {
             plcModelOptions[commonConfig?.model],
         },
         {
-          title: '机架号',
+          title: intl.formatMessage({ id: 'device.form.title.rack' }),
           dataIndex: ['config', 'commonConfig', 'rack'],
           required: true,
           valueType: 'select',
@@ -310,7 +323,7 @@ export const typeConfigColumns = {
           render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.rack,
         },
         {
-          title: '插槽号',
+          title: intl.formatMessage({ id: 'device.form.title.slot.plc' }),
           dataIndex: ['config', 'commonConfig', 'slot'],
           required: true,
           valueType: 'select',
@@ -322,16 +335,19 @@ export const typeConfigColumns = {
   ],
   [DeviceType.GENERIC_HTTP_DEVICE]: [
     {
-      title: '通用配置',
+      title: intl.formatMessage({ id: 'device.form.title.group.common' }),
       valueType: 'group',
       columns: [
-        ...createBoolConfig('启动轮询', 'autoRequest'),
-        ...timeoutConfig('连接超时'),
-        ...frequencyConfig('采集频率'),
+        ...createBoolConfig(
+          intl.formatMessage({ id: 'device.form.title.autoRequest' }),
+          'autoRequest',
+        ),
+        ...timeoutConfig(intl.formatMessage({ id: 'device.form.title.timeout.connect' })),
+        ...frequencyConfig(intl.formatMessage({ id: 'device.form.title.frequency' })),
       ],
     },
     {
-      title: 'HTTP 配置',
+      title: intl.formatMessage({ id: 'device.form.title.group.http' }),
       valueType: 'group',
       fieldProps: {
         direction: 'vertical',
@@ -339,7 +355,7 @@ export const typeConfigColumns = {
       key: 'http',
       columns: [
         {
-          title: '请求地址',
+          title: intl.formatMessage({ id: 'device.form.title.url' }),
           dataIndex: ['config', 'httpConfig', 'url'],
           required: true,
           render: (_dom: React.ReactNode, { httpConfig }: DeviceItem) => httpConfig.url,
@@ -373,7 +389,7 @@ export const typeConfigColumns = {
                           rules: [
                             {
                               required: isSuccess ? false : true,
-                              message: '请输入 value',
+                              message: `${intl.formatMessage({ id: 'placeholder.input' })} value`,
                             },
                           ],
                         },
@@ -394,12 +410,12 @@ export const typeConfigColumns = {
   ],
   [DeviceType.GENERIC_CAMERA]: [
     {
-      title: '通用配置',
+      title: intl.formatMessage({ id: 'device.form.title.group.common' }),
       valueType: 'group',
       key: 'camera',
       columns: [
         {
-          title: '输入模式',
+          title: intl.formatMessage({ id: 'device.form.title.inputMode' }),
           dataIndex: ['config', 'inputMode'],
           valueType: 'select',
           valueEnum: InputModeOption,
@@ -411,7 +427,7 @@ export const typeConfigColumns = {
           name: ['config'],
           columns: ({ config }: DeviceItem) => [
             {
-              title: '视频采集源',
+              title: intl.formatMessage({ id: 'device.form.title.inputAddr' }),
               dataIndex: ['config', 'inputAddr'],
               required: true,
               renderFormItem: () =>
@@ -440,12 +456,12 @@ export const typeConfigColumns = {
           ],
         },
         {
-          title: '输出模式',
+          title: intl.formatMessage({ id: 'device.form.title.outputMode' }),
           dataIndex: ['config', 'outputMode'],
           valueType: 'select',
           valueEnum: OutputModeOption,
           required: true,
-          tooltip: '注意：因为传输格式原因，Jpeg Stream 模式下仅保存了图像信息，没有原始声音',
+          tooltip: intl.formatMessage({ id: 'device.tooltip.outputMode' }),
           render: (_dom: React.ReactNode, { outputMode }: DeviceItem) =>
             OutputModeOption[outputMode],
         },
@@ -457,7 +473,7 @@ export const typeConfigColumns = {
 
             return [
               {
-                title: '输出编码',
+                title: intl.formatMessage({ id: 'device.form.title.outputEncode' }),
                 dataIndex: ['config', 'outputEncode'],
                 valueType: 'select',
                 valueEnum:
@@ -480,7 +496,7 @@ export const typeConfigColumns = {
 
             return [
               {
-                title: '输出地址',
+                title: intl.formatMessage({ id: 'device.form.title.outputAddr' }),
                 dataIndex: ['config', 'outputAddr'],
                 hideInForm: mode !== OutputMode.REMOTE_STREAM_SERVER,
                 render: (_dom: React.ReactNode, { outputAddr }: DeviceItem) => outputAddr,
@@ -493,7 +509,7 @@ export const typeConfigColumns = {
                     }}
                     className="text-[#00000073]"
                   >
-                    外部播放地址
+                    {intl.formatMessage({ id: 'device.form.title.playAddr' })}
                   </Typography.Paragraph>
                 ),
                 dataIndex: ['config', 'playAddr'],
@@ -516,12 +532,12 @@ export const typeConfigColumns = {
   ],
   [DeviceType.SMART_HOME_CONTROLLER]: [
     {
-      title: '通用配置',
+      title: intl.formatMessage({ id: 'device.form.title.group.common' }),
       valueType: 'group',
       columns: [
-        ...createBoolConfig('自动扫描', 'autoScan'),
-        ...timeoutConfig('扫描超时'),
-        ...frequencyConfig('扫描频率'),
+        ...createBoolConfig(intl.formatMessage({ id: 'device.form.title.autoScan' }), 'autoScan'),
+        ...timeoutConfig(intl.formatMessage({ id: 'device.form.title.timeout.scan' })),
+        ...frequencyConfig(intl.formatMessage({ id: 'device.form.title.frequency.scan' })),
         {
           title: 'CIDR',
           required: true,
@@ -542,7 +558,7 @@ export const typeConfigColumns = {
             rules: [
               {
                 required: true,
-                message: '请输入 CIDR',
+                message: intl.formatMessage({ id: 'device.form.rules.cidr' }),
               },
               {
                 validator: (_rule: Rule, value: string) =>
@@ -553,7 +569,7 @@ export const typeConfigColumns = {
           render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig.networkCidr,
         },
         {
-          title: '监听端口',
+          title: intl.formatMessage({ id: 'device.form.title.webHookPort' }),
           dataIndex: ['config', 'commonConfig', 'webHookPort'],
           valueType: 'digit',
           required: true,
@@ -565,34 +581,40 @@ export const typeConfigColumns = {
   ],
   [DeviceType.GENERIC_SNMP]: [
     {
-      title: '通用配置',
+      title: intl.formatMessage({ id: 'device.form.title.group.common' }),
       valueType: 'group',
       columns: [
-        ...createBoolConfig('启动轮询', 'autoRequest'),
-        ...createBoolConfig('并发采集', 'enableGroup'),
-        ...timeoutConfig('请求超时'),
-        ...frequencyConfig('请求频率'),
+        ...createBoolConfig(
+          intl.formatMessage({ id: 'device.form.title.autoRequest' }),
+          'autoRequest',
+        ),
+        ...createBoolConfig(
+          intl.formatMessage({ id: 'device.form.title.enableGroup' }),
+          'enableGroup',
+        ),
+        ...timeoutConfig(intl.formatMessage({ id: 'device.form.title.timeout.request' })),
+        ...frequencyConfig(intl.formatMessage({ id: 'device.form.title.frequency.request' })),
       ],
     },
     {
-      title: 'SNMP 配置',
+      title: intl.formatMessage({ id: 'device.form.title.group.snmp' }),
       valueType: 'group',
       columns: [
         {
-          title: '目标设备',
+          title: intl.formatMessage({ id: 'device.form.title.target.device' }),
           dataIndex: ['config', 'snmpConfig', 'target'],
           required: true,
           render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.target,
         },
         {
-          title: '目标端口',
+          title: intl.formatMessage({ id: 'device.form.title.target.port' }),
           dataIndex: ['config', 'snmpConfig', 'port'],
           valueType: 'digit',
           required: true,
           render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.port,
         },
         {
-          title: '传输协议',
+          title: intl.formatMessage({ id: 'device.form.title.transport' }),
           dataIndex: ['config', 'snmpConfig', 'transport'],
           required: true,
           valueType: 'select',
@@ -600,13 +622,13 @@ export const typeConfigColumns = {
           render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.transport,
         },
         {
-          title: '社区名称',
+          title: intl.formatMessage({ id: 'device.form.title.community' }),
           dataIndex: ['config', 'snmpConfig', 'community'],
           required: true,
           render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.community,
         },
         {
-          title: '协议版本',
+          title: intl.formatMessage({ id: 'device.form.title.version' }),
           dataIndex: ['config', 'snmpConfig', 'version'],
           required: true,
           valueType: 'select',
