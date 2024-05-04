@@ -53,4 +53,42 @@ export default {
   'ruleConfig.inend.link.ali': '阿里雲：',
   'ruleConfig.inend.link.tencent': '騰訊雲：',
   'ruleConfig.inend.link.w3c': 'W3C 規範：',
+
+  /**
+   * device ds
+   */
+  'ruleConfig.ds.device.in': '輸入參數',
+  'ruleConfig.ds.device.out': '輸出值',
+  'ruleConfig.ds.device.tag': '標籤',
+  'ruleConfig.ds.device.function': '功能碼',
+  'ruleConfig.ds.device.slaverId': '從機 ID',
+  'ruleConfig.ds.device.address': '地址',
+  'ruleConfig.ds.device.quantity': '數量',
+  'ruleConfig.ds.device.value': '值',
+  'ruleConfig.ds.device.type': '數據類型',
+  'ruleConfig.ds.device.frequency': '頻率',
+  'ruleConfig.ds.device.start': '起始位置',
+  'ruleConfig.ds.device.size': '大小',
+  'ruleConfig.ds.device.width': '單幀寬度',
+  'ruleConfig.ds.device.height': '單幀高度',
+  'ruleConfig.ds.device.extra': '視頻融合數據',
+  'ruleConfig.ds.device.event': '事件',
+  'ruleConfig.ds.device.mac': '設備 MAC',
+  'ruleConfig.ds.device.ip': '設備 IP',
+  'ruleConfig.ds.device.data': '數據',
+  'ruleConfig.ds.device.oid': '表示 SNMP 對象標誌符',
+  'ruleConfig.ds.device.alias': '別名',
+
+  /**
+   * inend ds
+   */
+  'ruleConfig.ds.inend.from': '數據來源',
+  'ruleConfig.ds.inend.data': '數據體',
+  'ruleConfig.ds.inend.type': '事件類型',
+  'ruleConfig.ds.inend.event': '事件名稱',
+  'ruleConfig.ds.inend.ts': '時間戳',
+  'ruleConfig.ds.inend.deviceUuid': '設備 ID',
+  'ruleConfig.ds.inend.deviceName': '設備名稱',
+  'ruleConfig.ds.inend.sourceUuid': '資源 ID',
+  'ruleConfig.ds.inend.sourceName': '資源名稱',
 };

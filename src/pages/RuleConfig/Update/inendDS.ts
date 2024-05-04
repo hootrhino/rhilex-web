@@ -1,9 +1,11 @@
 import { getIntl, getLocale } from '@umijs/max';
 import { InendType } from '../../Inend/enum';
 
+const intl = getIntl(getLocale());
+
 const inend_coap_ds = `{
-  "from": "ID00000",    // 数据来源
-  "data": {}            // 数据体
+  "from": "ID00000",    // ${intl.formatMessage({ id: 'ruleConfig.ds.inend.from' })}
+  "data": {}            // ${intl.formatMessage({ id: 'ruleConfig.ds.inend.data' })}
 }`;
 
 export const inend_ds = {
@@ -16,43 +18,73 @@ export const inend_ds = {
 
 // 内部事件源
 const event_connected_ds = `{
-  "type": "DEVICE",                       // 事件类型
-  "event": "event.device.connected",      // 事件名称
-  "ts": 100000000,                        // 时间戳
+  "type": "DEVICE",                       // ${intl.formatMessage({
+    id: 'ruleConfig.ds.inend.type',
+  })}
+  "event": "event.device.connected",      // ${intl.formatMessage({
+    id: 'ruleConfig.ds.inend.event',
+  })}
+  "ts": 100000000,                        // ${intl.formatMessage({ id: 'ruleConfig.ds.inend.ts' })}
   "device_info": {
-      "uuid": "UUID1234567",              // 设备 ID
-      "name": "test-device"               // 设备名称
+      "uuid": "UUID1234567",              // ${intl.formatMessage({
+        id: 'ruleConfig.ds.inend.deviceUuid',
+      })}
+      "name": "test-device"               // ${intl.formatMessage({
+        id: 'ruleConfig.ds.inend.deviceName',
+      })}
   }
 }`;
 const event_disconnected_ds = `{
-  "type": "DEVICE",                       // 事件类型
-  "event": "event.device.disconnected",   // 事件名称
-  "ts": 100000000,                        // 时间戳
+  "type": "DEVICE",                       // ${intl.formatMessage({
+    id: 'ruleConfig.ds.inend.type',
+  })}
+  "event": "event.device.disconnected",   // ${intl.formatMessage({
+    id: 'ruleConfig.ds.inend.event',
+  })}
+  "ts": 100000000,                        // ${intl.formatMessage({ id: 'ruleConfig.ds.inend.ts' })}
   "device_info": {
-      "uuid": "UUID1234567",              // 设备 ID
-      "name":"test-device"                // 设备名称
+      "uuid": "UUID1234567",              // ${intl.formatMessage({
+        id: 'ruleConfig.ds.inend.deviceUuid',
+      })}
+      "name":"test-device"                // ${intl.formatMessage({
+        id: 'ruleConfig.ds.inend.deviceName',
+      })}
   }
 }`;
 const event_up_ds = `{
-  "type": "SOURCE",                       // 事件类型
-  "event": "event.source.up",             // 事件名称
-  "ts": 100000000,                        // 时间戳
+  "type": "SOURCE",                       // ${intl.formatMessage({
+    id: 'ruleConfig.ds.inend.type',
+  })}
+  "event": "event.source.up",             // ${intl.formatMessage({
+    id: 'ruleConfig.ds.inend.event',
+  })}
+  "ts": 100000000,                        // ${intl.formatMessage({ id: 'ruleConfig.ds.inend.ts' })}
   "source_info": {
-      "uuid": "UUID1234567",              // 资源 ID
-      "name": "test-source"               // 资源名称
+      "uuid": "UUID1234567",              // ${intl.formatMessage({
+        id: 'ruleConfig.ds.inend.sourceUuid',
+      })}
+      "name": "test-source"               // ${intl.formatMessage({
+        id: 'ruleConfig.ds.inend.sourceName',
+      })}
   }
 }`;
 const event_down_ds = `{
-  "type": "SOURCE",                       // 事件类型
-  "event": "event.source.down",           // 事件名称
-  "ts": 100000000,                        // 时间戳
+  "type": "SOURCE",                       // ${intl.formatMessage({
+    id: 'ruleConfig.ds.inend.type',
+  })}
+  "event": "event.source.down",           // ${intl.formatMessage({
+    id: 'ruleConfig.ds.inend.event',
+  })}
+  "ts": 100000000,                        // ${intl.formatMessage({ id: 'ruleConfig.ds.inend.ts' })}
   "source_info": {
-      "uuid": "UUID1234567",              // 资源 ID
-      "name": "test-source"               // 资源名称
+      "uuid": "UUID1234567",              // ${intl.formatMessage({
+        id: 'ruleConfig.ds.inend.sourceUuid',
+      })}
+      "name": "test-source"               // ${intl.formatMessage({
+        id: 'ruleConfig.ds.inend.sourceName',
+      })}
   }
 }`;
-
-const intl = getIntl(getLocale());
 
 export const inend_event_ds = [
   {

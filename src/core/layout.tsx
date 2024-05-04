@@ -1,17 +1,19 @@
-import { history, Link } from '@umijs/max';
+import { getIntl, getLocale, history, Link } from '@umijs/max';
 
 import type { RunTimeLayoutConfig } from 'umi';
 
 import { GoBackModal } from '@/components/PageContainer';
 import RightContent from '@/components/RightContent';
 import { ProductMenuAccess } from '@/models/useSystem';
-import { COPYRIGHT, LOGIN_PATH } from '@/utils/constant';
+import { LOGIN_PATH } from '@/utils/constant';
 import { Product } from '@/utils/enum';
 import { DefaultFooter } from '@ant-design/pro-components';
 import { MacScrollbar } from 'mac-scrollbar';
 import 'mac-scrollbar/dist/mac-scrollbar.css';
 
 const layout: RunTimeLayoutConfig = ({ initialState }) => {
+  const COPYRIGHT = getIntl(getLocale()).formatMessage({ id: 'page.copyright' });
+
   return {
     siderWidth: 208,
     rightContentRender: () => <RightContent />,

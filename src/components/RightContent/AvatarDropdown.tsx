@@ -28,7 +28,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
    */
   const loginOut = async () => {
     modal.confirm({
-      title: formatMessage({ id: 'logout.modal.title' }),
+      title: formatMessage({ id: 'modal.title.logout' }),
       icon: <ExclamationCircleOutlined />,
       content: formatMessage({ id: 'logout.modal.content' }),
       onOk: logout,

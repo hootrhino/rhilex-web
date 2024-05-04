@@ -1,7 +1,7 @@
 import loginIcon from '@/assets/loginLogo.svg';
 import { message, modal } from '@/components/PopupHack';
 import { postLogin } from '@/services/rulex/yonghuguanli';
-import { COPYRIGHT, DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';
+import { DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';
 import type { ProFormInstance, Settings as LayoutSettings } from '@ant-design/pro-components';
 import { DefaultFooter, LoginForm, ProFormText } from '@ant-design/pro-components';
 import { Helmet, history, useIntl, useModel } from '@umijs/max';
@@ -53,6 +53,8 @@ const Login: React.FC = () => {
     password: ValidateStatus;
   }>({ username: '', password: '' });
 
+  const COPYRIGHT = formatMessage({ id: 'page.copyright' });
+
   const handleOnFinish = async (values: CurrentUser) => {
     try {
       const { data } = await postLogin(values);
@@ -65,7 +67,7 @@ const Login: React.FC = () => {
       );
 
       history.push('/');
-      message.success('登录成功');
+      message.success(formatMessage({ id: 'message.success.login' }));
       localStorage.setItem('accessToken', data);
     } catch (error) {
       console.error(error);
@@ -75,7 +77,9 @@ const Login: React.FC = () => {
   return (
     <div className="flex flex-col h-[100vh] overflow-auto bg-[#f0f2f5] bg-no-repeat bg-cover bg-[url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')]">
       <Helmet>
-        <title>登录页 - {DEFAULT_TITLE}</title>
+        <title>
+          {formatMessage({ id: 'login.title' })} - {DEFAULT_TITLE}
+        </title>
       </Helmet>
       <div className="flex justify-center flex-1 py-32">
         <div className="rhilex-login-form-wrapper">
@@ -93,14 +97,16 @@ const Login: React.FC = () => {
             <>
               <ProFormText
                 name="username"
-                label={<span className="opacity-70">用户名</span>}
+                label={
+                  <span className="opacity-70">{formatMessage({ id: 'form.title.username' })}</span>
+                }
                 fieldProps={{
                   size: 'large',
                   variant: 'filled',
                 }}
                 hasFeedback
                 validateStatus={validateStatus.username}
-                placeholder="请输入用户名"
+                placeholder={formatMessage({ id: 'form.placeholder.username' })}
                 rules={[
                   {
                     validator: (_rule: Rule, value: string) => {
@@ -116,14 +122,16 @@ const Login: React.FC = () => {
               />
               <ProFormText.Password
                 name="password"
-                label={<span className="opacity-70">密码</span>}
+                label={
+                  <span className="opacity-70">{formatMessage({ id: 'form.title.password' })}</span>
+                }
                 fieldProps={{
                   size: 'large',
                   variant: 'filled',
                 }}
                 hasFeedback
                 validateStatus={validateStatus.password}
-                placeholder="请输入密码"
+                placeholder={formatMessage({ id: 'form.placeholder.password' })}
                 rules={[
                   {
                     validator: (_rule: Rule, value: string) => {
@@ -142,8 +150,8 @@ const Login: React.FC = () => {
               className="float-right mb-6"
               onClick={() => {
                 modal.info({
-                  title: '忘记密码？',
-                  content: '如果忘记密码，请按照当前设备的手册进行重置。',
+                  title: formatMessage({ id: 'modal.title.forget' }),
+                  content: formatMessage({ id: 'modal.content.forget' }),
                 });
               }}
             >

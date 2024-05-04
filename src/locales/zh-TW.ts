@@ -43,17 +43,9 @@ export default {
   'table.desc': '備註',
   'table.option': '操作',
   /**
-   * login & logout
+   * login
    */
   'login.title': '登入頁',
-  'login.username.label': '用戶名',
-  'login.username.placeholder': '請輸入用戶名',
-  'login.password.label': '密碼',
-  'login.password.placeholder': '請輸入密碼',
-  'login.modal.title': '忘記密碼？',
-  'login.modal.content': '如果忘記密碼，請按照當前設備的手冊進行重置。',
-  'logout.modal.title': '提示',
-  'logout.modal.content': '確定要退出登入嗎？',
   /**
    * page
    */
@@ -62,18 +54,26 @@ export default {
   /**
    * form
    */
-  'form.rules.name': '请输入4-64个字符，支持中文、字母、数字或下划线',
-  'form.rules.port': '端口的值应在 0 到 65535 之间',
-  'form.rules.address': '起始地址的值应在 0 到 65535 之间',
-  'form.rules.ip': 'IP 地址格式不正确',
-  'form.rules.netmask': '子网掩码格式不正确',
-  'form.rules.gateway': '网关格式不正确',
-  'form.rules.cidr': 'CIDR 格式不正确',
-  'form.rules.default': '格式不正确',
+  'form.title.username': '用户名',
+  'form.title.password': '密碼',
+  'form.placeholder.username': '請輸入用户名',
+  'form.placeholder.password': '請輸入密碼',
+  'form.rules.name': '請輸入4-64個字符，支持中文、字母、數字或下劃線',
+  'form.rules.port': '端口的值應在 0 到 65535 之間',
+  'form.rules.address': '起始地址的值應在 0 到 65535 之間',
+  'form.rules.ip': 'IP 地址格式不正確',
+  'form.rules.netmask': '子網掩碼格式不正確',
+  'form.rules.gateway': '網關格式不正確',
+  'form.rules.cidr': 'CIDR 格式不正確',
+  'form.rules.default': '格式不正確',
   /**
    * modal
    */
   'modal.title.confirm': '確定執行此操作嗎？',
+  'modal.title.forget': '忘記密碼？',
+  'modal.content.forget': '如果忘記密碼，請按照當前設備的手冊進行重置。',
+  'modal.title.logout': '提示',
+  'modal.content.logout': '確定要退出登錄嗎？',
   /**
    * menu
    */

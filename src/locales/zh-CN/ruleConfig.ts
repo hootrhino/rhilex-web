@@ -53,4 +53,42 @@ export default {
   'ruleConfig.inend.link.ali': '阿里云：',
   'ruleConfig.inend.link.tencent': '腾讯云：',
   'ruleConfig.inend.link.w3c': 'W3C 规范：',
+
+  /**
+   * device ds
+   */
+  'ruleConfig.ds.device.in': '输入参数',
+  'ruleConfig.ds.device.out': '输出值',
+  'ruleConfig.ds.device.tag': '标签',
+  'ruleConfig.ds.device.function': '功能码',
+  'ruleConfig.ds.device.slaverId': '从机 ID',
+  'ruleConfig.ds.device.address': '地址',
+  'ruleConfig.ds.device.quantity': '数量',
+  'ruleConfig.ds.device.value': '值',
+  'ruleConfig.ds.device.type': '数据类型',
+  'ruleConfig.ds.device.frequency': '频率',
+  'ruleConfig.ds.device.start': '起始位置',
+  'ruleConfig.ds.device.size': '大小',
+  'ruleConfig.ds.device.width': '单帧宽度',
+  'ruleConfig.ds.device.height': '单帧高度',
+  'ruleConfig.ds.device.extra': '视频融合数据',
+  'ruleConfig.ds.device.event': '事件',
+  'ruleConfig.ds.device.mac': '设备 MAC',
+  'ruleConfig.ds.device.ip': '设备 IP',
+  'ruleConfig.ds.device.data': '数据',
+  'ruleConfig.ds.device.oid': '表示 SNMP 对象标志符',
+  'ruleConfig.ds.device.alias': '别名',
+
+  /**
+   * inend ds
+   */
+  'ruleConfig.ds.inend.from': '数据来源',
+  'ruleConfig.ds.inend.data': '数据体',
+  'ruleConfig.ds.inend.type': '事件类型',
+  'ruleConfig.ds.inend.event': '事件名称',
+  'ruleConfig.ds.inend.ts': '时间戳',
+  'ruleConfig.ds.inend.deviceUuid': '设备 ID',
+  'ruleConfig.ds.inend.deviceName': '设备名称',
+  'ruleConfig.ds.inend.sourceUuid': '资源 ID',
+  'ruleConfig.ds.inend.sourceName': '资源名称',
 };

@@ -1,8 +1,7 @@
+// import { getIntl, getLocale } from "@umijs/max";
+
 // 默认登录路由
 export const LOGIN_PATH = '/user/login';
-
-// 登录页默认 footer
-export const COPYRIGHT = 'RHILEX TEAM 2023-2033. 所有权利保留。';
 
 // 登录页默认 title
 export const DEFAULT_TITLE = 'RHILEX';

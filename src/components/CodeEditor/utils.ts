@@ -6,6 +6,7 @@ import type { InendItem } from '@/pages/Inend';
 import type { OutendItem } from '@/pages/Outend';
 import { CompletionContext } from '@codemirror/autocomplete';
 import { Diagnostic, linter } from '@codemirror/lint';
+import { getIntl, getLocale } from '@umijs/max';
 import luaparse from 'luaparse';
 import { buildInKeywords, buildInSnippet, builtInFuncs } from './BuildInLua';
 
@@ -32,7 +33,7 @@ export const autoCompletions = (
   const inendsOptions = ((inends as any[]) || [])?.map((item: any) => ({
     label: `${item?.name}`,
     type: 'variable',
-    detail: `UUID 参数来自南向资源管理`,
+    detail: getIntl(getLocale()).formatMessage({ id: 'component.tpl.inend' }),
     apply: item.uuid,
   }));
 
@@ -40,7 +41,7 @@ export const autoCompletions = (
   const outendsOptions = ((outends as any[]) || [])?.map((item: any) => ({
     label: `${item?.name}`,
     type: 'variable',
-    detail: `UUID 参数来自北向资源管理`,
+    detail: getIntl(getLocale()).formatMessage({ id: 'component.tpl.outend' }),
     apply: item.uuid,
   }));
 

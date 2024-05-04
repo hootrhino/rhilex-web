@@ -57,7 +57,12 @@ const ProConfirmModal = ({
               handleOnOk!();
             }}
           >
-            {countdown === 0 ? okText : `${Math.round(countdown / 1000)}s 后${afterOkText}`}
+            {countdown === 0
+              ? okText
+              : formatMessage(
+                  { id: 'component.button.countdown' },
+                  { countdown: Math.round(countdown / 1000), text: afterOkText },
+                )}
           </Button>
         </Space>
       }

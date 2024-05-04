@@ -39,7 +39,7 @@ const ClientList = () => {
       ellipsis: true,
     },
     {
-      title: formatMessage({ id: 'login.username.label' }),
+      title: formatMessage({ id: 'form.title.username' }),
       dataIndex: 'username',
     },
     {

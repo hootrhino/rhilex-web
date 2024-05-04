@@ -58,6 +58,8 @@ export default {
   'component.tpl.standard.debug.usage2': '抛出异常',
   'component.tpl.rhilex.label': '当没有网络时，网关上的 LED 会快速闪烁 5 次',
   'component.tpl.rhilex.detail': '{name} 联网测试',
+  'component.tpl.inend': 'UUID 参数来自南向资源管理',
+  'component.tpl.outend': 'UUID 参数来自北向资源管理',
 
   /**
    * others
@@ -80,6 +82,7 @@ export default {
   'component.button.use': '立即使用',
   'component.button.rule': '规则示例',
   'component.button.format': '代码格式化',
+  'component.button.countdown': '{countdown}s 后{text}',
 
   'component.tab.example': '常用规则示例',
   'component.tab.addRule': '新建规则示例',

@@ -1,5 +1,6 @@
 import { OutputMode } from '@/pages/Device/enum';
 import { createFromIconfontCN } from '@ant-design/icons';
+import { getIntl, getLocale } from '@umijs/max';
 import type { RcFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
 import CryptoJS from 'crypto-js';
@@ -140,31 +141,33 @@ export const validateFormItem = (value: string | number, type: FormItemType) => 
     case FormItemType.NAME:
       return typeof value === 'string' && validateName(value)
         ? Promise.resolve()
-        : Promise.reject('请输入4-64个字符，支持中文、字母、数字或下划线');
+        : Promise.reject(getIntl(getLocale()).formatMessage({ id: 'form.rules.name' }));
     case FormItemType.PORT:
     case FormItemType.ADDRESS:
       return typeof value === 'number' && validatePort(value)
         ? Promise.resolve()
         : Promise.reject(
-            `${type === FormItemType.PORT ? '端口' : '起始地址'}的值应在 0 到 65535 之间`,
+            type === FormItemType.PORT
+              ? getIntl(getLocale()).formatMessage({ id: 'form.rules.port' })
+              : getIntl(getLocale()).formatMessage({ id: 'form.rules.address' }),
           );
     case FormItemType.IP:
       return typeof value === 'string' && validateIPv4(value)
         ? Promise.resolve()
-        : Promise.reject('IP 地址格式不正确');
+        : Promise.reject(getIntl(getLocale()).formatMessage({ id: 'form.rules.ip' }));
     case FormItemType.NETMASK:
       return typeof value === 'string' && validateMask(value)
         ? Promise.resolve()
-        : Promise.reject('子网掩码格式不正确');
+        : Promise.reject(getIntl(getLocale()).formatMessage({ id: 'form.rules.netmask' }));
     case FormItemType.GATEWAY:
       return typeof value === 'string' && validateGateway(value)
         ? Promise.resolve()
-        : Promise.reject('网关格式不正确');
+        : Promise.reject(getIntl(getLocale()).formatMessage({ id: 'form.rules.gateway' }));
     case FormItemType.CIDR:
       return typeof value === 'string' && validateCIDR(value)
         ? Promise.resolve()
-        : Promise.reject('CIDR 格式不正确');
+        : Promise.reject(getIntl(getLocale()).formatMessage({ id: 'form.rules.cidr' }));
     default:
-      return Promise.reject('格式不正确');
+      return Promise.reject(getIntl(getLocale()).formatMessage({ id: 'form.rules.default' }));
   }
 };

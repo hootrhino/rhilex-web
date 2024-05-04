@@ -202,12 +202,12 @@ export const configColumns = {
     },
     ...portConfig,
     {
-      title: intl.formatMessage({ id: 'login.username.label' }),
+      title: intl.formatMessage({ id: 'form.title.username' }),
       dataIndex: ['config', 'username'],
       required: true,
     },
     {
-      title: intl.formatMessage({ id: 'login.password.label' }),
+      title: intl.formatMessage({ id: 'form.title.password' }),
       dataIndex: ['config', 'password'],
       valueType: 'password',
       required: true,

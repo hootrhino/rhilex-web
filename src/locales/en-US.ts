@@ -43,17 +43,9 @@ export default {
   'table.desc': '备注',
   'table.option': '操作',
   /**
-   * login & logout
+   * login
    */
   'login.title': '登录页',
-  'login.username.label': '用户名',
-  'login.username.placeholder': '请输入用户名',
-  'login.password.label': '密码',
-  'login.password.placeholder': '请输入密码',
-  'login.modal.title': '忘记密码？',
-  'login.modal.content': '如果忘记密码，请按照当前设备的手册进行重置。',
-  'logout.modal.title': '提示',
-  'logout.modal.content': '确定要退出登录吗？',
   /**
    * page
    */
@@ -62,6 +54,10 @@ export default {
   /**
    * form
    */
+  'form.title.username': '用户名',
+  'form.title.password': '密码',
+  'form.placeholder.username': '请输入用户名',
+  'form.placeholder.password': '请输入密码',
   'form.rules.name': '请输入4-64个字符，支持中文、字母、数字或下划线',
   'form.rules.port': '端口的值应在 0 到 65535 之间',
   'form.rules.address': '起始地址的值应在 0 到 65535 之间',
@@ -74,6 +70,10 @@ export default {
    * modal
    */
   'modal.title.confirm': '确定执行此操作吗？',
+  'modal.title.forget': '忘记密码？',
+  'modal.content.forget': '如果忘记密码，请按照当前设备的手册进行重置。',
+  'modal.title.logout': '提示',
+  'modal.content.logout': '确定要退出登录吗？',
   /**
    * menu
    */

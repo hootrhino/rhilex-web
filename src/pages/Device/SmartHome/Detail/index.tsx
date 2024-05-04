@@ -73,7 +73,9 @@ const baseColumns = [
         color={auth_en ? 'success' : 'default'}
         icon={auth_en ? <CheckCircleOutlined /> : <MinusCircleOutlined />}
       >
-        {auth_en ? '开启' : '关闭'}
+        {auth_en
+          ? intl.formatMessage({ id: 'status.open' })
+          : intl.formatMessage({ id: 'status.close' })}
       </Tag>
     ),
   },
@@ -92,7 +94,9 @@ const statusColumns = [
         color={restart_required ? 'success' : 'default'}
         icon={restart_required ? <CheckCircleOutlined /> : <MinusCircleOutlined />}
       >
-        {restart_required ? '开启' : '关闭'}
+        {restart_required
+          ? intl.formatMessage({ id: 'status.open' })
+          : intl.formatMessage({ id: 'status.close' })}
       </Tag>
     ),
   },
