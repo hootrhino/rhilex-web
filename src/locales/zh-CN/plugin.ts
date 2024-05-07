@@ -7,6 +7,14 @@ export default {
   'plugin.table.title.helpLink': '文档地址',
   'plugin.table.title.author': '作者',
   'plugin.table.title.email': '邮箱',
+  'plugin.table.title.running': '状态',
+  'plugin.table.title.serverAddr': '访问地址',
+  'plugin.table.title.serverEndpoint': '服务端点',
+  'plugin.table.title.domain': '透传域名',
+  'plugin.table.title.localSchema': '通信协议',
+  'plugin.table.title.localHost': '本地主机',
+  'plugin.table.title.localPort': '本地端口',
+  'plugin.table.title.authToken': '身份令牌',
 
   /**
    * title
@@ -24,9 +32,10 @@ export default {
   'plugin.button.scan.start': '开始扫描',
   'plugin.button.scan.stop': '停止扫描',
   'plugin.button.kickout': '强制离线',
+  'plugin.button.viewConfig': '查看配置',
 
   /**
-   * others
+   * form
    */
   'plugin.form.title.portUuid': '系统串口',
   'plugin.form.title.output': '输出结果',
@@ -37,4 +46,9 @@ export default {
    * message
    */
   'plugin.message.success.kickout': '离线成功',
+
+  /**
+   * other
+   */
+  'plugin.modal.title.viewConfig': '配置详情',
 };

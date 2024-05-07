@@ -2,11 +2,12 @@ import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 
 import PageContainer from '@/components/PageContainer';
-import { message } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
 import { getPlugwareList } from '@/services/rulex/chajianguanli';
 import { useIntl, useModel } from '@umijs/max';
 import { Space } from 'antd';
 import Detail from './Detail';
+import NgrokDetail from './Detail/Ngrok';
 
 export type PluginItem = {
   name: string;
@@ -20,6 +21,7 @@ export enum PluginOptionKey {
   MQTT = 'RULEX-MqttServer',
   SCANNER = 'MODBUS_SCANNER',
   TERMINAL = 'WEB_TTYD_TERMINAL',
+  NGROKC = 'NGROKC',
 }
 
 const Plugins = () => {
@@ -109,6 +111,20 @@ const Plugins = () => {
             {formatMessage({ id: 'button.stop' })}
           </a>
         </Space>
+      );
+    } else if (uuid === PluginOptionKey.NGROKC) {
+      return (
+        <a
+          onClick={() =>
+            modal.info({
+              title: formatMessage({ id: 'plugin.modal.title.viewConfig' }),
+              content: <NgrokDetail />,
+              okText: formatMessage({ id: 'button.close' }),
+            })
+          }
+        >
+          {formatMessage({ id: 'plugin.button.viewConfig' })}
+        </a>
       );
     } else {
       return '-';
