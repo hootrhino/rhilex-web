@@ -8,7 +8,11 @@ export async function getPlugwareDetail(
   params: API.getPlugwareDetailParams,
   options?: { [key: string]: any },
 ) {
-  return request<Record<string, any>>('/api/v1/plugware/detail', {
+  return request<{
+    code: number;
+    msg: string;
+    data: { uuid: string; name: string; version: string; description: string };
+  }>('/api/v1/plugware/detail', {
     method: 'GET',
     params: {
       ...params,
@@ -22,16 +26,7 @@ export async function getPlugwareList(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: {
-      uuid: string;
-      name: string;
-      version: string;
-      homepage: string;
-      helpLink: string;
-      author: string;
-      email: string;
-      license: string;
-    }[];
+    data: { uuid: string; name: string; version: string; description: string }[];
   }>('/api/v1/plugware/list', {
     method: 'GET',
     ...(options || {}),

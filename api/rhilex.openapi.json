@@ -2581,19 +2581,7 @@
                           "version": {
                             "type": "string"
                           },
-                          "homepage": {
-                            "type": "string"
-                          },
-                          "helpLink": {
-                            "type": "string"
-                          },
-                          "author": {
-                            "type": "string"
-                          },
-                          "email": {
-                            "type": "string"
-                          },
-                          "license": {
+                          "description": {
                             "type": "string"
                           }
                         },
@@ -2601,22 +2589,14 @@
                           "uuid",
                           "name",
                           "version",
-                          "homepage",
-                          "helpLink",
-                          "author",
-                          "email",
-                          "license"
+                          "description"
                         ],
                         "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
                           "uuid",
                           "name",
                           "version",
-                          "homepage",
-                          "helpLink",
-                          "author",
-                          "email",
-                          "license"
+                          "description"
                         ]
                       }
                     }
@@ -2638,17 +2618,37 @@
                     "summary": "成功示例",
                     "value": {
                       "code": 200,
-                      "msg": "操作成功",
+                      "msg": "Success",
                       "data": [
                         {
-                          "name": "Generic ModBus TCP Driver",
-                          "type": "TCP",
-                          "description": "Generic ModBus TCP Driver"
+                          "uuid": "HTTP-API-SERVER",
+                          "name": "Api Server",
+                          "version": "v1.0.0",
+                          "description": "RHILEX HTTP RESTFul Api Server"
                         },
                         {
-                          "name": "Generic ModBus TCP Driver",
-                          "type": "TCP",
-                          "description": "Generic ModBus TCP Driver"
+                          "uuid": "RHILEX-MqttServer",
+                          "name": "MqttServer",
+                          "version": "v2.0.0",
+                          "description": "Simple Light Weight MqttServer"
+                        },
+                        {
+                          "uuid": "ICMPSender",
+                          "name": "ICMP Sender",
+                          "version": "v1.0.0",
+                          "description": "Simple ICMP Packet Sender"
+                        },
+                        {
+                          "uuid": "MODBUS_SCANNER",
+                          "name": "ModbusScanner",
+                          "version": "v0.0.1",
+                          "description": "Simple Modbus Device Scanner"
+                        },
+                        {
+                          "uuid": "MODBUS_CRC_CALCULATOR",
+                          "name": "CRC Calculator",
+                          "version": "v0.0.1",
+                          "description": "Simple CRC Calculator"
                         }
                       ]
                     }
@@ -4123,9 +4123,70 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {},
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "uuid",
+                        "name",
+                        "version",
+                        "description"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "uuid",
+                        "name",
+                        "version",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
                   "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "uuid": "ICMPSender",
+                        "name": "ICMP Sender",
+                        "version": "v1.0.0",
+                        "description": "Simple ICMP Packet Sender"
+                      }
+                    }
+                  }
                 }
               }
             }
