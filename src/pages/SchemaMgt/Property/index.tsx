@@ -148,21 +148,24 @@ const PropertyList = ({ schemaId, published }: PropertyListProps) => {
         <a
           key="edit"
           onClick={() => {
-            if (!uuid) return;
+            if (!uuid || published) return;
             setOpen(true);
             getDetail({ uuid }).then((values) => setInitialValue(values));
           }}
+          className={published ? 'text-[#d9d9d9] cursor-not-allowed hover:text-[#d9d9d9]' : ''}
         >
           {formatMessage({ id: 'button.edit' })}
         </a>,
         <Popconfirm
           title={formatMessage({ id: 'schemaMgt.popconfirm.remove.property' })}
-          onConfirm={() => uuid && schemaId && remove({ uuid, schemaId })}
+          onConfirm={() => uuid && schemaId && !published && remove({ uuid, schemaId })}
           okText={formatMessage({ id: 'button.yes' })}
           cancelText={formatMessage({ id: 'button.no' })}
           key="remove"
         >
-          <a>{formatMessage({ id: 'button.remove' })}</a>
+          <a className={published ? 'text-[#d9d9d9] cursor-not-allowed hover:text-[#d9d9d9]' : ''}>
+            {formatMessage({ id: 'button.remove' })}
+          </a>
         </Popconfirm>,
       ],
     },
@@ -275,7 +278,7 @@ const PropertyList = ({ schemaId, published }: PropertyListProps) => {
             onClick={handleOnPublish}
             disabled={published}
           >
-            {formatMessage({ id: 'schemaMgt.button.publish' })}
+            {published ? '已发布' : formatMessage({ id: 'schemaMgt.button.publish' })}
           </Button>,
           <Button
             key="new-property"
