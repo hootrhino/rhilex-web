@@ -2,11 +2,6 @@ export default {
   /**
    * table
    */
-  'plugin.table.title.name': '插件名称',
-  'plugin.table.title.version': '版本',
-  'plugin.table.title.helpLink': '文档地址',
-  'plugin.table.title.author': '作者',
-  'plugin.table.title.email': '邮箱',
   'plugin.table.title.running': '状态',
   'plugin.table.title.serverAddr': '访问地址',
   'plugin.table.title.serverEndpoint': '服务端点',
