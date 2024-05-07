@@ -38,6 +38,9 @@ export default {
   'schemaMgt.modal.title.schema.update': '更新數據模型',
   'schemaMgt.modal.title.property.new': '新建屬性',
   'schemaMgt.modal.title.property.update': '更新屬性',
+  'schemaMgt.modal.title.property.publish': '發布模型',
+  'schemaMgt.modal.content.property.publish':
+    '模型發布後，您將無法對其進行修改。請確保在發布前完成所有的設計工作。',
 
   /**
    * title
@@ -80,4 +83,5 @@ export default {
   'schemaMgt.popconfirm.remove': '刪除操作將同步清除所有模型相關聯的資料庫，請謹慎操作',
   'schemaMgt.popconfirm.remove.property': '確定要刪除此屬性？',
   'schemaMgt.button.publish': '發布',
+  'schemaMgt.message.success.publish': '發布完成',
 };

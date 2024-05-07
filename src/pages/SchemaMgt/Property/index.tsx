@@ -128,13 +128,13 @@ const PropertyList = ({ schemaId, published }: PropertyListProps) => {
   const handleOnPublish = () => {
     modal.confirm({
       icon: <ExclamationCircleFilled />,
-      title: '发布模型',
-      content: '模型发布后，您将无法对其进行修改。请确保在发布前完成所有的设计工作。',
+      title: formatMessage({ id: 'schemaMgt.modal.title.property.publish' }),
+      content: formatMessage({ id: 'schemaMgt.modal.content.property.publish' }),
       okText: formatMessage({ id: 'button.ok' }),
       cancelText: formatMessage({ id: 'button.cancel' }),
       onOk: async () => {
         await postSchemaPublish({ uuid: schemaId });
-        message.success('发布完成');
+        message.success(formatMessage({ id: 'schemaMgt.message.success.publish' }));
       },
     });
   };
