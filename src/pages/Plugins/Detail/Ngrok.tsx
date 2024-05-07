@@ -24,6 +24,8 @@ const columns = [
   {
     title: intl.formatMessage({ id: 'plugin.table.title.serverAddr' }),
     dataIndex: 'server_addr',
+    renderText: (server_addr: string) =>
+      server_addr ? <a onClick={() => window.open(server_addr, '_blank')}>{server_addr}</a> : '-',
   },
   {
     title: intl.formatMessage({ id: 'plugin.table.title.serverEndpoint' }),
