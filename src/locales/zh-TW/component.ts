@@ -82,7 +82,7 @@ export default {
   'component.button.use': '立即使用',
   'component.button.rule': '規則示例',
   'component.button.format': '代碼格式化',
-  'component.button.countdown': '{countdown}s 後{text}',
+  'component.button.countdown': '{text}中（{countdown}s）',
 
   'component.tab.example': '常用規則示例',
   'component.tab.addRule': '新建規則示例',
