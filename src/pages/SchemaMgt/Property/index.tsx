@@ -1,14 +1,15 @@
 import IndexBorder from '@/components/IndexBorder';
-import { message } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
 import {
   deleteSchemaPropertiesDel,
   getSchemaPropertiesDetail,
   getSchemaPropertiesList,
   postSchemaPropertiesCreate,
+  postSchemaPublish,
   putSchemaPropertiesUpdate,
 } from '@/services/rulex/shujumoxing';
 import { isEmpty } from '@/utils/redash';
-import { PlusOutlined } from '@ant-design/icons';
+import { ExclamationCircleFilled, PlusOutlined, SendOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
@@ -42,6 +43,7 @@ export type Property = {
 
 type PropertyListProps = {
   schemaId: string;
+  published: boolean;
 };
 
 const baseColumns: ProColumns<Property>[] = [
@@ -96,7 +98,7 @@ const ruleFilterData = {
   [Type.GEO]: ['defaultValue', 'latitude', 'longitude'],
 };
 
-const PropertyList = ({ schemaId }: PropertyListProps) => {
+const PropertyList = ({ schemaId, published }: PropertyListProps) => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
@@ -121,6 +123,21 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
       },
     },
   );
+
+  // 发布
+  const handleOnPublish = () => {
+    modal.confirm({
+      icon: <ExclamationCircleFilled />,
+      title: '发布模型',
+      content: '模型发布后，您将无法对其进行修改。请确保在发布前完成所有的设计工作。',
+      okText: formatMessage({ id: 'button.ok' }),
+      cancelText: formatMessage({ id: 'button.cancel' }),
+      onOk: async () => {
+        await postSchemaPublish({ uuid: schemaId });
+        message.success('发布完成');
+      },
+    });
+  };
 
   const columns: ProColumns<Property>[] = baseColumns.concat([
     {
@@ -203,7 +220,7 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
             children = `${data?.min} ~ ${data?.max}`;
             break;
           case 'defaultValue':
-            children = data?.defaultValue?.toString();
+            children = data?.defaultValue?.toString() || '-';
             break;
           default:
             children = data?.[item.key];
@@ -250,6 +267,16 @@ const PropertyList = ({ schemaId }: PropertyListProps) => {
           rowExpandable: (record) => !isEmpty(record?.rule),
         }}
         toolBarRender={() => [
+          <Button
+            ghost
+            key="publish-property"
+            type="primary"
+            icon={<SendOutlined />}
+            onClick={handleOnPublish}
+            disabled={published}
+          >
+            {formatMessage({ id: 'schemaMgt.button.publish' })}
+          </Button>,
           <Button
             key="new-property"
             type="primary"

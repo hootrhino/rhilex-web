@@ -102,11 +102,29 @@ declare namespace API {
     uuid: string;
   };
 
-  type getDataCenterSchemaDefineParams = {
+  type getDatacenterExportDataParams = {
     uuid: string;
   };
 
-  type getDataCenterSchemaDetailParams = {
+  type getDatacenterQueryDataListParams = {
+    uuid: string;
+    current: string;
+    size: string;
+    order: string;
+    /** 用来筛选字段，web界面上全选，用户可以自己选择需要的字段 */
+    select?: string;
+  };
+
+  type getDatacenterQueryLastDataParams = {
+    uuid: string;
+    select?: string;
+  };
+
+  type getDatacenterSchemaDDLDefineParams = {
+    uuid: string;
+  };
+
+  type getDatacenterSchemaDDLDetailParams = {
     uuid: string;
   };
 
@@ -284,6 +302,10 @@ declare namespace API {
   };
 
   type getVisualListByGroupParams = {
+    uuid: string;
+  };
+
+  type postSchemaPublishParams = {
     uuid: string;
   };
 

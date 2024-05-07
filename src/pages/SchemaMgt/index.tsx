@@ -31,18 +31,21 @@ export type Property = {
 export type SchemaItem = {
   uuid: string;
   name: string;
+  published: boolean;
+  description?: string;
   schema: {
     iotProperties?: Property[];
   };
 };
 
-export type ActiveSchema = Omit<SchemaItem, 'schema'>;
+export type ActiveSchema = Omit<SchemaItem, 'schema' | 'description'>;
 
 const SchemaMgt = () => {
   const { formatMessage } = useIntl();
   const [activeSchema, setActiveSchema] = useState<ActiveSchema>({
     uuid: '',
     name: '',
+    published: false,
   });
   const [open, setOpen] = useState<boolean>(false);
 
@@ -72,7 +75,7 @@ const SchemaMgt = () => {
               : formatMessage({ id: 'schemaMgt.title.property' })
           }
         >
-          <PropertyList schemaId={activeSchema.uuid} />
+          <PropertyList schemaId={activeSchema.uuid} published={activeSchema.published} />
         </ProCard>
       </ProCard>
     </PageContainer>

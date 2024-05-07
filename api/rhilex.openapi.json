@@ -49,6 +49,9 @@
       "name": "扩展协议"
     },
     {
+      "name": "数据模型"
+    },
+    {
       "name": "数据中心"
     },
     {
@@ -98,9 +101,6 @@
     },
     {
       "name": "华中数控点位管理"
-    },
-    {
-      "name": "数据模型"
     },
     {
       "name": "流媒体管理"
@@ -5591,7 +5591,7 @@
         "security": []
       }
     },
-    "/api/v1/dataCenter/schema/list": {
+    "/api/v1/datacenter/listSchemaDDL": {
       "get": {
         "summary": "仓库列表",
         "x-apifox-folder": "数据中心",
@@ -5624,39 +5624,23 @@
                           "uuid": {
                             "type": "string"
                           },
+                          "published": {
+                            "type": "boolean"
+                          },
                           "name": {
-                            "type": "string"
-                          },
-                          "local_path": {
-                            "type": "string"
-                          },
-                          "net_addr": {
-                            "type": "string"
-                          },
-                          "create_ts": {
-                            "type": "integer"
-                          },
-                          "size": {
-                            "type": "integer"
-                          },
-                          "store_path": {
                             "type": "string"
                           },
                           "description": {
                             "type": "string"
                           }
                         },
+                        "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
                           "uuid",
+                          "published",
                           "name",
-                          "local_path",
-                          "net_addr",
-                          "create_ts",
-                          "size",
-                          "store_path",
                           "description"
-                        ],
-                        "x-apifox-ignore-properties": []
+                        ]
                       }
                     }
                   },
@@ -5665,12 +5649,12 @@
                     "msg",
                     "data"
                   ],
+                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ],
-                  "x-apifox-ignore-properties": []
+                  ]
                 },
                 "examples": {
                   "1": {
@@ -5680,14 +5664,10 @@
                       "msg": "Success",
                       "data": [
                         {
-                          "uuid": "GOODSLEVR8Y",
-                          "name": "",
-                          "local_path": "test/script/_temp/trailer-demo-app/app1.exe",
-                          "net_addr": "127.0.0.1:7700",
-                          "create_ts": 0,
-                          "size": 0,
-                          "store_path": "",
-                          "description": "trailer-demo-app1"
+                          "uuid": "SCHEMAHHCOOYVY",
+                          "published": true,
+                          "name": "测试1",
+                          "description": "测试1"
                         }
                       ]
                     }
@@ -5701,7 +5681,7 @@
         "security": []
       }
     },
-    "/api/v1/dataCenter/schema/define": {
+    "/api/v1/datacenter/schemaDDLDetail": {
       "get": {
         "summary": "仓库结构",
         "x-apifox-folder": "数据中心",
@@ -5717,298 +5697,12 @@
             "in": "query",
             "description": "",
             "required": true,
-            "example": "GOODSLEVR8Y",
+            "example": "SCHEMAHHCOOYVY",
             "schema": {
               "type": "string"
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "uuid": {
-                          "type": "string"
-                        },
-                        "columns": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              },
-                              "description": {
-                                "type": "string"
-                              }
-                            },
-                            "required": [
-                              "name",
-                              "type",
-                              "description"
-                            ],
-                            "x-apifox-orders": [
-                              "name",
-                              "type",
-                              "description"
-                            ],
-                            "x-apifox-ignore-properties": []
-                          }
-                        }
-                      },
-                      "required": [
-                        "uuid",
-                        "columns"
-                      ],
-                      "x-apifox-orders": [
-                        "uuid",
-                        "columns"
-                      ],
-                      "x-apifox-ignore-properties": []
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "uuid": "GOODSLEVR8Y",
-                        "columns": [
-                          {
-                            "name": "temp",
-                            "type": "NUMBER",
-                            "description": "温度"
-                          },
-                          {
-                            "name": "humi",
-                            "type": "NUMBER",
-                            "description": "湿度"
-                          },
-                          {
-                            "name": "co2",
-                            "type": "NUMBER",
-                            "description": "二氧化碳"
-                          },
-                          {
-                            "name": "weather",
-                            "type": "STRING",
-                            "description": "天气"
-                          },
-                          {
-                            "name": "isOk",
-                            "type": "BOOL",
-                            "description": "你还好吗"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117664331-run",
-        "security": []
-      }
-    },
-    "/api/v1/dataCenter/schema/detail": {
-      "get": {
-        "summary": "仓库详情",
-        "x-apifox-folder": "数据中心",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "数据中心"
-        ],
-        "parameters": [
-          {
-            "name": "uuid",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "GOODSLEVR8Y",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "uuid": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "local_path": {
-                          "type": "string"
-                        },
-                        "net_addr": {
-                          "type": "string"
-                        },
-                        "create_ts": {
-                          "type": "integer"
-                        },
-                        "size": {
-                          "type": "number"
-                        },
-                        "store_path": {
-                          "type": "string"
-                        },
-                        "description": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "uuid",
-                        "name",
-                        "local_path",
-                        "net_addr",
-                        "create_ts",
-                        "size",
-                        "store_path",
-                        "description"
-                      ],
-                      "x-apifox-orders": [
-                        "uuid",
-                        "name",
-                        "local_path",
-                        "net_addr",
-                        "create_ts",
-                        "size",
-                        "store_path",
-                        "description"
-                      ],
-                      "x-apifox-ignore-properties": []
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "uuid": "1122334455",
-                        "name": "Test RPC",
-                        "local_path": "/root/app1",
-                        "net_addr": "127.0.0.1:4567",
-                        "create_ts": 1697610371,
-                        "size": 12.34,
-                        "store_path": "/root/data/test.db",
-                        "description": "An simply demo"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117664333-run",
-        "security": []
-      }
-    },
-    "/api/v1/dataCenter/data/query": {
-      "post": {
-        "summary": "仓库查询",
-        "x-apifox-folder": "数据中心",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "数据中心"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "uuid": {
-                    "type": "string"
-                  },
-                  "query": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "uuid",
-                  "query"
-                ],
-                "x-apifox-orders": [
-                  "uuid",
-                  "query"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "uuid": "GOODSLEVR8Y",
-                "query": "SELECT * FROM GOODS2F2US5"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "成功",
@@ -6026,7 +5720,44 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "type": "string"
+                        "type": "object",
+                        "properties": {
+                          "cid": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "not_null": {
+                            "type": "boolean"
+                          },
+                          "default": {
+                            "type": "null"
+                          },
+                          "primary_key": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "cid",
+                          "name",
+                          "type",
+                          "not_null",
+                          "default",
+                          "primary_key"
+                        ],
+                        "x-apifox-ignore-properties": [],
+                        "x-apifox-orders": [
+                          "cid",
+                          "name",
+                          "type",
+                          "not_null",
+                          "default",
+                          "primary_key"
+                        ]
                       }
                     }
                   },
@@ -6035,12 +5766,12 @@
                     "msg",
                     "data"
                   ],
+                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ],
-                  "x-apifox-ignore-properties": []
+                  ]
                 },
                 "examples": {
                   "1": {
@@ -6048,7 +5779,342 @@
                     "value": {
                       "code": 200,
                       "msg": "Success",
-                      "data": []
+                      "data": [
+                        {
+                          "cid": 0,
+                          "name": "id",
+                          "type": "INTEGER",
+                          "not_null": false,
+                          "default": null,
+                          "primary_key": false
+                        },
+                        {
+                          "cid": 1,
+                          "name": "ts",
+                          "type": "INTEGER",
+                          "not_null": false,
+                          "default": null,
+                          "primary_key": false
+                        },
+                        {
+                          "cid": 2,
+                          "name": "schema_id",
+                          "type": "INTEGER",
+                          "not_null": false,
+                          "default": null,
+                          "primary_key": false
+                        },
+                        {
+                          "cid": 3,
+                          "name": "temp",
+                          "type": "REAL",
+                          "not_null": false,
+                          "default": null,
+                          "primary_key": false
+                        },
+                        {
+                          "cid": 4,
+                          "name": "humi",
+                          "type": "REAL",
+                          "not_null": false,
+                          "default": null,
+                          "primary_key": false
+                        },
+                        {
+                          "cid": 5,
+                          "name": "status",
+                          "type": "BOOLEAN",
+                          "not_null": false,
+                          "default": null,
+                          "primary_key": false
+                        },
+                        {
+                          "cid": 6,
+                          "name": "msg",
+                          "type": "TEXT",
+                          "not_null": false,
+                          "default": null,
+                          "primary_key": false
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-117664331-run",
+        "security": []
+      }
+    },
+    "/api/v1/datacenter/queryDataList": {
+      "get": {
+        "summary": "历史数据查询",
+        "x-apifox-folder": "数据中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据中心"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "SCHEMAHHCOOYVY",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "10",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "DESC",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "description": "用来筛选字段，web界面上全选，用户可以自己选择需要的字段",
+            "required": false,
+            "example": "id,ts",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "humi": {
+                                "type": "integer"
+                              },
+                              "id": {
+                                "type": "integer"
+                              },
+                              "msg": {
+                                "type": "string"
+                              },
+                              "schema_id": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "boolean"
+                              },
+                              "temp": {
+                                "type": "integer"
+                              },
+                              "ts": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "humi",
+                              "id",
+                              "msg",
+                              "schema_id",
+                              "status",
+                              "temp",
+                              "ts"
+                            ],
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "humi",
+                              "id",
+                              "msg",
+                              "schema_id",
+                              "status",
+                              "temp",
+                              "ts"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 10,
+                        "total": 34,
+                        "records": [
+                          {
+                            "humi": 1,
+                            "id": 34,
+                            "msg": "Hello",
+                            "schema_id": "SCHEMAHHCOOYVY",
+                            "status": true,
+                            "temp": 1,
+                            "ts": 34
+                          },
+                          {
+                            "humi": 1,
+                            "id": 33,
+                            "msg": "Hello",
+                            "schema_id": "SCHEMAHHCOOYVY",
+                            "status": true,
+                            "temp": 1,
+                            "ts": 33
+                          },
+                          {
+                            "humi": 1,
+                            "id": 32,
+                            "msg": "Hello",
+                            "schema_id": "SCHEMAHHCOOYVY",
+                            "status": true,
+                            "temp": 1,
+                            "ts": 32
+                          },
+                          {
+                            "humi": 1,
+                            "id": 31,
+                            "msg": "Hello",
+                            "schema_id": "SCHEMAHHCOOYVY",
+                            "status": true,
+                            "temp": 1,
+                            "ts": 31
+                          },
+                          {
+                            "humi": 1,
+                            "id": 30,
+                            "msg": "Hello",
+                            "schema_id": "SCHEMAHHCOOYVY",
+                            "status": true,
+                            "temp": 1,
+                            "ts": 30
+                          },
+                          {
+                            "humi": 1,
+                            "id": 29,
+                            "msg": "Hello",
+                            "schema_id": "SCHEMAHHCOOYVY",
+                            "status": true,
+                            "temp": 1,
+                            "ts": 29
+                          },
+                          {
+                            "humi": 1,
+                            "id": 28,
+                            "msg": "Hello",
+                            "schema_id": "SCHEMAHHCOOYVY",
+                            "status": true,
+                            "temp": 1,
+                            "ts": 28
+                          },
+                          {
+                            "humi": 1,
+                            "id": 27,
+                            "msg": "Hello",
+                            "schema_id": "SCHEMAHHCOOYVY",
+                            "status": true,
+                            "temp": 1,
+                            "ts": 27
+                          },
+                          {
+                            "humi": 1,
+                            "id": 26,
+                            "msg": "Hello",
+                            "schema_id": "SCHEMAHHCOOYVY",
+                            "status": true,
+                            "temp": 1,
+                            "ts": 26
+                          },
+                          {
+                            "humi": 1,
+                            "id": 25,
+                            "msg": "Hello",
+                            "schema_id": "SCHEMAHHCOOYVY",
+                            "status": true,
+                            "temp": 1,
+                            "ts": 25
+                          }
+                        ]
+                      }
                     }
                   }
                 }
@@ -17363,6 +17429,263 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-168752798-run",
+        "security": []
+      }
+    },
+    "/api/v1/schema/publish": {
+      "post": {
+        "summary": "发布模型",
+        "x-apifox-folder": "数据模型",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据模型"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "12345678",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "异常示例",
+                    "value": {
+                      "code": 4001,
+                      "msg": "record not found",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-170517850-run",
+        "security": []
+      }
+    },
+    "/api/v1/datacenter/queryLastData": {
+      "get": {
+        "summary": "查询最新数据",
+        "x-apifox-folder": "数据中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据中心"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "SCHEMAHHCOOYVY",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "select",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "id,ts",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "humi": 1,
+                        "id": 34,
+                        "msg": "Hello",
+                        "schema_id": "SCHEMAHHCOOYVY",
+                        "status": true,
+                        "temp": 1,
+                        "ts": 34
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "humi": 1,
+                        "id": 34,
+                        "msg": "Hello",
+                        "schema_id": "SCHEMAHHCOOYVY",
+                        "status": true,
+                        "temp": 1,
+                        "ts": 34
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-170524295-run",
+        "security": []
+      }
+    },
+    "/api/v1/datacenter/exportData": {
+      "get": {
+        "summary": "导出数据",
+        "x-apifox-folder": "数据中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据中心"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "SCHEMAHHCOOYVY",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-170559929-run",
+        "security": []
+      }
+    },
+    "/api/v1/datacenter/schemaDDLDefine": {
+      "get": {
+        "summary": "获取数据字段定义",
+        "x-apifox-folder": "数据中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据中心"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "SCHEMAAAEM8PHB",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "type"
+                        ],
+                        "x-apifox-ignore-properties": [],
+                        "x-apifox-orders": [
+                          "name",
+                          "type"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-171107683-run",
         "security": []
       }
     }

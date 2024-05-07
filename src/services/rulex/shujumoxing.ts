@@ -224,6 +224,21 @@ export async function putSchemaPropertiesUpdate(
   });
 }
 
+/** 发布模型 POST /api/v1/schema/publish */
+export async function postSchemaPublish(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.postSchemaPublishParams,
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/api/v1/schema/publish', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 更新模型 PUT /api/v1/schema/update */
 export async function putSchemaUpdate(
   body: {

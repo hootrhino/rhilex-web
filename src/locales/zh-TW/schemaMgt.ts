@@ -77,6 +77,7 @@ export default {
    */
   'schemaMgt.tooltip.update': '重新命名模型',
   'schemaMgt.tooltip.remove': '刪除模型',
-  'schemaMgt.popconfirm.remove': '確定要刪除此數據模型？',
+  'schemaMgt.popconfirm.remove': '刪除操作將同步清除所有模型相關聯的資料庫，請謹慎操作',
   'schemaMgt.popconfirm.remove.property': '確定要刪除此屬性？',
+  'schemaMgt.button.publish': '發布',
 };

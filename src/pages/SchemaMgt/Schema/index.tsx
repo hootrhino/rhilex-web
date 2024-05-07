@@ -10,17 +10,10 @@ import { cn } from '@/utils/utils';
 import { DeleteOutlined, EditOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import type { ActionType, ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProList } from '@ant-design/pro-components';
-import { useIntl, useRequest } from '@umijs/max';
+import { history, useIntl, useRequest } from '@umijs/max';
 import { Popconfirm, Space, Tooltip } from 'antd';
 import { useEffect, useRef, useState } from 'react';
-
-type SchemaItem = {
-  uuid: string;
-  name: string;
-  description?: string;
-};
-
-type ActiveSchema = Omit<SchemaItem, 'description'>;
+import type { ActiveSchema, SchemaItem } from '..';
 
 type SchemaListProps = ModalFormProps & {
   changeOpen: (value: boolean) => void;
@@ -73,6 +66,7 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
           changeActiveItem({
             uuid: defaultActiveItem?.uuid || '',
             name: defaultActiveItem?.name || '',
+            published: defaultActiveItem?.published || false,
           });
           return Promise.resolve({
             data,
@@ -80,9 +74,14 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
           });
         }}
         toolBarRender={false}
-        onRow={({ uuid, name }: Partial<SchemaItem>) => {
+        onRow={({ uuid, name, published }: Partial<SchemaItem>) => {
           return {
-            onClick: () => changeActiveItem({ uuid: uuid || '', name: name || '' }),
+            onClick: () =>
+              changeActiveItem({
+                uuid: uuid || '',
+                name: name || '',
+                published: published || false,
+              }),
           };
         }}
         rowClassName={({ uuid }: Partial<SchemaItem>) =>
@@ -99,13 +98,18 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
           },
           description: {
             dataIndex: 'description',
-            render: (dom, { description }) => {
-              return (
-                <Tooltip title={description ? description : ''}>
-                  <div className={cn('w-[150px] truncate ', !description && 'hidden')}>
-                    {description}
-                  </div>
+            render: (_dom, { uuid }) => {
+              return uuid ? (
+                <Tooltip title={uuid}>
+                  <a
+                    className={cn('w-[150px] truncate cursor-pointer', !uuid && 'hidden')}
+                    onClick={() => history.push('/data-center')}
+                  >
+                    {uuid}
+                  </a>
                 </Tooltip>
+              ) : (
+                ''
               );
             },
           },
