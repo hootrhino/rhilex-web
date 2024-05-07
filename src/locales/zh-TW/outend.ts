@@ -8,6 +8,7 @@ export default {
   'outend.table.title.allowPing': '開啓心跳',
   'outend.table.title.pingPacket': '心跳包內容',
   'outend.table.title.timeout': '超時時間',
+  'outend.table.title.timeout.rw': '讀寫超時',
   'outend.table.title.port': '端口',
   'outend.table.title.host': '主機地址',
   'outend.table.title.collection': '{type} 集合',
@@ -18,6 +19,7 @@ export default {
   'outend.table.title.dataMode': '傳輸模式',
   'outend.table.title.dbName': '數據庫名',
   'outend.table.title.url': '請求地址',
+  'outend.table.title.portUuid': '系統串口',
 
   /**
    * title
@@ -47,6 +49,7 @@ export default {
   'outend.type.tranport': '{type} 數據傳輸',
   'outend.type.push': '{type} 數據推送',
   'outend.type.database': '{type} 數據庫',
+  'outend.type.uart': '通用串口透傳',
 
   /**
    * mode

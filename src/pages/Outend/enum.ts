@@ -12,6 +12,7 @@ export enum OutendType {
   TCP_TRANSPORT = 'TCP_TRANSPORT',
   TDENGINE = 'TDENGINE',
   HTTP = 'HTTP',
+  GENERIC_UART_TARGET = 'GENERIC_UART_TARGET',
 }
 export const outendTypeOption = {
   [OutendType.MONGO_SINGLE]: intl.formatMessage(
@@ -23,6 +24,7 @@ export const outendTypeOption = {
   [OutendType.TCP_TRANSPORT]: intl.formatMessage({ id: 'outend.type.tranport' }, { type: 'TCP' }),
   [OutendType.TDENGINE]: intl.formatMessage({ id: 'outend.type.database' }, { type: 'Tdengine' }),
   [OutendType.HTTP]: intl.formatMessage({ id: 'outend.type.push' }, { type: 'HTTP' }),
+  [OutendType.GENERIC_UART_TARGET]: intl.formatMessage({ id: 'outend.type.uart' }),
 };
 
 /**

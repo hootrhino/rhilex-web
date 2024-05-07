@@ -2,31 +2,33 @@ import HeadersTitle from '@/components/HttpHeaders/Title';
 import ProSegmented from '@/components/ProSegmented';
 import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
+import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { stringToBool } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
-import { DataMode, dataModeOption, outendTypeOption } from './enum';
+import { Space } from 'antd';
+import { DataMode, dataModeOption, OutendType, outendTypeOption } from './enum';
 
 const DEFAULT_TIMEOUT = 3000;
 const DEFAULT_HOST = '127.0.0.1';
 
 export const defaultConfig = {
-  MQTT: {
+  [OutendType.MQTT]: {
     port: 1883,
     host: DEFAULT_HOST,
   },
-  MONGO_SINGLE: {
+  [OutendType.MONGO_SINGLE]: {
     mongoUrl: 'mongodb://root:root@127.0.0.1:27017/?connect=direct',
     database: 'rulexdb',
     collection: 'rulex',
   },
-  UDP_TARGET: {
+  [OutendType.UDP_TARGET]: {
     port: 2599,
     host: DEFAULT_HOST,
     timeout: DEFAULT_TIMEOUT,
     allowPing: false,
     pingPacket: 'rhilex',
   },
-  TCP_TRANSPORT: {
+  [OutendType.TCP_TRANSPORT]: {
     dataMode: DataMode.RAW_STRING,
     allowPing: false,
     pingPacket: 'rhilex',
@@ -34,19 +36,25 @@ export const defaultConfig = {
     host: DEFAULT_HOST,
     timeout: DEFAULT_TIMEOUT,
   },
-  TDENGINE: {
+  [OutendType.TDENGINE]: {
     port: 6041,
     fqdn: DEFAULT_HOST,
     username: 'root',
     password: 'taosdata',
     dbName: 'RULEX',
   },
-  HTTP: {
+  [OutendType.HTTP]: {
     url: 'http://127.0.0.1:8080',
     headers: [{ k: '', v: '' }],
     allowPing: false,
     pingPacket: 'rhilex',
     timeout: DEFAULT_TIMEOUT,
+  },
+  [OutendType.GENERIC_UART_TARGET]: {
+    allowPing: false,
+    pingPacket: 'rhilex',
+    timeout: DEFAULT_TIMEOUT,
+    dataMode: DataMode.RAW_STRING,
   },
 };
 
@@ -110,9 +118,9 @@ const pingConfig = [
   },
 ];
 
-const timeoutConfig = [
+const timeoutConfig = (title?: string) => [
   {
-    title: <UnitTitle title={intl.formatMessage({ id: 'outend.table.title.timeout' })} />,
+    title: <UnitTitle title={title || intl.formatMessage({ id: 'outend.table.title.timeout' })} />,
     dataIndex: ['config', 'timeout'],
     required: true,
     valueType: 'digit',
@@ -139,8 +147,18 @@ const hostPortConfig = [
   ...portConfig,
 ];
 
+const dataModeConfig = [
+  {
+    title: intl.formatMessage({ id: 'outend.table.title.dataMode' }),
+    dataIndex: ['config', 'dataMode'],
+    valueEnum: dataModeOption,
+    valueType: 'select',
+    required: true,
+  },
+];
+
 export const configColumns = {
-  MONGO_SINGLE: [
+  [OutendType.MONGO_SINGLE]: [
     {
       title: 'MongoDB URL',
       dataIndex: ['config', 'mongoUrl'],
@@ -157,7 +175,7 @@ export const configColumns = {
       required: true,
     },
   ],
-  MQTT: [
+  [OutendType.MQTT]: [
     ...hostPortConfig,
     {
       title: intl.formatMessage({ id: 'outend.table.title.clientId' }),
@@ -181,20 +199,14 @@ export const configColumns = {
       required: true,
     },
   ],
-  UDP_TARGET: [...pingConfig, ...timeoutConfig, ...hostPortConfig],
-  TCP_TRANSPORT: [
-    {
-      title: intl.formatMessage({ id: 'outend.table.title.dataMode' }),
-      dataIndex: ['config', 'dataMode'],
-      valueEnum: dataModeOption,
-      valueType: 'select',
-      required: true,
-    },
+  [OutendType.UDP_TARGET]: [...pingConfig, ...timeoutConfig(), ...hostPortConfig],
+  [OutendType.TCP_TRANSPORT]: [
     ...pingConfig,
-    ...timeoutConfig,
+    ...timeoutConfig(),
+    ...dataModeConfig,
     ...hostPortConfig,
   ],
-  TDENGINE: [
+  [OutendType.TDENGINE]: [
     {
       title: 'FQDN',
       dataIndex: ['config', 'fqdn'],
@@ -218,9 +230,9 @@ export const configColumns = {
       required: true,
     },
   ],
-  HTTP: [
+  [OutendType.HTTP]: [
     ...pingConfig,
-    ...timeoutConfig,
+    ...timeoutConfig(),
     {
       title: intl.formatMessage({ id: 'outend.table.title.url' }),
       dataIndex: ['config', 'url'],
@@ -279,6 +291,31 @@ export const configColumns = {
         Object.keys(headers)?.length > 0 ? <div /> : null,
     },
   ],
+  [OutendType.GENERIC_UART_TARGET]: [
+    ...pingConfig,
+    ...timeoutConfig(intl.formatMessage({ id: 'outend.table.title.timeout.rw' })),
+    ...dataModeConfig,
+    {
+      title: intl.formatMessage({ id: 'outend.table.title.portUuid' }),
+      dataIndex: ['config', 'portUuid'],
+      valueType: 'select',
+      required: true,
+      request: async () => {
+        const { data } = await getHwifaceList();
+
+        return data?.map((item) => ({
+          label: (
+            <Space>
+              <span>{item?.name}</span>
+              <span className="text-[12px] text-[#000000A6]">{item?.alias}</span>
+            </Space>
+          ),
+          value: item.uuid,
+        }));
+      },
+      render: (portUuid: string) => portUuid,
+    },
+  ],
 };
 
 export const columns = [
@@ -297,8 +334,8 @@ export const columns = [
           title: intl.formatMessage({ id: 'outend.title.source' }),
           valueType: 'group',
           columns:
-            type === 'HTTP'
-              ? configColumns['HTTP']
+            type === OutendType.HTTP
+              ? configColumns[OutendType.HTTP]
               : [
                   {
                     valueType: 'group',
