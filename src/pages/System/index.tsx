@@ -107,7 +107,7 @@ const System = () => {
     });
 
     setItems(filteredItems);
-    setActiveKey('resource');
+    // setActiveKey('resource');
   }, [isWindows, product, hasRoute, hasWifi]);
 
   return (
