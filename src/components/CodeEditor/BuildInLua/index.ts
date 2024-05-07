@@ -1,4 +1,5 @@
 import { getIntl, getLocale } from '@umijs/max';
+import { dataCenterTpl } from './dataCenterTpl';
 import { dataToTpl } from './dataToTpl';
 import { deviceTpl } from './deviceTpl';
 import { modbusTpl } from './modbusTpl';
@@ -298,6 +299,11 @@ export const builtInLuaTpl = [
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'json' }),
     children: jsonTpl,
     uuid: 'json',
+  },
+  {
+    name: intl.formatMessage({ id: 'component.tpl.name.dataCenter' }),
+    children: dataCenterTpl,
+    uuid: 'dataCenter',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name.other' }),

@@ -43,6 +43,7 @@ export default {
   'component.tpl.name': '{name} 函數',
   'component.tpl.name.standard': '標準庫函數',
   'component.tpl.name.other': '其他函數',
+  'component.tpl.name.dataCenter': '資料中心',
   'component.tpl.jsonT2J.detail': 'LuaTable 轉 JSON 字符串',
   'component.tpl.jsonT2J.arg': 'Lua 表變量',
   'component.tpl.jsonJ2T.detail': 'JSON 字符串轉 LuaTable',
@@ -60,6 +61,8 @@ export default {
   'component.tpl.rhilex.detail': '{name} 聯網測試',
   'component.tpl.inend': 'UUID 參數來自南向資源管理',
   'component.tpl.outend': 'UUID 參數來自北向資源管理',
+  'component.tpl.save.detail': '資料寫入資料中心',
+  'component.tpl.save.arg': '資料中心資源',
 
   /**
    * others

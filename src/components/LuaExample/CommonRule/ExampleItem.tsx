@@ -17,12 +17,18 @@ import { useEffect, useRef, useState } from 'react';
 import CopyButton from './CopyButton';
 import ExampleItemChild from './ExampleItemChild';
 
+export enum TplDataSource {
+  DEVICE = 'device',
+  OUTEND = 'outend',
+  DATACENTER = 'dataCenter',
+}
+
 type TplVariables = {
   name?: string;
   type?: string;
   label?: string;
   value?: number | string;
-  dataSource?: 'device' | 'outend';
+  dataSource?: TplDataSource;
 };
 
 type baseTplItem = {
