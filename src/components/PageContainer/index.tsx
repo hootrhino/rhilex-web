@@ -54,7 +54,7 @@ const ProPageContainer = ({
   };
 
   return (
-    <PageContainer header={getHeader()} {...props}>
+    <PageContainer header={props?.header ? props?.header : getHeader()} {...props}>
       {children}
     </PageContainer>
   );

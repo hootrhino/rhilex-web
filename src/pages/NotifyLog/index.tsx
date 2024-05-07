@@ -2,11 +2,11 @@ import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import StateTag, { StateType } from '@/components/StateTag';
 import { putNotifyClear, putNotifyRead } from '@/services/rulex/zhanneitongzhi';
-import { ClearOutlined } from '@ant-design/icons';
-import type { ProColumns } from '@ant-design/pro-components';
-import { ProTable } from '@ant-design/pro-components';
+import { CalendarOutlined, ClearOutlined } from '@ant-design/icons';
+import { ProList } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
-import { Button } from 'antd';
+import { Button, Checkbox, Space, Tooltip } from 'antd';
+import dayjs from 'dayjs';
 import { useEffect } from 'react';
 
 export type NotifyLogItem = {
@@ -40,66 +40,52 @@ const NotifyLog = () => {
     onSuccess: () => handleOnSuccess(),
   });
 
-  const columns: ProColumns<Partial<NotifyLogItem>>[] = [
-    {
-      title: formatMessage({ id: 'notifyLog.table.title.event' }),
-      dataIndex: 'event',
-    },
-    {
-      title: formatMessage({ id: 'notifyLog.table.title.type' }),
-      dataIndex: 'type',
-      renderText: (type: string) => <StateTag state={type || 'INFO'} type={StateType.NOTICE} />,
-    },
-    {
-      title: formatMessage({ id: 'notifyLog.table.title.summary' }),
-      dataIndex: 'summary',
-      ellipsis: true,
-    },
-    {
-      title: formatMessage({ id: 'notifyLog.table.title.ts' }),
-      dataIndex: 'ts',
-      valueType: 'dateTime',
-    },
-    {
-      title: formatMessage({ id: 'table.option' }),
-      valueType: 'option',
-      key: 'option',
-      width: 80,
-      fixed: 'right',
-      render: (_, { uuid }) => [
-        <a key="read" onClick={() => uuid && read({ uuid })}>
-          {formatMessage({ id: 'notifyLog.button.clear' })}
-        </a>,
-      ],
-    },
-  ];
-
   useEffect(() => {
     run();
   }, []);
 
   return (
     <>
-      <PageContainer>
-        <ProTable
+      <PageContainer header={{ title: formatMessage({ id: 'menu.notifyLog' }) }}>
+        <ProList<NotifyLogItem>
           rowKey="uuid"
-          columns={columns}
-          search={false}
-          pagination={false}
-          dataSource={data}
-          options={{ reload: refresh }}
-          toolBarRender={() => [
-            <Button type="primary" key="clear" onClick={clear} icon={<ClearOutlined />}>
-              {formatMessage({ id: 'notifyLog.button.clear' })}
-            </Button>,
-          ]}
-          expandable={{
-            expandedRowRender: ({ info }: any) => (
-              <>
-                <div>{formatMessage({ id: 'notifyLog.expanded' })}:</div>
-                <div>{info}</div>
-              </>
-            ),
+          toolBarRender={() => {
+            return [
+              <Button type="primary" key="clear" onClick={clear} icon={<ClearOutlined />}>
+                {formatMessage({ id: 'notifyLog.button.clear' })}
+              </Button>,
+            ];
+          }}
+          dataSource={data as NotifyLogItem[]}
+          metas={{
+            title: {
+              dataIndex: 'event',
+            },
+            avatar: {
+              render: (_dom, { uuid }) => (
+                <Tooltip title={formatMessage({ id: 'notifyLog.tooltip.clear' })}>
+                  <Checkbox onChange={() => uuid && read({ uuid })} />
+                </Tooltip>
+              ),
+            },
+            subTitle: {
+              render: (_dom, { type }) => {
+                return <StateTag state={type || 'INFO'} type={StateType.NOTICE} />;
+              },
+            },
+            description: {
+              dataIndex: 'info',
+            },
+            actions: {
+              render: (_dom, { ts }) => {
+                return (
+                  <Space>
+                    <CalendarOutlined />
+                    <span>{dayjs(ts).format('YYYY-MM-DD HH:mm:ss')}</span>
+                  </Space>
+                );
+              },
+            },
           }}
         />
       </PageContainer>

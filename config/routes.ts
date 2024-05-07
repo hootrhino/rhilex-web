@@ -202,19 +202,8 @@
     path: '/plugins',
     title: 'menu.plugin',
     icon: 'control',
-    hideChildrenInMenu: true,
     key: 'plugins',
-    routes: [
-      {
-        path: '/plugins',
-        redirect: '/plugins/list',
-      },
-      {
-        path: '/plugins/list',
-        title: '插件列表',
-        component: './Plugins',
-      },
-    ],
+    component: './Plugins',
   },
   {
     path: '/port',

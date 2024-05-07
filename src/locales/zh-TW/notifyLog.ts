@@ -7,8 +7,7 @@ export default {
   /**
    * button
    */
-  'notifyLog.button.clear.all': '全部已讀',
-  'notifyLog.button.clear': '已讀',
+  'notifyLog.button.clear': '全部已讀',
 
   /**
    * table
@@ -22,4 +21,5 @@ export default {
    * others
    */
   'notifyLog.expanded': '日誌詳情',
+  'notifyLog.tooltip.clear': '設定已讀',
 };
