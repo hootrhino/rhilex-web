@@ -66,6 +66,7 @@ export default {
   'form.rules.gateway': '网关格式不正确',
   'form.rules.cidr': 'CIDR 格式不正确',
   'form.rules.default': '格式不正确',
+  'form.rules.timeout': '读写超时必须在 30-1000ms 之间',
   /**
    * modal
    */

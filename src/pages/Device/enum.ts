@@ -8,7 +8,7 @@ const intl = getIntl(getLocale());
  * 设备类型枚举
  */
 export enum DeviceType {
-  GENERIC_PROTOCOL = 'GENERIC_PROTOCOL',
+  GENERIC_UART_PROTOCOL = 'GENERIC_UART_PROTOCOL',
   GENERIC_MODBUS = 'GENERIC_MODBUS',
   // GENERIC_AIS_RECEIVER = 'GENERIC_AIS_RECEIVER', 暂无需求，先隐藏
   SIEMENS_PLC = 'SIEMENS_PLC',
@@ -19,7 +19,7 @@ export enum DeviceType {
 }
 
 const baseTypeOption = {
-  [DeviceType.GENERIC_PROTOCOL]: intl.formatMessage({ id: 'device.type.protocol' }),
+  [DeviceType.GENERIC_UART_PROTOCOL]: intl.formatMessage({ id: 'device.type.uart' }),
   [DeviceType.GENERIC_MODBUS]: intl.formatMessage({ id: 'device.type.modbus' }),
   [DeviceType.GENERIC_SNMP]: intl.formatMessage({ id: 'device.type.snmp' }),
   // [DeviceType.GENERIC_AIS_RECEIVER]: '通用船载 AIS 数据解析网关', 暂无需求，先隐藏
@@ -41,14 +41,14 @@ export const deviceTypeOptions = {
 };
 
 export const defaultDeviceType = {
-  [Product.COMMON]: DeviceType.GENERIC_PROTOCOL,
+  [Product.COMMON]: DeviceType.GENERIC_UART_PROTOCOL,
   [Product.EN6400]: DeviceType.GENERIC_MODBUS,
-  [Product.RASPI4B]: DeviceType.GENERIC_PROTOCOL,
-  [Product.RHILEXG1]: DeviceType.GENERIC_PROTOCOL,
+  [Product.RASPI4B]: DeviceType.GENERIC_UART_PROTOCOL,
+  [Product.RHILEXG1]: DeviceType.GENERIC_UART_PROTOCOL,
 };
 
 export const deviceAvatar = {
-  [DeviceType.GENERIC_PROTOCOL]: 'PROT',
+  [DeviceType.GENERIC_UART_PROTOCOL]: 'PROT',
   [DeviceType.GENERIC_MODBUS]: 'MB',
   // [DeviceType.GENERIC_AIS_RECEIVER]: 'AIS', 暂无需求，先隐藏
   [DeviceType.SIEMENS_PLC]: 'PLC',

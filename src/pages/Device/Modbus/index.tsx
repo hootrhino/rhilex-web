@@ -8,7 +8,7 @@ import {
   postModbusDataSheetUpdate,
 } from '@/services/rulex/moddianweiguanli';
 import { omit } from '@/utils/redash';
-import { IconFont } from '@/utils/utils';
+import { IconFont, validateFormItem } from '@/utils/utils';
 import {
   DeleteOutlined,
   DownloadOutlined,
@@ -35,8 +35,9 @@ import { funcEnum } from '../enum';
 import PageContainer from '@/components/PageContainer';
 import StateTag, { StateType } from '@/components/StateTag';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
-import { SheetType } from '@/utils/enum';
+import { FormItemType, SheetType } from '@/utils/enum';
 import { inRange } from '@/utils/redash';
+import type { Rule } from 'antd/es/form';
 import { defaultQuantity, modbusDataTypeOptions } from './enum';
 import { ModbusDataSheetItem, ModbusDataSheetProps, removeParams, UpdateParams } from './typings';
 import UploadRule from './UploadRule';
@@ -332,11 +333,9 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.address' }) },
-          { min: 0, type: 'integer', message: formatMessage({ id: 'device.form.rules.address' }) },
           {
-            max: 65535,
-            type: 'integer',
-            message: formatMessage({ id: 'device.form.rules.address' }),
+            validator: (_rule: Rule, value: number) =>
+              validateFormItem(value, FormItemType.ADDRESS),
           },
         ],
       },

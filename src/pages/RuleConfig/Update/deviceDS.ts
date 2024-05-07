@@ -3,7 +3,7 @@ import { DeviceType } from '../../Device/enum';
 
 const intl = getIntl(getLocale());
 
-// GENERIC_PROTOCOL - 通用时间片中断串口采集网关
+// GENERIC_UART_PROTOCOL - 通用串口网关
 const device_protocol_ds = `{
   "in":"0001020304ABCDEF", // ${intl.formatMessage({ id: 'ruleConfig.ds.device.in' })}
   "out":"11220ABCDEF"      // ${intl.formatMessage({ id: 'ruleConfig.ds.device.out' })}
@@ -101,7 +101,7 @@ const device_smart_home_ds = `[
 ]`;
 
 export const device_ds = {
-  [DeviceType.GENERIC_PROTOCOL]: device_protocol_ds,
+  [DeviceType.GENERIC_UART_PROTOCOL]: device_protocol_ds,
   [DeviceType.GENERIC_MODBUS]: device_modbus_ds,
   [DeviceType.GENERIC_HTTP_DEVICE]: device_http_ds,
   [DeviceType.SIEMENS_PLC]: device_siemens_ds,

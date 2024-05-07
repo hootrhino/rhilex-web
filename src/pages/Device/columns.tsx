@@ -10,7 +10,7 @@ import { getPlayAddress, validateFormItem } from '@/utils/utils';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { getIntl, getLocale } from '@umijs/max';
 import { AutoComplete, Space, Typography } from 'antd';
-import { Rule } from 'antd/es/form';
+import type { FormItemProps, Rule } from 'antd/es/form';
 import type { DeviceItem } from '.';
 import {
   DeviceMode,
@@ -65,12 +65,14 @@ export const modeConfig = [
 /**
  * timeout 超时时间配置
  */
-export const timeoutConfig = (title: string) => [
+export const timeoutConfig = (title: string, formItemProps?: FormItemProps, tooltip?: string) => [
   {
     title: <UnitTitle title={title} />,
     dataIndex: ['config', 'commonConfig', 'timeout'],
     valueType: 'digit',
     required: true,
+    formItemProps,
+    tooltip,
     render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig.timeout,
   },
 ];
@@ -209,7 +211,7 @@ export const baseColumns = (product: Product) => [
  * 类型配置
  */
 export const typeConfigColumns = {
-  [DeviceType.GENERIC_PROTOCOL]: [
+  [DeviceType.GENERIC_UART_PROTOCOL]: [
     {
       title: intl.formatMessage({ id: 'device.form.title.group.common' }),
       valueType: 'group',
@@ -221,7 +223,30 @@ export const typeConfigColumns = {
           required: true,
           render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.retryTime,
         },
-        ...modeConfig,
+        {
+          title: intl.formatMessage({ id: 'device.form.title.mode' }),
+          dataIndex: ['config', 'commonConfig', 'mode'],
+          valueType: 'select',
+          valueEnum: [DeviceMode.UART],
+          required: true,
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.mode,
+        },
+        ...timeoutConfig(
+          intl.formatMessage({ id: 'device.form.title.timeout.uart' }),
+          {
+            rules: [
+              {
+                required: true,
+                message: intl.formatMessage({ id: 'device.form.placeholder.uartTimeout' }),
+              },
+              {
+                validator: (_rule: Rule, value: number) =>
+                  validateFormItem(value, FormItemType.TIMEOUT),
+              },
+            ],
+          },
+          '该值是串口最佳读完整包周期，请不要随便修改，修改之前最好知道这个参数是什么含义。如果一定要修改，建议这个值在 30-1000ms 之间',
+        ),
       ],
     },
     {
@@ -561,7 +586,7 @@ export const typeConfigColumns = {
             rules: [
               {
                 required: true,
-                message: intl.formatMessage({ id: 'device.form.rules.cidr' }),
+                message: intl.formatMessage({ id: 'device.form.placeholder.cidr' }),
               },
               {
                 validator: (_rule: Rule, value: string) =>

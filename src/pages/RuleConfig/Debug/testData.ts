@@ -1,6 +1,6 @@
 import { DeviceType } from '../../Device/enum';
 import { InendType } from '../../Inend/enum';
-// GENERIC_PROTOCOL - 通用时间片中断串口采集网关
+// GENERIC_UART_PROTOCOL - 通用串口网关
 const device_protocol_ds = `{
   "in": "0001020304ABCDEF",
   "out": "11220ABCDEF"
@@ -119,7 +119,7 @@ const inend_event_ds = `{
 }`;
 
 const device_test_data = {
-  [DeviceType.GENERIC_PROTOCOL]: device_protocol_ds,
+  [DeviceType.GENERIC_UART_PROTOCOL]: device_protocol_ds,
   [DeviceType.GENERIC_MODBUS]: device_modbus_ds,
   [DeviceType.GENERIC_HTTP_DEVICE]: device_http_ds,
   [DeviceType.SIEMENS_PLC]: device_siemens_ds,

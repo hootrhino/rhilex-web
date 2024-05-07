@@ -48,10 +48,11 @@ export const defaultInputModeConfig = {
 };
 
 export const defaultConfig = {
-  [DeviceType.GENERIC_PROTOCOL]: {
+  [DeviceType.GENERIC_UART_PROTOCOL]: {
     commonConfig: {
       retryTime: 5,
-      mode: DeviceMode.TCP,
+      mode: DeviceMode.UART,
+      timeout: 50,
     },
     hostConfig: defaultHostConfig,
   },

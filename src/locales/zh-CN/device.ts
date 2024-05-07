@@ -85,6 +85,7 @@ export default {
   'device.form.title.timeout.connect': '连接超时',
   'device.form.title.timeout.idle': '心跳超时',
   'device.form.title.timeout.scan': '扫描超时',
+  'device.form.title.timeout.uart': '读写超时',
 
   // frequency
   'device.form.title.frequency': '采集频率',
@@ -180,6 +181,8 @@ export default {
   'device.tooltip.group.edit': '重命名分组',
   'device.tooltip.group.remove': '删除分组',
   'device.tooltip.copy': '以当前行为模板新建一行数据',
+  'device.tooltip.uartTimeout':
+    '该值是串口最佳读完整包周期，请不要随便修改，修改之前最好知道这个参数是什么含义。如果一定要修改，建议这个值在 30-1000ms 之间',
 
   /**
    * placeholder
@@ -196,14 +199,14 @@ export default {
   'device.form.placeholder.frequency': '请输入采集频率',
   'device.form.placeholder.siemensAddress': '请输入地址',
   'device.form.placeholder.oid': '请输入对象标识符',
+  'device.form.placeholder.uartTimeout': '请输入读写超时',
+  'device.form.placeholder.cidr': '请输入 CIDR',
 
   /**
    * rules
    */
-  'device.form.rules.address': '起始地址范围在 0-65535 之间',
   'device.form.rules.quantity': '读取数量范围在 1-256 之间',
   'device.form.rules.weight': '权重系数必须在 -0.0001 到 100000 范围内',
-  'device.form.rules.cidr': '请输入 CIDR',
   'device.form.rules.slaverId': '从设备地址 在 1-255 之间',
 
   /**
@@ -221,7 +224,7 @@ export default {
   /**
    * device type
    */
-  'device.type.protocol': '通用时间片中断串口采集网关',
+  'device.type.uart': '通用串口网关',
   'device.type.modbus': '通用 Modbus 采集网关',
   'device.type.snmp': '通用 SNMP 协议采集网关',
   'device.type.plc': '通用西门子 S7 系列 PLC 采集网关',

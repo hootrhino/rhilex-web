@@ -85,6 +85,7 @@ export default {
   'device.form.title.timeout.connect': '連接超時',
   'device.form.title.timeout.idle': '心跳超時',
   'device.form.title.timeout.scan': '掃描超時',
+  'device.form.title.timeout.uart': '讀寫超時',
 
   // frequency
   'device.form.title.frequency': '採集頻率',
@@ -180,6 +181,8 @@ export default {
   'device.tooltip.group.edit': '重命名分組',
   'device.tooltip.group.remove': '刪除分組',
   'device.tooltip.copy': '以當前行為模板新建一行數據',
+  'device.tooltip.uartTimeout':
+    '該值是串列口最佳讀完整包週期，請不要隨便修改，修改之前最好知道這個參數是什麼意義。如果一定要修改，建議這個值在 30-1000ms 之間',
 
   /**
    * placeholder
@@ -196,14 +199,14 @@ export default {
   'device.form.placeholder.frequency': '請輸入採集頻率',
   'device.form.placeholder.siemensAddress': '請輸入地址',
   'device.form.placeholder.oid': '請輸入對象標識符',
+  'device.form.placeholder.uartTimeout': '請輸入讀寫超時',
+  'device.form.placeholder.cidr': '請輸入 CIDR',
 
   /**
    * rules
    */
-  'device.form.rules.address': '起始地址範圍在 0-65535 之間',
   'device.form.rules.quantity': '讀取數量範圍在 1-256 之間',
   'device.form.rules.weight': '權重係數必須在 -0.0001 到 100000 範圍內',
-  'device.form.rules.cidr': '請輸入 CIDR',
   'device.form.rules.slaverId': '從設備地址 在 1-255 之間',
 
   /**
@@ -221,7 +224,7 @@ export default {
   /**
    * device type
    */
-  'device.type.protocol': '通用時間片中斷串口採集網關',
+  'device.type.uart': '通用串口網關',
   'device.type.modbus': '通用 Modbus 採集網關',
   'device.type.snmp': '通用 SNMP 協議採集網關',
   'device.type.plc': '通用西門子 S7 系列 PLC 採集網關',

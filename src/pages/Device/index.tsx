@@ -105,7 +105,7 @@ const Devices = () => {
     },
   );
 
-  const getMenuItems = ({ type = DeviceType.GENERIC_PROTOCOL, state = 0 }) => {
+  const getMenuItems = ({ type = DeviceType.GENERIC_UART_PROTOCOL, state = 0 }) => {
     const baseItems = [
       {
         key: 'restart',

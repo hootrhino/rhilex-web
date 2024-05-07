@@ -15,6 +15,7 @@ import {
   validateMask,
   validateName,
   validatePort,
+  validateTimeout,
 } from './regExp';
 
 export function cn(...inputs: ClassValue[]) {
@@ -167,6 +168,10 @@ export const validateFormItem = (value: string | number, type: FormItemType) => 
       return typeof value === 'string' && validateCIDR(value)
         ? Promise.resolve()
         : Promise.reject(getIntl(getLocale()).formatMessage({ id: 'form.rules.cidr' }));
+    case FormItemType.TIMEOUT:
+      return typeof value === 'number' && validateTimeout(value)
+        ? Promise.resolve()
+        : Promise.reject(getIntl().formatMessage({ id: 'form.rules.uartTimeout' }));
     default:
       return Promise.reject(getIntl(getLocale()).formatMessage({ id: 'form.rules.default' }));
   }

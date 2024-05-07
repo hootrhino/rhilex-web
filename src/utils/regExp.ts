@@ -63,8 +63,20 @@ export const validateName = (name: string): boolean => {
  * @param {string} value - 需要校验的CIDR表示法的字符串。
  * @returns {boolean} - 如果字符串是有效的CIDR表示法，则返回true，否则返回false。
  */
-export const validateCIDR = (value: string) => {
+export const validateCIDR = (value: string): boolean => {
   const pattern =
     /^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\/([0-9]|1[0-9]|2[0-4])$/;
   return pattern.test(value);
+};
+
+/**
+ * 校验读写超时
+ * 此函数用于验证提供的读写超时时间是否符合预定的规则。
+ * 规则是：读写超时时间必须是一个正数，且数值在30到1000之间（包括30和1000）。
+ * @param timeout - 读写超时时间，正整数。
+ * @returns - 如果超时时间有效，则返回 true；否则返回 false。
+ */
+export const validateTimeout = (timeout: number): boolean => {
+  const pattern = /^\+?([3-9]\d|\d{3}|1000)$/;
+  return pattern.test(timeout.toString());
 };
