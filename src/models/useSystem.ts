@@ -8,6 +8,7 @@ const allMenu = [
   'dashboard',
   'device',
   'schema',
+  'dataCenter',
   'inend',
   'outend',
   'appStack',

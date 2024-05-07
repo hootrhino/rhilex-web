@@ -87,6 +87,7 @@ export default {
   'menu.device.objectList': 'SNMP OID Sheet',
   'menu.device.subDevice': 'Subdevice List',
   'menu.schema': 'Schema Model',
+  'menu.dataCenter': 'Data Center',
   'menu.inend': 'Inend Resources',
   'menu.source.list': 'Resource List',
   'menu.source.new': 'New Resource',

@@ -88,6 +88,13 @@
     key: 'schema',
   },
   {
+    path: '/data-center',
+    title: 'menu.dataCenter',
+    icon: 'database',
+    component: './DataCenter',
+    key: 'dataCenter',
+  },
+  {
     path: '/inend',
     title: 'menu.inend',
     icon: 'medicineBox',

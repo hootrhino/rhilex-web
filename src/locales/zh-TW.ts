@@ -87,6 +87,7 @@ export default {
   'menu.device.objectList': 'SNMP 對象列表',
   'menu.device.subDevice': '子設備列表',
   'menu.schema': '數據模型',
+  'menu.dataCenter': '資料中心',
   'menu.inend': '南向資源',
   'menu.source.list': '資源列表',
   'menu.source.new': '新建資源',
