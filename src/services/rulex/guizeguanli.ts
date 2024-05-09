@@ -81,8 +81,9 @@ export async function getRulesGetCanUsedResources(options?: { [key: string]: any
     code: number;
     msg: string;
     data: {
-      devices: { uuid?: string; name?: string }[];
+      devices: string[];
       outends: { uuid?: string; name?: string }[];
+      schemas: { uuid?: string; name?: string }[];
     };
   }>('/api/v1/rules/getCanUsedResources', {
     method: 'GET',

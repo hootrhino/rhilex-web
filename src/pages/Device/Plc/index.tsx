@@ -36,7 +36,7 @@ import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { SheetType } from '@/utils/enum';
 import { inRange } from '@/utils/redash';
-import { PlcSheetItem, PlcSheetProps, removeParams, UpdateParams } from './typings';
+import type { PlcSheetItem, PlcSheetProps, removeParams, UpdateParams } from './typings';
 
 const defaultPlcConfig = {
   tag: '',

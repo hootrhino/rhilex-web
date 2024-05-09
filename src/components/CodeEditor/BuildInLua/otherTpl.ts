@@ -1,3 +1,4 @@
+import { TplDataType } from '@/components/LuaExample/enum';
 import { getIntl, getLocale } from '@umijs/max';
 
 /**
@@ -16,13 +17,13 @@ export const otherTpl = [
         label: intl.formatMessage({ id: 'component.tpl.math.arg1' }),
         name: 'arg1',
         value: 0,
-        type: 'number',
+        type: TplDataType.NUMBER,
       },
       {
         label: intl.formatMessage({ id: 'component.tpl.math.arg2' }),
         name: 'arg2',
         value: 2,
-        type: 'number',
+        type: TplDataType.NUMBER,
       },
     ],
   },
@@ -36,13 +37,13 @@ export const otherTpl = [
         label: intl.formatMessage({ id: 'component.tpl.jq.arg1' }),
         name: 'arg1',
         value: '',
-        type: 'string',
+        type: TplDataType.STRING,
       },
       {
         label: intl.formatMessage({ id: 'component.tpl.jq.arg2' }),
         name: 'arg2',
         value: '',
-        type: 'string',
+        type: TplDataType.STRING,
       },
     ],
   },
@@ -56,19 +57,19 @@ export const otherTpl = [
         label: intl.formatMessage({ id: 'component.tpl.rpc.arg1' }),
         name: 'arg1',
         value: '',
-        type: 'string',
+        type: TplDataType.STRING,
       },
       {
         label: intl.formatMessage({ id: 'component.tpl.rpc.arg2' }),
         name: 'arg2',
         value: '',
-        type: 'string',
+        type: TplDataType.STRING,
       },
       {
         label: intl.formatMessage({ id: 'component.tpl.rpc.arg3' }),
         name: 'arg2',
         value: '',
-        type: 'string',
+        type: TplDataType.STRING,
       },
     ],
   },

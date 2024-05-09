@@ -1,3 +1,4 @@
+import { TplDataType } from '@/components/LuaExample/enum';
 import { getIntl, getLocale } from '@umijs/max';
 
 /**
@@ -19,9 +20,9 @@ const getVariables = (target: string) => {
       label: intl.formatMessage({ id: 'component.tpl.f15.arg1' }),
       name: 'arg1',
       value: '',
-      type: 'string',
+      type: TplDataType.STRING,
     },
-    { label: 'Modbus ID', name: 'arg2', value: 1, type: 'number' },
+    { label: 'Modbus ID', name: 'arg2', value: 1, type: TplDataType.NUMBER },
   ];
 
   if (['F15', 'F16'].includes(target)) {
@@ -32,19 +33,19 @@ const getVariables = (target: string) => {
         label: intl.formatMessage({ id: 'component.tpl.f15.arg3' }),
         name: 'arg3',
         value: 0,
-        type: 'number',
+        type: TplDataType.NUMBER,
       },
       {
         label: intl.formatMessage({ id: 'component.tpl.f15.arg4' }),
         name: 'arg4',
         value: 1,
-        type: 'number',
+        type: TplDataType.NUMBER,
       },
       {
         label: intl.formatMessage({ id: 'component.tpl.f15.arg5' }),
         name: 'arg5',
         value: '',
-        type: 'string',
+        type: TplDataType.STRING,
       },
     ];
   } else {
@@ -55,13 +56,13 @@ const getVariables = (target: string) => {
         label: intl.formatMessage({ id: 'component.tpl.f15.arg2' }),
         name: 'arg3',
         value: 0,
-        type: 'number',
+        type: TplDataType.NUMBER,
       },
       {
         label: intl.formatMessage({ id: 'component.tpl.f15.arg5' }),
         name: 'arg4',
         value: '00',
-        type: 'string',
+        type: TplDataType.STRING,
       },
     ];
   }

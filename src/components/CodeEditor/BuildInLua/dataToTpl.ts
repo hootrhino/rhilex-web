@@ -2,7 +2,7 @@
  * dataTo 函数相关代码模板&示例
  */
 
-import { TplDataSource } from '@/components/LuaExample/CommonRule/ExampleItem';
+import { TplDataSource, TplDataType } from '@/components/LuaExample/enum';
 import { firstUpperCase } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 
@@ -28,7 +28,7 @@ export const getVariables = (server: string) => [
   {
     label: intl.formatMessage({ id: 'component.tpl.data.arg' }, { server: server.toUpperCase() }),
     name: 'uuid',
-    type: 'select',
+    type: TplDataType.SELECT,
     dataSource: TplDataSource.OUTEND,
   },
 ];

@@ -15085,6 +15085,12 @@
                         "devices": {
                           "type": "array",
                           "items": {
+                            "type": "string"
+                          }
+                        },
+                        "outends": {
+                          "type": "array",
+                          "items": {
                             "type": "object",
                             "properties": {
                               "uuid": {
@@ -15101,7 +15107,7 @@
                             ]
                           }
                         },
-                        "outends": {
+                        "schemas": {
                           "type": "array",
                           "items": {
                             "type": "object",
@@ -15123,12 +15129,14 @@
                       },
                       "required": [
                         "devices",
-                        "outends"
+                        "outends",
+                        "schemas"
                       ],
                       "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "devices",
-                        "outends"
+                        "outends",
+                        "schemas"
                       ]
                     }
                   },
@@ -15151,16 +15159,17 @@
                       "code": 200,
                       "msg": "Success",
                       "data": {
-                        "devices": [
-                          {
-                            "uuid": "DEVICEWKHPPMSZ",
-                            "name": "22222"
-                          }
-                        ],
+                        "devices": [],
                         "outends": [
                           {
-                            "uuid": "OUTZYNUTXRW",
-                            "name": "http1"
+                            "uuid": "OUTO5TBGCND",
+                            "name": "Tdengine"
+                          }
+                        ],
+                        "schemas": [
+                          {
+                            "uuid": "SCHEMAAAEM8PHB",
+                            "name": "测试模型1"
                           }
                         ]
                       }
@@ -17716,16 +17725,21 @@
                           },
                           "type": {
                             "type": "string"
+                          },
+                          "defaultValue": {
+                            "type": "integer"
                           }
                         },
                         "required": [
                           "name",
-                          "type"
+                          "type",
+                          "defaultValue"
                         ],
                         "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
                           "name",
-                          "type"
+                          "type",
+                          "defaultValue"
                         ]
                       }
                     }
@@ -17741,6 +17755,47 @@
                     "msg",
                     "data"
                   ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "name": "id",
+                          "type": "INTEGER",
+                          "defaultValue": 0
+                        },
+                        {
+                          "name": "create_at",
+                          "type": "STRING",
+                          "defaultValue": "''"
+                        },
+                        {
+                          "name": "info",
+                          "type": "STRING",
+                          "defaultValue": "''"
+                        },
+                        {
+                          "name": "temperature",
+                          "type": "FLOAT",
+                          "defaultValue": 0
+                        },
+                        {
+                          "name": "oxygen",
+                          "type": "FLOAT",
+                          "defaultValue": 0
+                        },
+                        {
+                          "name": "ph_value",
+                          "type": "FLOAT",
+                          "defaultValue": 0
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }

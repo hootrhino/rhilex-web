@@ -1,5 +1,6 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
 import { getRulesGetCanUsedResources } from '@/services/rulex/guizeguanli';
+import { getDatacenterSchemaDdlDefine } from '@/services/rulex/shujuzhongxin';
 import { CaretRightOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -14,46 +15,13 @@ import { useIntl, useRequest } from '@umijs/max';
 import type { CollapseProps } from 'antd';
 import { Button, Collapse, Divider, Space, theme } from 'antd';
 import { useEffect, useRef, useState } from 'react';
+import { ExampleType, TplDataSource, TplDataType } from '../enum';
+import type { TplGroupItem, TplItem } from '../typings';
 import CopyButton from './CopyButton';
 import ExampleItemChild from './ExampleItemChild';
 
-export enum TplDataSource {
-  DEVICE = 'device',
-  OUTEND = 'outend',
-  DATACENTER = 'dataCenter',
-}
-
-type TplVariables = {
-  name?: string;
-  type?: string;
-  label?: string;
-  value?: number | string;
-  dataSource?: TplDataSource;
-};
-
-type baseTplItem = {
-  label?: string;
-  apply?: string;
-  type?: string;
-  detail?: string;
-  gid?: string;
-  uuid?: string;
-  variables?: TplVariables[];
-};
-
-// 代码模板
-export type TplItem = baseTplItem & {
-  usage?: baseTplItem;
-};
-
-export type TplGroupItem = {
-  uuid: string;
-  name: string;
-  children: TplItem[];
-};
-
-type ExampleItemProps = CollapseProps & {
-  type: string; // 'built-in' | 'custom' | 'quick'
+export type ExampleItemProps = CollapseProps & {
+  type: ExampleType;
   dataSource: TplGroupItem[];
 };
 
@@ -66,11 +34,12 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
     data: {},
   });
   const [copyData, setCopyData] = useState<TplItem>({});
+  const [schemaId, setSchemaId] = useState<string | undefined>('');
 
   const title = {
-    'built-in': formatMessage({ id: 'component.title.builtInTpl' }),
-    custom: formatMessage({ id: 'component.title.customTpl' }),
-    quick: formatMessage({ id: 'component.title.quickTpl' }),
+    [ExampleType.BUILTIN]: formatMessage({ id: 'component.title.builtInTpl' }),
+    [ExampleType.CUSTOM]: formatMessage({ id: 'component.title.customTpl' }),
+    [ExampleType.QUICK]: formatMessage({ id: 'component.title.quickTpl' }),
   };
 
   const panelStyle: React.CSSProperties = {
@@ -125,18 +94,27 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
     setValConfig({ open: false, data: {} });
   };
 
-  const getTargetValue = (type: string, value: any) => {
-    if (type === 'string') {
+  const getTargetValue = (type = TplDataType.STRING, value: any) => {
+    if (type === TplDataType.STRING) {
       return `"${value}"`;
     }
-    if (type === 'select') {
+    if (type === TplDataType.SELECT) {
       return value ? `"${value}"` : `""`;
     }
+    if (type === TplDataType.OBJECT) {
+      const result = value?.reduce((acc: any, item: any) => {
+        return `${acc}${item.name} = ${item.defaultValue},\n`;
+      }, '');
 
-    return value;
+      return value ? `{\n${result}}` : '{}';
+    }
+
+    return `${value}`;
   };
 
   const renderFormList = (key: number) => {
+    if (formRef.current?.getFieldValue('variables')[key]?.hideInForm) return;
+
     const { label, type, dataSource } = formRef.current?.getFieldValue('variables')[key];
 
     let commonConfig = {
@@ -146,10 +124,11 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
       width: 'md',
       placeholder: formatMessage({ id: 'component.form.placeholder.varValue' }),
       labelCol: { flex: '130px' },
+      className: 'testttttttttt',
     } as any;
 
     const optionData = () => {
-      if (type === 'boolean') {
+      if (type === TplDataType.BOOLEAN) {
         return [
           { label: 'true', value: true },
           { label: 'false', value: false },
@@ -170,11 +149,11 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
       }
     };
 
-    if (['boolean', 'select'].includes(type)) {
+    if ([TplDataType.BOOLEAN, TplDataType.SELECT].includes(type)) {
       commonConfig = {
         ...commonConfig,
         options: optionData(),
-        placeholder: formatMessage({ id: 'component.form.placeholder.varValue' }),
+        placeholder: formatMessage({ id: 'component.form.placeholder.varValue.select' }),
         allowClear: false,
       };
     }
@@ -191,29 +170,63 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
     return <ComponentType {...commonConfig} />;
   };
 
+  const { run: getSchema } = useRequest(
+    (params: API.getDatacenterSchemaDDLDefineParams) => getDatacenterSchemaDdlDefine(params),
+    {
+      manual: true,
+      onSuccess: (data) => {
+        const tpl = formRef.current?.getFieldsValue();
+        let newVariables = tpl.variables;
+
+        newVariables = newVariables?.map((v: any) => {
+          if (v.name === 'schema') {
+            return {
+              ...v,
+              value: data,
+            };
+          }
+          return v;
+        });
+
+        setValConfig({
+          ...valModalConfig,
+          data: { ...valModalConfig.data, variables: newVariables },
+        });
+      },
+    },
+  );
+
   useEffect(() => {
-    if (valModalConfig.data.variables) {
-      const originCode = valModalConfig.data?.apply;
-      let newCode = originCode;
-      const newVal = valModalConfig.data?.variables;
-      newVal?.forEach((item) => {
-        const source = item.name || '';
-        const target = getTargetValue(item.type || 'string', item?.value);
+    const newVal = valModalConfig.data?.variables;
 
-        if (type === 'select') {
-          newCode = item?.value ? newCode?.replace(source, target) : originCode;
-        } else {
-          newCode = newCode?.replace(source, target);
-        }
-      });
+    if (!newVal) return;
 
-      formRef.current?.setFieldsValue({
-        variables: newVal,
-        code: newCode,
-      });
-      setCopyData({ ...valModalConfig.data, apply: newCode });
-    }
+    const originCode = valModalConfig.data?.apply;
+    let newCode = originCode;
+
+    newVal?.forEach((item) => {
+      const source = item.name || '';
+      const target = getTargetValue(item.type, item?.value);
+
+      if (item.type === 'select') {
+        newCode = item?.value ? newCode?.replace(source, target) : originCode;
+      } else {
+        newCode = newCode?.replace(source, target);
+      }
+    });
+
+    formRef.current?.setFieldsValue({
+      variables: newVal,
+      code: newCode,
+    });
+    setCopyData({ ...valModalConfig.data, apply: newCode });
   }, [valModalConfig]);
+
+  useEffect(() => {
+    if (schemaId) {
+      getSchema({ uuid: schemaId });
+    }
+  }, [schemaId]);
 
   return dataSource && dataSource?.length > 0 ? (
     <>
@@ -238,6 +251,9 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
           if (changedValue?.variables) {
             const newVariables = valModalConfig?.data.variables?.map((origItem, index) => {
               const changedVar = changedValue.variables[index];
+              if (origItem.name === 'uuid' && origItem?.dataSource === TplDataSource.SCHEMA) {
+                setSchemaId(changedVar?.value);
+              }
 
               return changedVar ? { ...origItem, value: changedVar.value } : origItem;
             });

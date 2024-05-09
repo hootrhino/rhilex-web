@@ -1,3 +1,4 @@
+import { TplDataSource, TplDataType } from '@/components/LuaExample/enum';
 import { getIntl, getLocale } from '@umijs/max';
 
 /**
@@ -5,13 +6,7 @@ import { getIntl, getLocale } from '@umijs/max';
  */
 const intl = getIntl(getLocale());
 
-const apply = `local err = rds:Save(uuid, {
-  info = "", -- 对应的字段，这些需要
-  temperature = 0, -- 对应的字段
-  oxygen = 0,-- 对应的字段
-  ph_value = 0-- 对应的字段
-  -- Other ...
-})
+const apply = `local err = rds:Save(uuid, schema)
 if err ~= nil then
   Throw(err)
   return 0
@@ -27,7 +22,14 @@ export const dataCenterTpl = [
       {
         label: intl.formatMessage({ id: 'component.tpl.save.arg' }),
         name: 'uuid',
-        type: 'select',
+        type: TplDataType.SELECT,
+        dataSource: TplDataSource.SCHEMA,
+      },
+      {
+        label: '参数',
+        name: 'schema',
+        type: TplDataType.OBJECT,
+        hideInForm: true,
       },
     ],
   },

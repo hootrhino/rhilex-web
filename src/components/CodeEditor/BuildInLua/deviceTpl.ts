@@ -1,3 +1,4 @@
+import { TplDataSource, TplDataType } from '@/components/LuaExample/enum';
 import { getIntl, getLocale } from '@umijs/max';
 
 /**
@@ -33,20 +34,20 @@ export const deviceTpl = deviceList?.map((device) => ({
       label: intl.formatMessage({ id: 'component.tpl.device.arg1' }),
       name: 'arg1',
       value: '',
-      type: 'select',
-      dataSource: 'device',
+      type: TplDataType.SELECT,
+      dataSource: TplDataSource.DEVICE,
     },
     {
       label: intl.formatMessage({ id: 'component.tpl.device.arg2' }),
       name: 'arg2',
       value: '',
-      type: 'string',
+      type: TplDataType.STRING,
     },
     {
       label: intl.formatMessage({ id: 'component.tpl.device.arg3' }),
       name: 'arg3',
       value: '',
-      type: 'string',
+      type: TplDataType.STRING,
     },
   ],
 }));

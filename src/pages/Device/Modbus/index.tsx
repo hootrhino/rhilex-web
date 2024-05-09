@@ -39,7 +39,12 @@ import { FormItemType, SheetType } from '@/utils/enum';
 import { inRange } from '@/utils/redash';
 import type { Rule } from 'antd/es/form';
 import { defaultQuantity, modbusDataTypeOptions } from './enum';
-import { ModbusDataSheetItem, ModbusDataSheetProps, removeParams, UpdateParams } from './typings';
+import type {
+  ModbusDataSheetItem,
+  ModbusDataSheetProps,
+  removeParams,
+  UpdateParams,
+} from './typings';
 import UploadRule from './UploadRule';
 
 const defaultModbusConfig = {

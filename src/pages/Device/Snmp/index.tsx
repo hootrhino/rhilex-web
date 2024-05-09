@@ -24,7 +24,7 @@ import { EditableProTable, ProDescriptions, ProTable } from '@ant-design/pro-com
 import { getIntl, getLocale, history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
-import { removeParams, SnmpDataSheetItem, SnmpOidsSheetProps, UpdateParams } from './typings';
+import type { removeParams, SnmpDataSheetItem, SnmpOidsSheetProps, UpdateParams } from './typings';
 import UploadRule from './UploadRule';
 
 const defaultSnmpConfig = {

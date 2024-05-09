@@ -2,10 +2,11 @@ import CodeEditor, { Lang } from '@/components/CodeEditor';
 import { FormOutlined } from '@ant-design/icons';
 import { useIntl } from '@umijs/max';
 import { Button } from 'antd';
+import { ExampleType } from '../enum';
 import CopyButton from './CopyButton';
 
 type ExampleItemChildProps = {
-  type: string;
+  type: ExampleType;
   isUsage?: boolean;
   [key: string]: any;
 };
@@ -22,7 +23,7 @@ const ExampleItemChild = ({
   return (
     <div {...props}>
       <div className="flex justify-between w-full mb-[6px]">
-        <span className={type === 'quick' ? 'invisible' : ''}>
+        <span className={type === ExampleType.QUICK ? 'invisible' : ''}>
           {isUsage ? data?.label : formatMessage({ id: 'component.title.exampleChild' })}
         </span>
         {data?.variables && data?.variables?.length > 0 ? (

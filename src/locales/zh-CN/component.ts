@@ -99,6 +99,7 @@ export default {
   'component.form.placeholder.varName': '请输入变量名',
   'component.form.placeholder.varType': '请选择变量类型',
   'component.form.placeholder.varValue': '请输入变量值',
+  'component.form.placeholder.varValue.select': '请选择变量值',
 
   'component.unit.ms': '毫秒',
   'component.popconfirm.title.reset': '重置可能会丢失数据，确定要重置吗？',

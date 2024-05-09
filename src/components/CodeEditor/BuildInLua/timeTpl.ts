@@ -2,6 +2,7 @@
  * time 函数相关代码模板&示例
  */
 
+import { TplDataType } from '@/components/LuaExample/enum';
 import { firstUpperCase } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 const intl = getIntl(getLocale());
@@ -20,7 +21,7 @@ const timeList = [
         label: intl.formatMessage({ id: 'component.tpl.sleep.arg' }),
         name: 'arg',
         value: 500,
-        type: 'number',
+        type: TplDataType.NUMBER,
       },
     ],
   },

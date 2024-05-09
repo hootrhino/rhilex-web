@@ -82,16 +82,17 @@ export async function getDatacenterSchemaDdlDefine(
   params: API.getDatacenterSchemaDDLDefineParams,
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: { name: string; type: string }[] }>(
-    '/api/v1/datacenter/schemaDDLDefine',
-    {
-      method: 'GET',
-      params: {
-        ...params,
-      },
-      ...(options || {}),
+  return request<{
+    code: number;
+    msg: string;
+    data: { name: string; type: string; defaultValue: number }[];
+  }>('/api/v1/datacenter/schemaDDLDefine', {
+    method: 'GET',
+    params: {
+      ...params,
     },
-  );
+    ...(options || {}),
+  });
 }
 
 /** 仓库结构 GET /api/v1/datacenter/schemaDDLDetail */

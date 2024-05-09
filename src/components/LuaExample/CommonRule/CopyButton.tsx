@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import type { BaseButtonProps } from 'antd/es/button/button';
 import { useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import type { TplItem } from './ExampleItem';
+import type { TplItem } from '../typings';
 
 type CopyButtonProps = {
   data: TplItem;

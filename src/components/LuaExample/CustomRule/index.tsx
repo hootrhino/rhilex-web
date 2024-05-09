@@ -12,7 +12,7 @@ import { ProList } from '@ant-design/pro-components';
 import { useIntl } from '@umijs/max';
 import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
-import type { TplItem } from '../CommonRule/ExampleItem';
+import type { TplItem } from '../typings';
 import UpdateForm from './Update';
 
 const CustomRule = () => {

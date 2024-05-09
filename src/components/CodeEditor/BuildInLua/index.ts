@@ -1,3 +1,4 @@
+import { TplDataType } from '@/components/LuaExample/enum';
 import { getIntl, getLocale } from '@umijs/max';
 import { dataCenterTpl } from './dataCenterTpl';
 import { dataToTpl } from './dataToTpl';
@@ -161,8 +162,8 @@ export const kvTpl = [
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.kvSet.detail' }),
     variables: [
-      { label: 'Key', name: 'arg1', value: '', type: 'string' },
-      { label: 'Value', name: 'arg2', value: '', type: 'string' },
+      { label: 'Key', name: 'arg1', value: '', type: TplDataType.STRING },
+      { label: 'Value', name: 'arg2', value: '', type: TplDataType.STRING },
     ],
   },
   {
@@ -170,14 +171,14 @@ export const kvTpl = [
     apply: `local value = kv:Get(arg)`,
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.kvGet.detail' }),
-    variables: [{ label: 'Key', name: 'arg', value: '', type: 'string' }],
+    variables: [{ label: 'Key', name: 'arg', value: '', type: TplDataType.STRING }],
   },
   {
     label: 'kv:Del',
     apply: `kv:Del(arg)`,
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.kvDel.detail' }),
-    variables: [{ label: 'Key', name: 'arg', value: '', type: 'string' }],
+    variables: [{ label: 'Key', name: 'arg', value: '', type: TplDataType.STRING }],
   },
 ];
 
@@ -202,7 +203,7 @@ end`,
         label: intl.formatMessage({ id: 'component.tpl.query.arg' }),
         name: 'arg',
         value: '',
-        type: 'string',
+        type: TplDataType.STRING,
       },
     ],
   },
@@ -220,7 +221,7 @@ export const jsonTpl = [
         label: intl.formatMessage({ id: 'component.tpl.jsonT2J.arg' }),
         name: 'arg',
         value: '',
-        type: 'string',
+        type: TplDataType.STRING,
       },
     ],
   },
@@ -234,7 +235,7 @@ export const jsonTpl = [
         label: intl.formatMessage({ id: 'component.tpl.jsonJ2T.arg' }),
         name: 'arg',
         value: '',
-        type: 'string',
+        type: TplDataType.STRING,
       },
     ],
   },

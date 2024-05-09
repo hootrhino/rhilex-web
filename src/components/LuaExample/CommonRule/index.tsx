@@ -4,7 +4,8 @@ import { getUserluaListByGroup } from '@/services/rulex/yonghudingyiluamoban';
 import { DEFAULT_GROUP_KEY_LUA_TPL } from '@/utils/constant';
 import { Product } from '@/utils/enum';
 import { getIntl, getLocale, useModel, useRequest } from '@umijs/max';
-import type { TplGroupItem } from './ExampleItem';
+import { ExampleType } from '../enum';
+import type { TplGroupItem } from '../typings';
 import ExampleItem from './ExampleItem';
 
 type CommonRuleProps = {
@@ -34,15 +35,15 @@ const CommonRule = ({ activeTabKey }: CommonRuleProps) => {
 
   const data = [
     {
-      type: 'built-in',
+      type: ExampleType.BUILTIN,
       dataSource: builtInLuaTpl,
     },
     {
-      type: 'custom',
+      type: ExampleType.CUSTOM,
       dataSource: customTplData,
     },
     {
-      type: 'quick',
+      type: ExampleType.QUICK,
       dataSource: quickLuaTpl(product === Product.RHILEXG1),
     },
   ];

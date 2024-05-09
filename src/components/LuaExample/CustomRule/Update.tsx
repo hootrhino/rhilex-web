@@ -12,11 +12,12 @@ import {
 import { useIntl, useRequest } from '@umijs/max';
 import { Tooltip } from 'antd';
 import { useEffect, useRef } from 'react';
+import { TplDataType } from '../enum';
 
 const initialVariable = {
   label: '',
   name: '',
-  type: 'string',
+  type: TplDataType.STRING,
 };
 
 const initialValue = {

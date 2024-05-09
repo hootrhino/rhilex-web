@@ -1,3 +1,4 @@
+import { TplDataType } from '@/components/LuaExample/enum';
 import { getIntl, getLocale } from '@umijs/max';
 
 /**
@@ -52,7 +53,7 @@ end`;
         label: intl.formatMessage({ id: 'component.tpl.rhilexg1.arg' }),
         name: 'arg',
         value: 0,
-        type: 'number',
+        type: TplDataType.NUMBER,
       },
     ],
   };
