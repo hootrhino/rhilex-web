@@ -393,7 +393,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
         editableFormRef={editorFormRef}
         columns={columns}
         polling={polling}
-        rootClassName="sheet-table"
+        rootClassName="stripe-table"
         recordCreatorProps={{
           position: 'top',
           creatorButtonText: formatMessage({ id: 'device.button.new.object' }),
@@ -442,7 +442,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       <ProTable
         rowKey="uuid"
         columns={columns}
-        rootClassName="sheet-table"
+        rootClassName="stripe-table"
         request={async ({ current = 1, pageSize = 10 }) => {
           const { data } = await getSnmpOidsSheetList({
             device_uuid: uuid,

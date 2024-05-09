@@ -95,7 +95,17 @@ export const getPlayAddress = (
 };
 
 // 首字母大写
-export const firstUpperCase = (value: string) => value.replace(/^\w/, (c) => c.toUpperCase());
+export const toPascalCase = (str: string) => {
+  if (str === 'id') {
+    return 'ID';
+  } else if (!str.includes('_')) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+  return str
+    .replace(/_([a-z])/g, (match, char) => char.toUpperCase())
+    .replace(/_/g, '')
+    .replace(/^\w/, (char) => char.toUpperCase());
+};
 
 export const stringToBool = (value: string) => {
   const valueMap = {

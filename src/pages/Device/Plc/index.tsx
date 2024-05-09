@@ -476,7 +476,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
         editableFormRef={editorFormRef}
         columns={columns}
         polling={polling}
-        rootClassName="sheet-table"
+        rootClassName="stripe-table"
         recordCreatorProps={{
           position: 'top',
           creatorButtonText: formatMessage({ id: 'device.button.new.sheet' }),
@@ -539,7 +539,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       <ProTable
         rowKey="uuid"
         columns={columns}
-        rootClassName="sheet-table"
+        rootClassName="stripe-table"
         request={async ({ current = 1, pageSize = 10, ...keyword }) => {
           const { data } = await getS1200DataSheetList({
             device_uuid: uuid,

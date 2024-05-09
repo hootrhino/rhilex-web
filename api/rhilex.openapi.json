@@ -5937,7 +5937,7 @@
             "required": true,
             "example": "1",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
@@ -5947,7 +5947,7 @@
             "required": true,
             "example": "10",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
@@ -12740,6 +12740,9 @@
                           "uuid": {
                             "type": "string"
                           },
+                          "published": {
+                            "type": "boolean"
+                          },
                           "name": {
                             "type": "string"
                           },
@@ -12747,14 +12750,10 @@
                             "type": "string"
                           }
                         },
-                        "required": [
-                          "uuid",
-                          "name",
-                          "description"
-                        ],
                         "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
                           "uuid",
+                          "published",
                           "name",
                           "description"
                         ]
@@ -12781,94 +12780,10 @@
                       "msg": "Success",
                       "data": [
                         {
-                          "uuid": "SCHEMAKWFA8WBL",
-                          "name": "测试物模型: 机场大厅数据统计",
-                          "description": "测试物模型: 机场大厅数据统计"
-                        },
-                        {
-                          "uuid": "SCHEMA56WQTGTT",
-                          "name": "测试物模型: 机场大厅数据统计",
-                          "description": "测试物模型: 机场大厅数据统计"
-                        },
-                        {
-                          "uuid": "SCHEMAK6JEXYVR",
-                          "name": "测试物模型: 机场大厅数据统计",
-                          "description": "测试物模型: 机场大厅数据统计"
-                        }
-                      ]
-                    }
-                  },
-                  "2": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": [
-                        {
-                          "uuid": "AABBCCDDEEFFTT",
-                          "name": "测试物模型: 机场大厅数据统计",
-                          "schema": {
-                            "iotProperties": [
-                              {
-                                "label": "整形：今天进出人数统计",
-                                "name": "peopleCount",
-                                "type": "INTEGER",
-                                "rw": "R",
-                                "unit": "人",
-                                "rule": {
-                                  "defaultValue": 0,
-                                  "max": 100
-                                }
-                              },
-                              {
-                                "label": "浮点型：温度",
-                                "name": "temp",
-                                "type": "FLOAT",
-                                "rw": "R",
-                                "unit": "摄氏度",
-                                "rule": {
-                                  "defaultValue": 0,
-                                  "max": 100,
-                                  "min": -100,
-                                  "round": 2
-                                }
-                              },
-                              {
-                                "label": "浮点型：湿度",
-                                "name": "humi",
-                                "type": "FLOAT",
-                                "rw": "R",
-                                "unit": "摄氏度",
-                                "rule": {
-                                  "defaultValue": 0,
-                                  "max": 100,
-                                  "round": 2
-                                }
-                              },
-                              {
-                                "label": "布尔型：灯开关-1",
-                                "name": "switcher1",
-                                "type": "BOOL",
-                                "rw": "RW",
-                                "unit": "",
-                                "rule": {
-                                  "defaultValue": false,
-                                  "trueLabel": "开启",
-                                  "falseLabel": "关闭"
-                                }
-                              },
-                              {
-                                "label": "文本型：滚动显示屏幕文本",
-                                "name": "string1",
-                                "type": "STRING",
-                                "rw": "R",
-                                "unit": "",
-                                "rule": {
-                                  "defaultValue": "Hello, 大牛"
-                                }
-                              }
-                            ]
-                          }
+                          "uuid": "SCHEMAAAEM8PHB",
+                          "published": true,
+                          "name": "数据可视化大屏模型",
+                          "description": "SCHEMAAAEM8PHB"
                         }
                       ]
                     }

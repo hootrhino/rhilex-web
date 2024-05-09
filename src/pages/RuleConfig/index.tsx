@@ -167,6 +167,7 @@ const RuleConfig = ({
         <ProTable
           rowKey="uuid"
           columns={columns}
+          rootClassName="stripe-table"
           dataSource={dataSource}
           search={false}
           pagination={false}

@@ -139,6 +139,7 @@ const Inend = () => {
           rowKey="uuid"
           actionRef={actionRef}
           columns={columns}
+          rootClassName="stripe-table"
           request={async () => {
             const res = await getInendsList();
 

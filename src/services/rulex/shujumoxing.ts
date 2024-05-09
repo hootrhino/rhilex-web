@@ -59,7 +59,7 @@ export async function getSchemaList(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { uuid: string; name: string; description: string }[];
+    data: { uuid?: string; published?: boolean; name?: string; description?: string }[];
   }>('/api/v1/schema/list', {
     method: 'GET',
     ...(options || {}),

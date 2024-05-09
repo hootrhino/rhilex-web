@@ -600,7 +600,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
         editableFormRef={editorFormRef}
         columns={columns}
         polling={polling}
-        rootClassName="sheet-table"
+        rootClassName="stripe-table"
         recordCreatorProps={{
           position: 'top',
           creatorButtonText: formatMessage({ id: 'device.button.new.sheet' }),
@@ -660,7 +660,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       <ProTable
         rowKey="uuid"
         columns={columns}
-        rootClassName="sheet-table"
+        rootClassName="stripe-table"
         request={async ({ current = 1, pageSize = 10 }) => {
           const { data } = await getModbusDataSheetList({
             device_uuid: uuid,

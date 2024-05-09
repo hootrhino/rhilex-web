@@ -1,4 +1,3 @@
-import IndexBorder from '@/components/IndexBorder';
 import { message, modal } from '@/components/PopupHack';
 import {
   deleteSchemaPropertiesDel,
@@ -47,13 +46,6 @@ type PropertyListProps = {
 };
 
 const baseColumns: ProColumns<Property>[] = [
-  {
-    title: <FormattedMessage id="table.index" />,
-    dataIndex: 'index',
-    valueType: 'index',
-    width: 48,
-    render: (_text, _record, index) => <IndexBorder serial={index} />,
-  },
   {
     title: <FormattedMessage id="schemaMgt.form.title.schemaName" />,
     dataIndex: 'label',
@@ -248,17 +240,26 @@ const PropertyList = ({ schemaId, published }: PropertyListProps) => {
       <ProTable
         actionRef={actionRef}
         rowKey="uuid"
+        rootClassName="stripe-table"
         columns={columns}
         search={false}
         params={{ schema_uuid: schemaId }}
         request={async ({ current, pageSize, ...keyword }) => {
-          const { data } = await getSchemaPropertiesList({ current, size: pageSize, ...keyword });
+          if (keyword?.schema_uuid) {
+            const { data } = await getSchemaPropertiesList({ current, size: pageSize, ...keyword });
 
-          return Promise.resolve({
-            data: data?.records || [],
-            total: data?.total || 0,
-            success: true,
-          });
+            return Promise.resolve({
+              data: data?.records || [],
+              total: data?.total || 0,
+              success: true,
+            });
+          } else {
+            return Promise.resolve({
+              data: [],
+              total: 0,
+              success: true,
+            });
+          }
         }}
         pagination={{
           defaultPageSize: 10,

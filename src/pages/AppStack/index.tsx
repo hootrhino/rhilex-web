@@ -134,6 +134,7 @@ const AppStack = () => {
         <ProTable
           rowKey="uuid"
           actionRef={actionRef}
+          rootClassName="stripe-table"
           columns={[...baseColumns, ...actions] as ProColumns<AppStackItem>[]}
           search={false}
           pagination={false}

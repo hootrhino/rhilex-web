@@ -113,6 +113,7 @@ const Outend = () => {
           rowKey="uuid"
           actionRef={actionRef}
           columns={columns}
+          rootClassName="stripe-table"
           request={async () => {
             const res = await getOutendsList();
 

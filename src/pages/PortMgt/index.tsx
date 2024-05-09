@@ -153,6 +153,7 @@ const Interface = () => {
           rowKey="uuid"
           actionRef={actionRef}
           columns={columns}
+          rootClassName="stripe-table"
           search={false}
           pagination={false}
           request={async () => {

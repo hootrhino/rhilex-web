@@ -3,7 +3,7 @@
  */
 
 import { TplDataSource, TplDataType } from '@/components/LuaExample/enum';
-import { firstUpperCase } from '@/utils/utils';
+import { toPascalCase } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 
 const intl = getIntl(getLocale());
@@ -37,7 +37,7 @@ export const getVariables = (server: string) => [
 const getUsageTpl = (server: string) => {
   const code = `Actions = {
   function(args)
-      local err = data:To${firstUpperCase(server)}(uuid, args)
+      local err = data:To${toPascalCase(server)}(uuid, args)
       if err ~= nil then
           Throw(err)
       end
@@ -55,7 +55,7 @@ const getUsageTpl = (server: string) => {
 
 // 函数基本示例
 export const dataToTpl = dataToServers?.map(({ target, ...rest }) => {
-  const funcName = `data:To${firstUpperCase(target)}`;
+  const funcName = `data:To${toPascalCase(target)}`;
   const code = `local err = ${funcName}(arg1, args)
 if err ~= nil then
   Throw(err)
@@ -89,7 +89,7 @@ export const getQuickCode = (server: string) => `Actions = {
               method = "thing.event.property.post",
               params = params
           })
-          local err = data:To${firstUpperCase(server)}(uuid, json)
+          local err = data:To${toPascalCase(server)}(uuid, json)
           if err ~= nil then
               Throw(err)
           end

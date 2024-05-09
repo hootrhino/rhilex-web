@@ -331,6 +331,7 @@ const Devices = () => {
             <ProTable
               actionRef={actionRef}
               rowKey="uuid"
+              rootClassName="stripe-table"
               columns={[...baseColumns(product), ...actionColumns] as any}
               search={false}
               params={{ uuid: activeGroupKey }}

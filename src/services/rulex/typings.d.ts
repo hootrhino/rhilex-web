@@ -108,8 +108,8 @@ declare namespace API {
 
   type getDatacenterQueryDataListParams = {
     uuid: string;
-    current: string;
-    size: string;
+    current: number;
+    size: number;
     order: string;
     /** 用来筛选字段，web界面上全选，用户可以自己选择需要的字段 */
     select?: string;

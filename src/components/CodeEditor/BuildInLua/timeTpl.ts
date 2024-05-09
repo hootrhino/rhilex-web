@@ -3,7 +3,7 @@
  */
 
 import { TplDataType } from '@/components/LuaExample/enum';
-import { firstUpperCase } from '@/utils/utils';
+import { toPascalCase } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 const intl = getIntl(getLocale());
 
@@ -32,7 +32,7 @@ export const timeTpl = timeList.map((time) => {
     time.target === 'sleep'
       ? `local ts = time:${time.target}(arg)`
       : `local ts = time:${time.target}()`;
-  const label = `time:Time${firstUpperCase(time.target)}`;
+  const label = `time:Time${toPascalCase(time.target)}`;
   const variables = time?.variables && time.variables.length > 0 ? time.variables : [];
 
   return {
