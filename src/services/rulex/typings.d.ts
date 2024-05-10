@@ -38,6 +38,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type deleteDatacenterClearSchemaDataParams = {
+    uuid: string;
+  };
+
   type deleteDevicesDelParams = {
     uuid: string;
   };

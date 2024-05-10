@@ -1,17 +1,20 @@
 import PageContainer from '@/components/PageContainer';
+import { message } from '@/components/PopupHack';
 import {
+  deleteDatacenterClearSchemaData,
   getDatacenterListSchemaDdl,
   getDatacenterQueryDataList,
   getDatacenterSchemaDdlDefine,
   getDatacenterSchemaDdlDetail,
 } from '@/services/rulex/shujuzhongxin';
 import { toPascalCase } from '@/utils/utils';
-import { DownloadOutlined, TableOutlined } from '@ant-design/icons';
+import { DeleteOutlined, DownloadOutlined, TableOutlined } from '@ant-design/icons';
+import type { ActionType } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import type { TreeDataNode } from 'antd';
 import { Button, Empty, Space, Tooltip, Tree } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type SchemaDDLDefineItem = {
   name: string;
@@ -30,6 +33,7 @@ const getChildName = ({ name, type }: SchemaDDLDefineItem) => {
 
 const DataCenter = () => {
   // const {formatMessage} = useIntl();
+  const actionRef = useRef<ActionType>();
   const [selectedKey, setSelectedKey] = useState<string>();
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [treeData, setTreeData] = useState<TreeDataNode[]>([]);
@@ -96,6 +100,18 @@ const DataCenter = () => {
     window.location.href = `/api/v1/datacenter/exportData?uuid=${selectedKey}`;
   };
 
+  // 清空历史数据
+  const { run: clear } = useRequest(
+    (params: API.deleteDatacenterClearSchemaDataParams) => deleteDatacenterClearSchemaData(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        actionRef.current?.reload();
+        message.success('清空完成');
+      },
+    },
+  );
+
   useEffect(() => {
     if (selectedKey) {
       getSchemaDdlDefine({ uuid: selectedKey });
@@ -121,6 +137,7 @@ const DataCenter = () => {
           {columns && columns?.length > 0 ? (
             <ProTable
               rowKey="uuid"
+              actionRef={actionRef}
               params={{ uuid: selectedKey }}
               request={async ({ current = 1, pageSize = 10, ...keyword }) => {
                 if (keyword?.uuid) {
@@ -153,6 +170,14 @@ const DataCenter = () => {
               search={false}
               rootClassName="stripe-table"
               toolBarRender={() => [
+                <Button
+                  danger
+                  key="clear"
+                  onClick={() => selectedKey && clear({ uuid: selectedKey })}
+                  icon={<DeleteOutlined />}
+                >
+                  清空数据
+                </Button>,
                 <Button
                   key="download"
                   type="primary"

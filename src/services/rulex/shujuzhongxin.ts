@@ -2,6 +2,21 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
+/** 清空数据 DELETE /api/v1/datacenter/clearSchemaData */
+export async function deleteDatacenterClearSchemaData(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteDatacenterClearSchemaDataParams,
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/api/v1/datacenter/clearSchemaData', {
+    method: 'DELETE',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 导出数据 GET /api/v1/datacenter/exportData */
 export async function getDatacenterExportData(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
