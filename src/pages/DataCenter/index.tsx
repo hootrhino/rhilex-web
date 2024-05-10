@@ -122,7 +122,12 @@ const DataCenter = () => {
   return (
     <PageContainer>
       <ProCard split="vertical">
-        <ProCard colSpan="300px" title="数据表列表">
+        <ProCard
+          colSpan="300px"
+          title="数据表列表"
+          headStyle={{ paddingInline: 16 }}
+          bodyStyle={{ paddingInline: 16 }}
+        >
           <Tree.DirectoryTree
             showLine
             blockNode

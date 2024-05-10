@@ -60,6 +60,8 @@ const SchemaMgt = () => {
               {formatMessage({ id: 'button.new' })}
             </Button>
           }
+          headStyle={{ paddingInline: 16 }}
+          bodyStyle={{ paddingInline: 16 }}
         >
           <SchemaList
             open={open}

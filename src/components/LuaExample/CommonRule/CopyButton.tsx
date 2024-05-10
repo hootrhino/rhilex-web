@@ -29,7 +29,13 @@ const CopyButton = ({ data: { label, apply }, ...props }: CopyButtonProps) => {
         key="copy"
         type="primary"
         onClick={(e) => e.stopPropagation()}
-        icon={copied === apply ? <CheckOutlined /> : <CopyOutlined />}
+        icon={
+          copied === apply ? (
+            <CheckOutlined style={{ color: '#52c41a' }} />
+          ) : (
+            <CopyOutlined style={{ color: '#1677ff' }} />
+          )
+        }
         {...props}
       >
         {formatMessage({ id: 'component.button.copy' })}

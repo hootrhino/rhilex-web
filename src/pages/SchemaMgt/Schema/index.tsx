@@ -6,13 +6,14 @@ import {
   postSchemaCreate,
   putSchemaUpdate,
 } from '@/services/rulex/shujumoxing';
-import { cn } from '@/utils/utils';
-import { DeleteOutlined, EditOutlined, FolderOpenOutlined } from '@ant-design/icons';
+import { cn, IconFont } from '@/utils/utils';
+import { CheckOutlined, CopyOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import type { ActionType, ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProList } from '@ant-design/pro-components';
 import { history, useIntl, useRequest } from '@umijs/max';
 import { Popconfirm, Space, Tooltip } from 'antd';
 import { useEffect, useRef, useState } from 'react';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import type { ActiveSchema, SchemaItem } from '..';
 
 type SchemaListProps = ModalFormProps & {
@@ -26,6 +27,7 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
   const [initialValue, setInitialValue] = useState<Partial<SchemaItem>>();
+  const [copied, setCopied] = useState<string>('');
 
   // 详情
   const { run: getDetail } = useRequest(
@@ -74,6 +76,7 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
           });
         }}
         toolBarRender={false}
+        showActions="hover"
         onRow={({ uuid, name, published }: Partial<SchemaItem>) => {
           return {
             onClick: () =>
@@ -90,31 +93,57 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
         metas={{
           title: {
             dataIndex: 'name',
-            render: (dom, { name }) => (
+            render: (_dom, { name }) => (
               <Tooltip title={name}>
-                <div className="w-[120px] truncate">{name}</div>
+                <div className="w-[160px] truncate">{name}</div>
               </Tooltip>
             ),
           },
           description: {
             dataIndex: 'description',
             render: (_dom, { uuid }) => {
-              return uuid ? (
-                <Tooltip title={uuid}>
-                  <a
-                    className={cn('w-[150px] truncate cursor-pointer', !uuid && 'hidden')}
-                    onClick={() => history.push('/data-center')}
-                  >
-                    {uuid}
-                  </a>
-                </Tooltip>
-              ) : (
-                ''
+              return (
+                uuid && (
+                  <Space>
+                    <Tooltip title="复制">
+                      <CopyToClipboard
+                        key={uuid}
+                        text={uuid}
+                        onCopy={(text, result) => {
+                          setCopied(result ? text : '');
+                          setTimeout(() => {
+                            setCopied('');
+                          }, 1500);
+                        }}
+                      >
+                        {copied === uuid ? (
+                          <CheckOutlined style={{ color: '#52c41a' }} />
+                        ) : (
+                          <CopyOutlined
+                            style={{ color: '#1677ff' }}
+                            onClick={(e) => e.stopPropagation()}
+                          />
+                        )}
+                      </CopyToClipboard>
+                    </Tooltip>
+                    <Tooltip title={uuid}>
+                      <div
+                        className={cn(
+                          'w-[130px] truncate cursor-pointer text-[#1677ff]',
+                          !uuid && 'hidden',
+                        )}
+                        onClick={() => history.push('/data-center')}
+                      >
+                        {uuid}
+                      </div>
+                    </Tooltip>
+                  </Space>
+                )
               );
             },
           },
           avatar: {
-            render: () => <FolderOpenOutlined className="pl-[10px]" />,
+            render: () => <IconFont type={`icon-schema`} className="pl-[10px]" />,
           },
           actions: {
             render: (_dom, { uuid }) => (

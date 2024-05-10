@@ -288,7 +288,6 @@ const Devices = () => {
       <PageContainer>
         <ProCard split="vertical">
           <ProCard
-            headerBordered
             title={formatMessage({ id: 'device.title.group' })}
             colSpan="270px"
             extra={
