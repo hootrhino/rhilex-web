@@ -1,7 +1,7 @@
 import PageContainer from '@/components/PageContainer';
 import { PlusOutlined } from '@ant-design/icons';
 import { ProCard } from '@ant-design/pro-components';
-import { useIntl } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import { Button } from 'antd';
 import { useState } from 'react';
 import PropertyList from './Property';
@@ -42,11 +42,7 @@ export type ActiveSchema = Omit<SchemaItem, 'schema' | 'description'>;
 
 const SchemaMgt = () => {
   const { formatMessage } = useIntl();
-  const [activeSchema, setActiveSchema] = useState<ActiveSchema>({
-    uuid: '',
-    name: '',
-    published: false,
-  });
+  const { activeSchema } = useModel('useSchema');
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -63,12 +59,7 @@ const SchemaMgt = () => {
           headStyle={{ paddingInline: 16 }}
           bodyStyle={{ paddingInline: 16 }}
         >
-          <SchemaList
-            open={open}
-            changeOpen={setOpen}
-            activeItem={activeSchema}
-            changeActiveItem={setActiveSchema}
-          />
+          <SchemaList open={open} changeOpen={setOpen} />
         </ProCard>
         <ProCard
           title={
@@ -77,7 +68,7 @@ const SchemaMgt = () => {
               : formatMessage({ id: 'schemaMgt.title.property' })
           }
         >
-          <PropertyList schemaId={activeSchema.uuid} published={activeSchema.published} />
+          <PropertyList />
         </ProCard>
       </ProCard>
     </PageContainer>

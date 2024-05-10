@@ -83,5 +83,6 @@ export default {
   'schemaMgt.popconfirm.remove': '刪除操作將同步清除所有模型相關聯的資料庫，請謹慎操作',
   'schemaMgt.popconfirm.remove.property': '確定要刪除此屬性？',
   'schemaMgt.button.publish': '發布',
+  'schemaMgt.button.published': '已發布',
   'schemaMgt.message.success.publish': '發布完成',
 };

@@ -2,30 +2,33 @@ import { message } from '@/components/PopupHack';
 import {
   deleteSchemaDel,
   getSchemaDetail,
-  getSchemaList,
   postSchemaCreate,
   putSchemaUpdate,
 } from '@/services/rulex/shujumoxing';
 import { cn, IconFont } from '@/utils/utils';
 import { CheckOutlined, CopyOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import type { ActionType, ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
+import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProList } from '@ant-design/pro-components';
-import { history, useIntl, useRequest } from '@umijs/max';
+import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Popconfirm, Space, Tooltip } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import type { ActiveSchema, SchemaItem } from '..';
+import type { SchemaItem } from '..';
 
 type SchemaListProps = ModalFormProps & {
   changeOpen: (value: boolean) => void;
-  activeItem: ActiveSchema;
-  changeActiveItem: (item: ActiveSchema) => void;
 };
 
-const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaListProps) => {
-  const actionRef = useRef<ActionType>();
+const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
+  const {
+    activeSchema,
+    schemaList,
+    run: getSchemaList,
+    setActiveSchema,
+    refresh,
+  } = useModel('useSchema');
   const [initialValue, setInitialValue] = useState<Partial<SchemaItem>>();
   const [copied, setCopied] = useState<string>('');
 
@@ -44,7 +47,7 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
       manual: true,
       onSuccess: () => {
         message.success(formatMessage({ id: 'message.success.remove' }));
-        actionRef.current?.reload();
+        refresh();
       },
     },
   );
@@ -55,32 +58,22 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
     }
   }, [initialValue]);
 
+  useEffect(() => {
+    getSchemaList();
+  }, []);
+
   return (
     <>
       <ProList<Partial<SchemaItem>>
-        actionRef={actionRef}
         rowKey="uuid"
         headerTitle={false}
-        request={async () => {
-          const { data } = await getSchemaList();
-
-          const defaultActiveItem = data?.[0];
-          changeActiveItem({
-            uuid: defaultActiveItem?.uuid || '',
-            name: defaultActiveItem?.name || '',
-            published: defaultActiveItem?.published || false,
-          });
-          return Promise.resolve({
-            data,
-            success: true,
-          });
-        }}
+        dataSource={schemaList}
         toolBarRender={false}
         showActions="hover"
         onRow={({ uuid, name, published }: Partial<SchemaItem>) => {
           return {
             onClick: () =>
-              changeActiveItem({
+              setActiveSchema({
                 uuid: uuid || '',
                 name: name || '',
                 published: published || false,
@@ -88,7 +81,7 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
           };
         }}
         rowClassName={({ uuid }: Partial<SchemaItem>) =>
-          uuid === activeItem.uuid ? 'active-group' : ''
+          uuid === activeSchema.uuid ? 'active-group' : ''
         }
         metas={{
           title: {
@@ -206,7 +199,7 @@ const SchemaList = ({ open, changeOpen, activeItem, changeActiveItem }: SchemaLi
           }
           changeOpen(false);
           message.success(info);
-          actionRef.current?.reload();
+          refresh();
         }}
       >
         <ProFormText

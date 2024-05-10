@@ -83,5 +83,6 @@ export default {
   'schemaMgt.popconfirm.remove': '删除操作将同步清除所有模型相关联的数据库，请谨慎操作',
   'schemaMgt.popconfirm.remove.property': 'Are you sure to delete this property?',
   'schemaMgt.button.publish': '发布',
+  'schemaMgt.button.published': '已发布',
   'schemaMgt.message.success.publish': '发布完成',
 };

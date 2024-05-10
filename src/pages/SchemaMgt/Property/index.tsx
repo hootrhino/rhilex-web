@@ -11,7 +11,7 @@ import { isEmpty } from '@/utils/redash';
 import { ExclamationCircleFilled, PlusOutlined, SendOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
+import { FormattedMessage, useIntl, useModel, useRequest } from '@umijs/max';
 import type { DescriptionsProps } from 'antd';
 import { Button, Descriptions, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
@@ -38,11 +38,6 @@ export type Property = {
   rule?: Rule;
   description?: string;
   value?: string;
-};
-
-type PropertyListProps = {
-  schemaId: string;
-  published: boolean;
 };
 
 const baseColumns: ProColumns<Property>[] = [
@@ -90,11 +85,13 @@ const ruleFilterData = {
   [Type.GEO]: ['defaultValue', 'latitude', 'longitude'],
 };
 
-const PropertyList = ({ schemaId, published }: PropertyListProps) => {
+const PropertyList = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
+  const { run: getSchemaList, activeSchema } = useModel('useSchema');
   const [open, setOpen] = useState<boolean>(false);
   const [initialValue, setInitialValue] = useState<Property>({});
+  const [disabledPublish, setDisabled] = useState<boolean>(true);
 
   // 详情
   const { run: getDetail } = useRequest(
@@ -125,7 +122,9 @@ const PropertyList = ({ schemaId, published }: PropertyListProps) => {
       okText: formatMessage({ id: 'button.ok' }),
       cancelText: formatMessage({ id: 'button.cancel' }),
       onOk: async () => {
-        await postSchemaPublish({ uuid: schemaId });
+        await postSchemaPublish({ uuid: activeSchema.uuid });
+        getSchemaList();
+        actionRef.current?.reload();
         message.success(formatMessage({ id: 'schemaMgt.message.success.publish' }));
       },
     });
@@ -140,22 +139,33 @@ const PropertyList = ({ schemaId, published }: PropertyListProps) => {
         <a
           key="edit"
           onClick={() => {
-            if (!uuid || published) return;
+            if (!uuid || activeSchema.published) return;
             setOpen(true);
             getDetail({ uuid }).then((values) => setInitialValue(values));
           }}
-          className={published ? 'text-[#d9d9d9] cursor-not-allowed hover:text-[#d9d9d9]' : ''}
+          className={
+            activeSchema.published ? 'text-[#d9d9d9] cursor-not-allowed hover:text-[#d9d9d9]' : ''
+          }
         >
           {formatMessage({ id: 'button.edit' })}
         </a>,
         <Popconfirm
           title={formatMessage({ id: 'schemaMgt.popconfirm.remove.property' })}
-          onConfirm={() => uuid && schemaId && !published && remove({ uuid, schemaId })}
+          onConfirm={() =>
+            uuid &&
+            activeSchema.uuid &&
+            !activeSchema.published &&
+            remove({ uuid, schemaId: activeSchema.uuid })
+          }
           okText={formatMessage({ id: 'button.yes' })}
           cancelText={formatMessage({ id: 'button.no' })}
           key="remove"
         >
-          <a className={published ? 'text-[#d9d9d9] cursor-not-allowed hover:text-[#d9d9d9]' : ''}>
+          <a
+            className={
+              activeSchema.published ? 'text-[#d9d9d9] cursor-not-allowed hover:text-[#d9d9d9]' : ''
+            }
+          >
             {formatMessage({ id: 'button.remove' })}
           </a>
         </Popconfirm>,
@@ -243,17 +253,18 @@ const PropertyList = ({ schemaId, published }: PropertyListProps) => {
         rootClassName="stripe-table"
         columns={columns}
         search={false}
-        params={{ schema_uuid: schemaId }}
+        params={{ schema_uuid: activeSchema.uuid }}
         request={async ({ current, pageSize, ...keyword }) => {
           if (keyword?.schema_uuid) {
             const { data } = await getSchemaPropertiesList({ current, size: pageSize, ...keyword });
-
+            setDisabled(data?.total === 0);
             return Promise.resolve({
               data: data?.records || [],
               total: data?.total || 0,
               success: true,
             });
           } else {
+            setDisabled(true);
             return Promise.resolve({
               data: [],
               total: 0,
@@ -277,16 +288,18 @@ const PropertyList = ({ schemaId, published }: PropertyListProps) => {
             type="primary"
             icon={<SendOutlined />}
             onClick={handleOnPublish}
-            disabled={published}
+            disabled={activeSchema.published || disabledPublish}
           >
-            {published ? '已发布' : formatMessage({ id: 'schemaMgt.button.publish' })}
+            {activeSchema.published
+              ? formatMessage({ id: 'schemaMgt.button.published' })
+              : formatMessage({ id: 'schemaMgt.button.publish' })}
           </Button>,
           <Button
             key="new-property"
             type="primary"
             icon={<PlusOutlined />}
             onClick={() => setOpen(true)}
-            disabled={!schemaId}
+            disabled={!activeSchema.uuid}
           >
             {formatMessage({ id: 'button.new' })}
           </Button>,
@@ -302,7 +315,7 @@ const PropertyList = ({ schemaId, published }: PropertyListProps) => {
             ...values,
             unit: values?.unit || '',
             rule: values?.rule || {},
-            schemaId,
+            schemaId: activeSchema.uuid,
           };
           if (initialValue?.uuid) {
             info = formatMessage({ id: 'message.success.update' });
