@@ -137,6 +137,7 @@ const DataCenter = () => {
           {columns && columns?.length > 0 ? (
             <ProTable
               rowKey="uuid"
+              polling={5000}
               actionRef={actionRef}
               params={{ uuid: selectedKey }}
               request={async ({ current = 1, pageSize = 10, ...keyword }) => {
