@@ -49,7 +49,9 @@ const ProConfirmModal = ({
       width={400}
       footer={
         <Space>
-          <Button onClick={onCancel}>{formatMessage({ id: 'button.cancel' })}</Button>
+          <Button onClick={onCancel} disabled={countdown !== 0}>
+            {formatMessage({ id: 'button.cancel' })}
+          </Button>
           <Button
             type="primary"
             onClick={async () => {
