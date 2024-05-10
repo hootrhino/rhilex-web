@@ -46,28 +46,28 @@ export default {
   /**
    * modal
    */
-  'device.modal.title.remove': '确定要删除此设备？',
+  'device.modal.title.remove': 'Are you sure to delete this device?',
   'device.modal.title.remove.batchOid': '批量删除对象',
-  'device.modal.title.remove.oid': '确定要删除此对象？',
+  'device.modal.title.remove.oid': 'Are you sure to delete this OID?',
   'device.modal.title.remove.sheet': '确定要删除此点位？',
   'device.modal.title.remove.batchSheet': '批量删除点位',
   'device.modal.title.camera': '查看视频',
   'device.modal.title.group.new': '新建分组',
   'device.modal.title.group.edit': '编辑分组',
-  'device.modal.title.group.remove': '确定要删除此分组？',
+  'device.modal.title.group.remove': 'Are you sure to delete this group',
   'device.modal.title.upload.confirm': '导入点位表',
   'device.modal.title.upload.confirm.oid': '导入对象列表',
   'device.modal.title.upload': '你应当确保上传的点位表必须遵守一定表头格式，例如：',
 
   'device.modal.content.group.remove':
     '分组中包含 {count} 个子项目，删除后将被移入默认分组中，请谨慎处理。',
-  'device.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，需谨慎操作',
+  'device.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，请谨慎操作',
   'device.modal.content.camera.loading': '视频正在加载...',
   'device.modal.content.camera':
     '此模式下流媒体被中转到第三方地址，当前{inputAddr}已经成功推送到{outputAddr}，请在对应的平台上查看或者播放。',
   'device.modal.content.upload': '文件格式不正确可能会导致上传失败，你确定要上传',
-  'device.modal.content.remove.batchOid': '此操作会一次性删除多个对象，需谨慎操作',
-  'device.modal.content.remove.batchSheet': '此操作会一次性删除多个点位，需谨慎操作',
+  'device.modal.content.remove.batchOid': '此操作会一次性删除多个对象，请谨慎操作',
+  'device.modal.content.remove.batchSheet': '此操作会一次性删除多个点位，请谨慎操作',
 
   /**
    * form

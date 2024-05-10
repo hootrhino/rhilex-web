@@ -106,7 +106,7 @@ export default {
 
   'component.modal.title.page': '离开可能会丢失数据，确定要返回列表吗？',
   'component.modal.title.settingVar': '设置变量',
-  'component.modal.title.removeRule': '确定要删除此规则？',
+  'component.modal.title.removeRule': 'Are you sure to delete this rule?',
   'component.modal.title.editRule': '编辑规则',
   'component.modal.title.newRule': '新建规则',
 

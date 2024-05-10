@@ -21,5 +21,5 @@ export default {
   /**
    * others
    */
-  'appStack.popconfirm.title.remove': '确定要删除此应用？',
+  'appStack.popconfirm.title.remove': 'Are you sure to delete this app?',
 };

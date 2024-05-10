@@ -35,7 +35,7 @@ export default {
   'inend.title.base': '基本配置',
   'inend.title.source': '資源配置',
   'inend.popconfirm.title.remove': '確定要刪除此資源？',
-  'inend.modal.content.restart': '重啓過程會短暫（5-10秒）斷開資源連接，需謹慎操作',
+  'inend.modal.content.restart': '重啓過程會短暫（5-10秒）斷開資源連接，請謹慎操作',
   'inend.message.warning.new':
     '新建成功，但是暫時無法正常工作，請及時調整配置參數。錯誤信息：{msg}',
 

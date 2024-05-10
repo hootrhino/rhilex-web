@@ -29,8 +29,6 @@ export default {
   'message.success.login': '登录成功',
   'message.success.scan': '扫描成功',
   'message.success.restart': '重启成功',
-  'message.error.request': '请求错误，请重试',
-  'message.error.timeout': '客户端请求超时',
   /**
    * placeholder
    */
@@ -50,7 +48,7 @@ export default {
   /**
    * page
    */
-  'page.404.subTitle': '抱歉，你访问的页面不存在',
+  'page.404.subTitle': '抱歉，你访问的页面不存在。',
   'page.copyright': 'RHILEX TEAM 2023-2033。所有权利保留。',
   /**
    * form
@@ -74,7 +72,6 @@ export default {
   'modal.title.confirm': '确定执行此操作吗？',
   'modal.title.forget': '忘记密码？',
   'modal.content.forget': '如果忘记密码，请按照当前设备的手册进行重置。',
-  'modal.title.logout': '提示',
   'modal.content.logout': '确定要退出登录吗？',
   /**
    * menu

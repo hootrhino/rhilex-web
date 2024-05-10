@@ -61,13 +61,13 @@ export default {
 
   'device.modal.content.group.remove':
     '分組中包含 {count} 個子項目，刪除後將被移入默認分組中，請謹慎處理。',
-  'device.modal.content.restart': '重啓過程會短暫（5-10秒）斷開資源連接，需謹慎操作',
+  'device.modal.content.restart': '重啓過程會短暫（5-10秒）斷開資源連接，請謹慎操作',
   'device.modal.content.camera.loading': '視頻正在加載...',
   'device.modal.content.camera':
     '此模式下流媒体被中转到第三方地址，当前{inputAddr}已经成功推送到{outputAddr}，请在对应的平台上查看或者播放。',
   'device.modal.content.upload': '文件格式不正確可能會導致上傳失敗，你確定要上傳',
-  'device.modal.content.remove.batchOid': '此操作會一次性刪除多個對象，需謹慎操作',
-  'device.modal.content.remove.batchSheet': '此操作會一次性刪除多個點位，需謹慎操作',
+  'device.modal.content.remove.batchOid': '此操作會一次性刪除多個對象，請謹慎操作',
+  'device.modal.content.remove.batchSheet': '此操作會一次性刪除多個點位，請謹慎操作',
 
   /**
    * form

@@ -34,8 +34,8 @@ export default {
   'inend.title.detail': '资源详情',
   'inend.title.base': '基本配置',
   'inend.title.source': '资源配置',
-  'inend.popconfirm.title.remove': '确定要删除此资源？',
-  'inend.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，需谨慎操作',
+  'inend.popconfirm.title.remove': 'Are you sure to delete this resource?',
+  'inend.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，请谨慎操作',
   'inend.message.warning.new':
     '新建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：{msg}',
 

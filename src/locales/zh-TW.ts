@@ -29,8 +29,6 @@ export default {
   'message.success.login': '登入成功',
   'message.success.scan': '掃描成功',
   'message.success.restart': '重新啟動成功',
-  'message.error.request': '請求錯誤，請重試',
-  'message.error.timeout': '客戶端請求超時',
   /**
    * placeholder
    */
@@ -50,7 +48,7 @@ export default {
   /**
    * page
    */
-  'page.404.subTitle': '對不起，你訪問的頁面不存在',
+  'page.404.subTitle': '對不起，你訪問的頁面不存在。',
   'page.copyright': 'RHILEX TEAM 2023-2033。所有權利保留。',
   /**
    * form
@@ -74,7 +72,6 @@ export default {
   'modal.title.confirm': '確定執行此操作嗎？',
   'modal.title.forget': '忘記密碼？',
   'modal.content.forget': '如果忘記密碼，請按照當前設備的手冊進行重置。',
-  'modal.title.logout': '提示',
   'modal.content.logout': '確定要退出登錄嗎？',
   /**
    * menu

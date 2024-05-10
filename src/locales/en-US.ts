@@ -29,8 +29,6 @@ export default {
   'message.success.login': '登录成功',
   'message.success.scan': '扫描成功',
   'message.success.restart': '重启成功',
-  'message.error.request': '请求错误，请重试',
-  'message.error.timeout': '客户端请求超时',
   /**
    * placeholder
    */
@@ -40,23 +38,23 @@ export default {
   /**
    * table
    */
-  'table.index': '序号',
-  'table.desc': '备注',
-  'table.option': '操作',
+  'table.index': 'Sequence Number',
+  'table.desc': 'Description',
+  'table.option': 'Action',
   /**
    * login
    */
-  'login.title': '登录页',
+  'login.title': 'Login Page',
   /**
    * page
    */
-  'page.404.subTitle': '抱歉，你访问的页面不存在',
+  'page.404.subTitle': 'Sorry, the page you visited does not exist.',
   'page.copyright': 'RHILEX TEAM 2023-2033. All rights reserved.',
   /**
    * form
    */
-  'form.title.username': '用户名',
-  'form.title.password': '密码',
+  'form.title.username': 'Username',
+  'form.title.password': 'Password',
   'form.placeholder.username': '请输入用户名',
   'form.placeholder.password': '请输入密码',
   'form.rules.name': '请输入4-64个字符，支持中文、字母、数字或下划线',
@@ -74,7 +72,6 @@ export default {
   'modal.title.confirm': '确定执行此操作吗？',
   'modal.title.forget': '忘记密码？',
   'modal.content.forget': '如果忘记密码，请按照当前设备的手册进行重置。',
-  'modal.title.logout': '提示',
   'modal.content.logout': '确定要退出登录吗？',
   /**
    * menu

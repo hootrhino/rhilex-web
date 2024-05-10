@@ -81,7 +81,7 @@ export default {
   'schemaMgt.tooltip.update': '重命名模型',
   'schemaMgt.tooltip.remove': '删除模型',
   'schemaMgt.popconfirm.remove': '删除操作将同步清除所有模型相关联的数据库，请谨慎操作',
-  'schemaMgt.popconfirm.remove.property': '确定要删除此属性？',
+  'schemaMgt.popconfirm.remove.property': 'Are you sure to delete this property?',
   'schemaMgt.button.publish': '发布',
   'schemaMgt.message.success.publish': '发布完成',
 };

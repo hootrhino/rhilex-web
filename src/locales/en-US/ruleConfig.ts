@@ -36,7 +36,7 @@ export default {
   /**
    * others
    */
-  'ruleConfig.popconfirm.title.remove': '确定要删除此规则？',
+  'ruleConfig.popconfirm.title.remove': 'Are you sure to delete this rule?',
   'ruleConfig.popconfirm.title.reset': '重置可能会丢失数据，确定要重置吗？',
   'ruleConfig.message.mqtt':
     'Mqtt 消息来自 Publish 方，而此处规则只做原始数据转发，不对数据做任何更改，因此回调函数的参数就是原始的 Mqtt Message，其具体格式需要开发者自行决定。',
