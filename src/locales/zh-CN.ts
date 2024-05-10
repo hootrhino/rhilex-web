@@ -4,6 +4,7 @@ import status from './zh-CN/status';
 // pages
 import appStack from './zh-CN/appStack';
 import dashboard from './zh-CN/dashboard';
+import dataCenter from './zh-CN/dataCenter';
 import device from './zh-CN/device';
 import extend from './zh-CN/extend';
 import inend from './zh-CN/inend';
@@ -120,4 +121,5 @@ export default {
   ...ruleConfig,
   ...outend,
   ...inend,
+  ...dataCenter,
 };

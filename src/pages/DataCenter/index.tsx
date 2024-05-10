@@ -1,5 +1,5 @@
 import PageContainer from '@/components/PageContainer';
-import { message } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
 import {
   deleteDatacenterClearSchemaData,
   getDatacenterListSchemaDdl,
@@ -11,7 +11,7 @@ import { toPascalCase } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, TableOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import type { TreeDataNode } from 'antd';
 import { Button, Empty, Space, Tooltip, Tree } from 'antd';
 import { useEffect, useRef, useState } from 'react';
@@ -32,7 +32,7 @@ const getChildName = ({ name, type }: SchemaDDLDefineItem) => {
 };
 
 const DataCenter = () => {
-  // const {formatMessage} = useIntl();
+  const { formatMessage } = useIntl();
   const actionRef = useRef<ActionType>();
   const [selectedKey, setSelectedKey] = useState<string>();
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
@@ -45,7 +45,7 @@ const DataCenter = () => {
         title: item.published ? (
           item.name
         ) : (
-          <Tooltip title="数据模型尚未发布，因此暂时无法进行操作。你可以直接访问数据模型页面进行发布，以便启用相关功能。">
+          <Tooltip title={formatMessage({ id: 'dataCenter.tooltip.unpublish' })}>
             {item.name}
           </Tooltip>
         ),
@@ -107,10 +107,20 @@ const DataCenter = () => {
       manual: true,
       onSuccess: () => {
         actionRef.current?.reload();
-        message.success('清空完成');
+        message.success(formatMessage({ id: 'dataCenter.message.success.clear' }));
       },
     },
   );
+
+  const handleOnClear = () => {
+    modal.confirm({
+      title: formatMessage({ id: 'dataCenter.modal.title.clear' }),
+      content: formatMessage({ id: 'dataCenter.modal.content.clear' }),
+      okText: formatMessage({ id: 'button.ok' }),
+      cancelText: formatMessage({ id: 'button.cancel' }),
+      onOk: () => selectedKey && clear({ uuid: selectedKey }),
+    });
+  };
 
   useEffect(() => {
     if (selectedKey) {
@@ -124,7 +134,7 @@ const DataCenter = () => {
       <ProCard split="vertical">
         <ProCard
           colSpan="300px"
-          title="数据表列表"
+          title={formatMessage({ id: 'dataCenter.title.tree' })}
           headStyle={{ paddingInline: 16 }}
           bodyStyle={{ paddingInline: 16 }}
         >
@@ -138,7 +148,7 @@ const DataCenter = () => {
             treeData={treeData}
           />
         </ProCard>
-        <ProCard title="历史数据列表">
+        <ProCard title={formatMessage({ id: 'dataCenter.title.table' })}>
           {columns && columns?.length > 0 ? (
             <ProTable
               rowKey="uuid"
@@ -176,13 +186,8 @@ const DataCenter = () => {
               search={false}
               rootClassName="stripe-table"
               toolBarRender={() => [
-                <Button
-                  danger
-                  key="clear"
-                  onClick={() => selectedKey && clear({ uuid: selectedKey })}
-                  icon={<DeleteOutlined />}
-                >
-                  清空数据
+                <Button danger key="clear" onClick={handleOnClear} icon={<DeleteOutlined />}>
+                  {formatMessage({ id: 'dataCenter.button.clear' })}
                 </Button>,
                 <Button
                   key="download"
@@ -190,7 +195,7 @@ const DataCenter = () => {
                   onClick={handleOnDownload}
                   icon={<DownloadOutlined />}
                 >
-                  导出数据
+                  {formatMessage({ id: 'dataCenter.button.download' })}
                 </Button>,
               ]}
             />
