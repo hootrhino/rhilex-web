@@ -182,7 +182,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
           if (v.name === 'schema') {
             return {
               ...v,
-              value: data,
+              value: data?.filter((item) => !['id', 'create_at'].includes(item.name)),
             };
           }
           return v;
