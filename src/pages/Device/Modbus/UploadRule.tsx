@@ -1,4 +1,4 @@
-import { useIntl } from '@umijs/max';
+import { getIntl, getLocale } from '@umijs/max';
 import { Table } from 'antd';
 
 const dataSource = [
@@ -64,14 +64,14 @@ type UploadRuleProps = {
 };
 
 const UploadRule = ({ fileName }: UploadRuleProps) => {
-  const { formatMessage } = useIntl();
-
   return (
     <>
-      <div className="mb-[12px]">{formatMessage({ id: 'device.modal.title.upload' })}</div>
+      <div className="mb-[12px]">
+        {getIntl(getLocale()).formatMessage({ id: 'device.modal.title.upload' })}
+      </div>
       <Table bordered dataSource={dataSource} columns={columns} pagination={false} size="small" />
       <div className="mt-[24px]">
-        {formatMessage({ id: 'device.modal.content.upload' })}
+        {getIntl(getLocale()).formatMessage({ id: 'device.modal.content.upload' })}
         <span className="px-[5px] font-bold">{fileName}</span>？
       </div>
     </>
