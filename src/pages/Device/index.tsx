@@ -335,17 +335,26 @@ const Devices = () => {
               search={false}
               params={{ uuid: activeGroupKey }}
               request={async ({ current, pageSize, ...keyword }) => {
-                const { data } = await getDevicesListByGroup({
-                  current,
-                  size: pageSize,
-                  ...keyword,
-                });
-                setTotal(data?.total || 0);
-                return Promise.resolve({
-                  data: data?.records,
-                  total: data?.total || 0,
-                  success: true,
-                });
+                if (activeGroupKey) {
+                  const { data } = await getDevicesListByGroup({
+                    current,
+                    size: pageSize,
+                    ...keyword,
+                  });
+                  setTotal(data?.total || 0);
+                  return Promise.resolve({
+                    data: data?.records,
+                    total: data?.total || 0,
+                    success: true,
+                  });
+                } else {
+                  setTotal(0);
+                  return Promise.resolve({
+                    data: [],
+                    total: 0,
+                    success: true,
+                  });
+                }
               }}
               pagination={{
                 defaultPageSize: 10,

@@ -172,6 +172,7 @@ export const baseColumns = (product: Product) => [
     title: intl.formatMessage({ id: 'device.form.title.name' }),
     dataIndex: 'name',
     required: true,
+    ellipsis: true,
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.type' }),
@@ -199,11 +200,13 @@ export const baseColumns = (product: Product) => [
     title: intl.formatMessage({ id: 'device.form.title.state' }),
     dataIndex: 'state',
     hideInForm: true,
+    width: 80,
     renderText: (state: number) => <StateTag state={state} />,
   },
   {
     title: intl.formatMessage({ id: 'table.desc' }),
     dataIndex: 'description',
+    ellipsis: true,
   },
 ];
 

@@ -100,7 +100,7 @@ export async function getDatacenterSchemaDdlDefine(
   return request<{
     code: number;
     msg: string;
-    data: { name: string; type: string; uuid: string; unit: string }[];
+    data: { name: string; type: string; defaultValue: number }[];
   }>('/api/v1/datacenter/schemaDDLDefine', {
     method: 'GET',
     params: {
@@ -119,14 +119,7 @@ export async function getDatacenterSchemaDdlDetail(
   return request<{
     code: number;
     msg: string;
-    data: {
-      cid: number;
-      name: string;
-      type: string;
-      not_null: boolean;
-      default: null;
-      primary_key: boolean;
-    }[];
+    data: { name: string; type: string; uuid: string; unit: string }[];
   }>('/api/v1/datacenter/schemaDDLDetail', {
     method: 'GET',
     params: {

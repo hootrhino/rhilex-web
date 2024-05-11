@@ -5783,41 +5783,31 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "cid": {
-                            "type": "integer"
-                          },
                           "name": {
                             "type": "string"
                           },
                           "type": {
                             "type": "string"
                           },
-                          "not_null": {
-                            "type": "boolean"
+                          "uuid": {
+                            "type": "string"
                           },
-                          "default": {
-                            "type": "null"
-                          },
-                          "primary_key": {
-                            "type": "boolean"
+                          "unit": {
+                            "type": "string"
                           }
                         },
                         "required": [
-                          "cid",
                           "name",
                           "type",
-                          "not_null",
-                          "default",
-                          "primary_key"
+                          "uuid",
+                          "unit"
                         ],
                         "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
-                          "cid",
                           "name",
                           "type",
-                          "not_null",
-                          "default",
-                          "primary_key"
+                          "uuid",
+                          "unit"
                         ]
                       }
                     }
@@ -5842,60 +5832,28 @@
                       "msg": "Success",
                       "data": [
                         {
-                          "cid": 0,
-                          "name": "id",
-                          "type": "INTEGER",
-                          "not_null": false,
-                          "default": null,
-                          "primary_key": false
+                          "name": "ph_value",
+                          "type": "FLOAT",
+                          "uuid": "PROPERDPBPSRAA",
+                          "unit": "mol/L"
                         },
                         {
-                          "cid": 1,
-                          "name": "ts",
-                          "type": "INTEGER",
-                          "not_null": false,
-                          "default": null,
-                          "primary_key": false
+                          "name": "oxygen",
+                          "type": "FLOAT",
+                          "uuid": "PROPERJHT2RI29",
+                          "unit": "mg/L"
                         },
                         {
-                          "cid": 2,
-                          "name": "schema_id",
-                          "type": "INTEGER",
-                          "not_null": false,
-                          "default": null,
-                          "primary_key": false
+                          "name": "temperature",
+                          "type": "FLOAT",
+                          "uuid": "PROPERHM7ZLDAR",
+                          "unit": "ºC"
                         },
                         {
-                          "cid": 3,
-                          "name": "temp",
-                          "type": "REAL",
-                          "not_null": false,
-                          "default": null,
-                          "primary_key": false
-                        },
-                        {
-                          "cid": 4,
-                          "name": "humi",
-                          "type": "REAL",
-                          "not_null": false,
-                          "default": null,
-                          "primary_key": false
-                        },
-                        {
-                          "cid": 5,
-                          "name": "status",
-                          "type": "BOOLEAN",
-                          "not_null": false,
-                          "default": null,
-                          "primary_key": false
-                        },
-                        {
-                          "cid": 6,
-                          "name": "msg",
-                          "type": "TEXT",
-                          "not_null": false,
-                          "default": null,
-                          "primary_key": false
+                          "name": "warning",
+                          "type": "STRING",
+                          "uuid": "PROPERNW2BFTJI",
+                          "unit": "./."
                         }
                       ]
                     }
@@ -17641,25 +17599,20 @@
                           "type": {
                             "type": "string"
                           },
-                          "uuid": {
-                            "type": "string"
-                          },
-                          "unit": {
-                            "type": "string"
+                          "defaultValue": {
+                            "type": "integer"
                           }
                         },
                         "required": [
                           "name",
                           "type",
-                          "uuid",
-                          "unit"
+                          "defaultValue"
                         ],
                         "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
                           "name",
                           "type",
-                          "uuid",
-                          "unit"
+                          "defaultValue"
                         ]
                       }
                     }
@@ -17684,28 +17637,34 @@
                       "msg": "Success",
                       "data": [
                         {
-                          "name": "ph_value",
-                          "type": "FLOAT",
-                          "uuid": "PROPERDPBPSRAA",
-                          "unit": "mol/L"
+                          "name": "id",
+                          "type": "INTEGER",
+                          "defaultValue": 0
                         },
                         {
-                          "name": "oxygen",
-                          "type": "FLOAT",
-                          "uuid": "PROPERJHT2RI29",
-                          "unit": "mg/L"
-                        },
-                        {
-                          "name": "temperature",
-                          "type": "FLOAT",
-                          "uuid": "PROPERHM7ZLDAR",
-                          "unit": "ºC"
+                          "name": "create_at",
+                          "type": "STRING",
+                          "defaultValue": "''"
                         },
                         {
                           "name": "warning",
                           "type": "STRING",
-                          "uuid": "PROPERNW2BFTJI",
-                          "unit": "./."
+                          "defaultValue": "''"
+                        },
+                        {
+                          "name": "temperature",
+                          "type": "FLOAT",
+                          "defaultValue": 0
+                        },
+                        {
+                          "name": "oxygen",
+                          "type": "FLOAT",
+                          "defaultValue": 0
+                        },
+                        {
+                          "name": "ph_value",
+                          "type": "FLOAT",
+                          "defaultValue": 0
                         }
                       ]
                     }

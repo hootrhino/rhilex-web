@@ -14,6 +14,7 @@ import { ProCard, ProTable } from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
 import type { TreeDataNode } from 'antd';
 import { Button, Empty, Space, Tooltip, Tree } from 'antd';
+import dayjs from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
 
 type SchemaDDLDefineItem = {
@@ -92,7 +93,24 @@ const DataCenter = () => {
     {
       manual: true,
       formatResult: (res) =>
-        res?.data?.map((item) => ({ title: toPascalCase(item?.name), dataIndex: item?.name })),
+        res?.data?.map((item) => ({
+          title: toPascalCase(item?.name),
+          dataIndex: item?.name,
+          render: (_dom: React.ReactNode, record: Record<string, any>) => {
+            if (item?.unit) {
+              return (
+                <div className="flex items-center">
+                  <span>{record[item.name]}</span>
+                  <span className="text-[12px] opacity-[.8] pl-[4px] font-normal">{item.unit}</span>
+                </div>
+              );
+            } else {
+              return item.name === 'create_at'
+                ? dayjs(record['create_at']).format('YYYY-MM-DD HH:mm:ss')
+                : record[item.name];
+            }
+          },
+        })),
     },
   );
 

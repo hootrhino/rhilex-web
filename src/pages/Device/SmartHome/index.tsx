@@ -19,7 +19,7 @@ import {
   SettingOutlined,
 } from '@ant-design/icons';
 import type { CheckGroupValueType } from '@ant-design/pro-card/es/components/CheckCard/Group';
-import { CheckCard } from '@ant-design/pro-components';
+import { CheckCard, ProCard } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, Divider, Dropdown, Space, Switch, Tag } from 'antd';
 import type { MenuInfo } from 'rc-menu/lib/interface';
@@ -175,37 +175,37 @@ const ShellySubDevice = () => {
   ];
 
   return (
-    <>
-      <PageContainer
-        onBack={() => history.push('/device/list')}
-        title={formatMessage({ id: 'device.title.subDevice' }, { name: deviceDetail?.name || '' })}
-        extra={
-          <Space>
-            <Button
-              key="scan"
-              type="primary"
-              icon={<ScanOutlined />}
-              onClick={() => deviceId && scan({ uuid: deviceId })}
-              loading={scanLoading}
-            >
-              {formatMessage({ id: 'device.button.scan' })}
-            </Button>
-            <Button
-              ghost
-              key="reload"
-              type="primary"
-              icon={<ReloadOutlined />}
-              onClick={() => {
-                getSubDeviceList().then(() =>
-                  message.success(formatMessage({ id: 'device.button.reload' })),
-                );
-              }}
-            >
-              {formatMessage({ id: 'device.button.reload' })}
-            </Button>
-          </Space>
-        }
-      >
+    <PageContainer
+      onBack={() => history.push('/device/list')}
+      title={formatMessage({ id: 'device.title.subDevice' }, { name: deviceDetail?.name || '' })}
+      extra={
+        <Space>
+          <Button
+            key="scan"
+            type="primary"
+            icon={<ScanOutlined />}
+            onClick={() => deviceId && scan({ uuid: deviceId })}
+            loading={scanLoading}
+          >
+            {formatMessage({ id: 'device.button.scan' })}
+          </Button>
+          <Button
+            ghost
+            key="reload"
+            type="primary"
+            icon={<ReloadOutlined />}
+            onClick={() => {
+              getSubDeviceList().then(() =>
+                message.success(formatMessage({ id: 'device.button.reload' })),
+              );
+            }}
+          >
+            {formatMessage({ id: 'device.button.reload' })}
+          </Button>
+        </Space>
+      }
+    >
+      <ProCard>
         <CheckCard.Group multiple onChange={(value) => setCheckedItem(value)} value={checkedItem}>
           {subDeviceList?.map((item) => (
             <CheckCard
@@ -273,8 +273,8 @@ const ShellySubDevice = () => {
             />
           ))}
         </CheckCard.Group>
-      </PageContainer>
-    </>
+      </ProCard>
+    </PageContainer>
   );
 };
 
