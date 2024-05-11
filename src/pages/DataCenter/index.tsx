@@ -19,7 +19,7 @@ import { useEffect, useRef, useState } from 'react';
 type SchemaDDLDefineItem = {
   name: string;
   type: string;
-  defaultValue: number;
+  [key: string]: any;
 };
 
 const getChildName = ({ name, type }: SchemaDDLDefineItem) => {
@@ -54,9 +54,10 @@ const DataCenter = () => {
         icon: <TableOutlined />,
         children: [],
       }));
+      const publishedData = data?.filter((item) => item.published);
       setTreeData(formatData);
-      setSelectedKey(data?.[0]?.uuid);
-      setExpandedKeys(data?.[0]?.uuid ? [data?.[0]?.uuid] : []);
+      setSelectedKey(publishedData?.[0]?.uuid);
+      setExpandedKeys(publishedData?.[0]?.uuid ? [publishedData?.[0]?.uuid] : []);
     },
   });
 
