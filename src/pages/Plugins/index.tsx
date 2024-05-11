@@ -133,11 +133,10 @@ const Plugins = () => {
       <PageContainer>
         <ProList<PluginItem>
           rowKey="uuid"
-          ghost={true}
           pagination={false}
           showActions="hover"
           grid={{ gutter: 16, column: 4 }}
-          cardProps={{ className: 'plugin-card' }}
+          cardProps={{ className: 'plugin-card', bodyStyle: { paddingBlockStart: 16 } }}
           metas={{
             title: {
               dataIndex: 'name',

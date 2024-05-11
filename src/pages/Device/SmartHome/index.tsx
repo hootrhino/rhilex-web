@@ -25,7 +25,6 @@ import { Button, Divider, Dropdown, Space, Switch, Tag } from 'antd';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useState } from 'react';
 import Detail from './Detail';
-import { avatar, DefaultImg } from './images';
 
 export enum AppType {
   PRO1 = 'Pro1',
@@ -210,9 +209,15 @@ const ShellySubDevice = () => {
           {subDeviceList?.map((item) => (
             <CheckCard
               key={item.id}
-              avatar={item.app ? avatar[item.app] : DefaultImg}
               value={item.id}
-              title={<div className="truncate w-[180px]">{item.name}</div>}
+              title={
+                <div className="flex items-center truncate w-[200px]">
+                  {item.name}
+                  <Tag className="ml-[10px]" color="blue">
+                    {item.app}
+                  </Tag>
+                </div>
+              }
               description={
                 <div>
                   <div className="text-[#000] text-opacity-50 text-[12px]">{item.ip}</div>
