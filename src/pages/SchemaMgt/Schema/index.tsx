@@ -136,7 +136,12 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
             },
           },
           avatar: {
-            render: () => <IconFont type={`icon-schema`} className="pl-[10px]" />,
+            render: (_dom, { published }) =>
+              published ? (
+                <IconFont type="icon-schema-published" className="pl-[10px]" />
+              ) : (
+                <IconFont type={`icon-schema`} className="pl-[10px]" />
+              ),
           },
           actions: {
             render: (_dom, { uuid }) => (

@@ -17641,20 +17641,25 @@
                           "type": {
                             "type": "string"
                           },
-                          "defaultValue": {
-                            "type": "integer"
+                          "uuid": {
+                            "type": "string"
+                          },
+                          "unit": {
+                            "type": "string"
                           }
                         },
                         "required": [
                           "name",
                           "type",
-                          "defaultValue"
+                          "uuid",
+                          "unit"
                         ],
                         "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
                           "name",
                           "type",
-                          "defaultValue"
+                          "uuid",
+                          "unit"
                         ]
                       }
                     }
@@ -17679,34 +17684,28 @@
                       "msg": "Success",
                       "data": [
                         {
-                          "name": "id",
-                          "type": "INTEGER",
-                          "defaultValue": 0
-                        },
-                        {
-                          "name": "create_at",
-                          "type": "STRING",
-                          "defaultValue": "''"
-                        },
-                        {
-                          "name": "info",
-                          "type": "STRING",
-                          "defaultValue": "''"
-                        },
-                        {
-                          "name": "temperature",
+                          "name": "ph_value",
                           "type": "FLOAT",
-                          "defaultValue": 0
+                          "uuid": "PROPERDPBPSRAA",
+                          "unit": "mol/L"
                         },
                         {
                           "name": "oxygen",
                           "type": "FLOAT",
-                          "defaultValue": 0
+                          "uuid": "PROPERJHT2RI29",
+                          "unit": "mg/L"
                         },
                         {
-                          "name": "ph_value",
+                          "name": "temperature",
                           "type": "FLOAT",
-                          "defaultValue": 0
+                          "uuid": "PROPERHM7ZLDAR",
+                          "unit": "ºC"
+                        },
+                        {
+                          "name": "warning",
+                          "type": "STRING",
+                          "uuid": "PROPERNW2BFTJI",
+                          "unit": "./."
                         }
                       ]
                     }
