@@ -97,9 +97,7 @@ export default {
    */
   'system.button.reload': '刷新状态',
   'system.button.restart4g': '重启 4G 网卡',
-  'system.button.restart': '重启',
   'system.button.upgrade': '升级',
-  'system.button.recover': '恢复',
   'system.button.confirm.restart': '确认重启',
   'system.button.confirm.upload': '确认上传',
   'system.button.confirm.upgrade': '确认升级',

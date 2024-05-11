@@ -38,7 +38,7 @@ export default {
   /**
    * table
    */
-  'table.index': 'Sequence Number',
+  'table.index': 'NO.',
   'table.desc': 'Description',
   'table.option': 'Action',
   /**

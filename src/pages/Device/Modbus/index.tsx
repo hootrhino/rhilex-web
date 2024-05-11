@@ -330,7 +330,8 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       title: formatMessage({ id: 'device.form.title.address' }),
       dataIndex: 'address',
       valueType: 'digit',
-      width: 80,
+      width: 100,
+      ellipsis: true,
       fieldProps: {
         style: { width: '100%' },
         placeholder: formatMessage({ id: 'device.form.placeholder.address' }),
@@ -545,7 +546,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       onClick={handleOnBatchUpdate}
       disabled={disabled}
     >
-      {formatMessage({ id: 'device.button.update.batch' })}
+      {formatMessage({ id: 'device.button.update.bulk' })}
     </Button>,
     <Button
       key="batch-remove"
@@ -562,7 +563,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
         })
       }
     >
-      {formatMessage({ id: 'device.button.remove.batch' })}
+      {formatMessage({ id: 'device.button.remove.bulk' })}
     </Button>,
     <Button
       key="download"
@@ -633,6 +634,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
         pagination={{
           defaultPageSize: 10,
           hideOnSinglePage: true,
+          showSizeChanger: false,
         }}
         editable={{
           type: 'multiple',
@@ -680,6 +682,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
         pagination={{
           defaultPageSize: 10,
           hideOnSinglePage: true,
+          showSizeChanger: false,
         }}
         options={false}
         search={false}

@@ -97,9 +97,7 @@ export default {
    */
   'system.button.reload': '重新載入狀態',
   'system.button.restart4g': '重新啟動 4G 網卡',
-  'system.button.restart': '重啓',
   'system.button.upgrade': '升級',
-  'system.button.recover': '恢復',
   'system.button.confirm.restart': '確認重新啟動',
   'system.button.confirm.upload': '確認上傳',
   'system.button.confirm.upgrade': '確認升級',

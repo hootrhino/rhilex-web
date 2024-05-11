@@ -2,9 +2,9 @@ export default {
   /**
    * form
    */
-  'portMgt.form.title.name': '介面名稱',
+  'portMgt.form.title.name': '名稱',
   'portMgt.form.title.alias': '暱稱',
-  'portMgt.form.title.type': '介面類型',
+  'portMgt.form.title.type': '類型',
   'portMgt.form.title.busy': '狀態',
   'portMgt.form.title.occupyBy': '佔用設備',
   'portMgt.form.title.config': '介面配置',

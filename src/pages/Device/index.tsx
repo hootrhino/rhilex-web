@@ -359,6 +359,7 @@ const Devices = () => {
               pagination={{
                 defaultPageSize: 10,
                 hideOnSinglePage: true,
+                showSizeChanger: false,
               }}
               toolBarRender={() => [
                 <Button

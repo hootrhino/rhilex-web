@@ -195,11 +195,11 @@ const ShellySubDevice = () => {
             icon={<ReloadOutlined />}
             onClick={() => {
               getSubDeviceList().then(() =>
-                message.success(formatMessage({ id: 'device.button.reload' })),
+                message.success(formatMessage({ id: 'device.button.refresh' })),
               );
             }}
           >
-            {formatMessage({ id: 'device.button.reload' })}
+            {formatMessage({ id: 'device.button.refresh' })}
           </Button>
         </Space>
       }

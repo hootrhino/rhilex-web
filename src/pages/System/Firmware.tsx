@@ -47,14 +47,14 @@ const defaultRebootConfig = {
   title,
   content: intl.formatMessage({ id: 'system.modal.content.restartDevice' }),
   okText: intl.formatMessage({ id: 'system.button.confirm.restart' }),
-  afterOkText: intl.formatMessage({ id: 'system.button.restart' }),
+  afterOkText: intl.formatMessage({ id: 'button.restart' }),
 };
 
 const defaultRecoverConfig = {
   title,
   content: intl.formatMessage({ id: 'system.modal.content.recover' }),
   okText: intl.formatMessage({ id: 'system.button.confirm.recover' }),
-  afterOkText: intl.formatMessage({ id: 'system.button.recover' }),
+  afterOkText: intl.formatMessage({ id: 'button.recover' }),
 };
 
 export const twoColors: ProgressProps['strokeColor'] = {

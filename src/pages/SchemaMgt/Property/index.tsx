@@ -275,6 +275,7 @@ const PropertyList = () => {
         pagination={{
           defaultPageSize: 10,
           hideOnSinglePage: true,
+          showSizeChanger: false,
         }}
         expandable={{
           expandedRowRender,

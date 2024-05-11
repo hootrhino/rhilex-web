@@ -343,7 +343,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       </Button>
     </Upload>,
     <Button
-      key="batch-update"
+      key="bulk-update"
       type="primary"
       icon={
         <IconFont
@@ -354,10 +354,10 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       onClick={handleOnBatchUpdate}
       disabled={disabled}
     >
-      {formatMessage({ id: 'device.button.update.batch' })}
+      {formatMessage({ id: 'device.button.update.bulk' })}
     </Button>,
     <Button
-      key="batch-remove"
+      key="bulk-remove"
       danger
       icon={<DeleteOutlined />}
       disabled={disabled}
@@ -371,7 +371,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
         })
       }
     >
-      {formatMessage({ id: 'device.button.remove.batch' })}
+      {formatMessage({ id: 'device.button.remove.bulk' })}
     </Button>,
     <Button
       key="download"
@@ -424,6 +424,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
         pagination={{
           defaultPageSize: 10,
           hideOnSinglePage: true,
+          showSizeChanger: false,
         }}
         editable={{
           type: 'multiple',
@@ -459,6 +460,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
         pagination={{
           defaultPageSize: 10,
           hideOnSinglePage: true,
+          showSizeChanger: false,
         }}
         toolBarRender={false}
         options={false}

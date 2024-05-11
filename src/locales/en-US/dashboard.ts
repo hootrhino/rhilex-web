@@ -3,8 +3,8 @@ export default {
    * button
    */
   'dashboard.button.reset': '统计重置数据',
-  'dashboard.button.download': '下载',
-  'dashboard.button.clear': '清空',
+  'dashboard.button.download': 'Download',
+  'dashboard.button.clear': 'Clear',
 
   /**
    * title

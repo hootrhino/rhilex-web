@@ -2,9 +2,9 @@ export default {
   /**
    * table
    */
-  'outend.table.title.name': '資源名稱',
-  'outend.table.title.type': '資源類型',
-  'outend.table.title.state': '資源狀態',
+  'outend.table.title.name': '名稱',
+  'outend.table.title.type': '類型',
+  'outend.table.title.state': '狀態',
   'outend.table.title.allowPing': '開啓心跳',
   'outend.table.title.pingPacket': '心跳包內容',
   'outend.table.title.timeout': '超時時間',

@@ -2,9 +2,9 @@ export default {
   /**
    * table
    */
-  'inend.table.title.name': '資源名稱',
-  'inend.table.title.type': '資源類型',
-  'inend.table.title.state': '資源狀態',
+  'inend.table.title.name': '名稱',
+  'inend.table.title.type': '類型',
+  'inend.table.title.state': '狀態',
   'inend.table.title.host': '服務地址',
   'inend.table.title.port': '端口',
   'inend.table.title.clientId': '客户端 ID',

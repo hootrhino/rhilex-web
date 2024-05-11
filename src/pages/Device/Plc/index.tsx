@@ -437,7 +437,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       onClick={handleOnBatchUpdate}
       disabled={disabled}
     >
-      {formatMessage({ id: 'device.button.update.batch' })}
+      {formatMessage({ id: 'device.button.update.bulk' })}
     </Button>,
     <Button
       key="batch-remove"
@@ -454,7 +454,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
         })
       }
     >
-      {formatMessage({ id: 'device.button.remove.batch' })}
+      {formatMessage({ id: 'device.button.remove.bulk' })}
     </Button>,
     <Button
       key="download"
@@ -512,6 +512,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
         pagination={{
           defaultPageSize: 10,
           hideOnSinglePage: true,
+          showSizeChanger: false,
         }}
         editable={{
           type: 'multiple',
@@ -560,6 +561,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
         pagination={{
           defaultPageSize: 10,
           hideOnSinglePage: true,
+          showSizeChanger: false,
         }}
         options={false}
         search={false}

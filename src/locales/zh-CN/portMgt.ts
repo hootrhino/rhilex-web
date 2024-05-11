@@ -2,9 +2,9 @@ export default {
   /**
    * form
    */
-  'portMgt.form.title.name': '接口名称',
+  'portMgt.form.title.name': '名称',
   'portMgt.form.title.alias': '别名',
-  'portMgt.form.title.type': '接口类型',
+  'portMgt.form.title.type': '类型',
   'portMgt.form.title.busy': '状态',
   'portMgt.form.title.occupyBy': '占用设备',
   'portMgt.form.title.config': '接口配置',
