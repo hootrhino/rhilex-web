@@ -157,8 +157,8 @@ export default {
   'system.switch.checked': '開啟',
   'system.switch.unchecked': '關閉',
 
-  'system.desc.recovery': '僅支持 db 文件',
-  'system.message.error.recovery': '僅支持 .db 格式的文件，請檢查上傳文件格式',
+  'system.desc.recovery': '僅支持 zip 文件',
+  'system.message.error.recovery': '僅支持 .zip 格式的文件，請檢查上傳文件格式',
   'system.message.error.upload': '僅支持 zip 格式的文件，請檢查上傳文件格式',
   'system.message.success.ntp': 'NTP 時間更新成功',
   'system.message.success.scan': '掃描完成',

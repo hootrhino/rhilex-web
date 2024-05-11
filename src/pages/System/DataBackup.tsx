@@ -87,12 +87,12 @@ const DataBackupConfig = () => {
         <ProFormUploadDragger
           name="recovery"
           max={1}
-          accept=".db"
+          accept="application/zip"
           description={formatMessage({ id: 'system.desc.recovery' })}
           fieldProps={{
             style: { maxWidth: 700 },
             beforeUpload: (file) => {
-              const isSql = endsWith(file.name, '.db');
+              const isSql = file.type === 'application/zip' || endsWith(file?.name, '.zip');
 
               if (!isSql) {
                 message.error(formatMessage({ id: 'system.message.error.recovery' }));

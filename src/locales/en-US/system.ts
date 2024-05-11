@@ -156,8 +156,8 @@ export default {
   'system.switch.checked': '开启',
   'system.switch.unchecked': '关闭',
 
-  'system.desc.recovery': '仅支持 db 文件',
-  'system.message.error.recovery': '仅支持 .db 格式的文件，请检查上传文件格式',
+  'system.desc.recovery': '仅支持 zip 文件',
+  'system.message.error.recovery': '仅支持 .zip 格式的文件，请检查上传文件格式',
   'system.message.error.upload': '仅支持 zip 格式文件，请检查上传文件格式',
   'system.message.success.ntp': 'NTP 时间更新成功',
   'system.message.success.scan': '扫描完成',
