@@ -12,14 +12,13 @@ export default {
   /**
    * table
    */
-  'notifyLog.table.title.event': '事件',
-  'notifyLog.table.title.type': '类型',
-  'notifyLog.table.title.summary': '概览',
-  'notifyLog.table.title.ts': '时间',
+  'notifyLog.table.title.event': 'Event',
+  'notifyLog.table.title.type': 'Type',
+  'notifyLog.table.title.summary': 'Summary',
+  'notifyLog.table.title.ts': 'Time',
 
   /**
    * others
    */
-  'notifyLog.expanded': '日志详情',
   'notifyLog.tooltip.clear': '设置已读',
 };

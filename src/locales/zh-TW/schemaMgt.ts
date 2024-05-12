@@ -35,7 +35,7 @@ export default {
   'schemaMgt.modal.title.schema.new': '新建數據模型',
   'schemaMgt.modal.title.schema.update': '更新數據模型',
   'schemaMgt.modal.title.property.new': '新建屬性',
-  'schemaMgt.modal.title.property.update': '更新屬性',
+  'schemaMgt.modal.title.property.update': '編輯屬性',
   'schemaMgt.modal.title.property.publish': '發布模型',
   'schemaMgt.modal.content.property.publish':
     '模型發布後，您將無法對其進行修改。請確保在發布前完成所有的設計工作',

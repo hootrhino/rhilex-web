@@ -20,6 +20,5 @@ export default {
   /**
    * others
    */
-  'notifyLog.expanded': '日誌詳情',
   'notifyLog.tooltip.clear': '設定已讀',
 };

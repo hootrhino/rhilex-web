@@ -159,7 +159,7 @@ export default {
   'system.message.error.recovery': '僅支持 .zip 格式的文件，請檢查上傳文件格式',
   'system.message.error.upload': '僅支持 zip 格式的文件，請檢查上傳文件格式',
   'system.message.success.ntp': 'NTP 時間更新成功',
-  'system.message.success.scan': '掃描完成',
+  'system.message.success.scan': '掃描成功',
 
   'system.type.ethernet': '以太網',
   'system.type.bridge': '橋接設備',

@@ -14,7 +14,7 @@ export default {
    * title
    */
   'appStack.title.new': '新建应用',
-  'appStack.title.update': '更新应用',
+  'appStack.title.update': '编辑应用',
   'appStack.title.detail': '应用详情',
   'appStack.title.log': '应用日志',
 

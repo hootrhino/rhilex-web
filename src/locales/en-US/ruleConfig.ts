@@ -21,17 +21,17 @@ export default {
   /**
    * title
    */
-  'ruleConfig.title': '规则配置',
-  'ruleConfig.title.new': '新建规则',
-  'ruleConfig.title.edit': '编辑规则',
-  'ruleConfig.title.detail': '规则详情',
-  'ruleConfig.title.log': '规则日志',
-  'ruleConfig.title.test': '测试脚本',
-  'ruleConfig.title.device': '设备',
-  'ruleConfig.title.source': '资源',
-  'ruleConfig.title.deviceConfig': '设备 {title} - 规则配置',
-  'ruleConfig.title.sourceConfig': '资源 {title} - 规则配置',
-  'ruleConfig.title.tpl': '输出数据的结构及其示例',
+  'ruleConfig.title': 'Rule configuration',
+  'ruleConfig.title.new': 'New rule',
+  'ruleConfig.title.edit': 'Edit rule',
+  'ruleConfig.title.detail': 'Rule detail',
+  'ruleConfig.title.log': 'Rule log',
+  'ruleConfig.title.test': 'Test script',
+  'ruleConfig.title.device': 'Device',
+  'ruleConfig.title.source': 'Resource',
+  'ruleConfig.title.deviceConfig': 'Device {title} - rule configuration',
+  'ruleConfig.title.sourceConfig': 'Resource {title} - rule configuration',
+  'ruleConfig.title.tpl': 'Structure and examples of output data',
 
   /**
    * others
@@ -50,9 +50,9 @@ export default {
   'ruleConfig.inend.event.disconnected': '设备离线事件',
   'ruleConfig.inend.event.up': '资源上线事件',
   'ruleConfig.inend.event.down': '资源离线事件',
-  'ruleConfig.inend.link.ali': '阿里云:',
-  'ruleConfig.inend.link.tencent': '腾讯云:',
-  'ruleConfig.inend.link.w3c': 'W3C 规范:',
+  'ruleConfig.inend.link.ali': 'Ali Cloud:',
+  'ruleConfig.inend.link.tencent': 'Tencent Cloud:',
+  'ruleConfig.inend.link.w3c': 'W3C specifications:',
 
   /**
    * device ds
@@ -60,13 +60,13 @@ export default {
   'ruleConfig.ds.device.in': '输入参数',
   'ruleConfig.ds.device.out': '输出值',
   'ruleConfig.ds.device.tag': 'Tag',
-  'ruleConfig.ds.device.function': 'Function Code',
+  'ruleConfig.ds.device.function': 'Function code',
   'ruleConfig.ds.device.slaverId': '从机 ID',
   'ruleConfig.ds.device.address': 'Address',
-  'ruleConfig.ds.device.quantity': '数量',
+  'ruleConfig.ds.device.quantity': 'Quantity',
   'ruleConfig.ds.device.value': 'Value',
-  'ruleConfig.ds.device.type': 'Data Type',
-  'ruleConfig.ds.device.frequency': '频率',
+  'ruleConfig.ds.device.type': 'Data type',
+  'ruleConfig.ds.device.frequency': 'Frequency',
   'ruleConfig.ds.device.start': '起始位置',
   'ruleConfig.ds.device.size': '大小',
   'ruleConfig.ds.device.width': '单帧宽度',
@@ -84,11 +84,11 @@ export default {
    */
   'ruleConfig.ds.inend.from': '数据来源',
   'ruleConfig.ds.inend.data': '数据体',
-  'ruleConfig.ds.inend.type': '事件类型',
-  'ruleConfig.ds.inend.event': '事件名称',
+  'ruleConfig.ds.inend.type': 'Event type',
+  'ruleConfig.ds.inend.event': 'Event name',
   'ruleConfig.ds.inend.ts': '时间戳',
-  'ruleConfig.ds.inend.deviceUuid': '设备 ID',
-  'ruleConfig.ds.inend.deviceName': '设备名称',
-  'ruleConfig.ds.inend.sourceUuid': '资源 ID',
-  'ruleConfig.ds.inend.sourceName': '资源名称',
+  'ruleConfig.ds.inend.deviceUuid': 'Device ID',
+  'ruleConfig.ds.inend.deviceName': 'Device name',
+  'ruleConfig.ds.inend.sourceUuid': 'Resource ID',
+  'ruleConfig.ds.inend.sourceName': 'Resource name',
 };

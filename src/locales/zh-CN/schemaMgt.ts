@@ -35,7 +35,7 @@ export default {
   'schemaMgt.modal.title.schema.new': '新建数据模型',
   'schemaMgt.modal.title.schema.update': '更新数据模型',
   'schemaMgt.modal.title.property.new': '新建属性',
-  'schemaMgt.modal.title.property.update': '更新属性',
+  'schemaMgt.modal.title.property.update': '编辑属性',
   'schemaMgt.modal.title.property.publish': '发布模型',
   'schemaMgt.modal.content.property.publish':
     '模型发布后，您将无法对其进行修改。请确保在发布前完成所有的设计工作',
@@ -83,5 +83,5 @@ export default {
   'schemaMgt.popconfirm.remove.property': '确定要删除此属性？',
   'schemaMgt.button.publish': '发布',
   'schemaMgt.button.published': '已发布',
-  'schemaMgt.message.success.publish': '发布完成',
+  'schemaMgt.message.success.publish': '发布成功',
 };

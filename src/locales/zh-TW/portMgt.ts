@@ -33,7 +33,7 @@ export default {
    * modal
    */
   'portMgt.modal.title.detail': '介面詳情',
-  'portMgt.modal.title.update': '更新介面',
+  'portMgt.modal.title.update': '編輯介面',
 
   /**
    * others

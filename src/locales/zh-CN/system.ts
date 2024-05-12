@@ -158,7 +158,7 @@ export default {
   'system.message.error.recovery': '仅支持 .zip 格式的文件，请检查上传文件格式',
   'system.message.error.upload': '仅支持 zip 格式文件，请检查上传文件格式',
   'system.message.success.ntp': 'NTP 时间更新成功',
-  'system.message.success.scan': '扫描完成',
+  'system.message.success.scan': '扫描成功',
 
   'system.type.ethernet': '以太网',
   'system.type.bridge': '桥接设备',

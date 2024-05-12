@@ -33,7 +33,7 @@ export default {
    * modal
    */
   'portMgt.modal.title.detail': '接口详情',
-  'portMgt.modal.title.update': '更新接口',
+  'portMgt.modal.title.update': '编辑接口',
 
   /**
    * others

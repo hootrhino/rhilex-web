@@ -1,9 +1,10 @@
+// TODO 该模块已隐藏，暂时不做翻译
 export default {
   /**
    * form
    */
   'extend.form.title.new': '新建协议',
-  'extend.form.title.edit': '更新协议',
+  'extend.form.title.edit': '编辑协议',
   'extend.form.title.netAddr': '协议交互地址',
   'extend.form.title.args': '协议参数',
   'extend.form.title.upload': '可执行包',
