@@ -38,7 +38,7 @@ export default {
   'schemaMgt.modal.title.property.update': '更新属性',
   'schemaMgt.modal.title.property.publish': '发布模型',
   'schemaMgt.modal.content.property.publish':
-    '模型发布后，您将无法对其进行修改。请确保在发布前完成所有的设计工作。',
+    '模型发布后，您将无法对其进行修改。请确保在发布前完成所有的设计工作',
 
   /**
    * title

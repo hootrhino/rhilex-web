@@ -38,7 +38,7 @@ export default {
   'schemaMgt.modal.title.property.update': 'Update property',
   'schemaMgt.modal.title.property.publish': 'Publish schema',
   'schemaMgt.modal.content.property.publish':
-    '模型发布后，您将无法对其进行修改。请确保在发布前完成所有的设计工作。',
+    'After the schema is published, you will not be able to make any modifications to it. Please ensure all design work is completed before publication',
 
   /**
    * title
@@ -83,5 +83,5 @@ export default {
   'schemaMgt.popconfirm.remove.property': 'Are you sure to delete this property?',
   'schemaMgt.button.publish': 'Publish',
   'schemaMgt.button.published': 'Published',
-  'schemaMgt.message.success.publish': 'Publishing successful',
+  'schemaMgt.message.success.publish': 'Published successfully',
 };
