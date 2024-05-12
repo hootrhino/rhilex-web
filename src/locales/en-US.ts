@@ -34,7 +34,7 @@ export default {
    */
   'placeholder.input': '请输入{text}',
   'placeholder.select': '请选择{text}',
-  'placeholder.desc': '请输入备注',
+  'placeholder.desc': 'Please enter a description',
   /**
    * table
    */
@@ -84,7 +84,7 @@ export default {
   'menu.device.sheet': 'Register Sheet Configuration',
   'menu.device.objectList': 'SNMP OID Sheet',
   'menu.device.subDevice': 'Subdevice List',
-  'menu.schema': 'Schema Model',
+  'menu.schema': 'Data Schema',
   'menu.dataCenter': 'Data Center',
   'menu.inend': 'Inend Resources',
   'menu.source.list': 'Resource List',

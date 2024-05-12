@@ -31,7 +31,7 @@ export default {
   'device.title.detail.smartHome': '{name} Device Detail',
   'device.title.new': 'New Device',
   'device.title.update': 'Edit Device',
-  'device.title.base': '基本配置',
+  'device.title.base': 'Basic configuration',
   'device.title.modal.error.device': '设备异常信息',
   'device.title.modal.error.sheet': '点位异常信息',
   'device.title.modal.error.oid': '对象异常信息',
@@ -52,7 +52,7 @@ export default {
   'device.modal.title.remove.sheet': '确定要删除此点位？',
   'device.modal.title.remove.batchSheet': '批量删除点位',
   'device.modal.title.camera': '查看视频',
-  'device.modal.title.group.new': 'New Group',
+  'device.modal.title.group.new': 'New device group',
   'device.modal.title.group.edit': 'Edit Group',
   'device.modal.title.group.remove': 'Are you sure to delete this group',
   'device.modal.title.upload.confirm': 'Import Sheet',
@@ -74,11 +74,11 @@ export default {
    */
 
   // formList
-  'device.form.title.group.port': '串口配置',
-  'device.form.title.group.tcp': 'TCP 配置',
-  'device.form.title.group.common': '通用配置',
-  'device.form.title.group.http': 'HTTP 配置',
-  'device.form.title.group.snmp': 'SNMP 配置',
+  'device.form.title.group.port': 'UART configuration',
+  'device.form.title.group.tcp': 'TCP configuration',
+  'device.form.title.group.common': 'Common configuration',
+  'device.form.title.group.http': 'HTTP configuration',
+  'device.form.title.group.snmp': 'SNMP configuration',
 
   // timeout
   'device.form.title.timeout.request': 'Request Timeout',

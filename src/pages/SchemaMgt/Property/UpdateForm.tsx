@@ -67,19 +67,19 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
       <ProForm.Group>
         <ProFormText
           name="label"
-          label={formatMessage({ id: 'schemaMgt.form.title.label' })}
-          placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.label' })}
+          label={formatMessage({ id: 'schemaMgt.form.title.name' })}
+          placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.name' })}
           rules={[
-            { required: true, message: formatMessage({ id: 'schemaMgt.form.placeholder.label' }) },
+            { required: true, message: formatMessage({ id: 'schemaMgt.form.placeholder.name' }) },
           ]}
           width="md"
         />
         <ProFormText
           name="name"
-          label={formatMessage({ id: 'schemaMgt.form.title.name' })}
-          placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.name' })}
+          label={formatMessage({ id: 'schemaMgt.form.title.id' })}
+          placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.id' })}
           rules={[
-            { required: true, message: formatMessage({ id: 'schemaMgt.form.placeholder.name' }) },
+            { required: true, message: formatMessage({ id: 'schemaMgt.form.placeholder.id' }) },
           ]}
           width="md"
         />
@@ -91,6 +91,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
         valueEnum={typeOption}
         placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.type' })}
         width="md"
+        fieldProps={{ allowClear: false }}
         rules={[
           { required: true, message: formatMessage({ id: 'schemaMgt.form.placeholder.type' }) },
         ]}

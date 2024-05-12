@@ -209,17 +209,19 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
       >
         <ProFormText
           name="name"
-          label={formatMessage({ id: 'schemaMgt.form.title.schemaName' })}
-          placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.schemaName' })}
+          labelCol={{ span: 4 }}
+          label={formatMessage({ id: 'schemaMgt.form.title.name' })}
+          placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.name' })}
           rules={[
             {
               required: true,
-              message: formatMessage({ id: 'schemaMgt.form.placeholder.schemaName' }),
+              message: formatMessage({ id: 'schemaMgt.form.placeholder.name' }),
             },
           ]}
         />
         <ProFormText
           name="description"
+          labelCol={{ span: 4 }}
           label={formatMessage({ id: 'table.desc' })}
           placeholder={formatMessage({ id: 'placeholder.desc' })}
         />

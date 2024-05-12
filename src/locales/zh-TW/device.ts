@@ -52,7 +52,7 @@ export default {
   'device.modal.title.remove.sheet': '確定要刪除此點位？',
   'device.modal.title.remove.batchSheet': '批量刪除點位',
   'device.modal.title.camera': '查看視頻',
-  'device.modal.title.group.new': '新建分組',
+  'device.modal.title.group.new': '新建設備分組',
   'device.modal.title.group.edit': '編輯分組',
   'device.modal.title.group.remove': '確定要刪除此分組？',
   'device.modal.title.upload.confirm': '導入點位表',

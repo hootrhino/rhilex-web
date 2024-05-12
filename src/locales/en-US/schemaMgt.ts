@@ -2,61 +2,59 @@ export default {
   /**
    * form
    */
-  'schemaMgt.form.title.label': '属性名称',
-  'schemaMgt.form.title.name': '标志符',
+  'schemaMgt.form.title.name': 'Name',
+  'schemaMgt.form.title.id': 'Identifier',
   'schemaMgt.form.title.type': 'Type',
-  'schemaMgt.form.title.max': '最大长度',
-  'schemaMgt.form.title.range': '取值范围',
-  'schemaMgt.form.title.range.min': '最小值',
-  'schemaMgt.form.title.range.max': '最大值',
+  'schemaMgt.form.title.max': 'Max Length',
+  'schemaMgt.form.title.range': 'Range',
+  'schemaMgt.form.title.range.min': 'Minimum',
+  'schemaMgt.form.title.range.max': 'Maximum',
   'schemaMgt.form.title.round': 'Precision',
   'schemaMgt.form.title.latitude': 'Latitude',
   'schemaMgt.form.title.longitude': 'Longitude',
-  'schemaMgt.form.title.defaultValue': '默认值',
+  'schemaMgt.form.title.defaultValue': 'Default Value',
   'schemaMgt.form.title.unit': 'Unit',
   'schemaMgt.form.title.rw': 'RW',
-  'schemaMgt.form.title.schemaName': 'Name',
 
-  'schemaMgt.form.placeholder.label': '请输入属性名称',
-  'schemaMgt.form.placeholder.name': '请输入标志符',
-  'schemaMgt.form.placeholder.type': '请选择数据类型',
-  'schemaMgt.form.placeholder.max': '请输入最大长度',
-  'schemaMgt.form.placeholder.round': '请输入小数位',
-  'schemaMgt.form.placeholder.true': '比如：开启',
-  'schemaMgt.form.placeholder.false': '比如：关闭',
-  'schemaMgt.form.placeholder.latitude': '请输入经度',
-  'schemaMgt.form.placeholder.longitude': '请输入维度',
-  'schemaMgt.form.placeholder.defaultValue': '请输入默认值',
-  'schemaMgt.form.placeholder.unit': '请输入单位',
-  'schemaMgt.form.rules.range': '请输入取值范围',
-  'schemaMgt.form.placeholder.schemaName': '请输入名称',
+  'schemaMgt.form.placeholder.name': 'Please enter a name',
+  'schemaMgt.form.placeholder.id': 'Please enter a identifier',
+  'schemaMgt.form.placeholder.type': 'Please select a type',
+  'schemaMgt.form.placeholder.max': 'Please enter the maximum length',
+  'schemaMgt.form.placeholder.round': 'Please enter precision',
+  'schemaMgt.form.placeholder.true': 'Such as, turn on',
+  'schemaMgt.form.placeholder.false': 'Such as, turn off',
+  'schemaMgt.form.placeholder.latitude': 'Please enter a latitude',
+  'schemaMgt.form.placeholder.longitude': 'Please enter a longitude',
+  'schemaMgt.form.placeholder.defaultValue': 'Please enter a default value',
+  'schemaMgt.form.placeholder.unit': 'Please enter a unit',
+  'schemaMgt.form.rules.range': 'Please enter the range',
 
   /**
    * modal
    */
-  'schemaMgt.modal.title.schema.new': '新建数据模型',
-  'schemaMgt.modal.title.schema.update': '更新数据模型',
-  'schemaMgt.modal.title.property.new': '新建属性',
-  'schemaMgt.modal.title.property.update': '更新属性',
-  'schemaMgt.modal.title.property.publish': '发布模型',
+  'schemaMgt.modal.title.schema.new': 'New data schema',
+  'schemaMgt.modal.title.schema.update': 'Update data schema',
+  'schemaMgt.modal.title.property.new': 'New property',
+  'schemaMgt.modal.title.property.update': 'Update property',
+  'schemaMgt.modal.title.property.publish': 'Publish schema',
   'schemaMgt.modal.content.property.publish':
     '模型发布后，您将无法对其进行修改。请确保在发布前完成所有的设计工作。',
 
   /**
    * title
    */
-  'schemaMgt.title.schema': '数据模型列表',
-  'schemaMgt.title.property': '属性列表',
-  'schemaMgt.title.card': '数据定义',
+  'schemaMgt.title.schema': 'Data schema list',
+  'schemaMgt.title.property': 'Property list',
+  'schemaMgt.title.card': 'Data definition',
 
   /**
    * options
    */
-  'schemaMgt.type.string': '字符串',
-  'schemaMgt.type.int': '整数',
-  'schemaMgt.type.float': '浮点数',
-  'schemaMgt.type.bool': '布尔量',
-  'schemaMgt.type.geo': '地理坐标',
+  'schemaMgt.type.string': 'String',
+  'schemaMgt.type.int': 'Int',
+  'schemaMgt.type.float': 'Float',
+  'schemaMgt.type.bool': 'Boolean',
+  'schemaMgt.type.geo': 'Geo',
 
   'schemaMgt.rw.r': 'Read-only',
   'schemaMgt.rw.rw': 'Read-write',
@@ -78,11 +76,12 @@ export default {
   /**
    * others
    */
-  'schemaMgt.tooltip.update': '重命名模型',
-  'schemaMgt.tooltip.remove': '删除模型',
-  'schemaMgt.popconfirm.remove': '删除操作将同步清除所有模型相关联的数据库，请谨慎操作',
+  'schemaMgt.tooltip.update': 'Rename schema',
+  'schemaMgt.tooltip.remove': 'Delete schema',
+  'schemaMgt.popconfirm.remove':
+    'The delete operation will synchronously clear all databases associated with the schema; please proceed with caution',
   'schemaMgt.popconfirm.remove.property': 'Are you sure to delete this property?',
-  'schemaMgt.button.publish': '发布',
+  'schemaMgt.button.publish': 'Publish',
   'schemaMgt.button.published': 'Published',
-  'schemaMgt.message.success.publish': '发布完成',
+  'schemaMgt.message.success.publish': 'Publishing successful',
 };

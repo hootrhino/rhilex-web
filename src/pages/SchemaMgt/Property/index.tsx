@@ -42,12 +42,12 @@ export type Property = {
 
 const baseColumns: ProColumns<Property>[] = [
   {
-    title: <FormattedMessage id="schemaMgt.form.title.schemaName" />,
+    title: <FormattedMessage id="schemaMgt.form.title.name" />,
     dataIndex: 'label',
     ellipsis: true,
   },
   {
-    title: <FormattedMessage id="schemaMgt.form.title.name" />,
+    title: <FormattedMessage id="schemaMgt.form.title.id" />,
     dataIndex: 'name',
     ellipsis: true,
   },
@@ -68,7 +68,7 @@ const baseColumns: ProColumns<Property>[] = [
     dataIndex: 'rw',
     valueType: 'select',
     valueEnum: rwOption,
-    width: 80,
+    width: 100,
   },
   {
     title: <FormattedMessage id="table.desc" />,
