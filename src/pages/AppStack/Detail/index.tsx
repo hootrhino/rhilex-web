@@ -4,7 +4,7 @@ import { DetailModalType } from '@/utils/enum';
 import { handleNewMessage } from '@/utils/utils';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
-import { useIntl, useModel } from '@umijs/max';
+import { getLocale, useIntl, useModel } from '@umijs/max';
 import { useLocalStorageState } from 'ahooks';
 import type { DrawerProps } from 'antd';
 import { Button, Drawer, Modal } from 'antd';
@@ -39,7 +39,7 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       <ProDescriptions
         column={1}
         columns={baseColumns as ProDescriptionsItemProps<AppStackItem>[]}
-        labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
+        labelStyle={{ justifyContent: 'flex-end', minWidth: getLocale() === 'en-US' ? 130 : 80 }}
         params={{ uuid }}
         request={async (params) => {
           const res = await getAppDetail(params as API.getAppDetailParams);

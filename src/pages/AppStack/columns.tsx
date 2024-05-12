@@ -35,7 +35,7 @@ export const baseColumns = [
     dataIndex: 'type',
     valueType: 'select',
     valueEnum: {
-      lua: 'LUA 脚本',
+      lua: getIntl(getLocale()).formatMessage({ id: 'appStack.table.title.type.valueEnum' }),
     },
     hideInTable: true,
     hideInForm: true,

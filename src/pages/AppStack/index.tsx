@@ -109,8 +109,8 @@ const AppStack = () => {
           }}
         >
           {appState === 1
-            ? formatMessage({ id: 'status.stop' })
-            : formatMessage({ id: 'status.start' })}
+            ? formatMessage({ id: 'button.stop' })
+            : formatMessage({ id: 'button.start' })}
         </a>,
         <a key="edit" onClick={() => history.push(`/app-stack/edit/${uuid}`)}>
           {formatMessage({ id: 'button.edit' })}
