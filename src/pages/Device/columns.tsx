@@ -200,7 +200,7 @@ export const baseColumns = (product: Product) => [
     title: intl.formatMessage({ id: 'device.form.title.state' }),
     dataIndex: 'state',
     hideInForm: true,
-    width: 80,
+    width: 100,
     renderText: (state: number) => <StateTag state={state} />,
   },
   {

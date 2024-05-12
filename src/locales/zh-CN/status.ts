@@ -21,5 +21,4 @@ export default {
   'status.external': '外部',
   'status.busy': '占用',
   'status.free': '空闲',
-  'status.start': '启动',
 };
