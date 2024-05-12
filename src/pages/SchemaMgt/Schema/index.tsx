@@ -98,7 +98,7 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
               return (
                 uuid && (
                   <Space>
-                    <Tooltip title="复制">
+                    <Tooltip title={formatMessage({ id: 'schemaMgt.tooltip.copy' })}>
                       <CopyToClipboard
                         key={uuid}
                         text={uuid}
