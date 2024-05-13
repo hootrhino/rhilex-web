@@ -79,7 +79,7 @@ export default {
   'component.link.form': '前往官方文档主页查看更多帮助信息',
 
   'component.button.user': '个人设置',
-  'component.button.logout': '退出登录',
+  'component.button.logout': 'Logout',
   'component.button.more': '查看更多',
   'component.button.copy': '复制规则',
   'component.button.use': '立即使用',
@@ -92,7 +92,7 @@ export default {
 
   'component.form.title.rule': '规则名称',
   'component.form.title.name': '模板名称',
-  'component.form.title.apply': '代码',
+  'component.form.title.apply': 'Code',
   'component.form.title.var': '变量设置',
   'component.form.placeholder.name': '请输入模板名称',
   'component.form.placeholder.varDesc': '请输入变量描述',
@@ -101,7 +101,7 @@ export default {
   'component.form.placeholder.varValue': '请输入变量值',
   'component.form.placeholder.varValue.select': '请选择变量值',
 
-  'component.unit.ms': '毫秒',
+  'component.unit.ms': 'ms',
   'component.popconfirm.title.reset': '重置可能会丢失数据，确定要重置吗？',
 
   'component.modal.title.page': '离开可能会丢失数据，确定要返回列表吗？',

@@ -2,7 +2,7 @@ export default {
   /**
    * button
    */
-  'dashboard.button.reset': '統計重置數據',
+  'dashboard.button.reset': '重置數據',
   'dashboard.button.download': '下載',
   'dashboard.button.clear': '清空',
 
@@ -22,7 +22,7 @@ export default {
   'dashboard.count.plugin': '插件總數',
   'dashboard.count.app': '應用總數',
   'dashboard.count.device': '設備總數',
-  'dashboard.count.extend': '擴展協議總數',
+  // 'dashboard.count.extend': '擴展協議總數',
 
   /**
    * statistic

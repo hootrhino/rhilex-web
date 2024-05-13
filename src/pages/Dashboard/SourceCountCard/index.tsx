@@ -37,11 +37,11 @@ const SourceCountCard = () => {
       value: devices,
       key: 'device',
     },
-    {
-      title: formatMessage({ id: 'dashboard.count.extend' }),
-      value: 0,
-      key: 'extend',
-    },
+    // {
+    //   title: formatMessage({ id: 'dashboard.count.extend' }),
+    //   value: 0,
+    //   key: 'extend',
+    // },
   ];
 
   return (
