@@ -54,7 +54,7 @@ const StatisticCard = () => {
           })
         }
       >
-        {formatMessage({ id: 'dashboard.button.reset' })}
+        {formatMessage({ id: 'button.reset' })}
       </Button>
       <ProCard layout="center" direction="column" type="inner" colSpan="25%">
         <div className="text-[#585858]">{formatMessage({ id: 'dashboard.title.statistic' })}</div>

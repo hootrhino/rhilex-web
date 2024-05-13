@@ -13,7 +13,7 @@ export default {
   'outend.table.title.host': '主機地址',
   'outend.table.title.collection': '{type} 集合',
   'outend.table.title.clientId': '客户端 ID',
-  'outend.table.title.pubTopic': '上報 TOPIC',
+  'outend.table.title.pubTopic': '上報 Topic',
   'outend.table.title.username': '連接賬户',
   'outend.table.title.password': '連接密碼',
   'outend.table.title.dataMode': '傳輸模式',

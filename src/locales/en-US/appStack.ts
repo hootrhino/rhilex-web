@@ -4,7 +4,7 @@ export default {
    */
   'appStack.table.title.name': 'Name',
   'appStack.table.title.version': 'Version',
-  'appStack.table.title.autoStart': 'Automatic Start',
+  'appStack.table.title.autoStart': 'Enable AutoStart',
   'appStack.table.title.appState': 'Status',
   'appStack.table.title.type': 'Script Type',
   'appStack.table.title.type.valueEnum': 'Lua Script',

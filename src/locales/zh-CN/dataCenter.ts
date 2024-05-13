@@ -2,8 +2,8 @@ export default {
   /**
    * button
    */
-  'dataCenter.button.clear': '清空数据',
-  'dataCenter.button.download': '导出数据',
+  'dataCenter.button.clear': '清空',
+  'dataCenter.button.download': '导出',
 
   /**
    * title

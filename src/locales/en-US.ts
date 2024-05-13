@@ -32,8 +32,8 @@ export default {
   /**
    * placeholder
    */
-  'placeholder.input': '请输入{text}',
-  'placeholder.select': '请选择{text}',
+  'placeholder.input': 'Please enter a {text}',
+  'placeholder.select': 'Please select a {text}',
   'placeholder.desc': 'Please enter a description',
   /**
    * table
@@ -85,20 +85,19 @@ export default {
   'menu.device.objectList': 'SNMP OID Sheet',
   'menu.device.subDevice': 'Subdevice List',
   'menu.schema': 'Data Schema',
-  'menu.dataCenter': 'Data Center',
-  'menu.inend': 'Inend Resources',
+  'menu.dataCenter': 'Data Repository',
+  'menu.inend': 'Input Resource',
   'menu.source.list': 'Resource List',
   'menu.source.new': 'New Resource',
   'menu.source.update': 'Edit Resource',
-  'menu.outend': 'Outend Resources',
-  'menu.appStack': 'Application',
+  'menu.outend': 'Output Resource',
+  'menu.appStack': 'Micro Application',
   'menu.appStack.list': 'Application List',
   'menu.appStack.new': 'New Application',
   'menu.appStack.update': 'Edit Application',
-  'menu.plugin': 'Plugin Management',
+  'menu.plugin': 'Plugin',
   'menu.plugin.list': 'Plugin List',
-  'menu.port': 'Hardware Interface Settings',
-  'menu.system': 'System Management',
+  'menu.system': 'System Settings',
   'menu.notifyLog': 'Site Log',
   'menu.rule.list': 'Rule Configuration',
   'menu.rule.new': 'New Rule Configuration',

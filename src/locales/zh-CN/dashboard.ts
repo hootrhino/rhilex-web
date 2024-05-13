@@ -2,7 +2,6 @@ export default {
   /**
    * button
    */
-  'dashboard.button.reset': '重置数据',
   'dashboard.button.download': '下载',
   'dashboard.button.clear': '清空',
 

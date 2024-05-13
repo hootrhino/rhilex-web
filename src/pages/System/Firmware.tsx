@@ -177,7 +177,7 @@ const FirmwareConfig = () => {
             />
           </ProDescriptions>
 
-          <Space className="mt-[30px]">
+          <Space className="mt-[24px] w-full justify-end">
             <Upload
               accept="application/zip"
               showUploadList={false}

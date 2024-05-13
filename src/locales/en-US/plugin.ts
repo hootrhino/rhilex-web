@@ -27,7 +27,7 @@ export default {
   'plugin.button.scan.start': '开始扫描',
   'plugin.button.scan.stop': '停止扫描',
   'plugin.button.kickout': '强制离线',
-  'plugin.button.viewConfig': '查看配置',
+  'plugin.button.viewConfig': 'Detail',
 
   /**
    * form

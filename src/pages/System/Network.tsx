@@ -14,7 +14,7 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
-import { Tooltip } from 'antd';
+import { Space, Tooltip } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useRef } from 'react';
 
@@ -90,7 +90,11 @@ const NetworkConfig = () => {
           }
         }}
         submitter={{
-          render: (props, dom) => dom,
+          render: (props, dom) => (
+            <ProForm.Item wrapperCol={{ offset: 10 }}>
+              <Space>{dom}</Space>
+            </ProForm.Item>
+          ),
         }}
       >
         <ProFormSelect

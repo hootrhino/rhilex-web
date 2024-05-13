@@ -45,7 +45,7 @@ export default {
    */
   'schemaMgt.title.schema': 'Data schema list',
   'schemaMgt.title.property': 'Property list',
-  'schemaMgt.title.card': 'Data definition',
+  'schemaMgt.title.card': 'Data constraints',
 
   /**
    * options

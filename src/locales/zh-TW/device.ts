@@ -101,7 +101,7 @@ export default {
   'device.form.title.type': '類型',
   'device.form.title.gid': '設備分組',
   'device.form.title.state': '狀態',
-  'device.form.title.retryTime': '重試次數',
+  'device.form.title.retryTime': '最大容錯次數',
   'device.form.title.autoRequest': '啓動輪詢',
   'device.form.title.enableOptimize': '批量採集',
   'device.form.title.maxRegNum': '最大點位數',

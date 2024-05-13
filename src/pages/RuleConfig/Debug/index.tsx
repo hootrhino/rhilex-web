@@ -98,7 +98,7 @@ const Debug = ({ uuid, type, testType, ...props }: DebugProps) => {
           topic={`${type}/rule/test/${uuid}`}
           dataSource={debugLog}
           headStyle={{ paddingBlock: 0 }}
-          className="h-[280px]"
+          className="h-[225px]"
         />
       </ProForm.Item>
     </ModalForm>

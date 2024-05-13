@@ -51,36 +51,38 @@ const DataBackupConfig = () => {
         }}
         submitter={{
           render: () => (
-            <Space>
-              <Button
-                icon={<DownloadOutlined />}
-                onClick={() => (window.location.href = '/api/v1/backup/runningLog')}
-              >
-                {formatMessage({ id: 'system.button.backup.runningLog' })}
-              </Button>
-              <Button
-                icon={<DownloadOutlined />}
-                onClick={() => (window.location.href = '/api/v1/backup/snapshot')}
-              >
-                {formatMessage({ id: 'system.button.backup.snapshot' })}
-              </Button>
-              <Button
-                ghost
-                type="primary"
-                icon={<DownloadOutlined />}
-                onClick={() => (window.location.href = '/api/v1/backup/download')}
-              >
-                {formatMessage({ id: 'system.button.backup.download' })}
-              </Button>
-              <Button
-                type="primary"
-                onClick={() => setOpen(true)}
-                icon={<UploadOutlined />}
-                disabled={!uploadFile}
-              >
-                {formatMessage({ id: 'system.button.backup.upload' })}
-              </Button>
-            </Space>
+            <ProForm.Item wrapperCol={{ offset: 4 }}>
+              <Space>
+                <Button
+                  icon={<DownloadOutlined />}
+                  onClick={() => (window.location.href = '/api/v1/backup/runningLog')}
+                >
+                  {formatMessage({ id: 'system.button.backup.runningLog' })}
+                </Button>
+                <Button
+                  icon={<DownloadOutlined />}
+                  onClick={() => (window.location.href = '/api/v1/backup/snapshot')}
+                >
+                  {formatMessage({ id: 'system.button.backup.snapshot' })}
+                </Button>
+                <Button
+                  ghost
+                  type="primary"
+                  icon={<DownloadOutlined />}
+                  onClick={() => (window.location.href = '/api/v1/backup/download')}
+                >
+                  {formatMessage({ id: 'system.button.backup.download' })}
+                </Button>
+                <Button
+                  type="primary"
+                  onClick={() => setOpen(true)}
+                  icon={<UploadOutlined />}
+                  disabled={!uploadFile}
+                >
+                  {formatMessage({ id: 'system.button.backup.upload' })}
+                </Button>
+              </Space>
+            </ProForm.Item>
           ),
         }}
       >

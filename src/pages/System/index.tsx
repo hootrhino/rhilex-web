@@ -9,6 +9,7 @@ import FirmwareConfig from './Firmware';
 import NetworkConfig from './Network';
 import Network4GConfig from './Network4g';
 import NetworkStatus from './NetworkStatus';
+import PortSettings from './PortMgt';
 import Resource from './Resource';
 import RoutingConfig from './Routing';
 import TimeConfig from './Time';
@@ -25,6 +26,11 @@ const baseItems = [
     label: <FormattedMessage id="system.tab.resource" />,
     key: 'resource',
     children: <Resource />,
+  },
+  {
+    label: <FormattedMessage id="system.tab.port" />,
+    key: 'port',
+    children: <PortSettings />,
   },
   {
     label: <FormattedMessage id="system.tab.netStatus" />,

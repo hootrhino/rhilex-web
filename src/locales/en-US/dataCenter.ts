@@ -2,14 +2,14 @@ export default {
   /**
    * button
    */
-  'dataCenter.button.clear': 'Clear Data',
-  'dataCenter.button.download': 'Export Data',
+  'dataCenter.button.clear': 'Clear',
+  'dataCenter.button.download': 'Export',
 
   /**
    * title
    */
-  'dataCenter.title.tree': 'Data table list',
-  'dataCenter.title.table': 'Historical data list',
+  'dataCenter.title.tree': 'Data schema list',
+  'dataCenter.title.table': 'Historical list',
 
   /**
    * message

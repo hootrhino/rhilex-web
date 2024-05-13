@@ -14,6 +14,7 @@ export default {
   'system.tab.apn': 'APN 配置',
   'system.tab.backup': '数据备份',
   'system.tab.user': '用户配置',
+  'system.tab.port': 'Interface',
 
   /**
    * form

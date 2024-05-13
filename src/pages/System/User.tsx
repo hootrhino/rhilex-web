@@ -44,22 +44,24 @@ const UserConfig = () => {
         labelCol={{ span: 2 }}
         submitter={{
           render: ({ reset, submit }) => (
-            <Space>
-              <Button onClick={reset}>{formatMessage({ id: 'button.reset' })}</Button>
-              <Button
-                type="primary"
-                onClick={() =>
-                  modal.confirm({
-                    title: formatMessage({ id: 'system.modal.content.user' }),
-                    onOk: submit,
-                    okText: formatMessage({ id: 'button.ok' }),
-                    cancelText: formatMessage({ id: 'button.cancel' }),
-                  })
-                }
-              >
-                {formatMessage({ id: 'button.submit' })}
-              </Button>
-            </Space>
+            <ProForm.Item wrapperCol={{ offset: 9 }}>
+              <Space>
+                <Button onClick={reset}>{formatMessage({ id: 'button.reset' })}</Button>
+                <Button
+                  type="primary"
+                  onClick={() =>
+                    modal.confirm({
+                      title: formatMessage({ id: 'system.modal.content.user' }),
+                      onOk: submit,
+                      okText: formatMessage({ id: 'button.ok' }),
+                      cancelText: formatMessage({ id: 'button.cancel' }),
+                    })
+                  }
+                >
+                  {formatMessage({ id: 'button.submit' })}
+                </Button>
+              </Space>
+            </ProForm.Item>
           ),
         }}
       >

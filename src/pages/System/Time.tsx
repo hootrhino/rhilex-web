@@ -64,12 +64,19 @@ const TimeConfig = () => {
         labelCol={{ span: 2 }}
         submitter={{
           render: (props, dom) => (
-            <Space>
-              {dom}
-              <Button type="primary" onClick={updateNtp} icon={<SyncOutlined />} loading={loading}>
-                {formatMessage({ id: 'system.button.time.ntp' })}
-              </Button>
-            </Space>
+            <ProForm.Item wrapperCol={{ offset: 6 }}>
+              <Space>
+                {dom}
+                <Button
+                  type="primary"
+                  onClick={updateNtp}
+                  icon={<SyncOutlined />}
+                  loading={loading}
+                >
+                  {formatMessage({ id: 'system.button.time.ntp' })}
+                </Button>
+              </Space>
+            </ProForm.Item>
           ),
         }}
       >

@@ -43,10 +43,10 @@ export default {
   /**
    * type
    */
-  'inend.type.serve': 'Provide access services as a generic {type}',
-  'inend.type.topic': 'Subscribe to topic access as a generic {type} client',
-  'inend.type.subject': 'Subscribe to subject access as a generic {type}’',
-  'inend.type.event': '{type} internal event source',
+  'inend.type.serve': 'Generic {type}',
+  'inend.type.topic': 'Generic {type}',
+  'inend.type.subject': 'Generic {type}',
+  'inend.type.event': '{type} Internal Event Source',
 
   /**
    * mode
@@ -58,9 +58,9 @@ export default {
    * event
    */
   'inend.event.all': 'All events',
-  'inend.event.source': 'Inend event',
+  'inend.event.source': 'Input event',
   'inend.event.device': 'Device event',
-  'inend.event.target': 'Outend event',
+  'inend.event.target': 'Output event',
   'inend.event.system': 'System event',
   'inend.event.hardware': 'Hardware event',
 };

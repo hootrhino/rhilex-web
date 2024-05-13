@@ -67,7 +67,7 @@ export default {
   /**
    * others
    */
-  'component.title.notify': '站内日志通知',
+  'component.title.notify': 'Notification log',
   'component.title.customRule': '自定义规则示例',
   'component.title.defaultGroup': '默认分组',
   'component.title.builtInTpl': '内置模板',
@@ -78,9 +78,9 @@ export default {
   'component.link.httpHeaders': '更多信息请参考',
   'component.link.form': '前往官方文档主页查看更多帮助信息',
 
-  'component.button.user': '个人设置',
+  'component.button.user': 'User Settings',
   'component.button.logout': 'Logout',
-  'component.button.more': '查看更多',
+  'component.button.more': 'Show More',
   'component.button.copy': '复制规则',
   'component.button.use': '立即使用',
   'component.button.rule': '规则示例',
@@ -101,7 +101,7 @@ export default {
   'component.form.placeholder.varValue': '请输入变量值',
   'component.form.placeholder.varValue.select': '请选择变量值',
 
-  'component.unit.ms': 'ms',
+  'component.unit.ms': 'millisecond',
   'component.popconfirm.title.reset': '重置可能会丢失数据，确定要重置吗？',
 
   'component.modal.title.page': '离开可能会丢失数据，确定要返回列表吗？',

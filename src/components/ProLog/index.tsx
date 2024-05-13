@@ -117,29 +117,20 @@ const ProLog = ({
               ghost
               key="stop"
               type="primary"
-              icon={<PauseCircleOutlined />}
+              icon={play ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
               size="small"
               onClick={() => {
-                setPlay(false);
-                disconnect();
-              }}
-              disabled={!play}
-            >
-              {formatMessage({ id: 'button.stop' })}
-            </Button>
-            <Button
-              ghost
-              key="play"
-              type="primary"
-              icon={<PlayCircleOutlined />}
-              size="small"
-              disabled={play}
-              onClick={() => {
-                setPlay(true);
-                connect();
+                if (play) {
+                  disconnect();
+                } else {
+                  connect();
+                }
+                setPlay(!play);
               }}
             >
-              {formatMessage({ id: 'button.recover' })}
+              {play
+                ? formatMessage({ id: 'button.pause' })
+                : formatMessage({ id: 'button.resume' })}
             </Button>
             <Button
               danger

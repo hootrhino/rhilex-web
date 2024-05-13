@@ -3,6 +3,7 @@ import { getMn4GApn, postMn4GApn } from '@/services/rulex/yidongwangluo4Gshezhi'
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
+import { Space } from 'antd';
 import { useEffect, useRef } from 'react';
 
 type UpdateParams = {
@@ -57,7 +58,11 @@ const APNConfig = () => {
       layout="horizontal"
       labelCol={{ span: 4 }}
       submitter={{
-        render: (props, dom) => dom,
+        render: (props, dom) => (
+          <ProForm.Item wrapperCol={{ offset: 16 }}>
+            <Space>{dom}</Space>
+          </ProForm.Item>
+        ),
       }}
       onFinish={handleOnFinish}
     >

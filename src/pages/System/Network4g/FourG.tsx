@@ -48,7 +48,7 @@ const FourGConfig = () => {
       initialValues={{ zone: 'Asia/Shanghai', csq: 0 }}
       submitter={{
         render: () => (
-          <Space>
+          <Space className="w-full justify-end mt-[24px]">
             <Button
               type="primary"
               onClick={getDetail}

@@ -212,13 +212,13 @@
     key: 'plugins',
     component: './Plugins',
   },
-  {
-    path: '/port',
-    title: 'menu.port',
-    icon: 'nodeIndex',
-    component: './PortMgt',
-    key: 'port',
-  },
+  // {
+  //   path: '/port',
+  //   title: 'menu.port',
+  //   icon: 'nodeIndex',
+  //   component: './PortMgt',
+  //   key: 'port',
+  // },
   {
     path: '/system-mgt',
     title: 'menu.system',

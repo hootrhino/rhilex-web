@@ -2,7 +2,6 @@ export default {
   /**
    * button
    */
-  'dashboard.button.reset': 'Reset Data',
   'dashboard.button.download': 'Download',
   'dashboard.button.clear': 'Clear',
 
@@ -16,11 +15,11 @@ export default {
   /**
    * count
    */
-  'dashboard.count.inend': 'Inend Total',
-  'dashboard.count.outend': 'Outend Total',
+  'dashboard.count.inend': 'Input Total',
+  'dashboard.count.outend': 'Output Total',
   'dashboard.count.rule': 'Rule Total',
   'dashboard.count.plugin': 'Plugin Total',
-  'dashboard.count.app': 'Application Total',
+  'dashboard.count.app': 'Micro Application Total',
   'dashboard.count.device': 'Device Total',
   // 'dashboard.count.extend': '扩展协议总数',
 

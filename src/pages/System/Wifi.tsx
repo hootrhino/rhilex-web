@@ -72,17 +72,19 @@ const WIFIConfig = () => {
         labelCol={{ span: 2 }}
         submitter={{
           render: (props, dom) => (
-            <Space>
-              {dom}
-              <Button
-                icon={<WifiOutlined />}
-                type="primary"
-                onClick={GetWifiList}
-                loading={loading}
-              >
-                {formatMessage({ id: 'system.button.wifi.ntp' })}
-              </Button>
-            </Space>
+            <ProForm.Item wrapperCol={{ offset: 7 }}>
+              <Space>
+                {dom}
+                <Button
+                  icon={<WifiOutlined />}
+                  type="primary"
+                  onClick={GetWifiList}
+                  loading={loading}
+                >
+                  {formatMessage({ id: 'system.button.wifi.ntp' })}
+                </Button>
+              </Space>
+            </ProForm.Item>
           ),
         }}
       >

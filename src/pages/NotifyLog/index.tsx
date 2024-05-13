@@ -2,7 +2,7 @@ import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import StateTag, { StateType } from '@/components/StateTag';
 import { putNotifyClear, putNotifyRead } from '@/services/rulex/zhanneitongzhi';
-import { CalendarOutlined, ClearOutlined } from '@ant-design/icons';
+import { CalendarOutlined, SettingOutlined } from '@ant-design/icons';
 import { ProList } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Checkbox, Space, Tooltip } from 'antd';
@@ -51,7 +51,7 @@ const NotifyLog = () => {
           rowKey="uuid"
           toolBarRender={() => {
             return [
-              <Button type="primary" key="clear" onClick={clear} icon={<ClearOutlined />}>
+              <Button type="primary" key="clear" onClick={clear} icon={<SettingOutlined />}>
                 {formatMessage({ id: 'notifyLog.button.clear' })}
               </Button>,
             ];
