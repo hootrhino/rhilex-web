@@ -16,50 +16,51 @@ export default {
   'inend.table.title.topic': 'Topic',
   'inend.table.title.eventType': 'Event Type',
   'inend.table.title.qos': 'Qos',
-  'inend.table.title.subTopics': '订阅 topic 表',
+  'inend.table.title.subTopics': 'Subscribe to Topic Table',
   'inend.table.title.ip': 'Device IP',
   'inend.table.title.status': 'Device Status',
   'inend.table.title.properties': 'Device Properties',
 
-  'inend.table.placeholder.subTopics': '请输入订阅 tipic',
-  'inend.table.rules.subTopics': '订阅 topic 表至少要有一项',
+  'inend.table.placeholder.subTopics': 'Please enter a subscription tipic',
+  'inend.table.rules.subTopics': 'Please subscribe to at least one topic',
 
   /**
    * others
    */
-  'inend.title.group': '资源配置',
+  'inend.title.group': 'Resource configuration',
   'inend.title.new': 'New resource',
   'inend.title.update': 'Edit resource',
-  'inend.title.subDevice': '资源 {name} - 子设备列表',
+  'inend.title.subDevice': 'Resource {name} - Subdevice list',
   'inend.title.detail': 'Resource detail',
   'inend.title.base': 'Basic configuration',
   'inend.title.source': 'Resource configuration',
   'inend.popconfirm.title.remove': 'Are you sure to delete this resource?',
-  'inend.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，请谨慎操作',
+  'inend.modal.content.restart':
+    'The reboot process will briefly disconnect resource connections for 5-10 seconds; please proceed with caution',
   'inend.message.warning.new':
-    '新建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：{msg}',
+    'Successfully created, but currently unable to operate normally. Please modify the configuration parameters promptly according to the error message {msg}',
 
   /**
    * type
    */
-  'inend.type.serve': '作为通用 {type} 提供接入服务',
-  'inend.type.topic': '作為通用 {type} 客户端訂閲 Topic 接入',
-  'inend.type.subject': '作为通用 {type} 订阅 Subject 接入',
-  'inend.type.event': '{type} 内部事件源',
+  'inend.type.serve': 'Provide access services as a generic {type}',
+  'inend.type.topic': 'Subscribe to topic access as a generic {type} client',
+  'inend.type.subject': 'Subscribe to subject access as a generic {type}’',
+  'inend.type.event': '{type} internal event source',
 
   /**
    * mode
    */
-  'inend.mode.gw': '网关',
-  'inend.mode.dc': '直连',
+  'inend.mode.gw': 'Gateway',
+  'inend.mode.dc': 'Direct connection',
 
   /**
    * event
    */
-  'inend.event.all': '全部事件',
-  'inend.event.source': '南向事件',
-  'inend.event.device': '设备事件',
-  'inend.event.target': '北向事件',
-  'inend.event.system': '系统事件',
-  'inend.event.hardware': '硬件事件',
+  'inend.event.all': 'All events',
+  'inend.event.source': 'Inend event',
+  'inend.event.device': 'Device event',
+  'inend.event.target': 'Outend event',
+  'inend.event.system': 'System event',
+  'inend.event.hardware': 'Hardware event',
 };

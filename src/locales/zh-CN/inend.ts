@@ -22,7 +22,7 @@ export default {
   'inend.table.title.properties': '设备属性',
 
   'inend.table.placeholder.subTopics': '请输入订阅 tipic',
-  'inend.table.rules.subTopics': '订阅 topic 表至少要有一项',
+  'inend.table.rules.subTopics': '请至少订阅一个 topic',
 
   /**
    * others
@@ -37,13 +37,13 @@ export default {
   'inend.popconfirm.title.remove': '确定要删除此资源？',
   'inend.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，请谨慎操作',
   'inend.message.warning.new':
-    '新建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：{msg}',
+    '创建成功，但目前无法正常运行。请根据错误信息 {msg} 及时修改配置参数',
 
   /**
    * type
    */
   'inend.type.serve': '作为通用 {type} 提供接入服务',
-  'inend.type.topic': '作為通用 {type} 客户端訂閲 Topic 接入',
+  'inend.type.topic': '作为通用 {type} 客户端订阅 Topic 接入',
   'inend.type.subject': '作为通用 {type} 订阅 Subject 接入',
   'inend.type.event': '{type} 内部事件源',
 

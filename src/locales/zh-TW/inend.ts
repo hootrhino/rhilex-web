@@ -22,7 +22,7 @@ export default {
   'inend.table.title.properties': '設備屬性',
 
   'inend.table.placeholder.subTopics': '請輸入訂閲 tipic',
-  'inend.table.rules.subTopics': '訂閲 topic 表至少要有一項',
+  'inend.table.rules.subTopics': '請至少訂閱一個 topic',
 
   /**
    * others
@@ -37,7 +37,7 @@ export default {
   'inend.popconfirm.title.remove': '確定要刪除此資源？',
   'inend.modal.content.restart': '重啓過程會短暫（5-10秒）斷開資源連接，請謹慎操作',
   'inend.message.warning.new':
-    '新建成功，但是暫時無法正常工作，請及時調整配置參數。錯誤信息：{msg}',
+    '創建成功，但目前無法正常運作。請根據錯誤訊息 {msg} 及時修改配置參數',
 
   /**
    * type
