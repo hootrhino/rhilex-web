@@ -43,7 +43,7 @@ const ClientList = () => {
       dataIndex: 'username',
     },
     {
-      title: formatMessage({ id: 'plugin.title.remote' }),
+      title: formatMessage({ id: 'plugin.table.title.remote' }),
       dataIndex: 'remote',
     },
     {

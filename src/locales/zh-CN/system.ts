@@ -109,6 +109,7 @@ export default {
   'system.button.backup.upload': '备份恢复',
   'system.button.firmware.upload': '上传固件',
   'system.button.firmware.upgrade': '确定升级',
+  'system.button.firmware.reboot': '重启设备',
   'system.button.firmware.restart': '重启固件',
   'system.button.firmware.recover': '恢复出厂',
   'system.button.time.ntp': '立即同步 NTP',

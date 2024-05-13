@@ -2,7 +2,6 @@ export default {
   /**
    * button
    */
-  'device.button.restartDevice': '重启设备',
   'device.button.camera': '查看视频',
   'device.button.snmp': 'SNMP 对象列表',
   'device.button.sheet': 'sheet Configuration',
@@ -94,7 +93,7 @@ export default {
 
   // other
   'device.form.title.mode': 'Mode',
-  'device.form.title.portUuid': '系统串口',
+  'device.form.title.portUuid': 'Serial Port',
   'device.form.title.host': 'Host',
   'device.form.title.port': 'Port',
   'device.form.title.name': 'Name',
@@ -216,7 +215,8 @@ export default {
   'device.message.success.config': '配置成功',
   'device.message.success.clear': '清除成功',
   'device.message.success.reload': '刷新成功',
-  'device.message.error.new': '创建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：{msg}',
+  'device.message.error.new':
+    'Successfully created, but currently unable to operate normally. Please modify the configuration parameters promptly according to the error message {msg}',
   'device.unit.byte': 'Byte',
   'device.bigEndian': 'Big-Endian',
   'device.littleEndian': 'Little-Endian',

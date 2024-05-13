@@ -40,7 +40,7 @@ export default {
    * others
    */
   'outend.message.warning.new':
-    '新建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：{msg}',
+    '创建成功，但目前无法正常运行。请根据错误信息 {msg} 及时修改配置参数',
   'outend.button.new': '新建 Header',
 
   /**

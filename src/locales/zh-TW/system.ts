@@ -109,6 +109,7 @@ export default {
   'system.button.backup.upload': '備份還原',
   'system.button.firmware.upload': '上傳固件',
   'system.button.firmware.upgrade': '確定升級',
+  'system.button.firmware.reboot': '重新啟動裝置',
   'system.button.firmware.restart': '重新啟動固件',
   'system.button.firmware.recover': '恢復出廠設定',
   'system.button.time.ntp': '立即同步 NTP',

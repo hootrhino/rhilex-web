@@ -74,11 +74,11 @@ const Detail = () => {
     if (detailConfig.name === 'ping') return false;
     return (
       <Space>
-        <Button key="start" onClick={onStart} type="primary" loading={loading} disabled={disabled}>
-          {formatMessage({ id: 'plugin.button.scan.start' })}
-        </Button>
         <Button key="stop" onClick={onStop}>
           {formatMessage({ id: 'plugin.button.scan.stop' })}
+        </Button>
+        <Button key="start" onClick={onStart} type="primary" loading={loading} disabled={disabled}>
+          {formatMessage({ id: 'plugin.button.scan.start' })}
         </Button>
       </Space>
     );

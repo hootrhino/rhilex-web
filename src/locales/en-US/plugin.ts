@@ -2,48 +2,42 @@ export default {
   /**
    * table
    */
-  'plugin.table.title.running': '状态',
-  'plugin.table.title.serverAddr': '访问地址',
-  'plugin.table.title.serverEndpoint': '服务端点',
-  'plugin.table.title.domain': '透传域名',
-  'plugin.table.title.localSchema': '通信协议',
-  'plugin.table.title.localHost': '本地主机',
-  'plugin.table.title.localPort': '本地端口',
-  'plugin.table.title.authToken': '身份令牌',
+  'plugin.table.title.running': 'Status',
+  'plugin.table.title.serverAddr': 'Server Address',
+  'plugin.table.title.serverEndpoint': 'Service Endpoint',
+  'plugin.table.title.domain': 'Domain',
+  'plugin.table.title.localSchema': 'Local Schema',
+  'plugin.table.title.localHost': 'Local Host',
+  'plugin.table.title.localPort': 'Local Port',
+  'plugin.table.title.authToken': 'Auth Token',
+  'plugin.table.title.remote': 'Remote Address',
 
   /**
    * title
    */
-  'plugin.title.ping': '网络测速',
-  'plugin.title.clients': '客户端列表',
-  'plugin.title.scan': 'Modbus 扫描仪',
-  'plugin.title.terminal': '终端',
-  'plugin.title.username': '用户名',
-  'plugin.title.remote': '客户端地址',
+  'plugin.title.ping': 'Test network speed',
+  'plugin.title.clients': 'Client list',
+  'plugin.title.scan': 'Modbus scanner',
+  'plugin.title.terminal': 'Terminal',
 
   /**
    * button
    */
-  'plugin.button.scan.start': '开始扫描',
-  'plugin.button.scan.stop': '停止扫描',
-  'plugin.button.kickout': '强制离线',
+  'plugin.button.scan.start': 'Start Scan',
+  'plugin.button.scan.stop': 'Stop Scan',
+  'plugin.button.kickout': 'Kick Out',
   'plugin.button.viewConfig': 'Detail',
 
   /**
    * form
    */
-  'plugin.form.title.portUuid': '系统串口',
-  'plugin.form.title.output': '输出结果',
+  'plugin.form.title.portUuid': 'Serial Port',
+  'plugin.form.title.output': 'Output',
   'plugin.form.title.ip': 'IP Address',
-  'plugin.form.placeholder.ip': '请输入地址',
+  'plugin.form.placeholder.ip': 'Please enter an address',
 
   /**
    * message
    */
-  'plugin.message.success.kickout': '离线成功',
-
-  /**
-   * other
-   */
-  'plugin.modal.title.viewConfig': '配置详情',
+  'plugin.message.success.kickout': 'Kicked out successfully',
 };

@@ -109,7 +109,7 @@ const Devices = () => {
     const baseItems = [
       {
         key: 'restart',
-        label: formatMessage({ id: 'button.restartDevice' }),
+        label: formatMessage({ id: 'button.reload' }),
         icon: <PoweroffOutlined />,
         danger: true,
       },

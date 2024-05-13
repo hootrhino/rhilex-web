@@ -10,6 +10,7 @@ export default {
   'plugin.table.title.localHost': '本地主機',
   'plugin.table.title.localPort': '本地端口',
   'plugin.table.title.authToken': '身份令牌',
+  'plugin.table.title.remote': '遠端位址',
 
   /**
    * title
@@ -18,8 +19,6 @@ export default {
   'plugin.title.clients': '客戶端列表',
   'plugin.title.scan': 'Modbus 掃描儀',
   'plugin.title.terminal': '終端',
-  'plugin.title.username': '用戶名',
-  'plugin.title.remote': '客戶端地址',
 
   /**
    * button
@@ -41,9 +40,4 @@ export default {
    * message
    */
   'plugin.message.success.kickout': '離線成功',
-
-  /**
-   * other
-   */
-  'plugin.modal.title.viewConfig': '配置詳情',
 };

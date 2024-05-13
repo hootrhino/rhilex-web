@@ -38,7 +38,7 @@ export default {
   /**
    * others
    */
-  'portMgt.option.uart': '系统串口',
+  'portMgt.option.uart': 'Serial Port',
   'portMgt.option.e': '奇校验',
   'portMgt.option.o': '偶校验',
   'portMgt.option.n': '不校验',

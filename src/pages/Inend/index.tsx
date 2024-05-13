@@ -58,7 +58,7 @@ const Inend = () => {
     let newItems = [
       {
         key: 'restart',
-        label: formatMessage({ id: 'button.restartSource' }),
+        label: formatMessage({ id: 'button.reload' }),
         icon: <PoweroffOutlined />,
         danger: true,
       },

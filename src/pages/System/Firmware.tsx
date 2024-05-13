@@ -236,7 +236,7 @@ const FirmwareConfig = () => {
               }}
               icon={<PoweroffOutlined />}
             >
-              {formatMessage({ id: 'button.restartDevice' })}
+              {formatMessage({ id: 'system.button.firmware.reboot' })}
             </Button>
             <Button
               key="restartRulex"

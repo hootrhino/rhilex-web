@@ -2,7 +2,6 @@ export default {
   /**
    * button
    */
-  'device.button.restartDevice': '重启设备',
   'device.button.camera': '查看视频',
   'device.button.snmp': 'SNMP 对象列表',
   'device.button.sheet': '点位表配置',
@@ -216,7 +215,7 @@ export default {
   'device.message.success.config': '配置成功',
   'device.message.success.clear': '清除成功',
   'device.message.success.reload': '刷新成功',
-  'device.message.error.new': '创建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：{msg}',
+  'device.message.error.new': '创建成功，但目前无法正常运行。请根据错误信息 {msg} 及时修改配置参数',
   'device.unit.byte': '字节',
   'device.bigEndian': '大端',
   'device.littleEndian': '小端',

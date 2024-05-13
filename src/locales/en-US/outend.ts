@@ -17,43 +17,44 @@ export default {
   'outend.table.title.username': 'Username',
   'outend.table.title.password': 'Password',
   'outend.table.title.dataMode': 'Mode',
-  'outend.table.title.dbName': '数据库名',
-  'outend.table.title.url': '请求地址',
+  'outend.table.title.dbName': 'Database Name',
+  'outend.table.title.url': 'Request Url',
   'outend.table.title.portUuid': 'Serial Port',
 
   /**
    * title
    */
-  'outend.title.new': '新建资源',
-  'outend.title.edit': '编辑资源',
-  'outend.title.detail': '资源详情',
-  'outend.title.base': '基本配置',
-  'outend.title.source': '资源配置',
+  'outend.title.new': 'New resource',
+  'outend.title.edit': 'Edit resource',
+  'outend.title.detail': 'Resource detail',
+  'outend.title.base': 'Basic configuration',
+  'outend.title.source': 'Resource configuration',
 
   /**
    * modal
    */
   'outend.modal.title.remove': 'Are you sure to delete this resource?',
-  'outend.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，请谨慎操作',
+  'outend.modal.content.restart':
+    'The reload process will briefly disconnect resource connections for 5-10 seconds; please proceed with caution',
 
   /**
    * others
    */
   'outend.message.warning.new':
-    '新建成功，但是暂时无法正常工作，请及时调整配置参数。错误信息：{msg}',
-  'outend.button.new': '新建 Header',
+    'Successfully created, but currently unable to operate normally. Please modify the configuration parameters promptly according to the error message {msg}',
+  'outend.button.new': 'New Header',
 
   /**
    * type
    */
-  'outend.type.tranport': '{type} 数据传输',
-  'outend.type.push': '{type} 数据推送',
-  'outend.type.database': '{type} 数据库',
-  'outend.type.uart': '通用串口透传',
+  'outend.type.tranport': '{type} Data Transmission',
+  'outend.type.push': '{type} Data Push',
+  'outend.type.database': '{type} Database',
+  'outend.type.uart': 'Generic UART Transport',
 
   /**
    * mode
    */
-  'outend.mode.raw': '原始 ASIIC 传输',
-  'outend.mode.hex': '十六进制字符串',
+  'outend.mode.raw': 'Raw ASCII Transmission',
+  'outend.mode.hex': 'Hexadecimal String',
 };

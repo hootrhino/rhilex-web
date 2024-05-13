@@ -10,6 +10,7 @@ export default {
   'plugin.table.title.localHost': '本地主机',
   'plugin.table.title.localPort': '本地端口',
   'plugin.table.title.authToken': '身份令牌',
+  'plugin.table.title.remote': '远程地址',
 
   /**
    * title
@@ -18,8 +19,6 @@ export default {
   'plugin.title.clients': '客户端列表',
   'plugin.title.scan': 'Modbus 扫描仪',
   'plugin.title.terminal': '终端',
-  'plugin.title.username': '用户名',
-  'plugin.title.remote': '客户端地址',
 
   /**
    * button
@@ -41,9 +40,4 @@ export default {
    * message
    */
   'plugin.message.success.kickout': '离线成功',
-
-  /**
-   * other
-   */
-  'plugin.modal.title.viewConfig': '配置详情',
 };
