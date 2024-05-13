@@ -138,7 +138,7 @@ export default {
   'device.form.title.dataType': 'Data Type(Endianness)',
   'device.form.title.address': 'Address Range',
   'device.form.title.quantity': 'Quantity',
-  'device.form.title.weight': '权重系数',
+  'device.form.title.weight': 'Weight',
   'device.form.title.value': 'Value',
   'device.form.title.status': 'Status',
   'device.form.title.lastFetchTime': '采集时间',
@@ -260,5 +260,5 @@ export default {
   /**
    * outputEncode
    */
-  'device.camera.outputEncode': '{type} 编码',
+  'device.camera.outputEncode': '{type} Encode',
 };

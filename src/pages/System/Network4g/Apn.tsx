@@ -92,14 +92,14 @@ const APNConfig = () => {
       />
       <ProFormText
         name="apn_username"
-        label={formatMessage({ id: 'system.form.title.username' })}
-        placeholder={formatMessage({ id: 'system.form.placeholder.username' })}
+        label={formatMessage({ id: 'form.title.username' })}
+        placeholder={formatMessage({ id: 'form.placeholder.username' })}
         width="xl"
       />
       <ProFormText.Password
         name="apn_password"
-        label={formatMessage({ id: 'system.form.title.password' })}
-        placeholder={formatMessage({ id: 'system.form.placeholder.password' })}
+        label={formatMessage({ id: 'form.title.password' })}
+        placeholder={formatMessage({ id: 'form.placeholder.password' })}
         width="xl"
         allowClear
       />

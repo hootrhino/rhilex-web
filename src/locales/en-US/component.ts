@@ -90,7 +90,7 @@ export default {
   'component.tab.example': '常用规则示例',
   'component.tab.addRule': '新建规则示例',
 
-  'component.form.title.rule': '规则名称',
+  'component.form.title.rule': 'Rule Name',
   'component.form.title.name': '模板名称',
   'component.form.title.apply': 'Code',
   'component.form.title.var': '变量设置',
@@ -102,7 +102,8 @@ export default {
   'component.form.placeholder.varValue.select': '请选择变量值',
 
   'component.unit.ms': 'millisecond',
-  'component.popconfirm.title.reset': '重置可能会丢失数据，确定要重置吗？',
+  'component.popconfirm.title.reset':
+    'Resetting may result in data loss. Are you sure you want to continue?',
 
   'component.modal.title.page': '离开可能会丢失数据，确定要返回列表吗？',
   'component.modal.title.settingVar': '设置变量',

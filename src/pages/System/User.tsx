@@ -67,22 +67,18 @@ const UserConfig = () => {
       >
         <ProFormText
           name="username"
-          label={formatMessage({ id: 'system.form.title.username' })}
-          placeholder={formatMessage({ id: 'system.form.placeholder.username' })}
+          label={formatMessage({ id: 'form.title.username' })}
+          placeholder={formatMessage({ id: 'form.placeholder.username' })}
           width="xl"
-          rules={[
-            { required: true, message: formatMessage({ id: 'system.form.placeholder.username' }) },
-          ]}
+          rules={[{ required: true, message: formatMessage({ id: 'form.placeholder.username' }) }]}
         />
         <ProFormText.Password
           name="password"
-          label={formatMessage({ id: 'system.form.title.password' })}
-          placeholder={formatMessage({ id: 'system.form.placeholder.password' })}
+          label={formatMessage({ id: 'form.title.password' })}
+          placeholder={formatMessage({ id: 'form.placeholder.password' })}
           width="xl"
           allowClear
-          rules={[
-            { required: true, message: formatMessage({ id: 'system.form.placeholder.password' }) },
-          ]}
+          rules={[{ required: true, message: formatMessage({ id: 'form.placeholder.password' }) }]}
         />
       </ProForm>
     </ProCard>

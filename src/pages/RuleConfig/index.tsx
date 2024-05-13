@@ -103,7 +103,7 @@ const RuleConfig = ({
       copyable: true,
     },
     {
-      title: formatMessage({ id: 'ruleConfig.table.title.name' }),
+      title: formatMessage({ id: 'ruleConfig.form.title.name' }),
       dataIndex: 'name',
       ellipsis: true,
     },

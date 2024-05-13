@@ -69,10 +69,10 @@ const WIFIConfig = () => {
         formRef={formRef}
         onFinish={handleOnFinish}
         layout="horizontal"
-        labelCol={{ span: 2 }}
+        labelCol={{ span: 3 }}
         submitter={{
           render: (props, dom) => (
-            <ProForm.Item wrapperCol={{ offset: 7 }}>
+            <ProForm.Item wrapperCol={{ offset: 8 }}>
               <Space>
                 {dom}
                 <Button
@@ -105,13 +105,11 @@ const WIFIConfig = () => {
         </ProForm.Item>
         <ProFormText.Password
           name="password"
-          label={formatMessage({ id: 'system.form.title.password' })}
+          label={formatMessage({ id: 'form.title.password' })}
           width="xl"
           allowClear
-          placeholder={formatMessage({ id: 'system.form.placeholder.password' })}
-          rules={[
-            { required: true, message: formatMessage({ id: 'system.form.placeholder.password' }) },
-          ]}
+          placeholder={formatMessage({ id: 'form.placeholder.password' })}
+          rules={[{ required: true, message: formatMessage({ id: 'form.placeholder.password' }) }]}
         />
         <ProFormSelect
           options={[

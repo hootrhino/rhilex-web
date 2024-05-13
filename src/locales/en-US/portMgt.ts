@@ -6,40 +6,40 @@ export default {
   'portMgt.form.title.alias': 'Alias',
   'portMgt.form.title.type': 'Type',
   'portMgt.form.title.busy': 'Status',
-  'portMgt.form.title.occupyBy': '占用设备',
-  'portMgt.form.title.config': '接口配置',
+  'portMgt.form.title.occupyBy': 'Occupied Device',
+  'portMgt.form.title.config': 'Interface Configuration',
   'portMgt.form.title.timeout': 'Timeout',
   'portMgt.form.title.baudRate': 'Baud Rate',
   'portMgt.form.title.dataBits': 'Data Bits',
   'portMgt.form.title.parity': 'Parity',
   'portMgt.form.title.stopBits': 'Stop Bits',
-  'portMgt.form.title.uart': '串口路径',
-  'portMgt.form.placeholder.name': '请输入名称',
-  'portMgt.form.placeholder.alias': '请输入别名',
-  'portMgt.form.placeholder.type': '请选择类型',
-  'portMgt.form.placeholder.timeout': '请输入超时时间',
-  'portMgt.form.placeholder.baudRate': '请选择波特率',
-  'portMgt.form.placeholder.dataBits': '请选择数据位',
-  'portMgt.form.placeholder.parity': '请选择奇偶校验',
-  'portMgt.form.placeholder.stopBits': '请选择停止位',
-  'portMgt.form.placeholder.uart': '请输入本地系统的串口路径',
+  'portMgt.form.title.uart': 'Serial Path',
+  'portMgt.form.placeholder.name': 'Please enter a name',
+  'portMgt.form.placeholder.alias': 'Please enter an alias',
+  'portMgt.form.placeholder.type': 'Please select a type',
+  'portMgt.form.placeholder.timeout': 'Please enter a timeout',
+  'portMgt.form.placeholder.baudRate': 'Please select a baud rate',
+  'portMgt.form.placeholder.dataBits': 'Please select a data bits',
+  'portMgt.form.placeholder.parity': 'Please select a parity',
+  'portMgt.form.placeholder.stopBits': 'Please select a stop bits',
+  'portMgt.form.placeholder.uart': 'Please enter a serial port path for the local system',
 
   /**
    * button
    */
-  'portMgt.button.scan': '扫描端口',
+  'portMgt.button.scan': 'Scan Ports',
 
   /**
    * modal
    */
-  'portMgt.modal.title.detail': '接口详情',
-  'portMgt.modal.title.update': '更新接口',
+  'portMgt.modal.title.detail': 'Interface detail',
+  'portMgt.modal.title.update': 'Update interface',
 
   /**
    * others
    */
   'portMgt.option.uart': 'Serial Port',
-  'portMgt.option.e': '奇校验',
-  'portMgt.option.o': '偶校验',
-  'portMgt.option.n': '不校验',
+  'portMgt.option.e': 'Even',
+  'portMgt.option.o': 'Odd',
+  'portMgt.option.n': 'None',
 };

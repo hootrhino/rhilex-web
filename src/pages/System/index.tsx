@@ -84,7 +84,7 @@ const baseItems = [
   },
 ];
 
-const defaultConfig = ['resource', 'firmware', 'backup', 'user'];
+const defaultConfig = ['resource', 'port', 'firmware', 'backup', 'user'];
 
 const System = () => {
   const { isWindows, product, activeKey, setActiveKey, hasWifi, hasRoute } = useModel('useSystem');

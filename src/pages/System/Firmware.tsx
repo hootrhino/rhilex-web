@@ -216,7 +216,7 @@ const FirmwareConfig = () => {
               }}
               icon={<CloudUploadOutlined />}
             >
-              {formatMessage({ id: 'system.button.firmware.upgrade' })}
+              {formatMessage({ id: 'system.button.confirm.upgrade' })}
             </Button>
             <Button
               key="reboot"

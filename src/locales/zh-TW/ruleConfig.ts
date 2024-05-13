@@ -2,20 +2,19 @@ export default {
   /**
    * table
    */
-  'ruleConfig.table.title.name': '名稱',
   'ruleConfig.table.title.status': '狀態',
 
   /**
    * form
    */
-  'ruleConfig.form.title.name': '規則名稱',
+  'ruleConfig.form.title.name': '名稱',
   'ruleConfig.form.title.actions': '規則回調',
   'ruleConfig.form.title.sourceType': '數據來源',
   'ruleConfig.form.title.fromSource': '輸入資源',
   'ruleConfig.form.title.testData': '輸入數據',
   'ruleConfig.form.title.output': '輸出結果',
 
-  'ruleConfig.form.placeholder.name': '請輸入規則名稱',
+  'ruleConfig.form.placeholder.name': '請輸入名稱',
   'ruleConfig.form.placeholder.testData': '請輸入數據',
 
   /**
@@ -39,9 +38,9 @@ export default {
   'ruleConfig.popconfirm.title.remove': '確定要刪除此規則？',
   'ruleConfig.popconfirm.title.reset': '重置可能會丟失數據，確定要重置嗎？',
   'ruleConfig.message.mqtt':
-    'Mqtt 消息來自 Publish 方，而此處規則只做原始數據轉發，不對數據做任何更改，因此回調函數的參數就是原始的 Mqtt Message，其具體格式需要開發者自行決定。',
+    'Mqtt 訊息來自 Publish 方，本規則僅負責轉發原始數據，不進行任何修改。因此，回呼函數的參數即為原始 Mqtt 訊息。開發者需自行確定訊息的具體格式',
   'ruleConfig.message.iothub':
-    '不同的 IoTHub 有不同的數據格式，而此處規則只做原始數據轉發，不對數據做任何更改，因此回調函數的參數就是原始的 IoTHub 協議 JSON，其具體格式可以參考對應的雲服務商文檔。',
+    '由於不同的 IoTHub 可能採用各自獨特的資料格式，本規則的作用僅限於原始資料的轉發，不涉及任何資料修改。因此，回呼函數接收的參數將是最初的 IoTHub 協定 JSON。有關訊息的具體格式，請參考相應雲端服務提供者提供的文檔',
 
   /**
    * inends

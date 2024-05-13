@@ -97,7 +97,7 @@ const DataBackupConfig = () => {
               const isSql = file.type === 'application/zip' || endsWith(file?.name, '.zip');
 
               if (!isSql) {
-                message.error(formatMessage({ id: 'system.message.error.recovery' }));
+                message.error(formatMessage({ id: 'system.message.error.upload' }));
                 return Upload.LIST_IGNORE;
               }
 

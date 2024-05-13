@@ -2,20 +2,19 @@ export default {
   /**
    * table
    */
-  'ruleConfig.table.title.name': '名称',
   'ruleConfig.table.title.status': '状态',
 
   /**
    * form
    */
-  'ruleConfig.form.title.name': '规则名称',
+  'ruleConfig.form.title.name': '名称',
   'ruleConfig.form.title.actions': '规则回调',
   'ruleConfig.form.title.sourceType': '数据来源',
   'ruleConfig.form.title.fromSource': '输入资源',
   'ruleConfig.form.title.testData': '输入数据',
   'ruleConfig.form.title.output': '输出结果',
 
-  'ruleConfig.form.placeholder.name': '请输入规则名称',
+  'ruleConfig.form.placeholder.name': '请输入名称',
   'ruleConfig.form.placeholder.testData': '请输入数据',
 
   /**
@@ -39,9 +38,9 @@ export default {
   'ruleConfig.popconfirm.title.remove': '确定要删除此规则？',
   'ruleConfig.popconfirm.title.reset': '重置可能会丢失数据，确定要重置吗？',
   'ruleConfig.message.mqtt':
-    'Mqtt 消息来自 Publish 方，而此处规则只做原始数据转发，不对数据做任何更改，因此回调函数的参数就是原始的 Mqtt Message，其具体格式需要开发者自行决定。',
+    'Mqtt 消息来自 Publish 方，本规则仅负责转发原始数据，不进行任何修改。因此，回调函数的参数即为原始 Mqtt 消息。开发者需自行确定消息的具体格式',
   'ruleConfig.message.iothub':
-    '不同的 IoTHub 有不同的数据格式，而此处规则只做原始数据转发，不对数据做任何更改，因此回调函数的参数就是原始的 IoTHub 协议 JSON，其具体格式可以参考对应的云服务商文档。',
+    '由于不同的 IoTHub 可能采用各自独特的数据格式，本规则的作用仅限于原始数据的转发，不涉及任何数据修改。因此，回调函数接收的参数将是最初的 IoTHub 协议 JSON。有关消息的具体格式，请参考相应云服务提供商提供的文档',
 
   /**
    * inends
