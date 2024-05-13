@@ -7,7 +7,7 @@ export default {
   /**
    * button
    */
-  'notifyLog.button.clear': '全部已读',
+  'notifyLog.button.clear': '一键设置已读',
 
   /**
    * table

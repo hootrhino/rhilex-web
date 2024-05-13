@@ -2,12 +2,12 @@ export default {
   /**
    * message
    */
-  'notifyLog.message.success': '设置成功',
+  'notifyLog.message.success': 'Marked successfully',
 
   /**
    * button
    */
-  'notifyLog.button.clear': '全部已读',
+  'notifyLog.button.clear': 'Mark All as Read',
 
   /**
    * table
@@ -20,5 +20,5 @@ export default {
   /**
    * others
    */
-  'notifyLog.tooltip.clear': '设置已读',
+  'notifyLog.tooltip.clear': 'Mark as read',
 };
