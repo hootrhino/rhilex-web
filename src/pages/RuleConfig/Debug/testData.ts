@@ -37,12 +37,12 @@ const device_siemens_ds = `{
   }
 }`;
 
-// GENERIC_CAMERA - 通用摄像机流处理网关
-const device_camera_ds = `{
-  "width": 1024,
-  "height": 512,
-  "extra": {}
-}`;
+// TODO GENERIC_CAMERA - 通用摄像机流处理网关 暂时隐藏
+// const device_camera_ds = `{
+//   "width": 1024,
+//   "height": 512,
+//   "extra": {}
+// }`;
 
 // GENERIC_AIS_RECEIVER - 通用船载 AIS 数据解析网关
 // 原始数据
@@ -123,7 +123,7 @@ const device_test_data = {
   [DeviceType.GENERIC_MODBUS]: device_modbus_ds,
   [DeviceType.GENERIC_HTTP_DEVICE]: device_http_ds,
   [DeviceType.SIEMENS_PLC]: device_siemens_ds,
-  [DeviceType.GENERIC_CAMERA]: device_camera_ds,
+  // [DeviceType.GENERIC_CAMERA]: device_camera_ds,
   [DeviceType.GENERIC_SNMP]: device_snmp_ds,
   [DeviceType.SMART_HOME_CONTROLLER]: device_smart_home_ds,
   // [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,

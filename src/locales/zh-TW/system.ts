@@ -4,16 +4,16 @@ export default {
    */
   'system.tab.resource': '系統資源',
   'system.tab.netStatus': '網絡狀態',
-  'system.tab.network': '網卡配置',
-  'system.tab.wifi': 'WIFI 配置',
-  'system.tab.time': '時間配置',
+  'system.tab.network': '網卡設定',
+  'system.tab.wifi': 'WIFI 設定',
+  'system.tab.time': '時間設定',
   'system.tab.routing': '路由設定',
-  'system.tab.firmware': '固件配置',
-  'system.tab.4gConfig': '配置',
+  'system.tab.firmware': '固件設定',
+  'system.tab.4gConfig': '設定',
   'system.tab.4gNetwork': '網絡',
-  'system.tab.apn': 'APN 配置',
+  'system.tab.apn': 'APN 設定',
   'system.tab.backup': '數據備份',
-  'system.tab.user': '用戶配置',
+  'system.tab.user': '用戶設定',
   'system.tab.port': '連接埠設定',
 
   /**
@@ -95,6 +95,7 @@ export default {
   'system.button.reload': '重新載入狀態',
   'system.button.restart4g': '重新啟動 4G 網卡',
   'system.button.upgrade': '升級',
+  'system.button.confirm.reboot': '確認重新啟動',
   'system.button.confirm.restart': '確認重新啟動',
   'system.button.confirm.upload': '確認上傳',
   'system.button.confirm.upgrade': '確認升級',
@@ -104,8 +105,6 @@ export default {
   'system.button.backup.download': '備份下載',
   'system.button.backup.upload': '備份還原',
   'system.button.firmware.upload': '上傳固件',
-  'system.button.firmware.reboot': '重新啟動裝置',
-  'system.button.firmware.restart': '重新啟動固件',
   'system.button.firmware.recover': '恢復出廠設定',
   'system.button.time.ntp': '立即同步 NTP',
   'system.button.wifi.ntp': '掃描 WIFI',
@@ -119,10 +118,10 @@ export default {
     '上傳時請確認版本，版本錯誤會導致失敗，有可能會引起設備故障，請謹慎操作',
   'system.modal.content.upgrade':
     '升級時請確認版本，版本錯誤會導致升級失敗，有可能會引起設備故障，請謹慎操作',
-  'system.modal.content.restartDevice': '重新啟動設備會停止當前所有任務，請謹慎操作',
+  'system.modal.content.reboot': '重新啟動設備會停止當前所有任務，請謹慎操作',
   'system.modal.content.recover':
-    '恢復出廠設定會刪除當前所有資料，停止所有正在進行的任務，請謹慎操作',
-  'system.modal.content.user': '確定修改用戶名/密碼並重新登入嗎？',
+    '恢復原廠設定將刪除目前所有資料並停止所有正在進行中的任務，請謹慎操作',
+  'system.modal.content.user': '確定要修改用戶名 / 密碼並重新登入嗎？',
 
   /**
    * title
@@ -155,7 +154,6 @@ export default {
   'system.desc.recovery': '僅支持 zip 文件',
   'system.message.error.upload': '僅支持 zip 格式的文件，請檢查上傳文件格式',
   'system.message.success.ntp': 'NTP 時間更新成功',
-  'system.message.success.scan': '掃描成功',
 
   'system.type.ethernet': '以太網',
   'system.type.bridge': '橋接設備',

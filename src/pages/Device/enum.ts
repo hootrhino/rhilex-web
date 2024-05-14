@@ -13,7 +13,7 @@ export enum DeviceType {
   // GENERIC_AIS_RECEIVER = 'GENERIC_AIS_RECEIVER', 暂无需求，先隐藏
   SIEMENS_PLC = 'SIEMENS_PLC',
   GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
-  GENERIC_CAMERA = 'GENERIC_CAMERA',
+  // GENERIC_CAMERA = 'GENERIC_CAMERA', 暂无需求，先隐藏
   SMART_HOME_CONTROLLER = 'SMART_HOME_CONTROLLER',
   GENERIC_SNMP = 'GENERIC_SNMP',
 }
@@ -25,7 +25,7 @@ const baseTypeOption = {
   // [DeviceType.GENERIC_AIS_RECEIVER]: '通用船载 AIS 数据解析网关', 暂无需求，先隐藏
   [DeviceType.SIEMENS_PLC]: intl.formatMessage({ id: 'device.type.plc' }),
   [DeviceType.GENERIC_HTTP_DEVICE]: intl.formatMessage({ id: 'device.type.http' }),
-  [DeviceType.GENERIC_CAMERA]: intl.formatMessage({ id: 'device.type.camera' }),
+  // [DeviceType.GENERIC_CAMERA]: intl.formatMessage({ id: 'device.type.camera' }), 暂无需求，先隐藏
   [DeviceType.SMART_HOME_CONTROLLER]: intl.formatMessage({ id: 'device.type.smartHome' }),
 };
 
@@ -53,7 +53,7 @@ export const deviceAvatar = {
   // [DeviceType.GENERIC_AIS_RECEIVER]: 'AIS', 暂无需求，先隐藏
   [DeviceType.SIEMENS_PLC]: 'PLC',
   [DeviceType.GENERIC_HTTP_DEVICE]: 'HTTP',
-  [DeviceType.GENERIC_CAMERA]: 'CAM',
+  // [DeviceType.GENERIC_CAMERA]: 'CAM', 暂无需求，先隐藏
   [DeviceType.SMART_HOME_CONTROLLER]: 'S',
   [DeviceType.GENERIC_SNMP]: 'SNMP',
 };

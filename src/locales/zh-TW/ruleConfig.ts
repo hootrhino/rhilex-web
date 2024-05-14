@@ -70,7 +70,7 @@ export default {
   'ruleConfig.ds.device.size': '大小',
   'ruleConfig.ds.device.width': '單幀寬度',
   'ruleConfig.ds.device.height': '單幀高度',
-  'ruleConfig.ds.device.extra': '視頻融合數據',
+  'ruleConfig.ds.device.extra': '目標偵測',
   'ruleConfig.ds.device.event': '事件',
   'ruleConfig.ds.device.mac': '設備 MAC',
   'ruleConfig.ds.device.ip': '設備 IP',

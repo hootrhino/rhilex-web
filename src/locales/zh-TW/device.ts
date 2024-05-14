@@ -64,7 +64,7 @@ export default {
   'device.modal.content.camera.loading': '視頻正在加載...',
   'device.modal.content.camera':
     '此模式下流媒体被中转到第三方地址，当前{inputAddr}已经成功推送到{outputAddr}，请在对应的平台上查看或者播放。',
-  'device.modal.content.upload': '文件格式不正確可能會導致上傳失敗，你確定要上傳',
+  'device.modal.content.upload': '文件格式不正確可能會導致上傳失敗。你確定要上傳嗎？',
   'device.modal.content.remove.batchOid': '此操作會一次性刪除多個對象，請謹慎操作',
   'device.modal.content.remove.batchSheet': '此操作會一次性刪除多個點位，請謹慎操作',
 
@@ -108,9 +108,8 @@ export default {
   'device.form.title.host.tcp': '服務地址',
   'device.form.title.model': '設備型號',
   'device.form.title.model.plc': 'PLC 型號',
-  'device.form.title.rack': '機架號',
-  'device.form.title.slot': '設備所在的插槽位置',
-  'device.form.title.slot.plc': '插槽號',
+  'device.form.title.rack': '架位',
+  'device.form.title.slot': '槽位',
   'device.form.title.url': '請求地址',
   'device.form.title.inputMode': '輸入模式',
   'device.form.title.inputAddr': '視頻採集源',
@@ -181,7 +180,7 @@ export default {
   'device.tooltip.group.remove': '刪除分組',
   'device.tooltip.copy': '以當前行為模板新建一行數據',
   'device.tooltip.uartTimeout':
-    '該值是串列口最佳讀完整包週期，請不要隨便修改，修改之前最好知道這個參數是什麼意義。如果一定要修改，建議這個值在 30-1000ms 之間',
+    '該值是串列埠讀取完整資料包的最佳週期。請勿隨意更改此參數，在修改之前請確保您了解其含義。如果必須修改，建議將此值設為 30-1000ms 之間',
 
   /**
    * placeholder
@@ -214,7 +213,6 @@ export default {
   'device.tips.scroll': '橫向滾動查看更多',
   'device.message.success.config': '配置成功',
   'device.message.success.clear': '清除成功',
-  'device.message.success.reload': '刷新成功',
   'device.message.error.new': '創建成功，但目前無法正常運作。請根據錯誤訊息 {msg} 及時修改配置參數',
   'device.unit.byte': '字節',
   'device.bigEndian': '大端',

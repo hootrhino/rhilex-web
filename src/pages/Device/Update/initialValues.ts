@@ -1,7 +1,6 @@
 import {
   DeviceMode,
   DeviceType,
-  InputMode,
   OutputEncode,
   OutputMode,
   PLCModel,
@@ -98,10 +97,10 @@ export const defaultConfig = {
       url: `http://${DEFAULT_HOST}:8080`,
     },
   },
-  [DeviceType.GENERIC_CAMERA]: {
-    inputMode: InputMode.LOCAL_CAMERA,
-    ...defaultOutputConfig['LOCAL_JPEG_STREAM_SERVER'],
-  },
+  // [DeviceType.GENERIC_CAMERA]: {
+  //   inputMode: InputMode.LOCAL_CAMERA,
+  //   ...defaultOutputConfig['LOCAL_JPEG_STREAM_SERVER'],
+  // },
   [DeviceType.SMART_HOME_CONTROLLER]: {
     commonConfig: {
       networkCidr: '192.168.1.1/24',

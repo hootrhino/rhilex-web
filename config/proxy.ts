@@ -1,7 +1,7 @@
 export default {
   dev: {
     '/api/': {
-      target: 'http://wangwenhai.vicp.io/',
+      target: 'http://1365866fz0.vicp.fun/',
       // target: 'http://106.15.225.172:2580/',
       changeOrigin: true,
       pathRewrite: { '^': '' },

@@ -5,7 +5,7 @@ import {
   postDevicesCreate,
   putDevicesUpdate,
 } from '@/services/rulex/shebeiguanli';
-import { formatHeaders2Arr, formatHeaders2Obj, getPlayAddress, stringToBool } from '@/utils/utils';
+import { formatHeaders2Arr, formatHeaders2Obj, stringToBool } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
@@ -19,7 +19,7 @@ import {
 
 import PageContainer from '@/components/PageContainer';
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
-import { defaultDeviceType, DeviceMode, DeviceType, OutputMode } from '../enum';
+import { defaultDeviceType, DeviceMode, DeviceType } from '../enum';
 
 const DefaultListUrl = '/device/list';
 
@@ -64,51 +64,50 @@ const UpdateForm = () => {
       let params = { ...values };
       let commonConfig = { ...params.config?.commonConfig };
       let httpConfig = { ...params.config?.httpConfig };
-      let outputAddr = params?.config?.outputAddr;
+      // let outputAddr = params?.config?.outputAddr;
 
       const { autoRequest, enableOptimize, enableGroup, mode, parseAis, autoScan } = commonConfig;
       const type = params.type;
-      const outputMode = params?.config?.outputMode;
+      // const outputMode = params?.config?.outputMode;
 
-      if (type === DeviceType.GENERIC_CAMERA) {
-        outputAddr =
-          outputMode === OutputMode.REMOTE_STREAM_SERVER
-            ? outputAddr
-            : getPlayAddress(params?.name, outputMode, 'push');
-      } else {
-        if (type === DeviceType.GENERIC_HTTP_DEVICE) {
-          const newHeaders =
-            httpConfig?.headers?.length > 0 ? formatHeaders2Obj(httpConfig?.headers) : {};
-          httpConfig = {
-            ...httpConfig,
-            headers: newHeaders,
-          };
-        }
-        const options = {
-          autoRequest,
-          enableOptimize,
-          enableGroup,
-          parseAis,
-          autoScan,
-        };
-
-        Object.keys(options).forEach((key) => {
-          if (options[key]) {
-            commonConfig[key] = stringToBool(options[key]);
-          }
-        });
-
-        params = {
-          ...params,
-          config: filterData({
-            ...params.config,
-            outputAddr,
-            commonConfig,
-            httpConfig,
-            hostConfig: mode === DeviceMode.TCP ? params?.config?.hostConfig : undefined,
-          }),
+      // if (type === DeviceType.GENERIC_CAMERA) {
+      //   outputAddr =
+      //     outputMode === OutputMode.REMOTE_STREAM_SERVER
+      //       ? outputAddr
+      //       : getPlayAddress(params?.name, outputMode, 'push');
+      // }
+      if (type === DeviceType.GENERIC_HTTP_DEVICE) {
+        const newHeaders =
+          httpConfig?.headers?.length > 0 ? formatHeaders2Obj(httpConfig?.headers) : {};
+        httpConfig = {
+          ...httpConfig,
+          headers: newHeaders,
         };
       }
+      const options = {
+        autoRequest,
+        enableOptimize,
+        enableGroup,
+        parseAis,
+        autoScan,
+      };
+
+      Object.keys(options).forEach((key) => {
+        if (options[key]) {
+          commonConfig[key] = stringToBool(options[key]);
+        }
+      });
+
+      params = {
+        ...params,
+        config: filterData({
+          ...params.config,
+          // outputAddr,
+          commonConfig,
+          httpConfig,
+          hostConfig: mode === DeviceMode.TCP ? params?.config?.hostConfig : undefined,
+        }),
+      };
 
       if (deviceId) {
         await putDevicesUpdate({ ...params, uuid: deviceId });

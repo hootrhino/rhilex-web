@@ -56,10 +56,10 @@ const APNConfig = () => {
     <ProForm
       formRef={formRef}
       layout="horizontal"
-      labelCol={{ span: 4 }}
+      labelCol={{ span: 5 }}
       submitter={{
         render: (props, dom) => (
-          <ProForm.Item wrapperCol={{ offset: 16 }}>
+          <ProForm.Item wrapperCol={{ offset: 17 }}>
             <Space>{dom}</Space>
           </ProForm.Item>
         ),

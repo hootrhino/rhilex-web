@@ -83,7 +83,7 @@ const NetworkConfig = () => {
         formRef={formRef}
         onFinish={handleOnFinish}
         layout="horizontal"
-        labelCol={{ span: 2 }}
+        labelCol={{ span: 3 }}
         onValuesChange={(changedValue) => {
           if (changedValue?.interface && detail) {
             formRef.current?.setFieldsValue({ ...detail[changedValue?.interface] });

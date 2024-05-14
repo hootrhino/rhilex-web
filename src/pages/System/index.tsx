@@ -28,14 +28,14 @@ const baseItems = [
     children: <Resource />,
   },
   {
-    label: <FormattedMessage id="system.tab.port" />,
-    key: 'port',
-    children: <PortSettings />,
-  },
-  {
     label: <FormattedMessage id="system.tab.netStatus" />,
     key: 'netStatus',
     children: <NetworkStatus />,
+  },
+  {
+    label: <FormattedMessage id="system.tab.port" />,
+    key: 'port',
+    children: <PortSettings />,
   },
   {
     label: <FormattedMessage id="system.tab.network" />,
@@ -43,24 +43,14 @@ const baseItems = [
     children: <NetworkConfig />,
   },
   {
-    label: <FormattedMessage id="system.tab.wifi" />,
-    key: 'wifi',
-    children: <WIFIConfig />,
-  },
-  {
-    label: <FormattedMessage id="system.tab.time" />,
-    key: 'time',
-    children: <TimeConfig />,
-  },
-  {
     label: <FormattedMessage id="system.tab.routing" />,
     key: 'routing',
     children: <RoutingConfig />,
   },
   {
-    label: <FormattedMessage id="system.tab.firmware" />,
-    key: 'firmware',
-    children: <FirmwareConfig />,
+    label: <FormattedMessage id="system.tab.wifi" />,
+    key: 'wifi',
+    children: <WIFIConfig />,
   },
   {
     label: (
@@ -71,6 +61,17 @@ const baseItems = [
     ),
     key: 'apn',
     children: <Network4GConfig />,
+  },
+  {
+    label: <FormattedMessage id="system.tab.time" />,
+    key: 'time',
+    children: <TimeConfig />,
+  },
+
+  {
+    label: <FormattedMessage id="system.tab.firmware" />,
+    key: 'firmware',
+    children: <FirmwareConfig />,
   },
   {
     label: <FormattedMessage id="system.tab.backup" />,

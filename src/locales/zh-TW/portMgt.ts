@@ -13,7 +13,7 @@ export default {
   'portMgt.form.title.dataBits': '數據位',
   'portMgt.form.title.parity': '奇偶校驗',
   'portMgt.form.title.stopBits': '停止位',
-  'portMgt.form.title.uart': '串口路徑',
+  'portMgt.form.title.uart': '系統串口',
   'portMgt.form.placeholder.name': '請輸入介面名稱',
   'portMgt.form.placeholder.alias': '請輸入暱稱',
   'portMgt.form.placeholder.type': '請選擇介面類型',
@@ -22,7 +22,7 @@ export default {
   'portMgt.form.placeholder.dataBits': '請選擇數據位',
   'portMgt.form.placeholder.parity': '請選擇奇偶校驗',
   'portMgt.form.placeholder.stopBits': '請選擇停止位',
-  'portMgt.form.placeholder.uart': '請輸入本地系統的串口路徑',
+  'portMgt.form.placeholder.uart': '請輸入系統串口',
 
   /**
    * button

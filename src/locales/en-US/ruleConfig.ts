@@ -8,7 +8,7 @@ export default {
    * form
    */
   'ruleConfig.form.title.name': 'Name',
-  'ruleConfig.form.title.actions': '规则回调',
+  'ruleConfig.form.title.actions': 'Actions',
   'ruleConfig.form.title.sourceType': 'Data Sources',
   'ruleConfig.form.title.fromSource': 'Input resources',
   'ruleConfig.form.title.testData': 'Input devices',
@@ -57,21 +57,21 @@ export default {
   /**
    * device ds
    */
-  'ruleConfig.ds.device.in': 'Input',
+  'ruleConfig.ds.device.in': 'Input parameter',
   'ruleConfig.ds.device.out': 'Output',
   'ruleConfig.ds.device.tag': 'Tag',
   'ruleConfig.ds.device.function': 'Function code',
-  'ruleConfig.ds.device.slaverId': '从机 ID',
+  'ruleConfig.ds.device.slaverId': 'Slaver ID',
   'ruleConfig.ds.device.address': 'Address',
   'ruleConfig.ds.device.quantity': 'Quantity',
   'ruleConfig.ds.device.value': 'Value',
   'ruleConfig.ds.device.type': 'Data type',
   'ruleConfig.ds.device.frequency': 'Frequency',
-  'ruleConfig.ds.device.start': '起始位置',
+  'ruleConfig.ds.device.start': 'Start',
   'ruleConfig.ds.device.size': 'Size',
-  'ruleConfig.ds.device.width': '单帧宽度',
-  'ruleConfig.ds.device.height': '单帧高度',
-  'ruleConfig.ds.device.extra': '视频融合数据',
+  'ruleConfig.ds.device.width': 'Single frame width',
+  'ruleConfig.ds.device.height': 'Single frame height',
+  'ruleConfig.ds.device.extra': 'Object detection',
   'ruleConfig.ds.device.event': 'Event',
   'ruleConfig.ds.device.mac': 'Device MAC',
   'ruleConfig.ds.device.ip': 'Device IP',

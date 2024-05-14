@@ -13,7 +13,7 @@ export default {
   'portMgt.form.title.dataBits': '数据位',
   'portMgt.form.title.parity': '奇偶校验',
   'portMgt.form.title.stopBits': '停止位',
-  'portMgt.form.title.uart': '串口路径',
+  'portMgt.form.title.uart': '系统串口',
   'portMgt.form.placeholder.name': '请输入接口名称',
   'portMgt.form.placeholder.alias': '请输入别名',
   'portMgt.form.placeholder.type': '请选择接口类型',
@@ -22,7 +22,7 @@ export default {
   'portMgt.form.placeholder.dataBits': '请选择数据位',
   'portMgt.form.placeholder.parity': '请选择奇偶校验',
   'portMgt.form.placeholder.stopBits': '请选择停止位',
-  'portMgt.form.placeholder.uart': '请输入本地系统的串口路径',
+  'portMgt.form.placeholder.uart': '请输入系统串口',
 
   /**
    * button

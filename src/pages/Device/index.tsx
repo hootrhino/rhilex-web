@@ -15,7 +15,6 @@ import {
   DownOutlined,
   ExceptionOutlined,
   HddOutlined,
-  PlayCircleOutlined,
   PlusOutlined,
   PoweroffOutlined,
   SettingOutlined,
@@ -27,10 +26,9 @@ import { Button, Dropdown, Popconfirm, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/hooks/useItems';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useRef, useState } from 'react';
-import CameraDetail from './Camera';
 import { baseColumns } from './columns';
 import Detail from './Detail';
-import { DeviceType, OutputMode } from './enum';
+import { DeviceType } from './enum';
 import type { GroupConfig } from './Group';
 import GroupList, { DEFAULT_CONFIG } from './Group';
 
@@ -53,15 +51,15 @@ const Devices = () => {
 
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(DEFAULT_CONFIG);
   const [open, setOpen] = useState<boolean>(false);
-  const [openVideo, setOpenVideo] = useState<boolean>(false);
+  // const [openVideo, setOpenVideo] = useState<boolean>(false);
 
   const [total, setTotal] = useState<number>(0);
 
   const [activeDevice, setActiveDevice] = useState<string>('');
-  const [videoConfig, setVideoConfig] = useState<{
-    deviceName: string | undefined;
-    outputMode: OutputMode;
-  }>({ deviceName: '', outputMode: OutputMode.LOCAL_JPEG_STREAM_SERVER });
+  // const [videoConfig, setVideoConfig] = useState<{
+  //   deviceName: string | undefined;
+  //   outputMode: OutputMode;
+  // }>({ deviceName: '', outputMode: OutputMode.LOCAL_JPEG_STREAM_SERVER });
 
   // 设备分组列表
   const { data: groupList, run: getGroupList } = useRequest(() => getDevicesGroup());
@@ -129,16 +127,17 @@ const Devices = () => {
     let newItems = [...baseItems];
 
     switch (type) {
-      case DeviceType.GENERIC_CAMERA:
-        newItems = [
-          ...newItems,
-          {
-            key: 'video',
-            label: formatMessage({ id: 'device.button.camera' }),
-            icon: <PlayCircleOutlined />,
-          },
-        ];
-        break;
+      // TODO 暂无需求，先隐藏
+      // case DeviceType.GENERIC_CAMERA:
+      //   newItems = [
+      //     ...newItems,
+      //     {
+      //       key: 'video',
+      //       label: formatMessage({ id: 'device.button.camera' }),
+      //       icon: <PlayCircleOutlined />,
+      //     },
+      //   ];
+      //   break;
       case DeviceType.SMART_HOME_CONTROLLER:
         newItems = [
           ...newItems,
@@ -191,7 +190,7 @@ const Devices = () => {
     return [...newItems, showErr ? errItem : null];
   };
 
-  const handleOnMenu = ({ key }: MenuInfo, { uuid, gid, name, config }: Partial<DeviceItem>) => {
+  const handleOnMenu = ({ key }: MenuInfo, { uuid, gid }: Partial<DeviceItem>) => {
     switch (key) {
       case 'restart':
         setOpen(true);
@@ -209,26 +208,27 @@ const Devices = () => {
       case 'modbus-sheet':
         history.push(`/device/${gid}/${uuid}/modbus-sheet`);
         break;
-      case 'video':
-        if (config?.outputMode === OutputMode.REMOTE_STREAM_SERVER) {
-          modal.info({
-            title: formatMessage({ id: 'device.modal.title.camera' }),
-            content: (
-              <div className="break-all">
-                {formatMessage(
-                  { id: 'device.modal.content.camera' },
-                  { inputAddr: config?.inputAddr, outputAddr: config?.outputAddr },
-                )}
-              </div>
-            ),
-            width: 500,
-          });
-        } else {
-          setOpenVideo(true);
-          setVideoConfig({ deviceName: name, outputMode: config?.outputMode });
-        }
+      // TODO 暂无需求，先隐藏
+      // case 'video':
+      //   if (config?.outputMode === OutputMode.REMOTE_STREAM_SERVER) {
+      //     modal.info({
+      //       title: formatMessage({ id: 'device.modal.title.camera' }),
+      //       content: (
+      //         <div className="break-all">
+      //           {formatMessage(
+      //             { id: 'device.modal.content.camera' },
+      //             { inputAddr: config?.inputAddr, outputAddr: config?.outputAddr },
+      //           )}
+      //         </div>
+      //       ),
+      //       width: 500,
+      //     });
+      //   } else {
+      //     setOpenVideo(true);
+      //     setVideoConfig({ deviceName: name, outputMode: config?.outputMode });
+      //   }
 
-        break;
+      //   break;
       case 'error':
         getErrorMsg({ uuid });
         break;
@@ -376,18 +376,18 @@ const Devices = () => {
         </ProCard>
       </PageContainer>
       <Detail {...detailConfig} onClose={() => setDeviceConfig({ uuid: '', open: false })} />
-      <CameraDetail
+      {/* <CameraDetail
         open={openVideo}
         onCancel={() => {
           setOpenVideo(false);
         }}
         {...videoConfig}
-      />
+      /> */}
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}
         title={formatMessage({ id: 'modal.title.confirm' })}
-        okText={formatMessage({ id: 'button.restart.comfirm' })}
+        okText={formatMessage({ id: 'button.comfirm' })}
         afterOkText={formatMessage({ id: 'button.restart' })}
         content={formatMessage({ id: 'device.modal.content.restart' })}
         handleOnEnd={() => {

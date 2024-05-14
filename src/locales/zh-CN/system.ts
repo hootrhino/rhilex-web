@@ -4,16 +4,16 @@ export default {
    */
   'system.tab.resource': '系统资源',
   'system.tab.netStatus': '网络状态',
-  'system.tab.network': '网卡配置',
-  'system.tab.wifi': 'WIFI 配置',
-  'system.tab.time': '时间配置',
+  'system.tab.network': '网卡设置',
+  'system.tab.wifi': 'WIFI 设置',
+  'system.tab.time': '时间设置',
   'system.tab.routing': '路由设置',
-  'system.tab.firmware': '固件配置',
-  'system.tab.4gConfig': '配置',
+  'system.tab.firmware': '固件设置',
+  'system.tab.4gConfig': '设置',
   'system.tab.4gNetwork': '网络',
-  'system.tab.apn': 'APN 配置',
+  'system.tab.apn': 'APN 设置',
   'system.tab.backup': '数据备份',
-  'system.tab.user': '用户配置',
+  'system.tab.user': '用户设置',
   'system.tab.port': '端口设置',
 
   /**
@@ -95,6 +95,7 @@ export default {
   'system.button.reload': '刷新状态',
   'system.button.restart4g': '重启 4G 网卡',
   'system.button.upgrade': '升级',
+  'system.button.confirm.reboot': '确认重启',
   'system.button.confirm.restart': '确认重启',
   'system.button.confirm.upload': '确认上传',
   'system.button.confirm.upgrade': '确认升级',
@@ -104,8 +105,6 @@ export default {
   'system.button.backup.download': '备份下载',
   'system.button.backup.upload': '备份恢复',
   'system.button.firmware.upload': '上传固件',
-  'system.button.firmware.reboot': '重启设备',
-  'system.button.firmware.restart': '重启固件',
   'system.button.firmware.recover': '恢复出厂',
   'system.button.time.ntp': '立即同步 NTP',
   'system.button.wifi.ntp': '扫描 WIFI',
@@ -118,10 +117,10 @@ export default {
     '上传时请确认版本，版本错误会导致失败，有可能会引起设备故障，请谨慎操作',
   'system.modal.content.upgrade':
     '升级时请确认版本，版本错误会导致升级失败，有可能会引起设备故障，请谨慎操作',
-  'system.modal.content.restartDevice': '重启设备会停止当前所有任务，请谨慎操作',
+  'system.modal.content.reboot': '重启设备会停止当前所有任务，请谨慎操作',
   'system.modal.content.recover':
-    '恢复出厂设置会删除当前所有数据，停止所有正在进行的任务，请谨慎操作',
-  'system.modal.content.user': '确定修改用户名/密码并重新登录吗？',
+    '恢复出厂设置将删除当前所有数据并停止所有正在进行中的任务，请谨慎操作',
+  'system.modal.content.user': '确定要修改用户名 / 密码并重新登录吗？',
 
   /**
    * title
@@ -154,7 +153,6 @@ export default {
   'system.desc.recovery': '仅支持 zip 文件',
   'system.message.error.upload': '仅支持 zip 格式文件，请检查上传文件格式',
   'system.message.success.ntp': 'NTP 时间更新成功',
-  'system.message.success.scan': '扫描成功',
 
   'system.type.ethernet': '以太网',
   'system.type.bridge': '桥接设备',

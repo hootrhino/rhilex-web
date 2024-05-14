@@ -2,24 +2,24 @@ export default {
   /**
    * button
    */
-  'device.button.camera': '查看视频',
-  'device.button.snmp': 'SNMP 对象列表',
+  'device.button.camera': '查看视频', // TODO 已隐藏，暂时不需要翻译
+  'device.button.snmp': 'SNMP OIDs',
   'device.button.sheet': 'sheet Configuration',
-  'device.button.nonPolling': '停止刷新',
-  'device.button.polling': '开始刷新',
+  'device.button.nonPolling': 'Stop Refresh',
+  'device.button.polling': 'Start Refresh',
   'device.button.import.sheet': 'Import Sheet',
   'device.button.export.sheet': 'Export Sheet',
   'device.button.update.bulk': 'Bulk Update',
   'device.button.remove.bulk': 'Bulk Delete',
-  'device.button.control': '设备控制台',
-  'device.button.configWebhook': '快速接入网关',
-  'device.button.clearWebhook': '清除所有配置',
-  'device.button.scan': '扫描设备',
+  'device.button.control': 'Device Console',
+  'device.button.configWebhook': 'Setting Webhook',
+  'device.button.clearWebhook': 'Clear Webhook',
+  'device.button.scan': 'Scan Device',
   'device.button.refresh': 'Refresh',
-  'device.button.export.oid': '导出对象列表',
-  'device.button.import.oid': '导入对象列表',
-  'device.button.new.object': '添加对象',
-  'device.button.new.sheet': '添加点位',
+  'device.button.export.oid': 'Export OIDs',
+  'device.button.import.oid': 'Import OIDs',
+  'device.button.new.object': 'Add OID',
+  'device.button.new.sheet': 'Add point',
 
   /**
    * title
@@ -31,42 +31,47 @@ export default {
   'device.title.new': 'New Device',
   'device.title.update': 'Edit Device',
   'device.title.base': 'Basic configuration',
-  'device.title.modal.error.device': '设备异常信息',
-  'device.title.modal.error.sheet': '点位异常信息',
-  'device.title.modal.error.oid': '对象异常信息',
-  'device.title.sheet': '点位表配置',
-  'device.title.oid': 'SNMP 对象列表',
-  'device.title.subDevice': '设备 {name} - 子设备列表',
-  'device.title.sheetList': '设备 {name} - 点位表配置',
-  'device.title.oidList': '设备 {name} - SNMP 对象列表',
-  'device.title.smartHome.detail.base': '设备基本信息',
-  'device.title.smartHome.detail.status': '设备状态信息',
+  'device.title.modal.error.device': 'Device exception information',
+  'device.title.modal.error.sheet': 'Point exception information',
+  'device.title.modal.error.oid': 'OID exception information',
+  'device.title.sheet': 'Point sheet configuration',
+  'device.title.oid': 'SNMP OIDs',
+  'device.title.subDevice': 'Device {name} - Subdevice list',
+  'device.title.sheetList': 'Device {name} - Point sheet configuration',
+  'device.title.oidList': 'Device {name} - SNMP OIDs',
+  'device.title.smartHome.detail.base': 'Basic device information',
+  'device.title.smartHome.detail.status': 'Device status information',
 
   /**
    * modal
    */
   'device.modal.title.remove': 'Are you sure to delete this device?',
-  'device.modal.title.remove.batchOid': '批量删除对象',
+  'device.modal.title.remove.batchOid': 'Bulk delete OIDs',
   'device.modal.title.remove.oid': 'Are you sure to delete this OID?',
-  'device.modal.title.remove.sheet': '确定要删除此点位？',
-  'device.modal.title.remove.batchSheet': '批量删除点位',
-  'device.modal.title.camera': '查看视频',
+  'device.modal.title.remove.sheet': 'Are you sure to delete this point?',
+  'device.modal.title.remove.batchSheet': 'Bulk Delete Points',
+  'device.modal.title.camera': '查看视频', // TODO 已隐藏，暂时不需要翻译
   'device.modal.title.group.new': 'New device group',
   'device.modal.title.group.edit': 'Edit Group',
   'device.modal.title.group.remove': 'Are you sure to delete this group',
   'device.modal.title.upload.confirm': 'Import Sheet',
-  'device.modal.title.upload.confirm.oid': '导入对象列表',
-  'device.modal.title.upload': '你应当确保上传的点位表必须遵守一定表头格式，例如：',
+  'device.modal.title.upload.confirm.oid': 'Import OIDs',
+  'device.modal.title.upload':
+    'You should ensure that the uploaded point sheet adheres to a specific header format, for example:',
 
   'device.modal.content.group.remove':
-    '分组中包含 {count} 个子项目，删除后将被移入默认分组中，请谨慎处理。',
-  'device.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，请谨慎操作',
-  'device.modal.content.camera.loading': '视频正在加载...',
+    'The group contains {count} sub-items. After deletion, they will be moved to the default group;please proceed with caution',
+  'device.modal.content.restart':
+    'The restart process will temporarily disconnect resource connections for 5-10 seconds; please proceed with caution',
+  'device.modal.content.camera.loading': '视频正在加载...', // TODO 已隐藏，暂时不需要翻译
   'device.modal.content.camera':
-    '此模式下流媒体被中转到第三方地址，当前{inputAddr}已经成功推送到{outputAddr}，请在对应的平台上查看或者播放。',
-  'device.modal.content.upload': '文件格式不正确可能会导致上传失败，你确定要上传',
-  'device.modal.content.remove.batchOid': '此操作会一次性删除多个对象，请谨慎操作',
-  'device.modal.content.remove.batchSheet': '此操作会一次性删除多个点位，请谨慎操作',
+    '此模式下流媒体被中转到第三方地址，当前{inputAddr}已经成功推送到{outputAddr}，请在对应的平台上查看或者播放。', // TODO 已隐藏，暂时不需要翻译
+  'device.modal.content.upload':
+    'Incorrect file format may result in upload failure. Are you sure you want to upload?',
+  'device.modal.content.remove.batchOid':
+    'This operation will delete multiple OIDs at once. Please proceed with caution',
+  'device.modal.content.remove.batchSheet':
+    'This operation will delete multiple points at once. Please proceed with caution',
 
   /**
    * form
@@ -101,31 +106,32 @@ export default {
   'device.form.title.gid': 'Device Group',
   'device.form.title.state': 'Status',
   'device.form.title.retryTime': 'Max Fault Count',
-  'device.form.title.autoRequest': '启动轮询',
-  'device.form.title.enableOptimize': '批量采集',
-  'device.form.title.maxRegNum': '最大点位数',
+  'device.form.title.autoRequest': 'Enable Auto Request',
+  'device.form.title.enableOptimize': 'Enable Batch Fetch',
+  'device.form.title.maxRegNum': 'Max Points',
   'device.form.title.host.plc': 'PLC Address',
   'device.form.title.host.tcp': 'Host',
   'device.form.title.model': 'Device Model',
   'device.form.title.model.plc': 'PLC Model',
   'device.form.title.rack': 'Rack',
-  'device.form.title.slot': '设备所在的插槽位置',
-  'device.form.title.slot.plc': 'Slot',
-  'device.form.title.url': '请求地址',
+  'device.form.title.slot': 'Slot',
+  'device.form.title.url': 'Request URL',
   'device.form.title.inputMode': 'Input Mode',
+  // TODO 已隐藏，暂时不需要翻译 --begin
   'device.form.title.inputAddr': '视频采集源',
   'device.form.title.outputMode': 'Output Mode',
   'device.form.title.outputEncode': '输出编码',
   'device.form.title.outputAddr': '输出地址',
   'device.form.title.playAddr': '外部播放地址',
-  'device.form.title.autoScan': '自动扫描',
-  'device.form.title.enableGroup': '并发采集',
-  'device.form.title.target.device': '目标设备',
-  'device.form.title.target.port': '目标端口',
-  'device.form.title.transport': '传输协议',
-  'device.form.title.community': '社区名称',
-  'device.form.title.version': '协议版本',
-  'device.form.title.webHookPort': '监听端口',
+  // TODO 已隐藏，暂时不需要翻译 --end
+  'device.form.title.autoScan': 'Enable Auto Scan',
+  'device.form.title.enableGroup': 'enable Concurrent Fetch',
+  'device.form.title.target.device': 'Target Device',
+  'device.form.title.target.port': 'Target Port',
+  'device.form.title.transport': 'Transport Protocol',
+  'device.form.title.community': 'Community',
+  'device.form.title.version': 'Version',
+  'device.form.title.webHookPort': 'Port',
 
   // group
   'device.form.title.group.name': 'Group Name',
@@ -141,80 +147,79 @@ export default {
   'device.form.title.weight': 'Weight',
   'device.form.title.value': 'Value',
   'device.form.title.status': 'Status',
-  'device.form.title.lastFetchTime': '采集时间',
+  'device.form.title.lastFetchTime': 'Last Fetch Time',
 
   // plc
   'device.form.title.siemensAddress': 'Address',
 
   // snmp
-  'device.form.title.oid': '对象标识符',
+  'device.form.title.oid': 'OID',
 
   // smartHome
   'device.form.title.id': 'Device ID',
   'device.form.title.ip': 'Device IP Address',
   'device.form.title.mac': 'Device MAC Address',
-  'device.form.title.gen': '设备硬件版本号',
-  'device.form.title.fwId': '设备固件版本 ID',
-  'device.form.title.ver': '设备固件版本号',
-  'device.form.title.app': '设备应用程序名称',
-  'device.form.title.authEn': '开启认证功能',
-  'device.form.title.authDomain': '设备认证域',
-  'device.form.title.restartRequired': '重启设备',
-  'device.form.title.time': '设备当前时间',
-  'device.form.title.unixtime': '设备 Unix 时间戳',
-  'device.form.title.uptime': '设备运行时间',
-  'device.form.title.ramSize': 'RAM 总大小',
-  'device.form.title.ramFree': '可用 RAM 大小',
-  'device.form.title.fsSize': '文件系统总大小',
-  'device.form.title.fsFree': '文件系统可用大小',
-  'device.form.title.cfgRev': '配置版本号',
-  'device.form.title.kvsRev': '键值存储版本号',
-  'device.form.title.scheduleRev': '计划任务版本号',
-  'device.form.title.webhookRev': 'Webhook 版本号',
+  'device.form.title.gen': 'Device Hardware Version',
+  'device.form.title.fwId': 'Device Firmware ID',
+  'device.form.title.ver': 'Device Firmware Version',
+  'device.form.title.app': 'Device Application Name',
+  'device.form.title.authEn': 'Enable Auth',
+  'device.form.title.authDomain': 'Device Auth Domain',
+  'device.form.title.restartRequired': 'Enable Restart',
+  'device.form.title.time': 'System Time Setting',
+  'device.form.title.unixtime': 'Device Unix Timestamp',
+  'device.form.title.uptime': 'Device Up Start Time',
+  'device.form.title.ramSize': 'Total RAM',
+  'device.form.title.ramFree': 'Available RAM',
+  'device.form.title.fsSize': 'Total Space',
+  'device.form.title.fsFree': 'Available Space',
+  'device.form.title.cfgRev': 'Version Setting',
+  'device.form.title.kvsRev': 'Key Value Storage Version',
+  'device.form.title.scheduleRev': 'Schedule Job Version',
+  'device.form.title.webhookRev': 'Webhook Version',
 
   /**
    * tooltip
    */
   'device.tooltip.outputMode':
-    '注意：因为传输格式原因，Jpeg Stream 模式下仅保存了图像信息，没有原始声音',
-  'device.tooltip.group.edit': '重命名分组',
-  'device.tooltip.group.remove': '删除分组',
-  'device.tooltip.copy': '以当前行为模板新建一行数据',
+    '注意：因为传输格式原因，Jpeg Stream 模式下仅保存了图像信息，没有原始声音', // TODO 已隐藏，暂时不需要翻译
+  'device.tooltip.group.edit': 'Rename group',
+  'device.tooltip.group.remove': 'Delete group',
+  'device.tooltip.copy': 'Create a new row based on the current row as a templat',
   'device.tooltip.uartTimeout':
-    '该值是串口最佳读完整包周期，请不要随便修改，修改之前最好知道这个参数是什么含义。如果一定要修改，建议这个值在 30-1000ms 之间',
+    'The value represents the optimal period for reading complete packets over the serial port. Please do not modify this parameter without careful consideration. Before making any changes, ensure you understand the significance of this parameter. If modifications are necessary, it is recommended to set the value within the range of 30-1000ms',
 
   /**
    * placeholder
    */
-  'device.form.placeholder.group.name': '请输入分组名称',
-  'device.form.placeholder.slaverId': '请输入从设备地址',
-  'device.form.placeholder.tag': '请输入标签',
-  'device.form.placeholder.alias': '请输入别名',
-  'device.form.placeholder.func': '请选择 Modbus 功能',
-  'device.form.placeholder.dataType': '请选择数据类型和字节序',
-  'device.form.placeholder.address': '请输入起始地址',
-  'device.form.placeholder.quantity': '请输入读取数量',
-  'device.form.placeholder.weight': '请输入权重系数',
-  'device.form.placeholder.frequency': '请输入采集频率',
-  'device.form.placeholder.siemensAddress': '请输入地址',
-  'device.form.placeholder.oid': '请输入对象标识符',
-  'device.form.placeholder.uartTimeout': '请输入读写超时',
-  'device.form.placeholder.cidr': '请输入 CIDR',
+  'device.form.placeholder.group.name': 'Please enter a group name',
+  'device.form.placeholder.slaverId': 'Please enter a slaver Id',
+  'device.form.placeholder.tag': 'Please enter a tag',
+  'device.form.placeholder.alias': 'Please enter an alias',
+  'device.form.placeholder.func': 'Please select a modbus function',
+  'device.form.placeholder.dataType': 'Please select a data type and endianness',
+  'device.form.placeholder.address': 'Please enter an address',
+  'device.form.placeholder.quantity': 'Please enter a quantity',
+  'device.form.placeholder.weight': 'Please enter a weight',
+  'device.form.placeholder.frequency': 'Please enter a frequency',
+  'device.form.placeholder.siemensAddress': 'Please enter an address',
+  'device.form.placeholder.oid': 'Please enter an OID',
+  'device.form.placeholder.uartTimeout': 'Please enter a timeout',
+  'device.form.placeholder.cidr': 'Please enter a CIDR',
 
   /**
    * rules
    */
-  'device.form.rules.quantity': '读取数量范围在 1-256 之间',
-  'device.form.rules.weight': '权重系数必须在 -0.0001 到 100000 范围内',
-  'device.form.rules.slaverId': '从设备地址 在 1-255 之间',
+  'device.form.rules.quantity': 'The quantity ranges between 1 and 256',
+  'device.form.rules.weight': 'The weight must be within the range of -0.0001 to 100,000',
+  'device.form.rules.slaverId': 'The slaver address must be between 1 and 255',
 
   /**
    * others
    */
-  'device.tips.scroll': '横向滚动查看更多',
-  'device.message.success.config': '配置成功',
-  'device.message.success.clear': '清除成功',
-  'device.message.success.reload': '刷新成功',
+  'device.tips.scroll': 'Scroll horizontally to see more',
+  'device.message.success.config': 'Configured successfully',
+  'device.message.success.clear': 'Cleared successfully',
   'device.message.error.new':
     'Successfully created, but currently unable to operate normally. Please modify the configuration parameters promptly according to the error message {msg}',
   'device.unit.byte': 'Byte',
@@ -224,27 +229,28 @@ export default {
   /**
    * device type
    */
-  'device.type.uart': '通用串口网关',
-  'device.type.modbus': '通用 Modbus 采集网关',
-  'device.type.snmp': '通用 SNMP 协议采集网关',
-  'device.type.plc': '通用西门子 S7 系列 PLC 采集网关',
-  'device.type.http': '通用 HTTP 协议数据采集网关',
-  'device.type.camera': '通用摄像机流处理网关',
-  'device.type.smartHome': '全屋智能家居中心控制网关',
+  'device.type.uart': 'Generic Serial Port Gateway',
+  'device.type.modbus': 'Generic Modbus Gateway',
+  'device.type.snmp': 'Generic SNMP Gateway',
+  'device.type.plc': 'Generic Siemens S7 PLC Gateway',
+  'device.type.http': 'Generic HTTP Gatewa',
+  'device.type.camera': '通用摄像机流处理网关', // TODO 已隐藏，暂时不需要翻译
+  'device.type.smartHome': 'Smart Home Gateway',
 
   /**
    * modbus function
    */
-  'device.modbus.func1': '01 读线圈状态',
-  'device.modbus.func2': '02 读离散输入状态',
-  'device.modbus.func3': '03 读保持寄存器',
-  'device.modbus.func4': '04 读输入寄存器',
+  'device.modbus.func1': '01 Reading coil',
+  'device.modbus.func2': '02 Read Discrete Input',
+  'device.modbus.func3': '03 Read Holding Register',
+  'device.modbus.func4': '04 Read Input Register',
 
   /**
    * plc model
    */
-  'device.plc.model': '西门子 {model} 系列 PLC',
+  'device.plc.model': 'Siemens {model} PLC',
 
+  // TODO 暂时不需要翻译 --begin
   /**
    * inputMode
    */
@@ -261,4 +267,5 @@ export default {
    * outputEncode
    */
   'device.camera.outputEncode': '{type} Encode',
+  // TODO 暂时不需要翻译 --end
 };

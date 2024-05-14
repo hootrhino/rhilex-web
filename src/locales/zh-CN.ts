@@ -29,6 +29,7 @@ export default {
   'message.success.login': '登录成功',
   'message.success.scan': '扫描成功',
   'message.success.restart': '重启成功',
+  'message.success.reboot': '重启成功',
   /**
    * placeholder
    */

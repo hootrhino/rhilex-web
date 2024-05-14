@@ -141,7 +141,7 @@ const Outend = () => {
         open={open}
         onCancel={() => setOpen(false)}
         title={formatMessage({ id: 'modal.title.confirm' })}
-        okText={formatMessage({ id: 'button.restart.comfirm' })}
+        okText={formatMessage({ id: 'button.comfirm' })}
         afterOkText={formatMessage({ id: 'button.restart' })}
         content={formatMessage({ id: 'outend.modal.content.restart' })}
         handleOnEnd={() => {

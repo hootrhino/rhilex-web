@@ -167,7 +167,7 @@ const Inend = () => {
         open={open}
         onCancel={() => setOpen(false)}
         title={formatMessage({ id: 'modal.title.confirm' })}
-        okText={formatMessage({ id: 'button.restart.comfirm' })}
+        okText={formatMessage({ id: 'button.comfirm' })}
         afterOkText={formatMessage({ id: 'button.restart' })}
         content={formatMessage({ id: 'inend.modal.content.restart' })}
         handleOnEnd={() => {

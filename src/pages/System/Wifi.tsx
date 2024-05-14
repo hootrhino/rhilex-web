@@ -31,7 +31,7 @@ const WIFIConfig = () => {
     run: GetWifiList,
     loading,
   } = useRequest(() => getSettingsWifiScan(), {
-    onSuccess: () => message.success(formatMessage({ id: 'system.message.success.scan' })),
+    onSuccess: () => message.success(formatMessage({ id: 'message.success.scan' })),
   });
 
   // 详情

@@ -13,7 +13,7 @@ export default {
   'portMgt.form.title.dataBits': 'Data Bits',
   'portMgt.form.title.parity': 'Parity',
   'portMgt.form.title.stopBits': 'Stop Bits',
-  'portMgt.form.title.uart': 'Serial Path',
+  'portMgt.form.title.uart': 'Serial Port',
   'portMgt.form.placeholder.name': 'Please enter a name',
   'portMgt.form.placeholder.alias': 'Please enter an alias',
   'portMgt.form.placeholder.type': 'Please select a type',
@@ -22,7 +22,7 @@ export default {
   'portMgt.form.placeholder.dataBits': 'Please select a data bits',
   'portMgt.form.placeholder.parity': 'Please select a parity',
   'portMgt.form.placeholder.stopBits': 'Please select a stop bits',
-  'portMgt.form.placeholder.uart': 'Please enter a serial port path for the local system',
+  'portMgt.form.placeholder.uart': 'Please enter a serial port',
 
   /**
    * button

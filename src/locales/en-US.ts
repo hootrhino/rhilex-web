@@ -20,15 +20,16 @@ export default {
   /**
    * message
    */
-  'message.success.upload': '上传成功',
-  'message.success.remove': '删除成功',
+  'message.success.upload': 'Uploaded successfully',
+  'message.success.remove': 'Deleted successfully',
   'message.success.start': '启动成功',
   'message.success.stop': '停止成功',
-  'message.success.update': '更新成功',
+  'message.success.update': 'Updated successfully',
   'message.success.new': '新建成功',
-  'message.success.login': '登录成功',
-  'message.success.scan': '扫描成功',
-  'message.success.restart': '重启成功',
+  'message.success.login': 'Login Successfully',
+  'message.success.scan': 'Scanned successfully',
+  'message.success.restart': 'Restarted successfully',
+  'message.success.reboot': 'Rebooted successfully',
   /**
    * placeholder
    */

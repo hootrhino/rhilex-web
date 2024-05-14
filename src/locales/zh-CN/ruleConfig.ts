@@ -70,7 +70,7 @@ export default {
   'ruleConfig.ds.device.size': '大小',
   'ruleConfig.ds.device.width': '单帧宽度',
   'ruleConfig.ds.device.height': '单帧高度',
-  'ruleConfig.ds.device.extra': '视频融合数据',
+  'ruleConfig.ds.device.extra': '目标检测',
   'ruleConfig.ds.device.event': '事件',
   'ruleConfig.ds.device.mac': '设备 MAC',
   'ruleConfig.ds.device.ip': '设备 IP',

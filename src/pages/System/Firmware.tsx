@@ -5,11 +5,9 @@ import {
   getFirmwareVendorKey,
   postFirmwareReboot,
   postFirmwareRecoverNew,
-  postFirmwareRestartRulex,
   postFirmwareUpgrade,
 } from '@/services/rulex/gujiancaozuo';
 import { endsWith } from '@/utils/redash';
-import { IconFont } from '@/utils/utils';
 import {
   CloudUploadOutlined,
   PoweroffOutlined,
@@ -45,9 +43,9 @@ const defaultUpgradeConfig = {
 
 const defaultRebootConfig = {
   title,
-  content: intl.formatMessage({ id: 'system.modal.content.restartDevice' }),
-  okText: intl.formatMessage({ id: 'system.button.confirm.restart' }),
-  afterOkText: intl.formatMessage({ id: 'button.restart' }),
+  content: intl.formatMessage({ id: 'system.modal.content.reboot' }),
+  okText: intl.formatMessage({ id: 'system.button.confirm.reboot' }),
+  afterOkText: intl.formatMessage({ id: 'button.reboot' }),
 };
 
 const defaultRecoverConfig = {
@@ -200,6 +198,7 @@ const FirmwareConfig = () => {
               </Button>
             </Upload>
             <Button
+              danger
               key="upgrade"
               type="primary"
               onClick={() => {
@@ -236,28 +235,7 @@ const FirmwareConfig = () => {
               }}
               icon={<PoweroffOutlined />}
             >
-              {formatMessage({ id: 'system.button.firmware.reboot' })}
-            </Button>
-            <Button
-              key="restartRulex"
-              type="primary"
-              className="flex items-center"
-              danger
-              onClick={() => {
-                setOpen(true);
-                setConfirmConfig({
-                  ...defaultRebootConfig,
-                  handleOnOk: async () => {
-                    const { data } = await postFirmwareRestartRulex();
-                    setMsg(data);
-                    cancel();
-                  },
-                  handleOnEnd,
-                });
-              }}
-              icon={<IconFont type="icon-restart-rulex" className="text-[16px]" />}
-            >
-              {formatMessage({ id: 'system.button.firmware.restart' })}
+              {formatMessage({ id: 'button.reboot' })}
             </Button>
             <Button
               key="recover"

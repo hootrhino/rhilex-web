@@ -63,10 +63,10 @@ const DHCPConfig = () => {
       formRef={formRef}
       onFinish={handleOnFinish}
       layout="horizontal"
-      labelCol={{ span: 2 }}
+      labelCol={{ span: 3 }}
       submitter={{
         render: (props, dom) => (
-          <ProForm.Item wrapperCol={{ offset: 9 }}>
+          <ProForm.Item wrapperCol={{ offset: 10 }}>
             <Space>{dom}</Space>
           </ProForm.Item>
         ),
