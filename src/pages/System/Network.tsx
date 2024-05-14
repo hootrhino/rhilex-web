@@ -84,6 +84,7 @@ const NetworkConfig = () => {
         onFinish={handleOnFinish}
         layout="horizontal"
         labelCol={{ span: 3 }}
+        labelWrap
         onValuesChange={(changedValue) => {
           if (changedValue?.interface && detail) {
             formRef.current?.setFieldsValue({ ...detail[changedValue?.interface] });
@@ -91,8 +92,14 @@ const NetworkConfig = () => {
         }}
         submitter={{
           render: (props, dom) => (
-            <ProForm.Item wrapperCol={{ offset: 10 }}>
-              <Space>{dom}</Space>
+            <ProForm.Item
+              labelCol={{ span: 3 }}
+              label={<div className="invisible">action</div>}
+              colon={false}
+            >
+              <div className="w-[552px] flex justify-end">
+                <Space>{dom}</Space>
+              </div>
             </ProForm.Item>
           ),
         }}

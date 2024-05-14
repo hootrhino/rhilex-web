@@ -51,7 +51,7 @@ const DataBackupConfig = () => {
         }}
         submitter={{
           render: () => (
-            <ProForm.Item wrapperCol={{ offset: 2 }}>
+            <ProForm.Item className="w-[700px] flex justify-end">
               <Space>
                 <Button
                   icon={<DownloadOutlined />}

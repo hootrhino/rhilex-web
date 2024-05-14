@@ -61,21 +61,28 @@ const TimeConfig = () => {
         formRef={formRef}
         onFinish={handleOnFinish}
         layout="horizontal"
+        labelWrap
         labelCol={{ span: 2 }}
         submitter={{
           render: (props, dom) => (
-            <ProForm.Item wrapperCol={{ offset: 6 }}>
-              <Space>
-                {dom}
-                <Button
-                  type="primary"
-                  onClick={updateNtp}
-                  icon={<SyncOutlined />}
-                  loading={loading}
-                >
-                  {formatMessage({ id: 'system.button.time.ntp' })}
-                </Button>
-              </Space>
+            <ProForm.Item
+              labelCol={{ span: 2 }}
+              label={<div className="invisible">action</div>}
+              colon={false}
+            >
+              <div className="w-[552px] flex justify-end">
+                <Space>
+                  {dom}
+                  <Button
+                    type="primary"
+                    onClick={updateNtp}
+                    icon={<SyncOutlined />}
+                    loading={loading}
+                  >
+                    {formatMessage({ id: 'system.button.time.ntp' })}
+                  </Button>
+                </Space>
+              </div>
             </ProForm.Item>
           ),
         }}

@@ -69,21 +69,28 @@ const WIFIConfig = () => {
         formRef={formRef}
         onFinish={handleOnFinish}
         layout="horizontal"
+        labelWrap
         labelCol={{ span: 3 }}
         submitter={{
           render: (props, dom) => (
-            <ProForm.Item wrapperCol={{ offset: 8 }}>
-              <Space>
-                {dom}
-                <Button
-                  icon={<WifiOutlined />}
-                  type="primary"
-                  onClick={GetWifiList}
-                  loading={loading}
-                >
-                  {formatMessage({ id: 'system.button.wifi.ntp' })}
-                </Button>
-              </Space>
+            <ProForm.Item
+              labelCol={{ span: 3 }}
+              label={<div className="invisible">action</div>}
+              colon={false}
+            >
+              <div className="w-[552px] flex justify-end">
+                <Space>
+                  {dom}
+                  <Button
+                    icon={<WifiOutlined />}
+                    type="primary"
+                    onClick={GetWifiList}
+                    loading={loading}
+                  >
+                    {formatMessage({ id: 'system.button.wifi.ntp' })}
+                  </Button>
+                </Space>
+              </div>
             </ProForm.Item>
           ),
         }}
