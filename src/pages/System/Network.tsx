@@ -109,6 +109,7 @@ const NetworkConfig = () => {
           name="interface"
           label={formatMessage({ id: 'system.form.title.interface' })}
           width="xl"
+          allowClear={false}
           placeholder={formatMessage({ id: 'system.form.rules.interface' })}
           rules={[
             { required: true, message: formatMessage({ id: 'system.form.rules.interface' }) },

@@ -26,7 +26,7 @@ export default {
   'system.form.title.ifaceTo': '流量出口',
   'system.form.title.cops': '營運商',
   'system.form.title.csq': '訊號強度',
-  'system.form.title.senceId': '場景編號',
+  'system.form.title.sceneId': '場景編號',
   'system.form.title.ptytpe': '協議類型',
   'system.form.title.apn': 'APN 名稱',
   'system.form.title.auth': 'APN 鑑權',
@@ -51,7 +51,7 @@ export default {
   'system.form.rules.ssid': '請輸入 SSID',
   'system.form.rules.security': '請選擇加密方式',
 
-  'system.form.placeholder.senceId': '請選擇場景編號',
+  'system.form.placeholder.sceneId': '請選擇場景編號',
   'system.form.placeholder.ptytpe': '請選擇協議類型',
   'system.form.placeholder.apn': '請輸入 APN 名稱',
   'system.form.placeholder.auth': '請選擇 APN 鑑權',
@@ -162,4 +162,5 @@ export default {
   'system.state.disconnected': '未連接',
   'system.state.unmanaged': '系統默認',
   'system.state.unavailable': '網絡不可用',
+  'system.scene.option1': '場景1',
 };

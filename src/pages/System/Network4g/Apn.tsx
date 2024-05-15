@@ -75,10 +75,11 @@ const APNConfig = () => {
     >
       <ProFormSelect
         name="senceId"
-        label={formatMessage({ id: 'system.form.title.senceId' })}
-        options={[{ label: '场景1', value: 1 }]}
-        placeholder={formatMessage({ id: 'system.form.placeholder.senceId' })}
+        label={formatMessage({ id: 'system.form.title.sceneId' })}
+        options={[{ label: formatMessage({ id: 'system.scene.option1' }), value: 1 }]}
+        placeholder={formatMessage({ id: 'system.form.placeholder.sceneId' })}
         width="xl"
+        allowClear={false}
       />
       <ProFormSelect
         name="ptytpe"
@@ -90,6 +91,7 @@ const APNConfig = () => {
         ]}
         placeholder={formatMessage({ id: 'system.form.placeholder.ptytpe' })}
         width="xl"
+        allowClear={false}
       />
       <ProFormText
         name="apn"
@@ -121,6 +123,7 @@ const APNConfig = () => {
         ]}
         placeholder={formatMessage({ id: 'system.form.placeholder.auth' })}
         width="xl"
+        allowClear={false}
       />
       <ProFormSelect
         name="cdmapwd"
@@ -135,6 +138,7 @@ const APNConfig = () => {
           { text: formatMessage({ id: 'system.form.title.cdmapwd' }) },
         )}
         width="xl"
+        allowClear={false}
       />
     </ProForm>
   );

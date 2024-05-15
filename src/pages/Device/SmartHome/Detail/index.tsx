@@ -74,8 +74,8 @@ const baseColumns = [
         icon={auth_en ? <CheckCircleOutlined /> : <MinusCircleOutlined />}
       >
         {auth_en
-          ? intl.formatMessage({ id: 'status.open' })
-          : intl.formatMessage({ id: 'status.close' })}
+          ? intl.formatMessage({ id: 'status.enabled' })
+          : intl.formatMessage({ id: 'status.disabled' })}
       </Tag>
     ),
   },
@@ -95,8 +95,8 @@ const statusColumns = [
         icon={restart_required ? <CheckCircleOutlined /> : <MinusCircleOutlined />}
       >
         {restart_required
-          ? intl.formatMessage({ id: 'status.open' })
-          : intl.formatMessage({ id: 'status.close' })}
+          ? intl.formatMessage({ id: 'status.enabled' })
+          : intl.formatMessage({ id: 'status.disabled' })}
       </Tag>
     ),
   },

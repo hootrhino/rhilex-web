@@ -133,6 +133,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
             name="baudRate"
             width="sm"
             valueEnum={baudRateEnum}
+            allowClear={false}
             placeholder={formatMessage({ id: 'portMgt.form.placeholder.baudRate' })}
             rules={[
               {
@@ -145,6 +146,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
             label={formatMessage({ id: 'portMgt.form.title.dataBits' })}
             name="dataBits"
             width="sm"
+            allowClear={false}
             valueEnum={dataBitsEnum}
             placeholder={formatMessage({ id: 'portMgt.form.placeholder.dataBits' })}
             rules={[
@@ -160,6 +162,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
             label={formatMessage({ id: 'portMgt.form.title.parity' })}
             name="parity"
             width="sm"
+            allowClear={false}
             valueEnum={parityEnum}
             placeholder={formatMessage({ id: 'portMgt.form.placeholder.parity' })}
             rules={[
@@ -170,6 +173,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
             label={formatMessage({ id: 'portMgt.form.title.stopBits' })}
             name="stopBits"
             width="sm"
+            allowClear={false}
             valueEnum={stopBitsEnum}
             placeholder={formatMessage({ id: 'portMgt.form.placeholder.stopBits' })}
             rules={[

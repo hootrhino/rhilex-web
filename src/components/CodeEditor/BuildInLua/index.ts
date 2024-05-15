@@ -257,32 +257,32 @@ export const buildInSnippet = [
 
 export const builtInLuaTpl = [
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'data' }),
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Data' }),
     children: dataToTpl,
     uuid: 'data',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'time' }),
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Time' }),
     children: timeTpl,
     uuid: 'time',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'rhilexg1' }),
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Rhilexg1' }),
     children: rhilexg1Tpl,
     uuid: 'rhilexg1',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'device' }),
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Device' }),
     children: deviceTpl,
     uuid: 'device',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'modbus' }),
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Modbus' }),
     children: modbusTpl,
     uuid: 'modbus',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'kv' }),
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'KV' }),
     children: kvTpl,
     uuid: 'kv',
   },
@@ -292,12 +292,12 @@ export const builtInLuaTpl = [
     uuid: 'standard',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'localdb' }),
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Localdb' }),
     children: localdbTpl,
     uuid: 'localdb',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'json' }),
+    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'JSON' }),
     children: jsonTpl,
     uuid: 'json',
   },

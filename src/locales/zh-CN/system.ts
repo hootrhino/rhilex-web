@@ -26,7 +26,7 @@ export default {
   'system.form.title.ifaceTo': '流量出口',
   'system.form.title.cops': '运营商',
   'system.form.title.csq': '信号强度',
-  'system.form.title.senceId': '场景编号',
+  'system.form.title.sceneId': '场景编号',
   'system.form.title.ptytpe': '协议类型',
   'system.form.title.apn': 'APN 名称',
   'system.form.title.auth': 'APN 鉴权',
@@ -51,7 +51,7 @@ export default {
   'system.form.rules.ssid': '请输入 SSID',
   'system.form.rules.security': '请选择加密方式',
 
-  'system.form.placeholder.senceId': '请选择场景编号',
+  'system.form.placeholder.sceneId': '请选择场景编号',
   'system.form.placeholder.ptytpe': '请选择协议类型',
   'system.form.placeholder.apn': '请输入 APN 名称',
   'system.form.placeholder.auth': '请选择 APN 鉴权',
@@ -161,4 +161,5 @@ export default {
   'system.state.disconnected': '未连接',
   'system.state.unmanaged': '系统默认',
   'system.state.unavailable': '网络不可用',
+  'system.scene.option1': '场景1',
 };

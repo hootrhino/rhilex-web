@@ -80,7 +80,10 @@ const getFieldProps = (col: any) => {
 
   if (['select'].includes(col.valueType)) {
     return {
-      placeholder: intl.formatMessage({ id: 'placeholder.select' }, { text: col.title }),
+      placeholder: intl.formatMessage(
+        { id: 'placeholder.select' },
+        { text: col.title.toLowerCase() },
+      ),
       allowClear: false,
     };
   }
@@ -88,12 +91,12 @@ const getFieldProps = (col: any) => {
     return {
       placeholder: `${intl.formatMessage(
         { id: 'placeholder.input' },
-        { text: col.title.props.title },
+        { text: col.title.props.title.toLowerCase() },
       )}`,
     };
   }
   return {
-    placeholder: intl.formatMessage({ id: 'placeholder.input' }, { text: col.title }),
+    placeholder: intl.formatMessage({ id: 'placeholder.input' }, { text: col.title.toLowerCase() }),
   };
 };
 

@@ -56,7 +56,7 @@ const columns = [
 const NgrokDetail = () => {
   return (
     <ProDescriptions
-      labelStyle={{ minWidth: 80, justifyContent: 'flex-end', paddingRight: 10 }}
+      labelStyle={{ minWidth: 135, justifyContent: 'flex-end', paddingRight: 10 }}
       request={async () => {
         const { data } = await postPlugwareService({
           uuid: 'NGROKC',

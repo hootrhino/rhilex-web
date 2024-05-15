@@ -137,6 +137,7 @@ const DHCPConfig = () => {
         options={[{ label: 'eth1', value: 'eth1' }]}
         placeholder={formatMessage({ id: 'system.form.rules.ifaceFrom' })}
         width="xl"
+        allowClear={false}
         rules={[{ required: true, message: formatMessage({ id: 'system.form.rules.ifaceFrom' }) }]}
       />
       <ProFormSelect
@@ -145,6 +146,7 @@ const DHCPConfig = () => {
         options={[{ label: '4G(usb1)', value: '4G(usb1)' }]}
         placeholder={formatMessage({ id: 'system.form.rules.ifaceTo' })}
         width="xl"
+        allowClear={false}
         rules={[{ required: true, message: formatMessage({ id: 'system.form.rules.ifaceTo' }) }]}
       />
     </ProForm>

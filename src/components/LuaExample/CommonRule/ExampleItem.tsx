@@ -123,8 +123,6 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
       name: 'value',
       width: 'md',
       placeholder: formatMessage({ id: 'component.form.placeholder.varValue' }),
-      labelCol: { flex: '130px' },
-      className: 'testttttttttt',
     } as any;
 
     const optionData = () => {
@@ -166,7 +164,6 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
     };
 
     const ComponentType = typeMap[type];
-
     return <ComponentType {...commonConfig} />;
   };
 
@@ -244,9 +241,8 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
         formRef={formRef}
         title={formatMessage({ id: 'component.modal.title.settingVar' })}
         layout="horizontal"
-        labelWrap={true}
         open={valModalConfig.open}
-        modalProps={{ onCancel: handleOnCancel }}
+        modalProps={{ onCancel: handleOnCancel, maskClosable: false }}
         onValuesChange={(changedValue) => {
           if (changedValue?.variables) {
             const newVariables = valModalConfig?.data.variables?.map((origItem, index) => {
@@ -270,7 +266,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
               <Button key="cancel" onClick={handleOnCancel}>
                 {formatMessage({ id: 'button.cancel' })}
               </Button>,
-              <CopyButton data={copyData} key="copy" />,
+              <CopyButton data={copyData} key="copy" ghost />,
             ];
           },
         }}
@@ -281,7 +277,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
           creatorButtonProps={false}
           actionRender={() => []}
           alwaysShowItemLabel={true}
-          className="mb-[0]"
+          className="mb-[0] variable-list"
         >
           {({ key }) => renderFormList(key)}
         </ProFormList>

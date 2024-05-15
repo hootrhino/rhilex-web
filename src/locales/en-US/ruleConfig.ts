@@ -61,7 +61,7 @@ export default {
   'ruleConfig.ds.device.out': 'Output',
   'ruleConfig.ds.device.tag': 'Tag',
   'ruleConfig.ds.device.function': 'Function code',
-  'ruleConfig.ds.device.slaverId': 'Slaver ID',
+  'ruleConfig.ds.device.slaverId': 'Slaver Id',
   'ruleConfig.ds.device.address': 'Address',
   'ruleConfig.ds.device.quantity': 'Quantity',
   'ruleConfig.ds.device.value': 'Value',

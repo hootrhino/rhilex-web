@@ -95,6 +95,7 @@ const TimeConfig = () => {
           name="sysTimeZone"
           label={formatMessage({ id: 'system.table.title.sysTimeZone' })}
           width="xl"
+          allowClear={false}
           placeholder={formatMessage({ id: 'system.table.placeholder.sysTimeZone' })}
           rules={[
             {

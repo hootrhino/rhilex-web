@@ -51,8 +51,8 @@ const ProSegmented = ({ width, ...props }: ProSegmentedProps) => {
         block
         style={{ width: getWidth() }}
         options={[
-          { label: formatMessage({ id: 'status.open' }), value: 'true' },
-          { label: formatMessage({ id: 'status.close' }), value: 'false' },
+          { label: formatMessage({ id: 'status.enabled' }), value: 'true' },
+          { label: formatMessage({ id: 'status.disabled' }), value: 'false' },
         ]}
         {...props}
       />

@@ -43,7 +43,7 @@ export default {
   'component.tpl.name': '{name} 函数',
   'component.tpl.name.standard': '标准库函数',
   'component.tpl.name.other': '其他函数',
-  'component.tpl.name.dataCenter': '数据中心',
+  'component.tpl.name.dataCenter': '数据中心函数',
   'component.tpl.jsonT2J.detail': 'LuaTable 转 JSON 字符串',
   'component.tpl.jsonT2J.arg': 'Lua 表变量',
   'component.tpl.jsonJ2T.detail': 'JSON 字符串转 LuaTable',
@@ -104,7 +104,7 @@ export default {
   'component.unit.ms': '毫秒',
   'component.popconfirm.title.reset': '重置可能会丢失数据，确定要重置吗？',
 
-  'component.modal.title.page': '离开可能会丢失数据，确定要返回列表吗？',
+  'component.modal.title.page': '退出可能导致数据丢失。确定要返回列表吗？',
   'component.modal.title.settingVar': '设置变量',
   'component.modal.title.removeRule': '确定要删除此规则？',
   'component.modal.title.editRule': '编辑规则',

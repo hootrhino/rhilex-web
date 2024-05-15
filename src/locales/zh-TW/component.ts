@@ -43,7 +43,7 @@ export default {
   'component.tpl.name': '{name} 函數',
   'component.tpl.name.standard': '標準庫函數',
   'component.tpl.name.other': '其他函數',
-  'component.tpl.name.dataCenter': '資料中心',
+  'component.tpl.name.dataCenter': '資料中心函數',
   'component.tpl.jsonT2J.detail': 'LuaTable 轉 JSON 字符串',
   'component.tpl.jsonT2J.arg': 'Lua 表變量',
   'component.tpl.jsonJ2T.detail': 'JSON 字符串轉 LuaTable',
@@ -104,7 +104,7 @@ export default {
   'component.unit.ms': '毫秒',
   'component.popconfirm.title.reset': '重置可能會丟失數據，確定要重置嗎？',
 
-  'component.modal.title.page': '離開可能會丟失數據，確定要返回列表嗎？',
+  'component.modal.title.page': '退出可能導致資料遺失。確定要返回列表嗎？',
   'component.modal.title.settingVar': '設置變量',
   'component.modal.title.removeRule': '確定要刪除此規則？',
   'component.modal.title.editRule': '編輯規則',

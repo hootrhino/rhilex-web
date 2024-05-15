@@ -26,7 +26,7 @@ export default {
   'system.form.title.ifaceTo': 'Traffic Direction',
   'system.form.title.cops': 'COPS',
   'system.form.title.csq': 'CSQ',
-  'system.form.title.senceId': 'Scene Id',
+  'system.form.title.sceneId': 'Scene Id',
   'system.form.title.ptytpe': 'Protocol Type',
   'system.form.title.apn': 'APN Name',
   'system.form.title.auth': 'APN Auth',
@@ -51,7 +51,7 @@ export default {
   'system.form.rules.ssid': 'Please enter a SSID',
   'system.form.rules.security': 'Please select a encryption method',
 
-  'system.form.placeholder.senceId': 'Please enter a sence id',
+  'system.form.placeholder.sceneId': 'Please enter a sence id',
   'system.form.placeholder.ptytpe': 'Please select a protocol type',
   'system.form.placeholder.apn': 'Please enter a apn name',
   'system.form.placeholder.auth': 'Please select a apn auth',
@@ -166,4 +166,5 @@ export default {
   'system.state.disconnected': 'disconnected',
   'system.state.unmanaged': 'default',
   'system.state.unavailable': 'unaccessible',
+  'system.scene.option1': 'Scene1',
 };

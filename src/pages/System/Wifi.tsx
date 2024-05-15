@@ -126,6 +126,7 @@ const WIFIConfig = () => {
           name="security"
           label={formatMessage({ id: 'system.form.title.security' })}
           width="xl"
+          allowClear={false}
           placeholder={formatMessage({ id: 'system.form.rules.security' })}
           rules={[{ required: true, message: formatMessage({ id: 'system.form.rules.security' }) }]}
         />

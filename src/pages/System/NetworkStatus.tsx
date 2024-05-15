@@ -122,7 +122,7 @@ const NetworkStatus = () => {
               <Descriptions.Item
                 label={detailColumns[item]}
                 key={item}
-                labelStyle={{ minWidth: 100, justifyContent: 'end' }}
+                labelStyle={{ minWidth: 130, justifyContent: 'end' }}
               >
                 {detail[item]}
               </Descriptions.Item>

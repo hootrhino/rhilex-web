@@ -4,7 +4,7 @@ import { getHwifaceList, getHwifaceRefresh } from '@/services/rulex/jiekouguanli
 import { ScanOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProDescriptions, ProTable } from '@ant-design/pro-components';
-import { useIntl, useModel, useRequest } from '@umijs/max';
+import { getLocale, useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Card, Descriptions, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
 import { parityEnum, typeOption } from './enum';
@@ -85,7 +85,14 @@ const Interface = () => {
 
         return (
           <Card styles={{ body: { padding: '16px 18px' } }}>
-            <Descriptions column={1} labelStyle={{ width: 130, justifyContent: 'flex-end' }}>
+            <Descriptions
+              column={1}
+              labelStyle={{
+                width: getLocale() === 'en-US' ? 155 : 120,
+                justifyContent: 'flex-end',
+                paddingRight: 10,
+              }}
+            >
               <Descriptions.Item
                 label={<UnitTitle title={formatMessage({ id: 'portMgt.form.title.timeout' })} />}
               >
@@ -192,7 +199,11 @@ const Interface = () => {
           column={1}
           columns={columns as any}
           dataSource={detail}
-          labelStyle={{ width: 80, justifyContent: 'flex-end' }}
+          labelStyle={{
+            width: getLocale() === 'en-US' ? 180 : 80,
+            justifyContent: 'flex-end',
+            paddingRight: 10,
+          }}
         />
       </Modal>
     </>

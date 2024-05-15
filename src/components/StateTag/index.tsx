@@ -35,7 +35,7 @@ const defaultStateEnum = {
     icon: <CloseCircleOutlined />,
   },
   1: {
-    text: <FormattedMessage id="status.enable" />,
+    text: <FormattedMessage id="status.enabled" />,
     color: 'success',
     icon: <CheckCircleOutlined />,
   },
@@ -97,12 +97,12 @@ const ruleStateEnum = {
 
 const boolStateEnum = {
   true: {
-    text: <FormattedMessage id="status.open" />,
+    text: <FormattedMessage id="status.enabled" />,
     color: 'success',
     icon: <CheckCircleOutlined />,
   },
   false: {
-    text: <FormattedMessage id="status.close" />,
+    text: <FormattedMessage id="status.disabled" />,
     color: 'default',
     icon: <MinusCircleOutlined />,
   },
