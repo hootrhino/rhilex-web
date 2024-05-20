@@ -1,12 +1,5 @@
 import IndexBorder from '@/components/IndexBorder';
-import { message, modal } from '@/components/PopupHack';
-import {
-  deleteModbusDataSheetDelIds,
-  getModbusDataSheetList,
-  postModbusDataSheetSheetImport,
-  postModbusDataSheetUpdate,
-} from '@/services/rulex/moddianweiguanli';
-import { omit } from '@/utils/redash';
+import { modal } from '@/components/PopupHack';
 import { IconFont } from '@/utils/utils';
 import {
   DeleteOutlined,
@@ -16,50 +9,38 @@ import {
   ReloadOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
-import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
-import { EditableProTable, ProTable } from '@ant-design/pro-components';
+import type { ProColumns } from '@ant-design/pro-components';
+import { EditableProTable, ProDescriptions, ProTable } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space, Tooltip, Upload } from 'antd';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import PageContainer from '@/components/PageContainer';
 import StateTag, { StateType } from '@/components/StateTag';
 import UploadSheetConfirm from '@/components/UploadSheetConfirm';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { SheetType } from '@/utils/enum';
-import { ObjectType } from './enum';
-import type {
-  BacnetDataSheetItem,
-  BacnetDataSheetProps,
-  removeParams,
-  UpdateParams,
-} from './typings';
 
-const defaultBacnetConfig = {
-  bacnetDeviceId: 1,
-  tag: '',
-  alias: '',
-  objectType: ObjectType.AI,
-  objectId: 1,
-};
+import { omit } from '@/utils/redash';
+import type { DataSheetItem, DataSheetProps } from './typings';
 
-const defaultUploadData = {
-  bacnetDeviceId: 1,
-  tag: 'tag1',
-  alias: 'tag1',
-  objectType: ObjectType.AI,
-  objectId: 1,
-};
-
-const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) => {
-  const actionRef = useRef<ActionType>();
-  const editorFormRef = useRef<EditableFormInstance<BacnetDataSheetItem>>();
+const DataSheet = ({
+  type = SheetType.LIST,
+  columns,
+  defaultConfig,
+  defaultUploadData,
+  remove,
+  update,
+  upload,
+  download,
+  ...props
+}: DataSheetProps) => {
   const { deviceId } = useParams();
   const { formatMessage } = useIntl();
 
   const [title, setTitle] = useState<string>(formatMessage({ id: 'device.title.sheet' }));
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [editableRows, setEditableRows] = useState<Partial<BacnetDataSheetItem>[]>([]);
+  const [editableRows, setEditableRows] = useState<Partial<DataSheetItem>[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [polling, setPolling] = useState<number>(3000);
   const [stopPolling, setStopPolling] = useState<boolean>(false);
@@ -67,56 +48,22 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
   const disabled = selectedRowKeys?.length === 0;
 
   const handleOnReset = () => {
-    actionRef.current?.reload();
-    editorFormRef.current?.setRowData?.('new', { ...defaultBacnetConfig, uuid: 'new' });
     setSelectedRowKeys([]);
     setEditableRows([]);
     setEditableRowKeys([]);
   };
 
-  // 删除点位表
-  const { run: remove } = useRequest(
-    (params: removeParams) => deleteModbusDataSheetDelIds(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        handleOnReset();
-        message.success(formatMessage({ id: 'message.success.remove' }));
-      },
-    },
-  );
-
-  // 更新点位表
-  const { run: update } = useRequest((params: UpdateParams) => postModbusDataSheetUpdate(params), {
-    manual: true,
-    onSuccess: () => {
-      handleOnReset();
-      message.success(formatMessage({ id: 'message.success.update' }));
-    },
-  });
-
-  const formatUpdateParams = (params: Partial<BacnetDataSheetItem>) => {
-    let newParams = {
-      ...omit(params, ['type']),
-      dataType: params?.type?.[0],
-      dataOrder: params?.type?.[1],
-      weight: Number(params?.weight),
-    };
-
-    return newParams;
-  };
-
   // 批量更新
   const handleOnBatchUpdate = () => {
-    const updateData = editableRows?.map((item) => formatUpdateParams(item));
-    if (deviceId && updateData) {
-      update({ device_uuid: deviceId, points: updateData });
+    if (deviceId && editableRows) {
+      update(editableRows);
+      handleOnReset();
     }
   };
 
   // 单个更新
-  const handleOnSave = async (rowKey: RecordKey, data: Partial<BacnetDataSheetItem>) => {
-    let params = formatUpdateParams(data);
+  const handleOnSave = async (rowKey: RecordKey, data: Partial<DataSheetItem>) => {
+    let params = data;
 
     if (rowKey === 'new') {
       params = {
@@ -124,34 +71,15 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
         device_uuid: deviceId,
       } as any;
     }
-    if (deviceId && params) {
-      update({ device_uuid: deviceId, points: [params] });
-    }
+    update([params]);
+    handleOnReset();
   };
 
   // 批量删除
   const handleOnBatchRemove = () => {
-    const uuids = selectedRowKeys as string[];
-    if (uuids && deviceId) {
-      const params = {
-        device_uuid: deviceId,
-        uuids,
-      };
-      remove(params);
-    }
+    remove(selectedRowKeys);
+    handleOnReset();
   };
-
-  // 导入点位表
-  const { run: upload } = useRequest(
-    (id: string, file: File) => postModbusDataSheetSheetImport({ device_uuid: id }, file),
-    {
-      manual: true,
-      onSuccess: () => {
-        message.success(formatMessage({ id: 'message.success.upload' }));
-        actionRef.current?.reload();
-      },
-    },
-  );
 
   // 刷新
   const handleOnPolling = () => {
@@ -175,26 +103,13 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
       ),
   });
 
-  const columns: ProColumns<Partial<BacnetDataSheetItem>>[] = [
+  const baseColumns: ProColumns<Partial<DataSheetItem>>[] = [
     {
       title: formatMessage({ id: 'table.index' }),
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
       render: (_text, _record, index) => <IndexBorder serial={index} />,
-    },
-    {
-      title: '设备 ID',
-      dataIndex: 'bacnetDeviceId',
-      valueType: 'digit',
-      width: 100,
-      formItemProps: {
-        rules: [{ required: true, message: '请输入设备 ID' }],
-      },
-      fieldProps: {
-        style: { width: '100%' },
-        placeholder: '请输入设备 ID',
-      },
     },
     {
       title: formatMessage({ id: 'device.form.title.tag' }),
@@ -220,37 +135,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
         placeholder: formatMessage({ id: 'device.form.placeholder.alias' }),
       },
     },
-    {
-      title: '对象类型',
-      dataIndex: 'objectType',
-      valueType: 'select',
-      width: 150,
-      valueEnum: ObjectType,
-      formItemProps: {
-        rules: [{ required: true, message: '请选择对象类型' }],
-      },
-      fieldProps: {
-        allowClear: false,
-        placeholder: '请选择对象类型',
-      },
-    },
-    {
-      title: '对象 ID',
-      dataIndex: 'objectId',
-      width: 150,
-      valueType: 'digit',
-      formItemProps: {
-        rules: [
-          { required: true, message: '请输入对象 ID' },
-          { min: 0, message: '请输入有效的对象 ID，范围为 0-4194303', type: 'integer' },
-          { max: 4194303, message: '请输入有效的对象 ID，范围为 0-4194303', type: 'integer' },
-        ],
-      },
-      fieldProps: {
-        allowClear: false,
-        placeholder: '请输入对象 ID',
-      },
-    },
+    ...columns,
     {
       title: formatMessage({ id: 'device.form.title.value' }),
       dataIndex: 'value',
@@ -270,6 +155,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
       valueType: 'dateTime',
       editable: false,
       ellipsis: true,
+      width: 160,
     },
     {
       title: formatMessage({ id: 'table.option' }),
@@ -301,11 +187,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
             </a>
             <Popconfirm
               title={formatMessage({ id: 'device.modal.title.remove.sheet' })}
-              onConfirm={() => {
-                if (deviceId && record?.uuid) {
-                  remove({ device_uuid: deviceId, uuids: [record?.uuid] });
-                }
-              }}
+              onConfirm={() => remove([record?.uuid])}
               okText={formatMessage({ id: 'button.yes' })}
               cancelText={formatMessage({ id: 'button.no' })}
               key="remove"
@@ -356,7 +238,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
           title: formatMessage({ id: 'device.modal.title.upload.confirm' }),
           width: '50%',
           content: <UploadSheetConfirm fileName={file?.name} initialValue={defaultUploadData} />,
-          onOk: () => deviceId && upload(deviceId, file),
+          onOk: () => upload(file),
           okText: formatMessage({ id: 'button.ok' }),
           cancelText: formatMessage({ id: 'button.cancel' }),
         });
@@ -398,13 +280,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
     >
       {formatMessage({ id: 'device.button.remove.bulk' })}
     </Button>,
-    <Button
-      key="download"
-      icon={<UploadOutlined />}
-      onClick={() =>
-        (window.location.href = `/api/v1/bacnetip_data_sheet/sheetExport?device_uuid=${deviceId}`)
-      }
-    >
+    <Button key="download" icon={<UploadOutlined />} onClick={download}>
       {formatMessage({ id: 'device.button.export.sheet' })}
     </Button>,
   ];
@@ -427,19 +303,16 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
 
   return type === SheetType.LIST ? (
     <PageContainer title={title} onBack={() => history.push('/device/list')}>
-      <EditableProTable<Partial<BacnetDataSheetItem>>
+      <EditableProTable<Partial<DataSheetItem>>
         controlled
-        rowKey="uuid"
-        actionRef={actionRef}
-        editableFormRef={editorFormRef}
-        columns={columns}
+        columns={baseColumns}
         polling={polling}
         rootClassName="stripe-table"
         recordCreatorProps={{
           position: 'top',
           creatorButtonText: formatMessage({ id: 'device.button.new.sheet' }),
           record: () => ({
-            ...defaultBacnetConfig,
+            ...defaultConfig,
             uuid: 'new',
           }),
         }}
@@ -448,22 +321,6 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
           onChange: setSelectedRowKeys,
         }}
         toolBarRender={() => toolBar}
-        request={async ({ current = 1, pageSize = 10 }) => {
-          const { data } = await getModbusDataSheetList({
-            device_uuid: deviceId,
-            current,
-            size: pageSize,
-          });
-
-          return Promise.resolve({
-            data: data?.records?.map((item) => ({
-              ...item,
-              type: [item?.dataType, item?.dataOrder],
-            })),
-            total: data?.total,
-            success: true,
-          });
-        }}
         pagination={{
           defaultPageSize: 10,
           hideOnSinglePage: true,
@@ -478,41 +335,38 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
             setEditableRows(dataSource);
           },
         }}
+        {...props}
       />
     </PageContainer>
   ) : (
     <>
+      {props?.scroll && (
+        <ProDescriptions
+          title={
+            <>
+              <span>{formatMessage({ id: 'device.title.sheet' })}</span>
+              <span className="text-[12px] opacity-[.8] pl-[5px] font-normal">
+                ({formatMessage({ id: 'device.tips.scroll' })})
+              </span>
+            </>
+          }
+        />
+      )}
       <ProTable
-        rowKey="uuid"
-        columns={columns}
+        columns={baseColumns}
         rootClassName="stripe-table"
-        request={async ({ current = 1, pageSize = 10 }) => {
-          const { data } = await getModbusDataSheetList({
-            device_uuid: uuid,
-            current,
-            size: pageSize,
-          });
-
-          return Promise.resolve({
-            data: data?.records?.map((item) => ({
-              ...item,
-              type: [item?.dataType, item?.dataOrder],
-            })),
-            total: data?.total,
-            success: true,
-          });
-        }}
+        options={false}
+        search={false}
+        toolBarRender={false}
         pagination={{
           defaultPageSize: 10,
           hideOnSinglePage: true,
           showSizeChanger: false,
         }}
-        options={false}
-        search={false}
-        toolBarRender={false}
+        {...props}
       />
     </>
   );
 };
 
-export default BacnetDataSheet;
+export default DataSheet;
