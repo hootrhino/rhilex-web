@@ -110,6 +110,7 @@ export default {
   'component.modal.title.editRule': '編輯規則',
   'component.modal.title.newRule': '新建規則',
   'component.modal.title.upload': '你應當確保上傳的點位表必須遵守一定表頭格式，例如：',
+  'component.modal.content.upload': '文件格式不正確可能會導致上傳失敗。你確定要上傳嗎？',
 
   'component.tooltip.newVar': '新建變量',
 };

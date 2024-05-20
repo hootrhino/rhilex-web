@@ -63,7 +63,6 @@ export default {
   'device.modal.content.camera.loading': '视频正在加载...',
   'device.modal.content.camera':
     '此模式下流媒体被中转到第三方地址，当前{inputAddr}已经成功推送到{outputAddr}，请在对应的平台上查看或者播放。',
-  'device.modal.content.upload': '文件格式不正确可能会导致上传失败。你确定要上传吗？',
   'device.modal.content.remove.batchOid': '此操作会一次性删除多个对象，请谨慎操作',
   'device.modal.content.remove.batchSheet': '此操作会一次性删除多个点位，请谨慎操作',
 

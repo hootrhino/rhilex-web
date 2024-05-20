@@ -64,8 +64,6 @@ export default {
   'device.modal.content.camera.loading': '视频正在加载...', // TODO 已隐藏，暂时不需要翻译
   'device.modal.content.camera':
     '此模式下流媒体被中转到第三方地址，当前{inputAddr}已经成功推送到{outputAddr}，请在对应的平台上查看或者播放。', // TODO 已隐藏，暂时不需要翻译
-  'device.modal.content.upload':
-    'Incorrect file format may result in upload failure. Are you sure you want to upload?',
   'device.modal.content.remove.batchOid':
     'This operation will delete multiple OIDs at once. Please proceed with caution',
   'device.modal.content.remove.batchSheet':

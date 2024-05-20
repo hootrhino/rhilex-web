@@ -114,6 +114,8 @@ export default {
   'component.modal.title.newRule': 'New rule',
   'component.modal.title.upload':
     'You should ensure that the uploaded point sheet adheres to a specific header format, for example:',
+  'component.modal.content.upload':
+    'Incorrect file format may result in upload failure. Are you sure you want to upload?',
 
   'component.tooltip.newVar': 'New variable',
 };
