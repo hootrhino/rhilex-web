@@ -30,10 +30,10 @@ import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { plcDataTypeOptions } from './enum';
-import UploadRule from './UploadRule';
 
 import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
+import UploadSheetConfirm from '@/components/UploadSheetConfirm';
 import { SheetType } from '@/utils/enum';
 import { inRange } from '@/utils/redash';
 import type { PlcSheetItem, PlcSheetProps, removeParams, UpdateParams } from './typings';
@@ -45,6 +45,16 @@ const defaultPlcConfig = {
   siemensAddress: '',
   frequency: 1000,
   weight: 1,
+};
+
+const defaultUploadData = {
+  address: 'DB4900.DBD1000',
+  tag: 'R0',
+  alias: '新砂轮直径（mm）',
+  type: 'FLOAT',
+  order: 'ABCD',
+  weight: 1,
+  frequency: 1000,
 };
 
 const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
@@ -413,7 +423,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
         modal.confirm({
           title: formatMessage({ id: 'device.modal.title.upload.confirm' }),
           width: '50%',
-          content: <UploadRule fileName={file?.name} />,
+          content: <UploadSheetConfirm fileName={file?.name} initialValue={defaultUploadData} />,
           onOk: () => deviceId && upload(deviceId, file),
           okText: formatMessage({ id: 'button.ok' }),
           cancelText: formatMessage({ id: 'button.cancel' }),

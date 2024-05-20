@@ -112,6 +112,8 @@ export default {
   'component.modal.title.removeRule': 'Are you sure to delete this rule?',
   'component.modal.title.editRule': 'Edit rule',
   'component.modal.title.newRule': 'New rule',
+  'component.modal.title.upload':
+    'You should ensure that the uploaded point sheet adheres to a specific header format, for example:',
 
   'component.tooltip.newVar': 'New variable',
 };

@@ -2,6 +2,7 @@ import IndexBorder from '@/components/IndexBorder';
 import PageContainer from '@/components/PageContainer';
 import { message, modal } from '@/components/PopupHack';
 import StateTag, { StateType } from '@/components/StateTag';
+import UploadSheetConfirm from '@/components/UploadSheetConfirm';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import {
   deleteSnmpOidsSheetDelIds,
@@ -25,12 +26,18 @@ import { getIntl, getLocale, history, useIntl, useParams, useRequest } from '@um
 import { Button, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import type { removeParams, SnmpDataSheetItem, SnmpOidsSheetProps, UpdateParams } from './typings';
-import UploadRule from './UploadRule';
 
 const defaultSnmpConfig = {
   oid: '',
   tag: '',
   alias: '',
+  frequency: 1000,
+};
+
+const defaultUploadData = {
+  oid: '.1.3.6.1.2.1.1.1.0',
+  tag: 'Total Processes',
+  alias: '线程总数',
   frequency: 1000,
 };
 
@@ -330,7 +337,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
         modal.confirm({
           title: formatMessage({ id: 'device.modal.title.upload.confirm.oid' }),
           width: '50%',
-          content: <UploadRule fileName={file?.name} />,
+          content: <UploadSheetConfirm fileName={file?.name} initialValue={defaultUploadData} />,
           onOk: () => deviceId && upload(deviceId, file),
           okText: formatMessage({ id: 'button.ok' }),
           cancelText: formatMessage({ id: 'button.cancel' }),

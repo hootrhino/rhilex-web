@@ -56,8 +56,6 @@ export default {
   'device.modal.title.group.remove': 'Are you sure to delete this group',
   'device.modal.title.upload.confirm': 'Import Sheet',
   'device.modal.title.upload.confirm.oid': 'Import OIDs',
-  'device.modal.title.upload':
-    'You should ensure that the uploaded point sheet adheres to a specific header format, for example:',
 
   'device.modal.content.group.remove':
     'The group contains {count} sub-items. After deletion, they will be moved to the default group;please proceed with caution',

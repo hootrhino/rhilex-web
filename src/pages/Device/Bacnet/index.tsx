@@ -24,6 +24,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import PageContainer from '@/components/PageContainer';
 import StateTag, { StateType } from '@/components/StateTag';
+import UploadSheetConfirm from '@/components/UploadSheetConfirm';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { SheetType } from '@/utils/enum';
 import { ObjectType } from './enum';
@@ -33,12 +34,19 @@ import type {
   removeParams,
   UpdateParams,
 } from './typings';
-import UploadRule from './UploadRule';
 
 const defaultBacnetConfig = {
   bacnetDeviceId: 1,
   tag: '',
   alias: '',
+  objectType: ObjectType.AI,
+  objectId: 1,
+};
+
+const defaultUploadData = {
+  bacnetDeviceId: 1,
+  tag: 'tag1',
+  alias: 'tag1',
   objectType: ObjectType.AI,
   objectId: 1,
 };
@@ -347,7 +355,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
         modal.confirm({
           title: formatMessage({ id: 'device.modal.title.upload.confirm' }),
           width: '50%',
-          content: <UploadRule fileName={file?.name} />,
+          content: <UploadSheetConfirm fileName={file?.name} initialValue={defaultUploadData} />,
           onOk: () => deviceId && upload(deviceId, file),
           okText: formatMessage({ id: 'button.ok' }),
           cancelText: formatMessage({ id: 'button.cancel' }),

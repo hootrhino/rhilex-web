@@ -56,7 +56,6 @@ export default {
   'device.modal.title.group.remove': '確定要刪除此分組？',
   'device.modal.title.upload.confirm': '導入點位表',
   'device.modal.title.upload.confirm.oid': '導入對象列表',
-  'device.modal.title.upload': '你應當確保上傳的點位表必須遵守一定表頭格式，例如：',
 
   'device.modal.content.group.remove':
     '分組中包含 {count} 個子項目，刪除後將被移入默認分組中，請謹慎處理。',

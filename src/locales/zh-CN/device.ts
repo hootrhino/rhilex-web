@@ -56,7 +56,6 @@ export default {
   'device.modal.title.group.remove': '确定要删除此分组？',
   'device.modal.title.upload.confirm': '导入点位表',
   'device.modal.title.upload.confirm.oid': '导入对象列表',
-  'device.modal.title.upload': '你应当确保上传的点位表必须遵守一定表头格式，例如：',
 
   'device.modal.content.group.remove':
     '分组中包含 {count} 个子项目，删除后将被移入默认分组中，请谨慎处理。',

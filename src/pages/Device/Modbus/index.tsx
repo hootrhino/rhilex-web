@@ -34,6 +34,7 @@ import { funcEnum } from '../enum';
 
 import PageContainer from '@/components/PageContainer';
 import StateTag, { StateType } from '@/components/StateTag';
+import UploadSheetConfirm from '@/components/UploadSheetConfirm';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { FormItemType, SheetType } from '@/utils/enum';
 import { inRange } from '@/utils/redash';
@@ -45,7 +46,6 @@ import type {
   removeParams,
   UpdateParams,
 } from './typings';
-import UploadRule from './UploadRule';
 
 const defaultModbusConfig = {
   tag: '',
@@ -56,6 +56,19 @@ const defaultModbusConfig = {
   address: 0,
   quantity: 1,
   type: ['RAW', 'DCBA'],
+  weight: 1,
+};
+
+const defaultUploadData = {
+  tag: 'a1',
+  alias: 'a1',
+  function: 3,
+  frequency: 1000,
+  slaverId: 1,
+  address: 0,
+  quantity: 2,
+  type: 'FLOAT',
+  order: 'DCBA',
   weight: 1,
 };
 
@@ -522,7 +535,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
         modal.confirm({
           title: formatMessage({ id: 'device.modal.title.upload.confirm' }),
           width: '50%',
-          content: <UploadRule fileName={file?.name} />,
+          content: <UploadSheetConfirm fileName={file?.name} initialValue={defaultUploadData} />,
           onOk: () => deviceId && upload(deviceId, file),
           okText: formatMessage({ id: 'button.ok' }),
           cancelText: formatMessage({ id: 'button.cancel' }),

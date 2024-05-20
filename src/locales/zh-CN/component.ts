@@ -109,6 +109,7 @@ export default {
   'component.modal.title.removeRule': '确定要删除此规则？',
   'component.modal.title.editRule': '编辑规则',
   'component.modal.title.newRule': '新建规则',
+  'component.modal.title.upload': '你应当确保上传的点位表必须遵守一定表头格式，例如：',
 
   'component.tooltip.newVar': '新建变量',
 };
