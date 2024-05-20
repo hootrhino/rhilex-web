@@ -124,7 +124,7 @@ const Devices = () => {
       icon: <SettingOutlined />,
     };
 
-    let newItems = [...baseItems];
+    let newItems = [...baseItems, ruleItem];
 
     switch (type) {
       // TODO 暂无需求，先隐藏
@@ -141,7 +141,6 @@ const Devices = () => {
       case DeviceType.SMART_HOME_CONTROLLER:
         newItems = [
           ...newItems,
-          ruleItem,
           {
             key: 'sub-device',
             label: formatMessage({ id: 'button.subDevice' }),
@@ -152,7 +151,6 @@ const Devices = () => {
       case DeviceType.GENERIC_SNMP:
         newItems = [
           ...newItems,
-          ruleItem,
           {
             key: 'snmp-sheet',
             label: formatMessage({ id: 'device.button.snmp' }),
@@ -163,7 +161,6 @@ const Devices = () => {
       case DeviceType.GENERIC_MODBUS:
         newItems = [
           ...newItems,
-          ruleItem,
           {
             key: 'modbus-sheet',
             label: formatMessage({ id: 'device.button.sheet' }),
@@ -174,7 +171,6 @@ const Devices = () => {
       case DeviceType.SIEMENS_PLC:
         newItems = [
           ...newItems,
-          ruleItem,
           {
             key: 'plc-sheet',
             label: formatMessage({ id: 'device.button.sheet' }),
@@ -182,8 +178,18 @@ const Devices = () => {
           },
         ];
         break;
+      case DeviceType.GENERIC_BACNET_IP:
+        newItems = [
+          ...newItems,
+          {
+            key: 'bacnet-sheet',
+            label: formatMessage({ id: 'device.button.sheet' }),
+            icon: <ControlOutlined />,
+          },
+        ];
+        break;
       default:
-        newItems = [...newItems, ruleItem];
+        newItems = [...newItems];
         break;
     }
 
@@ -207,6 +213,9 @@ const Devices = () => {
         break;
       case 'modbus-sheet':
         history.push(`/device/${gid}/${uuid}/modbus-sheet`);
+        break;
+      case 'bacnet-sheet':
+        history.push(`/device/${gid}/${uuid}/bacnet-sheet`);
         break;
       // TODO 暂无需求，先隐藏
       // case 'video':

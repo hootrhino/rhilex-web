@@ -78,6 +78,11 @@
         title: 'menu.device.subDevice',
         component: './Device/SmartHome',
       },
+      {
+        path: '/device/:groupId/:deviceId/bacnet-sheet',
+        title: 'menu.device.sheet',
+        component: './Device/Bacnet',
+      },
     ],
   },
   {
