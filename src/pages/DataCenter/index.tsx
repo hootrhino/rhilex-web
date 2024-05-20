@@ -1,5 +1,6 @@
 import PageContainer from '@/components/PageContainer';
 import { message, modal } from '@/components/PopupHack';
+import UnitValue from '@/components/UnitValue';
 import {
   deleteDatacenterClearSchemaData,
   getDatacenterListSchemaDdl,
@@ -98,12 +99,7 @@ const DataCenter = () => {
           dataIndex: item?.name,
           render: (_dom: React.ReactNode, record: Record<string, any>) => {
             if (item?.unit) {
-              return (
-                <div className="flex items-center">
-                  <span>{record[item.name]}</span>
-                  <span className="text-[12px] opacity-[.8] pl-[4px] font-normal">{item.unit}</span>
-                </div>
-              );
+              return <UnitValue value={record[item.name]} unit={item.unit} />;
             } else {
               return item.name === 'create_at'
                 ? dayjs(record['create_at']).format('YYYY-MM-DD HH:mm:ss')

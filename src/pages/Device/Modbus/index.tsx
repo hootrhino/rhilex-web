@@ -18,6 +18,7 @@ import { useEffect, useRef, useState } from 'react';
 import { funcEnum } from '../enum';
 
 import { message } from '@/components/PopupHack';
+import UnitValue from '@/components/UnitValue';
 import { FormItemType, SheetType } from '@/utils/enum';
 import { inRange } from '@/utils/redash';
 import type { Rule } from 'antd/es/form';
@@ -324,12 +325,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
           { required: true, message: formatMessage({ id: 'device.form.placeholder.frequency' }) },
         ],
       },
-      render: (_, { frequency }) => (
-        <div className="flex items-center">
-          <span>{frequency}</span>
-          <span className="text-[12px] opacity-[.8] pl-[4px] font-normal">ms</span>
-        </div>
-      ),
+      render: (_, { frequency }) => <UnitValue value={frequency} />,
     },
   ];
 

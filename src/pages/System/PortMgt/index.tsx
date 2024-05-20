@@ -1,5 +1,5 @@
 import PageContainer from '@/components/PageContainer';
-import UnitTitle from '@/components/UnitTitle';
+import UnitValue from '@/components/UnitValue';
 import { getHwifaceList, getHwifaceRefresh } from '@/services/rulex/jiekouguanli';
 import { ScanOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
@@ -93,10 +93,8 @@ const Interface = () => {
                 paddingRight: 10,
               }}
             >
-              <Descriptions.Item
-                label={<UnitTitle title={formatMessage({ id: 'portMgt.form.title.timeout' })} />}
-              >
-                {timeout}
+              <Descriptions.Item label={formatMessage({ id: 'portMgt.form.title.timeout' })}>
+                <UnitValue value={timeout} />
               </Descriptions.Item>
               <Descriptions.Item label={formatMessage({ id: 'portMgt.form.title.baudRate' })}>
                 {baudRate}

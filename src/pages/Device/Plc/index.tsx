@@ -32,7 +32,7 @@ import { useEffect, useRef, useState } from 'react';
 import { plcDataTypeOptions } from './enum';
 
 import StateTag, { StateType } from '@/components/StateTag';
-import UnitTitle from '@/components/UnitTitle';
+import UnitValue from '@/components/UnitValue';
 import UploadSheetConfirm from '@/components/UploadSheetConfirm';
 import { SheetType } from '@/utils/enum';
 import { inRange } from '@/utils/redash';
@@ -306,7 +306,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       },
     },
     {
-      title: <UnitTitle title={formatMessage({ id: 'device.form.title.frequency' })} />,
+      title: formatMessage({ id: 'device.form.title.frequency' }),
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
@@ -319,6 +319,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
           { required: true, message: formatMessage({ id: 'device.form.placeholder.frequency' }) },
         ],
       },
+      render: (_, { frequency }) => <UnitValue value={frequency} />,
     },
     {
       title: formatMessage({ id: 'device.form.title.value' }),
