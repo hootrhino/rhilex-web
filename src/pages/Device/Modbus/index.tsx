@@ -1,4 +1,3 @@
-import UnitTitle from '@/components/UnitTitle';
 import {
   deleteModbusDataSheetDelIds,
   getModbusDataSheetList,
@@ -285,6 +284,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       title: formatMessage({ id: 'device.form.title.weight' }),
       dataIndex: 'weight',
       valueType: 'digit',
+      width: 80,
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.weight' }) },
@@ -311,7 +311,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       },
     },
     {
-      title: <UnitTitle title={formatMessage({ id: 'device.form.title.frequency' })} />,
+      title: formatMessage({ id: 'device.form.title.frequency' }),
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
@@ -324,6 +324,12 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
           { required: true, message: formatMessage({ id: 'device.form.placeholder.frequency' }) },
         ],
       },
+      render: (_, { frequency }) => (
+        <div className="flex items-center">
+          <span>{frequency}</span>
+          <span className="text-[12px] opacity-[.8] pl-[4px] font-normal">ms</span>
+        </div>
+      ),
     },
   ];
 
