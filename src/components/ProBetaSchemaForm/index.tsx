@@ -82,7 +82,7 @@ const getFieldProps = (col: any) => {
     return {
       placeholder: intl.formatMessage(
         { id: 'placeholder.select' },
-        { text: col.title.toLowerCase() },
+        { text: getLocale() === 'en-US' ? col.title.toLowerCase() : col.title },
       ),
       allowClear: false,
     };
@@ -91,12 +91,18 @@ const getFieldProps = (col: any) => {
     return {
       placeholder: `${intl.formatMessage(
         { id: 'placeholder.input' },
-        { text: col.title.props.title.toLowerCase() },
+        {
+          text:
+            getLocale() === 'en-US' ? col.title.props.title.toLowerCase() : col.title.props.title,
+        },
       )}`,
     };
   }
   return {
-    placeholder: intl.formatMessage({ id: 'placeholder.input' }, { text: col.title.toLowerCase() }),
+    placeholder: intl.formatMessage(
+      { id: 'placeholder.input' },
+      { text: getLocale() === 'en-US' ? col.title.toLowerCase() : col.title },
+    ),
   };
 };
 

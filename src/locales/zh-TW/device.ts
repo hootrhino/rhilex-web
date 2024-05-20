@@ -78,6 +78,8 @@ export default {
   'device.form.title.group.common': '通用配置',
   'device.form.title.group.http': 'HTTP 配置',
   'device.form.title.group.snmp': 'SNMP 配置',
+  'device.form.title.group.bacnet': 'BACnet 配置',
+  'device.form.title.group.tencent': '騰訊雲物聯網平台接入配置',
 
   // timeout
   'device.form.title.timeout.request': '請求超時',
@@ -171,6 +173,20 @@ export default {
   'device.form.title.scheduleRev': '計劃任務版本號',
   'device.form.title.webhookRev': 'Webhook 版本號',
 
+  // bacnet
+  'device.form.title.bacnet.mode.broadcast': '廣播模式',
+  'device.form.title.bacnet.interface': '網路適配器',
+  'device.form.title.bacnet.localIp': '本地地址',
+  'device.form.title.bacnet.subnetCidr': '子網路遮罩',
+  'device.form.title.bacnet.localPort': '本地埠',
+
+  // tencent
+  'device.form.title.tencent.mode': '模式',
+  'device.form.title.tencent.productId': '產品 ID',
+  'device.form.title.tencent.deviceName': '設備名稱',
+  'device.form.title.tencent.devicePsk': '設備秘鑰',
+  'device.form.title.tencent.clientId': '客戶端 ID',
+
   /**
    * tooltip
    */
@@ -180,7 +196,7 @@ export default {
   'device.tooltip.group.remove': '刪除分組',
   'device.tooltip.copy': '以當前行為模板新建一行數據',
   'device.tooltip.uartTimeout':
-    '該值是串列埠讀取完整資料包的最佳週期。請勿隨意更改此參數，在修改之前請確保您了解其含義。如果必須修改，建議將此值設為 30-1000ms 之間',
+    '此值表示串口讀取完整資料包的最佳週期。請謹慎設置，避免隨意更改。在修改之前，請確保理解此參數的具體含義。如需調整，建議設定值在 30-1000ms 之間',
 
   /**
    * placeholder
@@ -228,6 +244,8 @@ export default {
   'device.type.http': '通用 HTTP 協議數據採集網關',
   'device.type.camera': '通用攝像機流處理網關',
   'device.type.smartHome': '全屋智能家居中心控制網關',
+  'device.type.bacnet': '通用 Bacnet IP 採集網關',
+  'device.type.tencent': '騰訊雲端物聯網平台網關接入',
 
   /**
    * modbus function

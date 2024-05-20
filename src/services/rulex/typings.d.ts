@@ -207,6 +207,11 @@ declare namespace API {
     device_uuid: string;
   };
 
+  type getNotifyPageListParams = {
+    current?: string;
+    size?: string;
+  };
+
   type getOutendsDetailParams = {
     uuid: string;
   };

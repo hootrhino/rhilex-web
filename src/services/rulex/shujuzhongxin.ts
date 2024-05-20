@@ -128,3 +128,14 @@ export async function getDatacenterSchemaDdlDetail(
     ...(options || {}),
   });
 }
+
+/** 获取秘钥 GET /api/v1/datacenter/secret */
+export async function getDatacenterSecret(options?: { [key: string]: any }) {
+  return request<{ code: number; msg: string; data: { secret: string } }>(
+    '/api/v1/datacenter/secret',
+    {
+      method: 'GET',
+      ...(options || {}),
+    },
+  );
+}

@@ -83,6 +83,8 @@ export default {
   'device.form.title.group.common': 'Common configuration',
   'device.form.title.group.http': 'HTTP configuration',
   'device.form.title.group.snmp': 'SNMP configuration',
+  'device.form.title.group.bacnet': 'BACnet configuration',
+  'device.form.title.group.tencent': 'Tencent IoT Hub access configuration',
 
   // timeout
   'device.form.title.timeout.request': 'Request Timeout',
@@ -178,6 +180,20 @@ export default {
   'device.form.title.scheduleRev': 'Schedule Job Version',
   'device.form.title.webhookRev': 'Webhook Version',
 
+  // bacnet
+  'device.form.title.bacnet.mode.broadcast': 'Broadcast Mode',
+  'device.form.title.bacnet.interface': 'Network Interface Card',
+  'device.form.title.bacnet.localIp': 'IP',
+  'device.form.title.bacnet.subnetCidr': 'Subnet CIDR',
+  'device.form.title.bacnet.localPort': 'Port',
+
+  // tencent
+  'device.form.title.tencent.mode': 'Mode',
+  'device.form.title.tencent.productId': 'Product ID',
+  'device.form.title.tencent.deviceName': 'Device Name',
+  'device.form.title.tencent.devicePsk': 'Device PSK',
+  'device.form.title.tencent.clientId': 'Client ID',
+
   /**
    * tooltip
    */
@@ -187,7 +203,7 @@ export default {
   'device.tooltip.group.remove': 'Delete group',
   'device.tooltip.copy': 'Create a new row based on the current row as a templat',
   'device.tooltip.uartTimeout':
-    'The value represents the optimal period for reading complete packets over the serial port. Please do not modify this parameter without careful consideration. Before making any changes, ensure you understand the significance of this parameter. If modifications are necessary, it is recommended to set the value within the range of 30-1000ms',
+    'This value represents the optimal period for the serial port to read complete packets. Please set it with caution to avoid making random changes. Before making any modifications, ensure you understand the specific meaning of this parameter. If adjustments are needed, it is recommended to set the value within the range of 30-1000ms',
 
   /**
    * placeholder
@@ -236,6 +252,8 @@ export default {
   'device.type.http': 'Generic HTTP Gatewa',
   'device.type.camera': '通用摄像机流处理网关', // TODO 已隐藏，暂时不需要翻译
   'device.type.smartHome': 'Smart Home Gateway',
+  'device.type.bacnet': 'Generic Bacnet IP Gateway',
+  'device.type.tencent': 'Tencent IoT Hub Gateway Access',
 
   /**
    * modbus function

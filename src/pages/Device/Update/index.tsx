@@ -10,12 +10,7 @@ import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-compon
 import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { columns } from '../columns';
-import {
-  defaultConfig,
-  defaultInputModeConfig,
-  defaultModelConfig,
-  defaultOutputConfig,
-} from './initialValues';
+import { defaultConfig, defaultModelConfig } from './initialValues';
 
 import PageContainer from '@/components/PageContainer';
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
@@ -84,6 +79,7 @@ const UpdateForm = () => {
           headers: newHeaders,
         };
       }
+
       const options = {
         autoRequest,
         enableOptimize,
@@ -182,8 +178,9 @@ const UpdateForm = () => {
   const handleOnValuesChange = (changedValue: any) => {
     const type = changedValue?.type;
     const model = changedValue?.config?.commonConfig?.model;
-    const outputMode = changedValue?.config?.outputMode;
-    const inputMode = changedValue?.config?.inputMode;
+    //  const outputMode = changedValue?.config?.outputMode;
+    // const inputMode = changedValue?.config?.inputMode;
+    const nic = changedValue?.config?.bacnetConfig?.interface;
 
     if (type) {
       formRef.current?.setFieldsValue({
@@ -195,21 +192,34 @@ const UpdateForm = () => {
         config: defaultModelConfig[model],
       });
     }
-    if (outputMode) {
+    if (nic) {
+      const [ip, subnet] = nic.split('/');
       formRef.current?.setFieldsValue({
         config: {
-          ...defaultOutputConfig[outputMode],
+          bacnetConfig: {
+            interface: nic,
+            localIp: ip,
+            subnetCidr: subnet,
+          },
         },
       });
     }
-    if (inputMode) {
-      formRef.current?.setFieldsValue({
-        config:
-          inputMode === detail?.config?.inputMode
-            ? { inputAddr: detail?.config?.inputAddr }
-            : defaultInputModeConfig[inputMode],
-      });
-    }
+
+    // if (outputMode) {
+    //   formRef.current?.setFieldsValue({
+    //     config: {
+    //       ...defaultOutputConfig[outputMode],
+    //     },
+    //   });
+    // }
+    // if (inputMode) {
+    //   formRef.current?.setFieldsValue({
+    //     config:
+    //       inputMode === detail?.config?.inputMode
+    //         ? { inputAddr: detail?.config?.inputAddr }
+    //         : defaultInputModeConfig[inputMode],
+    //   });
+    // }
   };
 
   useEffect(() => {

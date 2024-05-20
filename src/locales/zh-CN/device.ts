@@ -78,6 +78,8 @@ export default {
   'device.form.title.group.common': '通用配置',
   'device.form.title.group.http': 'HTTP 配置',
   'device.form.title.group.snmp': 'SNMP 配置',
+  'device.form.title.group.bacnet': 'BACnet 配置',
+  'device.form.title.group.tencent': '腾讯云物联网平台接入配置',
 
   // timeout
   'device.form.title.timeout.request': '请求超时',
@@ -171,6 +173,20 @@ export default {
   'device.form.title.scheduleRev': '计划任务版本号',
   'device.form.title.webhookRev': 'Webhook 版本号',
 
+  // bacnet
+  'device.form.title.bacnet.mode.broadcast': '广播模式',
+  'device.form.title.bacnet.interface': '网络适配器',
+  'device.form.title.bacnet.localIp': '本地地址',
+  'device.form.title.bacnet.subnetCidr': '子网掩码',
+  'device.form.title.bacnet.localPort': '本地端口',
+
+  // tencent
+  'device.form.title.tencent.mode': '模式',
+  'device.form.title.tencent.productId': '产品 ID',
+  'device.form.title.tencent.deviceName': '设备名称',
+  'device.form.title.tencent.devicePsk': '设备秘钥',
+  'device.form.title.tencent.clientId': '客户端 ID',
+
   /**
    * tooltip
    */
@@ -180,7 +196,7 @@ export default {
   'device.tooltip.group.remove': '删除分组',
   'device.tooltip.copy': '以当前行为模板新建一行数据',
   'device.tooltip.uartTimeout':
-    '该值是串口读取完整数据包的最佳周期。请勿随意更改此参数，在修改之前请确保了解其含义。如果必须修改，建议将此值设置在 30-1000ms 之间',
+    '此值表示串口读取完整数据包的最佳周期。请谨慎设置，避免随意更改。在修改前，请确保理解此参数的具体含义。如需调整，建议设置值在 30-1000ms 之间',
 
   /**
    * placeholder
@@ -228,6 +244,8 @@ export default {
   'device.type.http': '通用 HTTP 协议数据采集网关',
   'device.type.camera': '通用摄像机流处理网关',
   'device.type.smartHome': '全屋智能家居中心控制网关',
+  'device.type.bacnet': '通用 Bacnet IP 采集网关',
+  'device.type.tencent': '腾讯云物联网平台网关接入',
 
   /**
    * modbus function

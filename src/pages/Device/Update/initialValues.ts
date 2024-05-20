@@ -1,10 +1,12 @@
 import {
+  BacnetMode,
   DeviceMode,
   DeviceType,
   OutputEncode,
   OutputMode,
   PLCModel,
   SNMPVersion,
+  TencentMode,
   Transport,
 } from '../enum';
 
@@ -123,6 +125,23 @@ export const defaultConfig = {
       transport: Transport.UDP,
       community: 'public',
       version: SNMPVersion.V2,
+    },
+  },
+  [DeviceType.GENERIC_BACNET_IP]: {
+    commonConfig: {
+      frequency: DEFAULT_FREQUENCE,
+    },
+    bacnetConfig: {
+      mode: BacnetMode.BROADCAST,
+      localPort: 47808,
+      interface: '',
+      addr: '',
+      subnetCidr: 24,
+    },
+  },
+  [DeviceType.TENCENT_IOTHUB_GATEWAY]: {
+    tencentConfig: {
+      mode: TencentMode.GATEWAY,
     },
   },
 };

@@ -4,6 +4,7 @@ import StateTag, { StateType } from '@/components/StateTag';
 import UnitTitle from '@/components/UnitTitle';
 import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
+import { getOsNetInterfaces } from '@/services/rulex/xitongshuju';
 import { FormItemType, Product } from '@/utils/enum';
 import { validateFormItem } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
@@ -11,6 +12,8 @@ import { AutoComplete, Space } from 'antd';
 import type { FormItemProps, Rule } from 'antd/es/form';
 import type { DeviceItem } from '.';
 import {
+  BacnetMode,
+  BacnetModeOption,
   DeviceMode,
   DeviceType,
   deviceTypeOptions,
@@ -18,6 +21,7 @@ import {
   rackEnum,
   slotEnum,
   snmpVersionEnum,
+  TencentMode,
   Transport,
 } from './enum';
 
@@ -149,6 +153,45 @@ export const modeColumns = {
 };
 
 /**
+ * BACnet mode
+ */
+export const bacnetModeColumns = {
+  [BacnetMode.BROADCAST]: [
+    {
+      valueType: 'group',
+      columns: [
+        {
+          title: intl.formatMessage({ id: 'device.form.title.bacnet.localIp' }),
+          dataIndex: ['config', 'bacnetConfig', 'localIp'],
+          required: true,
+          fieldProps: {
+            disabled: true,
+          },
+          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.localIp,
+        },
+        {
+          title: intl.formatMessage({ id: 'device.form.title.bacnet.subnetCidr' }),
+          dataIndex: ['config', 'bacnetConfig', 'subnetCidr'],
+          required: true,
+          valueType: 'digit',
+          fieldProps: {
+            disabled: true,
+          },
+          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.subnetCidr,
+        },
+        {
+          title: intl.formatMessage({ id: 'device.form.title.bacnet.localPort' }),
+          dataIndex: ['config', 'bacnetConfig', 'localPort'],
+          required: true,
+          valueType: 'digit',
+          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.localPort,
+        },
+      ],
+    },
+  ],
+};
+
+/**
  * 基本配置
  */
 export const baseColumns = (product: Product) => [
@@ -240,7 +283,7 @@ export const typeConfigColumns = {
               },
             ],
           },
-          '该值是串口最佳读完整包周期，请不要随便修改，修改之前最好知道这个参数是什么含义。如果一定要修改，建议这个值在 30-1000ms 之间',
+          intl.formatMessage({ id: 'device.tooltip.uartTimeout' }),
         ),
       ],
     },
@@ -659,6 +702,96 @@ export const typeConfigColumns = {
           valueType: 'select',
           valueEnum: snmpVersionEnum,
           render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => `v${snmpConfig?.version}`,
+        },
+      ],
+    },
+  ],
+  [DeviceType.GENERIC_BACNET_IP]: [
+    {
+      title: intl.formatMessage({ id: 'device.form.title.group.common' }),
+      valueType: 'group',
+      columns: [...frequencyConfig(intl.formatMessage({ id: 'device.form.title.frequency' }))],
+    },
+    {
+      title: intl.formatMessage({ id: 'device.form.title.group.bacnet' }),
+      valueType: 'group',
+      columns: [
+        {
+          title: intl.formatMessage({ id: 'device.form.title.mode' }),
+          dataIndex: ['config', 'bacnetConfig', 'mode'],
+          valueType: 'select',
+          valueEnum: BacnetModeOption,
+          required: true,
+          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.mode,
+        },
+        {
+          title: intl.formatMessage({ id: 'device.form.title.bacnet.interface' }),
+          dataIndex: ['config', 'bacnetConfig', 'interface'],
+          valueType: 'select',
+          required: true,
+          request: async () => {
+            const { data } = await getOsNetInterfaces();
+
+            return data?.map((item) => ({
+              label: (
+                <Space>
+                  <span>{item?.name}</span>
+                  <span className="text-[12px] text-[#000000A6]">{item?.addr}</span>
+                </Space>
+              ),
+              value: item.addr,
+            }));
+          },
+        },
+        {
+          valueType: 'dependency',
+          name: ['config'],
+          columns: ({ config }: DeviceItem) => {
+            return config?.bacnetConfig?.mode ? bacnetModeColumns[config?.bacnetConfig?.mode] : [];
+          },
+        },
+      ],
+    },
+  ],
+  [DeviceType.TENCENT_IOTHUB_GATEWAY]: [
+    {
+      title: intl.formatMessage({ id: 'device.form.title.group.tencent' }),
+      valueType: 'group',
+      columns: [
+        {
+          title: intl.formatMessage({ id: 'device.form.title.tencent.mode' }),
+          dataIndex: ['config', 'tencentConfig', 'mode'],
+          valueType: 'select',
+          valueEnum: TencentMode,
+          required: true,
+          render: (_dom: React.ReactNode, { tencentConfig }: DeviceItem) => tencentConfig?.mode,
+        },
+        {
+          title: intl.formatMessage({ id: 'device.form.title.tencent.productId' }),
+          dataIndex: ['config', 'tencentConfig', 'productId'],
+          required: true,
+          render: (_dom: React.ReactNode, { tencentConfig }: DeviceItem) =>
+            tencentConfig?.productId,
+        },
+        {
+          title: intl.formatMessage({ id: 'device.form.title.tencent.deviceName' }),
+          dataIndex: ['config', 'tencentConfig', 'deviceName'],
+          required: true,
+          render: (_dom: React.ReactNode, { tencentConfig }: DeviceItem) =>
+            tencentConfig?.deviceName,
+        },
+        {
+          title: intl.formatMessage({ id: 'device.form.title.tencent.devicePsk' }),
+          dataIndex: ['config', 'tencentConfig', 'devicePsk'],
+          required: true,
+          render: (_dom: React.ReactNode, { tencentConfig }: DeviceItem) =>
+            tencentConfig?.devicePsk,
+        },
+        {
+          title: intl.formatMessage({ id: 'device.form.title.tencent.clientId' }),
+          dataIndex: ['config', 'tencentConfig', 'clientId'],
+          required: true,
+          render: (_dom: React.ReactNode, { tencentConfig }: DeviceItem) => tencentConfig?.clientId,
         },
       ],
     },

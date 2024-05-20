@@ -16,6 +16,8 @@ export enum DeviceType {
   // GENERIC_CAMERA = 'GENERIC_CAMERA', 暂无需求，先隐藏
   SMART_HOME_CONTROLLER = 'SMART_HOME_CONTROLLER',
   GENERIC_SNMP = 'GENERIC_SNMP',
+  GENERIC_BACNET_IP = 'GENERIC_BACNET_IP',
+  TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
 }
 
 const baseTypeOption = {
@@ -27,6 +29,8 @@ const baseTypeOption = {
   [DeviceType.GENERIC_HTTP_DEVICE]: intl.formatMessage({ id: 'device.type.http' }),
   // [DeviceType.GENERIC_CAMERA]: intl.formatMessage({ id: 'device.type.camera' }), 暂无需求，先隐藏
   [DeviceType.SMART_HOME_CONTROLLER]: intl.formatMessage({ id: 'device.type.smartHome' }),
+  [DeviceType.GENERIC_BACNET_IP]: intl.formatMessage({ id: 'device.type.bacnet' }),
+  [DeviceType.TENCENT_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.tencent' }),
 };
 
 export const deviceTypeOptions = {
@@ -67,7 +71,7 @@ export enum DeviceMode {
 }
 
 /**
- * Modbus 设备功能
+ * GENERIC_MODBUS
  */
 export const funcEnum = new Map([
   [1, intl.formatMessage({ id: 'device.modbus.func1' })],
@@ -81,7 +85,7 @@ export const funcEnum = new Map([
 ]);
 
 /**
- * 西门子设备 PLC 型号
+ * SIEMENS_PLC
  */
 export enum PLCModel {
   S7200 = 'S7200',
@@ -125,7 +129,7 @@ export const slotEnum = new Map([
 ]);
 
 /**
- * 视频输入模式
+ * GENERIC_CAMERA
  */
 export enum InputMode {
   REMOTE_STREAM_RTSP = 'REMOTE_STREAM_RTSP',
@@ -137,9 +141,6 @@ export const InputModeOption = {
   [InputMode.LOCAL_CAMERA]: intl.formatMessage({ id: 'device.camera.inputMode.local' }),
 };
 
-/**
- * 视频输出模式
- */
 export enum OutputMode {
   // LOCAL_H264_STREAM_SERVER = 'LOCAL_H264_STREAM_SERVER',
   LOCAL_JPEG_STREAM_SERVER = 'LOCAL_JPEG_STREAM_SERVER',
@@ -154,9 +155,6 @@ export const OutputModeOption = {
   [OutputMode.REMOTE_STREAM_SERVER]: intl.formatMessage({ id: 'device.camera.outputMode.stream' }),
 };
 
-/**
- * 视频输出编码
- */
 export enum OutputEncode {
   H264_STREAM = 'H264_STREAM',
   JPEG_STREAM = 'JPEG_STREAM',
@@ -173,7 +171,9 @@ export const OutputEncodeOption = {
   ),
 };
 
-/** SNMP */
+/**
+ * GENERIC_SNMP
+ */
 export enum Transport {
   UDP = 'udp',
   TCP = 'tcp',
@@ -190,3 +190,22 @@ export const snmpVersionEnum = new Map([
   [2, '2'],
   [3, '3'],
 ]);
+
+/**
+ * GENERIC_BACNET_IP
+ */
+export enum BacnetMode {
+  BROADCAST = 'BROADCAST',
+}
+
+export const BacnetModeOption = {
+  [BacnetMode.BROADCAST]: intl.formatMessage({ id: 'device.form.title.bacnet.mode.broadcast' }),
+};
+
+/**
+ * TENCENT_IOTHUB_GATEWAY
+ */
+export enum TencentMode {
+  GATEWAY = 'GATEWAY',
+  DEVICE = 'DEVICE',
+}
