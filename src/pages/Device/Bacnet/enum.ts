@@ -11,13 +11,13 @@ export enum ObjectType {
 }
 
 export const ObjectTypeOption = {
-  [ObjectType.AI]: '模拟输入',
-  [ObjectType.AO]: '模拟输出',
-  [ObjectType.AV]: '模拟值',
-  [ObjectType.BI]: '二进制输入',
-  [ObjectType.BO]: '二进制输出',
-  [ObjectType.BV]: '二进制值',
-  [ObjectType.MI]: '多状态输入',
-  [ObjectType.MO]: '多状态输出',
-  [ObjectType.MV]: '多状态值',
+  [ObjectType.AI]: 'AI 模拟输入',
+  [ObjectType.AO]: 'AO 模拟输出',
+  [ObjectType.AV]: 'AV 模拟值',
+  [ObjectType.BI]: 'BI 二进制输入',
+  [ObjectType.BO]: 'BO 二进制输出',
+  [ObjectType.BV]: 'BV 二进制值',
+  [ObjectType.MI]: 'MI 多状态输入',
+  [ObjectType.MO]: 'MO 多状态输出',
+  [ObjectType.MV]: 'MV 多状态值',
 };
