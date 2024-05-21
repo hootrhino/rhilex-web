@@ -13,7 +13,7 @@ import {
 import { SheetType } from '@/utils/enum';
 import DataSheet from '../DataSheet';
 import type { DataSheetItem, Point, removeParams } from '../DataSheet/typings';
-import { ObjectType } from './enum';
+import { ObjectType, ObjectTypeOption } from './enum';
 
 const defaultBacnetConfig = {
   bacnetDeviceId: 1,
@@ -112,7 +112,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
       dataIndex: 'objectType',
       valueType: 'select',
       width: 150,
-      valueEnum: ObjectType,
+      valueEnum: ObjectTypeOption,
       formItemProps: {
         rules: [{ required: true, message: '请选择对象类型' }],
       },
