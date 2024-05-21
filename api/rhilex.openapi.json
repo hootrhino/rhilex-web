@@ -107,6 +107,9 @@
     },
     {
       "name": "shelly设备"
+    },
+    {
+      "name": "bacnet点位管理"
     }
   ],
   "paths": {
@@ -5662,7 +5665,18 @@
         "tags": [
           "数据中心"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "secret",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "secret",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "成功",
@@ -5753,6 +5767,16 @@
           "数据中心"
         ],
         "parameters": [
+          {
+            "name": "secret",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "secret",
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "uuid",
             "in": "query",
@@ -5878,6 +5902,16 @@
           "数据中心"
         ],
         "parameters": [
+          {
+            "name": "secret",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "123456",
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "uuid",
             "in": "query",
@@ -17438,6 +17472,16 @@
         ],
         "parameters": [
           {
+            "name": "secret",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "123456",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "uuid",
             "in": "query",
             "description": "",
@@ -17523,6 +17567,16 @@
         ],
         "parameters": [
           {
+            "name": "secret",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "secret",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "uuid",
             "in": "query",
             "description": "",
@@ -17569,6 +17623,16 @@
             "description": "",
             "required": true,
             "example": "SCHEMAAAEM8PHB",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "secret",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "secret",
             "schema": {
               "type": "string"
             }
@@ -17689,6 +17753,16 @@
           "数据中心"
         ],
         "parameters": [
+          {
+            "name": "secret",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "secret",
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "uuid",
             "in": "query",
@@ -17947,6 +18021,361 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-175617057-run",
+        "security": []
+      }
+    },
+    "/api/v1/bacnetip_data_sheet/sheetExport": {
+      "get": {
+        "summary": "export",
+        "x-apifox-folder": "bacnet点位管理",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "bacnet点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "DEVICE233",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-175914205-run",
+        "security": []
+      }
+    },
+    "/api/v1/bacnetip_data_sheet/sheetImport": {
+      "post": {
+        "summary": "import",
+        "x-apifox-folder": "bacnet点位管理",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "bacnet点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "device_uuid": {
+                    "type": "string",
+                    "example": "DEVICE233"
+                  }
+                },
+                "required": [
+                  "file",
+                  "device_uuid"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-175914206-run",
+        "security": []
+      }
+    },
+    "/api/v1/bacnetip_data_sheet/list": {
+      "get": {
+        "summary": "page",
+        "x-apifox-folder": "bacnet点位管理",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "bacnet点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "DEVICE233",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-175914207-run",
+        "security": []
+      }
+    },
+    "/api/v1/bacnetip_data_sheet/update": {
+      "post": {
+        "summary": "createOrupdate",
+        "x-apifox-folder": "bacnet点位管理",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "bacnet点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "points": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "tag": {
+                          "type": "string"
+                        },
+                        "alias": {
+                          "type": "string"
+                        },
+                        "bacnetDeviceId": {
+                          "type": "integer"
+                        },
+                        "objectType": {
+                          "type": "string"
+                        },
+                        "objectId": {
+                          "type": "integer"
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "uuid",
+                        "tag",
+                        "alias",
+                        "bacnetDeviceId",
+                        "objectType",
+                        "objectId"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "points"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "points"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICE233",
+                "points": [
+                  {
+                    "uuid": "BACNZQB9DSCF",
+                    "tag": "tag1",
+                    "alias": "tag1",
+                    "bacnetDeviceId": 2,
+                    "objectType": "AV",
+                    "objectId": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-175914208-run",
+        "security": []
+      }
+    },
+    "/api/v1/bacnetip_data_sheet/delIds": {
+      "delete": {
+        "summary": "delIds",
+        "x-apifox-folder": "bacnet点位管理",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "bacnet点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "device_uuid": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "uuids",
+                  "device_uuid"
+                ],
+                "x-apifox-orders": [
+                  "uuids",
+                  "device_uuid"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICE233",
+                "uuids": [
+                  "BACNNCNNY67H"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-175914209-run",
+        "security": []
+      }
+    },
+    "/api/v1/bacnetip_data_sheet/delAll": {
+      "delete": {
+        "summary": "delAll",
+        "x-apifox-folder": "bacnet点位管理",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "bacnet点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "device_uuid"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICE233"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-175914210-run",
         "security": []
       }
     }

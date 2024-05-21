@@ -33,13 +33,20 @@ export async function getDatacenterExportData(
 }
 
 /** 仓库列表 GET /api/v1/datacenter/listSchemaDDL */
-export async function getDatacenterListSchemaDdl(options?: { [key: string]: any }) {
+export async function getDatacenterListSchemaDdl(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getDatacenterListSchemaDDLParams,
+  options?: { [key: string]: any },
+) {
   return request<{
     code: number;
     msg: string;
     data: { uuid?: string; published?: boolean; name?: string; description?: string }[];
   }>('/api/v1/datacenter/listSchemaDDL', {
     method: 'GET',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }

@@ -39,6 +39,7 @@ declare namespace API {
   };
 
   type deleteDatacenterClearSchemaDataParams = {
+    secret: string;
     uuid: string;
   };
 
@@ -87,6 +88,14 @@ declare namespace API {
     uuid: string;
   };
 
+  type getBacnetipDataSheetListParams = {
+    device_uuid: string;
+  };
+
+  type getBacnetipDataSheetSheetExportParams = {
+    device_uuid: string;
+  };
+
   type getCrontaskResultsPageParams = {
     /** 当前页 */
     current?: string;
@@ -107,10 +116,16 @@ declare namespace API {
   };
 
   type getDatacenterExportDataParams = {
+    secret: string;
     uuid: string;
   };
 
+  type getDatacenterListSchemaDDLParams = {
+    secret: string;
+  };
+
   type getDatacenterQueryDataListParams = {
+    secret: string;
     uuid: string;
     current: number;
     size: number;
@@ -120,15 +135,18 @@ declare namespace API {
   };
 
   type getDatacenterQueryLastDataParams = {
+    secret: string;
     uuid: string;
     select?: string;
   };
 
   type getDatacenterSchemaDDLDefineParams = {
     uuid: string;
+    secret: string;
   };
 
   type getDatacenterSchemaDDLDetailParams = {
+    secret: string;
     uuid: string;
   };
 

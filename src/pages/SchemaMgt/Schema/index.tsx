@@ -29,6 +29,7 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
     setActiveSchema,
     refresh,
   } = useModel('useSchema');
+  const { setKey } = useModel('useDataCenter');
   const [initialValue, setInitialValue] = useState<Partial<SchemaItem>>();
   const [copied, setCopied] = useState<string>('');
 
@@ -94,7 +95,7 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
           },
           description: {
             dataIndex: 'description',
-            render: (_dom, { uuid }) => {
+            render: (_dom, { uuid, published }) => {
               return (
                 uuid && (
                   <Space>
@@ -122,10 +123,15 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
                     <Tooltip title={uuid}>
                       <div
                         className={cn(
-                          'w-[130px] truncate cursor-pointer text-[#1677ff]',
+                          'w-[130px] truncate',
                           !uuid && 'hidden',
+                          published ? 'cursor-pointer text-[#1677ff]' : 'cursor-not-allowed',
                         )}
-                        onClick={() => history.push('/data-center')}
+                        onClick={() => {
+                          if (!published) return;
+                          history.push('/data-center');
+                          setKey(uuid);
+                        }}
                       >
                         {uuid}
                       </div>

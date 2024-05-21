@@ -8,13 +8,13 @@ import {
   getDatacenterSchemaDdlDefine,
   getDatacenterSchemaDdlDetail,
 } from '@/services/rulex/shujuzhongxin';
-import { toPascalCase } from '@/utils/utils';
+import { IconFont, toPascalCase } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, TableOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
-import { useIntl, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import type { TreeDataNode } from 'antd';
-import { Button, Empty, Space, Tooltip, Tree } from 'antd';
+import { Button, Empty, Space, Tooltip, Tree, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
 
@@ -22,6 +22,11 @@ type SchemaDDLDefineItem = {
   name: string;
   type: string;
   [key: string]: any;
+};
+
+const defaultPagination = {
+  current: 1,
+  pageSize: 10,
 };
 
 const getChildName = ({ name, type }: SchemaDDLDefineItem) => {
@@ -36,12 +41,16 @@ const getChildName = ({ name, type }: SchemaDDLDefineItem) => {
 const DataCenter = () => {
   const { formatMessage } = useIntl();
   const actionRef = useRef<ActionType>();
+  const { key: activeKey, DataCenterSecret } = useModel('useDataCenter');
   const [selectedKey, setSelectedKey] = useState<string>();
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [treeData, setTreeData] = useState<TreeDataNode[]>([]);
+  const secret = DataCenterSecret?.secret || '';
 
   // 获取数据表列表
-  useRequest(() => getDatacenterListSchemaDdl(), {
+  useRequest(() => getDatacenterListSchemaDdl({ secret }), {
+    ready: !!DataCenterSecret?.secret,
+    refreshDeps: [DataCenterSecret?.secret],
     onSuccess: (data) => {
       const formatData = data?.map((item) => ({
         title: item.published ? (
@@ -53,40 +62,47 @@ const DataCenter = () => {
         ),
         key: item.uuid || '',
         disabled: !item.published,
+        isLeaf: item.published ? false : true,
         icon: <TableOutlined />,
-        children: [],
       }));
-      const publishedData = data?.filter((item) => item.published);
+
+      const publishedData = data?.filter((item) => item.published)?.map((d) => d.uuid);
+      const defaultKey = activeKey ? activeKey : publishedData?.[0];
+
       setTreeData(formatData);
-      setSelectedKey(publishedData?.[0]?.uuid);
-      setExpandedKeys(publishedData?.[0]?.uuid ? [publishedData?.[0]?.uuid] : []);
+      setSelectedKey(defaultKey);
+      setExpandedKeys(defaultKey ? [defaultKey] : []);
     },
   });
 
-  // 获取数据字段定义
-  const { run: getSchemaDdlDefine } = useRequest(
-    (params: API.getDatacenterSchemaDDLDefineParams) => getDatacenterSchemaDdlDefine(params),
-    {
-      manual: true,
-      onSuccess: (data) => {
-        const newTreeData = treeData?.map((tree) => {
-          if (tree?.key === selectedKey) {
-            return {
-              ...tree,
-              children: data?.map((d) => ({
-                title: getChildName(d),
-                key: d.name,
-                isLeaf: true,
-                selectable: false,
-              })),
-            };
-          }
-          return tree;
-        });
-        setTreeData(newTreeData);
-      },
-    },
-  );
+  const updateTreeData = (list: any[], key: React.Key, children: any[]): any[] => {
+    return list.map((node) => {
+      if (node.key === key) {
+        return {
+          ...node,
+          children: children?.map((d) => ({
+            title: getChildName(d),
+            key: `${d.name}-${Math.random()}`,
+            isLeaf: true,
+            selectable: false,
+          })),
+        };
+      }
+
+      return node;
+    });
+  };
+
+  const handleOnLoadData = async ({ key }: any) => {
+    const { data } = await getDatacenterSchemaDdlDefine({ uuid: key, secret });
+
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        setTreeData((origin) => updateTreeData(origin, key, data));
+        resolve();
+      }, 500);
+    });
+  };
 
   // 获取表头
   const { run: getColumns, data: columns } = useRequest(
@@ -133,14 +149,30 @@ const DataCenter = () => {
       content: formatMessage({ id: 'dataCenter.modal.content.clear' }),
       okText: formatMessage({ id: 'button.ok' }),
       cancelText: formatMessage({ id: 'button.cancel' }),
-      onOk: () => selectedKey && clear({ uuid: selectedKey }),
+      onOk: () => selectedKey && clear({ uuid: selectedKey, secret }),
+    });
+  };
+
+  // 生成代码
+  const handleOnCode = () => {
+    const { current, pageSize } = actionRef.current?.pageInfo || defaultPagination;
+
+    modal.info({
+      title: '请求 URL',
+      content: (
+        <Typography.Paragraph copyable={{ tooltips: ['复制', '复制成功'] }}>
+          {`curl --location --request GET 'http://Ip:2580/api/v1/datacenter/queryDataList?secrets=
+          ${secret}&uuid=${selectedKey}&current=${current}&size=${pageSize}&order=DESC' --header
+          'User-Agent: RHILEX'`}
+        </Typography.Paragraph>
+      ),
+      okText: '关闭',
     });
   };
 
   useEffect(() => {
     if (selectedKey) {
-      getSchemaDdlDefine({ uuid: selectedKey });
-      getColumns({ uuid: selectedKey });
+      getColumns({ uuid: selectedKey, secret });
     }
   }, [selectedKey]);
 
@@ -161,12 +193,13 @@ const DataCenter = () => {
             onSelect={(keys) => setSelectedKey(keys?.[0] as string)}
             onExpand={setExpandedKeys}
             treeData={treeData}
+            loadData={handleOnLoadData}
           />
         </ProCard>
         <ProCard title={formatMessage({ id: 'dataCenter.title.table' })}>
           {columns && columns?.length > 0 ? (
             <ProTable
-              rowKey="uuid"
+              rowKey="id"
               polling={5000}
               actionRef={actionRef}
               params={{ uuid: selectedKey }}
@@ -177,6 +210,7 @@ const DataCenter = () => {
                     size: pageSize,
                     order: 'DESC',
                     uuid: keyword.uuid,
+                    secret,
                   });
 
                   return Promise.resolve({
@@ -195,13 +229,16 @@ const DataCenter = () => {
               pagination={{
                 hideOnSinglePage: true,
                 showSizeChanger: false,
-                defaultCurrent: 1,
-                defaultPageSize: 10,
+                defaultCurrent: defaultPagination.current,
+                defaultPageSize: defaultPagination.pageSize,
               }}
               columns={columns}
               search={false}
               rootClassName="stripe-table"
               toolBarRender={() => [
+                <Button key="code" onClick={handleOnCode} icon={<IconFont type="icon-code" />}>
+                  生成代码
+                </Button>,
                 <Button danger key="clear" onClick={handleOnClear} icon={<DeleteOutlined />}>
                   {formatMessage({ id: 'dataCenter.button.clear' })}
                 </Button>,

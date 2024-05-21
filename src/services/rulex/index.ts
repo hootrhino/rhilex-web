@@ -2,6 +2,7 @@
 /* eslint-disable */
 // API 更新时间：
 // API 唯一标识：
+import * as bacnetdianweiguanli from './bacnetdianweiguanli';
 import * as chajianguanli from './chajianguanli';
 import * as dapingguanli from './dapingguanli';
 import * as dingshirenwu from './dingshirenwu';
@@ -69,4 +70,5 @@ export default {
   liumeitiguanli,
   shellyshebei,
   snmpdianweiguanli,
+  bacnetdianweiguanli,
 };
