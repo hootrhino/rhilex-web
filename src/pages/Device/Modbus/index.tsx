@@ -117,6 +117,10 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
     },
   );
 
+  // 导出点位表
+  const handleOnDownload = () =>
+    (window.location.href = `/api/v1/modbus_data_sheet/sheetExport?device_uuid=${deviceId}`);
+
   useEffect(() => {
     setDeviceId(deviceId || uuid);
   }, [uuid]);
@@ -357,9 +361,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       type={type}
       scroll={{ x: 1200 }}
       upload={(file: File) => deviceUuid && upload(file)}
-      download={() =>
-        (window.location.href = `/api/v1/modbus_data_sheet/sheetExport?device_uuid=${deviceId}`)
-      }
+      download={handleOnDownload}
       update={(data: Point[]) => {
         const points = data?.map((item) => formatUpdateParams(item));
         if (deviceUuid && points) {

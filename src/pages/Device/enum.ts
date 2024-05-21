@@ -60,6 +60,8 @@ export const deviceAvatar = {
   // [DeviceType.GENERIC_CAMERA]: 'CAM', 暂无需求，先隐藏
   [DeviceType.SMART_HOME_CONTROLLER]: 'S',
   [DeviceType.GENERIC_SNMP]: 'SNMP',
+  [DeviceType.GENERIC_BACNET_IP]: 'B',
+  [DeviceType.TENCENT_IOTHUB_GATEWAY]: 'T',
 };
 
 /**

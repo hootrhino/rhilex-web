@@ -90,6 +90,8 @@ declare namespace API {
 
   type getBacnetipDataSheetListParams = {
     device_uuid: string;
+    current: number;
+    size: number;
   };
 
   type getBacnetipDataSheetSheetExportParams = {

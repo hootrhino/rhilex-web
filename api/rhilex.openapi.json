@@ -18138,6 +18138,26 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "10",
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {

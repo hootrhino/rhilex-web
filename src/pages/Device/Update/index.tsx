@@ -199,7 +199,7 @@ const UpdateForm = () => {
           bacnetConfig: {
             interface: nic,
             localIp: ip,
-            subnetCidr: subnet,
+            subnetCidr: Number(subnet),
           },
         },
       });
