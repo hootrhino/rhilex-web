@@ -7,6 +7,7 @@ import RightContent from '@/components/RightContent';
 import { ProductMenuAccess } from '@/models/useSystem';
 import { LOGIN_PATH } from '@/utils/constant';
 import { Product } from '@/utils/enum';
+import { IconFont } from '@/utils/utils';
 import { DefaultFooter } from '@ant-design/pro-components';
 import { MacScrollbar } from 'mac-scrollbar';
 import 'mac-scrollbar/dist/mac-scrollbar.css';
@@ -34,12 +35,17 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
     },
     footerRender: () => <DefaultFooter copyright={COPYRIGHT} />,
     menuHeaderRender: undefined,
-    menuDataRender: (menuData) =>
-      menuData.filter((item) =>
+    menuDataRender: (menuData) => {
+      const filterData = menuData.filter((item) =>
         initialState?.product && Product[initialState?.product]
           ? ProductMenuAccess[initialState?.product].includes(item?.key)
           : ['dashboard'].includes(item?.key || ''),
-      ),
+      );
+
+      return filterData.map((item) =>
+        item?.icon ? item : { ...item, icon: <IconFont type={item.icon as string} /> },
+      );
+    },
     menuItemRender(item, defaultDom) {
       const currentPath = window.location?.pathname;
       const regex = /(?:inend|outend|app-stack|device\/[^/]+)\/(?:new|edit)[^/]*/;
@@ -61,7 +67,7 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
     childrenRender: (children) => {
       return <MacScrollbar>{children}</MacScrollbar>;
     },
-    className: 'h-[100vh]',
+    className: 'h-[100vh] rhilex-layout',
     ...initialState?.settings,
   };
 };

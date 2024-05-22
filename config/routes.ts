@@ -20,7 +20,7 @@
   {
     path: '/device',
     title: 'menu.device',
-    icon: 'group',
+    icon: 'icon-menu-device',
     hideChildrenInMenu: true,
     key: 'device',
     routes: [
@@ -88,7 +88,7 @@
   {
     path: '/schema',
     title: 'menu.schema',
-    icon: 'apartment',
+    icon: 'icon-menu-schema',
     component: './SchemaMgt',
     key: 'schema',
   },
@@ -102,7 +102,7 @@
   {
     path: '/inend',
     title: 'menu.inend',
-    icon: 'medicineBox',
+    icon: 'alignLeft',
     hideChildrenInMenu: true,
     key: 'inend',
     routes: [
@@ -150,7 +150,7 @@
   {
     path: '/outend',
     title: 'menu.outend',
-    icon: 'api',
+    icon: 'alignRight',
     hideChildrenInMenu: true,
     key: 'outend',
     routes: [
@@ -213,7 +213,7 @@
   {
     path: '/plugins',
     title: 'menu.plugin',
-    icon: 'control',
+    icon: 'icon-menu-plugin',
     key: 'plugins',
     component: './Plugins',
   },
