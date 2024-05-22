@@ -2,12 +2,13 @@ export default {
   /**
    * message
    */
-  'notifyLog.message.success': 'Marked successfully',
+  'notifyLog.message.success': 'Cleared successfully',
 
   /**
    * button
    */
-  'notifyLog.button.clear': 'Mark All as Read',
+  'notifyLog.button.clearAll': 'Clear All Notifications',
+  'notifyLog.button.clear': 'Clear',
 
   /**
    * table
@@ -18,7 +19,10 @@ export default {
   'notifyLog.table.title.ts': 'Time',
 
   /**
-   * others
+   * other
    */
-  'notifyLog.tooltip.clear': 'Mark as read',
+  'notifyLog.modal.title.clear': 'Are you sure you want to clear this notification?',
+  'notifyLog.modal.title.clearAll': 'Clear all notifications',
+  'notifyLog.modal.content.clearAll':
+    'Clearing the notification list will permanently delete all notifications. Are you sure you want to continue?',
 };

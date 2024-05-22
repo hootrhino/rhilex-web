@@ -228,8 +228,8 @@ declare namespace API {
   };
 
   type getNotifyPageListParams = {
-    current?: string;
-    size?: string;
+    current?: number;
+    size?: number;
   };
 
   type getOutendsDetailParams = {

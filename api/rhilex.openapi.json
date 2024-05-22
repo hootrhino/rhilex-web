@@ -9900,172 +9900,6 @@
         "security": []
       }
     },
-    "/api/v1/notify/header": {
-      "get": {
-        "summary": "右上角列表",
-        "x-apifox-folder": "站内通知",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "站内通知"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "uuid": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
-                          },
-                          "status": {
-                            "type": "integer"
-                          },
-                          "event": {
-                            "type": "string"
-                          },
-                          "ts": {
-                            "type": "integer"
-                          },
-                          "summary": {
-                            "type": "string"
-                          }
-                        },
-                        "x-apifox-ignore-properties": [],
-                        "x-apifox-orders": [
-                          "uuid",
-                          "type",
-                          "status",
-                          "event",
-                          "ts",
-                          "summary"
-                        ]
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-130086078-run",
-        "security": []
-      }
-    },
-    "/api/v1/notify/list": {
-      "get": {
-        "summary": "全部列表",
-        "x-apifox-folder": "站内通知",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "站内通知"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "uuid": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
-                          },
-                          "status": {
-                            "type": "integer"
-                          },
-                          "event": {
-                            "type": "string"
-                          },
-                          "ts": {
-                            "type": "integer"
-                          },
-                          "summary": {
-                            "type": "string"
-                          },
-                          "info": {
-                            "type": "string"
-                          }
-                        },
-                        "x-apifox-ignore-properties": [],
-                        "x-apifox-orders": [
-                          "uuid",
-                          "type",
-                          "status",
-                          "event",
-                          "ts",
-                          "summary",
-                          "info"
-                        ]
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-130086093-run",
-        "security": []
-      }
-    },
     "/api/v1/notify/clear": {
       "put": {
         "summary": "一键清空",
@@ -17884,7 +17718,7 @@
             "required": false,
             "example": "1",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
@@ -17894,7 +17728,7 @@
             "required": false,
             "example": "10",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],

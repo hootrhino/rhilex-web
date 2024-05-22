@@ -10,45 +10,6 @@ export async function putNotifyClear(options?: { [key: string]: any }) {
   });
 }
 
-/** 右上角列表 GET /api/v1/notify/header */
-export async function getNotifyHeader(options?: { [key: string]: any }) {
-  return request<{
-    code: number;
-    msg: string;
-    data: {
-      uuid?: string;
-      type?: string;
-      status?: number;
-      event?: string;
-      ts?: number;
-      summary?: string;
-    }[];
-  }>('/api/v1/notify/header', {
-    method: 'GET',
-    ...(options || {}),
-  });
-}
-
-/** 全部列表 GET /api/v1/notify/list */
-export async function getNotifyList(options?: { [key: string]: any }) {
-  return request<{
-    code: number;
-    msg: string;
-    data: {
-      uuid?: string;
-      type?: string;
-      status?: number;
-      event?: string;
-      ts?: number;
-      summary?: string;
-      info?: string;
-    }[];
-  }>('/api/v1/notify/list', {
-    method: 'GET',
-    ...(options || {}),
-  });
-}
-
 /** 站内分页通知 GET /api/v1/notify/pageList */
 export async function getNotifyPageList(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)

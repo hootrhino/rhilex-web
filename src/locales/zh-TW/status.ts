@@ -13,11 +13,20 @@ export default {
   'status.disabled': '關閉',
   'status.parse': '解析',
   'status.unparse': '不解析',
-  'status.info': '資訊',
-  'status.error': '錯誤',
-  'status.warning': '警告',
   'status.internal': '內部',
   'status.external': '外部',
   'status.busy': '占用中',
   'status.free': '空閒',
+  'status.unknow': '未知',
+  /**
+   * notice
+   */
+  'status.info': '資訊',
+  'status.error': '錯誤',
+  'status.warning': '警告',
+  'status.device': '設備事件',
+  'status.inend': '南向事件',
+  'status.outend': '北向事件',
+  'status.system': '系統內部事件',
+  'status.hardware': '硬體事件',
 };

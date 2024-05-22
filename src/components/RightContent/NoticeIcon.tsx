@@ -1,32 +1,27 @@
+import { getNotifyPageList } from '@/services/rulex/zhanneitongzhi';
 import { BellOutlined } from '@ant-design/icons';
 import { ProList } from '@ant-design/pro-components';
-import { history, useIntl, useModel } from '@umijs/max';
+import { history, useIntl, useRequest } from '@umijs/max';
 import { Badge, Popover } from 'antd';
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
 import StateTag, { StateType } from '../StateTag';
 
 const NoticeIcon = () => {
-  const { data, run } = useModel('useNotify');
   const { formatMessage } = useIntl();
-
-  useEffect(() => {
-    run();
-  }, []);
+  const { data } = useRequest(() => getNotifyPageList({ current: 1, size: 5 }));
 
   const content = (
     <ProList
       rowKey="uuid"
-      headerTitle={formatMessage({ id: 'component.title.notify' })}
       pagination={false}
+      dataSource={data?.records || []}
       footer={
-        data && data?.length > 0 ? (
+        data?.total && data?.total > 0 ? (
           <div className="cursor-pointer" onClick={() => history.push('/notify-log')}>
             {formatMessage({ id: 'component.button.more' })}
           </div>
         ) : null
       }
-      dataSource={data}
       metas={{
         title: {
           dataIndex: 'summary',
@@ -37,8 +32,8 @@ const NoticeIcon = () => {
             return dayjs(ts).format('YYYY-MM-DD HH:mm:ss');
           },
         },
-        subTitle: {
-          render: (_, { type }) => <StateTag state={type || 'INFO'} type={StateType.NOTICE} />,
+        actions: {
+          render: (_, { type }) => <StateTag state={type || 'DEFAULT'} type={StateType.NOTICE} />,
         },
       }}
       className="notification-list"
@@ -46,9 +41,15 @@ const NoticeIcon = () => {
   );
 
   return (
-    <Popover content={content} trigger="hover" arrow={false} rootClassName="notification-popver">
+    <Popover
+      title={formatMessage({ id: 'component.title.notify' })}
+      content={content}
+      trigger="hover"
+      arrow={false}
+      rootClassName="notification-popver"
+    >
       <span className="inline cursor-pointer transition-all duration-300 px-[8px]">
-        <Badge count={data?.length} rootClassName="notice-badge">
+        <Badge count={data?.total} rootClassName="notice-badge">
           <BellOutlined
             style={{ color: '#fff', fontSize: 16, padding: 4, verticalAlign: 'middle' }}
           />

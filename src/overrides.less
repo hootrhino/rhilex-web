@@ -23,12 +23,23 @@
 }
 
 .notification-list {
-  min-width: 270px;
+  min-width: 300px;
+  height: 300px;
+  overflow-y: auto;
+
   .ant-pro-card .ant-pro-card-body {
     padding: 0;
 
     .ant-pro-table-list-toolbar-left {
       max-width: 100%;
+    }
+  }
+
+  .ant-list .ant-list-item .ant-list-item-action > li {
+    padding: 0;
+
+    .ant-tag {
+      margin-inline-end: 0;
     }
   }
 }

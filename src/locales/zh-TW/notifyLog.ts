@@ -2,12 +2,13 @@ export default {
   /**
    * message
    */
-  'notifyLog.message.success': '設定成功',
+  'notifyLog.message.success': '清除成功',
 
   /**
    * button
    */
-  'notifyLog.button.clear': '一鍵設定已讀',
+  'notifyLog.button.clearAll': '一鍵清空通知',
+  'notifyLog.button.clear': '清除',
 
   /**
    * table
@@ -18,7 +19,9 @@ export default {
   'notifyLog.table.title.ts': '時間',
 
   /**
-   * others
+   * other
    */
-  'notifyLog.tooltip.clear': '設定已讀',
+  'notifyLog.modal.title.clear': '你確定要清除此通知？',
+  'notifyLog.modal.title.clearAll': '一鍵清空通知',
+  'notifyLog.modal.content.clearAll': '清除通知清單將永久刪除所有通知，你確定要繼續嗎？',
 };

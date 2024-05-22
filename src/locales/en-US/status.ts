@@ -13,11 +13,20 @@ export default {
   'status.disabled': 'disabled',
   'status.parse': 'parse',
   'status.unparse': 'unparse',
-  'status.info': 'INFO',
-  'status.error': 'ERROR',
-  'status.warning': 'WARNING',
   'status.internal': 'internal',
   'status.external': 'external',
   'status.busy': 'occupied',
   'status.free': 'idle',
+  'status.unknow': '未知',
+  /**
+   * notice
+   */
+  'status.info': 'Info',
+  'status.error': 'Error',
+  'status.warning': 'Warning',
+  'status.device': 'Device Event',
+  'status.inend': 'Input Event',
+  'status.outend': 'Output Event',
+  'status.system': 'System Event',
+  'status.hardware': 'Hardware Event',
 };

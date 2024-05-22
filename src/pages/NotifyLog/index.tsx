@@ -1,91 +1,115 @@
 import PageContainer from '@/components/PageContainer';
-import { message } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
 import StateTag, { StateType } from '@/components/StateTag';
-import { putNotifyClear, putNotifyRead } from '@/services/rulex/zhanneitongzhi';
-import { CalendarOutlined, SettingOutlined } from '@ant-design/icons';
+import { getNotifyPageList, putNotifyClear, putNotifyRead } from '@/services/rulex/zhanneitongzhi';
+import { CalendarOutlined, ClearOutlined } from '@ant-design/icons';
+import type { ActionType } from '@ant-design/pro-components';
 import { ProList } from '@ant-design/pro-components';
-import { useIntl, useModel, useRequest } from '@umijs/max';
-import { Button, Checkbox, Space, Tooltip } from 'antd';
+import { useIntl, useRequest } from '@umijs/max';
+import { Button, Popconfirm, Space } from 'antd';
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
+import { useRef } from 'react';
 
 export type NotifyLogItem = {
-  uuid: string;
-  type: string;
-  event: string;
-  ts: number;
-  summary: string;
-  info: string;
-  status: number;
+  uuid?: string;
+  type?: string;
+  event?: string;
+  ts?: number;
+  summary?: string;
+  info?: string;
+  status?: number;
 };
 
 const NotifyLog = () => {
-  const { refresh, data, run } = useModel('useNotify');
+  const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
 
   const handleOnSuccess = () => {
-    refresh();
+    actionRef.current?.reload();
     message.success(formatMessage({ id: 'notifyLog.message.success' }));
   };
 
-  // 已读
-  const { run: read } = useRequest((params: API.putNotifyReadParams) => putNotifyRead(params), {
+  // 清除
+  const { run: clear } = useRequest((params: API.putNotifyReadParams) => putNotifyRead(params), {
     manual: true,
     onSuccess: () => handleOnSuccess(),
   });
 
-  // 全部已读
-  const { run: clear } = useRequest(() => putNotifyClear(), {
+  // 全部清除
+  const { run: clearAll } = useRequest(() => putNotifyClear(), {
     manual: true,
     onSuccess: () => handleOnSuccess(),
   });
-
-  useEffect(() => {
-    run();
-  }, []);
 
   return (
     <>
       <PageContainer header={{ title: formatMessage({ id: 'menu.notifyLog' }) }}>
         <ProList<NotifyLogItem>
           rowKey="uuid"
+          actionRef={actionRef}
+          request={async ({ current = 1, pageSize = 8 }) => {
+            const { data } = await getNotifyPageList({ current, size: pageSize });
+
+            return Promise.resolve({
+              data: data?.records || [],
+              success: true,
+              total: data?.total || 0,
+            });
+          }}
           toolBarRender={() => {
             return [
-              <Button type="primary" key="clear" onClick={clear} icon={<SettingOutlined />}>
-                {formatMessage({ id: 'notifyLog.button.clear' })}
+              <Button
+                type="primary"
+                key="clearAll"
+                onClick={() =>
+                  modal.confirm({
+                    title: formatMessage({ id: 'notifyLog.modal.title.clearAll' }),
+                    content: formatMessage({ id: 'notifyLog.modal.content.clearAll' }),
+                    okText: formatMessage({ id: 'button.ok' }),
+                    cancelText: formatMessage({ id: 'button.cancel' }),
+                    onOk: clearAll,
+                  })
+                }
+                icon={<ClearOutlined />}
+              >
+                {formatMessage({ id: 'notifyLog.button.clearAll' })}
               </Button>,
             ];
           }}
-          dataSource={data as NotifyLogItem[]}
           metas={{
             title: {
               dataIndex: 'event',
             },
-            avatar: {
-              render: (_dom, { uuid }) => (
-                <Tooltip title={formatMessage({ id: 'notifyLog.tooltip.clear' })}>
-                  <Checkbox onChange={() => uuid && read({ uuid })} />
-                </Tooltip>
-              ),
-            },
             subTitle: {
               render: (_dom, { type }) => {
-                return <StateTag state={type || 'INFO'} type={StateType.NOTICE} />;
+                return <StateTag state={type || 'DEFAULT'} type={StateType.NOTICE} />;
               },
             },
             description: {
               dataIndex: 'info',
             },
             actions: {
-              render: (_dom, { ts }) => {
-                return (
-                  <Space>
+              render: (_dom, { ts, uuid }) => {
+                return [
+                  <Space key="time">
                     <CalendarOutlined />
                     <span>{dayjs(ts).format('YYYY-MM-DD HH:mm:ss')}</span>
-                  </Space>
-                );
+                  </Space>,
+                  <Popconfirm
+                    title={formatMessage({ id: 'notifyLog.modal.title.clear' })}
+                    onConfirm={async () => uuid && clear({ uuid })}
+                    key="clear"
+                  >
+                    <a className="pl-[16px]">{formatMessage({ id: 'notifyLog.button.clear' })}</a>
+                  </Popconfirm>,
+                ];
               },
             },
+          }}
+          pagination={{
+            defaultPageSize: 8,
+            defaultCurrent: 1,
+            hideOnSinglePage: true,
           }}
         />
       </PageContainer>

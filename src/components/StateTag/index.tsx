@@ -147,6 +147,30 @@ const noticeStateEnum = {
     text: <FormattedMessage id="status.warning" />,
     color: 'warning',
   },
+  DEVICE: {
+    text: <FormattedMessage id="status.device" />,
+    color: 'cyan',
+  },
+  SOURCE: {
+    text: <FormattedMessage id="status.inend" />,
+    color: 'magenta',
+  },
+  TARGET: {
+    text: <FormattedMessage id="status.outend" />,
+    color: 'purple',
+  },
+  SYSTEM: {
+    text: <FormattedMessage id="status.system" />,
+    color: 'geekblue',
+  },
+  HARDWARE: {
+    text: <FormattedMessage id="status.hardware" />,
+    color: 'lime',
+  },
+  DEFAULT: {
+    text: <FormattedMessage id="status.unknow" />,
+    color: 'default',
+  },
 };
 
 const levelStateEnum = {
