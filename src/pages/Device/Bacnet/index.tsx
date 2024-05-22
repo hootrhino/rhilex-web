@@ -62,7 +62,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
 
   // 更新点位表
   const { run: update } = useRequest(
-    (params: UpdateParams) => postBacnetipDataSheetUpdate(params as any),
+    (params: UpdateParams) => postBacnetipDataSheetUpdate(params),
     {
       manual: true,
       onSuccess: () => {

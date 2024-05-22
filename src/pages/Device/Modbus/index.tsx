@@ -56,9 +56,15 @@ export type ModbusDataSheetProps = {
   type: SheetType;
 };
 
+type ModbusPoint = Point & {
+  dataType: string;
+  dataOrder: string;
+  weight: number;
+};
+
 export type UpdateParams = {
   device_uuid: string;
-  modbus_data_points: Point[];
+  modbus_data_points: ModbusPoint[];
 };
 
 const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) => {
@@ -93,17 +99,14 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
   );
 
   // 更新点位表
-  const { run: update } = useRequest(
-    (params: UpdateParams) => postModbusDataSheetUpdate(params as any),
-    {
-      manual: true,
-      onSuccess: () => {
-        actionRef.current?.reload();
-        editorFormRef.current?.setRowData?.('new', { ...defaultModbusConfig, uuid: 'new' });
-        message.success(formatMessage({ id: 'message.success.update' }));
-      },
+  const { run: update } = useRequest((params: UpdateParams) => postModbusDataSheetUpdate(params), {
+    manual: true,
+    onSuccess: () => {
+      actionRef.current?.reload();
+      editorFormRef.current?.setRowData?.('new', { ...defaultModbusConfig, uuid: 'new' });
+      message.success(formatMessage({ id: 'message.success.update' }));
     },
-  );
+  });
 
   // 导入点位表
   const { run: upload } = useRequest(
