@@ -4,7 +4,9 @@ import PageContainer from '@/components/PageContainer';
 import { message, modal } from '@/components/PopupHack';
 import { getPlugwareList } from '@/services/rulex/chajianguanli';
 import { useIntl, useModel } from '@umijs/max';
+import { useSize } from 'ahooks';
 import { Tag, Tooltip } from 'antd';
+import { useRef } from 'react';
 import Detail from './Detail';
 import NgrokDetail from './Detail/Ngrok';
 
@@ -25,6 +27,8 @@ export enum PluginOptionKey {
 const Plugins = () => {
   const { setDetailConfig, run } = useModel('usePlugin');
   const { formatMessage } = useIntl();
+  const ref = useRef(null);
+  const size = useSize(ref);
 
   // ping
   const handleOnPing = (uuid: string) => {
@@ -129,13 +133,13 @@ const Plugins = () => {
   };
 
   return (
-    <>
+    <div ref={ref}>
       <PageContainer>
         <ProList<PluginItem>
           rowKey="uuid"
           pagination={false}
           showActions="hover"
-          grid={{ gutter: 16, column: 4 }}
+          grid={{ gutter: 16, column: size && size?.width < 1200 ? 2 : 4 }}
           cardProps={{ className: 'plugin-card', bodyStyle: { paddingBlockStart: 16 } }}
           metas={{
             title: {
@@ -170,7 +174,7 @@ const Plugins = () => {
         />
       </PageContainer>
       <Detail />
-    </>
+    </div>
   );
 };
 
