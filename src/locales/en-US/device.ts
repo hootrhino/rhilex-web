@@ -24,12 +24,12 @@ export default {
   /**
    * title
    */
-  'device.title.group': 'Device Group',
-  'device.title.list': 'Device List',
-  'device.title.detail': 'Device Detail',
-  'device.title.detail.smartHome': '{name} Device Detail',
-  'device.title.new': 'New Device',
-  'device.title.update': 'Edit Device',
+  'device.title.group': 'Device group',
+  'device.title.list': 'Device list',
+  'device.title.detail': 'Device detail',
+  'device.title.detail.smartHome': '{name} device detail',
+  'device.title.new': 'New device',
+  'device.title.update': 'Edit device',
   'device.title.base': 'Basic configuration',
   'device.title.modal.error.device': 'Device exception information',
   'device.title.modal.error.sheet': 'Point exception information',

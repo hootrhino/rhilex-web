@@ -1,4 +1,4 @@
-import UnitTitle from '@/components/UnitTitle';
+import UnitValue from '@/components/UnitValue';
 import { getShellyGen1Detail, getShellyGen1Status } from '@/services/rulex/shellyshebei';
 import { CheckCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import type { ProDescriptionsProps } from '@ant-design/pro-components';
@@ -113,40 +113,24 @@ const statusColumns = [
     dataIndex: 'uptime',
   },
   {
-    title: (
-      <UnitTitle
-        title={intl.formatMessage({ id: 'device.form.title.ramSize' })}
-        unit={intl.formatMessage({ id: 'device.unit.byte' })}
-      />
-    ),
+    title: intl.formatMessage({ id: 'device.form.title.ramSize' }),
     dataIndex: 'ram_size',
+    renderText: (ram_size: number) => <UnitValue value={ram_size} unit="Byte" />,
   },
   {
-    title: (
-      <UnitTitle
-        title={intl.formatMessage({ id: 'device.form.title.ramFree' })}
-        unit={intl.formatMessage({ id: 'device.unit.byte' })}
-      />
-    ),
+    title: intl.formatMessage({ id: 'device.form.title.ramFree' }),
     dataIndex: 'ram_free',
+    renderText: (ram_free: number) => <UnitValue value={ram_free} unit="Byte" />,
   },
   {
-    title: (
-      <UnitTitle
-        title={intl.formatMessage({ id: 'device.form.title.fsSize' })}
-        unit={intl.formatMessage({ id: 'device.unit.byte' })}
-      />
-    ),
+    title: intl.formatMessage({ id: 'device.form.title.fsSize' }),
     dataIndex: 'fs_size',
+    renderText: (fs_size: number) => <UnitValue value={fs_size} unit="Byte" />,
   },
   {
-    title: (
-      <UnitTitle
-        title={intl.formatMessage({ id: 'device.form.title.fsFree' })}
-        unit={intl.formatMessage({ id: 'device.unit.byte' })}
-      />
-    ),
+    title: intl.formatMessage({ id: 'device.form.title.fsFree' }),
     dataIndex: 'fs_free',
+    renderText: (fs_free: number) => <UnitValue value={fs_free} unit="Byte" />,
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.cfgRev' }),

@@ -1,5 +1,4 @@
 import { message } from '@/components/PopupHack';
-import UnitTitle from '@/components/UnitTitle';
 import { postHwifaceUpdate } from '@/services/rulex/jiekouguanli';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -118,7 +117,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
         <ProForm.Group>
           <ProFormDigit
             name="timeout"
-            label={<UnitTitle title={formatMessage({ id: 'portMgt.form.title.timeout' })} />}
+            label={formatMessage({ id: 'portMgt.form.title.timeout' })}
             width="sm"
             placeholder={formatMessage({ id: 'portMgt.form.placeholder.timeout' })}
             rules={[
@@ -127,6 +126,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
                 message: formatMessage({ id: 'portMgt.form.placeholder.timeout' }),
               },
             ]}
+            addonAfter="ms"
           />
           <ProFormSelect
             label={formatMessage({ id: 'portMgt.form.title.baudRate' })}

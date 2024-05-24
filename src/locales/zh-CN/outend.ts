@@ -41,7 +41,6 @@ export default {
    */
   'outend.message.warning.new':
     '创建成功，但目前无法正常运行。请根据错误信息 {msg} 及时修改配置参数',
-  'outend.button.new': '新建 Header',
 
   /**
    * type

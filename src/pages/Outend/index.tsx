@@ -60,7 +60,6 @@ const Outend = () => {
       valueType: 'option',
       key: 'option',
       width: 230,
-      fixed: 'right',
       render: (_, { uuid }) => [
         <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
           {formatMessage({ id: 'button.detail' })}

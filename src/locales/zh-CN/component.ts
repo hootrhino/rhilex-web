@@ -101,7 +101,6 @@ export default {
   'component.form.placeholder.varValue': '请输入变量值',
   'component.form.placeholder.varValue.select': '请选择变量值',
 
-  'component.unit.ms': '毫秒',
   'component.popconfirm.title.reset': '重置可能会丢失数据，确定要重置吗？',
 
   'component.modal.title.page': '退出可能导致数据丢失。确定要返回列表吗？',

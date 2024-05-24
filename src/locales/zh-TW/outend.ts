@@ -41,7 +41,6 @@ export default {
    */
   'outend.message.warning.new':
     '創建成功，但目前無法正常運作。請根據錯誤訊息 {msg} 及時修改配置參數',
-  'outend.button.new': '新建 Header',
 
   /**
    * type

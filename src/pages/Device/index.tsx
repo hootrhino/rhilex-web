@@ -253,7 +253,6 @@ const Devices = () => {
     {
       title: formatMessage({ id: 'table.option' }),
       width: 230,
-      fixed: 'right',
       key: 'option',
       valueType: 'option',
       render: (_, record) => {

@@ -189,7 +189,7 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
         formRef={formRef}
         width="30%"
         layout="horizontal"
-        labelCol={{ span: 3 }}
+        labelCol={{ span: 2 }}
         onOpenChange={(visible) => changeOpen(visible)}
         modalProps={{
           destroyOnClose: true,

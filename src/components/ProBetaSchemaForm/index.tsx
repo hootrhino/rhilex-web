@@ -30,13 +30,6 @@ const intl = getIntl(getLocale());
 
 // 辅助函数：根据不同条件生成规则
 const getRules = (col: any) => {
-  const baseRule = [
-    {
-      required: col.required,
-      message: intl.formatMessage({ id: 'placeholder.input' }, { text: col.title }),
-    },
-  ];
-
   const activeKey =
     typeof col.dataIndex === 'object' &&
     col.dataIndex.length > 0 &&
@@ -45,7 +38,13 @@ const getRules = (col: any) => {
 
   if (['name'].includes(col.dataIndex) || isPort) {
     return [
-      ...baseRule,
+      {
+        required: col.required,
+        message: intl.formatMessage(
+          { id: 'placeholder.input' },
+          { text: getLocale() === 'en-US' ? col.title : col.title },
+        ),
+      },
       {
         validator: (_rule: Rule, value: string) =>
           validateFormItem(value, isPort ? FormItemType.PORT : FormItemType.NAME),
@@ -56,28 +55,27 @@ const getRules = (col: any) => {
     return [
       {
         required: col.required,
-        message: intl.formatMessage({ id: 'placeholder.select' }, { text: col.title }),
+        message: intl.formatMessage(
+          { id: 'placeholder.select' },
+          { text: getLocale() === 'en-US' ? col.title.toLowerCase() : col.title },
+        ),
       },
     ];
   }
-  if (['timeout', 'frequency', 'idleTimeout'].includes(activeKey)) {
-    return [
-      {
-        required: col.required,
-        message: intl.formatMessage({ id: 'placeholder.input' }, { text: col.title.props.title }),
-      },
-    ];
-  }
-  return baseRule;
+
+  return [
+    {
+      required: col.required,
+      message: intl.formatMessage(
+        { id: 'placeholder.input' },
+        { text: getLocale() === 'en-US' ? col.title.toLowerCase() : col.title },
+      ),
+    },
+  ];
 };
 
 // 辅助函数：生成占位符
 const getFieldProps = (col: any) => {
-  const activeKey =
-    typeof col.dataIndex === 'object' &&
-    col.dataIndex.length > 0 &&
-    col.dataIndex[col.dataIndex.length - 1];
-
   if (['select'].includes(col.valueType)) {
     return {
       placeholder: intl.formatMessage(
@@ -87,17 +85,7 @@ const getFieldProps = (col: any) => {
       allowClear: false,
     };
   }
-  if (['timeout', 'frequency', 'idleTimeout'].includes(activeKey)) {
-    return {
-      placeholder: `${intl.formatMessage(
-        { id: 'placeholder.input' },
-        {
-          text:
-            getLocale() === 'en-US' ? col.title.props.title.toLowerCase() : col.title.props.title,
-        },
-      )}`,
-    };
-  }
+
   return {
     placeholder: intl.formatMessage(
       { id: 'placeholder.input' },

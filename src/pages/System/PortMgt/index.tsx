@@ -125,7 +125,6 @@ const Interface = () => {
       valueType: 'option',
       key: 'option',
       width: 120,
-      fixed: 'right',
       hideInDescriptions: true,
       render: (_, { uuid }) => [
         <a

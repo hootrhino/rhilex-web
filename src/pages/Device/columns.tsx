@@ -1,7 +1,7 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
 import ProSegmented from '@/components/ProSegmented';
 import StateTag, { StateType } from '@/components/StateTag';
-import UnitTitle from '@/components/UnitTitle';
+import UnitValue from '@/components/UnitValue';
 import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
 import { getOsNetInterfaces } from '@/services/rulex/xitongshuju';
@@ -19,9 +19,9 @@ import {
   plcModelOptions,
   rackEnum,
   slotEnum,
-  snmpVersionEnum,
+  SNMPVersionOption,
   TencentMode,
-  Transport,
+  TransportOption,
 } from './enum';
 
 const intl = getIntl(getLocale());
@@ -62,13 +62,18 @@ export const modeConfig = [
  */
 export const timeoutConfig = (title: string, formItemProps?: FormItemProps, tooltip?: string) => [
   {
-    title: <UnitTitle title={title} />,
+    title,
     dataIndex: ['config', 'commonConfig', 'timeout'],
     valueType: 'digit',
     required: true,
     formItemProps,
     tooltip,
-    render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig.timeout,
+    fieldProps: {
+      addonAfter: 'ms',
+    },
+    render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
+      <UnitValue value={commonConfig.timeout} />
+    ),
   },
 ];
 
@@ -77,11 +82,16 @@ export const timeoutConfig = (title: string, formItemProps?: FormItemProps, tool
  */
 export const frequencyConfig = (title: string) => [
   {
-    title: <UnitTitle title={title} />,
+    title,
     dataIndex: ['config', 'commonConfig', 'frequency'],
     valueType: 'digit',
     required: true,
-    render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig.frequency,
+    fieldProps: {
+      addonAfter: 'ms',
+    },
+    render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
+      <UnitValue value={commonConfig.frequency} />
+    ),
   },
 ];
 
@@ -124,13 +134,16 @@ export const modeColumns = {
       valueType: 'group',
       columns: [
         {
-          title: (
-            <UnitTitle title={intl.formatMessage({ id: 'device.form.title.timeout.request' })} />
-          ),
+          title: intl.formatMessage({ id: 'device.form.title.timeout.request' }),
           dataIndex: ['config', 'hostConfig', 'timeout'],
           valueType: 'digit',
           required: true,
-          render: (_dom: React.ReactNode, { hostConfig }: DeviceItem) => hostConfig?.timeout,
+          fieldProps: {
+            addonAfter: 'ms',
+          },
+          render: (_dom: React.ReactNode, { hostConfig }: DeviceItem) => (
+            <UnitValue value={hostConfig?.timeout} />
+          ),
         },
         {
           title: intl.formatMessage({ id: 'device.form.title.host' }),
@@ -202,6 +215,7 @@ export const baseColumns = (product: Product) => [
     title: intl.formatMessage({ id: 'table.desc' }),
     dataIndex: 'description',
     ellipsis: true,
+    renderText: (description: string) => (description ? description : '-'),
   },
 ];
 
@@ -316,12 +330,16 @@ export const typeConfigColumns = {
         ),
         ...timeoutConfig(intl.formatMessage({ id: 'device.form.title.timeout.connect' })),
         {
-          title: <UnitTitle title={intl.formatMessage({ id: 'device.form.title.timeout.idle' })} />,
+          title: intl.formatMessage({ id: 'device.form.title.timeout.idle' }),
           dataIndex: ['config', 'commonConfig', 'idleTimeout'],
           valueType: 'digit',
           required: true,
-          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) =>
-            commonConfig?.idleTimeout,
+          fieldProps: {
+            addonAfter: 'ms',
+          },
+          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
+            <UnitValue value={commonConfig?.idleTimeout} />
+          ),
         },
         {
           title: intl.formatMessage({ id: 'device.form.title.host.plc' }),
@@ -646,8 +664,9 @@ export const typeConfigColumns = {
           dataIndex: ['config', 'snmpConfig', 'transport'],
           required: true,
           valueType: 'select',
-          valueEnum: Transport,
-          render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.transport,
+          valueEnum: TransportOption,
+          render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) =>
+            TransportOption[snmpConfig?.transport],
         },
         {
           title: intl.formatMessage({ id: 'device.form.title.community' }),
@@ -660,8 +679,9 @@ export const typeConfigColumns = {
           dataIndex: ['config', 'snmpConfig', 'version'],
           required: true,
           valueType: 'select',
-          valueEnum: snmpVersionEnum,
-          render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => `v${snmpConfig?.version}`,
+          valueEnum: SNMPVersionOption,
+          render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) =>
+            SNMPVersionOption.get(snmpConfig?.version),
         },
       ],
     },

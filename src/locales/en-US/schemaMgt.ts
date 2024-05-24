@@ -17,7 +17,7 @@ export default {
   'schemaMgt.form.title.rw': 'RW',
 
   'schemaMgt.form.placeholder.name': 'Please enter a name',
-  'schemaMgt.form.placeholder.id': 'Please enter a identifier',
+  'schemaMgt.form.placeholder.id': 'Please enter an identifier',
   'schemaMgt.form.placeholder.type': 'Please select a type',
   'schemaMgt.form.placeholder.max': 'Please enter the maximum length',
   'schemaMgt.form.placeholder.round': 'Please enter precision',

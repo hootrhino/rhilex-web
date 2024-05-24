@@ -42,7 +42,6 @@ export default {
    */
   'outend.message.warning.new':
     'Successfully created, but currently unable to operate normally. Please modify the configuration parameters promptly according to the error message {msg}',
-  'outend.button.new': 'New Header',
 
   /**
    * type

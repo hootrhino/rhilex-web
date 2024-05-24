@@ -183,6 +183,9 @@ export const configColumns = {
       fieldProps: {
         required: true,
         min: 1,
+        creatorButtonProps: {
+          creatorButtonText: intl.formatMessage({ id: 'button.list' }, { item: 'Topic' }),
+        },
       },
       columns: [
         {

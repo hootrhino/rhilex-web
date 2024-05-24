@@ -74,7 +74,6 @@ const AppStack = () => {
     {
       title: formatMessage({ id: 'table.option' }),
       width: 220,
-      fixed: 'right',
       key: 'option',
       valueType: 'option',
       render: (_, { uuid, appState }) => [

@@ -21,11 +21,11 @@ export default {
   'inend.table.title.status': '设备状态',
   'inend.table.title.properties': '设备属性',
 
-  'inend.table.placeholder.subTopics': '请输入订阅 tipic',
+  'inend.table.placeholder.subTopics': '请输入 topic',
   'inend.table.rules.subTopics': '请至少订阅一个 topic',
 
   /**
-   * others
+   * title
    */
   'inend.title.group': '资源配置',
   'inend.title.new': '新建资源',
@@ -34,6 +34,10 @@ export default {
   'inend.title.detail': '资源详情',
   'inend.title.base': '基本配置',
   'inend.title.source': '资源配置',
+
+  /**
+   * other
+   */
   'inend.popconfirm.title.remove': '确定要删除此资源？',
   'inend.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，请谨慎操作',
   'inend.message.warning.new':

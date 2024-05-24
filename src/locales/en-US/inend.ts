@@ -21,11 +21,11 @@ export default {
   'inend.table.title.status': 'Device Status',
   'inend.table.title.properties': 'Device Properties',
 
-  'inend.table.placeholder.subTopics': 'Please enter a subscription tipic',
+  'inend.table.placeholder.subTopics': 'Please enter a topic',
   'inend.table.rules.subTopics': 'Please subscribe to at least one topic',
 
   /**
-   * others
+   * title
    */
   'inend.title.group': 'Resource configuration',
   'inend.title.new': 'New resource',
@@ -34,6 +34,10 @@ export default {
   'inend.title.detail': 'Resource detail',
   'inend.title.base': 'Basic configuration',
   'inend.title.source': 'Resource configuration',
+
+  /**
+   * other
+   */
   'inend.popconfirm.title.remove': 'Are you sure to delete this resource?',
   'inend.modal.content.restart':
     'The reboot process will briefly disconnect resource connections for 5-10 seconds; please proceed with caution',

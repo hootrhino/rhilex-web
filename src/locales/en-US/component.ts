@@ -102,7 +102,6 @@ export default {
   'component.form.placeholder.varValue': 'Please enter a value',
   'component.form.placeholder.varValue.select': 'Please select a value',
 
-  'component.unit.ms': 'millisecond',
   'component.popconfirm.title.reset':
     'Resetting may result in data loss. Are you sure you want to continue?',
 

@@ -146,7 +146,6 @@ const ExtendedProtocol = () => {
       valueType: 'option',
       key: 'option',
       width: 200,
-      fixed: 'right',
       render: (_, { uuid, running }) => [
         <a
           key="log"
@@ -204,6 +203,7 @@ const ExtendedProtocol = () => {
       <PageContainer>
         <ProTable
           rowKey="uuid"
+          rootClassName="stripe-table"
           actionRef={actionRef}
           columns={columns}
           request={async () => {

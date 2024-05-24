@@ -32,4 +32,5 @@ export default {
   'button.recover': '恢复',
   'button.checkDetail': '查看详情',
   'button.homePage': '返回首页',
+  'button.list': '新建 {item}',
 };

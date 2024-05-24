@@ -32,4 +32,5 @@ export default {
   'button.recover': '還原',
   'button.checkDetail': '查看詳細資料',
   'button.homePage': '返回首頁',
+  'button.list': '新建 {item}',
 };

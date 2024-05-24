@@ -52,7 +52,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
           : formatMessage({ id: 'schemaMgt.modal.title.property.new' })
       }
       formRef={formRef}
-      width="50%"
+      width="60%"
       initialValues={defaultProperty}
       onValuesChange={(changedValue) => {
         if ([Type.INTEGER, Type.FLOAT].includes(changedValue?.type)) {
@@ -83,19 +83,19 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
           ]}
           width="md"
         />
+        <ProFormSelect
+          name="type"
+          label={formatMessage({ id: 'schemaMgt.form.title.type' })}
+          valueEnum={typeOption}
+          placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.type' })}
+          width="md"
+          fieldProps={{ allowClear: false }}
+          rules={[
+            { required: true, message: formatMessage({ id: 'schemaMgt.form.placeholder.type' }) },
+          ]}
+        />
       </ProForm.Group>
 
-      <ProFormSelect
-        name="type"
-        label={formatMessage({ id: 'schemaMgt.form.title.type' })}
-        valueEnum={typeOption}
-        placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.type' })}
-        width="md"
-        fieldProps={{ allowClear: false }}
-        rules={[
-          { required: true, message: formatMessage({ id: 'schemaMgt.form.placeholder.type' }) },
-        ]}
-      />
       <ProFormDependency name={['type']} labelCol={{ span: 4 }}>
         {({ type }) => {
           if (!type) return null;
@@ -224,7 +224,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
                 }
                 headStyle={{ paddingBlockStart: 0 }}
               >
-                <ProForm.Group style={{ padding: 10, border: '1px solid #0505050f' }}>
+                <ProForm.Group>
                   {[Type.STRING, Type.INTEGER, Type.FLOAT, Type.BOOL].includes(type) && (
                     <ProFormText
                       name={['rule', 'defaultValue']}
@@ -250,7 +250,12 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
                     placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.unit' })}
                   />
                 </ProForm.Item>
-
+                <ProFormText
+                  name="description"
+                  label={formatMessage({ id: 'table.desc' })}
+                  placeholder={formatMessage({ id: 'placeholder.desc' })}
+                  width="md"
+                />
                 <ProFormRadio.Group
                   name="rw"
                   label={formatMessage({ id: 'schemaMgt.form.title.rw' })}
@@ -262,12 +267,6 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
           );
         }}
       </ProFormDependency>
-      <ProFormText
-        name="description"
-        label={formatMessage({ id: 'table.desc' })}
-        placeholder={formatMessage({ id: 'placeholder.desc' })}
-        width="md"
-      />
     </ModalForm>
   );
 };

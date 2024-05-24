@@ -181,16 +181,21 @@ export enum Transport {
   TCP = 'tcp',
 }
 
+export const TransportOption = {
+  [Transport.UDP]: 'UDP',
+  [Transport.TCP]: 'TCP',
+};
+
 export enum SNMPVersion {
   V1 = 1,
   V2 = 2,
   V3 = 3,
 }
 
-export const snmpVersionEnum = new Map([
-  [1, '1'],
-  [2, '2'],
-  [3, '3'],
+export const SNMPVersionOption = new Map([
+  [SNMPVersion.V1, 'V1'],
+  [SNMPVersion.V2, 'V2'],
+  [SNMPVersion.V3, 'V3'],
 ]);
 
 /**

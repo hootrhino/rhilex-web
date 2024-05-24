@@ -21,11 +21,11 @@ export default {
   'inend.table.title.status': '設備狀態',
   'inend.table.title.properties': '設備屬性',
 
-  'inend.table.placeholder.subTopics': '請輸入訂閲 tipic',
+  'inend.table.placeholder.subTopics': '請輸入 topic',
   'inend.table.rules.subTopics': '請至少訂閱一個 topic',
 
   /**
-   * others
+   * title
    */
   'inend.title.group': '資源配置',
   'inend.title.new': '新建資源',
@@ -34,6 +34,10 @@ export default {
   'inend.title.detail': '資源詳情',
   'inend.title.base': '基本配置',
   'inend.title.source': '資源配置',
+
+  /**
+   * other
+   */
   'inend.popconfirm.title.remove': '確定要刪除此資源？',
   'inend.modal.content.restart': '重啓過程會短暫（5-10秒）斷開資源連接，請謹慎操作',
   'inend.message.warning.new':

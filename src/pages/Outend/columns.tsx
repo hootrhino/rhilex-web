@@ -1,7 +1,6 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
 import ProSegmented from '@/components/ProSegmented';
 import StateTag, { StateType } from '@/components/StateTag';
-import UnitTitle from '@/components/UnitTitle';
 import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { stringToBool } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
@@ -120,10 +119,13 @@ const pingConfig = [
 
 const timeoutConfig = (title?: string) => [
   {
-    title: <UnitTitle title={title || intl.formatMessage({ id: 'outend.table.title.timeout' })} />,
+    title: title || intl.formatMessage({ id: 'outend.table.title.timeout' }),
     dataIndex: ['config', 'timeout'],
     required: true,
     valueType: 'digit',
+    fieldProps: {
+      addonAfter: 'ms',
+    },
   },
 ];
 
@@ -244,8 +246,7 @@ export const configColumns = {
       title: <HeadersTitle />,
       fieldProps: {
         creatorButtonProps: {
-          creatorButtonText: intl.formatMessage({ id: 'outend.button.new' }),
-          // position: 'top',
+          creatorButtonText: intl.formatMessage({ id: 'button.list' }, { item: 'Header' }),
         },
       },
       columns: [

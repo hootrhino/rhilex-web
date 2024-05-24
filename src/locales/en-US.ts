@@ -22,10 +22,10 @@ export default {
    */
   'message.success.upload': 'Uploaded successfully',
   'message.success.remove': 'Deleted successfully',
-  'message.success.start': '启动成功',
-  'message.success.stop': '停止成功',
+  'message.success.start': 'Started successfully',
+  'message.success.stop': 'Stopped successfully',
   'message.success.update': 'Updated successfully',
-  'message.success.new': '新建成功',
+  'message.success.new': 'Created successfully',
   'message.success.login': 'Login Successfully',
   'message.success.scan': 'Scanned successfully',
   'message.success.restart': 'Restarted successfully',
@@ -56,24 +56,26 @@ export default {
    */
   'form.title.username': 'Username',
   'form.title.password': 'Password',
-  'form.placeholder.username': '请输入用户名',
-  'form.placeholder.password': '请输入密码',
-  'form.rules.name': '请输入4-64个字符，支持中文、字母、数字或下划线',
-  'form.rules.port': '端口的值应在 0 到 65535 之间',
-  'form.rules.address': '起始地址的值应在 0 到 65535 之间',
-  'form.rules.ip': 'IP 地址格式不正确',
-  'form.rules.netmask': '子网掩码格式不正确',
-  'form.rules.gateway': '网关格式不正确',
-  'form.rules.cidr': 'CIDR 格式不正确',
-  'form.rules.default': '格式不正确',
-  'form.rules.timeout': '读写超时必须在 30-1000ms 之间',
+  'form.placeholder.username': 'Please enter a username',
+  'form.placeholder.password': 'Please enter a password’',
+  'form.rules.name':
+    'Please enter 4-64 characters, supporting Chinese, letters, numbers, or underscores’',
+  'form.rules.port': 'The port value must be between 0-65535',
+  'form.rules.address': 'The address value must be between 0-65535’',
+  'form.rules.ip': 'The IP address format is incorrect’',
+  'form.rules.netmask': 'The subnet mask format is incorrect',
+  'form.rules.gateway': 'The gateway mask format is incorrect',
+  'form.rules.cidr': 'The CIDR mask format is incorrect',
+  'form.rules.default': 'The format is incorrect',
+  'form.rules.timeout': 'The timeout must be between 30-1000ms',
   /**
    * modal
    */
-  'modal.title.confirm': '确定执行此操作吗？',
-  'modal.title.forget': '忘记密码？',
-  'modal.content.forget': '如果忘记密码，请按照当前设备的手册进行重置。',
-  'modal.content.logout': '确定要退出登录吗？',
+  'modal.title.confirm': 'Are you sure you want to perform this action?',
+  'modal.title.forget': 'Forgot your password?',
+  'modal.content.forget':
+    'If you have forgotten your password, please follow the manual for your current device to reset it.’',
+  'modal.content.logout': 'Are you sure you want to logout?',
   /**
    * menu
    */
