@@ -158,15 +158,22 @@ const DataCenter = () => {
     const { current, pageSize } = actionRef.current?.pageInfo || defaultPagination;
 
     modal.info({
-      title: '请求 URL',
+      title: formatMessage({ id: 'dataCenter.modal.title.code' }),
       content: (
-        <Typography.Paragraph copyable={{ tooltips: ['复制', '复制成功'] }}>
+        <Typography.Paragraph
+          copyable={{
+            tooltips: [
+              formatMessage({ id: 'dataCenter.tooltip.copy' }),
+              formatMessage({ id: 'dataCenter.tooltip.copied' }),
+            ],
+          }}
+        >
           {`curl --location --request GET 'http://Ip:2580/api/v1/datacenter/queryDataList?secrets=
           ${secret}&uuid=${selectedKey}&current=${current}&size=${pageSize}&order=DESC' --header
           'User-Agent: RHILEX'`}
         </Typography.Paragraph>
       ),
-      okText: '关闭',
+      okText: formatMessage({ id: 'button.cancel' }),
     });
   };
 
@@ -237,7 +244,7 @@ const DataCenter = () => {
               rootClassName="stripe-table"
               toolBarRender={() => [
                 <Button key="code" onClick={handleOnCode} icon={<IconFont type="icon-code" />}>
-                  生成代码
+                  {formatMessage({ id: 'dataCenter.button.code' })}
                 </Button>,
                 <Button danger key="clear" onClick={handleOnClear} icon={<DeleteOutlined />}>
                   {formatMessage({ id: 'dataCenter.button.clear' })}
