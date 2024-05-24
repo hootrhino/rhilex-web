@@ -340,18 +340,18 @@ const DataSheet = ({
     </PageContainer>
   ) : (
     <>
-      {props?.scroll && (
-        <ProDescriptions
-          title={
-            <>
-              <span>{formatMessage({ id: 'device.title.sheet' })}</span>
+      <ProDescriptions
+        title={
+          <>
+            <span>{formatMessage({ id: 'device.title.sheet' })}</span>
+            {props?.scroll && (
               <span className="text-[12px] opacity-[.8] pl-[5px] font-normal">
                 ({formatMessage({ id: 'device.tips.scroll' })})
               </span>
-            </>
-          }
-        />
-      )}
+            )}
+          </>
+        }
+      />
       <ProTable
         columns={baseColumns}
         rootClassName="stripe-table"

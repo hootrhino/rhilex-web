@@ -12,7 +12,6 @@ import { AutoComplete, Space } from 'antd';
 import type { FormItemProps, Rule } from 'antd/es/form';
 import type { DeviceItem } from '.';
 import {
-  BacnetMode,
   BacnetModeOption,
   DeviceMode,
   DeviceType,
@@ -150,45 +149,6 @@ export const modeColumns = {
     },
   ],
   '': [],
-};
-
-/**
- * BACnet mode
- */
-export const bacnetModeColumns = {
-  [BacnetMode.BROADCAST]: [
-    {
-      valueType: 'group',
-      columns: [
-        {
-          title: intl.formatMessage({ id: 'device.form.title.bacnet.localIp' }),
-          dataIndex: ['config', 'bacnetConfig', 'localIp'],
-          required: true,
-          fieldProps: {
-            disabled: true,
-          },
-          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.localIp,
-        },
-        {
-          title: intl.formatMessage({ id: 'device.form.title.bacnet.subnetCidr' }),
-          dataIndex: ['config', 'bacnetConfig', 'subnetCidr'],
-          required: true,
-          valueType: 'digit',
-          fieldProps: {
-            disabled: true,
-          },
-          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.subnetCidr,
-        },
-        {
-          title: intl.formatMessage({ id: 'device.form.title.bacnet.localPort' }),
-          dataIndex: ['config', 'bacnetConfig', 'localPort'],
-          required: true,
-          valueType: 'digit',
-          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.localPort,
-        },
-      ],
-    },
-  ],
 };
 
 /**
@@ -722,7 +682,8 @@ export const typeConfigColumns = {
           valueType: 'select',
           valueEnum: BacnetModeOption,
           required: true,
-          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.mode,
+          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) =>
+            BacnetModeOption[bacnetConfig?.mode],
         },
         {
           title: intl.formatMessage({ id: 'device.form.title.bacnet.interface' }),
@@ -742,13 +703,33 @@ export const typeConfigColumns = {
               value: item.addr,
             }));
           },
+          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.interface,
         },
         {
-          valueType: 'dependency',
-          name: ['config'],
-          columns: ({ config }: DeviceItem) => {
-            return config?.bacnetConfig?.mode ? bacnetModeColumns[config?.bacnetConfig?.mode] : [];
+          title: intl.formatMessage({ id: 'device.form.title.bacnet.localIp' }),
+          dataIndex: ['config', 'bacnetConfig', 'localIp'],
+          required: true,
+          fieldProps: {
+            disabled: true,
           },
+          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.localIp,
+        },
+        {
+          title: intl.formatMessage({ id: 'device.form.title.bacnet.subnetCidr' }),
+          dataIndex: ['config', 'bacnetConfig', 'subnetCidr'],
+          required: true,
+          valueType: 'digit',
+          fieldProps: {
+            disabled: true,
+          },
+          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.subnetCidr,
+        },
+        {
+          title: intl.formatMessage({ id: 'device.form.title.bacnet.localPort' }),
+          dataIndex: ['config', 'bacnetConfig', 'localPort'],
+          required: true,
+          valueType: 'digit',
+          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.localPort,
         },
       ],
     },

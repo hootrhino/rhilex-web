@@ -9,6 +9,7 @@ import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import type { DeviceItem } from '..';
+import BacnetSheet from '../Bacnet';
 import { baseColumns, typeConfigColumns } from '../columns';
 import { DeviceType } from '../enum';
 import ModbusSheet from '../Modbus';
@@ -159,6 +160,9 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
             )}
             {type === DeviceType.GENERIC_SNMP && (
               <SnmpOidsSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
+            )}
+            {type === DeviceType.GENERIC_BACNET_IP && (
+              <BacnetSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
             )}
           </>
         )}
