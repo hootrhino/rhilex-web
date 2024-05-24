@@ -10,32 +10,32 @@ const SourceCountCard = () => {
     {
       title: formatMessage({ id: 'dashboard.count.inend' }),
       value: inends,
-      key: 'device-inends',
+      key: 'dashboard-inend',
     },
     {
       title: formatMessage({ id: 'dashboard.count.outend' }),
       value: outends,
-      key: 'device-outends',
+      key: 'dashboard-outend',
     },
     {
       title: formatMessage({ id: 'dashboard.count.rule' }),
       value: rules,
-      key: 'rule',
+      key: 'dashboard-rule',
     },
     {
       title: formatMessage({ id: 'dashboard.count.plugin' }),
       value: plugins,
-      key: 'plugin',
+      key: 'dashboard-plugin',
     },
     {
       title: formatMessage({ id: 'dashboard.count.app' }),
       value: apps,
-      key: 'app',
+      key: 'dashboard-app',
     },
     {
       title: formatMessage({ id: 'dashboard.count.device' }),
       value: devices,
-      key: 'device',
+      key: 'dashboard-device',
     },
     // {
     //   title: formatMessage({ id: 'dashboard.count.extend' }),
