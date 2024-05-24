@@ -1,14 +1,13 @@
-import { getNotifyPageList } from '@/services/rulex/zhanneitongzhi';
 import { BellOutlined } from '@ant-design/icons';
 import { ProList } from '@ant-design/pro-components';
-import { history, useIntl, useRequest } from '@umijs/max';
+import { history, useIntl, useModel } from '@umijs/max';
 import { Badge, Popover } from 'antd';
 import dayjs from 'dayjs';
 import StateTag, { StateType } from '../StateTag';
 
 const NoticeIcon = () => {
   const { formatMessage } = useIntl();
-  const { data } = useRequest(() => getNotifyPageList({ current: 1, size: 5 }));
+  const { data } = useModel('useNotify');
 
   const content = (
     <ProList
@@ -18,7 +17,7 @@ const NoticeIcon = () => {
       footer={
         data?.total && data?.total > 0 ? (
           <div className="cursor-pointer" onClick={() => history.push('/notify-log')}>
-            {formatMessage({ id: 'component.button.more' })}
+            <a>{formatMessage({ id: 'component.button.more' })}</a>
           </div>
         ) : null
       }

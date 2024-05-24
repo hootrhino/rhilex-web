@@ -5,7 +5,7 @@ import { getNotifyPageList, putNotifyClear, putNotifyRead } from '@/services/rul
 import { CalendarOutlined, ClearOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-components';
 import { ProList } from '@ant-design/pro-components';
-import { useIntl, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Popconfirm, Space } from 'antd';
 import dayjs from 'dayjs';
 import { useRef } from 'react';
@@ -23,9 +23,11 @@ export type NotifyLogItem = {
 const NotifyLog = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
+  const { refresh } = useModel('useNotify');
 
   const handleOnSuccess = () => {
     actionRef.current?.reload();
+    refresh();
     message.success(formatMessage({ id: 'notifyLog.message.success' }));
   };
 
