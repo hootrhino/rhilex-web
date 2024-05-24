@@ -75,7 +75,7 @@ export default {
   'modal.title.forget': 'Forgot your password?',
   'modal.content.forget':
     'If you have forgotten your password, please follow the manual for your current device to reset it.’',
-  'modal.content.logout': 'Are you sure you want to logout?',
+  'modal.content.logout': 'Are you sure you want to log out?',
   /**
    * menu
    */

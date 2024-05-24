@@ -15,7 +15,7 @@ const NoticeIcon = () => {
       pagination={false}
       dataSource={data?.records || []}
       footer={
-        data?.total && data?.total > 0 ? (
+        data?.total && data?.total > 5 ? (
           <div className="cursor-pointer" onClick={() => history.push('/notify-log')}>
             <a>{formatMessage({ id: 'component.button.more' })}</a>
           </div>
