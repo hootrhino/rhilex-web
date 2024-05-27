@@ -38,15 +38,15 @@ const Interface = () => {
 
   const columns: ProColumns<InterfaceItem>[] = [
     {
-      title: formatMessage({ id: 'portMgt.form.title.name' }),
+      title: formatMessage({ id: 'system.form.title.name' }),
       dataIndex: 'name',
     },
     {
-      title: formatMessage({ id: 'portMgt.form.title.alias' }),
+      title: formatMessage({ id: 'system.form.title.alias' }),
       dataIndex: 'alias',
     },
     {
-      title: formatMessage({ id: 'portMgt.form.title.type' }),
+      title: formatMessage({ id: 'system.form.title.type' }),
       dataIndex: 'type',
       valueType: 'select',
       fieldProps: {
@@ -54,7 +54,7 @@ const Interface = () => {
       },
     },
     {
-      title: formatMessage({ id: 'portMgt.form.title.busy' }),
+      title: formatMessage({ id: 'system.form.title.busy' }),
       dataIndex: 'busy',
       valueEnum: {
         true: {
@@ -68,14 +68,14 @@ const Interface = () => {
       },
     },
     {
-      title: formatMessage({ id: 'portMgt.form.title.occupyBy' }),
+      title: formatMessage({ id: 'system.form.title.occupyBy' }),
       dataIndex: 'occupyBy',
       renderText: (occupyBy) => {
         return occupyBy?.name;
       },
     },
     {
-      title: formatMessage({ id: 'portMgt.form.title.config' }),
+      title: formatMessage({ id: 'system.form.title.config' }),
       dataIndex: 'config',
       valueType: 'formList',
       hideInTable: true,
@@ -88,27 +88,27 @@ const Interface = () => {
             <Descriptions
               column={1}
               labelStyle={{
-                width: getLocale() === 'en-US' ? 155 : 120,
+                width: 100,
                 justifyContent: 'flex-end',
                 paddingRight: 10,
               }}
             >
-              <Descriptions.Item label={formatMessage({ id: 'portMgt.form.title.timeout' })}>
+              <Descriptions.Item label={formatMessage({ id: 'system.form.title.timeout' })}>
                 <UnitValue value={timeout} />
               </Descriptions.Item>
-              <Descriptions.Item label={formatMessage({ id: 'portMgt.form.title.baudRate' })}>
+              <Descriptions.Item label={formatMessage({ id: 'system.form.title.baudRate' })}>
                 {baudRate}
               </Descriptions.Item>
-              <Descriptions.Item label={formatMessage({ id: 'portMgt.form.title.dataBits' })}>
+              <Descriptions.Item label={formatMessage({ id: 'system.form.title.dataBits' })}>
                 {dataBits}
               </Descriptions.Item>
-              <Descriptions.Item label={formatMessage({ id: 'portMgt.form.title.parity' })}>
+              <Descriptions.Item label={formatMessage({ id: 'system.form.title.parity' })}>
                 {parityEnum[parity]}
               </Descriptions.Item>
-              <Descriptions.Item label={formatMessage({ id: 'portMgt.form.title.stopBits' })}>
+              <Descriptions.Item label={formatMessage({ id: 'system.form.title.stopBits' })}>
                 {stopBits}
               </Descriptions.Item>
-              <Descriptions.Item label={formatMessage({ id: 'portMgt.form.title.uart' })}>
+              <Descriptions.Item label={formatMessage({ id: 'system.form.title.uart' })}>
                 {uart}
               </Descriptions.Item>
             </Descriptions>
@@ -170,7 +170,7 @@ const Interface = () => {
           }}
           toolBarRender={() => [
             <Button key="refresh" type="primary" icon={<ScanOutlined />} onClick={refresh}>
-              {formatMessage({ id: 'portMgt.button.scan' })}
+              {formatMessage({ id: 'system.button.scan' })}
             </Button>,
           ]}
         />
@@ -181,7 +181,7 @@ const Interface = () => {
         reload={() => actionRef.current?.reload()}
       />
       <Modal
-        title={formatMessage({ id: 'portMgt.modal.title.detail' })}
+        title={formatMessage({ id: 'system.modal.title.portDetail' })}
         open={detailConfig.open}
         onCancel={() => setDetailConfig({ open: false, uuid: '' })}
         maskClosable={false}

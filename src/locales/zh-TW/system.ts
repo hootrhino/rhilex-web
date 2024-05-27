@@ -38,6 +38,20 @@ export default {
   'system.form.title.dhcpEnabled': '啟用 DHCP',
   'system.form.title.security': '加密方式',
 
+  // port
+  'system.form.title.name': '名稱',
+  'system.form.title.alias': '暱稱',
+  'system.form.title.type': '類型',
+  'system.form.title.busy': '狀態',
+  'system.form.title.occupyBy': '佔用設備',
+  'system.form.title.config': '介面配置',
+  'system.form.title.timeout': '超時時間',
+  'system.form.title.baudRate': '波特率',
+  'system.form.title.dataBits': '數據位',
+  'system.form.title.parity': '奇偶校驗',
+  'system.form.title.stopBits': '停止位',
+  'system.form.title.uart': '系統串口',
+
   'system.form.rules.netmask': '請輸入子網掩碼',
   'system.form.rules.ip': '請輸入管理地址',
   'system.form.rules.ipPoolBegin': '請輸入 DHCP 起始地址',
@@ -57,6 +71,17 @@ export default {
   'system.form.placeholder.auth': '請選擇 APN 鑑權',
   'system.form.placeholder.sysTimeZone': '請選擇時區',
   'system.form.placeholder.sysTime': '請選擇時間',
+
+  // port
+  'system.form.placeholder.name': '請輸入介面名稱',
+  'system.form.placeholder.alias': '請輸入暱稱',
+  'system.form.placeholder.type': '請選擇介面類型',
+  'system.form.placeholder.timeout': '請輸入超時時間',
+  'system.form.placeholder.baudRate': '請選擇波特率',
+  'system.form.placeholder.dataBits': '請選擇數據位',
+  'system.form.placeholder.parity': '請選擇奇偶校驗',
+  'system.form.placeholder.stopBits': '請選擇停止位',
+  'system.form.placeholder.uart': '請輸入系統串口',
 
   /**
    * table
@@ -108,6 +133,7 @@ export default {
   'system.button.firmware.recover': '恢復出廠設定',
   'system.button.time.ntp': '立即同步 NTP',
   'system.button.wifi.ntp': '掃描 WIFI',
+  'system.button.scan': '掃描端口',
 
   /**
    * modal
@@ -122,6 +148,8 @@ export default {
   'system.modal.content.recover':
     '恢復原廠設定將刪除目前所有資料並停止所有正在進行中的任務，請謹慎操作',
   'system.modal.content.user': '確定要修改用戶名 / 密碼並重新登入嗎？',
+  'system.modal.title.portDetail': '介面詳情',
+  'system.modal.title.portUpdate': '編輯介面',
 
   /**
    * title
@@ -163,4 +191,10 @@ export default {
   'system.state.unmanaged': '系統默認',
   'system.state.unavailable': '網絡不可用',
   'system.scene.option1': '場景1',
+
+  // port
+  'system.option.uart': '系統串口',
+  'system.option.e': '奇校驗',
+  'system.option.o': '偶校驗',
+  'system.option.n': '不校驗',
 };

@@ -11,7 +11,6 @@ import inend from './zh-CN/inend';
 import notifyLog from './zh-CN/notifyLog';
 import outend from './zh-CN/outend';
 import plugin from './zh-CN/plugin';
-import portMgt from './zh-CN/portMgt';
 import ruleConfig from './zh-CN/ruleConfig';
 import schemaMgt from './zh-CN/schema';
 import system from './zh-CN/system';
@@ -112,7 +111,6 @@ export default {
   ...appStack,
   ...extend,
   ...plugin,
-  ...portMgt,
   ...schemaMgt,
   ...system,
   ...ruleConfig,

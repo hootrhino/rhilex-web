@@ -38,6 +38,20 @@ export default {
   'system.form.title.dhcpEnabled': '开启 DHCP',
   'system.form.title.security': '加密方式',
 
+  // port
+  'system.form.title.name': '名称',
+  'system.form.title.alias': '别名',
+  'system.form.title.type': '类型',
+  'system.form.title.busy': '状态',
+  'system.form.title.occupyBy': '占用设备',
+  'system.form.title.config': '接口配置',
+  'system.form.title.timeout': '超时时间',
+  'system.form.title.baudRate': '波特率',
+  'system.form.title.dataBits': '数据位',
+  'system.form.title.parity': '奇偶校验',
+  'system.form.title.stopBits': '停止位',
+  'system.form.title.uart': '系统串口',
+
   'system.form.rules.netmask': '请输入子网掩码',
   'system.form.rules.ip': '请输入管理地址',
   'system.form.rules.ipPoolBegin': '请输入 DHCP 起始地址',
@@ -57,6 +71,17 @@ export default {
   'system.form.placeholder.auth': '请选择 APN 鉴权',
   'system.form.placeholder.sysTimeZone': '请选择时区',
   'system.form.placeholder.sysTime': '请选择时间',
+
+  // port
+  'system.form.placeholder.name': '请输入接口名称',
+  'system.form.placeholder.alias': '请输入别名',
+  'system.form.placeholder.type': '请选择接口类型',
+  'system.form.placeholder.timeout': '请输入超时时间',
+  'system.form.placeholder.baudRate': '请选择波特率',
+  'system.form.placeholder.dataBits': '请选择数据位',
+  'system.form.placeholder.parity': '请选择奇偶校验',
+  'system.form.placeholder.stopBits': '请选择停止位',
+  'system.form.placeholder.uart': '请输入系统串口',
 
   /**
    * table
@@ -108,6 +133,7 @@ export default {
   'system.button.firmware.recover': '恢复出厂',
   'system.button.time.ntp': '立即同步 NTP',
   'system.button.wifi.ntp': '扫描 WIFI',
+  'system.button.scan': '扫描端口',
 
   /**
    * modal
@@ -121,6 +147,8 @@ export default {
   'system.modal.content.recover':
     '恢复出厂设置将删除当前所有数据并停止所有正在进行中的任务，请谨慎操作',
   'system.modal.content.user': '确定要修改用户名 / 密码并重新登录吗？',
+  'system.modal.title.portDetail': '接口详情',
+  'system.modal.title.portUpdate': '编辑接口',
 
   /**
    * title
@@ -162,4 +190,10 @@ export default {
   'system.state.unmanaged': '系统默认',
   'system.state.unavailable': '网络不可用',
   'system.scene.option1': '场景1',
+
+  // port
+  'system.option.uart': '系统串口',
+  'system.option.e': '奇校验',
+  'system.option.o': '偶校验',
+  'system.option.n': '不校验',
 };

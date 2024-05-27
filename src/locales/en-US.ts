@@ -11,7 +11,6 @@ import inend from './en-US/inend';
 import notifyLog from './en-US/notifyLog';
 import outend from './en-US/outend';
 import plugin from './en-US/plugin';
-import portMgt from './en-US/portMgt';
 import ruleConfig from './en-US/ruleConfig';
 import schemaMgt from './en-US/schema';
 import system from './en-US/system';
@@ -114,7 +113,6 @@ export default {
   ...appStack,
   ...extend,
   ...plugin,
-  ...portMgt,
   ...schemaMgt,
   ...system,
   ...ruleConfig,

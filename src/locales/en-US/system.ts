@@ -38,6 +38,20 @@ export default {
   'system.form.title.dhcpEnabled': 'Enable DHCP',
   'system.form.title.security': 'Encryption Method',
 
+  // port
+  'system.form.title.name': 'Name',
+  'system.form.title.alias': 'Alias',
+  'system.form.title.type': 'Type',
+  'system.form.title.busy': 'Status',
+  'system.form.title.occupyBy': 'Occupied Device',
+  'system.form.title.config': 'Interface Configuration',
+  'system.form.title.timeout': 'Timeout',
+  'system.form.title.baudRate': 'Baud Rate',
+  'system.form.title.dataBits': 'Data Bits',
+  'system.form.title.parity': 'Parity',
+  'system.form.title.stopBits': 'Stop Bits',
+  'system.form.title.uart': 'Serial Port',
+
   'system.form.rules.netmask': 'Please enter a subnet mask',
   'system.form.rules.ip': 'Please enter an address',
   'system.form.rules.ipPoolBegin': 'Please enter a dhcp start address',
@@ -57,6 +71,17 @@ export default {
   'system.form.placeholder.auth': 'Please select a apn auth',
   'system.form.placeholder.sysTimeZone': 'Please select a time zone',
   'system.form.placeholder.sysTime': 'Please select a time',
+
+  // port
+  'system.form.placeholder.name': 'Please enter a name',
+  'system.form.placeholder.alias': 'Please enter an alias',
+  'system.form.placeholder.type': 'Please select a type',
+  'system.form.placeholder.timeout': 'Please enter a timeout',
+  'system.form.placeholder.baudRate': 'Please select a baud rate',
+  'system.form.placeholder.dataBits': 'Please select a data bits',
+  'system.form.placeholder.parity': 'Please select a parity',
+  'system.form.placeholder.stopBits': 'Please select a stop bits',
+  'system.form.placeholder.uart': 'Please enter a serial port',
 
   /**
    * table
@@ -108,6 +133,7 @@ export default {
   'system.button.firmware.recover': 'Factory Reset',
   'system.button.time.ntp': 'Synchronize  NTP',
   'system.button.wifi.ntp': 'Scan WIFI',
+  'system.button.scan': 'Scan Ports',
 
   /**
    * modal
@@ -124,6 +150,8 @@ export default {
     'Factory reset will erase all current data and stop all ongoing tasks. Please proceed with caution',
   'system.modal.content.user':
     'Are you sure you want to change the username/password and login again?',
+  'system.modal.title.portDetail': 'Interface detail',
+  'system.modal.title.portUpdate': 'Update interface',
 
   /**
    * title
@@ -167,4 +195,10 @@ export default {
   'system.state.unmanaged': 'default',
   'system.state.unavailable': 'unaccessible',
   'system.scene.option1': 'Scene1',
+
+  // port
+  'system.option.uart': 'Serial Port',
+  'system.option.e': 'Even',
+  'system.option.o': 'Odd',
+  'system.option.n': 'None',
 };

@@ -69,7 +69,7 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
   return (
     <ModalForm
       formRef={formRef}
-      title={formatMessage({ id: 'portMgt.modal.title.update' })}
+      title={formatMessage({ id: 'system.modal.title.portUpdate' })}
       modalProps={{ destroyOnClose: true, maskClosable: false }}
       onFinish={handleOnFinish}
       {...props}
@@ -77,16 +77,16 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
       <ProForm.Group>
         <ProFormText
           name="name"
-          label={formatMessage({ id: 'portMgt.form.title.name' })}
-          placeholder={formatMessage({ id: 'portMgt.form.placeholder.name' })}
+          label={formatMessage({ id: 'system.form.title.name' })}
+          placeholder={formatMessage({ id: 'system.form.placeholder.name' })}
           width="sm"
           disabled
           required
         />
         <ProFormSelect
           name="type"
-          label={formatMessage({ id: 'portMgt.form.title.type' })}
-          placeholder={formatMessage({ id: 'portMgt.form.placeholder.type' })}
+          label={formatMessage({ id: 'system.form.title.type' })}
+          placeholder={formatMessage({ id: 'system.form.placeholder.type' })}
           width="sm"
           disabled
           required
@@ -94,17 +94,17 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
         />
         <ProFormText
           name="alias"
-          label={formatMessage({ id: 'portMgt.form.title.alias' })}
-          placeholder={formatMessage({ id: 'portMgt.form.placeholder.alias' })}
+          label={formatMessage({ id: 'system.form.title.alias' })}
+          placeholder={formatMessage({ id: 'system.form.placeholder.alias' })}
           width="sm"
           rules={[
-            { required: true, message: formatMessage({ id: 'portMgt.form.placeholder.alias' }) },
+            { required: true, message: formatMessage({ id: 'system.form.placeholder.alias' }) },
           ]}
         />
       </ProForm.Group>
       <ProFormList
         name="config"
-        label={formatMessage({ id: 'portMgt.form.title.config' })}
+        label={formatMessage({ id: 'system.form.title.config' })}
         creatorButtonProps={false}
         copyIconProps={false}
         deleteIconProps={false}
@@ -117,77 +117,77 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
         <ProForm.Group>
           <ProFormDigit
             name="timeout"
-            label={formatMessage({ id: 'portMgt.form.title.timeout' })}
+            label={formatMessage({ id: 'system.form.title.timeout' })}
             width="sm"
-            placeholder={formatMessage({ id: 'portMgt.form.placeholder.timeout' })}
+            placeholder={formatMessage({ id: 'system.form.placeholder.timeout' })}
             rules={[
               {
                 required: true,
-                message: formatMessage({ id: 'portMgt.form.placeholder.timeout' }),
+                message: formatMessage({ id: 'system.form.placeholder.timeout' }),
               },
             ]}
             addonAfter="ms"
           />
           <ProFormSelect
-            label={formatMessage({ id: 'portMgt.form.title.baudRate' })}
+            label={formatMessage({ id: 'system.form.title.baudRate' })}
             name="baudRate"
             width="sm"
             valueEnum={baudRateEnum}
             allowClear={false}
-            placeholder={formatMessage({ id: 'portMgt.form.placeholder.baudRate' })}
+            placeholder={formatMessage({ id: 'system.form.placeholder.baudRate' })}
             rules={[
               {
                 required: true,
-                message: formatMessage({ id: 'portMgt.form.placeholder.baudRate' }),
+                message: formatMessage({ id: 'system.form.placeholder.baudRate' }),
               },
             ]}
           />
           <ProFormSelect
-            label={formatMessage({ id: 'portMgt.form.title.dataBits' })}
+            label={formatMessage({ id: 'system.form.title.dataBits' })}
             name="dataBits"
             width="sm"
             allowClear={false}
             valueEnum={dataBitsEnum}
-            placeholder={formatMessage({ id: 'portMgt.form.placeholder.dataBits' })}
+            placeholder={formatMessage({ id: 'system.form.placeholder.dataBits' })}
             rules={[
               {
                 required: true,
-                message: formatMessage({ id: 'portMgt.form.placeholder.dataBits' }),
+                message: formatMessage({ id: 'system.form.placeholder.dataBits' }),
               },
             ]}
           />
         </ProForm.Group>
         <ProForm.Group>
           <ProFormSelect
-            label={formatMessage({ id: 'portMgt.form.title.parity' })}
+            label={formatMessage({ id: 'system.form.title.parity' })}
             name="parity"
             width="sm"
             allowClear={false}
             valueEnum={parityEnum}
-            placeholder={formatMessage({ id: 'portMgt.form.placeholder.parity' })}
+            placeholder={formatMessage({ id: 'system.form.placeholder.parity' })}
             rules={[
-              { required: true, message: formatMessage({ id: 'portMgt.form.placeholder.parity' }) },
+              { required: true, message: formatMessage({ id: 'system.form.placeholder.parity' }) },
             ]}
           />
           <ProFormSelect
-            label={formatMessage({ id: 'portMgt.form.title.stopBits' })}
+            label={formatMessage({ id: 'system.form.title.stopBits' })}
             name="stopBits"
             width="sm"
             allowClear={false}
             valueEnum={stopBitsEnum}
-            placeholder={formatMessage({ id: 'portMgt.form.placeholder.stopBits' })}
+            placeholder={formatMessage({ id: 'system.form.placeholder.stopBits' })}
             rules={[
               {
                 required: true,
-                message: formatMessage({ id: 'portMgt.form.placeholder.stopBits' }),
+                message: formatMessage({ id: 'system.form.placeholder.stopBits' }),
               },
             ]}
           />
           <ProFormText
-            label={formatMessage({ id: 'portMgt.form.title.uart' })}
+            label={formatMessage({ id: 'system.form.title.uart' })}
             name="uart"
             width="sm"
-            placeholder={formatMessage({ id: 'portMgt.form.placeholder.uart' })}
+            placeholder={formatMessage({ id: 'system.form.placeholder.uart' })}
             disabled
             required
           />

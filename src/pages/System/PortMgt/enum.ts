@@ -5,7 +5,7 @@ import { getIntl, getLocale } from '@umijs/max';
  */
 export const typeOption = [
   {
-    label: getIntl(getLocale()).formatMessage({ id: 'portMgt.option.uart' }),
+    label: getIntl(getLocale()).formatMessage({ id: 'system.option.uart' }),
     value: 'UART',
   },
 ];
@@ -47,9 +47,9 @@ export const dataBitsEnum = new Map([
 
 // 奇偶校验
 export const parityEnum = {
-  E: getIntl(getLocale()).formatMessage({ id: 'portMgt.option.e' }),
-  O: getIntl(getLocale()).formatMessage({ id: 'portMgt.option.o' }),
-  N: getIntl(getLocale()).formatMessage({ id: 'portMgt.option.n' }),
+  E: getIntl(getLocale()).formatMessage({ id: 'system.option.e' }),
+  O: getIntl(getLocale()).formatMessage({ id: 'system.option.o' }),
+  N: getIntl(getLocale()).formatMessage({ id: 'system.option.n' }),
 };
 
 // 停止位
