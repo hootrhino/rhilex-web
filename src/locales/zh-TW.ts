@@ -8,7 +8,7 @@ import dataCenter from './zh-TW/dataCenter';
 import device from './zh-TW/device';
 import extend from './zh-TW/extend';
 import inend from './zh-TW/inend';
-import notifyLog from './zh-TW/notifyLog';
+import notification from './zh-TW/notification';
 import outend from './zh-TW/outend';
 import plugin from './zh-TW/plugin';
 import ruleConfig from './zh-TW/ruleConfig';
@@ -98,7 +98,7 @@ export default {
   'menu.plugin': '增強插件',
   'menu.plugin.list': '插件列表',
   'menu.system': '系統設定',
-  'menu.notifyLog': '站內日誌',
+  'menu.notification': '站內日誌',
   'menu.rule.list': '規則配置',
   'menu.rule.new': '新建規則配置',
   'menu.rule.update': '編輯規則配置',
@@ -107,7 +107,7 @@ export default {
   ...status,
   ...dashboard,
   ...device,
-  ...notifyLog,
+  ...notification,
   ...appStack,
   ...extend,
   ...plugin,

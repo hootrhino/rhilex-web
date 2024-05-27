@@ -226,10 +226,10 @@
   },
   {
     path: '/notification',
-    title: 'menu.notifyLog',
+    title: 'menu.notification',
     component: './Notification',
     hideInMenu: true,
-    key: 'notify',
+    key: 'notification',
   },
   {
     path: '/',

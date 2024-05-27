@@ -68,7 +68,7 @@ export default {
   /**
    * others
    */
-  'component.title.notify': 'Notification log',
+  'component.title.notify': 'Notification',
   'component.title.customRule': 'Custom rule example',
   'component.title.defaultGroup': 'Default group',
   'component.title.builtInTpl': 'Built-in templates',

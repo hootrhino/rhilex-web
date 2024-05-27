@@ -8,7 +8,7 @@ import dataCenter from './en-US/dataCenter';
 import device from './en-US/device';
 import extend from './en-US/extend';
 import inend from './en-US/inend';
-import notifyLog from './en-US/notifyLog';
+import notification from './en-US/notification';
 import outend from './en-US/outend';
 import plugin from './en-US/plugin';
 import ruleConfig from './en-US/ruleConfig';
@@ -100,7 +100,7 @@ export default {
   'menu.plugin': 'Plugin',
   'menu.plugin.list': 'Plugin List',
   'menu.system': 'System Settings',
-  'menu.notifyLog': 'Site Log',
+  'menu.notification': 'Notification',
   'menu.rule.list': 'Rule Configuration',
   'menu.rule.new': 'New Rule Configuration',
   'menu.rule.update': 'Edit Rule Configuration',
@@ -109,7 +109,7 @@ export default {
   ...status,
   ...dashboard,
   ...device,
-  ...notifyLog,
+  ...notification,
   ...appStack,
   ...extend,
   ...plugin,

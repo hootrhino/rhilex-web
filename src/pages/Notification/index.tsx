@@ -29,7 +29,7 @@ const Notification = () => {
   const handleOnSuccess = () => {
     actionRef.current?.reload();
     refresh();
-    message.success(formatMessage({ id: 'notifyLog.message.success' }));
+    message.success(formatMessage({ id: 'notification.message.success' }));
   };
 
   // 清除
@@ -50,8 +50,8 @@ const Notification = () => {
       key="clearAll"
       onClick={() =>
         modal.confirm({
-          title: formatMessage({ id: 'notifyLog.modal.title.clearAll' }),
-          content: formatMessage({ id: 'notifyLog.modal.content.clearAll' }),
+          title: formatMessage({ id: 'notification.modal.title.clearAll' }),
+          content: formatMessage({ id: 'notification.modal.content.clearAll' }),
           okText: formatMessage({ id: 'button.ok' }),
           cancelText: formatMessage({ id: 'button.cancel' }),
           onOk: clearAll,
@@ -59,7 +59,7 @@ const Notification = () => {
       }
       icon={<ClearOutlined />}
     >
-      {formatMessage({ id: 'notifyLog.button.clearAll' })}
+      {formatMessage({ id: 'notification.button.clearAll' })}
     </Button>,
   ];
 
@@ -69,16 +69,16 @@ const Notification = () => {
       <span>{dayjs(ts).format('YYYY-MM-DD HH:mm:ss')}</span>
     </Space>,
     <Popconfirm
-      title={formatMessage({ id: 'notifyLog.modal.title.clear' })}
+      title={formatMessage({ id: 'notification.modal.title.clear' })}
       onConfirm={async () => uuid && clear({ uuid })}
       key="clear"
     >
-      <a className="pl-[16px]">{formatMessage({ id: 'notifyLog.button.clear' })}</a>
+      <a className="pl-[16px]">{formatMessage({ id: 'notification.button.clear' })}</a>
     </Popconfirm>,
   ];
 
   return (
-    <PageContainer header={{ title: formatMessage({ id: 'menu.notifyLog' }) }}>
+    <PageContainer header={{ title: formatMessage({ id: 'menu.notification' }) }}>
       <ProList<NotificationItem>
         rowKey="uuid"
         actionRef={actionRef}

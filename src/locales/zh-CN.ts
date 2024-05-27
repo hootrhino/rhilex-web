@@ -8,7 +8,7 @@ import dataCenter from './zh-CN/dataCenter';
 import device from './zh-CN/device';
 import extend from './zh-CN/extend';
 import inend from './zh-CN/inend';
-import notifyLog from './zh-CN/notifyLog';
+import notification from './zh-CN/notification';
 import outend from './zh-CN/outend';
 import plugin from './zh-CN/plugin';
 import ruleConfig from './zh-CN/ruleConfig';
@@ -98,7 +98,7 @@ export default {
   'menu.plugin': '增强插件',
   'menu.plugin.list': '插件列表',
   'menu.system': '系统设置',
-  'menu.notifyLog': '站内日志',
+  'menu.notification': '站内日志',
   'menu.rule.list': '规则配置',
   'menu.rule.new': '新建规则配置',
   'menu.rule.update': '编辑规则配置',
@@ -107,7 +107,7 @@ export default {
   ...status,
   ...dashboard,
   ...device,
-  ...notifyLog,
+  ...notification,
   ...appStack,
   ...extend,
   ...plugin,
