@@ -4,7 +4,7 @@ import status from './zh-TW/status';
 // pages
 import appStack from './zh-TW/appStack';
 import dashboard from './zh-TW/dashboard';
-import dataCenter from './zh-TW/dataCenter';
+import DataRepository from './zh-TW/DataRepository';
 import device from './zh-TW/device';
 import extend from './zh-TW/extend';
 import inend from './zh-TW/inend';
@@ -60,6 +60,7 @@ export default {
   'form.rules.name': '請輸入4-64個字符，支持中文、字母、數字或下劃線',
   'form.rules.port': '端口的值應在 0 到 65535 之間',
   'form.rules.address': '起始地址的值應在 0 到 65535 之間',
+  'form.rules.vendorId': '廠商 ID 應在 0 到 65535 之間',
   'form.rules.ip': 'IP 地址格式不正確',
   'form.rules.netmask': '子網掩碼格式不正確',
   'form.rules.gateway': '網關格式不正確',
@@ -85,7 +86,7 @@ export default {
   'menu.device.objectList': 'SNMP 對象列表',
   'menu.device.subDevice': '子設備列表',
   'menu.schema': '數據模型',
-  'menu.dataCenter': '資料中心',
+  'menu.dataRepository': '資料中心',
   'menu.inend': '南向資源',
   'menu.source.list': '資源列表',
   'menu.source.new': '新建資源',
@@ -116,5 +117,5 @@ export default {
   ...ruleConfig,
   ...outend,
   ...inend,
-  ...dataCenter,
+  ...DataRepository,
 };

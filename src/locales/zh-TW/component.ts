@@ -43,7 +43,7 @@ export default {
   'component.tpl.name': '{name} 函數',
   'component.tpl.name.standard': '標準庫函數',
   'component.tpl.name.other': '其他函數',
-  'component.tpl.name.dataCenter': '資料中心函數',
+  'component.tpl.name.dataRepo': '資料中心函數',
   'component.tpl.jsonT2J.detail': 'LuaTable 轉 JSON 字符串',
   'component.tpl.jsonT2J.arg': 'Lua 表變量',
   'component.tpl.jsonJ2T.detail': 'JSON 字符串轉 LuaTable',

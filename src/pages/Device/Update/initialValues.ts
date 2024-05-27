@@ -137,6 +137,8 @@ export const defaultConfig = {
       interface: '',
       addr: '',
       subnetCidr: 24,
+      deviceId: 2580,
+      vendorId: 2580,
     },
   },
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: {

@@ -697,6 +697,35 @@ export const typeConfigColumns = {
       valueType: 'group',
       columns: [
         {
+          title: '厂商 ID',
+          dataIndex: ['config', 'bacnetConfig', 'vendorId'],
+          valueType: 'digit',
+          formItemProps: {
+            rules: [
+              {
+                required: true,
+                message: '请输入厂商 ID',
+              },
+              {
+                validator: (_rule: Rule, value: number) =>
+                  validateFormItem(value, FormItemType.VENDORID),
+              },
+            ],
+          },
+        },
+        {
+          title: '设备 ID',
+          dataIndex: ['config', 'bacnetConfig', 'deviceId'],
+          valueType: 'digit',
+          formItemProps: {
+            rules: [
+              { required: true, message: '请输入设备 ID' },
+              { min: 0, message: '请输入有效的设备 ID，范围为 0-4194302', type: 'integer' },
+              { max: 4194302, message: '请输入有效的设备 ID，范围为 0-4194302', type: 'integer' },
+            ],
+          },
+        },
+        {
           title: intl.formatMessage({ id: 'device.form.title.mode' }),
           dataIndex: ['config', 'bacnetConfig', 'mode'],
           valueType: 'select',

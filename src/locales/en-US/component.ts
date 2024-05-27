@@ -43,7 +43,7 @@ export default {
   'component.tpl.name': '{name} functions',
   'component.tpl.name.standard': 'Standard  functions',
   'component.tpl.name.other': 'Other functions',
-  'component.tpl.name.dataCenter': 'Data repository functions',
+  'component.tpl.name.dataRepo': 'Data repository functions',
   'component.tpl.jsonT2J.detail': 'Convert LuaTable to JSON string',
   'component.tpl.jsonT2J.arg': 'Lua table variable',
   'component.tpl.jsonJ2T.detail': 'Convert JSON string to LuaTable',

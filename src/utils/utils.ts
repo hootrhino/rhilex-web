@@ -144,6 +144,19 @@ export const handleNewMessage = (source: string[] | undefined, target: string, t
  * @param type FormItemType 表单字段的类型
  * @returns Promise<boolean> 异步解析为布尔值，表示校验是否通过
  */
+const getRuleName = (type: FormItemType) => {
+  switch (type) {
+    case FormItemType.PORT:
+      return getIntl(getLocale()).formatMessage({ id: 'form.rules.port' });
+    case FormItemType.ADDRESS:
+      return getIntl(getLocale()).formatMessage({ id: 'form.rules.address' });
+    case FormItemType.VENDORID:
+      return getIntl(getLocale()).formatMessage({ id: 'form.rules.vendorId' });
+    default:
+      return '';
+  }
+};
+
 export const validateFormItem = (value: string | number, type: FormItemType) => {
   if (!value) {
     return Promise.resolve();
@@ -155,13 +168,10 @@ export const validateFormItem = (value: string | number, type: FormItemType) => 
         : Promise.reject(getIntl(getLocale()).formatMessage({ id: 'form.rules.name' }));
     case FormItemType.PORT:
     case FormItemType.ADDRESS:
+    case FormItemType.VENDORID:
       return typeof value === 'number' && validatePort(value)
         ? Promise.resolve()
-        : Promise.reject(
-            type === FormItemType.PORT
-              ? getIntl(getLocale()).formatMessage({ id: 'form.rules.port' })
-              : getIntl(getLocale()).formatMessage({ id: 'form.rules.address' }),
-          );
+        : Promise.reject(getRuleName(type));
     case FormItemType.IP:
       return typeof value === 'string' && validateIPv4(value)
         ? Promise.resolve()

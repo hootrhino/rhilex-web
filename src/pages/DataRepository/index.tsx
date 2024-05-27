@@ -54,9 +54,7 @@ const DataRepository = () => {
         title: item.published ? (
           item.name
         ) : (
-          <Tooltip title={formatMessage({ id: 'dataCenter.tooltip.unpublish' })}>
-            {item.name}
-          </Tooltip>
+          <Tooltip title={formatMessage({ id: 'dataRepo.tooltip.unpublish' })}>{item.name}</Tooltip>
         ),
         key: item.uuid || '',
         disabled: !item.published,
@@ -83,7 +81,7 @@ const DataRepository = () => {
             key: `${d.name}-${Math.random()}`,
             isLeaf: true,
             selectable: false,
-            className: 'data-center-tree-unselectable',
+            className: 'data-repo-tree-unselectable',
           })),
         };
       }
@@ -137,15 +135,15 @@ const DataRepository = () => {
       manual: true,
       onSuccess: () => {
         actionRef.current?.reload();
-        message.success(formatMessage({ id: 'dataCenter.message.success.clear' }));
+        message.success(formatMessage({ id: 'dataRepo.message.success.clear' }));
       },
     },
   );
 
   const handleOnClear = () => {
     modal.confirm({
-      title: formatMessage({ id: 'dataCenter.modal.title.clear' }),
-      content: formatMessage({ id: 'dataCenter.modal.content.clear' }),
+      title: formatMessage({ id: 'dataRepo.modal.title.clear' }),
+      content: formatMessage({ id: 'dataRepo.modal.content.clear' }),
       okText: formatMessage({ id: 'button.ok' }),
       cancelText: formatMessage({ id: 'button.cancel' }),
       onOk: () => selectedKey && clear({ uuid: selectedKey, secret }),
@@ -188,13 +186,13 @@ const DataRepository = () => {
     };
 
     modal.info({
-      title: formatMessage({ id: 'dataCenter.modal.title.code' }),
+      title: formatMessage({ id: 'dataRepo.modal.title.code' }),
       content: (
         <Typography.Paragraph
           copyable={{
             tooltips: [
-              formatMessage({ id: 'dataCenter.tooltip.copy' }),
-              formatMessage({ id: 'dataCenter.tooltip.copied' }),
+              formatMessage({ id: 'dataRepo.tooltip.copy' }),
+              formatMessage({ id: 'dataRepo.tooltip.copied' }),
             ],
           }}
         >
@@ -209,13 +207,13 @@ const DataRepository = () => {
 
   const toolBarRender = () => [
     <Button key="code" onClick={handleOnCode} icon={<IconFont type="icon-code" />}>
-      {formatMessage({ id: 'dataCenter.button.code' })}
+      {formatMessage({ id: 'dataRepo.button.code' })}
     </Button>,
     <Button danger key="clear" onClick={handleOnClear} icon={<DeleteOutlined />}>
-      {formatMessage({ id: 'dataCenter.button.clear' })}
+      {formatMessage({ id: 'dataRepo.button.clear' })}
     </Button>,
     <Button key="download" type="primary" onClick={handleOnDownload} icon={<DownloadOutlined />}>
-      {formatMessage({ id: 'dataCenter.button.download' })}
+      {formatMessage({ id: 'dataRepo.button.download' })}
     </Button>,
   ];
 
@@ -230,7 +228,7 @@ const DataRepository = () => {
       <ProCard split="vertical">
         <ProCard
           colSpan="300px"
-          title={formatMessage({ id: 'dataCenter.title.tree' })}
+          title={formatMessage({ id: 'dataRepo.title.tree' })}
           headStyle={{ paddingInline: 16 }}
           bodyStyle={{ paddingInline: 16 }}
         >
@@ -245,7 +243,7 @@ const DataRepository = () => {
             loadData={handleOnLoadData}
           />
         </ProCard>
-        <ProCard title={formatMessage({ id: 'dataCenter.title.table' })}>
+        <ProCard title={formatMessage({ id: 'dataRepo.title.table' })}>
           {columns && columns?.length > 0 ? (
             <ProTable
               rowKey="id"

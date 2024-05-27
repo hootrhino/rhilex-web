@@ -8,13 +8,12 @@ const allMenu = [
   'dashboard',
   'device',
   'schema',
-  'dataCenter',
+  'dataRepository',
   'inend',
   'outend',
   'appStack',
   'extend',
-  'plugins',
-  'port',
+  'plugin',
   'system',
 ];
 

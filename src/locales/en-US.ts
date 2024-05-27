@@ -4,7 +4,7 @@ import status from './en-US/status';
 // pages
 import appStack from './en-US/appStack';
 import dashboard from './en-US/dashboard';
-import dataCenter from './en-US/dataCenter';
+import DataRepository from './en-US/DataRepository';
 import device from './en-US/device';
 import extend from './en-US/extend';
 import inend from './en-US/inend';
@@ -56,12 +56,13 @@ export default {
   'form.title.username': 'Username',
   'form.title.password': 'Password',
   'form.placeholder.username': 'Please enter a username',
-  'form.placeholder.password': 'Please enter a password’',
+  'form.placeholder.password': 'Please enter a password',
   'form.rules.name':
-    'Please enter 4-64 characters, supporting Chinese, letters, numbers, or underscores’',
+    'Please enter 4-64 characters, supporting Chinese, letters, numbers, or underscores',
   'form.rules.port': 'The port value must be between 0-65535',
-  'form.rules.address': 'The address value must be between 0-65535’',
-  'form.rules.ip': 'The IP address format is incorrect’',
+  'form.rules.address': 'The address value must be between 0-65535',
+  'form.rules.vendorId': 'The vendor ID must be between 0-65535',
+  'form.rules.ip': 'The IP address format is incorrect',
   'form.rules.netmask': 'The subnet mask format is incorrect',
   'form.rules.gateway': 'The gateway mask format is incorrect',
   'form.rules.cidr': 'The CIDR mask format is incorrect',
@@ -73,7 +74,7 @@ export default {
   'modal.title.confirm': 'Are you sure you want to perform this action?',
   'modal.title.forget': 'Forgot your password?',
   'modal.content.forget':
-    'If you have forgotten your password, please follow the manual for your current device to reset it.’',
+    'If you have forgotten your password, please follow the manual for your current device to reset it.',
   'modal.content.logout': 'Are you sure you want to log out?',
   /**
    * menu
@@ -87,7 +88,7 @@ export default {
   'menu.device.objectList': 'SNMP OID Sheet',
   'menu.device.subDevice': 'Subdevice List',
   'menu.schema': 'Data Schema',
-  'menu.dataCenter': 'Data Repository',
+  'menu.dataRepository': 'Data Repository',
   'menu.inend': 'Input Resource',
   'menu.source.list': 'Resource List',
   'menu.source.new': 'New Resource',
@@ -118,5 +119,5 @@ export default {
   ...ruleConfig,
   ...outend,
   ...inend,
-  ...dataCenter,
+  ...DataRepository,
 };

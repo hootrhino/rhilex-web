@@ -94,10 +94,10 @@
   },
   {
     path: '/repository',
-    title: 'menu.dataCenter',
+    title: 'menu.dataRepository',
     icon: 'database',
     component: './DataRepository',
-    key: 'dataCenter',
+    key: 'dataRepository',
   },
   {
     path: '/inend',
@@ -214,7 +214,7 @@
     path: '/plugin',
     title: 'menu.plugin',
     icon: 'icon-menu-plugin',
-    key: 'plugins',
+    key: 'plugin',
     component: './Plugin',
   },
   {

@@ -21,6 +21,7 @@ export enum FormItemType {
   NAME = 'name', // 名称
   PORT = 'port', // 端口
   ADDRESS = 'address', // 起始地址
+  VENDORID = 'vendorId', // 厂商ID
   IP = 'ip', // IPv4
   NETMASK = 'netmask', // 子网掩码
   GATEWAY = 'gateway', // 网关

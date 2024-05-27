@@ -302,7 +302,7 @@ export const builtInLuaTpl = [
     uuid: 'json',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name.dataCenter' }),
+    name: intl.formatMessage({ id: 'component.tpl.name.dataRepo' }),
     children: dataCenterTpl,
     uuid: 'dataCenter',
   },

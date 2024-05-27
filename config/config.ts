@@ -26,8 +26,6 @@ export default defineConfig({
     },
   },
   locale: {
-    // default: 'zh-CN',
-    // baseSeparator: '-',
     antd: true,
     title: true,
   },
