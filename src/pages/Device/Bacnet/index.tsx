@@ -10,6 +10,7 @@ import {
   postBacnetipDataSheetSheetImport,
   postBacnetipDataSheetUpdate,
 } from '@/services/rulex/bacnetdianweiguanli';
+import { defaultPagination } from '@/utils/constant';
 import { SheetType } from '@/utils/enum';
 import DataSheet from '../DataSheet';
 import type { DataSheetItem, Point, removeParams } from '../DataSheet/typings';
@@ -147,7 +148,10 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
       actionRef={actionRef}
       columns={columns}
       params={{ deviceUuid }}
-      request={async ({ current = 1, pageSize = 10 }) => {
+      request={async ({
+        current = defaultPagination.defaultCurrent,
+        pageSize = defaultPagination.defaultPageSize,
+      }) => {
         const { data } = await getBacnetipDataSheetList({
           device_uuid: deviceUuid || '',
           current,

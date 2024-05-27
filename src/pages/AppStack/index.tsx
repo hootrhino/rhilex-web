@@ -111,7 +111,7 @@ const AppStack = () => {
             ? formatMessage({ id: 'button.stop' })
             : formatMessage({ id: 'button.start' })}
         </a>,
-        <a key="edit" onClick={() => history.push(`/app-stack/edit/${uuid}`)}>
+        <a key="edit" onClick={() => history.push(`/app/edit/${uuid}`)}>
           {formatMessage({ id: 'button.edit' })}
         </a>,
         <Popconfirm
@@ -150,7 +150,7 @@ const AppStack = () => {
               key="new"
               type="primary"
               icon={<PlusOutlined />}
-              onClick={() => history.push('/app-stack/new')}
+              onClick={() => history.push('/app/new')}
             >
               {formatMessage({ id: 'button.new' })}
             </Button>,

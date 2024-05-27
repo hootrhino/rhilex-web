@@ -19,6 +19,7 @@ import { funcEnum } from '../enum';
 
 import { message } from '@/components/PopupHack';
 import UnitValue from '@/components/UnitValue';
+import { defaultPagination } from '@/utils/constant';
 import { FormItemType, SheetType } from '@/utils/enum';
 import { inRange } from '@/utils/redash';
 import type { Rule } from 'antd/es/form';
@@ -343,7 +344,10 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       actionRef={actionRef}
       columns={columns}
       params={{ deviceUuid }}
-      request={async ({ current = 1, pageSize = 10 }) => {
+      request={async ({
+        current = defaultPagination.defaultCurrent,
+        pageSize = defaultPagination.defaultPageSize,
+      }) => {
         const { data } = await getModbusDataSheetList({
           device_uuid: deviceUuid,
           current,

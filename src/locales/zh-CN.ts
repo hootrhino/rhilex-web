@@ -13,7 +13,7 @@ import outend from './zh-CN/outend';
 import plugin from './zh-CN/plugin';
 import portMgt from './zh-CN/portMgt';
 import ruleConfig from './zh-CN/ruleConfig';
-import schemaMgt from './zh-CN/schemaMgt';
+import schemaMgt from './zh-CN/schema';
 import system from './zh-CN/system';
 
 export default {

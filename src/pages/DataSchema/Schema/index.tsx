@@ -129,7 +129,7 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
                         )}
                         onClick={() => {
                           if (!published) return;
-                          history.push('/data-center');
+                          history.push('/repository');
                           setKey(uuid);
                         }}
                       >

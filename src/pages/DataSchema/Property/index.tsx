@@ -7,6 +7,7 @@ import {
   postSchemaPublish,
   putSchemaPropertiesUpdate,
 } from '@/services/rulex/shujumoxing';
+import { defaultPagination } from '@/utils/constant';
 import { isEmpty } from '@/utils/redash';
 import { ExclamationCircleFilled, PlusOutlined, SendOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
@@ -272,11 +273,7 @@ const PropertyList = () => {
             });
           }
         }}
-        pagination={{
-          defaultPageSize: 10,
-          hideOnSinglePage: true,
-          showSizeChanger: false,
-        }}
+        pagination={defaultPagination}
         expandable={{
           expandedRowRender,
           indentSize: 0,

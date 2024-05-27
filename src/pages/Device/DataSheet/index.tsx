@@ -21,6 +21,7 @@ import UploadSheetConfirm from '@/components/UploadSheetConfirm';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { SheetType } from '@/utils/enum';
 
+import { defaultPagination } from '@/utils/constant';
 import { omit } from '@/utils/redash';
 import type { DataSheetItem, DataSheetProps } from './typings';
 
@@ -321,11 +322,7 @@ const DataSheet = ({
           onChange: setSelectedRowKeys,
         }}
         toolBarRender={() => toolBar}
-        pagination={{
-          defaultPageSize: 10,
-          hideOnSinglePage: true,
-          showSizeChanger: false,
-        }}
+        pagination={defaultPagination}
         editable={{
           type: 'multiple',
           editableKeys,
@@ -358,11 +355,7 @@ const DataSheet = ({
         options={false}
         search={false}
         toolBarRender={false}
-        pagination={{
-          defaultPageSize: 10,
-          hideOnSinglePage: true,
-          showSizeChanger: false,
-        }}
+        pagination={defaultPagination}
         {...props}
       />
     </>

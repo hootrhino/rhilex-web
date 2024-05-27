@@ -8,7 +8,7 @@ import {
   getDevicesListByGroup,
   putDevicesRestart,
 } from '@/services/rulex/shebeiguanli';
-import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
+import { defaultPagination, DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
 import { getName } from '@/utils/utils';
 import {
   ControlOutlined,
@@ -364,11 +364,7 @@ const Devices = () => {
                   });
                 }
               }}
-              pagination={{
-                defaultPageSize: 10,
-                hideOnSinglePage: true,
-                showSizeChanger: false,
-              }}
+              pagination={defaultPagination}
               toolBarRender={() => [
                 <Button
                   key="new"

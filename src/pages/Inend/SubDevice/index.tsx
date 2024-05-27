@@ -2,6 +2,7 @@ import IndexBorder from '@/components/IndexBorder';
 import PageContainer from '@/components/PageContainer';
 import StateTag, { StateType } from '@/components/StateTag';
 import { getInendsClients, getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
+import { defaultPagination } from '@/utils/constant';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useIntl, useParams, useRequest } from '@umijs/max';
@@ -60,7 +61,10 @@ const SubDeviceList = () => {
         columns={columns}
         options={false}
         search={false}
-        request={async ({ current = 1, pageSize = 10 }) => {
+        request={async ({
+          current = defaultPagination.defaultCurrent,
+          pageSize = defaultPagination.defaultPageSize,
+        }) => {
           const { data } = await getInendsClients({ uuid: inendId || '', current, size: pageSize });
 
           return Promise.resolve({
@@ -69,11 +73,7 @@ const SubDeviceList = () => {
             total: data.total,
           });
         }}
-        pagination={{
-          defaultPageSize: 10,
-          showSizeChanger: false,
-          hideOnSinglePage: true,
-        }}
+        pagination={defaultPagination}
       />
     </PageContainer>
   );

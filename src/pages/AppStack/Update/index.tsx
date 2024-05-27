@@ -11,7 +11,7 @@ import { history, useParams, useRequest } from 'umi';
 import { AppStackItem } from '..';
 import { baseColumns } from '../columns';
 
-const DefaultListUrl = '/app-stack/list';
+const DefaultListUrl = '/app/list';
 
 const defaultValue = {
   name: '',

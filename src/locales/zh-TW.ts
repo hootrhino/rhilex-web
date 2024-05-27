@@ -13,7 +13,7 @@ import outend from './zh-TW/outend';
 import plugin from './zh-TW/plugin';
 import portMgt from './zh-TW/portMgt';
 import ruleConfig from './zh-TW/ruleConfig';
-import schemaMgt from './zh-TW/schemaMgt';
+import schemaMgt from './zh-TW/schema';
 import system from './zh-TW/system';
 
 export default {

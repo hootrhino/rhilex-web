@@ -43,7 +43,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
         loginOut();
       }
       if (key === 'user') {
-        history.push('/system-mgt');
+        history.push('/system');
         setActiveKey('user');
       }
     },

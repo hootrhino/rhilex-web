@@ -5,6 +5,7 @@ import {
   postSnmpOidsSheetSheetImport,
   postSnmpOidsSheetUpdate,
 } from '@/services/rulex/snmpdianweiguanli';
+import { defaultPagination } from '@/utils/constant';
 import { SheetType } from '@/utils/enum';
 import { omit } from '@/utils/redash';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
@@ -129,7 +130,10 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       actionRef={actionRef}
       columns={columns}
       params={{ deviceUuid }}
-      request={async ({ current = 1, pageSize = 10 }) => {
+      request={async ({
+        current = defaultPagination.defaultCurrent,
+        pageSize = defaultPagination.defaultPageSize,
+      }) => {
         const { data } = await getSnmpOidsSheetList({
           device_uuid: deviceId,
           current,

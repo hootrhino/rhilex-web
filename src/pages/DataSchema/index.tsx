@@ -40,7 +40,7 @@ export type SchemaItem = {
 
 export type ActiveSchema = Omit<SchemaItem, 'schema' | 'description'>;
 
-const SchemaMgt = () => {
+const DataSchema = () => {
   const { formatMessage } = useIntl();
   const { activeSchema } = useModel('useSchema');
   const [open, setOpen] = useState<boolean>(false);
@@ -75,4 +75,4 @@ const SchemaMgt = () => {
   );
 };
 
-export default SchemaMgt;
+export default DataSchema;

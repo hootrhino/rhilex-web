@@ -8,6 +8,7 @@ import {
   getDatacenterSchemaDdlDefine,
   getDatacenterSchemaDdlDetail,
 } from '@/services/rulex/shujuzhongxin';
+import { defaultPagination } from '@/utils/constant';
 import { IconFont, toPascalCase } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, TableOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-components';
@@ -24,11 +25,6 @@ type SchemaDDLDefineItem = {
   [key: string]: any;
 };
 
-const defaultPagination = {
-  current: 1,
-  pageSize: 10,
-};
-
 const getChildName = ({ name, type }: SchemaDDLDefineItem) => {
   return (
     <Space>
@@ -38,13 +34,15 @@ const getChildName = ({ name, type }: SchemaDDLDefineItem) => {
   );
 };
 
-const DataCenter = () => {
+const DataRepository = () => {
   const { formatMessage } = useIntl();
   const actionRef = useRef<ActionType>();
   const { key: activeKey, DataCenterSecret } = useModel('useDataCenter');
+
   const [selectedKey, setSelectedKey] = useState<string>();
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [treeData, setTreeData] = useState<TreeDataNode[]>([]);
+
   const secret = DataCenterSecret?.secret || '';
 
   // 获取数据表列表
@@ -85,6 +83,7 @@ const DataCenter = () => {
             key: `${d.name}-${Math.random()}`,
             isLeaf: true,
             selectable: false,
+            className: 'data-center-tree-unselectable',
           })),
         };
       }
@@ -153,9 +152,40 @@ const DataCenter = () => {
     });
   };
 
+  const requestTable = async ({
+    current = defaultPagination.defaultCurrent,
+    pageSize = defaultPagination.defaultPageSize,
+    ...keyword
+  }) => {
+    if (keyword?.uuid) {
+      const { data } = await getDatacenterQueryDataList({
+        current,
+        size: pageSize,
+        order: 'DESC',
+        uuid: keyword.uuid,
+        secret,
+      });
+
+      return Promise.resolve({
+        data: data?.records,
+        total: data?.total || 0,
+        success: true,
+      });
+    } else {
+      return Promise.resolve({
+        data: [],
+        total: 0,
+        success: true,
+      });
+    }
+  };
+
   // 生成代码
   const handleOnCode = () => {
-    const { current, pageSize } = actionRef.current?.pageInfo || defaultPagination;
+    const { current, pageSize } = actionRef.current?.pageInfo || {
+      current: defaultPagination.defaultCurrent,
+      pageSize: defaultPagination.defaultPageSize,
+    };
 
     modal.info({
       title: formatMessage({ id: 'dataCenter.modal.title.code' }),
@@ -176,6 +206,18 @@ const DataCenter = () => {
       okText: formatMessage({ id: 'button.cancel' }),
     });
   };
+
+  const toolBarRender = () => [
+    <Button key="code" onClick={handleOnCode} icon={<IconFont type="icon-code" />}>
+      {formatMessage({ id: 'dataCenter.button.code' })}
+    </Button>,
+    <Button danger key="clear" onClick={handleOnClear} icon={<DeleteOutlined />}>
+      {formatMessage({ id: 'dataCenter.button.clear' })}
+    </Button>,
+    <Button key="download" type="primary" onClick={handleOnDownload} icon={<DownloadOutlined />}>
+      {formatMessage({ id: 'dataCenter.button.download' })}
+    </Button>,
+  ];
 
   useEffect(() => {
     if (selectedKey) {
@@ -210,54 +252,12 @@ const DataCenter = () => {
               polling={5000}
               actionRef={actionRef}
               params={{ uuid: selectedKey }}
-              request={async ({ current = 1, pageSize = 10, ...keyword }) => {
-                if (keyword?.uuid) {
-                  const { data } = await getDatacenterQueryDataList({
-                    current,
-                    size: pageSize,
-                    order: 'DESC',
-                    uuid: keyword.uuid,
-                    secret,
-                  });
-
-                  return Promise.resolve({
-                    data: data?.records,
-                    total: data?.total || 0,
-                    success: true,
-                  });
-                } else {
-                  return Promise.resolve({
-                    data: [],
-                    total: 0,
-                    success: true,
-                  });
-                }
-              }}
-              pagination={{
-                hideOnSinglePage: true,
-                showSizeChanger: false,
-                defaultCurrent: defaultPagination.current,
-                defaultPageSize: defaultPagination.pageSize,
-              }}
+              request={requestTable}
+              pagination={defaultPagination}
               columns={columns}
               search={false}
               rootClassName="stripe-table"
-              toolBarRender={() => [
-                <Button key="code" onClick={handleOnCode} icon={<IconFont type="icon-code" />}>
-                  {formatMessage({ id: 'dataCenter.button.code' })}
-                </Button>,
-                <Button danger key="clear" onClick={handleOnClear} icon={<DeleteOutlined />}>
-                  {formatMessage({ id: 'dataCenter.button.clear' })}
-                </Button>,
-                <Button
-                  key="download"
-                  type="primary"
-                  onClick={handleOnDownload}
-                  icon={<DownloadOutlined />}
-                >
-                  {formatMessage({ id: 'dataCenter.button.download' })}
-                </Button>,
-              ]}
+              toolBarRender={toolBarRender}
             />
           ) : (
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
@@ -268,4 +268,4 @@ const DataCenter = () => {
   );
 };
 
-export default DataCenter;
+export default DataRepository;

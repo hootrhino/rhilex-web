@@ -23,3 +23,10 @@ export const DEFAULT_GROUP_KEY_LUA_TPL = 'ULTROOT';
 
 // 其他
 export const isDev = process.env.NODE_ENV === 'development';
+
+export const defaultPagination = {
+  defaultCurrent: 1,
+  defaultPageSize: 10,
+  hideOnSinglePage: true,
+  showSizeChanger: false,
+};

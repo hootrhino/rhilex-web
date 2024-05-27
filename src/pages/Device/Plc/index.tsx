@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from 'react';
 import { plcDataTypeOptions } from './enum';
 
 import UnitValue from '@/components/UnitValue';
+import { defaultPagination } from '@/utils/constant';
 import { SheetType } from '@/utils/enum';
 import { inRange } from '@/utils/redash';
 import DataSheet from '../DataSheet';
@@ -215,7 +216,10 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       actionRef={actionRef}
       columns={columns}
       params={{ deviceUuid }}
-      request={async ({ current = 1, pageSize = 10 }) => {
+      request={async ({
+        current = defaultPagination.defaultCurrent,
+        pageSize = defaultPagination.defaultPageSize,
+      }) => {
         const { data } = await getS1200DataSheetList({
           device_uuid: deviceUuid,
           current,
