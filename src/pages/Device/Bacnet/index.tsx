@@ -25,6 +25,7 @@ const defaultBacnetConfig = {
 };
 
 const defaultUploadData = {
+  uuid: 'bacnetUploadData',
   bacnetDeviceId: 1,
   tag: 'tag1',
   alias: 'tag1',

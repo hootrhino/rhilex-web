@@ -17,12 +17,12 @@ import { useEffect, useState } from 'react';
 
 import PageContainer from '@/components/PageContainer';
 import StateTag, { StateType } from '@/components/StateTag';
-import UploadSheetConfirm from '@/components/UploadSheetConfirm';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { SheetType } from '@/utils/enum';
 
 import { defaultPagination } from '@/utils/constant';
 import { omit } from '@/utils/redash';
+import UploadSheetConfirm from './ConfirmModal';
 import type { DataSheetItem, DataSheetProps } from './typings';
 
 const DataSheet = ({
@@ -237,7 +237,7 @@ const DataSheet = ({
       beforeUpload={(file) => {
         modal.confirm({
           title: formatMessage({ id: 'device.modal.title.upload.confirm' }),
-          width: '50%',
+          width: '60%',
           content: <UploadSheetConfirm fileName={file?.name} initialValue={defaultUploadData} />,
           onOk: () => upload(file),
           okText: formatMessage({ id: 'button.ok' }),

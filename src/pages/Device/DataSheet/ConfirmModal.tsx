@@ -8,7 +8,11 @@ type UploadSheetConfirmProps = Omit<TableProps, 'columns' | 'dataSource'> & {
 };
 
 const UploadSheetConfirm = ({ fileName, initialValue, ...props }: UploadSheetConfirmProps) => {
-  const columns = Object.keys(initialValue)?.map((key) => ({ title: key, dataIndex: key }));
+  const columns = Object.keys(initialValue)?.map((key) => ({
+    title: key,
+    dataIndex: key,
+    hidden: key === 'uuid',
+  }));
   const dataSource = [{ ...initialValue }];
 
   return (
@@ -17,6 +21,7 @@ const UploadSheetConfirm = ({ fileName, initialValue, ...props }: UploadSheetCon
         {getIntl(getLocale()).formatMessage({ id: 'component.modal.title.upload' })}
       </div>
       <Table
+        rowKey="uuid"
         bordered
         pagination={false}
         size="small"
@@ -26,7 +31,8 @@ const UploadSheetConfirm = ({ fileName, initialValue, ...props }: UploadSheetCon
       />
       <div className="mt-[24px]">
         {getIntl(getLocale()).formatMessage({ id: 'component.modal.content.upload' })}
-        <span className="px-[5px] font-bold">{fileName}</span>？
+        <span className="px-[5px] font-bold">{fileName}</span>
+        {getLocale() === 'en-US' ? '?' : '？'}
       </div>
     </>
   );

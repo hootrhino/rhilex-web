@@ -45,9 +45,9 @@ export const baseColumns = [
     title: '扩展类型',
     dataIndex: 'goodsType',
     width: 80,
-    renderText: (goodsType: string) => (
-      <StateTag state={goodsType === 'LOCAL'} type={StateType.GOODSTYPE} />
-    ),
+    // renderText: (goodsType: string) => (
+    //   <StateTag state={goodsType === 'LOCAL'} type={StateType.GOODSTYPE} />
+    // ),
   },
   {
     title: '本地路径',

@@ -109,7 +109,7 @@ export default {
   'component.modal.title.editRule': '编辑规则',
   'component.modal.title.newRule': '新建规则',
   'component.modal.title.upload': '你应当确保上传的点位表必须遵守一定表头格式，例如：',
-  'component.modal.content.upload': '文件格式不正确可能会导致上传失败。你确定要上传吗？',
+  'component.modal.content.upload': '文件格式不正确可能会导致上传失败。你确定要上传',
 
   'component.tooltip.newVar': '新建变量',
 };

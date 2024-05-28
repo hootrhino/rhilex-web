@@ -40,6 +40,7 @@ const defaultModbusConfig = {
 };
 
 const defaultUploadData = {
+  uuid: 'modbusUploadData',
   tag: 'a1',
   alias: 'a1',
   function: 3,

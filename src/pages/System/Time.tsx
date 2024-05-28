@@ -96,11 +96,11 @@ const TimeConfig = () => {
           label={formatMessage({ id: 'system.table.title.sysTimeZone' })}
           width="xl"
           allowClear={false}
-          placeholder={formatMessage({ id: 'system.table.placeholder.sysTimeZone' })}
+          placeholder={formatMessage({ id: 'system.form.placeholder.sysTimeZone' })}
           rules={[
             {
               required: true,
-              message: formatMessage({ id: 'system.table.placeholder.sysTimeZone' }),
+              message: formatMessage({ id: 'system.form.placeholder.sysTimeZone' }),
             },
           ]}
         />
@@ -108,9 +108,9 @@ const TimeConfig = () => {
           name="sysTime"
           label={formatMessage({ id: 'system.table.title.sysTime' })}
           width="xl"
-          placeholder={formatMessage({ id: 'system.table.placeholder.sysTime' })}
+          placeholder={formatMessage({ id: 'system.form.placeholder.sysTime' })}
           rules={[
-            { required: true, message: formatMessage({ id: 'system.table.placeholder.sysTime' }) },
+            { required: true, message: formatMessage({ id: 'system.form.placeholder.sysTime' }) },
           ]}
         />
         <ProFormSwitch

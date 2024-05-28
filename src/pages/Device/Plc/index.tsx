@@ -29,6 +29,7 @@ const defaultPlcConfig = {
 };
 
 const defaultUploadData = {
+  uuid: 'plcUploadData',
   address: 'DB4900.DBD1000',
   tag: 'R0',
   alias: '新砂轮直径（mm）',
