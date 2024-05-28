@@ -177,6 +177,9 @@ export default {
   'device.form.title.bacnet.localIp': '本地地址',
   'device.form.title.bacnet.subnetCidr': '子网掩码',
   'device.form.title.bacnet.localPort': '本地端口',
+  'device.form.title.bacnet.vendorId': '厂商 ID',
+  'device.form.title.bacnet.objectType': '对象类型',
+  'device.form.title.bacnet.objectId': '对象 ID',
 
   // tencent
   'device.form.title.tencent.mode': '模式',
@@ -213,6 +216,10 @@ export default {
   'device.form.placeholder.oid': '请输入对象标识符',
   'device.form.placeholder.uartTimeout': '请输入读写超时',
   'device.form.placeholder.cidr': '请输入 CIDR',
+  'device.form.placeholder.bacnet.vendorId': '请输入厂商 ID',
+  'device.form.placeholder.id': '请输入设备 ID',
+  'device.form.placeholder.bacnet.objectType': '请选择对象类型',
+  'device.form.placeholder.bacnet.objectId': '请输入对象 ID',
 
   /**
    * rules
@@ -220,6 +227,8 @@ export default {
   'device.form.rules.quantity': '读取数量范围在 1-256 之间',
   'device.form.rules.weight': '权重系数必须在 -0.0001 到 100000 范围内',
   'device.form.rules.slaverId': '从设备地址 在 1-255 之间',
+  'device.form.rules.id': '请输入有效的设备 ID，范围为 0-4194302',
+  'device.form.rules.bacnet.objectId': '请输入有效的对象 ID，范围为 0-4194303',
 
   /**
    * others

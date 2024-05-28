@@ -96,47 +96,63 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
 
   const columns: ProColumns<Partial<DataSheetItem>>[] = [
     {
-      title: '设备 ID',
+      title: formatMessage({ id: 'device.form.title.id' }),
       dataIndex: 'bacnetDeviceId',
       valueType: 'digit',
       width: 100,
       formItemProps: {
-        rules: [{ required: true, message: '请输入设备 ID' }],
+        rules: [{ required: true, message: formatMessage({ id: 'device.form.placeholder.id' }) }],
       },
       fieldProps: {
         style: { width: '100%' },
-        placeholder: '请输入设备 ID',
+        placeholder: formatMessage({ id: 'device.form.placeholder.id' }),
       },
     },
     {
-      title: '对象类型',
+      title: formatMessage({ id: 'device.form.title.bacnet.objectType' }),
       dataIndex: 'objectType',
       valueType: 'select',
       width: 150,
       valueEnum: ObjectTypeOption,
       formItemProps: {
-        rules: [{ required: true, message: '请选择对象类型' }],
+        rules: [
+          {
+            required: true,
+            message: formatMessage({ id: 'device.form.placeholder.bacnet.objectType' }),
+          },
+        ],
       },
       fieldProps: {
         allowClear: false,
-        placeholder: '请选择对象类型',
+        placeholder: formatMessage({ id: 'device.form.placeholder.bacnet.objectType' }),
       },
     },
     {
-      title: '对象 ID',
+      title: formatMessage({ id: 'device.form.title.bacnet.objectId' }),
       dataIndex: 'objectId',
       width: 150,
       valueType: 'digit',
       formItemProps: {
         rules: [
-          { required: true, message: '请输入对象 ID' },
-          { min: 0, message: '请输入有效的对象 ID，范围为 0-4194303', type: 'integer' },
-          { max: 4194303, message: '请输入有效的对象 ID，范围为 0-4194303', type: 'integer' },
+          {
+            required: true,
+            message: formatMessage({ id: 'device.form.placeholder.bacnet.objectId' }),
+          },
+          {
+            min: 0,
+            message: formatMessage({ id: 'device.form.rules.bacnet.objectId' }),
+            type: 'integer',
+          },
+          {
+            max: 4194303,
+            message: formatMessage({ id: 'device.form.rules.bacnet.objectId' }),
+            type: 'integer',
+          },
         ],
       },
       fieldProps: {
         allowClear: false,
-        placeholder: '请输入对象 ID',
+        placeholder: formatMessage({ id: 'device.form.placeholder.bacnet.objectId' }),
       },
     },
   ];

@@ -178,10 +178,13 @@ export default {
 
   // bacnet
   'device.form.title.bacnet.mode.broadcast': 'Broadcast Mode',
-  'device.form.title.bacnet.interface': 'Network Interface Card',
-  'device.form.title.bacnet.localIp': 'IP',
+  'device.form.title.bacnet.interface': 'Interface',
+  'device.form.title.bacnet.localIp': 'Local IP',
   'device.form.title.bacnet.subnetCidr': 'Subnet CIDR',
   'device.form.title.bacnet.localPort': 'Port',
+  'device.form.title.bacnet.vendorId': 'Vendor ID',
+  'device.form.title.bacnet.objectType': 'Object Type',
+  'device.form.title.bacnet.objectId': 'Object ID',
 
   // tencent
   'device.form.title.tencent.mode': 'Mode',
@@ -218,6 +221,10 @@ export default {
   'device.form.placeholder.oid': 'Please enter an OID',
   'device.form.placeholder.uartTimeout': 'Please enter a timeout',
   'device.form.placeholder.cidr': 'Please enter a CIDR',
+  'device.form.placeholder.bacnet.vendorId': 'Please enter a vendor ID',
+  'device.form.placeholder.id': 'Please enter a device ID',
+  'device.form.placeholder.bacnet.objectType': 'Please select an object type',
+  'device.form.placeholder.bacnet.objectId': 'Please enter an object ID',
 
   /**
    * rules
@@ -225,6 +232,8 @@ export default {
   'device.form.rules.quantity': 'The quantity ranges between 1 and 256',
   'device.form.rules.weight': 'The weight must be within the range of -0.0001 to 100,000',
   'device.form.rules.slaverId': 'The slaver address must be between 1 and 255',
+  'device.form.rules.id': 'Please enter a valid device ID, ranging from 0 to 4194302',
+  'device.form.rules.bacnet.objectId': 'Please enter a valid object ID, ranging from 0 to 4194303',
 
   /**
    * others

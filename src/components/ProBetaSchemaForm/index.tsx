@@ -42,7 +42,7 @@ const getRules = (col: any) => {
         required: col.required,
         message: intl.formatMessage(
           { id: 'placeholder.input' },
-          { text: getLocale() === 'en-US' ? col.title : col.title },
+          { text: getLocale() === 'en-US' ? col.title.toLowerCase() : col.title },
         ),
       },
       {

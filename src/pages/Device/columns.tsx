@@ -187,6 +187,7 @@ export const baseColumns = (product: Product) => [
     dataIndex: 'type',
     valueType: 'select',
     required: true,
+    ellipsis: true,
     valueEnum: deviceTypeOptions[product],
   },
   {
@@ -697,14 +698,14 @@ export const typeConfigColumns = {
       valueType: 'group',
       columns: [
         {
-          title: '厂商 ID',
+          title: intl.formatMessage({ id: 'device.form.title.bacnet.vendorId' }),
           dataIndex: ['config', 'bacnetConfig', 'vendorId'],
           valueType: 'digit',
           formItemProps: {
             rules: [
               {
                 required: true,
-                message: '请输入厂商 ID',
+                message: intl.formatMessage({ id: 'device.form.placeholder.bacnet.vendorId' }),
               },
               {
                 validator: (_rule: Rule, value: number) =>
@@ -712,18 +713,28 @@ export const typeConfigColumns = {
               },
             ],
           },
+          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.vendorId,
         },
         {
-          title: '设备 ID',
+          title: intl.formatMessage({ id: 'device.form.title.id' }),
           dataIndex: ['config', 'bacnetConfig', 'deviceId'],
           valueType: 'digit',
           formItemProps: {
             rules: [
-              { required: true, message: '请输入设备 ID' },
-              { min: 0, message: '请输入有效的设备 ID，范围为 0-4194302', type: 'integer' },
-              { max: 4194302, message: '请输入有效的设备 ID，范围为 0-4194302', type: 'integer' },
+              { required: true, message: intl.formatMessage({ id: 'device.form.placeholder.id' }) },
+              {
+                min: 0,
+                message: intl.formatMessage({ id: 'device.form.rules.id' }),
+                type: 'integer',
+              },
+              {
+                max: 4194302,
+                message: intl.formatMessage({ id: 'device.form.rules.id' }),
+                type: 'integer',
+              },
             ],
           },
+          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.deviceId,
         },
         {
           title: intl.formatMessage({ id: 'device.form.title.mode' }),
