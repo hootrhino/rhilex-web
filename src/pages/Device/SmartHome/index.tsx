@@ -25,6 +25,7 @@ import { Button, Divider, Dropdown, Space, Switch, Tag } from 'antd';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useState } from 'react';
 import Detail from './Detail';
+import ProTag from '@/components/ProTag';
 
 export enum AppType {
   PRO1 = 'Pro1',
@@ -213,9 +214,9 @@ const ShellySubDevice = () => {
               title={
                 <div className="flex items-center truncate w-[200px]">
                   {item.name}
-                  <Tag className="ml-[10px]" color="blue">
+                  <ProTag className="ml-[10px]" color="blue">
                     {item.app}
-                  </Tag>
+                  </ProTag>
                 </div>
               }
               description={
@@ -228,11 +229,11 @@ const ShellySubDevice = () => {
                         const lastChild = item?.input?.[item?.input?.length - 1]?.id === i.id;
                         return (
                           <div key={i.id} className="input-tag-wrapper">
-                            <Tag
+                            <ProTag
                               color={i.status ? 'success' : 'default'}
                               icon={i.status ? <CheckCircleOutlined /> : <MinusCircleOutlined />}
                               bordered={false}
-                            >{`${i.id + 1}`}</Tag>
+                            >{`${i.id + 1}`}</ProTag>
                             {!lastChild && <Divider type="vertical" />}
                           </div>
                         );

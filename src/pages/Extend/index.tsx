@@ -1,6 +1,5 @@
 import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
-import StateTag, { StateType } from '@/components/StateTag';
 import {
   deleteGoods,
   getGoodsList,
@@ -18,6 +17,7 @@ import { useRef, useState } from 'react';
 import type { DetailLogModalConfig } from './Detail';
 import Detail from './Detail';
 import UpdateForm from './Update';
+import ProTag, { StatusType } from '@/components/ProTag';
 
 export type ExtendItem = {
   uuid?: string;
@@ -45,9 +45,6 @@ export const baseColumns = [
     title: '扩展类型',
     dataIndex: 'goodsType',
     width: 80,
-    // renderText: (goodsType: string) => (
-    //   <StateTag state={goodsType === 'LOCAL'} type={StateType.GOODSTYPE} />
-    // ),
   },
   {
     title: '本地路径',
@@ -91,7 +88,7 @@ export const baseColumns = [
     title: '运行状态',
     dataIndex: 'running',
     width: 100,
-    renderText: (running: string) => <StateTag state={running} type={StateType.RUNNING} />,
+    renderText: (running: string) => <ProTag type={StatusType.RUNNING}>{running}</ProTag>,
   },
   {
     title: <FormattedMessage id="table.desc" />,

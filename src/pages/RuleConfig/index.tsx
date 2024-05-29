@@ -6,7 +6,6 @@ import { useState } from 'react';
 
 import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
-import StateTag, { StateType } from '@/components/StateTag';
 import { deleteRulesDel } from '@/services/rulex/guizeguanli';
 import { DetailModalType } from '@/utils/enum';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
@@ -14,6 +13,7 @@ import type { TestType } from './Debug';
 import Debug from './Debug';
 import type { DetailLogModalConfig } from './Detail';
 import Detail from './Detail';
+import ProTag, { StatusType } from '@/components/ProTag';
 
 export type RuleItem = {
   uuid: string;
@@ -111,7 +111,7 @@ const RuleConfig = ({
       title: formatMessage({ id: 'ruleConfig.table.title.status' }),
       dataIndex: 'status',
       width: 100,
-      renderText: (status) => <StateTag state={status} type={StateType.RULE} />,
+      renderText: (status) => <ProTag type={StatusType.RULE}>{status}</ProTag>,
     },
     {
       title: formatMessage({ id: 'table.desc' }),

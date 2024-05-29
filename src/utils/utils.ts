@@ -116,6 +116,13 @@ export const stringToBool = (value: string) => {
   return valueMap[value];
 };
 
+export const bool2String = (value: boolean | string | number) => {
+  if (typeof value === 'boolean') {
+    return value ? 'true' : 'false';
+  }
+  return value;
+}
+
 export const ensureArrayLength = (arr: string[], maxLength = 50) => {
   if (arr.length > maxLength) {
     // 当数组长度超出最大长度时，从数组头部移除元素

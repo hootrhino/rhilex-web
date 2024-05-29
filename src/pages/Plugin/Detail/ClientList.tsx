@@ -1,10 +1,11 @@
+import ProTag from '@/components/ProTag';
 import type { PluginConfig, PluginParams } from '@/models/usePlugin';
 import { omit } from '@/utils/redash';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useIntl, useModel } from '@umijs/max';
-import { message, Tag } from 'antd';
+import { message } from 'antd';
 import { useEffect } from 'react';
 
 type DetailItem = {
@@ -50,12 +51,12 @@ const ClientList = () => {
       title: 'Clean Session',
       dataIndex: 'cleanSession',
       renderText: (cleanSession) => (
-        <Tag
+        <ProTag
           icon={cleanSessionEnum[cleanSession]?.icon}
           color={cleanSessionEnum[cleanSession]?.color}
         >
           {cleanSessionEnum[cleanSession]?.text}
-        </Tag>
+        </ProTag>
       ),
     },
     {

@@ -1,6 +1,6 @@
 import PageContainer from '@/components/PageContainer';
 import { message, modal } from '@/components/PopupHack';
-import StateTag, { StateType } from '@/components/StateTag';
+import ProTag, { StatusType } from '@/components/ProTag';
 import { getNotifyPageList, putNotifyClear, putNotifyRead } from '@/services/rulex/zhanneitongzhi';
 import { defaultPagination } from '@/utils/constant';
 import { CalendarOutlined, ClearOutlined } from '@ant-design/icons';
@@ -96,9 +96,7 @@ const Notification = () => {
             dataIndex: 'event',
           },
           subTitle: {
-            render: (_dom, { type }) => (
-              <StateTag state={type || 'DEFAULT'} type={StateType.NOTICE} />
-            ),
+            render: (_dom, { type }) => <ProTag type={StatusType.NOTICE}>{type || 'DEFAULT'}</ProTag>
           },
           description: {
             dataIndex: 'info',

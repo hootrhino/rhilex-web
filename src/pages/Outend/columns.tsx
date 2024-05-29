@@ -1,11 +1,11 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
 import ProSegmented from '@/components/ProSegmented';
-import StateTag, { StateType } from '@/components/StateTag';
 import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { stringToBool } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 import { Space } from 'antd';
 import { DataMode, dataModeOption, OutendType, outendTypeOption } from './enum';
+import ProTag, { StatusType } from '@/components/ProTag';
 
 const DEFAULT_TIMEOUT = 3000;
 const DEFAULT_HOST = '127.0.0.1';
@@ -85,7 +85,7 @@ export const baseColumns = [
     title: intl.formatMessage({ id: 'outend.table.title.state' }),
     dataIndex: 'state',
     hideInForm: true,
-    renderText: (state: number) => <StateTag state={state} />,
+    renderText: (state: number) => <ProTag type={StatusType.DEVICE}>{state}</ProTag>,
   },
   {
     title: intl.formatMessage({ id: 'table.desc' }),
@@ -108,7 +108,7 @@ const pingConfig = [
     }),
     convertValue: (value: boolean) => value?.toString(),
     renderFormItem: () => <ProSegmented width="md" />,
-    renderText: (allowPing: boolean) => <StateTag state={allowPing} type={StateType.BOOL} />,
+    renderText: (allowPing: boolean) => <ProTag type={StatusType.BOOL}>{allowPing}</ProTag>,
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.pingPacket' }),

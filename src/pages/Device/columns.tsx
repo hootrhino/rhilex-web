@@ -1,6 +1,5 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
 import ProSegmented from '@/components/ProSegmented';
-import StateTag, { StateType } from '@/components/StateTag';
 import UnitValue from '@/components/UnitValue';
 import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
@@ -23,22 +22,21 @@ import {
   TencentMode,
   TransportOption,
 } from './enum';
+import ProTag, { StatusType } from '@/components/ProTag';
 
 const intl = getIntl(getLocale());
 
 /**
  * 创建配置项 autoRequest/enableGroup/enableOptimize/parseAis
  */
-const createBoolConfig = (title: string, dataIndex: string, type = StateType.BOOL) => {
+const createBoolConfig = (title: string, dataIndex: string, type = StatusType.BOOL) => {
   return [
     {
       title,
       dataIndex: ['config', 'commonConfig', dataIndex],
       required: true,
       renderFormItem: () => <ProSegmented width="md" />,
-      render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
-        <StateTag state={commonConfig[dataIndex]} type={type} key={dataIndex} />
-      ),
+      render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => <ProTag type={type} key={dataIndex} >{commonConfig[dataIndex]}</ProTag>
     },
   ];
 };
@@ -210,7 +208,7 @@ export const baseColumns = (product: Product) => [
     dataIndex: 'state',
     hideInForm: true,
     width: 100,
-    renderText: (state: number) => <StateTag state={state} />,
+    renderText: (state: number) => <ProTag type={StatusType.DEVICE}>{state}</ProTag>,
   },
   {
     title: intl.formatMessage({ id: 'table.desc' }),
@@ -303,7 +301,7 @@ export const typeConfigColumns = {
   //     title: '通用配置',
   //     valueType: 'group',
   //     columns: [
-  //       ...createBoolConfig('解析 AIS 报文', 'parseAis', StateType.PARSE),
+  //       ...createBoolConfig('解析 AIS 报文', 'parseAis', StatusType.PARSE),
   //       {
   //         title: '主机序列号',
   //         dataIndex: ['config', 'commonConfig', 'gwsn'],

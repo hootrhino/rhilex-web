@@ -3,7 +3,7 @@ import { ProList } from '@ant-design/pro-components';
 import { history, useIntl, useModel } from '@umijs/max';
 import { Badge, Popover } from 'antd';
 import dayjs from 'dayjs';
-import StateTag, { StateType } from '../StateTag';
+import ProTag, { StatusType } from '../ProTag';
 
 const NoticeIcon = () => {
   const { formatMessage } = useIntl();
@@ -32,7 +32,7 @@ const NoticeIcon = () => {
           },
         },
         actions: {
-          render: (_, { type }) => <StateTag state={type || 'DEFAULT'} type={StateType.NOTICE} />,
+          render: (_, { type }) => <ProTag type={StatusType.NOTICE}>{type || 'DEFAULT'}</ProTag>
         },
       }}
       className="notification-list"

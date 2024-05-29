@@ -1,4 +1,3 @@
-import StateTag from '@/components/StateTag';
 import { getIntl, getLocale } from '@umijs/max';
 import {
   EventType,
@@ -9,6 +8,7 @@ import {
   modeOption,
   qosEnum,
 } from './enum';
+import ProTag, { StatusType } from '@/components/ProTag';
 
 const DEFAULT_HOST = '127.0.0.1';
 
@@ -79,7 +79,7 @@ export const baseColumns = [
     title: intl.formatMessage({ id: 'inend.table.title.state' }),
     dataIndex: 'state',
     hideInForm: true,
-    renderText: (state: number) => <StateTag state={state} />,
+    renderText: (state: number) => <ProTag type={StatusType.DEVICE}>{state}</ProTag>,
   },
   {
     title: intl.formatMessage({ id: 'table.desc' }),

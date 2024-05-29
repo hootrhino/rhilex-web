@@ -1,5 +1,6 @@
 import IndexBorder from '@/components/IndexBorder';
 import PageContainer from '@/components/PageContainer';
+import ProTag, { StatusType } from '@/components/ProTag';
 import StateTag, { StateType } from '@/components/StateTag';
 import { getInendsClients, getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { defaultPagination } from '@/utils/constant';
@@ -38,7 +39,7 @@ const SubDeviceList = () => {
     {
       title: formatMessage({ id: 'inend.table.title.status' }),
       dataIndex: 'status',
-      renderText: (status) => status && <StateTag state={status} type={StateType.DEVICE} />,
+      renderText: (status) => status && <ProTag type={StatusType.INEND}>{status}</ProTag>,
     },
     {
       title: formatMessage({ id: 'inend.table.title.properties' }),

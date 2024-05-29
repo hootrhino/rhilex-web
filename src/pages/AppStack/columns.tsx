@@ -1,5 +1,5 @@
 import ProSegmented from '@/components/ProSegmented';
-import StateTag, { StateType } from '@/components/StateTag';
+import ProTag, { StatusType } from '@/components/ProTag';
 import { stringToBool } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 
@@ -22,13 +22,13 @@ export const baseColumns = [
     convertValue: (value: boolean) => value?.toString(),
     transform: (value: string) => ({ autoStart: stringToBool(value) }),
     renderFormItem: () => <ProSegmented width="md" />,
-    renderText: (autoStart: boolean) => <StateTag state={autoStart} type={StateType.BOOL} />,
+    renderText: (autoStart: boolean) => autoStart && <ProTag type={StatusType.BOOL}>{autoStart}</ProTag>,
   },
   {
     title: getIntl(getLocale()).formatMessage({ id: 'appStack.table.title.appState' }),
     dataIndex: 'appState',
     hideInForm: true,
-    renderText: (appState: number) => <StateTag state={appState} type={StateType.APPSTACK} />,
+    renderText: (appState: number) => <ProTag type={StatusType.APP}>{appState}</ProTag>,
   },
   {
     title: getIntl(getLocale()).formatMessage({ id: 'appStack.table.title.type' }),

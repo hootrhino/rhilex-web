@@ -1,8 +1,7 @@
+import ProTag, { StatusType } from '@/components/ProTag';
 import { postPlugwareService } from '@/services/rulex/chajianguanli';
-import { MinusCircleOutlined, SyncOutlined } from '@ant-design/icons';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { getIntl, getLocale } from '@umijs/max';
-import { Tag } from 'antd';
 
 const intl = getIntl(getLocale());
 
@@ -11,14 +10,7 @@ const columns = [
     title: intl.formatMessage({ id: 'plugin.table.title.running' }),
     dataIndex: 'running',
     renderText: (running: boolean) => (
-      <Tag
-        icon={running ? <SyncOutlined spin /> : <MinusCircleOutlined />}
-        color={running ? 'processing' : 'default'}
-      >
-        {running
-          ? intl.formatMessage({ id: 'status.running' })
-          : intl.formatMessage({ id: 'status.stop' })}
-      </Tag>
+      <ProTag type={StatusType.RUNNING}>{running}</ProTag>
     ),
   },
   {

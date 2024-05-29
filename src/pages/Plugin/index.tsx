@@ -5,10 +5,11 @@ import { message, modal } from '@/components/PopupHack';
 import { getPlugwareList } from '@/services/rulex/chajianguanli';
 import { useIntl, useModel } from '@umijs/max';
 import { useSize } from 'ahooks';
-import { Tag, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
 import { useRef } from 'react';
 import Detail from './Detail';
 import NgrokDetail from './Detail/Ngrok';
+import ProTag from '@/components/ProTag';
 
 export type PluginItem = {
   name: string;
@@ -147,7 +148,7 @@ const Plugins = () => {
               dataIndex: 'name',
             },
             subTitle: {
-              render: (_dom, { version }) => <Tag color="blue">{version}</Tag>,
+              render: (_dom, { version }) => <ProTag color="blue">{version}</ProTag>,
             },
             content: {
               render: (_dom, { description }) =>

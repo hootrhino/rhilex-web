@@ -16,7 +16,6 @@ import { Button, Dropdown, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import { useEffect, useState } from 'react';
 
 import PageContainer from '@/components/PageContainer';
-import StateTag, { StateType } from '@/components/StateTag';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { SheetType } from '@/utils/enum';
 
@@ -24,6 +23,7 @@ import { defaultPagination } from '@/utils/constant';
 import { omit } from '@/utils/redash';
 import UploadSheetConfirm from './ConfirmModal';
 import type { DataSheetItem, DataSheetProps } from './typings';
+import ProTag, { StatusType } from '@/components/ProTag';
 
 const DataSheet = ({
   type = SheetType.LIST,
@@ -148,7 +148,7 @@ const DataSheet = ({
       dataIndex: 'status',
       width: 80,
       editable: false,
-      renderText: (_, record) => <StateTag state={record?.status || 0} type={StateType.POINT} />,
+      renderText: (_, record) => <ProTag type={StatusType.POINT} >{record?.status || 0}</ProTag>,
     },
     {
       title: formatMessage({ id: 'device.form.title.lastFetchTime' }),

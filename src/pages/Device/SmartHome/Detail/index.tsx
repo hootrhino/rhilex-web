@@ -1,3 +1,4 @@
+import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
 import { getShellyGen1Detail, getShellyGen1Status } from '@/services/rulex/shellyshebei';
 import { CheckCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
@@ -69,14 +70,9 @@ const baseColumns = [
     title: intl.formatMessage({ id: 'device.form.title.authEn' }),
     dataIndex: 'auth_en',
     renderText: (auth_en: boolean) => (
-      <Tag
-        color={auth_en ? 'success' : 'default'}
-        icon={auth_en ? <CheckCircleOutlined /> : <MinusCircleOutlined />}
-      >
-        {auth_en
-          ? intl.formatMessage({ id: 'status.enabled' })
-          : intl.formatMessage({ id: 'status.disabled' })}
-      </Tag>
+      <ProTag type={StatusType.BOOL}>
+        {auth_en}
+      </ProTag>
     ),
   },
   {
@@ -90,14 +86,9 @@ const statusColumns = [
     title: intl.formatMessage({ id: 'device.form.title.restartRequired' }),
     dataIndex: 'restart_required',
     renderText: (restart_required: boolean) => (
-      <Tag
-        color={restart_required ? 'success' : 'default'}
-        icon={restart_required ? <CheckCircleOutlined /> : <MinusCircleOutlined />}
-      >
-        {restart_required
-          ? intl.formatMessage({ id: 'status.enabled' })
-          : intl.formatMessage({ id: 'status.disabled' })}
-      </Tag>
+      <ProTag type={StatusType.BOOL}>
+        {restart_required}
+      </ProTag>
     ),
   },
   {
