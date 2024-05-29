@@ -87,6 +87,7 @@ const Plugins = () => {
   // ngrokc
   const handleOnViewConfig = () => {
     modal.info({
+      width: '40%',
       title: formatMessage({ id: 'button.detail' }),
       content: <NgrokDetail />,
       okText: formatMessage({ id: 'button.close' }),
