@@ -1,6 +1,6 @@
-import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import ProLog from '@/components/ProLog';
+import PageContainer from '@/components/ProPageContainer';
 import { deviceAvatar } from '@/pages/Device/enum';
 import { getDevicesList } from '@/services/rulex/shebeiguanli';
 import { postOsResetInterMetric } from '@/services/rulex/xitongshuju';

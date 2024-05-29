@@ -1,6 +1,6 @@
-import PageContainer from '@/components/PageContainer';
 import { message, modal } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
+import PageContainer from '@/components/ProPageContainer';
 import {
   deleteDevicesDel,
   getDevicesDeviceErrMsg,

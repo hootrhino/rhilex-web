@@ -2,7 +2,7 @@ import { getIntl, getLocale, history, Link } from '@umijs/max';
 
 import type { RunTimeLayoutConfig } from 'umi';
 
-import { GoBackModal } from '@/components/PageContainer';
+import { GoBackModal } from '@/components/ProPageContainer';
 import RightContent from '@/components/RightContent';
 import { ProductMenuAccess } from '@/models/useSystem';
 import { LOGIN_PATH } from '@/utils/constant';

@@ -1,4 +1,4 @@
-import PageContainer from '@/components/PageContainer';
+import PageContainer from '@/components/ProPageContainer';
 import UnitValue from '@/components/UnitValue';
 import { getHwifaceList, getHwifaceRefresh } from '@/services/rulex/jiekouguanli';
 import { ScanOutlined } from '@ant-design/icons';

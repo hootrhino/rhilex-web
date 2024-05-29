@@ -1,5 +1,6 @@
-import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
+import PageContainer from '@/components/ProPageContainer';
+import ProTag, { StatusType } from '@/components/ProTag';
 import {
   deleteGoods,
   getGoodsList,
@@ -17,7 +18,6 @@ import { useRef, useState } from 'react';
 import type { DetailLogModalConfig } from './Detail';
 import Detail from './Detail';
 import UpdateForm from './Update';
-import ProTag, { StatusType } from '@/components/ProTag';
 
 export type ExtendItem = {
   uuid?: string;

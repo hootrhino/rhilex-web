@@ -1,5 +1,5 @@
-import PageContainer from '@/components/PageContainer';
 import { message, modal } from '@/components/PopupHack';
+import PageContainer from '@/components/ProPageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
 import { getNotifyPageList, putNotifyClear, putNotifyRead } from '@/services/rulex/zhanneitongzhi';
 import { defaultPagination } from '@/utils/constant';
@@ -96,7 +96,9 @@ const Notification = () => {
             dataIndex: 'event',
           },
           subTitle: {
-            render: (_dom, { type }) => <ProTag type={StatusType.NOTICE}>{type || 'DEFAULT'}</ProTag>
+            render: (_dom, { type }) => (
+              <ProTag type={StatusType.NOTICE}>{type || 'DEFAULT'}</ProTag>
+            ),
           },
           description: {
             dataIndex: 'info',

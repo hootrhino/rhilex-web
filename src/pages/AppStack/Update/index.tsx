@@ -1,7 +1,7 @@
-import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
 import ProCodeEditor from '@/components/ProCodeEditor';
+import PageContainer from '@/components/ProPageContainer';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rulex/qingliangyingyong';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';

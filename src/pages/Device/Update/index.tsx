@@ -12,8 +12,8 @@ import { useEffect, useRef, useState } from 'react';
 import { columns } from '../columns';
 import { defaultConfig, defaultModelConfig } from './initialValues';
 
-import PageContainer from '@/components/PageContainer';
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
+import PageContainer from '@/components/ProPageContainer';
 import { defaultDeviceType, DeviceMode, DeviceType } from '../enum';
 
 const DefaultListUrl = '/device/list';

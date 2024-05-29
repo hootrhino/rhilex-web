@@ -1,4 +1,4 @@
-import PageContainer from '@/components/PageContainer';
+import PageContainer from '@/components/ProPageContainer';
 import { Product } from '@/utils/enum';
 import { ProCard } from '@ant-design/pro-components';
 import { FormattedMessage, useModel } from '@umijs/max';

@@ -1,5 +1,6 @@
-import PageContainer from '@/components/PageContainer';
 import { message, modal } from '@/components/PopupHack';
+import PageContainer from '@/components/ProPageContainer';
+import ProTag from '@/components/ProTag';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import {
   getShellyGen1List,
@@ -21,11 +22,10 @@ import {
 import type { CheckGroupValueType } from '@ant-design/pro-card/es/components/CheckCard/Group';
 import { CheckCard, ProCard } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
-import { Button, Divider, Dropdown, Space, Switch, Tag } from 'antd';
+import { Button, Divider, Dropdown, Space, Switch } from 'antd';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useState } from 'react';
 import Detail from './Detail';
-import ProTag from '@/components/ProTag';
 
 export enum AppType {
   PRO1 = 'Pro1',

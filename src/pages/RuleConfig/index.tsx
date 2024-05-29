@@ -4,8 +4,9 @@ import { ProTable } from '@ant-design/pro-components';
 import { Button, Popconfirm } from 'antd';
 import { useState } from 'react';
 
-import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
+import PageContainer from '@/components/ProPageContainer';
+import ProTag, { StatusType } from '@/components/ProTag';
 import { deleteRulesDel } from '@/services/rulex/guizeguanli';
 import { DetailModalType } from '@/utils/enum';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
@@ -13,7 +14,6 @@ import type { TestType } from './Debug';
 import Debug from './Debug';
 import type { DetailLogModalConfig } from './Detail';
 import Detail from './Detail';
-import ProTag, { StatusType } from '@/components/ProTag';
 
 export type RuleItem = {
   uuid: string;

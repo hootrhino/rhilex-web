@@ -6,9 +6,9 @@ import { ProTable } from '@ant-design/pro-components';
 import { Button, Dropdown, Popconfirm } from 'antd';
 import { history } from 'umi';
 
-import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
+import PageContainer from '@/components/ProPageContainer';
 import {
   deleteOutendsDel,
   getOutendsList,

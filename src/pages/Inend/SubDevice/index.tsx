@@ -1,5 +1,5 @@
 import IndexBorder from '@/components/IndexBorder';
-import PageContainer from '@/components/PageContainer';
+import PageContainer from '@/components/ProPageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
 import { getInendsClients, getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { defaultPagination } from '@/utils/constant';

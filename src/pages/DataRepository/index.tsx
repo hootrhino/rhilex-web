@@ -1,5 +1,5 @@
-import PageContainer from '@/components/PageContainer';
 import { message, modal } from '@/components/PopupHack';
+import PageContainer from '@/components/ProPageContainer';
 import UnitValue from '@/components/UnitValue';
 import {
   deleteDatacenterClearSchemaData,

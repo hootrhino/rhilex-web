@@ -1,7 +1,7 @@
 import CodeEditor, { Lang, Theme } from '@/components/CodeEditor';
-import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
+import PageContainer from '@/components/ProPageContainer';
 import { getRulesDetail, postRulesCreate, putRulesUpdate } from '@/services/rulex/guizeguanli';
 import { FormItemType } from '@/utils/enum';
 import { validateFormItem } from '@/utils/utils';

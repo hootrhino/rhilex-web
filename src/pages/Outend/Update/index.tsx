@@ -1,6 +1,6 @@
-import PageContainer from '@/components/PageContainer';
 import { message } from '@/components/PopupHack';
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
+import PageContainer from '@/components/ProPageContainer';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import {
   getOutendsDetail,

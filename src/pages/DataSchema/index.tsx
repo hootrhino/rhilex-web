@@ -1,4 +1,4 @@
-import PageContainer from '@/components/PageContainer';
+import PageContainer from '@/components/ProPageContainer';
 import { PlusOutlined } from '@ant-design/icons';
 import { ProCard } from '@ant-design/pro-components';
 import { useIntl, useModel } from '@umijs/max';
