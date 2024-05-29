@@ -1,3 +1,4 @@
+import ProTag, { StatusType } from '@/components/ProTag';
 import { getIntl, getLocale } from '@umijs/max';
 import {
   EventType,
@@ -8,7 +9,6 @@ import {
   modeOption,
   qosEnum,
 } from './enum';
-import ProTag, { StatusType } from '@/components/ProTag';
 
 const DEFAULT_HOST = '127.0.0.1';
 
@@ -74,6 +74,7 @@ export const baseColumns = [
     valueType: 'select',
     valueEnum: inendTypeOption,
     required: true,
+    ellipsis: true,
   },
   {
     title: intl.formatMessage({ id: 'inend.table.title.state' }),

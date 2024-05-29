@@ -1,11 +1,10 @@
 import IndexBorder from '@/components/IndexBorder';
 import PageContainer from '@/components/PageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
-import StateTag, { StateType } from '@/components/StateTag';
 import { getInendsClients, getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { defaultPagination } from '@/utils/constant';
 import type { ProColumns } from '@ant-design/pro-components';
-import { ProTable } from '@ant-design/pro-components';
+import { ProCard, ProTable } from '@ant-design/pro-components';
 import { useIntl, useParams, useRequest } from '@umijs/max';
 
 type SubDeviceItem = {
@@ -57,25 +56,31 @@ const SubDeviceList = () => {
       backUrl={`/inend/list`}
       title={formatMessage({ id: 'inend.title.subDevice' }, { name: inendsDetail?.name || '' })}
     >
-      <ProTable
-        rowKey="ip"
-        columns={columns}
-        options={false}
-        search={false}
-        request={async ({
-          current = defaultPagination.defaultCurrent,
-          pageSize = defaultPagination.defaultPageSize,
-        }) => {
-          const { data } = await getInendsClients({ uuid: inendId || '', current, size: pageSize });
+      <ProCard>
+        <ProTable
+          rowKey="ip"
+          columns={columns}
+          options={false}
+          search={false}
+          request={async ({
+            current = defaultPagination.defaultCurrent,
+            pageSize = defaultPagination.defaultPageSize,
+          }) => {
+            const { data } = await getInendsClients({
+              uuid: inendId || '',
+              current,
+              size: pageSize,
+            });
 
-          return Promise.resolve({
-            data: data.records,
-            success: true,
-            total: data.total,
-          });
-        }}
-        pagination={defaultPagination}
-      />
+            return Promise.resolve({
+              data: data.records,
+              success: true,
+              total: data.total,
+            });
+          }}
+          pagination={defaultPagination}
+        />
+      </ProCard>
     </PageContainer>
   );
 };
