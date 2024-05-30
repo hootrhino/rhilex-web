@@ -1,5 +1,5 @@
+import { InendType } from '@/pages/Inend/enum';
 import { getIntl, getLocale } from '@umijs/max';
-import { InendType } from '../../Inend/enum';
 
 const intl = getIntl(getLocale());
 

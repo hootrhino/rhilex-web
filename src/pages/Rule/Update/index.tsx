@@ -2,7 +2,10 @@ import CodeEditor, { Lang, Theme } from '@/components/CodeEditor';
 import { message } from '@/components/PopupHack';
 import ProCodeEditor from '@/components/ProCodeEditor';
 import PageContainer from '@/components/ProPageContainer';
+import { InendType } from '@/pages/Inend/enum';
 import { getRulesDetail, postRulesCreate, putRulesUpdate } from '@/services/rulex/guizeguanli';
+import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
+import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { FormItemType } from '@/utils/enum';
 import { validateFormItem } from '@/utils/utils';
 import { NotificationOutlined } from '@ant-design/icons';
@@ -13,12 +16,9 @@ import { Alert, Button, Popconfirm } from 'antd';
 import type { Rule } from 'antd/es/form';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
-import { RuleType } from '..';
-import { DeviceType } from '../../Device/enum';
-import { InendType } from '../../Inend/enum';
-import { device_ds } from './deviceDS';
-import { inend_ds, inend_event_ds, links } from './inendDS';
-import { DefaultActions, DefaultFailed, DefaultSuccess } from './initialValue';
+import type { DSType } from '..';
+import { dsData } from '../DS';
+import { inend_event_ds, links } from '../DS/inend';
 
 type FormParams = {
   name: string;
@@ -28,12 +28,21 @@ type FormParams = {
   failed: string;
 };
 
-type UpdateFormProps = {
-  type: RuleType;
-  typeId: string;
-  deviceType?: DeviceType;
-  inendType?: InendType;
-};
+/** 规则默认值 **/
+const DefaultActions = `Actions = {
+  function(args)
+    --Debug(args)
+    return true, args
+  end
+}`;
+
+const DefaultSuccess = `function Success()
+--Debug("success")
+end`;
+
+const DefaultFailed = `function Failed(error)
+Debug(error)
+end`;
 
 const initialValue = {
   actions: DefaultActions,
@@ -42,18 +51,42 @@ const initialValue = {
   name: '',
 };
 
-const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) => {
+const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
-  const { ruleId, groupId } = useParams();
+  const { ruleId, deviceId, inendId, groupId } = useParams();
   const { formatMessage } = useIntl();
+
   const [loading, setLoading] = useState<boolean>(false);
-  const DefaultListUrl = groupId ? `/${type}/${groupId}/${typeId}/rule` : `/${type}/${typeId}/rule`;
-  const hasDeviceDS = deviceType && Object.keys(DeviceType).includes(deviceType);
-  const hasInendDS = inendType && Object.keys(InendType).includes(inendType);
+  const [dsType, setType] = useState<string>();
+
+  const getBackUrl = () => {
+    if (groupId && deviceId) {
+      return `/device/${groupId}/${deviceId}/rule`;
+    } else {
+      return `/inend/${inendId}/rule`;
+    }
+  };
+
+  useRequest(() => getInendsDetail({ uuid: inendId || '' }), {
+    ready: !!inendId,
+    refreshDeps: [inendId],
+    onSuccess: (res) => {
+      setType(res?.type);
+    },
+  });
+
+  useRequest(() => getDevicesDetail({ uuid: deviceId || '' }), {
+    ready: !!deviceId,
+    refreshDeps: [deviceId],
+    onSuccess: (res) => {
+      setType(res?.type);
+    },
+  });
 
   // 获取详情
   const { data: detail } = useRequest(() => getRulesDetail({ uuid: ruleId || '' }), {
     ready: !!ruleId,
+    refreshDeps: [ruleId],
   });
 
   const handleOnFinish = async (values: FormParams) => {
@@ -61,8 +94,8 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
     try {
       const params = {
         ...values,
-        fromSource: type === RuleType.INEND ? [typeId] : [],
-        fromDevice: type === RuleType.DEVICE ? [typeId] : [],
+        fromSource: inendId ? [inendId] : [],
+        fromDevice: deviceId ? [deviceId] : [],
         success: DefaultSuccess,
         failed: DefaultFailed,
       };
@@ -74,7 +107,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
         await postRulesCreate(params);
         message.success(formatMessage({ id: 'message.success.new' }));
       }
-      history.push(DefaultListUrl);
+      history.push(getBackUrl());
       setLoading(false);
       return true;
     } catch (err) {
@@ -83,59 +116,15 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
     }
   };
 
-  // 获取设备数据结构
-  const getDeviceDS = () => {
-    // if (deviceType === 'GENERIC_AIS_RECEIVER') {
-    //   return device_ais_ds.map(({ key, title, json }) => (
-    //     <div key={key} className="mb-[20px]">
-    //       <div className="mb-[5px]">{title}</div>
-    //       <CodeEditor lang={Lang.JSON} readOnly value={json} theme={Theme.LIGHT} />
-    //     </div>
-    //   ));
-    // } else {
-    //   return (
-    //     <CodeEditor
-    //       lang={Lang.JSON}
-    //       readOnly
-    //       value={deviceType ? device_ds[deviceType] : ''}
-    //       theme={Theme.LIGHT}
-    //     />
-    //   );
-    // }
-    return (
-      <CodeEditor
-        lang={Lang.JSON}
-        readOnly
-        value={deviceType ? device_ds[deviceType] : ''}
-        theme={Theme.LIGHT}
-      />
-    );
-  };
+  useEffect(() => {
+    formRef.current?.setFieldsValue(detail ? detail : initialValue);
+  }, [detail]);
 
-  // 获取南向资源数据结构
-  const getInendDS = () => {
-    if (!inendType) return;
-    if (
-      [
-        InendType.COAP,
-        InendType.HTTP,
-        InendType.RULEX_UDP,
-        InendType.GRPC,
-        InendType.NATS_SERVER,
-      ].includes(inendType)
-    ) {
-      return (
-        <CodeEditor
-          lang={Lang.JSON}
-          readOnly
-          value={inendType ? inend_ds[inendType] : ''}
-          theme={Theme.LIGHT}
-        />
-      );
-    } else if ([InendType.GENERIC_IOT_HUB, InendType.GENERIC_MQTT].includes(inendType)) {
+  const renderDS = () => {
+    if (dsType && [InendType.GENERIC_IOT_HUB, InendType.GENERIC_MQTT].includes(dsType as DSType)) {
       let message: React.ReactNode = formatMessage({ id: 'ruleConfig.message.mqtt' });
 
-      if (inendType === InendType.GENERIC_IOT_HUB) {
+      if (dsType === InendType.GENERIC_IOT_HUB) {
         message = (
           <>
             <div>{formatMessage({ id: 'ruleConfig.message.iothub' })}</div>
@@ -162,7 +151,8 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
           className="flex items-start"
         />
       );
-    } else {
+    }
+    if (dsType === InendType.INTERNAL_EVENT) {
       // 内部事件源
       return inend_event_ds.map(({ key, title, json }) => (
         <div key={key} className="mb-[20px]">
@@ -171,26 +161,25 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
         </div>
       ));
     }
-  };
+    // TODO 暂时隐藏
+    // if (dsType === 'GENERIC_AIS_RECEIVER') {
+    //   return device_ais_ds.map(({ key, title, json }) => (
+    //     <div key={key} className="mb-[20px]">
+    //       <div className="mb-[5px]">{title}</div>
+    //       <CodeEditor lang={Lang.JSON} readOnly value={json} theme={Theme.LIGHT} />
+    //     </div>
+    //   ));
+    // }
 
-  // 获取数据结构 title
-  const getDSTitle = () => {
-    if (type === RuleType.DEVICE) {
-      return `${
-        hasDeviceDS ? DeviceType[deviceType] : formatMessage({ id: 'ruleConfig.title.device' })
-      } - ${formatMessage({ id: 'ruleConfig.title.tpl' })}`;
-    }
-    if (type === RuleType.INEND) {
-      return `${
-        hasInendDS ? InendType[inendType] : formatMessage({ id: 'ruleConfig.title.source' })
-      } - ${formatMessage({ id: 'ruleConfig.title.tpl' })}`;
-    }
-    return null;
+    return (
+      <CodeEditor
+        lang={Lang.JSON}
+        readOnly
+        value={dsType ? dsData[dsType] : ''}
+        theme={Theme.LIGHT}
+      />
+    );
   };
-
-  useEffect(() => {
-    formRef.current?.setFieldsValue(detail ? detail : initialValue);
-  }, [detail]);
 
   return (
     <PageContainer
@@ -200,7 +189,7 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
           ? formatMessage({ id: 'ruleConfig.title.edit' })
           : formatMessage({ id: 'ruleConfig.title.new' })
       }
-      backUrl={DefaultListUrl}
+      backUrl={getBackUrl()}
     >
       <ProCard split="vertical">
         <ProCard colSpan="60%">
@@ -260,9 +249,14 @@ const UpdateForm = ({ type, typeId, deviceType, inendType }: UpdateFormProps) =>
             />
           </ProForm>
         </ProCard>
-        <ProCard title={getDSTitle()}>
-          {hasDeviceDS && getDeviceDS()}
-          {hasInendDS && getInendDS()}
+        <ProCard
+          title={
+            dsType
+              ? `${dsType} - ${formatMessage({ id: 'ruleConfig.title.tpl' })}`
+              : formatMessage({ id: 'ruleConfig.title.tpl' })
+          }
+        >
+          {renderDS()}
         </ProCard>
       </ProCard>
     </PageContainer>

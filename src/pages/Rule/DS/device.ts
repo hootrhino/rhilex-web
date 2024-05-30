@@ -1,5 +1,5 @@
+import { DeviceType } from '@/pages/Device/enum';
 import { getIntl, getLocale } from '@umijs/max';
-import { DeviceType } from '../../Device/enum';
 
 const intl = getIntl(getLocale());
 

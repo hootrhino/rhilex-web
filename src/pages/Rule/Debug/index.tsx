@@ -1,7 +1,5 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
 import ProLog from '@/components/ProLog';
-import { DeviceType } from '@/pages/Device/enum';
-import { InendType } from '@/pages/Inend/enum';
 import { postRulesTestDevice } from '@/services/rulex/guizeguanli';
 import { handleNewMessage } from '@/utils/utils';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
@@ -9,28 +7,26 @@ import { ModalForm, ProForm } from '@ant-design/pro-components';
 import { useIntl, useModel, useParams } from '@umijs/max';
 import { Button } from 'antd';
 import { useEffect, useRef, useState } from 'react';
-import type { RuleType } from '..';
-import { default_test_data } from './testData';
-
-export type TestType = DeviceType & InendType;
+import type { DSType } from '..';
+import { debugData } from '../DS';
 
 type DebugProps = ModalFormProps & {
-  uuid: string;
-  type: RuleType;
-  testType: TestType;
+  topic: string;
+  ruleType: DSType | undefined;
 };
 
-const Debug = ({ uuid, type, testType, ...props }: DebugProps) => {
+const Debug = ({ topic, ruleType, ...props }: DebugProps) => {
   const { latestMessage } = useModel('useWebsocket');
   const { deviceId } = useParams();
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
+
   const [debugLog, setDebugLog] = useState<string[]>([]);
 
   useEffect(() => {
-    const newData = handleNewMessage(debugLog, latestMessage?.data, `${type}/rule/log/${uuid}`);
+    const newData = handleNewMessage(debugLog, latestMessage?.data, topic);
     setDebugLog(newData);
-  }, [latestMessage, type]);
+  }, [latestMessage, topic]);
 
   return (
     <ModalForm
@@ -73,7 +69,7 @@ const Debug = ({ uuid, type, testType, ...props }: DebugProps) => {
           return false;
         }
       }}
-      initialValues={{ testData: testType ? default_test_data[testType] : '' }}
+      initialValues={{ testData: ruleType ? debugData[ruleType] : '' }}
       {...props}
     >
       <ProForm.Item
@@ -94,8 +90,9 @@ const Debug = ({ uuid, type, testType, ...props }: DebugProps) => {
         className="mb-0"
       >
         <ProLog
+          key="rule_debug"
           hidePadding
-          topic={`${type}/rule/test/${uuid}`}
+          topic={topic}
           dataSource={debugLog}
           headStyle={{ paddingBlock: 0 }}
           className="h-[225px]"

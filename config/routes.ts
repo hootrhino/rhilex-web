@@ -46,17 +46,17 @@
       {
         path: '/device/:groupId/:deviceId/rule',
         title: 'menu.rule.list',
-        component: './Device/RuleConfig',
+        component: './Rule',
       },
       {
         path: '/device/:groupId/:deviceId/rule/new',
         title: 'menu.rule.new',
-        component: './Device/RuleConfig/Update',
+        component: './Rule/Update',
       },
       {
         path: '/device/:groupId/:deviceId/rule/edit/:ruleId',
         title: 'menu.rule.update',
-        component: './Device/RuleConfig/Update',
+        component: './Rule/Update',
       },
       {
         path: '/device/:groupId/:deviceId/plc-sheet',
@@ -128,17 +128,17 @@
       {
         path: '/inend/:inendId/rule',
         title: 'menu.rule.list',
-        component: './Inend/RuleConfig',
+        component: './Rule',
       },
       {
         path: '/inend/:inendId/rule/new',
         title: 'menu.rule.new',
-        component: './Inend/RuleConfig/Update',
+        component: './Rule/Update',
       },
       {
         path: '/inend/:inendId/rule/edit/:ruleId',
         title: 'menu.rule.update',
-        component: './Inend/RuleConfig/Update',
+        component: './Rule/Update',
       },
       {
         path: '/inend/:inendId/sub-device',

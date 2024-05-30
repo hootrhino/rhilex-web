@@ -1,5 +1,6 @@
-import { DeviceType } from '../../Device/enum';
-import { InendType } from '../../Inend/enum';
+import { DeviceType } from '@/pages/Device/enum';
+import { InendType } from '@/pages/Inend/enum';
+
 // GENERIC_UART_PROTOCOL - 通用串口网关
 const device_protocol_ds = `{
   "in": "0001020304ABCDEF",
@@ -118,7 +119,7 @@ const inend_event_ds = `{
   }
 }`;
 
-const device_test_data = {
+export const device_test_data = {
   [DeviceType.GENERIC_UART_PROTOCOL]: device_protocol_ds,
   [DeviceType.GENERIC_MODBUS]: device_modbus_ds,
   [DeviceType.GENERIC_HTTP_DEVICE]: device_http_ds,
@@ -129,7 +130,7 @@ const device_test_data = {
   // [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,
 };
 
-const inend_test_data = {
+export const inend_test_data = {
   [InendType.COAP]: inend_coap_ds,
   [InendType.GENERIC_IOT_HUB]: inend_iothub_ds,
   [InendType.RULEX_UDP]: inend_udp_ds,
@@ -138,9 +139,4 @@ const inend_test_data = {
   [InendType.GRPC]: inend_udp_ds,
   [InendType.GENERIC_MQTT]: inend_mqtt_ds,
   [InendType.INTERNAL_EVENT]: inend_event_ds,
-};
-
-export const default_test_data = {
-  ...device_test_data,
-  ...inend_test_data,
 };
