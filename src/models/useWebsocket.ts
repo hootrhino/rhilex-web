@@ -31,11 +31,14 @@ const useWebsocket = () => {
   }, [sendMessage, readyState, sockUrl]);
 
   useEffect(() => {
+    const { protocol } = window?.location;
+    const prefix = protocol === 'http:' ? 'ws' : 'wss';
     if (window?.location?.host) {
-      setUrl(`ws://${window?.location?.host}/ws`);
+      setUrl(`${prefix}://${window?.location?.host}/${prefix}`);
     }
-    // setUrl(`ws://106.15.225.172:2580/ws`);
-  }, [window?.location?.host]);
+
+    // setUrl(`${prefix}://106.15.225.172:2580/${prefix}`);
+  }, [window?.location]);
 
   return {
     latestMessage,
