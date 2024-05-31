@@ -19,14 +19,18 @@ const ExampleItemChild = ({
   ...props
 }: ExampleItemChildProps) => {
   const { formatMessage } = useIntl();
+  const isBuiltIn = type === ExampleType.BUILTIN;
+  const hideUsageButton = isBuiltIn && !isUsage;
 
   return (
     <div {...props}>
       <div className="flex justify-between w-full mb-[6px]">
-        <span className={type === ExampleType.QUICK ? 'invisible' : ''}>
+        <span className={isBuiltIn ? '' : 'invisible'}>
           {isUsage ? data?.label : formatMessage({ id: 'component.title.exampleChild' })}
         </span>
-        {data?.variables && data?.variables?.length > 0 ? (
+        {hideUsageButton ? (
+          <CopyButton data={data} size="small" ghost />
+        ) : (
           <Button
             type="primary"
             size="small"
@@ -39,8 +43,6 @@ const ExampleItemChild = ({
           >
             {formatMessage({ id: 'component.button.use' })}
           </Button>
-        ) : (
-          <CopyButton data={data} size="small" ghost />
         )}
       </div>
       <CodeEditor readOnly value={data.apply} lang={Lang.LUA} />

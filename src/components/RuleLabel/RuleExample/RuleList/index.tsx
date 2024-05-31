@@ -8,16 +8,18 @@ import { ExampleType } from '../enum';
 import type { TplGroupItem } from '../typings';
 import ExampleItem from './ExampleItem';
 
-type CommonRuleProps = {
+type RuleListProps = {
   activeTabKey: string;
 };
 
-const CommonRule = ({ activeTabKey }: CommonRuleProps) => {
+const RuleList = ({ activeTabKey }: RuleListProps) => {
   const { product } = useModel('useSystem');
 
+  // 自定义模板
   const { data: customTplData } = useRequest(
     () => getUserluaListByGroup({ uuid: DEFAULT_GROUP_KEY_LUA_TPL }),
     {
+      ready: !!activeTabKey,
       refreshDeps: [activeTabKey],
       formatResult: ({ data }) => {
         return data?.length > 0
@@ -53,4 +55,4 @@ const CommonRule = ({ activeTabKey }: CommonRuleProps) => {
   ));
 };
 
-export default CommonRule;
+export default RuleList;

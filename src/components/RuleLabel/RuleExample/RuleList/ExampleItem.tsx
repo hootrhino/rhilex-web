@@ -268,7 +268,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
               <Button key="cancel" onClick={handleOnCancel}>
                 {formatMessage({ id: 'button.cancel' })}
               </Button>,
-              <CopyButton data={copyData} key="copy" ghost />,
+              <CopyButton data={copyData} key="copy" />,
             ];
           },
         }}

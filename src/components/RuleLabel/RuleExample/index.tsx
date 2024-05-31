@@ -3,8 +3,8 @@ import { useIntl } from '@umijs/max';
 import type { DrawerProps, TabsProps } from 'antd';
 import { Button, Drawer, Tabs } from 'antd';
 import { useState } from 'react';
-import BuiltInRule from './BuiltIn';
 import CustomRule from './Custom';
+import RuleList from './RuleList';
 
 type RuleExampleProps = DrawerProps;
 
@@ -27,7 +27,7 @@ const RuleExample = ({ ...props }: RuleExampleProps) => {
   ];
 
   const children = {
-    example: <BuiltInRule activeTabKey={activeTabKey} />,
+    example: <RuleList activeTabKey={activeTabKey} />,
     addRule: <CustomRule open={open} tplId={tplId} updateId={setTplId} onOpenChange={setOpen} />,
   };
 

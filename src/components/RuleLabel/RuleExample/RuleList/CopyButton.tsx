@@ -31,9 +31,9 @@ const CopyButton = ({ data: { label, apply }, ...props }: CopyButtonProps) => {
         onClick={(e) => e.stopPropagation()}
         icon={
           copied === apply ? (
-            <CheckOutlined style={{ color: '#52c41a' }} />
+            <CheckOutlined style={{ color: props?.ghost ? '#52c41a' : '#fff' }} />
           ) : (
-            <CopyOutlined style={{ color: '#1677ff' }} />
+            <CopyOutlined style={{ color: props?.ghost ? '#1677ff' : '#fff' }} />
           )
         }
         {...props}
