@@ -12,6 +12,8 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
   const { formatMessage } = useIntl();
 
   const [activeTabKey, setActiveTabKey] = useState<string>('example');
+  const [open, setOpen] = useState<boolean>(false);
+  const [tplId, setTplId] = useState<string>('');
 
   const items: TabsProps['items'] = [
     {
@@ -26,7 +28,7 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
 
   const children = {
     example: <CommonRule activeTabKey={activeTabKey} />,
-    addRule: <CustomRule />,
+    addRule: <CustomRule open={open} tplId={tplId} updateId={setTplId} onOpenChange={setOpen} />,
   };
 
   return (
@@ -54,9 +56,8 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
               type="primary"
               icon={<PlusOutlined />}
               onClick={() => {
-                // TODO
-                // setOpen(true);
-                // setTplId('');
+                setOpen(true);
+                setTplId('');
               }}
             >
               {formatMessage({ id: 'button.new' })}

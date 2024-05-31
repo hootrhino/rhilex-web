@@ -62,6 +62,7 @@ export default {
   'component.tpl.rhilex.detail': '{name} network connection test',
   'component.tpl.inend': 'UUID parameter comes from the input',
   'component.tpl.outend': 'UUID parameter comes from the output',
+  'component.tpl.device': 'UUID parameter comes from the Device',
   'component.tpl.save.detail': 'Data written to the data repository',
   'component.tpl.save.arg': 'Data repository resource',
 

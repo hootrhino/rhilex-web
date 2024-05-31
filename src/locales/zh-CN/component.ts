@@ -61,6 +61,7 @@ export default {
   'component.tpl.rhilex.detail': '{name} 联网测试',
   'component.tpl.inend': 'UUID 参数来自南向资源',
   'component.tpl.outend': 'UUID 参数来自北向资源',
+  'component.tpl.device': 'UUID 参数来自设备接入',
   'component.tpl.save.detail': '数据写入数据中心',
   'component.tpl.save.arg': '数据中心资源',
 

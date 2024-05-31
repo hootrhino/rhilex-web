@@ -6,19 +6,22 @@ import {
   putUserluaUpdate,
 } from '@/services/rulex/yonghudingyiluamoban';
 import { DEFAULT_GROUP_KEY_LUA_TPL } from '@/utils/constant';
-import type { ActionType } from '@ant-design/pro-components';
+import type { ActionType, ModalFormProps } from '@ant-design/pro-components';
 import { ProList } from '@ant-design/pro-components';
 import { useIntl } from '@umijs/max';
 import { Popconfirm } from 'antd';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import type { TplItem } from '../typings';
 import UpdateForm from './Update';
 
-const CustomRule = () => {
+type CustomRuleProps = ModalFormProps & {
+  tplId: string;
+  updateId: (id: string) => void;
+};
+
+const CustomRule = ({ open, tplId, updateId, onOpenChange }: CustomRuleProps) => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
-  const [open, setOpen] = useState<boolean>(false);
-  const [tplId, setTplId] = useState<string>('');
 
   const handleOnFinish = async (values: any) => {
     const params = {
@@ -47,7 +50,6 @@ const CustomRule = () => {
       <ProList<TplItem>
         rowKey="uuid"
         showActions="hover"
-        //  headerTitle={formatMessage({ id: 'component.title.customRule' })}
         className="custom-rule-wrapper"
         actionRef={actionRef}
         request={async () => {
@@ -58,22 +60,6 @@ const CustomRule = () => {
             success: true,
           });
         }}
-        // toolBarRender={() => {
-        //   return [
-        //     <Button
-        //       key="add"
-        //       type="primary"
-        //       size="small"
-        //       icon={<PlusOutlined />}
-        //       onClick={() => {
-        //         setOpen(true);
-        //         setTplId('');
-        //       }}
-        //     >
-        //       {formatMessage({ id: 'button.new' })}
-        //     </Button>,
-        //   ];
-        // }}
         metas={{
           title: {
             dataIndex: 'label',
@@ -86,8 +72,8 @@ const CustomRule = () => {
             render: (_, row) => [
               <a
                 onClick={() => {
-                  setOpen(true);
-                  setTplId(row?.uuid || '');
+                  onOpenChange!(true);
+                  updateId(row?.uuid || '');
                 }}
                 key="edit"
               >
@@ -109,7 +95,7 @@ const CustomRule = () => {
           },
         }}
       />
-      <UpdateForm open={open} onOpenChange={setOpen} tplId={tplId} onFinish={handleOnFinish} />
+      <UpdateForm open={open} onOpenChange={onOpenChange} tplId={tplId} onFinish={handleOnFinish} />
     </>
   );
 };

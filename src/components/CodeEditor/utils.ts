@@ -20,6 +20,7 @@ export const autoCompletions = (
   context: CompletionContext,
   inends: InendItem[],
   outends: OutendItem[],
+  devices: any[],
 ) => {
   const word = context.matchBefore(/\w*/);
 
@@ -36,12 +37,20 @@ export const autoCompletions = (
     detail: getIntl(getLocale()).formatMessage({ id: 'component.tpl.inend' }),
     apply: item.uuid,
   }));
-  console.log(inendsOptions);
+
   // 北向资源 UUID
   const outendsOptions = ((outends as any[]) || [])?.map((item: any) => ({
     label: `${item?.name} - ${item.uuid}`,
     type: 'variable',
     detail: getIntl(getLocale()).formatMessage({ id: 'component.tpl.outend' }),
+    apply: item.uuid,
+  }));
+
+  // 设备接入 UUID
+  const deviceOptions = ((devices as any[]) || [])?.map((item: any) => ({
+    label: `${item?.name} - ${item.uuid}`,
+    type: 'variable',
+    detail: getIntl(getLocale()).formatMessage({ id: 'component.tpl.device' }),
     apply: item.uuid,
   }));
 
@@ -52,6 +61,7 @@ export const autoCompletions = (
       ...builtInFuncs,
       ...inendsOptions,
       ...outendsOptions,
+      ...deviceOptions,
       ...buildInSnippet,
     ],
   };

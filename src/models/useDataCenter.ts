@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 const useDataCenter = () => {
   const accessToken = localStorage.getItem('accessToken');
-  const [key, setKey] = useState<string>();
+  const [key, setKey] = useState<string>('');
 
   const { data: DataCenterSecret } = useRequest(() => getDatacenterSecret(), {
     ready: !!accessToken,

@@ -71,6 +71,10 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
       width="45%"
       formRef={formRef}
       initialValues={initialValue}
+      modalProps={{
+        destroyOnClose: true,
+        maskClosable: false,
+      }}
       {...props}
     >
       <ProForm.Group>

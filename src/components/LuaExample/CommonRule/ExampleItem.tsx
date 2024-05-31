@@ -11,7 +11,7 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useIntl, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import type { CollapseProps } from 'antd';
 import { Button, Collapse, Divider, Space, theme } from 'antd';
 import { useEffect, useRef, useState } from 'react';
@@ -29,6 +29,8 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
   const { token } = theme.useToken();
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
+  const { DataCenterSecret } = useModel('useDataCenter');
+
   const [valModalConfig, setValConfig] = useState<{ open: boolean; data: TplItem }>({
     open: false,
     data: {},
@@ -220,10 +222,10 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
   }, [valModalConfig]);
 
   useEffect(() => {
-    if (schemaId) {
-      getSchema({ uuid: schemaId });
+    if (schemaId && DataCenterSecret?.secret) {
+      getSchema({ uuid: schemaId, secret: DataCenterSecret.secret });
     }
-  }, [schemaId]);
+  }, [schemaId, DataCenterSecret]);
 
   return dataSource && dataSource?.length > 0 ? (
     <>

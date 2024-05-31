@@ -17,6 +17,7 @@ import {
 } from '@/components/CodeEditor/images/autocomplete';
 import type { InendItem } from '@/pages/Inend';
 import type { OutendItem } from '@/pages/Outend';
+import { getDevicesList } from '@/services/rulex/shebeiguanli';
 import { autoCompletions, createDetailEl, createIconEl, luaLinter } from './utils';
 
 export enum Lang {
@@ -71,6 +72,7 @@ const basicSetupSetting = {
 const CodeEditor = ({ lang, theme = Theme.DARK, ...props }: CodeEditorProps) => {
   const { data: inends } = useRequest(() => getInendsList());
   const { data: outends } = useRequest(() => getOutendsList());
+  const { data: devices } = useRequest(() => getDevicesList({ current: 1, size: 999 }));
 
   const getEditorConfig = () => {
     if (lang !== Lang.LUA) return [];
@@ -78,7 +80,13 @@ const CodeEditor = ({ lang, theme = Theme.DARK, ...props }: CodeEditorProps) => 
     return [
       autocompletion({
         override: [
-          (context) => autoCompletions(context, inends as InendItem[], outends as OutendItem[]),
+          (context) =>
+            autoCompletions(
+              context,
+              inends as InendItem[],
+              outends as OutendItem[],
+              devices?.records as any[],
+            ),
         ],
         addToOptions: [
           {
