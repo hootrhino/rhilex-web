@@ -89,8 +89,8 @@ export default {
   'component.button.format': 'Code Format',
   'component.button.countdown': '{text}中（{countdown}s）',
 
-  'component.tab.example': 'Built-in Rule Example',
-  'component.tab.addRule': 'Custom Rule Example',
+  'component.tab.example': 'Rule Example',
+  'component.tab.addRule': 'Custom Rule',
 
   'component.form.title.rule': 'Rule Name',
   'component.form.title.name': 'Template Name',

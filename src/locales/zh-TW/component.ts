@@ -88,8 +88,8 @@ export default {
   'component.button.format': '代碼格式化',
   'component.button.countdown': '{text}中（{countdown}s）',
 
-  'component.tab.example': '內置規則示例',
-  'component.tab.addRule': '自定義規則示例',
+  'component.tab.example': '規則示例',
+  'component.tab.addRule': '自定義規則',
 
   'component.form.title.rule': '規則名稱',
   'component.form.title.name': '模板名稱',

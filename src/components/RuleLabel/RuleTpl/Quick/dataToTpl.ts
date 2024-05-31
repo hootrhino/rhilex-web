@@ -1,6 +1,6 @@
 import { toPascalCase } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
-import { dataToServers, getQuickCode, getVariables } from '../BuildInLua/dataToTpl';
+import { dataToServers, getQuickCode, getVariables } from '../BuildIn/dataToTpl';
 
 export const dataToQuickTpl = dataToServers.map((item) => ({
   label: '',

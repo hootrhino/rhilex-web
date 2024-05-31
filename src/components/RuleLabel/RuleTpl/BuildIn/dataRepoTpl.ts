@@ -1,5 +1,5 @@
-import { TplDataSource, TplDataType } from '@/components/LuaExample/enum';
 import { getIntl, getLocale } from '@umijs/max';
+import { TplDataSource, TplDataType } from '../../RuleExample/enum';
 
 /**
  * 数据中心相关代码模板&示例
@@ -12,7 +12,7 @@ if err ~= nil then
   return 0
 end`;
 
-export const dataCenterTpl = [
+export const dataRepoTpl = [
   {
     label: 'rds:Save',
     apply,

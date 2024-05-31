@@ -2,7 +2,7 @@ import { CodeOutlined, FileTextOutlined } from '@ant-design/icons';
 import { useIntl } from '@umijs/max';
 import { Button, Space } from 'antd';
 import { useState } from 'react';
-import LuaExample from '../LuaExample';
+import RuleExample from './RuleExample';
 
 type RuleLabelProps = {
   name: string;
@@ -46,7 +46,7 @@ const RuleLabel = ({ name, handleOnFormatCode }: RuleLabelProps) => {
           </Button>
         </Space>
       </Space>
-      <LuaExample open={open} onClose={() => setOpen(false)} />
+      <RuleExample open={open} onClose={() => setOpen(false)} />
     </>
   );
 };

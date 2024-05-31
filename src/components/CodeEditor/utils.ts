@@ -8,7 +8,7 @@ import { CompletionContext } from '@codemirror/autocomplete';
 import { Diagnostic, linter } from '@codemirror/lint';
 import { getIntl, getLocale } from '@umijs/max';
 import luaparse from 'luaparse';
-import { buildInKeywords, buildInSnippet, builtInFuncs } from './BuildInLua';
+import { buildInKeywords, buildInSnippet, builtInFuncs } from '../RuleLabel/RuleTpl/BuildIn';
 
 // 关键字模糊搜索
 const fuzzySearch = (query: string) => {

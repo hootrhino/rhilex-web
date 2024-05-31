@@ -1,5 +1,5 @@
-import { TplDataType } from '@/components/LuaExample/enum';
 import { getIntl, getLocale } from '@umijs/max';
+import { TplDataType } from '../../RuleExample/enum';
 
 /**
  * rhilexg1 函数相关代码模板&示例

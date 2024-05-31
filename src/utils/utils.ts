@@ -31,7 +31,7 @@ export const getBase64 = (file: RcFile): Promise<string> =>
   });
 
 export const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/c/font_4557572_0lyq9226zzhg.js', // 在 iconfont.cn 上生成
+  scriptUrl: '//at.alicdn.com/t/c/font_4557572_2r71y6m2xq.js', // 在 iconfont.cn 上生成
 });
 
 /**
@@ -121,7 +121,7 @@ export const bool2String = (value: boolean | string | number) => {
     return value ? 'true' : 'false';
   }
   return value;
-}
+};
 
 export const ensureArrayLength = (arr: string[], maxLength = 50) => {
   if (arr.length > maxLength) {

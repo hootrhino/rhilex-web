@@ -1,9 +1,9 @@
-import { builtInLuaTpl } from '@/components/CodeEditor/BuildInLua';
-import { quickLuaTpl } from '@/components/CodeEditor/QuickLua';
 import { getUserluaListByGroup } from '@/services/rulex/yonghudingyiluamoban';
 import { DEFAULT_GROUP_KEY_LUA_TPL } from '@/utils/constant';
 import { Product } from '@/utils/enum';
 import { getIntl, getLocale, useModel, useRequest } from '@umijs/max';
+import { builtInLuaTpl } from '../../RuleTpl/BuildIn';
+import { quickLuaTpl } from '../../RuleTpl/Quick';
 import { ExampleType } from '../enum';
 import type { TplGroupItem } from '../typings';
 import ExampleItem from './ExampleItem';
@@ -39,12 +39,12 @@ const CommonRule = ({ activeTabKey }: CommonRuleProps) => {
       dataSource: builtInLuaTpl,
     },
     {
-      type: ExampleType.CUSTOM,
-      dataSource: customTplData,
-    },
-    {
       type: ExampleType.QUICK,
       dataSource: quickLuaTpl(product === Product.RHILEXG1),
+    },
+    {
+      type: ExampleType.CUSTOM,
+      dataSource: customTplData,
     },
   ];
 

@@ -1,6 +1,6 @@
 import { getIntl, getLocale } from '@umijs/max';
-import { En6400Tpl, RHILEXG1Tpl } from './appStackQuickTpl';
-import { dataToQuickTpl } from './dataToQuickTpl';
+import { En6400Tpl, RHILEXG1Tpl } from './appStackTpl';
+import { dataToQuickTpl } from './dataToTpl';
 
 // 自定义快捷模板
 export const quickLuaTpl = (isRHILEXG1: boolean) => {

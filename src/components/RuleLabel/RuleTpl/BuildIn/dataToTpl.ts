@@ -1,10 +1,9 @@
 /**
  * dataTo 函数相关代码模板&示例
  */
-
-import { TplDataSource, TplDataType } from '@/components/LuaExample/enum';
 import { toPascalCase } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
+import { TplDataSource, TplDataType } from '../../RuleExample/enum';
 
 const intl = getIntl(getLocale());
 

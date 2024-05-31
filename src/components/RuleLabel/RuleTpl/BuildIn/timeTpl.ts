@@ -1,10 +1,9 @@
 /**
  * time 函数相关代码模板&示例
  */
-
-import { TplDataType } from '@/components/LuaExample/enum';
 import { toPascalCase } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
+import { TplDataType } from '../../RuleExample/enum';
 const intl = getIntl(getLocale());
 
 const timeList = [

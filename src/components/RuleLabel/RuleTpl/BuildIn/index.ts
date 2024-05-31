@@ -1,6 +1,6 @@
-import { TplDataType } from '@/components/LuaExample/enum';
 import { getIntl, getLocale } from '@umijs/max';
-import { dataCenterTpl } from './dataCenterTpl';
+import { TplDataType } from '../../RuleExample/enum';
+import { dataRepoTpl } from './dataRepoTpl';
 import { dataToTpl } from './dataToTpl';
 import { deviceTpl } from './deviceTpl';
 import { modbusTpl } from './modbusTpl';
@@ -303,7 +303,7 @@ export const builtInLuaTpl = [
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name.dataRepo' }),
-    children: dataCenterTpl,
+    children: dataRepoTpl,
     uuid: 'dataCenter',
   },
   {

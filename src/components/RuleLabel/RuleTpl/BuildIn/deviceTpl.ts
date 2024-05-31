@@ -1,5 +1,5 @@
-import { TplDataSource, TplDataType } from '@/components/LuaExample/enum';
 import { getIntl, getLocale } from '@umijs/max';
+import { TplDataSource, TplDataType } from '../../RuleExample/enum';
 
 /**
  * device 函数相关代码模板&示例
