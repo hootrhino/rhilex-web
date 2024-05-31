@@ -1,6 +1,7 @@
+import { PlusOutlined } from '@ant-design/icons';
 import { useIntl } from '@umijs/max';
 import type { DrawerProps, TabsProps } from 'antd';
-import { Drawer, Tabs } from 'antd';
+import { Button, Drawer, Tabs } from 'antd';
 import { useState } from 'react';
 import CommonRule from './CommonRule';
 import CustomRule from './CustomRule';
@@ -16,14 +17,17 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
     {
       key: 'example',
       label: formatMessage({ id: 'component.tab.example' }),
-      children: <CommonRule activeTabKey={activeTabKey} />,
     },
     {
       key: 'addRule',
       label: formatMessage({ id: 'component.tab.addRule' }),
-      children: <CustomRule />,
     },
   ];
+
+  const children = {
+    example: <CommonRule activeTabKey={activeTabKey} />,
+    addRule: <CustomRule />,
+  };
 
   return (
     <>
@@ -31,18 +35,37 @@ const LuaExample = ({ ...props }: LuaExampleProps) => {
         destroyOnClose
         maskClosable={false}
         styles={{
-          body: { padding: '0px 24px 24px 24px' },
           header: { border: 'none', padding: '16px 24px 10px 24px' },
         }}
         placement="right"
         size="large"
+        title={
+          <Tabs
+            activeKey={activeTabKey}
+            items={items}
+            onChange={(activeKey) => setActiveTabKey(activeKey)}
+            rootClassName="lua-example-tabs"
+          />
+        }
+        extra={
+          activeTabKey === 'addRule' ? (
+            <Button
+              key="add"
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => {
+                // TODO
+                // setOpen(true);
+                // setTplId('');
+              }}
+            >
+              {formatMessage({ id: 'button.new' })}
+            </Button>
+          ) : null
+        }
         {...props}
       >
-        <Tabs
-          activeKey={activeTabKey}
-          items={items}
-          onChange={(activeKey) => setActiveTabKey(activeKey)}
-        />
+        {children[activeTabKey]}
       </Drawer>
     </>
   );

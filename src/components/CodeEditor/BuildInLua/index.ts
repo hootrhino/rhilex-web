@@ -135,7 +135,7 @@ export const standardTpl = [
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.standard.debug' }),
     usage: {
-      label: 'debug-tpl1',
+      label: intl.formatMessage({ id: 'component.tpl.standard.debug.usage1' }),
       apply: `Actions = {
   function(args)
     Debug(args)

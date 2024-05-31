@@ -59,18 +59,18 @@ export default {
   'component.tpl.standard.debug.usage2': '拋出異常',
   'component.tpl.rhilex.label': '當沒有網絡時，網關上的 LED 會快速閃爍 5 次',
   'component.tpl.rhilex.detail': '{name} 聯網測試',
-  'component.tpl.inend': 'UUID 參數來自南向資源管理',
-  'component.tpl.outend': 'UUID 參數來自北向資源管理',
+  'component.tpl.inend': 'UUID 參數來自南向資源',
+  'component.tpl.outend': 'UUID 參數來自北向資源',
   'component.tpl.save.detail': '資料寫入資料中心',
   'component.tpl.save.arg': '資料中心資源',
 
   /**
    * others
    */
-  'component.title.notify': '站內日誌通知',
+  'component.title.notify': '內部通知',
   'component.title.customRule': '自定義規則示例',
   'component.title.defaultGroup': '默認分組',
-  'component.title.builtInTpl': '內置模板',
+  'component.title.builtInTpl': '內置函數',
   'component.title.customTpl': '自定義模板',
   'component.title.quickTpl': '快捷模板',
   'component.title.exampleChild': '函數基本形式',
@@ -87,8 +87,8 @@ export default {
   'component.button.format': '代碼格式化',
   'component.button.countdown': '{text}中（{countdown}s）',
 
-  'component.tab.example': '常用規則示例',
-  'component.tab.addRule': '新建規則示例',
+  'component.tab.example': '內置規則示例',
+  'component.tab.addRule': '自定義規則示例',
 
   'component.form.title.rule': '規則名稱',
   'component.form.title.name': '模板名稱',

@@ -60,8 +60,8 @@ export default {
   'component.tpl.rhilex.label':
     'When there is no network, the gateway’s LED will flash quickly 5 times',
   'component.tpl.rhilex.detail': '{name} network connection test',
-  'component.tpl.inend': 'UUID parameter comes from the input resource management',
-  'component.tpl.outend': 'UUID parameter comes from the output resource management',
+  'component.tpl.inend': 'UUID parameter comes from the input',
+  'component.tpl.outend': 'UUID parameter comes from the output',
   'component.tpl.save.detail': 'Data written to the data repository',
   'component.tpl.save.arg': 'Data repository resource',
 
@@ -71,7 +71,7 @@ export default {
   'component.title.notify': 'Notification',
   'component.title.customRule': 'Custom rule example',
   'component.title.defaultGroup': 'Default group',
-  'component.title.builtInTpl': 'Built-in templates',
+  'component.title.builtInTpl': 'Built-in function',
   'component.title.customTpl': 'Custom templates',
   'component.title.quickTpl': 'Quick templates',
   'component.title.exampleChild': 'Basic form of functions',
@@ -88,8 +88,8 @@ export default {
   'component.button.format': 'Code Format',
   'component.button.countdown': '{text}中（{countdown}s）',
 
-  'component.tab.example': 'Common Rule Examples',
-  'component.tab.addRule': 'New Rule Example',
+  'component.tab.example': 'Built-in Rule Example',
+  'component.tab.addRule': 'Custom Rule Example',
 
   'component.form.title.rule': 'Rule Name',
   'component.form.title.name': 'Template Name',

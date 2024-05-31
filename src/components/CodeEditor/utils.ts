@@ -31,15 +31,15 @@ export const autoCompletions = (
 
   // 南向资源 UUID
   const inendsOptions = ((inends as any[]) || [])?.map((item: any) => ({
-    label: `${item?.name}`,
+    label: `${item?.name} - ${item.uuid}`,
     type: 'variable',
     detail: getIntl(getLocale()).formatMessage({ id: 'component.tpl.inend' }),
     apply: item.uuid,
   }));
-
+  console.log(inendsOptions);
   // 北向资源 UUID
   const outendsOptions = ((outends as any[]) || [])?.map((item: any) => ({
-    label: `${item?.name}`,
+    label: `${item?.name} - ${item.uuid}`,
     type: 'variable',
     detail: getIntl(getLocale()).formatMessage({ id: 'component.tpl.outend' }),
     apply: item.uuid,

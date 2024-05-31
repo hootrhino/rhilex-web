@@ -1,9 +1,14 @@
 import CodeEditor, { Lang, Theme } from '@/components/CodeEditor';
 import { message } from '@/components/PopupHack';
-import ProCodeEditor from '@/components/ProCodeEditor';
 import PageContainer from '@/components/ProPageContainer';
+import RuleLabel from '@/components/RuleLabel';
 import { InendType } from '@/pages/Inend/enum';
-import { getRulesDetail, postRulesCreate, putRulesUpdate } from '@/services/rulex/guizeguanli';
+import {
+  getRulesDetail,
+  postRulesCreate,
+  postRulesFormatLua,
+  putRulesUpdate,
+} from '@/services/rulex/guizeguanli';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { FormItemType } from '@/utils/enum';
@@ -114,6 +119,14 @@ const UpdateForm = () => {
       setLoading(false);
       return false;
     }
+  };
+
+  // 代码格式化
+  const handleOnFormatCode = async () => {
+    const code = formRef.current?.getFieldValue('actions');
+    const { data } = await postRulesFormatLua({ source: code });
+
+    formRef.current?.setFieldsValue({ actions: data.source });
   };
 
   useEffect(() => {
@@ -241,12 +254,27 @@ const UpdateForm = () => {
                 placeholder={formatMessage({ id: 'placeholder.desc' })}
               />
             </ProForm.Group>
-            <ProCodeEditor
-              label={formatMessage({ id: 'ruleConfig.form.title.actions' })}
+            <ProForm.Item
+              rootClassName="rule-label"
+              label={
+                <RuleLabel
+                  name={formatMessage({ id: 'ruleConfig.form.title.actions' })}
+                  handleOnFormatCode={handleOnFormatCode}
+                />
+              }
               name="actions"
-              ref={formRef}
-              required
-            />
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage(
+                    { id: 'placeholder.input' },
+                    { text: formatMessage({ id: 'ruleConfig.form.title.actions' }) },
+                  ),
+                },
+              ]}
+            >
+              <CodeEditor key="actions" minHeight="400px" lang={Lang.LUA} />
+            </ProForm.Item>
           </ProForm>
         </ProCard>
         <ProCard

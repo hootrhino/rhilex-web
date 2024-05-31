@@ -1,6 +1,7 @@
-import ProCodeEditor from '@/components/ProCodeEditor';
+import CodeEditor, { Lang } from '@/components/CodeEditor';
+import { postRulesFormatLua } from '@/services/rulex/guizeguanli';
 import { getUserluaDetail } from '@/services/rulex/yonghudingyiluamoban';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { CodeOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -10,7 +11,7 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
-import { Tooltip } from 'antd';
+import { Button, Space, Tooltip } from 'antd';
 import { useEffect, useRef } from 'react';
 import { TplDataType } from '../enum';
 
@@ -39,6 +40,14 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
   const { data: detail } = useRequest(() => getUserluaDetail({ uuid: tplId || '' }), {
     ready: !!tplId,
   });
+
+  // 代码格式化
+  const handleOnFormatCode = async () => {
+    const code = formRef.current?.getFieldValue('apply');
+    const { data } = await postRulesFormatLua({ source: code });
+
+    formRef.current?.setFieldsValue({ apply: data.source });
+  };
 
   const handleOnReset = () => {
     formRef.current?.setFieldsValue(initialValue);
@@ -82,14 +91,39 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
           rules={[{ required: true, message: formatMessage({ id: 'placeholder.desc' }) }]}
         />
       </ProForm.Group>
-      <ProCodeEditor
+      <ProForm.Item
         name="apply"
-        label={formatMessage({ id: 'component.form.title.apply' })}
-        ref={formRef}
-        required
-        showTpl={false}
-        collapsible={false}
-      />
+        rootClassName="rule-label"
+        label={
+          <Space className="w-full justify-between">
+            <span>{formatMessage({ id: 'component.form.title.apply' })}</span>
+            <Button
+              type="primary"
+              key="code-format"
+              size="small"
+              icon={<CodeOutlined />}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleOnFormatCode();
+              }}
+            >
+              {formatMessage({ id: 'component.button.format' })}
+            </Button>
+          </Space>
+        }
+        rules={[
+          {
+            required: true,
+            message: formatMessage(
+              { id: 'placeholder.input' },
+              { text: formatMessage({ id: 'component.form.title.apply' }) },
+            ),
+          },
+        ]}
+        // className="w-full"
+      >
+        <CodeEditor key="luaSource" minHeight="400px" lang={Lang.LUA} />
+      </ProForm.Item>
       <ProFormList
         required
         name="variables"

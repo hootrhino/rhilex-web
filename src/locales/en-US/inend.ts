@@ -15,7 +15,7 @@ export default {
   'inend.table.title.productId': 'Product ID',
   'inend.table.title.topic': 'Topic',
   'inend.table.title.eventType': 'Event Type',
-  'inend.table.title.qos': 'Qos',
+  'inend.table.title.qos': 'QoS',
   'inend.table.title.subTopics': 'Subscribe to Topic Table',
   'inend.table.title.ip': 'Device IP',
   'inend.table.title.status': 'Device Status',

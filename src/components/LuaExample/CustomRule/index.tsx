@@ -6,11 +6,10 @@ import {
   putUserluaUpdate,
 } from '@/services/rulex/yonghudingyiluamoban';
 import { DEFAULT_GROUP_KEY_LUA_TPL } from '@/utils/constant';
-import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-components';
 import { ProList } from '@ant-design/pro-components';
 import { useIntl } from '@umijs/max';
-import { Button, Popconfirm } from 'antd';
+import { Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import type { TplItem } from '../typings';
 import UpdateForm from './Update';
@@ -48,7 +47,7 @@ const CustomRule = () => {
       <ProList<TplItem>
         rowKey="uuid"
         showActions="hover"
-        headerTitle={formatMessage({ id: 'component.title.customRule' })}
+        //  headerTitle={formatMessage({ id: 'component.title.customRule' })}
         className="custom-rule-wrapper"
         actionRef={actionRef}
         request={async () => {
@@ -59,22 +58,22 @@ const CustomRule = () => {
             success: true,
           });
         }}
-        toolBarRender={() => {
-          return [
-            <Button
-              key="add"
-              type="primary"
-              size="small"
-              icon={<PlusOutlined />}
-              onClick={() => {
-                setOpen(true);
-                setTplId('');
-              }}
-            >
-              {formatMessage({ id: 'button.new' })}
-            </Button>,
-          ];
-        }}
+        // toolBarRender={() => {
+        //   return [
+        //     <Button
+        //       key="add"
+        //       type="primary"
+        //       size="small"
+        //       icon={<PlusOutlined />}
+        //       onClick={() => {
+        //         setOpen(true);
+        //         setTplId('');
+        //       }}
+        //     >
+        //       {formatMessage({ id: 'button.new' })}
+        //     </Button>,
+        //   ];
+        // }}
         metas={{
           title: {
             dataIndex: 'label',

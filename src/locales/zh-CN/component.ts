@@ -59,18 +59,18 @@ export default {
   'component.tpl.standard.debug.usage2': '抛出异常',
   'component.tpl.rhilex.label': '当没有网络时，网关上的 LED 会快速闪烁 5 次',
   'component.tpl.rhilex.detail': '{name} 联网测试',
-  'component.tpl.inend': 'UUID 参数来自南向资源管理',
-  'component.tpl.outend': 'UUID 参数来自北向资源管理',
+  'component.tpl.inend': 'UUID 参数来自南向资源',
+  'component.tpl.outend': 'UUID 参数来自北向资源',
   'component.tpl.save.detail': '数据写入数据中心',
   'component.tpl.save.arg': '数据中心资源',
 
   /**
    * others
    */
-  'component.title.notify': '站内日志通知',
+  'component.title.notify': '内部通知',
   'component.title.customRule': '自定义规则示例',
   'component.title.defaultGroup': '默认分组',
-  'component.title.builtInTpl': '内置模板',
+  'component.title.builtInTpl': '内置函数',
   'component.title.customTpl': '自定义模板',
   'component.title.quickTpl': '快捷模板',
   'component.title.exampleChild': '函数基本形式',
@@ -87,8 +87,8 @@ export default {
   'component.button.format': '代码格式化',
   'component.button.countdown': '{text}中（{countdown}s）',
 
-  'component.tab.example': '常用规则示例',
-  'component.tab.addRule': '新建规则示例',
+  'component.tab.example': '内置规则示例',
+  'component.tab.addRule': '自定义规则示例',
 
   'component.form.title.rule': '规则名称',
   'component.form.title.name': '模板名称',

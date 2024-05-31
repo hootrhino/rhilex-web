@@ -1,10 +1,12 @@
+import CodeEditor, { Lang } from '@/components/CodeEditor';
 import { message } from '@/components/PopupHack';
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
-import ProCodeEditor from '@/components/ProCodeEditor';
 import PageContainer from '@/components/ProPageContainer';
+import RuleLabel from '@/components/RuleLabel';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
+import { postRulesFormatLua } from '@/services/rulex/guizeguanli';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rulex/qingliangyingyong';
-import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
+import { ProForm, type ProFormColumnsType, type ProFormInstance } from '@ant-design/pro-components';
 import { useIntl } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
@@ -28,6 +30,14 @@ const UpdateForm = () => {
   const { formatMessage } = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
 
+  // 代码格式化
+  const handleOnFormatCode = async () => {
+    const code = formRef.current?.getFieldValue('luaSource');
+    const { data } = await postRulesFormatLua({ source: code });
+
+    formRef.current?.setFieldsValue({ luaSource: data.source });
+  };
+
   const columns = [
     {
       valueType: 'group',
@@ -44,13 +54,28 @@ const UpdateForm = () => {
             dataIndex: 'luaSource',
             hideInForm: !uuid,
             renderFormItem: () => (
-              <ProCodeEditor
-                label={formatMessage({ id: 'appStack.table.title.luaSource' })}
+              <ProForm.Item
                 name="luaSource"
-                ref={formRef}
-                required
+                rootClassName="rule-label"
+                label={
+                  <RuleLabel
+                    name={formatMessage({ id: 'appStack.table.title.luaSource' })}
+                    handleOnFormatCode={handleOnFormatCode}
+                  />
+                }
+                rules={[
+                  {
+                    required: true,
+                    message: formatMessage(
+                      { id: 'placeholder.input' },
+                      { text: formatMessage({ id: 'ruleConfig.form.title.actions' }) },
+                    ),
+                  },
+                ]}
                 className="w-full"
-              />
+              >
+                <CodeEditor key="luaSource" minHeight="400px" lang={Lang.LUA} />
+              </ProForm.Item>
             ),
           },
         ];

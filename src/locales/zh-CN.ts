@@ -99,7 +99,7 @@ export default {
   'menu.plugin': '增强插件',
   'menu.plugin.list': '插件列表',
   'menu.system': '系统设置',
-  'menu.notification': '站内日志',
+  'menu.notification': '内部通知',
   'menu.rule.list': '规则配置',
   'menu.rule.new': '新建规则配置',
   'menu.rule.update': '编辑规则配置',

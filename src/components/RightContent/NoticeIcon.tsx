@@ -15,7 +15,7 @@ const NoticeIcon = () => {
       pagination={false}
       dataSource={data?.records || []}
       footer={
-        data?.total && data?.total > 5 ? (
+        data?.total && data?.total > 0 ? (
           <div className="cursor-pointer" onClick={() => history.push('/notification')}>
             <a>{formatMessage({ id: 'component.button.more' })}</a>
           </div>
@@ -32,7 +32,7 @@ const NoticeIcon = () => {
           },
         },
         actions: {
-          render: (_, { type }) => <ProTag type={StatusType.NOTICE}>{type || 'DEFAULT'}</ProTag>
+          render: (_, { type }) => <ProTag type={StatusType.NOTICE}>{type || 'DEFAULT'}</ProTag>,
         },
       }}
       className="notification-list"
