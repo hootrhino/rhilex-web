@@ -76,6 +76,7 @@ export default {
   'device.form.title.group.common': '通用配置',
   'device.form.title.group.http': 'HTTP 配置',
   'device.form.title.group.snmp': 'SNMP 配置',
+  'device.form.title.group.smartHome': '智慧家庭配置',
   'device.form.title.group.bacnet': 'BACnet 配置',
   'device.form.title.group.tencent': '騰訊雲物聯網平台接入配置',
 
@@ -170,23 +171,20 @@ export default {
   'device.form.title.kvsRev': '鍵值存儲版本號',
   'device.form.title.scheduleRev': '計劃任務版本號',
   'device.form.title.webhookRev': 'Webhook 版本號',
+  'device.form.title.cidr': '網路',
 
   // bacnet
-  'device.form.title.bacnet.mode.broadcast': '廣播模式',
-  'device.form.title.bacnet.interface': '網路適配器',
-  'device.form.title.bacnet.localIp': '本地地址',
-  'device.form.title.bacnet.subnetCidr': '子網路遮罩',
-  'device.form.title.bacnet.localPort': '本地埠',
-  'device.form.title.bacnet.vendorId': '廠商 ID',
-  'device.form.title.bacnet.objectType': '對象類型',
-  'device.form.title.bacnet.objectId': '對象 ID',
+  'device.form.title.mode.broadcast': '廣播模式',
+  'device.form.title.localPort': '本地埠',
+  'device.form.title.vendorId': '廠商 ID',
+  'device.form.title.objectType': '對象類型',
+  'device.form.title.objectId': '對象 ID',
 
   // tencent
-  'device.form.title.tencent.mode': '模式',
-  'device.form.title.tencent.productId': '產品 ID',
-  'device.form.title.tencent.deviceName': '設備名稱',
-  'device.form.title.tencent.devicePsk': '設備秘鑰',
-  'device.form.title.tencent.clientId': '客戶端 ID',
+  'device.form.title.productId': '產品 ID',
+  'device.form.title.deviceName': '設備名稱',
+  'device.form.title.devicePsk': '設備秘鑰',
+  'device.form.title.clientId': '客戶端 ID',
 
   /**
    * tooltip
@@ -215,7 +213,7 @@ export default {
   'device.form.placeholder.siemensAddress': '請輸入地址',
   'device.form.placeholder.oid': '請輸入對象標識符',
   'device.form.placeholder.uartTimeout': '請輸入讀寫超時',
-  'device.form.placeholder.cidr': '請輸入 CIDR',
+  'device.form.placeholder.cidr': '請選擇網路',
   'device.form.placeholder.bacnet.vendorId': '請輸入廠商 ID',
   'device.form.placeholder.id': '請輸入設備 ID',
   'device.form.placeholder.bacnet.objectType': '請選擇對象類型',

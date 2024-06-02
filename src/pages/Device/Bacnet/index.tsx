@@ -110,7 +110,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
       },
     },
     {
-      title: formatMessage({ id: 'device.form.title.bacnet.objectType' }),
+      title: formatMessage({ id: 'device.form.title.objectType' }),
       dataIndex: 'objectType',
       valueType: 'select',
       width: 150,
@@ -129,7 +129,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
       },
     },
     {
-      title: formatMessage({ id: 'device.form.title.bacnet.objectId' }),
+      title: formatMessage({ id: 'device.form.title.objectId' }),
       dataIndex: 'objectId',
       width: 150,
       valueType: 'digit',

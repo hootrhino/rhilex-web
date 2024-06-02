@@ -105,10 +105,11 @@ export const defaultConfig = {
   // },
   [DeviceType.SMART_HOME_CONTROLLER]: {
     commonConfig: {
-      networkCidr: '192.168.1.1/24',
       autoScan: 'true',
       timeout: DEFAULT_TIMEOUT,
       frequency: DEFAULT_FREQUENCE,
+    },
+    shellyConfig: {
       webHookPort: 7000,
     },
   },
@@ -134,9 +135,6 @@ export const defaultConfig = {
     bacnetConfig: {
       mode: BacnetMode.BROADCAST,
       localPort: 47808,
-      interface: '',
-      addr: '',
-      subnetCidr: 24,
       deviceId: 2580,
       vendorId: 2580,
     },

@@ -180,7 +180,6 @@ const UpdateForm = () => {
     const model = changedValue?.config?.commonConfig?.model;
     //  const outputMode = changedValue?.config?.outputMode;
     // const inputMode = changedValue?.config?.inputMode;
-    const nic = changedValue?.config?.bacnetConfig?.interface;
 
     if (type) {
       formRef.current?.setFieldsValue({
@@ -190,18 +189,6 @@ const UpdateForm = () => {
     if (model) {
       formRef.current?.setFieldsValue({
         config: defaultModelConfig[model],
-      });
-    }
-    if (nic) {
-      const [ip, subnet] = nic.split('/');
-      formRef.current?.setFieldsValue({
-        config: {
-          bacnetConfig: {
-            interface: nic,
-            localIp: ip,
-            subnetCidr: Number(subnet),
-          },
-        },
       });
     }
 

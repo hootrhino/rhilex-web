@@ -1,5 +1,6 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
 import ProSegmented from '@/components/ProSegmented';
+import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
 import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
@@ -7,7 +8,7 @@ import { getOsNetInterfaces } from '@/services/rulex/xitongshuju';
 import { FormItemType, Product } from '@/utils/enum';
 import { validateFormItem } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
-import { AutoComplete, Space } from 'antd';
+import { Space } from 'antd';
 import type { FormItemProps, Rule } from 'antd/es/form';
 import type { DeviceItem } from '.';
 import {
@@ -22,7 +23,6 @@ import {
   TencentMode,
   TransportOption,
 } from './enum';
-import ProTag, { StatusType } from '@/components/ProTag';
 
 const intl = getIntl(getLocale());
 
@@ -36,7 +36,11 @@ const createBoolConfig = (title: string, dataIndex: string, type = StatusType.BO
       dataIndex: ['config', 'commonConfig', dataIndex],
       required: true,
       renderFormItem: () => <ProSegmented width="md" />,
-      render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => <ProTag type={type} key={dataIndex} >{commonConfig[dataIndex]}</ProTag>
+      render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
+        <ProTag type={type} key={dataIndex}>
+          {commonConfig[dataIndex]}
+        </ProTag>
+      ),
     },
   ];
 };
@@ -583,43 +587,40 @@ export const typeConfigColumns = {
         ...createBoolConfig(intl.formatMessage({ id: 'device.form.title.autoScan' }), 'autoScan'),
         ...timeoutConfig(intl.formatMessage({ id: 'device.form.title.timeout.scan' })),
         ...frequencyConfig(intl.formatMessage({ id: 'device.form.title.frequency.scan' })),
+      ],
+    },
+    {
+      title: intl.formatMessage({ id: 'device.form.title.group.smartHome' }),
+      valueType: 'group',
+      columns: [
         {
-          title: 'CIDR',
+          title: intl.formatMessage({ id: 'device.form.title.cidr' }),
           required: true,
-          dataIndex: ['config', 'commonConfig', 'networkCidr'],
-          renderFormItem: () => (
-            <AutoComplete
-              options={[
-                { value: '10.0.0.0/16', label: '10.0.0.0/16' },
-                { value: '172.168.1.0/24', label: '172.168.1.0/24' },
-                { value: '172.168.0.0/16', label: '172.168.0.0/16' },
-                { value: '192.168.1.0/24', label: '192.168.1.0/24' },
-                { value: '192.168.0.0/16', label: '192.168.0.0/16' },
-              ]}
-              style={{ width: 328 }}
-            />
-          ),
-          formItemProps: {
-            rules: [
-              {
-                required: true,
-                message: intl.formatMessage({ id: 'device.form.placeholder.cidr' }),
-              },
-              {
-                validator: (_rule: Rule, value: string) =>
-                  validateFormItem(value, FormItemType.CIDR),
-              },
-            ],
+          dataIndex: ['config', 'shellyConfig', 'networkCidr'],
+          valueType: 'select',
+          request: async () => {
+            const { data } = await getOsNetInterfaces();
+
+            return data?.map((item) => ({
+              label: (
+                <Space>
+                  <span>{item?.name}</span>
+                  <span className="text-[12px] text-[#000000A6]">{item?.addr}</span>
+                </Space>
+              ),
+              value: item.addr,
+            }));
           },
-          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig.networkCidr,
+          render: (_dom: React.ReactNode, { shellyConfig }: DeviceItem) =>
+            shellyConfig?.networkCidr,
         },
         {
           title: intl.formatMessage({ id: 'device.form.title.webHookPort' }),
-          dataIndex: ['config', 'commonConfig', 'webHookPort'],
+          dataIndex: ['config', 'shellyConfig', 'webHookPort'],
           valueType: 'digit',
           required: true,
-          render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) =>
-            commonConfig?.webHookPort,
+          render: (_dom: React.ReactNode, { shellyConfig }: DeviceItem) =>
+            shellyConfig?.webHookPort,
         },
       ],
     },
@@ -696,7 +697,7 @@ export const typeConfigColumns = {
       valueType: 'group',
       columns: [
         {
-          title: intl.formatMessage({ id: 'device.form.title.bacnet.vendorId' }),
+          title: intl.formatMessage({ id: 'device.form.title.vendorId' }),
           dataIndex: ['config', 'bacnetConfig', 'vendorId'],
           valueType: 'digit',
           formItemProps: {
@@ -744,8 +745,8 @@ export const typeConfigColumns = {
             BacnetModeOption[bacnetConfig?.mode],
         },
         {
-          title: intl.formatMessage({ id: 'device.form.title.bacnet.interface' }),
-          dataIndex: ['config', 'bacnetConfig', 'interface'],
+          title: intl.formatMessage({ id: 'device.form.title.cidr' }),
+          dataIndex: ['config', 'bacnetConfig', 'networkCidr'],
           valueType: 'select',
           required: true,
           request: async () => {
@@ -761,29 +762,11 @@ export const typeConfigColumns = {
               value: item.addr,
             }));
           },
-          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.interface,
+          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) =>
+            bacnetConfig?.networkCidr,
         },
         {
-          title: intl.formatMessage({ id: 'device.form.title.bacnet.localIp' }),
-          dataIndex: ['config', 'bacnetConfig', 'localIp'],
-          required: true,
-          fieldProps: {
-            disabled: true,
-          },
-          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.localIp,
-        },
-        {
-          title: intl.formatMessage({ id: 'device.form.title.bacnet.subnetCidr' }),
-          dataIndex: ['config', 'bacnetConfig', 'subnetCidr'],
-          required: true,
-          valueType: 'digit',
-          fieldProps: {
-            disabled: true,
-          },
-          render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.subnetCidr,
-        },
-        {
-          title: intl.formatMessage({ id: 'device.form.title.bacnet.localPort' }),
+          title: intl.formatMessage({ id: 'device.form.title.localPort' }),
           dataIndex: ['config', 'bacnetConfig', 'localPort'],
           required: true,
           valueType: 'digit',
@@ -798,7 +781,7 @@ export const typeConfigColumns = {
       valueType: 'group',
       columns: [
         {
-          title: intl.formatMessage({ id: 'device.form.title.tencent.mode' }),
+          title: intl.formatMessage({ id: 'device.form.title.mode' }),
           dataIndex: ['config', 'tencentConfig', 'mode'],
           valueType: 'select',
           valueEnum: TencentMode,
@@ -806,28 +789,28 @@ export const typeConfigColumns = {
           render: (_dom: React.ReactNode, { tencentConfig }: DeviceItem) => tencentConfig?.mode,
         },
         {
-          title: intl.formatMessage({ id: 'device.form.title.tencent.productId' }),
+          title: intl.formatMessage({ id: 'device.form.title.productId' }),
           dataIndex: ['config', 'tencentConfig', 'productId'],
           required: true,
           render: (_dom: React.ReactNode, { tencentConfig }: DeviceItem) =>
             tencentConfig?.productId,
         },
         {
-          title: intl.formatMessage({ id: 'device.form.title.tencent.deviceName' }),
+          title: intl.formatMessage({ id: 'device.form.title.deviceName' }),
           dataIndex: ['config', 'tencentConfig', 'deviceName'],
           required: true,
           render: (_dom: React.ReactNode, { tencentConfig }: DeviceItem) =>
             tencentConfig?.deviceName,
         },
         {
-          title: intl.formatMessage({ id: 'device.form.title.tencent.devicePsk' }),
+          title: intl.formatMessage({ id: 'device.form.title.devicePsk' }),
           dataIndex: ['config', 'tencentConfig', 'devicePsk'],
           required: true,
           render: (_dom: React.ReactNode, { tencentConfig }: DeviceItem) =>
             tencentConfig?.devicePsk,
         },
         {
-          title: intl.formatMessage({ id: 'device.form.title.tencent.clientId' }),
+          title: intl.formatMessage({ id: 'device.form.title.clientId' }),
           dataIndex: ['config', 'tencentConfig', 'clientId'],
           required: true,
           render: (_dom: React.ReactNode, { tencentConfig }: DeviceItem) => tencentConfig?.clientId,

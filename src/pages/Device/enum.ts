@@ -206,7 +206,7 @@ export enum BacnetMode {
 }
 
 export const BacnetModeOption = {
-  [BacnetMode.BROADCAST]: intl.formatMessage({ id: 'device.form.title.bacnet.mode.broadcast' }),
+  [BacnetMode.BROADCAST]: intl.formatMessage({ id: 'device.form.title.mode.broadcast' }),
 };
 
 /**

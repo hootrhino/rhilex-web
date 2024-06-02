@@ -76,6 +76,7 @@ export default {
   'device.form.title.group.common': '通用配置',
   'device.form.title.group.http': 'HTTP 配置',
   'device.form.title.group.snmp': 'SNMP 配置',
+  'device.form.title.group.smartHome': '智能家居配置',
   'device.form.title.group.bacnet': 'BACnet 配置',
   'device.form.title.group.tencent': '腾讯云物联网平台接入配置',
 
@@ -170,23 +171,20 @@ export default {
   'device.form.title.kvsRev': '键值存储版本号',
   'device.form.title.scheduleRev': '计划任务版本号',
   'device.form.title.webhookRev': 'Webhook 版本号',
+  'device.form.title.cidr': '网络',
 
   // bacnet
-  'device.form.title.bacnet.mode.broadcast': '广播模式',
-  'device.form.title.bacnet.interface': '网络适配器',
-  'device.form.title.bacnet.localIp': '本地地址',
-  'device.form.title.bacnet.subnetCidr': '子网掩码',
-  'device.form.title.bacnet.localPort': '本地端口',
-  'device.form.title.bacnet.vendorId': '厂商 ID',
-  'device.form.title.bacnet.objectType': '对象类型',
-  'device.form.title.bacnet.objectId': '对象 ID',
+  'device.form.title.mode.broadcast': '广播模式',
+  'device.form.title.localPort': '本地端口',
+  'device.form.title.vendorId': '厂商 ID',
+  'device.form.title.objectType': '对象类型',
+  'device.form.title.objectId': '对象 ID',
 
   // tencent
-  'device.form.title.tencent.mode': '模式',
-  'device.form.title.tencent.productId': '产品 ID',
-  'device.form.title.tencent.deviceName': '设备名称',
-  'device.form.title.tencent.devicePsk': '设备秘钥',
-  'device.form.title.tencent.clientId': '客户端 ID',
+  'device.form.title.productId': '产品 ID',
+  'device.form.title.deviceName': '设备名称',
+  'device.form.title.devicePsk': '设备秘钥',
+  'device.form.title.clientId': '客户端 ID',
 
   /**
    * tooltip
@@ -215,7 +213,7 @@ export default {
   'device.form.placeholder.siemensAddress': '请输入地址',
   'device.form.placeholder.oid': '请输入对象标识符',
   'device.form.placeholder.uartTimeout': '请输入读写超时',
-  'device.form.placeholder.cidr': '请输入 CIDR',
+  'device.form.placeholder.cidr': '请选择网络',
   'device.form.placeholder.bacnet.vendorId': '请输入厂商 ID',
   'device.form.placeholder.id': '请输入设备 ID',
   'device.form.placeholder.bacnet.objectType': '请选择对象类型',

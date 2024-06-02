@@ -79,6 +79,7 @@ export default {
   'device.form.title.group.common': 'Common configuration',
   'device.form.title.group.http': 'HTTP configuration',
   'device.form.title.group.snmp': 'SNMP configuration',
+  'device.form.title.group.smartHome': 'Smart home configuration',
   'device.form.title.group.bacnet': 'BACnet configuration',
   'device.form.title.group.tencent': 'Tencent IoT Hub access configuration',
 
@@ -175,23 +176,20 @@ export default {
   'device.form.title.kvsRev': 'Key Value Storage Version',
   'device.form.title.scheduleRev': 'Schedule Job Version',
   'device.form.title.webhookRev': 'Webhook Version',
+  'device.form.title.cidr': 'CIDR',
 
   // bacnet
-  'device.form.title.bacnet.mode.broadcast': 'Broadcast Mode',
-  'device.form.title.bacnet.interface': 'Interface',
-  'device.form.title.bacnet.localIp': 'Local IP',
-  'device.form.title.bacnet.subnetCidr': 'Subnet CIDR',
-  'device.form.title.bacnet.localPort': 'Port',
-  'device.form.title.bacnet.vendorId': 'Vendor ID',
-  'device.form.title.bacnet.objectType': 'Object Type',
-  'device.form.title.bacnet.objectId': 'Object ID',
+  'device.form.title.mode.broadcast': 'Broadcast Mode',
+  'device.form.title.localPort': 'Port',
+  'device.form.title.vendorId': 'Vendor ID',
+  'device.form.title.objectType': 'Object Type',
+  'device.form.title.objectId': 'Object ID',
 
   // tencent
-  'device.form.title.tencent.mode': 'Mode',
-  'device.form.title.tencent.productId': 'Product ID',
-  'device.form.title.tencent.deviceName': 'Device Name',
-  'device.form.title.tencent.devicePsk': 'Device PSK',
-  'device.form.title.tencent.clientId': 'Client ID',
+  'device.form.title.productId': 'Product ID',
+  'device.form.title.deviceName': 'Device Name',
+  'device.form.title.devicePsk': 'Device PSK',
+  'device.form.title.clientId': 'Client ID',
 
   /**
    * tooltip
@@ -220,7 +218,7 @@ export default {
   'device.form.placeholder.siemensAddress': 'Please enter an address',
   'device.form.placeholder.oid': 'Please enter an OID',
   'device.form.placeholder.uartTimeout': 'Please enter a timeout',
-  'device.form.placeholder.cidr': 'Please enter a CIDR',
+  'device.form.placeholder.cidr': 'Please select a CIDR',
   'device.form.placeholder.bacnet.vendorId': 'Please enter a vendor ID',
   'device.form.placeholder.id': 'Please enter a device ID',
   'device.form.placeholder.bacnet.objectType': 'Please select an object type',

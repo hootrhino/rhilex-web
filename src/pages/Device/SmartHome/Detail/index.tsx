@@ -1,11 +1,10 @@
 import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
 import { getShellyGen1Detail, getShellyGen1Status } from '@/services/rulex/shellyshebei';
-import { CheckCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import type { ProDescriptionsProps } from '@ant-design/pro-components';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { getIntl, getLocale } from '@umijs/max';
-import { Divider, Tag } from 'antd';
+import { Divider } from 'antd';
 
 type DetailProps<RecordType = Record<string, any>, ValueType = 'text'> = ProDescriptionsProps<
   RecordType,
@@ -69,11 +68,7 @@ const baseColumns = [
   {
     title: intl.formatMessage({ id: 'device.form.title.authEn' }),
     dataIndex: 'auth_en',
-    renderText: (auth_en: boolean) => (
-      <ProTag type={StatusType.BOOL}>
-        {auth_en}
-      </ProTag>
-    ),
+    renderText: (auth_en: boolean) => <ProTag type={StatusType.BOOL}>{auth_en}</ProTag>,
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.authDomain' }),
@@ -86,9 +81,7 @@ const statusColumns = [
     title: intl.formatMessage({ id: 'device.form.title.restartRequired' }),
     dataIndex: 'restart_required',
     renderText: (restart_required: boolean) => (
-      <ProTag type={StatusType.BOOL}>
-        {restart_required}
-      </ProTag>
+      <ProTag type={StatusType.BOOL}>{restart_required}</ProTag>
     ),
   },
   {
