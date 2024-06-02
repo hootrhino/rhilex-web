@@ -214,10 +214,10 @@ export default {
   'device.form.placeholder.oid': '請輸入對象標識符',
   'device.form.placeholder.uartTimeout': '請輸入讀寫超時',
   'device.form.placeholder.cidr': '請選擇網路',
-  'device.form.placeholder.bacnet.vendorId': '請輸入廠商 ID',
+  'device.form.placeholder.vendorId': '請輸入廠商 ID',
   'device.form.placeholder.id': '請輸入設備 ID',
-  'device.form.placeholder.bacnet.objectType': '請選擇對象類型',
-  'device.form.placeholder.bacnet.objectId': '請輸入對象 ID',
+  'device.form.placeholder.objectType': '請選擇對象類型',
+  'device.form.placeholder.objectId': '請輸入對象 ID',
 
   /**
    * rules

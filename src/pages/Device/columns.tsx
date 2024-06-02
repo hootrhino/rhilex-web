@@ -704,7 +704,7 @@ export const typeConfigColumns = {
             rules: [
               {
                 required: true,
-                message: intl.formatMessage({ id: 'device.form.placeholder.bacnet.vendorId' }),
+                message: intl.formatMessage({ id: 'device.form.placeholder.vendorId' }),
               },
               {
                 validator: (_rule: Rule, value: number) =>

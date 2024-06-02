@@ -119,13 +119,13 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
         rules: [
           {
             required: true,
-            message: formatMessage({ id: 'device.form.placeholder.bacnet.objectType' }),
+            message: formatMessage({ id: 'device.form.placeholder.objectType' }),
           },
         ],
       },
       fieldProps: {
         allowClear: false,
-        placeholder: formatMessage({ id: 'device.form.placeholder.bacnet.objectType' }),
+        placeholder: formatMessage({ id: 'device.form.placeholder.objectType' }),
       },
     },
     {
@@ -137,7 +137,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
         rules: [
           {
             required: true,
-            message: formatMessage({ id: 'device.form.placeholder.bacnet.objectId' }),
+            message: formatMessage({ id: 'device.form.placeholder.objectId' }),
           },
           {
             min: 0,
@@ -153,7 +153,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
       },
       fieldProps: {
         allowClear: false,
-        placeholder: formatMessage({ id: 'device.form.placeholder.bacnet.objectId' }),
+        placeholder: formatMessage({ id: 'device.form.placeholder.objectId' }),
       },
     },
   ];

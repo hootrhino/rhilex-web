@@ -214,10 +214,10 @@ export default {
   'device.form.placeholder.oid': '请输入对象标识符',
   'device.form.placeholder.uartTimeout': '请输入读写超时',
   'device.form.placeholder.cidr': '请选择网络',
-  'device.form.placeholder.bacnet.vendorId': '请输入厂商 ID',
+  'device.form.placeholder.vendorId': '请输入厂商 ID',
   'device.form.placeholder.id': '请输入设备 ID',
-  'device.form.placeholder.bacnet.objectType': '请选择对象类型',
-  'device.form.placeholder.bacnet.objectId': '请输入对象 ID',
+  'device.form.placeholder.objectType': '请选择对象类型',
+  'device.form.placeholder.objectId': '请输入对象 ID',
 
   /**
    * rules

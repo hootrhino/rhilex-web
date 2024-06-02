@@ -219,10 +219,10 @@ export default {
   'device.form.placeholder.oid': 'Please enter an OID',
   'device.form.placeholder.uartTimeout': 'Please enter a timeout',
   'device.form.placeholder.cidr': 'Please select a CIDR',
-  'device.form.placeholder.bacnet.vendorId': 'Please enter a vendor ID',
+  'device.form.placeholder.vendorId': 'Please enter a vendor ID',
   'device.form.placeholder.id': 'Please enter a device ID',
-  'device.form.placeholder.bacnet.objectType': 'Please select an object type',
-  'device.form.placeholder.bacnet.objectId': 'Please enter an object ID',
+  'device.form.placeholder.objectType': 'Please select an object type',
+  'device.form.placeholder.objectId': 'Please enter an object ID',
 
   /**
    * rules
