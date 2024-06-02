@@ -149,7 +149,7 @@ const ProLog = ({
       }
       {...props}
     >
-      <div id="terminal" ref={logRef} />
+      <div id="terminal" ref={logRef} style={{ width: '100%', height: '100%' }} />
     </ProCard>
   );
 };

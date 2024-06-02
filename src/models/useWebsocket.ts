@@ -37,7 +37,7 @@ const useWebsocket = () => {
       setUrl(`${prefix}://${window?.location?.host}/${prefix}`);
     }
 
-    // setUrl(`${prefix}://106.15.225.172:2580/${prefix}`);
+    // setUrl(`ws://1365866fz0.vicp.fun/ws`);
   }, [window?.location]);
 
   return {

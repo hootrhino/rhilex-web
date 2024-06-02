@@ -22,23 +22,30 @@ const Debug = ({ topic, ruleType, ...props }: DebugProps) => {
   const { formatMessage } = useIntl();
 
   const [debugLog, setDebugLog] = useState<string[]>([]);
+  const [showLog, setShowLog] = useState<boolean>(false);
+
+  const handleOnReset = () => {
+    setDebugLog([]);
+    setShowLog(false);
+  };
 
   useEffect(() => {
     const newData = handleNewMessage(debugLog, latestMessage?.data, topic);
-    setDebugLog(newData);
-  }, [latestMessage, topic]);
+    if (showLog) {
+      setDebugLog(newData);
+    }
+  }, [latestMessage, topic, showLog]);
 
   return (
     <ModalForm
       formRef={formRef}
       title={formatMessage({ id: 'ruleConfig.title.test' })}
-      style={{ height: 500 }}
       modalProps={{
         maskClosable: false,
         destroyOnClose: true,
         onCancel: () => {
           formRef.current?.resetFields();
-          setDebugLog([]);
+          handleOnReset();
         },
       }}
       submitter={{
@@ -48,7 +55,7 @@ const Debug = ({ topic, ruleType, ...props }: DebugProps) => {
               key="reset"
               onClick={() => {
                 reset();
-                setDebugLog([]);
+                handleOnReset();
               }}
             >
               {formatMessage({ id: 'button.reset' })}
@@ -62,7 +69,8 @@ const Debug = ({ topic, ruleType, ...props }: DebugProps) => {
       onFinish={async ({ testData }) => {
         try {
           if (deviceId) {
-            await postRulesTestDevice({ testData, uuid: deviceId });
+            const { code } = await postRulesTestDevice({ testData, uuid: deviceId });
+            setShowLog(code === 200);
           }
           return false;
         } catch (error) {
@@ -90,12 +98,11 @@ const Debug = ({ topic, ruleType, ...props }: DebugProps) => {
         className="mb-0"
       >
         <ProLog
-          key="rule_debug"
           hidePadding
+          headStyle={{ paddingBlock: 0 }}
           topic={topic}
           dataSource={debugLog}
-          headStyle={{ paddingBlock: 0 }}
-          className="h-[225px]"
+          className="h-[220px]"
         />
       </ProForm.Item>
     </ModalForm>

@@ -27,6 +27,7 @@ const LogDetail = ({ uuid, ...props }: LogDetailProps) => {
     <Modal
       title={formatMessage({ id: 'ruleConfig.title.log' })}
       width="65%"
+      destroyOnClose
       footer={
         <Button type="primary" onClick={props?.onCancel}>
           {formatMessage({ id: 'button.close' })}
@@ -34,7 +35,12 @@ const LogDetail = ({ uuid, ...props }: LogDetailProps) => {
       }
       {...props}
     >
-      <ProLog key="rule_log" hidePadding topic={`rule/log/${uuid}`} dataSource={ruleLog} />
+      <ProLog
+        hidePadding
+        headStyle={{ paddingBlock: 0 }}
+        topic={`rule/log/${uuid}`}
+        dataSource={ruleLog}
+      />
     </Modal>
   );
 };

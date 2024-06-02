@@ -152,8 +152,7 @@ const Rule = () => {
         <a
           key="debug"
           onClick={() => {
-            const type = deviceId ? RuleType.DEVICE : RuleType.INEND;
-            setDebugConfig({ open: true, topic: `${type}/rule/log/${uuid}` });
+            setDebugConfig({ open: true, topic: `rule/log/${uuid}` });
           }}
         >
           {formatMessage({ id: 'button.test' })}
