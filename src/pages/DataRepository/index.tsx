@@ -196,7 +196,7 @@ const DataRepository = () => {
             ],
           }}
         >
-          {`curl --location --request GET 'http://Ip:2580/api/v1/datacenter/queryDataList?secrets=
+          {`curl --location --request GET 'http://${window.location.host}/api/v1/datacenter/queryDataList?secrets=
           ${secret}&uuid=${selectedKey}&current=${current}&size=${pageSize}&order=DESC' --header
           'User-Agent: RHILEX'`}
         </Typography.Paragraph>

@@ -4,7 +4,7 @@ export default {
    */
   'dataRepo.button.clear': '清空',
   'dataRepo.button.download': '导出',
-  'dataRepo.button.code': '生成代码',
+  'dataRepo.button.code': '快速请求',
 
   /**
    * title
