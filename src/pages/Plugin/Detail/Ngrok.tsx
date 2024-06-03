@@ -1,6 +1,6 @@
+import ProDescriptions from '@/components/ProDescriptions';
 import ProTag, { StatusType } from '@/components/ProTag';
 import { postPlugwareService } from '@/services/rulex/chajianguanli';
-import { ProDescriptions } from '@ant-design/pro-components';
 import { getIntl, getLocale } from '@umijs/max';
 
 const intl = getIntl(getLocale());
@@ -9,9 +9,7 @@ const columns = [
   {
     title: intl.formatMessage({ id: 'plugin.table.title.running' }),
     dataIndex: 'running',
-    renderText: (running: boolean) => (
-      <ProTag type={StatusType.RUNNING}>{running}</ProTag>
-    ),
+    renderText: (running: boolean) => <ProTag type={StatusType.RUNNING}>{running}</ProTag>,
   },
   {
     title: intl.formatMessage({ id: 'plugin.table.title.serverAddr' }),
@@ -48,7 +46,7 @@ const columns = [
 const NgrokDetail = () => {
   return (
     <ProDescriptions
-      labelStyle={{ minWidth: 135, justifyContent: 'flex-end', paddingRight: 10 }}
+      columns={columns}
       request={async () => {
         const { data } = await postPlugwareService({
           uuid: 'NGROKC',
@@ -61,8 +59,6 @@ const NgrokDetail = () => {
           data,
         });
       }}
-      columns={columns}
-      column={1}
     />
   );
 };

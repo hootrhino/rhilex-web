@@ -1,9 +1,10 @@
+import ProDescriptions from '@/components/ProDescriptions';
 import { getSettingsNetDetails, getSettingsNetStatus } from '@/services/rulex/wangluopeizhi';
 import { pick } from '@/utils/redash';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
-import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
-import { Button, Descriptions, Modal } from 'antd';
+import { FormattedMessage, getLocale, useIntl, useRequest } from '@umijs/max';
+import { Button, Modal } from 'antd';
 import { useState } from 'react';
 
 type NetStatusItem = {
@@ -27,15 +28,36 @@ const stateEnum = {
   unavailable: <FormattedMessage id="system.state.unavailable" />,
 };
 
-const detailColumns = {
-  device: <FormattedMessage id="system.table.title.device" />,
-  type: <FormattedMessage id="system.table.title.type" />,
-  hwAddr: <FormattedMessage id="system.table.title.hwAddr" />,
-  mtu: <FormattedMessage id="system.table.title.mtu" />,
-  connection: <FormattedMessage id="system.table.title.connection" />,
-  ipv4Addr: <FormattedMessage id="system.table.title.ipv4Addr" />,
-  ipv6Addr: <FormattedMessage id="system.table.title.ipv6Addr" />,
-};
+const detailColumns = [
+  {
+    title: <FormattedMessage id="system.table.title.device" />,
+    dataIndex: 'device',
+  },
+  {
+    title: <FormattedMessage id="system.table.title.type" />,
+    dataIndex: 'type',
+  },
+  {
+    title: <FormattedMessage id="system.table.title.hwAddr" />,
+    dataIndex: 'hwAddr',
+  },
+  {
+    title: <FormattedMessage id="system.table.title.mtu" />,
+    dataIndex: 'mtu',
+  },
+  {
+    title: <FormattedMessage id="system.table.title.connection" />,
+    dataIndex: 'connection',
+  },
+  {
+    title: <FormattedMessage id="system.table.title.ipv4Addr" />,
+    dataIndex: 'ipv4Addr',
+  },
+  {
+    title: <FormattedMessage id="system.table.title.ipv6Addr" />,
+    dataIndex: 'ipv6Addr',
+  },
+];
 
 const NetworkStatus = () => {
   const { formatMessage } = useIntl();
@@ -116,18 +138,11 @@ const NetworkStatus = () => {
         }
         onCancel={() => setOpen(false)}
       >
-        <Descriptions column={1}>
-          {detail &&
-            Object.keys(detail)?.map((item) => (
-              <Descriptions.Item
-                label={detailColumns[item]}
-                key={item}
-                labelStyle={{ minWidth: 130, justifyContent: 'end' }}
-              >
-                {detail[item]}
-              </Descriptions.Item>
-            ))}
-        </Descriptions>
+        <ProDescriptions
+          columns={detailColumns}
+          dataSource={detail}
+          labelWidth={getLocale() === 'en-US' ? 130 : 100}
+        />
       </Modal>
     </ProCard>
   );

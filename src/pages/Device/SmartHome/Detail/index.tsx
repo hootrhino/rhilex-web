@@ -1,8 +1,8 @@
+import ProDescriptions from '@/components/ProDescriptions';
 import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
 import { getShellyGen1Detail, getShellyGen1Status } from '@/services/rulex/shellyshebei';
 import type { ProDescriptionsProps } from '@ant-design/pro-components';
-import { ProDescriptions } from '@ant-design/pro-components';
 import { getIntl, getLocale } from '@umijs/max';
 import { Divider } from 'antd';
 
@@ -22,6 +22,7 @@ const baseColumns = [
     title: intl.formatMessage({ id: 'device.form.title.id' }),
     dataIndex: 'id',
     ellipsis: true,
+    renderText: (id: string) => id || '-',
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.name' }),
@@ -31,31 +32,35 @@ const baseColumns = [
     title: intl.formatMessage({ id: 'device.form.title.ip' }),
     dataIndex: 'ip',
     ellipsis: true,
+    renderText: (ip: string) => ip || '-',
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.mac' }),
     dataIndex: 'mac',
     ellipsis: true,
+    renderText: (mac: string) => mac || '-',
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.model' }),
     dataIndex: 'model',
     ellipsis: true,
+    renderText: (model: string) => model || '-',
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.gen' }),
     dataIndex: 'gen',
-    renderText: (gen: string) => `v${gen}`,
+    renderText: (gen: string) => (gen ? `v${gen}` : '-'),
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.fwId' }),
     dataIndex: 'fw_id',
     ellipsis: true,
+    renderText: (fw_id: string) => fw_id || '-',
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.ver' }),
     dataIndex: 'ver',
-    renderText: (ver: string) => `v${ver}`,
+    renderText: (ver: string) => (ver ? `v${ver}` : '-'),
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.slot' }),
@@ -68,7 +73,10 @@ const baseColumns = [
   {
     title: intl.formatMessage({ id: 'device.form.title.authEn' }),
     dataIndex: 'auth_en',
-    renderText: (auth_en: boolean) => <ProTag type={StatusType.BOOL}>{auth_en}</ProTag>,
+    renderText: (auth_en: boolean) => {
+      console.log(auth_en);
+      return auth_en === undefined ? '-' : <ProTag type={StatusType.BOOL}>{auth_en}</ProTag>;
+    },
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.authDomain' }),
@@ -95,6 +103,7 @@ const statusColumns = [
   {
     title: intl.formatMessage({ id: 'device.form.title.uptime' }),
     dataIndex: 'uptime',
+    renderText: (uptime: number) => <UnitValue value={uptime} unit="ms" />,
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.ramSize' }),
@@ -139,28 +148,32 @@ const statusColumns = [
 ];
 
 const Detail = ({ mac, deviceId, ip, ...props }: DetailProps) => {
+  const labelWidth = getLocale() === 'en-US' ? 185 : 130;
+
   return (
     <>
       <ProDescriptions
         title={intl.formatMessage({ id: 'device.title.smartHome.detail.base' })}
         column={2}
-        labelStyle={{ justifyContent: 'flex-end', minWidth: 140, marginRight: 10 }}
+        columns={baseColumns}
+        labelWidth={labelWidth}
+        params={{ ip }}
         request={async () => {
-          const { data } = await getShellyGen1Detail({ mac, deviceId });
+          const { data } = await getShellyGen1Detail({ mac, deviceId, ip: ip as string });
 
           return Promise.resolve({
             data: data,
             success: true,
           });
         }}
-        columns={baseColumns}
         {...props}
       />
       <Divider className="my-[10px]" />
       <ProDescriptions
         title={intl.formatMessage({ id: 'device.title.smartHome.detail.status' })}
         column={2}
-        labelStyle={{ justifyContent: 'flex-end', minWidth: 170, marginRight: 10 }}
+        columns={statusColumns}
+        labelWidth={labelWidth}
         params={{ ip }}
         request={async () => {
           const { data } = await getShellyGen1Status({ ip: ip || '' });
@@ -170,7 +183,6 @@ const Detail = ({ mac, deviceId, ip, ...props }: DetailProps) => {
             success: true,
           });
         }}
-        columns={statusColumns}
         {...props}
       />
     </>

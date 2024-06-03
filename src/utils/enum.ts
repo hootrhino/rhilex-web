@@ -25,7 +25,6 @@ export enum FormItemType {
   IP = 'ip', // IPv4
   NETMASK = 'netmask', // 子网掩码
   GATEWAY = 'gateway', // 网关
-  CIDR = 'cidr', // CIDR
   TIMEOUT = 'timeout', // 读写超时
 }
 

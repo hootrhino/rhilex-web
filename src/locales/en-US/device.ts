@@ -27,7 +27,7 @@ export default {
   'device.title.group': 'Device group',
   'device.title.list': 'Device list',
   'device.title.detail': 'Device detail',
-  'device.title.detail.smartHome': '{name} device detail',
+  // 'device.title.detail.smartHome': 'Device detail',
   'device.title.new': 'New device',
   'device.title.update': 'Edit device',
   'device.title.base': 'Basic configuration',

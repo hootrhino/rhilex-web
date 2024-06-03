@@ -1,10 +1,10 @@
+import ProDescriptions from '@/components/ProDescriptions';
 import ProTag, { StatusType } from '@/components/ProTag';
 import { getRulesDetail } from '@/services/rulex/guizeguanli';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
-import { ProDescriptions } from '@ant-design/pro-components';
-import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
+import { getLocale, history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import type { DrawerProps } from 'antd';
 import { Drawer } from 'antd';
 
@@ -91,9 +91,8 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {...props}
     >
       <ProDescriptions
-        column={1}
         columns={columns}
-        labelStyle={{ justifyContent: 'flex-end', minWidth: 80 }}
+        labelWidth={getLocale() === 'en-US' ? 120 : 80}
         request={async () => {
           const res = await getRulesDetail({ uuid });
 

@@ -65,7 +65,6 @@ export default {
   'form.rules.ip': 'The IP address format is incorrect',
   'form.rules.netmask': 'The subnet mask format is incorrect',
   'form.rules.gateway': 'The gateway mask format is incorrect',
-  'form.rules.cidr': 'The CIDR mask format is incorrect',
   'form.rules.default': 'The format is incorrect',
   'form.rules.timeout': 'The timeout must be between 30-1000ms',
   /**

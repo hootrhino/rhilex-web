@@ -1,5 +1,7 @@
 import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
+import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
+import ProDescriptions from '@/components/ProDescriptions';
 import {
   getFirmwareUpgradeLog,
   getFirmwareVendorKey,
@@ -14,7 +16,7 @@ import {
   SyncOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
-import { ProCard, ProDescriptions } from '@ant-design/pro-components';
+import { ProCard } from '@ant-design/pro-components';
 import { getIntl, getLocale, useIntl, useModel, useRequest } from '@umijs/max';
 import type { ProgressProps } from 'antd';
 import { Button, Modal, Progress, Space, Upload } from 'antd';
@@ -128,6 +130,35 @@ const FirmwareConfig = () => {
     xhr.send(formData);
   };
 
+  const columns = [
+    {
+      title: formatMessage({ id: 'system.table.title.deviceId' }),
+      dataIndex: 'device_id',
+    },
+    {
+      title: formatMessage({ id: 'system.table.title.mac' }),
+      dataIndex: 'mac',
+    },
+    {
+      title: formatMessage({ id: 'system.table.title.license' }),
+      dataIndex: 'license',
+    },
+    {
+      title: formatMessage({ id: 'system.table.title.authorizeAdmin' }),
+      dataIndex: 'authorize_admin',
+    },
+    {
+      title: formatMessage({ id: 'system.table.title.beginAuthorize' }),
+      dataIndex: 'begin_authorize',
+      valueType: 'dateTime',
+    },
+    {
+      title: formatMessage({ id: 'system.table.title.endAuthorize' }),
+      dataIndex: 'end_authorize',
+      valueType: 'dateTime',
+    },
+  ];
+
   return (
     <>
       <ProCard
@@ -137,7 +168,8 @@ const FirmwareConfig = () => {
       >
         <ProCard colSpan="50%" title={formatMessage({ id: 'system.title.firmware.auth' })}>
           <ProDescriptions
-            column={1}
+            columns={columns as EnhancedProDescriptionsItemProps[]}
+            labelWidth={getLocale() === 'en-US' ? 140 : 110}
             request={async () => {
               const { data } = await getFirmwareVendorKey();
               return Promise.resolve({
@@ -145,35 +177,7 @@ const FirmwareConfig = () => {
                 data,
               });
             }}
-            labelStyle={{ justifyContent: 'flex-end', minWidth: 135 }}
-          >
-            <ProDescriptions.Item
-              label={formatMessage({ id: 'system.table.title.deviceId' })}
-              dataIndex="device_id"
-            />
-            <ProDescriptions.Item
-              label={formatMessage({ id: 'system.table.title.mac' })}
-              dataIndex="mac"
-            />
-            <ProDescriptions.Item
-              label={formatMessage({ id: 'system.table.title.license' })}
-              dataIndex="license"
-            />
-            <ProDescriptions.Item
-              label={formatMessage({ id: 'system.table.title.authorizeAdmin' })}
-              dataIndex="authorize_admin"
-            />
-            <ProDescriptions.Item
-              label={formatMessage({ id: 'system.table.title.beginAuthorize' })}
-              dataIndex="begin_authorize"
-              valueType="dateTime"
-            />
-            <ProDescriptions.Item
-              label={formatMessage({ id: 'system.table.title.endAuthorize' })}
-              dataIndex="end_authorize"
-              valueType="dateTime"
-            />
-          </ProDescriptions>
+          />
 
           <Space className="mt-[24px] w-full justify-end">
             <Upload

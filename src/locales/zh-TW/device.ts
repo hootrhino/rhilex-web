@@ -27,7 +27,7 @@ export default {
   'device.title.group': '設備分組',
   'device.title.list': '設備列表',
   'device.title.detail': '設備詳情',
-  'device.title.detail.smartHome': '{name} 設備詳情',
+  // 'device.title.detail.smartHome': '{name} 設備詳情',
   'device.title.new': '新建設備',
   'device.title.update': '編輯設備',
   'device.title.base': '基本配置',

@@ -1,9 +1,9 @@
+import ProDescriptions from '@/components/ProDescriptions';
 import ProLog from '@/components/ProLog';
 import { getAppDetail } from '@/services/rulex/qingliangyingyong';
 import { DetailModalType } from '@/utils/enum';
 import { handleNewMessage } from '@/utils/utils';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
-import { ProDescriptions } from '@ant-design/pro-components';
 import { getLocale, useIntl, useModel } from '@umijs/max';
 import { useLocalStorageState } from 'ahooks';
 import type { DrawerProps } from 'antd';
@@ -37,9 +37,8 @@ const Detail = ({ uuid, type, ...props }: DetailProps) => {
       {...props}
     >
       <ProDescriptions
-        column={1}
         columns={baseColumns as ProDescriptionsItemProps<AppStackItem>[]}
-        labelStyle={{ justifyContent: 'flex-end', minWidth: getLocale() === 'en-US' ? 130 : 80 }}
+        labelWidth={getLocale() === 'en-US' ? 130 : 80}
         params={{ uuid }}
         request={async (params) => {
           const res = await getAppDetail(params as API.getAppDetailParams);

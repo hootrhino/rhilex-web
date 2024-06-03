@@ -1,8 +1,9 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
+import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
+import ProDescriptions from '@/components/ProDescriptions';
 import { getOutendsDetail } from '@/services/rulex/shuchuziyuanguanli';
 import { omit } from '@/utils/redash';
-import { ProDescriptions } from '@ant-design/pro-components';
-import { useIntl } from '@umijs/max';
+import { getLocale, useIntl } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import { useRequest } from 'umi';
@@ -15,6 +16,8 @@ type DetailProps = DrawerProps & {
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
   const { formatMessage } = useIntl();
+  const labelWidth = getLocale() === 'en-US' ? 140 : 100;
+
   const { data, run, loading } = useRequest(() => getOutendsDetail({ uuid }), {
     manual: true,
   });
@@ -33,9 +36,8 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {...props}
     >
       <ProDescriptions
-        column={1}
-        columns={baseColumns}
-        labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
+        columns={baseColumns as EnhancedProDescriptionsItemProps[]}
+        labelWidth={labelWidth}
         title={formatMessage({ id: 'outend.title.base' })}
         dataSource={data && omit(data, ['config'])}
         loading={loading}
@@ -43,9 +45,8 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       {data?.type && Object.keys(OutendType).includes(data?.type) && (
         <>
           <ProDescriptions
-            column={1}
             columns={configColumns[data?.type]}
-            labelStyle={{ justifyContent: 'flex-end', minWidth: 130 }}
+            labelWidth={labelWidth}
             title={formatMessage({ id: 'outend.title.source' })}
             dataSource={data}
             loading={loading}

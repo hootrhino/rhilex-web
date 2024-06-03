@@ -16191,6 +16191,16 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "ip",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "192.168.7.7",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {

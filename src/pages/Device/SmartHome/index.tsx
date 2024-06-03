@@ -114,7 +114,7 @@ const ShellySubDevice = () => {
       case 'detail':
         if (item.mac && deviceId) {
           modal.info({
-            title: formatMessage({ id: 'device.title.detail.smartHome' }, { name: item.name }),
+            title: formatMessage({ id: 'device.title.detail' }, { name: item.name }),
             width: '45%',
             content: <Detail mac={item.mac} deviceId={deviceId} ip={item.ip} />,
             okText: formatMessage({ id: 'button.close' }),
@@ -214,9 +214,11 @@ const ShellySubDevice = () => {
               title={
                 <div className="flex items-center truncate w-[200px]">
                   {item.name}
-                  <ProTag className="ml-[10px]" color="blue">
-                    {item.app}
-                  </ProTag>
+                  {item.app && (
+                    <ProTag className="ml-[10px]" color="blue">
+                      {item.app}
+                    </ProTag>
+                  )}
                 </div>
               }
               description={

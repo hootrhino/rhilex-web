@@ -1,8 +1,8 @@
+import ProDescriptions from '@/components/ProDescriptions';
 import ProLog from '@/components/ProLog';
 import { getGoodsDetail } from '@/services/rulex/kuozhanxieyi';
 import { DetailModalType } from '@/utils/enum';
 import { handleNewMessage } from '@/utils/utils';
-import { ProDescriptions } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
 import { useLocalStorageState } from 'ahooks';
 import type { DrawerProps } from 'antd';
@@ -59,11 +59,16 @@ const Detail = ({ config, onClose, ...props }: DetailProps) => {
       <ProDescriptions
         dataSource={detail}
         columns={baseColumns.filter((col) => col.dataIndex !== 'args')}
+        labelWidth={120}
+      />
+      {/* <ProDescriptions
+        dataSource={detail}
+        columns={baseColumns.filter((col) => col.dataIndex !== 'args')}
         column={1}
         labelStyle={{ width: 120, justifyContent: 'end', paddingRight: 10 }}
       >
         <ProDescriptions.Item label="协议参数">{detail?.args}</ProDescriptions.Item>
-      </ProDescriptions>
+      </ProDescriptions> */}
     </Drawer>
   ) : (
     <Modal

@@ -64,7 +64,6 @@ export default {
   'form.rules.ip': 'IP 地址格式不正确',
   'form.rules.netmask': '子网掩码格式不正确',
   'form.rules.gateway': '网关格式不正确',
-  'form.rules.cidr': 'CIDR 格式不正确',
   'form.rules.default': '格式不正确',
   'form.rules.timeout': '读写超时必须在 30-1000ms 之间',
   /**

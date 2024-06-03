@@ -289,6 +289,7 @@ declare namespace API {
   type getShellyGen1DetailParams = {
     mac: string;
     deviceId: string;
+    ip: string;
   };
 
   type getShellyGen1ListParams = {

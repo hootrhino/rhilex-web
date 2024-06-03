@@ -9,7 +9,6 @@ import { isDev } from './constant';
 import { FormItemType } from './enum';
 import { isEmpty } from './redash';
 import {
-  validateCIDR,
   validateGateway,
   validateIPv4,
   validateMask,
@@ -191,10 +190,6 @@ export const validateFormItem = (value: string | number, type: FormItemType) => 
       return typeof value === 'string' && validateGateway(value)
         ? Promise.resolve()
         : Promise.reject(getIntl(getLocale()).formatMessage({ id: 'form.rules.gateway' }));
-    case FormItemType.CIDR:
-      return typeof value === 'string' && validateCIDR(value)
-        ? Promise.resolve()
-        : Promise.reject(getIntl(getLocale()).formatMessage({ id: 'form.rules.cidr' }));
     case FormItemType.TIMEOUT:
       return typeof value === 'number' && validateTimeout(value)
         ? Promise.resolve()

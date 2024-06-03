@@ -1,9 +1,10 @@
 import { modal } from '@/components/PopupHack';
+import ProDescriptions from '@/components/ProDescriptions';
 import { getOsOsRelease } from '@/services/rulex/xitongshuju';
 import { RingProgress } from '@ant-design/plots';
 import { ProCard, StatisticCard } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
-import { Descriptions, Space } from 'antd';
+import { Space } from 'antd';
 
 const Resource = () => {
   const { dataSource } = useModel('useSystem');
@@ -14,25 +15,17 @@ const Resource = () => {
   // 获取系统详情
   const { data: osDetail } = useRequest(() => getOsOsRelease({}));
 
+  const columns = osDetail
+    ? Object.keys(osDetail)?.map((item) => ({ title: item, dataIndex: item, key: item }))
+    : [];
+
   // 展示系统详情
   const detailConfig = {
     title: formatMessage({ id: 'system.title.resource.detail' }),
     width: 700,
     autoFocusButton: null,
-    content: (
-      <Descriptions
-        className="w-[500px]"
-        column={1}
-        labelStyle={{ justifyContent: 'flex-end', minWidth: 180, marginRight: 15 }}
-      >
-        {osDetail &&
-          Object.keys(osDetail)?.map((item) => (
-            <Descriptions.Item label={item} key={item}>
-              {osDetail[item]}
-            </Descriptions.Item>
-          ))}
-      </Descriptions>
-    ),
+    okText: formatMessage({ id: 'button.close' }),
+    content: <ProDescriptions columns={columns} dataSource={osDetail} labelWidth={170} />,
   };
 
   const ringConfig = {

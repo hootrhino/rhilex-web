@@ -1,11 +1,13 @@
+import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
+import ProDescriptions from '@/components/ProDescriptions';
 import PageContainer from '@/components/ProPageContainer';
 import UnitValue from '@/components/UnitValue';
 import { getHwifaceList, getHwifaceRefresh } from '@/services/rulex/jiekouguanli';
 import { ScanOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { ProDescriptions, ProTable } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
 import { getLocale, useIntl, useModel, useRequest } from '@umijs/max';
-import { Button, Card, Descriptions, message, Modal } from 'antd';
+import { Button, Card, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
 import { parityEnum, typeOption } from './enum';
 import Update from './Update';
@@ -35,6 +37,36 @@ const Interface = () => {
     manual: true,
     onSuccess: () => message.success(formatMessage({ id: 'message.success.scan' })),
   });
+
+  const configColumns = [
+    {
+      title: formatMessage({ id: 'system.form.title.timeout' }),
+      dataIndex: 'timeout',
+      renderText: (timeout: number) => <UnitValue value={timeout} />,
+    },
+    {
+      title: formatMessage({ id: 'system.form.title.baudRate' }),
+      dataIndex: 'baudRate',
+    },
+    {
+      title: formatMessage({ id: 'system.form.title.dataBits' }),
+      dataIndex: 'dataBits',
+    },
+    {
+      title: formatMessage({ id: 'system.form.title.parity' }),
+      dataIndex: 'parity',
+      valueType: 'select',
+      valueEnum: parityEnum,
+    },
+    {
+      title: formatMessage({ id: 'system.form.title.stopBits' }),
+      dataIndex: 'stopBits',
+    },
+    {
+      title: formatMessage({ id: 'system.form.title.uart' }),
+      dataIndex: 'uart',
+    },
+  ];
 
   const columns: ProColumns<InterfaceItem>[] = [
     {
@@ -81,37 +113,14 @@ const Interface = () => {
       hideInTable: true,
       renderText: (config) => {
         if (!config) return;
-        const { timeout, baudRate, dataBits, parity, stopBits, uart } = config;
 
         return (
           <Card styles={{ body: { padding: '16px 18px' } }}>
-            <Descriptions
-              column={1}
-              labelStyle={{
-                width: 100,
-                justifyContent: 'flex-end',
-                paddingRight: 10,
-              }}
-            >
-              <Descriptions.Item label={formatMessage({ id: 'system.form.title.timeout' })}>
-                <UnitValue value={timeout} />
-              </Descriptions.Item>
-              <Descriptions.Item label={formatMessage({ id: 'system.form.title.baudRate' })}>
-                {baudRate}
-              </Descriptions.Item>
-              <Descriptions.Item label={formatMessage({ id: 'system.form.title.dataBits' })}>
-                {dataBits}
-              </Descriptions.Item>
-              <Descriptions.Item label={formatMessage({ id: 'system.form.title.parity' })}>
-                {parityEnum[parity]}
-              </Descriptions.Item>
-              <Descriptions.Item label={formatMessage({ id: 'system.form.title.stopBits' })}>
-                {stopBits}
-              </Descriptions.Item>
-              <Descriptions.Item label={formatMessage({ id: 'system.form.title.uart' })}>
-                {uart}
-              </Descriptions.Item>
-            </Descriptions>
+            <ProDescriptions
+              columns={configColumns as EnhancedProDescriptionsItemProps[]}
+              labelWidth={getLocale() === 'en-US' ? 90 : 70}
+              dataSource={config}
+            />
           </Card>
         );
       },
@@ -193,14 +202,9 @@ const Interface = () => {
         }
       >
         <ProDescriptions
-          column={1}
-          columns={columns as any}
+          columns={columns as EnhancedProDescriptionsItemProps[]}
           dataSource={detail}
-          labelStyle={{
-            width: getLocale() === 'en-US' ? 180 : 80,
-            justifyContent: 'flex-end',
-            paddingRight: 10,
-          }}
+          labelWidth={getLocale() === 'en-US' ? 180 : 80}
         />
       </Modal>
     </>

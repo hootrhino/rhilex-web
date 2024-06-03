@@ -1,11 +1,11 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
+import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
+import ProDescriptions from '@/components/ProDescriptions';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { SheetType } from '@/utils/enum';
 import { flatten, omit } from '@/utils/redash';
 import { getName } from '@/utils/utils';
-import type { ProDescriptionsItemProps, ProDescriptionsProps } from '@ant-design/pro-components';
-import { ProDescriptions } from '@ant-design/pro-components';
-import { history, useIntl, useModel, useRequest } from '@umijs/max';
+import { getLocale, history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import type { DeviceItem } from '..';
@@ -20,19 +20,6 @@ type DetailProps = DrawerProps & {
   uuid: string;
 };
 
-type EnhancedProDescriptionsProps = ProDescriptionsProps & {
-  show?: boolean;
-};
-
-const EnhancedProDescriptions = ({
-  labelStyle = { justifyContent: 'flex-end', minWidth: 135 },
-  loading = false,
-  column = 3,
-  ...props
-}: EnhancedProDescriptionsProps) => {
-  return <ProDescriptions labelStyle={labelStyle} loading={loading} column={column} {...props} />;
-};
-
 const Detail = ({ uuid, open, ...props }: DetailProps) => {
   const {
     run: getPort,
@@ -42,6 +29,8 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
   } = useModel('usePort');
   const { product } = useModel('useSystem');
   const { formatMessage } = useIntl();
+
+  const labelWidth = getLocale() === 'en-US' ? 150 : 100;
 
   const { data: detail, run: getDetail } = useRequest(
     (params: API.getDevicesDetailParams) => getDevicesDetail(params),
@@ -75,11 +64,13 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
         }));
       }
       return (
-        <EnhancedProDescriptions
+        <ProDescriptions
           key={`description-${index}`}
           title={item?.title}
           dataSource={config}
           columns={formatColumns}
+          column={3}
+          labelWidth={labelWidth}
         />
       );
     });
@@ -111,12 +102,12 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
       {...props}
     >
       <>
-        <EnhancedProDescriptions
+        <ProDescriptions
           title={formatMessage({ id: 'device.title.base' })}
           dataSource={detail && omit(detail, ['config'])}
-          columns={
-            formatColumns(baseColumns(product)) as ProDescriptionsItemProps<Record<string, any>>[]
-          }
+          columns={formatColumns(baseColumns(product)) as EnhancedProDescriptionsItemProps[]}
+          column={3}
+          labelWidth={labelWidth}
         />
         {detail && type && Object.keys(DeviceType).includes(type) && (
           <>
@@ -138,12 +129,13 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
                 }
 
                 return (
-                  <EnhancedProDescriptions
+                  <ProDescriptions
                     key={`description-${index}`}
                     title={item?.title}
                     dataSource={detail.config}
                     columns={item?.columns && formatColumns(item?.columns)}
                     column={column}
+                    labelWidth={labelWidth}
                   />
                 );
               }
