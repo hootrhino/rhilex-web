@@ -9,6 +9,7 @@ const intl = getIntl(getLocale());
  */
 export enum DeviceType {
   GENERIC_UART_PROTOCOL = 'GENERIC_UART_PROTOCOL',
+  GENERIC_UART_RW = 'GENERIC_UART_RW',
   GENERIC_MODBUS = 'GENERIC_MODBUS',
   // GENERIC_AIS_RECEIVER = 'GENERIC_AIS_RECEIVER', 暂无需求，先隐藏
   SIEMENS_PLC = 'SIEMENS_PLC',
@@ -22,6 +23,7 @@ export enum DeviceType {
 
 const baseTypeOption = {
   [DeviceType.GENERIC_UART_PROTOCOL]: intl.formatMessage({ id: 'device.type.uart' }),
+  [DeviceType.GENERIC_UART_RW]: intl.formatMessage({ id: 'device.type.uartRW' }),
   [DeviceType.GENERIC_MODBUS]: intl.formatMessage({ id: 'device.type.modbus' }),
   [DeviceType.GENERIC_SNMP]: intl.formatMessage({ id: 'device.type.snmp' }),
   // [DeviceType.GENERIC_AIS_RECEIVER]: '通用船载 AIS 数据解析网关', 暂无需求，先隐藏
@@ -62,6 +64,7 @@ export const deviceAvatar = {
   [DeviceType.GENERIC_SNMP]: 'SNMP',
   [DeviceType.GENERIC_BACNET_IP]: 'B',
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: 'T',
+  [DeviceType.GENERIC_UART_RW]: 'RW',
 };
 
 /**
@@ -216,3 +219,18 @@ export enum TencentMode {
   GATEWAY = 'GATEWAY',
   DEVICE = 'DEVICE',
 }
+
+/**
+ * GENERIC_UART_RW
+ */
+export enum ReadFormat {
+  RAW = 'RAW',
+  HEX = 'HEX',
+  UTF8 = 'UTF8',
+}
+
+export const ReadFormatOption = {
+  [ReadFormat.RAW]: intl.formatMessage({ id: 'device.readFormat.raw' }),
+  [ReadFormat.HEX]: intl.formatMessage({ id: 'device.readFormat.hex' }),
+  [ReadFormat.UTF8]: intl.formatMessage({ id: 'device.readFormat.utf8' }),
+};

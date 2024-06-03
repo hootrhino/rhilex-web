@@ -5,6 +5,7 @@ import {
   OutputEncode,
   OutputMode,
   PLCModel,
+  ReadFormat,
   SNMPVersion,
   TencentMode,
   Transport,
@@ -142,6 +143,15 @@ export const defaultConfig = {
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: {
     tencentConfig: {
       mode: TencentMode.GATEWAY,
+    },
+  },
+  [DeviceType.GENERIC_UART_RW]: {
+    commonConfig: {
+      autoRequest: 'true',
+    },
+    rwConfig: {
+      readFormat: ReadFormat.HEX,
+      timeSlice: 50,
     },
   },
 };

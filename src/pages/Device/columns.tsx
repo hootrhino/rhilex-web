@@ -18,6 +18,7 @@ import {
   deviceTypeOptions,
   plcModelOptions,
   rackEnum,
+  ReadFormatOption,
   slotEnum,
   SNMPVersionOption,
   TencentMode,
@@ -814,6 +815,75 @@ export const typeConfigColumns = {
           dataIndex: ['config', 'tencentConfig', 'clientId'],
           required: true,
           render: (_dom: React.ReactNode, { tencentConfig }: DeviceItem) => tencentConfig?.clientId,
+        },
+      ],
+    },
+  ],
+  [DeviceType.GENERIC_UART_RW]: [
+    {
+      title: intl.formatMessage({ id: 'device.form.title.group.common' }),
+      valueType: 'group',
+      columns: [
+        ...createBoolConfig(
+          intl.formatMessage({ id: 'device.form.title.rwConfig.autoRequest' }),
+          'autoRequest',
+        ),
+      ],
+    },
+    {
+      title: intl.formatMessage({ id: 'device.form.title.group.uartRW' }),
+      valueType: 'group',
+      columns: [
+        {
+          title: intl.formatMessage({ id: 'device.form.title.tag' }),
+          required: true,
+          dataIndex: ['config', 'rwConfig', 'tag'],
+        },
+        {
+          title: intl.formatMessage({ id: 'device.form.title.readFormat' }),
+          valueType: 'select',
+          required: true,
+          valueEnum: ReadFormatOption,
+          dataIndex: ['config', 'rwConfig', 'readFormat'],
+        },
+        {
+          title: intl.formatMessage({ id: 'device.form.title.timeSlice' }),
+          valueType: 'digit',
+          dataIndex: ['config', 'rwConfig', 'timeSlice'],
+          required: true,
+          fieldProps: {
+            addonAfter: 'ms',
+          },
+          render: (_dom: React.ReactNode, { hostConfig }: DeviceItem) => (
+            <UnitValue value={hostConfig?.timeout} />
+          ),
+        },
+      ],
+    },
+    {
+      title: intl.formatMessage({ id: 'device.form.title.group.port' }),
+      valueType: 'group',
+      key: 'portConfig',
+      columns: [
+        {
+          title: intl.formatMessage({ id: 'device.form.title.portUuid' }),
+          dataIndex: ['config', 'portUuid'],
+          valueType: 'select',
+          required: true,
+          request: async () => {
+            const { data } = await getHwifaceList();
+
+            return data?.map((item) => ({
+              label: (
+                <Space>
+                  <span>{item?.name}</span>
+                  <span className="text-[12px] text-[#000000A6]">{item?.alias}</span>
+                </Space>
+              ),
+              value: item.uuid,
+            }));
+          },
+          render: (_dom: React.ReactNode, { portUuid }: DeviceItem) => portUuid,
         },
       ],
     },

@@ -82,6 +82,7 @@ export default {
   'device.form.title.group.smartHome': 'Smart home configuration',
   'device.form.title.group.bacnet': 'BACnet configuration',
   'device.form.title.group.tencent': 'Tencent IoT Hub access configuration',
+  'device.form.title.group.uartRW': 'Read/Write configuration',
 
   // timeout
   'device.form.title.timeout.request': 'Request Timeout',
@@ -191,6 +192,11 @@ export default {
   'device.form.title.devicePsk': 'Device PSK',
   'device.form.title.clientId': 'Client ID',
 
+  // uart rw
+  'device.form.title.rwConfig.autoRequest': 'Enable Auto Request',
+  'device.form.title.readFormat': 'Read Format',
+  'device.form.title.timeSlice': 'Time Slice',
+
   /**
    * tooltip
    */
@@ -257,6 +263,7 @@ export default {
   'device.type.smartHome': 'Smart Home Gateway',
   'device.type.bacnet': 'Generic Bacnet IP Gateway',
   'device.type.tencent': 'Tencent IoT Hub Gateway Access',
+  'device.type.uartRW': 'Generic Serial Read/Write Gateway',
 
   /**
    * modbus function
@@ -289,4 +296,11 @@ export default {
    */
   'device.camera.outputEncode': '{type} Encode',
   // TODO 暂时不需要翻译 --end
+
+  /**
+   * ReadFormat
+   */
+  'device.readFormat.raw': 'RAW',
+  'device.readFormat.hex': 'HEX',
+  'device.readFormat.utf8': 'UTF8',
 };

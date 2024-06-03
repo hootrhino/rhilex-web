@@ -79,6 +79,7 @@ export default {
   'device.form.title.group.smartHome': '智能家居配置',
   'device.form.title.group.bacnet': 'BACnet 配置',
   'device.form.title.group.tencent': '腾讯云物联网平台接入配置',
+  'device.form.title.group.uartRW': '读写配置',
 
   // timeout
   'device.form.title.timeout.request': '请求超时',
@@ -186,6 +187,11 @@ export default {
   'device.form.title.devicePsk': '设备秘钥',
   'device.form.title.clientId': '客户端 ID',
 
+  // uart rw
+  'device.form.title.rwConfig.autoRequest': '自动读取',
+  'device.form.title.readFormat': '读取格式',
+  'device.form.title.timeSlice': '超时时间',
+
   /**
    * tooltip
    */
@@ -242,7 +248,7 @@ export default {
   /**
    * device type
    */
-  'device.type.uart': '通用串口网关',
+  'device.type.uart': '通用串口控制网关',
   'device.type.modbus': '通用 Modbus 采集网关',
   'device.type.snmp': '通用 SNMP 协议采集网关',
   'device.type.plc': '通用西门子 S7 系列 PLC 采集网关',
@@ -251,6 +257,7 @@ export default {
   'device.type.smartHome': '全屋智能家居中心控制网关',
   'device.type.bacnet': '通用 Bacnet IP 采集网关',
   'device.type.tencent': '腾讯云物联网平台网关接入',
+  'device.type.uartRW': '通用串口读写网关',
 
   /**
    * modbus function
@@ -281,4 +288,11 @@ export default {
    * outputEncode
    */
   'device.camera.outputEncode': '{type} 编码',
+
+  /**
+   * ReadFormat
+   */
+  'device.readFormat.raw': '原始字节',
+  'device.readFormat.hex': '十六进制',
+  'device.readFormat.utf8': 'UTF8 字符串',
 };
