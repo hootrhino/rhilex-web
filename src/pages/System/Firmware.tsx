@@ -63,7 +63,7 @@ export const twoColors: ProgressProps['strokeColor'] = {
 };
 
 const FirmwareConfig = () => {
-  const { run, cancel } = useModel('useSystem');
+  const { run, cancel, isWindows } = useModel('useSystem');
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
   const [confirmConfig, setConfirmConfig] = useState<ConfirmCofig>(defaultUpgradeConfig);
@@ -178,90 +178,92 @@ const FirmwareConfig = () => {
               });
             }}
           />
+          {!isWindows && (
+            <Space className="mt-[24px] w-full justify-end">
+              <Upload
+                accept="application/zip"
+                showUploadList={false}
+                beforeUpload={(file) => {
+                  const isZip = file.type === 'application/zip' || endsWith(file?.name, '.zip');
 
-          <Space className="mt-[24px] w-full justify-end">
-            <Upload
-              accept="application/zip"
-              showUploadList={false}
-              beforeUpload={(file) => {
-                const isZip = file.type === 'application/zip' || endsWith(file?.name, '.zip');
+                  if (!isZip) {
+                    message.error(formatMessage({ id: 'system.message.error.upload' }));
+                    // return false;
+                    return Upload.LIST_IGNORE;
+                  }
 
-                if (!isZip) {
-                  message.error(formatMessage({ id: 'system.message.error.upload' }));
-                  // return false;
-                  return Upload.LIST_IGNORE;
-                }
+                  handleFileUpload(file);
 
-                handleFileUpload(file);
-
-                return false;
-              }}
-            >
-              <Button key="upload" type="primary" icon={<UploadOutlined />}>
-                {formatMessage({ id: 'system.button.firmware.upload' })}
+                  return false;
+                }}
+              >
+                <Button key="upload" type="primary" icon={<UploadOutlined />}>
+                  {formatMessage({ id: 'system.button.firmware.upload' })}
+                </Button>
+              </Upload>
+              <Button
+                danger
+                key="upgrade"
+                type="primary"
+                onClick={() => {
+                  setOpen(true);
+                  setConfirmConfig({
+                    ...defaultUpgradeConfig,
+                    handleOnOk: async () => {
+                      const { data } = await postFirmwareUpgrade();
+                      setMsg(data);
+                      cancel();
+                    },
+                    handleOnEnd,
+                  });
+                }}
+                icon={<CloudUploadOutlined />}
+              >
+                {formatMessage({ id: 'system.button.confirm.upgrade' })}
               </Button>
-            </Upload>
-            <Button
-              danger
-              key="upgrade"
-              type="primary"
-              onClick={() => {
-                setOpen(true);
-                setConfirmConfig({
-                  ...defaultUpgradeConfig,
-                  handleOnOk: async () => {
-                    const { data } = await postFirmwareUpgrade();
-                    setMsg(data);
-                    cancel();
-                  },
-                  handleOnEnd,
-                });
-              }}
-              icon={<CloudUploadOutlined />}
-            >
-              {formatMessage({ id: 'system.button.confirm.upgrade' })}
-            </Button>
-            <Button
-              key="reboot"
-              type="primary"
-              danger
-              onClick={() => {
-                setOpen(true);
-                setConfirmConfig({
-                  ...defaultRebootConfig,
-                  handleOnOk: async () => {
-                    const { data } = await postFirmwareReboot();
-                    setMsg(data);
-                    cancel();
-                  },
-                  handleOnEnd,
-                });
-              }}
-              icon={<PoweroffOutlined />}
-            >
-              {formatMessage({ id: 'button.reboot' })}
-            </Button>
-            <Button
-              key="recover"
-              type="primary"
-              danger
-              onClick={() => {
-                setOpen(true);
-                setConfirmConfig({
-                  ...defaultRecoverConfig,
-                  handleOnOk: async () => {
-                    const { data } = await postFirmwareRecoverNew();
-                    setMsg(data);
-                    cancel();
-                  },
-                  handleOnEnd,
-                });
-              }}
-              icon={<SyncOutlined />}
-            >
-              {formatMessage({ id: 'system.button.firmware.recover' })}
-            </Button>
-          </Space>
+              <Button
+                key="reboot"
+                type="primary"
+                danger
+                onClick={() => {
+                  setOpen(true);
+                  setConfirmConfig({
+                    ...defaultRebootConfig,
+                    handleOnOk: async () => {
+                      const { data } = await postFirmwareReboot();
+                      setMsg(data);
+                      cancel();
+                    },
+                    handleOnEnd,
+                  });
+                }}
+                icon={<PoweroffOutlined />}
+              >
+                {formatMessage({ id: 'button.reboot' })}
+              </Button>
+              <Button
+                key="recover"
+                type="primary"
+                danger
+                onClick={() => {
+                  setOpen(true);
+                  setConfirmConfig({
+                    ...defaultRecoverConfig,
+                    handleOnOk: async () => {
+                      const { data } = await postFirmwareRecoverNew();
+                      setMsg(data);
+                      cancel();
+                    },
+                    handleOnEnd,
+                  });
+                }}
+                icon={<SyncOutlined />}
+              >
+                {formatMessage({ id: 'system.button.firmware.recover' })}
+              </Button>
+            </Space>
+          )}
+
           <Modal
             title={formatMessage({ id: 'system.title.firmware.upload' })}
             open={showProgress}
