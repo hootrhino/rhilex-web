@@ -134,18 +134,22 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
           { label: 'false', value: false },
         ];
       } else {
-        return resourceData
-          ? resourceData[dataSource]?.map((item: any) => ({
-              label: (
-                <>
-                  <span>{item?.name}</span>
-                  <Divider type="vertical" />
-                  <span className="text-[12px] text-[#000000A6]">{item?.uuid}</span>
-                </>
-              ),
-              value: item.uuid,
-            }))
-          : [];
+        if (typeof dataSource === 'string') {
+          return resourceData
+            ? resourceData[dataSource]?.map((item: any) => ({
+                label: (
+                  <>
+                    <span>{item?.name}</span>
+                    <Divider type="vertical" />
+                    <span className="text-[12px] text-[#000000A6]">{item?.uuid}</span>
+                  </>
+                ),
+                value: item.uuid,
+              }))
+            : [];
+        } else {
+          return dataSource;
+        }
       }
     };
 
