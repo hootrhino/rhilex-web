@@ -1,7 +1,6 @@
 import { message } from '@/components/PopupHack';
 import ProLog from '@/components/ProLog';
 import PageContainer from '@/components/ProPageContainer';
-import { deviceAvatar } from '@/pages/Device/enum';
 import { getDevicesList } from '@/services/rulex/shebeiguanli';
 import { postOsResetInterMetric } from '@/services/rulex/xitongshuju';
 import { sum } from '@/utils/redash';
@@ -9,7 +8,7 @@ import { cn, IconFont } from '@/utils/utils';
 import { ReloadOutlined } from '@ant-design/icons';
 import { ProCard, ProList } from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
-import { Avatar, Badge, Button, Col, Row, Space, Statistic } from 'antd';
+import { Badge, Button, Col, Row, Space, Statistic } from 'antd';
 import { useState } from 'react';
 import { useModel } from 'umi';
 
@@ -120,7 +119,7 @@ const Dashboard = () => {
             expandable={{
               expandedRowKeys,
               onExpandedRowsChange: setExpandedRowKeys,
-              rowExpandable: ({ description }) => !!description,
+              // rowExpandable: ({ description }) => !!description,
             }}
             metas={{
               title: {
@@ -130,9 +129,7 @@ const Dashboard = () => {
                 dataIndex: 'uuid',
               },
               avatar: {
-                render: (_, { type }) => (
-                  <Avatar className="w-[18px] h-[18px]">{deviceAvatar[type]}</Avatar>
-                ),
+                render: () => <IconFont type="icon-active-device" />,
               },
               description: {
                 render: (_, { description }) => <div className="truncate">{description}</div>,

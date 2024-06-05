@@ -102,6 +102,7 @@ const Interface = () => {
     {
       title: formatMessage({ id: 'system.form.title.occupyBy' }),
       dataIndex: 'occupyBy',
+      ellipsis: true,
       renderText: (occupyBy) => {
         return occupyBy?.name;
       },
@@ -128,6 +129,7 @@ const Interface = () => {
     {
       title: formatMessage({ id: 'table.desc' }),
       dataIndex: 'description',
+      ellipsis: true,
     },
     {
       title: formatMessage({ id: 'table.option' }),
@@ -169,11 +171,12 @@ const Interface = () => {
           rootClassName="stripe-table"
           search={false}
           pagination={false}
+          scroll={{ y: 400 }}
           request={async () => {
             const { data } = await getHwifaceList();
 
             return Promise.resolve({
-              data,
+              data: [...data, ...data, ...data, ...data],
               success: true,
             });
           }}
