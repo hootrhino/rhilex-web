@@ -83,7 +83,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
         items: menuItems,
       }}
       overlayStyle={{
-        width: 120,
+        width: 150,
       }}
     >
       <span className="flex items-center h-[56px] ml-auto px-[12px] cursor-pointer rounded-[2px] hover:bg-[#32393F]">

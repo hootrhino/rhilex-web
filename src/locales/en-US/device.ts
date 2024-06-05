@@ -4,7 +4,7 @@ export default {
    */
   'device.button.camera': '查看视频', // TODO 已隐藏，暂时不需要翻译
   'device.button.snmp': 'SNMP OIDs',
-  'device.button.sheet': 'sheet Configuration',
+  'device.button.sheet': 'Sheet Configuration',
   'device.button.nonPolling': 'Stop Refresh',
   'device.button.polling': 'Start Refresh',
   'device.button.import.sheet': 'Import Sheet',

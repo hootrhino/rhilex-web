@@ -47,7 +47,13 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
     {
       manual: true,
       onSuccess: () => {
+        const firstItem = schemaList?.[0];
         message.success(formatMessage({ id: 'message.success.remove' }));
+        setActiveSchema({
+          uuid: firstItem?.uuid || '',
+          name: firstItem?.name || '',
+          published: firstItem?.published || false,
+        });
         refresh();
       },
     },
