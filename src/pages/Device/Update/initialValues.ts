@@ -152,6 +152,7 @@ export const defaultConfig = {
     rwConfig: {
       readFormat: ReadFormat.HEX,
       timeSlice: 50,
+      tag: 'rhilex',
     },
   },
 };
