@@ -9,6 +9,7 @@ const useSchema = () => {
     name: '',
     published: false,
   });
+  const [activeDataCenterkey, setActiveDataCenterKey] = useState<string>('');
 
   const {
     run,
@@ -40,6 +41,8 @@ const useSchema = () => {
     schemaList,
     activeSchema,
     setActiveSchema,
+    activeDataCenterkey,
+    setActiveDataCenterKey,
   };
 };
 

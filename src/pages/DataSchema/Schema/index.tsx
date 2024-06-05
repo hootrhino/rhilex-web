@@ -28,8 +28,8 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
     run: getSchemaList,
     setActiveSchema,
     refresh,
+    setActiveDataCenterKey: setKey,
   } = useModel('useSchema');
-  const { setKey } = useModel('useDataCenter');
   const [initialValue, setInitialValue] = useState<Partial<SchemaItem>>();
   const [copied, setCopied] = useState<string>('');
 

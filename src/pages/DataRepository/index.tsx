@@ -37,18 +37,17 @@ const getChildName = ({ name, type }: SchemaDDLDefineItem) => {
 const DataRepository = () => {
   const { formatMessage } = useIntl();
   const actionRef = useRef<ActionType>();
-  const { key: activeKey, DataCenterSecret } = useModel('useDataCenter');
+  const { activeDataCenterkey: activeKey } = useModel('useSchema');
+  const { secret } = useModel('useSystem');
 
   const [selectedKey, setSelectedKey] = useState<string>();
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [treeData, setTreeData] = useState<TreeDataNode[]>([]);
 
-  const secret = DataCenterSecret?.secret || '';
-
   // 获取数据表列表
-  useRequest(() => getDatacenterListSchemaDdl({ secret }), {
-    ready: !!DataCenterSecret?.secret,
-    refreshDeps: [DataCenterSecret?.secret],
+  useRequest(() => getDatacenterListSchemaDdl({ secret: secret || '' }), {
+    ready: !!secret,
+    refreshDeps: [secret],
     onSuccess: (data) => {
       const formatData = data?.map((item) => ({
         title: item.published ? (
@@ -91,6 +90,7 @@ const DataRepository = () => {
   };
 
   const handleOnLoadData = async ({ key }: any) => {
+    if (!secret) return [];
     const { data } = await getDatacenterSchemaDdlDefine({ uuid: key, secret });
 
     return new Promise<void>((resolve) => {
@@ -146,7 +146,7 @@ const DataRepository = () => {
       content: formatMessage({ id: 'dataRepo.modal.content.clear' }),
       okText: formatMessage({ id: 'button.ok' }),
       cancelText: formatMessage({ id: 'button.cancel' }),
-      onOk: () => selectedKey && clear({ uuid: selectedKey, secret }),
+      onOk: () => selectedKey && secret && clear({ uuid: selectedKey, secret }),
     });
   };
 
@@ -155,7 +155,7 @@ const DataRepository = () => {
     pageSize = defaultPagination.defaultPageSize,
     ...keyword
   }) => {
-    if (keyword?.uuid) {
+    if (keyword?.uuid && secret) {
       const { data } = await getDatacenterQueryDataList({
         current,
         size: pageSize,
@@ -218,7 +218,7 @@ const DataRepository = () => {
   ];
 
   useEffect(() => {
-    if (selectedKey) {
+    if (selectedKey && secret) {
       getColumns({ uuid: selectedKey, secret });
     }
   }, [selectedKey]);

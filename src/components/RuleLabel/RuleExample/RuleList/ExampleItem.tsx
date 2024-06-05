@@ -29,7 +29,7 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
   const { token } = theme.useToken();
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
-  const { DataCenterSecret } = useModel('useDataCenter');
+  const { secret } = useModel('useSystem');
 
   const [valModalConfig, setValConfig] = useState<{ open: boolean; data: TplItem }>({
     open: false,
@@ -222,10 +222,10 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
   }, [valModalConfig]);
 
   useEffect(() => {
-    if (schemaId && DataCenterSecret?.secret) {
-      getSchema({ uuid: schemaId, secret: DataCenterSecret.secret });
+    if (schemaId && secret) {
+      getSchema({ uuid: schemaId, secret });
     }
-  }, [schemaId, DataCenterSecret]);
+  }, [schemaId, secret]);
 
   return dataSource && dataSource?.length > 0 ? (
     <>
