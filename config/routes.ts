@@ -81,7 +81,12 @@
       {
         path: '/device/:groupId/:deviceId/bacnet-sheet',
         title: 'menu.device.sheet',
-        component: './Device/Bacnet',
+        component: './Device/BacnetIP',
+      },
+      {
+        path: '/device/:groupId/:deviceId/bacnet-router-sheet',
+        title: 'menu.device.sheet',
+        component: './Device/BacnetRouter',
       },
     ],
   },

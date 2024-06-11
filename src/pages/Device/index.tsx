@@ -26,7 +26,7 @@ import { Button, Dropdown, Popconfirm, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/hooks/useItems';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useRef, useState } from 'react';
-import { baseColumns } from './columns';
+import { baseColumns } from './Columns';
 import Detail from './Detail';
 import { DeviceType } from './enum';
 import type { GroupConfig } from './Group';
@@ -188,6 +188,16 @@ const Devices = () => {
           },
         ];
         break;
+      case DeviceType.BACNET_ROUTER_GW:
+        newItems = [
+          ...newItems,
+          {
+            key: 'bacnet-router-sheet',
+            label: formatMessage({ id: 'device.button.sheet' }),
+            icon: <ControlOutlined />,
+          },
+        ];
+        break;
       default:
         newItems = [...newItems];
         break;
@@ -216,6 +226,9 @@ const Devices = () => {
         break;
       case 'bacnet-sheet':
         history.push(`/device/${gid}/${uuid}/bacnet-sheet`);
+        break;
+      case 'bacnet-router-sheet':
+        history.push(`/device/${gid}/${uuid}/bacnet-router-sheet`);
         break;
       // TODO 暂无需求，先隐藏
       // case 'video':

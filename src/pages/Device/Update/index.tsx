@@ -9,7 +9,7 @@ import { formatHeaders2Arr, formatHeaders2Obj, stringToBool } from '@/utils/util
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
-import { columns } from '../columns';
+import { columns } from '../Columns';
 import { defaultConfig, defaultModelConfig } from './initialValues';
 
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';

@@ -255,7 +255,8 @@ export default {
   'device.type.http': '通用 HTTP 協議數據採集網關',
   'device.type.camera': '通用攝像機流處理網關',
   'device.type.smartHome': '全屋智能家居中心控制網關',
-  'device.type.bacnet': '通用 Bacnet IP 採集網關',
+  'device.type.bacnet.ip': '通用 Bacnet IP 採集網關',
+  'device.type.bacnet.router': 'Bacnet 路由網關',
   'device.type.tencent': '騰訊雲端物聯網平台網關接入',
   'device.type.uartRW': '通用串口讀寫網關',
 

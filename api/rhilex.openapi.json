@@ -110,6 +110,9 @@
     },
     {
       "name": "bacnet点位管理"
+    },
+    {
+      "name": "bacnet-router模式"
     }
   ],
   "paths": {
@@ -18240,6 +18243,488 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-175914210-run",
+        "security": []
+      }
+    },
+    "/api/v1/bacnet_router_sheet/sheetExport": {
+      "get": {
+        "summary": "export",
+        "x-apifox-folder": "bacnet-router模式",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "bacnet-router模式"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "DEVICE233",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-182541879-run",
+        "security": []
+      }
+    },
+    "/api/v1/bacnet_router_sheet/sheetImport": {
+      "post": {
+        "summary": "import",
+        "x-apifox-folder": "bacnet-router模式",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "bacnet-router模式"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "device_uuid": {
+                    "type": "string",
+                    "example": "DEVICE233"
+                  }
+                },
+                "required": [
+                  "file",
+                  "device_uuid"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-182541880-run",
+        "security": []
+      }
+    },
+    "/api/v1/bacnet_router_sheet/list": {
+      "get": {
+        "summary": "page",
+        "x-apifox-folder": "bacnet-router模式",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "bacnet-router模式"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "DEVICE233",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "10",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "device_uuid": {
+                                "type": "string"
+                              },
+                              "tag": {
+                                "type": "string"
+                              },
+                              "alias": {
+                                "type": "string"
+                              },
+                              "bacnetDeviceId": {
+                                "type": "integer"
+                              },
+                              "objectType": {
+                                "type": "string"
+                              },
+                              "objectId": {
+                                "type": "integer"
+                              },
+                              "errMsg": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "integer"
+                              },
+                              "lastFetchTime": {
+                                "type": "integer"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "uuid",
+                              "device_uuid",
+                              "tag",
+                              "alias",
+                              "bacnetDeviceId",
+                              "objectType",
+                              "objectId",
+                              "errMsg",
+                              "status",
+                              "lastFetchTime",
+                              "value"
+                            ],
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "device_uuid",
+                              "tag",
+                              "alias",
+                              "bacnetDeviceId",
+                              "objectType",
+                              "objectId",
+                              "errMsg",
+                              "status",
+                              "lastFetchTime",
+                              "value"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-182541881-run",
+        "security": []
+      }
+    },
+    "/api/v1/bacnet_router_sheet/update": {
+      "post": {
+        "summary": "createOrupdate",
+        "x-apifox-folder": "bacnet-router模式",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "bacnet-router模式"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "points": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "tag": {
+                          "type": "string"
+                        },
+                        "alias": {
+                          "type": "string"
+                        },
+                        "objectType": {
+                          "type": "string"
+                        },
+                        "objectId": {
+                          "type": "integer"
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "uuid",
+                        "tag",
+                        "alias",
+                        "objectType",
+                        "objectId"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "points"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "points"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICE233",
+                "points": [
+                  {
+                    "uuid": "BACNZQB9DSCF",
+                    "tag": "tag1",
+                    "alias": "tag1",
+                    "bacnetDeviceId": 2,
+                    "objectType": "AV",
+                    "objectId": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-182541882-run",
+        "security": []
+      }
+    },
+    "/api/v1/bacnet_router_sheet/delIds": {
+      "delete": {
+        "summary": "delIds",
+        "x-apifox-folder": "bacnet-router模式",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "bacnet-router模式"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "device_uuid": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "uuids",
+                  "device_uuid"
+                ],
+                "x-apifox-orders": [
+                  "uuids",
+                  "device_uuid"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICE233",
+                "uuids": [
+                  "BACNNCNNY67H"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-182541883-run",
+        "security": []
+      }
+    },
+    "/api/v1/bacnet_router_sheet/delAll": {
+      "delete": {
+        "summary": "delAll",
+        "x-apifox-folder": "bacnet-router模式",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "bacnet-router模式"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "device_uuid"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICE233"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-182541884-run",
         "security": []
       }
     }

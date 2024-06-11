@@ -66,7 +66,7 @@ export default {
   'form.rules.netmask': 'The subnet mask format is incorrect',
   'form.rules.gateway': 'The gateway mask format is incorrect',
   'form.rules.default': 'The format is incorrect',
-  'form.rules.timeout': 'The timeout must be between 30-1000ms',
+  'form.rules.uartTimeout': 'The timeout must be between 30-1000ms',
   /**
    * modal
    */

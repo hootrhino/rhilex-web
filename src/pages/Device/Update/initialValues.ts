@@ -140,6 +140,15 @@ export const defaultConfig = {
       vendorId: 2580,
     },
   },
+  [DeviceType.BACNET_ROUTER_GW]: {
+    bacnetRouterConfig: {
+      mode: BacnetMode.BROADCAST,
+      localPort: 47808,
+      deviceId: 2580,
+      deviceName: 'rhilex',
+      vendorId: 2580,
+    },
+  },
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: {
     tencentConfig: {
       mode: TencentMode.GATEWAY,

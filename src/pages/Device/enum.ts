@@ -11,14 +11,15 @@ export enum DeviceType {
   GENERIC_UART_PROTOCOL = 'GENERIC_UART_PROTOCOL',
   GENERIC_UART_RW = 'GENERIC_UART_RW',
   GENERIC_MODBUS = 'GENERIC_MODBUS',
-  // GENERIC_AIS_RECEIVER = 'GENERIC_AIS_RECEIVER', 暂无需求，先隐藏
   SIEMENS_PLC = 'SIEMENS_PLC',
   GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
+  // GENERIC_AIS_RECEIVER = 'GENERIC_AIS_RECEIVER', 暂无需求，先隐藏
   // GENERIC_CAMERA = 'GENERIC_CAMERA', 暂无需求，先隐藏
-  SMART_HOME_CONTROLLER = 'SMART_HOME_CONTROLLER',
   GENERIC_SNMP = 'GENERIC_SNMP',
   GENERIC_BACNET_IP = 'GENERIC_BACNET_IP',
+  BACNET_ROUTER_GW = 'BACNET_ROUTER_GW',
   TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
+  SMART_HOME_CONTROLLER = 'SMART_HOME_CONTROLLER',
 }
 
 const baseTypeOption = {
@@ -26,13 +27,14 @@ const baseTypeOption = {
   [DeviceType.GENERIC_UART_RW]: intl.formatMessage({ id: 'device.type.uartRW' }),
   [DeviceType.GENERIC_MODBUS]: intl.formatMessage({ id: 'device.type.modbus' }),
   [DeviceType.GENERIC_SNMP]: intl.formatMessage({ id: 'device.type.snmp' }),
-  // [DeviceType.GENERIC_AIS_RECEIVER]: '通用船载 AIS 数据解析网关', 暂无需求，先隐藏
   [DeviceType.SIEMENS_PLC]: intl.formatMessage({ id: 'device.type.plc' }),
   [DeviceType.GENERIC_HTTP_DEVICE]: intl.formatMessage({ id: 'device.type.http' }),
+  // [DeviceType.GENERIC_AIS_RECEIVER]: '通用船载 AIS 数据解析网关', 暂无需求，先隐藏
   // [DeviceType.GENERIC_CAMERA]: intl.formatMessage({ id: 'device.type.camera' }), 暂无需求，先隐藏
-  [DeviceType.SMART_HOME_CONTROLLER]: intl.formatMessage({ id: 'device.type.smartHome' }),
-  [DeviceType.GENERIC_BACNET_IP]: intl.formatMessage({ id: 'device.type.bacnet' }),
+  [DeviceType.GENERIC_BACNET_IP]: intl.formatMessage({ id: 'device.type.bacnet.ip' }),
+  [DeviceType.BACNET_ROUTER_GW]: intl.formatMessage({ id: 'device.type.bacnet.router' }),
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.tencent' }),
+  [DeviceType.SMART_HOME_CONTROLLER]: intl.formatMessage({ id: 'device.type.smartHome' }),
 };
 
 export const deviceTypeOptions = {

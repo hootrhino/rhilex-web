@@ -98,6 +98,16 @@ declare namespace API {
     device_uuid: string;
   };
 
+  type getBacnetRouterSheetListParams = {
+    device_uuid: string;
+    current: number;
+    size: number;
+  };
+
+  type getBacnetRouterSheetSheetExportParams = {
+    device_uuid: string;
+  };
+
   type getCrontaskResultsPageParams = {
     /** 当前页 */
     current?: string;

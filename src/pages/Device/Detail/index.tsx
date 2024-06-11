@@ -9,8 +9,9 @@ import { getLocale, history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import type { DeviceItem } from '..';
-import BacnetSheet from '../Bacnet';
-import { baseColumns, typeConfigColumns } from '../columns';
+import BacnetIPSheet from '../BacnetIP';
+import BacnetRouterSheet from '../BacnetRouter';
+import { baseColumns, typeConfigColumns } from '../Columns';
 import { DeviceType } from '../enum';
 import ModbusSheet from '../Modbus';
 import PlcSheet from '../Plc';
@@ -154,7 +155,10 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
               <SnmpOidsSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
             )}
             {type === DeviceType.GENERIC_BACNET_IP && (
-              <BacnetSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
+              <BacnetIPSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
+            )}
+            {type === DeviceType.BACNET_ROUTER_GW && (
+              <BacnetRouterSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
             )}
           </>
         )}
