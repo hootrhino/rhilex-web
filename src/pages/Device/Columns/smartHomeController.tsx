@@ -70,14 +70,16 @@ export const SMART_HOME_CONTROLLER_CONFIG = [
             value: item.addr,
           }));
         },
-        render: (_dom: React.ReactNode, { shellyConfig }: DeviceItem) => shellyConfig?.networkCidr,
+        render: (_dom: React.ReactNode, { shellyConfig }: DeviceItem) =>
+          shellyConfig?.networkCidr || '-',
       },
       {
         title: intl.formatMessage({ id: 'device.form.title.webHookPort' }),
         dataIndex: ['config', 'shellyConfig', 'webHookPort'],
         valueType: 'digit',
         required: true,
-        render: (_dom: React.ReactNode, { shellyConfig }: DeviceItem) => shellyConfig?.webHookPort,
+        render: (_dom: React.ReactNode, { shellyConfig }: DeviceItem) =>
+          shellyConfig?.webHookPort || '-',
       },
     ],
   },

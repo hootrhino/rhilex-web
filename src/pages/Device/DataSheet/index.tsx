@@ -34,6 +34,7 @@ const DataSheet = ({
   update,
   upload,
   download,
+  scroll,
   ...props
 }: DataSheetProps) => {
   const { deviceId } = useParams();
@@ -113,6 +114,14 @@ const DataSheet = ({
       render: (_text, _record, index) => <IndexBorder serial={index} />,
     },
     {
+      title: formatMessage({ id: 'device.form.title.status' }),
+      dataIndex: 'status',
+      width: 80,
+      editable: false,
+      hideInTable: type === SheetType.LIST,
+      renderText: (_, record) => <ProTag type={StatusType.POINT}>{record?.status || 0}</ProTag>,
+    },
+    {
       title: formatMessage({ id: 'device.form.title.tag' }),
       dataIndex: 'tag',
       ellipsis: true,
@@ -148,6 +157,7 @@ const DataSheet = ({
       dataIndex: 'status',
       width: 80,
       editable: false,
+      hideInTable: type === SheetType.DETAIL,
       renderText: (_, record) => <ProTag type={StatusType.POINT}>{record?.status || 0}</ProTag>,
     },
     {
@@ -332,6 +342,7 @@ const DataSheet = ({
             setEditableRows(dataSource);
           },
         }}
+        scroll={scroll}
         {...props}
       />
     </PageContainer>
@@ -356,6 +367,7 @@ const DataSheet = ({
         search={false}
         toolBarRender={false}
         pagination={defaultPagination}
+        scroll={false}
         {...props}
       />
     </>

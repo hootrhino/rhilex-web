@@ -98,6 +98,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
       valueType: 'select',
       width: 150,
       valueEnum: ObjectTypeOption,
+      hideInTable: type === SheetType.DETAIL,
       formItemProps: {
         rules: [
           {
@@ -116,6 +117,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
       dataIndex: 'objectId',
       width: 150,
       valueType: 'digit',
+      hideInTable: type === SheetType.DETAIL,
       formItemProps: {
         rules: [
           {

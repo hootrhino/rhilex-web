@@ -41,6 +41,14 @@ export type DeviceItem = {
   [key: string]: any;
 };
 
+const sheetType = {
+  [DeviceType.GENERIC_SNMP]: 'snmp-sheet',
+  [DeviceType.SIEMENS_PLC]: 'plc-sheet',
+  [DeviceType.GENERIC_MODBUS]: 'modbus-sheet',
+  [DeviceType.GENERIC_BACNET_IP]: 'bacnet-sheet',
+  [DeviceType.BACNET_ROUTER_GW]: 'bacnet-router-sheet',
+};
+
 const Devices = () => {
   const actionRef = useRef<ActionType>();
 
@@ -125,6 +133,10 @@ const Devices = () => {
     };
 
     let newItems = [...baseItems, ruleItem];
+    const sheetLabel =
+      type === DeviceType.GENERIC_SNMP
+        ? formatMessage({ id: 'device.button.snmp' })
+        : formatMessage({ id: 'device.button.sheet' });
 
     switch (type) {
       // TODO 暂无需求，先隐藏
@@ -149,51 +161,15 @@ const Devices = () => {
         ];
         break;
       case DeviceType.GENERIC_SNMP:
-        newItems = [
-          ...newItems,
-          {
-            key: 'snmp-sheet',
-            label: formatMessage({ id: 'device.button.snmp' }),
-            icon: <ControlOutlined />,
-          },
-        ];
-        break;
       case DeviceType.GENERIC_MODBUS:
-        newItems = [
-          ...newItems,
-          {
-            key: 'modbus-sheet',
-            label: formatMessage({ id: 'device.button.sheet' }),
-            icon: <ControlOutlined />,
-          },
-        ];
-        break;
       case DeviceType.SIEMENS_PLC:
-        newItems = [
-          ...newItems,
-          {
-            key: 'plc-sheet',
-            label: formatMessage({ id: 'device.button.sheet' }),
-            icon: <ControlOutlined />,
-          },
-        ];
-        break;
       case DeviceType.GENERIC_BACNET_IP:
-        newItems = [
-          ...newItems,
-          {
-            key: 'bacnet-sheet',
-            label: formatMessage({ id: 'device.button.sheet' }),
-            icon: <ControlOutlined />,
-          },
-        ];
-        break;
       case DeviceType.BACNET_ROUTER_GW:
         newItems = [
           ...newItems,
           {
-            key: 'bacnet-router-sheet',
-            label: formatMessage({ id: 'device.button.sheet' }),
+            key: 'data-sheet',
+            label: sheetLabel,
             icon: <ControlOutlined />,
           },
         ];
@@ -206,7 +182,7 @@ const Devices = () => {
     return [...newItems, showErr ? errItem : null];
   };
 
-  const handleOnMenu = ({ key }: MenuInfo, { uuid, gid }: Partial<DeviceItem>) => {
+  const handleOnMenu = ({ key }: MenuInfo, { uuid, gid, type }: Partial<DeviceItem>) => {
     switch (key) {
       case 'restart':
         setOpen(true);
@@ -215,20 +191,9 @@ const Devices = () => {
       case 'rule':
         history.push(`/device/${gid}/${uuid}/rule`);
         break;
-      case 'snmp-sheet':
-        history.push(`/device/${gid}/${uuid}/snmp-sheet`);
-        break;
-      case 'plc-sheet':
-        history.push(`/device/${gid}/${uuid}/plc-sheet`);
-        break;
-      case 'modbus-sheet':
-        history.push(`/device/${gid}/${uuid}/modbus-sheet`);
-        break;
-      case 'bacnet-sheet':
-        history.push(`/device/${gid}/${uuid}/bacnet-sheet`);
-        break;
-      case 'bacnet-router-sheet':
-        history.push(`/device/${gid}/${uuid}/bacnet-router-sheet`);
+      case 'data-sheet':
+        if (!type) return;
+        history.push(`/device/${gid}/${uuid}/${sheetType[type]}`);
         break;
       // TODO 暂无需求，先隐藏
       // case 'video':

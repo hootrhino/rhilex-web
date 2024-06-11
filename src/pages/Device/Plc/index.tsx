@@ -130,6 +130,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       title: formatMessage({ id: 'device.form.title.dataType' }),
       dataIndex: 'type',
       width: 150,
+      hideInTable: type === SheetType.DETAIL,
       renderFormItem: () => (
         <ProFormCascader
           noStyle
@@ -167,6 +168,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       title: formatMessage({ id: 'device.form.title.weight' }),
       dataIndex: 'weight',
       valueType: 'digit',
+      hideInTable: type === SheetType.DETAIL,
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.weight' }) },
@@ -197,6 +199,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
+      hideInTable: type === SheetType.DETAIL,
       fieldProps: {
         style: { width: '100%' },
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),

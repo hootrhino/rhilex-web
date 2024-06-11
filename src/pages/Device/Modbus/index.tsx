@@ -157,6 +157,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       dataIndex: 'function',
       valueType: 'select',
       width: 150,
+      hideInTable: type === SheetType.DETAIL,
       valueEnum: funcEnum,
       renderFormItem: (_, { record }) => (
         <ProFormSelect
@@ -189,6 +190,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       title: formatMessage({ id: 'device.form.title.dataType' }),
       dataIndex: 'type',
       width: 150,
+      hideInTable: type === SheetType.DETAIL,
       ellipsis: true,
       renderFormItem: (_, { record }) => {
         let options = modbusDataTypeOptions;
@@ -247,6 +249,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       dataIndex: 'address',
       valueType: 'digit',
       width: 100,
+      hideInTable: type === SheetType.DETAIL,
       ellipsis: true,
       fieldProps: {
         style: { width: '100%' },
@@ -267,6 +270,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       dataIndex: 'quantity',
       valueType: 'digit',
       width: 100,
+      hideInTable: type === SheetType.DETAIL,
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.quantity' }) },
@@ -295,6 +299,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       dataIndex: 'weight',
       valueType: 'digit',
       width: 80,
+      hideInTable: type === SheetType.DETAIL,
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.weight' }) },
@@ -325,6 +330,7 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
+      hideInTable: type === SheetType.DETAIL,
       fieldProps: {
         style: { width: '100%' },
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),

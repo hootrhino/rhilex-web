@@ -113,6 +113,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 100,
+      hideInTable: type === SheetType.DETAIL,
       fieldProps: {
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
       },
@@ -136,7 +137,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
         pageSize = defaultPagination.defaultPageSize,
       }) => {
         const { data } = await getSnmpOidsSheetList({
-          device_uuid: deviceId,
+          device_uuid: deviceUuid,
           current,
           size: pageSize,
         });
