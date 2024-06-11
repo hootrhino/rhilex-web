@@ -176,7 +176,7 @@ const Interface = () => {
             const { data } = await getHwifaceList();
 
             return Promise.resolve({
-              data: [...data, ...data, ...data, ...data],
+              data,
               success: true,
             });
           }}
