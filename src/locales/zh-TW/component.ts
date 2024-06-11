@@ -82,7 +82,7 @@ export default {
   'component.button.user': '個人設置',
   'component.button.logout': '退出登錄',
   'component.button.more': '查看更多',
-  'component.button.copy': '複製規則',
+  'component.button.copy': '複製',
   'component.button.use': '立即使用',
   'component.button.rule': '規則示例',
   'component.button.format': '代碼格式化',
