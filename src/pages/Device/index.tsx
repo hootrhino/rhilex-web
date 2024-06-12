@@ -23,7 +23,7 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
 import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space } from 'antd';
-import type { ItemType } from 'antd/es/menu/hooks/useItems';
+import type { ItemType } from 'antd/es/menu/interface';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useRef, useState } from 'react';
 import { baseColumns } from './Columns';

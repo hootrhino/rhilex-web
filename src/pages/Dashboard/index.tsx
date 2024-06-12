@@ -7,14 +7,14 @@ import { sum } from '@/utils/redash';
 import { cn, IconFont } from '@/utils/utils';
 import { ReloadOutlined } from '@ant-design/icons';
 import { ProCard, ProList } from '@ant-design/pro-components';
-import { useIntl, useRequest } from '@umijs/max';
+import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Badge, Button, Col, Row, Space, Statistic } from 'antd';
 import { useState } from 'react';
-import { useModel } from 'umi';
 
 const Dashboard = () => {
   const { dataSource, run } = useModel('useSystem');
   const { runningLogs, setLogs } = useModel('useWebsocket');
+  const { setDeviceConfig } = useModel('useDevice');
   const { formatMessage } = useIntl();
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
 
@@ -124,6 +124,17 @@ const Dashboard = () => {
             metas={{
               title: {
                 dataIndex: 'name',
+                render: (_, { name, uuid }) => (
+                  <a
+                    onClick={() => {
+                      if (!uuid) return;
+                      history.push('/device/list');
+                      setDeviceConfig({ open: true, uuid });
+                    }}
+                  >
+                    {name}
+                  </a>
+                ),
               },
               subTitle: {
                 dataIndex: 'uuid',
