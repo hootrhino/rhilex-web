@@ -28,14 +28,14 @@ const Resource = () => {
     content: <ProDescriptions columns={columns} dataSource={osDetail} labelWidth={170} />,
   };
 
-  const commonConfig = (text: string, dy?: number) => {
+  const commonConfig = (text: string, dx?: number, dy?: number) => {
     return {
       type: 'text',
       style: {
         text,
         wordWrap: true,
         wordWrapWidth: 164,
-        dx: -160,
+        dx: dx || -140,
         dy: dy || -30,
         fill: '#2C3542',
         fillOpacity: 0.65,
@@ -79,7 +79,7 @@ const Resource = () => {
       },
       {
         data: [maxCpu.time, maxCpu.value],
-        ...commonConfig(`Max CPU ${maxCpu.value}%`, 30),
+        ...commonConfig(`Max CPU ${maxCpu.value}%`, 70, -10),
       },
     ];
   };
