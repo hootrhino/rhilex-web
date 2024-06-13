@@ -5,7 +5,6 @@ import { Line } from '@ant-design/plots';
 import { ProCard, StatisticCard } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Space } from 'antd';
-import dayjs from 'dayjs';
 
 const Resource = () => {
   const { dataSource, resourceData } = useModel('useSystem');
@@ -92,11 +91,15 @@ const Resource = () => {
     tooltip: { channel: 'y', valueFormatter: (d: number) => `${d}%` },
     axis: {
       y: { labelFormatter: (datum: number) => `${datum}%` },
-      x: { labelFormatter: (d: any) => dayjs(d).format('MM-DD HH:mm:ss') },
+      x: {
+        label: null,
+        tick: false,
+      },
+      // x: { labelFormatter: (d: any) => dayjs(d).format('MM-DD HH:mm:ss') },
     },
     scale: {
       y: { tickCount: 40 },
-      x: { tickCount: 10 },
+      // x: { tickCount: 10 },
     },
     label: {
       text: 'category',

@@ -90,7 +90,8 @@ const useSystem = () => {
           time: new Date(),
         },
       ];
-      setResourceData([...resourceData, ...newData]);
+
+      setResourceData([...resourceData, ...newData].slice(-100));
     } else {
       setResourceData([
         { time: new Date(), value: 0, category: 'memory' },
