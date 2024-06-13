@@ -72,7 +72,7 @@ const useSystem = () => {
   useEffect(() => {
     const { memPercent, diskInfo, cpuPercent } = dataSource?.hardWareInfo || {};
 
-    if (activeKey === 'resource') {
+    if (activeKey === 'resource' && window.location.pathname === '/system') {
       const newData = [
         {
           value: memPercent || 0,
@@ -92,7 +92,11 @@ const useSystem = () => {
       ];
       setResourceData([...resourceData, ...newData]);
     } else {
-      setResourceData([]);
+      setResourceData([
+        { time: new Date(), value: 0, category: 'memory' },
+        { time: new Date(), value: 0, category: 'disk' },
+        { time: new Date(), value: 0, category: 'cpu' },
+      ]);
     }
   }, [
     dataSource?.hardWareInfo?.memPercent,
