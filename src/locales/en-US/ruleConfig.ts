@@ -30,7 +30,7 @@ export default {
   'ruleConfig.title.source': 'Resource',
   'ruleConfig.title.deviceConfig': 'Device {title} - rule configuration',
   'ruleConfig.title.sourceConfig': 'Resource {title} - rule configuration',
-  'ruleConfig.title.tpl': 'Structure and examples of output data',
+  // 'ruleConfig.title.tpl': 'Structure and examples of output data',
 
   /**
    * others
@@ -38,10 +38,10 @@ export default {
   'ruleConfig.popconfirm.title.remove': 'Are you sure to delete this rule?',
   'ruleConfig.popconfirm.title.reset':
     'Resetting may result in data loss. Are you sure you want to continue?',
-  'ruleConfig.message.mqtt':
-    'MQTT messages originate from the Publish side, and this rule is solely responsible for forwarding the raw data without making any modifications. Therefore, the parameter of the callback function is the original MQTT message. Developers need to determine the specific format of the message themselves',
-  'ruleConfig.message.iothub':
-    'Since different IoTHubs may use their own unique data formats, the purpose of this rule is limited to the forwarding of raw data without any modifications. Therefore, the parameter received by the callback function will be the original IoTHub protocol JSON. For the specific format of the messages, please refer to the documentation provided by the respective cloud service provider。',
+  // 'ruleConfig.message.mqtt':
+  //   'MQTT messages originate from the Publish side, and this rule is solely responsible for forwarding the raw data without making any modifications. Therefore, the parameter of the callback function is the original MQTT message. Developers need to determine the specific format of the message themselves',
+  // 'ruleConfig.message.iothub':
+  //   'Since different IoTHubs may use their own unique data formats, the purpose of this rule is limited to the forwarding of raw data without any modifications. Therefore, the parameter received by the callback function will be the original IoTHub protocol JSON. For the specific format of the messages, please refer to the documentation provided by the respective cloud service provider。',
 
   /**
    * inends

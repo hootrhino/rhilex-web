@@ -30,17 +30,17 @@ export default {
   'ruleConfig.title.source': '资源',
   'ruleConfig.title.deviceConfig': '设备 {title} - 规则配置',
   'ruleConfig.title.sourceConfig': '资源 {title} - 规则配置',
-  'ruleConfig.title.tpl': '输出数据的结构及其示例',
+  // 'ruleConfig.title.tpl': '输出数据的结构及其示例',
 
   /**
    * others
    */
   'ruleConfig.popconfirm.title.remove': '确定要删除此规则？',
   'ruleConfig.popconfirm.title.reset': '重置可能会丢失数据，确定要重置吗？',
-  'ruleConfig.message.mqtt':
-    'Mqtt 消息来自 Publish 方，本规则仅负责转发原始数据，不进行任何修改。因此，回调函数的参数即为原始 Mqtt 消息。开发者需自行确定消息的具体格式',
-  'ruleConfig.message.iothub':
-    '由于不同的 IoTHub 可能采用各自独特的数据格式，本规则的作用仅限于原始数据的转发，不涉及任何数据修改。因此，回调函数接收的参数将是最初的 IoTHub 协议 JSON。有关消息的具体格式，请参考相应云服务提供商提供的文档',
+  // 'ruleConfig.message.mqtt':
+  //   'Mqtt 消息来自 Publish 方，本规则仅负责转发原始数据，不进行任何修改。因此，回调函数的参数即为原始 Mqtt 消息。开发者需自行确定消息的具体格式',
+  // 'ruleConfig.message.iothub':
+  //   '由于不同的 IoTHub 可能采用各自独特的数据格式，本规则的作用仅限于原始数据的转发，不涉及任何数据修改。因此，回调函数接收的参数将是最初的 IoTHub 协议 JSON。有关消息的具体格式，请参考相应云服务提供商提供的文档',
 
   /**
    * inends

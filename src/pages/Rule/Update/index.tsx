@@ -1,29 +1,28 @@
-import CodeEditor, { Lang, Theme } from '@/components/CodeEditor';
+import CodeEditor, { Lang } from '@/components/CodeEditor';
 import { message } from '@/components/PopupHack';
+import ProLog from '@/components/ProLog';
 import PageContainer from '@/components/ProPageContainer';
 import RuleLabel from '@/components/RuleLabel';
-import { InendType } from '@/pages/Inend/enum';
 import {
   getRulesDetail,
   postRulesCreate,
   postRulesFormatLua,
+  postRulesTestDevice,
   putRulesUpdate,
 } from '@/services/rulex/guizeguanli';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { FormItemType } from '@/utils/enum';
-import { validateFormItem } from '@/utils/utils';
-import { NotificationOutlined } from '@ant-design/icons';
+import { handleNewMessage, validateFormItem } from '@/utils/utils';
+import { BugOutlined, FileSyncOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { FooterToolbar, ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
-import { useIntl } from '@umijs/max';
-import { Alert, Button, Popconfirm } from 'antd';
+import { useIntl, useModel } from '@umijs/max';
+import { Button, Popconfirm, Space } from 'antd';
 import type { Rule } from 'antd/es/form';
 import { useEffect, useRef, useState } from 'react';
 import { history, useParams, useRequest } from 'umi';
-import type { DSType } from '..';
-import { dsData } from '../DS';
-import { inend_event_ds, links } from '../DS/inend';
+import { debugData } from '../DS';
 
 type FormParams = {
   name: string;
@@ -58,11 +57,15 @@ const initialValue = {
 
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
+  const debugFormRef = useRef<ProFormInstance>();
   const { ruleId, deviceId, inendId, groupId } = useParams();
+  const { latestMessage } = useModel('useWebsocket');
   const { formatMessage } = useIntl();
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [dsType, setType] = useState<string>();
+  const [debugLog, setDebugLog] = useState<string[]>([]);
+  const [showLog, setShowLog] = useState<boolean>(false);
+  const [ruleType, setType] = useState<string>();
 
   const getBackUrl = () => {
     if (groupId && deviceId) {
@@ -72,20 +75,36 @@ const UpdateForm = () => {
     }
   };
 
+  // 重置测试数据
+  const handleOnReset = () => {
+    setDebugLog([]);
+    setShowLog(false);
+    debugFormRef.current?.resetFields();
+    debugFormRef.current?.setFieldsValue({ testData: ruleType ? debugData[ruleType] : '' });
+  };
+
+  // 测试
+  const handleOnDebug = async () => {
+    const inputData = debugFormRef.current?.getFieldValue('testData');
+    if (inputData && deviceId) {
+      const { code } = await postRulesTestDevice({
+        testData: inputData,
+        uuid: deviceId,
+      });
+      setShowLog(code === 200);
+    }
+  };
+
   useRequest(() => getInendsDetail({ uuid: inendId || '' }), {
     ready: !!inendId,
     refreshDeps: [inendId],
-    onSuccess: (res) => {
-      setType(res?.type);
-    },
+    onSuccess: (res) => setType(res?.type),
   });
 
   useRequest(() => getDevicesDetail({ uuid: deviceId || '' }), {
     ready: !!deviceId,
     refreshDeps: [deviceId],
-    onSuccess: (res) => {
-      setType(res?.type);
-    },
+    onSuccess: (res) => setType(res?.type),
   });
 
   // 获取详情
@@ -94,6 +113,15 @@ const UpdateForm = () => {
     refreshDeps: [ruleId],
   });
 
+  // 代码格式化
+  const handleOnFormatCode = async () => {
+    const code = formRef.current?.getFieldValue('actions');
+    const { data } = await postRulesFormatLua({ source: code });
+
+    formRef.current?.setFieldsValue({ actions: data.source });
+  };
+
+  // 新建&更新规则表单
   const handleOnFinish = async (values: FormParams) => {
     setLoading(true);
     try {
@@ -121,78 +149,21 @@ const UpdateForm = () => {
     }
   };
 
-  // 代码格式化
-  const handleOnFormatCode = async () => {
-    const code = formRef.current?.getFieldValue('actions');
-    const { data } = await postRulesFormatLua({ source: code });
-
-    formRef.current?.setFieldsValue({ actions: data.source });
-  };
+  useEffect(() => {
+    const topic = `rule/log/${ruleId}`;
+    const newData = handleNewMessage(debugLog, latestMessage?.data, topic);
+    if (showLog) {
+      setDebugLog(newData);
+    }
+  }, [latestMessage, ruleId, showLog]);
 
   useEffect(() => {
     formRef.current?.setFieldsValue(detail ? detail : initialValue);
   }, [detail]);
 
-  const renderDS = () => {
-    if (dsType && [InendType.GENERIC_IOT_HUB, InendType.GENERIC_MQTT].includes(dsType as DSType)) {
-      let message: React.ReactNode = formatMessage({ id: 'ruleConfig.message.mqtt' });
-
-      if (dsType === InendType.GENERIC_IOT_HUB) {
-        message = (
-          <>
-            <div>{formatMessage({ id: 'ruleConfig.message.iothub' })}</div>
-            <ul className="list-disc">
-              {links.map((l) => (
-                <li key={l.key}>
-                  <span>{l.label}</span>
-                  <a href={l.link} target="_blank" rel="noreferrer">
-                    {l.link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </>
-        );
-      }
-
-      return (
-        <Alert
-          icon={<NotificationOutlined className="pt-[5px]" />}
-          showIcon
-          message={message}
-          type="warning"
-          className="flex items-start"
-        />
-      );
-    }
-    if (dsType === InendType.INTERNAL_EVENT) {
-      // 内部事件源
-      return inend_event_ds.map(({ key, title, json }) => (
-        <div key={key} className="mb-[20px]">
-          <div className="mb-[5px]">{title}</div>
-          <CodeEditor lang={Lang.JSON} readOnly value={json} theme={Theme.LIGHT} />
-        </div>
-      ));
-    }
-    // TODO 暂时隐藏
-    // if (dsType === 'GENERIC_AIS_RECEIVER') {
-    //   return device_ais_ds.map(({ key, title, json }) => (
-    //     <div key={key} className="mb-[20px]">
-    //       <div className="mb-[5px]">{title}</div>
-    //       <CodeEditor lang={Lang.JSON} readOnly value={json} theme={Theme.LIGHT} />
-    //     </div>
-    //   ));
-    // }
-
-    return (
-      <CodeEditor
-        lang={Lang.JSON}
-        readOnly
-        value={dsType ? dsData[dsType] : ''}
-        theme={Theme.LIGHT}
-      />
-    );
-  };
+  useEffect(() => {
+    handleOnReset();
+  }, [ruleType]);
 
   return (
     <PageContainer
@@ -205,7 +176,7 @@ const UpdateForm = () => {
       backUrl={getBackUrl()}
     >
       <ProCard split="vertical">
-        <ProCard colSpan="60%">
+        <ProCard>
           <ProForm
             formRef={formRef}
             submitter={{
@@ -278,13 +249,54 @@ const UpdateForm = () => {
           </ProForm>
         </ProCard>
         <ProCard
-          title={
-            dsType
-              ? `${dsType} - ${formatMessage({ id: 'ruleConfig.title.tpl' })}`
-              : formatMessage({ id: 'ruleConfig.title.tpl' })
+          title={formatMessage({ id: 'ruleConfig.title.test' })}
+          className="h-full"
+          colSpan="40%"
+          extra={
+            <Space>
+              <Button key="reset" size="small" icon={<FileSyncOutlined />} onClick={handleOnReset}>
+                {formatMessage({ id: 'button.reset' })}
+              </Button>
+              <Button
+                ghost
+                key="debug"
+                type="primary"
+                size="small"
+                icon={<BugOutlined />}
+                onClick={handleOnDebug}
+              >
+                {formatMessage({ id: 'button.test' })}
+              </Button>
+            </Space>
           }
         >
-          {renderDS()}
+          <ProForm formRef={debugFormRef} submitter={false}>
+            <ProForm.Item
+              name="testData"
+              label={formatMessage({ id: 'ruleConfig.form.title.testData' })}
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'ruleConfig.form.placeholder.testData' }),
+                },
+              ]}
+            >
+              <CodeEditor autoFocus lang={Lang.SHELL} />
+            </ProForm.Item>
+            <ProForm.Item
+              name="output"
+              label={formatMessage({ id: 'ruleConfig.form.title.output' })}
+              className="mb-0"
+            >
+              <ProLog
+                hidePadding
+                headStyle={{ paddingBlock: 0 }}
+                topic={`rule/log/${ruleId}`}
+                dataSource={debugLog}
+                className="h-[290px]"
+              />
+            </ProForm.Item>
+          </ProForm>
         </ProCard>
       </ProCard>
     </PageContainer>

@@ -30,17 +30,17 @@ export default {
   'ruleConfig.title.source': '資源',
   'ruleConfig.title.deviceConfig': '設備 {title} - 規則配置',
   'ruleConfig.title.sourceConfig': '資源 {title} - 規則配置',
-  'ruleConfig.title.tpl': '輸出數據的結構及其示例',
+  // 'ruleConfig.title.tpl': '輸出數據的結構及其示例',
 
   /**
    * others
    */
   'ruleConfig.popconfirm.title.remove': '確定要刪除此規則？',
   'ruleConfig.popconfirm.title.reset': '重置可能會丟失數據，確定要重置嗎？',
-  'ruleConfig.message.mqtt':
-    'Mqtt 訊息來自 Publish 方，本規則僅負責轉發原始數據，不進行任何修改。因此，回呼函數的參數即為原始 Mqtt 訊息。開發者需自行確定訊息的具體格式',
-  'ruleConfig.message.iothub':
-    '由於不同的 IoTHub 可能採用各自獨特的資料格式，本規則的作用僅限於原始資料的轉發，不涉及任何資料修改。因此，回呼函數接收的參數將是最初的 IoTHub 協定 JSON。有關訊息的具體格式，請參考相應雲端服務提供者提供的文檔',
+  // 'ruleConfig.message.mqtt':
+  //   'Mqtt 訊息來自 Publish 方，本規則僅負責轉發原始數據，不進行任何修改。因此，回呼函數的參數即為原始 Mqtt 訊息。開發者需自行確定訊息的具體格式',
+  // 'ruleConfig.message.iothub':
+  //   '由於不同的 IoTHub 可能採用各自獨特的資料格式，本規則的作用僅限於原始資料的轉發，不涉及任何資料修改。因此，回呼函數接收的參數將是最初的 IoTHub 協定 JSON。有關訊息的具體格式，請參考相應雲端服務提供者提供的文檔',
 
   /**
    * inends
