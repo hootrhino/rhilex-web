@@ -2,7 +2,7 @@ import { postPlugwareService } from '@/services/rulex/chajianguanli';
 import { useRequest } from '@umijs/max';
 import { useState } from 'react';
 
-export type PluginName = 'ping' | 'scan' | 'clients' | 'kickout' | 'start' | 'stop' | '';
+export type PluginName = 'ping' | 'scan' | 'clients' | 'kickout' | 'start' | 'stop' | 'crc' | '';
 
 export type PluginParams = {
   uuid: string;

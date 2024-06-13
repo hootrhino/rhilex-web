@@ -19,6 +19,7 @@ export default {
   'plugin.title.clients': '客戶端列表',
   'plugin.title.scan': 'Modbus 掃描儀',
   'plugin.title.terminal': '終端',
+  'plugin.title.calc': 'Modbus CRC 計算',
 
   /**
    * button
@@ -27,6 +28,7 @@ export default {
   'plugin.button.scan.stop': '停止掃描',
   'plugin.button.kickout': '強制離線',
   'plugin.button.viewConfig': '查看配置',
+  'plugin.button.calc': '計算',
 
   /**
    * form
@@ -34,10 +36,21 @@ export default {
   'plugin.form.title.portUuid': '系統串口',
   'plugin.form.title.output': '輸出結果',
   'plugin.form.title.ip': '地址',
+  'plugin.form.title.ca': '校驗演算法',
+  'plugin.form.title.hex': '十六進位字串',
+  'plugin.form.title.cv': '校驗值（CRC）',
   'plugin.form.placeholder.ip': '請輸入地址',
+  'plugin.form.placeholder.hex': '請輸入不含 0x/0X 前綴的合法十六進位字串',
 
   /**
    * message
    */
   'plugin.message.success.kickout': '離線成功',
+
+  /**
+   * other
+   */
+  'plugin.ca.big': '大端（CRC16）',
+  'plugin.ca.little': '小端（CRC16）',
+  'plugin.tooltip.hex': `不含 '0x' 或 '0X' 前綴的十六進位字串`,
 };

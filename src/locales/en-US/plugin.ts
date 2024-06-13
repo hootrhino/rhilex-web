@@ -19,6 +19,7 @@ export default {
   'plugin.title.clients': 'Client list',
   'plugin.title.scan': 'Modbus scanner',
   'plugin.title.terminal': 'Terminal',
+  'plugin.title.calc': 'Modbus CRC calculate',
 
   /**
    * button
@@ -27,6 +28,7 @@ export default {
   'plugin.button.scan.stop': 'Stop Scan',
   'plugin.button.kickout': 'Kick Out',
   'plugin.button.viewConfig': 'Detail',
+  'plugin.button.calc': 'Calculate',
 
   /**
    * form
@@ -34,10 +36,21 @@ export default {
   'plugin.form.title.portUuid': 'Serial Port',
   'plugin.form.title.output': 'Output',
   'plugin.form.title.ip': 'IP Address',
+  'plugin.form.title.ca': 'CRC Algorithm',
+  'plugin.form.title.hex': 'Hexadecimal String',
+  'plugin.form.title.cv': 'Checksum(CRC)',
   'plugin.form.placeholder.ip': 'Please enter an address',
+  'plugin.form.placeholder.hex': 'Please enter a hex string without 0x/oX prefixes',
 
   /**
    * message
    */
   'plugin.message.success.kickout': 'Kicked out successfully',
+
+  /**
+   * other
+   */
+  'plugin.ca.big': 'Big-Endian（CRC16）',
+  'plugin.ca.little': 'Little-Endian（CRC16）',
+  'plugin.tooltip.hex': `Hexadecimal strings without '0x' or '0X' prefixes`,
 };

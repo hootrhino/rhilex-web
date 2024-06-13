@@ -8,6 +8,7 @@ import { useIntl, useModel } from '@umijs/max';
 import { Button, message, Modal, Space } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import ClientList from './ClientList';
+import ModbusCRC from './CRC';
 import Ping from './Ping';
 import Terminal from './Terminal';
 
@@ -70,8 +71,23 @@ const Detail = () => {
     });
   };
 
+  // 计算 CRC
+  const onCRC = () => {
+    const { name, args } = formRef.current?.getFieldsValue();
+    run({ uuid: detailConfig.uuid, name, args }).then((res) => {
+      const code = (res as Record<string, any>)[0]?.value;
+      formRef.current?.setFieldsValue({ code });
+    });
+  };
+
   const renderSubmitter = () => {
     if (detailConfig.name === 'ping') return false;
+    if (detailConfig.name === 'crc')
+      return (
+        <Button key="CRC" type="primary" onClick={onCRC}>
+          {formatMessage({ id: 'plugin.button.calc' })}
+        </Button>
+      );
     return (
       <Space>
         <Button key="stop" onClick={onStop}>
@@ -128,6 +144,11 @@ const Detail = () => {
         onCancel: handleOnClose,
       }}
       onOpenChange={(visible) => setDetailConfig({ ...detailConfig, open: visible })}
+      initialValues={
+        detailConfig.name === 'crc'
+          ? { name: 'crc16little', args: '010300000001', code: '1747' }
+          : {}
+      }
     >
       {detailConfig.name === 'ping' && <Ping dataSource={pingLog} uuid={detailConfig.uuid} />}
       {['scan', 'stop'].includes(detailConfig.name) && (
@@ -158,6 +179,7 @@ const Detail = () => {
           </ProForm.Item>
         </>
       )}
+      {detailConfig.name === 'crc' && <ModbusCRC />}
     </ModalForm>
   );
 };

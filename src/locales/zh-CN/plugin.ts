@@ -19,6 +19,7 @@ export default {
   'plugin.title.clients': '客户端列表',
   'plugin.title.scan': 'Modbus 扫描仪',
   'plugin.title.terminal': '终端',
+  'plugin.title.calc': 'Modbus CRC 计算',
 
   /**
    * button
@@ -27,6 +28,7 @@ export default {
   'plugin.button.scan.stop': '停止扫描',
   'plugin.button.kickout': '强制离线',
   'plugin.button.viewConfig': '查看配置',
+  'plugin.button.calc': '计算',
 
   /**
    * form
@@ -34,10 +36,21 @@ export default {
   'plugin.form.title.portUuid': '系统串口',
   'plugin.form.title.output': '输出结果',
   'plugin.form.title.ip': '地址',
+  'plugin.form.title.ca': '校验算法',
+  'plugin.form.title.hex': '十六进制字符串',
+  'plugin.form.title.cv': '校验值（CRC）',
   'plugin.form.placeholder.ip': '请输入地址',
+  'plugin.form.placeholder.hex': '请输入不带 0x/0X 前缀的合法十六进制字符串',
 
   /**
    * message
    */
   'plugin.message.success.kickout': '离线成功',
+
+  /**
+   * other
+   */
+  'plugin.ca.big': '大端（CRC16）',
+  'plugin.ca.little': '小端（CRC16）',
+  'plugin.tooltip.hex': `不带 '0x' 或 '0X' 前缀的十六进制字符串`,
 };

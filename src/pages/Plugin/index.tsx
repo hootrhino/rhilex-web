@@ -23,6 +23,7 @@ export enum PluginOptionKey {
   SCANNER = 'MODBUS_SCANNER',
   TERMINAL = 'WEB_TTYD_TERMINAL',
   NGROKC = 'NGROKC',
+  CRC = 'MODBUS_CRC_CALCULATOR',
 }
 
 const Plugins = () => {
@@ -95,43 +96,70 @@ const Plugins = () => {
     });
   };
 
+  // CRC
+  const handleOnCRC = (uuid: string) => {
+    setDetailConfig({
+      open: true,
+      uuid,
+      name: 'crc',
+      title: formatMessage({ id: 'plugin.title.calc' }),
+    });
+  };
+
   const handleOption = (uuid: string) => {
-    if (uuid === PluginOptionKey.ICMP) {
-      return [
-        <a key="ping" onClick={() => handleOnPing(uuid)}>
-          {formatMessage({ id: 'button.ping' })}
-        </a>,
-      ];
-    } else if (uuid === PluginOptionKey.MQTT) {
-      return [
-        <a key="detail" onClick={() => handleOnDetail(uuid)}>
-          {formatMessage({ id: 'button.detail' })}
-        </a>,
-      ];
-    } else if (uuid === PluginOptionKey.SCANNER) {
-      return [
-        <a key="config" onClick={() => handleOnConfig(uuid)}>
-          {formatMessage({ id: 'button.config' })}
-        </a>,
-      ];
-    } else if (uuid === PluginOptionKey.TERMINAL) {
-      return [
-        <a key="start" onClick={() => handleOnStart(uuid)}>
-          {formatMessage({ id: 'button.start' })}
-        </a>,
-        <a key="stop" onClick={() => handleOnStop(uuid)}>
-          {formatMessage({ id: 'button.stop' })}
-        </a>,
-      ];
-    } else if (uuid === PluginOptionKey.NGROKC) {
-      return [
-        <a key="ngrokc" onClick={handleOnViewConfig}>
-          {formatMessage({ id: 'plugin.button.viewConfig' })}
-        </a>,
-      ];
-    } else {
-      return [];
+    let options: React.ReactNode[] = [];
+
+    switch (uuid) {
+      case PluginOptionKey.ICMP:
+        options = [
+          <a key="ping" onClick={() => handleOnPing(uuid)}>
+            {formatMessage({ id: 'button.ping' })}
+          </a>,
+        ];
+        break;
+      case PluginOptionKey.MQTT:
+        options = [
+          <a key="detail" onClick={() => handleOnDetail(uuid)}>
+            {formatMessage({ id: 'button.detail' })}
+          </a>,
+        ];
+        break;
+      case PluginOptionKey.SCANNER:
+        options = [
+          <a key="config" onClick={() => handleOnConfig(uuid)}>
+            {formatMessage({ id: 'button.config' })}
+          </a>,
+        ];
+        break;
+      case PluginOptionKey.TERMINAL:
+        options = [
+          <a key="start" onClick={() => handleOnStart(uuid)}>
+            {formatMessage({ id: 'button.start' })}
+          </a>,
+          <a key="stop" onClick={() => handleOnStop(uuid)}>
+            {formatMessage({ id: 'button.stop' })}
+          </a>,
+        ];
+        break;
+      case PluginOptionKey.NGROKC:
+        options = [
+          <a key="ngrokc" onClick={handleOnViewConfig}>
+            {formatMessage({ id: 'plugin.button.viewConfig' })}
+          </a>,
+        ];
+        break;
+      case PluginOptionKey.CRC:
+        options = [
+          <a key="crc" onClick={() => handleOnCRC(uuid)}>
+            {formatMessage({ id: 'plugin.button.calc' })}
+          </a>,
+        ];
+        break;
+      default:
+        options = [];
+        break;
     }
+    return options;
   };
 
   return (
