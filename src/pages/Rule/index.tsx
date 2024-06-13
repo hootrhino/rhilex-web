@@ -152,7 +152,7 @@ const Rule = () => {
         <a
           key="debug"
           onClick={() => {
-            setDebugConfig({ open: true, topic: `rule/log/${uuid}` });
+            setDebugConfig({ open: true, topic: `rule/log/test/${uuid}` });
           }}
         >
           {formatMessage({ id: 'button.test' })}

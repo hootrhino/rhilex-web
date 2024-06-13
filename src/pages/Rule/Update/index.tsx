@@ -150,7 +150,7 @@ const UpdateForm = () => {
   };
 
   useEffect(() => {
-    const topic = `rule/log/${ruleId}`;
+    const topic = `rule/log/test/${ruleId}`;
     const newData = handleNewMessage(debugLog, latestMessage?.data, topic);
     if (showLog) {
       setDebugLog(newData);
@@ -291,7 +291,7 @@ const UpdateForm = () => {
               <ProLog
                 hidePadding
                 headStyle={{ paddingBlock: 0 }}
-                topic={`rule/log/${ruleId}`}
+                topic={`rule/log/test/${ruleId}`}
                 dataSource={debugLog}
                 className="h-[290px]"
               />
