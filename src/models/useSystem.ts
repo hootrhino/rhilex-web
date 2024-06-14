@@ -63,48 +63,35 @@ const useSystem = () => {
     },
   });
 
-  const dataSource = useMemo(() => data, [data]);
-
   const { data: DataCenterSecret } = useRequest(() => getDatacenterSecret(), {
     ready: !!accessToken,
   });
 
+  const dataSource = useMemo(() => data, [data]);
+
+  const { memPercent, diskInfo, cpuPercent } = dataSource?.hardWareInfo || {};
+
   useEffect(() => {
-    const { memPercent, diskInfo, cpuPercent } = dataSource?.hardWareInfo || {};
+    const newData = [
+      {
+        value: memPercent || 0,
+        category: 'memory',
+        time: new Date(),
+      },
+      {
+        value: diskInfo || 0,
+        category: 'disk',
+        time: new Date(),
+      },
+      {
+        value: cpuPercent || 0,
+        category: 'cpu',
+        time: new Date(),
+      },
+    ];
 
-    if (activeKey === 'resource' && window.location.pathname === '/system') {
-      const newData = [
-        {
-          value: memPercent || 0,
-          category: 'memory',
-          time: new Date(),
-        },
-        {
-          value: diskInfo || 0,
-          category: 'disk',
-          time: new Date(),
-        },
-        {
-          value: cpuPercent || 0,
-          category: 'cpu',
-          time: new Date(),
-        },
-      ];
-
-      setResourceData([...resourceData, ...newData].slice(-100));
-    } else {
-      setResourceData([
-        { time: new Date(), value: 0, category: 'memory' },
-        { time: new Date(), value: 0, category: 'disk' },
-        { time: new Date(), value: 0, category: 'cpu' },
-      ]);
-    }
-  }, [
-    dataSource?.hardWareInfo?.memPercent,
-    dataSource?.hardWareInfo?.diskInfo,
-    dataSource?.hardWareInfo?.cpuPercent,
-    activeKey,
-  ]);
+    setResourceData([...resourceData, ...newData].slice(-100));
+  }, [memPercent, diskInfo, cpuPercent]);
 
   return {
     dataSource,
@@ -116,6 +103,7 @@ const useSystem = () => {
     product,
     activeKey,
     setActiveKey,
+    setResourceData,
     hasWifi,
     hasRoute,
     interfaceOption,
