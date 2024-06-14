@@ -89,6 +89,7 @@ const Resource = () => {
     yField: 'value',
     colorField: 'category',
     tooltip: { channel: 'y', valueFormatter: (d: number) => `${d}%` },
+    animate: { enter: { type: 'pathIn' } },
     axis: {
       y: { labelFormatter: (datum: number) => `${datum}%` },
       x: {
@@ -131,6 +132,7 @@ const Resource = () => {
 
   return (
     <ProCard
+      className="h-full"
       title={formatMessage({ id: 'system.tab.resource' })}
       extra={
         <Space split={<StatisticCard.Divider type="vertical" className="h-[12px]" />}>
@@ -152,7 +154,7 @@ const Resource = () => {
         </Space>
       }
     >
-      <Line {...config} key={Math.random()} />
+      <Line {...config} containerStyle={{ minHeight: 560 }} />
     </ProCard>
   );
 };

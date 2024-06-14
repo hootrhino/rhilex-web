@@ -129,6 +129,7 @@ const System = () => {
             setActiveKey(key);
           },
         }}
+        className="h-full"
       />
     </PageContainer>
   );
