@@ -38,7 +38,8 @@ const DataRepository = () => {
   const { formatMessage } = useIntl();
   const actionRef = useRef<ActionType>();
   const { activeDataCenterkey: activeKey } = useModel('useSchema');
-  const { secret } = useModel('useSystem');
+
+  const secret = localStorage.getItem('secret');
 
   const [selectedKey, setSelectedKey] = useState<string>();
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);

@@ -1,5 +1,6 @@
 import loginIcon from '@/assets/loginLogo.svg';
 import { message, modal } from '@/components/PopupHack';
+import { getDatacenterSecret } from '@/services/rulex/shujuzhongxin';
 import { postLogin } from '@/services/rulex/yonghuguanli';
 import { DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';
 import type { ProFormInstance, Settings as LayoutSettings } from '@ant-design/pro-components';
@@ -55,6 +56,11 @@ const Login: React.FC = () => {
 
   const COPYRIGHT = formatMessage({ id: 'page.copyright' });
 
+  const handleOnSecret = async () => {
+    const { data } = await getDatacenterSecret();
+    localStorage.setItem('secret', data.secret);
+  };
+
   const handleOnFinish = async (values: CurrentUser) => {
     try {
       const { data } = await postLogin(values);
@@ -66,6 +72,7 @@ const Login: React.FC = () => {
         }),
       );
 
+      handleOnSecret();
       history.push('/');
       message.success(formatMessage({ id: 'message.success.login' }));
       localStorage.setItem('accessToken', data);

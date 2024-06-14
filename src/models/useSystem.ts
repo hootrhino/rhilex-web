@@ -1,4 +1,3 @@
-import { getDatacenterSecret } from '@/services/rulex/shujuzhongxin';
 import { getSettingsCtrlTree } from '@/services/rulex/wangluopeizhi';
 import { getOsSystem } from '@/services/rulex/xitongshuju';
 import { Product } from '@/utils/enum';
@@ -63,10 +62,6 @@ const useSystem = () => {
     },
   });
 
-  const { data: DataCenterSecret } = useRequest(() => getDatacenterSecret(), {
-    ready: !!accessToken,
-  });
-
   const dataSource = useMemo(() => data, [data]);
 
   const { memPercent, diskInfo, cpuPercent } = dataSource?.hardWareInfo || {};
@@ -107,7 +102,6 @@ const useSystem = () => {
     hasWifi,
     hasRoute,
     interfaceOption,
-    secret: DataCenterSecret?.secret,
   };
 };
 

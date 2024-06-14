@@ -12,6 +12,7 @@ const useUser = () => {
     onSuccess: () => {
       setInitialState({ currentUser: undefined, settings: {}, product: '' });
       localStorage.setItem('accessToken', '');
+      localStorage.setItem('secret', '');
       history.push(LOGIN_PATH);
       setResourceData([
         { time: new Date(), value: 0, category: 'memory' },

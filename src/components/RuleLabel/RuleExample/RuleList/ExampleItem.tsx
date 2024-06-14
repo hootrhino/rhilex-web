@@ -11,7 +11,7 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useIntl, useModel, useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import type { CollapseProps } from 'antd';
 import { Button, Collapse, Divider, Space, theme } from 'antd';
 import { useEffect, useRef, useState } from 'react';
@@ -29,7 +29,8 @@ const ExampleItem = ({ type, dataSource, ...props }: ExampleItemProps) => {
   const { token } = theme.useToken();
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
-  const { secret } = useModel('useSystem');
+
+  const secret = localStorage.getItem('secret');
 
   const [valModalConfig, setValConfig] = useState<{ open: boolean; data: TplItem }>({
     open: false,
