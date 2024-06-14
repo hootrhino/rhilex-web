@@ -47,6 +47,7 @@ const defaultSettings = {
 const Login: React.FC = () => {
   const { setInitialState } = useModel('@@initialState');
   const { product } = useModel('useSystem');
+  const { getNotify } = useModel('useNotify');
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
   const [validateStatus, setValidateStatus] = useState<{
@@ -71,7 +72,7 @@ const Login: React.FC = () => {
           settings: defaultSettings as Partial<LayoutSettings>,
         }),
       );
-
+      getNotify();
       handleOnSecret();
       history.push('/');
       message.success(formatMessage({ id: 'message.success.login' }));
