@@ -9,7 +9,7 @@ import { ReloadOutlined } from '@ant-design/icons';
 import { ProCard, ProList } from '@ant-design/pro-components';
 import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Badge, Button, Col, Row, Space, Statistic } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
   const { dataSource, run } = useModel('useSystem');
@@ -87,6 +87,10 @@ const Dashboard = () => {
   ];
 
   const { data: deviceData } = useRequest(() => getDevicesList({ current: 1, size: 999 }));
+
+  useEffect(() => {
+    run();
+  }, []);
 
   return (
     <PageContainer className="overflow-x-hidden">

@@ -4,7 +4,7 @@ import { history, useModel, useRequest } from '@umijs/max';
 
 const useUser = () => {
   const { setInitialState } = useModel('@@initialState');
-  const { setResourceData } = useModel('useSystem');
+  const { setResourceData, cancel } = useModel('useSystem');
 
   // 退出登录
   const { run: logout } = useRequest(() => postLogout(), {
@@ -19,19 +19,7 @@ const useUser = () => {
         { time: new Date(), value: 0, category: 'disk' },
         { time: new Date(), value: 0, category: 'cpu' },
       ]);
-      // const { search, pathname } = window.location;
-      // const urlParams = new URL(window.location.href).searchParams;
-      /** 此方法会跳转到 redirect 参数所在的位置 */
-      // const redirect = urlParams.get('redirect');
-      // Note: There may be security issues, please note
-      // if (window.location.pathname !== '/user/login' && !redirect) {
-      //   history.replace({
-      //     pathname: '/user/login',
-      //     search: stringify({
-      //       redirect: pathname + search,
-      //     }),
-      //   });
-      // }
+      cancel();
     },
   });
 

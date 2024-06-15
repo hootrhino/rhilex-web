@@ -36,9 +36,9 @@ const useSystem = () => {
   const accessToken = localStorage.getItem('accessToken');
 
   const { data, run, cancel } = useRequest(() => getOsSystem(), {
-    formatResult: (res) => res.data,
+    manual: true,
     pollingInterval: 5000,
-    // ready: !!accessToken,
+    formatResult: (res) => res.data,
     onSuccess: (res) => {
       if (!res) return;
       const { osDist } = res?.hardWareInfo;

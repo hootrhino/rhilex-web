@@ -3,11 +3,13 @@ import { ProList } from '@ant-design/pro-components';
 import { history, useIntl, useModel } from '@umijs/max';
 import { Badge, Popover } from 'antd';
 import dayjs from 'dayjs';
+import { useEffect } from 'react';
 import ProTag, { StatusType } from '../ProTag';
 
 const NoticeIcon = () => {
   const { formatMessage } = useIntl();
-  const { data } = useModel('useNotify');
+  const { data, run } = useModel('useNotify');
+  const accessToken = localStorage.getItem('accessToken');
 
   const content = (
     <ProList
@@ -38,6 +40,12 @@ const NoticeIcon = () => {
       className="notification-list"
     />
   );
+
+  useEffect(() => {
+    if (accessToken) {
+      run();
+    }
+  }, [accessToken]);
 
   return (
     <Popover
