@@ -13,12 +13,12 @@ export const DOC_URL = 'http://www.hootrhino.com/';
 
 // 分组类型
 export const GROUP_TYPE_DEVICE = 'DEVICE';
-export const GROUP_TYPE_SCREEN = 'VISUAL';
+// export const GROUP_TYPE_SCREEN = 'VISUAL';
 export const GROUP_TYPE_LUA_TPL = 'USER_LUA_TEMPLATE';
 
 // 分组默认 key
 export const DEFAULT_GROUP_KEY_DEVICE = 'DROOT';
-export const DEFAULT_GROUP_KEY_SCREEN = 'VROOT';
+// export const DEFAULT_GROUP_KEY_SCREEN = 'VROOT';
 export const DEFAULT_GROUP_KEY_LUA_TPL = 'ULTROOT';
 
 // 其他

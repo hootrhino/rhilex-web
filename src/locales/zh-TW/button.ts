@@ -17,6 +17,7 @@ export default {
   'button.new': '新建',
   'button.edit': '編輯',
   'button.detail': '詳細資料',
+  'button.scan': '掃描',
   'button.remove': '删除',
   'button.ping': '測速',
   'button.config': '配置',

@@ -1,6 +1,5 @@
+import { history } from '@umijs/max';
 import { useRef, useState } from 'react';
-
-import { history } from 'umi';
 
 import {
   DownOutlined,

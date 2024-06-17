@@ -88,6 +88,14 @@ const Dashboard = () => {
 
   const { data: deviceData } = useRequest(() => getDevicesList({ current: 1, size: 999 }));
 
+  const { run: reset } = useRequest(() => postOsResetInterMetric(), {
+    manual: true,
+    onSuccess: () => {
+      message.success(formatMessage({ id: 'dashboard.message.reset.success' }));
+      run();
+    },
+  });
+
   useEffect(() => {
     run();
   }, []);
@@ -172,12 +180,7 @@ const Dashboard = () => {
               ghost
               className="absolute top-[8px] left-[8px]"
               icon={<ReloadOutlined />}
-              onClick={async () =>
-                await postOsResetInterMetric().then(() => {
-                  message.success(formatMessage({ id: 'dashboard.message.reset.success' }));
-                  run();
-                })
-              }
+              onClick={reset}
             >
               {formatMessage({ id: 'button.reset' })}
             </Button>

@@ -17,11 +17,10 @@ import { handleNewMessage, validateFormItem } from '@/utils/utils';
 import { BugOutlined, FileSyncOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { FooterToolbar, ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
-import { useIntl, useModel } from '@umijs/max';
+import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import { Button, Popconfirm, Space } from 'antd';
 import type { Rule } from 'antd/es/form';
 import { useEffect, useRef, useState } from 'react';
-import { history, useParams, useRequest } from 'umi';
 import { debugData } from '../DS';
 
 type FormParams = {

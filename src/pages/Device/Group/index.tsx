@@ -5,10 +5,12 @@ import {
   postGroupCreate,
   putGroupUpdate,
 } from '@/services/rulex/fenzuguanli';
+import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
+import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
 import { DeleteOutlined, EditOutlined, FolderOpenOutlined } from '@ant-design/icons';
-import type { ProFormInstance } from '@ant-design/pro-components';
+import type { ActionType, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProList } from '@ant-design/pro-components';
-import { getIntl, getLocale, useIntl, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Space, Tooltip } from 'antd';
 import { useEffect, useRef } from 'react';
 
@@ -39,75 +41,65 @@ type updateGroupParams = createGroupParams & {
   uuid: string;
 };
 
-type GroupListProps = {
-  dataSource: any[];
-  activeGroup: string;
-  itemCount: number;
-  config: GroupConfig;
-  groupRoot: string;
-  groupType: string;
-  onReset: () => void;
-  onRefresh: () => void;
-  updateActiveGroup: (key: string) => void;
-  updateConfig: (values: GroupConfig) => void;
-};
-
 export const DEFAULT_CONFIG: GroupConfig = {
   open: false,
   type: GroupModalType.NEW,
-  title: getIntl(getLocale()).formatMessage({ id: 'device.modal.title.group.new' }),
+  title: 'device.modal.title.group.new',
 };
 
-const GroupList = ({
-  dataSource,
-  activeGroup,
-  itemCount,
-  config,
-  groupRoot,
-  groupType,
-  onReset,
-  onRefresh,
-  updateActiveGroup,
-  updateConfig,
-}: GroupListProps) => {
+const GroupList = () => {
   const groupFormRef = useRef<ProFormInstance>();
+  const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
-  const { type, ...params } = config;
+  const { groupConfig, activeGroupKey, setTitle, setActiveGroupKey, setGroupConfig } =
+    useModel('useDevice');
+  const { type, title, ...params } = groupConfig;
 
   // 分组详情
   const { run: getDetail, data: groupDetail } = useRequest(
     (params: API.getGroupDetailParams) => getGroupDetail(params),
     {
       manual: true,
+      onSuccess: () => {
+        setGroupConfig({
+          open: true,
+          title: 'device.modal.title.group.edit',
+          type: GroupModalType.EDIT,
+        });
+      },
     },
   );
 
   // 新建分组
   const { run: createGroup } = useRequest((params: createGroupParams) => postGroupCreate(params), {
     manual: true,
-    onSuccess: () => message.success(formatMessage({ id: 'message.success.new' })),
+    onSuccess: (res: any) => {
+      setActiveGroupKey(res?.gid);
+      setGroupConfig(DEFAULT_CONFIG);
+      actionRef.current?.reload();
+      message.success(formatMessage({ id: 'message.success.new' }));
+    },
   });
 
   // 更新分组
   const { run: updateGroup } = useRequest((params: updateGroupParams) => putGroupUpdate(params), {
     manual: true,
-    onSuccess: () => message.success(formatMessage({ id: 'message.success.update' })),
+    onSuccess: () => {
+      setGroupConfig(DEFAULT_CONFIG);
+      actionRef.current?.reload();
+      message.success(formatMessage({ id: 'message.success.update' }));
+    },
   });
 
   // 新建&编辑
   const handleOnFinish = async ({ name }: { name: string }) => {
     if (type === 'new') {
-      createGroup({ type: groupType, name }).then((value: any) => {
-        updateActiveGroup(value?.gid);
-        onRefresh();
-      });
+      createGroup({ type: GROUP_TYPE_DEVICE, name });
     } else {
       updateGroup({
-        type: groupType,
+        type: GROUP_TYPE_DEVICE,
         uuid: groupDetail?.uuid || '',
         name,
-      }).then(() => {
-        onRefresh();
       });
     }
   };
@@ -117,7 +109,11 @@ const GroupList = ({
     (params: API.deleteGroupDelParams) => deleteGroupDel(params),
     {
       manual: true,
-      onSuccess: () => message.success(formatMessage({ id: 'message.success.remove' })),
+      onSuccess: () => {
+        actionRef.current?.reload();
+        setActiveGroupKey(DEFAULT_GROUP_KEY_DEVICE);
+        message.success(formatMessage({ id: 'message.success.remove' }));
+      },
     },
   );
 
@@ -125,8 +121,8 @@ const GroupList = ({
     modal.confirm({
       title: formatMessage({ id: 'device.modal.title.group.remove' }),
       width: 600,
-      content: formatMessage({ id: 'device.modal.content.group.remove' }, { count: itemCount }),
-      onOk: () => removeGroup({ uuid: uuid }).then(() => onReset()),
+      content: formatMessage({ id: 'device.modal.content.group.remove' }),
+      onOk: () => removeGroup({ uuid: uuid }),
       okText: formatMessage({ id: 'button.ok' }),
       cancelText: formatMessage({ id: 'button.cancel' }),
     });
@@ -143,18 +139,27 @@ const GroupList = ({
   return (
     <>
       <ProList<GroupItem>
+        actionRef={actionRef}
         rowKey="uuid"
         headerTitle={false}
-        dataSource={dataSource}
         toolBarRender={false}
-        onRow={({ uuid }: GroupItem) => {
+        request={async () => {
+          const { data } = await getDevicesGroup();
+
+          return Promise.resolve({
+            data: data as GroupItem[],
+            success: true,
+          });
+        }}
+        onRow={({ uuid, name }: GroupItem) => {
           return {
             onClick: () => {
-              updateActiveGroup(uuid);
+              setActiveGroupKey(uuid);
+              setTitle(name);
             },
           };
         }}
-        rowClassName={({ uuid }: GroupItem) => (uuid === activeGroup ? 'active-group' : '')}
+        rowClassName={({ uuid }: GroupItem) => (uuid === activeGroupKey ? 'active-group' : '')}
         metas={{
           title: {
             dataIndex: 'name',
@@ -165,20 +170,10 @@ const GroupList = ({
           },
           actions: {
             render: (_dom, { uuid }) =>
-              uuid === groupRoot ? null : (
+              uuid === DEFAULT_GROUP_KEY_DEVICE ? null : (
                 <Space size="middle">
                   <Tooltip title={formatMessage({ id: 'device.tooltip.group.edit' })}>
-                    <a
-                      key="edit"
-                      onClick={() => {
-                        updateConfig({
-                          open: true,
-                          title: formatMessage({ id: 'device.modal.title.group.edit' }),
-                          type: GroupModalType.EDIT,
-                        });
-                        getDetail({ uuid });
-                      }}
-                    >
+                    <a key="edit" onClick={() => getDetail({ uuid })}>
                       <EditOutlined />
                     </a>
                   </Tooltip>
@@ -195,7 +190,8 @@ const GroupList = ({
       <ModalForm
         {...params}
         formRef={groupFormRef}
-        onOpenChange={(visible) => updateConfig({ ...config, open: visible })}
+        title={formatMessage({ id: title })}
+        onOpenChange={(visible) => setGroupConfig({ ...groupConfig, open: visible })}
         modalProps={{ destroyOnClose: true }}
         onFinish={handleOnFinish}
         layout="horizontal"

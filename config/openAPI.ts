@@ -1,5 +1,5 @@
+import { defineConfig } from '@umijs/max';
 import { join } from 'path';
-import { defineConfig } from 'umi';
 
 const openAPIConfig: Parameters<typeof defineConfig>[0]['openAPI'] = [
   {

@@ -59,10 +59,14 @@ const Update = ({ reload, uuid, ...props }: UpdateProps) => {
   };
 
   useEffect(() => {
+    if (detail) {
+      formRef.current?.setFieldsValue({ ...detail, config: [detail?.config] });
+    }
+  }, [detail]);
+
+  useEffect(() => {
     if (uuid) {
-      getDetail({ uuid }).then((data) =>
-        formRef.current?.setFieldsValue({ ...data, config: [data?.config] }),
-      );
+      getDetail({ uuid });
     }
   }, [uuid]);
 

@@ -2,9 +2,8 @@ import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescripti
 import ProDescriptions from '@/components/ProDescriptions';
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { omit } from '@/utils/redash';
-import { useIntl } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
-import { useRequest } from 'umi';
 import { baseColumns, configColumns } from '../columns';
 import { InendType } from '../enum';
 

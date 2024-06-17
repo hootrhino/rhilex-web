@@ -1,7 +1,3 @@
-import { getIntl, getLocale, history, Link } from '@umijs/max';
-
-import type { RunTimeLayoutConfig } from 'umi';
-
 import { GoBackModal } from '@/components/ProPageContainer';
 import RightContent from '@/components/RightContent';
 import { ProductMenuAccess } from '@/models/useSystem';
@@ -9,6 +5,8 @@ import { LOGIN_PATH } from '@/utils/constant';
 import { Product } from '@/utils/enum';
 import { IconFont } from '@/utils/utils';
 import { DefaultFooter } from '@ant-design/pro-components';
+import type { RunTimeLayoutConfig } from '@umijs/max';
+import { getIntl, getLocale, history, Link } from '@umijs/max';
 import { MacScrollbar } from 'mac-scrollbar';
 import 'mac-scrollbar/dist/mac-scrollbar.css';
 

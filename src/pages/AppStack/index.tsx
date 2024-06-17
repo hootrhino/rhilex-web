@@ -10,10 +10,9 @@ import { DetailModalType } from '@/utils/enum';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { useIntl, useRequest } from '@umijs/max';
+import { history, useIntl, useRequest } from '@umijs/max';
 import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
-import { history } from 'umi';
 import { baseColumns } from './columns';
 import Detail from './Detail';
 

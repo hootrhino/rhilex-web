@@ -3,10 +3,9 @@ import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescripti
 import ProDescriptions from '@/components/ProDescriptions';
 import { getOutendsDetail } from '@/services/rulex/shuchuziyuanguanli';
 import { omit } from '@/utils/redash';
-import { getLocale, useIntl } from '@umijs/max';
+import { getLocale, useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
-import { useRequest } from 'umi';
 import { baseColumns, configColumns } from '../columns';
 import { OutendType } from '../enum';
 

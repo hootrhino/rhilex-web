@@ -69,6 +69,7 @@ const NetworkStatus = () => {
       manual: true,
       formatResult: (res) =>
         pick(res.data, ['device', 'type', 'hwAddr', 'mtu', 'connection', 'ipv4Addr', 'ipv6Addr']),
+      onSuccess: () => setOpen(true),
     },
   );
 
@@ -102,7 +103,7 @@ const NetworkStatus = () => {
           key="detail"
           onClick={() => {
             if (!device) return;
-            getDetail({ iface: device }).then(() => setOpen(true));
+            getDetail({ iface: device });
           }}
         >
           {formatMessage({ id: 'button.detail' })}

@@ -1,10 +1,9 @@
-import { useRef, useState } from 'react';
-
 import { DownOutlined, PlusOutlined, PoweroffOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
+import { history } from '@umijs/max';
 import { Button, Dropdown, Popconfirm } from 'antd';
-import { history } from 'umi';
+import { useRef, useState } from 'react';
 
 import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';

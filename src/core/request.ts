@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { message, notification } from '@/components/PopupHack';
 import { LOGIN_PATH } from '@/utils/constant';
+import type { RequestConfig } from '@umijs/max';
 import { history } from '@umijs/max';
-import type { RequestConfig } from 'umi';
 
 // 错误处理方案： 错误类型
 enum ErrorShowType {

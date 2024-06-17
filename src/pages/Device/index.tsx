@@ -4,12 +4,10 @@ import PageContainer from '@/components/ProPageContainer';
 import {
   deleteDevicesDel,
   getDevicesDeviceErrMsg,
-  getDevicesGroup,
   getDevicesListByGroup,
   putDevicesRestart,
 } from '@/services/rulex/shebeiguanli';
-import { defaultPagination, DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
-import { getName } from '@/utils/utils';
+import { defaultPagination } from '@/utils/constant';
 import {
   ControlOutlined,
   DownOutlined,
@@ -29,7 +27,6 @@ import { useRef, useState } from 'react';
 import { baseColumns } from './Columns';
 import Detail from './Detail';
 import { DeviceType } from './enum';
-import type { GroupConfig } from './Group';
 import GroupList, { DEFAULT_CONFIG } from './Group';
 
 export type DeviceItem = {
@@ -52,38 +49,18 @@ const sheetType = {
 const Devices = () => {
   const actionRef = useRef<ActionType>();
 
-  const { detailConfig, setDeviceConfig, activeGroupKey, setActiveGroupKey } =
+  const { title, detailConfig, activeGroupKey, setDeviceConfig, setGroupConfig } =
     useModel('useDevice');
   const { product } = useModel('useSystem');
   const { formatMessage } = useIntl();
 
-  const [groupConfig, setGroupConfig] = useState<GroupConfig>(DEFAULT_CONFIG);
   const [open, setOpen] = useState<boolean>(false);
-  // const [openVideo, setOpenVideo] = useState<boolean>(false);
-
-  const [total, setTotal] = useState<number>(0);
-
   const [activeDevice, setActiveDevice] = useState<string>('');
+  // const [openVideo, setOpenVideo] = useState<boolean>(false);
   // const [videoConfig, setVideoConfig] = useState<{
   //   deviceName: string | undefined;
   //   outputMode: OutputMode;
   // }>({ deviceName: '', outputMode: OutputMode.LOCAL_JPEG_STREAM_SERVER });
-
-  // 设备分组列表
-  const { data: groupList, run: getGroupList } = useRequest(() => getDevicesGroup());
-
-  // 重置分组表单
-  const handleOnReset = () => {
-    getGroupList().then(() => {
-      setActiveGroupKey(DEFAULT_GROUP_KEY_DEVICE);
-    });
-  };
-
-  // 刷新分组列表
-  const handleOnRefresh = () => {
-    setGroupConfig(DEFAULT_CONFIG);
-    getGroupList();
-  };
 
   // 删除设备
   const { run: remove } = useRequest(
@@ -291,23 +268,12 @@ const Devices = () => {
             headStyle={{ paddingInline: 16 }}
             bodyStyle={{ paddingInline: 16 }}
           >
-            <GroupList
-              dataSource={groupList || []}
-              activeGroup={activeGroupKey}
-              itemCount={total}
-              config={groupConfig}
-              groupRoot={DEFAULT_GROUP_KEY_DEVICE}
-              groupType={GROUP_TYPE_DEVICE}
-              onReset={handleOnReset}
-              onRefresh={handleOnRefresh}
-              updateActiveGroup={setActiveGroupKey}
-              updateConfig={setGroupConfig}
-            />
+            <GroupList />
           </ProCard>
           <ProCard
             title={
-              getName(groupList || [], activeGroupKey)
-                ? `${getName(groupList || [], activeGroupKey)} - ${formatMessage({
+              title
+                ? `${title} - ${formatMessage({
                     id: 'device.title.list',
                   })}`
                 : formatMessage({ id: 'device.title.list' })
@@ -327,14 +293,13 @@ const Devices = () => {
                     size: pageSize,
                     ...keyword,
                   });
-                  setTotal(data?.total || 0);
+
                   return Promise.resolve({
                     data: data?.records,
                     total: data?.total || 0,
                     success: true,
                   });
                 } else {
-                  setTotal(0);
                   return Promise.resolve({
                     data: [],
                     total: 0,

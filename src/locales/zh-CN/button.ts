@@ -20,6 +20,7 @@ export default {
   'button.remove': '删除',
   'button.ping': '测速',
   'button.config': '配置',
+  'button.scan': '扫描',
   'button.log': '日志',
   'button.advancedOption': '高级操作',
   'button.reload': '重新加载',

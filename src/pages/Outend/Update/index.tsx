@@ -9,9 +9,8 @@ import {
 } from '@/services/rulex/shuchuziyuanguanli';
 import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
-import { useIntl } from '@umijs/max';
+import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
-import { history, useParams, useRequest } from 'umi';
 import { columns, defaultConfig } from '../columns';
 import { OutendType } from '../enum';
 

@@ -1,5 +1,6 @@
 import ProDescriptions from '@/components/ProDescriptions';
 import ProTag, { StatusType } from '@/components/ProTag';
+import { PluginName, PluginUUID } from '@/models/usePlugin';
 import { postPlugwareService } from '@/services/rulex/chajianguanli';
 import { getIntl, getLocale } from '@umijs/max';
 
@@ -49,8 +50,8 @@ const NgrokDetail = () => {
       columns={columns}
       request={async () => {
         const { data } = await postPlugwareService({
-          uuid: 'NGROKC',
-          name: 'get_config',
+          uuid: PluginUUID.NGROKC,
+          name: PluginName.CONFIG,
           args: '',
         });
 

@@ -1,30 +1,29 @@
 import { ProList } from '@ant-design/pro-components';
 
-import { message, modal } from '@/components/PopupHack';
+import { message } from '@/components/PopupHack';
 import PageContainer from '@/components/ProPageContainer';
 import ProTag from '@/components/ProTag';
+import { defaultConfig, PluginName, PluginUUID } from '@/models/usePlugin';
 import { getPlugwareList } from '@/services/rulex/chajianguanli';
 import { useIntl, useModel } from '@umijs/max';
 import { useSize } from 'ahooks';
 import { Tooltip } from 'antd';
 import { useRef } from 'react';
 import Detail from './Detail';
-import NgrokDetail from './Detail/Ngrok';
 
 export type PluginItem = {
   name: string;
   version: string;
+  uuid: PluginUUID;
   [key: string]: any;
 };
 
-export enum PluginOptionKey {
-  ICMP = 'ICMPSender',
-  MQTT = 'RULEX-MqttServer',
-  SCANNER = 'MODBUS_SCANNER',
-  TERMINAL = 'WEB_TTYD_TERMINAL',
-  NGROKC = 'NGROKC',
-  CRC = 'MODBUS_CRC_CALCULATOR',
-}
+type DetailParams = {
+  uuid: PluginUUID;
+  name: PluginName;
+  titleId: string;
+  args?: any;
+};
 
 const Plugins = () => {
   const { setDetailConfig, run } = useModel('usePlugin');
@@ -32,106 +31,77 @@ const Plugins = () => {
   const ref = useRef(null);
   const size = useSize(ref);
 
-  // ping
-  const handleOnPing = (uuid: string) => {
+  const handleOnDetail = ({ uuid, name, titleId, ...rest }: DetailParams) => {
     setDetailConfig({
       open: true,
       uuid,
-      name: 'ping',
-      title: formatMessage({ id: 'plugin.title.ping' }),
-    });
-  };
-
-  // clients
-  const handleOnDetail = (uuid: string) => {
-    setDetailConfig({
-      open: true,
-      uuid,
-      name: 'clients',
-      title: formatMessage({ id: 'plugin.title.clients' }),
-      args: [],
-    });
-  };
-
-  // scan
-  const handleOnConfig = (uuid: string) => {
-    setDetailConfig({
-      open: true,
-      uuid,
-      name: 'scan',
-      title: formatMessage({ id: 'plugin.title.scan' }),
+      name,
+      title: formatMessage({ id: titleId }),
+      ...rest,
     });
   };
 
   // start
-  const handleOnStart = (uuid: string) => {
-    run({ uuid, name: 'start', args: '' }).then(() => {
-      // 启动并打开终端
-      message.success(formatMessage({ id: 'message.success.start' }));
-      setDetailConfig({
-        open: true,
-        uuid,
-        name: 'start',
-        title: formatMessage({ id: 'plugin.title.terminal' }),
-        args: '',
-      });
-    });
+  const handleOnStart = (uuid: PluginUUID) => {
+    run({ uuid, name: PluginName.START, args: '' });
+    // 启动并打开终端
+    handleOnDetail({ uuid, name: PluginName.START, titleId: 'plugin.title.terminal', args: '' });
+    message.success(formatMessage({ id: 'message.success.start' }));
   };
 
   // stop
-  const handleOnStop = (uuid: string) => {
-    run({ uuid, name: 'stop', args: '' }).then(() => {
-      message.success(formatMessage({ id: 'message.success.stop' }));
-      setDetailConfig({ open: false, uuid, name: 'stop', title: '', args: '' });
-    });
+  const handleOnStop = (uuid: PluginUUID) => {
+    run({ uuid, name: PluginName.STOP, args: '' });
+    setDetailConfig(defaultConfig);
+    message.success(formatMessage({ id: 'message.success.stop' }));
   };
 
-  // ngrokc
-  const handleOnViewConfig = () => {
-    modal.info({
-      width: '40%',
-      title: formatMessage({ id: 'button.detail' }),
-      content: <NgrokDetail />,
-      okText: formatMessage({ id: 'button.close' }),
-    });
-  };
-
-  // CRC
-  const handleOnCRC = (uuid: string) => {
-    setDetailConfig({
-      open: true,
-      uuid,
-      name: 'crc',
-      title: formatMessage({ id: 'plugin.title.calc' }),
-    });
-  };
-
-  const handleOption = (uuid: string) => {
+  const handleOption = (uuid: PluginUUID) => {
     let options: React.ReactNode[] = [];
 
     switch (uuid) {
-      case PluginOptionKey.ICMP:
+      case PluginUUID.ICMP:
         options = [
-          <a key="ping" onClick={() => handleOnPing(uuid)}>
+          <a
+            key="ping"
+            onClick={() =>
+              handleOnDetail({ uuid, name: PluginName.PING, titleId: 'plugin.title.ping' })
+            }
+          >
             {formatMessage({ id: 'button.ping' })}
           </a>,
         ];
         break;
-      case PluginOptionKey.MQTT:
+      case PluginUUID.MQTT:
         options = [
-          <a key="detail" onClick={() => handleOnDetail(uuid)}>
+          <a
+            key="detail"
+            onClick={() =>
+              handleOnDetail({
+                uuid,
+                name: PluginName.CLIENTS,
+                titleId: 'plugin.title.clients',
+                args: [],
+              })
+            }
+          >
             {formatMessage({ id: 'button.detail' })}
           </a>,
         ];
         break;
-      case PluginOptionKey.SCANNER:
+      case PluginUUID.SCANNER:
         options = [
-          <a key="config" onClick={() => handleOnConfig(uuid)}>
-            {formatMessage({ id: 'button.config' })}
+          <a
+            key="scan"
+            onClick={() =>
+              handleOnDetail({ uuid, name: PluginName.SCAN, titleId: 'plugin.title.scan' })
+            }
+          >
+            {formatMessage({ id: 'button.scan' })}
           </a>,
         ];
         break;
-      case PluginOptionKey.TERMINAL:
+      case PluginUUID.TERMINAL:
         options = [
           <a key="start" onClick={() => handleOnStart(uuid)}>
             {formatMessage({ id: 'button.start' })}
@@ -141,16 +111,26 @@ const Plugins = () => {
           </a>,
         ];
         break;
-      case PluginOptionKey.NGROKC:
+      case PluginUUID.NGROKC:
         options = [
-          <a key="ngrokc" onClick={handleOnViewConfig}>
-            {formatMessage({ id: 'plugin.button.viewConfig' })}
+          <a
+            key="ngrokc"
+            onClick={() =>
+              handleOnDetail({ uuid, name: PluginName.NGROKC, titleId: 'plugin.title.ngrokc' })
+            }
+          >
+            {formatMessage({ id: 'button.detail' })}
           </a>,
         ];
         break;
-      case PluginOptionKey.CRC:
+      case PluginUUID.CRC:
         options = [
-          <a key="crc" onClick={() => handleOnCRC(uuid)}>
+          <a
+            key="crc"
+            onClick={() =>
+              handleOnDetail({ uuid, name: PluginName.CRC, titleId: 'plugin.title.calc' })
+            }
+          >
             {formatMessage({ id: 'plugin.button.calc' })}
           </a>,
         ];
@@ -185,7 +165,7 @@ const Plugins = () => {
                     <div className="truncate">{description}</div>
                   </Tooltip>
                 ) : (
-                  description
+                  <div className={description ? 'truncate' : 'invisible'}>{description || '-'}</div>
                 ),
             },
             actions: {

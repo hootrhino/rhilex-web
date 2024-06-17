@@ -1,27 +1,38 @@
 import ProLog from '@/components/ProLog';
+import { PluginName, PluginUUID } from '@/models/usePlugin';
 import { FormItemType } from '@/utils/enum';
 import { validateIPv4 } from '@/utils/regExp';
 import { validateFormItem } from '@/utils/utils';
+import type { ProFormProps } from '@ant-design/pro-components';
 import { ProForm } from '@ant-design/pro-components';
-import { useIntl } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import { Button, Input } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useState } from 'react';
-import { useModel } from 'umi';
 
-type PingProps = {
+type PingProps = ProFormProps & {
   dataSource: string[];
-  uuid: string;
+  uuid: PluginUUID | undefined;
 };
 
-const Ping = ({ uuid, dataSource }: PingProps) => {
-  const { run, detailConfig } = useModel('usePlugin');
+const Ping = ({ uuid, dataSource, ...props }: PingProps) => {
+  const { run } = useModel('usePlugin');
   const { formatMessage } = useIntl();
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const handleOnSearch = (value: string) => {
+    if (!uuid) return;
+
+    setLoading(true);
+    run({ name: PluginName.PING, args: [value], uuid }).then(() => {
+      setLoading(false);
+      setDisabled(false);
+    });
+  };
+
   return (
-    <>
+    <ProForm submitter={false} {...props}>
       <ProForm.Item
         name="ip"
         label={formatMessage({ id: 'plugin.form.title.ip' })}
@@ -43,19 +54,13 @@ const Ping = ({ uuid, dataSource }: PingProps) => {
             </Button>
           }
           size="large"
-          onSearch={(value: string) => {
-            setLoading(true);
-            run({ name: 'ping', args: [value], uuid: detailConfig.uuid }).then(() => {
-              setLoading(false);
-              setDisabled(false);
-            });
-          }}
+          onSearch={handleOnSearch}
         />
       </ProForm.Item>
       <ProForm.Item name="output" label={formatMessage({ id: 'plugin.form.title.output' })}>
         <ProLog hidePadding topic={`plugin/ICMPSenderPing/${uuid}`} dataSource={dataSource} />
       </ProForm.Item>
-    </>
+    </ProForm>
   );
 };
 

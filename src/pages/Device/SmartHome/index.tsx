@@ -132,7 +132,8 @@ const ShellySubDevice = () => {
             deviceIp: item.ip,
             gwIp: ip,
             webHookPort: port,
-          }).then(() => message.success(formatMessage({ id: 'device.message.success.config' })));
+          });
+          message.success(formatMessage({ id: 'device.message.success.config' }));
         }
         break;
       case 'clear-webhook':
@@ -142,7 +143,8 @@ const ShellySubDevice = () => {
             deviceIp: item.ip,
             gwIp: ip,
             webHookPort: port,
-          }).then(() => message.success(formatMessage({ id: 'device.message.success.clear' })));
+          });
+          message.success(formatMessage({ id: 'device.message.success.clear' }));
         }
         break;
       default:
@@ -195,9 +197,8 @@ const ShellySubDevice = () => {
             type="primary"
             icon={<ReloadOutlined />}
             onClick={() => {
-              getSubDeviceList().then(() =>
-                message.success(formatMessage({ id: 'device.button.refresh' })),
-              );
+              getSubDeviceList();
+              message.success(formatMessage({ id: 'device.button.refresh' }));
             }}
           >
             {formatMessage({ id: 'device.button.refresh' })}

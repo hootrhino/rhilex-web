@@ -38,6 +38,7 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
     (params: API.getSchemaDetailParams) => getSchemaDetail(params),
     {
       manual: true,
+      onSuccess: (res) => setInitialValue(res),
     },
   );
 
@@ -164,7 +165,7 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
                     onClick={() => {
                       if (!uuid) return;
                       changeOpen(true);
-                      getDetail({ uuid }).then((values) => setInitialValue(values));
+                      getDetail({ uuid });
                     }}
                   >
                     <EditOutlined />

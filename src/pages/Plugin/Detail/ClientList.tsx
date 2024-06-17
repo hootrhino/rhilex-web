@@ -1,12 +1,15 @@
 import ProTag from '@/components/ProTag';
-import type { PluginConfig, PluginParams } from '@/models/usePlugin';
-import { omit } from '@/utils/redash';
+import { defaultConfig, PluginName } from '@/models/usePlugin';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useIntl, useModel } from '@umijs/max';
 import { message } from 'antd';
 import { useEffect } from 'react';
+
+type ClientProps = {
+  uuid: string | undefined;
+};
 
 type DetailItem = {
   id: string;
@@ -29,9 +32,30 @@ const cleanSessionEnum = {
   },
 };
 
-const ClientList = () => {
-  const { data, run, setDetailConfig, detailConfig, refresh } = useModel('usePlugin');
+const ClientList = ({ uuid }: ClientProps) => {
+  const { data, run, setDetailConfig, refresh } = useModel('usePlugin');
   const { formatMessage } = useIntl();
+
+  const handleOnKickout = (args: string[]) => {
+    if (!uuid) return;
+
+    const params = { uuid, name: PluginName.KICKOUT, args };
+    run(params).then(() => {
+      setDetailConfig(defaultConfig);
+      message.success(formatMessage({ id: 'plugin.message.success.kickout' }));
+      refresh();
+    });
+  };
+
+  const handleOnClientList = () => {
+    if (!uuid) return;
+
+    run({
+      uuid,
+      name: PluginName.CLIENTS,
+      args: [],
+    });
+  };
 
   const columns: ProColumns<DetailItem>[] = [
     {
@@ -66,17 +90,7 @@ const ClientList = () => {
       fixed: 'right',
       key: 'option',
       render: (_, { id }) => [
-        <a
-          key="kickout"
-          onClick={() => {
-            const params = { uuid: detailConfig.uuid, name: 'kickout', args: [id] };
-            run(params).then(() => {
-              setDetailConfig({ ...params, title: '', open: false } as PluginConfig);
-              message.success(formatMessage({ id: 'plugin.message.success.kickout' }));
-              refresh();
-            });
-          }}
-        >
+        <a key="kickout" onClick={() => handleOnKickout([id])}>
           {formatMessage({ id: 'plugin.button.kickout' })}
         </a>,
       ],
@@ -84,11 +98,8 @@ const ClientList = () => {
   ];
 
   useEffect(() => {
-    if (detailConfig.uuid) {
-      const params = omit(detailConfig, ['title', 'open']);
-      run(params as PluginParams);
-    }
-  }, [detailConfig]);
+    handleOnClientList();
+  }, [uuid]);
 
   return (
     <ProTable

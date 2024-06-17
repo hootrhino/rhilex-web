@@ -1,8 +1,8 @@
 import { getSettingsCtrlTree } from '@/services/rulex/wangluopeizhi';
 import { getOsSystem } from '@/services/rulex/xitongshuju';
 import { Product } from '@/utils/enum';
+import { useRequest } from '@umijs/max';
 import { useEffect, useMemo, useState } from 'react';
-import { useRequest } from 'umi';
 
 const allMenu = [
   'dashboard',
@@ -87,6 +87,14 @@ const useSystem = () => {
 
     setResourceData([...resourceData, ...newData].slice(-100));
   }, [memPercent, diskInfo, cpuPercent]);
+
+  useEffect(() => {
+    if (accessToken) {
+      run();
+    } else {
+      cancel();
+    }
+  }, []);
 
   return {
     dataSource,

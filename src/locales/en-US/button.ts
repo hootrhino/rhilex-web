@@ -17,6 +17,7 @@ export default {
   'button.new': 'New',
   'button.edit': 'Edit',
   'button.detail': 'Detail',
+  'button.scan': 'Scan',
   'button.remove': 'Delete',
   'button.ping': 'Ping',
   'button.config': 'Configure',

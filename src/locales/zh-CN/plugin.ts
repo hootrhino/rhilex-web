@@ -20,6 +20,7 @@ export default {
   'plugin.title.scan': 'Modbus 扫描仪',
   'plugin.title.terminal': '终端',
   'plugin.title.calc': 'Modbus CRC 计算',
+  'plugin.title.ngrokc': '详情',
 
   /**
    * button
@@ -27,7 +28,6 @@ export default {
   'plugin.button.scan.start': '开始扫描',
   'plugin.button.scan.stop': '停止扫描',
   'plugin.button.kickout': '强制离线',
-  'plugin.button.viewConfig': '查看配置',
   'plugin.button.calc': '计算',
 
   /**

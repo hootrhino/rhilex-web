@@ -99,6 +99,7 @@ const PropertyList = () => {
     (params: API.getSchemaPropertiesDetailParams) => getSchemaPropertiesDetail(params),
     {
       manual: true,
+      onSuccess: (res) => setInitialValue(res),
     },
   );
 
@@ -142,7 +143,7 @@ const PropertyList = () => {
           onClick={() => {
             if (!uuid || activeSchema.published) return;
             setOpen(true);
-            getDetail({ uuid }).then((values) => setInitialValue(values));
+            getDetail({ uuid });
           }}
           className={
             activeSchema.published ? 'text-[#d9d9d9] cursor-not-allowed hover:text-[#d9d9d9]' : ''

@@ -58,7 +58,7 @@ export default {
   'device.modal.title.upload.confirm.oid': 'Import OIDs',
 
   'device.modal.content.group.remove':
-    'The group contains {count} sub-items. After deletion, they will be moved to the default group;please proceed with caution',
+    'Deleting this group will move all sub-items within it to the default group, please proceed with caution',
   'device.modal.content.restart':
     'The restart process will temporarily disconnect resource connections for 5-10 seconds; please proceed with caution',
   'device.modal.content.camera.loading': '视频正在加载...', // TODO 已隐藏，暂时不需要翻译

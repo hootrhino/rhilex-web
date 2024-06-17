@@ -7,9 +7,8 @@ import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import { postRulesFormatLua } from '@/services/rulex/guizeguanli';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rulex/qingliangyingyong';
 import { ProForm, type ProFormColumnsType, type ProFormInstance } from '@ant-design/pro-components';
-import { useIntl } from '@umijs/max';
+import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
-import { history, useParams, useRequest } from 'umi';
 import { AppStackItem } from '..';
 import { baseColumns } from '../columns';
 
