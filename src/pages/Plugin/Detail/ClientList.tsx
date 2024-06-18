@@ -6,9 +6,8 @@ import { ProTable } from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
 import { message } from 'antd';
 import { useRef } from 'react';
-import { defaultConfig } from '..';
 import { PluginName, PluginUUID } from '../enum';
-import type { ClientItem, PluginConfig, PluginParams } from '../typings';
+import type { ClientItem, PluginParams } from '../typings';
 
 const cleanSessionEnum = {
   true: {
@@ -23,18 +22,13 @@ const cleanSessionEnum = {
   },
 };
 
-type ClientProps = {
-  changeDetailConfig: (value: PluginConfig) => void;
-};
-
-const ClientList = ({ changeDetailConfig }: ClientProps) => {
+const ClientList = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
 
   const { run: onKickout } = useRequest((params: PluginParams) => postPlugwareService(params), {
     manual: true,
     onSuccess: () => {
-      changeDetailConfig(defaultConfig);
       message.success(formatMessage({ id: 'plugin.message.success.kickout' }));
       actionRef.current?.reload();
     },

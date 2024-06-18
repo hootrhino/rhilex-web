@@ -169,9 +169,7 @@ const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
       {...detailConfig}
     >
       {detailConfig.name === PluginName.NGROKC && <Ngrok />}
-      {detailConfig.name === PluginName.CLIENTS && (
-        <ClientList changeDetailConfig={setDetailConfig} />
-      )}
+      {detailConfig.name === PluginName.CLIENTS && <ClientList />}
       {detailConfig.name === PluginName.START && <Terminal />}
       {detailConfig.name === PluginName.PING && (
         <Ping formRef={formRef} dataSource={pingLog} changeData={setPingLog} />
