@@ -1,18 +1,31 @@
 import ProLog from '@/components/ProLog';
-import { PluginUUID } from '@/models/usePlugin';
 import { getHwifaceList } from '@/services/rulex/jiekouguanli';
+import { handleNewMessage } from '@/utils/utils';
 import type { ProFormProps } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect } from '@ant-design/pro-components';
-import { useIntl } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import { Space } from 'antd';
+import { useEffect } from 'react';
+import { PluginUUID } from '../enum';
 
 type ScanProps = ProFormProps & {
   dataSource: string[];
-  uuid: PluginUUID | undefined;
+  changeData: (value: string[]) => void;
 };
 
-const Scan = ({ uuid, dataSource, ...props }: ScanProps) => {
+const Scan = ({ dataSource, changeData, ...props }: ScanProps) => {
   const { formatMessage } = useIntl();
+  const { latestMessage } = useModel('useWebsocket');
+
+  useEffect(() => {
+    const newScanData = handleNewMessage(
+      dataSource,
+      latestMessage?.data,
+      `plugin/ModbusScanner/${PluginUUID.SCANNER}`,
+    );
+
+    changeData(newScanData);
+  }, [latestMessage]);
 
   return (
     <ProForm submitter={false} {...props}>
@@ -34,7 +47,11 @@ const Scan = ({ uuid, dataSource, ...props }: ScanProps) => {
         }}
       />
       <ProForm.Item name="output" label={formatMessage({ id: 'plugin.form.title.output' })}>
-        <ProLog hidePadding topic={`plugin/ModbusScanner/${uuid}`} dataSource={dataSource} />
+        <ProLog
+          hidePadding
+          topic={`plugin/ModbusScanner/${PluginUUID.SCANNER}`}
+          dataSource={dataSource}
+        />
       </ProForm.Item>
     </ProForm>
   );

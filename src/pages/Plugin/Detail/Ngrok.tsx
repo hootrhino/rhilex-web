@@ -1,8 +1,8 @@
 import ProDescriptions from '@/components/ProDescriptions';
 import ProTag, { StatusType } from '@/components/ProTag';
-import { PluginName, PluginUUID } from '@/models/usePlugin';
 import { postPlugwareService } from '@/services/rulex/chajianguanli';
 import { getIntl, getLocale } from '@umijs/max';
+import { PluginName, PluginUUID } from '../enum';
 
 const intl = getIntl(getLocale());
 

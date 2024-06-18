@@ -3,58 +3,58 @@ import { ProList } from '@ant-design/pro-components';
 import { message } from '@/components/PopupHack';
 import PageContainer from '@/components/ProPageContainer';
 import ProTag from '@/components/ProTag';
-import { defaultConfig, PluginName, PluginUUID } from '@/models/usePlugin';
-import { getPlugwareList } from '@/services/rulex/chajianguanli';
-import { useIntl, useModel } from '@umijs/max';
+import { getPlugwareList, postPlugwareService } from '@/services/rulex/chajianguanli';
+import { useIntl, useRequest } from '@umijs/max';
 import { useSize } from 'ahooks';
 import { Tooltip } from 'antd';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Detail from './Detail';
+import { PluginName, PluginUUID } from './enum';
+import type { DetailParams, PluginConfig, PluginItem } from './typings';
 
-export type PluginItem = {
-  name: string;
-  version: string;
-  uuid: PluginUUID;
-  [key: string]: any;
-};
-
-type DetailParams = {
-  uuid: PluginUUID;
-  name: PluginName;
-  titleId: string;
-  args?: any;
-};
+export const defaultConfig = { open: false, name: undefined, args: '', title: '' };
 
 const Plugins = () => {
-  const { setDetailConfig, run } = useModel('usePlugin');
-  const { formatMessage } = useIntl();
   const ref = useRef(null);
   const size = useSize(ref);
 
-  const handleOnDetail = ({ uuid, name, titleId, ...rest }: DetailParams) => {
+  const { formatMessage } = useIntl();
+
+  const [detailConfig, setDetailConfig] = useState<PluginConfig>(defaultConfig);
+
+  const handleOnDetail = ({ name, titleId, ...rest }: DetailParams) => {
     setDetailConfig({
       open: true,
-      uuid,
       name,
       title: formatMessage({ id: titleId }),
       ...rest,
     });
   };
 
-  // start
-  const handleOnStart = (uuid: PluginUUID) => {
-    run({ uuid, name: PluginName.START, args: '' });
-    // 启动并打开终端
-    handleOnDetail({ uuid, name: PluginName.START, titleId: 'plugin.title.terminal', args: '' });
-    message.success(formatMessage({ id: 'message.success.start' }));
-  };
+  // 启动
+  const { run: onStart } = useRequest(
+    () => postPlugwareService({ uuid: PluginUUID.TERMINAL, name: PluginName.START, args: '' }),
+    {
+      manual: true,
+      onSuccess: () => {
+        // 打开终端
+        handleOnDetail({ name: PluginName.START, titleId: 'plugin.title.terminal', args: '' });
+        message.success(formatMessage({ id: 'message.success.start' }));
+      },
+    },
+  );
 
-  // stop
-  const handleOnStop = (uuid: PluginUUID) => {
-    run({ uuid, name: PluginName.STOP, args: '' });
-    setDetailConfig(defaultConfig);
-    message.success(formatMessage({ id: 'message.success.stop' }));
-  };
+  // 停止
+  const { run: onStop } = useRequest(
+    () => postPlugwareService({ uuid: PluginUUID.TERMINAL, name: PluginName.STOP, args: '' }),
+    {
+      manual: true,
+      onSuccess: () => {
+        setDetailConfig(defaultConfig);
+        message.success(formatMessage({ id: 'message.success.stop' }));
+      },
+    },
+  );
 
   const handleOption = (uuid: PluginUUID) => {
     let options: React.ReactNode[] = [];
@@ -64,9 +64,7 @@ const Plugins = () => {
         options = [
           <a
             key="ping"
-            onClick={() =>
-              handleOnDetail({ uuid, name: PluginName.PING, titleId: 'plugin.title.ping' })
-            }
+            onClick={() => handleOnDetail({ name: PluginName.PING, titleId: 'plugin.title.ping' })}
           >
             {formatMessage({ id: 'button.ping' })}
           </a>,
@@ -78,7 +76,6 @@ const Plugins = () => {
             key="detail"
             onClick={() =>
               handleOnDetail({
-                uuid,
                 name: PluginName.CLIENTS,
                 titleId: 'plugin.title.clients',
                 args: [],
@@ -93,9 +90,7 @@ const Plugins = () => {
         options = [
           <a
             key="scan"
-            onClick={() =>
-              handleOnDetail({ uuid, name: PluginName.SCAN, titleId: 'plugin.title.scan' })
-            }
+            onClick={() => handleOnDetail({ name: PluginName.SCAN, titleId: 'plugin.title.scan' })}
           >
             {formatMessage({ id: 'button.scan' })}
           </a>,
@@ -103,10 +98,10 @@ const Plugins = () => {
         break;
       case PluginUUID.TERMINAL:
         options = [
-          <a key="start" onClick={() => handleOnStart(uuid)}>
+          <a key="start" onClick={onStart}>
             {formatMessage({ id: 'button.start' })}
           </a>,
-          <a key="stop" onClick={() => handleOnStop(uuid)}>
+          <a key="stop" onClick={onStop}>
             {formatMessage({ id: 'button.stop' })}
           </a>,
         ];
@@ -116,7 +111,7 @@ const Plugins = () => {
           <a
             key="ngrokc"
             onClick={() =>
-              handleOnDetail({ uuid, name: PluginName.NGROKC, titleId: 'plugin.title.ngrokc' })
+              handleOnDetail({ name: PluginName.NGROKC, titleId: 'plugin.title.ngrokc' })
             }
           >
             {formatMessage({ id: 'button.detail' })}
@@ -127,9 +122,7 @@ const Plugins = () => {
         options = [
           <a
             key="crc"
-            onClick={() =>
-              handleOnDetail({ uuid, name: PluginName.CRC, titleId: 'plugin.title.calc' })
-            }
+            onClick={() => handleOnDetail({ name: PluginName.CRC, titleId: 'plugin.title.calc' })}
           >
             {formatMessage({ id: 'plugin.button.calc' })}
           </a>,
@@ -183,7 +176,7 @@ const Plugins = () => {
           }}
         />
       </PageContainer>
-      <Detail />
+      <Detail detailConfig={detailConfig} setDetailConfig={setDetailConfig} />
     </div>
   );
 };

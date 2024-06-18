@@ -1,23 +1,14 @@
 import ProTag from '@/components/ProTag';
-import { defaultConfig, PluginName } from '@/models/usePlugin';
+import { postPlugwareService } from '@/services/rulex/chajianguanli';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import type { ProColumns } from '@ant-design/pro-components';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { useIntl, useModel } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { message } from 'antd';
-import { useEffect } from 'react';
-
-type ClientProps = {
-  uuid: string | undefined;
-};
-
-type DetailItem = {
-  id: string;
-  username: string;
-  remote: string;
-  cleanSession: boolean;
-  [key: string]: any;
-};
+import { useRef } from 'react';
+import { defaultConfig } from '..';
+import { PluginName, PluginUUID } from '../enum';
+import type { ClientItem, PluginConfig, PluginParams } from '../typings';
 
 const cleanSessionEnum = {
   true: {
@@ -32,32 +23,24 @@ const cleanSessionEnum = {
   },
 };
 
-const ClientList = ({ uuid }: ClientProps) => {
-  const { data, run, setDetailConfig, refresh } = useModel('usePlugin');
+type ClientProps = {
+  changeDetailConfig: (value: PluginConfig) => void;
+};
+
+const ClientList = ({ changeDetailConfig }: ClientProps) => {
+  const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
 
-  const handleOnKickout = (args: string[]) => {
-    if (!uuid) return;
-
-    const params = { uuid, name: PluginName.KICKOUT, args };
-    run(params).then(() => {
-      setDetailConfig(defaultConfig);
+  const { run: onKickout } = useRequest((params: PluginParams) => postPlugwareService(params), {
+    manual: true,
+    onSuccess: () => {
+      changeDetailConfig(defaultConfig);
       message.success(formatMessage({ id: 'plugin.message.success.kickout' }));
-      refresh();
-    });
-  };
+      actionRef.current?.reload();
+    },
+  });
 
-  const handleOnClientList = () => {
-    if (!uuid) return;
-
-    run({
-      uuid,
-      name: PluginName.CLIENTS,
-      args: [],
-    });
-  };
-
-  const columns: ProColumns<DetailItem>[] = [
+  const columns: ProColumns<ClientItem>[] = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -90,22 +73,33 @@ const ClientList = ({ uuid }: ClientProps) => {
       fixed: 'right',
       key: 'option',
       render: (_, { id }) => [
-        <a key="kickout" onClick={() => handleOnKickout([id])}>
+        <a
+          key="kickout"
+          onClick={() => onKickout({ uuid: PluginUUID.MQTT, name: PluginName.KICKOUT, args: [id] })}
+        >
           {formatMessage({ id: 'plugin.button.kickout' })}
         </a>,
       ],
     },
   ];
 
-  useEffect(() => {
-    handleOnClientList();
-  }, [uuid]);
-
   return (
     <ProTable
+      actionRef={actionRef}
       rowKey="id"
       columns={columns}
-      dataSource={data as any}
+      request={async () => {
+        const { data } = await postPlugwareService({
+          uuid: PluginUUID.MQTT,
+          name: PluginName.CLIENTS,
+          args: [],
+        } as any);
+
+        return Promise.resolve({
+          data: data as any,
+          success: true,
+        });
+      }}
       search={false}
       pagination={false}
     />

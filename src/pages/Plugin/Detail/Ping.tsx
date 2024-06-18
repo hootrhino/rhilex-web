@@ -1,35 +1,44 @@
 import ProLog from '@/components/ProLog';
-import { PluginName, PluginUUID } from '@/models/usePlugin';
+import { postPlugwareService } from '@/services/rulex/chajianguanli';
 import { FormItemType } from '@/utils/enum';
 import { validateIPv4 } from '@/utils/regExp';
-import { validateFormItem } from '@/utils/utils';
+import { handleNewMessage, validateFormItem } from '@/utils/utils';
 import type { ProFormProps } from '@ant-design/pro-components';
 import { ProForm } from '@ant-design/pro-components';
-import { useIntl, useModel } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Input } from 'antd';
 import { Rule } from 'antd/es/form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { PluginName, PluginUUID } from '../enum';
+import type { PluginParams } from '../typings';
 
 type PingProps = ProFormProps & {
   dataSource: string[];
-  uuid: PluginUUID | undefined;
+  changeData: (value: string[]) => void;
 };
 
-const Ping = ({ uuid, dataSource, ...props }: PingProps) => {
-  const { run } = useModel('usePlugin');
+const Ping = ({ dataSource, changeData, ...props }: PingProps) => {
+  const { latestMessage } = useModel('useWebsocket');
   const { formatMessage } = useIntl();
   const [disabled, setDisabled] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleOnSearch = (value: string) => {
-    if (!uuid) return;
+  const { run: onSearch, loading: loading } = useRequest(
+    (params: PluginParams) => postPlugwareService(params),
+    {
+      manual: true,
+      onSuccess: () => setDisabled(false),
+    },
+  );
 
-    setLoading(true);
-    run({ name: PluginName.PING, args: [value], uuid }).then(() => {
-      setLoading(false);
-      setDisabled(false);
-    });
-  };
+  useEffect(() => {
+    const newPingData = handleNewMessage(
+      dataSource,
+      latestMessage?.data,
+      `plugin/ICMPSenderPing/${PluginUUID.ICMP}`,
+    );
+
+    changeData(newPingData);
+  }, [latestMessage]);
 
   return (
     <ProForm submitter={false} {...props}>
@@ -54,11 +63,17 @@ const Ping = ({ uuid, dataSource, ...props }: PingProps) => {
             </Button>
           }
           size="large"
-          onSearch={handleOnSearch}
+          onSearch={(value: string) =>
+            onSearch({ uuid: PluginUUID.ICMP, name: PluginName.PING, args: [value] })
+          }
         />
       </ProForm.Item>
       <ProForm.Item name="output" label={formatMessage({ id: 'plugin.form.title.output' })}>
-        <ProLog hidePadding topic={`plugin/ICMPSenderPing/${uuid}`} dataSource={dataSource} />
+        <ProLog
+          hidePadding
+          topic={`plugin/ICMPSenderPing/${PluginUUID.ICMP}`}
+          dataSource={dataSource}
+        />
       </ProForm.Item>
     </ProForm>
   );

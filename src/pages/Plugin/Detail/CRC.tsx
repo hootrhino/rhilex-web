@@ -5,7 +5,7 @@ import type { Rule } from 'antd/es/form';
 
 type ModbusCRCProps = ProFormProps;
 
-const ModbusCRC = ({ ...props }: ModbusCRCProps) => {
+const ModbusCRC = (props: ModbusCRCProps) => {
   const { formatMessage } = useIntl();
 
   return (
