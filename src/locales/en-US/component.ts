@@ -37,7 +37,7 @@ export default {
   'component.tpl.f16': 'Write multiple holding registe',
   'component.tpl.f15.arg1': 'Modbus device resource',
   'component.tpl.f15.arg2': 'Coil value',
-  'component.tpl.f15.arg3': 'Start address',
+  'component.tpl.f15.arg3': 'Starting address',
   'component.tpl.f15.arg4': 'Write quantity',
   'component.tpl.f15.arg5': 'Write data',
   'component.tpl.name': '{name} functions',

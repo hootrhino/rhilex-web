@@ -14,7 +14,7 @@ export default {
   'schemaMgt.form.title.longitude': 'Longitude',
   'schemaMgt.form.title.defaultValue': 'Default Value',
   'schemaMgt.form.title.unit': 'Unit',
-  'schemaMgt.form.title.rw': 'RW',
+  'schemaMgt.form.title.rw': 'Read/Write',
 
   'schemaMgt.form.placeholder.name': 'Please enter a name',
   'schemaMgt.form.placeholder.id': 'Please enter an identifier',
@@ -56,8 +56,8 @@ export default {
   'schemaMgt.type.bool': 'Boolean',
   'schemaMgt.type.geo': 'Geo',
 
-  'schemaMgt.rw.r': 'Read-only',
-  'schemaMgt.rw.rw': 'Read-write',
+  'schemaMgt.rw.r': 'read only',
+  'schemaMgt.rw.rw': 'read/write',
 
   'schemaMgt.unit.c': 'Celsius',
   'schemaMgt.unit.f': 'Fahrenheit',

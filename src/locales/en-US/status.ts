@@ -17,7 +17,7 @@ export default {
   'status.external': 'external',
   'status.busy': 'occupied',
   'status.free': 'idle',
-  'status.unknow': '未知',
+  'status.unknow': 'Unknow',
   /**
    * notice
    */

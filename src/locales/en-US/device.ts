@@ -89,7 +89,7 @@ export default {
   'device.form.title.timeout.connect': 'Connection Timeout',
   'device.form.title.timeout.idle': 'Heartbeat Timeout',
   'device.form.title.timeout.scan': 'Scanning Timeout',
-  'device.form.title.timeout.uart': 'RW Timeout',
+  'device.form.title.timeout.uart': 'Read/Write Timeout',
 
   // frequency
   'device.form.title.frequency': 'Execution Frequency',
@@ -137,10 +137,10 @@ export default {
   'device.form.title.group.name': 'Group Name',
 
   // modbus
-  'device.form.title.slaverId': 'Slave IP Address',
+  'device.form.title.slaverId': 'Slave ID',
   'device.form.title.tag': 'Tag',
   'device.form.title.alias': 'Alias',
-  'device.form.title.func': 'Modbus Function',
+  'device.form.title.func': 'Function Code',
   'device.form.title.dataType': 'Data Type(Endianness)',
   'device.form.title.address': 'Address Range',
   'device.form.title.quantity': 'Quantity',
@@ -212,7 +212,7 @@ export default {
    * placeholder
    */
   'device.form.placeholder.group.name': 'Please enter a group name',
-  'device.form.placeholder.slaverId': 'Please enter a slaver Id',
+  'device.form.placeholder.slaverId': 'Please enter a slaver address',
   'device.form.placeholder.tag': 'Please enter a tag',
   'device.form.placeholder.alias': 'Please enter an alias',
   'device.form.placeholder.func': 'Please select a modbus function',
@@ -269,10 +269,10 @@ export default {
   /**
    * modbus function
    */
-  'device.modbus.func1': '01 Reading coil',
-  'device.modbus.func2': '02 Read Discrete Input',
-  'device.modbus.func3': '03 Read Holding Register',
-  'device.modbus.func4': '04 Read Input Register',
+  'device.modbus.func1': '01 Read Coils',
+  'device.modbus.func2': '02 Read Discrete Inputs',
+  'device.modbus.func3': '03 Read Holding Registers',
+  'device.modbus.func4': '04 Read Input Registers',
 
   /**
    * plc model

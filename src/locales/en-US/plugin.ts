@@ -38,7 +38,7 @@ export default {
   'plugin.form.title.ip': 'IP Address',
   'plugin.form.title.ca': 'CRC Algorithm',
   'plugin.form.title.hex': 'Hexadecimal String',
-  'plugin.form.title.cv': 'Checksum(CRC)',
+  'plugin.form.title.cv': 'Cyclic-Redundant Checksum(CRC)',
   'plugin.form.placeholder.ip': 'Please enter an address',
   'plugin.form.placeholder.hex': 'Please enter a hex string without 0x/oX prefixes',
 

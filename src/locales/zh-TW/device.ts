@@ -134,7 +134,7 @@ export default {
   'device.form.title.slaverId': '從設備地址',
   'device.form.title.tag': '標籤',
   'device.form.title.alias': '別名',
-  'device.form.title.func': 'Modbus 功能',
+  'device.form.title.func': '功能碼',
   'device.form.title.dataType': '數據類型（字節序）',
   'device.form.title.address': '起始地址',
   'device.form.title.quantity': '讀取數量',
