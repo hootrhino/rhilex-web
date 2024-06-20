@@ -51,7 +51,7 @@ export default {
   'outend.type.push': '{type} Data Push',
   'outend.type.database': '{type} Database',
   'outend.type.uart': 'Generic UART Transport',
-  'outend.type.lorawan': 'Semtech UDP Protocol',
+  'outend.type.lorawan': 'Semtech UDP Packet Forwarder',
 
   /**
    * mode
