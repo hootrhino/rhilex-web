@@ -13,6 +13,7 @@ export enum OutendType {
   TDENGINE = 'TDENGINE',
   HTTP = 'HTTP',
   GENERIC_UART_TARGET = 'GENERIC_UART_TARGET',
+  SEMTECH_UDP_FORWARDER = 'SEMTECH_UDP_FORWARDER',
 }
 export const outendTypeOption = {
   [OutendType.MONGO_SINGLE]: intl.formatMessage(
@@ -25,6 +26,7 @@ export const outendTypeOption = {
   [OutendType.TDENGINE]: intl.formatMessage({ id: 'outend.type.database' }, { type: 'Tdengine' }),
   [OutendType.HTTP]: intl.formatMessage({ id: 'outend.type.push' }, { type: 'HTTP' }),
   [OutendType.GENERIC_UART_TARGET]: intl.formatMessage({ id: 'outend.type.uart' }),
+  [OutendType.SEMTECH_UDP_FORWARDER]: intl.formatMessage({ id: 'outend.type.lorawan' }),
 };
 
 /**

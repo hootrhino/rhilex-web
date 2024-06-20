@@ -20,6 +20,7 @@ export default {
   'outend.table.title.dbName': 'Database Name',
   'outend.table.title.url': 'Request Url',
   'outend.table.title.portUuid': 'Serial Port',
+  'outend.table.title.mac': 'MAC Address',
 
   /**
    * title
@@ -50,6 +51,7 @@ export default {
   'outend.type.push': '{type} Data Push',
   'outend.type.database': '{type} Database',
   'outend.type.uart': 'Generic UART Transport',
+  'outend.type.lorawan': 'Semtech UDP Protocol',
 
   /**
    * mode

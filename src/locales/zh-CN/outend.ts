@@ -20,6 +20,7 @@ export default {
   'outend.table.title.dbName': '数据库名',
   'outend.table.title.url': '请求地址',
   'outend.table.title.portUuid': '系统串口',
+  'outend.table.title.mac': 'MAC 地址',
 
   /**
    * title
@@ -49,6 +50,7 @@ export default {
   'outend.type.push': '{type} 数据推送',
   'outend.type.database': '{type} 数据库',
   'outend.type.uart': '通用串口透传',
+  'outend.type.lorawan': 'Semtech UDP 协议代理',
 
   /**
    * mode
