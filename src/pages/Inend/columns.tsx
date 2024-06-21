@@ -7,7 +7,8 @@ import {
   inendTypeOption,
   Mode,
   modeOption,
-  qosEnum,
+  QoSLevel,
+  qosOption,
 } from './enum';
 
 const DEFAULT_HOST = '127.0.0.1';
@@ -46,7 +47,7 @@ export const defaultConfig = {
     port: 1883,
     username: 'rhilex',
     password: 'rhilex',
-    qos: 1,
+    qos: QoSLevel.LEVEL1,
     subTopics: [{ k: '/device/rulex-rhilex1' }],
   },
 };
@@ -175,7 +176,9 @@ export const configColumns = {
       dataIndex: ['config', 'qos'],
       valueType: 'select',
       required: true,
-      valueEnum: qosEnum,
+      fieldProps: {
+        options: qosOption,
+      },
     },
     {
       valueType: 'formList',

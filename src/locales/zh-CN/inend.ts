@@ -15,7 +15,7 @@ export default {
   'inend.table.title.productId': '产品 ID',
   'inend.table.title.topic': '主题',
   'inend.table.title.eventType': '事件类型',
-  'inend.table.title.qos': '数据质量',
+  'inend.table.title.qos': '数据质量等级',
   'inend.table.title.subTopics': '订阅 topic 表',
   'inend.table.title.ip': '设备 IP',
   'inend.table.title.status': '设备状态',
@@ -66,4 +66,11 @@ export default {
   'inend.event.target': '北向事件',
   'inend.event.system': '系统事件',
   'inend.event.hardware': '硬件事件',
+
+  /**
+   * QoS
+   */
+  'inend.qos.level0': '0 - 至多一次',
+  'inend.qos.level1': '1 - 至少一次',
+  'inend.qos.level2': '2 - 只有一次',
 };

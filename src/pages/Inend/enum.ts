@@ -4,7 +4,7 @@ import { getIntl, getLocale } from '@umijs/max';
  * 南向资源类型
  */
 export enum InendType {
-  COAP = 'COAP',
+  COAP = 'CoAP',
   GENERIC_IOT_HUB = 'GENERIC_IOT_HUB',
   RULEX_UDP = 'RULEX_UDP',
   HTTP = 'HTTP',
@@ -17,7 +17,7 @@ export enum InendType {
 const intl = getIntl(getLocale());
 
 export const inendTypeOption = {
-  [InendType.COAP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'COAP Server' }),
+  [InendType.COAP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'CoAP Server' }),
   [InendType.GENERIC_IOT_HUB]: intl.formatMessage({ id: 'inend.type.topic' }, { type: 'IoTHub' }),
   [InendType.RULEX_UDP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'UDP Server' }),
   [InendType.HTTP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'HTTP Server' }),
@@ -65,9 +65,23 @@ export const eventTypeOption = {
 /**
  * 数据质量
  */
+export enum QoSLevel {
+  LEVEL0 = 0,
+  LEVEL1 = 1,
+  LEVEL2 = 2,
+}
 
-export const qosEnum = {
-  0: '0',
-  1: '1',
-  2: '2',
-};
+export const qosOption = [
+  {
+    label: intl.formatMessage({ id: 'inend.qos.level0' }),
+    value: QoSLevel.LEVEL0,
+  },
+  {
+    label: intl.formatMessage({ id: 'inend.qos.level1' }),
+    value: QoSLevel.LEVEL1,
+  },
+  {
+    label: intl.formatMessage({ id: 'inend.qos.level2' }),
+    value: QoSLevel.LEVEL2,
+  },
+];

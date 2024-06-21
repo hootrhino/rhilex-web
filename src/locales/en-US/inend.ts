@@ -67,4 +67,11 @@ export default {
   'inend.event.target': 'Output event',
   'inend.event.system': 'System event',
   'inend.event.hardware': 'Hardware event',
+
+  /**
+   * QoS
+   */
+  'inend.qos.level0': '0 - At Most Once',
+  'inend.qos.level1': '1 - At Least Once',
+  'inend.qos.level2': '2 - Exactly Once',
 };

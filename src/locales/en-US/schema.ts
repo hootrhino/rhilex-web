@@ -56,8 +56,8 @@ export default {
   'schemaMgt.type.bool': 'Boolean',
   'schemaMgt.type.geo': 'Geo',
 
-  'schemaMgt.rw.r': 'read only',
-  'schemaMgt.rw.rw': 'read/write',
+  'schemaMgt.rw.r': 'Read-Only',
+  'schemaMgt.rw.rw': 'Read-Write',
 
   'schemaMgt.unit.c': 'Celsius',
   'schemaMgt.unit.f': 'Fahrenheit',
