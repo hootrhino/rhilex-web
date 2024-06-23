@@ -34,10 +34,50 @@ export async function postSettingsWifi(
   });
 }
 
+/** 刷新DNS GET /api/v1/settings/wifi/refreshDNS */
+export async function getSettingsWifiRefreshDns(options?: { [key: string]: any }) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      eth0: {
+        interface: string;
+        address: string;
+        netmask: string;
+        gateway: string;
+        dns: string[];
+        dhcp_enabled: boolean;
+      };
+      eth1: {
+        interface: string;
+        address: string;
+        netmask: string;
+        gateway: string;
+        dns: string[];
+        dhcp_enabled: boolean;
+      };
+    };
+  }>('/api/v1/settings/wifi/refreshDNS', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** 扫描WIFI GET /api/v1/settings/wifi/scan */
 export async function getSettingsWifiScan(options?: { [key: string]: any }) {
   return request<{ code: number; msg: string; data: string[] }>('/api/v1/settings/wifi/scan', {
     method: 'GET',
     ...(options || {}),
   });
+}
+
+/** 扫描WIFI信号强度 GET /api/v1/settings/wifi/scanSignal */
+export async function getSettingsWifiScanSignal(options?: { [key: string]: any }) {
+  return request<{ code: number; msg: string; data: string[][] }>(
+    '/api/v1/settings/wifi/scanSignal',
+    {
+      method: 'GET',
+      ...(options || {}),
+    },
+  );
 }

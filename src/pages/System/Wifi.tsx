@@ -1,14 +1,14 @@
 import { message } from '@/components/PopupHack';
 import {
   getSettingsWifi,
-  getSettingsWifiScan,
+  getSettingsWifiScanSignal,
   postSettingsWifi,
 } from '@/services/rulex/wuxianwifipeizhi';
 import { WifiOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
-import { AutoComplete, Button, Space } from 'antd';
+import { AutoComplete, Button, Progress, Space } from 'antd';
 import { useRef } from 'react';
 
 type UpdateForm = {
@@ -25,13 +25,9 @@ const WIFIConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
 
-  // 扫描 wifi
-  const {
-    data: wifiList,
-    run: GetWifiList,
-    loading,
-  } = useRequest(() => getSettingsWifiScan(), {
-    onSuccess: () => message.success(formatMessage({ id: 'message.success.scan' })),
+  // 扫描信号强度
+  const { data, loading, run } = useRequest(() => getSettingsWifiScanSignal(), {
+    formatResult: (res) => res?.data?.filter((item) => item && item[0] && item[1]),
   });
 
   // 详情
@@ -84,7 +80,10 @@ const WIFIConfig = () => {
                   <Button
                     icon={<WifiOutlined />}
                     type="primary"
-                    onClick={GetWifiList}
+                    onClick={() => {
+                      run();
+                      message.success(formatMessage({ id: 'message.success.scan' }));
+                    }}
                     loading={loading}
                   >
                     {formatMessage({ id: 'system.button.wifi.ntp' })}
@@ -101,10 +100,21 @@ const WIFIConfig = () => {
           rules={[{ required: true, message: formatMessage({ id: 'system.form.rules.ssid' }) }]}
         >
           <AutoComplete
-            options={wifiList?.map((item) => ({
-              label: item,
-              value: item,
-              key: `${item}-${Math.random()}`,
+            options={data?.map((item) => ({
+              label: (
+                <Space className="w-full justify-between">
+                  <span>{item[0]}</span>
+                  <Progress
+                    steps={10}
+                    size="small"
+                    percent={Number(item[1]) || 0}
+                    className="pr-[24px]"
+                    format={(percent) => `${percent}dbm`}
+                  />
+                </Space>
+              ),
+              value: item[0],
+              key: `${item[0]}-${Math.random()}`,
             }))}
             style={{ width: 552 }}
             placeholder={formatMessage({ id: 'system.form.rules.ssid' })}

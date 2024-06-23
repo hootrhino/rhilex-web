@@ -3480,7 +3480,8 @@
                 },
                 "required": [
                   "uuid",
-                  "name"
+                  "name",
+                  "args"
                 ],
                 "x-apifox-orders": [
                   "uuid",
@@ -3499,51 +3500,6 @@
         },
         "responses": {
           "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": []
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "x-200:成功": {
             "description": "成功",
             "content": {
               "application/json": {
@@ -18725,6 +18681,499 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-182541884-run",
+        "security": []
+      }
+    },
+    "/api/v1/settings/wifi/refreshDNS": {
+      "get": {
+        "summary": "刷新DNS",
+        "x-apifox-folder": "系统配置/无线wifi配置",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/无线wifi配置"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "eth0": {
+                          "type": "object",
+                          "properties": {
+                            "interface": {
+                              "type": "string"
+                            },
+                            "address": {
+                              "type": "string"
+                            },
+                            "netmask": {
+                              "type": "string"
+                            },
+                            "gateway": {
+                              "type": "string"
+                            },
+                            "dns": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "dhcp_enabled": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "interface",
+                            "address",
+                            "netmask",
+                            "gateway",
+                            "dns",
+                            "dhcp_enabled"
+                          ],
+                          "x-apifox-orders": [
+                            "interface",
+                            "address",
+                            "netmask",
+                            "gateway",
+                            "dns",
+                            "dhcp_enabled"
+                          ],
+                          "x-apifox-ignore-properties": []
+                        },
+                        "eth1": {
+                          "type": "object",
+                          "properties": {
+                            "interface": {
+                              "type": "string"
+                            },
+                            "address": {
+                              "type": "string"
+                            },
+                            "netmask": {
+                              "type": "string"
+                            },
+                            "gateway": {
+                              "type": "string"
+                            },
+                            "dns": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "dhcp_enabled": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "interface",
+                            "address",
+                            "netmask",
+                            "gateway",
+                            "dns",
+                            "dhcp_enabled"
+                          ],
+                          "x-apifox-orders": [
+                            "interface",
+                            "address",
+                            "netmask",
+                            "gateway",
+                            "dns",
+                            "dhcp_enabled"
+                          ],
+                          "x-apifox-ignore-properties": []
+                        }
+                      },
+                      "required": [
+                        "eth0",
+                        "eth1"
+                      ],
+                      "x-apifox-orders": [
+                        "eth0",
+                        "eth1"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "eth0": {
+                          "interface": "eth0",
+                          "address": "192.168.1.100",
+                          "netmask": "192.168.1.100",
+                          "gateway": "192.168.1.100",
+                          "dns": [
+                            "8.8.8.8",
+                            "114.114.114.114"
+                          ],
+                          "dhcp_enabled": true
+                        },
+                        "eth1": {
+                          "interface": "eth1",
+                          "address": "192.168.64.100",
+                          "netmask": "192.168.64.100",
+                          "gateway": "192.168.64.100",
+                          "dns": [
+                            "8.8.8.8",
+                            "114.114.114.114"
+                          ],
+                          "dhcp_enabled": false
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-184218598-run",
+        "security": []
+      }
+    },
+    "/api/v1/settings/wifi/scanSignal": {
+      "get": {
+        "summary": "扫描WIFI信号强度",
+        "x-apifox-folder": "系统配置/无线wifi配置",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统配置/无线wifi配置"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        [
+                          "ShellyPro1-30C6F78474C0",
+                          "100"
+                        ],
+                        [
+                          "iotlab407A",
+                          "100"
+                        ],
+                        [
+                          "HiWiFi_57EB5C",
+                          "100"
+                        ],
+                        [
+                          "HAP_PSMZBA",
+                          "100"
+                        ],
+                        [
+                          "eduroam",
+                          "92"
+                        ],
+                        [
+                          "Mju-1x",
+                          "92"
+                        ],
+                        [
+                          "Mju",
+                          "92"
+                        ],
+                        [
+                          "gk-4f",
+                          "82"
+                        ],
+                        [
+                          "CZS",
+                          "80"
+                        ],
+                        [
+                          "",
+                          "80"
+                        ],
+                        [
+                          "ChinaNet-2Uv3",
+                          "65"
+                        ],
+                        [
+                          "Mju-1x",
+                          "64"
+                        ],
+                        [
+                          "Mju",
+                          "64"
+                        ],
+                        [
+                          "xzsys",
+                          "62"
+                        ],
+                        [
+                          "eduroam",
+                          "62"
+                        ],
+                        [
+                          "eduroam",
+                          "62"
+                        ],
+                        [
+                          "Mju-1x",
+                          "60"
+                        ],
+                        [
+                          "Mju",
+                          "60"
+                        ],
+                        [
+                          "Mju",
+                          "57"
+                        ],
+                        [
+                          "Mju-1x",
+                          "55"
+                        ],
+                        [
+                          "eduroam",
+                          "55"
+                        ],
+                        [
+                          "SpringOffice",
+                          "52"
+                        ],
+                        [
+                          "gk-4f",
+                          "47"
+                        ],
+                        [
+                          "Mju",
+                          "45"
+                        ],
+                        [
+                          "hyzb-inner",
+                          "45"
+                        ],
+                        [
+                          "eduroam",
+                          "44"
+                        ],
+                        [
+                          "Mju-1x",
+                          "44"
+                        ],
+                        [
+                          "",
+                          "42"
+                        ],
+                        [
+                          "",
+                          "42"
+                        ],
+                        [
+                          "TL-WDR7661-PINK",
+                          "42"
+                        ],
+                        [
+                          "Mju",
+                          "42"
+                        ],
+                        [
+                          "gk-4f",
+                          "42"
+                        ],
+                        [
+                          "eduroam",
+                          "40"
+                        ],
+                        [
+                          "Mju-1x",
+                          "40"
+                        ],
+                        [
+                          "Mju",
+                          "40"
+                        ],
+                        [
+                          "",
+                          "35"
+                        ],
+                        [
+                          "SpringOffice",
+                          "35"
+                        ],
+                        [
+                          "eduroam",
+                          "35"
+                        ],
+                        [
+                          "Mju",
+                          "35"
+                        ],
+                        [
+                          "Mju-1x",
+                          "34"
+                        ],
+                        [
+                          "Xiaomi_6F12",
+                          "32"
+                        ],
+                        [
+                          "eduroam",
+                          "32"
+                        ],
+                        [
+                          "eduroam",
+                          "30"
+                        ],
+                        [
+                          "Mju-1x",
+                          "30"
+                        ],
+                        [
+                          "eduroam",
+                          "30"
+                        ],
+                        [
+                          "Mju",
+                          "30"
+                        ],
+                        [
+                          "Mju",
+                          "30"
+                        ],
+                        [
+                          "Mju",
+                          "30"
+                        ],
+                        [
+                          "",
+                          "29"
+                        ],
+                        [
+                          "Mju",
+                          "29"
+                        ],
+                        [
+                          "xzsys",
+                          "29"
+                        ],
+                        [
+                          "eduroam",
+                          "29"
+                        ],
+                        [
+                          "Mju-1x",
+                          "27"
+                        ],
+                        [
+                          "xzsys",
+                          "25"
+                        ],
+                        [
+                          "ChinaNet-MvXB",
+                          "25"
+                        ],
+                        [
+                          "Mju-1x",
+                          "25"
+                        ],
+                        [
+                          "Mju",
+                          "25"
+                        ],
+                        [
+                          "Mju-1x",
+                          "24"
+                        ],
+                        [
+                          "eduroam",
+                          "24"
+                        ],
+                        [
+                          "Mju",
+                          "22"
+                        ],
+                        [
+                          "Mju-1x",
+                          "20"
+                        ],
+                        [
+                          "Mju",
+                          "9"
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-184218898-run",
         "security": []
       }
     }
