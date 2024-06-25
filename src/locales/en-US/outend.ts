@@ -21,6 +21,10 @@ export default {
   'outend.table.title.url': 'Request Url',
   'outend.table.title.portUuid': 'Serial Port',
   'outend.table.title.mac': 'MAC Address',
+  'outend.table.title.anonymous': 'Enabled Anonymous',
+  'outend.table.title.serverName': 'Service Name',
+  'outend.table.title.listenHost': 'Listen Address',
+  'outend.table.title.listenPort': 'Listen Port',
 
   /**
    * title
@@ -52,6 +56,7 @@ export default {
   'outend.type.database': '{type} Database',
   'outend.type.uart': 'Generic UART Transport',
   'outend.type.lorawan': 'Semtech UDP Packet Forwarder',
+  'outend.type.mqtt': 'Generic MQTT Access Service',
 
   /**
    * mode

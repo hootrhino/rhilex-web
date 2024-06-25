@@ -21,6 +21,10 @@ export default {
   'outend.table.title.url': '请求地址',
   'outend.table.title.portUuid': '系统串口',
   'outend.table.title.mac': 'MAC 地址',
+  'outend.table.title.anonymous': '允许匿名连接',
+  'outend.table.title.serverName': '服务名称',
+  'outend.table.title.listenHost': '监听地址',
+  'outend.table.title.listenPort': '监听端口',
 
   /**
    * title
@@ -51,6 +55,7 @@ export default {
   'outend.type.database': '{type} 数据库',
   'outend.type.uart': '通用串口透传',
   'outend.type.lorawan': 'Semtech UDP 协议代理',
+  'outend.type.mqtt': '通用 MQTT 接入服务',
 
   /**
    * mode

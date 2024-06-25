@@ -50,13 +50,8 @@ const pingConfig = [
     title: intl.formatMessage({ id: 'outend.table.title.allowPing' }),
     dataIndex: ['config', 'allowPing'],
     required: true,
-    transform: (value: string, namePath: string, allValue: Record<string, any>) => ({
-      config: {
-        ...allValue,
-        allowPing: stringToBool(value),
-      },
-    }),
     convertValue: (value: boolean) => value?.toString(),
+    transform: (value: string) => ({ config: { allowPing: stringToBool(value) } }),
     renderFormItem: () => <ProSegmented width="md" />,
     renderText: (allowPing: boolean) => <ProTag type={StatusType.BOOL}>{allowPing}</ProTag>,
   },
@@ -79,9 +74,9 @@ const timeoutConfig = (title?: string) => [
   },
 ];
 
-const portConfig = [
+const portConfig = (hostTitle?: string) => [
   {
-    title: intl.formatMessage({ id: 'outend.table.title.port' }),
+    title: intl.formatMessage({ id: hostTitle || 'outend.table.title.port' }),
     dataIndex: ['config', 'port'],
     valueType: 'digit',
     required: true,
@@ -89,14 +84,14 @@ const portConfig = [
   },
 ];
 
-const hostPortConfig = [
+const hostPortConfig = (hostTitle?: string, portTitle?: string) => [
   {
-    title: intl.formatMessage({ id: 'outend.table.title.host' }),
+    title: intl.formatMessage({ id: hostTitle || 'outend.table.title.host' }),
     dataIndex: ['config', 'host'],
     required: true,
     copyable: true,
   },
-  ...portConfig,
+  ...portConfig(portTitle),
 ];
 
 const dataModeConfig = [
@@ -128,7 +123,7 @@ export const configColumns = {
     },
   ],
   [OutendType.MQTT]: [
-    ...hostPortConfig,
+    ...hostPortConfig(),
     {
       title: intl.formatMessage({ id: 'outend.table.title.clientId' }),
       dataIndex: ['config', 'clientId'],
@@ -151,12 +146,12 @@ export const configColumns = {
       required: true,
     },
   ],
-  [OutendType.UDP_TARGET]: [...pingConfig, ...timeoutConfig(), ...hostPortConfig],
+  [OutendType.UDP_TARGET]: [...pingConfig, ...timeoutConfig(), ...hostPortConfig()],
   [OutendType.TCP_TRANSPORT]: [
     ...pingConfig,
     ...timeoutConfig(),
     ...dataModeConfig,
-    ...hostPortConfig,
+    ...hostPortConfig(),
   ],
   [OutendType.TDENGINE]: [
     {
@@ -164,7 +159,7 @@ export const configColumns = {
       dataIndex: ['config', 'fqdn'],
       required: true,
     },
-    ...portConfig,
+    ...portConfig(),
     {
       title: intl.formatMessage({ id: 'form.title.username' }),
       dataIndex: ['config', 'username'],
@@ -268,12 +263,29 @@ export const configColumns = {
     },
   ],
   [OutendType.SEMTECH_UDP_FORWARDER]: [
-    ...hostPortConfig,
+    ...hostPortConfig(),
     {
       title: intl.formatMessage({ id: 'outend.table.title.mac' }),
       dataIndex: ['config', 'mac'],
       required: true,
     },
+  ],
+  [OutendType.GENERIC_MQTT_SERVER]: [
+    {
+      title: intl.formatMessage({ id: 'outend.table.title.anonymous' }),
+      dataIndex: ['config', 'anonymous'],
+      required: true,
+      convertValue: (value: boolean) => value?.toString(),
+      transform: (value: string) => ({ config: { anonymous: stringToBool(value) } }),
+      renderFormItem: () => <ProSegmented width="md" />,
+      renderText: (anonymous: boolean) => <ProTag type={StatusType.BOOL}>{anonymous}</ProTag>,
+    },
+    {
+      title: intl.formatMessage({ id: 'outend.table.title.serverName' }),
+      dataIndex: ['config', 'serverName'],
+      required: true,
+    },
+    ...hostPortConfig('outend.table.title.listenHost', 'outend.table.title.listenPort'),
   ],
 };
 

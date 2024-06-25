@@ -52,4 +52,10 @@ export const defaultConfig = {
     host: DEFAULT_HOST,
     port: 1700,
   },
+  [OutendType.GENERIC_MQTT_SERVER]: {
+    serverName: 'rhilex-mqtt-server',
+    anonymous: true,
+    host: DEFAULT_HOST,
+    port: 1883,
+  },
 };

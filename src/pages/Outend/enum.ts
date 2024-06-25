@@ -6,26 +6,28 @@ import { getIntl, getLocale } from '@umijs/max';
 const intl = getIntl(getLocale());
 
 export enum OutendType {
-  MONGO_SINGLE = 'MONGO_SINGLE',
   MQTT = 'MQTT',
   UDP_TARGET = 'UDP_TARGET',
   TCP_TRANSPORT = 'TCP_TRANSPORT',
-  TDENGINE = 'TDENGINE',
   HTTP = 'HTTP',
+  MONGO_SINGLE = 'MONGO_SINGLE',
+  TDENGINE = 'TDENGINE',
   GENERIC_UART_TARGET = 'GENERIC_UART_TARGET',
+  GENERIC_MQTT_SERVER = 'GENERIC_MQTT_SERVER',
   SEMTECH_UDP_FORWARDER = 'SEMTECH_UDP_FORWARDER',
 }
 export const outendTypeOption = {
+  [OutendType.MQTT]: 'MQTT Broker',
+  [OutendType.UDP_TARGET]: intl.formatMessage({ id: 'outend.type.tranport' }, { type: 'UDP' }),
+  [OutendType.TCP_TRANSPORT]: intl.formatMessage({ id: 'outend.type.tranport' }, { type: 'TCP' }),
+  [OutendType.HTTP]: intl.formatMessage({ id: 'outend.type.push' }, { type: 'HTTP' }),
   [OutendType.MONGO_SINGLE]: intl.formatMessage(
     { id: 'outend.type.database' },
     { type: 'MongoDB' },
   ),
-  [OutendType.MQTT]: 'MQTT Broker',
-  [OutendType.UDP_TARGET]: intl.formatMessage({ id: 'outend.type.tranport' }, { type: 'UDP' }),
-  [OutendType.TCP_TRANSPORT]: intl.formatMessage({ id: 'outend.type.tranport' }, { type: 'TCP' }),
   [OutendType.TDENGINE]: intl.formatMessage({ id: 'outend.type.database' }, { type: 'Tdengine' }),
-  [OutendType.HTTP]: intl.formatMessage({ id: 'outend.type.push' }, { type: 'HTTP' }),
   [OutendType.GENERIC_UART_TARGET]: intl.formatMessage({ id: 'outend.type.uart' }),
+  [OutendType.GENERIC_MQTT_SERVER]: intl.formatMessage({ id: 'outend.type.mqtt' }),
   [OutendType.SEMTECH_UDP_FORWARDER]: intl.formatMessage({ id: 'outend.type.lorawan' }),
 };
 
