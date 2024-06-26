@@ -20,6 +20,10 @@ export default {
   'inend.table.title.ip': 'Device IP',
   'inend.table.title.status': 'Device Status',
   'inend.table.title.properties': 'Device Properties',
+  'inend.table.title.listenHost': 'Listen Address',
+  'inend.table.title.listenPort': 'Listen Port',
+  'inend.table.title.anonymous': 'Enabled Anonymous',
+  'inend.table.title.serverName': 'Service Name',
 
   'inend.table.placeholder.subTopics': 'Please enter a topic',
   'inend.table.rules.subTopics': 'Please subscribe to at least one topic',
@@ -51,6 +55,7 @@ export default {
   'inend.type.topic': 'Generic {type}',
   'inend.type.subject': 'Generic {type}',
   'inend.type.event': '{type} Internal Event Source',
+  'inend.type.mqtt': 'Lightweight MQTT Broker',
 
   /**
    * mode

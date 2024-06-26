@@ -20,6 +20,10 @@ export default {
   'inend.table.title.ip': '设备 IP',
   'inend.table.title.status': '设备状态',
   'inend.table.title.properties': '设备属性',
+  'inend.table.title.listenHost': '监听地址',
+  'inend.table.title.listenPort': '监听端口',
+  'inend.table.title.anonymous': '允许匿名连接',
+  'inend.table.title.serverName': '服务名称',
 
   'inend.table.placeholder.subTopics': '请输入 topic',
   'inend.table.rules.subTopics': '请至少订阅一个 topic',
@@ -50,6 +54,7 @@ export default {
   'inend.type.topic': '作为通用 {type} 客户端订阅 Topic 接入',
   'inend.type.subject': '作为通用 {type} 订阅 Subject 接入',
   'inend.type.event': '{type} 内部事件源',
+  'inend.type.mqtt': '轻量级 MQTT Broker',
 
   /**
    * mode

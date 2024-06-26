@@ -13,7 +13,6 @@ export enum OutendType {
   MONGO_SINGLE = 'MONGO_SINGLE',
   TDENGINE = 'TDENGINE',
   GENERIC_UART_TARGET = 'GENERIC_UART_TARGET',
-  GENERIC_MQTT_SERVER = 'GENERIC_MQTT_SERVER',
   SEMTECH_UDP_FORWARDER = 'SEMTECH_UDP_FORWARDER',
 }
 export const outendTypeOption = {
@@ -27,7 +26,6 @@ export const outendTypeOption = {
   ),
   [OutendType.TDENGINE]: intl.formatMessage({ id: 'outend.type.database' }, { type: 'Tdengine' }),
   [OutendType.GENERIC_UART_TARGET]: intl.formatMessage({ id: 'outend.type.uart' }),
-  [OutendType.GENERIC_MQTT_SERVER]: intl.formatMessage({ id: 'outend.type.mqtt' }),
   [OutendType.SEMTECH_UDP_FORWARDER]: intl.formatMessage({ id: 'outend.type.lorawan' }),
 };
 

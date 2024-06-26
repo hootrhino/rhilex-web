@@ -11,6 +11,7 @@ export enum InendType {
   NATS_SERVER = 'NATS_SERVER',
   GRPC = 'GRPC',
   GENERIC_MQTT = 'GENERIC_MQTT',
+  GENERIC_MQTT_SERVER = 'GENERIC_MQTT_SERVER',
   INTERNAL_EVENT = 'INTERNAL_EVENT',
 }
 
@@ -27,6 +28,7 @@ export const inendTypeOption = {
   ),
   [InendType.GRPC]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'GRPC Server' }),
   [InendType.GENERIC_MQTT]: intl.formatMessage({ id: 'inend.type.topic' }, { type: 'MQTT' }),
+  [InendType.GENERIC_MQTT_SERVER]: intl.formatMessage({ id: 'inend.type.mqtt' }),
   [InendType.INTERNAL_EVENT]: intl.formatMessage({ id: 'inend.type.event' }, { type: 'RHILEX' }),
 };
 

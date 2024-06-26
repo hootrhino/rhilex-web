@@ -1,56 +1,8 @@
+import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
+import { stringToBool } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
-import {
-  EventType,
-  eventTypeOption,
-  InendType,
-  inendTypeOption,
-  Mode,
-  modeOption,
-  QoSLevel,
-  qosOption,
-} from './enum';
-
-const DEFAULT_HOST = '127.0.0.1';
-
-export const defaultConfig = {
-  [InendType.COAP]: {
-    port: 2582,
-    host: DEFAULT_HOST,
-  },
-  [InendType.RULEX_UDP]: {
-    port: 2583,
-    host: DEFAULT_HOST,
-  },
-  [InendType.HTTP]: {
-    port: 2584,
-    host: DEFAULT_HOST,
-  },
-  [InendType.NATS_SERVER]: {
-    port: 4222,
-    host: DEFAULT_HOST,
-  },
-  [InendType.GRPC]: {
-    port: 2585,
-    host: DEFAULT_HOST,
-  },
-  [InendType.INTERNAL_EVENT]: {
-    type: EventType.ALL,
-  },
-  [InendType.GENERIC_IOT_HUB]: {
-    host: DEFAULT_HOST,
-    port: 1883,
-    mode: Mode.DC,
-  },
-  [InendType.GENERIC_MQTT]: {
-    host: DEFAULT_HOST,
-    port: 1883,
-    username: 'rhilex',
-    password: 'rhilex',
-    qos: QoSLevel.LEVEL1,
-    subTopics: [{ k: '/device/rulex-rhilex1' }],
-  },
-};
+import { eventTypeOption, InendType, inendTypeOption, modeOption, qosOption } from './enum';
 
 const intl = getIntl(getLocale());
 
@@ -91,14 +43,14 @@ export const baseColumns = [
   },
 ];
 
-const defaultConfigColumns = [
+const defaultConfigColumns = (hostTitle?: string, portTitle?: string) => [
   {
-    title: intl.formatMessage({ id: 'inend.table.title.host' }),
+    title: intl.formatMessage({ id: hostTitle || 'inend.table.title.host' }),
     dataIndex: ['config', 'host'],
     required: true,
   },
   {
-    title: intl.formatMessage({ id: 'inend.table.title.port' }),
+    title: intl.formatMessage({ id: portTitle || 'inend.table.title.port' }),
     dataIndex: ['config', 'port'],
     valueType: 'digit',
     required: true,
@@ -107,7 +59,7 @@ const defaultConfigColumns = [
 ];
 
 const defaultGenericColumns = [
-  ...defaultConfigColumns,
+  ...defaultConfigColumns(),
   {
     title: intl.formatMessage({ id: 'inend.table.title.clientId' }),
     dataIndex: ['config', 'clientId'],
@@ -127,7 +79,7 @@ const defaultGenericColumns = [
 ];
 
 export const configColumns = {
-  [InendType.COAP]: defaultConfigColumns,
+  [InendType.COAP]: defaultConfigColumns(),
   [InendType.GENERIC_IOT_HUB]: [
     ...defaultGenericColumns,
     {
@@ -149,17 +101,17 @@ export const configColumns = {
       required: true,
     },
   ],
-  [InendType.RULEX_UDP]: defaultConfigColumns,
-  [InendType.HTTP]: defaultConfigColumns,
+  [InendType.RULEX_UDP]: defaultConfigColumns(),
+  [InendType.HTTP]: defaultConfigColumns(),
   [InendType.NATS_SERVER]: [
-    ...defaultConfigColumns,
+    ...defaultConfigColumns(),
     {
       title: intl.formatMessage({ id: 'inend.table.title.topic' }),
       dataIndex: ['config', 'topic'],
       required: true,
     },
   ],
-  [InendType.GRPC]: defaultConfigColumns,
+  [InendType.GRPC]: defaultConfigColumns(),
   [InendType.INTERNAL_EVENT]: [
     {
       title: intl.formatMessage({ id: 'inend.table.title.eventType' }),
@@ -222,6 +174,23 @@ export const configColumns = {
       ],
       renderText: (record: string[]) => record.join(','),
     },
+  ],
+  [InendType.GENERIC_MQTT_SERVER]: [
+    {
+      title: intl.formatMessage({ id: 'inend.table.title.anonymous' }),
+      dataIndex: ['config', 'anonymous'],
+      required: true,
+      convertValue: (value: boolean) => value?.toString(),
+      transform: (value: string) => ({ config: { anonymous: stringToBool(value) } }),
+      renderFormItem: () => <ProSegmented width="md" />,
+      renderText: (anonymous: boolean) => <ProTag type={StatusType.BOOL}>{anonymous}</ProTag>,
+    },
+    {
+      title: intl.formatMessage({ id: 'inend.table.title.serverName' }),
+      dataIndex: ['config', 'serverName'],
+      required: true,
+    },
+    ...defaultConfigColumns('inend.table.title.listenHost', 'inend.table.title.listenPort'),
   ],
 };
 
