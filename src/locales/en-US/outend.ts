@@ -22,6 +22,7 @@ export default {
   'outend.table.title.portUuid': 'Serial Port',
   'outend.table.title.mac': 'MAC Address',
   'outend.table.title.uart': ' Local UART',
+  'outend.table.title.database': 'MongoDB Database',
 
   /**
    * title

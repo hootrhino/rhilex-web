@@ -22,6 +22,7 @@ export default {
   'outend.table.title.portUuid': '系統串口',
   'outend.table.title.mac': 'MAC 地址',
   'outend.table.title.uart': '本地串口',
+  'outend.table.title.database': 'MongoDB 資料庫',
 
   /**
    * title

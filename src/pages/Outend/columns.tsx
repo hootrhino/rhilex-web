@@ -112,7 +112,7 @@ export const configColumns = {
       required: true,
     },
     {
-      title: intl.formatMessage({ id: 'outend.type.database' }, { type: 'MongoDB' }),
+      title: intl.formatMessage({ id: 'outend.table.title.database' }),
       dataIndex: ['config', 'database'],
       required: true,
     },
