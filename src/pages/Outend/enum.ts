@@ -16,17 +16,23 @@ export enum OutendType {
   SEMTECH_UDP_FORWARDER = 'SEMTECH_UDP_FORWARDER',
 }
 export const outendTypeOption = {
-  [OutendType.MQTT]: 'MQTT Broker',
-  [OutendType.UDP_TARGET]: intl.formatMessage({ id: 'outend.type.tranport' }, { type: 'UDP' }),
-  [OutendType.TCP_TRANSPORT]: intl.formatMessage({ id: 'outend.type.tranport' }, { type: 'TCP' }),
-  [OutendType.HTTP]: intl.formatMessage({ id: 'outend.type.push' }, { type: 'HTTP' }),
-  [OutendType.MONGO_SINGLE]: intl.formatMessage(
-    { id: 'outend.type.database' },
-    { type: 'MongoDB' },
+  [OutendType.MQTT]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' MQTT Broker' }),
+  [OutendType.UDP_TARGET]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' UDP Server' }),
+  [OutendType.TCP_TRANSPORT]: intl.formatMessage(
+    { id: 'outend.type.push' },
+    { type: ' TCP Server' },
   ),
-  [OutendType.TDENGINE]: intl.formatMessage({ id: 'outend.type.database' }, { type: 'Tdengine' }),
-  [OutendType.GENERIC_UART_TARGET]: intl.formatMessage({ id: 'outend.type.uart' }),
-  [OutendType.SEMTECH_UDP_FORWARDER]: intl.formatMessage({ id: 'outend.type.lorawan' }),
+  [OutendType.HTTP]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' HTTP Server' }),
+  [OutendType.MONGO_SINGLE]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' MongoDB' }),
+  [OutendType.TDENGINE]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' TdEngine' }),
+  [OutendType.GENERIC_UART_TARGET]: intl.formatMessage(
+    { id: 'outend.type.push' },
+    { type: intl.formatMessage({ id: 'outend.table.title.uart' }) },
+  ),
+  [OutendType.SEMTECH_UDP_FORWARDER]: intl.formatMessage(
+    { id: 'outend.type.push' },
+    { type: ' Semtech UDP Forwarder' },
+  ),
 };
 
 /**

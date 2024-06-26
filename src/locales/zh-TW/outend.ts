@@ -21,6 +21,7 @@ export default {
   'outend.table.title.url': '請求地址',
   'outend.table.title.portUuid': '系統串口',
   'outend.table.title.mac': 'MAC 地址',
+  'outend.table.title.uart': '本地串口',
 
   /**
    * title
@@ -46,15 +47,11 @@ export default {
   /**
    * type
    */
-  'outend.type.tranport': '{type} 數據傳輸',
-  'outend.type.push': '{type} 數據推送',
-  'outend.type.database': '{type} 數據庫',
-  'outend.type.uart': '通用串口透傳',
-  'outend.type.lorawan': 'Semtech UDP 協定代理',
+  'outend.type.push': '數據推送到{type}',
 
   /**
    * mode
    */
-  'outend.mode.raw': '原始 ASIIC 傳輸',
+  'outend.mode.raw': '原始 ASCII 傳輸',
   'outend.mode.hex': '十六進制字符串',
 };

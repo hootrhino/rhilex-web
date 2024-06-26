@@ -21,6 +21,7 @@ export default {
   'outend.table.title.url': 'Request Url',
   'outend.table.title.portUuid': 'Serial Port',
   'outend.table.title.mac': 'MAC Address',
+  'outend.table.title.uart': ' Local UART',
 
   /**
    * title
@@ -47,11 +48,7 @@ export default {
   /**
    * type
    */
-  'outend.type.tranport': '{type} Data Transmission',
-  'outend.type.push': '{type} Data Push',
-  'outend.type.database': '{type} Database',
-  'outend.type.uart': 'Generic UART Transport',
-  'outend.type.lorawan': 'Semtech UDP Packet Forwarder',
+  'outend.type.push': 'Data Push to{type}',
 
   /**
    * mode
