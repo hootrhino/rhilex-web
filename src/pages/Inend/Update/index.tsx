@@ -10,7 +10,7 @@ import {
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
-import { columns } from '../columns';
+import { columns } from '../Columns';
 import { InendType } from '../enum';
 import { defaultConfig } from './initialValues';
 

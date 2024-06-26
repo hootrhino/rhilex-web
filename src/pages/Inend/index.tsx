@@ -21,7 +21,8 @@ import {
   putInendsRestart,
 } from '@/services/rulex/shuruziyuanguanli';
 import { useIntl, useModel, useRequest } from '@umijs/max';
-import { baseColumns } from './columns';
+
+import { baseColumns } from './Columns';
 import Detail from './Detail';
 import { InendType } from './enum';
 

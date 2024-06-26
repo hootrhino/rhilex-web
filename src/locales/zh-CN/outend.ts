@@ -51,7 +51,6 @@ export default {
   'outend.type.database': '{type} 数据库',
   'outend.type.uart': '通用串口透传',
   'outend.type.lorawan': 'Semtech UDP 协议代理',
-  'outend.type.mqtt': '通用 MQTT 接入服务',
 
   /**
    * mode

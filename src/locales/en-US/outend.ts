@@ -52,7 +52,6 @@ export default {
   'outend.type.database': '{type} Database',
   'outend.type.uart': 'Generic UART Transport',
   'outend.type.lorawan': 'Semtech UDP Packet Forwarder',
-  'outend.type.mqtt': 'Generic MQTT Access Service',
 
   /**
    * mode

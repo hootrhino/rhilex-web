@@ -4,7 +4,7 @@ import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { omit } from '@/utils/redash';
 import { useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
-import { baseColumns, configColumns } from '../columns';
+import { baseColumns, typeConfigColumns } from '../Columns';
 import { InendType } from '../enum';
 
 type DetailProps = DrawerProps & {
@@ -36,7 +36,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       />
       {data?.type && Object.keys(InendType).includes(data?.type) && (
         <ProDescriptions
-          columns={configColumns[data?.type]}
+          columns={typeConfigColumns[data?.type]}
           labelWidth={80}
           title={formatMessage({ id: 'inend.title.group' })}
           dataSource={data}
