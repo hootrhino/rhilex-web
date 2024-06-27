@@ -24,6 +24,7 @@ export default {
   'inend.table.title.listenPort': 'Listen Port',
   'inend.table.title.anonymous': 'Enabled Anonymous',
   'inend.table.title.serverName': 'Service Name',
+  'inend.table.title.comName': 'Communication Module Name',
 
   'inend.table.placeholder.subTopics': 'Please enter a topic',
   'inend.table.rules.subTopics': 'Please subscribe to at least one topic',
@@ -56,6 +57,7 @@ export default {
   'inend.type.subject': 'Generic {type}',
   'inend.type.event': '{type} Internal Event Source',
   'inend.type.mqtt': 'Lightweight MQTT Broker',
+  'inend.type.comtc': '来自通信模块的数据',
 
   /**
    * mode

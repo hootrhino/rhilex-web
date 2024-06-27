@@ -24,6 +24,7 @@ export default {
   'inend.table.title.listenPort': '監聽端口',
   'inend.table.title.anonymous': '允許匿名連線',
   'inend.table.title.serverName': '服務名稱',
+  'inend.table.title.comName': '通訊模組名稱',
 
   'inend.table.placeholder.subTopics': '請輸入 topic',
   'inend.table.rules.subTopics': '請至少訂閱一個 topic',
@@ -55,6 +56,7 @@ export default {
   'inend.type.subject': '作為通用 {type} 訂閲 Subject 接入',
   'inend.type.event': '{type} 內部事件源',
   'inend.type.mqtt': '輕量級 MQTT Broker',
+  'inend.type.comtc': '来自通信模块的数据',
 
   /**
    * mode

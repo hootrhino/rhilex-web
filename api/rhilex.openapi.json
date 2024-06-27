@@ -113,6 +113,9 @@
     },
     {
       "name": "bacnet-router模式"
+    },
+    {
+      "name": "通信模组"
     }
   ],
   "paths": {
@@ -19174,6 +19177,394 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-184218898-run",
+        "security": []
+      }
+    },
+    "/api/v1/transceiver/list": {
+      "get": {
+        "summary": "通信模组列表",
+        "x-apifox-folder": "通信模组",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "通信模组"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "model": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "integer"
+                          },
+                          "vendor": {
+                            "type": "string"
+                          }
+                        },
+                        "x-apifox-ignore-properties": [],
+                        "x-apifox-orders": [
+                          "name",
+                          "model",
+                          "type",
+                          "vendor"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "name": "MX01-BLE-Module",
+                          "model": "MX01-BLE-Module",
+                          "type": 3,
+                          "vendor": "SHENZHEN-MIAOXIANG-TECH"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-188138006-run",
+        "security": []
+      }
+    },
+    "/api/v1/transceiver/ctrl": {
+      "post": {
+        "summary": "发送指令",
+        "x-apifox-folder": "通信模组",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "通信模组"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "cmd": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "cmd"
+                ],
+                "x-apifox-ignore-properties": [],
+                "x-apifox-orders": [
+                  "name",
+                  "cmd"
+                ]
+              },
+              "example": ""
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-188138746-run",
+        "security": []
+      }
+    },
+    "/api/v1/inends/mqttClientsKickOut": {
+      "delete": {
+        "summary": "MQTT客户端踢下线",
+        "x-apifox-folder": "输入资源管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "输入资源管理"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "INI4NN82DY",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clientId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "INI4NN82DY",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-188444614-run",
+        "security": []
+      }
+    },
+    "/api/v1/inends/mqttClients": {
+      "get": {
+        "summary": "MQTT客户端列表",
+        "x-apifox-folder": "输入资源管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "输入资源管理"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "INI4NN82DY",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "1",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "10",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "remote": {
+                                "type": "string"
+                              },
+                              "listener": {
+                                "type": "string"
+                              },
+                              "username": {
+                                "type": "string"
+                              },
+                              "cleanSession": {
+                                "type": "boolean"
+                              }
+                            },
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "id",
+                              "remote",
+                              "listener",
+                              "username",
+                              "cleanSession"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 10,
+                        "total": 1,
+                        "records": [
+                          {
+                            "id": "mqttx_e1297f60",
+                            "remote": "127.0.0.1:62977",
+                            "listener": "GENERIC_MQTT_SERVER",
+                            "username": "1",
+                            "cleanSession": true
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-188444751-run",
         "security": []
       }
     }

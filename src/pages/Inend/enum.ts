@@ -13,6 +13,7 @@ export enum InendType {
   GENERIC_MQTT = 'GENERIC_MQTT',
   GENERIC_MQTT_SERVER = 'GENERIC_MQTT_SERVER',
   INTERNAL_EVENT = 'INTERNAL_EVENT',
+  COMTC_EVENT_FORWARDAR = 'COMTC_EVENT_FORWARDAR',
 }
 
 const intl = getIntl(getLocale());
@@ -30,6 +31,7 @@ export const inendTypeOption = {
   [InendType.GENERIC_MQTT]: intl.formatMessage({ id: 'inend.type.topic' }, { type: 'MQTT' }),
   [InendType.GENERIC_MQTT_SERVER]: intl.formatMessage({ id: 'inend.type.mqtt' }),
   [InendType.INTERNAL_EVENT]: intl.formatMessage({ id: 'inend.type.event' }, { type: 'RHILEX' }),
+  [InendType.COMTC_EVENT_FORWARDAR]: intl.formatMessage({ id: 'inend.type.comtc' }),
 };
 
 /**

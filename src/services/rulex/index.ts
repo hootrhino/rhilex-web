@@ -28,6 +28,7 @@ import * as shujumoxing from './shujumoxing';
 import * as shujuzhongxin from './shujuzhongxin';
 import * as shuruziyuanguanli from './shuruziyuanguanli';
 import * as snmpdianweiguanli from './snmpdianweiguanli';
+import * as tongxinmozu from './tongxinmozu';
 import * as wangluopeizhi from './wangluopeizhi';
 import * as wuxianwifipeizhi from './wuxianwifipeizhi';
 import * as ximenzidianweiguanli from './ximenzidianweiguanli';
@@ -73,4 +74,5 @@ export default {
   snmpdianweiguanli,
   bacnetdianweiguanli,
   bacnetRoutermoshi,
+  tongxinmozu,
 };

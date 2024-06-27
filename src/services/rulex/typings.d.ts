@@ -59,6 +59,11 @@ declare namespace API {
     uuid?: string;
   };
 
+  type deleteInendsMqttClientsKickOutParams = {
+    uuid?: string;
+    clientId?: string;
+  };
+
   type deleteOutendsDelParams = {
     uuid?: string;
   };
@@ -221,6 +226,12 @@ declare namespace API {
 
   type getInendsDetailParams = {
     uuid: string;
+  };
+
+  type getInendsMqttClientsParams = {
+    uuid?: string;
+    current?: number;
+    size?: number;
   };
 
   type getJpegStreamDetailParams = {

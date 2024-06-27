@@ -110,6 +110,54 @@ export async function getInendsList(options?: { [key: string]: any }) {
   );
 }
 
+/** MQTT客户端列表 GET /api/v1/inends/mqttClients */
+export async function getInendsMqttClients(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getInendsMqttClientsParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      current: number;
+      size: number;
+      total: number;
+      records: {
+        id?: string;
+        remote?: string;
+        listener?: string;
+        username?: string;
+        cleanSession?: boolean;
+      }[];
+    };
+  }>('/api/v1/inends/mqttClients', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** MQTT客户端踢下线 DELETE /api/v1/inends/mqttClientsKickOut */
+export async function deleteInendsMqttClientsKickOut(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteInendsMqttClientsKickOutParams,
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string[] }>(
+    '/api/v1/inends/mqttClientsKickOut',
+    {
+      method: 'DELETE',
+      params: {
+        ...params,
+      },
+      ...(options || {}),
+    },
+  );
+}
+
 /** 重启资源 PUT /api/v1/inends/restart */
 export async function putInendsRestart(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
