@@ -26,4 +26,8 @@ export default {
    * others
    */
   'com.modal.title': 'Send command',
+  'com.type.urf': 'Universal Radio Frequency',
+  'com.type.blc': 'Bluetooth Classic',
+  'com.type.ble': 'Bluetooth Low Energy',
+  'com.type.rf': '{type} Radio Frequency',
 };

@@ -1,13 +1,14 @@
 import PageContainer from '@/components/ProPageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
 import { getTransceiverList, postTransceiverCtrl } from '@/services/rulex/tongxinmozu';
-import { cn } from '@/utils/utils';
+import { cn, IconFont } from '@/utils/utils';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { getLocale, useIntl, useRequest } from '@umijs/max';
-import { Button, Form, Modal } from 'antd';
+import { Button, Form, Modal, Space } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useState } from 'react';
+import { TransceiverTypeOption } from './enum';
 
 type TransceiverCtrlParams = {
   name: string;
@@ -21,21 +22,6 @@ type ComItem = {
   status: number;
   vendor: string;
 };
-
-enum TransceiverType {
-  COMMON_RF = 0,
-  WIFI = 1,
-  BLC = 2,
-  BLE = 3,
-  ZIGBEE = 4,
-  RF24g = 5,
-  RF433M = 6,
-  MN4G = 7,
-  MN5G = 8,
-  NBIoT = 9,
-  LORA = 10,
-  LORA_WAN = 11,
-}
 
 const CommunicationModule = () => {
   const { formatMessage } = useIntl();
@@ -67,7 +53,15 @@ const CommunicationModule = () => {
     {
       title: formatMessage({ id: 'com.table.title.type' }),
       dataIndex: 'type',
-      renderText: (type: number) => TransceiverType[type],
+      renderText: (type: number) => (
+        <Space>
+          <IconFont
+            type={`icon-com-${TransceiverTypeOption[type].icon}`}
+            style={{ fontSize: 18 }}
+          />
+          <span>{TransceiverTypeOption[type].text}</span>
+        </Space>
+      ),
     },
     {
       title: formatMessage({ id: 'com.table.title.model' }),

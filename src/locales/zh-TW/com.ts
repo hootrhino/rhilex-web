@@ -26,4 +26,8 @@ export default {
    * others
    */
   'com.modal.title': '發送指令',
+  'com.type.urf': '通用射頻',
+  'com.type.blc': '經典藍牙',
+  'com.type.ble': '低功耗藍牙',
+  'com.type.rf': '{type} 通信',
 };
