@@ -3,6 +3,7 @@ import component from './en-US/component';
 import status from './en-US/status';
 // pages
 import appStack from './en-US/appStack';
+import com from './en-US/com';
 import dashboard from './en-US/dashboard';
 import DataRepository from './en-US/DataRepository';
 import device from './en-US/device';
@@ -104,6 +105,7 @@ export default {
   'menu.rule.list': 'Rule Configuration',
   'menu.rule.new': 'New Rule Configuration',
   'menu.rule.update': 'Edit Rule Configuration',
+  'menu.cm': 'COM Module',
   ...component,
   ...button,
   ...status,
@@ -119,4 +121,5 @@ export default {
   ...outend,
   ...inend,
   ...DataRepository,
+  ...com,
 };

@@ -223,6 +223,13 @@
     component: './Plugin',
   },
   {
+    path: '/module',
+    title: 'menu.cm',
+    icon: 'icon-menu-com',
+    key: 'communicationModule',
+    component: './CommunicationModule',
+  },
+  {
     path: '/system',
     title: 'menu.system',
     icon: 'setting',

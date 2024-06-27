@@ -25,7 +25,7 @@ export async function getTransceiverList(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { name?: string; model?: string; type?: number; vendor?: string }[];
+    data: { name?: string; model?: string; type?: number; status?: number; vendor?: string }[];
   }>('/api/v1/transceiver/list', {
     method: 'GET',
     ...(options || {}),

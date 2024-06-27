@@ -19219,6 +19219,9 @@
                           "type": {
                             "type": "integer"
                           },
+                          "status": {
+                            "type": "integer"
+                          },
                           "vendor": {
                             "type": "string"
                           }
@@ -19228,6 +19231,7 @@
                           "name",
                           "model",
                           "type",
+                          "status",
                           "vendor"
                         ]
                       }
@@ -19244,23 +19248,6 @@
                     "msg",
                     "data"
                   ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": [
-                        {
-                          "name": "MX01-BLE-Module",
-                          "model": "MX01-BLE-Module",
-                          "type": 3,
-                          "vendor": "SHENZHEN-MIAOXIANG-TECH"
-                        }
-                      ]
-                    }
-                  }
                 }
               }
             }

@@ -3,6 +3,7 @@ import component from './zh-CN/component';
 import status from './zh-CN/status';
 // pages
 import appStack from './zh-CN/appStack';
+import com from './zh-CN/com';
 import dashboard from './zh-CN/dashboard';
 import DataRepository from './zh-CN/DataRepository';
 import device from './zh-CN/device';
@@ -102,6 +103,7 @@ export default {
   'menu.rule.list': '规则配置',
   'menu.rule.new': '新建规则配置',
   'menu.rule.update': '编辑规则配置',
+  'menu.cm': '通信模组',
   ...component,
   ...button,
   ...status,
@@ -117,4 +119,5 @@ export default {
   ...outend,
   ...inend,
   ...DataRepository,
+  ...com,
 };

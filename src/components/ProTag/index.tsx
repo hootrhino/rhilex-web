@@ -171,6 +171,24 @@ const levelStatusEnum = {
   },
 };
 
+const TransceiverStatusEnum = {
+  0: {
+    text: 'status.exception',
+    color: 'error',
+    icon: <CloseCircleOutlined />,
+  },
+  1: {
+    text: 'status.enabled',
+    color: 'success',
+    icon: <CheckCircleOutlined />,
+  },
+  2: {
+    text: 'status.error',
+    color: 'error',
+    icon: <CloseCircleOutlined />,
+  },
+};
+
 export enum StatusType {
   NOTICE = 'notice',
   RUNNING = 'running',
@@ -182,6 +200,7 @@ export enum StatusType {
   POINT = 'point',
   APP = 'app',
   RULE = 'rule',
+  COM = 'com',
 }
 
 const typeEnum = {
@@ -195,6 +214,7 @@ const typeEnum = {
   [StatusType.POINT]: pointStatusEnum,
   [StatusType.APP]: appStatusEnum,
   [StatusType.RULE]: ruleStatusEnum,
+  [StatusType.COM]: TransceiverStatusEnum,
 };
 
 type ProTagProps = Omit<TagProps, 'children'> & {

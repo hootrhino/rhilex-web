@@ -14,6 +14,7 @@ const allMenu = [
   'appStack',
   'extend',
   'plugin',
+  'communicationModule',
   'system',
 ];
 
