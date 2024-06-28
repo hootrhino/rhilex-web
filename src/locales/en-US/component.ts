@@ -41,7 +41,7 @@ export default {
   'component.tpl.f15.arg4': 'Write quantity',
   'component.tpl.f15.arg5': 'Write data',
   'component.tpl.name': '{name} functions',
-  'component.tpl.name.standard': 'Standard  functions',
+  'component.tpl.name.standard': 'Standard functions',
   'component.tpl.name.other': 'Other functions',
   'component.tpl.name.dataRepo': 'Data repository functions',
   'component.tpl.jsonT2J.detail': 'Convert LuaTable to JSON string',
@@ -55,7 +55,7 @@ export default {
   'component.tpl.kvGet.detail': 'Global cache get value',
   'component.tpl.kvDel.detail': 'Global cache delete value',
   'component.tpl.standard.debug': 'Print log',
-  'component.tpl.standard.debug.usage1': 'Function usage example',
+  'component.tpl.usage': 'Function usage example',
   'component.tpl.standard.debug.usage2': 'Throw an exception',
   'component.tpl.rhilex.label':
     'When there is no network, the gateway’s LED will flash quickly 5 times',
@@ -65,6 +65,9 @@ export default {
   'component.tpl.device': 'UUID parameter comes from the Device',
   'component.tpl.save.detail': 'Data written to the data repository',
   'component.tpl.save.arg': 'Data repository resource',
+  'component.tpl.rfcom.name': 'Communication control functions',
+  'component.tpl.rfcom.detail': 'Get the MAC address of the Bluetooth module',
+  'component.tpl.rfcom.arg': 'Module Resources',
 
   /**
    * others

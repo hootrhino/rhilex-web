@@ -55,7 +55,7 @@ export default {
   'component.tpl.kvGet.detail': '全局緩存取值',
   'component.tpl.kvDel.detail': '全局緩存刪除值',
   'component.tpl.standard.debug': '打印日誌',
-  'component.tpl.standard.debug.usage1': '函數使用示例',
+  'component.tpl.usage': '函數使用示例',
   'component.tpl.standard.debug.usage2': '拋出異常',
   'component.tpl.rhilex.label': '當沒有網絡時，網關上的 LED 會快速閃爍 5 次',
   'component.tpl.rhilex.detail': '{name} 聯網測試',
@@ -64,6 +64,9 @@ export default {
   'component.tpl.device': 'UUID 參數來自設備接入',
   'component.tpl.save.detail': '資料寫入資料中心',
   'component.tpl.save.arg': '資料中心資源',
+  'component.tpl.rfcom.name': '通訊控制函數',
+  'component.tpl.rfcom.detail': '取得藍牙模組的 MAC 地址',
+  'component.tpl.rfcom.arg': '通訊模組資源',
 
   /**
    * others

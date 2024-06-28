@@ -1,5 +1,6 @@
 import { getIntl, getLocale } from '@umijs/max';
 import { TplDataType } from '../../RuleExample/enum';
+import { comTpl } from './comTpl';
 import { dataRepoTpl } from './dataRepoTpl';
 import { dataToTpl } from './dataToTpl';
 import { deviceTpl } from './deviceTpl';
@@ -135,7 +136,7 @@ export const standardTpl = [
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.standard.debug' }),
     usage: {
-      label: intl.formatMessage({ id: 'component.tpl.standard.debug.usage1' }),
+      label: intl.formatMessage({ id: 'component.tpl.usage' }),
       apply: `Actions = {
   function(args)
     Debug(args)
@@ -143,7 +144,7 @@ export const standardTpl = [
   end
 }`,
       type: 'function',
-      detail: intl.formatMessage({ id: 'component.tpl.standard.debug.usage1' }),
+      detail: intl.formatMessage({ id: 'component.tpl.usage' }),
     },
   },
   {
@@ -305,6 +306,11 @@ export const builtInLuaTpl = [
     name: intl.formatMessage({ id: 'component.tpl.name.dataRepo' }),
     children: dataRepoTpl,
     uuid: 'dataCenter',
+  },
+  {
+    name: intl.formatMessage({ id: 'component.tpl.rfcom.name' }),
+    children: comTpl,
+    uuid: 'com',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name.other' }),

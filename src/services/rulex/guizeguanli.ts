@@ -82,8 +82,9 @@ export async function getRulesGetCanUsedResources(options?: { [key: string]: any
     msg: string;
     data: {
       devices: string[];
-      outends: { uuid?: string; name?: string }[];
-      schemas: { uuid?: string; name?: string }[];
+      outends: string[];
+      rfcoms: { uuid: string; name: string }[];
+      schemas: string[];
     };
   }>('/api/v1/rules/getCanUsedResources', {
     method: 'GET',

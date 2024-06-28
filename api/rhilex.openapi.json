@@ -14794,23 +14794,10 @@
                         "outends": {
                           "type": "array",
                           "items": {
-                            "type": "object",
-                            "properties": {
-                              "uuid": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              }
-                            },
-                            "x-apifox-ignore-properties": [],
-                            "x-apifox-orders": [
-                              "uuid",
-                              "name"
-                            ]
+                            "type": "string"
                           }
                         },
-                        "schemas": {
+                        "rfcoms": {
                           "type": "array",
                           "items": {
                             "type": "object",
@@ -14822,23 +14809,35 @@
                                 "type": "string"
                               }
                             },
+                            "required": [
+                              "uuid",
+                              "name"
+                            ],
                             "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "uuid",
                               "name"
                             ]
                           }
+                        },
+                        "schemas": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
                         }
                       },
                       "required": [
                         "devices",
                         "outends",
+                        "rfcoms",
                         "schemas"
                       ],
                       "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "devices",
                         "outends",
+                        "rfcoms",
                         "schemas"
                       ]
                     }
@@ -14863,18 +14862,22 @@
                       "msg": "Success",
                       "data": {
                         "devices": [],
-                        "outends": [
+                        "outends": [],
+                        "rfcoms": [
                           {
-                            "uuid": "OUTO5TBGCND",
-                            "name": "Tdengine"
+                            "uuid": "MX01-BLE-Module",
+                            "name": "MX01-BLE-Module"
+                          },
+                          {
+                            "uuid": "EC200A-4G-DTU",
+                            "name": "EC200A-4G-DTU"
+                          },
+                          {
+                            "uuid": "ATK-01-LORA",
+                            "name": "ATK-01-LORA"
                           }
                         ],
-                        "schemas": [
-                          {
-                            "uuid": "SCHEMAAAEM8PHB",
-                            "name": "测试模型1"
-                          }
-                        ]
+                        "schemas": []
                       }
                     }
                   }

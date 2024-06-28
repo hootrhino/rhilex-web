@@ -55,7 +55,7 @@ export default {
   'component.tpl.kvGet.detail': '全局缓存取值',
   'component.tpl.kvDel.detail': '全局缓存删除值',
   'component.tpl.standard.debug': '打印日志',
-  'component.tpl.standard.debug.usage1': '函数使用示例',
+  'component.tpl.usage': '函数使用示例',
   'component.tpl.standard.debug.usage2': '抛出异常',
   'component.tpl.rhilex.label': '当没有网络时，网关上的 LED 会快速闪烁 5 次',
   'component.tpl.rhilex.detail': '{name} 联网测试',
@@ -64,6 +64,9 @@ export default {
   'component.tpl.device': 'UUID 参数来自设备接入',
   'component.tpl.save.detail': '数据写入数据中心',
   'component.tpl.save.arg': '数据中心资源',
+  'component.tpl.rfcom.name': '通信控制函数',
+  'component.tpl.rfcom.detail': '获取蓝牙模块的 MAC 地址',
+  'component.tpl.rfcom.arg': '通信模组资源',
 
   /**
    * others

@@ -45,7 +45,7 @@ const getUsageTpl = (server: string) => {
 }`;
 
   return {
-    label: intl.formatMessage({ id: 'component.tpl.standard.debug.usage1' }),
+    label: intl.formatMessage({ id: 'component.tpl.usage' }),
     apply: code,
     type: 'function',
     variables: getVariables(server),

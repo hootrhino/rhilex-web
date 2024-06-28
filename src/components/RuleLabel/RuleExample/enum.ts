@@ -2,6 +2,7 @@ export enum TplDataSource {
   DEVICE = 'devices',
   OUTEND = 'outends',
   SCHEMA = 'schemas',
+  RFCOM = 'rfcoms',
 }
 
 export enum TplDataType {

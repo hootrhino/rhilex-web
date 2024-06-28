@@ -280,7 +280,7 @@ const UpdateForm = () => {
                 },
               ]}
             >
-              <CodeEditor autoFocus lang={Lang.SHELL} />
+              <CodeEditor autoFocus lang={Lang.SHELL} minHeight="100px" />
             </ProForm.Item>
             <ProForm.Item
               name="output"
