@@ -76,8 +76,8 @@ export default {
   'component.title.quickTpl': '快捷模板',
   'component.title.exampleChild': '函數基本形式',
 
-  'component.link.httpHeaders': '更多信息請參考',
-  'component.link.form': '前往官方文檔主頁查看更多幫助信息',
+  'component.link.httpHeaders': '更多訊息請參考',
+  'component.link.form': '前往官方文檔主頁查看更多幫助訊息',
 
   'component.button.user': '個人設置',
   'component.button.logout': '退出登錄',

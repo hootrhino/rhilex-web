@@ -31,16 +31,16 @@ export default {
   'device.title.new': '新建設備',
   'device.title.update': '編輯設備',
   'device.title.base': '基本配置',
-  'device.title.modal.error.device': '設備異常信息',
-  'device.title.modal.error.sheet': '點位異常信息',
-  'device.title.modal.error.oid': '對象異常信息',
+  'device.title.modal.error.device': '設備異常訊息',
+  'device.title.modal.error.sheet': '點位異常訊息',
+  'device.title.modal.error.oid': '對象異常訊息',
   'device.title.sheet': '點位表配置',
   'device.title.oid': 'SNMP 對象列表',
   'device.title.subDevice': '{name} - 子設備列表',
   'device.title.sheetList': '{name} - 點位表配置',
   'device.title.oidList': '設備 {name} - SNMP 對象列表',
-  'device.title.smartHome.detail.base': '設備基本信息',
-  'device.title.smartHome.detail.status': '設備狀態信息',
+  'device.title.smartHome.detail.base': '設備基本訊息',
+  'device.title.smartHome.detail.status': '設備狀態訊息',
 
   /**
    * modal
@@ -195,7 +195,7 @@ export default {
    * tooltip
    */
   'device.tooltip.outputMode':
-    '注意：因為傳輸格式原因，Jpeg Stream 模式下僅保存了圖像信息，沒有原始聲音',
+    '注意：因為傳輸格式原因，Jpeg Stream 模式下僅保存了圖像訊息，沒有原始聲音',
   'device.tooltip.group.edit': '重命名分組',
   'device.tooltip.group.remove': '刪除分組',
   'device.tooltip.copy': '以當前行為模板新建一行數據',

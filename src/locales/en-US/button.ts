@@ -25,7 +25,7 @@ export default {
   'button.advancedOption': 'Advanced',
   'button.reload': 'Reload',
   'button.ruleConfig': 'Rule Configuration',
-  'button.error': 'Show Exception',
+  'button.error': 'Exception Details',
   'button.subDevice': 'Show Subdevices',
   'button.new.formList': 'Add a Row',
   'button.forget': 'Forgot Password',

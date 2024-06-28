@@ -1,51 +1,34 @@
+import { modal } from '@/components/PopupHack';
 import PageContainer from '@/components/ProPageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
-import { getTransceiverList, postTransceiverCtrl } from '@/services/rulex/tongxinmozu';
-import { cn, IconFont } from '@/utils/utils';
+import { getTransceiverList } from '@/services/rulex/tongxinmozu';
+import { IconFont } from '@/utils/utils';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { getLocale, useIntl, useRequest } from '@umijs/max';
-import { Button, Form, Modal, Space } from 'antd';
-import TextArea from 'antd/es/input/TextArea';
+import { getLocale, useIntl } from '@umijs/max';
+import { Space } from 'antd';
 import { useState } from 'react';
+import Command from './Command';
+import Detail from './Detail';
 import { TransceiverTypeOption } from './enum';
 
-type TransceiverCtrlParams = {
-  name: string;
-  cmd: string;
-};
-
-type ComItem = {
+export type ComItem = {
   name: string;
   type: number;
   model: string;
   status: number;
   vendor: string;
+  [key: string]: any;
 };
 
 const CommunicationModule = () => {
   const { formatMessage } = useIntl();
-  const [form] = Form.useForm();
 
-  const [open, setOpen] = useState<boolean>(false);
-  const [name, setName] = useState<string>();
-  const [result, setResult] = useState<string>();
+  const [activeName, setActiveName] = useState<string>('');
+  const [openCommand, setOpenCommand] = useState<boolean>(false);
+  const [openDetail, setOpenDetail] = useState<boolean>(false);
 
-  // 发送指令
-  const { run, loading } = useRequest(
-    (params: TransceiverCtrlParams) => postTransceiverCtrl(params),
-    {
-      manual: true,
-      onSuccess: (data) => {
-        setTimeout(() => {
-          setResult(data.result);
-        }, 1000);
-      },
-      onError: () => setResult('Error'),
-    },
-  );
-
-  const columns: ProColumns<Partial<ComItem>>[] = [
+  const columns: ProColumns<ComItem>[] = [
     {
       title: formatMessage({ id: 'com.table.title.name' }),
       dataIndex: 'name',
@@ -79,18 +62,42 @@ const CommunicationModule = () => {
     {
       title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
-      width: getLocale() === 'en-US' ? 150 : 100,
-      render: (_, { name }) => [
+      width: getLocale() === 'en-US' ? 250 : 180,
+      render: (_, { name, status, errMsg }) => [
+        <a
+          key="detail"
+          onClick={() => {
+            if (!name) return;
+
+            setOpenDetail(true);
+            setActiveName(name);
+          }}
+        >
+          {formatMessage({ id: 'button.detail' })}
+        </a>,
         <a
           key="command"
           onClick={() => {
             if (!name) return;
 
-            setOpen(true);
-            setName(name);
+            setOpenCommand(true);
+            setActiveName(name);
           }}
         >
           {formatMessage({ id: 'com.button.cmd' })}
+        </a>,
+        <a
+          key="error"
+          onClick={() => {
+            modal.error({
+              title: formatMessage({ id: 'com.modal.title.error' }),
+              content: <div className="flex flex-wrap">{errMsg}</div>,
+              okText: formatMessage({ id: 'button.close' }),
+            });
+          }}
+          className={status === 1 ? 'hidden' : 'block'}
+        >
+          {formatMessage({ id: 'button.error' })}
         </a>,
       ],
     },
@@ -115,48 +122,22 @@ const CommunicationModule = () => {
           }}
         />
       </PageContainer>
-      <Modal
-        destroyOnClose
-        title={formatMessage({ id: 'com.modal.title' })}
-        open={open}
+      <Command
+        name={activeName}
+        open={openCommand}
         onCancel={() => {
-          setOpen(false);
-          setResult(undefined);
-          form.resetFields();
+          setOpenCommand(false);
+          setActiveName('');
         }}
-        footer={false}
-      >
-        <Form
-          form={form}
-          layout="vertical"
-          requiredMark={false}
-          onFinish={({ cmd }) => {
-            if (cmd && name) {
-              setResult('loading...');
-              run({ cmd, name });
-            }
-          }}
-        >
-          <Form.Item
-            label={formatMessage({ id: 'com.form.title.cmd' })}
-            name="cmd"
-            rules={[{ required: true, message: formatMessage({ id: 'com.form.placeholder.cmd' }) }]}
-          >
-            <TextArea rows={4} placeholder={formatMessage({ id: 'com.form.placeholder.cmd' })} />
-          </Form.Item>
-          <Form.Item className="send-button-item">
-            <Button type="primary" htmlType="submit" className={cn('w-full')} loading={loading}>
-              {formatMessage({ id: 'com.button.send' })}
-            </Button>
-          </Form.Item>
-        </Form>
-        {result && (
-          <div>
-            <div className="pb-[8px]">{formatMessage({ id: 'com.form.title.result' })}</div>
-            <TextArea autoSize={{ minRows: 2, maxRows: 5 }} value={result} variant="borderless" />
-          </div>
-        )}
-      </Modal>
+      />
+      <Detail
+        name={activeName}
+        open={openDetail}
+        onCancel={() => {
+          setOpenDetail(false);
+          setActiveName('');
+        }}
+      />
     </>
   );
 };

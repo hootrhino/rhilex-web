@@ -7,6 +7,8 @@ export default {
   'com.table.title.model': '型號',
   'com.table.title.status': '狀態',
   'com.table.title.vendor': '廠商',
+  'com.table.title.firmware': '固件',
+  'com.table.title.mac': 'MAC 地址',
 
   /**
    * form
@@ -25,7 +27,9 @@ export default {
   /**
    * others
    */
-  'com.modal.title': '發送指令',
+  'com.modal.title.command': '發送指令',
+  'com.modal.title.detail': '模組詳情',
+  'com.modal.title.error': '模組異常訊息',
   'com.type.urf': '通用射頻',
   'com.type.blc': '經典藍牙',
   'com.type.ble': '低功耗藍牙',

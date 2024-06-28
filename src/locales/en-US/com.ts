@@ -7,6 +7,8 @@ export default {
   'com.table.title.model': 'Model',
   'com.table.title.status': 'Status',
   'com.table.title.vendor': 'Vendor',
+  'com.table.title.firmware': 'Firmware',
+  'com.table.title.mac': 'MAC Address',
 
   /**
    * form
@@ -19,13 +21,15 @@ export default {
   /**
    * button
    */
-  'com.button.cmd': 'Send Command',
+  'com.button.cmd': 'Command',
   'com.button.send': 'Send',
 
   /**
    * others
    */
-  'com.modal.title': 'Send command',
+  'com.modal.title.command': 'Send command',
+  'com.modal.title.detail': 'Module details',
+  'com.modal.title.error': 'Module exception details',
   'com.type.urf': 'Universal Radio Frequency',
   'com.type.blc': 'Bluetooth Classic',
   'com.type.ble': 'Bluetooth Low Energy',

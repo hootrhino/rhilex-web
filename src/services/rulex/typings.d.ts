@@ -335,6 +335,10 @@ declare namespace API {
     device_uuid: string;
   };
 
+  type getTransceiverDetailParams = {
+    name: string;
+  };
+
   type getUserluaDetailParams = {
     uuid: string;
   };

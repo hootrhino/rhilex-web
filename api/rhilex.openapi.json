@@ -19219,20 +19219,42 @@
                           "type": {
                             "type": "integer"
                           },
+                          "vendor": {
+                            "type": "string"
+                          },
+                          "mac": {
+                            "type": "string"
+                          },
+                          "firmware": {
+                            "type": "string"
+                          },
                           "status": {
                             "type": "integer"
                           },
-                          "vendor": {
-                            "type": "string"
+                          "errMsg": {
+                            "type": "null"
                           }
                         },
+                        "required": [
+                          "name",
+                          "model",
+                          "type",
+                          "vendor",
+                          "mac",
+                          "firmware",
+                          "status",
+                          "errMsg"
+                        ],
                         "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
                           "name",
                           "model",
                           "type",
+                          "vendor",
+                          "mac",
+                          "firmware",
                           "status",
-                          "vendor"
+                          "errMsg"
                         ]
                       }
                     }
@@ -19248,6 +19270,47 @@
                     "msg",
                     "data"
                   ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "name": "MX01-BLE-Module",
+                          "model": "MX01-BLE-Module",
+                          "type": 3,
+                          "vendor": "SHENZHEN-MIAOXIANG-technology",
+                          "mac": "00:00:00:00:00:00:00:00",
+                          "firmware": "0.0.0",
+                          "status": 1,
+                          "errMsg": null
+                        },
+                        {
+                          "name": "EC200A-4G-DTU",
+                          "model": "EC200A-4G-DTU",
+                          "type": 7,
+                          "vendor": "Quectel technology",
+                          "mac": "00:00:00:00:00:00:00:00",
+                          "firmware": "0.0.0",
+                          "status": 1,
+                          "errMsg": null
+                        },
+                        {
+                          "name": "ATK-01-LORA",
+                          "model": "ATK-01-LORA",
+                          "type": 10,
+                          "vendor": "GUANGZHOU-ZHENGDIAN-YUANZI technology",
+                          "mac": "00:00:00:00:00:00:00:00",
+                          "firmware": "0.0.0",
+                          "status": 1,
+                          "errMsg": null
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -19302,9 +19365,50 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {},
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "cmd": {
+                          "type": "string"
+                        },
+                        "result": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "cmd",
+                        "result"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "name",
+                        "cmd",
+                        "result"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
                   "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
                 }
               }
             }
@@ -19552,6 +19656,113 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-188444751-run",
+        "security": []
+      }
+    },
+    "/api/v1/transceiver/detail": {
+      "get": {
+        "summary": "获取详情",
+        "x-apifox-folder": "通信模组",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "通信模组"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "MX01-BLE-Module",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "model": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "integer"
+                        },
+                        "vendor": {
+                          "type": "string"
+                        },
+                        "mac": {
+                          "type": "string"
+                        },
+                        "firmware": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "integer"
+                        },
+                        "errMsg": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "model",
+                        "type",
+                        "vendor",
+                        "mac",
+                        "firmware",
+                        "status",
+                        "errMsg"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "name",
+                        "model",
+                        "type",
+                        "vendor",
+                        "mac",
+                        "firmware",
+                        "status",
+                        "errMsg"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-188699890-run",
         "security": []
       }
     }
