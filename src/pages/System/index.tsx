@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import DataBackupConfig from './DataBackup';
 import FirmwareConfig from './Firmware';
 import NetworkConfig from './Network';
-import Network4GConfig from './Network4g';
 import NetworkStatus from './NetworkStatus';
 import PortSettings from './PortMgt';
 import Resource from './Resource';
@@ -53,16 +52,6 @@ const baseItems = [
     children: <WIFIConfig />,
   },
   {
-    label: (
-      <div>
-        4G&nbsp;&nbsp;
-        <FormattedMessage id="system.tab.4gNetwork" />
-      </div>
-    ),
-    key: 'apn',
-    children: <Network4GConfig />,
-  },
-  {
     label: <FormattedMessage id="system.tab.time" />,
     key: 'time',
     children: <TimeConfig />,
@@ -97,9 +86,9 @@ const System = () => {
         return defaultConfig.includes(item.key);
       } else {
         // mac linux
-        if (product === Product.EN6400) {
-          return !['apn'].includes(item.key);
-        }
+        // if (product === Product.EN6400) {
+        //   return !['apn'].includes(item.key);
+        // }
         if ([Product.COMMON].includes(product)) {
           return defaultConfig.includes(item.key);
         }

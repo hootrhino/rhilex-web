@@ -5,11 +5,8 @@ import type { ModalProps } from 'antd';
 import { Button, Form, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useState } from 'react';
-
-type TransceiverCtrlParams = {
-  name: string;
-  cmd: string;
-};
+import type { TransceiverCtrlParams } from '..';
+import { TransceiverTopic } from '../enum';
 
 type SendCommandProps = ModalProps & {
   name: string;
@@ -52,16 +49,16 @@ const SendCommand = ({ name, onCancel, ...props }: SendCommandProps) => {
         form={form}
         layout="vertical"
         requiredMark={false}
-        onFinish={({ cmd }) => {
-          if (cmd && name) {
+        onFinish={({ args }) => {
+          if (args && name) {
             setResult('loading...');
-            run({ cmd, name });
+            run({ args, name, topic: TransceiverTopic.SEND });
           }
         }}
       >
         <Form.Item
           label={intl.formatMessage({ id: 'com.form.title.cmd' })}
-          name="cmd"
+          name="args"
           rules={[
             { required: true, message: intl.formatMessage({ id: 'com.form.placeholder.cmd' }) },
           ]}

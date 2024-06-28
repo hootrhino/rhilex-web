@@ -14788,13 +14788,39 @@
                         "devices": {
                           "type": "array",
                           "items": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "name"
+                            ]
                           }
                         },
                         "outends": {
                           "type": "array",
                           "items": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "name"
+                            ]
                           }
                         },
                         "rfcoms": {
@@ -14823,7 +14849,20 @@
                         "schemas": {
                           "type": "array",
                           "items": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "name"
+                            ]
                           }
                         }
                       },
@@ -14853,34 +14892,6 @@
                     "msg",
                     "data"
                   ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "devices": [],
-                        "outends": [],
-                        "rfcoms": [
-                          {
-                            "uuid": "MX01-BLE-Module",
-                            "name": "MX01-BLE-Module"
-                          },
-                          {
-                            "uuid": "EC200A-4G-DTU",
-                            "name": "EC200A-4G-DTU"
-                          },
-                          {
-                            "uuid": "ATK-01-LORA",
-                            "name": "ATK-01-LORA"
-                          }
-                        ],
-                        "schemas": []
-                      }
-                    }
-                  }
                 }
               }
             }
@@ -19343,18 +19354,23 @@
                   "name": {
                     "type": "string"
                   },
-                  "cmd": {
+                  "topic": {
+                    "type": "string"
+                  },
+                  "args": {
                     "type": "string"
                   }
                 },
                 "required": [
                   "name",
-                  "cmd"
+                  "topic",
+                  "args"
                 ],
                 "x-apifox-ignore-properties": [],
                 "x-apifox-orders": [
                   "name",
-                  "cmd"
+                  "topic",
+                  "args"
                 ]
               },
               "example": ""
@@ -19393,12 +19409,12 @@
                         "cmd",
                         "result"
                       ],
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "name",
                         "cmd",
                         "result"
-                      ]
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -19406,12 +19422,12 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
               }
             }

@@ -1,19 +1,23 @@
 import ProDescriptions from '@/components/ProDescriptions';
 import ProTag, { StatusType } from '@/components/ProTag';
-import { getTransceiverDetail } from '@/services/rulex/tongxinmozu';
+import { getTransceiverDetail, postTransceiverCtrl } from '@/services/rulex/tongxinmozu';
 import { IconFont } from '@/utils/utils';
+import { green } from '@ant-design/colors';
 import { getIntl, getLocale } from '@umijs/max';
 import type { ModalProps } from 'antd';
-import { Button, Modal, Space } from 'antd';
-import { TransceiverTypeOption } from '../enum';
+import { Button, Modal, Progress, Space } from 'antd';
+import { TransceiverTopic, TransceiverType, TransceiverTypeOption } from '../enum';
 
 type DetailProps = ModalProps & {
   name: string;
+  type: number;
 };
 
 const intl = getIntl(getLocale());
+const labelWidth = getLocale() === 'en-US' ? 120 : 80;
 
-const Detail = ({ name, ...props }: DetailProps) => {
+const Detail = ({ name, type, ...props }: DetailProps) => {
+  // 基本信息
   const columns = [
     {
       title: intl.formatMessage({ id: 'com.table.title.name' }),
@@ -54,6 +58,28 @@ const Detail = ({ name, ...props }: DetailProps) => {
     },
   ];
 
+  // 信号强度
+  const csqColumns = [
+    {
+      title: intl.formatMessage({ id: 'com.table.title.cops' }),
+      dataIndex: 'cops',
+    },
+    {
+      title: 'ICCID',
+      dataIndex: 'iccid',
+    },
+    {
+      title: intl.formatMessage({ id: 'com.table.title.csq' }),
+      dataIndex: 'csq',
+      renderText: (csq: number) => {
+        const base = 31 / 100;
+        const percent = csq ? csq / base : 0;
+
+        return <Progress steps={10} size={20} percent={percent} strokeColor={green[6]} />;
+      },
+    },
+  ];
+
   return (
     <Modal
       destroyOnClose
@@ -66,8 +92,9 @@ const Detail = ({ name, ...props }: DetailProps) => {
       {...props}
     >
       <ProDescriptions
+        title={intl.formatMessage({ id: 'com.modal.title.detail.basic' })}
         columns={columns}
-        labelWidth={getLocale() === 'en-US' ? 120 : 80}
+        labelWidth={labelWidth}
         request={async () => {
           const res = await getTransceiverDetail({ name });
 
@@ -77,6 +104,21 @@ const Detail = ({ name, ...props }: DetailProps) => {
           });
         }}
       />
+      {type === TransceiverType.MN4G && (
+        <ProDescriptions
+          title={intl.formatMessage({ id: 'com.modal.title.detail.csq' })}
+          columns={csqColumns}
+          labelWidth={labelWidth}
+          request={async () => {
+            const res = await postTransceiverCtrl({ name, args: '', topic: TransceiverTopic.CSQ });
+
+            return Promise.resolve({
+              success: true,
+              data: (res as any)?.result,
+            });
+          }}
+        />
+      )}
     </Modal>
   );
 };

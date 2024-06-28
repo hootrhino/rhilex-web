@@ -10,7 +10,6 @@ export default {
   'system.tab.routing': '路由设置',
   'system.tab.firmware': '固件设置',
   'system.tab.4gConfig': '设置',
-  'system.tab.4gNetwork': '网络',
   'system.tab.apn': 'APN 设置',
   'system.tab.backup': '数据备份',
   'system.tab.user': '用户设置',

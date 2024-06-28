@@ -6,7 +6,8 @@ import { request } from '@umijs/max';
 export async function postTransceiverCtrl(
   body: {
     name: string;
-    cmd: string;
+    topic: string;
+    args: string;
   },
   options?: { [key: string]: any },
 ) {

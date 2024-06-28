@@ -10,7 +10,6 @@ export default {
   'system.tab.routing': 'Routing Settings',
   'system.tab.firmware': 'Firmware Settings',
   'system.tab.4gConfig': 'Settings',
-  'system.tab.4gNetwork': 'Network',
   'system.tab.apn': 'APN Settings',
   'system.tab.backup': 'Backup Settings',
   'system.tab.user': 'User Settings',

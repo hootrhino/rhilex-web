@@ -75,28 +75,28 @@ const APNConfig = () => {
     >
       <ProFormSelect
         name="senceId"
-        label={formatMessage({ id: 'system.form.title.sceneId' })}
-        options={[{ label: formatMessage({ id: 'system.scene.option1' }), value: 1 }]}
-        placeholder={formatMessage({ id: 'system.form.placeholder.sceneId' })}
+        label={formatMessage({ id: 'com.form.title.sceneId' })}
+        options={[{ label: formatMessage({ id: 'com.scene.option1' }), value: 1 }]}
+        placeholder={formatMessage({ id: 'com.form.placeholder.sceneId' })}
         width="xl"
         allowClear={false}
       />
       <ProFormSelect
         name="ptytpe"
-        label={formatMessage({ id: 'system.form.title.ptytpe' })}
+        label={formatMessage({ id: 'com.form.title.ptytpe' })}
         options={[
           { label: 'IPv4', value: 1 },
           { label: 'IPv6', value: 2 },
-          { label: `IPv4 ${formatMessage({ id: 'system.option.and' })} IPv6`, value: 3 },
+          { label: `IPv4 ${formatMessage({ id: 'com.option.and' })} IPv6`, value: 3 },
         ]}
-        placeholder={formatMessage({ id: 'system.form.placeholder.ptytpe' })}
+        placeholder={formatMessage({ id: 'com.form.placeholder.ptytpe' })}
         width="xl"
         allowClear={false}
       />
       <ProFormText
         name="apn"
-        label={formatMessage({ id: 'system.form.title.apn' })}
-        placeholder={formatMessage({ id: 'system.form.placeholder.apn' })}
+        label={formatMessage({ id: 'com.form.title.apn' })}
+        placeholder={formatMessage({ id: 'com.form.placeholder.apn' })}
         width="xl"
       />
       <ProFormText
@@ -114,29 +114,26 @@ const APNConfig = () => {
       />
       <ProFormSelect
         name="auth"
-        label={formatMessage({ id: 'system.form.title.auth' })}
+        label={formatMessage({ id: 'com.form.title.auth' })}
         options={[
           { label: 'NONE', value: 0 },
           { label: 'PAP', value: 1 },
           { label: 'CHAP', value: 2 },
-          { label: `PAP ${formatMessage({ id: 'system.option.or' })} CHAP`, value: 3 },
+          { label: `PAP ${formatMessage({ id: 'com.option.or' })} CHAP`, value: 3 },
         ]}
-        placeholder={formatMessage({ id: 'system.form.placeholder.auth' })}
+        placeholder={formatMessage({ id: 'com.form.placeholder.auth' })}
         width="xl"
         allowClear={false}
       />
       <ProFormSelect
         name="cdmapwd"
-        label={formatMessage({ id: 'system.form.title.cdmapwd' })}
+        label={formatMessage({ id: 'com.form.title.cdmapwd' })}
         options={[
-          { label: formatMessage({ id: 'system.option.unsave' }), value: 0 },
-          { label: formatMessage({ id: 'system.option.save' }), value: 1 },
+          { label: formatMessage({ id: 'com.option.unsave' }), value: 0 },
+          { label: formatMessage({ id: 'com.option.save' }), value: 1 },
         ]}
-        tooltip={formatMessage({ id: 'system.tooltip.cdmapwd' })}
-        placeholder={formatMessage(
-          { id: 'placeholder.select' },
-          { text: formatMessage({ id: 'system.form.title.cdmapwd' }) },
-        )}
+        tooltip={formatMessage({ id: 'com.tooltip.cdmapwd' })}
+        placeholder={formatMessage({ id: 'com.form.placeholder.cdmapwd' })}
         width="xl"
         allowClear={false}
       />

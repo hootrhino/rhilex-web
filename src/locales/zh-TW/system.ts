@@ -10,7 +10,6 @@ export default {
   'system.tab.routing': '路由設定',
   'system.tab.firmware': '固件設定',
   'system.tab.4gConfig': '設定',
-  'system.tab.4gNetwork': '網絡',
   'system.tab.apn': 'APN 設定',
   'system.tab.backup': '數據備份',
   'system.tab.user': '用戶設定',
@@ -138,7 +137,6 @@ export default {
   /**
    * modal
    */
-  'system.modal.title.restart': '確定執行此操作嗎？',
   'system.modal.content.restart': '重新啟動 4G 網卡會造成短時間內移動網絡處於離線狀態，請謹慎操作',
   'system.modal.content.upload':
     '上傳時請確認版本，版本錯誤會導致失敗，有可能會引起設備故障，請謹慎操作',
