@@ -56,6 +56,8 @@ export default {
   'com.type.blc': '经典蓝牙',
   'com.type.ble': '低功耗蓝牙',
   'com.type.rf': '{type} 通信',
+  'com.type.ir': '红外收发器',
+  'com.type.beep': '蜂鸣器',
   'com.scene.option1': '场景1',
   'com.option.unsave': '不保存',
   'com.option.save': '保存',

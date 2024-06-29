@@ -21,6 +21,8 @@ export enum TransceiverType {
   NBIoT = 9,
   LORA = 10,
   LORA_WAN = 11,
+  IR = 12,
+  BEEP = 13,
 }
 
 export const TransceiverTypeOption = {
@@ -71,5 +73,13 @@ export const TransceiverTypeOption = {
   [TransceiverType.LORA_WAN]: {
     icon: 'lorawan',
     text: 'LoRaWAN',
+  },
+  [TransceiverType.IR]: {
+    icon: 'ir',
+    text: intl.formatMessage({ id: 'com.type.ir' }),
+  },
+  [TransceiverType.BEEP]: {
+    icon: 'beep',
+    text: intl.formatMessage({ id: 'com.type.beep' }),
   },
 };

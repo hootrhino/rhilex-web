@@ -57,6 +57,8 @@ export default {
   'com.type.blc': 'Bluetooth Classic',
   'com.type.ble': 'Bluetooth Low Energy',
   'com.type.rf': '{type} Radio Frequency',
+  'com.type.ir': 'IR Transceiver',
+  'com.type.beep': 'Beeper',
   'com.scene.option1': 'Scene1',
   'com.option.unsave': 'Unsaved',
   'com.option.save': 'Save',
