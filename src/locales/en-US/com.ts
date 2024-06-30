@@ -38,7 +38,6 @@ export default {
    */
   'com.button.cmd': 'Send Command',
   'com.button.send': 'Send',
-  'com.button.restart': 'Restart',
   'com.button.confirm.restart': 'Confirm',
 
   /**
@@ -51,7 +50,7 @@ export default {
   'com.modal.title.detail.parameter': '{type} parameters',
   'com.modal.title.detail.parameter.ble': 'Bluetooth',
   'com.modal.content.restart':
-    'Resetting the 4G network card will temporarily disconnect the mobile network for a short period of time. Please proceed with caution',
+    'Restarting will temporarily disconnect the mobile network for a short period of time. Please proceed with caution',
 
   /**
    * option

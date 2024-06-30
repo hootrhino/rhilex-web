@@ -9,8 +9,6 @@ export default {
   'system.tab.time': '時間設定',
   'system.tab.routing': '路由設定',
   'system.tab.firmware': '固件設定',
-  'system.tab.4gConfig': '設定',
-  'system.tab.apn': 'APN 設定',
   'system.tab.backup': '數據備份',
   'system.tab.user': '用戶設定',
   'system.tab.port': '連接埠設定',
@@ -23,13 +21,6 @@ export default {
   'system.form.title.ipPoolRange': 'IP 分配範圍',
   'system.form.title.ifaceFrom': 'LAN 網卡',
   'system.form.title.ifaceTo': '流量出口',
-  'system.form.title.cops': '營運商',
-  'system.form.title.csq': '訊號強度',
-  'system.form.title.sceneId': '場景編號',
-  'system.form.title.ptytpe': '協議類型',
-  'system.form.title.apn': 'APN 名稱',
-  'system.form.title.auth': 'APN 鑑權',
-  'system.form.title.cdmapwd': '保存 CDMA 模式',
   'system.form.title.interface': '網卡選擇',
   'system.form.title.address': 'IP 地址',
   'system.form.title.gateway': '默認網關',
@@ -64,10 +55,6 @@ export default {
   'system.form.rules.ssid': '請輸入 SSID',
   'system.form.rules.security': '請選擇加密方式',
 
-  'system.form.placeholder.sceneId': '請選擇場景編號',
-  'system.form.placeholder.ptytpe': '請選擇協議類型',
-  'system.form.placeholder.apn': '請輸入 APN 名稱',
-  'system.form.placeholder.auth': '請選擇 APN 鑑權',
   'system.form.placeholder.sysTimeZone': '請選擇時區',
   'system.form.placeholder.sysTime': '請選擇時間',
 
@@ -116,8 +103,6 @@ export default {
   /**
    * button
    */
-  'system.button.reload': '重新載入狀態',
-  'system.button.restart4g': '重新啟動 4G 網卡',
   'system.button.upgrade': '升級',
   'system.button.confirm.reboot': '確認重新啟動',
   'system.button.confirm.restart': '確認重新啟動',
@@ -168,10 +153,6 @@ export default {
   'system.tooltip.cdmapwd': '是否在 CDMA 網絡下保存用戶名和密碼',
   'system.tooltip.new': '新建一行',
 
-  'system.option.unsave': '不保存',
-  'system.option.save': '保存',
-  'system.option.or': '或',
-  'system.option.and': '和',
   'system.option.shanghai': '中國',
   'system.option.tokyo': '日本',
   'system.switch.checked': '開啟',

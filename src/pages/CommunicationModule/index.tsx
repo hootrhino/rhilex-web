@@ -98,7 +98,7 @@ const CommunicationModule = () => {
         {
           key: 'restart',
           danger: true,
-          label: formatMessage({ id: 'com.button.restart' }),
+          label: formatMessage({ id: 'button.restart' }),
           icon: <PoweroffOutlined />,
         },
         ...menuItem,

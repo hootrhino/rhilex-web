@@ -38,7 +38,6 @@ export default {
    */
   'com.button.cmd': '發送指令',
   'com.button.send': '發送',
-  'com.button.restart': '重新啟動',
   'com.button.confirm.restart': '確認重新啟動',
 
   /**
@@ -50,7 +49,7 @@ export default {
   'com.modal.title.detail.basic': '基本訊息',
   'com.modal.title.detail.parameter': '{type} 參數',
   'com.modal.title.detail.parameter.ble': '藍牙',
-  'com.modal.content.restart': '重新啟動 4G 網卡會造成短時間內移動網絡處於離線狀態，請謹慎操作',
+  'com.modal.content.restart': '重新啟動會造成短時間內移動網絡處於離線狀態，請謹慎操作',
 
   /**
    * option

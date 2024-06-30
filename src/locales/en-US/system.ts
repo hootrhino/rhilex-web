@@ -9,8 +9,6 @@ export default {
   'system.tab.time': 'Time Settings',
   'system.tab.routing': 'Routing Settings',
   'system.tab.firmware': 'Firmware Settings',
-  'system.tab.4gConfig': 'Settings',
-  'system.tab.apn': 'APN Settings',
   'system.tab.backup': 'Backup Settings',
   'system.tab.user': 'User Settings',
   'system.tab.port': 'Interface Setting',
@@ -23,13 +21,6 @@ export default {
   'system.form.title.ipPoolRange': 'IP Range',
   'system.form.title.ifaceFrom': 'LAN Interface',
   'system.form.title.ifaceTo': 'Traffic Direction',
-  'system.form.title.cops': 'COPS',
-  'system.form.title.csq': 'CSQ',
-  'system.form.title.sceneId': 'Scene Id',
-  'system.form.title.ptytpe': 'Protocol Type',
-  'system.form.title.apn': 'APN Name',
-  'system.form.title.auth': 'APN Auth',
-  'system.form.title.cdmapwd': 'Save CDMA Mode',
   'system.form.title.interface': 'Select Interface',
   'system.form.title.address': 'IP Address',
   'system.form.title.gateway': 'Gateway',
@@ -64,10 +55,6 @@ export default {
   'system.form.rules.ssid': 'Please enter a SSID',
   'system.form.rules.security': 'Please select a encryption method',
 
-  'system.form.placeholder.sceneId': 'Please enter a sence id',
-  'system.form.placeholder.ptytpe': 'Please select a protocol type',
-  'system.form.placeholder.apn': 'Please enter a apn name',
-  'system.form.placeholder.auth': 'Please select a apn auth',
   'system.form.placeholder.sysTimeZone': 'Please select a time zone',
   'system.form.placeholder.sysTime': 'Please select a time',
 
@@ -116,8 +103,6 @@ export default {
   /**
    * button
    */
-  'system.button.reload': 'Refresh',
-  'system.button.restart4g': 'Reset 4G',
   'system.button.upgrade': 'Upgrade',
   'system.button.confirm.reboot': 'Confirm',
   'system.button.confirm.restart': 'Confirm',
@@ -172,10 +157,6 @@ export default {
   'system.tooltip.cdmapwd': 'Whether to save the username and password on the CDMA network',
   'system.tooltip.new': 'Add a new line',
 
-  'system.option.unsave': 'Unsaved',
-  'system.option.save': 'Save',
-  'system.option.or': 'or',
-  'system.option.and': 'and',
   'system.option.shanghai': 'China',
   'system.option.tokyo': 'Japan',
   'system.switch.checked': 'enable',
