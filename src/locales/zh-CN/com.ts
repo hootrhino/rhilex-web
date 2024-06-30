@@ -11,6 +11,8 @@ export default {
   'com.table.title.mac': 'MAC 地址',
   'com.table.title.cops': '运营商',
   'com.table.title.csq': '信号强度',
+  'com.table.title.bleName': '蓝牙名称',
+  'com.table.title.bleMac': '蓝牙地址',
 
   /**
    * form
@@ -36,7 +38,7 @@ export default {
    */
   'com.button.cmd': '发送指令',
   'com.button.send': '发送',
-  'com.button.restart4g': '重启 4G 网卡',
+  'com.button.restart': '重启',
   'com.button.confirm.restart': '确认重启',
 
   /**
@@ -46,7 +48,8 @@ export default {
   'com.modal.title.error': '模组异常信息',
   'com.modal.title.detail': '模组详情',
   'com.modal.title.detail.basic': '基本信息',
-  'com.modal.title.detail.csq': '网络状态',
+  'com.modal.title.detail.parameter': '{type} 参数',
+  'com.modal.title.detail.parameter.ble': '蓝牙',
   'com.modal.content.restart': '重启 4G 网卡会造成短时间内移动网络处于离线状态，请谨慎操作',
 
   /**

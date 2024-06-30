@@ -11,6 +11,8 @@ export default {
   'com.table.title.mac': 'MAC 地址',
   'com.table.title.cops': '營運商',
   'com.table.title.csq': '訊號強度',
+  'com.table.title.bleName': '藍牙名稱',
+  'com.table.title.bleMac': '藍牙地址',
 
   /**
    * form
@@ -36,7 +38,7 @@ export default {
    */
   'com.button.cmd': '發送指令',
   'com.button.send': '發送',
-  'com.button.restart4g': '重新啟動 4G 網卡',
+  'com.button.restart': '重新啟動',
   'com.button.confirm.restart': '確認重新啟動',
 
   /**
@@ -46,7 +48,8 @@ export default {
   'com.modal.title.error': '模組異常訊息',
   'com.modal.title.detail': '模組詳情',
   'com.modal.title.detail.basic': '基本訊息',
-  'com.modal.title.detail.csq': '網路狀態',
+  'com.modal.title.detail.parameter': '{type} 參數',
+  'com.modal.title.detail.parameter.ble': '藍牙',
   'com.modal.content.restart': '重新啟動 4G 網卡會造成短時間內移動網絡處於離線狀態，請謹慎操作',
 
   /**

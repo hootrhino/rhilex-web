@@ -6,16 +6,17 @@ import { Button, Form, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useState } from 'react';
 import type { TransceiverCtrlParams } from '..';
-import { TransceiverTopic } from '../enum';
+import { TopicType, TransceiverTopic } from '../enum';
 
 type SendCommandProps = ModalProps & {
   name: string;
+  type: number;
   onCancel: () => void;
 };
 
 const intl = getIntl(getLocale());
 
-const SendCommand = ({ name, onCancel, ...props }: SendCommandProps) => {
+const SendCommand = ({ name, type, onCancel, ...props }: SendCommandProps) => {
   const [form] = Form.useForm();
   const [result, setResult] = useState<string>();
 
@@ -52,7 +53,7 @@ const SendCommand = ({ name, onCancel, ...props }: SendCommandProps) => {
         onFinish={({ args }) => {
           if (args && name) {
             setResult('loading...');
-            run({ args, name, topic: TransceiverTopic.SEND });
+            run({ args, name, topic: TransceiverTopic[type]?.[TopicType.SEND] });
           }
         }}
       >

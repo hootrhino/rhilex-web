@@ -2,12 +2,6 @@ import { getIntl, getLocale } from '@umijs/max';
 
 const intl = getIntl(getLocale());
 
-export enum TransceiverTopic {
-  CSQ = 'mn4g.ec200a.info.csq',
-  RESTART = 'mn4g.ec200a.opt.restart',
-  SEND = 'mn4g.ec200a.cmd.send',
-}
-
 export enum TransceiverType {
   COMMON_RF = 0,
   WIFI = 1,
@@ -83,3 +77,31 @@ export const TransceiverTypeOption = {
     text: intl.formatMessage({ id: 'com.type.beep' }),
   },
 };
+
+// 指令 Topic
+export const enum TopicType {
+  INFO = 'info',
+  RESTART = 'restart',
+  SEND = 'send',
+}
+
+export const TransceiverTopic = {
+  [TransceiverType.MN4G]: {
+    [TopicType.INFO]: 'mn4g.ec200a.info',
+    [TopicType.RESTART]: 'mn4g.ec200a.opt.restart',
+    [TopicType.SEND]: 'mn4g.ec200a.cmd.send',
+  },
+  [TransceiverType.BLE]: {
+    [TopicType.INFO]: 'ble.mx01.info',
+    [TopicType.RESTART]: 'ble.mx01.opt.restart',
+    [TopicType.SEND]: 'ble.mx01.cmd.send',
+  },
+  [TransceiverType.LORA]: {
+    [TopicType.SEND]: 'lora.atk01.cmd.send',
+  },
+};
+
+export enum ModalType {
+  DETAIL = 'detail',
+  COMMAND = 'command',
+}

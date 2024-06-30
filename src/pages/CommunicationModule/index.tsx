@@ -2,7 +2,8 @@ import { modal } from '@/components/PopupHack';
 import PageContainer from '@/components/ProPageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
 import { getTransceiverList, postTransceiverCtrl } from '@/services/rulex/tongxinmozu';
-import { IconFont } from '@/utils/utils';
+import { pick } from '@/utils/redash';
+import { cn, IconFont } from '@/utils/utils';
 import {
   DownOutlined,
   ExceptionOutlined,
@@ -18,7 +19,13 @@ import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useState } from 'react';
 import Command from './Command';
 import Detail from './Detail';
-import { TransceiverType, TransceiverTypeOption } from './enum';
+import {
+  ModalType,
+  TopicType,
+  TransceiverTopic,
+  TransceiverType,
+  TransceiverTypeOption,
+} from './enum';
 
 export type ComItem = {
   name: string;
@@ -35,16 +42,27 @@ export type TransceiverCtrlParams = {
   args: string;
 };
 
+type ModalConfig = {
+  open: boolean;
+  name: string;
+  type: number;
+  modalType: ModalType;
+};
+
+const DEFAULT_CONFIG = {
+  open: false,
+  name: '',
+  type: -1,
+  modalType: ModalType.DETAIL,
+};
+
 const CommunicationModule = () => {
   const { formatMessage } = useIntl();
 
-  const [activeName, setActiveName] = useState<string>('');
-  const [activeType, setActiveType] = useState<number>(-1);
-  const [openCommand, setOpenCommand] = useState<boolean>(false);
-  const [openDetail, setOpenDetail] = useState<boolean>(false);
+  const [config, setConfig] = useState<ModalConfig>(DEFAULT_CONFIG);
 
-  // 重启 4G 网卡
-  const { run: restart4G } = useRequest(
+  // 重启
+  const { run: restart } = useRequest(
     (params: TransceiverCtrlParams) => postTransceiverCtrl(params),
     {
       manual: true,
@@ -54,6 +72,7 @@ const CommunicationModule = () => {
     },
   );
 
+  // 获取高级操作
   const getMenuItems = ({ status, type }: ComItem) => {
     const baseItem = [
       {
@@ -74,12 +93,12 @@ const CommunicationModule = () => {
         },
       ];
     }
-    if (type === TransceiverType.MN4G) {
+    if ([TransceiverType.MN4G, TransceiverType.BLE].includes(type)) {
       menuItem = [
         {
-          key: 'restart4g',
+          key: 'restart',
           danger: true,
-          label: formatMessage({ id: 'com.button.restart4g' }),
+          label: formatMessage({ id: 'com.button.restart' }),
           icon: <PoweroffOutlined />,
         },
         ...menuItem,
@@ -89,13 +108,12 @@ const CommunicationModule = () => {
     return menuItem;
   };
 
-  const handleOnMenu = ({ key }: MenuInfo, { name, errMsg }: ComItem) => {
+  const handleOnMenu = ({ key }: MenuInfo, { name, type, errMsg }: ComItem) => {
     switch (key) {
       case 'command':
         if (!name) return;
 
-        setOpenCommand(true);
-        setActiveName(name);
+        setConfig({ ...config, open: true, name, type, modalType: ModalType.COMMAND });
         break;
       case 'error':
         modal.error({
@@ -104,11 +122,12 @@ const CommunicationModule = () => {
           okText: formatMessage({ id: 'button.close' }),
         });
         break;
-      case 'restart4g':
+      case 'restart':
         modal.confirm({
           title: formatMessage({ id: 'modal.title.confirm' }),
           content: formatMessage({ id: 'com.modal.content.restart' }),
-          onOk: restart4G,
+          onOk: () =>
+            restart({ name, args: '', topic: TransceiverTopic[type]?.[TopicType.RESTART] }),
           okText: formatMessage({ id: 'com.button.confirm.restart' }),
           cancelText: formatMessage({ id: 'button.cancel' }),
         });
@@ -116,6 +135,11 @@ const CommunicationModule = () => {
       default:
         break;
     }
+  };
+
+  // 重置 modal 配置
+  const handleOnReset = () => {
+    setConfig(DEFAULT_CONFIG);
   };
 
   const columns: ProColumns<ComItem>[] = [
@@ -159,9 +183,13 @@ const CommunicationModule = () => {
           onClick={() => {
             if (!record?.name) return;
 
-            setOpenDetail(true);
-            setActiveName(record?.name);
-            setActiveType(record?.type);
+            setConfig({
+              ...config,
+              open: true,
+              name: record?.name,
+              type: record?.type,
+              modalType: ModalType.DETAIL,
+            });
           }}
         >
           {formatMessage({ id: 'button.detail' })}
@@ -173,7 +201,15 @@ const CommunicationModule = () => {
             onClick: (info: MenuInfo) => handleOnMenu(info, record),
           }}
         >
-          <a>
+          <a
+            className={cn(
+              [TransceiverType.MN4G, TransceiverType.BLE, TransceiverType.LORA].includes(
+                record?.type,
+              )
+                ? 'display'
+                : 'hidden',
+            )}
+          >
             {formatMessage({ id: 'button.advancedOption' })} <DownOutlined />
           </a>
         </Dropdown>,
@@ -201,21 +237,14 @@ const CommunicationModule = () => {
         />
       </PageContainer>
       <Command
-        name={activeName}
-        open={openCommand}
-        onCancel={() => {
-          setOpenCommand(false);
-          setActiveName('');
-        }}
+        {...pick(config, ['name', 'type'])}
+        open={config.open && config.modalType === ModalType.COMMAND}
+        onCancel={handleOnReset}
       />
       <Detail
-        name={activeName}
-        type={activeType}
-        open={openDetail}
-        onCancel={() => {
-          setOpenDetail(false);
-          setActiveName('');
-        }}
+        {...pick(config, ['name', 'type'])}
+        open={config.open && config.modalType === ModalType.DETAIL}
+        onCancel={handleOnReset}
       />
     </>
   );
