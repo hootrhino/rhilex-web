@@ -178,7 +178,7 @@ const TransceiverStatusEnum = {
     icon: <CloseCircleOutlined />,
   },
   1: {
-    text: 'status.enabled',
+    text: 'status.normal',
     color: 'success',
     icon: <CheckCircleOutlined />,
   },
