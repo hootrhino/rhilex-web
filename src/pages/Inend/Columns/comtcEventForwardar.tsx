@@ -6,7 +6,7 @@ import { Space } from 'antd';
 
 const intl = getIntl(getLocale());
 
-export const COMTC_EVENT_FORWARDAR = [
+export const COMTC_EVENT_FORWARDER = [
   {
     title: intl.formatMessage({ id: 'inend.table.title.comName' }),
     dataIndex: ['config', 'comName'],
