@@ -50,7 +50,6 @@ export default {
    * page
    */
   'page.404.subTitle': 'Sorry, the page you visited does not exist',
-  'page.copyright': 'RHILEX TEAM 2023-2033. All rights reserved.',
   /**
    * form
    */

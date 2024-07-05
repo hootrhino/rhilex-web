@@ -54,8 +54,6 @@ const Login: React.FC = () => {
     password: ValidateStatus;
   }>({ username: '', password: '' });
 
-  const COPYRIGHT = formatMessage({ id: 'page.copyright' });
-
   const handleOnSecret = async () => {
     const { data } = await getDatacenterSecret();
     localStorage.setItem('secret', data.secret);
@@ -166,7 +164,10 @@ const Login: React.FC = () => {
           </LoginForm>
         </div>
       </div>
-      <DefaultFooter copyright={COPYRIGHT} className="bg-[#f0f2f5]" />
+      <DefaultFooter
+        copyright={`2023-${new Date().getFullYear()} RHILEX Team. All rights reserved.`}
+        className="bg-[#f0f2f5]"
+      />
     </div>
   );
 };

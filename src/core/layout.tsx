@@ -6,13 +6,11 @@ import { Product } from '@/utils/enum';
 import { IconFont } from '@/utils/utils';
 import { DefaultFooter } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
-import { getIntl, getLocale, history, Link } from '@umijs/max';
+import { history, Link } from '@umijs/max';
 import { MacScrollbar } from 'mac-scrollbar';
 import 'mac-scrollbar/dist/mac-scrollbar.css';
 
 const layout: RunTimeLayoutConfig = ({ initialState }) => {
-  const COPYRIGHT = getIntl(getLocale()).formatMessage({ id: 'page.copyright' });
-
   return {
     siderWidth: 208,
     rightContentRender: () => <RightContent />,
@@ -31,7 +29,11 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
         <Link to={`/${paths[paths.length - 1]}`}>{route.title}</Link>
       );
     },
-    footerRender: () => <DefaultFooter copyright={COPYRIGHT} />,
+    footerRender: () => (
+      <DefaultFooter
+        copyright={`2023-${new Date().getFullYear()} RHILEX Team. All rights reserved.`}
+      />
+    ),
     menuHeaderRender: undefined,
     menuDataRender: (menuData) => {
       const filterData = menuData.filter((item) =>
