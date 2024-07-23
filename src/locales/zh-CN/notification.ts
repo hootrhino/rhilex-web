@@ -7,7 +7,7 @@ export default {
   /**
    * button
    */
-  'notification.button.clearAll': '一键清空通知',
+  'notification.button.clearAll': '清空通知',
   'notification.button.clear': '清除',
 
   /**
