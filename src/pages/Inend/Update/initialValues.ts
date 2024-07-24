@@ -7,7 +7,11 @@ export const defaultConfig = {
     port: 2582,
     host: DEFAULT_HOST,
   },
-  [InendType.RULEX_UDP]: {
+  [InendType.UDP_SERVER]: {
+    port: 2583,
+    host: DEFAULT_HOST,
+  },
+  [InendType.TCP_SERVER]: {
     port: 2583,
     host: DEFAULT_HOST,
   },

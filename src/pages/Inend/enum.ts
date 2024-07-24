@@ -3,10 +3,12 @@ import { getIntl, getLocale } from '@umijs/max';
 /**
  * 南向资源类型
  */
+
 export enum InendType {
   COAP = 'CoAP',
   GENERIC_IOT_HUB = 'GENERIC_IOT_HUB',
-  RULEX_UDP = 'RULEX_UDP',
+  UDP_SERVER = 'UDP_SERVER',
+  TCP_SERVER = 'TCP_SERVER',
   HTTP = 'HTTP',
   NATS_SERVER = 'NATS_SERVER',
   GRPC = 'GRPC',
@@ -21,7 +23,8 @@ const intl = getIntl(getLocale());
 export const inendTypeOption = {
   [InendType.COAP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'CoAP Server' }),
   [InendType.GENERIC_IOT_HUB]: intl.formatMessage({ id: 'inend.type.topic' }, { type: 'IoTHub' }),
-  [InendType.RULEX_UDP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'UDP Server' }),
+  [InendType.UDP_SERVER]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'UDP Server' }),
+  [InendType.TCP_SERVER]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'TCP Server' }),
   [InendType.HTTP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'HTTP Server' }),
   [InendType.NATS_SERVER]: intl.formatMessage(
     { id: 'inend.type.subject' },

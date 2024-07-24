@@ -65,7 +65,9 @@ const Inend = () => {
       { key: 'rule', label: formatMessage({ id: 'button.ruleConfig' }), icon: <SettingOutlined /> },
     ];
 
-    if ([InendType.COAP, InendType.RULEX_UDP, InendType.HTTP].includes(type)) {
+    if (
+      [InendType.COAP, InendType.UDP_SERVER, InendType.HTTP, InendType.TCP_SERVER].includes(type)
+    ) {
       newItems = [
         ...newItems,
         {

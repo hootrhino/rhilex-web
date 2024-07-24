@@ -91,7 +91,7 @@ const inend_iothub_ds = `{
   }
 }`;
 
-// RULEX_UDP HTTP NATS_SERVER GRPC
+// UDP_SERVER HTTP NATS_SERVER GRPC
 const inend_udp_ds = `{
   "k1": "v1",
   "k2": "v2",
@@ -133,7 +133,8 @@ export const device_test_data = {
 export const inend_test_data = {
   [InendType.COAP]: inend_coap_ds,
   [InendType.GENERIC_IOT_HUB]: inend_iothub_ds,
-  [InendType.RULEX_UDP]: inend_udp_ds,
+  [InendType.UDP_SERVER]: inend_udp_ds,
+  [InendType.TCP_SERVER]: inend_udp_ds,
   [InendType.HTTP]: inend_udp_ds,
   [InendType.NATS_SERVER]: inend_udp_ds,
   [InendType.GRPC]: inend_udp_ds,

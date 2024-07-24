@@ -10,7 +10,8 @@ import { GRPC } from './grpc';
 import { HTTP } from './http';
 import { INTERNAL_EVENT } from './internalEvent';
 import { NATS_SERVER } from './natsServer';
-import { RULEX_UDP } from './rulexUdp';
+import { TCP_SERVER } from './tcp';
+import { UDP_SERVER } from './udp';
 
 const intl = getIntl(getLocale());
 
@@ -57,7 +58,8 @@ export const baseColumns = [
 export const typeConfigColumns = {
   [InendType.COAP]: CoAP,
   [InendType.GENERIC_IOT_HUB]: GENERIC_IOT_HUB,
-  [InendType.RULEX_UDP]: RULEX_UDP,
+  [InendType.UDP_SERVER]: UDP_SERVER,
+  [InendType.TCP_SERVER]: TCP_SERVER,
   [InendType.HTTP]: HTTP,
   [InendType.NATS_SERVER]: NATS_SERVER,
   [InendType.GRPC]: GRPC,

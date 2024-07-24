@@ -2,7 +2,7 @@ import { getIntl, getLocale } from '@umijs/max';
 
 const intl = getIntl(getLocale());
 
-export const RULEX_UDP = [
+export const TCP_SERVER = [
   {
     title: intl.formatMessage({ id: 'inend.table.title.host' }),
     dataIndex: ['config', 'host'],
