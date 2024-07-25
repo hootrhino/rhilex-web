@@ -58,7 +58,7 @@ export const defaultConfig = {
     },
     hostConfig: defaultHostConfig,
   },
-  [DeviceType.GENERIC_MODBUS]: {
+  [DeviceType.GENERIC_MODBUS_MASTER]: {
     commonConfig: {
       autoRequest: DEFAULT_AUTOREQUEST,
       enableOptimize: 'false',

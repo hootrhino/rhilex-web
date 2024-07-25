@@ -7,7 +7,7 @@ const device_protocol_ds = `{
   "out": "11220ABCDEF"
 }`;
 
-// GENERIC_MODBUS - 通用 modbus 采集网关
+// GENERIC_MODBUS_MASTER - 通用 Modbus 主机网关
 const device_modbus_ds = `{
   "tag":{
      "tag": "tag",
@@ -121,7 +121,7 @@ const inend_event_ds = `{
 
 export const device_test_data = {
   [DeviceType.GENERIC_UART_PROTOCOL]: device_protocol_ds,
-  [DeviceType.GENERIC_MODBUS]: device_modbus_ds,
+  [DeviceType.GENERIC_MODBUS_MASTER]: device_modbus_ds,
   [DeviceType.GENERIC_HTTP_DEVICE]: device_http_ds,
   [DeviceType.SIEMENS_PLC]: device_siemens_ds,
   // [DeviceType.GENERIC_CAMERA]: device_camera_ds,

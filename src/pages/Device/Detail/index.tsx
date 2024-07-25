@@ -145,7 +145,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
             {type === DeviceType.GENERIC_HTTP_DEVICE && (
               <HeadersDetail data={config?.httpConfig?.headers} />
             )}
-            {type === DeviceType.GENERIC_MODBUS && (
+            {type === DeviceType.GENERIC_MODBUS_MASTER && (
               <ModbusSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
             )}
             {type === DeviceType.SIEMENS_PLC && (

@@ -255,7 +255,8 @@ export default {
    * device type
    */
   'device.type.uart': 'Generic Serial Port Gateway',
-  'device.type.modbus': 'Generic Modbus Gateway',
+  'device.type.modbus.master': 'Generic Modbus Master Gateway',
+  'device.type.modbus.slaver': 'Generic Modbus Slaver Gateway',
   'device.type.snmp': 'Generic SNMP Gateway',
   'device.type.plc': 'Generic Siemens S7 PLC Gateway',
   'device.type.http': 'Generic HTTP Gatewa',

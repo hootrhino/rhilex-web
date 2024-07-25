@@ -248,7 +248,8 @@ export default {
    * device type
    */
   'device.type.uart': '通用串口控制網關',
-  'device.type.modbus': '通用 Modbus 採集網關',
+  'device.type.modbus.master': '通用 Modbus 主機網關',
+  'device.type.modbus.slaver': '通用 Modbus 從機網關',
   'device.type.snmp': '通用 SNMP 協議採集網關',
   'device.type.plc': '通用西門子 S7 系列 PLC 採集網關',
   'device.type.http': '通用 HTTP 協議數據採集網關',

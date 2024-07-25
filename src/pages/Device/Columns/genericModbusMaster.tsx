@@ -7,7 +7,7 @@ import { DeviceMode } from '../enum';
 
 const intl = getIntl(getLocale());
 
-export const GENERIC_MODBUS_CONFIG = [
+export const GENERIC_MODBUS_MASTER_CONFIG = [
   {
     title: intl.formatMessage({ id: 'device.form.title.group.common' }),
     valueType: 'group',

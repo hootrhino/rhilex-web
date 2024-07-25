@@ -10,7 +10,7 @@ const intl = getIntl(getLocale());
 export enum DeviceType {
   GENERIC_UART_PROTOCOL = 'GENERIC_UART_PROTOCOL',
   GENERIC_UART_RW = 'GENERIC_UART_RW',
-  GENERIC_MODBUS = 'GENERIC_MODBUS',
+  GENERIC_MODBUS_MASTER = 'GENERIC_MODBUS_MASTER',
   SIEMENS_PLC = 'SIEMENS_PLC',
   GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
   // GENERIC_AIS_RECEIVER = 'GENERIC_AIS_RECEIVER', 暂无需求，先隐藏
@@ -25,7 +25,8 @@ export enum DeviceType {
 const baseTypeOption = {
   [DeviceType.GENERIC_UART_PROTOCOL]: intl.formatMessage({ id: 'device.type.uart' }),
   [DeviceType.GENERIC_UART_RW]: intl.formatMessage({ id: 'device.type.uartRW' }),
-  [DeviceType.GENERIC_MODBUS]: intl.formatMessage({ id: 'device.type.modbus' }),
+  [DeviceType.GENERIC_MODBUS_MASTER]: intl.formatMessage({ id: 'device.type.modbus.master' }),
+
   [DeviceType.GENERIC_SNMP]: intl.formatMessage({ id: 'device.type.snmp' }),
   [DeviceType.SIEMENS_PLC]: intl.formatMessage({ id: 'device.type.plc' }),
   [DeviceType.GENERIC_HTTP_DEVICE]: intl.formatMessage({ id: 'device.type.http' }),
@@ -40,7 +41,7 @@ const baseTypeOption = {
 export const deviceTypeOptions = {
   [Product.COMMON]: baseTypeOption,
   [Product.EN6400]: pick(baseTypeOption, [
-    DeviceType.GENERIC_MODBUS,
+    DeviceType.GENERIC_MODBUS_MASTER,
     DeviceType.GENERIC_SNMP,
     DeviceType.SIEMENS_PLC,
   ]),
@@ -50,24 +51,10 @@ export const deviceTypeOptions = {
 
 export const defaultDeviceType = {
   [Product.COMMON]: DeviceType.GENERIC_UART_PROTOCOL,
-  [Product.EN6400]: DeviceType.GENERIC_MODBUS,
+  [Product.EN6400]: DeviceType.GENERIC_MODBUS_MASTER,
   [Product.RASPI4B]: DeviceType.GENERIC_UART_PROTOCOL,
   [Product.RHILEXG1]: DeviceType.GENERIC_UART_PROTOCOL,
 };
-
-// export const deviceAvatar = {
-//   [DeviceType.GENERIC_UART_PROTOCOL]: 'PROT',
-//   [DeviceType.GENERIC_MODBUS]: 'MB',
-//   // [DeviceType.GENERIC_AIS_RECEIVER]: 'AIS', 暂无需求，先隐藏
-//   [DeviceType.SIEMENS_PLC]: 'PLC',
-//   [DeviceType.GENERIC_HTTP_DEVICE]: 'HTTP',
-//   // [DeviceType.GENERIC_CAMERA]: 'CAM', 暂无需求，先隐藏
-//   [DeviceType.SMART_HOME_CONTROLLER]: 'S',
-//   [DeviceType.GENERIC_SNMP]: 'SNMP',
-//   [DeviceType.GENERIC_BACNET_IP]: 'B',
-//   [DeviceType.TENCENT_IOTHUB_GATEWAY]: 'T',
-//   [DeviceType.GENERIC_UART_RW]: 'RW',
-// };
 
 /**
  * 设备工作模式枚举
@@ -78,7 +65,7 @@ export enum DeviceMode {
 }
 
 /**
- * GENERIC_MODBUS
+ * GENERIC_MODBUS_MASTER
  */
 export const funcEnum = new Map([
   [1, intl.formatMessage({ id: 'device.modbus.func1' })],
