@@ -67,6 +67,15 @@ export const defaultConfig = {
     },
     hostConfig: defaultHostConfig,
   },
+  [DeviceType.GENERIC_MODBUS_SLAVER]: {
+    commonConfig: {
+      autoRequest: DEFAULT_AUTOREQUEST,
+      enableOptimize: 'false',
+      mode: DeviceMode.UART,
+      maxRegNum: 64,
+    },
+    hostConfig: defaultHostConfig,
+  },
   // [DeviceType.GENERIC_AIS_RECEIVER]: {
   //   commonConfig: {
   //     parseAis: 'false',

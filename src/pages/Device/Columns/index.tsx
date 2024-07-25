@@ -11,6 +11,7 @@ import { BACNET_ROUTER_GW_CONFIG } from './bacnetRouterGW';
 import { GENERIC_BACNET_IP_CONFIG } from './genericBacnetIP';
 import { GENERIC_HTTP_DEVICE_CONFIG } from './genericHttpDevice';
 import { GENERIC_MODBUS_MASTER_CONFIG } from './genericModbusMaster';
+import { GENERIC_MODBUS_SLAVER_CONFIG } from './genericModbusSlaver';
 import { GENERIC_SNMP_CONFIG } from './genericSnmp';
 import { GENERIC_UART_PROTOCOL_CONFIG } from './genericUartProtocol';
 import { GENERIC_UART_RW_CONFIG } from './genericUartRW';
@@ -151,6 +152,7 @@ export const baseColumns = (product: Product) => [
 export const typeConfigColumns = {
   [DeviceType.GENERIC_UART_PROTOCOL]: GENERIC_UART_PROTOCOL_CONFIG,
   [DeviceType.GENERIC_MODBUS_MASTER]: GENERIC_MODBUS_MASTER_CONFIG,
+  [DeviceType.GENERIC_MODBUS_SLAVER]: GENERIC_MODBUS_SLAVER_CONFIG,
   [DeviceType.SIEMENS_PLC]: SIEMENS_PLC_CONFIG,
   [DeviceType.GENERIC_HTTP_DEVICE]: GENERIC_HTTP_DEVICE_CONFIG,
   [DeviceType.SMART_HOME_CONTROLLER]: SMART_HOME_CONTROLLER_CONFIG,

@@ -11,6 +11,7 @@ export enum DeviceType {
   GENERIC_UART_PROTOCOL = 'GENERIC_UART_PROTOCOL',
   GENERIC_UART_RW = 'GENERIC_UART_RW',
   GENERIC_MODBUS_MASTER = 'GENERIC_MODBUS_MASTER',
+  GENERIC_MODBUS_SLAVER = 'GENERIC_MODBUS_SLAVER',
   SIEMENS_PLC = 'SIEMENS_PLC',
   GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
   // GENERIC_AIS_RECEIVER = 'GENERIC_AIS_RECEIVER', 暂无需求，先隐藏
@@ -26,7 +27,7 @@ const baseTypeOption = {
   [DeviceType.GENERIC_UART_PROTOCOL]: intl.formatMessage({ id: 'device.type.uart' }),
   [DeviceType.GENERIC_UART_RW]: intl.formatMessage({ id: 'device.type.uartRW' }),
   [DeviceType.GENERIC_MODBUS_MASTER]: intl.formatMessage({ id: 'device.type.modbus.master' }),
-
+  [DeviceType.GENERIC_MODBUS_SLAVER]: intl.formatMessage({ id: 'device.type.modbus.slaver' }),
   [DeviceType.GENERIC_SNMP]: intl.formatMessage({ id: 'device.type.snmp' }),
   [DeviceType.SIEMENS_PLC]: intl.formatMessage({ id: 'device.type.plc' }),
   [DeviceType.GENERIC_HTTP_DEVICE]: intl.formatMessage({ id: 'device.type.http' }),
@@ -42,6 +43,7 @@ export const deviceTypeOptions = {
   [Product.COMMON]: baseTypeOption,
   [Product.EN6400]: pick(baseTypeOption, [
     DeviceType.GENERIC_MODBUS_MASTER,
+    DeviceType.GENERIC_MODBUS_SLAVER,
     DeviceType.GENERIC_SNMP,
     DeviceType.SIEMENS_PLC,
   ]),
@@ -65,7 +67,7 @@ export enum DeviceMode {
 }
 
 /**
- * GENERIC_MODBUS_MASTER
+ * GENERIC_MODBUS_MASTER & GENERIC_MODBUS_SLAVER
  */
 export const funcEnum = new Map([
   [1, intl.formatMessage({ id: 'device.modbus.func1' })],

@@ -42,6 +42,7 @@ const sheetType = {
   [DeviceType.GENERIC_SNMP]: 'snmp-sheet',
   [DeviceType.SIEMENS_PLC]: 'plc-sheet',
   [DeviceType.GENERIC_MODBUS_MASTER]: 'modbus-sheet',
+  [DeviceType.GENERIC_MODBUS_SLAVER]: 'modbus-sheet',
   [DeviceType.GENERIC_BACNET_IP]: 'bacnet-sheet',
   [DeviceType.BACNET_ROUTER_GW]: 'bacnet-router-sheet',
 };
@@ -139,6 +140,7 @@ const Devices = () => {
         break;
       case DeviceType.GENERIC_SNMP:
       case DeviceType.GENERIC_MODBUS_MASTER:
+      case DeviceType.GENERIC_MODBUS_SLAVER:
       case DeviceType.SIEMENS_PLC:
       case DeviceType.GENERIC_BACNET_IP:
       case DeviceType.BACNET_ROUTER_GW:
