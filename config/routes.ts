@@ -64,7 +64,12 @@
         component: './Device/Plc',
       },
       {
-        path: '/device/:groupId/:deviceId/modbus-sheet',
+        path: '/device/:groupId/:deviceId/modbus-master-sheet',
+        title: 'menu.device.sheet',
+        component: './Device/Modbus',
+      },
+      {
+        path: '/device/:groupId/:deviceId/modbus-slaver-sheet',
         title: 'menu.device.sheet',
         component: './Device/Modbus',
       },

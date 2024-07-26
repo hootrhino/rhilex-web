@@ -91,7 +91,10 @@
       "name": "用户定义lua模板"
     },
     {
-      "name": "mod点位管理"
+      "name": "ModbusMaster点位管理"
+    },
+    {
+      "name": "ModbusSlaver点位管理"
     },
     {
       "name": "西门子点位管理"
@@ -10859,15 +10862,15 @@
         "security": []
       }
     },
-    "/api/v1/modbus_data_sheet/sheetImport": {
+    "/api/v1/modbus_master_sheet/sheetImport": {
       "post": {
         "summary": "导入点位表",
-        "x-apifox-folder": "mod点位管理",
+        "x-apifox-folder": "ModbusMaster点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "mod点位管理"
+          "ModbusMaster点位管理"
         ],
         "parameters": [],
         "requestBody": {
@@ -10912,15 +10915,15 @@
         "security": []
       }
     },
-    "/api/v1/modbus_data_sheet/list": {
+    "/api/v1/modbus_master_sheet/list": {
       "get": {
         "summary": "分页查看点位表",
-        "x-apifox-folder": "mod点位管理",
+        "x-apifox-folder": "ModbusMaster点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "mod点位管理"
+          "ModbusMaster点位管理"
         ],
         "parameters": [
           {
@@ -11161,15 +11164,15 @@
         "security": []
       }
     },
-    "/api/v1/modbus_data_sheet/update": {
+    "/api/v1/modbus_master_sheet/update": {
       "post": {
         "summary": "更新点位表",
-        "x-apifox-folder": "mod点位管理",
+        "x-apifox-folder": "ModbusMaster点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "mod点位管理"
+          "ModbusMaster点位管理"
         ],
         "parameters": [],
         "requestBody": {
@@ -11326,15 +11329,15 @@
         "security": []
       }
     },
-    "/api/v1/modbus_data_sheet/delIds": {
+    "/api/v1/modbus_master_sheet/delIds": {
       "delete": {
         "summary": "多行删除",
-        "x-apifox-folder": "mod点位管理",
+        "x-apifox-folder": "ModbusMaster点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "mod点位管理"
+          "ModbusMaster点位管理"
         ],
         "parameters": [],
         "requestBody": {
@@ -11424,15 +11427,15 @@
         "security": []
       }
     },
-    "/api/v1/modbus_data_sheet/sheetExport": {
+    "/api/v1/modbus_master_sheet/sheetExport": {
       "get": {
         "summary": "导出点表",
-        "x-apifox-folder": "mod点位管理",
+        "x-apifox-folder": "ModbusMaster点位管理",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
         "tags": [
-          "mod点位管理"
+          "ModbusMaster点位管理"
         ],
         "parameters": [
           {
@@ -19784,6 +19787,612 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-188699890-run",
         "security": []
       }
+    },
+    "/api/v1/modbus_slaver_sheet/sheetImport": {
+      "post": {
+        "summary": "导入点位表",
+        "x-apifox-folder": "ModbusSlaver点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ModbusSlaver点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string",
+                    "example": "11223344"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-198023456-run",
+        "security": []
+      }
+    },
+    "/api/v1/modbus_slaver_sheet/list": {
+      "get": {
+        "summary": "分页查看点位表",
+        "x-apifox-folder": "ModbusSlaver点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ModbusSlaver点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "DEVICEDQNLO8",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "6",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "2",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "device_uuid": {
+                                "type": "string"
+                              },
+                              "tag": {
+                                "type": "string"
+                              },
+                              "alias": {
+                                "type": "string"
+                              },
+                              "function": {
+                                "type": "integer"
+                              },
+                              "slaverId": {
+                                "type": "integer"
+                              },
+                              "address": {
+                                "type": "integer"
+                              },
+                              "frequency": {
+                                "type": "integer"
+                              },
+                              "quantity": {
+                                "type": "integer"
+                              },
+                              "dataType": {
+                                "type": "string"
+                              },
+                              "dataOrder": {
+                                "type": "string"
+                              },
+                              "weight": {
+                                "type": "integer"
+                              },
+                              "status": {
+                                "type": "integer"
+                              },
+                              "lastFetchTime": {
+                                "type": "integer"
+                              },
+                              "value": {
+                                "type": "string"
+                              },
+                              "errMsg": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "uuid",
+                              "device_uuid",
+                              "tag",
+                              "alias",
+                              "function",
+                              "slaverId",
+                              "address",
+                              "frequency",
+                              "quantity",
+                              "dataType",
+                              "dataOrder",
+                              "weight",
+                              "status",
+                              "lastFetchTime",
+                              "value",
+                              "errMsg"
+                            ],
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "device_uuid",
+                              "tag",
+                              "alias",
+                              "function",
+                              "slaverId",
+                              "address",
+                              "frequency",
+                              "quantity",
+                              "dataType",
+                              "dataOrder",
+                              "weight",
+                              "status",
+                              "lastFetchTime",
+                              "value",
+                              "errMsg"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 2,
+                        "total": 7,
+                        "records": [
+                          {
+                            "uuid": "MDTBHACW7UDY",
+                            "device_uuid": "DEVICEI8XFYHN9",
+                            "tag": "ph_value",
+                            "alias": "PH传感器值",
+                            "function": 1,
+                            "slaverId": 10,
+                            "address": 1,
+                            "frequency": 100,
+                            "quantity": 1,
+                            "dataType": "BYTE",
+                            "dataOrder": "A",
+                            "weight": 1,
+                            "status": 0,
+                            "lastFetchTime": 1711445359218,
+                            "value": "",
+                            "errMsg": "serial: timeout"
+                          },
+                          {
+                            "uuid": "MDTBUCJUUUQQ",
+                            "device_uuid": "DEVICEI8XFYHN9",
+                            "tag": "t1",
+                            "alias": "PH传感器温度",
+                            "function": 3,
+                            "slaverId": 10,
+                            "address": 3,
+                            "frequency": 100,
+                            "quantity": 2,
+                            "dataType": "FLOAT",
+                            "dataOrder": "CDAB",
+                            "weight": 1,
+                            "status": 1,
+                            "lastFetchTime": 1711445359249,
+                            "value": "23.2337",
+                            "errMsg": ""
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-198023457-run",
+        "security": []
+      }
+    },
+    "/api/v1/modbus_slaver_sheet/update": {
+      "post": {
+        "summary": "更新点位表",
+        "x-apifox-folder": "ModbusSlaver点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ModbusSlaver点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "modbus_data_points": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "device_uuid": {
+                          "type": "string"
+                        },
+                        "tag": {
+                          "type": "string"
+                        },
+                        "alias": {
+                          "type": "string"
+                        },
+                        "function": {
+                          "type": "integer"
+                        },
+                        "slaverId": {
+                          "type": "integer"
+                        },
+                        "address": {
+                          "type": "integer"
+                        },
+                        "frequency": {
+                          "type": "integer"
+                        },
+                        "quantity": {
+                          "type": "integer"
+                        },
+                        "dataType": {
+                          "type": "string"
+                        },
+                        "dataOrder": {
+                          "type": "string"
+                        },
+                        "weight": {
+                          "type": "number"
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "uuid",
+                        "device_uuid",
+                        "tag",
+                        "alias",
+                        "function",
+                        "slaverId",
+                        "address",
+                        "frequency",
+                        "quantity",
+                        "dataType",
+                        "dataOrder",
+                        "weight"
+                      ],
+                      "required": [
+                        "dataType",
+                        "dataOrder",
+                        "weight"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "modbus_data_points"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "modbus_data_points"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICETWRRCW",
+                "modbus_data_points": [
+                  {
+                    "uuid": "MDTBHMPBQKAR",
+                    "device_uuid": "DEVICETWRRCW",
+                    "tag": "a11-new111111",
+                    "alias": "a111",
+                    "function": 3,
+                    "slaverId": 10,
+                    "address": 10,
+                    "frequency": 100,
+                    "quantity": 2
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-198023458-run",
+        "security": []
+      }
+    },
+    "/api/v1/modbus_slaver_sheet/delIds": {
+      "delete": {
+        "summary": "多行删除",
+        "x-apifox-folder": "ModbusSlaver点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ModbusSlaver点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "uuids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICEDQNLO8",
+                "uuids": [
+                  "MDTBJJMDUX",
+                  "MDTBC4TT8B"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-198023460-run",
+        "security": []
+      }
+    },
+    "/api/v1/modbus_slaver_sheet/sheetExport": {
+      "get": {
+        "summary": "导出点表",
+        "x-apifox-folder": "ModbusSlaver点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ModbusSlaver点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "AABBCCDD",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-198023462-run",
+        "security": []
+      }
     }
   },
   "components": {
@@ -19911,5 +20520,10 @@
     },
     "securitySchemes": {}
   },
-  "servers": []
+  "servers": [
+    {
+      "url": "http://127.0.0.1:2580",
+      "description": "本机环境"
+    }
+  ]
 }

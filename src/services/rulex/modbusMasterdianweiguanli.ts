@@ -2,8 +2,8 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 多行删除 DELETE /api/v1/modbus_data_sheet/delIds */
-export async function deleteModbusDataSheetDelIds(
+/** 多行删除 DELETE /api/v1/modbus_master_sheet/delIds */
+export async function deleteModbusMasterSheetDelIds(
   body: {
     device_uuid: string;
     uuids: string[];
@@ -11,7 +11,7 @@ export async function deleteModbusDataSheetDelIds(
   options?: { [key: string]: any },
 ) {
   return request<{ code: number; msg: string; data: string[] }>(
-    '/api/v1/modbus_data_sheet/delIds',
+    '/api/v1/modbus_master_sheet/delIds',
     {
       method: 'DELETE',
       headers: {
@@ -23,10 +23,10 @@ export async function deleteModbusDataSheetDelIds(
   );
 }
 
-/** 分页查看点位表 GET /api/v1/modbus_data_sheet/list */
-export async function getModbusDataSheetList(
+/** 分页查看点位表 GET /api/v1/modbus_master_sheet/list */
+export async function getModbusMasterSheetList(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getModbusDataSheetListParams,
+  params: API.getModbusMasterSheetListParams,
   options?: { [key: string]: any },
 ) {
   return request<{
@@ -55,7 +55,7 @@ export async function getModbusDataSheetList(
         errMsg: string;
       }[];
     };
-  }>('/api/v1/modbus_data_sheet/list', {
+  }>('/api/v1/modbus_master_sheet/list', {
     method: 'GET',
     params: {
       ...params,
@@ -64,13 +64,13 @@ export async function getModbusDataSheetList(
   });
 }
 
-/** 导出点表 GET /api/v1/modbus_data_sheet/sheetExport */
-export async function getModbusDataSheetSheetExport(
+/** 导出点表 GET /api/v1/modbus_master_sheet/sheetExport */
+export async function getModbusMasterSheetSheetExport(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getModbusDataSheetSheetExportParams,
+  params: API.getModbusMasterSheetSheetExportParams,
   options?: { [key: string]: any },
 ) {
-  return request<Record<string, any>>('/api/v1/modbus_data_sheet/sheetExport', {
+  return request<Record<string, any>>('/api/v1/modbus_master_sheet/sheetExport', {
     method: 'GET',
     params: {
       ...params,
@@ -79,8 +79,8 @@ export async function getModbusDataSheetSheetExport(
   });
 }
 
-/** 导入点位表 POST /api/v1/modbus_data_sheet/sheetImport */
-export async function postModbusDataSheetSheetImport(
+/** 导入点位表 POST /api/v1/modbus_master_sheet/sheetImport */
+export async function postModbusMasterSheetSheetImport(
   body: {
     device_uuid: string;
   },
@@ -109,7 +109,7 @@ export async function postModbusDataSheetSheetImport(
     }
   });
 
-  return request<Record<string, any>>('/api/v1/modbus_data_sheet/sheetImport', {
+  return request<Record<string, any>>('/api/v1/modbus_master_sheet/sheetImport', {
     method: 'POST',
     data: formData,
     requestType: 'form',
@@ -117,8 +117,8 @@ export async function postModbusDataSheetSheetImport(
   });
 }
 
-/** 更新点位表 POST /api/v1/modbus_data_sheet/update */
-export async function postModbusDataSheetUpdate(
+/** 更新点位表 POST /api/v1/modbus_master_sheet/update */
+export async function postModbusMasterSheetUpdate(
   body: {
     device_uuid: string;
     modbus_data_points: {
@@ -139,7 +139,7 @@ export async function postModbusDataSheetUpdate(
   options?: { [key: string]: any },
 ) {
   return request<{ code: number; msg: string; data: string[] }>(
-    '/api/v1/modbus_data_sheet/update',
+    '/api/v1/modbus_master_sheet/update',
     {
       method: 'POST',
       headers: {

@@ -1,10 +1,20 @@
+import { message } from '@/components/PopupHack';
+import UnitValue from '@/components/UnitValue';
 import {
-  deleteModbusDataSheetDelIds,
-  getModbusDataSheetList,
-  postModbusDataSheetSheetImport,
-  postModbusDataSheetUpdate,
-} from '@/services/rulex/moddianweiguanli';
-import { omit } from '@/utils/redash';
+  deleteModbusMasterSheetDelIds,
+  getModbusMasterSheetList,
+  postModbusMasterSheetSheetImport,
+  postModbusMasterSheetUpdate,
+} from '@/services/rulex/modbusMasterdianweiguanli';
+import {
+  deleteModbusSlaverSheetDelIds,
+  getModbusSlaverSheetList,
+  postModbusSlaverSheetSheetImport,
+  postModbusSlaverSheetUpdate,
+} from '@/services/rulex/modbusSlaverdianweiguanli';
+import { defaultPagination } from '@/utils/constant';
+import { FormItemType, SheetType } from '@/utils/enum';
+import { inRange, omit } from '@/utils/redash';
 import { validateFormItem } from '@/utils/utils';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import {
@@ -13,18 +23,12 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useIntl, useParams, useRequest } from '@umijs/max';
-import { useEffect, useRef, useState } from 'react';
-import { funcEnum } from '../enum';
-
-import { message } from '@/components/PopupHack';
-import UnitValue from '@/components/UnitValue';
-import { defaultPagination } from '@/utils/constant';
-import { FormItemType, SheetType } from '@/utils/enum';
-import { inRange } from '@/utils/redash';
+import { useIntl, useLocation, useParams, useRequest } from '@umijs/max';
 import type { Rule } from 'antd/es/form';
+import { useEffect, useRef, useState } from 'react';
 import DataSheet from '../DataSheet';
 import { DataSheetItem, Point, removeParams } from '../DataSheet/typings';
+import { funcEnum } from '../enum';
 import { defaultQuantity, modbusDataTypeOptions } from './enum';
 
 const defaultModbusConfig = {
@@ -69,13 +73,21 @@ export type UpdateParams = {
   modbus_data_points: ModbusPoint[];
 };
 
+enum ModbusDataType {
+  MASTER = 'modbus-master-sheet',
+  SLAVER = 'modbus-slaver-sheet',
+}
+
 const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) => {
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const actionRef = useRef<ActionType>();
   const { deviceId } = useParams();
+  const { pathname } = useLocation();
   const { formatMessage } = useIntl();
 
   const [deviceUuid, setDeviceId] = useState<string>();
+  const pathArr = pathname.split('/');
+  const modbusType = pathArr[pathArr.length - 1];
 
   const formatUpdateParams = (params: Partial<DataSheetItem>) => {
     let newParams = {
@@ -88,9 +100,9 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
     return newParams;
   };
 
-  // 删除点位表
-  const { run: remove } = useRequest(
-    (params: removeParams) => deleteModbusDataSheetDelIds(params),
+  // Master - 删除点位表
+  const { run: masterRemove } = useRequest(
+    (params: removeParams) => deleteModbusMasterSheetDelIds(params),
     {
       manual: true,
       onSuccess: () => {
@@ -100,19 +112,47 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
     },
   );
 
-  // 更新点位表
-  const { run: update } = useRequest((params: UpdateParams) => postModbusDataSheetUpdate(params), {
-    manual: true,
-    onSuccess: () => {
-      actionRef.current?.reload();
-      editorFormRef.current?.setRowData?.('new', { ...defaultModbusConfig, uuid: 'new' });
-      message.success(formatMessage({ id: 'message.success.update' }));
+  // Slaver - 删除点位表
+  const { run: slaverRemove } = useRequest(
+    (params: removeParams) => deleteModbusSlaverSheetDelIds(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        actionRef.current?.reload();
+        message.success(formatMessage({ id: 'message.success.remove' }));
+      },
     },
-  });
+  );
 
-  // 导入点位表
-  const { run: upload } = useRequest(
-    (file: File) => postModbusDataSheetSheetImport({ device_uuid: deviceUuid || '' }, file),
+  // Master - 更新点位表
+  const { run: masterUpdate } = useRequest(
+    (params: UpdateParams) => postModbusMasterSheetUpdate(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        actionRef.current?.reload();
+        editorFormRef.current?.setRowData?.('new', { ...defaultModbusConfig, uuid: 'new' });
+        message.success(formatMessage({ id: 'message.success.update' }));
+      },
+    },
+  );
+
+  // Slaver - 更新点位表
+  const { run: slaverUpdate } = useRequest(
+    (params: UpdateParams) => postModbusSlaverSheetUpdate(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        actionRef.current?.reload();
+        editorFormRef.current?.setRowData?.('new', { ...defaultModbusConfig, uuid: 'new' });
+        message.success(formatMessage({ id: 'message.success.update' }));
+      },
+    },
+  );
+
+  // Master - 导入点位表
+  const { run: masterUpload } = useRequest(
+    (file: File) => postModbusMasterSheetSheetImport({ device_uuid: deviceUuid || '' }, file),
     {
       manual: true,
       onSuccess: () => {
@@ -122,9 +162,59 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
     },
   );
 
-  // 导出点位表
+  // Slaver - 导入点位表
+  const { run: slaverUpload } = useRequest(
+    (file: File) => postModbusSlaverSheetSheetImport({ device_uuid: deviceUuid || '' }, file),
+    {
+      manual: true,
+      onSuccess: () => {
+        actionRef.current?.reload();
+        message.success(formatMessage({ id: 'message.success.upload' }));
+      },
+    },
+  );
+
+  // Master & Slaver - 导出点位表
   const handleOnDownload = () =>
-    (window.location.href = `/api/v1/modbus_data_sheet/sheetExport?device_uuid=${deviceId}`);
+    (window.location.href = `/api/v1/${modbusType}/sheetExport?device_uuid=${deviceId}`);
+
+  // 获取列表
+  const handleOnRequest = async ({
+    current = defaultPagination.defaultCurrent,
+    pageSize = defaultPagination.defaultPageSize,
+  }) => {
+    if (modbusType === ModbusDataType.MASTER) {
+      const { data } = await getModbusMasterSheetList({
+        device_uuid: deviceUuid,
+        current,
+        size: pageSize,
+      });
+
+      return Promise.resolve({
+        data: data?.records?.map((item) => ({
+          ...item,
+          type: [item?.dataType, item?.dataOrder],
+        })),
+        total: data?.total,
+        success: true,
+      });
+    } else {
+      const { data } = await getModbusSlaverSheetList({
+        device_uuid: deviceUuid,
+        current,
+        size: pageSize,
+      });
+
+      return Promise.resolve({
+        data: data?.records?.map((item) => ({
+          ...item,
+          type: [item?.dataType, item?.dataOrder],
+        })),
+        total: data?.total,
+        success: true,
+      });
+    }
+  };
 
   useEffect(() => {
     setDeviceId(deviceId || uuid);
@@ -351,44 +441,43 @@ const ModbusDataSheet = ({ uuid, type = SheetType.LIST }: ModbusDataSheetProps) 
       actionRef={actionRef}
       columns={columns}
       params={{ deviceUuid }}
-      request={async ({
-        current = defaultPagination.defaultCurrent,
-        pageSize = defaultPagination.defaultPageSize,
-      }) => {
-        const { data } = await getModbusDataSheetList({
-          device_uuid: deviceUuid,
-          current,
-          size: pageSize,
-        });
-
-        return Promise.resolve({
-          data: data?.records?.map((item) => ({
-            ...item,
-            type: [item?.dataType, item?.dataOrder],
-          })),
-          total: data?.total,
-          success: true,
-        });
-      }}
+      request={handleOnRequest}
       defaultConfig={defaultModbusConfig}
       defaultUploadData={defaultUploadData}
       type={type}
       scroll={{ x: 1200 }}
-      upload={(file: File) => deviceUuid && upload(file)}
+      upload={(file: File) => {
+        if (!deviceUuid) return;
+
+        if (modbusType === ModbusDataType.MASTER) {
+          masterUpload(file);
+        } else {
+          slaverUpload(file);
+        }
+      }}
       download={handleOnDownload}
       update={(data: Point[]) => {
         const points = data?.map((item) => formatUpdateParams(item));
-        if (deviceUuid && points) {
-          update({ device_uuid: deviceUuid, modbus_data_points: points });
+        if (!deviceUuid || !points) return;
+
+        const params = { device_uuid: deviceUuid, modbus_data_points: points };
+
+        if (modbusType === ModbusDataType.MASTER) {
+          masterUpdate(params);
+        } else {
+          slaverUpdate(params);
         }
       }}
       remove={(uuids: string[]) => {
-        if (deviceUuid && uuids) {
-          const params = {
-            device_uuid: deviceUuid,
-            uuids,
-          };
-          remove(params);
+        if (!deviceUuid || !uuids) return;
+        const params = {
+          device_uuid: deviceUuid,
+          uuids,
+        };
+        if (modbusType === ModbusDataType.MASTER) {
+          masterRemove(params);
+        } else {
+          slaverRemove(params);
         }
       }}
     />

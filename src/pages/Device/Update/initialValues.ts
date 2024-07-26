@@ -74,7 +74,11 @@ export const defaultConfig = {
       mode: DeviceMode.UART,
       maxRegNum: 64,
     },
-    hostConfig: defaultHostConfig,
+    hostConfig: {
+      port: 1502,
+      host: '0.0.0.0',
+      timeout: DEFAULT_TIMEOUT,
+    },
   },
   // [DeviceType.GENERIC_AIS_RECEIVER]: {
   //   commonConfig: {

@@ -238,13 +238,23 @@ declare namespace API {
     liveId: string;
   };
 
-  type getModbusDataSheetListParams = {
+  type getModbusMasterSheetListParams = {
     device_uuid?: string;
     current?: number;
     size?: number;
   };
 
-  type getModbusDataSheetSheetExportParams = {
+  type getModbusMasterSheetSheetExportParams = {
+    device_uuid: string;
+  };
+
+  type getModbusSlaverSheetListParams = {
+    device_uuid?: string;
+    current?: number;
+    size?: number;
+  };
+
+  type getModbusSlaverSheetSheetExportParams = {
     device_uuid: string;
   };
 
