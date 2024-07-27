@@ -69,15 +69,11 @@ export const defaultConfig = {
   },
   [DeviceType.GENERIC_MODBUS_SLAVER]: {
     commonConfig: {
-      autoRequest: DEFAULT_AUTOREQUEST,
-      enableOptimize: 'false',
       mode: DeviceMode.UART,
-      maxRegNum: 64,
     },
     hostConfig: {
       port: 1502,
       host: '0.0.0.0',
-      timeout: DEFAULT_TIMEOUT,
     },
   },
   // [DeviceType.GENERIC_AIS_RECEIVER]: {
