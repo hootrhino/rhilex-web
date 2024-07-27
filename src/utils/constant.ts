@@ -6,7 +6,7 @@ export const LOGIN_PATH = '/user/login';
 // 登录页默认 title
 export const DEFAULT_TITLE = 'RHILEX';
 
-export const DEFAULT_SUBTITLE = '大象无形 数据无边';
+export const DEFAULT_SUBTITLE = '数据无边 万物有声';
 
 // 官方文档地址
 export const DOC_URL = 'http://www.hootrhino.com/';

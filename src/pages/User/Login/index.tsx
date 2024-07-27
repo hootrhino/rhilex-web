@@ -2,7 +2,7 @@ import loginIcon from '@/assets/loginLogo.svg';
 import { message, modal } from '@/components/PopupHack';
 import { getDatacenterSecret } from '@/services/rulex/shujuzhongxin';
 import { postLogin } from '@/services/rulex/yonghuguanli';
-import { DEFAULT_SUBTITLE, DEFAULT_TITLE } from '@/utils/constant';
+import { DEFAULT_TITLE } from '@/utils/constant';
 import type { ProFormInstance, Settings as LayoutSettings } from '@ant-design/pro-components';
 import { DefaultFooter, LoginForm, ProFormText } from '@ant-design/pro-components';
 import { Helmet, history, useIntl, useModel } from '@umijs/max';
@@ -95,7 +95,12 @@ const Login: React.FC = () => {
               maxWidth: '75vw',
             }}
             title={<img alt="logo" src={loginIcon} style={{ width: 160 }} />}
-            subTitle={DEFAULT_SUBTITLE}
+            subTitle={
+              <div className="text-[14px] text-[rgba(0, 0, 0, 0.65)] mt-[12px] mb-[40px]">
+                <span className="pr-[14px]">数据无边</span>
+                <span>万物有声</span>
+              </div>
+            }
             onFinish={handleOnFinish}
           >
             <>
