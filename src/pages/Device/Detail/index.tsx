@@ -13,7 +13,7 @@ import BacnetIPSheet from '../BacnetIP';
 import BacnetRouterSheet from '../BacnetRouter';
 import { baseColumns, typeConfigColumns } from '../Columns';
 import { DeviceType } from '../enum';
-import ModbusSheet from '../Modbus';
+import ModbusMasterDataSheet from '../ModbusMaster';
 import PlcSheet from '../Plc';
 import SnmpOidsSheet from '../Snmp';
 
@@ -145,9 +145,9 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
             {type === DeviceType.GENERIC_HTTP_DEVICE && (
               <HeadersDetail data={config?.httpConfig?.headers} />
             )}
-            {[DeviceType.GENERIC_MODBUS_MASTER, DeviceType.GENERIC_MODBUS_SLAVER].includes(
-              type as DeviceType,
-            ) && <ModbusSheet uuid={detail?.uuid} type={SheetType.DETAIL} />}
+            {type === DeviceType.GENERIC_MODBUS_MASTER && (
+              <ModbusMasterDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
+            )}
             {type === DeviceType.SIEMENS_PLC && (
               <PlcSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
             )}

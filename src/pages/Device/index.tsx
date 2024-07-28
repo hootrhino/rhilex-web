@@ -42,7 +42,7 @@ const sheetType = {
   [DeviceType.GENERIC_SNMP]: 'snmp-sheet',
   [DeviceType.SIEMENS_PLC]: 'plc-sheet',
   [DeviceType.GENERIC_MODBUS_MASTER]: 'modbus-master-sheet',
-  [DeviceType.GENERIC_MODBUS_SLAVER]: 'modbus-slaver-sheet',
+  [DeviceType.GENERIC_MODBUS_SLAVER]: 'modbus-slaver-registers',
   [DeviceType.GENERIC_BACNET_IP]: 'bacnet-sheet',
   [DeviceType.BACNET_ROUTER_GW]: 'bacnet-router-sheet',
 };
@@ -89,6 +89,18 @@ const Devices = () => {
     },
   );
 
+  const getSheetLabel = (type: DeviceType) => {
+    if (type === DeviceType.GENERIC_SNMP) {
+      return formatMessage({ id: 'device.button.snmp' });
+    }
+
+    if (type === DeviceType.GENERIC_MODBUS_SLAVER) {
+      return formatMessage({ id: 'device.button.registers' });
+    }
+
+    return formatMessage({ id: 'device.button.sheet' });
+  };
+
   const getMenuItems = ({ type = DeviceType.GENERIC_UART_PROTOCOL, state = 0 }) => {
     const baseItems = [
       {
@@ -111,10 +123,6 @@ const Devices = () => {
     };
 
     let newItems = [...baseItems, ruleItem];
-    const sheetLabel =
-      type === DeviceType.GENERIC_SNMP
-        ? formatMessage({ id: 'device.button.snmp' })
-        : formatMessage({ id: 'device.button.sheet' });
 
     switch (type) {
       // TODO 暂无需求，先隐藏
@@ -148,7 +156,7 @@ const Devices = () => {
           ...newItems,
           {
             key: 'data-sheet',
-            label: sheetLabel,
+            label: getSheetLabel(type),
             icon: <ControlOutlined />,
           },
         ];

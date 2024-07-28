@@ -82,6 +82,7 @@ export default {
   'menu.device.new': '新建设备',
   'menu.device.update': '编辑设备',
   'menu.device.sheet': '点位表配置',
+  'menu.device.registers': '查看寄存器组',
   'menu.device.objectList': 'SNMP 对象列表',
   'menu.device.subDevice': '子设备列表',
   'menu.schema': '数据模型',

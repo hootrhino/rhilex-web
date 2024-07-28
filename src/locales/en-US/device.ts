@@ -5,6 +5,7 @@ export default {
   'device.button.camera': '查看视频', // TODO 已隐藏，暂时不需要翻译
   'device.button.snmp': 'SNMP OIDs',
   'device.button.sheet': 'Sheet Configuration',
+  'device.button.registers': 'Registers Detail',
   'device.button.nonPolling': 'Stop Refresh',
   'device.button.polling': 'Start Refresh',
   'device.button.import.sheet': 'Import Sheet',
@@ -41,6 +42,7 @@ export default {
   'device.title.oidList': 'Device {name} - SNMP OIDs',
   'device.title.smartHome.detail.base': 'Basic device information',
   'device.title.smartHome.detail.status': 'Device status information',
+  'device.title.registers': 'Registers detail',
 
   /**
    * modal
@@ -305,4 +307,12 @@ export default {
   'device.readFormat.raw': 'RAW',
   'device.readFormat.hex': 'HEX',
   'device.readFormat.utf8': 'UTF8',
+
+  /**
+   * Tab
+   */
+  'device.tab.coils': 'Coils Registers',
+  'device.tab.discrete': 'Discrete Registers',
+  'device.tab.holding': 'Holding Registers',
+  'device.tab.input': 'Input Registers',
 };

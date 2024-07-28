@@ -1,5 +1,5 @@
 import { getIntl, getLocale } from '@umijs/max';
-import { baseOptions, byte1Options } from '../Modbus/enum';
+import { baseOptions, byte1Options } from '../ModbusMaster/enum';
 
 const intl = getIntl(getLocale());
 

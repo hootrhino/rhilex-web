@@ -66,12 +66,12 @@
       {
         path: '/device/:groupId/:deviceId/modbus-master-sheet',
         title: 'menu.device.sheet',
-        component: './Device/Modbus',
+        component: './Device/ModbusMaster',
       },
       {
-        path: '/device/:groupId/:deviceId/modbus-slaver-sheet',
-        title: 'menu.device.sheet',
-        component: './Device/Modbus',
+        path: '/device/:groupId/:deviceId/modbus-slaver-registers',
+        title: 'menu.device.registers',
+        component: './Device/ModbusSlaver',
       },
       {
         path: '/device/:groupId/:deviceId/snmp-sheet',

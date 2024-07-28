@@ -5,6 +5,7 @@ export default {
   'device.button.camera': '查看視頻',
   'device.button.snmp': 'SNMP 對象列表',
   'device.button.sheet': '點位表配置',
+  'device.button.registers': '查看暫存器組',
   'device.button.nonPolling': '停止刷新',
   'device.button.polling': '開始刷新',
   'device.button.import.sheet': '導入點位表',
@@ -41,6 +42,7 @@ export default {
   'device.title.oidList': '設備 {name} - SNMP 對象列表',
   'device.title.smartHome.detail.base': '設備基本訊息',
   'device.title.smartHome.detail.status': '設備狀態訊息',
+  'device.title.registers': '暫存器組詳情',
 
   /**
    * modal
@@ -296,4 +298,12 @@ export default {
   'device.readFormat.raw': '原始位元組',
   'device.readFormat.hex': '十六進位',
   'device.readFormat.utf8': 'UTF8 字串',
+
+  /**
+   * Tab
+   */
+  'device.tab.coils': '线圈寄存器',
+  'device.tab.discrete': '離散寄存器',
+  'device.tab.holding': '保持寄存器',
+  'device.tab.input': '輸入寄存器',
 };

@@ -252,10 +252,7 @@ declare namespace API {
     device_uuid?: string;
     current?: number;
     size?: number;
-  };
-
-  type getModbusSlaverSheetSheetExportParams = {
-    device_uuid: string;
+    registerType: string;
   };
 
   type getNotifyPageListParams = {

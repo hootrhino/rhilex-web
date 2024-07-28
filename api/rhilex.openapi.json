@@ -19788,59 +19788,6 @@
         "security": []
       }
     },
-    "/api/v1/modbus_slaver_sheet/sheetImport": {
-      "post": {
-        "summary": "导入点位表",
-        "x-apifox-folder": "ModbusSlaver点位管理",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "ModbusSlaver点位管理"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_uuid": {
-                    "type": "string",
-                    "example": "11223344"
-                  },
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                },
-                "required": [
-                  "device_uuid",
-                  "file"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-198023456-run",
-        "security": []
-      }
-    },
     "/api/v1/modbus_slaver_sheet/list": {
       "get": {
         "summary": "分页查看点位表",
@@ -19881,6 +19828,16 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "registerType",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "Coils",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -19917,88 +19874,28 @@
                               "uuid": {
                                 "type": "string"
                               },
-                              "device_uuid": {
-                                "type": "string"
-                              },
-                              "tag": {
-                                "type": "string"
-                              },
-                              "alias": {
-                                "type": "string"
-                              },
-                              "function": {
-                                "type": "integer"
-                              },
-                              "slaverId": {
+                              "type": {
                                 "type": "integer"
                               },
                               "address": {
                                 "type": "integer"
                               },
-                              "frequency": {
-                                "type": "integer"
-                              },
-                              "quantity": {
-                                "type": "integer"
-                              },
-                              "dataType": {
-                                "type": "string"
-                              },
-                              "dataOrder": {
-                                "type": "string"
-                              },
-                              "weight": {
-                                "type": "integer"
-                              },
-                              "status": {
-                                "type": "integer"
-                              },
-                              "lastFetchTime": {
-                                "type": "integer"
-                              },
                               "value": {
-                                "type": "string"
-                              },
-                              "errMsg": {
                                 "type": "string"
                               }
                             },
                             "required": [
                               "uuid",
-                              "device_uuid",
-                              "tag",
-                              "alias",
-                              "function",
-                              "slaverId",
+                              "type",
                               "address",
-                              "frequency",
-                              "quantity",
-                              "dataType",
-                              "dataOrder",
-                              "weight",
-                              "status",
-                              "lastFetchTime",
-                              "value",
-                              "errMsg"
+                              "value"
                             ],
                             "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "uuid",
-                              "device_uuid",
-                              "tag",
-                              "alias",
-                              "function",
-                              "slaverId",
+                              "type",
                               "address",
-                              "frequency",
-                              "quantity",
-                              "dataType",
-                              "dataOrder",
-                              "weight",
-                              "status",
-                              "lastFetchTime",
-                              "value",
-                              "errMsg"
+                              "value"
                             ]
                           }
                         }
@@ -20039,43 +19936,391 @@
                       "data": {
                         "current": 1,
                         "size": 2,
-                        "total": 7,
+                        "total": 64,
                         "records": [
                           {
-                            "uuid": "MDTBHACW7UDY",
-                            "device_uuid": "DEVICEI8XFYHN9",
-                            "tag": "ph_value",
-                            "alias": "PH传感器值",
-                            "function": 1,
-                            "slaverId": 10,
-                            "address": 1,
-                            "frequency": 100,
-                            "quantity": 1,
-                            "dataType": "BYTE",
-                            "dataOrder": "A",
-                            "weight": 1,
-                            "status": 0,
-                            "lastFetchTime": 1711445359218,
-                            "value": "",
-                            "errMsg": "serial: timeout"
+                            "uuid": "DEVICECQSTGSKD_Coils:0",
+                            "type": 1,
+                            "address": 0,
+                            "value": "0"
                           },
                           {
-                            "uuid": "MDTBUCJUUUQQ",
-                            "device_uuid": "DEVICEI8XFYHN9",
-                            "tag": "t1",
-                            "alias": "PH传感器温度",
-                            "function": 3,
-                            "slaverId": 10,
+                            "uuid": "DEVICECQSTGSKD_Coils:1",
+                            "type": 1,
+                            "address": 1,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:2",
+                            "type": 1,
+                            "address": 2,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:3",
+                            "type": 1,
                             "address": 3,
-                            "frequency": 100,
-                            "quantity": 2,
-                            "dataType": "FLOAT",
-                            "dataOrder": "CDAB",
-                            "weight": 1,
-                            "status": 1,
-                            "lastFetchTime": 1711445359249,
-                            "value": "23.2337",
-                            "errMsg": ""
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:4",
+                            "type": 1,
+                            "address": 4,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:5",
+                            "type": 1,
+                            "address": 5,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:6",
+                            "type": 1,
+                            "address": 6,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:7",
+                            "type": 1,
+                            "address": 7,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:8",
+                            "type": 1,
+                            "address": 8,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:9",
+                            "type": 1,
+                            "address": 9,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:10",
+                            "type": 1,
+                            "address": 10,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:11",
+                            "type": 1,
+                            "address": 11,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:12",
+                            "type": 1,
+                            "address": 12,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:13",
+                            "type": 1,
+                            "address": 13,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:14",
+                            "type": 1,
+                            "address": 14,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:15",
+                            "type": 1,
+                            "address": 15,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:16",
+                            "type": 1,
+                            "address": 16,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:17",
+                            "type": 1,
+                            "address": 17,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:18",
+                            "type": 1,
+                            "address": 18,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:19",
+                            "type": 1,
+                            "address": 19,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:20",
+                            "type": 1,
+                            "address": 20,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:21",
+                            "type": 1,
+                            "address": 21,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:22",
+                            "type": 1,
+                            "address": 22,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:23",
+                            "type": 1,
+                            "address": 23,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:24",
+                            "type": 1,
+                            "address": 24,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:25",
+                            "type": 1,
+                            "address": 25,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:26",
+                            "type": 1,
+                            "address": 26,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:27",
+                            "type": 1,
+                            "address": 27,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:28",
+                            "type": 1,
+                            "address": 28,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:29",
+                            "type": 1,
+                            "address": 29,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:30",
+                            "type": 1,
+                            "address": 30,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:31",
+                            "type": 1,
+                            "address": 31,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:32",
+                            "type": 1,
+                            "address": 32,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:33",
+                            "type": 1,
+                            "address": 33,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:34",
+                            "type": 1,
+                            "address": 34,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:35",
+                            "type": 1,
+                            "address": 35,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:36",
+                            "type": 1,
+                            "address": 36,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:37",
+                            "type": 1,
+                            "address": 37,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:38",
+                            "type": 1,
+                            "address": 38,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:39",
+                            "type": 1,
+                            "address": 39,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:40",
+                            "type": 1,
+                            "address": 40,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:41",
+                            "type": 1,
+                            "address": 41,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:42",
+                            "type": 1,
+                            "address": 42,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:43",
+                            "type": 1,
+                            "address": 43,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:44",
+                            "type": 1,
+                            "address": 44,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:45",
+                            "type": 1,
+                            "address": 45,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:46",
+                            "type": 1,
+                            "address": 46,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:47",
+                            "type": 1,
+                            "address": 47,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:48",
+                            "type": 1,
+                            "address": 48,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:49",
+                            "type": 1,
+                            "address": 49,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:50",
+                            "type": 1,
+                            "address": 50,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:51",
+                            "type": 1,
+                            "address": 51,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:52",
+                            "type": 1,
+                            "address": 52,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:53",
+                            "type": 1,
+                            "address": 53,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:54",
+                            "type": 1,
+                            "address": 54,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:55",
+                            "type": 1,
+                            "address": 55,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:56",
+                            "type": 1,
+                            "address": 56,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:57",
+                            "type": 1,
+                            "address": 57,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:58",
+                            "type": 1,
+                            "address": 58,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:59",
+                            "type": 1,
+                            "address": 59,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:60",
+                            "type": 1,
+                            "address": 60,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:61",
+                            "type": 1,
+                            "address": 61,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:62",
+                            "type": 1,
+                            "address": 62,
+                            "value": "0"
+                          },
+                          {
+                            "uuid": "DEVICECQSTGSKD_Coils:63",
+                            "type": 1,
+                            "address": 63,
+                            "value": "0"
                           }
                         ]
                       }
@@ -20087,310 +20332,6 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-198023457-run",
-        "security": []
-      }
-    },
-    "/api/v1/modbus_slaver_sheet/update": {
-      "post": {
-        "summary": "更新点位表",
-        "x-apifox-folder": "ModbusSlaver点位管理",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "ModbusSlaver点位管理"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_uuid": {
-                    "type": "string"
-                  },
-                  "modbus_data_points": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "uuid": {
-                          "type": "string"
-                        },
-                        "device_uuid": {
-                          "type": "string"
-                        },
-                        "tag": {
-                          "type": "string"
-                        },
-                        "alias": {
-                          "type": "string"
-                        },
-                        "function": {
-                          "type": "integer"
-                        },
-                        "slaverId": {
-                          "type": "integer"
-                        },
-                        "address": {
-                          "type": "integer"
-                        },
-                        "frequency": {
-                          "type": "integer"
-                        },
-                        "quantity": {
-                          "type": "integer"
-                        },
-                        "dataType": {
-                          "type": "string"
-                        },
-                        "dataOrder": {
-                          "type": "string"
-                        },
-                        "weight": {
-                          "type": "number"
-                        }
-                      },
-                      "x-apifox-orders": [
-                        "uuid",
-                        "device_uuid",
-                        "tag",
-                        "alias",
-                        "function",
-                        "slaverId",
-                        "address",
-                        "frequency",
-                        "quantity",
-                        "dataType",
-                        "dataOrder",
-                        "weight"
-                      ],
-                      "required": [
-                        "dataType",
-                        "dataOrder",
-                        "weight"
-                      ],
-                      "x-apifox-ignore-properties": []
-                    }
-                  }
-                },
-                "required": [
-                  "device_uuid",
-                  "modbus_data_points"
-                ],
-                "x-apifox-orders": [
-                  "device_uuid",
-                  "modbus_data_points"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "device_uuid": "DEVICETWRRCW",
-                "modbus_data_points": [
-                  {
-                    "uuid": "MDTBHMPBQKAR",
-                    "device_uuid": "DEVICETWRRCW",
-                    "tag": "a11-new111111",
-                    "alias": "a111",
-                    "function": 3,
-                    "slaverId": 10,
-                    "address": 10,
-                    "frequency": 100,
-                    "quantity": 2
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": []
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-198023458-run",
-        "security": []
-      }
-    },
-    "/api/v1/modbus_slaver_sheet/delIds": {
-      "delete": {
-        "summary": "多行删除",
-        "x-apifox-folder": "ModbusSlaver点位管理",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "ModbusSlaver点位管理"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_uuid": {
-                    "type": "string"
-                  },
-                  "uuids": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "required": [
-                  "device_uuid",
-                  "uuids"
-                ],
-                "x-apifox-orders": [
-                  "device_uuid",
-                  "uuids"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "device_uuid": "DEVICEDQNLO8",
-                "uuids": [
-                  "MDTBJJMDUX",
-                  "MDTBC4TT8B"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": []
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-198023460-run",
-        "security": []
-      }
-    },
-    "/api/v1/modbus_slaver_sheet/sheetExport": {
-      "get": {
-        "summary": "导出点表",
-        "x-apifox-folder": "ModbusSlaver点位管理",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "ModbusSlaver点位管理"
-        ],
-        "parameters": [
-          {
-            "name": "device_uuid",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "AABBCCDD",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-198023462-run",
         "security": []
       }
     }
@@ -20520,10 +20461,5 @@
     },
     "securitySchemes": {}
   },
-  "servers": [
-    {
-      "url": "http://127.0.0.1:2580",
-      "description": "本机环境"
-    }
-  ]
+  "servers": []
 }
