@@ -3,6 +3,7 @@ import { getModbusSlaverSheetList } from '@/services/rulex/modbusSlaverjicunqigu
 import { defaultPagination } from '@/utils/constant';
 import { ProTable } from '@ant-design/pro-components';
 import { history, useIntl, useParams } from '@umijs/max';
+import { Tag } from 'antd';
 
 const ModbusSlaverRegisters = () => {
   const { formatMessage } = useIntl();
@@ -19,7 +20,11 @@ const ModbusSlaverRegisters = () => {
         {
           title: formatMessage({ id: 'device.form.title.value' }),
           dataIndex: 'valueCoils',
-          width: 120,
+          renderText: (record: string) => (
+            <Tag color={Number(record) === 0 ? 'red' : 'green'}>
+              {Number(record) === 0 ? 'OFF' : 'ON'}
+            </Tag>
+          ),
         },
       ],
     },
@@ -33,7 +38,6 @@ const ModbusSlaverRegisters = () => {
         {
           title: formatMessage({ id: 'device.form.title.value' }),
           dataIndex: 'valueDiscrete',
-          width: 120,
         },
       ],
     },
@@ -47,7 +51,6 @@ const ModbusSlaverRegisters = () => {
         {
           title: formatMessage({ id: 'device.form.title.value' }),
           dataIndex: 'valueHolding',
-          width: 120,
         },
       ],
     },
@@ -61,7 +64,6 @@ const ModbusSlaverRegisters = () => {
         {
           title: formatMessage({ id: 'device.form.title.value' }),
           dataIndex: 'valueInput',
-          width: 120,
         },
       ],
     },
@@ -74,6 +76,7 @@ const ModbusSlaverRegisters = () => {
     >
       <ProTable
         rowKey="uuid"
+        rootClassName="stripe-table modbus-slaver-table"
         search={false}
         columns={columns}
         request={async ({
