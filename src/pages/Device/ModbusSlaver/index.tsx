@@ -1,29 +1,69 @@
 import PageContainer from '@/components/ProPageContainer';
-import { getModbusSlaverSheetList } from '@/services/rulex/modbusSlaverdianweiguanli';
+import { getModbusSlaverSheetList } from '@/services/rulex/modbusSlaverjicunqiguanli';
+import { defaultPagination } from '@/utils/constant';
 import { ProTable } from '@ant-design/pro-components';
 import { history, useIntl, useParams } from '@umijs/max';
-import { useState } from 'react';
-
-enum Registers {
-  COILS = 'Coils',
-  DISCRETE = 'Discrete',
-  HOLDING = 'Holding',
-  INPUT = 'Input',
-}
 
 const ModbusSlaverRegisters = () => {
   const { formatMessage } = useIntl();
   const { deviceId } = useParams();
-  const [activeKey, setActiveKey] = useState<string>(Registers.COILS);
 
   const columns = [
     {
-      title: formatMessage({ id: 'device.form.title.siemensAddress' }),
-      dataIndex: 'address',
+      title: '线圈寄存器',
+      children: [
+        {
+          title: formatMessage({ id: 'device.form.title.siemensAddress' }),
+          dataIndex: 'addressCoils',
+        },
+        {
+          title: formatMessage({ id: 'device.form.title.value' }),
+          dataIndex: 'valueCoils',
+          width: 120,
+        },
+      ],
     },
     {
-      title: formatMessage({ id: 'device.form.title.value' }),
-      dataIndex: 'value',
+      title: '离散寄存器',
+      children: [
+        {
+          title: formatMessage({ id: 'device.form.title.siemensAddress' }),
+          dataIndex: 'addressDiscrete',
+        },
+        {
+          title: formatMessage({ id: 'device.form.title.value' }),
+          dataIndex: 'valueDiscrete',
+          width: 120,
+        },
+      ],
+    },
+    {
+      title: '保持寄存器',
+      children: [
+        {
+          title: formatMessage({ id: 'device.form.title.siemensAddress' }),
+          dataIndex: 'addressHolding',
+        },
+        {
+          title: formatMessage({ id: 'device.form.title.value' }),
+          dataIndex: 'valueHolding',
+          width: 120,
+        },
+      ],
+    },
+    {
+      title: '输入寄存器',
+      children: [
+        {
+          title: formatMessage({ id: 'device.form.title.siemensAddress' }),
+          dataIndex: 'addressInput',
+        },
+        {
+          title: formatMessage({ id: 'device.form.title.value' }),
+          dataIndex: 'valueInput',
+          width: 120,
+        },
+      ],
     },
   ];
 
@@ -36,13 +76,15 @@ const ModbusSlaverRegisters = () => {
         rowKey="uuid"
         search={false}
         columns={columns}
-        params={{ registerType: activeKey }}
-        request={async ({ ...keyword }) => {
+        request={async ({
+          current = defaultPagination.defaultCurrent,
+          pageSize = defaultPagination.defaultPageSize,
+        }) => {
+          console.log(current);
           const { data } = await getModbusSlaverSheetList({
-            current: 1,
-            size: 256,
+            current,
+            size: pageSize,
             device_uuid: deviceId,
-            ...keyword,
           });
 
           return Promise.resolve({
@@ -51,34 +93,8 @@ const ModbusSlaverRegisters = () => {
             success: true,
           });
         }}
-        toolbar={{
-          menu: {
-            type: 'tab',
-            activeKey: activeKey,
-            items: [
-              {
-                key: Registers.COILS,
-                label: formatMessage({ id: 'device.tab.coils' }),
-              },
-              {
-                key: Registers.DISCRETE,
-                label: formatMessage({ id: 'device.tab.discrete' }),
-              },
-              {
-                key: Registers.HOLDING,
-                label: formatMessage({ id: 'device.tab.holding' }),
-              },
-              {
-                key: Registers.INPUT,
-                label: formatMessage({ id: 'device.tab.input' }),
-              },
-            ],
-            onChange: (key) => {
-              setActiveKey(key as string);
-            },
-          },
-        }}
-        pagination={false}
+        pagination={defaultPagination}
+        bordered
       />
     </PageContainer>
   );

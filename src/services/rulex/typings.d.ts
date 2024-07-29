@@ -252,7 +252,6 @@ declare namespace API {
     device_uuid?: string;
     current?: number;
     size?: number;
-    registerType: string;
   };
 
   type getNotifyPageListParams = {
