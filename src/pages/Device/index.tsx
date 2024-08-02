@@ -12,7 +12,6 @@ import {
   ControlOutlined,
   DownOutlined,
   ExceptionOutlined,
-  HddOutlined,
   PlusOutlined,
   PoweroffOutlined,
   SettingOutlined,
@@ -136,16 +135,16 @@ const Devices = () => {
       //     },
       //   ];
       //   break;
-      case DeviceType.SMART_HOME_CONTROLLER:
-        newItems = [
-          ...newItems,
-          {
-            key: 'sub-device',
-            label: formatMessage({ id: 'button.subDevice' }),
-            icon: <HddOutlined />,
-          },
-        ];
-        break;
+      // case DeviceType.SMART_HOME_CONTROLLER:
+      //   newItems = [
+      //     ...newItems,
+      //     {
+      //       key: 'sub-device',
+      //       label: formatMessage({ id: 'button.subDevice' }),
+      //       icon: <HddOutlined />,
+      //     },
+      //   ];
+      //   break;
       case DeviceType.GENERIC_SNMP:
       case DeviceType.GENERIC_MODBUS_MASTER:
       case DeviceType.GENERIC_MODBUS_SLAVER:

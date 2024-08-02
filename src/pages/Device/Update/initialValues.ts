@@ -109,20 +109,21 @@ export const defaultConfig = {
       url: `http://${DEFAULT_HOST}:8080`,
     },
   },
+  // TODO 暂无需求，先隐藏
   // [DeviceType.GENERIC_CAMERA]: {
   //   inputMode: InputMode.LOCAL_CAMERA,
   //   ...defaultOutputConfig['LOCAL_JPEG_STREAM_SERVER'],
   // },
-  [DeviceType.SMART_HOME_CONTROLLER]: {
-    commonConfig: {
-      autoScan: 'true',
-      timeout: DEFAULT_TIMEOUT,
-      frequency: DEFAULT_FREQUENCE,
-    },
-    shellyConfig: {
-      webHookPort: 7000,
-    },
-  },
+  // [DeviceType.SMART_HOME_CONTROLLER]: {
+  //   commonConfig: {
+  //     autoScan: 'true',
+  //     timeout: DEFAULT_TIMEOUT,
+  //     frequency: DEFAULT_FREQUENCE,
+  //   },
+  //   shellyConfig: {
+  //     webHookPort: 7000,
+  //   },
+  // },
   [DeviceType.GENERIC_SNMP]: {
     commonConfig: {
       autoRequest: DEFAULT_AUTOREQUEST,

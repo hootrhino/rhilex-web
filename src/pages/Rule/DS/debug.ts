@@ -61,15 +61,15 @@ const device_snmp_ds = `[
   }
 ]`;
 
-// SMART_HOME_CONTROLLER - 全屋智能家居中心控制网关
-const device_smart_home_ds = `[
-  {
-    "event": "Input.Toggle",
-    "mac": "AA:BB:CC:DD:EE",
-    "ip": "192.168.1.107",
-    "data": {}
-  }
-]`;
+// TODO SMART_HOME_CONTROLLER - 全屋智能家居中心控制网关
+// const device_smart_home_ds = `[
+//   {
+//     "event": "Input.Toggle",
+//     "mac": "AA:BB:CC:DD:EE",
+//     "ip": "192.168.1.107",
+//     "data": {}
+//   }
+// ]`;
 
 // COAP
 const inend_coap_ds = `{
@@ -125,10 +125,10 @@ export const device_test_data = {
   [DeviceType.GENERIC_MODBUS_SLAVER]: device_modbus_ds,
   [DeviceType.GENERIC_HTTP_DEVICE]: device_http_ds,
   [DeviceType.SIEMENS_PLC]: device_siemens_ds,
-  // [DeviceType.GENERIC_CAMERA]: device_camera_ds,
+  // TODO [DeviceType.GENERIC_CAMERA]: device_camera_ds,
   [DeviceType.GENERIC_SNMP]: device_snmp_ds,
-  [DeviceType.SMART_HOME_CONTROLLER]: device_smart_home_ds,
-  // [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,
+  // TODO [DeviceType.SMART_HOME_CONTROLLER]: device_smart_home_ds,
+  // TODO [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,
 };
 
 export const inend_test_data = {
