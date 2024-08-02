@@ -259,7 +259,7 @@ export default {
   'device.type.camera': '通用摄像机流处理网关',
   'device.type.smartHome': '全屋智能家居中心控制网关',
   'device.type.bacnet.ip': '通用 Bacnet IP 采集网关',
-  'device.type.bacnet.router': 'Bacnet 路由网关',
+  'device.type.bacnet.router': '通用 Bacnet 路由网关',
   'device.type.tencent': '腾讯云物联网平台网关接入',
   'device.type.uartRW': '通用串口读写网关',
 
