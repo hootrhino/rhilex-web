@@ -1,6 +1,7 @@
 import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { getIntl, getLocale } from '@umijs/max';
 import { Space } from 'antd';
+import type { LabeledValue } from 'antd/es/select';
 import type { DeviceItem } from '..';
 import { DeviceMode } from '../enum';
 
@@ -18,18 +19,18 @@ const modeColumns = {
           dataIndex: ['config', 'portUuid'],
           valueType: 'select',
           required: true,
+          fieldProps: {
+            optionRender: (option: LabeledValue) => (
+              <Space>
+                <span>{option?.label}</span>
+                <span className="text-[12px] text-[#000000A6]">{option?.value}</span>
+              </Space>
+            ),
+          },
           request: async () => {
             const { data } = await getHwifaceList();
 
-            return data?.map((item) => ({
-              label: (
-                <Space>
-                  <span>{item?.name}</span>
-                  <span className="text-[12px] text-[#000000A6]">{item?.alias}</span>
-                </Space>
-              ),
-              value: item.uuid,
-            }));
+            return data.map((item) => ({ label: item.name, value: item.uuid }));
           },
           render: (_dom: React.ReactNode, { portUuid }: DeviceItem) => portUuid,
         },

@@ -4,6 +4,7 @@ import UnitValue from '@/components/UnitValue';
 import { getOsNetInterfaces } from '@/services/rulex/xitongshuju';
 import { getIntl, getLocale } from '@umijs/max';
 import { Space } from 'antd';
+import type { LabeledValue } from 'antd/es/select';
 import type { DeviceItem } from '..';
 
 const intl = getIntl(getLocale());
@@ -57,18 +58,18 @@ export const SMART_HOME_CONTROLLER_CONFIG = [
         required: true,
         dataIndex: ['config', 'shellyConfig', 'networkCidr'],
         valueType: 'select',
+        fieldProps: {
+          optionRender: (option: LabeledValue) => (
+            <Space>
+              <span>{option?.label}</span>
+              <span className="text-[12px] text-[#000000A6]">{option?.value}</span>
+            </Space>
+          ),
+        },
         request: async () => {
           const { data } = await getOsNetInterfaces();
 
-          return data?.map((item) => ({
-            label: (
-              <Space>
-                <span>{item?.name}</span>
-                <span className="text-[12px] text-[#000000A6]">{item?.addr}</span>
-              </Space>
-            ),
-            value: item.addr,
-          }));
+          return data.map((item) => ({ label: item.name, value: item.addr }));
         },
         render: (_dom: React.ReactNode, { shellyConfig }: DeviceItem) =>
           shellyConfig?.networkCidr || '-',

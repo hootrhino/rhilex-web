@@ -5,6 +5,7 @@ import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { stringToBool } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 import { Space } from 'antd';
+import { LabeledValue } from 'antd/es/select';
 import { dataModeOption, OutendType, outendTypeOption } from './enum';
 
 const intl = getIntl(getLocale());
@@ -246,18 +247,17 @@ export const configColumns = {
       dataIndex: ['config', 'portUuid'],
       valueType: 'select',
       required: true,
+      fieldProps: {
+        optionRender: (option: LabeledValue) => (
+          <Space>
+            <span>{option?.label}</span>
+            <span className="text-[12px] text-[#000000A6]">{option?.value}</span>
+          </Space>
+        ),
+      },
       request: async () => {
         const { data } = await getHwifaceList();
-
-        return data?.map((item) => ({
-          label: (
-            <Space>
-              <span>{item?.name}</span>
-              <span className="text-[12px] text-[#000000A6]">{item?.alias}</span>
-            </Space>
-          ),
-          value: item.uuid,
-        }));
+        return data.map((item) => ({ label: item.name, value: item.uuid }));
       },
       render: (portUuid: string) => portUuid,
     },

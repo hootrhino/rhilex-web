@@ -45,7 +45,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
     "@ant-design/plots": "^2.2.2",
-    "@ant-design/pro-components": "^2.3.57",
+    "@ant-design/pro-components": "^2.7.12",
     "@codemirror/autocomplete": "^6.10.2",
     "@codemirror/lint": "^6.4.2",
     "@uiw/codemirror-extensions-langs": "^4.21.20",

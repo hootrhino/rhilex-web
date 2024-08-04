@@ -17,6 +17,7 @@ import { GENERIC_UART_PROTOCOL_CONFIG } from './genericUartProtocol';
 import { GENERIC_UART_RW_CONFIG } from './genericUartRW';
 import { SIEMENS_PLC_CONFIG } from './siemensPLC';
 // TODO import { SMART_HOME_CONTROLLER_CONFIG } from './smartHomeController';
+import type { LabeledValue } from 'antd/es/select';
 import { TENCENT_IOTHUB_GATEWAY_CONFIG } from './tencentIothubGateway';
 
 const intl = getIntl(getLocale());
@@ -36,18 +37,18 @@ export const modeColumns = {
           dataIndex: ['config', 'portUuid'],
           valueType: 'select',
           required: true,
+          fieldProps: {
+            optionRender: (option: LabeledValue) => (
+              <Space>
+                <span>{option?.label}</span>
+                <span className="text-[12px] text-[#000000A6]">{option?.value}</span>
+              </Space>
+            ),
+          },
           request: async () => {
             const { data } = await getHwifaceList();
 
-            return data?.map((item) => ({
-              label: (
-                <Space>
-                  <span>{item?.name}</span>
-                  <span className="text-[12px] text-[#000000A6]">{item?.alias}</span>
-                </Space>
-              ),
-              value: item.uuid,
-            }));
+            return data.map((item) => ({ label: item.name, value: item.uuid }));
           },
           render: (_dom: React.ReactNode, { portUuid }: DeviceItem) => portUuid,
         },

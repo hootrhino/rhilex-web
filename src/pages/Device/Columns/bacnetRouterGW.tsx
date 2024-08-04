@@ -4,6 +4,7 @@ import { validateFormItem } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 import { Space } from 'antd';
 import type { Rule } from 'antd/es/form';
+import type { LabeledValue } from 'antd/es/select';
 import type { DeviceItem } from '..';
 import { BacnetModeOption } from '../enum';
 
@@ -75,18 +76,18 @@ export const BACNET_ROUTER_GW_CONFIG = [
         dataIndex: ['config', 'bacnetRouterConfig', 'networkCidr'],
         valueType: 'select',
         required: true,
+        fieldProps: {
+          optionRender: (option: LabeledValue) => (
+            <Space>
+              <span>{option?.label}</span>
+              <span className="text-[12px] text-[#000000A6]">{option?.value}</span>
+            </Space>
+          ),
+        },
         request: async () => {
           const { data } = await getOsNetInterfaces();
 
-          return data?.map((item) => ({
-            label: (
-              <Space>
-                <span>{item?.name}</span>
-                <span className="text-[12px] text-[#000000A6]">{item?.addr}</span>
-              </Space>
-            ),
-            value: item.addr,
-          }));
+          return data.map((item) => ({ label: item.name, value: item.addr }));
         },
         render: (_dom: React.ReactNode, { bacnetRouterConfig }: DeviceItem) =>
           bacnetRouterConfig?.networkCidr,
