@@ -57,7 +57,7 @@ export default {
   'com.type.urf': '通用射頻',
   'com.type.blc': '經典藍牙',
   'com.type.ble': '低功耗藍牙',
-  'com.type.rf': '{type} 通信',
+  'com.type.rf': '{type} 通訊',
   'com.type.ir': '紅外線收發器',
   'com.type.beep': '蜂鳴器',
   'com.scene.option1': '場景1',

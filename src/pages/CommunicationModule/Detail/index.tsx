@@ -26,12 +26,15 @@ const Detail = ({ name, type, ...props }: DetailProps) => {
     {
       title: intl.formatMessage({ id: 'com.table.title.type' }),
       dataIndex: 'type',
-      renderText: (type: number) => (
-        <Space>
-          <span>{TransceiverTypeOption[type]?.text}</span>
-          <IconFont type={`icon-com-${TransceiverTypeOption[type]?.icon}`} />
-        </Space>
-      ),
+      renderText: (type: number) =>
+        type ? (
+          <Space>
+            <span>{TransceiverTypeOption[type]?.text}</span>
+            <IconFont type={`icon-com-${TransceiverTypeOption[type]?.icon}`} />
+          </Space>
+        ) : (
+          '-'
+        ),
     },
     {
       title: intl.formatMessage({ id: 'com.table.title.model' }),
@@ -54,7 +57,7 @@ const Detail = ({ name, type, ...props }: DetailProps) => {
     {
       title: intl.formatMessage({ id: 'com.table.title.status' }),
       dataIndex: 'status',
-      renderText: (status: number) => <ProTag type={StatusType.COM}>{status}</ProTag>,
+      renderText: (status: number) => <ProTag type={StatusType.COM}>{status || 0}</ProTag>,
     },
   ];
 

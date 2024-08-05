@@ -132,6 +132,7 @@ const Resource = () => {
 
   return (
     <ProCard
+      headStyle={{ flexWrap: 'wrap' }}
       className="h-full"
       title={formatMessage({ id: 'system.tab.resource' })}
       extra={

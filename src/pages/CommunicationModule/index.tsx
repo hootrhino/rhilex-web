@@ -3,7 +3,7 @@ import PageContainer from '@/components/ProPageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
 import { getTransceiverList, postTransceiverCtrl } from '@/services/rulex/tongxinmozu';
 import { pick } from '@/utils/redash';
-import { cn, IconFont } from '@/utils/utils';
+import { IconFont } from '@/utils/utils';
 import {
   DownOutlined,
   ExceptionOutlined,
@@ -74,38 +74,51 @@ const CommunicationModule = () => {
 
   // 获取高级操作
   const getMenuItems = ({ status, type }: ComItem) => {
-    const baseItem = [
-      {
-        key: 'command',
-        label: formatMessage({ id: 'com.button.cmd' }),
-        icon: <MacCommandOutlined />,
-      },
-    ];
-    let menuItem: ItemType[] = [...baseItem];
-
-    if ([0, 2].includes(status)) {
-      menuItem = [
-        ...menuItem,
+    if ([TransceiverType.MN4G, TransceiverType.BLE, TransceiverType.LORA].includes(type)) {
+      const baseItem = [
         {
-          key: 'error',
-          label: formatMessage({ id: 'button.error' }),
-          icon: <ExceptionOutlined />,
+          key: 'command',
+          label: formatMessage({ id: 'com.button.cmd' }),
+          icon: <MacCommandOutlined />,
         },
       ];
-    }
-    if ([TransceiverType.MN4G, TransceiverType.BLE].includes(type)) {
-      menuItem = [
-        {
-          key: 'restart',
-          danger: true,
-          label: formatMessage({ id: 'button.restart' }),
-          icon: <PoweroffOutlined />,
-        },
-        ...menuItem,
-      ];
-    }
+      let menuItem: ItemType[] = [...baseItem];
 
-    return menuItem;
+      if ([0, 2].includes(status)) {
+        menuItem = [
+          ...menuItem,
+          {
+            key: 'error',
+            label: formatMessage({ id: 'button.error' }),
+            icon: <ExceptionOutlined />,
+          },
+        ];
+      }
+      if ([TransceiverType.MN4G, TransceiverType.BLE].includes(type)) {
+        menuItem = [
+          {
+            key: 'restart',
+            danger: true,
+            label: formatMessage({ id: 'button.restart' }),
+            icon: <PoweroffOutlined />,
+          },
+          ...menuItem,
+        ];
+      }
+
+      return menuItem;
+    } else {
+      if ([0, 2].includes(status)) {
+        return [
+          {
+            key: 'error',
+            label: formatMessage({ id: 'button.error' }),
+            icon: <ExceptionOutlined />,
+          },
+        ];
+      }
+      return [];
+    }
   };
 
   const handleOnMenu = ({ key }: MenuInfo, { name, type, errMsg }: ComItem) => {
@@ -176,7 +189,7 @@ const CommunicationModule = () => {
     {
       title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
-      width: getLocale() === 'en-US' ? 160 : 140,
+      width: getLocale() !== 'zh-CN' ? 160 : 140,
       render: (_, record) => [
         <a
           key="detail"
@@ -201,15 +214,7 @@ const CommunicationModule = () => {
             onClick: (info: MenuInfo) => handleOnMenu(info, record),
           }}
         >
-          <a
-            className={cn(
-              [TransceiverType.MN4G, TransceiverType.BLE, TransceiverType.LORA].includes(
-                record?.type,
-              )
-                ? 'display'
-                : 'hidden',
-            )}
-          >
+          <a>
             {formatMessage({ id: 'button.advancedOption' })} <DownOutlined />
           </a>
         </Dropdown>,
