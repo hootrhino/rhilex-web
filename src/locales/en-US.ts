@@ -84,7 +84,7 @@ export default {
   'menu.device.new': 'New Device',
   'menu.device.update': 'Edit Device',
   'menu.device.sheet': 'Register Sheet Configuration',
-  'menu.device.registers': 'Registers Detail',
+  'menu.device.registers': 'Registers Details',
   'menu.device.objectList': 'SNMP OID Sheet',
   'menu.device.subDevice': 'Subdevice List',
   'menu.schema': 'Data Schema',

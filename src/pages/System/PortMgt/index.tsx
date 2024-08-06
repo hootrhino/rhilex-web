@@ -1,11 +1,10 @@
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
 import ProDescriptions from '@/components/ProDescriptions';
-import PageContainer from '@/components/ProPageContainer';
 import UnitValue from '@/components/UnitValue';
 import { getHwifaceList, getHwifaceRefresh } from '@/services/rulex/jiekouguanli';
 import { ScanOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { ProTable } from '@ant-design/pro-components';
+import { ProCard, ProTable } from '@ant-design/pro-components';
 import { getLocale, useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Card, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
@@ -162,31 +161,30 @@ const Interface = () => {
   ];
 
   return (
-    <>
-      <PageContainer>
-        <ProTable
-          rowKey="uuid"
-          actionRef={actionRef}
-          columns={columns}
-          rootClassName="stripe-table"
-          search={false}
-          pagination={false}
-          scroll={{ y: 400 }}
-          request={async () => {
-            const { data } = await getHwifaceList();
+    <ProCard title={formatMessage({ id: 'system.tab.port' })} headStyle={{ paddingBlock: 0 }}>
+      <ProTable
+        rowKey="uuid"
+        actionRef={actionRef}
+        columns={columns}
+        rootClassName="stripe-table"
+        search={false}
+        pagination={false}
+        scroll={{ y: 400 }}
+        request={async () => {
+          const { data } = await getHwifaceList();
 
-            return Promise.resolve({
-              data,
-              success: true,
-            });
-          }}
-          toolBarRender={() => [
-            <Button key="refresh" type="primary" icon={<ScanOutlined />} onClick={refresh}>
-              {formatMessage({ id: 'system.button.scan' })}
-            </Button>,
-          ]}
-        />
-      </PageContainer>
+          return Promise.resolve({
+            data,
+            success: true,
+          });
+        }}
+        toolBarRender={() => [
+          <Button key="refresh" type="primary" icon={<ScanOutlined />} onClick={refresh}>
+            {formatMessage({ id: 'system.button.scan' })}
+          </Button>,
+        ]}
+      />
+
       <Update
         {...formConfig}
         onOpenChange={(visible) => setFormConfig({ open: visible, uuid: '' })}
@@ -210,7 +208,7 @@ const Interface = () => {
           labelWidth={getLocale() === 'en-US' ? 180 : 80}
         />
       </Modal>
-    </>
+    </ProCard>
   );
 };
 

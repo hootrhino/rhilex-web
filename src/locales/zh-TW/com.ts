@@ -27,7 +27,7 @@ export default {
   'com.form.title.cdmapwd': '保存 CDMA 模式',
 
   'com.form.placeholder.cmd': '請輸入指令',
-  'com.form.placeholder.cdmapwd': '请选择保存 CDMA 的模式',
+  'com.form.placeholder.cdmapwd': '請選擇保存 CDMA 的模式',
   'com.form.placeholder.sceneId': '請選擇場景編號',
   'com.form.placeholder.ptytpe': '請選擇協議類型',
   'com.form.placeholder.apn': '請輸入 APN 名稱',

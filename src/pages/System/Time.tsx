@@ -56,7 +56,7 @@ const TimeConfig = () => {
   };
 
   return (
-    <ProCard title={formatMessage({ id: 'system.tab.time' })}>
+    <ProCard title={formatMessage({ id: 'system.tab.time' })} headStyle={{ paddingBlock: 0 }}>
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}

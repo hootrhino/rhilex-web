@@ -164,7 +164,7 @@ const FirmwareConfig = () => {
       <ProCard
         split="vertical"
         title={formatMessage({ id: 'system.tab.firmware' })}
-        headStyle={{ paddingBlockEnd: 12 }}
+        headStyle={{ paddingBlock: 0 }}
       >
         <ProCard colSpan="50%" title={formatMessage({ id: 'system.title.firmware.auth' })}>
           <ProDescriptions

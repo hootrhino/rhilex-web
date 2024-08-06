@@ -36,7 +36,7 @@ const UserConfig = () => {
   }, [initialState]);
 
   return (
-    <ProCard title={formatMessage({ id: 'system.tab.user' })}>
+    <ProCard title={formatMessage({ id: 'system.tab.user' })} headStyle={{ paddingBlock: 0 }}>
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}

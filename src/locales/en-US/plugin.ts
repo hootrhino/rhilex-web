@@ -20,7 +20,7 @@ export default {
   'plugin.title.scan': 'Modbus scanner',
   'plugin.title.terminal': 'Terminal',
   'plugin.title.calc': 'Modbus CRC calculate',
-  'plugin.title.ngrokc': 'Detail',
+  'plugin.title.ngrokc': 'Details',
 
   /**
    * button

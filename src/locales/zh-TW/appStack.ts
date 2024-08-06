@@ -7,7 +7,7 @@ export default {
   'appStack.table.title.autoStart': '自動啟動',
   'appStack.table.title.appState': '狀態',
   'appStack.table.title.type': '腳本類型',
-  'appStack.table.title.type.valueEnum': 'LUA 腳本',
+  'appStack.table.title.type.valueEnum': 'Lua 腳本',
   'appStack.table.title.luaSource': 'Lua 源碼',
 
   /**

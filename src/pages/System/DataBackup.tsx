@@ -36,7 +36,7 @@ const DataBackupConfig = () => {
   }, [activeKey]);
 
   return (
-    <ProCard title={formatMessage({ id: 'system.tab.backup' })}>
+    <ProCard title={formatMessage({ id: 'system.tab.backup' })} headStyle={{ paddingBlock: 0 }}>
       <ProForm
         formRef={formRef}
         layout="vertical"

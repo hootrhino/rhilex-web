@@ -56,7 +56,7 @@ export default {
   'inend.type.subject': '作為通用 {type} 訂閲 Subject 接入',
   'inend.type.event': '{type} 內部事件源',
   'inend.type.mqtt': '輕量級 MQTT Broker',
-  'inend.type.comtc': '来自通信模块的数据',
+  'inend.type.comtc': '來自通訊模組的數據',
 
   /**
    * mode

@@ -78,7 +78,7 @@ const NetworkConfig = () => {
   };
 
   return (
-    <ProCard title={formatMessage({ id: 'system.tab.network' })}>
+    <ProCard title={formatMessage({ id: 'system.tab.network' })} headStyle={{ paddingBlock: 0 }}>
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}

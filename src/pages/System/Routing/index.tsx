@@ -12,6 +12,7 @@ const RoutingConfig = () => {
     <ProCard
       title={formatMessage({ id: 'system.tab.routing' })}
       className="mb-[12px]"
+      headStyle={{ paddingBlock: 0 }}
       tabs={{
         tabPosition: 'top',
         className: 'px-[24px] routing-tab',

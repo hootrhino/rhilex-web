@@ -23,7 +23,7 @@ export default {
   'ruleConfig.title': 'Rule configuration',
   'ruleConfig.title.new': 'New rule',
   'ruleConfig.title.edit': 'Edit rule',
-  'ruleConfig.title.detail': 'Rule detail',
+  'ruleConfig.title.detail': 'Rule details',
   'ruleConfig.title.log': 'Rule log',
   'ruleConfig.title.test': 'Test script',
 

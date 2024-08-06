@@ -4,7 +4,7 @@ import { getOsOsRelease } from '@/services/rulex/xitongshuju';
 import { Line } from '@ant-design/plots';
 import { ProCard, StatisticCard } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
-import { Space } from 'antd';
+import { Button, Space } from 'antd';
 
 const Resource = () => {
   const { dataSource, resourceData } = useModel('useSystem');
@@ -96,11 +96,9 @@ const Resource = () => {
         label: null,
         tick: false,
       },
-      // x: { labelFormatter: (d: any) => dayjs(d).format('MM-DD HH:mm:ss') },
     },
     scale: {
       y: { tickCount: 40 },
-      // x: { tickCount: 10 },
     },
     label: {
       text: 'category',
@@ -130,29 +128,54 @@ const Resource = () => {
     ],
   };
 
+  const extraData = [
+    {
+      label: formatMessage({ id: 'system.table.title.product' }),
+      value: product || '-',
+      key: 'product',
+    },
+    {
+      label: formatMessage({ id: 'system.table.title.version' }),
+      value: version || 'v0.0.0',
+      key: 'version',
+    },
+    {
+      label: formatMessage({ id: 'system.table.title.osUpTime' }),
+      value: osUpTime || '-',
+      key: 'osUpTime',
+    },
+    {
+      label: formatMessage({ id: 'system.table.title.osArch' }),
+      value: osArch || '-',
+      key: 'osArch',
+    },
+  ];
+
   return (
     <ProCard
-      headStyle={{ flexWrap: 'wrap' }}
+      headStyle={{ flexWrap: 'wrap', paddingBlock: 0 }}
       className="h-full"
       title={formatMessage({ id: 'system.tab.resource' })}
       extra={
-        <Space split={<StatisticCard.Divider type="vertical" className="h-[12px]" />}>
-          <span className="text-[#585858] text-[13px]">
-            {formatMessage({ id: 'system.table.title.product' })} {product}
-          </span>
-          <span className="text-[#585858] text-[13px]">
-            {formatMessage({ id: 'system.table.title.version' })} {version || 'v0.0.0'}
-          </span>
-          <span className="text-[#585858] text-[13px]">
-            {formatMessage({ id: 'system.table.title.osUpTime' })} {osUpTime}
-          </span>
-          <span className="text-[#585858] text-[13px]">
-            {formatMessage({ id: 'system.table.title.osArch' })} {osArch}
-            <a className="pl-[5px]" onClick={() => modal.info(detailConfig)}>
-              {formatMessage({ id: 'button.checkDetail' })}
-            </a>
-          </span>
-        </Space>
+        <>
+          <Space split={<StatisticCard.Divider type="vertical" className="h-[12px]" />}>
+            {extraData.map(({ key, label, value }) => (
+              <span key={key}>
+                <span className="text-[#585858] text-[12px]">{label}</span>
+                <span className="text-[rgba(0,0,0,0.75)] text-[16px] pl-[5px]">{value}</span>
+              </span>
+            ))}
+          </Space>
+          <Button
+            size="small"
+            type="primary"
+            ghost
+            className="ml-[16px]"
+            onClick={() => modal.info(detailConfig)}
+          >
+            {formatMessage({ id: 'button.checkDetail' })}
+          </Button>
+        </>
       }
     >
       <Line {...config} containerStyle={{ minHeight: 560 }} />

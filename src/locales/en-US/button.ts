@@ -26,7 +26,7 @@ export default {
   'button.reload': 'Reload',
   'button.ruleConfig': 'Rule Configuration',
   'button.error': 'Exception Details',
-  'button.subDevice': 'Show Subdevices',
+  'button.subDevice': 'Sub-devices Details',
   'button.new.formList': 'Add a Row',
   'button.forget': 'Forgot Password',
   'button.test': 'Test',

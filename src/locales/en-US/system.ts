@@ -134,7 +134,7 @@ export default {
     'Factory reset will erase all current data and stop all ongoing tasks. Please proceed with caution',
   'system.modal.content.user':
     'Are you sure you want to change the username/password and login again?',
-  'system.modal.title.portDetail': 'Interface detail',
+  'system.modal.title.portDetail': 'Interface details',
   'system.modal.title.portUpdate': 'Update interface',
 
   /**
@@ -143,9 +143,9 @@ export default {
   'system.title.firmware.auth': 'Device authorization information',
   'system.title.firmware.log': 'Firmware upgrade log',
   'system.title.firmware.upload': 'Upload firmware',
-  'system.title.network.detail': 'Network detail',
+  'system.title.network.detail': 'Network details',
   'system.title.network.status': 'Network Status',
-  'system.title.resource.detail': 'System detail',
+  'system.title.resource.detail': 'System details',
 
   /**
    * others

@@ -27,8 +27,7 @@ export default {
    */
   'device.title.group': 'Device group',
   'device.title.list': 'Device list',
-  'device.title.detail': 'Device detail',
-  // 'device.title.detail.smartHome': 'Device detail',
+  'device.title.detail': 'Device details',
   'device.title.new': 'New device',
   'device.title.update': 'Edit device',
   'device.title.base': 'Basic configuration',
@@ -42,7 +41,7 @@ export default {
   'device.title.oidList': 'Device {name} - SNMP OIDs',
   'device.title.smartHome.detail.base': 'Basic device information',
   'device.title.smartHome.detail.status': 'Device status information',
-  'device.title.registers': 'Registers detail',
+  'device.title.registers': 'Registers details',
 
   /**
    * modal

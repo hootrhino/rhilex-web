@@ -15,7 +15,7 @@ export default {
    */
   'appStack.title.new': 'New application',
   'appStack.title.update': 'Update application',
-  'appStack.title.detail': 'Application detail',
+  'appStack.title.detail': 'Application details',
   'appStack.title.log': 'Application log',
 
   /**

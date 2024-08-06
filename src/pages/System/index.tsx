@@ -113,6 +113,7 @@ const System = () => {
           tabPosition: 'left',
           activeKey,
           className: 'min-h-[700px] overflow-hidden',
+          cardProps: { bodyStyle: { paddingBlock: 24 } },
           items: tabItems,
           onChange: (key) => {
             setActiveKey(key);

@@ -60,7 +60,7 @@ const WIFIConfig = () => {
   };
 
   return (
-    <ProCard title={formatMessage({ id: 'system.tab.wifi' })}>
+    <ProCard title={formatMessage({ id: 'system.tab.wifi' })} headStyle={{ paddingBlock: 0 }}>
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}

@@ -29,7 +29,7 @@ export default {
    */
   'outend.title.new': 'New resource',
   'outend.title.edit': 'Edit resource',
-  'outend.title.detail': 'Resource detail',
+  'outend.title.detail': 'Resource details',
   'outend.title.base': 'Basic configuration',
   'outend.title.source': 'Resource configuration',
 

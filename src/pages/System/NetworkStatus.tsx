@@ -113,7 +113,7 @@ const NetworkStatus = () => {
   ];
 
   return (
-    <ProCard title={formatMessage({ id: 'system.tab.netStatus' })}>
+    <ProCard title={formatMessage({ id: 'system.tab.netStatus' })} headStyle={{ paddingBlock: 0 }}>
       <ProTable
         rowKey="device"
         columns={columns}
