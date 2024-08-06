@@ -90,6 +90,7 @@ const DataBackupConfig = () => {
           name="recovery"
           max={1}
           accept="application/zip"
+          title={formatMessage({ id: 'antd.upload.title' })}
           description={formatMessage({ id: 'system.desc.recovery' })}
           fieldProps={{
             style: { maxWidth: 700 },

@@ -74,6 +74,10 @@ export default {
   'modal.content.forget': '如果忘記密碼，請按照當前設備的手冊進行重置。',
   'modal.content.logout': '確定要退出登錄嗎？',
   /**
+   * others
+   */
+  'antd.upload.title': '點擊或拖曳文件到此區域進行上傳',
+  /**
    * menu
    */
   'menu.dashboard': '系統首頁',

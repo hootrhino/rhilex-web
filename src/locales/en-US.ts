@@ -76,6 +76,10 @@ export default {
     'If you have forgotten your password, please follow the manual for your current device to reset it.',
   'modal.content.logout': 'Are you sure you want to log out?',
   /**
+   * others
+   */
+  'antd.upload.title': 'Click or drag file to this area to upload',
+  /**
    * menu
    */
   'menu.dashboard': 'Dashboard',

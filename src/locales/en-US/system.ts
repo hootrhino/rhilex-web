@@ -2,7 +2,7 @@ export default {
   /**
    * tabs
    */
-  'system.tab.resource': 'Resource',
+  'system.tab.resource': 'Resources',
   'system.tab.netStatus': 'Network Status',
   'system.tab.network': 'Network Settings',
   'system.tab.wifi': 'WIFI Settings',
@@ -11,7 +11,7 @@ export default {
   'system.tab.firmware': 'Firmware Settings',
   'system.tab.backup': 'Backup Settings',
   'system.tab.user': 'User Settings',
-  'system.tab.port': 'Interface Setting',
+  'system.tab.port': 'Interface Settings',
 
   /**
    * form

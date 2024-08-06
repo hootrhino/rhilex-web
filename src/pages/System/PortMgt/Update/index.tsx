@@ -1,5 +1,3 @@
-import { message } from '@/components/PopupHack';
-import { postHwifaceUpdate } from '@/services/rulex/jiekouguanli';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -9,18 +7,17 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useIntl, useModel } from '@umijs/max';
+import { useIntl } from '@umijs/max';
 import { Card } from 'antd';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import type { InterfaceItem } from '..';
 import { baudRateEnum, dataBitsEnum, parityEnum, stopBitsEnum, typeOption } from '../enum';
 
 type UpdateProps = ModalFormProps<any> & {
-  uuid: string;
-  reload: () => void;
+  dataSource: InterfaceItem;
 };
 
-type InterfaceFormParams = InterfaceItem & {
+export type InterfaceFormParams = InterfaceItem & {
   config: {
     timeout: number;
     baudRate: number;
@@ -31,51 +28,24 @@ type InterfaceFormParams = InterfaceItem & {
   };
 };
 
-type UpdateParams = {
+export type UpdateParams = {
   uuid: string;
   config: Record<string, any>;
 };
 
-const Update = ({ reload, uuid, ...props }: UpdateProps) => {
+const Update = ({ dataSource, ...props }: UpdateProps) => {
   const formRef = useRef<ProFormInstance>();
-  const { detail, getDetail } = useModel('usePort');
   const { formatMessage } = useIntl();
-
-  // 更新接口配置
-  const handleOnFinish = async ({ config }: InterfaceFormParams) => {
-    try {
-      const params: UpdateParams = {
-        uuid: detail?.uuid || '',
-        config: config?.[0],
-      };
-
-      await postHwifaceUpdate(params);
-      message.success(formatMessage({ id: 'message.success.update' }));
-      reload();
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
-
-  useEffect(() => {
-    if (detail) {
-      formRef.current?.setFieldsValue({ ...detail, config: [detail?.config] });
-    }
-  }, [detail]);
-
-  useEffect(() => {
-    if (uuid) {
-      getDetail({ uuid });
-    }
-  }, [uuid]);
 
   return (
     <ModalForm
       formRef={formRef}
       title={formatMessage({ id: 'system.modal.title.portUpdate' })}
-      modalProps={{ destroyOnClose: true, maskClosable: false }}
-      onFinish={handleOnFinish}
+      modalProps={{
+        destroyOnClose: true,
+        maskClosable: false,
+      }}
+      initialValues={{ ...dataSource, config: [dataSource?.config] }}
       {...props}
     >
       <ProForm.Group>

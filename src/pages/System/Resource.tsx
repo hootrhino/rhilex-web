@@ -162,7 +162,7 @@ const Resource = () => {
             {extraData.map(({ key, label, value }) => (
               <span key={key}>
                 <span className="text-[#585858] text-[12px]">{label}</span>
-                <span className="text-[rgba(0,0,0,0.75)] text-[16px] pl-[5px]">{value}</span>
+                <span className="text-[rgba(0,0,0,0.9)] text-[14px] pl-[5px]">{value}</span>
               </span>
             ))}
           </Space>

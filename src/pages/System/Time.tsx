@@ -10,6 +10,7 @@ import {
   ProFormSwitch,
 } from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
+import { useSize } from 'ahooks';
 import { Button, Space } from 'antd';
 import { useRef } from 'react';
 
@@ -22,6 +23,8 @@ type UpdateParams = {
 const TimeConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
+  const sizeRef = useRef(null);
+  const size = useSize(sizeRef);
 
   // 详情
   useRequest(() => getSettingsTime(), {
@@ -56,13 +59,16 @@ const TimeConfig = () => {
   };
 
   return (
-    <ProCard title={formatMessage({ id: 'system.tab.time' })} headStyle={{ paddingBlock: 0 }}>
+    <ProCard
+      title={formatMessage({ id: 'system.tab.time' })}
+      headStyle={{ paddingBlock: 0 }}
+      ref={sizeRef}
+    >
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
-        layout="horizontal"
-        labelWrap
-        labelCol={{ span: 2 }}
+        layout={size && size?.width < 1200 ? 'vertical' : 'horizontal'}
+        labelCol={size && size?.width < 1200 ? {} : { span: 2 }}
         submitter={{
           render: (props, dom) => (
             <ProForm.Item

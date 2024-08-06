@@ -8,6 +8,7 @@ import { WifiOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
+import { useSize } from 'ahooks';
 import { AutoComplete, Button, Progress, Space } from 'antd';
 import { useRef } from 'react';
 
@@ -24,6 +25,8 @@ type UpdateParams = UpdateForm & {
 const WIFIConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
+  const sizeRef = useRef(null);
+  const size = useSize(sizeRef);
 
   // 扫描信号强度
   const { data, loading, run } = useRequest(() => getSettingsWifiScanSignal(), {
@@ -35,7 +38,7 @@ const WIFIConfig = () => {
     onSuccess: (data) => {
       if (!data) {
         formRef.current?.setFieldsValue({
-          security: 'WPA-PSK',
+          security: 'wpa-psk',
         });
       } else {
         formRef.current?.setFieldsValue({ ...data.wlan0 });
@@ -60,13 +63,16 @@ const WIFIConfig = () => {
   };
 
   return (
-    <ProCard title={formatMessage({ id: 'system.tab.wifi' })} headStyle={{ paddingBlock: 0 }}>
+    <ProCard
+      title={formatMessage({ id: 'system.tab.wifi' })}
+      headStyle={{ paddingBlock: 0 }}
+      ref={sizeRef}
+    >
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
-        layout="horizontal"
-        labelWrap
-        labelCol={{ span: 3 }}
+        layout={size && size?.width < 1200 ? 'vertical' : 'horizontal'}
+        labelCol={size && size?.width < 1200 ? {} : { span: 3 }}
         submitter={{
           render: (props, dom) => (
             <ProForm.Item

@@ -14,6 +14,7 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
+import { useSize } from 'ahooks';
 import { Space, Tooltip } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useRef } from 'react';
@@ -46,6 +47,8 @@ const initialValue = {
 const NetworkConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const actionRef = useRef<FormListActionType>();
+  const sizeRef = useRef(null);
+  const size = useSize(sizeRef);
   const { interfaceOption } = useModel('useSystem');
   const { formatMessage } = useIntl();
 
@@ -78,13 +81,16 @@ const NetworkConfig = () => {
   };
 
   return (
-    <ProCard title={formatMessage({ id: 'system.tab.network' })} headStyle={{ paddingBlock: 0 }}>
+    <ProCard
+      title={formatMessage({ id: 'system.tab.network' })}
+      headStyle={{ paddingBlock: 0 }}
+      ref={sizeRef}
+    >
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
-        layout="horizontal"
-        labelCol={{ span: 3 }}
-        labelWrap
+        layout={size && size?.width < 1000 ? 'vertical' : 'horizontal'}
+        labelCol={size && size?.width < 1000 ? {} : { span: 3 }}
         onValuesChange={(changedValue) => {
           if (changedValue?.interface && detail) {
             formRef.current?.setFieldsValue({ ...detail[changedValue?.interface] });
@@ -166,7 +172,7 @@ const NetworkConfig = () => {
           actionRender={(props, action, defaultActionDom) => {
             return [
               <Tooltip key="add" title={formatMessage({ id: 'system.tooltip.new' })}>
-                <PlusCircleOutlined onClick={() => action.add()} className="ml-[10px]" />{' '}
+                <PlusCircleOutlined onClick={() => action.add()} className="ml-[10px]" />
               </Tooltip>,
               ...defaultActionDom,
             ];

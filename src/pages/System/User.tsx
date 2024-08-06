@@ -3,6 +3,7 @@ import { putUsersUpdate } from '@/services/rulex/yonghuguanli';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
 import { useIntl, useModel } from '@umijs/max';
+import { useSize } from 'ahooks';
 import { Button, Space } from 'antd';
 import { useEffect, useRef } from 'react';
 
@@ -13,6 +14,8 @@ type UpdateParams = {
 
 const UserConfig = () => {
   const formRef = useRef<ProFormInstance>();
+  const sizeRef = useRef(null);
+  const size = useSize(sizeRef);
   const { initialState } = useModel('@@initialState');
   const { logout } = useModel('useUser');
   const { formatMessage } = useIntl();
@@ -36,12 +39,16 @@ const UserConfig = () => {
   }, [initialState]);
 
   return (
-    <ProCard title={formatMessage({ id: 'system.tab.user' })} headStyle={{ paddingBlock: 0 }}>
+    <ProCard
+      title={formatMessage({ id: 'system.tab.user' })}
+      headStyle={{ paddingBlock: 0 }}
+      ref={sizeRef}
+    >
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
-        layout="horizontal"
-        labelCol={{ span: 2 }}
+        layout={size && size?.width < 1000 ? 'vertical' : 'horizontal'}
+        labelCol={size && size?.width < 1000 ? {} : { span: 2 }}
         submitter={{
           render: ({ reset, submit }) => (
             <ProForm.Item

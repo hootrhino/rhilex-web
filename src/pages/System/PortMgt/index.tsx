@@ -1,7 +1,12 @@
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
 import ProDescriptions from '@/components/ProDescriptions';
 import UnitValue from '@/components/UnitValue';
-import { getHwifaceList, getHwifaceRefresh } from '@/services/rulex/jiekouguanli';
+import {
+  getHwifaceList,
+  getHwifaceRefresh,
+  postHwifaceUpdate,
+} from '@/services/rulex/jiekouguanli';
+import { isEmpty } from '@/utils/redash';
 import { ScanOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
@@ -9,6 +14,7 @@ import { getLocale, useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Card, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
 import { parityEnum, typeOption } from './enum';
+import type { InterfaceFormParams, UpdateParams } from './Update';
 import Update from './Update';
 
 export type InterfaceItem = {
@@ -20,22 +26,35 @@ export type InterfaceItem = {
   config?: Record<string, any>;
 };
 
-type DetailModalConfig = {
-  open: boolean;
-  uuid: string;
-};
-
 const Interface = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
-  const [formConfig, setFormConfig] = useState<DetailModalConfig>({ open: false, uuid: '' });
   const { detailConfig, setDetailConfig, detail, getDetail } = useModel('usePort');
+
+  const [openUpdateModal, setOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   // 扫描端口
   const { run: refresh } = useRequest(() => getHwifaceRefresh(), {
     manual: true,
-    onSuccess: () => message.success(formatMessage({ id: 'message.success.scan' })),
   });
+
+  // 更新接口配置
+  const handleOnFinish = async ({ config }: InterfaceFormParams) => {
+    try {
+      const params: UpdateParams = {
+        uuid: detail?.uuid || '',
+        config: config?.[0],
+      };
+
+      await postHwifaceUpdate(params);
+      message.success(formatMessage({ id: 'message.success.update' }));
+      actionRef.current?.reload();
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
 
   const configColumns = [
     {
@@ -149,9 +168,12 @@ const Interface = () => {
         </a>,
         <a
           key="edit"
-          onClick={() => {
+          onClick={async () => {
             if (!uuid) return;
-            setFormConfig({ open: true, uuid });
+            const res = await getDetail({ uuid });
+            if (!isEmpty(res)) {
+              setOpen(true);
+            }
           }}
         >
           {formatMessage({ id: 'button.edit' })}
@@ -179,16 +201,31 @@ const Interface = () => {
           });
         }}
         toolBarRender={() => [
-          <Button key="refresh" type="primary" icon={<ScanOutlined />} onClick={refresh}>
+          <Button
+            key="refresh"
+            type="primary"
+            loading={loading}
+            icon={<ScanOutlined />}
+            onClick={() => {
+              refresh();
+              setLoading(true);
+              setTimeout(() => {
+                setLoading(false);
+                actionRef.current?.reload();
+                message.success(formatMessage({ id: 'message.success.scan' }));
+              }, 2000);
+            }}
+          >
             {formatMessage({ id: 'system.button.scan' })}
           </Button>,
         ]}
       />
 
       <Update
-        {...formConfig}
-        onOpenChange={(visible) => setFormConfig({ open: visible, uuid: '' })}
-        reload={() => actionRef.current?.reload()}
+        open={openUpdateModal}
+        onOpenChange={(visible) => setOpen(visible)}
+        onFinish={handleOnFinish}
+        dataSource={detail as InterfaceItem}
       />
       <Modal
         title={formatMessage({ id: 'system.modal.title.portDetail' })}
