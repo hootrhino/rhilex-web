@@ -125,6 +125,7 @@ const DataSheet = ({
       title: formatMessage({ id: 'device.form.title.tag' }),
       dataIndex: 'tag',
       ellipsis: true,
+      width: 100,
       formItemProps: {
         rules: [{ required: true, message: formatMessage({ id: 'device.form.placeholder.tag' }) }],
       },
@@ -136,6 +137,7 @@ const DataSheet = ({
       title: formatMessage({ id: 'device.form.title.alias' }),
       dataIndex: 'alias',
       ellipsis: true,
+      width: 100,
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.alias' }) },
