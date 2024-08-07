@@ -170,7 +170,7 @@ const Login: React.FC = () => {
         </div>
       </div>
       <DefaultFooter
-        copyright={`2023-${new Date().getFullYear()} RHILEX Team. All rights reserved.`}
+        copyright={`2023-${new Date().getFullYear()} RHILEX Technologies Inc. All rights reserved.`}
         className="bg-[#f0f2f5]"
       />
     </div>

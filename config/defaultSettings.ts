@@ -14,7 +14,7 @@ const Settings: ProLayoutProps & {
   fixSiderbar: true,
   colorWeak: false,
   splitMenus: false,
-  title: '',
+  title: 'RHILEX｜瑞利思科技',
   pwa: false,
   logo: '/logo.svg',
   iconfontUrl: '',

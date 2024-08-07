@@ -2,7 +2,7 @@
   "name": "rhilex-web",
   "version": "0.6.8",
   "private": true,
-  "description": "轻量级边缘计算框架",
+  "description": "RHILEX - 做专业的边缘数据处理引擎",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 max build",
     "build": "max build",
