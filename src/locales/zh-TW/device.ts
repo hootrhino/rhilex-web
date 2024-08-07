@@ -59,7 +59,8 @@ export default {
   'device.modal.title.upload.confirm': '導入點位表',
   'device.modal.title.upload.confirm.oid': '導入對象列表',
 
-  'device.modal.content.group.remove': '刪除此分組將會將其中的所有子項目移到預設分組，請謹慎操作',
+  'device.modal.content.group.remove':
+    '請確認該分組下無任何設備掛載後再執行刪除操作。若分組下有設備，則不允許刪除',
   'device.modal.content.restart': '重啓過程會短暫（5-10秒）斷開資源連接，請謹慎操作',
   'device.modal.content.camera.loading': '視頻正在加載...',
   'device.modal.content.camera':
