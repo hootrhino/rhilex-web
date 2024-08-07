@@ -1,14 +1,9 @@
 ﻿export default [
   {
-    path: '/user',
+    path: '/login',
     layout: false,
-    routes: [
-      {
-        name: 'login',
-        path: '/user/login',
-        component: './User/Login',
-      },
-    ],
+    component: './User/Login',
+    wrappers: ['@/wrappers/auth'],
   },
   {
     path: '/dashboard',

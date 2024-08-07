@@ -1,7 +1,7 @@
 // import { getIntl, getLocale } from "@umijs/max";
 
 // 默认登录路由
-export const LOGIN_PATH = '/user/login';
+export const LOGIN_PATH = '/login';
 
 // 登录页默认 title
 export const DEFAULT_TITLE = 'RHILEX';
