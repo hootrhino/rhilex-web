@@ -40,11 +40,12 @@ const Interface = () => {
   });
 
   // 更新接口配置
-  const handleOnFinish = async ({ config }: InterfaceFormParams) => {
+  const handleOnFinish = async ({ config, description }: InterfaceFormParams) => {
     try {
       const params: UpdateParams = {
         uuid: detail?.uuid || '',
         config: config?.[0],
+        description: description || '',
       };
 
       await postHwifaceUpdate(params);

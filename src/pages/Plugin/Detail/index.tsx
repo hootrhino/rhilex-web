@@ -25,6 +25,7 @@ const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
 
   const [scanLog, setScanLog] = useState<string[]>([]);
   const [pingLog, setPingLog] = useState<string[]>([]);
+  const [disabledStart, setDisabled] = useState<boolean>(true);
 
   // 开始扫描
   const { run: onStart, loading: startLoading } = useRequest(
@@ -146,7 +147,7 @@ const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
               onClick={handleOnStart}
               type="primary"
               loading={startLoading}
-              disabled={!formRef.current?.getFieldValue('portUuid')}
+              disabled={disabledStart}
             >
               {formatMessage({ id: 'plugin.button.scan.start' })}
             </Button>
@@ -176,7 +177,12 @@ const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
       )}
       {detailConfig.name === PluginName.CRC && <ModbusCRC formRef={formRef} />}
       {detailConfig.name && [PluginName.SCAN, PluginName.STOP].includes(detailConfig.name) && (
-        <Scan formRef={formRef} dataSource={scanLog} changeData={setScanLog} />
+        <Scan
+          formRef={formRef}
+          dataSource={scanLog}
+          changeData={setScanLog}
+          changeDisabled={setDisabled}
+        />
       )}
     </Modal>
   );

@@ -12,9 +12,10 @@ import { PluginUUID } from '../enum';
 type ScanProps = ProFormProps & {
   dataSource: string[];
   changeData: (value: string[]) => void;
+  changeDisabled: (value: boolean) => void;
 };
 
-const Scan = ({ dataSource, changeData, ...props }: ScanProps) => {
+const Scan = ({ dataSource, changeData, changeDisabled, ...props }: ScanProps) => {
   const { formatMessage } = useIntl();
   const { latestMessage } = useModel('useWebsocket');
 
@@ -46,6 +47,7 @@ const Scan = ({ dataSource, changeData, ...props }: ScanProps) => {
 
           return data.map((item) => ({ label: item.name, value: item.uuid }));
         }}
+        onChange={(value) => changeDisabled(!value)}
       />
       <ProForm.Item name="output" label={formatMessage({ id: 'plugin.form.title.output' })}>
         <ProLog

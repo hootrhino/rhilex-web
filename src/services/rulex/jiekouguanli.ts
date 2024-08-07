@@ -61,7 +61,15 @@ export async function getHwifaceRefresh(options?: { [key: string]: any }) {
 export async function postHwifaceUpdate(
   body: {
     uuid: string;
-    config: Record<string, any>;
+    config: {
+      timeout: number;
+      uart: string;
+      baudRate: number;
+      dataBits: number;
+      parity: string;
+      stopBits: number;
+    };
+    description: string;
   },
   options?: { [key: string]: any },
 ) {

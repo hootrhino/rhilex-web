@@ -17,20 +17,23 @@ type UpdateProps = ModalFormProps<any> & {
   dataSource: InterfaceItem;
 };
 
+type Config = {
+  timeout: number;
+  baudRate: number;
+  dataBits: number;
+  parity: string;
+  stopBits: number;
+  uart: string;
+};
+
 export type InterfaceFormParams = InterfaceItem & {
-  config: {
-    timeout: number;
-    baudRate: number;
-    dataBits: number;
-    parity: string;
-    stopBits: number;
-    uart: string;
-  };
+  config: Config;
 };
 
 export type UpdateParams = {
   uuid: string;
-  config: Record<string, any>;
+  config: Config;
+  description: string;
 };
 
 const Update = ({ dataSource, ...props }: UpdateProps) => {
