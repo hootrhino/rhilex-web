@@ -22,7 +22,7 @@ export const baseColumns = [
     convertValue: (value: boolean) => value?.toString(),
     transform: (value: string) => ({ autoStart: stringToBool(value) }),
     renderFormItem: () => <ProSegmented width="md" />,
-    renderText: (autoStart: boolean) => autoStart && <ProTag type={StatusType.BOOL}>{autoStart}</ProTag>,
+    renderText: (autoStart: boolean) => <ProTag type={StatusType.BOOL}>{autoStart}</ProTag>,
   },
   {
     title: getIntl(getLocale()).formatMessage({ id: 'appStack.table.title.appState' }),

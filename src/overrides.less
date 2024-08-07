@@ -202,3 +202,19 @@
     width: 100%;
   }
 }
+
+// 自定义规则
+.rule-modal {
+  .ant-modal-content {
+    height: 750px;
+
+    .ant-modal-body {
+      height: calc(100% - 57px - 48px);
+      overflow-y: auto;
+
+      .rule-form {
+        height: 100%;
+      }
+    }
+  }
+}

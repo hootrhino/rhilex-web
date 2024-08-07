@@ -74,7 +74,9 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
       modalProps={{
         destroyOnClose: true,
         maskClosable: false,
+        className: 'rule-modal',
       }}
+      className="rule-form"
       {...props}
     >
       <ProForm.Group>
@@ -134,11 +136,14 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
         label={formatMessage({ id: 'component.form.title.var' })}
         min={1}
         creatorButtonProps={false}
-        creatorRecord={initialVariable}
+        // creatorRecord={initialVariable}
         actionRender={(_, action, defaultActionDom) => {
           return [
             <Tooltip key="add" title={formatMessage({ id: 'component.tooltip.newVar' })}>
-              <PlusCircleOutlined onClick={() => action.add()} className="ml-[10px]" />
+              <PlusCircleOutlined
+                onClick={() => action.add(initialVariable)}
+                className="ml-[10px]"
+              />
             </Tooltip>,
             ...defaultActionDom,
           ];
