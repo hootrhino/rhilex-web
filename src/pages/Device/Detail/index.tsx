@@ -109,6 +109,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
           columns={formatColumns(baseColumns(product)) as EnhancedProDescriptionsItemProps[]}
           column={3}
           labelWidth={labelWidth}
+          rootClassName="detail-descriptions"
         />
         {detail && type && Object.keys(DeviceType).includes(type) && (
           <>
@@ -137,6 +138,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
                     columns={item?.columns && formatColumns(item?.columns)}
                     column={column}
                     labelWidth={labelWidth}
+                    rootClassName="detail-descriptions"
                   />
                 );
               }

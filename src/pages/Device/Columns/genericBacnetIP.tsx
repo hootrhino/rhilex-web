@@ -1,3 +1,5 @@
+import ProSegmented from '@/components/ProSegmented';
+import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
 import { getOsNetInterfaces } from '@/services/rulex/xitongshuju';
 import { FormItemType } from '@/utils/enum';
@@ -16,6 +18,15 @@ export const GENERIC_BACNET_IP_CONFIG = [
     title: intl.formatMessage({ id: 'device.form.title.group.common' }),
     valueType: 'group',
     columns: [
+      {
+        title: intl.formatMessage({ id: 'device.form.title.enableBatchRequest' }),
+        dataIndex: ['config', 'commonConfig', 'batchRequest'],
+        required: true,
+        renderFormItem: () => <ProSegmented width="md" />,
+        render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
+          <ProTag type={StatusType.BOOL}>{commonConfig?.batchRequest}</ProTag>
+        ),
+      },
       {
         title: intl.formatMessage({ id: 'device.form.title.frequency' }),
         dataIndex: ['config', 'commonConfig', 'frequency'],

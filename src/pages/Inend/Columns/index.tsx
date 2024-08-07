@@ -37,6 +37,7 @@ export const baseColumns = [
     valueEnum: inendTypeOption,
     required: true,
     ellipsis: true,
+    renderText: (record: InendType) => (record ? inendTypeOption[record] : '-'),
   },
   {
     title: intl.formatMessage({ id: 'inend.table.title.state' }),

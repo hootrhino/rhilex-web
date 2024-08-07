@@ -22,6 +22,15 @@ export const SIEMENS_PLC_CONFIG = [
         ),
       },
       {
+        title: intl.formatMessage({ id: 'device.form.title.enableBatchRequest' }),
+        dataIndex: ['config', 'commonConfig', 'batchRequest'],
+        required: true,
+        renderFormItem: () => <ProSegmented width="md" />,
+        render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
+          <ProTag type={StatusType.BOOL}>{commonConfig?.batchRequest}</ProTag>
+        ),
+      },
+      {
         title: intl.formatMessage({ id: 'device.form.title.timeout.connect' }),
         dataIndex: ['config', 'commonConfig', 'timeout'],
         valueType: 'digit',

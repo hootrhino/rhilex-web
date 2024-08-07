@@ -57,7 +57,7 @@ export default {
   'inend.type.subject': 'Generic {type}',
   'inend.type.event': '{type} Internal Event Source',
   'inend.type.mqtt': 'Lightweight MQTT Broker',
-  'inend.type.comtc': '来自通信模块的数据',
+  'inend.type.comtc': 'Data from Communication Module',
 
   /**
    * mode

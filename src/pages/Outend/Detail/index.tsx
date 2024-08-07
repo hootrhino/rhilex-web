@@ -15,7 +15,7 @@ type DetailProps = DrawerProps & {
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
   const { formatMessage } = useIntl();
-  const labelWidth = getLocale() === 'en-US' ? 140 : 100;
+  const labelWidth = getLocale() === 'en-US' ? 150 : 130;
 
   const { data, run, loading } = useRequest(() => getOutendsDetail({ uuid }), {
     manual: true,
@@ -31,7 +31,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     <Drawer
       title={formatMessage({ id: 'outend.title.detail' })}
       placement="right"
-      width="30%"
+      width="40%"
       {...props}
     >
       <ProDescriptions
@@ -40,6 +40,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         title={formatMessage({ id: 'outend.title.base' })}
         dataSource={data && omit(data, ['config'])}
         loading={loading}
+        rootClassName="detail-descriptions"
       />
       {data?.type && Object.keys(OutendType).includes(data?.type) && (
         <>

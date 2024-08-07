@@ -62,6 +62,7 @@ export const defaultConfig = {
     commonConfig: {
       autoRequest: DEFAULT_AUTOREQUEST,
       enableOptimize: 'false',
+      batchRequest: 'false',
       mode: DeviceMode.UART,
       maxRegNum: 64,
     },
@@ -91,6 +92,7 @@ export const defaultConfig = {
   [DeviceType.SIEMENS_PLC]: {
     commonConfig: {
       autoRequest: DEFAULT_AUTOREQUEST,
+      batchRequest: 'false',
       host: `${DEFAULT_HOST}:102`,
       model: 'S71200',
       rack: 0,
@@ -128,6 +130,7 @@ export const defaultConfig = {
     commonConfig: {
       autoRequest: DEFAULT_AUTOREQUEST,
       enableGroup: 'false',
+      batchRequest: 'false',
       timeout: DEFAULT_TIMEOUT,
       frequency: DEFAULT_FREQUENCE,
     },
@@ -142,6 +145,7 @@ export const defaultConfig = {
   [DeviceType.GENERIC_BACNET_IP]: {
     commonConfig: {
       frequency: DEFAULT_FREQUENCE,
+      batchRequest: 'false',
     },
     bacnetConfig: {
       mode: BacnetMode.BROADCAST,

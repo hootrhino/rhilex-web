@@ -13,14 +13,14 @@ export const COMTC_EVENT_FORWARDER = [
     valueType: 'select',
     required: true,
     fieldProps: {
-      optionRender: (option: { label: number; value: string }) => (
+      optionRender: (option: { label: number; value: string; type: number }) => (
         <Space className="w-full justify-between">
           <span>{option.value}</span>
           <Space>
             <span className="text-[12px] text-[#000000A6]">
-              {TransceiverTypeOption[option?.label || 0].text}
+              {TransceiverTypeOption[option?.type || 0].text}
             </span>
-            <IconFont type={`icon-com-${TransceiverTypeOption[option?.label || 0].icon}`} />
+            <IconFont type={`icon-com-${TransceiverTypeOption[option?.type || 0].icon}`} />
           </Space>
         </Space>
       ),
@@ -28,7 +28,7 @@ export const COMTC_EVENT_FORWARDER = [
     request: async () => {
       const { data } = await getTransceiverList();
 
-      return data.map((item) => ({ label: item.type, value: item.name }));
+      return data.map((item) => ({ label: item.name, value: item.name, type: item.type }));
     },
   },
 ];

@@ -31,6 +31,15 @@ export const GENERIC_MODBUS_MASTER_CONFIG = [
         ),
       },
       {
+        title: intl.formatMessage({ id: 'device.form.title.enableBatchRequest' }),
+        dataIndex: ['config', 'commonConfig', 'batchRequest'],
+        required: true,
+        renderFormItem: () => <ProSegmented width="md" />,
+        render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
+          <ProTag type={StatusType.BOOL}>{commonConfig?.batchRequest}</ProTag>
+        ),
+      },
+      {
         title: intl.formatMessage({ id: 'device.form.title.maxRegNum' }),
         dataIndex: ['config', 'commonConfig', 'maxRegNum'],
         valueType: 'digit',

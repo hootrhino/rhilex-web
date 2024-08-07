@@ -2,7 +2,7 @@ import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescripti
 import ProDescriptions from '@/components/ProDescriptions';
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { omit } from '@/utils/redash';
-import { useIntl, useRequest } from '@umijs/max';
+import { getLocale, useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { baseColumns, typeConfigColumns } from '../Columns';
 import { InendType } from '../enum';
@@ -13,6 +13,7 @@ type DetailProps = DrawerProps & {
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
   const { formatMessage } = useIntl();
+  const labelWidth = getLocale() === 'en-US' ? 220 : 120;
 
   const { data, loading } = useRequest(() => getInendsDetail({ uuid }), {
     ready: !!uuid,
@@ -23,21 +24,22 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     <Drawer
       title={formatMessage({ id: 'inend.title.detail' })}
       placement="right"
-      width="30%"
+      width="40%"
       destroyOnClose
       {...props}
     >
       <ProDescriptions
         columns={baseColumns as EnhancedProDescriptionsItemProps[]}
-        labelWidth={80}
+        labelWidth={labelWidth}
         title={formatMessage({ id: 'inend.title.base' })}
         dataSource={data && omit(data, ['config'])}
         loading={loading}
+        rootClassName="detail-descriptions"
       />
-      {data?.type && Object.keys(InendType).includes(data?.type) && (
+      {data?.type && Object.values(InendType).includes(data?.type as InendType) && (
         <ProDescriptions
           columns={typeConfigColumns[data?.type]}
-          labelWidth={80}
+          labelWidth={labelWidth}
           title={formatMessage({ id: 'inend.title.group' })}
           dataSource={data}
           loading={loading}
