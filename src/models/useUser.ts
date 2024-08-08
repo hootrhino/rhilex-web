@@ -1,4 +1,4 @@
-import { postLogout } from '@/services/rulex/yonghuguanli';
+import { postUsersLogout } from '@/services/rulex/yonghuguanli';
 import { LOGIN_PATH } from '@/utils/constant';
 import { history, useModel, useRequest } from '@umijs/max';
 
@@ -7,7 +7,7 @@ const useUser = () => {
   const { setResourceData, cancel } = useModel('useSystem');
 
   // 退出登录
-  const { run: logout } = useRequest(() => postLogout(), {
+  const { run: logout } = useRequest(() => postUsersLogout(), {
     manual: true,
     onSuccess: () => {
       setInitialState({ currentUser: undefined, settings: {}, product: '' });

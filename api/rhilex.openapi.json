@@ -763,7 +763,34 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "string"
+                      "type": "object",
+                      "properties": {
+                        "description": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "token": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "description",
+                        "role",
+                        "token",
+                        "username"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "description",
+                        "role",
+                        "token",
+                        "username"
+                      ]
                     }
                   },
                   "required": [
@@ -771,20 +798,25 @@
                     "msg",
                     "data"
                   ],
+                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ],
-                  "x-apifox-ignore-properties": []
+                  ]
                 },
                 "examples": {
                   "1": {
                     "summary": "成功示例",
                     "value": {
                       "code": 200,
-                      "msg": "操作成功",
-                      "data": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6InJ1bGV4IiwiZXhwIjoxNjU4NzYzNjY0LCJpc3MiOiJydWxleCJ9.r66zDkOucEbBKGQnOnsgsTV8dodOMLWj1Gc3F4AV_vQ"
+                      "msg": "Success",
+                      "data": {
+                        "description": "Default RHILEX Admin User",
+                        "role": "Admin",
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6InJoaWxleCIsImV4cCI6MTcyMzEyNTgwNCwiaXNzIjoicmhpbGV4In0.fgWPpRhFBu-TJNLPNDUk_j_pz5-pR4eIqiUJzkbS-Sg",
+                        "username": "rhilex"
+                      }
                     }
                   }
                 }
@@ -3398,7 +3430,7 @@
         "security": []
       }
     },
-    "/api/v1/logout": {
+    "/api/v1/users/logout": {
       "post": {
         "summary": "用户注销",
         "x-apifox-folder": "用户管理",
@@ -20836,5 +20868,10 @@
     },
     "securitySchemes": {}
   },
-  "servers": []
+  "servers": [
+    {
+      "url": "http://127.0.0.1:2580",
+      "description": "本机环境"
+    }
+  ]
 }

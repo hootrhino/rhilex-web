@@ -73,6 +73,8 @@ const request: RequestConfig = {
   requestInterceptors: [
     // 请求拦截器
     (url, options) => {
+      const token = localStorage.getItem('accessToken');
+
       // 添加缓存控制头
       return {
         url,
@@ -83,6 +85,7 @@ const request: RequestConfig = {
             'Cache-Control': 'no-cache, no-store, must-revalidate',
             Pragma: 'no-cache',
             Expires: '0',
+            Authorization: `${token}`,
           },
         },
       };

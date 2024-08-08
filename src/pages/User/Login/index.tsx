@@ -72,7 +72,7 @@ const Login: React.FC = () => {
       handleOnSecret();
       history.push('/');
       message.success(formatMessage({ id: 'message.success.login' }));
-      localStorage.setItem('accessToken', data);
+      localStorage.setItem('accessToken', data.token);
     } catch (error) {
       console.error(error);
     }
