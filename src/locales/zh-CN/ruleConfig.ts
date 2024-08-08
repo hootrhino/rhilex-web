@@ -32,4 +32,5 @@ export default {
    */
   'ruleConfig.popconfirm.title.remove': '确定要删除此规则？',
   'ruleConfig.popconfirm.title.reset': '重置可能会丢失数据，确定要重置吗？',
+  'ruleConfig.modal.title.test': '在开始测试之前，请确保已保存规则。确定要提交表单并执行测试吗？',
 };

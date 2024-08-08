@@ -1,5 +1,5 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
-import { message } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
 import ProLog from '@/components/ProLog';
 import PageContainer from '@/components/ProPageContainer';
 import RuleLabel from '@/components/RuleLabel';
@@ -7,7 +7,7 @@ import {
   getRulesDetail,
   postRulesCreate,
   postRulesFormatLua,
-  postRulesTestDevice,
+  postRulesTest,
   putRulesUpdate,
 } from '@/services/rulex/guizeguanli';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
@@ -29,6 +29,12 @@ type FormParams = {
   actions: string;
   success: string;
   failed: string;
+};
+
+type TestParams = {
+  uuid: string;
+  type: string;
+  testData: string;
 };
 
 /** 规则默认值 **/
@@ -65,6 +71,7 @@ const UpdateForm = () => {
   const [debugLog, setDebugLog] = useState<string[]>([]);
   const [showLog, setShowLog] = useState<boolean>(false);
   const [ruleType, setType] = useState<string>();
+  const [disabledTest, setDisabled] = useState<boolean>(false);
 
   const getBackUrl = () => {
     if (groupId && deviceId) {
@@ -78,20 +85,33 @@ const UpdateForm = () => {
   const handleOnReset = () => {
     setDebugLog([]);
     setShowLog(false);
+    setDisabled(false);
     debugFormRef.current?.resetFields();
     debugFormRef.current?.setFieldsValue({ testData: ruleType ? debugData[ruleType] : '' });
   };
 
   // 测试
-  const handleOnDebug = async () => {
-    const inputData = debugFormRef.current?.getFieldValue('testData');
-    if (inputData && deviceId) {
-      const { code } = await postRulesTestDevice({
-        testData: inputData,
-        uuid: deviceId,
-      });
-      setShowLog(code === 200);
+  const handleOnDebug = async (values: TestParams) => {
+    const ruleData = formRef.current?.getFieldsValue();
+
+    // 提交表单
+    const ruleFormParams = {
+      ...ruleData,
+      fromSource: inendId ? [inendId] : [],
+      fromDevice: deviceId ? [deviceId] : [],
+      success: DefaultSuccess,
+      failed: DefaultFailed,
+    };
+
+    if (ruleId) {
+      await putRulesUpdate({ ...ruleFormParams, uuid: ruleId });
+    } else {
+      await postRulesCreate(ruleFormParams);
     }
+
+    // 进行测试
+    const { code } = await postRulesTest(values);
+    setShowLog(code === 200);
   };
 
   useRequest(() => getInendsDetail({ uuid: inendId || '' }), {
@@ -262,14 +282,40 @@ const UpdateForm = () => {
                 type="primary"
                 size="small"
                 icon={<BugOutlined />}
-                onClick={handleOnDebug}
+                disabled={disabledTest}
+                onClick={() => {
+                  const testData = debugFormRef.current?.getFieldValue('testData');
+                  const testUuid = inendId || deviceId;
+
+                  if (!testData || !testUuid) return;
+
+                  const testParams = {
+                    testData: testData,
+                    uuid: testUuid,
+                    type: groupId && deviceId ? 'DEVICE' : 'INEND',
+                  };
+
+                  modal.confirm({
+                    title: formatMessage({ id: 'ruleConfig.modal.title.test' }),
+                    okText: formatMessage({ id: 'button.ok' }),
+                    cancelText: formatMessage({ id: 'button.cancel' }),
+                    onOk: () => handleOnDebug(testParams),
+                  });
+                }}
               >
                 {formatMessage({ id: 'button.test' })}
               </Button>
             </Space>
           }
         >
-          <ProForm formRef={debugFormRef} submitter={false}>
+          <ProForm
+            formRef={debugFormRef}
+            submitter={false}
+            onValuesChange={(values) => {
+              setDisabled(!values?.testData);
+            }}
+            initialValues={{ testData: ruleType ? debugData[ruleType] : '' }}
+          >
             <ProForm.Item
               name="testData"
               label={formatMessage({ id: 'ruleConfig.form.title.testData' })}

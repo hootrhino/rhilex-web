@@ -33,4 +33,6 @@ export default {
   'ruleConfig.popconfirm.title.remove': 'Are you sure to delete this rule?',
   'ruleConfig.popconfirm.title.reset':
     'Resetting may result in data loss. Are you sure you want to continue?',
+  'ruleConfig.modal.title.test':
+    'Make sure you have saved the rules before starting the test. Sure you want to submit the form and run the test?',
 };

@@ -12478,7 +12478,7 @@
         "security": []
       }
     },
-    "/api/v1/rules/testDevice": {
+    "/api/v1/rules/test": {
       "post": {
         "summary": "测试规则",
         "x-apifox-folder": "规则管理",
@@ -12498,23 +12498,29 @@
                   "uuid": {
                     "type": "string"
                   },
+                  "type": {
+                    "type": "string"
+                  },
                   "testData": {
                     "type": "string"
                   }
                 },
                 "required": [
                   "uuid",
+                  "type",
                   "testData"
                 ],
                 "x-apifox-ignore-properties": [],
                 "x-apifox-orders": [
                   "uuid",
+                  "type",
                   "testData"
                 ]
               },
               "example": {
-                "uuid": "RULEBR75ZXZV",
-                "testData": "122333"
+                "uuid": "DEVICEFGBCDBZK",
+                "type": "DEVICE",
+                "testData": "测试"
               }
             }
           }

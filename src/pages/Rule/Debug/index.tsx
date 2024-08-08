@@ -1,6 +1,6 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
 import ProLog from '@/components/ProLog';
-import { postRulesTestDevice } from '@/services/rulex/guizeguanli';
+import { postRulesTest } from '@/services/rulex/guizeguanli';
 import { handleNewMessage } from '@/utils/utils';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProForm } from '@ant-design/pro-components';
@@ -17,7 +17,7 @@ type DebugProps = ModalFormProps & {
 
 const Debug = ({ topic, ruleType, ...props }: DebugProps) => {
   const { latestMessage } = useModel('useWebsocket');
-  const { deviceId } = useParams();
+  const { deviceId, inendId } = useParams();
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
 
@@ -68,10 +68,17 @@ const Debug = ({ topic, ruleType, ...props }: DebugProps) => {
       }}
       onFinish={async ({ testData }) => {
         try {
-          if (deviceId) {
-            const { code } = await postRulesTestDevice({ testData, uuid: deviceId });
-            setShowLog(code === 200);
-          }
+          const testUuid = deviceId || inendId;
+
+          if (!testData || !testUuid) return;
+
+          const { code } = await postRulesTest({
+            testData,
+            uuid: testUuid,
+            type: deviceId ? 'DEVICE' : 'INEND',
+          });
+          setShowLog(code === 200);
+
           return false;
         } catch (error) {
           return false;

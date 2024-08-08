@@ -110,15 +110,16 @@ export async function getRulesList(
   );
 }
 
-/** 测试规则 POST /api/v1/rules/testDevice */
-export async function postRulesTestDevice(
+/** 测试规则 POST /api/v1/rules/test */
+export async function postRulesTest(
   body: {
     uuid: string;
+    type: string;
     testData: string;
   },
   options?: { [key: string]: any },
 ) {
-  return request<{ code: number; msg: string; data: string[] }>('/api/v1/rules/testDevice', {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/rules/test', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

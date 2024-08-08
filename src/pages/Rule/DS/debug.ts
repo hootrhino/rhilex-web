@@ -61,6 +61,24 @@ const device_snmp_ds = `[
   }
 ]`;
 
+// GENERIC_BACNET_IP & BACNET_ROUTER_GW
+const device_bacnet_ds = `{
+  "humi": {
+      "tag": "humi",
+      "deviceId": 1,
+      "propertyType": "AnalogInput",
+      "propertyInstance": 1,
+      "value": 56.78
+  },
+  "temp": {
+      "tag": "temp",
+      "deviceId": 1,
+      "propertyType": "AnalogInput",
+      "propertyInstance": 0,
+      "value": 12.34
+  }
+}`;
+
 // TODO SMART_HOME_CONTROLLER - 全屋智能家居中心控制网关
 // const device_smart_home_ds = `[
 //   {
@@ -119,6 +137,12 @@ const inend_event_ds = `{
   }
 }`;
 
+// COMTC_EVENT_FORWARDER
+const inend_com_ds = `{
+  "comName": "COM1",
+  "value": "0102030405"
+}`;
+
 export const device_test_data = {
   [DeviceType.GENERIC_UART_PROTOCOL]: device_protocol_ds,
   [DeviceType.GENERIC_MODBUS_MASTER]: device_modbus_ds,
@@ -127,6 +151,8 @@ export const device_test_data = {
   [DeviceType.SIEMENS_PLC]: device_siemens_ds,
   // TODO [DeviceType.GENERIC_CAMERA]: device_camera_ds,
   [DeviceType.GENERIC_SNMP]: device_snmp_ds,
+  [DeviceType.GENERIC_BACNET_IP]: device_bacnet_ds,
+  [DeviceType.BACNET_ROUTER_GW]: device_bacnet_ds,
   // TODO [DeviceType.SMART_HOME_CONTROLLER]: device_smart_home_ds,
   // TODO [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,
 };
@@ -141,4 +167,5 @@ export const inend_test_data = {
   [InendType.GRPC]: inend_udp_ds,
   [InendType.GENERIC_MQTT]: inend_mqtt_ds,
   [InendType.INTERNAL_EVENT]: inend_event_ds,
+  [InendType.COMTC_EVENT_FORWARDER]: inend_com_ds,
 };
