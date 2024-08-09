@@ -218,11 +218,11 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
               <ProCard
                 ghost
                 title={
-                  <div className="text-[14px] font-normal">
+                  <div className="text-[14px] font-medium">
                     {formatMessage({ id: 'schemaMgt.title.card' })}
                   </div>
                 }
-                headStyle={{ paddingBlockStart: 0 }}
+                // headStyle={{ paddingBlockStart: 0 }}
               >
                 <ProForm.Group>
                   {[Type.STRING, Type.INTEGER, Type.FLOAT, Type.BOOL].includes(type) && (

@@ -116,7 +116,7 @@ const DataRepository = () => {
               return <UnitValue value={record[item.name]} unit={item.unit} />;
             } else {
               if (typeof record[item.name] === 'boolean') {
-                return record[item.name].toString();
+                return record[item.name] === true ? item.rule.trueLabel : item.rule.falseLabel;
               }
               return item.name === 'create_at'
                 ? dayjs(record['create_at']).format('YYYY-MM-DD HH:mm:ss')

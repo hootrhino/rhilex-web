@@ -5804,6 +5804,9 @@
                       "items": {
                         "type": "object",
                         "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
                           "name": {
                             "type": "string"
                           },
@@ -5815,20 +5818,65 @@
                           },
                           "unit": {
                             "type": "string"
+                          },
+                          "rule": {
+                            "type": "object",
+                            "properties": {
+                              "defaultValue": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "max": {
+                                "type": "integer"
+                              },
+                              "min": {
+                                "type": "integer"
+                              },
+                              "trueLabel": {
+                                "type": "string"
+                              },
+                              "falseLabel": {
+                                "type": "string"
+                              },
+                              "round": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "defaultValue",
+                              "max",
+                              "min",
+                              "trueLabel",
+                              "falseLabel",
+                              "round"
+                            ],
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "defaultValue",
+                              "max",
+                              "min",
+                              "trueLabel",
+                              "falseLabel",
+                              "round"
+                            ]
                           }
                         },
                         "required": [
+                          "id",
                           "name",
                           "type",
                           "uuid",
-                          "unit"
+                          "unit",
+                          "rule"
                         ],
                         "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
+                          "id",
                           "name",
                           "type",
                           "uuid",
-                          "unit"
+                          "unit",
+                          "rule"
                         ]
                       }
                     }
@@ -5853,28 +5901,109 @@
                       "msg": "Success",
                       "data": [
                         {
-                          "name": "ph_value",
-                          "type": "FLOAT",
-                          "uuid": "PROPERDPBPSRAA",
-                          "unit": "mol/L"
+                          "id": 101,
+                          "name": "id",
+                          "type": "INTEGER",
+                          "uuid": "101",
+                          "unit": "",
+                          "rule": {
+                            "defaultValue": null,
+                            "max": 0,
+                            "min": 0,
+                            "trueLabel": "",
+                            "falseLabel": "",
+                            "round": 0
+                          }
                         },
                         {
-                          "name": "oxygen",
-                          "type": "FLOAT",
-                          "uuid": "PROPERJHT2RI29",
-                          "unit": "mg/L"
-                        },
-                        {
-                          "name": "temperature",
-                          "type": "FLOAT",
-                          "uuid": "PROPERHM7ZLDAR",
-                          "unit": "ºC"
-                        },
-                        {
-                          "name": "warning",
+                          "id": 100,
+                          "name": "create_at",
                           "type": "STRING",
-                          "uuid": "PROPERNW2BFTJI",
-                          "unit": "./."
+                          "uuid": "100",
+                          "unit": "",
+                          "rule": {
+                            "defaultValue": null,
+                            "max": 0,
+                            "min": 0,
+                            "trueLabel": "",
+                            "falseLabel": "",
+                            "round": 0
+                          }
+                        },
+                        {
+                          "id": 1,
+                          "name": "a",
+                          "type": "STRING",
+                          "uuid": "PROPERFCWAPSBA",
+                          "unit": "ºC",
+                          "rule": {
+                            "defaultValue": "",
+                            "max": 10,
+                            "min": 0,
+                            "trueLabel": "",
+                            "falseLabel": "",
+                            "round": 0
+                          }
+                        },
+                        {
+                          "id": 2,
+                          "name": "b",
+                          "type": "INTEGER",
+                          "uuid": "PROPERAX5BFKT2",
+                          "unit": "ºC",
+                          "rule": {
+                            "defaultValue": 0,
+                            "max": 100,
+                            "min": 0,
+                            "trueLabel": "",
+                            "falseLabel": "",
+                            "round": 0
+                          }
+                        },
+                        {
+                          "id": 3,
+                          "name": "c",
+                          "type": "FLOAT",
+                          "uuid": "PROPERZBM2WAAT",
+                          "unit": "ºC",
+                          "rule": {
+                            "defaultValue": 0,
+                            "max": 100,
+                            "min": 0,
+                            "trueLabel": "",
+                            "falseLabel": "",
+                            "round": 2
+                          }
+                        },
+                        {
+                          "id": 4,
+                          "name": "d",
+                          "type": "BOOL",
+                          "uuid": "PROPERSHWGTRFN",
+                          "unit": "",
+                          "rule": {
+                            "defaultValue": false,
+                            "max": 0,
+                            "min": 0,
+                            "trueLabel": "开",
+                            "falseLabel": "假",
+                            "round": 0
+                          }
+                        },
+                        {
+                          "id": 5,
+                          "name": "e",
+                          "type": "GEO",
+                          "uuid": "PROPERJB6FMONG",
+                          "unit": "",
+                          "rule": {
+                            "defaultValue": "",
+                            "max": 0,
+                            "min": 0,
+                            "trueLabel": "",
+                            "falseLabel": "",
+                            "round": 0
+                          }
                         }
                       ]
                     }

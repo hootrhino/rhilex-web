@@ -126,7 +126,21 @@ export async function getDatacenterSchemaDdlDetail(
   return request<{
     code: number;
     msg: string;
-    data: { name: string; type: string; uuid: string; unit: string }[];
+    data: {
+      id: number;
+      name: string;
+      type: string;
+      uuid: string;
+      unit: string;
+      rule: {
+        defaultValue: string;
+        max: number;
+        min: number;
+        trueLabel: string;
+        falseLabel: string;
+        round: number;
+      };
+    }[];
   }>('/api/v1/datacenter/schemaDDLDetail', {
     method: 'GET',
     params: {
