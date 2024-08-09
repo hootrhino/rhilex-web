@@ -3,12 +3,14 @@ import { getSchemaList } from '@/services/rulex/shujumoxing';
 import { useRequest } from '@umijs/max';
 import { useState } from 'react';
 
+export const defaultActiveSchema = {
+  uuid: '',
+  name: '',
+  published: false,
+};
+
 const useSchema = () => {
-  const [activeSchema, setActiveSchema] = useState<ActiveSchema>({
-    uuid: '',
-    name: '',
-    published: false,
-  });
+  const [activeSchema, setActiveSchema] = useState<ActiveSchema>(defaultActiveSchema);
   const [activeDataCenterkey, setActiveDataCenterKey] = useState<string>('');
 
   const {
@@ -18,18 +20,12 @@ const useSchema = () => {
   } = useRequest(() => getSchemaList(), {
     manual: true,
     onSuccess: (res) => {
-      if (!activeSchema.uuid) {
-        const defaultActiveItem = res?.[0];
+      const defaultActiveItem = res?.[0];
+      if (defaultActiveItem.uuid && defaultActiveItem.name) {
         setActiveSchema({
-          uuid: defaultActiveItem?.uuid || '',
-          name: defaultActiveItem?.name || '',
+          uuid: defaultActiveItem.uuid,
+          name: defaultActiveItem.name,
           published: defaultActiveItem?.published || false,
-        });
-      } else {
-        const activeItem = res?.find((item) => item.uuid === activeSchema.uuid);
-        setActiveSchema({
-          ...activeSchema,
-          published: activeItem?.published || false,
         });
       }
     },

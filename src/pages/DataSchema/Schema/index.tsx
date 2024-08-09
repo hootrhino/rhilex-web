@@ -1,4 +1,5 @@
 import { message } from '@/components/PopupHack';
+import { defaultActiveSchema } from '@/models/useSchema';
 import {
   deleteSchemaDel,
   getSchemaDetail,
@@ -50,18 +51,10 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
       onSuccess: () => {
         message.success(formatMessage({ id: 'message.success.remove' }));
         refresh();
+        setActiveSchema(defaultActiveSchema);
       },
     },
   );
-
-  useEffect(() => {
-    const firstItem = schemaList?.[0];
-    setActiveSchema({
-      uuid: firstItem?.uuid || '',
-      name: firstItem?.name || '',
-      published: firstItem?.published || false,
-    });
-  }, [schemaList]);
 
   useEffect(() => {
     if (initialValue) {
@@ -84,9 +77,11 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
         onRow={({ uuid, name, published }: Partial<SchemaItem>) => {
           return {
             onClick: () =>
+              uuid &&
+              name &&
               setActiveSchema({
-                uuid: uuid || '',
-                name: name || '',
+                uuid,
+                name,
                 published: published || false,
               }),
           };

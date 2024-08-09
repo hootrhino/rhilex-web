@@ -1,3 +1,4 @@
+import type { LogRef } from '@/components/ProLog';
 import ProLog from '@/components/ProLog';
 import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { handleNewMessage } from '@/utils/utils';
@@ -5,8 +6,7 @@ import type { ProFormProps } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect } from '@ant-design/pro-components';
 import { useIntl, useModel } from '@umijs/max';
 import { Space } from 'antd';
-import type { LabeledValue } from 'antd/es/select';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { PluginUUID } from '../enum';
 
 type ScanProps = ProFormProps & {
@@ -18,16 +18,32 @@ type ScanProps = ProFormProps & {
 const Scan = ({ dataSource, changeData, changeDisabled, ...props }: ScanProps) => {
   const { formatMessage } = useIntl();
   const { latestMessage } = useModel('useWebsocket');
+  const logRef = useRef<LogRef>(null);
+
+  const handleOnClearLog = () => {
+    changeData([]);
+    logRef.current?.clearLog();
+  };
 
   useEffect(() => {
-    const newScanData = handleNewMessage(
-      dataSource,
-      latestMessage?.data,
-      `plugin/ModbusScanner/${PluginUUID.SCANNER}`,
-    );
+    const portUuid = props.formRef?.current?.getFieldValue('portUuid');
 
-    changeData(newScanData);
+    if (portUuid) {
+      const newScanData = handleNewMessage(
+        dataSource,
+        latestMessage?.data,
+        `plugin/ModbusScanner/${PluginUUID.SCANNER}`,
+      );
+
+      changeData(newScanData);
+    } else {
+      handleOnClearLog();
+    }
   }, [latestMessage]);
+
+  useEffect(() => {
+    handleOnClearLog();
+  }, []);
 
   return (
     <ProForm submitter={false} {...props}>
@@ -35,7 +51,7 @@ const Scan = ({ dataSource, changeData, changeDisabled, ...props }: ScanProps) =
         name="portUuid"
         label={formatMessage({ id: 'plugin.form.title.portUuid' })}
         fieldProps={{
-          optionRender: (option: LabeledValue) => (
+          optionRender: (option) => (
             <Space>
               <span>{option?.label}</span>
               <span className="text-[12px] text-[#000000A6]">{option?.value}</span>
@@ -54,6 +70,7 @@ const Scan = ({ dataSource, changeData, changeDisabled, ...props }: ScanProps) =
           hidePadding
           topic={`plugin/ModbusScanner/${PluginUUID.SCANNER}`}
           dataSource={dataSource}
+          ref={logRef}
         />
       </ProForm.Item>
     </ProForm>

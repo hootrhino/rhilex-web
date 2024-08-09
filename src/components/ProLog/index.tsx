@@ -13,7 +13,11 @@ import { Terminal } from '@xterm/xterm';
 import '@xterm/xterm/css/xterm.css';
 import { Button, Space } from 'antd';
 import dayjs from 'dayjs';
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+
+export type LogRef = {
+  clearLog: () => void;
+};
 
 type cardProps = Pick<ProCardTabsProps, 'cardProps'>;
 
@@ -41,117 +45,131 @@ export const getAnsiColor = (level: string) => {
   return colorMap[level] || '\u001b[37m';
 };
 
-const ProLog = ({
-  dataSource = [],
-  extra = false,
-  topic = 'all',
-  hidePadding = false,
-  handleOnReset,
-  className,
-  title,
-  ...props
-}: ProLogProps) => {
-  const { disconnect, connect } = useModel('useWebsocket');
-  const logRef = useRef<any>(null);
-  const { formatMessage } = useIntl();
-  const [play, setPlay] = useState<boolean>(true);
+const ProLog = forwardRef(
+  (
+    {
+      dataSource,
+      extra = false,
+      topic = 'all',
+      hidePadding = false,
+      handleOnReset,
+      className,
+      title,
+      ...props
+    }: ProLogProps,
+    ref,
+  ) => {
+    const { disconnect, connect } = useModel('useWebsocket');
+    const logRef = useRef<any>(null);
+    const { formatMessage } = useIntl();
+    const [play, setPlay] = useState<boolean>(true);
 
-  const handleOutput = (inputValue: Record<string, any>) => {
-    const time = dayjs(inputValue.time).format('YYYY-MM-DD HH:mm:ss');
-    const level = inputValue.level;
-    const msg = inputValue.msg;
+    const handleOutput = (inputValue: Record<string, any>) => {
+      const time = dayjs(inputValue.time).format('YYYY-MM-DD HH:mm:ss');
+      const level = inputValue.level;
+      const msg = inputValue.msg;
 
-    const timeColor = '\u001b[38;2;56;158;13m';
-    const msgColor = '\u001b[37m';
-    const levelColor = getAnsiColor(level);
+      const timeColor = '\u001b[38;2;56;158;13m';
+      const msgColor = '\u001b[37m';
+      const levelColor = getAnsiColor(level);
 
-    return `${timeColor}${time} ${levelColor}[${level}] ${msgColor}${msg}\r\n`;
-  };
+      return `${timeColor}${time} ${levelColor}[${level}] ${msgColor}${msg}\r\n`;
+    };
 
-  useEffect(() => {
-    const term = new Terminal({
-      disableStdin: true, // 禁止输入
-      cursorStyle: 'underline',
-      cursorBlink: true,
-      cursorInactiveStyle: 'underline',
-    });
-    const fitAddon = new FitAddon();
-    term.loadAddon(fitAddon);
+    // 清空编辑器
+    const handleOnClear = () => {
+      logRef.current.clear();
+    };
 
-    const terminalContainer = document.getElementById('terminal');
-    if (terminalContainer) {
-      term.open(terminalContainer);
-      fitAddon.fit();
-    }
+    useEffect(() => {
+      const term = new Terminal({
+        disableStdin: true, // 禁止输入
+        cursorStyle: 'underline',
+        cursorBlink: true,
+        cursorInactiveStyle: 'underline',
+      });
+      const fitAddon = new FitAddon();
+      term.loadAddon(fitAddon);
 
-    window.addEventListener('resize', () => fitAddon.fit());
-    logRef.current = term;
-  }, []);
-
-  useEffect(() => {
-    dataSource?.forEach((msg) => {
-      const parsedItem = msg && JSON.parse(msg);
-      const output = handleOutput(parsedItem);
-      logRef.current.write(output);
-    });
-  }, [dataSource, topic]);
-
-  return (
-    <ProCard
-      className={cn(className, 'overflow-y-auto')}
-      title={<span className="text-[14px]">{title}</span>}
-      bodyStyle={hidePadding ? { paddingBlock: 0, paddingInline: 0 } : {}}
-      extra={
-        extra ? (
-          <Space>
-            <Button
-              key="download"
-              type="primary"
-              icon={<DownloadOutlined />}
-              size="small"
-              onClick={() => (window.location.href = '/api/v1/backup/runningLog')}
-            >
-              {formatMessage({ id: 'dashboard.button.download' })}
-            </Button>
-            <Button
-              ghost
-              key="stop"
-              type="primary"
-              icon={play ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
-              size="small"
-              onClick={() => {
-                if (play) {
-                  disconnect();
-                } else {
-                  connect();
-                }
-                setPlay(!play);
-              }}
-            >
-              {play
-                ? formatMessage({ id: 'button.pause' })
-                : formatMessage({ id: 'button.resume' })}
-            </Button>
-            <Button
-              danger
-              key="reload"
-              icon={<DeleteOutlined />}
-              size="small"
-              onClick={() => {
-                handleOnReset?.();
-                logRef.current.clear();
-              }}
-            >
-              {formatMessage({ id: 'dashboard.button.clear' })}
-            </Button>
-          </Space>
-        ) : null
+      const terminalContainer = document.getElementById('terminal');
+      if (terminalContainer) {
+        term.open(terminalContainer);
+        fitAddon.fit();
       }
-      {...props}
-    >
-      <div id="terminal" ref={logRef} style={{ width: '100%', height: '100%' }} />
-    </ProCard>
-  );
-};
+
+      window.addEventListener('resize', () => fitAddon.fit());
+      logRef.current = term;
+    }, []);
+
+    useEffect(() => {
+      dataSource?.forEach((msg) => {
+        const parsedItem = msg && JSON.parse(msg);
+        const output = handleOutput(parsedItem);
+        logRef.current.write(output);
+      });
+    }, [dataSource, topic]);
+
+    useImperativeHandle(ref, () => ({
+      clearLog: handleOnClear,
+    }));
+
+    return (
+      <ProCard
+        className={cn(className, 'overflow-y-auto')}
+        title={<span className="text-[14px]">{title}</span>}
+        bodyStyle={hidePadding ? { paddingBlock: 0, paddingInline: 0 } : {}}
+        extra={
+          extra ? (
+            <Space>
+              <Button
+                key="download"
+                type="primary"
+                icon={<DownloadOutlined />}
+                size="small"
+                onClick={() => (window.location.href = '/api/v1/backup/runningLog')}
+              >
+                {formatMessage({ id: 'dashboard.button.download' })}
+              </Button>
+              <Button
+                ghost
+                key="stop"
+                type="primary"
+                icon={play ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+                size="small"
+                onClick={() => {
+                  if (play) {
+                    disconnect();
+                  } else {
+                    connect();
+                  }
+                  setPlay(!play);
+                }}
+              >
+                {play
+                  ? formatMessage({ id: 'button.pause' })
+                  : formatMessage({ id: 'button.resume' })}
+              </Button>
+              <Button
+                danger
+                key="reload"
+                icon={<DeleteOutlined />}
+                size="small"
+                onClick={() => {
+                  handleOnReset?.();
+                  logRef.current.clear();
+                }}
+              >
+                {formatMessage({ id: 'dashboard.button.clear' })}
+              </Button>
+            </Space>
+          ) : null
+        }
+        {...props}
+      >
+        <div id="terminal" ref={logRef} />
+      </ProCard>
+    );
+  },
+);
 
 export default ProLog;

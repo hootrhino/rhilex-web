@@ -17,17 +17,19 @@ const useWebsocket = () => {
       const newLogs = [...(runningLogs || [])];
       newLogs.push(latestMessage?.data);
       ensureArrayLength(newLogs);
-
       setLogs(newLogs);
     }
   }, [latestMessage]);
 
   useEffect(() => {
     if (readyState === WebSocket.OPEN && sockUrl) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         sendMessage?.('WsTerminal');
       }, 600);
+
+      return () => clearTimeout(timer);
     }
+    return;
   }, [sendMessage, readyState, sockUrl]);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const useWebsocket = () => {
       setUrl(`${prefix}://${window?.location?.host}/${prefix}`);
     }
 
-    // setUrl(`ws://1365866fz0.vicp.fun/ws`);
+    // setUrl(`ws://wangwenhai.vicp.io/ws`);
   }, [window?.location]);
 
   return {

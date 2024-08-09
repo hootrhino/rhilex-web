@@ -1,3 +1,4 @@
+import type { LogRef } from '@/components/ProLog';
 import ProLog from '@/components/ProLog';
 import { postPlugwareService } from '@/services/rulex/chajianguanli';
 import { FormItemType } from '@/utils/enum';
@@ -8,7 +9,7 @@ import { ProForm } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Input } from 'antd';
 import { Rule } from 'antd/es/form';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PluginName, PluginUUID } from '../enum';
 import type { PluginParams } from '../typings';
 
@@ -20,6 +21,7 @@ type PingProps = ProFormProps & {
 const Ping = ({ dataSource, changeData, ...props }: PingProps) => {
   const { latestMessage } = useModel('useWebsocket');
   const { formatMessage } = useIntl();
+  const logRef = useRef<LogRef>(null);
   const [disabled, setDisabled] = useState<boolean>(true);
 
   const { run: onSearch, loading: loading } = useRequest(
@@ -30,14 +32,23 @@ const Ping = ({ dataSource, changeData, ...props }: PingProps) => {
     },
   );
 
-  useEffect(() => {
-    const newPingData = handleNewMessage(
-      dataSource,
-      latestMessage?.data,
-      `plugin/ICMPSenderPing/${PluginUUID.ICMP}`,
-    );
+  const handleOnClearLog = () => {
+    changeData([]);
+    logRef.current?.clearLog();
+  };
 
-    changeData(newPingData);
+  useEffect(() => {
+    if (!disabled) {
+      const newPingData = handleNewMessage(
+        dataSource,
+        latestMessage?.data,
+        `plugin/ICMPSenderPing/${PluginUUID.ICMP}`,
+      );
+
+      changeData(newPingData);
+    } else {
+      handleOnClearLog();
+    }
   }, [latestMessage]);
 
   return (
@@ -73,6 +84,7 @@ const Ping = ({ dataSource, changeData, ...props }: PingProps) => {
           hidePadding
           topic={`plugin/ICMPSenderPing/${PluginUUID.ICMP}`}
           dataSource={dataSource}
+          ref={logRef}
         />
       </ProForm.Item>
     </ProForm>
