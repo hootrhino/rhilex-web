@@ -235,8 +235,7 @@ export const configColumns = {
           ],
         },
       ],
-      renderText: (headers: Record<string, any>) =>
-        Object.keys(headers)?.length > 0 ? <div /> : null,
+      hideInDescriptions: true,
     },
   ],
   [OutendType.GENERIC_UART_TARGET]: [

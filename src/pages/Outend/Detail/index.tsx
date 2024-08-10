@@ -1,4 +1,5 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
+import HeadersTitle from '@/components/HttpHeaders/Title';
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
 import ProDescriptions from '@/components/ProDescriptions';
 import { getOutendsDetail } from '@/services/rulex/shuchuziyuanguanli';
@@ -51,8 +52,11 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
             dataSource={data}
             loading={loading}
           />
-          {data?.type === OutendType.HTTP && (
-            <HeadersDetail data={data?.config?.headers} className="mt-[12px]" />
+          {data?.type === OutendType.HTTP && Object.keys(data?.config?.headers)?.length > 0 && (
+            <div className="mt-[24px]">
+              <HeadersTitle />
+              <HeadersDetail data={data?.config?.headers} className="mt-[12px]" />
+            </div>
           )}
         </>
       )}
