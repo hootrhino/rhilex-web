@@ -51,7 +51,9 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
             dataSource={data}
             loading={loading}
           />
-          {data?.type === OutendType.HTTP && <HeadersDetail data={data?.config?.headers} />}
+          {data?.type === OutendType.HTTP && (
+            <HeadersDetail data={data?.config?.headers} className="mt-[12px]" />
+          )}
         </>
       )}
     </Drawer>

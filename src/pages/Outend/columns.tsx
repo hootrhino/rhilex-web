@@ -36,7 +36,7 @@ export const baseColumns = [
     title: intl.formatMessage({ id: 'outend.table.title.state' }),
     dataIndex: 'state',
     hideInForm: true,
-    renderText: (state: number) => <ProTag type={StatusType.DEVICE}>{state}</ProTag>,
+    renderText: (state: number) => <ProTag type={StatusType.DEVICE}>{state || 0}</ProTag>,
   },
   {
     title: intl.formatMessage({ id: 'table.desc' }),
@@ -72,6 +72,7 @@ const timeoutConfig = (title?: string) => [
     fieldProps: {
       addonAfter: 'ms',
     },
+    render: (timeout: number) => `${timeout} ms`,
   },
 ];
 
