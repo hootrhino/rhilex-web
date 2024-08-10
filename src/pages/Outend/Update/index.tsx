@@ -134,6 +134,7 @@ const UpdateForm = () => {
         columns={columns as ProFormColumnsType<Record<string, any>>[]}
         loading={loading}
         handleOnReset={handleOnReset}
+        rootClassName="outend-form"
       />
     </PageContainer>
   );

@@ -1,6 +1,7 @@
 import HeadersTitle from '@/components/HttpHeaders/Title';
 import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
+import UnitValue from '@/components/UnitValue';
 import { getHwifaceList } from '@/services/rulex/jiekouguanli';
 import { stringToBool } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
@@ -31,6 +32,8 @@ export const baseColumns = [
     valueType: 'select',
     valueEnum: outendTypeOption,
     required: true,
+    ellipsis: true,
+    renderText: (type: OutendType) => (type ? outendTypeOption[type] : '-'),
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.state' }),
@@ -72,7 +75,7 @@ const timeoutConfig = (title?: string) => [
     fieldProps: {
       addonAfter: 'ms',
     },
-    render: (timeout: number) => `${timeout} ms`,
+    render: (timeout: number) => <UnitValue value={timeout} />,
   },
 ];
 

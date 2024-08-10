@@ -104,10 +104,7 @@ export const GENERIC_HTTP_DEVICE_CONFIG = [
             ],
           },
         ],
-        render: (_dom: React.ReactNode, { httpConfig }: DeviceItem) => {
-          const headers = httpConfig?.headers;
-          return Object.keys(headers)?.length > 0 ? <div /> : null;
-        },
+        hideInDescriptions: true,
       },
     ],
   },

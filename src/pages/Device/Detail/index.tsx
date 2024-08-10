@@ -1,4 +1,5 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
+import HeadersTitle from '@/components/HttpHeaders/Title';
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
 import ProDescriptions from '@/components/ProDescriptions';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
@@ -51,7 +52,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
           render: (_: any, { portUuid }: DeviceItem) => (
             <a
               onClick={(e) => {
-                history.push('/port');
+                history.push('/system');
                 setDetailConfig({ open: true, uuid: portUuid });
                 getPortDetail({ uuid: portUuid });
                 if (props?.onClose) {
@@ -72,6 +73,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
           columns={formatColumns}
           column={3}
           labelWidth={labelWidth}
+          rootClassName="detail-descriptions"
         />
       );
     });
@@ -144,9 +146,13 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
               }
             })}
 
-            {type === DeviceType.GENERIC_HTTP_DEVICE && (
-              <HeadersDetail data={config?.httpConfig?.headers} />
-            )}
+            {type === DeviceType.GENERIC_HTTP_DEVICE &&
+              Object.keys(config?.httpConfig?.headers)?.length > 0 && (
+                <div>
+                  <HeadersTitle />
+                  <HeadersDetail data={config?.httpConfig?.headers} className="mt-[12px]" />
+                </div>
+              )}
             {type === DeviceType.GENERIC_MODBUS_MASTER && (
               <ModbusMasterDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
             )}

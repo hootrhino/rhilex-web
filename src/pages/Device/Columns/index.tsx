@@ -116,6 +116,7 @@ export const baseColumns = (product: Product) => [
     required: true,
     ellipsis: true,
     valueEnum: deviceTypeOptions[product],
+    renderText: (type: DeviceType) => type && deviceTypeOptions[product][type],
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.gid' }),
@@ -137,7 +138,7 @@ export const baseColumns = (product: Product) => [
     dataIndex: 'state',
     hideInForm: true,
     width: 100,
-    renderText: (state: number) => <ProTag type={StatusType.DEVICE}>{state}</ProTag>,
+    renderText: (state: number) => <ProTag type={StatusType.DEVICE}>{state || 0}</ProTag>,
   },
   {
     title: intl.formatMessage({ id: 'table.desc' }),

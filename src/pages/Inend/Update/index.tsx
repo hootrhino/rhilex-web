@@ -138,6 +138,7 @@ const UpdateForm = () => {
             uuid ? { ...detail, config: formatDetailConfig() } : defaultValue,
           )
         }
+        rootClassName="inend-form"
       />
     </PageContainer>
   );

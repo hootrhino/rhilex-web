@@ -34,6 +34,7 @@ export const GENERIC_UART_RW_CONFIG = [
         title: intl.formatMessage({ id: 'device.form.title.tag' }),
         required: true,
         dataIndex: ['config', 'rwConfig', 'tag'],
+        render: (_dom: React.ReactNode, { rwConfig }: DeviceItem) => rwConfig.tag,
       },
       {
         title: intl.formatMessage({ id: 'device.form.title.readFormat' }),
@@ -41,6 +42,8 @@ export const GENERIC_UART_RW_CONFIG = [
         required: true,
         valueEnum: ReadFormatOption,
         dataIndex: ['config', 'rwConfig', 'readFormat'],
+        render: (_dom: React.ReactNode, { rwConfig }: DeviceItem) =>
+          rwConfig.readFormat ? ReadFormatOption[rwConfig.readFormat] : '-',
       },
       {
         title: intl.formatMessage({ id: 'device.form.title.timeSlice' }),
@@ -50,8 +53,8 @@ export const GENERIC_UART_RW_CONFIG = [
         fieldProps: {
           addonAfter: 'ms',
         },
-        render: (_dom: React.ReactNode, { hostConfig }: DeviceItem) => (
-          <UnitValue value={hostConfig?.timeout} />
+        render: (_dom: React.ReactNode, { rwConfig }: DeviceItem) => (
+          <UnitValue value={rwConfig?.timeSlice} />
         ),
       },
     ],
