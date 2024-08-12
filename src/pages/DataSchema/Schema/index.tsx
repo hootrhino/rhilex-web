@@ -52,6 +52,7 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
         message.success(formatMessage({ id: 'message.success.remove' }));
         refresh();
         setActiveSchema(defaultActiveSchema);
+        setKey('');
       },
     },
   );
