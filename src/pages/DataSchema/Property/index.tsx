@@ -176,10 +176,10 @@ const PropertyList = () => {
   ]);
 
   const items = [
-    {
-      key: 'defaultValue',
-      label: formatMessage({ id: 'schemaMgt.form.title.defaultValue' }),
-    },
+    // {
+    //   key: 'defaultValue',
+    //   label: formatMessage({ id: 'schemaMgt.form.title.defaultValue' }),
+    // },
     {
       key: 'falseLabel',
       label: 'false',
@@ -226,9 +226,9 @@ const PropertyList = () => {
           case 'range':
             children = `${data?.min} ~ ${data?.max}`;
             break;
-          case 'defaultValue':
-            children = data?.defaultValue?.toString() || '-';
-            break;
+          // case 'defaultValue':
+          //   children = data?.defaultValue?.toString() || '-';
+          //   break;
           default:
             children = data?.[item.key];
         }
@@ -313,7 +313,11 @@ const PropertyList = () => {
           let params = {
             ...values,
             unit: values?.unit || '',
-            rule: values?.rule || {},
+            rule:
+              {
+                ...values?.rule,
+                defaultValue: '0',
+              } || {},
             schemaId: activeSchema.uuid,
           };
           if (initialValue?.uuid) {

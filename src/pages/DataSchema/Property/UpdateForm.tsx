@@ -54,14 +54,14 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
       formRef={formRef}
       width="60%"
       initialValues={defaultProperty}
-      onValuesChange={(changedValue) => {
-        if ([Type.INTEGER, Type.FLOAT].includes(changedValue?.type)) {
-          formRef.current?.setFieldsValue({ rule: { defaultValue: 0 } });
-        }
-        if (changedValue?.type === Type.BOOL) {
-          formRef.current?.setFieldsValue({ rule: { defaultValue: false } });
-        }
-      }}
+      // onValuesChange={(changedValue) => {
+      //   if ([Type.INTEGER, Type.FLOAT].includes(changedValue?.type)) {
+      //     formRef.current?.setFieldsValue({ rule: { defaultValue: 0 } });
+      //   }
+      //   if (changedValue?.type === Type.BOOL) {
+      //     formRef.current?.setFieldsValue({ rule: { defaultValue: false } });
+      //   }
+      // }}
       {...props}
     >
       <ProForm.Group>
@@ -225,14 +225,14 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
                 // headStyle={{ paddingBlockStart: 0 }}
               >
                 <ProForm.Group>
-                  {[Type.STRING, Type.INTEGER, Type.FLOAT, Type.BOOL].includes(type) && (
+                  {/* {[Type.STRING, Type.INTEGER, Type.FLOAT, Type.BOOL].includes(type) && (
                     <ProFormText
                       name={['rule', 'defaultValue']}
                       width="md"
                       label={formatMessage({ id: 'schemaMgt.form.title.defaultValue' })}
                       placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.defaultValue' })}
                     />
-                  )}
+                  )} */}
 
                   {dom}
                 </ProForm.Group>

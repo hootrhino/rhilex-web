@@ -21,7 +21,8 @@ const useSchema = () => {
     manual: true,
     onSuccess: (res) => {
       const defaultActiveItem = res?.[0];
-      if (defaultActiveItem.uuid && defaultActiveItem.name) {
+
+      if (defaultActiveItem && defaultActiveItem.uuid && defaultActiveItem.name) {
         setActiveSchema({
           uuid: defaultActiveItem.uuid,
           name: defaultActiveItem.name,
