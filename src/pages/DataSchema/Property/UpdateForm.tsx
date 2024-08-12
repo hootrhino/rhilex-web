@@ -238,18 +238,21 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
                 </ProForm.Group>
               </ProCard>
               <ProForm.Group style={{ marginTop: 24 }}>
-                <ProForm.Item
-                  name="unit"
-                  label={formatMessage({ id: 'schemaMgt.form.title.unit' })}
-                  className="w-[328px]"
-                  hidden={type === Type.BOOL}
-                >
-                  <AutoComplete
-                    options={unitOptions}
-                    style={{ width: '100%' }}
-                    placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.unit' })}
-                  />
-                </ProForm.Item>
+                {![Type.STRING, Type.GEO].includes(type) && (
+                  <ProForm.Item
+                    name="unit"
+                    label={formatMessage({ id: 'schemaMgt.form.title.unit' })}
+                    className="w-[328px]"
+                    hidden={type === Type.BOOL}
+                  >
+                    <AutoComplete
+                      options={unitOptions}
+                      style={{ width: '100%' }}
+                      placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.unit' })}
+                    />
+                  </ProForm.Item>
+                )}
+
                 <ProFormText
                   name="description"
                   label={formatMessage({ id: 'table.desc' })}
