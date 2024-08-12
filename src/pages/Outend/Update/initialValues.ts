@@ -51,5 +51,6 @@ export const defaultConfig = {
   [OutendType.SEMTECH_UDP_FORWARDER]: {
     host: DEFAULT_HOST,
     port: 1700,
+    mac: 'FFFFFFFFFFFF',
   },
 };
