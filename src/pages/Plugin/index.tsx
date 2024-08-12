@@ -128,11 +128,36 @@ const Plugins = () => {
           </a>,
         ];
         break;
+      case PluginUUID.TEL:
+        options = [
+          <a
+            key="tel"
+            onClick={() => handleOnDetail({ name: PluginName.TEL, titleId: 'plugin.title.tel' })}
+          >
+            {formatMessage({ id: 'plugin.button.tel' })}
+          </a>,
+        ];
+        break;
       default:
         options = [];
         break;
     }
     return options;
+  };
+
+  const getListColumn = () => {
+    let column = 4;
+
+    if (size) {
+      if (size?.width < 1500) {
+        column = 3;
+      }
+      if (size?.width < 1200) {
+        column = 2;
+      }
+    }
+
+    return column;
   };
 
   return (
@@ -142,7 +167,7 @@ const Plugins = () => {
           rowKey="uuid"
           pagination={false}
           showActions="hover"
-          grid={{ gutter: 16, column: size && size?.width < 1200 ? 2 : 4 }}
+          grid={{ gutter: 16, column: getListColumn() }}
           cardProps={{ className: 'plugin-card', bodyStyle: { paddingBlockStart: 16 } }}
           metas={{
             title: {

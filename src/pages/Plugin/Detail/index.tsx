@@ -7,12 +7,13 @@ import { useRef, useState } from 'react';
 import { defaultConfig } from '..';
 import { PluginName, PluginUUID } from '../enum';
 import type { PluginConfig, PluginParams } from '../typings';
-import ClientList from './ClientList';
-import ModbusCRC from './CRC';
-import Ngrok from './Ngrok';
-import Ping from './Ping';
-import Scan from './Scan';
-import Terminal from './Terminal';
+import ClientList from './clientList';
+import ModbusCRC from './crc';
+import Ngrok from './ngrok';
+import Ping from './ping';
+import Scan from './scan';
+import TelemetryProtocol from './tel';
+import Terminal from './terminal';
 
 type DetailProps = {
   detailConfig: PluginConfig;
@@ -104,6 +105,7 @@ const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
       case PluginName.CLIENTS:
       case PluginName.PING:
       case PluginName.START:
+      case PluginName.TEL:
         footer = (
           <Button type="primary" onClick={handleOnClose}>
             {formatMessage({ id: 'button.close' })}
@@ -167,6 +169,7 @@ const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
       maskClosable={false}
       footer={() => renderFooter(detailConfig.name)}
       onCancel={handleOnClose}
+      styles={{ body: { height: 630, overflow: 'auto' } }}
       {...detailConfig}
     >
       {detailConfig.name === PluginName.NGROKC && <Ngrok />}
@@ -184,6 +187,7 @@ const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
           changeDisabled={setDisabled}
         />
       )}
+      {detailConfig.name === PluginName.TEL && <TelemetryProtocol />}
     </Modal>
   );
 };

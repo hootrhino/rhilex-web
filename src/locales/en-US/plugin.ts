@@ -21,6 +21,7 @@ export default {
   'plugin.title.terminal': 'Terminal',
   'plugin.title.calc': 'Modbus CRC calculate',
   'plugin.title.ngrokc': 'Details',
+  'plugin.title.tel': 'RHILEX TELEMETRY PROTOCOL',
 
   /**
    * button
@@ -29,6 +30,7 @@ export default {
   'plugin.button.scan.stop': 'Stop Scan',
   'plugin.button.kickout': 'Kick Out',
   'plugin.button.calc': 'Calculate',
+  'plugin.button.tel': 'Telemetry Protocol',
 
   /**
    * form

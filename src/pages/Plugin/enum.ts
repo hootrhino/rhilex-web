@@ -8,6 +8,7 @@ export enum PluginName {
   CRC = 'crc', // 非真实 name
   CONFIG = 'get_config',
   NGROKC = 'ngrokc',
+  TEL = 'tel',
 }
 
 // 插件类型
@@ -20,4 +21,5 @@ export enum PluginUUID {
   NGROKC = 'NGROKC',
   USB = 'USB_EVENT_MONITOR',
   HTTP = 'HTTP-API-SERVER',
+  TEL = 'BUSINESS_TELEMETRY',
 }

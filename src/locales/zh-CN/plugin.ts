@@ -21,6 +21,7 @@ export default {
   'plugin.title.terminal': '终端',
   'plugin.title.calc': 'Modbus CRC 计算',
   'plugin.title.ngrokc': '详情',
+  'plugin.title.tel': 'RHILEX 遥测协议',
 
   /**
    * button
@@ -29,6 +30,7 @@ export default {
   'plugin.button.scan.stop': '停止扫描',
   'plugin.button.kickout': '强制离线',
   'plugin.button.calc': '计算',
+  'plugin.button.tel': '遥测协议',
 
   /**
    * form
