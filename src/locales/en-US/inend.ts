@@ -56,7 +56,7 @@ export default {
   'inend.type.topic': 'Generic {type}',
   'inend.type.subject': 'Generic {type}',
   'inend.type.event': '{type} Internal Event Source',
-  'inend.type.mqtt': 'Lightweight MQTT Broker',
+  'inend.type.mqtt': 'MQTT Broker',
   'inend.type.comtc': 'Data from Communication Module',
 
   /**

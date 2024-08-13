@@ -6,13 +6,13 @@ import { getIntl, getLocale } from '@umijs/max';
 
 export enum InendType {
   COAP = 'CoAP',
-  GENERIC_IOT_HUB = 'GENERIC_IOT_HUB',
+  // TODO GENERIC_IOT_HUB = 'GENERIC_IOT_HUB',
   UDP_SERVER = 'UDP_SERVER',
   TCP_SERVER = 'TCP_SERVER',
   HTTP = 'HTTP',
-  NATS_SERVER = 'NATS_SERVER',
+  // TODO NATS_SERVER = 'NATS_SERVER',
   GRPC = 'GRPC',
-  GENERIC_MQTT = 'GENERIC_MQTT',
+  // TODO GENERIC_MQTT = 'GENERIC_MQTT',
   GENERIC_MQTT_SERVER = 'GENERIC_MQTT_SERVER',
   INTERNAL_EVENT = 'INTERNAL_EVENT',
   COMTC_EVENT_FORWARDER = 'COMTC_EVENT_FORWARDER',
@@ -22,16 +22,16 @@ const intl = getIntl(getLocale());
 
 export const inendTypeOption = {
   [InendType.COAP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'CoAP Server' }),
-  [InendType.GENERIC_IOT_HUB]: intl.formatMessage({ id: 'inend.type.topic' }, { type: 'IoTHub' }),
+  // TODO [InendType.GENERIC_IOT_HUB]: intl.formatMessage({ id: 'inend.type.topic' }, { type: 'IoTHub' }),
   [InendType.UDP_SERVER]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'UDP Server' }),
   [InendType.TCP_SERVER]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'TCP Server' }),
   [InendType.HTTP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'HTTP Server' }),
-  [InendType.NATS_SERVER]: intl.formatMessage(
-    { id: 'inend.type.subject' },
-    { type: 'NATS Client' },
-  ),
+  // TODO [InendType.NATS_SERVER]: intl.formatMessage(
+  //   { id: 'inend.type.subject' },
+  //   { type: 'NATS Client' },
+  // ),
   [InendType.GRPC]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'GRPC Server' }),
-  [InendType.GENERIC_MQTT]: intl.formatMessage({ id: 'inend.type.topic' }, { type: 'MQTT' }),
+  // TODO [InendType.GENERIC_MQTT]: intl.formatMessage({ id: 'inend.type.topic' }, { type: 'MQTT' }),
   [InendType.GENERIC_MQTT_SERVER]: intl.formatMessage({ id: 'inend.type.mqtt' }),
   [InendType.INTERNAL_EVENT]: intl.formatMessage({ id: 'inend.type.event' }, { type: 'RHILEX' }),
   [InendType.COMTC_EVENT_FORWARDER]: intl.formatMessage({ id: 'inend.type.comtc' }),

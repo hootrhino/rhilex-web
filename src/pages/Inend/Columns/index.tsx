@@ -3,13 +3,13 @@ import { getIntl, getLocale } from '@umijs/max';
 import { InendType, inendTypeOption } from '../enum';
 import { CoAP } from './coap';
 import { COMTC_EVENT_FORWARDER } from './comtcEventForwardar';
-import { GENERIC_IOT_HUB } from './genericIothub';
-import { GENERIC_MQTT } from './genericMqtt';
+// import { GENERIC_IOT_HUB } from './genericIothub';
+// import { GENERIC_MQTT } from './genericMqtt';
 import { GENERIC_MQTT_SERVER } from './genericMqttServer';
 import { GRPC } from './grpc';
 import { HTTP } from './http';
 import { INTERNAL_EVENT } from './internalEvent';
-import { NATS_SERVER } from './natsServer';
+// import { NATS_SERVER } from './natsServer';
 import { TCP_SERVER } from './tcp';
 import { UDP_SERVER } from './udp';
 
@@ -58,14 +58,14 @@ export const baseColumns = [
  */
 export const typeConfigColumns = {
   [InendType.COAP]: CoAP,
-  [InendType.GENERIC_IOT_HUB]: GENERIC_IOT_HUB,
+  // TODO [InendType.GENERIC_IOT_HUB]: GENERIC_IOT_HUB,
   [InendType.UDP_SERVER]: UDP_SERVER,
   [InendType.TCP_SERVER]: TCP_SERVER,
   [InendType.HTTP]: HTTP,
-  [InendType.NATS_SERVER]: NATS_SERVER,
+  // TODO [InendType.NATS_SERVER]: NATS_SERVER,
   [InendType.GRPC]: GRPC,
   [InendType.INTERNAL_EVENT]: INTERNAL_EVENT,
-  [InendType.GENERIC_MQTT]: GENERIC_MQTT,
+  // TODO [InendType.GENERIC_MQTT]: GENERIC_MQTT,
   [InendType.GENERIC_MQTT_SERVER]: GENERIC_MQTT_SERVER,
   [InendType.COMTC_EVENT_FORWARDER]: COMTC_EVENT_FORWARDER,
 };

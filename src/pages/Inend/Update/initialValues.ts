@@ -1,4 +1,4 @@
-import { EventType, InendType, Mode, QoSLevel } from '../enum';
+import { EventType, InendType } from '../enum';
 
 const DEFAULT_HOST = '127.0.0.1';
 
@@ -19,10 +19,10 @@ export const defaultConfig = {
     port: 2584,
     host: DEFAULT_HOST,
   },
-  [InendType.NATS_SERVER]: {
-    port: 4222,
-    host: DEFAULT_HOST,
-  },
+  // [InendType.NATS_SERVER]: {
+  //   port: 4222,
+  //   host: DEFAULT_HOST,
+  // },
   [InendType.GRPC]: {
     port: 2585,
     host: DEFAULT_HOST,
@@ -30,19 +30,19 @@ export const defaultConfig = {
   [InendType.INTERNAL_EVENT]: {
     type: EventType.ALL,
   },
-  [InendType.GENERIC_IOT_HUB]: {
-    host: DEFAULT_HOST,
-    port: 1883,
-    mode: Mode.DC,
-  },
-  [InendType.GENERIC_MQTT]: {
-    host: DEFAULT_HOST,
-    port: 1883,
-    username: 'rhilex',
-    password: 'rhilex',
-    qos: QoSLevel.LEVEL1,
-    subTopics: [{ k: '/device/rulex-rhilex1' }],
-  },
+  // [InendType.GENERIC_IOT_HUB]: {
+  //   host: DEFAULT_HOST,
+  //   port: 1883,
+  //   mode: Mode.DC,
+  // },
+  // [InendType.GENERIC_MQTT]: {
+  //   host: DEFAULT_HOST,
+  //   port: 1883,
+  //   username: 'rhilex',
+  //   password: 'rhilex',
+  //   qos: QoSLevel.LEVEL1,
+  //   subTopics: [{ k: '/device/rulex-rhilex1' }],
+  // },
   [InendType.GENERIC_MQTT_SERVER]: {
     serverName: 'rhilex-mqtt-server',
     anonymous: true,

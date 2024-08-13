@@ -55,7 +55,7 @@ export default {
   'inend.type.topic': '作为通用 {type} 客户端订阅 Topic 接入',
   'inend.type.subject': '作为通用 {type} 订阅 Subject 接入',
   'inend.type.event': '{type} 内部事件源',
-  'inend.type.mqtt': '轻量级 MQTT Broker',
+  'inend.type.mqtt': '作为 MQTT Broker 提供接入服务',
   'inend.type.comtc': '来自通信模块的数据',
 
   /**
