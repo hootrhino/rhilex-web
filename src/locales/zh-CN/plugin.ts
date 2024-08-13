@@ -66,8 +66,7 @@ export default {
   'plugin.tel.passage1.desc':
     'RHILEX 提供数据遥测服务，用于从边缘设备收集、传输和处理数据。这些数据包括设备运行状态、性能指标、操作日志等。数据遥测服务旨在提升设备管理、性能监控和故障诊断的效率。',
   'plugin.tel.passage2.title': '二、数据收集',
-  'plugin.tel.passage2.desc.item1': `数据类型：
-  我们收集的遥测数据包括但不限于设备的操作状态、性能指标、错误日志及其他相关信息。`,
+  'plugin.tel.passage2.desc.item1': `数据类型：我们收集的遥测数据包括但不限于设备的操作状态、性能指标、错误日志及其他相关信息。`,
   'plugin.tel.passage2.desc.item2': `数据来源：数据由您所使用的设备通过软件收集，并通过网络传输到我们的服务器。`,
   'plugin.tel.passage2.desc.item3': `数据目的：收集的数据用于分析和改善设备性能、提供技术支持及提升用户体验。`,
   'plugin.tel.passage3.title': '三、数据使用',

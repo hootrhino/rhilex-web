@@ -12,7 +12,7 @@ export default {
   /**
    * modal
    */
-  'login.modal.title': 'User agreement',
+  'login.modal.title': 'User Agreement',
   'login.modal.content.intro.desc': `Welcome to RHILEX. Please read the following User Agreement (hereinafter referred to as the "Agreement") carefully before using our software. This Agreement is a legal agreement between you (hereinafter referred to as the "User") and RHILEX (hereinafter referred to as "We" or "the Company") regarding the use of RHILEX software (hereinafter referred to as the "Software"). By downloading, installing, or using this Software, you agree to comply with all terms and conditions of this Agreement. If you do not agree to these terms, please do not use this Software.`,
   'login.modal.content.passages1.title': 'Description and Function of the Software',
   'login.modal.content.passages1.desc':
