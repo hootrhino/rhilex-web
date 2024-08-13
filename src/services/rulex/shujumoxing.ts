@@ -54,6 +54,21 @@ export async function getSchemaDetail(
   });
 }
 
+/** 修复模型 POST /api/v1/schema/fix */
+export async function postSchemaFix(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.postSchemaFixParams,
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/api/v1/schema/fix', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 模型列表 GET /api/v1/schema/list */
 export async function getSchemaList(options?: { [key: string]: any }) {
   return request<{

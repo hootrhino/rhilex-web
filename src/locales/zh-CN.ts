@@ -31,6 +31,7 @@ export default {
   'message.success.scan': '扫描成功',
   'message.success.restart': '重启成功',
   'message.success.reboot': '重启成功',
+  'message.success.reset': '重置成功',
   /**
    * placeholder
    */

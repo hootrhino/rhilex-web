@@ -38,7 +38,10 @@ export default {
   'schemaMgt.modal.title.property.update': 'Update property',
   'schemaMgt.modal.title.property.publish': 'Publish schema',
   'schemaMgt.modal.content.property.publish':
-    'After the schema is published, you will not be able to make any modifications to it. Please ensure all design work is completed before publication',
+    'After the schema is published, you will not be able to make any modifications to it. Please ensure all design work is completed before publication.',
+  'schemaMgt.modal.title.property.fix': 'Fix schema',
+  'schemaMgt.modal.content.property.fix':
+    'This operation will delete all data and restore it to an unpublished state. Please proceed with caution.',
 
   /**
    * title

@@ -31,6 +31,7 @@ export default {
   'message.success.scan': 'Scanned successfully',
   'message.success.restart': 'Restarted successfully',
   'message.success.reboot': 'Rebooted successfully',
+  'message.success.reset': 'Reseted Successfully',
   /**
    * placeholder
    */

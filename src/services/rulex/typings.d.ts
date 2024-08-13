@@ -366,6 +366,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type postSchemaFixParams = {
+    uuid: string;
+  };
+
   type postSchemaPublishParams = {
     uuid: string;
   };

@@ -30,9 +30,4 @@ export default {
   'dashboard.statistic.inFailed': '输入失败',
   'dashboard.statistic.outSuccess': '输出成功',
   'dashboard.statistic.outFailed': '输出失败',
-
-  /**
-   * message
-   */
-  'dashboard.message.reset.success': '重置成功',
 };

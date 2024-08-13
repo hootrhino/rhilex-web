@@ -20876,6 +20876,47 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-198023457-run",
         "security": []
       }
+    },
+    "/api/v1/schema/fix": {
+      "post": {
+        "summary": "修复模型",
+        "x-apifox-folder": "数据模型",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据模型"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "SCHEMATUERR9QX",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204289880-run",
+        "security": []
+      }
     }
   },
   "components": {
@@ -21003,10 +21044,5 @@
     },
     "securitySchemes": {}
   },
-  "servers": [
-    {
-      "url": "http://127.0.0.1:2580",
-      "description": "本机环境"
-    }
-  ]
+  "servers": []
 }

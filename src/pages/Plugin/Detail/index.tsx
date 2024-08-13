@@ -12,7 +12,7 @@ import ModbusCRC from './CRC';
 import Ngrok from './Ngrok';
 import Ping from './Ping';
 import Scan from './Scan';
-import TelemetryProtocol from './Tel';
+import TelemetryProtocol from './Telemetry';
 import Terminal from './Terminal';
 
 type DetailProps = {

@@ -2,7 +2,7 @@ import PageContainer from '@/components/ProPageContainer';
 import { PlusOutlined } from '@ant-design/icons';
 import { ProCard } from '@ant-design/pro-components';
 import { useIntl, useModel } from '@umijs/max';
-import { Button } from 'antd';
+import { Badge, Button } from 'antd';
 import { useState } from 'react';
 import PropertyList from './Property';
 import SchemaList from './Schema';
@@ -45,6 +45,17 @@ const DataSchema = () => {
   const { activeSchema } = useModel('useSchema');
   const [open, setOpen] = useState<boolean>(false);
 
+  const getPropertyTitle = () => {
+    if (activeSchema.name) {
+      return (
+        <>
+          {activeSchema.name} - {formatMessage({ id: 'schemaMgt.title.property' })}
+        </>
+      );
+    }
+    return <>{formatMessage({ id: 'schemaMgt.title.property' })}</>;
+  };
+
   return (
     <PageContainer>
       <ProCard split="vertical">
@@ -61,15 +72,14 @@ const DataSchema = () => {
         >
           <SchemaList open={open} changeOpen={setOpen} />
         </ProCard>
-        <ProCard
-          title={
-            activeSchema.name
-              ? `${activeSchema.name} - ${formatMessage({ id: 'schemaMgt.title.property' })}`
-              : formatMessage({ id: 'schemaMgt.title.property' })
-          }
+        <Badge.Ribbon
+          text={activeSchema.published ? '已发布' : '未发布'}
+          color={activeSchema.published ? 'green' : 'blue'}
         >
-          <PropertyList />
-        </ProCard>
+          <ProCard title={getPropertyTitle()}>
+            <PropertyList />
+          </ProCard>
+        </Badge.Ribbon>
       </ProCard>
     </PageContainer>
   );

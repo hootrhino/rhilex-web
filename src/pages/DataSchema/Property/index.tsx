@@ -3,13 +3,19 @@ import {
   deleteSchemaPropertiesDel,
   getSchemaPropertiesDetail,
   getSchemaPropertiesList,
+  postSchemaFix,
   postSchemaPropertiesCreate,
   postSchemaPublish,
   putSchemaPropertiesUpdate,
 } from '@/services/rulex/shujumoxing';
 import { defaultPagination } from '@/utils/constant';
 import { isEmpty } from '@/utils/redash';
-import { ExclamationCircleFilled, PlusOutlined, SendOutlined } from '@ant-design/icons';
+import {
+  ExclamationCircleFilled,
+  PlusOutlined,
+  RedoOutlined,
+  SendOutlined,
+} from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl, useModel, useRequest } from '@umijs/max';
@@ -92,7 +98,6 @@ const PropertyList = () => {
   const { run: getSchemaList, activeSchema } = useModel('useSchema');
   const [open, setOpen] = useState<boolean>(false);
   const [initialValue, setInitialValue] = useState<Property>({});
-  const [disabledPublish, setDisabled] = useState<boolean>(true);
 
   // 详情
   const { run: getDetail } = useRequest(
@@ -115,19 +120,33 @@ const PropertyList = () => {
     },
   );
 
-  // 发布
+  // 发布 || 重置
   const handleOnPublish = () => {
+    const isPubulished = activeSchema.published;
+    const formatKey = isPubulished ? 'fix' : 'publish';
+
     modal.confirm({
       icon: <ExclamationCircleFilled />,
-      title: formatMessage({ id: 'schemaMgt.modal.title.property.publish' }),
-      content: formatMessage({ id: 'schemaMgt.modal.content.property.publish' }),
+      title: formatMessage({
+        id: `schemaMgt.modal.title.property.${formatKey}`,
+      }),
+      content: formatMessage({
+        id: `schemaMgt.modal.content.property.${formatKey}`,
+      }),
       okText: formatMessage({ id: 'button.ok' }),
       cancelText: formatMessage({ id: 'button.cancel' }),
       onOk: async () => {
-        await postSchemaPublish({ uuid: activeSchema.uuid });
+        const params = { uuid: activeSchema.uuid };
+
+        if (isPubulished) {
+          await postSchemaFix(params);
+          message.success(formatMessage({ id: 'message.success.reset' }));
+        } else {
+          await postSchemaPublish(params);
+          message.success(formatMessage({ id: 'schemaMgt.message.success.publish' }));
+        }
         getSchemaList();
         actionRef.current?.reload();
-        message.success(formatMessage({ id: 'schemaMgt.message.success.publish' }));
       },
     });
   };
@@ -259,14 +278,12 @@ const PropertyList = () => {
         request={async ({ current, pageSize, ...keyword }) => {
           if (keyword?.schema_uuid) {
             const { data } = await getSchemaPropertiesList({ current, size: pageSize, ...keyword });
-            setDisabled(data?.total === 0);
             return Promise.resolve({
               data: data?.records || [],
               total: data?.total || 0,
               success: true,
             });
           } else {
-            setDisabled(true);
             return Promise.resolve({
               data: [],
               total: 0,
@@ -285,12 +302,12 @@ const PropertyList = () => {
             ghost
             key="publish-property"
             type="primary"
-            icon={<SendOutlined />}
+            icon={activeSchema.published ? <RedoOutlined /> : <SendOutlined />}
             onClick={handleOnPublish}
-            disabled={activeSchema.published || disabledPublish}
+            disabled={!activeSchema.uuid}
           >
             {activeSchema.published
-              ? formatMessage({ id: 'schemaMgt.button.published' })
+              ? formatMessage({ id: 'button.reset' })
               : formatMessage({ id: 'schemaMgt.button.publish' })}
           </Button>,
           <Button
@@ -298,7 +315,7 @@ const PropertyList = () => {
             type="primary"
             icon={<PlusOutlined />}
             onClick={() => setOpen(true)}
-            disabled={!activeSchema.uuid}
+            disabled={!activeSchema.uuid || activeSchema.published}
           >
             {formatMessage({ id: 'button.new' })}
           </Button>,

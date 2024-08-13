@@ -91,7 +91,7 @@ const Dashboard = () => {
   const { run: reset } = useRequest(() => postOsResetInterMetric(), {
     manual: true,
     onSuccess: () => {
-      message.success(formatMessage({ id: 'dashboard.message.reset.success' }));
+      message.success(formatMessage({ id: 'message.success.reset' }));
       run();
     },
   });

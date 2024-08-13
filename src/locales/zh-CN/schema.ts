@@ -38,7 +38,10 @@ export default {
   'schemaMgt.modal.title.property.update': '编辑属性',
   'schemaMgt.modal.title.property.publish': '发布模型',
   'schemaMgt.modal.content.property.publish':
-    '模型发布后，您将无法对其进行修改。请确保在发布前完成所有的设计工作',
+    '模型发布后，您将无法对其进行修改。请确保在发布前完成所有的设计工作。',
+  'schemaMgt.modal.title.property.fix': '修复模型',
+  'schemaMgt.modal.content.property.fix':
+    '此操作将删除所有数据并将其恢复至未发布状态，请确保谨慎操作。',
 
   /**
    * title
