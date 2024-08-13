@@ -3,7 +3,7 @@ import { getSettingsNetDetails, getSettingsNetStatus } from '@/services/rulex/wa
 import { pick } from '@/utils/redash';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
-import { FormattedMessage, getLocale, useIntl, useRequest } from '@umijs/max';
+import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
 import { Button, Modal } from 'antd';
 import { useState } from 'react';
 
@@ -60,7 +60,7 @@ const detailColumns = [
 ];
 
 const NetworkStatus = () => {
-  const { formatMessage } = useIntl();
+  const { formatMessage, locale } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
 
   const { data: detail, run: getDetail } = useRequest(
@@ -142,7 +142,7 @@ const NetworkStatus = () => {
         <ProDescriptions
           columns={detailColumns}
           dataSource={detail}
-          labelWidth={getLocale() === 'en-US' ? 130 : 100}
+          labelWidth={locale === 'en-US' ? 130 : 100}
         />
       </Modal>
     </ProCard>

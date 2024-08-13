@@ -4,7 +4,7 @@ import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescripti
 import ProDescriptions from '@/components/ProDescriptions';
 import { getOutendsDetail } from '@/services/rulex/shuchuziyuanguanli';
 import { omit } from '@/utils/redash';
-import { getLocale, useIntl, useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import { baseColumns, configColumns } from '../columns';
@@ -15,8 +15,8 @@ type DetailProps = DrawerProps & {
 };
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
-  const { formatMessage } = useIntl();
-  const labelWidth = getLocale() === 'en-US' ? 150 : 130;
+  const { formatMessage, locale } = useIntl();
+  const labelWidth = locale === 'en-US' ? 150 : 130;
 
   const { data, run, loading } = useRequest(() => getOutendsDetail({ uuid }), {
     manual: true,

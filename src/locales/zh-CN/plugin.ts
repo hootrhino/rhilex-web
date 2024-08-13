@@ -68,29 +68,23 @@ export default {
   'plugin.tel.passage2.title': '二、数据收集',
   'plugin.tel.passage2.desc.item1': `数据类型：
   我们收集的遥测数据包括但不限于设备的操作状态、性能指标、错误日志及其他相关信息。`,
-  'plugin.tel.passage2.desc.item2': `数据来源： 数据由您所使用的设备通过软件收集，并通过网络传输到我们的服务器。`,
-  'plugin.tel.passage2.desc.item3': `数据目的： 收集的数据用于分析和改善设备性能、提供技术支持及提升用户体验。`,
+  'plugin.tel.passage2.desc.item2': `数据来源：数据由您所使用的设备通过软件收集，并通过网络传输到我们的服务器。`,
+  'plugin.tel.passage2.desc.item3': `数据目的：收集的数据用于分析和改善设备性能、提供技术支持及提升用户体验。`,
   'plugin.tel.passage3.title': '三、数据使用',
-  'plugin.tel.passage3.desc.item1': `数据分析：
-  我们会对收集的数据进行分析，以帮助优化设备运行、改进软件功能及提供更好的服务。`,
-  'plugin.tel.passage3.desc.item2': `数据共享：
-  除非法律要求或经您同意，我们不会将您的数据共享给第三方。我们承诺保护您的数据隐私，不会将数据用于未授权的目的。`,
+  'plugin.tel.passage3.desc.item1': `数据分析：我们会对收集的数据进行分析，以帮助优化设备运行、改进软件功能及提供更好的服务。`,
+  'plugin.tel.passage3.desc.item2': `数据共享：除非法律要求或经您同意，我们不会将您的数据共享给第三方。我们承诺保护您的数据隐私，不会将数据用于未授权的目的。`,
   'plugin.tel.passage4.title': '四、隐私保护',
-  'plugin.tel.passage4.desc.item1': `隐私政策：
-  我们将按照我们的隐私政策来处理和保护您的数据。隐私政策详细说明了我们如何收集、使用、存储和保护您的个人数据。请参阅[隐私政策链接]以了解更多信息。`,
-  'plugin.tel.passage4.desc.item2': `数据安全： 我们采取适当的技术和组织措施，确保您的数据在传输和存储过程中的安全性。`,
+  'plugin.tel.passage4.desc.item1': `隐私政策：我们将按照我们的隐私政策来处理和保护您的数据。隐私政策详细说明了我们如何收集、使用、存储和保护您的个人数据。请参阅[隐私政策链接]以了解更多信息。`,
+  'plugin.tel.passage4.desc.item2': `数据安全：我们采取适当的技术和组织措施，确保您的数据在传输和存储过程中的安全性。`,
   'plugin.tel.passage5.title': '五、用户同意',
-  'plugin.tel.passage5.desc.item1': `同意数据收集： 使用我们的数据遥测服务即表示您同意我们收集和使用设备数据。`,
-  'plugin.tel.passage5.desc.item2': `数据传输： 您同意在使用软件时，允许软件通过网络传输数据至我们的服务器。`,
+  'plugin.tel.passage5.desc.item1': `同意数据收集：使用我们的数据遥测服务即表示您同意我们收集和使用设备数据。`,
+  'plugin.tel.passage5.desc.item2': `数据传输：您同意在使用软件时，允许软件通过网络传输数据至我们的服务器。`,
   'plugin.tel.passage6.title': '六、数据存储与保留',
-  'plugin.tel.passage6.desc.item1': `存储期限：
-  我们会在需要的时间内存储您的数据，以便于分析和服务提供。具体存储期限将根据业务需求和法律要求而定。`,
-  'plugin.tel.passage6.desc.item2': `数据删除：
-  在某些情况下，您有权要求我们删除您的数据。有关数据删除的请求可通过联系我们的客户支持团队提出。`,
+  'plugin.tel.passage6.desc.item1': `存储期限：我们会在需要的时间内存储您的数据，以便于分析和服务提供。具体存储期限将根据业务需求和法律要求而定。`,
+  'plugin.tel.passage6.desc.item2': `数据删除：在某些情况下，您有权要求我们删除您的数据。有关数据删除的请求可通过联系我们的客户支持团队提出。`,
   'plugin.tel.passage7.title': '七、责任限制',
-  'plugin.tel.passage7.desc.item1': `数据准确性：
-  尽管我们努力确保数据的准确性，但我们不对因数据不准确或延迟引起的任何直接或间接损失负责。`,
-  'plugin.tel.passage7.desc.item2': `服务中断： 我们不对因服务中断或不可预见的技术问题导致的数据丢失或损坏承担责任。`,
+  'plugin.tel.passage7.desc.item1': `数据准确性：尽管我们努力确保数据的准确性，但我们不对因数据不准确或延迟引起的任何直接或间接损失负责。`,
+  'plugin.tel.passage7.desc.item2': `服务中断：我们不对因服务中断或不可预见的技术问题导致的数据丢失或损坏承担责任。`,
   'plugin.tel.passage8.title': '八、协议变更',
   'plugin.tel.passage8.desc':
     '我们保留随时修改或更新本协议的权利。任何修改将在我们的网站或软件中发布，并立即生效。您继续使用数据遥测服务即表示接受修改后的协议。',

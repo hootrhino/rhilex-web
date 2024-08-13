@@ -2,7 +2,7 @@ import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescripti
 import ProDescriptions from '@/components/ProDescriptions';
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { omit } from '@/utils/redash';
-import { getLocale, useIntl, useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { baseColumns, typeConfigColumns } from '../Columns';
 import { InendType } from '../enum';
@@ -12,8 +12,8 @@ type DetailProps = DrawerProps & {
 };
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
-  const { formatMessage } = useIntl();
-  const labelWidth = getLocale() === 'en-US' ? 220 : 120;
+  const { formatMessage, locale } = useIntl();
+  const labelWidth = locale === 'en-US' ? 220 : 120;
 
   const { data, loading } = useRequest(() => getInendsDetail({ uuid }), {
     ready: !!uuid,

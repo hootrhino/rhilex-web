@@ -6,7 +6,7 @@ import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { SheetType } from '@/utils/enum';
 import { flatten, omit } from '@/utils/redash';
 import { getName } from '@/utils/utils';
-import { getLocale, history, useIntl, useModel, useRequest } from '@umijs/max';
+import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import type { DeviceItem } from '..';
@@ -30,9 +30,9 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     getDetail: getPortDetail,
   } = useModel('usePort');
   const { product } = useModel('useSystem');
-  const { formatMessage } = useIntl();
+  const { formatMessage, locale } = useIntl();
 
-  const labelWidth = getLocale() === 'en-US' ? 150 : 100;
+  const labelWidth = locale === 'en-US' ? 150 : 100;
 
   const { data: detail, run: getDetail } = useRequest(
     (params: API.getDevicesDetailParams) => getDevicesDetail(params),

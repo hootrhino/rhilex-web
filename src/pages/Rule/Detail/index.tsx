@@ -4,7 +4,7 @@ import { getRulesDetail } from '@/services/rulex/guizeguanli';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
-import { getLocale, history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
+import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import type { DrawerProps } from 'antd';
 import { Drawer } from 'antd';
 
@@ -14,7 +14,7 @@ type DetailProps = DrawerProps & {
 
 const Detail = ({ uuid, ...props }: DetailProps) => {
   const { deviceId, inendId } = useParams();
-  const { formatMessage } = useIntl();
+  const { formatMessage, locale } = useIntl();
   const { setConfig: setSourceDetail } = useModel('useSource');
   const { setDeviceConfig } = useModel('useDevice');
 
@@ -92,7 +92,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     >
       <ProDescriptions
         columns={columns}
-        labelWidth={getLocale() === 'en-US' ? 120 : 80}
+        labelWidth={locale === 'en-US' ? 120 : 80}
         request={async () => {
           const res = await getRulesDetail({ uuid });
 

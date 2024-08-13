@@ -12,7 +12,7 @@ import {
 } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { getLocale, useIntl, useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Dropdown, message, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/interface';
 import type { MenuInfo } from 'rc-menu/lib/interface';
@@ -57,7 +57,7 @@ const DEFAULT_CONFIG = {
 };
 
 const CommunicationModule = () => {
-  const { formatMessage } = useIntl();
+  const { formatMessage, locale } = useIntl();
 
   const [config, setConfig] = useState<ModalConfig>(DEFAULT_CONFIG);
 
@@ -189,7 +189,7 @@ const CommunicationModule = () => {
     {
       title: formatMessage({ id: 'table.option' }),
       valueType: 'option',
-      width: getLocale() !== 'zh-CN' ? 160 : 140,
+      width: locale !== 'zh-CN' ? 160 : 140,
       render: (_, record) => [
         <a
           key="detail"

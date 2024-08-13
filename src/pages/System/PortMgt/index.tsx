@@ -10,7 +10,7 @@ import { isEmpty } from '@/utils/redash';
 import { ScanOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
-import { getLocale, useIntl, useModel, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Card, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
 import { parityEnum, typeOption } from './enum';
@@ -28,7 +28,7 @@ export type InterfaceItem = {
 
 const Interface = () => {
   const actionRef = useRef<ActionType>();
-  const { formatMessage } = useIntl();
+  const { formatMessage, locale } = useIntl();
   const { detailConfig, setDetailConfig, detail, getDetail } = useModel('usePort');
 
   const [openUpdateModal, setOpen] = useState<boolean>(false);
@@ -138,7 +138,7 @@ const Interface = () => {
           <Card styles={{ body: { padding: '16px 18px' } }}>
             <ProDescriptions
               columns={configColumns as EnhancedProDescriptionsItemProps[]}
-              labelWidth={getLocale() === 'en-US' ? 90 : 70}
+              labelWidth={locale === 'en-US' ? 90 : 70}
               dataSource={config}
             />
           </Card>
@@ -243,7 +243,7 @@ const Interface = () => {
         <ProDescriptions
           columns={columns as EnhancedProDescriptionsItemProps[]}
           dataSource={detail}
-          labelWidth={getLocale() === 'en-US' ? 180 : 80}
+          labelWidth={locale === 'en-US' ? 180 : 80}
         />
       </Modal>
     </ProCard>

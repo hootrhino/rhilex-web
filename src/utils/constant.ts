@@ -1,12 +1,10 @@
-// import { getIntl, getLocale } from "@umijs/max";
-
 // 默认登录路由
 export const LOGIN_PATH = '/login';
 
 // 登录页默认 title
 export const DEFAULT_TITLE = 'RHILEX';
 
-export const DEFAULT_SUBTITLE = '数据无边 万物有声';
+// export const DEFAULT_SUBTITLE = '数据无边 万物有声';
 
 // 官方文档地址
 export const DOC_URL = 'http://www.hootrhino.com/';
