@@ -9,6 +9,7 @@ import DataRepository from './zh-CN/DataRepository';
 import device from './zh-CN/device';
 import extend from './zh-CN/extend';
 import inend from './zh-CN/inend';
+import login from './zh-CN/login';
 import notification from './zh-CN/notification';
 import outend from './zh-CN/outend';
 import plugin from './zh-CN/plugin';
@@ -42,10 +43,7 @@ export default {
   'table.index': '序号',
   'table.desc': '备注',
   'table.option': '操作',
-  /**
-   * login
-   */
-  'login.title': '登录页',
+
   /**
    * page
    */
@@ -124,4 +122,5 @@ export default {
   ...inend,
   ...DataRepository,
   ...com,
+  ...login,
 };

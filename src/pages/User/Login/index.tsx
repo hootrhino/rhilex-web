@@ -3,18 +3,19 @@ import { message, modal } from '@/components/PopupHack';
 import { getDatacenterSecret } from '@/services/rulex/shujuzhongxin';
 import { postLogin } from '@/services/rulex/yonghuguanli';
 import { DEFAULT_TITLE } from '@/utils/constant';
+import { pick } from '@/utils/redash';
 import type { ProFormInstance, Settings as LayoutSettings } from '@ant-design/pro-components';
-import { DefaultFooter, LoginForm, ProFormText } from '@ant-design/pro-components';
+import { DefaultFooter, LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { Helmet, history, useIntl, useModel } from '@umijs/max';
-import { Rule } from 'antd/es/form';
-import type { ValidateStatus } from 'antd/es/form/FormItem';
 
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
+import UserAgreementModal from './AgreementModal';
 
 export type CurrentUser = {
   username: string;
   password: string;
+  agreement: string[];
 };
 
 const defaultSettings = {
@@ -49,10 +50,7 @@ const Login: React.FC = () => {
   const { product } = useModel('useSystem');
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
-  const [validateStatus, setValidateStatus] = useState<{
-    username: ValidateStatus;
-    password: ValidateStatus;
-  }>({ username: '', password: '' });
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleOnSecret = async () => {
     const { data } = await getDatacenterSecret();
@@ -60,8 +58,11 @@ const Login: React.FC = () => {
   };
 
   const handleOnFinish = async (values: CurrentUser) => {
+    console.log(values);
     try {
-      const { data } = await postLogin(values);
+      const params = pick(values, ['username', 'password']);
+
+      const { data } = await postLogin(params);
       flushSync(() =>
         setInitialState({
           currentUser: formRef.current?.getFieldsValue(),
@@ -93,12 +94,13 @@ const Login: React.FC = () => {
             contentStyle={{
               minWidth: 280,
               maxWidth: '75vw',
+              position: 'relative',
             }}
             title={<img alt="logo" src={loginIcon} style={{ width: 160 }} />}
             subTitle={
               <div className="text-[14px] text-[rgba(0, 0, 0, 0.65)] mt-[12px] mb-[40px]">
-                <span className="pr-[14px]">数据无边</span>
-                <span>万物有声</span>
+                <span className="pr-[14px]">{formatMessage({ id: 'login.slogan1' })}</span>
+                <span>{formatMessage({ id: 'login.slogan2' })}</span>
               </div>
             }
             onFinish={handleOnFinish}
@@ -111,22 +113,10 @@ const Login: React.FC = () => {
                 }
                 fieldProps={{
                   size: 'large',
-                  variant: 'filled',
                 }}
-                hasFeedback
-                validateStatus={validateStatus.username}
                 placeholder={formatMessage({ id: 'form.placeholder.username' })}
                 rules={[
-                  {
-                    validator: (_rule: Rule, value: string) => {
-                      if (value) {
-                        setValidateStatus({ ...validateStatus, username: '' });
-                      } else {
-                        setValidateStatus({ ...validateStatus, username: 'error' });
-                      }
-                      return Promise.resolve();
-                    },
-                  },
+                  { required: true, message: formatMessage({ id: 'form.placeholder.username' }) },
                 ]}
               />
               <ProFormText.Password
@@ -136,27 +126,42 @@ const Login: React.FC = () => {
                 }
                 fieldProps={{
                   size: 'large',
-                  variant: 'filled',
                 }}
-                hasFeedback
-                validateStatus={validateStatus.password}
                 placeholder={formatMessage({ id: 'form.placeholder.password' })}
                 rules={[
+                  { required: true, message: formatMessage({ id: 'form.placeholder.password' }) },
+                ]}
+              />
+              <ProFormCheckbox.Group
+                name="agreement"
+                label=""
+                options={[
                   {
-                    validator: (_rule: Rule, value: string) => {
-                      if (value) {
-                        setValidateStatus({ ...validateStatus, password: '' });
-                      } else {
-                        setValidateStatus({ ...validateStatus, password: 'error' });
-                      }
-                      return Promise.resolve();
-                    },
+                    label: (
+                      <>
+                        <span className="text-[rgba(0,0,0,0.7)]">
+                          {formatMessage({ id: 'login.form.label.agreement' })}
+                        </span>
+                        <a
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setOpen(true);
+                          }}
+                        >
+                          {formatMessage({ id: 'login.form.label.agreement.user' })}
+                        </a>
+                      </>
+                    ),
+                    value: 'true',
                   },
+                ]}
+                rules={[
+                  { required: true, message: formatMessage({ id: 'login.form.rules.agreement' }) },
                 ]}
               />
             </>
             <a
-              className="float-right mb-6"
+              className="absolute right-0 bottom-[-30px]"
               onClick={() => {
                 modal.info({
                   title: formatMessage({ id: 'modal.title.forget' }),
@@ -173,6 +178,7 @@ const Login: React.FC = () => {
         copyright={`2023-${new Date().getFullYear()} RHILEX Technologies Inc. All rights reserved.`}
         className="bg-[#f0f2f5]"
       />
+      <UserAgreementModal open={open} onCancel={() => setOpen(false)} />
     </div>
   );
 };

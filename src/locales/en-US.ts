@@ -9,6 +9,7 @@ import DataRepository from './en-US/DataRepository';
 import device from './en-US/device';
 import extend from './en-US/extend';
 import inend from './en-US/inend';
+import login from './en-US/login';
 import notification from './en-US/notification';
 import outend from './en-US/outend';
 import plugin from './en-US/plugin';
@@ -42,10 +43,6 @@ export default {
   'table.index': 'NO.',
   'table.desc': 'Description',
   'table.option': 'Action',
-  /**
-   * login
-   */
-  'login.title': 'Login Page',
   /**
    * page
    */
@@ -126,4 +123,5 @@ export default {
   ...inend,
   ...DataRepository,
   ...com,
+  ...login,
 };
