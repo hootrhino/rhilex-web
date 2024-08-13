@@ -7,13 +7,13 @@ import { useRef, useState } from 'react';
 import { defaultConfig } from '..';
 import { PluginName, PluginUUID } from '../enum';
 import type { PluginConfig, PluginParams } from '../typings';
-import ClientList from './clientList';
-import ModbusCRC from './crc';
-import Ngrok from './ngrok';
-import Ping from './ping';
-import Scan from './scan';
-import TelemetryProtocol from './tel';
-import Terminal from './terminal';
+import ClientList from './ClientList';
+import ModbusCRC from './CRC';
+import Ngrok from './Ngrok';
+import Ping from './Ping';
+import Scan from './Scan';
+import TelemetryProtocol from './Tel';
+import Terminal from './Terminal';
 
 type DetailProps = {
   detailConfig: PluginConfig;
