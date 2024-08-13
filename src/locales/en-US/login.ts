@@ -6,7 +6,7 @@ export default {
   'login.slogan1': 'Data Unbounded',
   'login.slogan2': 'All Things Vocalized',
   'login.form.rules.agreement': 'Please read and agree to our User Agreement',
-  'login.form.label.agreement': 'I have read and agree to the RHILEX',
+  'login.form.label.agreement': 'I have read and agree to the RHILEX ',
   'login.form.label.agreement.user': 'User Agreement',
 
   /**

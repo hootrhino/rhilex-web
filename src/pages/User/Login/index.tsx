@@ -6,7 +6,7 @@ import { DEFAULT_TITLE } from '@/utils/constant';
 import { pick } from '@/utils/redash';
 import type { ProFormInstance, Settings as LayoutSettings } from '@ant-design/pro-components';
 import { DefaultFooter, LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
-import { Helmet, history, useIntl, useModel } from '@umijs/max';
+import { Helmet, history, SelectLang, useIntl, useModel } from '@umijs/max';
 
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
@@ -80,7 +80,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-[100vh] overflow-auto bg-[#f0f2f5] bg-no-repeat bg-cover bg-[url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')]">
+    <div className="relative flex flex-col h-[100vh] overflow-auto bg-[#f0f2f5] bg-no-repeat bg-cover bg-[url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')]">
       <Helmet>
         <title>
           {formatMessage({ id: 'login.title' })} - {DEFAULT_TITLE}
@@ -92,7 +92,8 @@ const Login: React.FC = () => {
             formRef={formRef}
             requiredMark={false}
             contentStyle={{
-              minWidth: 280,
+              width: 375,
+              // minWidth: 280,
               maxWidth: '75vw',
               position: 'relative',
             }}
@@ -179,6 +180,7 @@ const Login: React.FC = () => {
         className="bg-[#f0f2f5]"
       />
       <UserAgreementModal open={open} onCancel={() => setOpen(false)} />
+      <SelectLang className="absolute right-[16px] p-[12px] rounded-md bg-transparent hover:bg-[rgba(0,0,0,0.06)]" />
     </div>
   );
 };

@@ -6,7 +6,7 @@ export default {
   'login.slogan1': '數據無邊',
   'login.slogan2': '萬物有聲',
   'login.form.rules.agreement': '請閱讀並同意我們的用戶協議',
-  'login.form.label.agreement': '我已閱讀並同意 RHILEX',
+  'login.form.label.agreement': '我已閱讀並同意 RHILEX ',
   'login.form.label.agreement.user': '用戶協議',
 
   /**
