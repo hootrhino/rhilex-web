@@ -67,17 +67,15 @@ const TelemetryProtocol = () => {
           {item?.title && (
             <h2 className="text-[18px] mt-[24px]">{formatMessage({ id: item?.title })}</h2>
           )}
-          <p>
-            {item?.items && item?.items?.length > 0 ? (
-              <ol>
-                {item?.items.map((i) => (
-                  <li key={`tel-item-${Math.random()}`}>{formatMessage({ id: i })}</li>
-                ))}
-              </ol>
-            ) : (
-              formatMessage({ id: item?.desc })
-            )}
-          </p>
+          {item?.items && item?.items?.length > 0 ? (
+            <ol>
+              {item?.items.map((i) => (
+                <li key={`tel-item-${Math.random()}`}>{formatMessage({ id: i })}</li>
+              ))}
+            </ol>
+          ) : (
+            <p>{formatMessage({ id: item?.desc })}</p>
+          )}
         </div>
       ))}
       <p className="mt-[48px] font-bold">{formatMessage({ id: 'plugin.tel.extra1' })}</p>

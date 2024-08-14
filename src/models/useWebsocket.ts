@@ -1,25 +1,19 @@
-import { ensureArrayLength } from '@/utils/utils';
-import { useLocalStorageState, useWebSocket } from 'ahooks';
-import { useEffect, useMemo, useState } from 'react';
+import { useWebSocket } from 'ahooks';
+import { useEffect, useState } from 'react';
 
 const useWebsocket = () => {
   const [sockUrl, setUrl] = useState<string>('');
-  const [runningLogs, setLogs] = useLocalStorageState<string[]>('running-logs', {
-    defaultValue: [],
-  });
+  const [runningLogs, setLogs] = useState<string[]>([]);
+  const [latestLog, setLatestLog] = useState<string>('');
 
   const { sendMessage, readyState, latestMessage, disconnect, connect } = useWebSocket(sockUrl, {
     reconnectInterval: 1000,
+    onMessage(message) {
+      if (message?.data && message?.data !== 'Connected') {
+        setLatestLog(message.data);
+      }
+    },
   });
-
-  useMemo(() => {
-    if (latestMessage?.data && latestMessage?.data !== 'Connected') {
-      const newLogs = [...(runningLogs || [])];
-      newLogs.push(latestMessage?.data);
-      ensureArrayLength(newLogs);
-      setLogs(newLogs);
-    }
-  }, [latestMessage]);
 
   useEffect(() => {
     if (readyState === WebSocket.OPEN && sockUrl) {
@@ -30,7 +24,7 @@ const useWebsocket = () => {
       return () => clearTimeout(timer);
     }
     return;
-  }, [sendMessage, readyState, sockUrl]);
+  }, [readyState, sockUrl]);
 
   useEffect(() => {
     const { protocol } = window?.location;
@@ -48,6 +42,7 @@ const useWebsocket = () => {
     disconnect,
     runningLogs,
     setLogs,
+    latestLog,
   };
 };
 

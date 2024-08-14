@@ -1,9 +1,8 @@
 import { postPlugwareService } from '@/services/rulex/chajianguanli';
-import { omit } from '@/utils/redash';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
-import { Button, message, Modal, Space } from 'antd';
-import { useRef, useState } from 'react';
+import { Button, Modal, Space } from 'antd';
+import { useRef } from 'react';
 import { defaultConfig } from '..';
 import { PluginName, PluginUUID } from '../enum';
 import type { PluginConfig, PluginParams } from '../typings';
@@ -15,7 +14,7 @@ import Scan from './Scan';
 import TelemetryProtocol from './Telemetry';
 import Terminal from './Terminal';
 
-type DetailProps = {
+export type DetailProps = {
   detailConfig: PluginConfig;
   setDetailConfig: (value: PluginConfig) => void;
 };
@@ -23,45 +22,6 @@ type DetailProps = {
 const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
-
-  const [scanLog, setScanLog] = useState<string[]>([]);
-  const [pingLog, setPingLog] = useState<string[]>([]);
-  const [disabledStart, setDisabled] = useState<boolean>(true);
-
-  // 开始扫描
-  const { run: onStart, loading: startLoading } = useRequest(
-    (params: PluginParams) => postPlugwareService(params),
-    {
-      manual: true,
-    },
-  );
-
-  const handleOnStart = () => {
-    let formValues = formRef.current?.getFieldsValue();
-
-    formValues = {
-      ...omit(formValues, ['output']),
-    };
-    const params = {
-      uuid: PluginUUID.SCANNER,
-      name: PluginName.SCAN,
-      args: JSON.stringify(formValues),
-    };
-
-    onStart(params);
-  };
-
-  // 停止扫描
-  const { run: onStop, loading: stopLoading } = useRequest(
-    (params: PluginParams) => postPlugwareService(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        setDetailConfig({ ...detailConfig, open: true, name: PluginName.STOP, args: '' });
-        message.success(formatMessage({ id: 'message.success.stop' }));
-      },
-    },
-  );
 
   // 计算 CRC
   const { run: onCRC, loading: crcLoading } = useRequest(
@@ -93,8 +53,6 @@ const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
     }
 
     setDetailConfig(defaultConfig);
-    setScanLog([]);
-    setPingLog([]);
   };
 
   const renderFooter = (name: PluginName | undefined) => {
@@ -103,7 +61,6 @@ const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
     switch (name) {
       case PluginName.NGROKC:
       case PluginName.CLIENTS:
-      case PluginName.PING:
       case PluginName.START:
       case PluginName.TEL:
         footer = (
@@ -130,31 +87,6 @@ const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
           </Space>
         );
         break;
-      case PluginName.SCAN:
-      case PluginName.STOP:
-        footer = (
-          <Space>
-            <Button onClick={handleOnClose}>{formatMessage({ id: 'button.close' })}</Button>
-            <Button
-              ghost
-              key="stop"
-              type="primary"
-              loading={stopLoading}
-              onClick={() => onStop({ uuid: PluginUUID.SCANNER, name: PluginName.STOP, args: '' })}
-            >
-              {formatMessage({ id: 'plugin.button.scan.stop' })}
-            </Button>
-            <Button
-              key="start"
-              onClick={handleOnStart}
-              type="primary"
-              loading={startLoading}
-              disabled={disabledStart}
-            >
-              {formatMessage({ id: 'plugin.button.scan.start' })}
-            </Button>
-          </Space>
-        );
       default:
         break;
     }
@@ -162,34 +94,34 @@ const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
     return footer;
   };
 
-  return (
-    <Modal
-      width="50%"
-      destroyOnClose
-      maskClosable={false}
-      footer={() => renderFooter(detailConfig.name)}
-      onCancel={handleOnClose}
-      styles={{ body: { height: 630, overflow: 'auto' } }}
-      {...detailConfig}
-    >
-      {detailConfig.name === PluginName.NGROKC && <Ngrok />}
-      {detailConfig.name === PluginName.CLIENTS && <ClientList />}
-      {detailConfig.name === PluginName.START && <Terminal />}
-      {detailConfig.name === PluginName.PING && (
-        <Ping formRef={formRef} dataSource={pingLog} changeData={setPingLog} />
-      )}
-      {detailConfig.name === PluginName.CRC && <ModbusCRC formRef={formRef} />}
-      {detailConfig.name && [PluginName.SCAN, PluginName.STOP].includes(detailConfig.name) && (
-        <Scan
-          formRef={formRef}
-          dataSource={scanLog}
-          changeData={setScanLog}
-          changeDisabled={setDisabled}
-        />
-      )}
-      {detailConfig.name === PluginName.TEL && <TelemetryProtocol />}
-    </Modal>
-  );
+  const renderDetail = () => {
+    if (detailConfig.name && [PluginName.SCAN, PluginName.STOP].includes(detailConfig.name)) {
+      return <Scan detailConfig={detailConfig} setDetailConfig={setDetailConfig} />;
+    }
+    if (detailConfig.name === PluginName.PING) {
+      return <Ping detailConfig={detailConfig} setDetailConfig={setDetailConfig} />;
+    }
+
+    return (
+      <Modal
+        width="50%"
+        destroyOnClose
+        maskClosable={false}
+        footer={() => renderFooter(detailConfig.name)}
+        onCancel={handleOnClose}
+        styles={{ body: { height: 630, overflow: 'auto' } }}
+        {...detailConfig}
+      >
+        {detailConfig.name === PluginName.NGROKC && <Ngrok />}
+        {detailConfig.name === PluginName.CLIENTS && <ClientList />}
+        {detailConfig.name === PluginName.START && <Terminal />}
+        {detailConfig.name === PluginName.CRC && <ModbusCRC formRef={formRef} />}
+        {detailConfig.name === PluginName.TEL && <TelemetryProtocol />}
+      </Modal>
+    );
+  };
+
+  return renderDetail();
 };
 
 export default Detail;

@@ -1,35 +1,17 @@
-import { cn } from '@/utils/utils';
-import {
-  DeleteOutlined,
-  DownloadOutlined,
-  PauseCircleOutlined,
-  PlayCircleOutlined,
-} from '@ant-design/icons';
-import type { ProCardTabsProps } from '@ant-design/pro-components';
-import { ProCard } from '@ant-design/pro-components';
-import { useIntl, useModel } from '@umijs/max';
+import { useModel } from '@umijs/max';
 import { FitAddon } from '@xterm/addon-fit';
 import { Terminal } from '@xterm/xterm';
 import '@xterm/xterm/css/xterm.css';
-import { Button, Space } from 'antd';
 import dayjs from 'dayjs';
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 
 export type LogRef = {
   clearLog: () => void;
 };
 
-type cardProps = Pick<ProCardTabsProps, 'cardProps'>;
-
-type ProLogProps = Omit<cardProps, 'extra'> &
-  React.HTMLAttributes<HTMLDivElement> & {
-    dataSource: string[] | undefined;
-    topic?: string;
-    extra?: boolean;
-    hidePadding?: boolean;
-    headStyle?: React.CSSProperties;
-    handleOnReset?: () => void;
-  };
+type ProLogProps = React.HTMLAttributes<HTMLDivElement> & {
+  topic?: string;
+};
 
 // text color 30-37
 export const getAnsiColor = (level: string) => {
@@ -45,131 +27,69 @@ export const getAnsiColor = (level: string) => {
   return colorMap[level] || '\u001b[37m';
 };
 
-const ProLog = forwardRef(
-  (
-    {
-      dataSource,
-      extra = false,
-      topic = 'all',
-      hidePadding = false,
-      handleOnReset,
-      className,
-      title,
-      ...props
-    }: ProLogProps,
-    ref,
-  ) => {
-    const { disconnect, connect } = useModel('useWebsocket');
-    const logRef = useRef<any>(null);
-    const { formatMessage } = useIntl();
-    const [play, setPlay] = useState<boolean>(true);
+const ProLog = forwardRef(({ topic = 'all' }: ProLogProps, ref) => {
+  const { latestLog } = useModel('useWebsocket');
+  const logRef = useRef<any>(null);
 
-    const handleOutput = (inputValue: Record<string, any>) => {
-      const time = dayjs(inputValue.time).format('YYYY-MM-DD HH:mm:ss');
-      const level = inputValue.level;
-      const msg = inputValue.msg;
+  const handleOutput = (inputValue: Record<string, any>) => {
+    const time = dayjs(inputValue.time).format('YYYY-MM-DD HH:mm:ss');
+    const level = inputValue.level;
+    const msg = inputValue.msg;
 
-      const timeColor = '\u001b[38;2;56;158;13m';
-      const msgColor = '\u001b[37m';
-      const levelColor = getAnsiColor(level);
+    const timeColor = '\u001b[38;2;56;158;13m';
+    const msgColor = '\u001b[37m';
+    const levelColor = getAnsiColor(level);
 
-      return `${timeColor}${time} ${levelColor}[${level}] ${msgColor}${msg}\r\n`;
-    };
+    const output = `${timeColor}${time} ${levelColor}[${level}] ${msgColor}${msg}\r\n`;
+    logRef.current?.write(output);
+  };
 
-    // 清空编辑器
-    const handleOnClear = () => {
-      logRef.current.clear();
-    };
+  // 清空编辑器
+  const handleOnClear = () => {
+    logRef.current.clear();
+  };
 
-    useEffect(() => {
-      const term = new Terminal({
-        disableStdin: true, // 禁止输入
-        cursorStyle: 'underline',
-        cursorBlink: true,
-        cursorInactiveStyle: 'underline',
-      });
-      const fitAddon = new FitAddon();
-      term.loadAddon(fitAddon);
+  useMemo(() => {
+    if (latestLog) {
+      const parsedItem = latestLog && JSON.parse(latestLog);
 
-      const terminalContainer = document.getElementById('terminal');
-      if (terminalContainer) {
-        term.open(terminalContainer);
-        fitAddon.fit();
-      }
+      if (!parsedItem) return;
 
-      window.addEventListener('resize', () => fitAddon.fit());
-      logRef.current = term;
-    }, []);
-
-    useEffect(() => {
-      dataSource?.forEach((msg) => {
-        const parsedItem = msg && JSON.parse(msg);
-        const output = handleOutput(parsedItem);
-        logRef.current.write(output);
-      });
-    }, [dataSource, topic]);
-
-    useImperativeHandle(ref, () => ({
-      clearLog: handleOnClear,
-    }));
-
-    return (
-      <ProCard
-        className={cn(className, 'overflow-y-auto')}
-        title={<span className="text-[14px]">{title}</span>}
-        bodyStyle={hidePadding ? { paddingBlock: 0, paddingInline: 0 } : {}}
-        extra={
-          extra ? (
-            <Space>
-              <Button
-                key="download"
-                type="primary"
-                icon={<DownloadOutlined />}
-                size="small"
-                onClick={() => (window.location.href = '/api/v1/backup/runningLog')}
-              >
-                {formatMessage({ id: 'dashboard.button.download' })}
-              </Button>
-              <Button
-                ghost
-                key="stop"
-                type="primary"
-                icon={play ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
-                size="small"
-                onClick={() => {
-                  if (play) {
-                    disconnect();
-                  } else {
-                    connect();
-                  }
-                  setPlay(!play);
-                }}
-              >
-                {play
-                  ? formatMessage({ id: 'button.pause' })
-                  : formatMessage({ id: 'button.resume' })}
-              </Button>
-              <Button
-                danger
-                key="reload"
-                icon={<DeleteOutlined />}
-                size="small"
-                onClick={() => {
-                  handleOnReset?.();
-                  logRef.current.clear();
-                }}
-              >
-                {formatMessage({ id: 'dashboard.button.clear' })}
-              </Button>
-            </Space>
-          ) : null
+      if (topic === 'all') {
+        handleOutput(parsedItem);
+      } else {
+        if (parsedItem?.topic === topic) {
+          handleOutput(parsedItem);
         }
-        {...props}
-      >
-        <div id="terminal" ref={logRef} />
-      </ProCard>
-    );
-  },
-);
+      }
+    }
+  }, [latestLog, topic]);
+
+  useEffect(() => {
+    const term = new Terminal({
+      disableStdin: true, // 禁止输入
+      cursorStyle: 'underline',
+      cursorBlink: true,
+      cursorInactiveStyle: 'underline',
+    });
+    const fitAddon = new FitAddon();
+    term.loadAddon(fitAddon);
+
+    const terminalContainer = document.getElementById('terminal');
+    if (terminalContainer) {
+      term.open(terminalContainer);
+      fitAddon.fit();
+    }
+
+    window.addEventListener('resize', () => fitAddon.fit());
+    logRef.current = term;
+  }, []);
+
+  useImperativeHandle(ref, () => ({
+    clearLog: handleOnClear,
+  }));
+
+  return <div id="terminal" ref={logRef} />;
+});
 
 export default ProLog;

@@ -13,11 +13,11 @@ import {
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { FormItemType } from '@/utils/enum';
-import { handleNewMessage, validateFormItem } from '@/utils/utils';
+import { validateFormItem } from '@/utils/utils';
 import { BugOutlined, FileSyncOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { FooterToolbar, ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
-import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
+import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, Popconfirm, Space } from 'antd';
 import type { Rule } from 'antd/es/form';
 import { useEffect, useRef, useState } from 'react';
@@ -64,12 +64,9 @@ const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const debugFormRef = useRef<ProFormInstance>();
   const { ruleId, deviceId, inendId, groupId } = useParams();
-  const { latestMessage } = useModel('useWebsocket');
   const { formatMessage } = useIntl();
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [debugLog, setDebugLog] = useState<string[]>([]);
-  const [showLog, setShowLog] = useState<boolean>(false);
   const [ruleType, setType] = useState<string>();
   const [disabledTest, setDisabled] = useState<boolean>(false);
 
@@ -83,8 +80,6 @@ const UpdateForm = () => {
 
   // 重置测试数据
   const handleOnReset = () => {
-    setDebugLog([]);
-    setShowLog(false);
     setDisabled(false);
     debugFormRef.current?.resetFields();
     debugFormRef.current?.setFieldsValue({ testData: ruleType ? debugData[ruleType] : '' });
@@ -110,8 +105,9 @@ const UpdateForm = () => {
     }
 
     // 进行测试
-    const { code } = await postRulesTest(values);
-    setShowLog(code === 200);
+    await postRulesTest(values);
+    // const { code } = await postRulesTest(values);
+    // setShowLog(code === 200);
   };
 
   useRequest(() => getInendsDetail({ uuid: inendId || '' }), {
@@ -167,14 +163,6 @@ const UpdateForm = () => {
       return false;
     }
   };
-
-  useEffect(() => {
-    const topic = `rule/log/test/${ruleId}`;
-    const newData = handleNewMessage(debugLog, latestMessage?.data, topic);
-    if (showLog) {
-      setDebugLog(newData);
-    }
-  }, [latestMessage, ruleId, showLog]);
 
   useEffect(() => {
     formRef.current?.setFieldsValue(detail ? detail : initialValue);
@@ -333,13 +321,7 @@ const UpdateForm = () => {
               label={formatMessage({ id: 'ruleConfig.form.title.output' })}
               className="mb-0"
             >
-              <ProLog
-                hidePadding
-                headStyle={{ paddingBlock: 0 }}
-                topic={`rule/log/test/${ruleId}`}
-                dataSource={debugLog}
-                className="h-[290px]"
-              />
+              <ProLog topic={`rule/log/test/${ruleId}`} />
             </ProForm.Item>
           </ProForm>
         </ProCard>

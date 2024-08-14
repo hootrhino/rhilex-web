@@ -122,28 +122,6 @@ export const bool2String = (value: boolean | string | number) => {
   return value;
 };
 
-export const ensureArrayLength = (arr: string[], maxLength = 50) => {
-  if (arr.length > maxLength) {
-    // 当数组长度超出最大长度时，从数组头部移除元素
-    arr.shift(); // 移除数组的第一个元素
-  }
-};
-
-// log
-export const handleNewMessage = (source: string[] | undefined, target: string, topic: string) => {
-  const newData = [...(source || [])]; // Clone the existing array or create a new one if it's undefined
-
-  if (target && target !== 'Connected') {
-    const parsedNewMsg = target && JSON.parse(target);
-    if (parsedNewMsg?.topic === topic) {
-      newData.push(target);
-      ensureArrayLength(newData); // Ensure the array doesn't exceed the maximum length
-    }
-  }
-
-  return newData; // Return the updated array
-};
-
 /**
  * 校验表单字段
  * @param value 校验字段的值

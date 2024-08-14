@@ -3,23 +3,21 @@ import ProLog from '@/components/ProLog';
 import { postPlugwareService } from '@/services/rulex/chajianguanli';
 import { FormItemType } from '@/utils/enum';
 import { validateIPv4 } from '@/utils/regExp';
-import { handleNewMessage, validateFormItem } from '@/utils/utils';
-import type { ProFormProps } from '@ant-design/pro-components';
+import { validateFormItem } from '@/utils/utils';
 import { ProForm } from '@ant-design/pro-components';
-import { useIntl, useModel, useRequest } from '@umijs/max';
-import { Button, Input } from 'antd';
+import { useIntl, useRequest } from '@umijs/max';
+import type { ModalFuncProps } from 'antd';
+import { Button, Input, Modal } from 'antd';
 import { Rule } from 'antd/es/form';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import type { DetailProps } from '.';
+import { defaultConfig } from '..';
 import { PluginName, PluginUUID } from '../enum';
 import type { PluginParams } from '../typings';
 
-type PingProps = ProFormProps & {
-  dataSource: string[];
-  changeData: (value: string[]) => void;
-};
+type PingProps = ModalFuncProps & DetailProps;
 
-const Ping = ({ dataSource, changeData, ...props }: PingProps) => {
-  const { latestMessage } = useModel('useWebsocket');
+const Ping = ({ detailConfig, setDetailConfig }: PingProps) => {
   const { formatMessage } = useIntl();
   const logRef = useRef<LogRef>(null);
   const [disabled, setDisabled] = useState<boolean>(true);
@@ -32,62 +30,57 @@ const Ping = ({ dataSource, changeData, ...props }: PingProps) => {
     },
   );
 
-  const handleOnClearLog = () => {
-    changeData([]);
+  const handleOnClose = () => {
+    setDetailConfig(defaultConfig);
     logRef.current?.clearLog();
   };
 
-  useEffect(() => {
-    if (!disabled) {
-      const newPingData = handleNewMessage(
-        dataSource,
-        latestMessage?.data,
-        `plugin/ICMPSenderPing/${PluginUUID.ICMP}`,
-      );
-
-      changeData(newPingData);
-    } else {
-      handleOnClearLog();
-    }
-  }, [latestMessage]);
-
   return (
-    <ProForm submitter={false} {...props}>
-      <ProForm.Item
-        name="ip"
-        label={formatMessage({ id: 'plugin.form.title.ip' })}
-        rules={[
-          {
-            validator: (_rule: Rule, value: string) => {
-              setDisabled(!validateIPv4(value));
+    <Modal
+      width="50%"
+      destroyOnClose
+      maskClosable={false}
+      footer={() => (
+        <Button type="primary" onClick={handleOnClose}>
+          {formatMessage({ id: 'button.close' })}
+        </Button>
+      )}
+      onCancel={handleOnClose}
+      styles={{ body: { height: 630, overflow: 'auto' } }}
+      {...detailConfig}
+    >
+      <ProForm submitter={false}>
+        <ProForm.Item
+          name="ip"
+          label={formatMessage({ id: 'plugin.form.title.ip' })}
+          rules={[
+            {
+              validator: (_rule: Rule, value: string) => {
+                setDisabled(!validateIPv4(value));
 
-              return validateFormItem(value, FormItemType.IP);
+                return validateFormItem(value, FormItemType.IP);
+              },
             },
-          },
-        ]}
-      >
-        <Input.Search
-          placeholder={formatMessage({ id: 'plugin.form.placeholder.ip' })}
-          enterButton={
-            <Button type="primary" disabled={disabled} loading={loading}>
-              {formatMessage({ id: 'button.test' })}
-            </Button>
-          }
-          size="large"
-          onSearch={(value: string) =>
-            onSearch({ uuid: PluginUUID.ICMP, name: PluginName.PING, args: [value] })
-          }
-        />
-      </ProForm.Item>
-      <ProForm.Item name="output" label={formatMessage({ id: 'plugin.form.title.output' })}>
-        <ProLog
-          hidePadding
-          topic={`plugin/ICMPSenderPing/${PluginUUID.ICMP}`}
-          dataSource={dataSource}
-          ref={logRef}
-        />
-      </ProForm.Item>
-    </ProForm>
+          ]}
+        >
+          <Input.Search
+            placeholder={formatMessage({ id: 'plugin.form.placeholder.ip' })}
+            enterButton={
+              <Button type="primary" disabled={disabled} loading={loading}>
+                {formatMessage({ id: 'button.test' })}
+              </Button>
+            }
+            size="large"
+            onSearch={(value: string) =>
+              onSearch({ uuid: PluginUUID.ICMP, name: PluginName.PING, args: [value] })
+            }
+          />
+        </ProForm.Item>
+        <ProForm.Item name="output" label={formatMessage({ id: 'plugin.form.title.output' })}>
+          <ProLog topic={`plugin/ICMPSenderPing/${PluginUUID.ICMP}`} ref={logRef} />
+        </ProForm.Item>
+      </ProForm>
+    </Modal>
   );
 };
 

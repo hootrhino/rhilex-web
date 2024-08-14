@@ -1,22 +1,34 @@
 import { message } from '@/components/PopupHack';
+import type { LogRef } from '@/components/ProLog';
 import ProLog from '@/components/ProLog';
 import PageContainer from '@/components/ProPageContainer';
 import { getDevicesList } from '@/services/rulex/shebeiguanli';
 import { postOsResetInterMetric } from '@/services/rulex/xitongshuju';
 import { sum } from '@/utils/redash';
 import { cn, IconFont } from '@/utils/utils';
-import { ReloadOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  DownloadOutlined,
+  PauseCircleOutlined,
+  PlayCircleOutlined,
+  ReloadOutlined,
+} from '@ant-design/icons';
 import { ProCard, ProList } from '@ant-design/pro-components';
 import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Badge, Button, Col, Row, Space, Statistic } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const Dashboard = () => {
+  const logRef = useRef<LogRef>(null);
+
   const { dataSource, run } = useModel('useSystem');
-  const { runningLogs, setLogs } = useModel('useWebsocket');
+  const { disconnect, connect } = useModel('useWebsocket');
   const { setDeviceConfig } = useModel('useDevice');
+
   const { formatMessage } = useIntl();
+
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
+  const [play, setPlay] = useState<boolean>(true);
 
   const { inends, outends, rules, plugins, apps, devices } = dataSource?.sourceCount || {};
   const { inSuccess, inFailed, outSuccess, outFailed } = dataSource?.statistic || {};
@@ -131,7 +143,6 @@ const Dashboard = () => {
             expandable={{
               expandedRowKeys,
               onExpandedRowsChange: setExpandedRowKeys,
-              // rowExpandable: ({ description }) => !!description,
             }}
             metas={{
               title: {
@@ -217,13 +228,53 @@ const Dashboard = () => {
           </ProCard>
         </Col>
       </Row>
-      <ProLog
-        extra
-        className="mt-6"
-        title={formatMessage({ id: 'dashboard.title.log' })}
-        dataSource={runningLogs}
-        handleOnReset={() => setLogs([])}
-      />
+      <ProCard
+        className="overflow-y-auto mt-6"
+        title={<span className="text-[14px]">{formatMessage({ id: 'dashboard.title.log' })}</span>}
+        extra={
+          <Space>
+            <Button
+              key="download"
+              type="primary"
+              icon={<DownloadOutlined />}
+              size="small"
+              onClick={() => (window.location.href = '/api/v1/backup/runningLog')}
+            >
+              {formatMessage({ id: 'dashboard.button.download' })}
+            </Button>
+            <Button
+              ghost
+              key="stop"
+              type="primary"
+              icon={play ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+              size="small"
+              onClick={() => {
+                if (play) {
+                  disconnect();
+                } else {
+                  connect();
+                }
+                setPlay(!play);
+              }}
+            >
+              {play
+                ? formatMessage({ id: 'button.pause' })
+                : formatMessage({ id: 'button.resume' })}
+            </Button>
+            <Button
+              danger
+              key="reload"
+              icon={<DeleteOutlined />}
+              size="small"
+              onClick={() => logRef.current?.clearLog()}
+            >
+              {formatMessage({ id: 'dashboard.button.clear' })}
+            </Button>
+          </Space>
+        }
+      >
+        <ProLog ref={logRef} />
+      </ProCard>
     </PageContainer>
   );
 };

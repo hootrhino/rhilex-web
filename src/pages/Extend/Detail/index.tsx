@@ -2,9 +2,7 @@ import ProDescriptions from '@/components/ProDescriptions';
 import ProLog from '@/components/ProLog';
 import { getGoodsDetail } from '@/services/rulex/kuozhanxieyi';
 import { DetailModalType } from '@/utils/enum';
-import { handleNewMessage } from '@/utils/utils';
-import { useIntl, useModel, useRequest } from '@umijs/max';
-import { useLocalStorageState } from 'ahooks';
+import { useIntl, useRequest } from '@umijs/max';
 import type { DrawerProps } from 'antd';
 import { Button, Drawer, Modal } from 'antd';
 import { useEffect } from 'react';
@@ -22,10 +20,6 @@ type DetailProps = DrawerProps & {
 
 const Detail = ({ config, onClose, ...props }: DetailProps) => {
   const { uuid, type, open } = config;
-  const { latestMessage } = useModel('useWebsocket');
-  const [goodsConsole, setConsole] = useLocalStorageState<string[]>('goods-console', {
-    defaultValue: [],
-  });
   const { formatMessage } = useIntl();
 
   const { run: getDetail, data: detail } = useRequest(
@@ -40,11 +34,6 @@ const Detail = ({ config, onClose, ...props }: DetailProps) => {
       getDetail({ uuid });
     }
   }, [uuid]);
-
-  useEffect(() => {
-    const newData = handleNewMessage(goodsConsole, latestMessage?.data, `goods/console/${uuid}`);
-    setConsole(newData);
-  }, [latestMessage]);
 
   return type === DetailModalType.DETAIL ? (
     <Drawer
@@ -83,7 +72,7 @@ const Detail = ({ config, onClose, ...props }: DetailProps) => {
       onCancel={onClose}
       styles={{ body: { padding: 0 } }}
     >
-      <ProLog topic={`goods/console/${uuid}`} dataSource={goodsConsole} />
+      <ProLog topic={`goods/console/${uuid}`} />
     </Modal>
   );
 };
