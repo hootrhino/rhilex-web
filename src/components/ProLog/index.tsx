@@ -1,12 +1,15 @@
-import { useModel } from '@umijs/max';
 import { FitAddon } from '@xterm/addon-fit';
+import { WebglAddon } from '@xterm/addon-webgl';
 import { Terminal } from '@xterm/xterm';
 import '@xterm/xterm/css/xterm.css';
+import { useWebSocket } from 'ahooks';
 import dayjs from 'dayjs';
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 
 export type LogRef = {
   clearLog: () => void;
+  startLog: () => void;
+  stopLog: () => void;
 };
 
 type ProLogProps = React.HTMLAttributes<HTMLDivElement> & {
@@ -28,9 +31,14 @@ export const getAnsiColor = (level: string) => {
 };
 
 const ProLog = forwardRef(({ topic = 'all' }: ProLogProps, ref) => {
-  const { latestLog } = useModel('useWebsocket');
+  const [sockUrl, setUrl] = useState<string>('');
   const logRef = useRef<any>(null);
 
+  const { sendMessage, readyState, latestMessage, disconnect, connect } = useWebSocket(sockUrl, {
+    reconnectInterval: 1000,
+  });
+
+  // 输出日志
   const handleOutput = (inputValue: Record<string, any>) => {
     const time = dayjs(inputValue.time).format('YYYY-MM-DD HH:mm:ss');
     const level = inputValue.level;
@@ -49,9 +57,41 @@ const ProLog = forwardRef(({ topic = 'all' }: ProLogProps, ref) => {
     logRef.current.clear();
   };
 
+  // 开始连接 ws
+  const handleOnStart = () => {
+    connect();
+  };
+
+  // 结束连接 ws
+  const handleOnStop = () => {
+    disconnect();
+  };
+
+  // 初始化 Term
+  const initialTerm = () => {
+    const term = new Terminal({
+      disableStdin: true, // 禁止输入
+      cursorStyle: 'underline',
+      cursorBlink: true,
+      cursorInactiveStyle: 'underline',
+    });
+    const fitAddon = new FitAddon();
+    term.loadAddon(fitAddon);
+    term.loadAddon(new WebglAddon());
+
+    const terminalContainer = document.getElementById('terminal');
+    if (terminalContainer) {
+      term.open(terminalContainer);
+      fitAddon.fit();
+    }
+
+    window.addEventListener('resize', () => fitAddon.fit());
+    logRef.current = term;
+  };
+
   useMemo(() => {
-    if (latestLog) {
-      const parsedItem = latestLog && JSON.parse(latestLog);
+    if (latestMessage?.data && latestMessage?.data !== 'Connected') {
+      const parsedItem = latestMessage?.data && JSON.parse(latestMessage?.data);
 
       if (!parsedItem) return;
 
@@ -63,30 +103,37 @@ const ProLog = forwardRef(({ topic = 'all' }: ProLogProps, ref) => {
         }
       }
     }
-  }, [latestLog, topic]);
+  }, [latestMessage?.data, topic]);
 
   useEffect(() => {
-    const term = new Terminal({
-      disableStdin: true, // 禁止输入
-      cursorStyle: 'underline',
-      cursorBlink: true,
-      cursorInactiveStyle: 'underline',
-    });
-    const fitAddon = new FitAddon();
-    term.loadAddon(fitAddon);
+    if (readyState === WebSocket.OPEN && sockUrl) {
+      const timer = setTimeout(() => {
+        sendMessage?.('WsTerminal');
+      }, 600);
 
-    const terminalContainer = document.getElementById('terminal');
-    if (terminalContainer) {
-      term.open(terminalContainer);
-      fitAddon.fit();
+      return () => clearTimeout(timer);
+    }
+    return;
+  }, [readyState, sockUrl]);
+
+  useEffect(() => {
+    const { protocol } = window?.location;
+    const prefix = protocol === 'http:' ? 'ws' : 'wss';
+    if (window?.location?.host) {
+      setUrl(`${prefix}://${window?.location?.host}/${prefix}`);
     }
 
-    window.addEventListener('resize', () => fitAddon.fit());
-    logRef.current = term;
+    // setUrl(`ws://wangwenhai.vicp.io/ws`);
+  }, [window?.location]);
+
+  useEffect(() => {
+    initialTerm();
   }, []);
 
   useImperativeHandle(ref, () => ({
     clearLog: handleOnClear,
+    startLog: handleOnStart,
+    stopLog: handleOnStop,
   }));
 
   return <div id="terminal" ref={logRef} />;

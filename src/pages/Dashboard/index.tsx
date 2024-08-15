@@ -22,7 +22,6 @@ const Dashboard = () => {
   const logRef = useRef<LogRef>(null);
 
   const { dataSource, run } = useModel('useSystem');
-  const { disconnect, connect } = useModel('useWebsocket');
   const { setDeviceConfig } = useModel('useDevice');
 
   const { formatMessage } = useIntl();
@@ -250,9 +249,9 @@ const Dashboard = () => {
               size="small"
               onClick={() => {
                 if (play) {
-                  disconnect();
+                  logRef.current?.stopLog();
                 } else {
-                  connect();
+                  logRef.current?.startLog();
                 }
                 setPlay(!play);
               }}

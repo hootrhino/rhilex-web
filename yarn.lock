@@ -4503,6 +4503,11 @@
   resolved "https://registry.npmmirror.com/@xterm/addon-fit/-/addon-fit-0.9.0.tgz#29846f08782c51ad85b949528c45b84ad4ec45d7"
   integrity sha512-hDlPPbTVPYyvwXu/asW8HbJkI/2RMi0cMaJnBZYVeJB0SWP2NeESMCNr+I7CvBlyI0sAxpxOg8Wk4OMkxBz9WA==
 
+"@xterm/addon-webgl@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.npmmirror.com/@xterm/addon-webgl/-/addon-webgl-0.18.0.tgz#9e927cee10af971595fb2a72fd4c3bc2819f0096"
+  integrity sha512-xCnfMBTI+/HKPdRnSOHaJDRqEpq2Ugy8LEj9GiY4J3zJObo3joylIFaMvzBwbYRg8zLtkO0KQaStCeSfoaI2/w==
+
 "@xterm/xterm@^5.4.0":
   version "5.5.0"
   resolved "https://registry.npmmirror.com/@xterm/xterm/-/xterm-5.5.0.tgz#275fb8f6e14afa6e8a0c05d4ebc94523ff775396"
