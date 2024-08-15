@@ -12,6 +12,7 @@ export const dataToServers = [
   { target: 'mqtt', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'MQTT' }) },
   { target: 'udp', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'UDP' }) },
   { target: 'tcp', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'TCP' }) },
+  { target: 'uart', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'UART' }) },
   {
     target: 'tdEngine',
     detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'Tdengine' }),
