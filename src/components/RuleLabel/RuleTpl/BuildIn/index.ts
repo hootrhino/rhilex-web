@@ -1,5 +1,4 @@
 import { getIntl, getLocale } from '@umijs/max';
-import { TplDataType } from '../../RuleExample/enum';
 import { comTpl } from './comTpl';
 import { dataRepoTpl } from './dataRepoTpl';
 import { dataToTpl } from './dataToTpl';
@@ -162,24 +161,18 @@ export const kvTpl = [
     apply: `kv:Set(arg1, arg2)`,
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.kvSet.detail' }),
-    variables: [
-      { label: 'Key', name: 'arg1', value: '', type: TplDataType.STRING },
-      { label: 'Value', name: 'arg2', value: '', type: TplDataType.STRING },
-    ],
   },
   {
     label: 'kv:Get',
     apply: `local value = kv:Get(arg)`,
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.kvGet.detail' }),
-    variables: [{ label: 'Key', name: 'arg', value: '', type: TplDataType.STRING }],
   },
   {
     label: 'kv:Del',
     apply: `kv:Del(arg)`,
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.kvDel.detail' }),
-    variables: [{ label: 'Key', name: 'arg', value: '', type: TplDataType.STRING }],
   },
 ];
 
@@ -199,14 +192,6 @@ end`,
     apply: `local error = localdb:Query(arg)`,
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.execute.detail' }),
-    variables: [
-      {
-        label: intl.formatMessage({ id: 'component.tpl.query.arg' }),
-        name: 'arg',
-        value: '',
-        type: TplDataType.STRING,
-      },
-    ],
   },
 ];
 
@@ -217,28 +202,12 @@ export const jsonTpl = [
     apply: `local Value = json:T2J(arg)`,
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.jsonT2J.detail' }),
-    variables: [
-      {
-        label: intl.formatMessage({ id: 'component.tpl.jsonT2J.arg' }),
-        name: 'arg',
-        value: '',
-        type: TplDataType.STRING,
-      },
-    ],
   },
   {
     label: 'json:J2T',
     apply: `local Value = json:J2T(arg)`,
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.jsonJ2T.detail' }),
-    variables: [
-      {
-        label: intl.formatMessage({ id: 'component.tpl.jsonJ2T.arg' }),
-        name: 'arg',
-        value: '',
-        type: TplDataType.STRING,
-      },
-    ],
   },
 ];
 

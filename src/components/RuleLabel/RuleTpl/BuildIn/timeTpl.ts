@@ -3,7 +3,6 @@
  */
 import { toPascalCase } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
-// import { TplDataType } from '../../RuleExample/enum';
 const intl = getIntl(getLocale());
 
 const timeList = [
@@ -15,14 +14,6 @@ const timeList = [
   {
     target: 'Sleep',
     detail: intl.formatMessage({ id: 'component.tpl.sleep' }),
-    // variables: [
-    //   {
-    //     label: intl.formatMessage({ id: 'component.tpl.sleep.arg' }),
-    //     name: 'arg',
-    //     value: 1000,
-    //     type: TplDataType.NUMBER,
-    //   },
-    // ],
   },
 ];
 
@@ -30,13 +21,11 @@ export const timeTpl = timeList.map((time) => {
   const code =
     time.target === 'Sleep' ? `time:${time.target}(1000)` : `local ts = time:${time.target}()`;
   const label = `time:Time${toPascalCase(time.target)}`;
-  // const variables = time?.variables && time.variables.length > 0 ? time.variables : [];
 
   return {
     ...time,
     label,
     apply: code,
     type: 'function',
-    // variables,
   };
 });

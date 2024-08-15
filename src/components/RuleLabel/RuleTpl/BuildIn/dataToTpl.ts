@@ -56,7 +56,7 @@ const getUsageTpl = (server: string) => {
 // 函数基本示例
 export const dataToTpl = dataToServers?.map(({ target, ...rest }) => {
   const funcName = `data:To${toPascalCase(target)}`;
-  const code = `local err = ${funcName}(arg1, args)
+  const code = `local err = ${funcName}(uuid, args)
 if err ~= nil then
   Throw(err)
   return true, args
@@ -68,7 +68,6 @@ end`;
     apply: code,
     type: 'function',
     usage: getUsageTpl(target),
-    variables: getVariables(target),
   };
 });
 

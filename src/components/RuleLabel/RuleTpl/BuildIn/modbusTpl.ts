@@ -1,5 +1,4 @@
 import { getIntl, getLocale } from '@umijs/max';
-import { TplDataType } from '../../RuleExample/enum';
 
 /**
  * modbus 函数相关代码模板&示例
@@ -13,65 +12,13 @@ const modbusList = [
   { target: 'F16', detail: intl.formatMessage({ id: 'component.tpl.f16' }) },
 ];
 
-const getVariables = (target: string) => {
-  let err = '';
-  let variables = [
-    {
-      label: intl.formatMessage({ id: 'component.tpl.f15.arg1' }),
-      name: 'arg1',
-      value: '',
-      type: TplDataType.STRING,
-    },
-    { label: 'Modbus ID', name: 'arg2', value: 1, type: TplDataType.NUMBER },
-  ];
-
-  if (['F15', 'F16'].includes(target)) {
-    err = `local err = modbus:${target}(arg1, arg2, arg3, arg4, arg5)`;
-    variables = [
-      ...variables,
-      {
-        label: intl.formatMessage({ id: 'component.tpl.f15.arg3' }),
-        name: 'arg3',
-        value: 0,
-        type: TplDataType.NUMBER,
-      },
-      {
-        label: intl.formatMessage({ id: 'component.tpl.f15.arg4' }),
-        name: 'arg4',
-        value: 1,
-        type: TplDataType.NUMBER,
-      },
-      {
-        label: intl.formatMessage({ id: 'component.tpl.f15.arg5' }),
-        name: 'arg5',
-        value: '',
-        type: TplDataType.STRING,
-      },
-    ];
-  } else {
-    err = `local err = modbus:${target}(arg1, arg2, arg3, arg4)`;
-    variables = [
-      ...variables,
-      {
-        label: intl.formatMessage({ id: 'component.tpl.f15.arg2' }),
-        name: 'arg3',
-        value: 0,
-        type: TplDataType.NUMBER,
-      },
-      {
-        label: intl.formatMessage({ id: 'component.tpl.f15.arg5' }),
-        name: 'arg4',
-        value: '00',
-        type: TplDataType.STRING,
-      },
-    ];
-  }
-
-  return { err, variables };
-};
-
 export const modbusTpl = modbusList?.map((modbus) => {
-  const { err, variables } = getVariables(modbus.target);
+  let err = '';
+  if (['F15', 'F16'].includes(modbus.target)) {
+    err = `local err = modbus:${modbus.target}(arg1, arg2, arg3, arg4, arg5)`;
+  } else {
+    err = `local err = modbus:${modbus.target}(arg1, arg2, arg3, arg4)`;
+  }
 
   const code = `${err}
 if err ~= nil then
@@ -83,6 +30,5 @@ end`;
     label: `modbus:${modbus.target}`,
     apply: code,
     type: 'function',
-    variables,
   };
 });

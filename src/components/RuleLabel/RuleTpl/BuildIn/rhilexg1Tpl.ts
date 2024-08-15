@@ -1,5 +1,4 @@
 import { getIntl, getLocale } from '@umijs/max';
-import { TplDataType } from '../../RuleExample/enum';
 
 /**
  * rhilexg1 函数相关代码模板&示例
@@ -48,13 +47,5 @@ end`;
     label: `rhilexg1:${rhilexg1.target}`,
     apply: code,
     type: 'function',
-    variables: [
-      {
-        label: intl.formatMessage({ id: 'component.tpl.rhilexg1.arg' }),
-        name: 'arg',
-        value: 0,
-        type: TplDataType.NUMBER,
-      },
-    ],
   };
 });
