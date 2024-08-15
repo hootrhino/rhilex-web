@@ -155,7 +155,7 @@ export const configColumns = {
   [OutendType.TCP_TRANSPORT]: [
     ...pingConfig,
     ...timeoutConfig(),
-    ...dataModeConfig,
+    //TODO 暂时隐藏 ...dataModeConfig,
     ...hostPortConfig,
   ],
   [OutendType.TDENGINE]: [

@@ -21,7 +21,7 @@ export const defaultConfig = {
     pingPacket: 'rhilex',
   },
   [OutendType.TCP_TRANSPORT]: {
-    dataMode: DataMode.RAW_STRING,
+    // dataMode: DataMode.RAW_STRING,
     allowPing: false,
     pingPacket: 'rhilex',
     port: 6005,
