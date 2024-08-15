@@ -7,7 +7,6 @@ import {
   PLCModel,
   ReadFormat,
   SNMPVersion,
-  TencentMode,
   Transport,
 } from '../enum';
 
@@ -163,11 +162,12 @@ export const defaultConfig = {
       vendorId: 2580,
     },
   },
-  [DeviceType.TENCENT_IOTHUB_GATEWAY]: {
-    tencentConfig: {
-      mode: TencentMode.GATEWAY,
-    },
-  },
+  // TODO 暂无需求，先隐藏
+  // [DeviceType.TENCENT_IOTHUB_GATEWAY]: {
+  //   tencentConfig: {
+  //     mode: TencentMode.GATEWAY,
+  //   },
+  // },
   [DeviceType.GENERIC_UART_RW]: {
     commonConfig: {
       autoRequest: 'true',

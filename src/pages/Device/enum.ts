@@ -19,7 +19,7 @@ export enum DeviceType {
   GENERIC_SNMP = 'GENERIC_SNMP',
   GENERIC_BACNET_IP = 'GENERIC_BACNET_IP',
   BACNET_ROUTER_GW = 'BACNET_ROUTER_GW',
-  TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
+  // TODO TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
   // TODO SMART_HOME_CONTROLLER = 'SMART_HOME_CONTROLLER', 暂无需求，先隐藏
 }
 
@@ -35,7 +35,7 @@ const baseTypeOption = {
   // TODO [DeviceType.GENERIC_CAMERA]: intl.formatMessage({ id: 'device.type.camera' }), 暂无需求，先隐藏
   [DeviceType.GENERIC_BACNET_IP]: intl.formatMessage({ id: 'device.type.bacnet.ip' }),
   [DeviceType.BACNET_ROUTER_GW]: intl.formatMessage({ id: 'device.type.bacnet.router' }),
-  [DeviceType.TENCENT_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.tencent' }),
+  // TODO [DeviceType.TENCENT_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.tencent' }),
   // TODO [DeviceType.SMART_HOME_CONTROLLER]: intl.formatMessage({ id: 'device.type.smartHome' }),
 };
 

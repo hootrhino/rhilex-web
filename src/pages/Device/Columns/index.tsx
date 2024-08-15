@@ -18,7 +18,7 @@ import { GENERIC_UART_RW_CONFIG } from './genericUartRW';
 import { SIEMENS_PLC_CONFIG } from './siemensPLC';
 // TODO import { SMART_HOME_CONTROLLER_CONFIG } from './smartHomeController';
 import type { LabeledValue } from 'antd/es/select';
-import { TENCENT_IOTHUB_GATEWAY_CONFIG } from './tencentIothubGateway';
+// import { TENCENT_IOTHUB_GATEWAY_CONFIG } from './tencentIothubGateway';
 
 const intl = getIntl(getLocale());
 
@@ -161,7 +161,7 @@ export const typeConfigColumns = {
   [DeviceType.GENERIC_SNMP]: GENERIC_SNMP_CONFIG,
   [DeviceType.GENERIC_BACNET_IP]: GENERIC_BACNET_IP_CONFIG,
   [DeviceType.BACNET_ROUTER_GW]: BACNET_ROUTER_GW_CONFIG,
-  [DeviceType.TENCENT_IOTHUB_GATEWAY]: TENCENT_IOTHUB_GATEWAY_CONFIG,
+  // TODO [DeviceType.TENCENT_IOTHUB_GATEWAY]: TENCENT_IOTHUB_GATEWAY_CONFIG,
   [DeviceType.GENERIC_UART_RW]: GENERIC_UART_RW_CONFIG,
 };
 
