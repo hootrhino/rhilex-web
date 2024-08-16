@@ -46,7 +46,7 @@ const defaultUploadData = {
   slaverId: 1,
   address: 0,
   quantity: 2,
-  type: 'FLOAT',
+  type: 'FLOAT32',
   order: 'DCBA',
   weight: 1,
 };
@@ -233,6 +233,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
             disabled={record?.function === 1}
             fieldProps={{
               allowClear: false,
+              popupClassName: 'data-type-cascader',
               placeholder: formatMessage({ id: 'device.form.placeholder.dataType' }),
               onChange: (value: any) => {
                 const dataType = value?.[0];

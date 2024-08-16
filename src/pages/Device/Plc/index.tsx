@@ -22,7 +22,7 @@ import type { DataSheetItem, Point, removeParams } from '../DataSheet/typings';
 const defaultPlcConfig = {
   tag: '',
   alias: '',
-  type: ['FLOAT', 'DCBA'],
+  type: ['FLOAT32', 'DCBA'],
   siemensAddress: '',
   frequency: 1000,
   weight: 1,
@@ -33,7 +33,7 @@ const defaultUploadData = {
   address: 'DB4900.DBD1000',
   tag: 'R0',
   alias: '新砂轮直径（mm）',
-  type: 'FLOAT',
+  type: 'FLOAT32',
   order: 'ABCD',
   weight: 1,
   frequency: 1000,
@@ -129,13 +129,14 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
     {
       title: formatMessage({ id: 'device.form.title.dataType' }),
       dataIndex: 'type',
-      width: 150,
+      // width: 150,
       hideInTable: type === SheetType.DETAIL,
       renderFormItem: () => (
         <ProFormCascader
           noStyle
           fieldProps={{
             allowClear: false,
+            popupClassName: 'plc-data-type-cascader',
             placeholder: formatMessage({ id: 'device.form.placeholder.dataType' }),
             options: plcDataTypeOptions,
           }}
@@ -168,6 +169,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       title: formatMessage({ id: 'device.form.title.weight' }),
       dataIndex: 'weight',
       valueType: 'digit',
+      width: 100,
       hideInTable: type === SheetType.DETAIL,
       formItemProps: {
         rules: [
