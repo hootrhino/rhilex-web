@@ -1,13 +1,13 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
 import ProLog from '@/components/ProLog';
 import { postRulesTest } from '@/services/rulex/guizeguanli';
+import { debugData } from '@/templates';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProForm } from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
 import { Button } from 'antd';
 import { useRef } from 'react';
 import type { DSType } from '..';
-import { debugData } from '../DS';
 
 type DebugProps = ModalFormProps & {
   topic: string;

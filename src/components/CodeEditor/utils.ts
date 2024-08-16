@@ -4,11 +4,11 @@
 
 import type { InendItem } from '@/pages/Inend';
 import type { OutendItem } from '@/pages/Outend';
+import { buildInKeywords, buildInSnippet, builtInFuncs } from '@/templates/BuildIn';
 import { CompletionContext } from '@codemirror/autocomplete';
 import { Diagnostic, linter } from '@codemirror/lint';
 import { getIntl, getLocale } from '@umijs/max';
 import luaparse from 'luaparse';
-import { buildInKeywords, buildInSnippet, builtInFuncs } from '../RuleLabel/RuleTpl/BuildIn';
 
 // 关键字模糊搜索
 const fuzzySearch = (query: string) => {

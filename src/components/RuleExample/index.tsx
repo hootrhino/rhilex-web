@@ -1,17 +1,17 @@
 import { CodeOutlined, FileTextOutlined } from '@ant-design/icons';
 import { useIntl } from '@umijs/max';
-import { Button, Space } from 'antd';
+import { Button, Drawer, Space } from 'antd';
 import { useState } from 'react';
-import RuleExample from './RuleExample';
+import RuleList from './RuleList';
 
-type RuleLabelProps = {
+type RuleExampleProps = {
   name: string;
   handleOnFormatCode: () => void;
 };
 
-const RuleLabel = ({ name, handleOnFormatCode }: RuleLabelProps) => {
+// TODO 暂时隐藏自定义规则
+const RuleExample = ({ name, handleOnFormatCode }: RuleExampleProps) => {
   const { formatMessage } = useIntl();
-
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -25,10 +25,7 @@ const RuleLabel = ({ name, handleOnFormatCode }: RuleLabelProps) => {
             ghost
             size="small"
             icon={<FileTextOutlined />}
-            onClick={(e) => {
-              e.stopPropagation();
-              setOpen(true);
-            }}
+            onClick={() => setOpen(true)}
           >
             {formatMessage({ id: 'component.button.rule' })}
           </Button>
@@ -46,9 +43,19 @@ const RuleLabel = ({ name, handleOnFormatCode }: RuleLabelProps) => {
           </Button>
         </Space>
       </Space>
-      <RuleExample open={open} onClose={() => setOpen(false)} />
+      <Drawer
+        destroyOnClose
+        open={open}
+        maskClosable={false}
+        placement="right"
+        size="large"
+        title={formatMessage({ id: 'component.tab.example' })}
+        onClose={() => setOpen(false)}
+      >
+        <RuleList />
+      </Drawer>
     </>
   );
 };
 
-export default RuleLabel;
+export default RuleExample;

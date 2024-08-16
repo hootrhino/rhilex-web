@@ -18,7 +18,7 @@ type UsageModalProps = ModalFormProps & {
 const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
-  const [copyData, setCopyData] = useState<TplItem>({});
+  const [copyData, setCopyData] = useState<Pick<TplItem, 'label' | 'apply'>>({});
 
   const { data: resourceData } = useRequest(() => getRulesGetCanUsedResources());
 
@@ -63,7 +63,7 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
       variables: newVal,
       code: newCode,
     });
-    setCopyData({ ...data, apply: newCode });
+    setCopyData({ label: data.label, apply: newCode });
   }, [data]);
 
   return (
@@ -91,7 +91,7 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
           <Button key="cancel" onClick={() => changeConfig(defaultConfig)}>
             {formatMessage({ id: 'button.cancel' })}
           </Button>,
-          <CopyButton data={copyData} key="copy-item" />,
+          <CopyButton {...copyData} key="copy-item" />,
         ],
       }}
       {...props}

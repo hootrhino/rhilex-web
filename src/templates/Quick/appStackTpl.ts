@@ -1,5 +1,5 @@
 import { getIntl, getLocale } from '@umijs/max';
-import { TplDataType } from '../../RuleExample/enum';
+import { TplDataType } from '../../components/RuleExample/enum';
 
 const intl = getIntl(getLocale());
 

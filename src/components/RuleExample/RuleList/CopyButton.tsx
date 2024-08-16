@@ -6,11 +6,9 @@ import { useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import type { TplItem } from '../typings';
 
-type CopyButtonProps = {
-  data: TplItem;
-} & BaseButtonProps;
+type CopyButtonProps = Pick<TplItem, 'label' | 'apply'> & BaseButtonProps;
 
-const CopyButton = ({ data: { label, apply }, ...props }: CopyButtonProps) => {
+const CopyButton = ({ label, apply, ...props }: CopyButtonProps) => {
   const [copied, setCopied] = useState<string>('');
   const { formatMessage } = useIntl();
 

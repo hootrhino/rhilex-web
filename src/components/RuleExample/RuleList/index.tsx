@@ -1,10 +1,9 @@
+import { builtInLuaTpl, quickLuaTpl } from '@/templates';
 import { Product } from '@/utils/enum';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { useIntl, useModel } from '@umijs/max';
 import { Collapse, Divider, Space, theme } from 'antd';
 import { useState } from 'react';
-import { builtInLuaTpl } from '../../RuleTpl/BuildIn';
-import { quickLuaTpl } from '../../RuleTpl/Quick';
 import { ExampleType } from '../enum';
 import type { TplGroupItem, TplItem, ValConfig } from '../typings';
 import ExampleItemChild from './ExampleItemChild';
@@ -87,6 +86,7 @@ const RuleList = () => {
       style: panelStyle,
       children: (
         <Collapse
+          accordion
           bordered={false}
           items={getItemsChildren(type, tpl.children)}
           key={`collapse-${tpl.uuid}`}
@@ -120,6 +120,7 @@ const RuleList = () => {
           {type === ExampleType.QUICK && <Divider />}
           <div className="mb-[16px] font-medium text-[16px]">{title}</div>
           <Collapse
+            accordion
             bordered={false}
             expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
             style={{ background: token.colorBgContainer }}

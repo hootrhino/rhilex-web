@@ -1,4 +1,5 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
+import { pick } from '@/utils/redash';
 import { FormOutlined } from '@ant-design/icons';
 import { useIntl } from '@umijs/max';
 import { Button } from 'antd';
@@ -29,7 +30,7 @@ const ExampleItemChild = ({
           {isUsage ? data?.label : formatMessage({ id: 'component.title.exampleChild' })}
         </span>
         {hideUsageButton ? (
-          <CopyButton data={data} size="small" ghost />
+          <CopyButton ghost {...pick(data, ['label', 'apply'])} size="small" />
         ) : (
           <Button
             type="primary"

@@ -4,7 +4,7 @@
 
 import { toPascalCase } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
-import { TplDataSource, TplDataType } from '../../RuleExample/enum';
+import { TplDataSource, TplDataType } from '../../components/RuleExample/enum';
 
 const intl = getIntl(getLocale());
 

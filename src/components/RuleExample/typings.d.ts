@@ -1,3 +1,5 @@
+import TplDataType from './enum';
+
 type TplVariables = {
   name?: string;
   type?: TplDataType;

@@ -2,7 +2,7 @@ import CodeEditor, { Lang } from '@/components/CodeEditor';
 import { message, modal } from '@/components/PopupHack';
 import ProLog from '@/components/ProLog';
 import PageContainer from '@/components/ProPageContainer';
-import RuleLabel from '@/components/RuleLabel';
+import RuleExample from '@/components/RuleExample';
 import {
   getRulesDetail,
   postRulesCreate,
@@ -12,6 +12,7 @@ import {
 } from '@/services/rulex/guizeguanli';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
+import { debugData } from '@/templates';
 import { FormItemType } from '@/utils/enum';
 import { validateFormItem } from '@/utils/utils';
 import { BugOutlined, FileSyncOutlined } from '@ant-design/icons';
@@ -21,7 +22,6 @@ import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, Popconfirm, Space } from 'antd';
 import type { Rule } from 'antd/es/form';
 import { useEffect, useRef, useState } from 'react';
-import { debugData } from '../DS';
 
 type FormParams = {
   name: string;
@@ -231,7 +231,7 @@ const UpdateForm = () => {
             <ProForm.Item
               rootClassName="rule-label"
               label={
-                <RuleLabel
+                <RuleExample
                   name={formatMessage({ id: 'ruleConfig.form.title.actions' })}
                   handleOnFormatCode={handleOnFormatCode}
                 />

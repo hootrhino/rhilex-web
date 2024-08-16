@@ -8,14 +8,14 @@ export enum TplDataSource {
 export enum TplDataType {
   STRING = 'string',
   SELECT = 'select',
-  BOOLEAN = 'boolean',
-  OBJECT = 'object',
-  NUMBER = 'number',
+  // BOOLEAN = 'boolean',
+  // OBJECT = 'object',
+  // NUMBER = 'number',
 }
 
 // 模板类型
 export enum ExampleType {
   QUICK = 'quick',
-  CUSTOM = 'custom',
+  // CUSTOM = 'custom',
   BUILTIN = 'built-in',
 }

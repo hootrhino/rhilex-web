@@ -2,7 +2,7 @@ import CodeEditor, { Lang } from '@/components/CodeEditor';
 import { message } from '@/components/PopupHack';
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
 import PageContainer from '@/components/ProPageContainer';
-import RuleLabel from '@/components/RuleLabel';
+import RuleExample from '@/components/RuleExample';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import { postRulesFormatLua } from '@/services/rulex/guizeguanli';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rulex/qingliangyingyong';
@@ -57,7 +57,7 @@ const UpdateForm = () => {
                 name="luaSource"
                 rootClassName="rule-label"
                 label={
-                  <RuleLabel
+                  <RuleExample
                     name={formatMessage({ id: 'appStack.table.title.luaSource' })}
                     handleOnFormatCode={handleOnFormatCode}
                   />
