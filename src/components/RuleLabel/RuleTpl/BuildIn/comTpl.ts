@@ -1,14 +1,14 @@
+/**
+ * 通信模组相关代码模板&示例
+ */
+
 import { getIntl, getLocale } from '@umijs/max';
 import { TplDataSource, TplDataType } from '../../RuleExample/enum';
 
 const intl = getIntl(getLocale());
 
-/**
- * 通信模组相关代码模板&示例
- */
-
-const apply = `local result, err = rfcom:Ctrl('uuid', 'cmd')`;
-const usageApply = `Actions = {
+const code = `local result, err = rfcom:Ctrl('uuid', 'cmd')`;
+const usageCode = `Actions = {
   function(args)
     local result, err = rfcom:Ctrl('uuid', 'COMMAND')
     if err ~= nil then
@@ -33,12 +33,12 @@ const variables = [
 export const comTpl = [
   {
     label: 'rfcom:Ctrl',
-    apply,
+    apply: code,
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.rfcom.detail' }),
     usage: {
       label: intl.formatMessage({ id: 'component.tpl.usage' }),
-      apply: usageApply,
+      apply: usageCode,
       type: 'function',
       variables,
     },

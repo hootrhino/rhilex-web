@@ -1,6 +1,7 @@
 /**
  * dataTo 函数相关代码模板&示例
  */
+
 import { toPascalCase } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 import { TplDataSource, TplDataType } from '../../RuleExample/enum';

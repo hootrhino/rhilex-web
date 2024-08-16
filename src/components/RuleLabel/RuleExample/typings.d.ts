@@ -27,3 +27,8 @@ export type TplGroupItem = {
   name: string;
   children: TplItem[];
 };
+
+export type ValConfig = {
+  open: boolean;
+  data: TplItem;
+};

@@ -3,14 +3,20 @@ import { comTpl } from './comTpl';
 import { dataRepoTpl } from './dataRepoTpl';
 import { dataToTpl } from './dataToTpl';
 import { deviceTpl } from './deviceTpl';
+import { jsonTpl } from './jsonTpl';
+import { kvTpl } from './kvTpl';
+import { localdbTpl } from './localdbTpl';
 import { modbusTpl } from './modbusTpl';
 import { otherTpl } from './otherTpl';
 import { rhilexg1Tpl } from './rhilexg1Tpl';
+import { standardTpl } from './standardTpl';
 import { timeTpl } from './timeTpl';
 
 const intl = getIntl(getLocale());
 
-/** Lua 关键词 **/
+/**
+ * 编辑器代码提示 - Lua 关键词
+ */
 export const buildInKeywords = [
   'and',
   'break',
@@ -36,7 +42,9 @@ export const buildInKeywords = [
   'goto',
 ];
 
-/** Lua 内置方法函数 **/
+/**
+ * 编辑器代码提示 - Lua 内置方法函数
+ */
 export const builtInFuncs = [
   {
     label: 'then .. end',
@@ -127,91 +135,9 @@ export const builtInFuncs = [
   },
 ];
 
-// 标准库函数
-export const standardTpl = [
-  {
-    label: 'Debug',
-    apply: 'Debug(arg)',
-    type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.standard.debug' }),
-    usage: {
-      label: intl.formatMessage({ id: 'component.tpl.usage' }),
-      apply: `Actions = {
-  function(args)
-    Debug(args)
-    return true, args
-  end
-}`,
-      type: 'function',
-      detail: intl.formatMessage({ id: 'component.tpl.usage' }),
-    },
-  },
-  {
-    label: 'Throw',
-    apply: 'Throw(err)',
-    type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.standard.debug.usage2' }),
-  },
-];
-
-// kv 函数
-export const kvTpl = [
-  {
-    label: 'kv:Set',
-    apply: `kv:Set(arg1, arg2)`,
-    type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.kvSet.detail' }),
-  },
-  {
-    label: 'kv:Get',
-    apply: `local value = kv:Get(arg)`,
-    type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.kvGet.detail' }),
-  },
-  {
-    label: 'kv:Del',
-    apply: `kv:Del(arg)`,
-    type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.kvDel.detail' }),
-  },
-];
-
-// localdb 函数
-export const localdbTpl = [
-  {
-    label: 'localdb:Query',
-    apply: `local Table = localdb:Query('select * from db1')
-for i, v in ipairs(Table) do
-  Debug(err)
-end`,
-    type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.query.detail' }),
-  },
-  {
-    label: 'localdb:Execute',
-    apply: `local error = localdb:Query(arg)`,
-    type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.execute.detail' }),
-  },
-];
-
-// json 函数
-export const jsonTpl = [
-  {
-    label: 'json:T2J',
-    apply: `local Value = json:T2J(arg)`,
-    type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.jsonT2J.detail' }),
-  },
-  {
-    label: 'json:J2T',
-    apply: `local Value = json:J2T(arg)`,
-    type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.jsonJ2T.detail' }),
-  },
-];
-
-/** Lua 内置模板 */
+/**
+ * 编辑器代码提示 - Lua 内置模板
+ */
 export const buildInSnippet = [
   ...dataToTpl,
   ...timeTpl,
@@ -225,6 +151,9 @@ export const buildInSnippet = [
   ...otherTpl,
 ];
 
+/**
+ * 规则示例
+ */
 export const builtInLuaTpl = [
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Data' }),

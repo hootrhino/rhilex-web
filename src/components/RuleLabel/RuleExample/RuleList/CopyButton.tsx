@@ -14,17 +14,15 @@ const CopyButton = ({ data: { label, apply }, ...props }: CopyButtonProps) => {
   const [copied, setCopied] = useState<string>('');
   const { formatMessage } = useIntl();
 
+  const handleOnCopy = (text: string, result: boolean) => {
+    setCopied(result ? text : '');
+    setTimeout(() => {
+      setCopied('');
+    }, 1500);
+  };
+
   return (
-    <CopyToClipboard
-      key={label}
-      text={apply || ''}
-      onCopy={(text, result) => {
-        setCopied(result ? text : '');
-        setTimeout(() => {
-          setCopied('');
-        }, 1500);
-      }}
-    >
+    <CopyToClipboard key={label} text={apply || ''} onCopy={handleOnCopy}>
       <Button
         key="copy"
         type="primary"

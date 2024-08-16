@@ -1,8 +1,8 @@
-import { getIntl, getLocale } from '@umijs/max';
-
 /**
  * rhilexg1 函数相关代码模板&示例
  */
+
+import { getIntl, getLocale } from '@umijs/max';
 const intl = getIntl(getLocale());
 
 const rhilexg1List = [

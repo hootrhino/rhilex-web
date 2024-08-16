@@ -1,8 +1,8 @@
-import { getIntl, getLocale } from '@umijs/max';
-
 /**
  * modbus 函数相关代码模板&示例
  */
+
+import { getIntl, getLocale } from '@umijs/max';
 const intl = getIntl(getLocale());
 
 const modbusList = [

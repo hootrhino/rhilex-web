@@ -101,7 +101,6 @@ const useSystem = () => {
     dataSource,
     run,
     cancel,
-    data,
     resourceData,
     isWindows,
     product,

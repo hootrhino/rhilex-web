@@ -68,7 +68,6 @@ const UpdateForm = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [ruleType, setType] = useState<string>();
-  const [disabledTest, setDisabled] = useState<boolean>(false);
 
   const getBackUrl = () => {
     if (groupId && deviceId) {
@@ -80,7 +79,6 @@ const UpdateForm = () => {
 
   // 重置测试数据
   const handleOnReset = () => {
-    setDisabled(false);
     debugFormRef.current?.resetFields();
     debugFormRef.current?.setFieldsValue({ testData: ruleType ? debugData[ruleType] : '' });
   };
@@ -106,8 +104,6 @@ const UpdateForm = () => {
 
     // 进行测试
     await postRulesTest(values);
-    // const { code } = await postRulesTest(values);
-    // setShowLog(code === 200);
   };
 
   useRequest(() => getInendsDetail({ uuid: inendId || '' }), {
@@ -270,7 +266,6 @@ const UpdateForm = () => {
                 type="primary"
                 size="small"
                 icon={<BugOutlined />}
-                disabled={disabledTest}
                 onClick={() => {
                   const testData = debugFormRef.current?.getFieldValue('testData');
                   const testUuid = inendId || deviceId;
@@ -282,12 +277,13 @@ const UpdateForm = () => {
                     uuid: testUuid,
                     type: groupId && deviceId ? 'DEVICE' : 'INEND',
                   };
-
-                  modal.confirm({
-                    title: formatMessage({ id: 'ruleConfig.modal.title.test' }),
-                    okText: formatMessage({ id: 'button.ok' }),
-                    cancelText: formatMessage({ id: 'button.cancel' }),
-                    onOk: () => handleOnDebug(testParams),
+                  formRef.current?.validateFields().then(() => {
+                    modal.confirm({
+                      title: formatMessage({ id: 'ruleConfig.modal.title.test' }),
+                      okText: formatMessage({ id: 'button.ok' }),
+                      cancelText: formatMessage({ id: 'button.cancel' }),
+                      onOk: () => handleOnDebug(testParams),
+                    });
                   });
                 }}
               >
@@ -299,9 +295,6 @@ const UpdateForm = () => {
           <ProForm
             formRef={debugFormRef}
             submitter={false}
-            onValuesChange={(values) => {
-              setDisabled(!values?.testData);
-            }}
             initialValues={{ testData: ruleType ? debugData[ruleType] : '' }}
           >
             <ProForm.Item

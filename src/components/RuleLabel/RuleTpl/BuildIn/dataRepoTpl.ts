@@ -1,8 +1,8 @@
-import { getIntl, getLocale } from '@umijs/max';
-
 /**
  * 数据中心相关代码模板&示例
  */
+
+import { getIntl, getLocale } from '@umijs/max';
 const intl = getIntl(getLocale());
 
 const apply = `local err = rds:Save(uuid, schema)
