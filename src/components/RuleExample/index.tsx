@@ -9,7 +9,6 @@ type RuleExampleProps = {
   handleOnFormatCode: () => void;
 };
 
-// TODO 暂时隐藏自定义规则
 const RuleExample = ({ name, handleOnFormatCode }: RuleExampleProps) => {
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);

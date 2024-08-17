@@ -68,6 +68,7 @@ end`;
     label: funcName,
     apply: code,
     type: 'function',
+    key: `data-${target}`,
     usage: getUsageTpl(target),
   };
 });

@@ -23,9 +23,10 @@ if err ~= nil then
 end`;
 };
 
-export const deviceTpl = deviceList?.map((device) => ({
-  ...device,
-  label: `device:${device.target}`,
-  apply: getCode(device.target),
+export const deviceTpl = deviceList?.map(({target, ...rest}) => ({
+  ...rest,
+  key: `device-${target}`,
+  label: `device:${target}`,
+  apply: getCode(target),
   type: 'function',
 }));

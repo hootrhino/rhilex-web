@@ -12,12 +12,12 @@ const modbusList = [
   { target: 'F16', detail: intl.formatMessage({ id: 'component.tpl.f16' }) },
 ];
 
-export const modbusTpl = modbusList?.map((modbus) => {
+export const modbusTpl = modbusList?.map(({target, ...rest}) => {
   let err = '';
-  if (['F15', 'F16'].includes(modbus.target)) {
-    err = `local err = modbus:${modbus.target}(arg1, arg2, arg3, arg4, arg5)`;
+  if (['F15', 'F16'].includes(target)) {
+    err = `local err = modbus:${target}(arg1, arg2, arg3, arg4, arg5)`;
   } else {
-    err = `local err = modbus:${modbus.target}(arg1, arg2, arg3, arg4)`;
+    err = `local err = modbus:${target}(arg1, arg2, arg3, arg4)`;
   }
 
   const code = `${err}
@@ -26,8 +26,9 @@ if err ~= nil then
 end`;
 
   return {
-    ...modbus,
-    label: `modbus:${modbus.target}`,
+    ...rest,
+    key: `modbus-${target}`,
+    label: `modbus:${target}`,
     apply: code,
     type: 'function',
   };

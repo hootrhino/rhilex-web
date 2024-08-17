@@ -157,62 +157,77 @@ export const buildInSnippet = [
 export const builtInLuaTpl = [
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Data' }),
-    children: dataToTpl,
+    // children: dataToTpl,
     uuid: 'data',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Time' }),
-    children: timeTpl,
+    // children: timeTpl,
     uuid: 'time',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Rhilexg1' }),
-    children: rhilexg1Tpl,
+   // children: rhilexg1Tpl,
     uuid: 'rhilexg1',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Device' }),
-    children: deviceTpl,
+   // children: deviceTpl,
     uuid: 'device',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Modbus' }),
-    children: modbusTpl,
+   // children: modbusTpl,
     uuid: 'modbus',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'KV' }),
-    children: kvTpl,
+   // children: kvTpl,
     uuid: 'kv',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name.standard' }),
-    children: standardTpl,
+    // children: standardTpl,
     uuid: 'standard',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Localdb' }),
-    children: localdbTpl,
+    // children: localdbTpl,
     uuid: 'localdb',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'JSON' }),
-    children: jsonTpl,
+    // children: jsonTpl,
     uuid: 'json',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name.dataRepo' }),
-    children: dataRepoTpl,
-    uuid: 'dataCenter',
+    // children: dataRepoTpl,
+    uuid: 'dataRepo',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.rfcom.name' }),
-    children: comTpl,
+    // children: comTpl,
     uuid: 'com',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name.other' }),
-    children: otherTpl,
+    // children: otherTpl,
     uuid: 'other',
   },
 ];
+
+export const builtInChildren = {
+  data: dataToTpl,
+  time: timeTpl,
+  rhilexg1: rhilexg1Tpl,
+  device: deviceTpl,
+  modbus: modbusTpl,
+  kv: kvTpl,
+  standard: standardTpl,
+  localdb: localdbTpl,
+  json: jsonTpl,
+  dataRepo: dataRepoTpl,
+  com: comTpl,
+  other: otherTpl
+}

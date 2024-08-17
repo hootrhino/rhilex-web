@@ -32,6 +32,7 @@ const variables = [
 
 export const comTpl = [
   {
+    key: 'rfcom-ctrl',
     label: 'rfcom:Ctrl',
     apply: code,
     type: 'function',

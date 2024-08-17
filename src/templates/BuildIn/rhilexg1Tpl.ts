@@ -36,15 +36,16 @@ const rhilexg1List = [
   },
 ];
 
-export const rhilexg1Tpl = rhilexg1List?.map((rhilexg1) => {
-  const code = `local err = rhilexg1:${rhilexg1.target}(arg)
+export const rhilexg1Tpl = rhilexg1List?.map(({target, ...rest}) => {
+  const code = `local err = rhilexg1:${target}(arg)
 if err ~= nil then
     Debug(err)
 end`;
 
   return {
-    ...rhilexg1,
-    label: `rhilexg1:${rhilexg1.target}`,
+    ...rest,
+    key: `rhilexg1-${target}`,
+    label: `rhilexg1:${target}`,
     apply: code,
     type: 'function',
   };

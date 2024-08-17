@@ -18,13 +18,14 @@ const timeList = [
   },
 ];
 
-export const timeTpl = timeList.map((time) => {
+export const timeTpl = timeList.map(({target, ...rest}) => {
   const code =
-    time.target === 'Sleep' ? `time:${time.target}(1000)` : `local ts = time:${time.target}()`;
-  const label = `time:Time${toPascalCase(time.target)}`;
+    target === 'Sleep' ? `time:${target}(1000)` : `local ts = time:${target}()`;
+  const label = `time:Time${toPascalCase(target)}`;
 
   return {
-    ...time,
+    ...rest,
+    key: `time-${target}`,
     label,
     apply: code,
     type: 'function',

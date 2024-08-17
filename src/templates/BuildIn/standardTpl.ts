@@ -14,6 +14,7 @@ const debugCode = `Actions = {
 
 export const standardTpl = [
   {
+    key: 'standard-debug',
     label: 'Debug',
     apply: 'Debug(arg)',
     type: 'function',
@@ -26,6 +27,7 @@ export const standardTpl = [
     },
   },
   {
+    key: 'standard-throw',
     label: 'Throw',
     apply: 'Throw(err)',
     type: 'function',

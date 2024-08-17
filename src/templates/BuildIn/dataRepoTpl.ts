@@ -13,6 +13,7 @@ end`;
 
 export const dataRepoTpl = [
   {
+    key: 'rds-save',
     label: 'rds:Save',
     apply,
     type: 'function',

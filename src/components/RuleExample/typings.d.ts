@@ -17,6 +17,7 @@ type baseTplItem = {
   gid?: string;
   uuid?: string;
   variables?: TplVariables[];
+  [key: string]: any;
 };
 
 // 代码模板
@@ -27,7 +28,7 @@ export type TplItem = baseTplItem & {
 export type TplGroupItem = {
   uuid: string;
   name: string;
-  children: TplItem[];
+  // children: TplItem[];
 };
 
 export type ValConfig = {
