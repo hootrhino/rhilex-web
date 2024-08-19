@@ -1,8 +1,7 @@
 import { getIntl, getLocale } from '@umijs/max';
-import { En6400Tpl, RHILEXG1Tpl } from './appStackTpl';
-import { dataToQuickTpl } from './dataToTpl';
+import {appStackQuickTpl } from './appStackTpl';
 import { Product } from '@/utils/enum';
-import type { baseTplItem } from '@/components/RuleExample/typings';
+import { dataToQuickTpl } from '../BuildIn/dataToTpl';
 
 // 自定义快捷模板
 export const quickLuaTpl = [
@@ -12,17 +11,4 @@ export const quickLuaTpl = [
   },
 ];
 
-export const quickChildren = (product: Product) => {
-  let productTpl: baseTplItem[] = [];
-
-  if (product === Product.RHILEXG1) {
-    productTpl = [...RHILEXG1Tpl]
-  }
-  if (product === Product.EN6400) {
-    productTpl = [...En6400Tpl]
-  }
-
-  return {
-    'default_quick_group': [...dataToQuickTpl, ...productTpl]
-  }
-}
+export const quickChildren = (product: Product) => new Map([['default_quick_group', [...dataToQuickTpl, ...appStackQuickTpl(product)]]]);

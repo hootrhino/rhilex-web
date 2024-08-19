@@ -1,5 +1,5 @@
-import { builtInLuaTpl } from './BuildIn';
+import { builtInLuaTpl,builtInChildren } from './BuildIn';
 import { debugData } from './DataStructure';
-import { quickLuaTpl } from './Quick';
+import { quickLuaTpl, quickChildren } from './Quick';
 
-export { builtInLuaTpl, quickLuaTpl, debugData}
+export { builtInLuaTpl, builtInChildren, quickLuaTpl, quickChildren, debugData}

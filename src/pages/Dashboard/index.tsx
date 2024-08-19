@@ -2,7 +2,6 @@ import { message } from '@/components/PopupHack';
 import type { LogRef } from '@/components/ProLog';
 import ProLog from '@/components/ProLog';
 import PageContainer from '@/components/ProPageContainer';
-import { getDevicesList } from '@/services/rulex/shebeiguanli';
 import { postOsResetInterMetric } from '@/services/rulex/xitongshuju';
 import { sum } from '@/utils/redash';
 import { cn, IconFont } from '@/utils/utils';
@@ -22,7 +21,7 @@ const Dashboard = () => {
   const logRef = useRef<LogRef>(null);
 
   const { dataSource, run } = useModel('useSystem');
-  const { setDeviceConfig } = useModel('useDevice');
+  const { setDeviceConfig, allDeviceData } = useModel('useDevice');
 
   const { formatMessage } = useIntl();
 
@@ -97,8 +96,6 @@ const Dashboard = () => {
     },
   ];
 
-  const { data: deviceData } = useRequest(() => getDevicesList({ current: 1, size: 999 }));
-
   const { run: reset } = useRequest(() => postOsResetInterMetric(), {
     manual: true,
     onSuccess: () => {
@@ -138,7 +135,7 @@ const Dashboard = () => {
             headerTitle={
               <span className="text-[14px]">{formatMessage({ id: 'dashboard.title.device' })}</span>
             }
-            dataSource={deviceData?.records}
+            dataSource={allDeviceData?.records}
             expandable={{
               expandedRowKeys,
               onExpandedRowsChange: setExpandedRowKeys,

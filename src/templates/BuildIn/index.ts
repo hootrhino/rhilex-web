@@ -17,7 +17,7 @@ const intl = getIntl(getLocale());
 /**
  * 编辑器代码提示 - Lua 关键词
  */
-export const buildInKeywords = [
+export const buildInKeywords = new Map([['luaKeywords', [
   'and',
   'break',
   'do',
@@ -40,12 +40,12 @@ export const buildInKeywords = [
   'until',
   'while',
   'goto',
-];
+].map(item => ({label: item, type: 'keyword'}))]]);
 
 /**
  * 编辑器代码提示 - Lua 内置方法函数
  */
-export const builtInFuncs = [
+export const builtInFuncs = new Map([['luaBuiltFuncs', [
   {
     label: 'then .. end',
     apply: `then
@@ -133,12 +133,12 @@ export const builtInFuncs = [
     end`,
     type: 'snippet',
   },
-];
+]]])
 
 /**
  * 编辑器代码提示 - Lua 内置模板
  */
-export const buildInSnippet = [
+export const buildInSnippet = new Map([['luaSnappet', [
   ...dataToTpl,
   ...timeTpl,
   ...rhilexg1Tpl,
@@ -149,7 +149,7 @@ export const buildInSnippet = [
   ...localdbTpl,
   ...jsonTpl,
   ...otherTpl,
-];
+]]]);
 
 /**
  * 规则示例
@@ -157,77 +157,65 @@ export const buildInSnippet = [
 export const builtInLuaTpl = [
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Data' }),
-    // children: dataToTpl,
     uuid: 'data',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Time' }),
-    // children: timeTpl,
     uuid: 'time',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Rhilexg1' }),
-   // children: rhilexg1Tpl,
     uuid: 'rhilexg1',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Device' }),
-   // children: deviceTpl,
     uuid: 'device',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Modbus' }),
-   // children: modbusTpl,
     uuid: 'modbus',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'KV' }),
-   // children: kvTpl,
     uuid: 'kv',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name.standard' }),
-    // children: standardTpl,
     uuid: 'standard',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Localdb' }),
-    // children: localdbTpl,
     uuid: 'localdb',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'JSON' }),
-    // children: jsonTpl,
     uuid: 'json',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name.dataRepo' }),
-    // children: dataRepoTpl,
     uuid: 'dataRepo',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.rfcom.name' }),
-    // children: comTpl,
     uuid: 'com',
   },
   {
     name: intl.formatMessage({ id: 'component.tpl.name.other' }),
-    // children: otherTpl,
     uuid: 'other',
   },
 ];
 
-export const builtInChildren = {
-  data: dataToTpl,
-  time: timeTpl,
-  rhilexg1: rhilexg1Tpl,
-  device: deviceTpl,
-  modbus: modbusTpl,
-  kv: kvTpl,
-  standard: standardTpl,
-  localdb: localdbTpl,
-  json: jsonTpl,
-  dataRepo: dataRepoTpl,
-  com: comTpl,
-  other: otherTpl
-}
+export const builtInChildren = new Map([
+  ['data',dataToTpl],
+  ['time', timeTpl],
+  ['rhilexg1', rhilexg1Tpl],
+  ['device', deviceTpl],
+  ['modbus', modbusTpl],
+  ['kv', kvTpl],
+  ['standard', standardTpl],
+  ['localdb', localdbTpl],
+  ['json', jsonTpl],
+  ['dataRepo', dataRepoTpl],
+  ['com', comTpl],
+  ['other', otherTpl],
+]);

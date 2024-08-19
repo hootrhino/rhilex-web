@@ -7,7 +7,7 @@ import { darculaInit } from '@uiw/codemirror-theme-darcula';
 import { githubLightInit } from '@uiw/codemirror-theme-github';
 import type { ReactCodeMirrorProps } from '@uiw/react-codemirror';
 import CodeMirror, { basicSetup, keymap } from '@uiw/react-codemirror';
-import { useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 
 import {
   funcIcon,
@@ -17,7 +17,7 @@ import {
 } from '@/components/CodeEditor/images/autocomplete';
 import type { InendItem } from '@/pages/Inend';
 import type { OutendItem } from '@/pages/Outend';
-import { getDevicesList } from '@/services/rulex/shebeiguanli';
+import { useMemo } from 'react';
 import { autoCompletions, createDetailEl, createIconEl, luaLinter } from './utils';
 
 export enum Lang {
@@ -70,9 +70,38 @@ const basicSetupSetting = {
 };
 
 const CodeEditor = ({ lang, theme = Theme.DARK, ...props }: CodeEditorProps) => {
-  const { data: inends } = useRequest(() => getInendsList());
-  const { data: outends } = useRequest(() => getOutendsList());
-  const { data: devices } = useRequest(() => getDevicesList({ current: 1, size: 999 }));
+  const { formatMessage } = useIntl();
+  const { allDeviceData } = useModel('useDevice');
+  const { data: inendVariables } = useRequest(() => getInendsList(), {
+    formatResult: ({ data }: any) =>
+      data?.map((item: InendItem) => ({
+        label: `${item?.name} - ${item.uuid}`,
+        type: 'variable',
+        detail: formatMessage({ id: 'component.tpl.inend' }),
+        apply: item.uuid,
+      })),
+  });
+  const { data: outendVariables } = useRequest(() => getOutendsList(), {
+    formatResult: (res) =>
+      (res as any)?.data?.map((item: OutendItem) => ({
+        label: `${item?.name} - ${item.uuid}`,
+        type: 'variable',
+        detail: formatMessage({ id: 'component.tpl.outend' }),
+        apply: item.uuid,
+      })),
+  });
+
+  const deviceVariables = useMemo(
+    () =>
+      allDeviceData &&
+      allDeviceData?.records?.map((item: any) => ({
+        label: `${item?.name} - ${item.uuid}`,
+        type: 'variable',
+        detail: formatMessage({ id: 'component.tpl.device' }),
+        apply: item.uuid,
+      })),
+    [allDeviceData],
+  );
 
   const getEditorConfig = () => {
     if (lang !== Lang.LUA) return [];
@@ -81,12 +110,7 @@ const CodeEditor = ({ lang, theme = Theme.DARK, ...props }: CodeEditorProps) => 
       autocompletion({
         override: [
           (context) =>
-            autoCompletions(
-              context,
-              inends as InendItem[],
-              outends as OutendItem[],
-              devices?.records as any[],
-            ),
+            autoCompletions(context, inendVariables, outendVariables, deviceVariables as any),
         ],
         addToOptions: [
           {

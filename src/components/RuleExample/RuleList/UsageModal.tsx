@@ -1,7 +1,13 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
 import { getRulesGetCanUsedResources } from '@/services/rulex/guizeguanli';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
-import { ModalForm, ProForm, ProFormList, ProFormSelect } from '@ant-design/pro-components';
+import {
+  ModalForm,
+  ProForm,
+  ProFormList,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
 import { Button, Space } from 'antd';
 import { useEffect, useRef, useState } from 'react';
@@ -23,9 +29,9 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
   const { data: resourceData } = useRequest(() => getRulesGetCanUsedResources());
 
   const getTargetValue = (type = TplDataType.STRING, value: any) => {
-    // if (type === TplDataType.STRING) {
-    //   return `"${value}"`;
-    // }
+    if (type === TplDataType.STRING) {
+      return `"${value}"`;
+    }
     if (type === TplDataType.SELECT) {
       return value ? `"${value}"` : `""`;
     }
@@ -38,6 +44,11 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
     // }
 
     return `${value}`;
+  };
+
+  const handleOnCancel = () => {
+    formRef.current?.resetFields();
+    changeConfig(defaultConfig);
   };
 
   useEffect(() => {
@@ -64,14 +75,14 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
       code: newCode,
     });
     setCopyData({ label: data.label, apply: newCode });
-  }, [data]);
+  }, [data.variables]);
 
   return (
     <ModalForm
       formRef={formRef}
       title={formatMessage({ id: 'component.modal.title.settingVar' })}
       layout="horizontal"
-      modalProps={{ onCancel: () => changeConfig(defaultConfig), maskClosable: false }}
+      modalProps={{ onCancel: handleOnCancel, maskClosable: false }}
       onValuesChange={(changedValue) => {
         if (changedValue?.variables) {
           const newVariables = data.variables?.map((origItem, index) => {
@@ -88,7 +99,7 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
       }}
       submitter={{
         render: () => [
-          <Button key="cancel" onClick={() => changeConfig(defaultConfig)}>
+          <Button key="cancel" onClick={handleOnCancel}>
             {formatMessage({ id: 'button.cancel' })}
           </Button>,
           <CopyButton {...copyData} key="copy-item" />,
@@ -105,7 +116,8 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
         className="mb-[0] variable-list"
       >
         {({ key }) => {
-          const { label, dataSource } = formRef.current?.getFieldValue('variables')[key];
+          const { label, dataSource, type } = formRef.current?.getFieldValue('variables')[key];
+
           const isIncludes = Object.values(TplDataSource).includes(dataSource);
           const getOptions = () => {
             if (isIncludes) {
@@ -121,7 +133,9 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
             }
           };
 
-          return (
+          return type === TplDataType.STRING ? (
+            <ProFormText key={key} label={label} name="value" width="md" />
+          ) : (
             <ProFormSelect
               key={key}
               label={label}

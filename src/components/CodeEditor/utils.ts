@@ -2,69 +2,36 @@
  * lua 编辑器相关支持
  */
 
+import type { DeviceItem } from '@/pages/Device';
 import type { InendItem } from '@/pages/Inend';
 import type { OutendItem } from '@/pages/Outend';
 import { buildInKeywords, buildInSnippet, builtInFuncs } from '@/templates/BuildIn';
 import { CompletionContext } from '@codemirror/autocomplete';
 import { Diagnostic, linter } from '@codemirror/lint';
-import { getIntl, getLocale } from '@umijs/max';
 import luaparse from 'luaparse';
-
-// 关键字模糊搜索
-const fuzzySearch = (query: string) => {
-  return buildInKeywords.filter((word) => word.toLowerCase().includes(query.toLocaleLowerCase()));
-};
 
 // autocomplete 代码提示
 export const autoCompletions = (
   context: CompletionContext,
-  inends: InendItem[],
-  outends: OutendItem[],
-  devices: any[],
+  inendVariables: InendItem[],
+  outendVariables: OutendItem[],
+  deviceVariables: DeviceItem[],
 ) => {
   const word = context.matchBefore(/\w*/);
 
   if (!word || word.from === word.to || word.text.trim().length <= 0) return null;
-  const queryData = fuzzySearch(word.text);
-
-  // 内置 keyword
-  const buildInKeyword = queryData?.map((item) => ({ label: `${item}`, type: 'keyword' }));
-
-  // 南向资源 UUID
-  const inendsOptions = ((inends as any[]) || [])?.map((item: any) => ({
-    label: `${item?.name} - ${item.uuid}`,
-    type: 'variable',
-    detail: getIntl(getLocale()).formatMessage({ id: 'component.tpl.inend' }),
-    apply: item.uuid,
-  }));
-
-  // 北向资源 UUID
-  const outendsOptions = ((outends as any[]) || [])?.map((item: any) => ({
-    label: `${item?.name} - ${item.uuid}`,
-    type: 'variable',
-    detail: getIntl(getLocale()).formatMessage({ id: 'component.tpl.outend' }),
-    apply: item.uuid,
-  }));
-
-  // 设备接入 UUID
-  const deviceOptions = ((devices as any[]) || [])?.map((item: any) => ({
-    label: `${item?.name} - ${item.uuid}`,
-    type: 'variable',
-    detail: getIntl(getLocale()).formatMessage({ id: 'component.tpl.device' }),
-    apply: item.uuid,
-  }));
 
   return {
     from: word.from,
     options: [
-      ...buildInKeyword,
-      ...builtInFuncs,
-      ...inendsOptions,
-      ...outendsOptions,
-      ...deviceOptions,
-      ...buildInSnippet,
+      ...(buildInKeywords.get('luaKeywords') || []),
+      ...(builtInFuncs.get('luaBuiltFuncs') || []),
+      ...(buildInSnippet.get('luaSnappet') || []),
+      ...inendVariables,
+      ...outendVariables,
+      ...deviceVariables,
     ],
-  };
+  } as any;
 };
 
 // lint 错误提示

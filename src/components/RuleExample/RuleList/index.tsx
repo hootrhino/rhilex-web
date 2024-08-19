@@ -1,6 +1,4 @@
-import { builtInLuaTpl, quickLuaTpl } from '@/templates';
-import { builtInChildren } from '@/templates/BuildIn';
-import { quickChildren } from '@/templates/Quick';
+import { builtInChildren, builtInLuaTpl, quickChildren, quickLuaTpl } from '@/templates';
 import { useIntl, useModel } from '@umijs/max';
 import { Collapse, Divider, Space } from 'antd';
 import { useState } from 'react';
@@ -82,7 +80,11 @@ const RuleList = () => {
           accordion
           ghost
           activeKey={builtInActivekey}
-          items={getItems(ExampleType.BUILTIN, builtInLuaTpl, builtInChildren[builtInActivekey[0]])}
+          items={getItems(
+            ExampleType.BUILTIN,
+            builtInLuaTpl,
+            builtInChildren.get(builtInActivekey[0]) || [],
+          )}
           onChange={(key) => {
             setBuiltInKey(key as string[]);
             setQuickKey([]);
@@ -101,7 +103,7 @@ const RuleList = () => {
           items={getItems(
             ExampleType.QUICK,
             quickLuaTpl,
-            quickChildren(product)[quickActivekey[0]],
+            quickChildren(product).get(quickActivekey[0]) || [],
           )}
           onChange={(key) => {
             setQuickKey(key as string[]);

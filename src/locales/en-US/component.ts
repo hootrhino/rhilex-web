@@ -2,8 +2,9 @@ export default {
   /**
    * CodeEditor
    */
+  'component.tpl.usage': 'Function usage example',
   'component.tpl.data': 'Data pushed to {server} service',
-  'component.tpl.data.arg': '{server} resource',
+  'component.tpl.data.arg': '{server} Resource',
   'component.tpl.data.quick.modbus': 'Modbus data parsing and pushing to {server}',
   'component.tpl.device.write': 'Write data to the device',
   'component.tpl.device.read': 'Read data from the device',
@@ -35,8 +36,8 @@ export default {
   'component.tpl.kvGet.detail': 'Global cache get value',
   'component.tpl.kvDel.detail': 'Global cache delete value',
   'component.tpl.standard.debug': 'Print log',
-  'component.tpl.usage': 'Function usage example',
   'component.tpl.standard.debug.usage2': 'Throw an exception',
+  'component.tpl.standard.debug.arg': 'Debug Text',
   'component.tpl.rhilex.label':
     'When there is no network, the gateway’s LED will flash quickly 5 times',
   'component.tpl.rhilex.detail': '{name} network connection test',

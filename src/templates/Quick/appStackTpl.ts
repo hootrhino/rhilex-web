@@ -1,75 +1,49 @@
 import { getIntl, getLocale } from '@umijs/max';
-import { TplDataType } from '../../components/RuleExample/enum';
+import { TplDataType } from '@/components/RuleExample/enum';
+import { Product } from '@/utils/enum';
 
 const intl = getIntl(getLocale());
 
-const en6400Code = `function Main(arg)
-  while true do
-    local _, Error = network:Ping(ip);
-    if Error ~= nil then
-        for i = 1, 5, 1 do
-            en6400:Led1On();
-            time:Sleep(50);
-            en6400:Led1Off();
-            time:Sleep(50);
-        end;
-    else
-        en6400:Led1On();
-        time:Sleep(50);
-        en6400:Led1Off();
-        time:Sleep(50);
-    end;
-    time:Sleep(5000);
+const getCode = (product: Product) => `function Main(arg)
+while true do
+  local _, Error = network:Ping(ip);
+  if Error ~= nil then
+      for i = 1, 5, 1 do
+          ${product.toLowerCase()}:Led1On();
+          time:Sleep(50);
+          ${product.toLowerCase()}:Led1Off();
+          time:Sleep(50);
+      end;
+  else
+      ${product.toLowerCase()}:Led1On();
+      time:Sleep(50);
+      ${product.toLowerCase()}:Led1Off();
+      time:Sleep(50);
   end;
-  return 0;
-end;`;
+  time:Sleep(5000);
+end;
+return 0;
+end;`
 
-const rhilexg1Code = `function Main(arg)
-  while true do
-    local _, Error = network:Ping(ip);
-    if Error ~= nil then
-        for i = 1, 5, 1 do
-            rhilexg1:Led1On();
-            time:Sleep(50);
-            rhilexg1:Led1Off();
-            time:Sleep(50);
-        end;
-    else
-        rhilexg1:Led1On();
-        time:Sleep(50);
-        rhilexg1:Led1Off();
-        time:Sleep(50);
-    end;
-    time:Sleep(5000);
-  end;
-  return 0;
-end;`;
+export const appStackQuickTpl = (product: Product) => {
+  if ([Product.RHILEXG1, Product.EN6400].includes(product)) {
+    return [
+      {
+        label: intl.formatMessage({ id: 'component.tpl.rhilex.label' }),
+        detail: intl.formatMessage({ id: 'component.tpl.rhilex.detail' }, { name: product }),
+        apply: getCode(product),
+        type: 'function',
+        variables: [
+          {
+            label: 'IP',
+            name: 'ip',
+            type: TplDataType.SELECT,
+            dataSource: ['8.8.8.8', '114.114.114.114', '202.108.22.5', '202.108.22.103'],
+          },
+        ],
+      },
+    ];
+  }
 
-const variables = [
-  {
-    label: 'IP',
-    name: 'ip',
-    type: TplDataType.SELECT,
-    dataSource: ['8.8.8.8', '114.114.114.114', '202.108.22.5', '202.108.22.103'],
-  },
-];
-
-export const RHILEXG1Tpl = [
-  {
-    label: intl.formatMessage({ id: 'component.tpl.rhilex.label' }),
-    detail: intl.formatMessage({ id: 'component.tpl.rhilex.detail' }, { name: 'RHILEXG1' }),
-    apply: rhilexg1Code,
-    type: 'function',
-    variables,
-  },
-];
-
-export const En6400Tpl = [
-  {
-    label: intl.formatMessage({ id: 'component.tpl.rhilex.label' }),
-    detail: intl.formatMessage({ id: 'component.tpl.rhilex.detail' }, { name: 'EN6400' }),
-    apply: en6400Code,
-    type: 'function',
-    variables,
-  },
-];
+  return [];
+}

@@ -2,6 +2,7 @@ export default {
   /**
    * CodeEditor
    */
+  'component.tpl.usage': '函數使用示例',
   'component.tpl.data': '數據推送到 {server} 服務',
   'component.tpl.data.arg': '{server} 資源',
   'component.tpl.data.quick.modbus': 'Modbus 數據解析並推向 {server}',
@@ -35,8 +36,8 @@ export default {
   'component.tpl.kvGet.detail': '全局緩存取值',
   'component.tpl.kvDel.detail': '全局緩存刪除值',
   'component.tpl.standard.debug': '打印日誌',
-  'component.tpl.usage': '函數使用示例',
   'component.tpl.standard.debug.usage2': '拋出異常',
+  'component.tpl.standard.debug.arg': '除錯文本',
   'component.tpl.rhilex.label': '當沒有網絡時，網關上的 LED 會快速閃爍 5 次',
   'component.tpl.rhilex.detail': '{name} 聯網測試',
   'component.tpl.inend': 'UUID 參數來自南向資源',
