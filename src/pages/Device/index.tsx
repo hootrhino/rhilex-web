@@ -7,7 +7,7 @@ import {
   getDevicesListByGroup,
   putDevicesRestart,
 } from '@/services/rulex/shebeiguanli';
-import { defaultPagination } from '@/utils/constant';
+import { defaultPagination, DEFAULT_GROUP_KEY_DEVICE } from '@/utils/constant';
 import {
   ControlOutlined,
   DownOutlined,
@@ -26,6 +26,7 @@ import { useRef, useState } from 'react';
 import { baseColumns } from './Columns';
 import Detail from './Detail';
 import { DeviceType } from './enum';
+import type { GroupConfig } from './Group';
 import GroupList, { DEFAULT_CONFIG } from './Group';
 
 export type DeviceItem = {
@@ -49,13 +50,15 @@ const sheetType = {
 const Devices = () => {
   const actionRef = useRef<ActionType>();
 
-  const { title, detailConfig, activeGroupKey, setDeviceConfig, setGroupConfig } =
-    useModel('useDevice');
+  const { detailConfig, setDeviceConfig } = useModel('useDevice');
   const { product } = useModel('useSystem');
   const { formatMessage } = useIntl();
 
   const [open, setOpen] = useState<boolean>(false);
   const [activeDevice, setActiveDevice] = useState<string>('');
+  const [activeGroupKey, setActiveGroupKey] = useState<string>(DEFAULT_GROUP_KEY_DEVICE);
+  const [groupConfig, setGroupConfig] = useState<GroupConfig>(DEFAULT_CONFIG);
+  const [title, setTitle] = useState<string>('');
   // const [openVideo, setOpenVideo] = useState<boolean>(false);
   // const [videoConfig, setVideoConfig] = useState<{
   //   deviceName: string | undefined;
@@ -277,7 +280,13 @@ const Devices = () => {
             headStyle={{ paddingInline: 16 }}
             bodyStyle={{ paddingInline: 16 }}
           >
-            <GroupList />
+            <GroupList
+              activeKey={activeGroupKey}
+              config={groupConfig}
+              changeActiveKey={setActiveGroupKey}
+              changeConfig={setGroupConfig}
+              changeTitle={setTitle}
+            />
           </ProCard>
           <ProCard
             title={
@@ -296,25 +305,17 @@ const Devices = () => {
               search={false}
               params={{ uuid: activeGroupKey }}
               request={async ({ current, pageSize, ...keyword }) => {
-                if (activeGroupKey) {
-                  const { data } = await getDevicesListByGroup({
-                    current,
-                    size: pageSize,
-                    ...keyword,
-                  });
+                const { data } = await getDevicesListByGroup({
+                  current,
+                  size: pageSize,
+                  ...keyword,
+                });
 
-                  return Promise.resolve({
-                    data: data?.records,
-                    total: data?.total || 0,
-                    success: true,
-                  });
-                } else {
-                  return Promise.resolve({
-                    data: [],
-                    total: 0,
-                    success: true,
-                  });
-                }
+                return Promise.resolve({
+                  data: data?.records,
+                  total: data?.total || 0,
+                  success: true,
+                });
               }}
               pagination={defaultPagination}
               toolBarRender={() => [

@@ -8,10 +8,10 @@ import {
 import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
 import { DeleteOutlined, EditOutlined, FolderOpenOutlined } from '@ant-design/icons';
-import type { ActionType, ProFormInstance } from '@ant-design/pro-components';
+import type { ActionType } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProList } from '@ant-design/pro-components';
-import { useIntl, useModel, useRequest } from '@umijs/max';
-import { Space, Tooltip } from 'antd';
+import { useIntl, useRequest } from '@umijs/max';
+import { Form, Space, Tooltip } from 'antd';
 import { useEffect, useRef } from 'react';
 
 export enum GroupModalType {
@@ -41,32 +41,37 @@ type updateGroupParams = createGroupParams & {
   uuid: string;
 };
 
+type GroupProps = {
+  config: GroupConfig;
+  activeKey: string;
+  changeActiveKey: (value: string) => void;
+  changeConfig: (values: GroupConfig) => void;
+  changeTitle: (value: string) => void;
+};
+
 export const DEFAULT_CONFIG: GroupConfig = {
   open: false,
   type: GroupModalType.NEW,
   title: 'device.modal.title.group.new',
 };
 
-const GroupList = () => {
-  const groupFormRef = useRef<ProFormInstance>();
+const GroupList = ({
+  config,
+  activeKey,
+  changeActiveKey,
+  changeConfig,
+  changeTitle,
+}: GroupProps) => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
-  const { groupConfig, activeGroupKey, setTitle, setActiveGroupKey, setGroupConfig } =
-    useModel('useDevice');
-  const { type, title, ...params } = groupConfig;
+  const { type, title, open } = config;
+  const [form] = Form.useForm();
 
   // 分组详情
   const { run: getDetail, data: groupDetail } = useRequest(
     (params: API.getGroupDetailParams) => getGroupDetail(params),
     {
       manual: true,
-      onSuccess: () => {
-        setGroupConfig({
-          open: true,
-          title: 'device.modal.title.group.edit',
-          type: GroupModalType.EDIT,
-        });
-      },
     },
   );
 
@@ -74,8 +79,8 @@ const GroupList = () => {
   const { run: createGroup } = useRequest((params: createGroupParams) => postGroupCreate(params), {
     manual: true,
     onSuccess: (res: any) => {
-      setActiveGroupKey(res?.gid);
-      setGroupConfig(DEFAULT_CONFIG);
+      changeActiveKey(res?.gid);
+      changeConfig(DEFAULT_CONFIG);
       actionRef.current?.reload();
       message.success(formatMessage({ id: 'message.success.new' }));
     },
@@ -85,7 +90,7 @@ const GroupList = () => {
   const { run: updateGroup } = useRequest((params: updateGroupParams) => putGroupUpdate(params), {
     manual: true,
     onSuccess: () => {
-      setGroupConfig(DEFAULT_CONFIG);
+      changeConfig(DEFAULT_CONFIG);
       actionRef.current?.reload();
       message.success(formatMessage({ id: 'message.success.update' }));
     },
@@ -93,7 +98,7 @@ const GroupList = () => {
 
   // 新建&编辑
   const handleOnFinish = async ({ name }: { name: string }) => {
-    if (type === 'new') {
+    if (type === GroupModalType.NEW) {
       createGroup({ type: GROUP_TYPE_DEVICE, name });
     } else {
       updateGroup({
@@ -111,7 +116,7 @@ const GroupList = () => {
       manual: true,
       onSuccess: () => {
         actionRef.current?.reload();
-        setActiveGroupKey(DEFAULT_GROUP_KEY_DEVICE);
+        changeActiveKey(DEFAULT_GROUP_KEY_DEVICE);
         message.success(formatMessage({ id: 'message.success.remove' }));
       },
     },
@@ -129,12 +134,9 @@ const GroupList = () => {
   };
 
   useEffect(() => {
-    if (groupDetail) {
-      groupFormRef.current?.setFieldsValue({ name: groupDetail.name });
-    } else {
-      groupFormRef.current?.setFieldsValue({ name: '' });
-    }
-  }, [groupDetail]);
+    if (!activeKey) return;
+    getDetail({ uuid: activeKey }).then((res) => changeTitle(res.name));
+  }, [activeKey]);
 
   return (
     <>
@@ -154,12 +156,12 @@ const GroupList = () => {
         onRow={({ uuid, name }: GroupItem) => {
           return {
             onClick: () => {
-              setActiveGroupKey(uuid);
-              setTitle(name);
+              changeActiveKey(uuid);
+              changeTitle(name);
             },
           };
         }}
-        rowClassName={({ uuid }: GroupItem) => (uuid === activeGroupKey ? 'active-group' : '')}
+        rowClassName={({ uuid }: GroupItem) => (uuid === activeKey ? 'active-group' : '')}
         metas={{
           title: {
             dataIndex: 'name',
@@ -173,7 +175,19 @@ const GroupList = () => {
               uuid === DEFAULT_GROUP_KEY_DEVICE ? null : (
                 <Space size="middle">
                   <Tooltip title={formatMessage({ id: 'device.tooltip.group.edit' })}>
-                    <a key="edit" onClick={() => getDetail({ uuid })}>
+                    <a
+                      key="edit"
+                      onClick={() => {
+                        getDetail({ uuid }).then((res) => {
+                          form.setFieldValue('name', res.name);
+                          changeConfig({
+                            open: true,
+                            title: 'device.modal.title.group.edit',
+                            type: GroupModalType.EDIT,
+                          });
+                        });
+                      }}
+                    >
                       <EditOutlined />
                     </a>
                   </Tooltip>
@@ -188,10 +202,10 @@ const GroupList = () => {
         }}
       />
       <ModalForm
-        {...params}
-        formRef={groupFormRef}
+        open={open}
+        form={form}
         title={formatMessage({ id: title })}
-        onOpenChange={(visible) => setGroupConfig({ ...groupConfig, open: visible })}
+        onOpenChange={(visible) => changeConfig({ ...config, open: visible })}
         modalProps={{ destroyOnClose: true }}
         onFinish={handleOnFinish}
         layout="horizontal"

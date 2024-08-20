@@ -36,7 +36,6 @@ const filterData = (obj: Record<string, any>) => {
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { deviceId, groupId } = useParams();
-  const { setActiveGroupKey } = useModel('useDevice');
   const { product } = useModel('useSystem');
   const { formatMessage } = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
@@ -115,7 +114,6 @@ const UpdateForm = () => {
 
         if (msg === 'Success') {
           message.success(formatMessage({ id: 'message.success.new' }));
-          setActiveGroupKey(groupId ? groupId : 'DROOT');
         } else {
           const info = formatMessage({ id: 'device.message.error.new' }, { msg: msg });
           message.warning(info);
