@@ -1,7 +1,8 @@
 import PageContainer from '@/components/ProPageContainer';
+import { getSettingsCtrlTree } from '@/services/rulex/wangluopeizhi';
 import { Product } from '@/utils/enum';
 import { ProCard } from '@ant-design/pro-components';
-import { FormattedMessage, useModel } from '@umijs/max';
+import { FormattedMessage, useModel, useRequest } from '@umijs/max';
 import type { TabPaneProps } from 'antd';
 import { useEffect, useState } from 'react';
 import DataBackupConfig from './DataBackup';
@@ -20,75 +21,79 @@ type TabItem = Omit<TabPaneProps, 'tab'> & {
   label: React.ReactNode;
 };
 
-const baseItems = [
-  {
-    label: <FormattedMessage id="system.tab.resource" />,
-    key: 'resource',
-    children: <Resource />,
-  },
-  {
-    label: <FormattedMessage id="system.tab.netStatus" />,
-    key: 'netStatus',
-    children: <NetworkStatus />,
-  },
-  {
-    label: <FormattedMessage id="system.tab.port" />,
-    key: 'port',
-    children: <PortSettings />,
-  },
-  {
-    label: <FormattedMessage id="system.tab.network" />,
-    key: 'network',
-    children: <NetworkConfig />,
-  },
-  {
-    label: <FormattedMessage id="system.tab.routing" />,
-    key: 'routing',
-    children: <RoutingConfig />,
-  },
-  {
-    label: <FormattedMessage id="system.tab.wifi" />,
-    key: 'wifi',
-    children: <WIFIConfig />,
-  },
-  {
-    label: <FormattedMessage id="system.tab.time" />,
-    key: 'time',
-    children: <TimeConfig />,
-  },
-
-  {
-    label: <FormattedMessage id="system.tab.firmware" />,
-    key: 'firmware',
-    children: <FirmwareConfig />,
-  },
-  {
-    label: <FormattedMessage id="system.tab.backup" />,
-    key: 'backup',
-    children: <DataBackupConfig />,
-  },
-  {
-    label: <FormattedMessage id="system.tab.user" />,
-    key: 'user',
-    children: <UserConfig />,
-  },
-];
+type NetworkItem = {
+  name: string;
+  [key: string]: any;
+};
 
 const defaultConfig = ['resource', 'port', 'firmware', 'backup', 'user'];
 
 const System = () => {
-  const { isWindows, product, activeKey, setActiveKey, hasWifi, hasRoute } = useModel('useSystem');
-  const [tabItems, setItems] = useState<TabItem[]>(baseItems);
+  const { isWindows, product, activeKey, setActiveKey } = useModel('useSystem');
+  const [interfaceOption, setInterfaceOption] = useState<OptionItem[]>([]);
+  const [tabItems, setItems] = useState<TabItem[]>([]);
 
-  useEffect(() => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  const baseItems = [
+    {
+      label: <FormattedMessage id="system.tab.resource" />,
+      key: 'resource',
+      children: <Resource />,
+    },
+    {
+      label: <FormattedMessage id="system.tab.netStatus" />,
+      key: 'netStatus',
+      children: <NetworkStatus />,
+    },
+    {
+      label: <FormattedMessage id="system.tab.port" />,
+      key: 'port',
+      children: <PortSettings />,
+    },
+    {
+      label: <FormattedMessage id="system.tab.network" />,
+      key: 'network',
+      children: <NetworkConfig interfaceOption={interfaceOption} />,
+    },
+    {
+      label: <FormattedMessage id="system.tab.routing" />,
+      key: 'routing',
+      children: <RoutingConfig />,
+    },
+    {
+      label: <FormattedMessage id="system.tab.wifi" />,
+      key: 'wifi',
+      children: <WIFIConfig />,
+    },
+    {
+      label: <FormattedMessage id="system.tab.time" />,
+      key: 'time',
+      children: <TimeConfig />,
+    },
+
+    {
+      label: <FormattedMessage id="system.tab.firmware" />,
+      key: 'firmware',
+      children: <FirmwareConfig />,
+    },
+    {
+      label: <FormattedMessage id="system.tab.backup" />,
+      key: 'backup',
+      children: <DataBackupConfig />,
+    },
+    {
+      label: <FormattedMessage id="system.tab.user" />,
+      key: 'user',
+      children: <UserConfig />,
+    },
+  ];
+
+  const changeItems = (hasWifi: boolean, hasRoute: boolean) => {
     const filteredItems = baseItems.filter((item) => {
       if (isWindows) {
         return defaultConfig.includes(item.key);
       } else {
-        // mac linux
-        // if (product === Product.EN6400) {
-        //   return !['apn'].includes(item.key);
-        // }
         if ([Product.COMMON].includes(product)) {
           return defaultConfig.includes(item.key);
         }
@@ -103,8 +108,33 @@ const System = () => {
     });
 
     setItems(filteredItems);
-    // setActiveKey('resource');
-  }, [isWindows, product, hasRoute, hasWifi]);
+  };
+
+  const changeInterface = (network: NetworkItem[]) => {
+    const newOption =
+      network && network.length > 0
+        ? network?.map((item) => ({ label: item?.name || '', value: item?.name || '' }))
+        : [];
+    setInterfaceOption(newOption);
+  };
+
+  useRequest(() => getSettingsCtrlTree(), {
+    ready: !!accessToken,
+    onSuccess: (res) => {
+      if (!res) return;
+      const { wlan, soft_router, network } = res;
+
+      const hasWifi = wlan && wlan.length > 0;
+      const hasRoute = soft_router && soft_router.length > 0;
+
+      changeItems(hasWifi, hasRoute);
+      changeInterface(network);
+    },
+  });
+
+  useEffect(() => {
+    setItems(baseItems);
+  }, []);
 
   return (
     <PageContainer>

@@ -13,7 +13,7 @@ import {
   ProFormSwitch,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useIntl, useModel, useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { useSize } from 'ahooks';
 import { Space, Tooltip } from 'antd';
 import { Rule } from 'antd/es/form';
@@ -36,6 +36,10 @@ type UpdateParams = Omit<BaseFormItem, 'dnsList'> & {
   dns: string[];
 };
 
+type NetworkConfigProps = {
+  interfaceOption: OptionItem[];
+};
+
 const initialValue = {
   interface: 'eth0',
   address: '192.168.199.1',
@@ -44,12 +48,12 @@ const initialValue = {
   dnsList: [{ dns: '8.8.8.8' }, { dns: '114.114.114.114' }],
 };
 
-const NetworkConfig = () => {
+const NetworkConfig = ({ interfaceOption }: NetworkConfigProps) => {
   const formRef = useRef<ProFormInstance>();
   const actionRef = useRef<FormListActionType>();
   const sizeRef = useRef(null);
   const size = useSize(sizeRef);
-  const { interfaceOption } = useModel('useSystem');
+  // const { interfaceOption } = useModel('useSystem');
   const { formatMessage } = useIntl();
 
   // 详情

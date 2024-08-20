@@ -1,15 +1,26 @@
 import { modal } from '@/components/PopupHack';
 import ProDescriptions from '@/components/ProDescriptions';
 import { getOsOsRelease } from '@/services/rulex/xitongshuju';
+import { toPascalCase } from '@/utils/utils';
 import { Line } from '@ant-design/plots';
 import { ProCard, StatisticCard } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Space } from 'antd';
+import { useEffect, useRef, useState } from 'react';
+
+enum Category {
+  MEMORY = 'memory',
+  DISK = 'disk',
+  CPU = 'cpu',
+}
 
 const Resource = () => {
-  const { dataSource, resourceData } = useModel('useSystem');
+  const { dataSource } = useModel('useSystem');
   const { formatMessage } = useIntl();
-  const { version, osUpTime, osArch, product } = dataSource?.hardWareInfo || {};
+  const currentTimeRef = useRef(new Date());
+  const [resourceData, setResourceData] = useState<Record<string, any>[]>([]);
+  const { version, osUpTime, osArch, product, memPercent, diskInfo, cpuPercent } =
+    dataSource?.hardWareInfo || {};
 
   // 获取系统详情
   const { data: osDetail } = useRequest(() => getOsOsRelease({}));
@@ -50,38 +61,34 @@ const Resource = () => {
     };
   };
 
-  const getTextAnnotationConfig = () => {
-    const maxMemory = resourceData
-      ?.filter((item) => item.category === 'memory')
-      ?.reduce((max, current) => {
-        return max.value > current.value ? max : current;
-      });
-    const maxDisk = resourceData
-      ?.filter((item) => item.category === 'disk')
-      ?.reduce((max, current) => {
-        return max.value > current.value ? max : current;
-      });
-    const maxCpu = resourceData
-      ?.filter((item) => item.category === 'cpu')
-      ?.reduce((max, current) => {
-        return max.value > current.value ? max : current;
+  const getMaxData = (category: Category) => {
+    const maxData = resourceData
+      ?.filter((item) => item.category === category)
+      ?.reduce((max, current) => (max.value > current.value ? max : current), {
+        time: currentTimeRef.current,
+        value: 0,
       });
 
-    return [
-      {
-        data: [maxMemory.time, maxMemory.value],
-        ...commonConfig(`Max Memory ${maxMemory.value}%`),
-      },
-      {
-        data: [maxDisk.time, maxDisk.value],
-        ...commonConfig(`Max Disk ${maxDisk.value}%`),
-      },
-      {
-        data: [maxCpu.time, maxCpu.value],
-        ...commonConfig(`Max CPU ${maxCpu.value}%`, 70, -10),
-      },
-    ];
+    return {
+      data: [maxData.time, maxData.value],
+      text: `Max ${toPascalCase(category)} ${maxData.value}%`,
+    };
   };
+
+  const getTextAnnotationConfig = [
+    {
+      data: getMaxData(Category.MEMORY).data,
+      ...commonConfig(getMaxData(Category.MEMORY).text),
+    },
+    {
+      data: getMaxData(Category.DISK).data,
+      ...commonConfig(getMaxData(Category.DISK).text),
+    },
+    {
+      data: getMaxData(Category.CPU).data,
+      ...commonConfig(getMaxData(Category.CPU).text, 70, -10),
+    },
+  ];
 
   const config = {
     data: resourceData,
@@ -124,7 +131,7 @@ const Resource = () => {
         },
         style: { stroke: 'red', lineDash: [2, 2] },
       },
-      ...getTextAnnotationConfig(),
+      ...getTextAnnotationConfig,
     ],
   };
 
@@ -150,6 +157,32 @@ const Resource = () => {
       key: 'osArch',
     },
   ];
+
+  useEffect(() => {
+    currentTimeRef.current = new Date();
+    const time = currentTimeRef.current;
+    const defaultValue = 0;
+
+    const newData = [
+      {
+        value: memPercent || defaultValue,
+        category: 'memory',
+        time,
+      },
+      {
+        value: diskInfo || defaultValue,
+        category: 'disk',
+        time,
+      },
+      {
+        value: cpuPercent || defaultValue,
+        category: 'cpu',
+        time,
+      },
+    ];
+
+    setResourceData([...resourceData, ...newData].slice(-100));
+  }, [memPercent, diskInfo, cpuPercent]);
 
   return (
     <ProCard
