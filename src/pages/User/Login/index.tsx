@@ -58,7 +58,6 @@ const Login: React.FC = () => {
   };
 
   const handleOnFinish = async (values: CurrentUser) => {
-    console.log(values);
     try {
       const params = pick(values, ['username', 'password']);
 
@@ -74,6 +73,7 @@ const Login: React.FC = () => {
       history.push('/');
       message.success(formatMessage({ id: 'message.success.login' }));
       localStorage.setItem('accessToken', data.token);
+      localStorage.setItem('play-log-state', 'true');
     } catch (error) {
       console.error(error);
     }

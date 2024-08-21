@@ -83,7 +83,6 @@ const ModbusSlaverRegisters = () => {
           current = defaultPagination.defaultCurrent,
           pageSize = defaultPagination.defaultPageSize,
         }) => {
-          console.log(current);
           const { data } = await getModbusSlaverSheetList({
             current,
             size: pageSize,

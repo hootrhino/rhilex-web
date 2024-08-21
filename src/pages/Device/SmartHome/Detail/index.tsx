@@ -74,7 +74,6 @@ const baseColumns = [
     title: intl.formatMessage({ id: 'device.form.title.authEn' }),
     dataIndex: 'auth_en',
     renderText: (auth_en: boolean) => {
-      console.log(auth_en);
       return auth_en === undefined ? '-' : <ProTag type={StatusType.BOOL}>{auth_en}</ProTag>;
     },
   },

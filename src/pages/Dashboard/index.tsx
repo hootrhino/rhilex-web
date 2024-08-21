@@ -27,7 +27,7 @@ const Dashboard = () => {
   const { formatMessage } = useIntl();
 
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
-  const [play, setPlay] = useState<boolean>(true);
+  const [play, setPlay] = useState<boolean>();
 
   const { inends, outends, rules, plugins, apps, devices } = dataSource?.sourceCount || {};
   const { inSuccess, inFailed, outSuccess, outFailed } = dataSource?.statistic || {};
@@ -106,6 +106,7 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
+    setPlay(JSON.parse(localStorage.getItem('play-log-state') || 'false'));
     run();
   }, []);
 
@@ -248,8 +249,10 @@ const Dashboard = () => {
               onClick={() => {
                 if (play) {
                   logRef.current?.stopLog();
+                  localStorage.setItem('play-log-state', 'false');
                 } else {
                   logRef.current?.startLog();
+                  localStorage.setItem('play-log-state', 'true');
                 }
                 setPlay(!play);
               }}

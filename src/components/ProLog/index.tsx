@@ -33,6 +33,7 @@ export const getAnsiColor = (level: string) => {
 const ProLog = forwardRef(({ topic = 'all' }: ProLogProps, ref) => {
   const [sockUrl, setUrl] = useState<string>('');
   const logRef = useRef<any>(null);
+  const play = localStorage.getItem('play-log-state') === 'true' ? true : false;
 
   const { sendMessage, readyState, latestMessage, disconnect, connect } = useWebSocket(sockUrl, {
     reconnectInterval: 1000,
@@ -67,8 +68,45 @@ const ProLog = forwardRef(({ topic = 'all' }: ProLogProps, ref) => {
     disconnect();
   };
 
-  // 初始化 Term
-  const initialTerm = () => {
+  useMemo(() => {
+    if (latestMessage?.data && latestMessage?.data !== 'Connected') {
+      const parsedItem = latestMessage?.data && JSON.parse(latestMessage?.data);
+
+      if (!parsedItem) return;
+
+      if (topic === 'all') {
+        handleOutput(parsedItem);
+      } else {
+        if (parsedItem?.topic === topic) {
+          handleOutput(parsedItem);
+        }
+      }
+    }
+  }, [latestMessage?.data, topic]);
+
+  useEffect(() => {
+    if (readyState === WebSocket.OPEN && sockUrl && play) {
+      const timer = setTimeout(() => {
+        sendMessage?.('WsTerminal');
+      }, 600);
+
+      return () => clearTimeout(timer);
+    }
+    return;
+  }, [readyState, sockUrl, play]);
+
+  useEffect(() => {
+    const { protocol } = window?.location;
+    const prefix = protocol === 'http:' ? 'ws' : 'wss';
+    if (window?.location?.host) {
+      setUrl(`${prefix}://${window?.location?.host}/${prefix}`);
+    }
+
+    // setUrl(`ws://wangwenhai.vicp.io/ws`);
+  }, [window?.location]);
+
+  useEffect(() => {
+    // 初始化 Term
     const term = new Terminal({
       disableStdin: true, // 禁止输入
       cursorStyle: 'underline',
@@ -87,47 +125,8 @@ const ProLog = forwardRef(({ topic = 'all' }: ProLogProps, ref) => {
 
     window.addEventListener('resize', () => fitAddon.fit());
     logRef.current = term;
-  };
 
-  useMemo(() => {
-    if (latestMessage?.data && latestMessage?.data !== 'Connected') {
-      const parsedItem = latestMessage?.data && JSON.parse(latestMessage?.data);
-
-      if (!parsedItem) return;
-
-      if (topic === 'all') {
-        handleOutput(parsedItem);
-      } else {
-        if (parsedItem?.topic === topic) {
-          handleOutput(parsedItem);
-        }
-      }
-    }
-  }, [latestMessage?.data, topic]);
-
-  useEffect(() => {
-    if (readyState === WebSocket.OPEN && sockUrl) {
-      const timer = setTimeout(() => {
-        sendMessage?.('WsTerminal');
-      }, 600);
-
-      return () => clearTimeout(timer);
-    }
-    return;
-  }, [readyState, sockUrl]);
-
-  useEffect(() => {
-    const { protocol } = window?.location;
-    const prefix = protocol === 'http:' ? 'ws' : 'wss';
-    if (window?.location?.host) {
-      setUrl(`${prefix}://${window?.location?.host}/${prefix}`);
-    }
-
-    // setUrl(`ws://wangwenhai.vicp.io/ws`);
-  }, [window?.location]);
-
-  useEffect(() => {
-    initialTerm();
+    return () => term?.dispose();
   }, []);
 
   useImperativeHandle(ref, () => ({
