@@ -1,7 +1,7 @@
 import { BellOutlined } from '@ant-design/icons';
 import { ProList } from '@ant-design/pro-components';
 import { history, useIntl, useModel } from '@umijs/max';
-import { Badge, Popover } from 'antd';
+import { Badge, Popover, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import ProTag, { StatusType } from '../ProTag';
@@ -26,7 +26,11 @@ const NoticeIcon = () => {
       metas={{
         title: {
           dataIndex: 'summary',
-          render: (_, { summary }) => <div className="w-[180px] truncate">{summary}</div>,
+          render: (_, { summary }) => (
+            <Tooltip title={summary}>
+              <div className="w-[180px] truncate cursor-default">{summary}</div>
+            </Tooltip>
+          ),
         },
         description: {
           render: (_, { ts }) => {

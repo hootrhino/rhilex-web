@@ -25,10 +25,7 @@ const GlobalHeaderRight = () => {
         <QuestionCircleOutlined style={{ color: '#fff', fontSize: 16, verticalAlign: 'middle' }} />
       </span>
       <NoticeIcon />
-      <SelectLang
-        style={{ padding: '0 12px', height: '100%', display: 'inline', color: '#fff' }}
-        className="hover:bg-[#32393F]"
-      />
+      <SelectLang className="h-full inline py-0 px-[12px] ml-[12px] text-[#fff] hover:bg-[#32393F]" />
       <Avatar />
     </div>
   );
