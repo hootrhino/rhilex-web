@@ -4,6 +4,7 @@ import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
 import { omit } from '@/utils/redash';
 import { useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
+import { useEffect } from 'react';
 import { baseColumns, typeConfigColumns } from '../Columns';
 import { InendType } from '../enum';
 
@@ -15,10 +16,18 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
   const { formatMessage, locale } = useIntl();
   const labelWidth = locale === 'en-US' ? 220 : 120;
 
-  const { data, loading } = useRequest(() => getInendsDetail({ uuid }), {
-    ready: !!uuid,
-    refreshDeps: [uuid],
-  });
+  const { run, data, loading } = useRequest(
+    (params: API.getInendsDetailParams) => getInendsDetail(params),
+    {
+      manual: true,
+    },
+  );
+
+  useEffect(() => {
+    if (uuid && props.open) {
+      run({ uuid });
+    }
+  }, [uuid]);
 
   return (
     <Drawer

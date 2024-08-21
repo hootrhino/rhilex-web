@@ -2,6 +2,7 @@ import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescripti
 import ProDescriptions from '@/components/ProDescriptions';
 import UnitValue from '@/components/UnitValue';
 import {
+  getHwifaceDetail,
   getHwifaceList,
   getHwifaceRefresh,
   postHwifaceUpdate,
@@ -12,7 +13,7 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Card, message, Modal } from 'antd';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { parityEnum, typeOption } from './enum';
 import type { InterfaceFormParams, UpdateParams } from './Update';
 import Update from './Update';
@@ -29,10 +30,18 @@ export type InterfaceItem = {
 const Interface = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage, locale } = useIntl();
-  const { detailConfig, setDetailConfig, detail, getDetail } = useModel('usePort');
+  const { detailConfig, changeConfig, initialConfig } = useModel('useCommon');
 
   const [openUpdateModal, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+
+  // 接口详情
+  const { run: getDetail, data: detail } = useRequest(
+    (params: API.getHwifaceDetailParams) => getHwifaceDetail(params),
+    {
+      manual: true,
+    },
+  );
 
   // 扫描端口
   const { run: refresh } = useRequest(() => getHwifaceRefresh(), {
@@ -161,8 +170,7 @@ const Interface = () => {
           key="detail"
           onClick={() => {
             if (!uuid) return;
-            getDetail({ uuid });
-            setDetailConfig({ open: true, uuid });
+            changeConfig({ open: true, uuid });
           }}
         >
           {formatMessage({ id: 'button.detail' })}
@@ -171,10 +179,11 @@ const Interface = () => {
           key="edit"
           onClick={async () => {
             if (!uuid) return;
-            const res = await getDetail({ uuid });
-            if (!isEmpty(res)) {
-              setOpen(true);
-            }
+            getDetail({ uuid }).then((res) => {
+              if (!isEmpty(res)) {
+                setOpen(true);
+              }
+            });
           }}
         >
           {formatMessage({ id: 'button.edit' })}
@@ -182,6 +191,12 @@ const Interface = () => {
       ],
     },
   ];
+
+  useEffect(() => {
+    if (detailConfig.open && detailConfig.uuid) {
+      getDetail({ uuid: detailConfig.uuid });
+    }
+  }, [detailConfig]);
 
   return (
     <ProCard title={formatMessage({ id: 'system.tab.port' })} headStyle={{ paddingBlock: 0 }}>
@@ -229,13 +244,13 @@ const Interface = () => {
         dataSource={detail as InterfaceItem}
       />
       <Modal
+        destroyOnClose
         title={formatMessage({ id: 'system.modal.title.portDetail' })}
         open={detailConfig.open}
-        onCancel={() => setDetailConfig({ open: false, uuid: '' })}
+        onCancel={initialConfig}
         maskClosable={false}
-        destroyOnClose
         footer={
-          <Button type="primary" onClick={() => setDetailConfig({ open: false, uuid: '' })}>
+          <Button type="primary" onClick={initialConfig}>
             {formatMessage({ id: 'button.close' })}
           </Button>
         }

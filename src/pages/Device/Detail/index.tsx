@@ -23,13 +23,9 @@ type DetailProps = DrawerProps & {
 };
 
 const Detail = ({ uuid, open, ...props }: DetailProps) => {
-  const {
-    run: getPort,
-    data: portList,
-    setDetailConfig,
-    getDetail: getPortDetail,
-  } = useModel('usePort');
+  const { run: getPort, data: portList } = useModel('usePort');
   const { product, setActiveKey } = useModel('useSystem');
+  const { changeConfig } = useModel('useCommon');
   const { formatMessage, locale } = useIntl();
 
   const labelWidth = locale === 'en-US' ? 150 : 100;
@@ -51,14 +47,11 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
           ...c,
           render: (_: any, { portUuid }: DeviceItem) => (
             <a
-              onClick={(e) => {
+              onClick={() => {
                 history.push('/system');
-                setDetailConfig({ open: true, uuid: portUuid });
+                changeConfig({ open: true, uuid: portUuid });
                 setActiveKey('port');
-                getPortDetail({ uuid: portUuid });
-                if (props?.onClose) {
-                  props.onClose(e);
-                }
+                // getPortDetail({ uuid: portUuid });
               }}
             >
               {getName(portList || [], portUuid)}

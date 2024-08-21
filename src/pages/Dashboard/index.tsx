@@ -21,7 +21,8 @@ const Dashboard = () => {
   const logRef = useRef<LogRef>(null);
 
   const { dataSource, run } = useModel('useSystem');
-  const { setDeviceConfig, allDeviceData } = useModel('useDevice');
+  const { allDeviceData } = useModel('useDevice');
+  const { changeConfig } = useModel('useCommon');
 
   const { formatMessage } = useIntl();
 
@@ -148,7 +149,7 @@ const Dashboard = () => {
                     onClick={() => {
                       if (!uuid) return;
                       history.push('/device/list');
-                      setDeviceConfig({ open: true, uuid });
+                      changeConfig({ open: true, uuid });
                     }}
                   >
                     {name}

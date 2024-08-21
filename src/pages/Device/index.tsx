@@ -50,7 +50,7 @@ const sheetType = {
 const Devices = () => {
   const actionRef = useRef<ActionType>();
 
-  const { detailConfig, setDeviceConfig } = useModel('useDevice');
+  const { detailConfig, changeConfig, initialConfig } = useModel('useCommon');
   const { product } = useModel('useSystem');
   const { formatMessage } = useIntl();
 
@@ -227,7 +227,7 @@ const Devices = () => {
 
         return (
           <Space>
-            <a key="detail" onClick={() => setDeviceConfig({ open: true, uuid })}>
+            <a key="detail" onClick={() => changeConfig({ open: true, uuid })}>
               {formatMessage({ id: 'button.detail' })}
             </a>
             <a key="edit" onClick={() => history.push(`/device/${gid}/edit/${uuid}`)}>
@@ -332,7 +332,7 @@ const Devices = () => {
           </ProCard>
         </ProCard>
       </PageContainer>
-      <Detail {...detailConfig} onClose={() => setDeviceConfig({ uuid: '', open: false })} />
+      <Detail {...detailConfig} onClose={initialConfig} />
       {/* <CameraDetail
         open={openVideo}
         onCancel={() => {

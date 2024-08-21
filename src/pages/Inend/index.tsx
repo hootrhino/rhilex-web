@@ -37,7 +37,7 @@ export type InendItem = {
 
 const Inend = () => {
   const actionRef = useRef<ActionType>();
-  const { detailConfig, setConfig } = useModel('useSource');
+  const { detailConfig, changeConfig, initialConfig } = useModel('useCommon');
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
   const [restartId, setRestartId] = useState<string>('');
@@ -88,7 +88,7 @@ const Inend = () => {
       key: 'option',
       valueType: 'option',
       render: (_, { uuid, type }) => [
-        <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
+        <a key="detail" onClick={() => changeConfig({ open: true, uuid })}>
           {formatMessage({ id: 'button.detail' })}
         </a>,
         <a key="edit" onClick={() => history.push(`/inend/edit/${uuid}`)}>
@@ -163,7 +163,7 @@ const Inend = () => {
           ]}
         />
       </PageContainer>
-      <Detail {...detailConfig} onClose={() => setConfig({ ...detailConfig, open: false })} />
+      <Detail {...detailConfig} onClose={initialConfig} />
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}

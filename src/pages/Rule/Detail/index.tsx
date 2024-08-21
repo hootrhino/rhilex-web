@@ -15,8 +15,7 @@ type DetailProps = DrawerProps & {
 const Detail = ({ uuid, ...props }: DetailProps) => {
   const { deviceId, inendId } = useParams();
   const { formatMessage, locale } = useIntl();
-  const { setConfig: setSourceDetail } = useModel('useSource');
-  const { setDeviceConfig } = useModel('useDevice');
+  const { changeConfig } = useModel('useCommon');
 
   // 获取资源详情
   const { data: inendDetail } = useRequest(() => getInendsDetail({ uuid: inendId || '' }), {
@@ -57,11 +56,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
           <a
             onClick={() => {
               history.push(`/${isSource ? 'inend' : 'device'}/list`);
-              if (isSource) {
-                setSourceDetail({ open: true, uuid: fromSource?.[0] });
-              } else {
-                setDeviceConfig({ open: true, uuid: fromDevice?.[0] });
-              }
+              changeConfig({ open: true, uuid: isSource ? fromSource?.[0] : fromDevice?.[0] });
             }}
           >
             {isSource ? inendDetail?.name : deviceDetail?.name}
