@@ -60,6 +60,7 @@ const initialValue = {
   name: '',
 };
 
+// TODO 为了兼容，暂时限制新建时无法进行测试
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const debugFormRef = useRef<ProFormInstance>();
@@ -257,7 +258,13 @@ const UpdateForm = () => {
           colSpan="40%"
           extra={
             <Space>
-              <Button key="reset" size="small" icon={<FileSyncOutlined />} onClick={handleOnReset}>
+              <Button
+                key="reset"
+                size="small"
+                disabled={!ruleId}
+                icon={<FileSyncOutlined />}
+                onClick={handleOnReset}
+              >
                 {formatMessage({ id: 'button.reset' })}
               </Button>
               <Button
@@ -266,6 +273,7 @@ const UpdateForm = () => {
                 type="primary"
                 size="small"
                 icon={<BugOutlined />}
+                disabled={!ruleId}
                 onClick={() => {
                   const testData = debugFormRef.current?.getFieldValue('testData');
                   const testUuid = inendId || deviceId;
