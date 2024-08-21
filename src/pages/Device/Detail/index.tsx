@@ -29,7 +29,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     setDetailConfig,
     getDetail: getPortDetail,
   } = useModel('usePort');
-  const { product } = useModel('useSystem');
+  const { product, setActiveKey } = useModel('useSystem');
   const { formatMessage, locale } = useIntl();
 
   const labelWidth = locale === 'en-US' ? 150 : 100;
@@ -54,6 +54,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
               onClick={(e) => {
                 history.push('/system');
                 setDetailConfig({ open: true, uuid: portUuid });
+                setActiveKey('port');
                 getPortDetail({ uuid: portUuid });
                 if (props?.onClose) {
                   props.onClose(e);
