@@ -169,6 +169,7 @@ const BacnetDataSheet = ({ uuid, type = SheetType.LIST }: BacnetDataSheetProps) 
       defaultConfig={defaultBacnetConfig}
       defaultUploadData={defaultUploadData}
       type={type}
+      scroll={{ x: 1200 }}
       upload={(file: File) => deviceUuid && upload(file)}
       download={handleOnDownload}
       update={(data: Point[]) => {

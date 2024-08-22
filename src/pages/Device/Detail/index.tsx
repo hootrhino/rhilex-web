@@ -1,11 +1,9 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
-import HeadersTitle from '@/components/HttpHeaders/Title';
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
 import ProDescriptions from '@/components/ProDescriptions';
 import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
 import { SheetType } from '@/utils/enum';
 import { flatten, omit } from '@/utils/redash';
-import { getName } from '@/utils/utils';
 import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
@@ -20,6 +18,12 @@ import SnmpOidsSheet from '../Snmp';
 
 type DetailProps = DrawerProps & {
   uuid: string;
+};
+
+const getPortName = (portList: Record<string, any>[] = [], key: string) => {
+  const currentItem = portList?.find((item: Record<string, any>) => item.uuid === key);
+
+  return currentItem?.name;
 };
 
 const Detail = ({ uuid, open, ...props }: DetailProps) => {
@@ -54,7 +58,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
                 // getPortDetail({ uuid: portUuid });
               }}
             >
-              {getName(portList || [], portUuid)}
+              {getPortName(portList, portUuid)}
             </a>
           ),
         }));
@@ -142,10 +146,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
 
             {type === DeviceType.GENERIC_HTTP_DEVICE &&
               Object.keys(config?.httpConfig?.headers)?.length > 0 && (
-                <div>
-                  <HeadersTitle />
-                  <HeadersDetail data={config?.httpConfig?.headers} className="mt-[12px]" />
-                </div>
+                <HeadersDetail data={config?.httpConfig?.headers} />
               )}
             {type === DeviceType.GENERIC_MODBUS_MASTER && (
               <ModbusMasterDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />

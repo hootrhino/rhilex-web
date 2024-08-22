@@ -1,6 +1,6 @@
 import IndexBorder from '@/components/IndexBorder';
 import { modal } from '@/components/PopupHack';
-import { IconFont } from '@/utils/utils';
+// import { IconFont } from '@/utils/utils';
 import {
   DeleteOutlined,
   DownloadOutlined,
@@ -42,7 +42,7 @@ const DataSheet = ({
 
   const [title, setTitle] = useState<string>(formatMessage({ id: 'device.title.sheet' }));
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [editableRows, setEditableRows] = useState<Partial<DataSheetItem>[]>([]);
+  // const [editableRows, setEditableRows] = useState<Partial<DataSheetItem>[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [polling, setPolling] = useState<number>(3000);
   const [stopPolling, setStopPolling] = useState<boolean>(false);
@@ -51,17 +51,17 @@ const DataSheet = ({
 
   const handleOnReset = () => {
     setSelectedRowKeys([]);
-    setEditableRows([]);
+    // setEditableRows([]);
     setEditableRowKeys([]);
   };
 
-  // 批量更新
-  const handleOnBatchUpdate = () => {
-    if (deviceId && editableRows) {
-      update(editableRows);
-      handleOnReset();
-    }
-  };
+  // TODO 暂时隐藏 - 批量更新
+  // const handleOnBatchUpdate = () => {
+  //   if (deviceId && editableRows) {
+  //     update(editableRows);
+  //     handleOnReset();
+  //   }
+  // };
 
   // 单个更新
   const handleOnSave = async (rowKey: RecordKey, data: Partial<DataSheetItem>) => {
@@ -215,6 +215,7 @@ const DataSheet = ({
                     modal.error({
                       title: formatMessage({ id: 'device.title.modal.error.sheet' }),
                       content: <div className="flex flex-wrap">{record?.errMsg}</div>,
+                      okText: formatMessage({ id: 'button.close' }),
                     });
                   },
                 }}
@@ -262,20 +263,20 @@ const DataSheet = ({
         {formatMessage({ id: 'device.button.import.sheet' })}
       </Button>
     </Upload>,
-    <Button
-      key="batch-update"
-      type="primary"
-      icon={
-        <IconFont
-          type={disabled ? 'icon-batch-create-disabled' : 'icon-batch-create'}
-          className="text-[16px]"
-        />
-      }
-      onClick={handleOnBatchUpdate}
-      disabled={disabled}
-    >
-      {formatMessage({ id: 'device.button.update.bulk' })}
-    </Button>,
+    // <Button
+    //   key="batch-update"
+    //   type="primary"
+    //   icon={
+    //     <IconFont
+    //       type={disabled ? 'icon-batch-create-disabled' : 'icon-batch-create'}
+    //       className="text-[16px]"
+    //     />
+    //   }
+    //   onClick={handleOnBatchUpdate}
+    //   disabled={disabled}
+    // >
+    //   {formatMessage({ id: 'device.button.update.bulk' })}
+    // </Button>,
     <Button
       key="batch-remove"
       danger
@@ -340,9 +341,9 @@ const DataSheet = ({
           editableKeys,
           onSave: handleOnSave,
           onChange: setEditableRowKeys,
-          onValuesChange: (_record, dataSource) => {
-            setEditableRows(dataSource);
-          },
+          // onValuesChange: (_record, dataSource) => {
+          //   setEditableRows(dataSource);
+          // },
         }}
         scroll={scroll}
         {...props}

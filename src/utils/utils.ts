@@ -33,18 +33,6 @@ export const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4557572_nnn7n7e53d.js', // 在 iconfont.cn 上生成
 });
 
-/**
- * 获取名称
- * @param list
- * @param key
- * @returns
- */
-export const getName = (list: Record<string, any>[], key: string) => {
-  const currentItem = list?.find((item: Record<string, any>) => item.uuid === key);
-
-  return currentItem?.name;
-};
-
 // 格式化 k-v
 export const formatHeaders2Obj = (data: { k: string; v: string }[]) => {
   const newData = data.reduce((acc: any, curr: { k: string; v: string }) => {

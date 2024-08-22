@@ -108,6 +108,7 @@ export const defaultConfig = {
     },
     httpConfig: {
       url: `http://${DEFAULT_HOST}:8080`,
+      headers: [{ k: '', v: '' }],
     },
   },
   // TODO 暂无需求，先隐藏
