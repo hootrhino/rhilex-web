@@ -98,6 +98,7 @@ const PropertyList = () => {
   const { run: getSchemaList, activeSchema } = useModel('useSchema');
   const [open, setOpen] = useState<boolean>(false);
   const [initialValue, setInitialValue] = useState<Property>({});
+  const [total, setTotal] = useState<number>(0);
 
   // 详情
   const { run: getDetail } = useRequest(
@@ -291,6 +292,7 @@ const PropertyList = () => {
             });
           }
         }}
+        onDataSourceChange={(d) => setTotal(d.length)}
         pagination={defaultPagination}
         expandable={{
           expandedRowRender,
@@ -304,7 +306,7 @@ const PropertyList = () => {
             type="primary"
             icon={activeSchema.published ? <RedoOutlined /> : <SendOutlined />}
             onClick={handleOnPublish}
-            disabled={!activeSchema.uuid}
+            disabled={!activeSchema.uuid || total === 0}
           >
             {activeSchema.published
               ? formatMessage({ id: 'button.reset' })

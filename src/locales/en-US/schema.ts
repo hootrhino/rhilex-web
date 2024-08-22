@@ -81,7 +81,7 @@ export default {
    */
   'schemaMgt.tooltip.update': 'Rename schema',
   'schemaMgt.tooltip.remove': 'Delete schema',
-  'schemaMgt.tooltip.copy': 'Copy',
+  'schemaMgt.tooltip.copy': 'Copy UUID',
   'schemaMgt.popconfirm.remove':
     'The delete operation will synchronously clear all databases associated with the schema; please proceed with caution',
   'schemaMgt.popconfirm.remove.property': 'Are you sure to delete this property?',

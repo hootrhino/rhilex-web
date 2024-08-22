@@ -104,60 +104,56 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
             render: (_dom, { uuid, published }) => {
               return (
                 uuid && (
-                  <Space>
-                    <Tooltip title={formatMessage({ id: 'schemaMgt.tooltip.copy' })}>
-                      <CopyToClipboard
-                        key={uuid}
-                        text={uuid}
-                        onCopy={(text, result) => {
-                          setCopied(result ? text : '');
-                          setTimeout(() => {
-                            setCopied('');
-                          }, 1500);
-                        }}
-                      >
-                        {copied === uuid ? (
-                          <CheckOutlined style={{ color: '#52c41a' }} />
-                        ) : (
-                          <CopyOutlined
-                            style={{ color: '#1677ff' }}
-                            onClick={(e) => e.stopPropagation()}
-                          />
-                        )}
-                      </CopyToClipboard>
-                    </Tooltip>
-                    <Tooltip title={uuid}>
-                      <div
-                        className={cn(
-                          'w-[130px] truncate',
-                          !uuid && 'hidden',
-                          published ? 'cursor-pointer text-[#1677ff]' : 'cursor-not-allowed',
-                        )}
-                        onClick={() => {
-                          if (!published) return;
-                          history.push('/repository');
-                          setKey(uuid);
-                        }}
-                      >
-                        {uuid}
-                      </div>
-                    </Tooltip>
-                  </Space>
+                  <Tooltip title={uuid}>
+                    <div
+                      className={cn(
+                        'w-[130px] truncate',
+                        !uuid && 'hidden',
+                        published ? 'cursor-pointer text-[#1677ff]' : 'cursor-not-allowed',
+                      )}
+                      onClick={() => {
+                        if (!published) return;
+                        history.push('/repository');
+                        setKey(uuid);
+                      }}
+                    >
+                      {uuid}
+                    </div>
+                  </Tooltip>
                 )
               );
             },
           },
           avatar: {
-            render: (_dom, { published }) =>
-              published ? (
-                <IconFont type="icon-schema-published" className="pl-[10px]" />
-              ) : (
-                <IconFont type={`icon-schema`} className="pl-[10px]" />
-              ),
+            render: () => <IconFont type={`icon-schema`} className="pl-[10px]" />,
           },
           actions: {
             render: (_dom, { uuid }) => (
               <Space size="middle">
+                {uuid && (
+                  <Tooltip title={formatMessage({ id: 'schemaMgt.tooltip.copy' })}>
+                    <CopyToClipboard
+                      key={uuid}
+                      text={uuid}
+                      onCopy={(text, result) => {
+                        setCopied(result ? text : '');
+                        setTimeout(() => {
+                          setCopied('');
+                        }, 1500);
+                      }}
+                    >
+                      {copied === uuid ? (
+                        <CheckOutlined style={{ color: '#52c41a' }} />
+                      ) : (
+                        <CopyOutlined
+                          style={{ color: '#1677ff' }}
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      )}
+                    </CopyToClipboard>
+                  </Tooltip>
+                )}
+
                 <Tooltip title={formatMessage({ id: 'schemaMgt.tooltip.update' })}>
                   <a
                     key="edit"
