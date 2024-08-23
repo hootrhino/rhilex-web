@@ -20,7 +20,7 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl, useModel, useRequest } from '@umijs/max';
 import type { DescriptionsProps } from 'antd';
-import { Button, Descriptions, Popconfirm } from 'antd';
+import { Button, Descriptions, Popconfirm, Tooltip } from 'antd';
 import { useRef, useState } from 'react';
 import { rwOption, Type, typeOption } from '../enum';
 import PropertyForm from './UpdateForm';
@@ -300,18 +300,22 @@ const PropertyList = () => {
           rowExpandable: (record) => !isEmpty(record?.rule),
         }}
         toolBarRender={() => [
-          <Button
-            ghost
+          <Tooltip
+            title={total === 0 ? formatMessage({ id: 'schemaMgt.tooltip.publish' }) : ''}
             key="publish-property"
-            type="primary"
-            icon={activeSchema.published ? <RedoOutlined /> : <SendOutlined />}
-            onClick={handleOnPublish}
-            disabled={!activeSchema.uuid || total === 0}
           >
-            {activeSchema.published
-              ? formatMessage({ id: 'button.reset' })
-              : formatMessage({ id: 'schemaMgt.button.publish' })}
-          </Button>,
+            <Button
+              ghost
+              type="primary"
+              icon={activeSchema.published ? <RedoOutlined /> : <SendOutlined />}
+              onClick={handleOnPublish}
+              disabled={!activeSchema.uuid || total === 0}
+            >
+              {activeSchema.published
+                ? formatMessage({ id: 'button.reset' })
+                : formatMessage({ id: 'schemaMgt.button.publish' })}
+            </Button>
+          </Tooltip>,
           <Button
             key="new-property"
             type="primary"

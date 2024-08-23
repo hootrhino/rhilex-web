@@ -82,6 +82,7 @@ export default {
   'schemaMgt.tooltip.update': '重命名模型',
   'schemaMgt.tooltip.remove': '删除模型',
   'schemaMgt.tooltip.copy': '复制 UUID',
+  'schemaMgt.tooltip.publish': '发布前，请确保至少添加一个属性',
   'schemaMgt.popconfirm.remove': '删除操作将同步清除所有模型相关联的数据库，请谨慎操作',
   'schemaMgt.popconfirm.remove.property': '确定要删除此属性？',
   'schemaMgt.button.publish': '发布',
