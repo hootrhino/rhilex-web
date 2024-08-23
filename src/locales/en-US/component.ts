@@ -70,7 +70,7 @@ export default {
   'component.button.use': 'Use Now',
   'component.button.rule': 'Rule Example',
   'component.button.format': 'Code Format',
-  'component.button.countdown': '{text}中（{countdown}s）',
+  'component.button.countdown': '{text}（{countdown}s）',
 
   'component.tab.example': 'Rule Example',
   'component.tab.addRule': 'Custom Rule',

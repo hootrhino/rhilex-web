@@ -103,7 +103,7 @@ export default {
   /**
    * button
    */
-  'system.button.upgrade': 'Upgrade',
+  'system.button.upgrade': 'Upgrading',
   'system.button.confirm.reboot': 'Confirm',
   'system.button.confirm.restart': 'Confirm',
   'system.button.confirm.upload': 'Confirm',

@@ -128,7 +128,7 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
-      <Row gutter={16}>
+      <Row gutter={[16, 16]}>
         <Col lg={{ span: 12 }} md={{ span: 24 }}>
           <ProList
             rowKey="uuid"
