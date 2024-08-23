@@ -73,7 +73,9 @@ const DataSchema = () => {
           <SchemaList open={open} changeOpen={setOpen} />
         </ProCard>
         <Badge.Ribbon
-          text={activeSchema.published ? '已发布' : '未发布'}
+          text={formatMessage({
+            id: `schemaMgt.status.${activeSchema.published ? 'published' : 'unpublished'}`,
+          })}
           color={activeSchema.published ? 'green' : 'blue'}
         >
           <ProCard title={getPropertyTitle()}>

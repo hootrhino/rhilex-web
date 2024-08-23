@@ -56,7 +56,7 @@ const UserConfig = () => {
               label={<div className="invisible">action</div>}
               colon={false}
             >
-              <div className="w-[552px] flex justify-end">
+              <div className="max-w-[552px] flex justify-end">
                 <Space>
                   <Button onClick={reset}>{formatMessage({ id: 'button.reset' })}</Button>
                   <Button

@@ -88,4 +88,6 @@ export default {
   'schemaMgt.button.publish': '發布',
   'schemaMgt.button.published': '已發布',
   'schemaMgt.message.success.publish': '發布成功',
+  'schemaMgt.status.published': '已發布',
+  'schemaMgt.status.unpublished': '未發布',
 };

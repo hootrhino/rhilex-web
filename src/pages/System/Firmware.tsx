@@ -18,10 +18,11 @@ import {
 } from '@ant-design/icons';
 import { ProCard } from '@ant-design/pro-components';
 import { getIntl, getLocale, useIntl, useModel, useRequest } from '@umijs/max';
+import { useSize } from 'ahooks';
 import type { ProgressProps } from 'antd';
 import { Button, Modal, Progress, Space, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 type ConfirmCofig = {
   title: string;
@@ -63,6 +64,8 @@ export const twoColors: ProgressProps['strokeColor'] = {
 };
 
 const FirmwareConfig = () => {
+  const ref = useRef(null);
+  const size = useSize(ref);
   const { run, cancel, isWindows } = useModel('useSystem');
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
@@ -70,6 +73,8 @@ const FirmwareConfig = () => {
   const [errorMsg, setMsg] = useState<string>('');
   const [showProgress, setShowProgress] = useState<boolean>(false);
   const [uploadProgress, setProgress] = useState<number>(0);
+
+  const isSmallView = size && size.width < 1000;
 
   // 查看日志
   const { data: logData } = useRequest(() => getFirmwareUpgradeLog());
@@ -160,13 +165,17 @@ const FirmwareConfig = () => {
   ];
 
   return (
-    <>
+    <div ref={ref}>
       <ProCard
-        split="vertical"
+        split={isSmallView ? 'horizontal' : 'vertical'}
         title={formatMessage({ id: 'system.tab.firmware' })}
         headStyle={{ paddingBlock: 0 }}
+        wrap
       >
-        <ProCard colSpan="50%" title={formatMessage({ id: 'system.title.firmware.auth' })}>
+        <ProCard
+          colSpan={isSmallView ? '100%' : '50%'}
+          title={formatMessage({ id: 'system.title.firmware.auth' })}
+        >
           <ProDescriptions
             columns={columns as EnhancedProDescriptionsItemProps[]}
             labelWidth={getLocale() === 'en-US' ? 140 : 110}
@@ -179,7 +188,7 @@ const FirmwareConfig = () => {
             }}
           />
           {!isWindows && (
-            <Space className="mt-[24px] w-full justify-end">
+            <Space className="mt-[24px] w-full justify-end flex-wrap">
               <Upload
                 accept="application/zip"
                 showUploadList={false}
@@ -284,7 +293,7 @@ const FirmwareConfig = () => {
         </ProCard>
       </ProCard>
       <ProConfirmModal open={open} onCancel={() => setOpen(false)} {...confirmConfig} />
-    </>
+    </div>
   );
 };
 

@@ -90,4 +90,6 @@ export default {
   'schemaMgt.button.publish': 'Publish',
   'schemaMgt.button.published': 'Published',
   'schemaMgt.message.success.publish': 'Published successfully',
+  'schemaMgt.status.published': 'Published',
+  'schemaMgt.status.unpublished': 'Unpublished',
 };

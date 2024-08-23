@@ -76,7 +76,7 @@ const TimeConfig = () => {
               label={<div className="invisible">action</div>}
               colon={false}
             >
-              <div className="w-[552px] flex justify-end">
+              <div className="max-w-[552px] flex justify-end">
                 <Space>
                   {dom}
                   <Button
