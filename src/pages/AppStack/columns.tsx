@@ -16,6 +16,12 @@ export const baseColumns = [
     required: true,
   },
   {
+    title: getIntl(getLocale()).formatMessage({ id: 'appStack.table.title.appState' }),
+    dataIndex: 'appState',
+    hideInForm: true,
+    renderText: (appState: number) => <ProTag type={StatusType.APP}>{appState}</ProTag>,
+  },
+  {
     title: getIntl(getLocale()).formatMessage({ id: 'appStack.table.title.autoStart' }),
     dataIndex: 'autoStart',
     required: true,
@@ -23,12 +29,6 @@ export const baseColumns = [
     transform: (value: string) => ({ autoStart: stringToBool(value) }),
     renderFormItem: () => <ProSegmented width="md" />,
     renderText: (autoStart: boolean) => <ProTag type={StatusType.BOOL}>{autoStart}</ProTag>,
-  },
-  {
-    title: getIntl(getLocale()).formatMessage({ id: 'appStack.table.title.appState' }),
-    dataIndex: 'appState',
-    hideInForm: true,
-    renderText: (appState: number) => <ProTag type={StatusType.APP}>{appState}</ProTag>,
   },
   {
     title: getIntl(getLocale()).formatMessage({ id: 'appStack.table.title.type' }),
