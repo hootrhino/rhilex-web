@@ -264,8 +264,8 @@ export default {
   'device.type.http': 'Generic HTTP Gatewa',
   'device.type.camera': '通用摄像机流处理网关', // TODO 已隐藏，暂时不需要翻译
   'device.type.smartHome': 'Smart Home Gateway',
-  'device.type.bacnet.ip': 'Generic BACnet IP Gateway',
-  'device.type.bacnet.router': 'Generic BACnet Router Gateway',
+  'device.type.bacnet.ip': 'Generic BACnet IP Master Gateway',
+  'device.type.bacnet.router': 'Generic BACnet IP Slaver Gateway',
   'device.type.tencent': 'Tencent IoT Hub Gateway Access',
   'device.type.uartRW': 'Generic Serial Read/Write Gateway',
 

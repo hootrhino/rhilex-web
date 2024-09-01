@@ -20,7 +20,7 @@ type PingProps = ModalFuncProps & DetailProps;
 const Ping = ({ detailConfig, setDetailConfig }: PingProps) => {
   const { formatMessage } = useIntl();
   const logRef = useRef<LogRef>(null);
-  const [disabled, setDisabled] = useState<boolean>(true);
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   const { run: onSearch, loading: loading } = useRequest(
     (params: PluginParams) => postPlugwareService(params),
@@ -49,7 +49,7 @@ const Ping = ({ detailConfig, setDetailConfig }: PingProps) => {
       styles={{ body: { height: 630, overflow: 'auto' } }}
       {...detailConfig}
     >
-      <ProForm submitter={false}>
+      <ProForm submitter={false} initialValues={{ ip: '127.0.0.0' }}>
         <ProForm.Item
           name="ip"
           label={formatMessage({ id: 'plugin.form.title.ip' })}

@@ -11,7 +11,7 @@ export default {
   'system.tab.firmware': 'Firmware Settings',
   'system.tab.backup': 'Backup Settings',
   'system.tab.user': 'User Settings',
-  'system.tab.port': 'Interface Settings',
+  'system.tab.port': 'Serial Port Settings',
 
   /**
    * form

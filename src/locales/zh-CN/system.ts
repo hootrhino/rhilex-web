@@ -11,7 +11,7 @@ export default {
   'system.tab.firmware': '固件设置',
   'system.tab.backup': '数据备份',
   'system.tab.user': '用户设置',
-  'system.tab.port': '端口设置',
+  'system.tab.port': '串口设置',
 
   /**
    * form

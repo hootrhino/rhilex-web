@@ -33,7 +33,7 @@ export const defaultConfig = {
     fqdn: DEFAULT_HOST,
     username: 'root',
     password: 'taosdata',
-    dbName: 'RULEX',
+    dbName: 'RHILEX',
   },
   [OutendType.HTTP]: {
     url: 'http://127.0.0.1:8080',
