@@ -288,8 +288,11 @@ const FirmwareConfig = () => {
             />
           </Modal>
         </ProCard>
-        <ProCard title={formatMessage({ id: 'system.title.firmware.log' })} colSpan="50%">
-          <div className="w-full break-words whitespace-pre">{logData}</div>
+        <ProCard
+          title={formatMessage({ id: 'system.title.firmware.log' })}
+          colSpan={isSmallView ? '100%' : '50%'}
+        >
+          <div className="w-full break-words whitespace-pre-wrap">{logData}</div>
         </ProCard>
       </ProCard>
       <ProConfirmModal open={open} onCancel={() => setOpen(false)} {...confirmConfig} />
