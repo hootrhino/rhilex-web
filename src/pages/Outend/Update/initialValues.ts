@@ -10,8 +10,8 @@ export const defaultConfig = {
   },
   [OutendType.MONGO_SINGLE]: {
     mongoUrl: 'mongodb://root:root@127.0.0.1:27017/?connect=direct',
-    database: 'rulexdb',
-    collection: 'rulex',
+    database: 'rhilex',
+    collection: 'rhilex',
   },
   [OutendType.UDP_TARGET]: {
     port: 2599,
