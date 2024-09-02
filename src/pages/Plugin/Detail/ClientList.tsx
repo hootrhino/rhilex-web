@@ -1,5 +1,5 @@
 import ProTag from '@/components/ProTag';
-import { postPlugwareService } from '@/services/rulex/chajianguanli';
+import { postPlugwareService } from '@/services/rhilex/chajianguanli';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';

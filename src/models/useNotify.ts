@@ -1,4 +1,4 @@
-import { getNotifyPageList } from '@/services/rulex/zhanneitongzhi';
+import { getNotifyPageList } from '@/services/rhilex/zhanneitongzhi';
 import { useRequest } from '@umijs/max';
 
 const useNotify = () => {

@@ -1,8 +1,8 @@
 import ProDescriptions from '@/components/ProDescriptions';
 import ProTag, { StatusType } from '@/components/ProTag';
-import { getRulesDetail } from '@/services/rulex/guizeguanli';
-import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
-import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
+import { getRulesDetail } from '@/services/rhilex/guizeguanli';
+import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
+import { getInendsDetail } from '@/services/rhilex/shuruziyuanguanli';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import type { DrawerProps } from 'antd';

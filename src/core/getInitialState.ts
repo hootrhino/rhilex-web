@@ -1,7 +1,7 @@
 import { history } from '@umijs/max';
 
 import { CurrentUser } from '@/pages/User/Login';
-// import { getOsSystem } from '@/services/rulex/xitongshuju';
+// import { getOsSystem } from '@/services/rhilex/xitongshuju';
 import { LOGIN_PATH } from '@/utils/constant';
 import { Product } from '@/utils/enum';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';

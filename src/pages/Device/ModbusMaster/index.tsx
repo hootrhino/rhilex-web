@@ -5,7 +5,7 @@ import {
   getModbusMasterSheetList,
   postModbusMasterSheetSheetImport,
   postModbusMasterSheetUpdate,
-} from '@/services/rulex/modbusMasterdianweiguanli';
+} from '@/services/rhilex/modbusMasterdianweiguanli';
 import { defaultPagination } from '@/utils/constant';
 import { FormItemType, SheetType } from '@/utils/enum';
 import { inRange, omit } from '@/utils/redash';

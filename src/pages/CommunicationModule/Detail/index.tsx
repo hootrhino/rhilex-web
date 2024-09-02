@@ -1,6 +1,6 @@
 import ProDescriptions from '@/components/ProDescriptions';
 import ProTag, { StatusType } from '@/components/ProTag';
-import { getTransceiverDetail, postTransceiverCtrl } from '@/services/rulex/tongxinmozu';
+import { getTransceiverDetail, postTransceiverCtrl } from '@/services/rhilex/tongxinmozu';
 import { IconFont } from '@/utils/utils';
 import { green } from '@ant-design/colors';
 import { getIntl, getLocale } from '@umijs/max';

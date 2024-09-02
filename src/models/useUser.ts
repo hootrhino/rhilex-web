@@ -1,4 +1,4 @@
-import { postUsersLogout } from '@/services/rulex/yonghuguanli';
+import { postUsersLogout } from '@/services/rhilex/yonghuguanli';
 import { LOGIN_PATH } from '@/utils/constant';
 import { history, useModel, useRequest } from '@umijs/max';
 

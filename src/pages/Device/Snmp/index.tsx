@@ -4,7 +4,7 @@ import {
   getSnmpOidsSheetList,
   postSnmpOidsSheetSheetImport,
   postSnmpOidsSheetUpdate,
-} from '@/services/rulex/snmpdianweiguanli';
+} from '@/services/rhilex/snmpdianweiguanli';
 import { defaultPagination } from '@/utils/constant';
 import { SheetType } from '@/utils/enum';
 import { omit } from '@/utils/redash';

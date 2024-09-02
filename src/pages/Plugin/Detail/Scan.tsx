@@ -1,7 +1,7 @@
 import type { LogRef } from '@/components/ProLog';
 import ProLog from '@/components/ProLog';
-import { postPlugwareService } from '@/services/rulex/chajianguanli';
-import { getHwifaceList } from '@/services/rulex/jiekouguanli';
+import { postPlugwareService } from '@/services/rhilex/chajianguanli';
+import { getHwifaceList } from '@/services/rhilex/jiekouguanli';
 import { omit } from '@/utils/redash';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect } from '@ant-design/pro-components';

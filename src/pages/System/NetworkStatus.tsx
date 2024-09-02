@@ -1,5 +1,5 @@
 import ProDescriptions from '@/components/ProDescriptions';
-import { getSettingsNetDetails, getSettingsNetStatus } from '@/services/rulex/wangluopeizhi';
+import { getSettingsNetDetails, getSettingsNetStatus } from '@/services/rhilex/wangluopeizhi';
 import { pick } from '@/utils/redash';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';

@@ -1,5 +1,5 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
-import { getRulesGetCanUsedResources } from '@/services/rulex/guizeguanli';
+import { getRulesGetCanUsedResources } from '@/services/rhilex/guizeguanli';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,

@@ -7,7 +7,7 @@ import {
   getDatacenterQueryDataList,
   getDatacenterSchemaDdlDefine,
   getDatacenterSchemaDdlDetail,
-} from '@/services/rulex/shujuzhongxin';
+} from '@/services/rhilex/shujuzhongxin';
 import { defaultPagination } from '@/utils/constant';
 import { IconFont, toPascalCase } from '@/utils/utils';
 import { DeleteOutlined, DownloadOutlined, TableOutlined } from '@ant-design/icons';

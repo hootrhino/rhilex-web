@@ -1,7 +1,7 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
 import ProDescriptions from '@/components/ProDescriptions';
-import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
+import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
 import { SheetType } from '@/utils/enum';
 import { flatten, omit } from '@/utils/redash';
 import { history, useIntl, useModel, useRequest } from '@umijs/max';

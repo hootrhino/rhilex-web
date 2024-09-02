@@ -1,6 +1,6 @@
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
 import ProDescriptions from '@/components/ProDescriptions';
-import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
+import { getInendsDetail } from '@/services/rhilex/shuruziyuanguanli';
 import { omit } from '@/utils/redash';
 import { useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';

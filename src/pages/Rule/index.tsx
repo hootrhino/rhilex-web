@@ -1,9 +1,9 @@
 import { message } from '@/components/PopupHack';
 import PageContainer from '@/components/ProPageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
-import { deleteRulesDel } from '@/services/rulex/guizeguanli';
-import { getDevicesDetail, getRulesByDevice } from '@/services/rulex/shebeiguanli';
-import { getInendsDetail, getRulesByInend } from '@/services/rulex/shuruziyuanguanli';
+import { deleteRulesDel } from '@/services/rhilex/guizeguanli';
+import { getDevicesDetail, getRulesByDevice } from '@/services/rhilex/shebeiguanli';
+import { getInendsDetail, getRulesByInend } from '@/services/rhilex/shuruziyuanguanli';
 import { PlusOutlined } from '@ant-design/icons';
 import { ProTable, type ProColumns } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';

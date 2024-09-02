@@ -1,5 +1,5 @@
 import PageContainer from '@/components/ProPageContainer';
-import { getModbusSlaverSheetList } from '@/services/rulex/modbusSlaverjicunqiguanli';
+import { getModbusSlaverSheetList } from '@/services/rhilex/modbusSlaverjicunqiguanli';
 import { defaultPagination } from '@/utils/constant';
 import { ProTable } from '@ant-design/pro-components';
 import { history, useIntl, useParams } from '@umijs/max';

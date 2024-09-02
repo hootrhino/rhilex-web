@@ -6,7 +6,7 @@ import {
   getGoodsList,
   putGoodsStart,
   putGoodsStop,
-} from '@/services/rulex/kuozhanxieyi';
+} from '@/services/rhilex/kuozhanxieyi';
 import { DetailModalType } from '@/utils/enum';
 import { IconFont } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';

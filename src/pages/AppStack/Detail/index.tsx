@@ -1,7 +1,7 @@
 import ProDescriptions from '@/components/ProDescriptions';
 import type { LogRef } from '@/components/ProLog';
 import ProLog from '@/components/ProLog';
-import { getAppDetail } from '@/services/rulex/qingliangyingyong';
+import { getAppDetail } from '@/services/rhilex/qingliangyingyong';
 import { DetailModalType } from '@/utils/enum';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { getLocale, useIntl } from '@umijs/max';

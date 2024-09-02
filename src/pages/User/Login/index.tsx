@@ -1,7 +1,7 @@
 import loginIcon from '@/assets/loginLogo.svg';
 import { message, modal } from '@/components/PopupHack';
-import { getDatacenterSecret } from '@/services/rulex/shujuzhongxin';
-import { postLogin } from '@/services/rulex/yonghuguanli';
+import { getDatacenterSecret } from '@/services/rhilex/shujuzhongxin';
+import { postLogin } from '@/services/rhilex/yonghuguanli';
 import { DEFAULT_TITLE } from '@/utils/constant';
 import { pick } from '@/utils/redash';
 import type { ProFormInstance, Settings as LayoutSettings } from '@ant-design/pro-components';

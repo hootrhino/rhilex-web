@@ -1,5 +1,5 @@
-import { getOutendsList } from '@/services/rulex/shuchuziyuanguanli';
-import { getInendsList } from '@/services/rulex/shuruziyuanguanli';
+import { getOutendsList } from '@/services/rhilex/shuchuziyuanguanli';
+import { getInendsList } from '@/services/rhilex/shuruziyuanguanli';
 import { autocompletion, Completion } from '@codemirror/autocomplete';
 import { lintGutter, lintKeymap } from '@codemirror/lint';
 import { langs } from '@uiw/codemirror-extensions-langs';

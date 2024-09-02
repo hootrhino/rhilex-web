@@ -1,4 +1,4 @@
-import { getHwifaceList } from '@/services/rulex/jiekouguanli';
+import { getHwifaceList } from '@/services/rhilex/jiekouguanli';
 import { getIntl, getLocale } from '@umijs/max';
 import { Space } from 'antd';
 import type { LabeledValue } from 'antd/es/select';

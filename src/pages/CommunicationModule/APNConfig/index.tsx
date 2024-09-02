@@ -1,5 +1,5 @@
 import { message } from '@/components/PopupHack';
-import { getMn4GApn, postMn4GApn } from '@/services/rulex/yidongwangluo4Gshezhi';
+import { getMn4GApn, postMn4GApn } from '@/services/rhilex/yidongwangluo4Gshezhi';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';

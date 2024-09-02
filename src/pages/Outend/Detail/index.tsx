@@ -1,7 +1,7 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
 import ProDescriptions from '@/components/ProDescriptions';
-import { getOutendsDetail } from '@/services/rulex/shuchuziyuanguanli';
+import { getOutendsDetail } from '@/services/rhilex/shuchuziyuanguanli';
 import { omit } from '@/utils/redash';
 import { useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';

@@ -6,7 +6,7 @@ import {
   getHwifaceList,
   getHwifaceRefresh,
   postHwifaceUpdate,
-} from '@/services/rulex/jiekouguanli';
+} from '@/services/rhilex/jiekouguanli';
 import { isEmpty } from '@/utils/redash';
 import { ScanOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';

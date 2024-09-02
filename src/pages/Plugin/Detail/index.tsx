@@ -1,4 +1,4 @@
-import { postPlugwareService } from '@/services/rulex/chajianguanli';
+import { postPlugwareService } from '@/services/rhilex/chajianguanli';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
 import { Button, Modal, Space } from 'antd';

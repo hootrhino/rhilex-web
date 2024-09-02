@@ -1,6 +1,6 @@
 import ProDescriptions from '@/components/ProDescriptions';
 import ProTag, { StatusType } from '@/components/ProTag';
-import { postPlugwareService } from '@/services/rulex/chajianguanli';
+import { postPlugwareService } from '@/services/rhilex/chajianguanli';
 import { getIntl, getLocale } from '@umijs/max';
 import { PluginName, PluginUUID } from '../enum';
 

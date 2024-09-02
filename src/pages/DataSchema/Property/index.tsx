@@ -7,7 +7,7 @@ import {
   postSchemaPropertiesCreate,
   postSchemaPublish,
   putSchemaPropertiesUpdate,
-} from '@/services/rulex/shujumoxing';
+} from '@/services/rhilex/shujumoxing';
 import { defaultPagination } from '@/utils/constant';
 import { isEmpty } from '@/utils/redash';
 import {

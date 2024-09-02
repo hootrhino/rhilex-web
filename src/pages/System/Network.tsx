@@ -1,5 +1,5 @@
 import { message } from '@/components/PopupHack';
-import { getSettingsEth, postSettingsEth } from '@/services/rulex/wangluopeizhi';
+import { getSettingsEth, postSettingsEth } from '@/services/rhilex/wangluopeizhi';
 import { FormItemType } from '@/utils/enum';
 import { omit } from '@/utils/redash';
 import { validateFormItem } from '@/utils/utils';

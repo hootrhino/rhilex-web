@@ -8,7 +8,7 @@ import {
   postFirmwareReboot,
   postFirmwareRecoverNew,
   postFirmwareUpgrade,
-} from '@/services/rulex/gujiancaozuo';
+} from '@/services/rhilex/gujiancaozuo';
 import { endsWith } from '@/utils/redash';
 import {
   CloudUploadOutlined,

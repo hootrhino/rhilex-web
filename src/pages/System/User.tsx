@@ -1,5 +1,5 @@
 import { message, modal } from '@/components/PopupHack';
-import { putUsersUpdate } from '@/services/rulex/yonghuguanli';
+import { putUsersUpdate } from '@/services/rhilex/yonghuguanli';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
 import { useIntl, useModel } from '@umijs/max';

@@ -4,7 +4,7 @@ import {
   getBacnetRouterSheetList,
   postBacnetRouterSheetSheetImport,
   postBacnetRouterSheetUpdate,
-} from '@/services/rulex/bacnetRoutermoshi';
+} from '@/services/rhilex/bacnetRoutermoshi';
 import { defaultPagination } from '@/utils/constant';
 import { SheetType } from '@/utils/enum';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';

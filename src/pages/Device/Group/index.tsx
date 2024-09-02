@@ -4,8 +4,8 @@ import {
   getGroupDetail,
   postGroupCreate,
   putGroupUpdate,
-} from '@/services/rulex/fenzuguanli';
-import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
+} from '@/services/rhilex/fenzuguanli';
+import { getDevicesGroup } from '@/services/rhilex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
 import { DeleteOutlined, EditOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-components';

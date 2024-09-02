@@ -1,7 +1,7 @@
 import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
-import { getOsNetInterfaces } from '@/services/rulex/xitongshuju';
+import { getOsNetInterfaces } from '@/services/rhilex/xitongshuju';
 import { FormItemType } from '@/utils/enum';
 import { validateFormItem } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';

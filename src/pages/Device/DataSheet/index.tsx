@@ -16,7 +16,7 @@ import { Button, Dropdown, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import { useEffect, useState } from 'react';
 
 import PageContainer from '@/components/ProPageContainer';
-import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
+import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
 import { SheetType } from '@/utils/enum';
 
 import ProTag, { StatusType } from '@/components/ProTag';

@@ -5,7 +5,7 @@ import {
   getAppList,
   putAppStart,
   putAppStop,
-} from '@/services/rulex/qingliangyingyong';
+} from '@/services/rhilex/qingliangyingyong';
 import { DetailModalType } from '@/utils/enum';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';

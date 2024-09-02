@@ -1,5 +1,5 @@
 import { message } from '@/components/PopupHack';
-import { getSettingsTime, postSettingsTime, putSettingsNtp } from '@/services/rulex/shijianpeizhi';
+import { getSettingsTime, postSettingsTime, putSettingsNtp } from '@/services/rhilex/shijianpeizhi';
 import { SyncOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import {

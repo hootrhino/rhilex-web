@@ -2,7 +2,7 @@ import HeadersTitle from '@/components/HttpHeaders/Title';
 import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
-import { getHwifaceList } from '@/services/rulex/jiekouguanli';
+import { getHwifaceList } from '@/services/rhilex/jiekouguanli';
 import { stringToBool } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 import { Space } from 'antd';

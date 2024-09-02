@@ -1,7 +1,7 @@
 import { modal } from '@/components/PopupHack';
 import PageContainer from '@/components/ProPageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
-import { getTransceiverList, postTransceiverCtrl } from '@/services/rulex/tongxinmozu';
+import { getTransceiverList, postTransceiverCtrl } from '@/services/rhilex/tongxinmozu';
 import { pick } from '@/utils/redash';
 import { IconFont } from '@/utils/utils';
 import {

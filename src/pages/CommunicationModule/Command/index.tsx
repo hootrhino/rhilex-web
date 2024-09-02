@@ -1,4 +1,4 @@
-import { postTransceiverCtrl } from '@/services/rulex/tongxinmozu';
+import { postTransceiverCtrl } from '@/services/rhilex/tongxinmozu';
 import { cn } from '@/utils/utils';
 import { getIntl, getLocale, useRequest } from '@umijs/max';
 import type { ModalProps } from 'antd';

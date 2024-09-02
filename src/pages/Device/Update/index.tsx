@@ -4,7 +4,7 @@ import {
   getDevicesDetail,
   postDevicesCreate,
   putDevicesUpdate,
-} from '@/services/rulex/shebeiguanli';
+} from '@/services/rhilex/shebeiguanli';
 import { formatHeaders2Arr, formatHeaders2Obj, stringToBool } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';

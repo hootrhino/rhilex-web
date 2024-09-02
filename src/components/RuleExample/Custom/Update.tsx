@@ -1,6 +1,6 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
-import { postRulesFormatLua } from '@/services/rulex/guizeguanli';
-import { getUserluaDetail } from '@/services/rulex/yonghudingyiluamoban';
+import { postRulesFormatLua } from '@/services/rhilex/guizeguanli';
+import { getUserluaDetail } from '@/services/rhilex/yonghudingyiluamoban';
 import { CodeOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {

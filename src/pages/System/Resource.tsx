@@ -1,6 +1,6 @@
 import { modal } from '@/components/PopupHack';
 import ProDescriptions from '@/components/ProDescriptions';
-import { getOsOsRelease } from '@/services/rulex/xitongshuju';
+import { getOsOsRelease } from '@/services/rhilex/xitongshuju';
 import { toPascalCase } from '@/utils/utils';
 import { Line } from '@ant-design/plots';
 import { ProCard, StatisticCard } from '@ant-design/pro-components';

@@ -6,7 +6,7 @@ import {
   getInendsDetail,
   postInendsCreate,
   putInendsUpdate,
-} from '@/services/rulex/shuruziyuanguanli';
+} from '@/services/rhilex/shuruziyuanguanli';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';

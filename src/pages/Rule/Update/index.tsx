@@ -9,9 +9,9 @@ import {
   postRulesFormatLua,
   postRulesTest,
   putRulesUpdate,
-} from '@/services/rulex/guizeguanli';
-import { getDevicesDetail } from '@/services/rulex/shebeiguanli';
-import { getInendsDetail } from '@/services/rulex/shuruziyuanguanli';
+} from '@/services/rhilex/guizeguanli';
+import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
+import { getInendsDetail } from '@/services/rhilex/shuruziyuanguanli';
 import { debugData } from '@/templates';
 import { FormItemType } from '@/utils/enum';
 import { validateFormItem } from '@/utils/utils';

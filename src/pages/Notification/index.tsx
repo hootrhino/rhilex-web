@@ -1,7 +1,7 @@
 import { message, modal } from '@/components/PopupHack';
 import PageContainer from '@/components/ProPageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
-import { getNotifyPageList, putNotifyClear, putNotifyRead } from '@/services/rulex/zhanneitongzhi';
+import { getNotifyPageList, putNotifyClear, putNotifyRead } from '@/services/rhilex/zhanneitongzhi';
 import { defaultPagination } from '@/utils/constant';
 import { CalendarOutlined, ClearOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-components';

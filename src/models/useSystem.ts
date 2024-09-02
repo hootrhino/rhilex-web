@@ -1,4 +1,4 @@
-import { getOsSystem } from '@/services/rulex/xitongshuju';
+import { getOsSystem } from '@/services/rhilex/xitongshuju';
 import { Product } from '@/utils/enum';
 import { useRequest } from '@umijs/max';
 import { useEffect, useMemo, useState } from 'react';

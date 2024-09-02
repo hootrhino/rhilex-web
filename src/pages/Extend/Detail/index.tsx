@@ -1,6 +1,6 @@
 import ProDescriptions from '@/components/ProDescriptions';
 import ProLog from '@/components/ProLog';
-import { getGoodsDetail } from '@/services/rulex/kuozhanxieyi';
+import { getGoodsDetail } from '@/services/rhilex/kuozhanxieyi';
 import { DetailModalType } from '@/utils/enum';
 import { useIntl, useRequest } from '@umijs/max';
 import type { DrawerProps } from 'antd';

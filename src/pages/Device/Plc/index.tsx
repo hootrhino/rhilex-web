@@ -4,7 +4,7 @@ import {
   getS1200DataSheetList,
   postS1200DataSheetSheetImport,
   postS1200DataSheetUpdate,
-} from '@/services/rulex/ximenzidianweiguanli';
+} from '@/services/rhilex/ximenzidianweiguanli';
 import { omit } from '@/utils/redash';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { ProFormCascader, ProFormText } from '@ant-design/pro-components';

@@ -1,4 +1,4 @@
-import { getSoftRouterDhcp, postSoftRouterDhcp } from '@/services/rulex/luyoupeizhi';
+import { getSoftRouterDhcp, postSoftRouterDhcp } from '@/services/rhilex/luyoupeizhi';
 import { FormItemType } from '@/utils/enum';
 import { validateFormItem } from '@/utils/utils';
 import type { ProFormInstance } from '@ant-design/pro-components';

@@ -1,6 +1,6 @@
 import type { LogRef } from '@/components/ProLog';
 import ProLog from '@/components/ProLog';
-import { postPlugwareService } from '@/services/rulex/chajianguanli';
+import { postPlugwareService } from '@/services/rhilex/chajianguanli';
 import { FormItemType } from '@/utils/enum';
 import { validateIPv4 } from '@/utils/regExp';
 import { validateFormItem } from '@/utils/utils';

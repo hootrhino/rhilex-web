@@ -4,7 +4,7 @@ import {
   getUserluaListByGroup,
   postUserluaCreate,
   putUserluaUpdate,
-} from '@/services/rulex/yonghudingyiluamoban';
+} from '@/services/rhilex/yonghudingyiluamoban';
 import { DEFAULT_GROUP_KEY_LUA_TPL } from '@/utils/constant';
 import type { ActionType, ModalFormProps } from '@ant-design/pro-components';
 import { ProList } from '@ant-design/pro-components';

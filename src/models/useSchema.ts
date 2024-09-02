@@ -1,5 +1,5 @@
 import type { ActiveSchema } from '@/pages/DataSchema';
-import { getSchemaList } from '@/services/rulex/shujumoxing';
+import { getSchemaList } from '@/services/rhilex/shujumoxing';
 import { useRequest } from '@umijs/max';
 import { useState } from 'react';
 

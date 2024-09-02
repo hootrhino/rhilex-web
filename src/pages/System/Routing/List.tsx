@@ -1,4 +1,4 @@
-import { getSoftRouterDhcpClients } from '@/services/rulex/luyoupeizhi';
+import { getSoftRouterDhcpClients } from '@/services/rhilex/luyoupeizhi';
 import { ProTable } from '@ant-design/pro-components';
 import { useIntl } from '@umijs/max';
 

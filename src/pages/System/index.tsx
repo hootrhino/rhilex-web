@@ -1,5 +1,5 @@
 import PageContainer from '@/components/ProPageContainer';
-import { getSettingsCtrlTree } from '@/services/rulex/wangluopeizhi';
+import { getSettingsCtrlTree } from '@/services/rhilex/wangluopeizhi';
 import { Product } from '@/utils/enum';
 import { ProCard } from '@ant-design/pro-components';
 import { FormattedMessage, useModel, useRequest } from '@umijs/max';

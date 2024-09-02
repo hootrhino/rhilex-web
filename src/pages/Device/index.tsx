@@ -6,7 +6,7 @@ import {
   getDevicesDeviceErrMsg,
   getDevicesListByGroup,
   putDevicesRestart,
-} from '@/services/rulex/shebeiguanli';
+} from '@/services/rhilex/shebeiguanli';
 import { defaultPagination, DEFAULT_GROUP_KEY_DEVICE } from '@/utils/constant';
 import {
   ControlOutlined,

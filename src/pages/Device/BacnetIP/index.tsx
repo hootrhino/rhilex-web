@@ -9,7 +9,7 @@ import {
   getBacnetipDataSheetList,
   postBacnetipDataSheetSheetImport,
   postBacnetipDataSheetUpdate,
-} from '@/services/rulex/bacnetdianweiguanli';
+} from '@/services/rhilex/bacnetdianweiguanli';
 import { defaultPagination } from '@/utils/constant';
 import { SheetType } from '@/utils/enum';
 import DataSheet from '../DataSheet';

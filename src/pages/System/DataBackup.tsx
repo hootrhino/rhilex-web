@@ -1,6 +1,6 @@
 import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
-import { postBackupUpload } from '@/services/rulex/shujubeifen';
+import { postBackupUpload } from '@/services/rhilex/shujubeifen';
 import { endsWith } from '@/utils/redash';
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';

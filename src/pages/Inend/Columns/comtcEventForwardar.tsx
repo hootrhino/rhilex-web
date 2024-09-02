@@ -1,5 +1,5 @@
 import { TransceiverTypeOption } from '@/pages/CommunicationModule/enum';
-import { getTransceiverList } from '@/services/rulex/tongxinmozu';
+import { getTransceiverList } from '@/services/rhilex/tongxinmozu';
 import { IconFont } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 import { Space } from 'antd';

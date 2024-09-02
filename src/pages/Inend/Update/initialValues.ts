@@ -41,7 +41,7 @@ export const defaultConfig = {
   //   username: 'rhilex',
   //   password: 'rhilex',
   //   qos: QoSLevel.LEVEL1,
-  //   subTopics: [{ k: '/device/rulex-rhilex1' }],
+  //   subTopics: [{ k: '/device/rhilex-rhilex1' }],
   // },
   [InendType.GENERIC_MQTT_SERVER]: {
     serverName: 'rhilex-mqtt-server',

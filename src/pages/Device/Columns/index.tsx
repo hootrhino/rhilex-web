@@ -1,7 +1,7 @@
 import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
-import { getHwifaceList } from '@/services/rulex/jiekouguanli';
-import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
+import { getHwifaceList } from '@/services/rhilex/jiekouguanli';
+import { getDevicesGroup } from '@/services/rhilex/shebeiguanli';
 import { Product } from '@/utils/enum';
 import { getIntl, getLocale } from '@umijs/max';
 import { Space } from 'antd';

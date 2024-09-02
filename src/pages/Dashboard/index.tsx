@@ -2,7 +2,7 @@ import { message } from '@/components/PopupHack';
 import type { LogRef } from '@/components/ProLog';
 import ProLog from '@/components/ProLog';
 import PageContainer from '@/components/ProPageContainer';
-import { postOsResetInterMetric } from '@/services/rulex/xitongshuju';
+import { postOsResetInterMetric } from '@/services/rhilex/xitongshuju';
 import { sum } from '@/utils/redash';
 import { cn, IconFont } from '@/utils/utils';
 import {

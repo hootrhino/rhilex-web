@@ -3,7 +3,7 @@ import { ProList } from '@ant-design/pro-components';
 import { message } from '@/components/PopupHack';
 import PageContainer from '@/components/ProPageContainer';
 import ProTag from '@/components/ProTag';
-import { getPlugwareList, postPlugwareService } from '@/services/rulex/chajianguanli';
+import { getPlugwareList, postPlugwareService } from '@/services/rhilex/chajianguanli';
 import { useIntl, useRequest } from '@umijs/max';
 import { useSize } from 'ahooks';
 import { Tooltip } from 'antd';

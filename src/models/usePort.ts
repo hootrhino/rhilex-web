@@ -1,4 +1,4 @@
-import { getHwifaceList } from '@/services/rulex/jiekouguanli';
+import { getHwifaceList } from '@/services/rhilex/jiekouguanli';
 import { useRequest } from '@umijs/max';
 
 const usePort = () => {

@@ -1,4 +1,4 @@
-import { getDevicesList } from '@/services/rulex/shebeiguanli';
+import { getDevicesList } from '@/services/rhilex/shebeiguanli';
 import { useRequest } from '@umijs/max';
 
 const useDevice = () => {

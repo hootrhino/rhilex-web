@@ -5,7 +5,7 @@ import {
   getSchemaDetail,
   postSchemaCreate,
   putSchemaUpdate,
-} from '@/services/rulex/shujumoxing';
+} from '@/services/rhilex/shujumoxing';
 import { cn, IconFont } from '@/utils/utils';
 import { CheckOutlined, CopyOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';

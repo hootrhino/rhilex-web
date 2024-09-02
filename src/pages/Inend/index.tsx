@@ -19,7 +19,7 @@ import {
   deleteInendsDel,
   getInendsList,
   putInendsRestart,
-} from '@/services/rulex/shuruziyuanguanli';
+} from '@/services/rhilex/shuruziyuanguanli';
 import { useIntl, useModel, useRequest } from '@umijs/max';
 
 import { baseColumns } from './Columns';

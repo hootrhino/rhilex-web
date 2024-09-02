@@ -1,5 +1,5 @@
 import { message } from '@/components/PopupHack';
-import { getGoodsDetail, postGoodsCreate, putGoodsUpdate } from '@/services/rulex/kuozhanxieyi';
+import { getGoodsDetail, postGoodsCreate, putGoodsUpdate } from '@/services/rhilex/kuozhanxieyi';
 import { omit } from '@/utils/redash';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {
@@ -46,7 +46,7 @@ type UpdateFormProps = ModalFormProps<any> & {
 export const defaultValue = {
   net_addr: '127.0.0.1:8080',
   description: '',
-  args: ['-arg1=hello -arg2=rulex'],
+  args: ['-arg1=hello -arg2=rhilex'],
   local_path: '',
   running: false,
   upload: undefined,

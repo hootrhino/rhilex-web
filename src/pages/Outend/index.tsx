@@ -12,7 +12,7 @@ import {
   deleteOutendsDel,
   getOutendsList,
   putOutendsRestart,
-} from '@/services/rulex/shuchuziyuanguanli';
+} from '@/services/rhilex/shuchuziyuanguanli';
 import { useIntl } from '@umijs/max';
 import { baseColumns } from './columns';
 import Detail from './Detail';
