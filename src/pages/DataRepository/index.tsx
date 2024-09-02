@@ -214,7 +214,7 @@ const DataRepository = () => {
       {formatMessage({ id: 'dataRepo.button.code' })}
     </Button>,
     <Button danger key="clear" onClick={handleOnClear} icon={<DeleteOutlined />}>
-      {formatMessage({ id: 'dataRepo.button.clear' })}
+      {formatMessage({ id: 'button.clear' })}
     </Button>,
     <Button key="download" type="primary" onClick={handleOnDownload} icon={<DownloadOutlined />}>
       {formatMessage({ id: 'dataRepo.button.download' })}

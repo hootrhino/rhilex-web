@@ -66,7 +66,6 @@ export default {
   'component.button.user': 'User Settings',
   'component.button.logout': 'Logout',
   'component.button.more': 'Show More',
-  'component.button.copy': 'Copy',
   'component.button.use': 'Use Now',
   'component.button.rule': 'Rule Example',
   'component.button.format': 'Code Format',

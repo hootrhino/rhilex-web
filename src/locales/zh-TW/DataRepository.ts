@@ -2,7 +2,6 @@ export default {
   /**
    * button
    */
-  'dataRepo.button.clear': '清空',
   'dataRepo.button.download': '導出',
   'dataRepo.button.code': '快速請求',
 

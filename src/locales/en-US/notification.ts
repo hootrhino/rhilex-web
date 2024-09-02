@@ -8,7 +8,6 @@ export default {
    * button
    */
   'notification.button.clearAll': 'Clear All Notifications',
-  'notification.button.clear': 'Clear',
 
   /**
    * table

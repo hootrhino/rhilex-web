@@ -25,7 +25,6 @@ export default {
   'device.title.base': 'Basic configuration',
   'device.title.modal.error.device': 'Device exception information',
   'device.title.modal.error.sheet': 'Point exception information',
-  'device.title.modal.error.oid': 'OID exception information',
   'device.title.sheet': 'Point sheet configuration',
   'device.title.sheetList': '{name} - Point sheet configuration',
   'device.title.registers': 'Registers details',
@@ -43,7 +42,6 @@ export default {
   'device.modal.title.group.edit': 'Edit Group',
   'device.modal.title.group.remove': 'Are you sure to delete this group',
   'device.modal.title.upload.confirm': 'Import Sheet',
-  'device.modal.title.upload.confirm.oid': 'Import OIDs',
 
   'device.modal.content.group.remove':
     'Please ensure no devices are mounted under this group before performing the deletion. If there are devices under the group, deletion is not permitted',
@@ -52,8 +50,6 @@ export default {
   'device.modal.content.camera.loading': '视频正在加载...', // TODO 已隐藏，暂时不需要翻译
   'device.modal.content.camera':
     '此模式下流媒体被中转到第三方地址，当前{inputAddr}已经成功推送到{outputAddr}，请在对应的平台上查看或者播放。', // TODO 已隐藏，暂时不需要翻译
-  'device.modal.content.remove.batchOid':
-    'This operation will delete multiple OIDs at once. Please proceed with caution',
   'device.modal.content.remove.batchSheet':
     'This operation will delete multiple points at once. Please proceed with caution',
 
@@ -119,7 +115,6 @@ export default {
   'device.form.title.transport': 'Transport Protocol',
   'device.form.title.community': 'Community',
   'device.form.title.version': 'Version',
-  'device.form.title.webHookPort': 'Port',
 
   // group
   'device.form.title.group.name': 'Group Name',

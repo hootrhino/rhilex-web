@@ -3,7 +3,6 @@ export default {
    * button
    */
   'dashboard.button.download': 'Download',
-  'dashboard.button.clear': 'Clear',
 
   /**
    * title

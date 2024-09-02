@@ -34,7 +34,7 @@ const CopyButton = ({ label, apply, ...props }: CopyButtonProps) => {
         }
         {...props}
       >
-        {formatMessage({ id: 'component.button.copy' })}
+        {formatMessage({ id: 'button.copy' })}
       </Button>
     </CopyToClipboard>
   );

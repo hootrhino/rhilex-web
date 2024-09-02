@@ -24,7 +24,7 @@ export const outendTypeOption = {
   ),
   [OutendType.HTTP]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' HTTP Server' }),
   [OutendType.MONGO_SINGLE]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' MongoDB' }),
-  [OutendType.TDENGINE]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' TdEngine' }),
+  [OutendType.TDENGINE]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' TDengine' }),
   [OutendType.GENERIC_UART_TARGET]: intl.formatMessage(
     { id: 'outend.type.push' },
     { type: intl.formatMessage({ id: 'outend.table.title.uart' }) },

@@ -3,7 +3,6 @@ export default {
    * button
    */
   'dashboard.button.download': '下载',
-  'dashboard.button.clear': '清空',
 
   /**
    * title

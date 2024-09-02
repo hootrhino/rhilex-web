@@ -34,4 +34,5 @@ export default {
   'button.checkDetail': '查看詳細資料',
   'button.homePage': '返回首頁',
   'button.list': '新建 {item}',
+  'button.clear': '清空',
 };

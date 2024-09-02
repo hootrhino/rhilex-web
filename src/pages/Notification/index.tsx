@@ -73,7 +73,7 @@ const Notification = () => {
       onConfirm={async () => uuid && clear({ uuid })}
       key="clear"
     >
-      <a className="pl-[16px]">{formatMessage({ id: 'notification.button.clear' })}</a>
+      <a className="pl-[16px]">{formatMessage({ id: 'button.remove' })}</a>
     </Popconfirm>,
   ];
 

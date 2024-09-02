@@ -34,4 +34,5 @@ export default {
   'button.checkDetail': 'Show Detail',
   'button.homePage': 'Back Home',
   'button.list': 'New {item}',
+  'button.clear': 'Clear',
 };

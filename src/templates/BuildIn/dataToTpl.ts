@@ -17,13 +17,13 @@ const dataToServers = [
   { target: 'uart', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'UART' }) },
   {
     target: 'tdEngine',
-    detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'Tdengine' }),
+    detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'TDengine' }),
   },
   {
     target: 'mongo',
-    detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'Mongodb' }),
+    detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'MongoDB' }),
   },
-  { target: 'nats', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'Nats' }) },
+  { target: 'nats', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'NATS' }) },
 ];
 
 const getVariables = (server: string) => [

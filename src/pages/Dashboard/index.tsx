@@ -268,7 +268,7 @@ const Dashboard = () => {
               size="small"
               onClick={() => logRef.current?.clearLog()}
             >
-              {formatMessage({ id: 'dashboard.button.clear' })}
+              {formatMessage({ id: 'button.clear' })}
             </Button>
           </Space>
         }

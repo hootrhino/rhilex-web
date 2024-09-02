@@ -25,7 +25,6 @@ export default {
   'device.title.base': '基本配置',
   'device.title.modal.error.device': '设备异常信息',
   'device.title.modal.error.sheet': '点位异常信息',
-  'device.title.modal.error.oid': '对象异常信息',
   'device.title.sheet': '点位表配置',
   'device.title.sheetList': '{name} - 点位表配置',
   'device.title.registers': '寄存器组详情',
@@ -43,7 +42,6 @@ export default {
   'device.modal.title.group.edit': '编辑分组',
   'device.modal.title.group.remove': '确定要删除此分组？',
   'device.modal.title.upload.confirm': '导入点位表',
-  'device.modal.title.upload.confirm.oid': '导入对象列表',
 
   'device.modal.content.group.remove':
     '请确认该分组下无任何设备挂载后再执行删除操作。若分组下有设备，则不允许删除',
@@ -51,7 +49,6 @@ export default {
   'device.modal.content.camera.loading': '视频正在加载...',
   'device.modal.content.camera':
     '此模式下流媒体被中转到第三方地址，当前{inputAddr}已经成功推送到{outputAddr}，请在对应的平台上查看或者播放。',
-  'device.modal.content.remove.batchOid': '此操作会一次性删除多个对象，请谨慎操作',
   'device.modal.content.remove.batchSheet': '此操作会一次性删除多个点位，请谨慎操作',
 
   /**
@@ -114,7 +111,6 @@ export default {
   'device.form.title.transport': '传输协议',
   'device.form.title.community': '社区名称',
   'device.form.title.version': '协议版本',
-  'device.form.title.webHookPort': '监听端口',
 
   // group
   'device.form.title.group.name': '分组名称',

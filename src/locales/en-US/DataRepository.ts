@@ -2,7 +2,6 @@ export default {
   /**
    * button
    */
-  'dataRepo.button.clear': 'Clear',
   'dataRepo.button.download': 'Export',
   'dataRepo.button.code': 'Quick Request',
 
