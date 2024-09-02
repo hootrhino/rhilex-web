@@ -5,6 +5,7 @@ import { getDevicesGroup } from '@/services/rulex/shebeiguanli';
 import { Product } from '@/utils/enum';
 import { getIntl, getLocale } from '@umijs/max';
 import { Space } from 'antd';
+import type { LabeledValue } from 'antd/es/select';
 import type { DeviceItem } from '..';
 import { DeviceType, deviceTypeOptions } from '../enum';
 import { BACNET_ROUTER_GW_CONFIG } from './bacnetRouterGW';
@@ -16,8 +17,6 @@ import { GENERIC_SNMP_CONFIG } from './genericSnmp';
 import { GENERIC_UART_PROTOCOL_CONFIG } from './genericUartProtocol';
 import { GENERIC_UART_RW_CONFIG } from './genericUartRW';
 import { SIEMENS_PLC_CONFIG } from './siemensPLC';
-// TODO import { SMART_HOME_CONTROLLER_CONFIG } from './smartHomeController';
-import type { LabeledValue } from 'antd/es/select';
 // import { TENCENT_IOTHUB_GATEWAY_CONFIG } from './tencentIothubGateway';
 
 const intl = getIntl(getLocale());
@@ -157,7 +156,6 @@ export const typeConfigColumns = {
   [DeviceType.GENERIC_MODBUS_SLAVER]: GENERIC_MODBUS_SLAVER_CONFIG,
   [DeviceType.SIEMENS_PLC]: SIEMENS_PLC_CONFIG,
   [DeviceType.GENERIC_HTTP_DEVICE]: GENERIC_HTTP_DEVICE_CONFIG,
-  // TODO [DeviceType.SMART_HOME_CONTROLLER]: SMART_HOME_CONTROLLER_CONFIG,
   [DeviceType.GENERIC_SNMP]: GENERIC_SNMP_CONFIG,
   [DeviceType.GENERIC_BACNET_IP]: GENERIC_BACNET_IP_CONFIG,
   [DeviceType.BACNET_ROUTER_GW]: BACNET_ROUTER_GW_CONFIG,

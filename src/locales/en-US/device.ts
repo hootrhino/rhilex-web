@@ -12,14 +12,6 @@ export default {
   'device.button.export.sheet': 'Export Sheet',
   'device.button.update.bulk': 'Bulk Update',
   'device.button.remove.bulk': 'Bulk Delete',
-  'device.button.control': 'Device Console',
-  'device.button.configWebhook': 'Setting Webhook',
-  'device.button.clearWebhook': 'Clear Webhook',
-  'device.button.scan': 'Scan Device',
-  'device.button.refresh': 'Refresh',
-  'device.button.export.oid': 'Export OIDs',
-  'device.button.import.oid': 'Import OIDs',
-  'device.button.new.object': 'Add OID',
   'device.button.new.sheet': 'Add point',
 
   /**
@@ -35,12 +27,7 @@ export default {
   'device.title.modal.error.sheet': 'Point exception information',
   'device.title.modal.error.oid': 'OID exception information',
   'device.title.sheet': 'Point sheet configuration',
-  'device.title.oid': 'SNMP OIDs',
-  'device.title.subDevice': '{name} - Subdevice list',
   'device.title.sheetList': '{name} - Point sheet configuration',
-  'device.title.oidList': 'Device {name} - SNMP OIDs',
-  'device.title.smartHome.detail.base': 'Basic device information',
-  'device.title.smartHome.detail.status': 'Device status information',
   'device.title.registers': 'Registers details',
 
   /**
@@ -80,7 +67,6 @@ export default {
   'device.form.title.group.common': 'Common configuration',
   'device.form.title.group.http': 'HTTP configuration',
   'device.form.title.group.snmp': 'SNMP configuration',
-  'device.form.title.group.smartHome': 'Smart home configuration',
   'device.form.title.group.bacnet': 'BACnet configuration',
   'device.form.title.group.tencent': 'Tencent IoT Hub access configuration',
   'device.form.title.group.uartRW': 'Read/Write configuration',
@@ -157,36 +143,14 @@ export default {
   // snmp
   'device.form.title.oid': 'OID',
 
-  // smartHome
-  'device.form.title.id': 'Device ID',
-  'device.form.title.ip': 'Device IP Address',
-  'device.form.title.mac': 'Device MAC Address',
-  'device.form.title.gen': 'Device Hardware Version',
-  'device.form.title.fwId': 'Device Firmware ID',
-  'device.form.title.ver': 'Device Firmware Version',
-  'device.form.title.app': 'Device Application Name',
-  'device.form.title.authEn': 'Enable Auth',
-  'device.form.title.authDomain': 'Device Auth Domain',
-  'device.form.title.restartRequired': 'Enable Restart',
-  'device.form.title.time': 'System Time Setting',
-  'device.form.title.unixtime': 'Device Unix Timestamp',
-  'device.form.title.uptime': 'Device Up Start Time',
-  'device.form.title.ramSize': 'Total RAM',
-  'device.form.title.ramFree': 'Available RAM',
-  'device.form.title.fsSize': 'Total Space',
-  'device.form.title.fsFree': 'Available Space',
-  'device.form.title.cfgRev': 'Version Setting',
-  'device.form.title.kvsRev': 'Key Value Storage Version',
-  'device.form.title.scheduleRev': 'Schedule Job Version',
-  'device.form.title.webhookRev': 'Webhook Version',
-  'device.form.title.cidr': 'CIDR',
-
   // bacnet
+  'device.form.title.id': 'Device ID',
   'device.form.title.mode.broadcast': 'Broadcast Mode',
   'device.form.title.localPort': 'Port',
   'device.form.title.vendorId': 'Vendor ID',
   'device.form.title.objectType': 'Object Type',
   'device.form.title.objectId': 'Object ID',
+  'device.form.title.cidr': 'CIDR',
 
   // tencent
   'device.form.title.productId': 'Product ID',
@@ -245,8 +209,6 @@ export default {
    * others
    */
   'device.tips.scroll': 'Scroll horizontally to see more',
-  'device.message.success.config': 'Configured successfully',
-  'device.message.success.clear': 'Cleared successfully',
   'device.message.error.new':
     'Successfully created, but currently unable to operate normally. Please modify the configuration parameters promptly according to the error message {msg}',
   'device.unit.byte': 'Byte',
@@ -263,7 +225,6 @@ export default {
   'device.type.plc': 'Generic Siemens S7 PLC Gateway',
   'device.type.http': 'Generic HTTP Gatewa',
   'device.type.camera': '通用摄像机流处理网关', // TODO 已隐藏，暂时不需要翻译
-  'device.type.smartHome': 'Smart Home Gateway',
   'device.type.bacnet.ip': 'Generic BACnet IP Master Gateway',
   'device.type.bacnet.router': 'Generic BACnet IP Slaver Gateway',
   'device.type.tencent': 'Tencent IoT Hub Gateway Access',

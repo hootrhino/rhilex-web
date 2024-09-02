@@ -138,16 +138,6 @@ const Devices = () => {
       //     },
       //   ];
       //   break;
-      // case DeviceType.SMART_HOME_CONTROLLER:
-      //   newItems = [
-      //     ...newItems,
-      //     {
-      //       key: 'sub-device',
-      //       label: formatMessage({ id: 'button.subDevice' }),
-      //       icon: <HddOutlined />,
-      //     },
-      //   ];
-      //   break;
       case DeviceType.GENERIC_SNMP:
       case DeviceType.GENERIC_MODBUS_MASTER:
       case DeviceType.GENERIC_MODBUS_SLAVER:
@@ -207,9 +197,6 @@ const Devices = () => {
       //   break;
       case 'error':
         getErrorMsg({ uuid });
-        break;
-      case 'sub-device':
-        history.push(`/device/${gid}/${uuid}/sub-device`);
         break;
       default:
         break;

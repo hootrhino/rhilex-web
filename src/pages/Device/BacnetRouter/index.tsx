@@ -10,9 +10,9 @@ import { SheetType } from '@/utils/enum';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
+import { ObjectType, ObjectTypeOption } from '../BacnetIP/enum';
 import DataSheet from '../DataSheet';
 import type { DataSheetItem, Point, removeParams } from '../DataSheet/typings';
-import { ObjectType, ObjectTypeOption } from './enum';
 
 const defaultBacnetConfig = {
   tag: '',

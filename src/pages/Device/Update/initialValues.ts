@@ -116,16 +116,6 @@ export const defaultConfig = {
   //   inputMode: InputMode.LOCAL_CAMERA,
   //   ...defaultOutputConfig['LOCAL_JPEG_STREAM_SERVER'],
   // },
-  // [DeviceType.SMART_HOME_CONTROLLER]: {
-  //   commonConfig: {
-  //     autoScan: 'true',
-  //     timeout: DEFAULT_TIMEOUT,
-  //     frequency: DEFAULT_FREQUENCE,
-  //   },
-  //   shellyConfig: {
-  //     webHookPort: 7000,
-  //   },
-  // },
   [DeviceType.GENERIC_SNMP]: {
     commonConfig: {
       autoRequest: DEFAULT_AUTOREQUEST,

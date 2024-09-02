@@ -78,16 +78,6 @@ const device_bacnet_ds = `{
   }
 }`;
 
-// TODO SMART_HOME_CONTROLLER - 全屋智能家居中心控制网关
-// const device_smart_home_ds = `[
-//   {
-//     "event": "Input.Toggle",
-//     "mac": "AA:BB:CC:DD:EE",
-//     "ip": "192.168.1.107",
-//     "data": {}
-//   }
-// ]`;
-
 export const deviceDS = {
   [DeviceType.GENERIC_UART_PROTOCOL]: device_protocol_ds,
   [DeviceType.GENERIC_MODBUS_MASTER]: device_modbus_ds,
@@ -98,6 +88,5 @@ export const deviceDS = {
   [DeviceType.GENERIC_SNMP]: device_snmp_ds,
   [DeviceType.GENERIC_BACNET_IP]: device_bacnet_ds,
   [DeviceType.BACNET_ROUTER_GW]: device_bacnet_ds,
-  // TODO [DeviceType.SMART_HOME_CONTROLLER]: device_smart_home_ds,
   // TODO [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,
 };

@@ -14,13 +14,13 @@ export enum DeviceType {
   GENERIC_MODBUS_SLAVER = 'GENERIC_MODBUS_SLAVER',
   SIEMENS_PLC = 'SIEMENS_PLC',
   GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
-  // TODO GENERIC_AIS_RECEIVER = 'GENERIC_AIS_RECEIVER', 暂无需求，先隐藏
-  // TODO GENERIC_CAMERA = 'GENERIC_CAMERA', 暂无需求，先隐藏
   GENERIC_SNMP = 'GENERIC_SNMP',
   GENERIC_BACNET_IP = 'GENERIC_BACNET_IP',
   BACNET_ROUTER_GW = 'BACNET_ROUTER_GW',
-  // TODO TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
-  // TODO SMART_HOME_CONTROLLER = 'SMART_HOME_CONTROLLER', 暂无需求，先隐藏
+  // TODO 暂无需求，先隐藏
+  // GENERIC_AIS_RECEIVER = 'GENERIC_AIS_RECEIVER',
+  // GENERIC_CAMERA = 'GENERIC_CAMERA',
+  // TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
 }
 
 const baseTypeOption = {
@@ -31,12 +31,12 @@ const baseTypeOption = {
   [DeviceType.GENERIC_SNMP]: intl.formatMessage({ id: 'device.type.snmp' }),
   [DeviceType.SIEMENS_PLC]: intl.formatMessage({ id: 'device.type.plc' }),
   [DeviceType.GENERIC_HTTP_DEVICE]: intl.formatMessage({ id: 'device.type.http' }),
-  // TODO [DeviceType.GENERIC_AIS_RECEIVER]: '通用船载 AIS 数据解析网关', 暂无需求，先隐藏
-  // TODO [DeviceType.GENERIC_CAMERA]: intl.formatMessage({ id: 'device.type.camera' }), 暂无需求，先隐藏
   [DeviceType.GENERIC_BACNET_IP]: intl.formatMessage({ id: 'device.type.bacnet.ip' }),
   [DeviceType.BACNET_ROUTER_GW]: intl.formatMessage({ id: 'device.type.bacnet.router' }),
-  // TODO [DeviceType.TENCENT_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.tencent' }),
-  // TODO [DeviceType.SMART_HOME_CONTROLLER]: intl.formatMessage({ id: 'device.type.smartHome' }),
+  // TODO 暂无需求，先隐藏
+  // [DeviceType.GENERIC_AIS_RECEIVER]: '通用船载 AIS 数据解析网关',
+  // [DeviceType.GENERIC_CAMERA]: intl.formatMessage({ id: 'device.type.camera' }),
+  // [DeviceType.TENCENT_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.tencent' }),
 };
 
 export const deviceTypeOptions = {
