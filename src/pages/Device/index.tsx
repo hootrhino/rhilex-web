@@ -111,6 +111,11 @@ const Devices = () => {
         icon: <PoweroffOutlined />,
         danger: true,
       },
+      {
+        key: 'rule',
+        label: formatMessage({ id: 'button.ruleConfig' }),
+        icon: <SettingOutlined />,
+      },
     ] as ItemType[];
     const showErr = state === 0;
     const errItem = {
@@ -118,13 +123,8 @@ const Devices = () => {
       label: formatMessage({ id: 'button.error' }),
       icon: <ExceptionOutlined />,
     };
-    const ruleItem = {
-      key: 'rule',
-      label: formatMessage({ id: 'button.ruleConfig' }),
-      icon: <SettingOutlined />,
-    };
 
-    let newItems = [...baseItems, ruleItem];
+    let newItems = [...baseItems];
 
     switch (type) {
       // TODO 暂无需求，先隐藏

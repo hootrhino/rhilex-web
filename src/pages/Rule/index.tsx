@@ -4,7 +4,7 @@ import ProTag, { StatusType } from '@/components/ProTag';
 import { deleteRulesDel } from '@/services/rhilex/guizeguanli';
 import { getDevicesDetail, getRulesByDevice } from '@/services/rhilex/shebeiguanli';
 import { getInendsDetail, getRulesByInend } from '@/services/rhilex/shuruziyuanguanli';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { ProTable, type ProColumns } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, Popconfirm } from 'antd';
@@ -14,6 +14,7 @@ import { InendType } from '../Inend/enum';
 import Debug from './Debug';
 import Detail from './Detail';
 import Log from './Log';
+import QuickForm from './QuickForm';
 
 export type DSType = DeviceType & InendType;
 
@@ -62,6 +63,7 @@ const Rule = () => {
   const [detailConfig, setDetailConfig] = useState<DetailConfig>(defaultConfig);
   const [logConfig, setLogConfig] = useState<DetailConfig>(defaultConfig);
   const [debugConfig, setDebugConfig] = useState<DebugConfig>(defaultDebugConfig);
+  const [openQuickForm, setOpen] = useState<boolean>(false);
 
   const { refresh: reloadDeviceRule } = useRequest(
     () => getRulesByDevice({ deviceId: deviceId || '' }),
@@ -203,12 +205,21 @@ const Rule = () => {
         options={{ reload: handleOnReload }}
         toolBarRender={() => [
           <Button
+            ghost
             type="primary"
-            key="new"
+            key="new-custom-rule"
             onClick={() => history.push(goNewUrl)}
             icon={<PlusOutlined />}
           >
-            {formatMessage({ id: 'button.new' })}
+            {formatMessage({ id: 'ruleConfig.button.custom' })}
+          </Button>,
+          <Button
+            type="primary"
+            key="new-quick-rule"
+            onClick={() => setOpen(true)}
+            icon={<ThunderboltOutlined />}
+          >
+            {formatMessage({ id: 'ruleConfig.button.quick' })}
           </Button>,
         ]}
       />
@@ -218,6 +229,11 @@ const Rule = () => {
         onOpenChange={(visible: boolean) => setDebugConfig({ ...debugConfig, open: visible })}
         ruleType={ruleType}
         {...debugConfig}
+      />
+      <QuickForm
+        open={openQuickForm}
+        onOpenChange={(open) => setOpen(open)}
+        reload={handleOnReload}
       />
     </PageContainer>
   );

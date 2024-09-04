@@ -16,7 +16,7 @@ const dataToServers = [
   { target: 'tcp', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'TCP' }) },
   { target: 'uart', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'UART' }) },
   {
-    target: 'tdEngine',
+    target: 'tDengine',
     detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'TDengine' }),
   },
   {

@@ -23,7 +23,7 @@ import { Button, Popconfirm, Space } from 'antd';
 import type { Rule } from 'antd/es/form';
 import { useEffect, useRef, useState } from 'react';
 
-type FormParams = {
+export type FormParams = {
   name: string;
   description: string;
   actions: string;
@@ -38,18 +38,18 @@ type TestParams = {
 };
 
 /** 规则默认值 **/
-const DefaultActions = `Actions = {
+export const DefaultActions = `Actions = {
   function(args)
     --Debug(args)
     return true, args
   end
 }`;
 
-const DefaultSuccess = `function Success()
+export const DefaultSuccess = `function Success()
 --Debug("success")
 end`;
 
-const DefaultFailed = `function Failed(error)
+export const DefaultFailed = `function Failed(error)
 Debug(error)
 end`;
 

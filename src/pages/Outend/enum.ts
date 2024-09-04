@@ -34,6 +34,16 @@ export const outendTypeOption = {
     { type: ' Semtech UDP Forwarder' },
   ),
 };
+export const dataToType = {
+  [OutendType.MQTT]: 'Mqtt',
+  [OutendType.UDP_TARGET]: 'Udp',
+  [OutendType.TCP_TRANSPORT]: 'Tcp',
+  [OutendType.HTTP]: 'Http',
+  [OutendType.MONGO_SINGLE]: 'Mongo',
+  [OutendType.TDENGINE]: 'TDengine',
+  [OutendType.GENERIC_UART_TARGET]: 'Uart',
+  [OutendType.SEMTECH_UDP_FORWARDER]: 'Semtech',
+};
 
 /**
  * 传输模式
