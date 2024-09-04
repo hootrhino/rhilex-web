@@ -76,18 +76,6 @@ export const defaultConfig = {
       host: '0.0.0.0',
     },
   },
-  // [DeviceType.GENERIC_AIS_RECEIVER]: {
-  //   commonConfig: {
-  //     parseAis: 'false',
-  //     gwsn: 'HR0001',
-  //     mode: DeviceMode.TCP,
-  //   },
-  //   hostConfig: {
-  //     port: 6005,
-  //     host: '0.0.0.0',
-  //     timeout: DEFAULT_TIMEOUT,
-  //   },
-  // },
   [DeviceType.SIEMENS_PLC]: {
     commonConfig: {
       autoRequest: DEFAULT_AUTOREQUEST,

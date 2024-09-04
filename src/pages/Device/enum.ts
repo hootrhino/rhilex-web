@@ -18,7 +18,6 @@ export enum DeviceType {
   GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
   SIEMENS_PLC = 'SIEMENS_PLC',
   // TODO 暂无需求，先隐藏
-  // GENERIC_AIS_RECEIVER = 'GENERIC_AIS_RECEIVER',
   // GENERIC_CAMERA = 'GENERIC_CAMERA',
   // TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
 }
@@ -34,7 +33,6 @@ const baseTypeOption = {
   [DeviceType.GENERIC_HTTP_DEVICE]: intl.formatMessage({ id: 'device.type.http' }),
   [DeviceType.SIEMENS_PLC]: intl.formatMessage({ id: 'device.type.plc' }),
   // TODO 暂无需求，先隐藏
-  // [DeviceType.GENERIC_AIS_RECEIVER]: '通用船载 AIS 数据解析网关',
   // [DeviceType.GENERIC_CAMERA]: intl.formatMessage({ id: 'device.type.camera' }),
   // [DeviceType.TENCENT_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.tencent' }),
 };

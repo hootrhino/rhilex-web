@@ -44,12 +44,6 @@ const device_siemens_ds = `{
 //   "extra": {}
 // }`;
 
-// GENERIC_AIS_RECEIVER - 通用船载 AIS 数据解析网关
-// 原始数据
-// const device_ais_origin_ds = `{
-//   "ais_data": "!AIVDM..............."
-// }`;
-
 // GENERIC_SNMP - 通用 SNMP 协议采集网关
 const device_snmp_ds = `[
   {
@@ -88,5 +82,4 @@ export const deviceDS = {
   [DeviceType.GENERIC_SNMP]: device_snmp_ds,
   [DeviceType.GENERIC_BACNET_IP]: device_bacnet_ds,
   [DeviceType.BACNET_ROUTER_GW]: device_bacnet_ds,
-  // TODO [DeviceType.GENERIC_AIS_RECEIVER]: device_ais_origin_ds,
 };
