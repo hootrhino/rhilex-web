@@ -14,7 +14,7 @@ import {
   putOutendsRestart,
 } from '@/services/rhilex/shuchuziyuanguanli';
 import { useIntl } from '@umijs/max';
-import { baseColumns } from './columns';
+import { baseColumns } from './Columns';
 import Detail from './Detail';
 
 export type OutendItem = {

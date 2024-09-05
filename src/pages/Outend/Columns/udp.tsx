@@ -1,0 +1,47 @@
+import ProSegmented from '@/components/ProSegmented';
+import ProTag, { StatusType } from '@/components/ProTag';
+import UnitValue from '@/components/UnitValue';
+import { stringToBool } from '@/utils/utils';
+import { getIntl, getLocale } from '@umijs/max';
+
+const intl = getIntl(getLocale());
+
+export const UDP_TARGET = [
+  {
+    title: intl.formatMessage({ id: 'outend.table.title.allowPing' }),
+    dataIndex: ['config', 'allowPing'],
+    required: true,
+    convertValue: (value: boolean) => value?.toString(),
+    transform: (value: string) => ({ config: { allowPing: stringToBool(value) } }),
+    renderFormItem: () => <ProSegmented width="md" />,
+    renderText: (allowPing: boolean) => <ProTag type={StatusType.BOOL}>{allowPing}</ProTag>,
+  },
+  {
+    title: intl.formatMessage({ id: 'outend.table.title.pingPacket' }),
+    dataIndex: ['config', 'pingPacket'],
+    required: true,
+  },
+  {
+    title: intl.formatMessage({ id: 'outend.table.title.timeout' }),
+    dataIndex: ['config', 'timeout'],
+    required: true,
+    valueType: 'digit',
+    fieldProps: {
+      addonAfter: 'ms',
+    },
+    render: (timeout: number) => <UnitValue value={timeout} />,
+  },
+  {
+    title: intl.formatMessage({ id: 'outend.table.title.host' }),
+    dataIndex: ['config', 'host'],
+    required: true,
+    copyable: true,
+  },
+  {
+    title: intl.formatMessage({ id: 'form.title.port' }),
+    dataIndex: ['config', 'port'],
+    valueType: 'digit',
+    required: true,
+    render: (port: number) => port,
+  },
+];

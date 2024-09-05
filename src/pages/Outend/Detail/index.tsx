@@ -6,7 +6,7 @@ import { omit } from '@/utils/redash';
 import { useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
-import { baseColumns, configColumns } from '../columns';
+import { baseColumns, configColumns } from '../Columns';
 import { OutendType } from '../enum';
 
 type DetailProps = DrawerProps & {

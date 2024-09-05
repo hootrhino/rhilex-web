@@ -54,7 +54,6 @@ export const baseColumns = [
  */
 export const typeConfigColumns = {
   [InendType.COAP]: DEFAULT_CONFIG,
-
   [InendType.UDP_SERVER]: DEFAULT_CONFIG,
   [InendType.TCP_SERVER]: DEFAULT_CONFIG,
   [InendType.HTTP]: DEFAULT_CONFIG,
