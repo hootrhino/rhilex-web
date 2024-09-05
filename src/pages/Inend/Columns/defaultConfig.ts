@@ -1,8 +1,11 @@
+/**
+ * UDP_SERVER | TCP_SERVER | COAP | HTTP | GRPC
+ */
 import { getIntl, getLocale } from '@umijs/max';
 
 const intl = getIntl(getLocale());
 
-export const CoAP = [
+export const DEFAULT_CONFIG = [
   {
     title: intl.formatMessage({ id: 'inend.table.title.host' }),
     dataIndex: ['config', 'host'],

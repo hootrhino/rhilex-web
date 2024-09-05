@@ -1,17 +1,13 @@
 import ProTag, { StatusType } from '@/components/ProTag';
 import { getIntl, getLocale } from '@umijs/max';
 import { InendType, inendTypeOption } from '../enum';
-import { CoAP } from './coap';
 import { COMTC_EVENT_FORWARDER } from './comtcEventForwardar';
 // import { GENERIC_IOT_HUB } from './genericIothub';
 // import { GENERIC_MQTT } from './genericMqtt';
 import { GENERIC_MQTT_SERVER } from './genericMqttServer';
-import { GRPC } from './grpc';
-import { HTTP } from './http';
 import { INTERNAL_EVENT } from './internalEvent';
 // import { NATS_SERVER } from './natsServer';
-import { TCP_SERVER } from './tcp';
-import { UDP_SERVER } from './udp';
+import { DEFAULT_CONFIG } from './defaultConfig';
 
 const intl = getIntl(getLocale());
 
@@ -57,14 +53,15 @@ export const baseColumns = [
  * 类型配置
  */
 export const typeConfigColumns = {
-  [InendType.COAP]: CoAP,
-  // TODO [InendType.GENERIC_IOT_HUB]: GENERIC_IOT_HUB,
-  [InendType.UDP_SERVER]: UDP_SERVER,
-  [InendType.TCP_SERVER]: TCP_SERVER,
-  [InendType.HTTP]: HTTP,
-  // TODO [InendType.NATS_SERVER]: NATS_SERVER,
-  [InendType.GRPC]: GRPC,
+  [InendType.COAP]: DEFAULT_CONFIG,
+
+  [InendType.UDP_SERVER]: DEFAULT_CONFIG,
+  [InendType.TCP_SERVER]: DEFAULT_CONFIG,
+  [InendType.HTTP]: DEFAULT_CONFIG,
+  [InendType.GRPC]: DEFAULT_CONFIG,
   [InendType.INTERNAL_EVENT]: INTERNAL_EVENT,
+  // TODO [InendType.GENERIC_IOT_HUB]: GENERIC_IOT_HUB,
+  // TODO [InendType.NATS_SERVER]: NATS_SERVER,
   // TODO [InendType.GENERIC_MQTT]: GENERIC_MQTT,
   [InendType.GENERIC_MQTT_SERVER]: GENERIC_MQTT_SERVER,
   [InendType.COMTC_EVENT_FORWARDER]: COMTC_EVENT_FORWARDER,

@@ -1,21 +1,23 @@
 import { getIntl, getLocale } from '@umijs/max';
 import { qosOption } from '../enum';
+import { DEFAULT_CONFIG } from './defaultConfig';
 
 const intl = getIntl(getLocale());
 
 export const GENERIC_MQTT = [
-  {
-    title: intl.formatMessage({ id: 'inend.table.title.host' }),
-    dataIndex: ['config', 'host'],
-    required: true,
-  },
-  {
-    title: intl.formatMessage({ id: 'form.title.port' }),
-    dataIndex: ['config', 'port'],
-    valueType: 'digit',
-    required: true,
-    render: (port: number) => port,
-  },
+  // {
+  //   title: intl.formatMessage({ id: 'inend.table.title.host' }),
+  //   dataIndex: ['config', 'host'],
+  //   required: true,
+  // },
+  // {
+  //   title: intl.formatMessage({ id: 'form.title.port' }),
+  //   dataIndex: ['config', 'port'],
+  //   valueType: 'digit',
+  //   required: true,
+  //   render: (port: number) => port,
+  // },
+  ...DEFAULT_CONFIG,
   {
     title: intl.formatMessage({ id: 'form.title.clientId' }),
     dataIndex: ['config', 'clientId'],
