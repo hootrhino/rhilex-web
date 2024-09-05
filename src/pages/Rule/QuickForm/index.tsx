@@ -9,7 +9,7 @@ import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-component
 import { useIntl, useParams } from '@umijs/max';
 import { Empty, message, Space } from 'antd';
 import type { Rule } from 'antd/es/form';
-import { DefaultFailed, DefaultSuccess } from '../Update';
+import { DefaultFailed, DefaultSuccess } from '../initialValues';
 
 type QuickFormProps = ModalFormProps & {
   reload: () => void;

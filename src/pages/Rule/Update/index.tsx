@@ -22,6 +22,7 @@ import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, Popconfirm, Space } from 'antd';
 import type { Rule } from 'antd/es/form';
 import { useEffect, useRef, useState } from 'react';
+import { DefaultFailed, DefaultSuccess, initialValue } from '../initialValues';
 
 export type FormParams = {
   name: string;
@@ -35,29 +36,6 @@ type TestParams = {
   uuid: string;
   type: string;
   testData: string;
-};
-
-/** 规则默认值 **/
-export const DefaultActions = `Actions = {
-  function(args)
-    --Debug(args)
-    return true, args
-  end
-}`;
-
-export const DefaultSuccess = `function Success()
---Debug("success")
-end`;
-
-export const DefaultFailed = `function Failed(error)
-Debug(error)
-end`;
-
-const initialValue = {
-  actions: DefaultActions,
-  success: DefaultSuccess,
-  failed: DefaultFailed,
-  name: '',
 };
 
 // TODO 为了兼容，暂时限制新建时无法进行测试
