@@ -205,7 +205,7 @@ const Devices = () => {
 
   const actionColumns: ProColumns<Partial<DeviceItem>>[] = [
     {
-      title: formatMessage({ id: 'table.option' }),
+      title: formatMessage({ id: 'table.title.option' }),
       width: 230,
       key: 'option',
       valueType: 'option',

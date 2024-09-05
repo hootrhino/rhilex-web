@@ -5,7 +5,7 @@ import { getIntl, getLocale } from '@umijs/max';
 
 export const baseColumns = [
   {
-    title: getIntl(getLocale()).formatMessage({ id: 'appStack.table.title.name' }),
+    title: getIntl(getLocale()).formatMessage({ id: 'table.title.name' }),
     dataIndex: 'name',
     ellipsis: true,
     required: true,
@@ -16,7 +16,7 @@ export const baseColumns = [
     required: true,
   },
   {
-    title: getIntl(getLocale()).formatMessage({ id: 'appStack.table.title.appState' }),
+    title: getIntl(getLocale()).formatMessage({ id: 'table.title.status' }),
     dataIndex: 'appState',
     hideInForm: true,
     renderText: (appState: number) => <ProTag type={StatusType.APP}>{appState}</ProTag>,
@@ -48,7 +48,7 @@ export const baseColumns = [
     hideInForm: true,
   },
   {
-    title: getIntl(getLocale()).formatMessage({ id: 'table.desc' }),
+    title: getIntl(getLocale()).formatMessage({ id: 'table.title.desc' }),
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => description || '-',

@@ -32,6 +32,7 @@ export default {
   'message.success.restart': 'Restarted successfully',
   'message.success.reboot': 'Rebooted successfully',
   'message.success.reset': 'Reseted Successfully',
+  'message.success.clear': 'Cleared successfully',
   /**
    * placeholder
    */
@@ -41,9 +42,12 @@ export default {
   /**
    * table
    */
-  'table.index': 'NO.',
-  'table.desc': 'Description',
-  'table.option': 'Action',
+  'table.title.index': 'NO.',
+  'table.title.name': 'Name',
+  'table.title.type': 'Type',
+  'table.title.status': 'Status',
+  'table.title.desc': 'Description',
+  'table.title.option': 'Action',
   /**
    * page
    */
@@ -51,10 +55,21 @@ export default {
   /**
    * form
    */
+  'form.title.name': 'Name',
+  'form.title.alias': 'Alias',
+  'form.title.type': 'Type',
+  'form.title.status': 'Status',
+  'form.title.clientId': 'Client ID',
+  'form.title.port': 'Port',
   'form.title.username': 'Username',
   'form.title.password': 'Password',
+  // placeholder
+  'form.placeholder.name': 'Please enter a name',
+  'form.placeholder.alias': 'Please enter an alias',
+  'form.placeholder.type': 'Please select a type',
   'form.placeholder.username': 'Please enter a username',
   'form.placeholder.password': 'Please enter a password',
+  // rule
   'form.rules.name':
     'Please enter 4-64 characters, supporting Chinese, letters, numbers, or underscores',
   'form.rules.port': 'The port value must be between 0-65535',

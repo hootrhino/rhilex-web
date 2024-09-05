@@ -2,7 +2,7 @@ export default {
   /**
    * button
    */
-  'dataRepo.button.download': 'Export',
+  'dataRepo.button.export': 'Export',
   'dataRepo.button.code': 'Quick Request',
 
   /**
@@ -10,11 +10,6 @@ export default {
    */
   'dataRepo.title.tree': 'Data schema list',
   'dataRepo.title.table': 'Historical list',
-
-  /**
-   * message
-   */
-  'dataRepo.message.success.clear': 'Cleared successfully',
 
   /**
    * modal

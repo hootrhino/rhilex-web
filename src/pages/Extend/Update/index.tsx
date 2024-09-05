@@ -143,7 +143,7 @@ const UpdateForm = ({ uuid, reload, onOpenChange, ...props }: UpdateFormProps) =
       />
       <ProFormText
         name="description"
-        label={formatMessage({ id: 'table.desc' })}
+        label={formatMessage({ id: 'table.title.desc' })}
         placeholder="请输入备注"
       />
     </ModalForm>

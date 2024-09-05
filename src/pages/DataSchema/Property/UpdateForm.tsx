@@ -67,11 +67,9 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
       <ProForm.Group>
         <ProFormText
           name="label"
-          label={formatMessage({ id: 'schemaMgt.form.title.name' })}
-          placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.name' })}
-          rules={[
-            { required: true, message: formatMessage({ id: 'schemaMgt.form.placeholder.name' }) },
-          ]}
+          label={formatMessage({ id: 'form.title.name' })}
+          placeholder={formatMessage({ id: 'form.placeholder.name' })}
+          rules={[{ required: true, message: formatMessage({ id: 'form.placeholder.name' }) }]}
           width="md"
         />
         <ProFormText
@@ -85,14 +83,12 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
         />
         <ProFormSelect
           name="type"
-          label={formatMessage({ id: 'schemaMgt.form.title.type' })}
+          label={formatMessage({ id: 'form.title.type' })}
           valueEnum={typeOption}
-          placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.type' })}
+          placeholder={formatMessage({ id: 'form.placeholder.type' })}
           width="md"
           fieldProps={{ allowClear: false }}
-          rules={[
-            { required: true, message: formatMessage({ id: 'schemaMgt.form.placeholder.type' }) },
-          ]}
+          rules={[{ required: true, message: formatMessage({ id: 'form.placeholder.type' }) }]}
         />
       </ProForm.Group>
 
@@ -255,7 +251,7 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
 
                 <ProFormText
                   name="description"
-                  label={formatMessage({ id: 'table.desc' })}
+                  label={formatMessage({ id: 'table.title.desc' })}
                   placeholder={formatMessage({ id: 'placeholder.desc' })}
                   width="md"
                 />

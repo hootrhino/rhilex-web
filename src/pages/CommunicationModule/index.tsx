@@ -157,11 +157,11 @@ const CommunicationModule = () => {
 
   const columns: ProColumns<ComItem>[] = [
     {
-      title: formatMessage({ id: 'com.table.title.name' }),
+      title: formatMessage({ id: 'table.title.name' }),
       dataIndex: 'name',
     },
     {
-      title: formatMessage({ id: 'com.table.title.type' }),
+      title: formatMessage({ id: 'table.title.type' }),
       dataIndex: 'type',
       renderText: (type: number) => (
         <Space>
@@ -182,12 +182,12 @@ const CommunicationModule = () => {
       dataIndex: 'vendor',
     },
     {
-      title: formatMessage({ id: 'com.table.title.status' }),
+      title: formatMessage({ id: 'table.title.status' }),
       dataIndex: 'status',
       renderText: (status: number) => <ProTag type={StatusType.COM}>{status}</ProTag>,
     },
     {
-      title: formatMessage({ id: 'table.option' }),
+      title: formatMessage({ id: 'table.title.option' }),
       valueType: 'option',
       width: locale !== 'zh-CN' ? 160 : 140,
       render: (_, record) => [

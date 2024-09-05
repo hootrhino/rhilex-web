@@ -1,13 +1,7 @@
 export default {
   /**
-   * table
-   */
-  'ruleConfig.table.title.status': '状态',
-
-  /**
    * form
    */
-  'ruleConfig.form.title.name': '名称',
   'ruleConfig.form.title.actions': '规则回调',
   'ruleConfig.form.title.sourceType': '数据来源',
   'ruleConfig.form.title.fromSource': '输入资源',
@@ -16,9 +10,7 @@ export default {
   'ruleConfig.form.title.targetType': '北向资源类型',
   'ruleConfig.form.title.targetId': '北向资源 UUID',
 
-  'ruleConfig.form.placeholder.name': '请输入名称',
   'ruleConfig.form.placeholder.testData': '请输入数据',
-  'ruleConfig.form.placeholder.targetType': '请选择类型',
 
   /**
    * title

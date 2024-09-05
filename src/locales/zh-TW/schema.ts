@@ -2,9 +2,7 @@ export default {
   /**
    * form
    */
-  'schemaMgt.form.title.name': '名稱',
   'schemaMgt.form.title.id': '識別符',
-  'schemaMgt.form.title.type': '類型',
   'schemaMgt.form.title.max': '最大長度',
   'schemaMgt.form.title.range': '取值範圍',
   'schemaMgt.form.title.range.min': '最小值',
@@ -16,9 +14,7 @@ export default {
   'schemaMgt.form.title.unit': '單位',
   'schemaMgt.form.title.rw': '讀寫',
 
-  'schemaMgt.form.placeholder.name': '請輸入名稱',
   'schemaMgt.form.placeholder.id': '請輸入識別符',
-  'schemaMgt.form.placeholder.type': '請選擇類型',
   'schemaMgt.form.placeholder.max': '請輸入最大長度',
   'schemaMgt.form.placeholder.round': '請輸入小數位',
   'schemaMgt.form.placeholder.true': '例如：開啟',

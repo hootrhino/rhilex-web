@@ -85,7 +85,7 @@ const NetworkStatus = () => {
       valueEnum: typeEnum,
     },
     {
-      title: formatMessage({ id: 'system.table.title.state' }),
+      title: formatMessage({ id: 'table.title.status' }),
       dataIndex: 'state',
       valueType: 'select',
       valueEnum: stateEnum,
@@ -95,7 +95,7 @@ const NetworkStatus = () => {
       dataIndex: 'connection',
     },
     {
-      title: formatMessage({ id: 'table.option' }),
+      title: formatMessage({ id: 'table.title.option' }),
       valueType: 'option',
       width: 80,
       render: (_, { device }) => [

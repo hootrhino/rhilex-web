@@ -2,7 +2,6 @@ export default {
   /**
    * table
    */
-  'plugin.table.title.running': 'Status',
   'plugin.table.title.serverAddr': 'Server Address',
   'plugin.table.title.serverEndpoint': 'Service Endpoint',
   'plugin.table.title.domain': 'Domain',

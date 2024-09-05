@@ -83,11 +83,7 @@ export default {
   'device.form.title.mode': 'Mode',
   'device.form.title.portUuid': 'Serial Port',
   'device.form.title.host': 'Host',
-  'device.form.title.port': 'Port',
-  'device.form.title.name': 'Name',
-  'device.form.title.type': 'Type',
   'device.form.title.gid': 'Device Group',
-  'device.form.title.state': 'Status',
   'device.form.title.retryTime': 'Max Fault Count',
   'device.form.title.autoRequest': 'Enable Auto Request',
   'device.form.title.enableOptimize': 'Enable Optimize Fetch',
@@ -122,7 +118,6 @@ export default {
   // modbus
   'device.form.title.slaverId': 'Slave ID',
   'device.form.title.tag': 'Tag',
-  'device.form.title.alias': 'Alias',
   'device.form.title.func': 'Function Code',
   'device.form.title.dataType': 'Data Type(Endianness)',
   'device.form.title.address': 'Address Range',
@@ -151,7 +146,6 @@ export default {
   'device.form.title.productId': 'Product ID',
   'device.form.title.deviceName': 'Device Name',
   'device.form.title.devicePsk': 'Device PSK',
-  'device.form.title.clientId': 'Client ID',
 
   // uart rw
   'device.form.title.rwConfig.autoRequest': 'Enable Auto Request',
@@ -162,7 +156,7 @@ export default {
    * tooltip
    */
   'device.tooltip.outputMode':
-    '注意：因为传输格式原因，Jpeg Stream 模式下仅保存了图像信息，没有原始声音', // TODO 已隐藏，暂时不需要翻译
+    '注意：因为传输格式原因，JPEG Stream 模式下仅保存了图像信息，没有原始声音', // TODO 已隐藏，暂时不需要翻译
   'device.tooltip.group.edit': 'Rename group',
   'device.tooltip.group.remove': 'Delete group',
   'device.tooltip.copy': 'Create a new row based on the current row as a templat',
@@ -175,7 +169,6 @@ export default {
   'device.form.placeholder.group.name': 'Please enter a group name',
   'device.form.placeholder.slaverId': 'Please enter a slaver address',
   'device.form.placeholder.tag': 'Please enter a tag',
-  'device.form.placeholder.alias': 'Please enter an alias',
   'device.form.placeholder.func': 'Please select a modbus function',
   'device.form.placeholder.dataType': 'Please select a data type and endianness',
   'device.form.placeholder.address': 'Please enter an address',
@@ -248,7 +241,7 @@ export default {
   /**
    * outputMode
    */
-  'device.camera.outputMode.jpeg': '本地 Jpeg 流服务器',
+  'device.camera.outputMode.jpeg': '本地 JPEG 流服务器',
   'device.camera.outputMode.stream': '远程流媒体服务器',
 
   /**

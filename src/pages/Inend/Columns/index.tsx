@@ -25,13 +25,13 @@ export const baseColumns = [
     copyable: true,
   },
   {
-    title: intl.formatMessage({ id: 'inend.table.title.name' }),
+    title: intl.formatMessage({ id: 'table.title.name' }),
     dataIndex: 'name',
     ellipsis: true,
     required: true,
   },
   {
-    title: intl.formatMessage({ id: 'inend.table.title.type' }),
+    title: intl.formatMessage({ id: 'table.title.type' }),
     dataIndex: 'type',
     valueType: 'select',
     valueEnum: inendTypeOption,
@@ -40,13 +40,13 @@ export const baseColumns = [
     renderText: (record: InendType) => (record ? inendTypeOption[record] : '-'),
   },
   {
-    title: intl.formatMessage({ id: 'inend.table.title.state' }),
+    title: intl.formatMessage({ id: 'table.title.status' }),
     dataIndex: 'state',
     hideInForm: true,
     renderText: (state: number) => <ProTag type={StatusType.DEVICE}>{state}</ProTag>,
   },
   {
-    title: intl.formatMessage({ id: 'table.desc' }),
+    title: intl.formatMessage({ id: 'table.title.desc' }),
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => description || '-',

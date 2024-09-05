@@ -98,15 +98,15 @@ const Interface = () => {
 
   const columns: ProColumns<InterfaceItem>[] = [
     {
-      title: formatMessage({ id: 'system.form.title.name' }),
+      title: formatMessage({ id: 'form.title.name' }),
       dataIndex: 'name',
     },
     {
-      title: formatMessage({ id: 'system.form.title.alias' }),
+      title: formatMessage({ id: 'form.title.alias' }),
       dataIndex: 'alias',
     },
     {
-      title: formatMessage({ id: 'system.form.title.type' }),
+      title: formatMessage({ id: 'form.title.type' }),
       dataIndex: 'type',
       valueType: 'select',
       fieldProps: {
@@ -114,7 +114,7 @@ const Interface = () => {
       },
     },
     {
-      title: formatMessage({ id: 'system.form.title.busy' }),
+      title: formatMessage({ id: 'form.title.status' }),
       dataIndex: 'busy',
       valueEnum: {
         true: {
@@ -155,12 +155,12 @@ const Interface = () => {
       },
     },
     {
-      title: formatMessage({ id: 'table.desc' }),
+      title: formatMessage({ id: 'table.title.desc' }),
       dataIndex: 'description',
       ellipsis: true,
     },
     {
-      title: formatMessage({ id: 'table.option' }),
+      title: formatMessage({ id: 'table.title.option' }),
       valueType: 'option',
       key: 'option',
       width: 120,

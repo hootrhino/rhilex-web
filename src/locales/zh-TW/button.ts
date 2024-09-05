@@ -35,4 +35,5 @@ export default {
   'button.homePage': '返回首頁',
   'button.list': '新建 {item}',
   'button.clear': '清空',
+  'button.download': '下載',
 };

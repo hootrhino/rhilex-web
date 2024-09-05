@@ -25,7 +25,7 @@ const SubDeviceList = () => {
 
   const columns: ProColumns<SubDeviceItem>[] = [
     {
-      title: formatMessage({ id: 'table.index' }),
+      title: formatMessage({ id: 'table.title.index' }),
       dataIndex: 'index',
       valueType: 'index',
       width: 80,

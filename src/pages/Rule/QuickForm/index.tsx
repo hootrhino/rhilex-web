@@ -78,13 +78,13 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
       {...props}
     >
       <ProFormText
-        label={formatMessage({ id: 'ruleConfig.form.title.name' })}
+        label={formatMessage({ id: 'form.title.name' })}
         name="name"
-        placeholder={formatMessage({ id: 'ruleConfig.form.placeholder.name' })}
+        placeholder={formatMessage({ id: 'form.placeholder.name' })}
         rules={[
           {
             required: true,
-            message: formatMessage({ id: 'ruleConfig.form.placeholder.name' }),
+            message: formatMessage({ id: 'form.placeholder.name' }),
           },
           {
             validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.NAME),
@@ -98,11 +98,11 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
           label: outendTypeOption[key],
           value: key,
         }))}
-        placeholder={formatMessage({ id: 'ruleConfig.form.placeholder.targetType' })}
+        placeholder={formatMessage({ id: 'form.placeholder.type' })}
         rules={[
           {
             required: true,
-            message: formatMessage({ id: 'ruleConfig.form.placeholder.targetType' }),
+            message: formatMessage({ id: 'form.placeholder.type' }),
           },
         ]}
         allowClear={false}
@@ -142,7 +142,7 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
         allowClear={false}
       />
       <ProFormText
-        label={formatMessage({ id: 'table.desc' })}
+        label={formatMessage({ id: 'table.title.desc' })}
         name="description"
         placeholder={formatMessage({ id: 'placeholder.desc' })}
       />

@@ -81,11 +81,7 @@ export default {
   'device.form.title.mode': '工作模式',
   'device.form.title.portUuid': '系統串口',
   'device.form.title.host': '服務地址',
-  'device.form.title.port': '端口',
-  'device.form.title.name': '名稱',
-  'device.form.title.type': '類型',
   'device.form.title.gid': '設備分組',
-  'device.form.title.state': '狀態',
   'device.form.title.retryTime': '最大容錯次數',
   'device.form.title.autoRequest': '啓動輪詢',
   'device.form.title.enableOptimize': '優化採集',
@@ -118,7 +114,6 @@ export default {
   // modbus
   'device.form.title.slaverId': '從設備地址',
   'device.form.title.tag': '標籤',
-  'device.form.title.alias': '別名',
   'device.form.title.func': '功能碼',
   'device.form.title.dataType': '數據類型（字節序）',
   'device.form.title.address': '起始地址',
@@ -147,7 +142,6 @@ export default {
   'device.form.title.productId': '產品 ID',
   'device.form.title.deviceName': '設備名稱',
   'device.form.title.devicePsk': '設備秘鑰',
-  'device.form.title.clientId': '客戶端 ID',
 
   // uart rw
   'device.form.title.rwConfig.autoRequest': '自動讀取',
@@ -158,7 +152,7 @@ export default {
    * tooltip
    */
   'device.tooltip.outputMode':
-    '注意：因為傳輸格式原因，Jpeg Stream 模式下僅保存了圖像訊息，沒有原始聲音',
+    '注意：因為傳輸格式原因，JPEG Stream 模式下僅保存了圖像訊息，沒有原始聲音',
   'device.tooltip.group.edit': '重命名分組',
   'device.tooltip.group.remove': '刪除分組',
   'device.tooltip.copy': '以當前行為模板新建一行數據',
@@ -171,7 +165,6 @@ export default {
   'device.form.placeholder.group.name': '請輸入分組名稱',
   'device.form.placeholder.slaverId': '請輸入從設備地址',
   'device.form.placeholder.tag': '請輸入標籤',
-  'device.form.placeholder.alias': '請輸入別名',
   'device.form.placeholder.func': '請選擇 Modbus 功能',
   'device.form.placeholder.dataType': '請選擇數據類型和字節序',
   'device.form.placeholder.address': '請輸入起始地址',
@@ -215,8 +208,8 @@ export default {
   'device.type.plc': '通用西門子 S7 系列 PLC 採集網關',
   'device.type.http': '通用 HTTP 協議數據採集網關',
   'device.type.camera': '通用攝像機流處理網關',
-  'device.type.bacnet.ip': '通用 Bacnet IP 主機網關',
-  'device.type.bacnet.router': '通用 Bacnet IP 從機網關',
+  'device.type.bacnet.ip': '通用 BACnet IP 主機網關',
+  'device.type.bacnet.router': '通用 BACnet IP 從機網關',
   'device.type.tencent': '騰訊雲端物聯網平台網關接入',
   'device.type.uartRW': '通用串口讀寫網關',
 
@@ -242,7 +235,7 @@ export default {
   /**
    * outputMode
    */
-  'device.camera.outputMode.jpeg': '本地 Jpeg 流服務器',
+  'device.camera.outputMode.jpeg': '本地 JPEG 流服務器',
   'device.camera.outputMode.stream': '遠程流媒體服務器',
 
   /**

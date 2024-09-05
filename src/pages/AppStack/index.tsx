@@ -71,7 +71,7 @@ const AppStack = () => {
 
   const actions: ProColumns<AppStackItem>[] = [
     {
-      title: formatMessage({ id: 'table.option' }),
+      title: formatMessage({ id: 'table.title.option' }),
       width: 220,
       key: 'option',
       valueType: 'option',

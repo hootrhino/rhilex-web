@@ -2,17 +2,12 @@ export default {
   /**
    * table
    */
-  'outend.table.title.name': 'Name',
-  'outend.table.title.type': 'Type',
-  'outend.table.title.state': 'Status',
   'outend.table.title.allowPing': 'Enabled Heartbeat',
   'outend.table.title.pingPacket': 'Heartbeat Package',
   'outend.table.title.timeout': 'Timeout',
   'outend.table.title.timeout.rw': 'Read/Write Timeout',
-  'outend.table.title.port': 'Port',
   'outend.table.title.host': 'Host',
   'outend.table.title.collection': '{type} Collections',
-  'outend.table.title.clientId': 'Client ID',
   'outend.table.title.pubTopic': 'Publish Topic',
   'outend.table.title.username': 'Username',
   'outend.table.title.password': 'Password',

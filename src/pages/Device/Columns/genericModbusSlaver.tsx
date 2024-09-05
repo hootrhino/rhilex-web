@@ -49,7 +49,7 @@ const modeColumns = {
           render: (_dom: React.ReactNode, { hostConfig }: DeviceItem) => hostConfig?.host,
         },
         {
-          title: intl.formatMessage({ id: 'device.form.title.port' }),
+          title: intl.formatMessage({ id: 'form.title.port' }),
           dataIndex: ['config', 'hostConfig', 'port'],
           valueType: 'digit',
           required: true,

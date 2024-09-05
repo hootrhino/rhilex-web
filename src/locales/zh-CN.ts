@@ -32,6 +32,7 @@ export default {
   'message.success.restart': '重启成功',
   'message.success.reboot': '重启成功',
   'message.success.reset': '重置成功',
+  'message.success.clear': '清空成功',
   /**
    * placeholder
    */
@@ -41,9 +42,12 @@ export default {
   /**
    * table
    */
-  'table.index': '序号',
-  'table.desc': '备注',
-  'table.option': '操作',
+  'table.title.index': '序号',
+  'table.title.name': '名称',
+  'table.title.type': '类型',
+  'table.title.status': '状态',
+  'table.title.desc': '备注',
+  'table.title.option': '操作',
 
   /**
    * page
@@ -52,10 +56,21 @@ export default {
   /**
    * form
    */
+  'form.title.name': '名称',
+  'form.title.alias': '别名',
+  'form.title.type': '类型',
+  'form.title.status': '状态',
+  'form.title.clientId': '客户端 ID',
+  'form.title.port': '端口',
   'form.title.username': '用户名',
   'form.title.password': '密码',
+  // placeholder
+  'form.placeholder.name': '请输入名称',
+  'form.placeholder.alias': '请输入别名',
+  'form.placeholder.type': '请选择类型',
   'form.placeholder.username': '请输入用户名',
   'form.placeholder.password': '请输入密码',
+  // rule
   'form.rules.name': '请输入4-64个字符，支持中文、字母、数字或下划线',
   'form.rules.port': '端口的值应在 0 到 65535 之间',
   'form.rules.address': '起始地址的值应在 0 到 65535 之间',

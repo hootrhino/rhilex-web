@@ -1,13 +1,7 @@
 export default {
   /**
-   * table
-   */
-  'ruleConfig.table.title.status': 'Status',
-
-  /**
    * form
    */
-  'ruleConfig.form.title.name': 'Name',
   'ruleConfig.form.title.actions': 'Actions',
   'ruleConfig.form.title.sourceType': 'Data Sources',
   'ruleConfig.form.title.fromSource': 'Input resources',
@@ -16,9 +10,7 @@ export default {
   'ruleConfig.form.title.targetType': 'Outend Type',
   'ruleConfig.form.title.targetId': 'Outend UUID',
 
-  'ruleConfig.form.placeholder.name': 'Please enter a name',
   'ruleConfig.form.placeholder.testData': 'Please enter test data',
-  'ruleConfig.form.placeholder.targetType': 'Please select a type',
 
   /**
    * title

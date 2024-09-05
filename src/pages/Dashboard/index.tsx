@@ -238,7 +238,7 @@ const Dashboard = () => {
               size="small"
               onClick={() => (window.location.href = '/api/v1/backup/runningLog')}
             >
-              {formatMessage({ id: 'dashboard.button.download' })}
+              {formatMessage({ id: 'button.download' })}
             </Button>
             <Button
               ghost

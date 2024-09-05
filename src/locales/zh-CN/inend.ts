@@ -2,12 +2,7 @@ export default {
   /**
    * table
    */
-  'inend.table.title.name': '名称',
-  'inend.table.title.type': '类型',
-  'inend.table.title.state': '状态',
   'inend.table.title.host': '服务地址',
-  'inend.table.title.port': '端口',
-  'inend.table.title.clientId': '客户端 ID',
   'inend.table.title.username': '用户名称',
   'inend.table.title.password': '用户密码',
   'inend.table.title.mode': '模式',

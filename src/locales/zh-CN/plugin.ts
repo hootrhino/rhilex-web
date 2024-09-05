@@ -2,7 +2,6 @@ export default {
   /**
    * table
    */
-  'plugin.table.title.running': '状态',
   'plugin.table.title.serverAddr': '访问地址',
   'plugin.table.title.serverEndpoint': '服务端点',
   'plugin.table.title.domain': '透传域名',

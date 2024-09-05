@@ -37,12 +37,12 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       copyable: true,
     },
     {
-      title: formatMessage({ id: 'ruleConfig.form.title.name' }),
+      title: formatMessage({ id: 'table.title.name' }),
       dataIndex: 'name',
       ellipsis: true,
     },
     {
-      title: formatMessage({ id: 'ruleConfig.table.title.status' }),
+      title: formatMessage({ id: 'table.title.status' }),
       dataIndex: 'status',
       renderText: (status) => <ProTag type={StatusType.RULE}>{status}</ProTag>,
     },
@@ -70,7 +70,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
       valueType: 'code',
     },
     {
-      title: formatMessage({ id: 'table.desc' }),
+      title: formatMessage({ id: 'table.title.desc' }),
       dataIndex: 'description',
       render: (_, { description }) => description || '-',
     },

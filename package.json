@@ -1,6 +1,6 @@
 {
   "name": "rhilex-web",
-  "version": "0.6.8",
+  "version": "0.7.4",
   "private": true,
   "description": "RHILEX - 做专业的边缘数据处理引擎",
   "scripts": {

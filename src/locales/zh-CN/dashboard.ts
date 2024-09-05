@@ -1,10 +1,5 @@
 export default {
   /**
-   * button
-   */
-  'dashboard.button.download': '下载',
-
-  /**
    * title
    */
   'dashboard.title.log': '运行日志',

@@ -36,7 +36,7 @@ export const TENCENT_IOTHUB_GATEWAY_CONFIG = [
         render: (_dom: React.ReactNode, { tencentConfig }: DeviceItem) => tencentConfig?.devicePsk,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.clientId' }),
+        title: intl.formatMessage({ id: 'form.title.clientId' }),
         dataIndex: ['config', 'tencentConfig', 'clientId'],
         required: true,
         render: (_dom: React.ReactNode, { tencentConfig }: DeviceItem) => tencentConfig?.clientId,

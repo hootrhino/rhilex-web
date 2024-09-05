@@ -29,12 +29,8 @@ export default {
   'system.form.title.security': 'Encryption Method',
 
   // port
-  'system.form.title.name': 'Name',
-  'system.form.title.alias': 'Alias',
-  'system.form.title.type': 'Type',
-  'system.form.title.busy': 'Status',
   'system.form.title.occupyBy': 'Occupied Device',
-  'system.form.title.config': 'Interface Configuration',
+  'system.form.title.config': 'Serial Port Configuration',
   'system.form.title.timeout': 'Timeout',
   'system.form.title.baudRate': 'Baud Rate',
   'system.form.title.dataBits': 'Data Bits',
@@ -59,9 +55,6 @@ export default {
   'system.form.placeholder.sysTime': 'Please select a time',
 
   // port
-  'system.form.placeholder.name': 'Please enter a name',
-  'system.form.placeholder.alias': 'Please enter an alias',
-  'system.form.placeholder.type': 'Please select a type',
   'system.form.placeholder.timeout': 'Please enter a timeout',
   'system.form.placeholder.baudRate': 'Please select a baud rate',
   'system.form.placeholder.dataBits': 'Please select a data bits',
@@ -105,7 +98,6 @@ export default {
    */
   'system.button.upgrade': 'Upgrading',
   'system.button.confirm.reboot': 'Confirm',
-  'system.button.confirm.restart': 'Confirm',
   'system.button.confirm.upload': 'Confirm',
   'system.button.confirm.upgrade': 'Confirm Upgrade',
   'system.button.confirm.recover': 'Confirm',
@@ -134,8 +126,8 @@ export default {
     'Factory reset will erase all current data and stop all ongoing tasks. Please proceed with caution',
   'system.modal.content.user':
     'Are you sure you want to change the username/password and login again?',
-  'system.modal.title.portDetail': 'Interface details',
-  'system.modal.title.portUpdate': 'Update interface',
+  'system.modal.title.portDetail': 'Serial port details',
+  'system.modal.title.portUpdate': 'Update serial port',
 
   /**
    * title

@@ -78,7 +78,7 @@ export const modeColumns = {
           render: (_dom: React.ReactNode, { hostConfig }: DeviceItem) => hostConfig?.host,
         },
         {
-          title: intl.formatMessage({ id: 'device.form.title.port' }),
+          title: intl.formatMessage({ id: 'form.title.port' }),
           dataIndex: ['config', 'hostConfig', 'port'],
           valueType: 'digit',
           required: true,
@@ -103,13 +103,13 @@ export const baseColumns = (product: Product) => [
     hideInDescriptions: true,
   },
   {
-    title: intl.formatMessage({ id: 'device.form.title.name' }),
+    title: intl.formatMessage({ id: 'form.title.name' }),
     dataIndex: 'name',
     required: true,
     ellipsis: true,
   },
   {
-    title: intl.formatMessage({ id: 'device.form.title.type' }),
+    title: intl.formatMessage({ id: 'form.title.type' }),
     dataIndex: 'type',
     valueType: 'select',
     required: true,
@@ -133,14 +133,14 @@ export const baseColumns = (product: Product) => [
     },
   },
   {
-    title: intl.formatMessage({ id: 'device.form.title.state' }),
+    title: intl.formatMessage({ id: 'form.title.status' }),
     dataIndex: 'state',
     hideInForm: true,
     width: 100,
     renderText: (state: number) => <ProTag type={StatusType.DEVICE}>{state || 0}</ProTag>,
   },
   {
-    title: intl.formatMessage({ id: 'table.desc' }),
+    title: intl.formatMessage({ id: 'table.title.desc' }),
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => (description ? description : '-'),

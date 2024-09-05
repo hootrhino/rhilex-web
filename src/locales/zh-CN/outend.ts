@@ -2,17 +2,12 @@ export default {
   /**
    * table
    */
-  'outend.table.title.name': '名称',
-  'outend.table.title.type': '类型',
-  'outend.table.title.state': '状态',
   'outend.table.title.allowPing': '开启心跳',
   'outend.table.title.pingPacket': '心跳包内容',
   'outend.table.title.timeout': '超时时间',
   'outend.table.title.timeout.rw': '读写超时',
-  'outend.table.title.port': '端口',
   'outend.table.title.host': '主机地址',
   'outend.table.title.collection': '{type} 集合',
-  'outend.table.title.clientId': '客户端 ID',
   'outend.table.title.pubTopic': '上报 Topic',
   'outend.table.title.username': '连接账户',
   'outend.table.title.password': '连接密码',

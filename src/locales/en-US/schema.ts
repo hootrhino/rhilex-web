@@ -2,9 +2,7 @@ export default {
   /**
    * form
    */
-  'schemaMgt.form.title.name': 'Name',
   'schemaMgt.form.title.id': 'Identifier',
-  'schemaMgt.form.title.type': 'Type',
   'schemaMgt.form.title.max': 'Max Length',
   'schemaMgt.form.title.range': 'Range',
   'schemaMgt.form.title.range.min': 'Min',
@@ -16,9 +14,7 @@ export default {
   'schemaMgt.form.title.unit': 'Unit',
   'schemaMgt.form.title.rw': 'Read/Write',
 
-  'schemaMgt.form.placeholder.name': 'Please enter a name',
   'schemaMgt.form.placeholder.id': 'Please enter an identifier',
-  'schemaMgt.form.placeholder.type': 'Please select a type',
   'schemaMgt.form.placeholder.max': 'Please enter the maximum length',
   'schemaMgt.form.placeholder.round': 'Please enter precision',
   'schemaMgt.form.placeholder.true': 'Such as, turn on',

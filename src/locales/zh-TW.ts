@@ -32,6 +32,7 @@ export default {
   'message.success.restart': '重新啟動成功',
   'message.success.reboot': '重新啟動成功',
   'message.success.reset': '重置成功',
+  'message.success.clear': '清空成功',
   /**
    * placeholder
    */
@@ -41,9 +42,12 @@ export default {
   /**
    * table
    */
-  'table.index': '序號',
-  'table.desc': '備註',
-  'table.option': '操作',
+  'table.title.index': '序號',
+  'table.title.name': '名稱',
+  'table.title.type': '類型',
+  'table.title.status': '狀態',
+  'table.title.desc': '備註',
+  'table.title.option': '操作',
   /**
    * page
    */
@@ -51,10 +55,21 @@ export default {
   /**
    * form
    */
+  'form.title.name': '名稱',
+  'form.title.alias': '別名',
+  'form.title.type': '類型',
+  'form.title.status': '狀態',
+  'form.title.clientId': '客戶端 ID',
+  'form.title.port': '端口',
   'form.title.username': '用户名',
   'form.title.password': '密碼',
+  // placeholder
+  'form.placeholder.name': '請輸入名稱',
+  'form.placeholder.alias': '请输入别名',
+  'form.placeholder.type': '請選擇類型',
   'form.placeholder.username': '請輸入用户名',
   'form.placeholder.password': '請輸入密碼',
+  // rule
   'form.rules.name': '請輸入4-64個字符，支持中文、字母、數字或下劃線',
   'form.rules.port': '端口的值應在 0 到 65535 之間',
   'form.rules.address': '起始地址的值應在 0 到 65535 之間',

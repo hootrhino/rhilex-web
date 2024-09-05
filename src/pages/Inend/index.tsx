@@ -83,7 +83,7 @@ const Inend = () => {
 
   const columns: ProColumns<InendItem>[] = (baseColumns as ProColumns<InendItem>[]).concat([
     {
-      title: formatMessage({ id: 'table.option' }),
+      title: formatMessage({ id: 'table.title.option' }),
       width: 230,
       key: 'option',
       valueType: 'option',

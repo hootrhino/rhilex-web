@@ -8,7 +8,7 @@ const intl = getIntl(getLocale());
 
 const columns = [
   {
-    title: intl.formatMessage({ id: 'plugin.table.title.running' }),
+    title: intl.formatMessage({ id: 'table.title.status' }),
     dataIndex: 'running',
     renderText: (running: boolean) => <ProTag type={StatusType.RUNNING}>{running}</ProTag>,
   },

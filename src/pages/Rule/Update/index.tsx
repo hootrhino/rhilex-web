@@ -185,13 +185,13 @@ const UpdateForm = () => {
           >
             <ProForm.Group>
               <ProFormText
-                label={formatMessage({ id: 'ruleConfig.form.title.name' })}
+                label={formatMessage({ id: 'form.title.name' })}
                 name="name"
-                placeholder={formatMessage({ id: 'ruleConfig.form.placeholder.name' })}
+                placeholder={formatMessage({ id: 'form.placeholder.name' })}
                 rules={[
                   {
                     required: true,
-                    message: formatMessage({ id: 'ruleConfig.form.placeholder.name' }),
+                    message: formatMessage({ id: 'form.placeholder.name' }),
                   },
                   {
                     validator: (_rule: Rule, value: string) =>
@@ -201,7 +201,7 @@ const UpdateForm = () => {
                 width="lg"
               />
               <ProFormText
-                label={formatMessage({ id: 'table.desc' })}
+                label={formatMessage({ id: 'table.title.desc' })}
                 name="description"
                 width="lg"
                 placeholder={formatMessage({ id: 'placeholder.desc' })}

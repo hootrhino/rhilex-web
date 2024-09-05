@@ -10,14 +10,14 @@ export const GENERIC_MQTT = [
     required: true,
   },
   {
-    title: intl.formatMessage({ id: 'inend.table.title.port' }),
+    title: intl.formatMessage({ id: 'form.title.port' }),
     dataIndex: ['config', 'port'],
     valueType: 'digit',
     required: true,
     render: (port: number) => port,
   },
   {
-    title: intl.formatMessage({ id: 'inend.table.title.clientId' }),
+    title: intl.formatMessage({ id: 'form.title.clientId' }),
     dataIndex: ['config', 'clientId'],
     required: true,
   },

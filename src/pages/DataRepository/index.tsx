@@ -139,7 +139,7 @@ const DataRepository = () => {
       manual: true,
       onSuccess: () => {
         actionRef.current?.reload();
-        message.success(formatMessage({ id: 'dataRepo.message.success.clear' }));
+        message.success(formatMessage({ id: 'message.success.clear' }));
       },
     },
   );
@@ -217,7 +217,7 @@ const DataRepository = () => {
       {formatMessage({ id: 'button.clear' })}
     </Button>,
     <Button key="download" type="primary" onClick={handleOnDownload} icon={<DownloadOutlined />}>
-      {formatMessage({ id: 'dataRepo.button.download' })}
+      {formatMessage({ id: 'dataRepo.button.export' })}
     </Button>,
   ];
 

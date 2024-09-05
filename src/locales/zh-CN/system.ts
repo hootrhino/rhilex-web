@@ -29,12 +29,8 @@ export default {
   'system.form.title.security': '加密方式',
 
   // port
-  'system.form.title.name': '名称',
-  'system.form.title.alias': '别名',
-  'system.form.title.type': '类型',
-  'system.form.title.busy': '状态',
   'system.form.title.occupyBy': '占用设备',
-  'system.form.title.config': '接口配置',
+  'system.form.title.config': '串口配置',
   'system.form.title.timeout': '超时时间',
   'system.form.title.baudRate': '波特率',
   'system.form.title.dataBits': '数据位',
@@ -59,9 +55,6 @@ export default {
   'system.form.placeholder.sysTime': '请选择时间',
 
   // port
-  'system.form.placeholder.name': '请输入接口名称',
-  'system.form.placeholder.alias': '请输入别名',
-  'system.form.placeholder.type': '请选择接口类型',
   'system.form.placeholder.timeout': '请输入超时时间',
   'system.form.placeholder.baudRate': '请选择波特率',
   'system.form.placeholder.dataBits': '请选择数据位',
@@ -105,7 +98,6 @@ export default {
    */
   'system.button.upgrade': '升级',
   'system.button.confirm.reboot': '确认重启',
-  'system.button.confirm.restart': '确认重启',
   'system.button.confirm.upload': '确认上传',
   'system.button.confirm.upgrade': '确认升级',
   'system.button.confirm.recover': '确认恢复',
@@ -131,8 +123,8 @@ export default {
   'system.modal.content.recover':
     '恢复出厂设置将删除当前所有数据并停止所有正在进行中的任务，请谨慎操作',
   'system.modal.content.user': '确定要修改用户名 / 密码并重新登录吗？',
-  'system.modal.title.portDetail': '接口详情',
-  'system.modal.title.portUpdate': '编辑接口',
+  'system.modal.title.portDetail': '串口详情',
+  'system.modal.title.portUpdate': '编辑串口',
 
   /**
    * title

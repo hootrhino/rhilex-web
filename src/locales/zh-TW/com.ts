@@ -2,10 +2,7 @@ export default {
   /**
    * table
    */
-  'com.table.title.name': '名稱',
-  'com.table.title.type': '類型',
   'com.table.title.model': '型號',
-  'com.table.title.status': '狀態',
   'com.table.title.vendor': '廠商',
   'com.table.title.firmware': '固件',
   'com.table.title.mac': 'MAC 地址',

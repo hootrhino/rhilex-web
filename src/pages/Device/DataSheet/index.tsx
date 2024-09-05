@@ -107,7 +107,7 @@ const DataSheet = ({
 
   const baseColumns: ProColumns<Partial<DataSheetItem>>[] = [
     {
-      title: formatMessage({ id: 'table.index' }),
+      title: formatMessage({ id: 'table.title.index' }),
       dataIndex: 'index',
       valueType: 'index',
       width: 50,
@@ -134,17 +134,15 @@ const DataSheet = ({
       },
     },
     {
-      title: formatMessage({ id: 'device.form.title.alias' }),
+      title: formatMessage({ id: 'form.title.alias' }),
       dataIndex: 'alias',
       ellipsis: true,
       width: 100,
       formItemProps: {
-        rules: [
-          { required: true, message: formatMessage({ id: 'device.form.placeholder.alias' }) },
-        ],
+        rules: [{ required: true, message: formatMessage({ id: 'form.placeholder.alias' }) }],
       },
       fieldProps: {
-        placeholder: formatMessage({ id: 'device.form.placeholder.alias' }),
+        placeholder: formatMessage({ id: 'form.placeholder.alias' }),
       },
     },
     ...columns,
@@ -171,7 +169,7 @@ const DataSheet = ({
       width: 160,
     },
     {
-      title: formatMessage({ id: 'table.option' }),
+      title: formatMessage({ id: 'table.title.option' }),
       valueType: 'option',
       width: 150,
       hideInTable: type === SheetType.DETAIL,

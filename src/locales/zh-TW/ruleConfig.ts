@@ -1,13 +1,7 @@
 export default {
   /**
-   * table
-   */
-  'ruleConfig.table.title.status': '狀態',
-
-  /**
    * form
    */
-  'ruleConfig.form.title.name': '名稱',
   'ruleConfig.form.title.actions': '規則回調',
   'ruleConfig.form.title.sourceType': '數據來源',
   'ruleConfig.form.title.fromSource': '輸入資源',
@@ -16,9 +10,7 @@ export default {
   'ruleConfig.form.title.targetType': '北向資源類型',
   'ruleConfig.form.title.targetId': '北向資源 UUID',
 
-  'ruleConfig.form.placeholder.name': '請輸入名稱',
   'ruleConfig.form.placeholder.testData': '請輸入數據',
-  'ruleConfig.form.placeholder.targetType': '請選擇類型',
 
   /**
    * title

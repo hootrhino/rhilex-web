@@ -20,11 +20,11 @@ const Detail = ({ name, type, ...props }: DetailProps) => {
   // 基本信息
   const columns = [
     {
-      title: intl.formatMessage({ id: 'com.table.title.name' }),
+      title: intl.formatMessage({ id: 'table.title.name' }),
       dataIndex: 'name',
     },
     {
-      title: intl.formatMessage({ id: 'com.table.title.type' }),
+      title: intl.formatMessage({ id: 'table.title.type' }),
       dataIndex: 'type',
       renderText: (type: number) =>
         type ? (
@@ -55,7 +55,7 @@ const Detail = ({ name, type, ...props }: DetailProps) => {
       hideInTable: true,
     },
     {
-      title: intl.formatMessage({ id: 'com.table.title.status' }),
+      title: intl.formatMessage({ id: 'table.title.status' }),
       dataIndex: 'status',
       renderText: (status: number) => <ProTag type={StatusType.COM}>{status || 0}</ProTag>,
     },

@@ -54,16 +54,16 @@ const Update = ({ dataSource, ...props }: UpdateProps) => {
       <ProForm.Group>
         <ProFormText
           name="name"
-          label={formatMessage({ id: 'system.form.title.name' })}
-          placeholder={formatMessage({ id: 'system.form.placeholder.name' })}
+          label={formatMessage({ id: 'form.title.name' })}
+          placeholder={formatMessage({ id: 'form.placeholder.name' })}
           width="sm"
           disabled
           required
         />
         <ProFormSelect
           name="type"
-          label={formatMessage({ id: 'system.form.title.type' })}
-          placeholder={formatMessage({ id: 'system.form.placeholder.type' })}
+          label={formatMessage({ id: 'form.title.type' })}
+          placeholder={formatMessage({ id: 'form.placeholder.type' })}
           width="sm"
           disabled
           required
@@ -71,12 +71,10 @@ const Update = ({ dataSource, ...props }: UpdateProps) => {
         />
         <ProFormText
           name="alias"
-          label={formatMessage({ id: 'system.form.title.alias' })}
-          placeholder={formatMessage({ id: 'system.form.placeholder.alias' })}
+          label={formatMessage({ id: 'form.title.alias' })}
+          placeholder={formatMessage({ id: 'form.placeholder.alias' })}
           width="sm"
-          rules={[
-            { required: true, message: formatMessage({ id: 'system.form.placeholder.alias' }) },
-          ]}
+          rules={[{ required: true, message: formatMessage({ id: 'form.placeholder.alias' }) }]}
         />
       </ProForm.Group>
       <ProFormList
@@ -172,7 +170,7 @@ const Update = ({ dataSource, ...props }: UpdateProps) => {
       </ProFormList>
       <ProFormText
         name="description"
-        label={formatMessage({ id: 'table.desc' })}
+        label={formatMessage({ id: 'table.title.desc' })}
         placeholder={formatMessage({ id: 'placeholder.desc' })}
       />
     </ModalForm>

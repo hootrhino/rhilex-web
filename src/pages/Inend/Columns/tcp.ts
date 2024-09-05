@@ -9,7 +9,7 @@ export const TCP_SERVER = [
     required: true,
   },
   {
-    title: intl.formatMessage({ id: 'inend.table.title.port' }),
+    title: intl.formatMessage({ id: 'form.title.port' }),
     dataIndex: ['config', 'port'],
     valueType: 'digit',
     required: true,

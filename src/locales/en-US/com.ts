@@ -2,10 +2,7 @@ export default {
   /**
    * table
    */
-  'com.table.title.name': 'Name',
-  'com.table.title.type': 'Type',
   'com.table.title.model': 'Model',
-  'com.table.title.status': 'Status',
   'com.table.title.vendor': 'Vendor',
   'com.table.title.firmware': 'Firmware',
   'com.table.title.mac': 'MAC Address',

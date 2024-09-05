@@ -2,12 +2,7 @@ export default {
   /**
    * table
    */
-  'inend.table.title.name': 'Name',
-  'inend.table.title.type': 'Type',
-  'inend.table.title.state': 'Status',
   'inend.table.title.host': 'Host',
-  'inend.table.title.port': 'Port',
-  'inend.table.title.clientId': 'Client ID',
   'inend.table.title.username': 'Username',
   'inend.table.title.password': 'Password',
   'inend.table.title.mode': 'Mode',

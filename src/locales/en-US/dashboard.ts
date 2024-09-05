@@ -1,10 +1,5 @@
 export default {
   /**
-   * button
-   */
-  'dashboard.button.download': 'Download',
-
-  /**
    * title
    */
   'dashboard.title.log': 'Runtime log',

@@ -35,4 +35,5 @@ export default {
   'button.homePage': 'Back Home',
   'button.list': 'New {item}',
   'button.clear': 'Clear',
+  'button.download': 'Download',
 };

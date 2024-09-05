@@ -61,7 +61,7 @@ const ClientList = () => {
       ),
     },
     {
-      title: formatMessage({ id: 'table.option' }),
+      title: formatMessage({ id: 'table.title.option' }),
       valueType: 'option',
       width: 80,
       fixed: 'right',

@@ -2,7 +2,7 @@ export default {
   /**
    * button
    */
-  'dataRepo.button.download': '導出',
+  'dataRepo.button.export': '導出',
   'dataRepo.button.code': '快速請求',
 
   /**
@@ -10,11 +10,6 @@ export default {
    */
   'dataRepo.title.tree': '數據表列表',
   'dataRepo.title.table': '歷史數據列表',
-
-  /**
-   * message
-   */
-  'dataRepo.message.success.clear': '清空成功',
 
   /**
    * modal

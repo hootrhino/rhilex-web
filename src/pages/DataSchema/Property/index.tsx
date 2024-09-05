@@ -49,7 +49,7 @@ export type Property = {
 
 const baseColumns: ProColumns<Property>[] = [
   {
-    title: <FormattedMessage id="schemaMgt.form.title.name" />,
+    title: <FormattedMessage id="form.title.name" />,
     dataIndex: 'label',
     ellipsis: true,
   },
@@ -59,7 +59,7 @@ const baseColumns: ProColumns<Property>[] = [
     ellipsis: true,
   },
   {
-    title: <FormattedMessage id="schemaMgt.form.title.type" />,
+    title: <FormattedMessage id="form.title.type" />,
     dataIndex: 'type',
     valueType: 'select',
     valueEnum: typeOption,
@@ -78,7 +78,7 @@ const baseColumns: ProColumns<Property>[] = [
     width: 100,
   },
   {
-    title: <FormattedMessage id="table.desc" />,
+    title: <FormattedMessage id="table.title.desc" />,
     dataIndex: 'description',
     ellipsis: true,
   },
@@ -154,7 +154,7 @@ const PropertyList = () => {
 
   const columns: ProColumns<Property>[] = baseColumns.concat([
     {
-      title: formatMessage({ id: 'table.option' }),
+      title: formatMessage({ id: 'table.title.option' }),
       valueType: 'option',
       width: 100,
       render: (_, { uuid }) => [

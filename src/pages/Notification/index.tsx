@@ -29,19 +29,24 @@ const Notification = () => {
   const handleOnSuccess = () => {
     actionRef.current?.reload();
     refresh();
-    message.success(formatMessage({ id: 'notification.message.success' }));
   };
 
-  // 清除
-  const { run: clear } = useRequest((params: API.putNotifyReadParams) => putNotifyRead(params), {
+  // 删除
+  const { run: remove } = useRequest((params: API.putNotifyReadParams) => putNotifyRead(params), {
     manual: true,
-    onSuccess: () => handleOnSuccess(),
+    onSuccess: () => {
+      handleOnSuccess();
+      message.success(formatMessage({ id: 'message.success.remove' }));
+    },
   });
 
   // 全部清除
   const { run: clearAll } = useRequest(() => putNotifyClear(), {
     manual: true,
-    onSuccess: () => handleOnSuccess(),
+    onSuccess: () => {
+      handleOnSuccess();
+      message.success(formatMessage({ id: 'notification.message.success' }));
+    },
   });
 
   const toolBarRender = () => [
@@ -69,9 +74,9 @@ const Notification = () => {
       <span>{dayjs(ts).format('YYYY-MM-DD HH:mm:ss')}</span>
     </Space>,
     <Popconfirm
-      title={formatMessage({ id: 'notification.modal.title.clear' })}
-      onConfirm={async () => uuid && clear({ uuid })}
-      key="clear"
+      title={formatMessage({ id: 'notification.modal.title.remove' })}
+      onConfirm={async () => uuid && remove({ uuid })}
+      key="remove"
     >
       <a className="pl-[16px]">{formatMessage({ id: 'button.remove' })}</a>
     </Popconfirm>,

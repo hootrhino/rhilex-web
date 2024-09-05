@@ -91,7 +91,7 @@ export const baseColumns = [
     renderText: (running: string) => <ProTag type={StatusType.RUNNING}>{running}</ProTag>,
   },
   {
-    title: <FormattedMessage id="table.desc" />,
+    title: <FormattedMessage id="table.title.desc" />,
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => description || '-',
@@ -139,7 +139,7 @@ const ExtendedProtocol = () => {
   const columns: ProColumns<ExtendItem>[] = [
     ...baseColumns,
     {
-      title: formatMessage({ id: 'table.option' }),
+      title: formatMessage({ id: 'table.title.option' }),
       valueType: 'option',
       key: 'option',
       width: 200,

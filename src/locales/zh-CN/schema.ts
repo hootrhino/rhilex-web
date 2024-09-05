@@ -2,9 +2,7 @@ export default {
   /**
    * form
    */
-  'schemaMgt.form.title.name': '名称',
   'schemaMgt.form.title.id': '标志符',
-  'schemaMgt.form.title.type': '类型',
   'schemaMgt.form.title.max': '最大长度',
   'schemaMgt.form.title.range': '取值范围',
   'schemaMgt.form.title.range.min': '最小值',
@@ -16,9 +14,7 @@ export default {
   'schemaMgt.form.title.unit': '单位',
   'schemaMgt.form.title.rw': '读写',
 
-  'schemaMgt.form.placeholder.name': '请输入名称',
   'schemaMgt.form.placeholder.id': '请输入标志符',
-  'schemaMgt.form.placeholder.type': '请选择类型',
   'schemaMgt.form.placeholder.max': '请输入最大长度',
   'schemaMgt.form.placeholder.round': '请输入小数位',
   'schemaMgt.form.placeholder.true': '比如：开启',

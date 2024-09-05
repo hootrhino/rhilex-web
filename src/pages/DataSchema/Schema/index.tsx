@@ -218,19 +218,19 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
         <ProFormText
           name="name"
           labelCol={{ span: 4 }}
-          label={formatMessage({ id: 'schemaMgt.form.title.name' })}
-          placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.name' })}
+          label={formatMessage({ id: 'form.title.name' })}
+          placeholder={formatMessage({ id: 'form.placeholder.name' })}
           rules={[
             {
               required: true,
-              message: formatMessage({ id: 'schemaMgt.form.placeholder.name' }),
+              message: formatMessage({ id: 'form.placeholder.name' }),
             },
           ]}
         />
         <ProFormText
           name="description"
           labelCol={{ span: 4 }}
-          label={formatMessage({ id: 'table.desc' })}
+          label={formatMessage({ id: 'table.title.desc' })}
           placeholder={formatMessage({ id: 'placeholder.desc' })}
         />
       </ModalForm>

@@ -130,23 +130,23 @@ const Rule = () => {
       copyable: true,
     },
     {
-      title: formatMessage({ id: 'ruleConfig.form.title.name' }),
+      title: formatMessage({ id: 'table.title.name' }),
       dataIndex: 'name',
       ellipsis: true,
     },
     {
-      title: formatMessage({ id: 'ruleConfig.table.title.status' }),
+      title: formatMessage({ id: 'table.title.status' }),
       dataIndex: 'status',
       width: 100,
       renderText: (status) => <ProTag type={StatusType.RULE}>{status}</ProTag>,
     },
     {
-      title: formatMessage({ id: 'table.desc' }),
+      title: formatMessage({ id: 'table.title.desc' }),
       dataIndex: 'description',
       ellipsis: true,
     },
     {
-      title: formatMessage({ id: 'table.option' }),
+      title: formatMessage({ id: 'table.title.option' }),
       valueType: 'option',
       key: 'option',
       width: 230,

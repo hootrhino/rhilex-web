@@ -91,7 +91,7 @@ const UpdateForm = ({ tplId, ...props }: RuleUpdateFormProps) => {
         />
         <ProFormText
           name="detail"
-          label={formatMessage({ id: 'table.desc' })}
+          label={formatMessage({ id: 'table.title.desc' })}
           width="md"
           placeholder={formatMessage({ id: 'placeholder.desc' })}
           rules={[{ required: true, message: formatMessage({ id: 'placeholder.desc' }) }]}

@@ -21,13 +21,13 @@ export const baseColumns = [
     copyable: true,
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.name' }),
+    title: intl.formatMessage({ id: 'table.title.name' }),
     dataIndex: 'name',
     ellipsis: true,
     required: true,
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.type' }),
+    title: intl.formatMessage({ id: 'table.title.type' }),
     dataIndex: 'type',
     valueType: 'select',
     valueEnum: outendTypeOption,
@@ -36,13 +36,13 @@ export const baseColumns = [
     renderText: (type: OutendType) => (type ? outendTypeOption[type] : '-'),
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.state' }),
+    title: intl.formatMessage({ id: 'table.title.status' }),
     dataIndex: 'state',
     hideInForm: true,
     renderText: (state: number) => <ProTag type={StatusType.DEVICE}>{state || 0}</ProTag>,
   },
   {
-    title: intl.formatMessage({ id: 'table.desc' }),
+    title: intl.formatMessage({ id: 'table.title.desc' }),
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => description || '-',
@@ -81,7 +81,7 @@ const timeoutConfig = (title?: string) => [
 
 const portConfig = [
   {
-    title: intl.formatMessage({ id: 'outend.table.title.port' }),
+    title: intl.formatMessage({ id: 'form.title.port' }),
     dataIndex: ['config', 'port'],
     valueType: 'digit',
     required: true,
@@ -130,7 +130,7 @@ export const configColumns = {
   [OutendType.MQTT]: [
     ...hostPortConfig,
     {
-      title: intl.formatMessage({ id: 'outend.table.title.clientId' }),
+      title: intl.formatMessage({ id: 'form.title.clientId' }),
       dataIndex: ['config', 'clientId'],
       required: true,
     },

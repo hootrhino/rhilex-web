@@ -29,12 +29,8 @@ export default {
   'system.form.title.security': '加密方式',
 
   // port
-  'system.form.title.name': '名稱',
-  'system.form.title.alias': '暱稱',
-  'system.form.title.type': '類型',
-  'system.form.title.busy': '狀態',
   'system.form.title.occupyBy': '佔用設備',
-  'system.form.title.config': '介面配置',
+  'system.form.title.config': '串口配置',
   'system.form.title.timeout': '超時時間',
   'system.form.title.baudRate': '波特率',
   'system.form.title.dataBits': '數據位',
@@ -59,9 +55,6 @@ export default {
   'system.form.placeholder.sysTime': '請選擇時間',
 
   // port
-  'system.form.placeholder.name': '請輸入介面名稱',
-  'system.form.placeholder.alias': '請輸入暱稱',
-  'system.form.placeholder.type': '請選擇介面類型',
   'system.form.placeholder.timeout': '請輸入超時時間',
   'system.form.placeholder.baudRate': '請選擇波特率',
   'system.form.placeholder.dataBits': '請選擇數據位',
@@ -105,7 +98,6 @@ export default {
    */
   'system.button.upgrade': '升級',
   'system.button.confirm.reboot': '確認重新啟動',
-  'system.button.confirm.restart': '確認重新啟動',
   'system.button.confirm.upload': '確認上傳',
   'system.button.confirm.upgrade': '確認升級',
   'system.button.confirm.recover': '確認還原',
@@ -131,8 +123,8 @@ export default {
   'system.modal.content.recover':
     '恢復原廠設定將刪除目前所有資料並停止所有正在進行中的任務，請謹慎操作',
   'system.modal.content.user': '確定要修改用戶名 / 密碼並重新登入嗎？',
-  'system.modal.title.portDetail': '介面詳情',
-  'system.modal.title.portUpdate': '編輯介面',
+  'system.modal.title.portDetail': '串口詳情',
+  'system.modal.title.portUpdate': '編輯串口',
 
   /**
    * title
