@@ -21,7 +21,6 @@ const UpdateForm = () => {
   const { uuid } = useParams();
   const { formatMessage } = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
-  // const randomNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
   const defaultValue = { type: InendType.COAP, config: defaultConfig[InendType.COAP] };
 
   // 获取详情
@@ -37,18 +36,6 @@ const UpdateForm = () => {
       let params = {
         ...values,
       };
-      // TODO 暂时隐藏
-      // if (params.type === InendType.GENERIC_MQTT) {
-      //   const newSubTopics = params?.config?.subTopics?.map(({ k }: { k: string }) => k);
-
-      //   params = {
-      //     ...params,
-      //     config: {
-      //       ...params.config,
-      //       subTopics: newSubTopics,
-      //     },
-      //   };
-      // }
 
       if (uuid) {
         await putInendsUpdate({ ...params, uuid });
@@ -71,50 +58,18 @@ const UpdateForm = () => {
     }
   };
 
-  const formatDetailConfig = () => {
-    // const newConfig =
-    //   detail?.type === InendType.GENERIC_MQTT
-    //     ? {
-    //         ...detail?.config,
-    //         subTopics: detail?.config?.subTopics?.map((topic: string) => ({ k: topic })),
-    //       }
-    //     : detail?.config;
-
-    return detail?.config;
-  };
-
   const handleOnValuesChange = (changedValue: any) => {
     if (!changedValue?.type) return;
 
     const config = defaultConfig[changedValue?.type];
-    // TODO 暂时隐藏
-    // if (changedValue?.type === InendType.GENERIC_IOT_HUB) {
-    //   config = {
-    //     ...defaultConfig[InendType.GENERIC_IOT_HUB],
-    //     productId: `rhilex${randomNumber}`,
-    //     deviceName: `rhilex${randomNumber}`,
-    //     clientId: `rhilex${randomNumber}`,
-    //   };
-    // } else if (changedValue?.type === InendType.GENERIC_MQTT) {
-    //   config = {
-    //     ...defaultConfig[InendType.GENERIC_MQTT],
-    //     clientId: `rhilex${randomNumber}`,
-    //   };
-    // } else {
-    //   config = defaultConfig[changedValue?.type];
-    // }
 
     formRef.current?.setFieldsValue({
-      config: changedValue?.type === detail?.type ? formatDetailConfig() : config,
+      config: changedValue?.type === detail?.type ? detail?.config : config,
     });
   };
 
   useEffect(() => {
-    if (detail) {
-      formRef.current?.setFieldsValue({ ...detail, config: formatDetailConfig() });
-    } else {
-      formRef.current?.setFieldsValue(defaultValue);
-    }
+    formRef.current?.setFieldsValue(detail || defaultValue);
   }, [detail]);
 
   useBeforeUnloadConfirm();
@@ -135,11 +90,7 @@ const UpdateForm = () => {
         onValuesChange={handleOnValuesChange}
         columns={columns as ProFormColumnsType<Record<string, any>>[]}
         loading={loading}
-        handleOnReset={() =>
-          formRef.current?.setFieldsValue(
-            uuid ? { ...detail, config: formatDetailConfig() } : defaultValue,
-          )
-        }
+        handleOnReset={() => formRef.current?.setFieldsValue(uuid ? detail : defaultValue)}
         rootClassName="inend-form"
       />
     </PageContainer>

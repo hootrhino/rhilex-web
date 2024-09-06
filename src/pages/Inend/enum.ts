@@ -6,13 +6,10 @@ import { getIntl, getLocale } from '@umijs/max';
 
 export enum InendType {
   COAP = 'CoAP',
-  // TODO GENERIC_IOT_HUB = 'GENERIC_IOT_HUB',
   UDP_SERVER = 'UDP_SERVER',
   TCP_SERVER = 'TCP_SERVER',
   HTTP = 'HTTP',
-  // TODO NATS_SERVER = 'NATS_SERVER',
   GRPC = 'GRPC',
-  // TODO GENERIC_MQTT = 'GENERIC_MQTT',
   GENERIC_MQTT_SERVER = 'GENERIC_MQTT_SERVER',
   INTERNAL_EVENT = 'INTERNAL_EVENT',
   COMTC_EVENT_FORWARDER = 'COMTC_EVENT_FORWARDER',
@@ -22,17 +19,14 @@ const intl = getIntl(getLocale());
 
 export const inendTypeOption = {
   [InendType.COAP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'CoAP Server' }),
-  // TODO [InendType.GENERIC_IOT_HUB]: intl.formatMessage({ id: 'inend.type.topic' }, { type: 'IoTHub' }),
   [InendType.UDP_SERVER]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'UDP Server' }),
   [InendType.TCP_SERVER]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'TCP Server' }),
   [InendType.HTTP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'HTTP Server' }),
-  // TODO [InendType.NATS_SERVER]: intl.formatMessage(
-  //   { id: 'inend.type.subject' },
-  //   { type: 'NATS Client' },
-  // ),
   [InendType.GRPC]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'GRPC Server' }),
-  // TODO [InendType.GENERIC_MQTT]: intl.formatMessage({ id: 'inend.type.topic' }, { type: 'MQTT' }),
-  [InendType.GENERIC_MQTT_SERVER]: intl.formatMessage({ id: 'inend.type.mqtt' }),
+  [InendType.GENERIC_MQTT_SERVER]: intl.formatMessage(
+    { id: 'inend.type.serve' },
+    { type: 'MQTT Broker' },
+  ),
   [InendType.INTERNAL_EVENT]: intl.formatMessage({ id: 'inend.type.event' }, { type: 'RHILEX' }),
   [InendType.COMTC_EVENT_FORWARDER]: intl.formatMessage({ id: 'inend.type.comtc' }),
 };
@@ -68,27 +62,3 @@ export const eventTypeOption = {
   [EventType.SYSTEM]: intl.formatMessage({ id: 'inend.event.system' }),
   [EventType.HARDWARE]: intl.formatMessage({ id: 'inend.event.hardware' }),
 };
-
-/**
- * 数据质量
- */
-export enum QoSLevel {
-  LEVEL0 = 0,
-  LEVEL1 = 1,
-  LEVEL2 = 2,
-}
-
-export const qosOption = [
-  {
-    label: intl.formatMessage({ id: 'inend.qos.level0' }),
-    value: QoSLevel.LEVEL0,
-  },
-  {
-    label: intl.formatMessage({ id: 'inend.qos.level1' }),
-    value: QoSLevel.LEVEL1,
-  },
-  {
-    label: intl.formatMessage({ id: 'inend.qos.level2' }),
-    value: QoSLevel.LEVEL2,
-  },
-];

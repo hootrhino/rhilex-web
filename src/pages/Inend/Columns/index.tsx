@@ -2,14 +2,25 @@ import ProTag, { StatusType } from '@/components/ProTag';
 import { getIntl, getLocale } from '@umijs/max';
 import { InendType, inendTypeOption } from '../enum';
 import { COMTC_EVENT_FORWARDER } from './comtcEventForwardar';
-// import { GENERIC_IOT_HUB } from './genericIothub';
-// import { GENERIC_MQTT } from './genericMqtt';
+import { DEFAULT_CONFIG } from './defaultConfig';
 import { GENERIC_MQTT_SERVER } from './genericMqttServer';
 import { INTERNAL_EVENT } from './internalEvent';
-// import { NATS_SERVER } from './natsServer';
-import { DEFAULT_CONFIG } from './defaultConfig';
 
 const intl = getIntl(getLocale());
+
+/**
+ * 类型配置
+ */
+export const typeConfigColumns = {
+  [InendType.COAP]: DEFAULT_CONFIG,
+  [InendType.UDP_SERVER]: DEFAULT_CONFIG,
+  [InendType.TCP_SERVER]: DEFAULT_CONFIG,
+  [InendType.HTTP]: DEFAULT_CONFIG,
+  [InendType.GRPC]: DEFAULT_CONFIG,
+  [InendType.INTERNAL_EVENT]: INTERNAL_EVENT,
+  [InendType.GENERIC_MQTT_SERVER]: GENERIC_MQTT_SERVER,
+  [InendType.COMTC_EVENT_FORWARDER]: COMTC_EVENT_FORWARDER,
+};
 
 export const baseColumns = [
   {
@@ -48,23 +59,6 @@ export const baseColumns = [
     renderText: (description: string) => description || '-',
   },
 ];
-
-/**
- * 类型配置
- */
-export const typeConfigColumns = {
-  [InendType.COAP]: DEFAULT_CONFIG,
-  [InendType.UDP_SERVER]: DEFAULT_CONFIG,
-  [InendType.TCP_SERVER]: DEFAULT_CONFIG,
-  [InendType.HTTP]: DEFAULT_CONFIG,
-  [InendType.GRPC]: DEFAULT_CONFIG,
-  [InendType.INTERNAL_EVENT]: INTERNAL_EVENT,
-  // TODO [InendType.GENERIC_IOT_HUB]: GENERIC_IOT_HUB,
-  // TODO [InendType.NATS_SERVER]: NATS_SERVER,
-  // TODO [InendType.GENERIC_MQTT]: GENERIC_MQTT,
-  [InendType.GENERIC_MQTT_SERVER]: GENERIC_MQTT_SERVER,
-  [InendType.COMTC_EVENT_FORWARDER]: COMTC_EVENT_FORWARDER,
-};
 
 export const columns = [
   {

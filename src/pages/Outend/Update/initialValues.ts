@@ -34,7 +34,7 @@ export const defaultConfig = {
     port: 4001,
     username: 'rhilex',
     password: 'rhilex',
-    database: 'rhilex',
+    database: 'public',
     table: 'rhilex',
   },
   [OutendType.TDENGINE]: {

@@ -5,13 +5,7 @@ export default {
   'inend.table.title.host': 'Host',
   'inend.table.title.username': 'Username',
   'inend.table.title.password': 'Password',
-  'inend.table.title.mode': 'Mode',
-  'inend.table.title.deviceName': 'Device Name',
-  'inend.table.title.productId': 'Product ID',
-  'inend.table.title.topic': 'Topic',
   'inend.table.title.eventType': 'Event Type',
-  'inend.table.title.qos': 'QoS',
-  'inend.table.title.subTopics': 'Subscribe to Topic Table',
   'inend.table.title.ip': 'Device IP',
   'inend.table.title.status': 'Device Status',
   'inend.table.title.properties': 'Device Properties',
@@ -48,10 +42,7 @@ export default {
    * type
    */
   'inend.type.serve': 'Generic {type}',
-  'inend.type.topic': 'Generic {type}',
-  'inend.type.subject': 'Generic {type}',
   'inend.type.event': '{type} Internal Event Source',
-  'inend.type.mqtt': 'MQTT Broker',
   'inend.type.comtc': 'Data from Communication Module',
 
   /**
@@ -69,11 +60,4 @@ export default {
   'inend.event.target': 'Output event',
   'inend.event.system': 'System event',
   'inend.event.hardware': 'Hardware event',
-
-  /**
-   * QoS
-   */
-  'inend.qos.level0': '0 - At Most Once',
-  'inend.qos.level1': '1 - At Least Once',
-  'inend.qos.level2': '2 - Exactly Once',
 };

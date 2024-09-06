@@ -5,13 +5,7 @@ export default {
   'inend.table.title.host': '服務地址',
   'inend.table.title.username': '用户名稱',
   'inend.table.title.password': '用户密碼',
-  'inend.table.title.mode': '模式',
-  'inend.table.title.deviceName': '設備名稱',
-  'inend.table.title.productId': '產品 ID',
-  'inend.table.title.topic': '主題',
   'inend.table.title.eventType': '事件類型',
-  'inend.table.title.qos': '數據質量等級',
-  'inend.table.title.subTopics': '訂閲 topic 表',
   'inend.table.title.ip': '設備 IP',
   'inend.table.title.status': '設備狀態',
   'inend.table.title.properties': '設備屬性',
@@ -47,10 +41,7 @@ export default {
    * type
    */
   'inend.type.serve': '作為通用 {type} 提供接入服務',
-  'inend.type.topic': '作為通用 {type} 客户端訂閲 Topic 接入',
-  'inend.type.subject': '作為通用 {type} 訂閲 Subject 接入',
   'inend.type.event': '{type} 內部事件源',
-  'inend.type.mqtt': '作為 MQTT Broker 提供接入服務',
   'inend.type.comtc': '來自通訊模組的數據',
 
   /**
@@ -68,11 +59,4 @@ export default {
   'inend.event.target': '北向事件',
   'inend.event.system': '系統事件',
   'inend.event.hardware': '硬件事件',
-
-  /**
-   * QoS
-   */
-  'inend.qos.level0': '0 - 至多一次',
-  'inend.qos.level1': '1 - 至少一次',
-  'inend.qos.level2': '2 - 只有一次',
 };
