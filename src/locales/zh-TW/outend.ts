@@ -18,6 +18,8 @@ export default {
   'outend.table.title.mac': 'MAC 地址',
   'outend.table.title.uart': '本地串口',
   'outend.table.title.database': 'MongoDB 資料庫',
+  'outend.table.title.tableName': '數據表名',
+  'outend.table.title.gwsn': '網關序號',
 
   /**
    * title

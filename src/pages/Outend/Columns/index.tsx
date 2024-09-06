@@ -1,6 +1,7 @@
 import ProTag, { StatusType } from '@/components/ProTag';
 import { getIntl, getLocale } from '@umijs/max';
 import { OutendType, outendTypeOption } from '../enum';
+import { GREPTIME_DATABASE } from './greptimeDB';
 import { HTTP } from './http';
 import { MONGO_SINGLE } from './mongoDB';
 import { MQTT } from './mqttBroker';
@@ -61,13 +62,14 @@ export const baseColumns = [
 // ];
 
 export const configColumns = {
-  [OutendType.MONGO_SINGLE]: MONGO_SINGLE,
   [OutendType.MQTT]: MQTT,
   [OutendType.UDP_TARGET]: UDP_TARGET,
   [OutendType.TCP_TRANSPORT]: [
     ...UDP_TARGET,
     //TODO 暂时隐藏 ...dataModeConfig,
   ],
+  [OutendType.MONGO_SINGLE]: MONGO_SINGLE,
+  [OutendType.GREPTIME_DATABASE]: GREPTIME_DATABASE,
   [OutendType.TDENGINE]: TDENGINE,
   [OutendType.HTTP]: HTTP,
   [OutendType.GENERIC_UART_TARGET]: GENERIC_UART_TARGET,

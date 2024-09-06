@@ -8,11 +8,6 @@ export const defaultConfig = {
     port: 1883,
     host: DEFAULT_HOST,
   },
-  [OutendType.MONGO_SINGLE]: {
-    mongoUrl: 'mongodb://root:root@127.0.0.1:27017/?connect=direct',
-    database: 'rhilex',
-    collection: 'rhilex',
-  },
   [OutendType.UDP_TARGET]: {
     port: 2599,
     host: DEFAULT_HOST,
@@ -27,6 +22,20 @@ export const defaultConfig = {
     port: 6005,
     host: DEFAULT_HOST,
     timeout: DEFAULT_TIMEOUT,
+  },
+  [OutendType.MONGO_SINGLE]: {
+    mongoUrl: 'mongodb://root:root@127.0.0.1:27017/?connect=direct',
+    database: 'rhilex',
+    collection: 'rhilex',
+  },
+  [OutendType.GREPTIME_DATABASE]: {
+    gwsn: 'rhilex',
+    host: DEFAULT_HOST,
+    port: 4001,
+    username: 'rhilex',
+    password: 'rhilex',
+    database: 'rhilex',
+    table: 'rhilex',
   },
   [OutendType.TDENGINE]: {
     port: 6041,

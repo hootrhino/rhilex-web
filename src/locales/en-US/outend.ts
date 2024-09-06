@@ -18,6 +18,8 @@ export default {
   'outend.table.title.mac': 'MAC Address',
   'outend.table.title.uart': ' Local UART',
   'outend.table.title.database': 'MongoDB Database',
+  'outend.table.title.tableName': 'Table Name',
+  'outend.table.title.gwsn': 'Gateway Serial Number',
 
   /**
    * title

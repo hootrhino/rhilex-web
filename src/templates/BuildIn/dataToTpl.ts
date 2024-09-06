@@ -20,8 +20,12 @@ const dataToServers = [
     detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'TDengine' }),
   },
   {
-    target: 'mongo',
+    target: 'mongoDB',
     detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'MongoDB' }),
+  },
+  {
+    target: 'greptimeDB',
+    detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'GreptimeDB' }),
   },
   { target: 'nats', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'NATS' }) },
 ];

@@ -86,8 +86,8 @@ const UpdateForm = () => {
       }
     } else {
       formRef.current?.setFieldsValue({
-        type: OutendType.MONGO_SINGLE,
-        config: defaultConfig[OutendType.MONGO_SINGLE],
+        type: OutendType.MQTT,
+        config: defaultConfig[OutendType.MQTT],
       });
     }
   };

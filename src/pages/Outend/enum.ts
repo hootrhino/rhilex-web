@@ -11,6 +11,7 @@ export enum OutendType {
   TCP_TRANSPORT = 'TCP_TRANSPORT',
   HTTP = 'HTTP',
   MONGO_SINGLE = 'MONGO_SINGLE',
+  GREPTIME_DATABASE = 'GREPTIME_DATABASE',
   TDENGINE = 'TDENGINE',
   GENERIC_UART_TARGET = 'GENERIC_UART_TARGET',
   SEMTECH_UDP_FORWARDER = 'SEMTECH_UDP_FORWARDER',
@@ -24,6 +25,10 @@ export const outendTypeOption = {
   ),
   [OutendType.HTTP]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' HTTP Server' }),
   [OutendType.MONGO_SINGLE]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' MongoDB' }),
+  [OutendType.GREPTIME_DATABASE]: intl.formatMessage(
+    { id: 'outend.type.push' },
+    { type: ' GreptimeDB' },
+  ),
   [OutendType.TDENGINE]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' TDengine' }),
   [OutendType.GENERIC_UART_TARGET]: intl.formatMessage(
     { id: 'outend.type.push' },
