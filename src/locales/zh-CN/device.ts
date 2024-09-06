@@ -2,7 +2,6 @@ export default {
   /**
    * button
    */
-  'device.button.camera': '查看视频',
   'device.button.snmp': 'SNMP 对象列表',
   'device.button.sheet': '点位表配置',
   'device.button.registers': '查看寄存器组',
@@ -37,7 +36,6 @@ export default {
   'device.modal.title.remove.oid': '确定要删除此对象？',
   'device.modal.title.remove.sheet': '确定要删除此点位？',
   'device.modal.title.remove.batchSheet': '批量删除点位',
-  'device.modal.title.camera': '查看视频',
   'device.modal.title.group.new': '新建设备分组',
   'device.modal.title.group.edit': '编辑分组',
   'device.modal.title.group.remove': '确定要删除此分组？',
@@ -46,9 +44,6 @@ export default {
   'device.modal.content.group.remove':
     '请确认该分组下无任何设备挂载后再执行删除操作。若分组下有设备，则不允许删除',
   'device.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，请谨慎操作',
-  'device.modal.content.camera.loading': '视频正在加载...',
-  'device.modal.content.camera':
-    '此模式下流媒体被中转到第三方地址，当前{inputAddr}已经成功推送到{outputAddr}，请在对应的平台上查看或者播放。',
   'device.modal.content.remove.batchSheet': '此操作会一次性删除多个点位，请谨慎操作',
 
   /**
@@ -94,12 +89,6 @@ export default {
   'device.form.title.rack': '架位',
   'device.form.title.slot': '槽位',
   'device.form.title.url': '请求地址',
-  'device.form.title.inputMode': '输入模式',
-  'device.form.title.inputAddr': '视频采集源',
-  'device.form.title.outputMode': '输出模式',
-  'device.form.title.outputEncode': '输出编码',
-  'device.form.title.outputAddr': '输出地址',
-  'device.form.title.playAddr': '外部播放地址',
   'device.form.title.autoScan': '自动扫描',
   'device.form.title.enableGroup': '并发采集',
   'device.form.title.target.device': '目标设备',
@@ -207,7 +196,6 @@ export default {
   'device.type.snmp': '通用 SNMP 协议采集网关',
   'device.type.plc': '通用西门子 S7 系列 PLC 采集网关',
   'device.type.http': '通用 HTTP 协议数据采集网关',
-  'device.type.camera': '通用摄像机流处理网关',
   'device.type.bacnet.ip': '通用 BACnet IP 主机网关',
   'device.type.bacnet.router': '通用 BACnet IP 从机网关',
   'device.type.tencent': '腾讯云物联网平台网关接入',
@@ -225,23 +213,6 @@ export default {
    * plc model
    */
   'device.plc.model': '西门子 {model} 系列 PLC',
-
-  /**
-   * inputMode
-   */
-  'device.camera.inputMode.rtsp': '远程 RTSP 流地址',
-  'device.camera.inputMode.local': '本地相机设备',
-
-  /**
-   * outputMode
-   */
-  'device.camera.outputMode.jpeg': '本地 JPEG 流服务器',
-  'device.camera.outputMode.stream': '远程流媒体服务器',
-
-  /**
-   * outputEncode
-   */
-  'device.camera.outputEncode': '{type} 编码',
 
   /**
    * ReadFormat

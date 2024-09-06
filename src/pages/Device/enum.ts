@@ -17,9 +17,7 @@ export enum DeviceType {
   GENERIC_SNMP = 'GENERIC_SNMP',
   GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
   SIEMENS_PLC = 'SIEMENS_PLC',
-  // TODO 暂无需求，先隐藏
-  // GENERIC_CAMERA = 'GENERIC_CAMERA',
-  // TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
+  // TODO 暂无需求，先隐藏 TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
 }
 
 const baseTypeOption = {
@@ -32,9 +30,7 @@ const baseTypeOption = {
   [DeviceType.GENERIC_SNMP]: intl.formatMessage({ id: 'device.type.snmp' }),
   [DeviceType.GENERIC_HTTP_DEVICE]: intl.formatMessage({ id: 'device.type.http' }),
   [DeviceType.SIEMENS_PLC]: intl.formatMessage({ id: 'device.type.plc' }),
-  // TODO 暂无需求，先隐藏
-  // [DeviceType.GENERIC_CAMERA]: intl.formatMessage({ id: 'device.type.camera' }),
-  // [DeviceType.TENCENT_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.tencent' }),
+  // TODO 暂无需求，先隐藏 [DeviceType.TENCENT_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.tencent' }),
 };
 
 export const deviceTypeOptions = {
@@ -121,49 +117,6 @@ export const slotEnum = new Map([
   [10, '10'],
   [11, '11'],
 ]);
-
-/**
- * GENERIC_CAMERA
- */
-export enum InputMode {
-  REMOTE_STREAM_RTSP = 'REMOTE_STREAM_RTSP',
-  LOCAL_CAMERA = 'LOCAL_CAMERA',
-}
-
-export const InputModeOption = {
-  [InputMode.REMOTE_STREAM_RTSP]: intl.formatMessage({ id: 'device.camera.inputMode.rtsp' }),
-  [InputMode.LOCAL_CAMERA]: intl.formatMessage({ id: 'device.camera.inputMode.local' }),
-};
-
-export enum OutputMode {
-  // LOCAL_H264_STREAM_SERVER = 'LOCAL_H264_STREAM_SERVER',
-  LOCAL_JPEG_STREAM_SERVER = 'LOCAL_JPEG_STREAM_SERVER',
-  REMOTE_STREAM_SERVER = 'REMOTE_STREAM_SERVER',
-}
-
-export const OutputModeOption = {
-  // [OutputMode.LOCAL_H264_STREAM_SERVER]: '本地 FLV 流服务器',
-  [OutputMode.LOCAL_JPEG_STREAM_SERVER]: intl.formatMessage({
-    id: 'device.camera.outputMode.jpeg',
-  }),
-  [OutputMode.REMOTE_STREAM_SERVER]: intl.formatMessage({ id: 'device.camera.outputMode.stream' }),
-};
-
-export enum OutputEncode {
-  H264_STREAM = 'H264_STREAM',
-  JPEG_STREAM = 'JPEG_STREAM',
-}
-
-export const OutputEncodeOption = {
-  [OutputEncode.H264_STREAM]: intl.formatMessage(
-    { id: 'device.camera.outputEncode' },
-    { type: 'H264' },
-  ),
-  [OutputEncode.JPEG_STREAM]: intl.formatMessage(
-    { id: 'device.camera.outputEncode' },
-    { type: 'JPEG' },
-  ),
-};
 
 /**
  * GENERIC_SNMP

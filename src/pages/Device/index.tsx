@@ -59,11 +59,6 @@ const Devices = () => {
   const [activeGroupKey, setActiveGroupKey] = useState<string>(DEFAULT_GROUP_KEY_DEVICE);
   const [groupConfig, setGroupConfig] = useState<GroupConfig>(DEFAULT_CONFIG);
   const [title, setTitle] = useState<string>('');
-  // const [openVideo, setOpenVideo] = useState<boolean>(false);
-  // const [videoConfig, setVideoConfig] = useState<{
-  //   deviceName: string | undefined;
-  //   outputMode: OutputMode;
-  // }>({ deviceName: '', outputMode: OutputMode.LOCAL_JPEG_STREAM_SERVER });
 
   // 删除设备
   const { run: remove } = useRequest(
@@ -127,17 +122,6 @@ const Devices = () => {
     let newItems = [...baseItems];
 
     switch (type) {
-      // TODO 暂无需求，先隐藏
-      // case DeviceType.GENERIC_CAMERA:
-      //   newItems = [
-      //     ...newItems,
-      //     {
-      //       key: 'video',
-      //       label: formatMessage({ id: 'device.button.camera' }),
-      //       icon: <PlayCircleOutlined />,
-      //     },
-      //   ];
-      //   break;
       case DeviceType.GENERIC_SNMP:
       case DeviceType.GENERIC_MODBUS_MASTER:
       case DeviceType.GENERIC_MODBUS_SLAVER:
@@ -174,27 +158,6 @@ const Devices = () => {
         if (!type) return;
         history.push(`/device/${gid}/${uuid}/${sheetType[type]}`);
         break;
-      // TODO 暂无需求，先隐藏
-      // case 'video':
-      //   if (config?.outputMode === OutputMode.REMOTE_STREAM_SERVER) {
-      //     modal.info({
-      //       title: formatMessage({ id: 'device.modal.title.camera' }),
-      //       content: (
-      //         <div className="break-all">
-      //           {formatMessage(
-      //             { id: 'device.modal.content.camera' },
-      //             { inputAddr: config?.inputAddr, outputAddr: config?.outputAddr },
-      //           )}
-      //         </div>
-      //       ),
-      //       width: 500,
-      //     });
-      //   } else {
-      //     setOpenVideo(true);
-      //     setVideoConfig({ deviceName: name, outputMode: config?.outputMode });
-      //   }
-
-      //   break;
       case 'error':
         getErrorMsg({ uuid });
         break;
@@ -320,13 +283,6 @@ const Devices = () => {
         </ProCard>
       </PageContainer>
       <Detail {...detailConfig} onClose={initialConfig} />
-      {/* <CameraDetail
-        open={openVideo}
-        onCancel={() => {
-          setOpenVideo(false);
-        }}
-        {...videoConfig}
-      /> */}
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}

@@ -1,11 +1,8 @@
-import { OutputMode } from '@/pages/Device/enum';
 import { createFromIconfontCN } from '@ant-design/icons';
 import { getIntl, getLocale } from '@umijs/max';
 import type { RcFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
-import CryptoJS from 'crypto-js';
 import { twMerge } from 'tailwind-merge';
-import { isDev } from './constant';
 import { FormItemType } from './enum';
 import { isEmpty } from './redash';
 import {
@@ -55,30 +52,6 @@ export const formatHeaders2Arr = (data: Record<string, any>) => {
     : [{ k: '', v: '' }];
 
   return newData;
-};
-
-// 获取设备通用摄像机流处理网关播放地址
-export const getPlayAddress = (
-  deviceName: string,
-  mode: OutputMode,
-  serviceType: 'pull' | 'push',
-) => {
-  const params = {
-    LOCAL_H264_STREAM_SERVER: {
-      steam: 'h264_stream',
-      port: 9400,
-    },
-    LOCAL_JPEG_STREAM_SERVER: {
-      steam: 'jpeg_stream',
-      port: 9401,
-    },
-  };
-  const hash = deviceName && CryptoJS.MD5(deviceName).toString();
-  const hostname = window?.location?.hostname;
-  const devPlayAddr = `http://1365866fz0.vicp.fun/${params[mode]?.steam}/${serviceType}?liveId=${hash}`;
-  const playAddress = `http://${hostname}:${params[mode]?.port}/${params[mode]?.steam}/${serviceType}?liveId=${hash}`;
-
-  return isDev ? devPlayAddr : playAddress;
 };
 
 // 首字母大写

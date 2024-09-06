@@ -58,19 +58,11 @@ const UpdateForm = () => {
       let params = { ...values };
       let commonConfig = { ...params.config?.commonConfig };
       let httpConfig = { ...params.config?.httpConfig };
-      // let outputAddr = params?.config?.outputAddr;
 
       const { autoRequest, enableOptimize, enableGroup, mode, autoScan, batchRequest } =
         commonConfig;
       const type = params.type;
-      // const outputMode = params?.config?.outputMode;
 
-      // if (type === DeviceType.GENERIC_CAMERA) {
-      //   outputAddr =
-      //     outputMode === OutputMode.REMOTE_STREAM_SERVER
-      //       ? outputAddr
-      //       : getPlayAddress(params?.name, outputMode, 'push');
-      // }
       if (type === DeviceType.GENERIC_HTTP_DEVICE) {
         const newHeaders =
           httpConfig?.headers?.length > 0 ? formatHeaders2Obj(httpConfig?.headers) : {};
@@ -177,8 +169,6 @@ const UpdateForm = () => {
   const handleOnValuesChange = (changedValue: any) => {
     const type = changedValue?.type;
     const model = changedValue?.config?.commonConfig?.model;
-    //  const outputMode = changedValue?.config?.outputMode;
-    // const inputMode = changedValue?.config?.inputMode;
 
     if (type) {
       formRef.current?.setFieldsValue({
@@ -190,22 +180,6 @@ const UpdateForm = () => {
         config: defaultModelConfig[model],
       });
     }
-
-    // if (outputMode) {
-    //   formRef.current?.setFieldsValue({
-    //     config: {
-    //       ...defaultOutputConfig[outputMode],
-    //     },
-    //   });
-    // }
-    // if (inputMode) {
-    //   formRef.current?.setFieldsValue({
-    //     config:
-    //       inputMode === detail?.config?.inputMode
-    //         ? { inputAddr: detail?.config?.inputAddr }
-    //         : defaultInputModeConfig[inputMode],
-    //   });
-    // }
   };
 
   useEffect(() => {

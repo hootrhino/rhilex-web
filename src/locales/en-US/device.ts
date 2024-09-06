@@ -2,7 +2,6 @@ export default {
   /**
    * button
    */
-  'device.button.camera': '查看视频', // TODO 已隐藏，暂时不需要翻译
   'device.button.snmp': 'SNMP OIDs',
   'device.button.sheet': 'Sheet Configuration',
   'device.button.registers': 'Registers Detail',
@@ -37,7 +36,6 @@ export default {
   'device.modal.title.remove.oid': 'Are you sure to delete this OID?',
   'device.modal.title.remove.sheet': 'Are you sure to delete this point?',
   'device.modal.title.remove.batchSheet': 'Bulk Delete Points',
-  'device.modal.title.camera': '查看视频', // TODO 已隐藏，暂时不需要翻译
   'device.modal.title.group.new': 'New device group',
   'device.modal.title.group.edit': 'Edit Group',
   'device.modal.title.group.remove': 'Are you sure to delete this group',
@@ -47,9 +45,6 @@ export default {
     'Please ensure no devices are mounted under this group before performing the deletion. If there are devices under the group, deletion is not permitted',
   'device.modal.content.restart':
     'The restart process will temporarily disconnect resource connections for 5-10 seconds; please proceed with caution',
-  'device.modal.content.camera.loading': '视频正在加载...', // TODO 已隐藏，暂时不需要翻译
-  'device.modal.content.camera':
-    '此模式下流媒体被中转到第三方地址，当前{inputAddr}已经成功推送到{outputAddr}，请在对应的平台上查看或者播放。', // TODO 已隐藏，暂时不需要翻译
   'device.modal.content.remove.batchSheet':
     'This operation will delete multiple points at once. Please proceed with caution',
 
@@ -96,14 +91,6 @@ export default {
   'device.form.title.rack': 'Rack',
   'device.form.title.slot': 'Slot',
   'device.form.title.url': 'Request URL',
-  'device.form.title.inputMode': 'Input Mode',
-  // TODO 已隐藏，暂时不需要翻译 --begin
-  'device.form.title.inputAddr': '视频采集源',
-  'device.form.title.outputMode': 'Output Mode',
-  'device.form.title.outputEncode': '输出编码',
-  'device.form.title.outputAddr': '输出地址',
-  'device.form.title.playAddr': '外部播放地址',
-  // TODO 已隐藏，暂时不需要翻译 --end
   'device.form.title.autoScan': 'Enable Auto Scan',
   'device.form.title.enableGroup': 'enable Concurrent Fetch',
   'device.form.title.target.device': 'Target Device',
@@ -212,7 +199,6 @@ export default {
   'device.type.snmp': 'Generic SNMP Gateway',
   'device.type.plc': 'Generic Siemens S7 PLC Gateway',
   'device.type.http': 'Generic HTTP Gatewa',
-  'device.type.camera': '通用摄像机流处理网关', // TODO 已隐藏，暂时不需要翻译
   'device.type.bacnet.ip': 'Generic BACnet IP Master Gateway',
   'device.type.bacnet.router': 'Generic BACnet IP Slaver Gateway',
   'device.type.tencent': 'Tencent IoT Hub Gateway Access',
@@ -230,25 +216,6 @@ export default {
    * plc model
    */
   'device.plc.model': 'Siemens {model} PLC',
-
-  // TODO 暂时不需要翻译 --begin
-  /**
-   * inputMode
-   */
-  'device.camera.inputMode.rtsp': '远程 RTSP 流地址',
-  'device.camera.inputMode.local': '本地相机设备',
-
-  /**
-   * outputMode
-   */
-  'device.camera.outputMode.jpeg': '本地 JPEG 流服务器',
-  'device.camera.outputMode.stream': '远程流媒体服务器',
-
-  /**
-   * outputEncode
-   */
-  'device.camera.outputEncode': '{type} Encode',
-  // TODO 暂时不需要翻译 --end
 
   /**
    * ReadFormat

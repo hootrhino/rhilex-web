@@ -2,8 +2,6 @@ import {
   BacnetMode,
   DeviceMode,
   DeviceType,
-  OutputEncode,
-  OutputMode,
   PLCModel,
   ReadFormat,
   SNMPVersion,
@@ -20,32 +18,6 @@ export const defaultHostConfig = {
   port: 3399,
   host: DEFAULT_HOST,
   timeout: DEFAULT_TIMEOUT,
-};
-
-// 根据输出模式改变输出编码&输出地址默认值
-export const defaultOutputConfig = {
-  LOCAL_H264_STREAM_SERVER: {
-    outputMode: 'LOCAL_H264_STREAM_SERVER',
-    outputEncode: OutputEncode.H264_STREAM,
-  },
-  LOCAL_JPEG_STREAM_SERVER: {
-    outputMode: OutputMode.LOCAL_JPEG_STREAM_SERVER,
-    outputEncode: OutputEncode.JPEG_STREAM,
-  },
-  REMOTE_STREAM_SERVER: {
-    outputMode: OutputMode.REMOTE_STREAM_SERVER,
-    outputEncode: OutputEncode.H264_STREAM,
-    outputAddr: 'rtmp://127.0.0.1/stream/live1',
-  },
-};
-
-export const defaultInputModeConfig = {
-  REMOTE_STREAM_RTSP: {
-    inputAddr: `http://${window.location.hostname}:345`,
-  },
-  LOCAL_CAMERA: {
-    inputAddr: undefined,
-  },
 };
 
 export const defaultConfig = {
@@ -99,11 +71,6 @@ export const defaultConfig = {
       headers: [{ k: '', v: '' }],
     },
   },
-  // TODO 暂无需求，先隐藏
-  // [DeviceType.GENERIC_CAMERA]: {
-  //   inputMode: InputMode.LOCAL_CAMERA,
-  //   ...defaultOutputConfig['LOCAL_JPEG_STREAM_SERVER'],
-  // },
   [DeviceType.GENERIC_SNMP]: {
     commonConfig: {
       autoRequest: DEFAULT_AUTOREQUEST,
