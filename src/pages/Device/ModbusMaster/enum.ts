@@ -109,20 +109,14 @@ export const modbusDataTypeOptions = [
   },
 ];
 
-export enum defaultQuantity {
-  RAW = 0,
+export enum Quantity {
   UTF8 = 0,
   BYTE = 1,
-  SHORT = 1,
-  USHORT = 1,
   INT16 = 1,
   UINT16 = 1,
-  INT = 2,
-  UINT = 2,
+  RAW = 2,
   INT32 = 2,
   UINT32 = 2,
-  FLOAT = 2,
-  UFLOAT = 2,
   FLOAT32 = 2,
   UFLOAT32 = 2,
 }

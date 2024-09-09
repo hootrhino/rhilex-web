@@ -23,7 +23,7 @@ import { useEffect, useRef, useState } from 'react';
 import DataSheet from '../DataSheet';
 import { DataSheetItem, Point, removeParams } from '../DataSheet/typings';
 import { funcEnum } from '../enum';
-import { defaultQuantity, modbusDataTypeOptions } from './enum';
+import { modbusDataTypeOptions, Quantity } from './enum';
 
 const defaultModbusConfig = {
   tag: '',
@@ -32,7 +32,7 @@ const defaultModbusConfig = {
   frequency: 1000,
   slaverId: 1,
   address: 0,
-  quantity: 1,
+  quantity: 2,
   type: ['RAW', 'DCBA'],
   weight: 1,
 };
@@ -239,7 +239,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
                 const dataType = value?.[0];
 
                 editorFormRef.current?.setRowData?.(record?.uuid as string, {
-                  quantity: Number(defaultQuantity[dataType]),
+                  quantity: Number(Quantity[dataType]),
                   weight: dataType === 'UTF8' ? 0 : 1,
                 });
               },
