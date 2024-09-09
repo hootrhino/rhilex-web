@@ -115,6 +115,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
       width: 100,
       hideInTable: type === SheetType.DETAIL,
       fieldProps: {
+        addonAfter: 'ms',
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
       },
       formItemProps: {

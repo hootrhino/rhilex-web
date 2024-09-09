@@ -48,6 +48,19 @@ export const defaultConfig = {
       host: '0.0.0.0',
     },
   },
+  [DeviceType.GENERIC_MBUS_MASTER]: {
+    commonConfig: {
+      autoRequest: DEFAULT_AUTOREQUEST,
+      batchRequest: 'false',
+      mode: DeviceMode.UART,
+      frequency: DEFAULT_FREQUENCE,
+    },
+    hostConfig: {
+      port: 6005,
+      host: '0.0.0.0',
+      timeout: DEFAULT_TIMEOUT,
+    },
+  },
   [DeviceType.SIEMENS_PLC]: {
     commonConfig: {
       autoRequest: DEFAULT_AUTOREQUEST,

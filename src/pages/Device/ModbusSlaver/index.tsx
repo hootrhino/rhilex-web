@@ -11,7 +11,7 @@ const ModbusSlaverRegisters = () => {
 
   const columns = [
     {
-      title: '线圈寄存器',
+      title: formatMessage({ id: 'device.tab.coil' }),
       children: [
         {
           title: formatMessage({ id: 'device.form.title.siemensAddress' }),
@@ -29,7 +29,7 @@ const ModbusSlaverRegisters = () => {
       ],
     },
     {
-      title: '离散寄存器',
+      title: formatMessage({ id: 'device.tab.discrete' }),
       children: [
         {
           title: formatMessage({ id: 'device.form.title.siemensAddress' }),
@@ -42,7 +42,7 @@ const ModbusSlaverRegisters = () => {
       ],
     },
     {
-      title: '保持寄存器',
+      title: formatMessage({ id: 'device.tab.holding' }),
       children: [
         {
           title: formatMessage({ id: 'device.form.title.siemensAddress' }),
@@ -55,7 +55,7 @@ const ModbusSlaverRegisters = () => {
       ],
     },
     {
-      title: '输入寄存器',
+      title: formatMessage({ id: 'device.tab.input' }),
       children: [
         {
           title: formatMessage({ id: 'device.form.title.siemensAddress' }),

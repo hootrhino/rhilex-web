@@ -43,6 +43,7 @@ const sheetType = {
   [DeviceType.SIEMENS_PLC]: 'plc-sheet',
   [DeviceType.GENERIC_MODBUS_MASTER]: 'modbus-master-sheet',
   [DeviceType.GENERIC_MODBUS_SLAVER]: 'modbus-slaver-registers',
+  [DeviceType.GENERIC_MBUS_MASTER]: 'mbus-master-sheet',
   [DeviceType.GENERIC_BACNET_IP]: 'bacnet-sheet',
   [DeviceType.BACNET_ROUTER_GW]: 'bacnet-router-sheet',
 };
@@ -125,6 +126,7 @@ const Devices = () => {
       case DeviceType.GENERIC_SNMP:
       case DeviceType.GENERIC_MODBUS_MASTER:
       case DeviceType.GENERIC_MODBUS_SLAVER:
+      case DeviceType.GENERIC_MBUS_MASTER:
       case DeviceType.SIEMENS_PLC:
       case DeviceType.GENERIC_BACNET_IP:
       case DeviceType.BACNET_ROUTER_GW:

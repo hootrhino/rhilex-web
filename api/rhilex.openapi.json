@@ -43,9 +43,6 @@
       "name": "大屏管理"
     },
     {
-      "name": "定时任务"
-    },
-    {
       "name": "扩展协议"
     },
     {
@@ -94,6 +91,9 @@
       "name": "ModbusMaster点位管理"
     },
     {
+      "name": "MBusMaster点位管理"
+    },
+    {
       "name": "ModbusSlaver寄存器管理"
     },
     {
@@ -119,6 +119,12 @@
     },
     {
       "name": "通信模组"
+    },
+    {
+      "name": "通用点位管理"
+    },
+    {
+      "name": "定时任务"
     }
   ],
   "paths": {
@@ -20915,6 +20921,1100 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204289880-run",
+        "security": []
+      }
+    },
+    "/api/v1/datapoint/update": {
+      "post": {
+        "summary": "创建或更新点位",
+        "x-apifox-folder": "通用点位管理",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "# points字段element示例\n\n## Modbus Master\n```json\n{\n    \"tag\": \"tag1\",\n    \"alias\": \"tag1\",\n    \"frequency\": 50,\n    \"config\": {\n        \"function\": 1,\n        \"slaverId\": 1,\n        \"address\": 0,\n        \"quality\": 2,\n        \"dataType\": \"INT\",\n        \"dataOrder\": \"ABCD\",\n        \"weight\": 1.0\n    }\n}\n```\n\n## SNMP\n```json\n{\n    \"tag\": \"tag1\",\n    \"alias\": \"tag1\",\n    \"frequency\": 50,\n    \"config\": {\n        \"oid\": \"A.B.C\"\n    }\n}\n```\n\n\n## BACnetIP \n```json\n{\n    \"tag\": \"tag1\",\n    \"alias\": \"tag1\",\n    \"config\": {\n        \"bacnetDeviceId\": 1,\n        \"objectType\": \"AO\",\n        \"objectId\": 1\n    }\n}\n```\n\n## BACnet Router\n```json\n{\n    \"tag\": \"tag1\",\n    \"alias\": \"tag1\",\n    \"config\": {\n        \"objectType\": \"AI\",\n        \"objectId\": 1\n    }\n}\n```\n\n## siemens PLC\n```json\n{\n    \"tag\": \"tag1\",\n    \"alias\": \"tag1\",\n    \"frequency\": 100,\n    \"config\": {\n        \"siemensAddress\": \"AI\",\n        \"dataBlockType\": \"FLOAT\",\n        \"dataBlockOrder\": \"ABCD\",\n        \"weight\": 1\n    }\n}\n```\n",
+        "tags": [
+          "通用点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "points": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "tag": {
+                          "type": "string"
+                        },
+                        "alias": {
+                          "type": "string"
+                        },
+                        "frequency": {
+                          "type": "integer"
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {
+                            "bacnetDeviceId": {
+                              "type": "integer"
+                            },
+                            "objectType": {
+                              "type": "string"
+                            },
+                            "objectId": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "bacnetDeviceId",
+                            "objectType",
+                            "objectId"
+                          ],
+                          "x-apifox-orders": [
+                            "bacnetDeviceId",
+                            "objectType",
+                            "objectId"
+                          ],
+                          "x-apifox-ignore-properties": []
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "tag",
+                        "alias",
+                        "frequency",
+                        "config"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "points"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "points"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICEGAFJS2HE",
+                "points": [
+                  {
+                    "tag": "tag1",
+                    "alias": "tag1",
+                    "frequency": 100,
+                    "config": {
+                      "bacnetDeviceId": 2,
+                      "objectType": "AA",
+                      "objectId": 1
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204439247-run",
+        "security": []
+      }
+    },
+    "/api/v1/datapoint/list": {
+      "get": {
+        "summary": "分页查询",
+        "x-apifox-folder": "通用点位管理",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "通用点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "DEVICEFVZPNTAW",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "当前页",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "每页数量",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204439248-run",
+        "security": []
+      }
+    },
+    "/api/v1/datapoint/sheetImport": {
+      "post": {
+        "summary": "点位导入",
+        "x-apifox-folder": "通用点位管理",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "通用点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "device_uuid": {
+                    "type": "string",
+                    "example": "DEVICENSDMC7QA"
+                  }
+                },
+                "required": [
+                  "file",
+                  "device_uuid"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204439249-run",
+        "security": []
+      }
+    },
+    "/api/v1/datapoint/sheetExport": {
+      "get": {
+        "summary": "点位导出",
+        "x-apifox-folder": "通用点位管理",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "通用点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "DEVICECMJURMFY",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204439250-run",
+        "security": []
+      }
+    },
+    "/api/v1/datapoint/delIds": {
+      "delete": {
+        "summary": "多行删除",
+        "x-apifox-folder": "通用点位管理",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "通用点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "uuids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICECMJURMFY",
+                "uuids": [
+                  "MDTBNFNSF7K8",
+                  "MDTBCGIVDFZZ"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204439251-run",
+        "security": []
+      }
+    },
+    "/api/v1/datapoint/delAll": {
+      "delete": {
+        "summary": "删除所有点位",
+        "x-apifox-folder": "通用点位管理",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "通用点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "device_uuid"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICECMJURMFY"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204439252-run",
+        "security": []
+      }
+    },
+    "/api/v1/users/clear": {
+      "delete": {
+        "summary": "清空用户",
+        "x-apifox-folder": "用户管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "用户管理"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-208334486-run",
+        "security": []
+      }
+    },
+    "/api/v1/mbus_master_sheet/sheetImport": {
+      "post": {
+        "summary": "导入点位表",
+        "x-apifox-folder": "MBusMaster点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "MBusMaster点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string",
+                    "example": "11223344"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-212418873-run",
+        "security": []
+      }
+    },
+    "/api/v1/mbus_master_sheet/list": {
+      "get": {
+        "summary": "分页查看点位表",
+        "x-apifox-folder": "MBusMaster点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "MBusMaster点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "DEVICEDQNLO8",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "6",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "2",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "device_uuid": {
+                                "type": "string"
+                              },
+                              "slaverId": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "tag": {
+                                "type": "string"
+                              },
+                              "alias": {
+                                "type": "string"
+                              },
+                              "frequency": {
+                                "type": "integer"
+                              },
+                              "dataLength": {
+                                "type": "integer"
+                              },
+                              "manufacturer": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "integer"
+                              },
+                              "lastFetchTime": {
+                                "type": "integer"
+                              },
+                              "value": {
+                                "type": "string"
+                              },
+                              "errMsg": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "uuid",
+                              "device_uuid",
+                              "slaverId",
+                              "type",
+                              "tag",
+                              "alias",
+                              "frequency",
+                              "dataLength",
+                              "manufacturer",
+                              "status",
+                              "lastFetchTime",
+                              "value",
+                              "errMsg"
+                            ],
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "device_uuid",
+                              "slaverId",
+                              "type",
+                              "tag",
+                              "alias",
+                              "frequency",
+                              "dataLength",
+                              "manufacturer",
+                              "status",
+                              "lastFetchTime",
+                              "value",
+                              "errMsg"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 20,
+                        "total": 9,
+                        "records": [
+                          {
+                            "uuid": "MBUSBHKQRVRT",
+                            "device_uuid": "1",
+                            "slaverId": "",
+                            "type": "Meter",
+                            "tag": "room1_m1",
+                            "alias": "卧室",
+                            "frequency": 100,
+                            "dataLength": 4,
+                            "manufacturer": "NORTECH",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": null,
+                            "errMsg": ""
+                          },
+                          {
+                            "uuid": "MBUSZGFHUFUE",
+                            "device_uuid": "2",
+                            "slaverId": "",
+                            "type": "Meter",
+                            "tag": "room1_m2",
+                            "alias": "书房",
+                            "frequency": 100,
+                            "dataLength": 4,
+                            "manufacturer": "NORTECH",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": null,
+                            "errMsg": ""
+                          },
+                          {
+                            "uuid": "MBUSKH9S6WZS",
+                            "device_uuid": "3",
+                            "slaverId": "",
+                            "type": "Meter",
+                            "tag": "room1_m3",
+                            "alias": "客厅",
+                            "frequency": 100,
+                            "dataLength": 4,
+                            "manufacturer": "NORTECH",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": null,
+                            "errMsg": ""
+                          },
+                          {
+                            "uuid": "MBUSXW5WSXYE",
+                            "device_uuid": "1",
+                            "slaverId": "",
+                            "type": "Meter",
+                            "tag": "room1_m1",
+                            "alias": "卧室",
+                            "frequency": 100,
+                            "dataLength": 4,
+                            "manufacturer": "NORTECH",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": null,
+                            "errMsg": ""
+                          },
+                          {
+                            "uuid": "MBUSCBBBBSFO",
+                            "device_uuid": "2",
+                            "slaverId": "",
+                            "type": "Meter",
+                            "tag": "room1_m2",
+                            "alias": "书房",
+                            "frequency": 100,
+                            "dataLength": 4,
+                            "manufacturer": "NORTECH",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": null,
+                            "errMsg": ""
+                          },
+                          {
+                            "uuid": "MBUSYAPUGECQ",
+                            "device_uuid": "3",
+                            "slaverId": "",
+                            "type": "Meter",
+                            "tag": "room1_m3",
+                            "alias": "客厅",
+                            "frequency": 100,
+                            "dataLength": 4,
+                            "manufacturer": "NORTECH",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": null,
+                            "errMsg": ""
+                          },
+                          {
+                            "uuid": "MBUSWYUEBZAQ",
+                            "device_uuid": "1",
+                            "slaverId": "",
+                            "type": "Meter",
+                            "tag": "room1_m1",
+                            "alias": "卧室",
+                            "frequency": 100,
+                            "dataLength": 4,
+                            "manufacturer": "NORTECH",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": null,
+                            "errMsg": ""
+                          },
+                          {
+                            "uuid": "MBUSGMSBC7BG",
+                            "device_uuid": "2",
+                            "slaverId": "",
+                            "type": "Meter",
+                            "tag": "room1_m2",
+                            "alias": "书房",
+                            "frequency": 100,
+                            "dataLength": 4,
+                            "manufacturer": "NORTECH",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": null,
+                            "errMsg": ""
+                          },
+                          {
+                            "uuid": "MBUSRBB3A4ZZ",
+                            "device_uuid": "3",
+                            "slaverId": "",
+                            "type": "Meter",
+                            "tag": "room1_m3",
+                            "alias": "客厅",
+                            "frequency": 100,
+                            "dataLength": 4,
+                            "manufacturer": "NORTECH",
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": null,
+                            "errMsg": ""
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-212418874-run",
+        "security": []
+      }
+    },
+    "/api/v1/mbus_master_sheet/update": {
+      "post": {
+        "summary": "更新点位表",
+        "x-apifox-folder": "MBusMaster点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "MBusMaster点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "mbus_data_points": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "device_uuid": {
+                          "type": "string"
+                        },
+                        "slaverId": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "tag": {
+                          "type": "string"
+                        },
+                        "alias": {
+                          "type": "string"
+                        },
+                        "frequency": {
+                          "type": "integer"
+                        },
+                        "dataLength": {
+                          "type": "integer"
+                        },
+                        "manufacturer": {
+                          "type": "string"
+                        }
+                      },
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "uuid",
+                        "device_uuid",
+                        "slaverId",
+                        "type",
+                        "tag",
+                        "alias",
+                        "frequency",
+                        "dataLength",
+                        "manufacturer"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "mbus_data_points"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "mbus_data_points"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICE5AGNIMJL",
+                "mbus_data_points": [
+                  {
+                    "uuid": "MBUSBHKQRVRT",
+                    "device_uuid": "DEVICE5AGNIMJL",
+                    "slaverId": "1",
+                    "type": "Meter",
+                    "tag": "room1_m1",
+                    "alias": "卧室",
+                    "frequency": 100,
+                    "dataLength": 4,
+                    "manufacturer": "NORTECH"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-212418875-run",
+        "security": []
+      }
+    },
+    "/api/v1/mbus_master_sheet/delIds": {
+      "delete": {
+        "summary": "多行删除",
+        "x-apifox-folder": "MBusMaster点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "MBusMaster点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "uuids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICEDQNLO8",
+                "uuids": [
+                  "MDTBJJMDUX",
+                  "MDTBC4TT8B"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-212418876-run",
+        "security": []
+      }
+    },
+    "/api/v1/mbus_master_sheet/sheetExport": {
+      "get": {
+        "summary": "导出点表",
+        "x-apifox-folder": "MBusMaster点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "MBusMaster点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "AABBCCDD",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-212418877-run",
         "security": []
       }
     }

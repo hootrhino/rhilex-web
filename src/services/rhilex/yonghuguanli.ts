@@ -72,6 +72,14 @@ export async function deleteUsers(
   });
 }
 
+/** 清空用户 DELETE /api/v1/users/clear */
+export async function deleteUsersClear(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/users/clear', {
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
 /** 用户注销 POST /api/v1/users/logout */
 export async function postUsersLogout(options?: { [key: string]: any }) {
   return request<{ code: number; msg: string; data: string }>('/api/v1/users/logout', {

@@ -167,6 +167,18 @@ declare namespace API {
     uuid: string;
   };
 
+  type getDatapointListParams = {
+    device_uuid: string;
+    /** 当前页 */
+    current?: number;
+    /** 每页数量 */
+    size?: number;
+  };
+
+  type getDatapointSheetExportParams = {
+    device_uuid: string;
+  };
+
   type getDevicesDetailParams = {
     uuid: string;
   };
@@ -236,6 +248,16 @@ declare namespace API {
 
   type getJpegStreamDetailParams = {
     liveId: string;
+  };
+
+  type getMbusMasterSheetListParams = {
+    device_uuid?: string;
+    current?: number;
+    size?: number;
+  };
+
+  type getMbusMasterSheetSheetExportParams = {
+    device_uuid: string;
   };
 
   type getModbusMasterSheetListParams = {

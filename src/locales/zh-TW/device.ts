@@ -137,11 +137,13 @@ export default {
   'device.form.title.readFormat': '讀取格式',
   'device.form.title.timeSlice': '超時時間',
 
+  // MBus
+  'device.form.title.dataLength': '數據長度',
+  'device.form.title.manufacturer': '製造商',
+
   /**
    * tooltip
    */
-  'device.tooltip.outputMode':
-    '注意：因為傳輸格式原因，JPEG Stream 模式下僅保存了圖像訊息，沒有原始聲音',
   'device.tooltip.group.edit': '重命名分組',
   'device.tooltip.group.remove': '刪除分組',
   'device.tooltip.copy': '以當前行為模板新建一行數據',
@@ -168,6 +170,8 @@ export default {
   'device.form.placeholder.id': '請輸入設備 ID',
   'device.form.placeholder.objectType': '請選擇對象類型',
   'device.form.placeholder.objectId': '請輸入對象 ID',
+  'device.form.placeholder.dataLength': '請輸入數據長度',
+  'device.form.placeholder.manufacturer': '請輸入製造商',
 
   /**
    * rules
@@ -200,6 +204,7 @@ export default {
   'device.type.bacnet.router': '通用 BACnet IP 從機網關',
   'device.type.tencent': '騰訊雲端物聯網平台網關接入',
   'device.type.uartRW': '通用串口讀寫網關',
+  'device.type.mbus': '通用 M-Bus 數據採集網關',
 
   /**
    * modbus function
@@ -228,4 +233,14 @@ export default {
   'device.tab.discrete': '離散寄存器',
   'device.tab.holding': '保持寄存器',
   'device.tab.input': '輸入寄存器',
+
+  /**
+   * MBus Type
+   */
+  'device.mbus.type.heatMeter': '熱量表',
+  'device.mbus.type.waterMeter': '水表',
+  'device.mbus.type.gasMeter': '煤氣表',
+  'device.mbus.type.elecMeter': '電表',
+  'device.mbus.type.transparent': '透傳設備',
+  'device.mbus.type.protocol': '協議轉換器',
 };

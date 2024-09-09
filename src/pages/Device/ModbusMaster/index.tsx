@@ -355,7 +355,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
       width: 120,
       hideInTable: type === SheetType.DETAIL,
       fieldProps: {
-        style: { width: '100%' },
+        addonAfter: 'ms',
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
       },
       formItemProps: {

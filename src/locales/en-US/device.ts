@@ -139,11 +139,13 @@ export default {
   'device.form.title.readFormat': 'Read Format',
   'device.form.title.timeSlice': 'Time Slice',
 
+  // MBus
+  'device.form.title.dataLength': 'Data Length',
+  'device.form.title.manufacturer': 'Manufacturer',
+
   /**
    * tooltip
    */
-  'device.tooltip.outputMode':
-    '注意：因为传输格式原因，JPEG Stream 模式下仅保存了图像信息，没有原始声音', // TODO 已隐藏，暂时不需要翻译
   'device.tooltip.group.edit': 'Rename group',
   'device.tooltip.group.remove': 'Delete group',
   'device.tooltip.copy': 'Create a new row based on the current row as a templat',
@@ -170,6 +172,8 @@ export default {
   'device.form.placeholder.id': 'Please enter a device ID',
   'device.form.placeholder.objectType': 'Please select an object type',
   'device.form.placeholder.objectId': 'Please enter an object ID',
+  'device.form.placeholder.dataLength': 'Please enter a data length',
+  'device.form.placeholder.manufacturer': 'Please enter a manufacturer',
 
   /**
    * rules
@@ -203,6 +207,7 @@ export default {
   'device.type.bacnet.router': 'Generic BACnet IP Slaver Gateway',
   'device.type.tencent': 'Tencent IoT Hub Gateway Access',
   'device.type.uartRW': 'Generic Serial Read/Write Gateway',
+  'device.type.mbus': 'Generic M-Bus Gateway',
 
   /**
    * modbus function
@@ -231,4 +236,14 @@ export default {
   'device.tab.discrete': 'Discrete Registers',
   'device.tab.holding': 'Holding Registers',
   'device.tab.input': 'Input Registers',
+
+  /**
+   * MBus Type
+   */
+  'device.mbus.type.heatMeter': 'Heat Meter',
+  'device.mbus.type.waterMeter': 'Water Meter',
+  'device.mbus.type.gasMeter': 'Gas Meter',
+  'device.mbus.type.elecMeter': 'Electric Meter',
+  'device.mbus.type.transparent': 'Transparent',
+  'device.mbus.type.protocol': 'Protocol Converter',
 };

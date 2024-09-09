@@ -69,6 +69,11 @@
         component: './Device/ModbusSlaver',
       },
       {
+        path: '/device/:groupId/:deviceId/mbus-master-sheet',
+        title: 'menu.device.sheet',
+        component: './Device/MbusMaster',
+      },
+      {
         path: '/device/:groupId/:deviceId/snmp-sheet',
         title: 'menu.device.objectList',
         component: './Device/Snmp',
