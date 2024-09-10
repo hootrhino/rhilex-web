@@ -23,11 +23,42 @@ export type UpdateFormItem = {
 
 const DefaultListUrl = '/outend/list';
 
+const convertBooleanOrString = (config: Record<string, any>) => {
+  let formatConfig = config;
+
+  const { cacheOfflineData, allowPing, headers } = formatConfig;
+
+  const options = {
+    cacheOfflineData,
+    allowPing,
+  };
+
+  Object.keys(options).forEach((key) => {
+    if (options[key] && typeof options[key] === 'string') {
+      formatConfig[key] = stringToBool(options[key]);
+    }
+    if (options[key] !== 'undefined' && typeof options[key] === 'boolean') {
+      formatConfig[key] = options[key].toString();
+    }
+  });
+
+  if (headers && typeof headers === 'object') {
+    const formatHeaders =
+      headers.length >= 0 ? formatHeaders2Obj(headers) : formatHeaders2Arr(headers);
+
+    formatConfig = {
+      ...formatConfig,
+      headers: formatHeaders,
+    };
+  }
+
+  return formatConfig;
+};
+
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { uuid } = useParams();
   const { formatMessage } = useIntl();
-  const randomNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
   const [loading, setLoading] = useState<boolean>(false);
 
   // 获取详情
@@ -39,33 +70,10 @@ const UpdateForm = () => {
     setLoading(true);
 
     try {
-      let params = {
+      const params = {
         ...values,
+        config: convertBooleanOrString(values.config),
       };
-      let formatConfig = params.config;
-
-      const { cacheOfflineData, allowPing } = formatConfig;
-
-      const options = {
-        cacheOfflineData,
-        allowPing,
-      };
-
-      Object.keys(options).forEach((key) => {
-        if (options[key]) {
-          formatConfig[key] = stringToBool(options[key]);
-        }
-      });
-
-      if (params.type === OutendType.HTTP) {
-        params = {
-          ...params,
-          config: {
-            ...formatConfig,
-            headers: formatHeaders2Obj(formatConfig?.headers),
-          },
-        };
-      }
 
       if (uuid) {
         await putOutendsUpdate({ ...params, uuid });
@@ -90,27 +98,10 @@ const UpdateForm = () => {
 
   const handleOnReset = () => {
     if (detail) {
-      if (!detail.config) return;
-      const formatConfig = detail.config;
-      const { cacheOfflineData, allowPing } = formatConfig;
-      const options = {
-        cacheOfflineData,
-        allowPing,
-      };
-
-      Object.keys(options).forEach((key) => {
-        if (options[key] !== undefined) {
-          formatConfig[key] = options[key].toString();
-        }
+      formRef.current?.setFieldsValue({
+        ...detail,
+        config: detail.config && convertBooleanOrString(detail.config),
       });
-      if (detail?.type === OutendType.HTTP) {
-        formRef.current?.setFieldsValue({
-          ...detail,
-          config: { ...formatConfig, headers: formatHeaders2Arr(formatConfig?.headers) },
-        });
-      } else {
-        formRef.current?.setFieldsValue({ ...detail, config: formatConfig });
-      }
     } else {
       formRef.current?.setFieldsValue({
         type: OutendType.MQTT,
@@ -121,17 +112,7 @@ const UpdateForm = () => {
 
   const handleOnValuesChange = (changedValue: UpdateFormItem) => {
     if (!changedValue?.type) return;
-    let config: any = [];
-
-    if (changedValue?.type === OutendType.MQTT) {
-      config = {
-        ...defaultConfig[OutendType.MQTT],
-        clientId: `rhilex${randomNumber}`,
-        pubTopic: `rhilex${randomNumber}`,
-      };
-    } else {
-      config = defaultConfig[changedValue?.type];
-    }
+    const config = defaultConfig[changedValue?.type];
 
     formRef.current?.setFieldsValue({
       config: changedValue?.type === detail?.type ? detail?.config : config,
