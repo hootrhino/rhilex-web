@@ -3,7 +3,7 @@ export default {
    * title
    */
   'dashboard.title.log': 'Runtime log',
-  'dashboard.title.device': 'Active devices',
+  'dashboard.title.resource': 'Active resources',
   'dashboard.title.statistic': 'Total Data Input/Output',
 
   /**

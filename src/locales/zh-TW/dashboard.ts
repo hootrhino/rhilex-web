@@ -3,7 +3,7 @@ export default {
    * title
    */
   'dashboard.title.log': '運行日誌',
-  'dashboard.title.device': '活躍設備',
+  'dashboard.title.resource': '活躍資源',
   'dashboard.title.statistic': '數據輸入 / 輸出總數',
 
   /**

@@ -135,7 +135,9 @@ const Dashboard = () => {
             size="small"
             className="dashboard-device-card"
             headerTitle={
-              <span className="text-[14px]">{formatMessage({ id: 'dashboard.title.device' })}</span>
+              <span className="text-[14px]">
+                {formatMessage({ id: 'dashboard.title.resource' })}
+              </span>
             }
             dataSource={allDeviceData?.records}
             expandable={{

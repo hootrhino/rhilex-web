@@ -3,7 +3,7 @@ export default {
    * title
    */
   'dashboard.title.log': '运行日志',
-  'dashboard.title.device': '活跃设备',
+  'dashboard.title.resource': '活跃资源',
   'dashboard.title.statistic': '数据输入 / 输出总数',
 
   /**
