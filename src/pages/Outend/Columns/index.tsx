@@ -50,24 +50,10 @@ export const baseColumns = [
   },
 ];
 
-// TODO 暂时隐藏
-// const dataModeConfig = [
-//   {
-//     title: intl.formatMessage({ id: 'outend.table.title.dataMode' }),
-//     dataIndex: ['config', 'dataMode'],
-//     valueEnum: dataModeOption,
-//     valueType: 'select',
-//     required: true,
-//   },
-// ];
-
 export const configColumns = {
   [OutendType.MQTT]: MQTT,
   [OutendType.UDP_TARGET]: UDP_TARGET,
-  [OutendType.TCP_TRANSPORT]: [
-    ...UDP_TARGET,
-    //TODO 暂时隐藏 ...dataModeConfig,
-  ],
+  [OutendType.TCP_TRANSPORT]: UDP_TARGET,
   [OutendType.MONGO_SINGLE]: MONGO_SINGLE,
   [OutendType.GREPTIME_DATABASE]: GREPTIME_DATABASE,
   [OutendType.TDENGINE]: TDENGINE,

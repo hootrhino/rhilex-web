@@ -14,6 +14,7 @@ export const defaultConfig = {
     host: DEFAULT_HOST,
   },
   [OutendType.UDP_TARGET]: {
+    dataMode: DataMode.RAW_STRING,
     cacheOfflineData: DEFAULT_ENABLE_OFFLINE_CACHE,
     port: 2599,
     host: DEFAULT_HOST,
@@ -22,7 +23,7 @@ export const defaultConfig = {
     pingPacket: DEFAULT_VALUE,
   },
   [OutendType.TCP_TRANSPORT]: {
-    // dataMode: DataMode.RAW_STRING,
+    dataMode: DataMode.RAW_STRING,
     cacheOfflineData: DEFAULT_ENABLE_OFFLINE_CACHE,
     allowPing: DEFAULT_ALLOWPING,
     pingPacket: DEFAULT_VALUE,

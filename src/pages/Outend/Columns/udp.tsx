@@ -2,6 +2,7 @@ import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
 import { getIntl, getLocale } from '@umijs/max';
+import { dataModeOption } from '../enum';
 
 const intl = getIntl(getLocale());
 
@@ -36,6 +37,13 @@ export const UDP_TARGET = [
       addonAfter: 'ms',
     },
     render: (timeout: number) => <UnitValue value={timeout} />,
+  },
+  {
+    title: intl.formatMessage({ id: 'outend.table.title.dataMode' }),
+    dataIndex: ['config', 'dataMode'],
+    valueEnum: dataModeOption,
+    valueType: 'select',
+    required: true,
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.host' }),
