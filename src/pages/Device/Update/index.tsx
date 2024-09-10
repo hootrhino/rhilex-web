@@ -14,7 +14,7 @@ import { defaultConfig, defaultModelConfig } from './initialValues';
 
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
 import PageContainer from '@/components/ProPageContainer';
-import { defaultDeviceType, DeviceMode, DeviceType } from '../enum';
+import { defaultDeviceType, DeviceMode } from '../enum';
 
 const DefaultListUrl = '/device/list';
 
@@ -31,6 +31,54 @@ const filterData = (obj: Record<string, any>) => {
     }
   });
   return filteredObj;
+};
+
+const convertBooleanOrString = (config: Record<string, any>) => {
+  const formatConfig = JSON.parse(JSON.stringify(config));
+  let formatCommonConfig = { ...formatConfig.commonConfig };
+  let formatHttpConfig = { ...formatConfig.httpConfig };
+
+  const { autoRequest, enableOptimize, enableGroup, autoScan, batchRequest } = formatCommonConfig;
+
+  const options = {
+    autoRequest,
+    enableOptimize,
+    enableGroup,
+    autoScan,
+    batchRequest,
+  };
+
+  Object.keys(options).forEach((key) => {
+    if (options[key] && typeof options[key] === 'string') {
+      formatCommonConfig[key] = stringToBool(options[key]);
+    }
+    if (options[key] !== 'undefined' && typeof options[key] === 'boolean') {
+      formatCommonConfig[key] = options[key].toString();
+    }
+  });
+
+  if (
+    formatHttpConfig &&
+    formatHttpConfig.headers &&
+    typeof formatHttpConfig.headers === 'object'
+  ) {
+    const formatHeaders =
+      formatHttpConfig.headers.length >= 0
+        ? formatHeaders2Obj(formatHttpConfig.headers)
+        : formatHeaders2Arr(formatHttpConfig.headers);
+
+    formatHttpConfig = {
+      ...formatHttpConfig,
+      headers: formatHeaders,
+    };
+  }
+
+  return filterData({
+    ...formatConfig,
+    commonConfig: formatCommonConfig,
+    httpConfig: formatHttpConfig,
+    hostConfig: formatCommonConfig.mode === DeviceMode.TCP ? formatConfig?.hostConfig : undefined,
+  });
 };
 
 const UpdateForm = () => {
@@ -55,46 +103,9 @@ const UpdateForm = () => {
   const handleOnFinish = async (values: any) => {
     setLoading(true);
     try {
-      let params = { ...values };
-      let commonConfig = { ...params.config?.commonConfig };
-      let httpConfig = { ...params.config?.httpConfig };
-
-      const { autoRequest, enableOptimize, enableGroup, mode, autoScan, batchRequest } =
-        commonConfig;
-      const type = params.type;
-
-      if (type === DeviceType.GENERIC_HTTP_DEVICE) {
-        const newHeaders =
-          httpConfig?.headers?.length > 0 ? formatHeaders2Obj(httpConfig?.headers) : {};
-        httpConfig = {
-          ...httpConfig,
-          headers: newHeaders,
-        };
-      }
-
-      const options = {
-        autoRequest,
-        enableOptimize,
-        enableGroup,
-        autoScan,
-        batchRequest,
-      };
-
-      Object.keys(options).forEach((key) => {
-        if (options[key]) {
-          commonConfig[key] = stringToBool(options[key]);
-        }
-      });
-
-      params = {
-        ...params,
-        config: filterData({
-          ...params.config,
-          // outputAddr,
-          commonConfig,
-          httpConfig,
-          hostConfig: mode === DeviceMode.TCP ? params?.config?.hostConfig : undefined,
-        }),
+      const params = {
+        ...values,
+        config: convertBooleanOrString(values.config),
       };
 
       if (deviceId) {
@@ -120,46 +131,11 @@ const UpdateForm = () => {
     }
   };
 
-  const handleOnUpdateValue = ({ config, type }: any) => {
-    let httpConfig = config.httpConfig;
-    let commonConfig = config?.commonConfig;
-
-    if (type === DeviceType.GENERIC_HTTP_DEVICE) {
-      httpConfig = {
-        ...httpConfig,
-        headers: formatHeaders2Arr(config?.httpConfig?.headers),
-      };
-    }
-
-    if (commonConfig) {
-      const { autoRequest, enableOptimize, enableGroup, autoScan, batchRequest } = commonConfig;
-      const options = {
-        autoRequest,
-        enableOptimize,
-        enableGroup,
-        autoScan,
-        batchRequest,
-      };
-
-      Object.keys(options).forEach((key) => {
-        if (options[key] !== undefined) {
-          commonConfig[key] = options[key].toString();
-        }
-      });
-    }
-
-    return filterData({
-      ...config,
-      httpConfig,
-      commonConfig,
-    });
-  };
-
   const handleOnReset = () => {
     if (deviceId && detail) {
       formRef.current?.setFieldsValue({
         ...detail,
-        config: handleOnUpdateValue(detail),
+        config: convertBooleanOrString(detail.config),
       });
     } else {
       formRef.current?.setFieldsValue(initialValues);

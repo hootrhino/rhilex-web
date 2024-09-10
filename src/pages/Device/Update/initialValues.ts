@@ -13,7 +13,7 @@ const DEFAULT_TIMEOUT = 3000;
 const DEFAULT_HOST = '127.0.0.1';
 const DEFAULT_FREQUENCE = 5000;
 const DEFAULT_TRUE = 'true';
-const DEFAULT_FALSE = DEFAULT_TRUE;
+const DEFAULT_FALSE = 'false';
 const DEFAULT_VALUE = DEFAULT_TITLE.toLocaleLowerCase();
 
 // TCP 配置

@@ -24,7 +24,7 @@ export type UpdateFormItem = {
 const DefaultListUrl = '/outend/list';
 
 const convertBooleanOrString = (config: Record<string, any>) => {
-  let formatConfig = config;
+  let formatConfig = { ...config };
 
   const { cacheOfflineData, allowPing, headers } = formatConfig;
 
