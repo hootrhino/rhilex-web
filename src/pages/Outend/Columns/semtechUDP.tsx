@@ -1,8 +1,19 @@
+import ProSegmented from '@/components/ProSegmented';
+import ProTag, { StatusType } from '@/components/ProTag';
 import { getIntl, getLocale } from '@umijs/max';
 
 const intl = getIntl(getLocale());
 
 export const SEMTECH_UDP_FORWARDER = [
+  {
+    title: intl.formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
+    dataIndex: ['config', 'cacheOfflineData'],
+    required: true,
+    renderFormItem: () => <ProSegmented width="md" />,
+    renderText: (cacheOfflineData: boolean) => (
+      <ProTag type={StatusType.BOOL}>{cacheOfflineData}</ProTag>
+    ),
+  },
   {
     title: intl.formatMessage({ id: 'outend.table.title.host' }),
     dataIndex: ['config', 'host'],

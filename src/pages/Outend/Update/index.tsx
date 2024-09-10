@@ -7,7 +7,7 @@ import {
   postOutendsCreate,
   putOutendsUpdate,
 } from '@/services/rhilex/shuchuziyuanguanli';
-import { formatHeaders2Arr, formatHeaders2Obj } from '@/utils/utils';
+import { formatHeaders2Arr, formatHeaders2Obj, stringToBool } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
@@ -42,13 +42,27 @@ const UpdateForm = () => {
       let params = {
         ...values,
       };
+      let formatConfig = params.config;
+
+      const { cacheOfflineData, allowPing } = formatConfig;
+
+      const options = {
+        cacheOfflineData,
+        allowPing,
+      };
+
+      Object.keys(options).forEach((key) => {
+        if (options[key]) {
+          formatConfig[key] = stringToBool(options[key]);
+        }
+      });
 
       if (params.type === OutendType.HTTP) {
         params = {
           ...params,
           config: {
-            ...params.config,
-            headers: formatHeaders2Obj(params.config?.headers),
+            ...formatConfig,
+            headers: formatHeaders2Obj(formatConfig?.headers),
           },
         };
       }
@@ -76,13 +90,26 @@ const UpdateForm = () => {
 
   const handleOnReset = () => {
     if (detail) {
+      if (!detail.config) return;
+      const formatConfig = detail.config;
+      const { cacheOfflineData, allowPing } = formatConfig;
+      const options = {
+        cacheOfflineData,
+        allowPing,
+      };
+
+      Object.keys(options).forEach((key) => {
+        if (options[key] !== undefined) {
+          formatConfig[key] = options[key].toString();
+        }
+      });
       if (detail?.type === OutendType.HTTP) {
         formRef.current?.setFieldsValue({
           ...detail,
-          config: { ...detail?.config, headers: formatHeaders2Arr(detail?.config?.headers) },
+          config: { ...formatConfig, headers: formatHeaders2Arr(formatConfig?.headers) },
         });
       } else {
-        formRef.current?.setFieldsValue(detail);
+        formRef.current?.setFieldsValue({ ...detail, config: formatConfig });
       }
     } else {
       formRef.current?.setFieldsValue({

@@ -2,6 +2,7 @@ export default {
   /**
    * table
    */
+  'outend.table.title.cacheOfflineData': '開啟離線快取',
   'outend.table.title.allowPing': '開啓心跳',
   'outend.table.title.pingPacket': '心跳包內容',
   'outend.table.title.timeout': '超時時間',

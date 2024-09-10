@@ -2,6 +2,7 @@ export default {
   /**
    * table
    */
+  'outend.table.title.cacheOfflineData': 'Enable offline cache',
   'outend.table.title.allowPing': 'Enabled Heartbeat',
   'outend.table.title.pingPacket': 'Heartbeat Package',
   'outend.table.title.timeout': 'Timeout',

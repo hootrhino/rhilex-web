@@ -1,3 +1,4 @@
+import { DEFAULT_TITLE } from '@/utils/constant';
 import {
   BacnetMode,
   DeviceMode,
@@ -11,7 +12,9 @@ import {
 const DEFAULT_TIMEOUT = 3000;
 const DEFAULT_HOST = '127.0.0.1';
 const DEFAULT_FREQUENCE = 5000;
-const DEFAULT_AUTOREQUEST = 'true';
+const DEFAULT_TRUE = 'true';
+const DEFAULT_FALSE = DEFAULT_TRUE;
+const DEFAULT_VALUE = DEFAULT_TITLE.toLocaleLowerCase();
 
 // TCP 配置
 export const defaultHostConfig = {
@@ -31,9 +34,9 @@ export const defaultConfig = {
   },
   [DeviceType.GENERIC_MODBUS_MASTER]: {
     commonConfig: {
-      autoRequest: DEFAULT_AUTOREQUEST,
-      enableOptimize: 'false',
-      batchRequest: 'false',
+      autoRequest: DEFAULT_TRUE,
+      enableOptimize: DEFAULT_FALSE,
+      batchRequest: DEFAULT_FALSE,
       mode: DeviceMode.UART,
       maxRegNum: 64,
     },
@@ -50,8 +53,8 @@ export const defaultConfig = {
   },
   [DeviceType.GENERIC_MBUS_MASTER]: {
     commonConfig: {
-      autoRequest: DEFAULT_AUTOREQUEST,
-      batchRequest: 'false',
+      autoRequest: DEFAULT_TRUE,
+      batchRequest: DEFAULT_FALSE,
       mode: DeviceMode.UART,
       frequency: DEFAULT_FREQUENCE,
     },
@@ -63,8 +66,8 @@ export const defaultConfig = {
   },
   [DeviceType.SIEMENS_PLC]: {
     commonConfig: {
-      autoRequest: DEFAULT_AUTOREQUEST,
-      batchRequest: 'false',
+      autoRequest: DEFAULT_TRUE,
+      batchRequest: DEFAULT_FALSE,
       host: `${DEFAULT_HOST}:102`,
       model: 'S71200',
       rack: 0,
@@ -75,7 +78,7 @@ export const defaultConfig = {
   },
   [DeviceType.GENERIC_HTTP_DEVICE]: {
     commonConfig: {
-      autoRequest: DEFAULT_AUTOREQUEST,
+      autoRequest: DEFAULT_TRUE,
       timeout: DEFAULT_TIMEOUT,
       frequency: DEFAULT_FREQUENCE,
     },
@@ -86,9 +89,9 @@ export const defaultConfig = {
   },
   [DeviceType.GENERIC_SNMP]: {
     commonConfig: {
-      autoRequest: DEFAULT_AUTOREQUEST,
-      enableGroup: 'false',
-      batchRequest: 'false',
+      autoRequest: DEFAULT_TRUE,
+      enableGroup: DEFAULT_FALSE,
+      batchRequest: DEFAULT_FALSE,
       timeout: DEFAULT_TIMEOUT,
       frequency: DEFAULT_FREQUENCE,
     },
@@ -103,7 +106,7 @@ export const defaultConfig = {
   [DeviceType.GENERIC_BACNET_IP]: {
     commonConfig: {
       frequency: DEFAULT_FREQUENCE,
-      batchRequest: 'false',
+      batchRequest: DEFAULT_FALSE,
     },
     bacnetConfig: {
       mode: BacnetMode.BROADCAST,
@@ -117,7 +120,7 @@ export const defaultConfig = {
       mode: BacnetMode.BROADCAST,
       localPort: 47808,
       deviceId: 2580,
-      deviceName: 'rhilex',
+      deviceName: DEFAULT_VALUE,
       vendorId: 2580,
     },
   },
@@ -129,12 +132,12 @@ export const defaultConfig = {
   // },
   [DeviceType.GENERIC_UART_RW]: {
     commonConfig: {
-      autoRequest: 'true',
+      autoRequest: DEFAULT_TRUE,
     },
     rwConfig: {
       readFormat: ReadFormat.HEX,
       timeSlice: 50,
-      tag: 'rhilex',
+      tag: DEFAULT_VALUE,
     },
   },
 };

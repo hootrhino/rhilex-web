@@ -2,7 +2,6 @@ import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
 import { getHwifaceList } from '@/services/rhilex/jiekouguanli';
-import { stringToBool } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 import { Space } from 'antd';
 import type { LabeledValue } from 'antd/es/select';
@@ -12,11 +11,18 @@ const intl = getIntl(getLocale());
 
 export const GENERIC_UART_TARGET = [
   {
+    title: intl.formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
+    dataIndex: ['config', 'cacheOfflineData'],
+    required: true,
+    renderFormItem: () => <ProSegmented width="md" />,
+    renderText: (cacheOfflineData: boolean) => (
+      <ProTag type={StatusType.BOOL}>{cacheOfflineData}</ProTag>
+    ),
+  },
+  {
     title: intl.formatMessage({ id: 'outend.table.title.allowPing' }),
     dataIndex: ['config', 'allowPing'],
     required: true,
-    convertValue: (value: boolean) => value?.toString(),
-    transform: (value: string) => ({ config: { allowPing: stringToBool(value) } }),
     renderFormItem: () => <ProSegmented width="md" />,
     renderText: (allowPing: boolean) => <ProTag type={StatusType.BOOL}>{allowPing}</ProTag>,
   },

@@ -2,18 +2,24 @@ import HeadersTitle from '@/components/HttpHeaders/Title';
 import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
-import { stringToBool } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 
 const intl = getIntl(getLocale());
 
 export const HTTP = [
   {
+    title: intl.formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
+    dataIndex: ['config', 'cacheOfflineData'],
+    required: true,
+    renderFormItem: () => <ProSegmented width="md" />,
+    renderText: (cacheOfflineData: boolean) => (
+      <ProTag type={StatusType.BOOL}>{cacheOfflineData}</ProTag>
+    ),
+  },
+  {
     title: intl.formatMessage({ id: 'outend.table.title.allowPing' }),
     dataIndex: ['config', 'allowPing'],
     required: true,
-    convertValue: (value: boolean) => value?.toString(),
-    transform: (value: string) => ({ config: { allowPing: stringToBool(value) } }),
     renderFormItem: () => <ProSegmented width="md" />,
     renderText: (allowPing: boolean) => <ProTag type={StatusType.BOOL}>{allowPing}</ProTag>,
   },
