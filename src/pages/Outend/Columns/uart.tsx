@@ -32,7 +32,7 @@ export const GENERIC_UART_TARGET = [
     required: true,
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.timeout.rw' }),
+    title: intl.formatMessage({ id: 'outend.table.title.timeout' }),
     dataIndex: ['config', 'timeout'],
     required: true,
     valueType: 'digit',

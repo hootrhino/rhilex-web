@@ -6,7 +6,6 @@ export default {
   'outend.table.title.allowPing': 'Enabled Heartbeat',
   'outend.table.title.pingPacket': 'Heartbeat Package',
   'outend.table.title.timeout': 'Timeout',
-  'outend.table.title.timeout.rw': 'Read/Write Timeout',
   'outend.table.title.host': 'Host',
   'outend.table.title.collection': '{type} Collections',
   'outend.table.title.pubTopic': 'Publish Topic',

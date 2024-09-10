@@ -6,7 +6,6 @@ export default {
   'outend.table.title.allowPing': '開啓心跳',
   'outend.table.title.pingPacket': '心跳包內容',
   'outend.table.title.timeout': '超時時間',
-  'outend.table.title.timeout.rw': '讀寫超時',
   'outend.table.title.host': '主機地址',
   'outend.table.title.collection': '{type} 集合',
   'outend.table.title.pubTopic': '上報 Topic',
