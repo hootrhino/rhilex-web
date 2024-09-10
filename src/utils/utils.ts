@@ -83,6 +83,17 @@ export const bool2String = (value: boolean | string | number) => {
   return value;
 };
 
+// 生成随机字符串的函数
+export const generateRandomString = (length = 8) => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};
+
 /**
  * 校验表单字段
  * @param value 校验字段的值
