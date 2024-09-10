@@ -2,6 +2,7 @@ import { createFromIconfontCN } from '@ant-design/icons';
 import { getIntl, getLocale } from '@umijs/max';
 import type { RcFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
+import { customAlphabet } from 'nanoid';
 import { twMerge } from 'tailwind-merge';
 import { FormItemType } from './enum';
 import { isEmpty } from './redash';
@@ -84,14 +85,10 @@ export const bool2String = (value: boolean | string | number) => {
 };
 
 // 生成随机字符串的函数
-export const generateRandomString = (length = 8) => {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let result = '';
-  const charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
+export const generateRandomId = () => {
+  const nanoId = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 8);
+
+  return nanoId();
 };
 
 /**

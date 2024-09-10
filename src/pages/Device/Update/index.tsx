@@ -5,7 +5,12 @@ import {
   postDevicesCreate,
   putDevicesUpdate,
 } from '@/services/rhilex/shebeiguanli';
-import { formatHeaders2Arr, formatHeaders2Obj, stringToBool } from '@/utils/utils';
+import {
+  formatHeaders2Arr,
+  formatHeaders2Obj,
+  generateRandomId,
+  stringToBool,
+} from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
@@ -92,6 +97,7 @@ const UpdateForm = () => {
   const initialValues = {
     type: defaultType,
     gid: groupId,
+    name: `DEVICE_${generateRandomId()}`,
     config: defaultConfig[defaultType],
   };
 

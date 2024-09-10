@@ -3,7 +3,7 @@ import { dataToType, OutendType, outendTypeOption } from '@/pages/Outend/enum';
 import { postRulesCreate } from '@/services/rhilex/guizeguanli';
 import { getOutendsList } from '@/services/rhilex/shuchuziyuanguanli';
 import { FormItemType } from '@/utils/enum';
-import { generateRandomString, validateFormItem } from '@/utils/utils';
+import { generateRandomId, validateFormItem } from '@/utils/utils';
 import type { ModalFormProps } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -55,7 +55,7 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
   return (
     <ModalForm
       title={formatMessage({ id: 'ruleConfig.title.new' })}
-      initialValues={{ name: `RULE_${generateRandomString()}`, targetType: OutendType.MQTT }}
+      initialValues={{ name: `RULE_${generateRandomId()}`, targetType: OutendType.MQTT }}
       width="30%"
       modalProps={{ destroyOnClose: true, maskClosable: false }}
       onFinish={async ({ targetId, targetType, ...values }) => {

@@ -7,7 +7,12 @@ import {
   postOutendsCreate,
   putOutendsUpdate,
 } from '@/services/rhilex/shuchuziyuanguanli';
-import { formatHeaders2Arr, formatHeaders2Obj, stringToBool } from '@/utils/utils';
+import {
+  formatHeaders2Arr,
+  formatHeaders2Obj,
+  generateRandomId,
+  stringToBool,
+} from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
@@ -104,6 +109,7 @@ const UpdateForm = () => {
       });
     } else {
       formRef.current?.setFieldsValue({
+        name: `OUTEND_${generateRandomId()}`,
         type: OutendType.MQTT,
         config: defaultConfig[OutendType.MQTT],
       });

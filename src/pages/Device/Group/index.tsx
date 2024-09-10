@@ -7,6 +7,7 @@ import {
 } from '@/services/rhilex/fenzuguanli';
 import { getDevicesGroup } from '@/services/rhilex/shebeiguanli';
 import { DEFAULT_GROUP_KEY_DEVICE, GROUP_TYPE_DEVICE } from '@/utils/constant';
+import { generateRandomId } from '@/utils/utils';
 import { DeleteOutlined, EditOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProList } from '@ant-design/pro-components';
@@ -210,6 +211,7 @@ const GroupList = ({
         onFinish={handleOnFinish}
         layout="horizontal"
         width="30%"
+        initialValues={{ name: `DEVICE_GROUP_${generateRandomId()}` }}
       >
         <ProFormText
           width="md"

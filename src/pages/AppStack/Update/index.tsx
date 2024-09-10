@@ -6,6 +6,7 @@ import RuleExample from '@/components/RuleExample';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import { postRulesFormatLua } from '@/services/rhilex/guizeguanli';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rhilex/qingliangyingyong';
+import { generateRandomId } from '@/utils/utils';
 import { ProForm, type ProFormColumnsType, type ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
@@ -15,7 +16,7 @@ import { baseColumns } from '../columns';
 const DefaultListUrl = '/app/list';
 
 const defaultValue = {
-  name: '',
+  name: `APP_${generateRandomId()}`,
   version: '1.0.0',
   type: 'lua',
   autoStart: 'true',

@@ -1,3 +1,5 @@
+import { generateRandomId } from '@/utils/utils';
+
 /** 规则默认值 **/
 export const DefaultActions = `Actions = {
   function(args)
@@ -18,5 +20,5 @@ export const initialValue = {
   actions: DefaultActions,
   success: DefaultSuccess,
   failed: DefaultFailed,
-  name: '',
+  name: `RULE_${generateRandomId()}`,
 };

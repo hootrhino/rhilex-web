@@ -6,7 +6,7 @@ import {
   postSchemaCreate,
   putSchemaUpdate,
 } from '@/services/rhilex/shujumoxing';
-import { cn, IconFont } from '@/utils/utils';
+import { cn, generateRandomId, IconFont } from '@/utils/utils';
 import { CheckOutlined, CopyOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProList } from '@ant-design/pro-components';
@@ -214,6 +214,7 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
           message.success(info);
           refresh();
         }}
+        initialValues={{ name: `SCHEMA_${generateRandomId()}` }}
       >
         <ProFormText
           name="name"

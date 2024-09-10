@@ -7,6 +7,7 @@ import {
   postInendsCreate,
   putInendsUpdate,
 } from '@/services/rhilex/shuruziyuanguanli';
+import { generateRandomId } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
@@ -21,7 +22,11 @@ const UpdateForm = () => {
   const { uuid } = useParams();
   const { formatMessage } = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
-  const defaultValue = { type: InendType.COAP, config: defaultConfig[InendType.COAP] };
+  const defaultValue = {
+    name: `INEND_${generateRandomId()}`,
+    type: InendType.COAP,
+    config: defaultConfig[InendType.COAP],
+  };
 
   // 获取详情
   const { data: detail } = useRequest(() => getInendsDetail({ uuid: uuid || '' }), {
