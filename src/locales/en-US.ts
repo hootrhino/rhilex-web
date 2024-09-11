@@ -7,7 +7,6 @@ import com from './en-US/com';
 import dashboard from './en-US/dashboard';
 import DataRepository from './en-US/DataRepository';
 import device from './en-US/device';
-import extend from './en-US/extend';
 import inend from './en-US/inend';
 import login from './en-US/login';
 import notification from './en-US/notification';
@@ -130,7 +129,6 @@ export default {
   ...device,
   ...notification,
   ...appStack,
-  ...extend,
   ...plugin,
   ...schemaMgt,
   ...system,

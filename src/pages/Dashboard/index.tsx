@@ -63,11 +63,6 @@ const Dashboard = () => {
       value: devices,
       key: 'device',
     },
-    // {
-    //   title: formatMessage({ id: 'dashboard.count.extend' }),
-    //   value: 0,
-    //   key: 'extend',
-    // },
   ];
 
   const statisticData = [

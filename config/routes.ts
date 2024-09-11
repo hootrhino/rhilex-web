@@ -208,13 +208,6 @@
       },
     ],
   },
-  // {
-  //   path: '/extend',
-  //   title: '扩展协议',
-  //   icon: 'cluster',
-  //   component: './Extend',
-  //   key: 'extend',
-  // },
   {
     path: '/plugin',
     title: 'menu.plugin',

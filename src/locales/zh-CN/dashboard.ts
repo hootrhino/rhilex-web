@@ -15,7 +15,6 @@ export default {
   'dashboard.count.plugin': '插件总数',
   'dashboard.count.app': '应用总数',
   'dashboard.count.device': '设备总数',
-  // 'dashboard.count.extend': '扩展协议总数',
 
   /**
    * statistic

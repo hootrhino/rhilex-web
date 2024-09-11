@@ -11,7 +11,6 @@ const allMenu = [
   'inend',
   'outend',
   'appStack',
-  'extend',
   'plugin',
   'communicationModule',
   'system',
@@ -19,7 +18,7 @@ const allMenu = [
 
 export const ProductMenuAccess = {
   [Product.COMMON]: allMenu,
-  [Product.EN6400]: allMenu.filter((menu) => !['extend', 'plugins'].includes(menu)),
+  [Product.EN6400]: allMenu.filter((menu) => !['plugins'].includes(menu)),
   [Product.RASPI4B]: allMenu,
   [Product.RHILEXG1]: allMenu,
 };

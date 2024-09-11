@@ -7,7 +7,6 @@ import com from './zh-TW/com';
 import dashboard from './zh-TW/dashboard';
 import DataRepository from './zh-TW/DataRepository';
 import device from './zh-TW/device';
-import extend from './zh-TW/extend';
 import inend from './zh-TW/inend';
 import login from './zh-TW/login';
 import notification from './zh-TW/notification';
@@ -128,7 +127,6 @@ export default {
   ...device,
   ...notification,
   ...appStack,
-  ...extend,
   ...plugin,
   ...schemaMgt,
   ...system,

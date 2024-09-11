@@ -15,7 +15,6 @@ export default {
   'dashboard.count.plugin': 'Plugin Total',
   'dashboard.count.app': 'Micro Application Total',
   'dashboard.count.device': 'Device Total',
-  // 'dashboard.count.extend': '扩展协议总数',
 
   /**
    * statistic
