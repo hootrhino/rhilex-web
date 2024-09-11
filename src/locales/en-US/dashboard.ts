@@ -23,4 +23,9 @@ export default {
   'dashboard.statistic.inFailed': 'Input Failed',
   'dashboard.statistic.outSuccess': 'Output Successful',
   'dashboard.statistic.outFailed': 'Output Failed',
+
+  /**
+   * others
+   */
+  'dashboard.empty.resource': 'Resource not found. Go to Device Access to add a new device.',
 };

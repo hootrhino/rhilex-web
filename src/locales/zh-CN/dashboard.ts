@@ -23,4 +23,9 @@ export default {
   'dashboard.statistic.inFailed': '输入失败',
   'dashboard.statistic.outSuccess': '输出成功',
   'dashboard.statistic.outFailed': '输出失败',
+
+  /**
+   * others
+   */
+  'dashboard.empty.resource': `暂无活跃资源，可前往「设备接入」添加新设备`,
 };

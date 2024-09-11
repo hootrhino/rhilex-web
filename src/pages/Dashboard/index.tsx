@@ -14,7 +14,7 @@ import {
 } from '@ant-design/icons';
 import { ProCard, ProList } from '@ant-design/pro-components';
 import { history, useIntl, useModel, useRequest } from '@umijs/max';
-import { Badge, Button, Col, Row, Space, Statistic } from 'antd';
+import { Badge, Button, Col, Empty, Row, Space, Statistic } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
 const Dashboard = () => {
@@ -129,6 +129,14 @@ const Dashboard = () => {
             rowKey="uuid"
             size="small"
             className="dashboard-device-card"
+            locale={{
+              emptyText: (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description={formatMessage({ id: 'dashboard.empty.resource' })}
+                />
+              ),
+            }}
             headerTitle={
               <span className="text-[14px]">
                 {formatMessage({ id: 'dashboard.title.resource' })}

@@ -27,7 +27,6 @@ const dataToServers = [
     target: 'greptimeDB',
     detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'GreptimeDB' }),
   },
-  { target: 'nats', detail: intl.formatMessage({ id: 'component.tpl.data' }, { server: 'NATS' }) },
 ];
 
 const getVariables = (server: string) => [

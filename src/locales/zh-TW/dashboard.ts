@@ -23,4 +23,9 @@ export default {
   'dashboard.statistic.inFailed': '輸入失敗',
   'dashboard.statistic.outSuccess': '輸出成功',
   'dashboard.statistic.outFailed': '輸出失敗',
+
+  /**
+   * others
+   */
+  'dashboard.empty.resource': '暫無活躍資源，可前往「設備接取」新增設備',
 };
