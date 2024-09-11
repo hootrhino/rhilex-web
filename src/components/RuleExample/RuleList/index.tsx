@@ -34,22 +34,12 @@ const RuleList = () => {
       ),
       style: panelStyle,
       children: (
-        <>
-          <ExampleItemChild
-            className="pb-[20px]"
-            type={type}
-            data={item}
-            handleOnCopy={() => setValConfig({ open: true, data: item })}
-          />
-          {item?.usage && (
-            <ExampleItemChild
-              isUsage
-              type={type}
-              data={item.usage}
-              handleOnCopy={() => setValConfig({ open: true, data: item.usage || {} })}
-            />
-          )}
-        </>
+        <ExampleItemChild
+          className="pb-[20px]"
+          type={type}
+          data={item}
+          handleOnCopy={() => setValConfig({ open: true, data: item })}
+        />
       ),
     }));
 

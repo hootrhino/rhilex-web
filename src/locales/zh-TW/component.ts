@@ -3,9 +3,9 @@ export default {
    * CodeEditor
    */
   'component.tpl.usage': '函數使用示例',
-  'component.tpl.data': '數據推送到 {server} 服務',
+  'component.tpl.data': '數據推送到北向資源',
   'component.tpl.data.arg': '{server} 資源',
-  'component.tpl.data.quick.modbus': 'Modbus 數據解析並推向 {server}',
+  'component.tpl.data.quick.modbus': 'Modbus 數據解析並推向北向資源',
   'component.tpl.device.write': '向設備寫入數據',
   'component.tpl.device.read': '從設備讀取數據',
   'component.tpl.device.ctrl': '向設備發送控制指令',
@@ -37,7 +37,8 @@ export default {
   'component.tpl.kvDel.detail': '全局緩存刪除值',
   'component.tpl.standard.debug': '打印日誌',
   'component.tpl.standard.debug.usage2': '拋出異常',
-  'component.tpl.standard.debug.arg': '除錯文本',
+  'component.tpl.standard.debug.arg': '調試文本',
+  'component.tpl.standard.debug.arg.placeholder': '請輸入調試文本',
   'component.tpl.rhilex.label': '當沒有網絡時，網關上的 LED 會快速閃爍 5 次',
   'component.tpl.rhilex.detail': '{name} 聯網測試',
   'component.tpl.inend': 'UUID 參數來自南向資源',
@@ -47,6 +48,7 @@ export default {
   'component.tpl.rfcom.name': '通訊控制函數',
   'component.tpl.rfcom.detail': '取得藍牙模組的 MAC 地址',
   'component.tpl.rfcom.arg': '通訊模組資源',
+  'component.tpl.rfcom.arg.placeholder': '請選擇通訊模組資源',
 
   /**
    * others

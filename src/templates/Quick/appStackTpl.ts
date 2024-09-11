@@ -1,12 +1,11 @@
 import { getIntl, getLocale } from '@umijs/max';
-import { TplDataType } from '@/components/RuleExample/enum';
 import { Product } from '@/utils/enum';
 
 const intl = getIntl(getLocale());
 
-const getCode = (product: Product) => `function Main(arg)
+export const getAppStackCode = (product: Product, ip?: string) => `function Main(arg)
 while true do
-  local _, Error = network:Ping(ip);
+  local _, Error = network:Ping("${ip || 'ip'}");
   if Error ~= nil then
       for i = 1, 5, 1 do
           ${product.toLowerCase()}:Led1On();
@@ -29,18 +28,12 @@ export const appStackQuickTpl = (product: Product) => {
   if ([Product.RHILEXG1, Product.EN6400].includes(product)) {
     return [
       {
+        key: 'appStack',
         label: intl.formatMessage({ id: 'component.tpl.rhilex.label' }),
         detail: intl.formatMessage({ id: 'component.tpl.rhilex.detail' }, { name: product }),
-        apply: getCode(product),
+        apply: getAppStackCode(product, '8.8.8.8'),
         type: 'function',
-        variables: [
-          {
-            label: 'IP',
-            name: 'ip',
-            type: TplDataType.SELECT,
-            dataSource: ['8.8.8.8', '114.114.114.114', '202.108.22.5', '202.108.22.103'],
-          },
-        ],
+        hasVariables: true
       },
     ];
   }

@@ -3,9 +3,9 @@ export default {
    * CodeEditor
    */
   'component.tpl.usage': '函数使用示例',
-  'component.tpl.data': '数据推送到 {server} 服务',
+  'component.tpl.data': '数据推送到北向资源',
   'component.tpl.data.arg': '{server} 资源',
-  'component.tpl.data.quick.modbus': 'Modbus 数据解析并推向 {server}',
+  'component.tpl.data.quick.modbus': 'Modbus 数据解析并推向北向资源',
   'component.tpl.device.write': '向设备写入数据',
   'component.tpl.device.read': '从设备读取数据',
   'component.tpl.device.ctrl': '向设备发送控制指令',
@@ -38,6 +38,7 @@ export default {
   'component.tpl.standard.debug': '打印日志',
   'component.tpl.standard.debug.usage2': '抛出异常',
   'component.tpl.standard.debug.arg': '调试文本',
+  'component.tpl.standard.debug.arg.placeholder': '请输入调试文本',
   'component.tpl.rhilex.label': '当没有网络时，网关上的 LED 会快速闪烁 5 次',
   'component.tpl.rhilex.detail': '{name} 联网测试',
   'component.tpl.inend': 'UUID 参数来自南向资源',
@@ -47,6 +48,7 @@ export default {
   'component.tpl.rfcom.name': '通信控制函数',
   'component.tpl.rfcom.detail': '获取蓝牙模块的 MAC 地址',
   'component.tpl.rfcom.arg': '通信模组资源',
+  'component.tpl.rfcom.arg.placeholder': '请选择通信控制函数',
 
   /**
    * others

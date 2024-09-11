@@ -69,7 +69,7 @@ export default {
   'form.placeholder.username': '請輸入用户名',
   'form.placeholder.password': '請輸入密碼',
   // rule
-  'form.rules.name': '請輸入4-64個字符，支持中文、字母、數字或下劃線',
+  'form.rules.name': '請輸入 4-64 個字符，支持中文、字母、數字或下劃線',
   'form.rules.port': '端口的值應在 0 到 65535 之間',
   'form.rules.address': '起始地址的值應在 0 到 65535 之間',
   'form.rules.vendorId': '廠商 ID 應在 0 到 65535 之間',

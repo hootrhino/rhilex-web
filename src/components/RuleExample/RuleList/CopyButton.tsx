@@ -2,13 +2,13 @@ import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
 import { useIntl } from '@umijs/max';
 import { Button } from 'antd';
 import type { BaseButtonProps } from 'antd/es/button/button';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import type { TplItem } from '../typings';
 
-type CopyButtonProps = Pick<TplItem, 'label' | 'apply'> & BaseButtonProps;
+type CopyButtonProps = Pick<TplItem, 'apply'> & BaseButtonProps;
 
-const CopyButton = ({ label, apply, ...props }: CopyButtonProps) => {
+const CopyButton = ({ apply, ...props }: CopyButtonProps) => {
   const [copied, setCopied] = useState<string>('');
   const { formatMessage } = useIntl();
 
@@ -20,7 +20,7 @@ const CopyButton = ({ label, apply, ...props }: CopyButtonProps) => {
   };
 
   return (
-    <CopyToClipboard key={label} text={apply || ''} onCopy={handleOnCopy}>
+    <CopyToClipboard key={useId()} text={apply || ''} onCopy={handleOnCopy}>
       <Button
         key="copy"
         type="primary"

@@ -3,14 +3,12 @@
  */
 
 import { getIntl, getLocale } from '@umijs/max';
-import { TplDataSource, TplDataType } from '../../components/RuleExample/enum';
 
 const intl = getIntl(getLocale());
 
-const code = `local result, err = rfcom:Ctrl('uuid', 'cmd')`;
-const usageCode = `Actions = {
+export const getRfcomCode = (uuid?: string) => `Actions = {
   function(args)
-    local result, err = rfcom:Ctrl('uuid', 'COMMAND')
+    local result, err = rfcom:Ctrl("${uuid}", 'COMMAND')
     if err ~= nil then
       Throw(err)
       return true, args
@@ -21,27 +19,13 @@ const usageCode = `Actions = {
   end
 }`;
 
-const variables = [
-  {
-    label: intl.formatMessage({ id: 'component.tpl.rfcom.arg' }),
-    name: 'uuid',
-    type: TplDataType.SELECT,
-    dataSource: TplDataSource.RFCOM,
-  },
-];
-
 export const comTpl = [
   {
-    key: 'rfcom-ctrl',
+    key: 'rfcom',
     label: 'rfcom:Ctrl',
-    apply: code,
+    apply: getRfcomCode('uuid'),
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.rfcom.detail' }),
-    usage: {
-      label: intl.formatMessage({ id: 'component.tpl.usage' }),
-      apply: usageCode,
-      type: 'function',
-      variables,
-    },
+    hasVariables: true
   },
 ];

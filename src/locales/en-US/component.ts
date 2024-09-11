@@ -3,9 +3,9 @@ export default {
    * CodeEditor
    */
   'component.tpl.usage': 'Function usage example',
-  'component.tpl.data': 'Data pushed to {server} service',
+  'component.tpl.data': 'Data pushed to outend',
   'component.tpl.data.arg': '{server} Resource',
-  'component.tpl.data.quick.modbus': 'Modbus data parsing and pushing to {server}',
+  'component.tpl.data.quick.modbus': 'Modbus data parsing and pushing to outend',
   'component.tpl.device.write': 'Write data to the device',
   'component.tpl.device.read': 'Read data from the device',
   'component.tpl.device.ctrl': 'Send control instructions to the device',
@@ -38,6 +38,7 @@ export default {
   'component.tpl.standard.debug': 'Print log',
   'component.tpl.standard.debug.usage2': 'Throw an exception',
   'component.tpl.standard.debug.arg': 'Debug Text',
+  'component.tpl.standard.debug.arg.placeholder': 'Please enter a text',
   'component.tpl.rhilex.label':
     'When there is no network, the gateway’s LED will flash quickly 5 times',
   'component.tpl.rhilex.detail': '{name} network connection test',
@@ -48,6 +49,7 @@ export default {
   'component.tpl.rfcom.name': 'Communication control functions',
   'component.tpl.rfcom.detail': 'Get the MAC address of the Bluetooth module',
   'component.tpl.rfcom.arg': 'Module Resources',
+  'component.tpl.rfcom.arg.placeholder': 'Please select a module resource',
 
   /**
    * others
