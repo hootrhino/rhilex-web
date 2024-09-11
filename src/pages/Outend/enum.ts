@@ -10,6 +10,7 @@ export enum OutendType {
   UDP_TARGET = 'UDP_TARGET',
   TCP_TRANSPORT = 'TCP_TRANSPORT',
   HTTP = 'HTTP',
+  RHILEX_GRPC_TARGET = 'RHILEX_GRPC_TARGET',
   MONGO_SINGLE = 'MONGO_SINGLE',
   GREPTIME_DATABASE = 'GREPTIME_DATABASE',
   TDENGINE = 'TDENGINE',
@@ -24,6 +25,10 @@ export const outendTypeOption = {
     { type: ' TCP Server' },
   ),
   [OutendType.HTTP]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' HTTP Server' }),
+  [OutendType.RHILEX_GRPC_TARGET]: intl.formatMessage(
+    { id: 'outend.type.push' },
+    { type: ' GRPC Server' },
+  ),
   [OutendType.MONGO_SINGLE]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' MongoDB' }),
   [OutendType.GREPTIME_DATABASE]: intl.formatMessage(
     { id: 'outend.type.push' },
@@ -44,10 +49,12 @@ export const dataToType = {
   [OutendType.UDP_TARGET]: 'Udp',
   [OutendType.TCP_TRANSPORT]: 'Tcp',
   [OutendType.HTTP]: 'Http',
-  [OutendType.MONGO_SINGLE]: 'Mongo',
+  [OutendType.MONGO_SINGLE]: 'MongoDB',
+  [OutendType.GREPTIME_DATABASE]: 'GreptimeDB',
   [OutendType.TDENGINE]: 'TDengine',
   [OutendType.GENERIC_UART_TARGET]: 'Uart',
   [OutendType.SEMTECH_UDP_FORWARDER]: 'Semtech',
+  [OutendType.RHILEX_GRPC_TARGET]: 'Grpc',
 };
 
 /**

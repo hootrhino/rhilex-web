@@ -80,4 +80,9 @@ export const defaultConfig = {
     port: 1700,
     mac: 'FFFFFFFFFFFF',
   },
+  [OutendType.RHILEX_GRPC_TARGET]: {
+    cacheOfflineData: DEFAULT_ENABLE_OFFLINE_CACHE,
+    host: DEFAULT_HOST,
+    port: 2599,
+  },
 };

@@ -2,6 +2,7 @@ import ProTag, { StatusType } from '@/components/ProTag';
 import { getIntl, getLocale } from '@umijs/max';
 import { OutendType, outendTypeOption } from '../enum';
 import { GREPTIME_DATABASE } from './greptimeDB';
+import { RHILEX_GRPC_TARGET } from './grpc';
 import { HTTP } from './http';
 import { MONGO_SINGLE } from './mongoDB';
 import { MQTT } from './mqttBroker';
@@ -58,6 +59,7 @@ export const configColumns = {
   [OutendType.GREPTIME_DATABASE]: GREPTIME_DATABASE,
   [OutendType.TDENGINE]: TDENGINE,
   [OutendType.HTTP]: HTTP,
+  [OutendType.RHILEX_GRPC_TARGET]: RHILEX_GRPC_TARGET,
   [OutendType.GENERIC_UART_TARGET]: GENERIC_UART_TARGET,
   [OutendType.SEMTECH_UDP_FORWARDER]: SEMTECH_UDP_FORWARDER,
 };
