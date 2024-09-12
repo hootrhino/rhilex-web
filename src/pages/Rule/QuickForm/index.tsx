@@ -1,7 +1,8 @@
 import type { OutendItem } from '@/pages/Outend';
-import { dataToType, OutendType, outendTypeOption } from '@/pages/Outend/enum';
+import { OutendType, outendTypeOption } from '@/pages/Outend/enum';
 import { postRulesCreate } from '@/services/rhilex/guizeguanli';
 import { getOutendsList } from '@/services/rhilex/shuchuziyuanguanli';
+import { getDataToQuickAction } from '@/templates/BuildIn/dataToTpl';
 import { FormItemType } from '@/utils/enum';
 import { generateRandomId, validateFormItem } from '@/utils/utils';
 import type { ModalFormProps } from '@ant-design/pro-components';
@@ -24,34 +25,6 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
   const { formatMessage } = useIntl();
   const { deviceId, inendId } = useParams();
 
-  const getActions = (type: OutendType, uuid: string) => {
-    const target = dataToType[type];
-
-    return `Actions = {
-      function(args)
-          local dataT, err = json:J2T(args)
-          if (err ~= nil) then
-              Throw(err)
-              return true, args
-          end
-          for _, value in pairs(dataT) do
-              local params = {}
-              params[value['tag']] = value.value
-              local json = json:T2J({
-                  id = time:TimeMs(),
-                  method = "thing.event.property.post",
-                  params = params
-              })
-              local err = data:To${target}("${uuid}", json)
-              if err ~= nil then
-                  Throw(err)
-              end
-          end
-          return true, args
-      end
-    }`;
-  };
-
   return (
     <ModalForm
       title={formatMessage({ id: 'ruleConfig.title.new' })}
@@ -67,7 +40,7 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
             fromDevice: deviceId ? [deviceId] : [],
             success: DefaultSuccess,
             failed: DefaultFailed,
-            actions: getActions(targetType, targetId),
+            actions: getDataToQuickAction(targetType, targetId),
           };
 
           await postRulesCreate(params);

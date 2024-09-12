@@ -3,10 +3,10 @@ import type { OutendItem } from '@/pages/Outend';
 import { outendTypeOption } from '@/pages/Outend/enum';
 import { getRulesGetCanUsedResources } from '@/services/rhilex/guizeguanli';
 import { getOutendsList } from '@/services/rhilex/shuchuziyuanguanli';
-import { getRfcomCode } from '@/templates/BuildIn/comTpl';
-import { getActions, getQuickCode } from '@/templates/BuildIn/dataToTpl';
+import { getRfcomAction } from '@/templates/BuildIn/comTpl';
+import { getDataToAction, getDataToQuickAction } from '@/templates/BuildIn/dataToTpl';
 import { getDebugCode } from '@/templates/BuildIn/standardTpl';
-import { getAppStackCode } from '@/templates/Quick/appStackTpl';
+import { getAppStackAction } from '@/templates/Quick/appStackTpl';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -47,15 +47,15 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
       if (changedValue?.targetType) {
         newCode =
           data?.key === 'dataToTargetQuick'
-            ? getQuickCode(changedValue?.targetType, 'uuid')
-            : getActions(changedValue?.targetType, 'uuid');
+            ? getDataToQuickAction(changedValue?.targetType, 'uuid')
+            : getDataToAction(changedValue?.targetType, 'uuid');
       }
       if (changedValue?.targetId) {
         const type = formRef.current?.getFieldValue('targetType');
         newCode =
           data?.key === 'dataToTargetQuick'
-            ? getQuickCode(type, changedValue?.targetId)
-            : getActions(type, changedValue?.targetId);
+            ? getDataToQuickAction(type, changedValue?.targetId)
+            : getDataToAction(type, changedValue?.targetId);
       }
     }
 
@@ -66,12 +66,12 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
 
     // rfcom
     if (data?.key === 'rfcom' && changedValue?.rfcomId) {
-      newCode = getRfcomCode(changedValue?.rfcomId);
+      newCode = getRfcomAction(changedValue?.rfcomId);
     }
 
     // appStack
     if (data?.key === 'appStack' && changedValue?.ip) {
-      newCode = getAppStackCode(product, changedValue?.ip);
+      newCode = getAppStackAction(product, changedValue?.ip);
     }
 
     formRef.current?.setFieldsValue({

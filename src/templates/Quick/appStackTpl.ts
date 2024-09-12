@@ -3,7 +3,7 @@ import { Product } from '@/utils/enum';
 
 const intl = getIntl(getLocale());
 
-export const getAppStackCode = (product: Product, ip?: string) => `function Main(arg)
+export const getAppStackAction = (product: Product, ip?: string) => `function Main(arg)
 while true do
   local _, Error = network:Ping("${ip || 'ip'}");
   if Error ~= nil then
@@ -31,7 +31,7 @@ export const appStackQuickTpl = (product: Product) => {
         key: 'appStack',
         label: intl.formatMessage({ id: 'component.tpl.rhilex.label' }),
         detail: intl.formatMessage({ id: 'component.tpl.rhilex.detail' }, { name: product }),
-        apply: getAppStackCode(product, '8.8.8.8'),
+        apply: getAppStackAction(product, '8.8.8.8'),
         type: 'function',
         hasVariables: true
       },

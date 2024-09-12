@@ -6,7 +6,7 @@ import { getIntl, getLocale } from '@umijs/max';
 
 const intl = getIntl(getLocale());
 
-export const getRfcomCode = (uuid?: string) => `Actions = {
+export const getRfcomAction = (uuid?: string) => `Actions = {
   function(args)
     local result, err = rfcom:Ctrl("${uuid}", 'COMMAND')
     if err ~= nil then
@@ -23,7 +23,7 @@ export const comTpl = [
   {
     key: 'rfcom',
     label: 'rfcom:Ctrl',
-    apply: getRfcomCode('uuid'),
+    apply: getRfcomAction('uuid'),
     type: 'function',
     detail: intl.formatMessage({ id: 'component.tpl.rfcom.detail' }),
     hasVariables: true

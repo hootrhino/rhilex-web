@@ -9,7 +9,7 @@ const intl = getIntl(getLocale());
 
 // 完整示例（快捷模板）
 // Modbus 数据解析并推向 MqttServer 快捷模板
-export const getQuickCode = (type?: OutendType, uuid?: string) => {
+export const getDataToQuickAction = (type?: OutendType, uuid?: string) => {
   const target = type ? dataToType[type] : 'Target';
  const targetId = uuid || 'uuid';
 
@@ -39,7 +39,7 @@ export const getQuickCode = (type?: OutendType, uuid?: string) => {
 };
 
 // 函数使用示例
-export const getActions = (type?: OutendType, uuid?: string) => {
+export const getDataToAction = (type?: OutendType, uuid?: string) => {
   const target = type ? dataToType[type] : 'Target';
   const targetId = uuid || 'uuid';
 
@@ -58,7 +58,7 @@ export const getActions = (type?: OutendType, uuid?: string) => {
 export const dataToTpl: TplItem[] = [{
   key: 'dataToTarget',
   label: 'data:ToTarget',
-  apply: getActions(),
+  apply: getDataToAction(),
   detail: intl.formatMessage({id: 'component.tpl.data'}),
   type: 'function',
   hasVariables: true
@@ -68,7 +68,7 @@ export const dataToQuickTpl: TplItem[] = [{
   label: '',
   key: 'dataToTargetQuick',
   detail: intl.formatMessage({id: 'component.tpl.data.quick.modbus'}),
-  apply: getQuickCode(),
+  apply: getDataToQuickAction(),
   type: 'function',
   hasVariables: true
 }];
