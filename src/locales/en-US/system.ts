@@ -82,13 +82,10 @@ export default {
   'system.table.title.mtu': 'MTU',
   'system.table.title.ipv4Addr': 'IPV4 Address',
   'system.table.title.ipv6Addr': 'IPV6 Address',
-  'system.table.title.product': 'Product',
+  'system.table.title.product': 'Product Model',
   'system.table.title.version': 'Version',
   'system.table.title.osUpTime': 'Up Start Time',
   'system.table.title.osArch': 'OS',
-  // 'system.table.title.memPercent': 'Usaged Memory',
-  // 'system.table.title.diskInfo': 'Used Disk',
-  // 'system.table.title.cpuPercent': 'Used CPU',
   'system.table.title.sysTimeZone': 'Time Zone',
   'system.table.title.sysTime': 'System Time',
   'system.table.title.enableNtp': 'Enable NTP',
@@ -110,6 +107,7 @@ export default {
   'system.button.time.ntp': 'Synchronize  NTP',
   'system.button.wifi.ntp': 'Scan WIFI',
   'system.button.scan': 'Scan Ports',
+  'system.button.more': 'More Info',
 
   /**
    * modal
@@ -173,4 +171,10 @@ export default {
   'system.option.e': 'Even',
   'system.option.o': 'Odd',
   'system.option.n': 'None',
+
+  // time
+  'system.time.day': 'day',
+  'system.time.hour': 'h',
+  'system.time.minute': 'm',
+  'system.time.second': 's',
 };

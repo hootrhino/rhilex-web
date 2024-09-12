@@ -1,11 +1,12 @@
 import { modal } from '@/components/PopupHack';
 import ProDescriptions from '@/components/ProDescriptions';
 import { getOsOsRelease } from '@/services/rhilex/xitongshuju';
-import { toPascalCase } from '@/utils/utils';
+import { IconFont, toPascalCase } from '@/utils/utils';
+import { ClockCircleOutlined, DesktopOutlined, ForkOutlined } from '@ant-design/icons';
 import { Line } from '@ant-design/plots';
 import { ProCard, StatisticCard } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
-import { Button, Space } from 'antd';
+import { Button } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
 enum Category {
@@ -135,28 +136,24 @@ const Resource = () => {
     ],
   };
 
-  const extraData = [
-    {
-      label: formatMessage({ id: 'system.table.title.product' }),
-      value: product || '-',
-      key: 'product',
-    },
-    {
-      label: formatMessage({ id: 'system.table.title.version' }),
-      value: version || 'v0.0.0',
-      key: 'version',
-    },
-    {
-      label: formatMessage({ id: 'system.table.title.osUpTime' }),
-      value: osUpTime || '-',
-      key: 'osUpTime',
-    },
-    {
-      label: formatMessage({ id: 'system.table.title.osArch' }),
-      value: osArch || '-',
-      key: 'osArch',
-    },
-  ];
+  const formatVersion = () => {
+    if (!version) return;
+    const v = version?.split('-');
+
+    return v[0] || 'v0.0.0';
+  };
+
+  const formatTime = () => {
+    if (osUpTime) {
+      return osUpTime
+        .replace(/days/g, formatMessage({ id: 'system.time.day' }))
+        .replace(/Hours/g, formatMessage({ id: 'system.time.hour' }))
+        .replace(/Minutes/g, formatMessage({ id: 'system.time.minute' }))
+        .replace(/Seconds/g, formatMessage({ id: 'system.time.second' }));
+    }
+
+    return '-';
+  };
 
   useEffect(() => {
     currentTimeRef.current = new Date();
@@ -191,14 +188,6 @@ const Resource = () => {
       title={formatMessage({ id: 'system.tab.resource' })}
       extra={
         <>
-          <Space split={<StatisticCard.Divider type="vertical" className="h-[12px]" />}>
-            {extraData.map(({ key, label, value }) => (
-              <span key={key}>
-                <span className="text-[#585858] text-[12px]">{label}</span>
-                <span className="text-[rgba(0,0,0,0.9)] text-[14px] pl-[5px]">{value}</span>
-              </span>
-            ))}
-          </Space>
           <Button
             size="small"
             type="primary"
@@ -206,11 +195,46 @@ const Resource = () => {
             className="ml-[16px]"
             onClick={() => modal.info(detailConfig)}
           >
-            {formatMessage({ id: 'button.checkDetail' })}
+            {formatMessage({ id: 'system.button.more' })}
           </Button>
         </>
       }
     >
+      <StatisticCard.Group direction="row" className="mb-[24px]">
+        <StatisticCard
+          statistic={{
+            title: formatMessage({ id: 'system.table.title.product' }),
+            value: product,
+            valueStyle: { color: '#1677ff' },
+            prefix: <IconFont type="icon-product" />,
+          }}
+        />
+        <StatisticCard.Divider type="vertical" />
+        <StatisticCard
+          statistic={{
+            title: formatMessage({ id: 'system.table.title.version' }),
+            value: formatVersion(),
+            valueStyle: { color: '#3f8600' },
+            prefix: <ForkOutlined />,
+          }}
+        />
+        <StatisticCard.Divider type="vertical" />
+        <StatisticCard
+          statistic={{
+            title: formatMessage({ id: 'system.table.title.osUpTime' }),
+            value: formatTime(),
+            prefix: <ClockCircleOutlined />,
+          }}
+        />
+        <StatisticCard.Divider type="vertical" />
+        <StatisticCard
+          statistic={{
+            title: formatMessage({ id: 'system.table.title.osArch' }),
+            value: osArch,
+            prefix: <DesktopOutlined />,
+          }}
+        />
+      </StatisticCard.Group>
       <Line {...config} containerStyle={{ minHeight: 560 }} />
     </ProCard>
   );

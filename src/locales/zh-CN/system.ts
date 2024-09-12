@@ -82,13 +82,10 @@ export default {
   'system.table.title.mtu': '网络 MTU',
   'system.table.title.ipv4Addr': 'IPV4 地址',
   'system.table.title.ipv6Addr': 'IPV6 地址',
-  'system.table.title.product': '产品',
+  'system.table.title.product': '产品型号',
   'system.table.title.version': '当前版本',
   'system.table.title.osUpTime': '运行时长',
   'system.table.title.osArch': '操作系统',
-  // 'system.table.title.memPercent': '内存使用',
-  // 'system.table.title.diskInfo': '磁盘使用',
-  // 'system.table.title.cpuPercent': 'CPU 使用',
   'system.table.title.sysTimeZone': '时区选择',
   'system.table.title.sysTime': '系统时间',
   'system.table.title.enableNtp': 'NTP 同步',
@@ -110,6 +107,7 @@ export default {
   'system.button.time.ntp': '立即同步 NTP',
   'system.button.wifi.ntp': '扫描 WIFI',
   'system.button.scan': '扫描端口',
+  'system.button.more': '查看更多信息',
 
   /**
    * modal
@@ -168,4 +166,10 @@ export default {
   'system.option.e': '奇校验',
   'system.option.o': '偶校验',
   'system.option.n': '不校验',
+
+  // time
+  'system.time.day': '天',
+  'system.time.hour': '时',
+  'system.time.minute': '分',
+  'system.time.second': '秒',
 };
