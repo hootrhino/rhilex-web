@@ -38,6 +38,36 @@ export async function getOsStartedAt(options?: { [key: string]: any }) {
   });
 }
 
+/** 运行配置 获取首页dashboard数据 GET /api/v1/os/sysConfig */
+export async function getOsSysConfig(options?: { [key: string]: any }) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      appId: string;
+      maxQueueSize: number;
+      sourceRestartInterval: number;
+      gomaxProcs: number;
+      enablePProf: boolean;
+      enableConsole: boolean;
+      appDebugMode: boolean;
+      logLevel: string;
+      logPath: string;
+      logMaxSize: number;
+      logMaxBackups: number;
+      logMaxAge: number;
+      logCompress: boolean;
+      maxKvStoreSize: number;
+      maxLostCacheSize: number;
+      extLibs: string[];
+      dataSchemaSecret: string[];
+    };
+  }>('/api/v1/os/sysConfig', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** 系统参数 获取首页dashboard数据 GET /api/v1/os/system */
 export async function getOsSystem(options?: { [key: string]: any }) {
   return request<{

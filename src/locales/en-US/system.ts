@@ -126,6 +126,8 @@ export default {
     'Are you sure you want to change the username/password and login again?',
   'system.modal.title.portDetail': 'Serial port details',
   'system.modal.title.portUpdate': 'Update serial port',
+  'system.modal.title.config': 'System configuration parameters',
+  'system.button.config': 'Show Configuration',
 
   /**
    * title
@@ -136,6 +138,27 @@ export default {
   'system.title.network.detail': 'Network details',
   'system.title.network.status': 'Network Status',
   'system.title.resource.detail': 'System details',
+
+  /**
+   * descriptions
+   */
+  'system.desc.appId': 'AppID',
+  'system.desc.maxQueueSize': 'MaxQueueSize',
+  'system.desc.sourceRestartInterval': 'SourceRestartInterval',
+  'system.desc.gomaxProcs': 'GoMaxProcs',
+  'system.desc.enablePProf': 'EnablePProf',
+  'system.desc.enableConsole': 'EnableConsole',
+  'system.desc.appDebugMode': 'AppDebugMode',
+  'system.desc.logLevel': 'LogLevel',
+  'system.desc.logPath': 'LogPath',
+  'system.desc.logMaxSize': 'LogMaxSize',
+  'system.desc.logMaxBackups': 'LogMaxBackups',
+  'system.desc.logMaxAge': 'LogMaxAge',
+  'system.desc.logCompress': 'LogCompress',
+  'system.desc.maxKvStoreSize': 'MaxKvStoreSize',
+  'system.desc.maxLostCacheSize': 'MaxLostCacheSize',
+  'system.desc.extLibs': 'ExtLibs',
+  'system.desc.dataSchemaSecret': 'DataSchemaSecret',
 
   /**
    * others

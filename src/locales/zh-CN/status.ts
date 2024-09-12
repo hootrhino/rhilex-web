@@ -18,6 +18,8 @@ export default {
   'status.busy': '占用',
   'status.free': '空闲',
   'status.unknow': '未知',
+  'status.yes': '是',
+  'status.no': '否',
   /**
    * notice
    */

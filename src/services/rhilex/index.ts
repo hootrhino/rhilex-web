@@ -7,6 +7,7 @@ import * as bacnetRoutermoshi from './bacnetRoutermoshi';
 import * as chajianguanli from './chajianguanli';
 import * as dapingguanli from './dapingguanli';
 import * as dingshirenwu from './dingshirenwu';
+import * as dingshizhongqi from './dingshizhongqi';
 import * as fenzuguanli from './fenzuguanli';
 import * as guizeguanli from './guizeguanli';
 import * as gujiancaozuo from './gujiancaozuo';
@@ -39,7 +40,6 @@ import * as xitongshuju from './xitongshuju';
 import * as yidongwangluo4Gshezhi from './yidongwangluo4Gshezhi';
 import * as yonghudingyiluamoban from './yonghudingyiluamoban';
 import * as yonghuguanli from './yonghuguanli';
-import * as zhandianpeizhi from './zhandianpeizhi';
 import * as zhanneitongzhi from './zhanneitongzhi';
 export default {
   shebeiguanli,
@@ -62,7 +62,6 @@ export default {
   shijianpeizhi,
   wuxianwifipeizhi,
   yidongwangluo4Gshezhi,
-  zhandianpeizhi,
   luyoupeizhi,
   shujubeifen,
   jiekouguanli,
@@ -81,4 +80,5 @@ export default {
   modbusSlaverjicunqiguanli,
   tongyongdianweiguanli,
   mBusMasterdianweiguanli,
+  dingshizhongqi,
 };

@@ -1,6 +1,6 @@
 export default {
-  'status.online': 'online',
-  'status.offline': 'offline',
+  'status.online': 'Online',
+  'status.offline': 'Offline',
   'status.fault': 'fault',
   'status.pause': 'paused',
   'status.stop': 'stopped',
@@ -9,15 +9,17 @@ export default {
   'status.exception': 'exception',
   'status.running': 'running',
   'status.finished': 'finished',
-  'status.enabled': 'enabled',
-  'status.disabled': 'disabled',
+  'status.enabled': 'Enabled',
+  'status.disabled': 'Disabled',
   'status.parse': 'parse',
   'status.unparse': 'unparse',
   'status.internal': 'internal',
   'status.external': 'external',
   'status.busy': 'occupied',
   'status.free': 'idle',
-  'status.unknow': 'Unknow',
+  'status.unknow': 'unknow',
+  'status.yes': 'Yes',
+  'status.no': 'No',
   /**
    * notice
    */

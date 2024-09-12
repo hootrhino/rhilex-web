@@ -31,6 +31,7 @@ const Interface = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage, locale } = useIntl();
   const { detailConfig, changeConfig, initialConfig } = useModel('useCommon');
+  const isEn = locale === 'en-US';
 
   const [openUpdateModal, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -147,7 +148,7 @@ const Interface = () => {
           <Card styles={{ body: { padding: '16px 18px' } }}>
             <ProDescriptions
               columns={configColumns as EnhancedProDescriptionsItemProps[]}
-              labelWidth={locale === 'en-US' ? 90 : 70}
+              labelWidth={isEn ? 90 : 70}
               dataSource={config}
             />
           </Card>
@@ -207,7 +208,6 @@ const Interface = () => {
         rootClassName="stripe-table"
         search={false}
         pagination={false}
-        scroll={{ y: 400 }}
         request={async () => {
           const { data } = await getHwifaceList();
 
@@ -258,7 +258,7 @@ const Interface = () => {
         <ProDescriptions
           columns={columns as EnhancedProDescriptionsItemProps[]}
           dataSource={detail}
-          labelWidth={locale === 'en-US' ? 180 : 80}
+          labelWidth={isEn ? 180 : 80}
         />
       </Modal>
     </ProCard>

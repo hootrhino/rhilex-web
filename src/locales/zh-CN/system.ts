@@ -108,6 +108,7 @@ export default {
   'system.button.wifi.ntp': '扫描 WIFI',
   'system.button.scan': '扫描端口',
   'system.button.more': '查看更多信息',
+  'system.button.config': '查看系统配置',
 
   /**
    * modal
@@ -123,6 +124,7 @@ export default {
   'system.modal.content.user': '确定要修改用户名 / 密码并重新登录吗？',
   'system.modal.title.portDetail': '串口详情',
   'system.modal.title.portUpdate': '编辑串口',
+  'system.modal.title.config': '系统配置参数',
 
   /**
    * title
@@ -133,6 +135,27 @@ export default {
   'system.title.network.detail': '网卡详情',
   'system.title.network.status': '网络状态',
   'system.title.resource.detail': '系统详情',
+
+  /**
+   * descriptions
+   */
+  'system.desc.appId': '应用标识',
+  'system.desc.maxQueueSize': '最大队列',
+  'system.desc.sourceRestartInterval': '资源重启间隔',
+  'system.desc.gomaxProcs': '最大 CPU 核心数',
+  'system.desc.enablePProf': '是否启用性能分析',
+  'system.desc.enableConsole': '是否启用控制台输出',
+  'system.desc.appDebugMode': '是否启用调试模式',
+  'system.desc.logLevel': '日志记录级别',
+  'system.desc.logPath': '日志存储路径',
+  'system.desc.logMaxSize': '单个日志文件大小',
+  'system.desc.logMaxBackups': '日志文件备份数量',
+  'system.desc.logMaxAge': '日志文件保留天数',
+  'system.desc.logCompress': '是否压缩日志文件',
+  'system.desc.maxKvStoreSize': '键值存储大小',
+  'system.desc.maxLostCacheSize': '最大缓存大小',
+  'system.desc.extLibs': '外部 Lua 库',
+  'system.desc.dataSchemaSecret': '密钥列表',
 
   /**
    * others
