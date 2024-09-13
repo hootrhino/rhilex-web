@@ -12,6 +12,7 @@ export default {
   'system.tab.backup': '数据备份',
   'system.tab.user': '用户设置',
   'system.tab.port': '串口设置',
+  'system.tab.reboot': '定时重启',
 
   /**
    * form
@@ -38,6 +39,11 @@ export default {
   'system.form.title.stopBits': '停止位',
   'system.form.title.uart': '系统串口',
 
+  // reboot
+  'system.form.title.enableReboot': '开启定时重启',
+  'system.form.title.cronExpr': 'CRON 表达式',
+
+  // rules
   'system.form.rules.netmask': '请输入子网掩码',
   'system.form.rules.ip': '请输入管理地址',
   'system.form.rules.ipPoolBegin': '请输入 DHCP 起始地址',
@@ -50,11 +56,11 @@ export default {
   'system.form.rules.dns': '请输入 DNS 服务器',
   'system.form.rules.ssid': '请输入 SSID',
   'system.form.rules.security': '请选择加密方式',
+  'system.form.rules.cronExpr': '请选择常用定时策略或者自定义输入定时策略',
 
+  // placeholder
   'system.form.placeholder.sysTimeZone': '请选择时区',
   'system.form.placeholder.sysTime': '请选择时间',
-
-  // port
   'system.form.placeholder.timeout': '请输入超时时间',
   'system.form.placeholder.baudRate': '请选择波特率',
   'system.form.placeholder.dataBits': '请选择数据位',
@@ -108,7 +114,8 @@ export default {
   'system.button.wifi.ntp': '扫描 WIFI',
   'system.button.scan': '扫描端口',
   'system.button.more': '查看更多信息',
-  'system.button.config': '查看系统配置',
+  'system.button.showConfig': '查看系统配置',
+  'system.button.comfirmConfig': '提交配置',
 
   /**
    * modal
@@ -122,6 +129,8 @@ export default {
   'system.modal.content.recover':
     '恢复出厂设置将删除当前所有数据并停止所有正在进行中的任务，请谨慎操作',
   'system.modal.content.user': '确定要修改用户名 / 密码并重新登录吗？',
+  'system.modal.content.cornExpr':
+    '请准确填写 CRON 表达式以确保重启时间的准确性。重启将断开网络资源和数据转发链路，请提前备份数据以避免丢失。在启用定时重启策略前务必完成备份。',
   'system.modal.title.portDetail': '串口详情',
   'system.modal.title.portUpdate': '编辑串口',
   'system.modal.title.config': '系统配置参数',
@@ -163,8 +172,12 @@ export default {
   'system.routing.tab.config': 'DHCP 配置',
   'system.routing.tab.list': 'DHCP 列表',
   'system.tips.apn': '此配置项属于高级网络功能，配置不当会造成设备断网，请谨慎操作',
+
+  // tooltip
   'system.tooltip.cdmapwd': '是否在 CDMA 网络下保存用户名和密码',
   'system.tooltip.new': '新建一行',
+  'system.tooltip.corn':
+    '本功能采用标准 crontab 格式，允许用户通过自定义分钟、小时、日期、月份、星期的值来设置重启策略。',
 
   'system.option.shanghai': '中国',
   'system.option.tokyo': '日本',
@@ -174,6 +187,7 @@ export default {
   'system.desc.recovery': '仅支持 zip 文件',
   'system.message.error.upload': '仅支持 zip 格式文件，请检查上传文件格式',
   'system.message.success.ntp': 'NTP 时间更新成功',
+  'system.message.success.scheduledReboot': '设置成功',
 
   'system.type.ethernet': '以太网',
   'system.type.bridge': '桥接设备',
@@ -195,4 +209,11 @@ export default {
   'system.time.hour': '时',
   'system.time.minute': '分',
   'system.time.second': '秒',
+
+  // cron expression
+  'system.cronExpr.option1': '每天凌晨 0 点执行一次',
+  'system.cronExpr.option2': '每天凌晨 3 点 33 分执行一次',
+  'system.cronExpr.option3': '每周日凌晨 0 点执行一次',
+  'system.cronExpr.option4': '每月的第一天凌晨 0 点执行一次',
+  'system.cronExpr.option5': '每三个月的第一天凌晨 0 点执行一次',
 };

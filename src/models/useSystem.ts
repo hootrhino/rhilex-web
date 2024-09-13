@@ -37,6 +37,7 @@ const useSystem = () => {
     onSuccess: (res) => {
       if (!res) return;
       const { osDist } = res?.hardWareInfo;
+
       setWindows(osDist?.includes('windows'));
       setProduct(res?.hardWareInfo?.product);
     },

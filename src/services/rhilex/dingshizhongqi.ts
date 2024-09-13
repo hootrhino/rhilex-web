@@ -14,7 +14,13 @@ export async function getCronRebootConfig(options?: { [key: string]: any }) {
 }
 
 /** 更新配置 POST /api/v1/cronReboot/update */
-export async function postCronRebootUpdate(body: {}, options?: { [key: string]: any }) {
+export async function postCronRebootUpdate(
+  body: {
+    enable: boolean;
+    cron_expr: string;
+  },
+  options?: { [key: string]: any },
+) {
   return request<{ code: number; msg: string; data: string[] }>('/api/v1/cronReboot/update', {
     method: 'POST',
     headers: {

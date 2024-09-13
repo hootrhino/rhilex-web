@@ -12,6 +12,7 @@ export default {
   'system.tab.backup': 'Backup Settings',
   'system.tab.user': 'User Settings',
   'system.tab.port': 'Serial Port Settings',
+  'system.tab.reboot': 'Scheduled Reboot',
 
   /**
    * form
@@ -38,6 +39,11 @@ export default {
   'system.form.title.stopBits': 'Stop Bits',
   'system.form.title.uart': 'Serial Port',
 
+  // reboot
+  'system.form.title.enableReboot': 'Enable Reboot',
+  'system.form.title.cronExpr': 'CRON Expression',
+
+  // rules
   'system.form.rules.netmask': 'Please enter a subnet mask',
   'system.form.rules.ip': 'Please enter an address',
   'system.form.rules.ipPoolBegin': 'Please enter a dhcp start address',
@@ -50,11 +56,12 @@ export default {
   'system.form.rules.dns': 'Please enter a DNS server',
   'system.form.rules.ssid': 'Please enter a SSID',
   'system.form.rules.security': 'Please select a encryption method',
+  'system.form.rules.cronExpr':
+    'Please select a common timing policy or enter a custom timing policy',
 
+  // placeholder
   'system.form.placeholder.sysTimeZone': 'Please select a time zone',
   'system.form.placeholder.sysTime': 'Please select a time',
-
-  // port
   'system.form.placeholder.timeout': 'Please enter a timeout',
   'system.form.placeholder.baudRate': 'Please select a baud rate',
   'system.form.placeholder.dataBits': 'Please select a data bits',
@@ -108,6 +115,8 @@ export default {
   'system.button.wifi.ntp': 'Scan WIFI',
   'system.button.scan': 'Scan Ports',
   'system.button.more': 'More Info',
+  'system.button.showConfig': 'Show Configuration',
+  'system.button.comfirmConfig': 'Submit',
 
   /**
    * modal
@@ -124,10 +133,11 @@ export default {
     'Factory reset will erase all current data and stop all ongoing tasks. Please proceed with caution',
   'system.modal.content.user':
     'Are you sure you want to change the username/password and login again?',
+  'system.modal.content.cornExpr':
+    'Please fill in the CRON expression accurately to ensure the accuracy of the reboot time. Reboot will disconnect network resources and data forwarding links, please backup data in advance to avoid loss. Be sure to complete the backup before enabling the timed reboot policy.',
   'system.modal.title.portDetail': 'Serial port details',
   'system.modal.title.portUpdate': 'Update serial port',
   'system.modal.title.config': 'System configuration parameters',
-  'system.button.config': 'Show Configuration',
 
   /**
    * title
@@ -167,8 +177,12 @@ export default {
   'system.routing.tab.list': 'DHCP List',
   'system.tips.apn':
     'This configuration item is a high-level network feature; incorrect configuration can lead to network disconnection. Please proceed with caution',
+
+  // tooltip
   'system.tooltip.cdmapwd': 'Whether to save the username and password on the CDMA network',
   'system.tooltip.new': 'Add a new line',
+  'system.tooltip.corn':
+    'This feature uses the standard crontab format to allow the user to set the reboot policy by customizing the values for minutes, hours, day, month, and week.',
 
   'system.option.shanghai': 'China',
   'system.option.tokyo': 'Japan',
@@ -178,7 +192,8 @@ export default {
   'system.desc.recovery': 'Only ZIP files are supported',
   'system.message.error.upload':
     'Only ZIP format files are supported. Please check the uploaded file format',
-  'system.message.success.ntp': 'NTP Update Successful',
+  'system.message.success.ntp': 'NTP update successful',
+  'system.message.success.scheduledReboot': 'Settings saved successfully',
 
   'system.type.ethernet': 'Ethernet',
   'system.type.bridge': 'Bridge',
@@ -200,4 +215,11 @@ export default {
   'system.time.hour': 'h',
   'system.time.minute': 'm',
   'system.time.second': 's',
+
+  // cron expression
+  'system.cronExpr.option1': 'Run at 00:00 AM daily',
+  'system.cronExpr.option2': 'Run at 3:33 AM daily',
+  'system.cronExpr.option3': 'Run at 0 AM on Sundays',
+  'system.cronExpr.option4': 'Run at 0 AM on the first day of each month',
+  'system.cronExpr.option5': 'Run at 0 AM on the first day of every three months',
 };

@@ -22032,8 +22032,25 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {}
-              }
+                "properties": {
+                  "enable": {
+                    "type": "boolean"
+                  },
+                  "cron_expr": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "enable",
+                  "cron_expr"
+                ],
+                "x-apifox-ignore-properties": [],
+                "x-apifox-orders": [
+                  "enable",
+                  "cron_expr"
+                ]
+              },
+              "example": ""
             }
           }
         },

@@ -330,7 +330,7 @@ const Resource = () => {
             className="ml-[16px]"
             onClick={() => modal.info(showSystemConfig)}
           >
-            {formatMessage({ id: 'system.button.config' })}
+            {formatMessage({ id: 'system.button.showConfig' })}
           </Button>
         </>
       }

@@ -12,6 +12,7 @@ import NetworkStatus from './NetworkStatus';
 import PortSettings from './PortMgt';
 import Resource from './Resource';
 import RoutingConfig from './Routing';
+import ScheduledReboot from './ScheduledReboot';
 import TimeConfig from './Time';
 import UserConfig from './User';
 import WIFIConfig from './Wifi';
@@ -87,6 +88,11 @@ const System = () => {
       key: 'user',
       children: <UserConfig />,
     },
+    {
+      label: <FormattedMessage id="system.tab.reboot" />,
+      key: 'reboot',
+      children: <ScheduledReboot />,
+    },
   ];
 
   const changeItems = (hasWifi: boolean, hasRoute: boolean) => {
@@ -95,7 +101,7 @@ const System = () => {
         return defaultConfig.includes(item.key);
       } else {
         if ([Product.COMMON].includes(product)) {
-          return defaultConfig.includes(item.key);
+          return [...defaultConfig, 'reboot'].includes(item.key);
         }
         if (!hasRoute) {
           return !['routing'].includes(item.key);

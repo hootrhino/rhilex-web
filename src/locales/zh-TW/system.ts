@@ -12,6 +12,7 @@ export default {
   'system.tab.backup': '數據備份',
   'system.tab.user': '用戶設定',
   'system.tab.port': '串口設定',
+  'system.tab.reboot': '定時重啟',
 
   /**
    * form
@@ -38,6 +39,11 @@ export default {
   'system.form.title.stopBits': '停止位',
   'system.form.title.uart': '系統串口',
 
+  // reboot
+  'system.form.title.enableReboot': '開啟定時重啟',
+  'system.form.title.cronExpr': 'CRON 表達式',
+
+  // rules
   'system.form.rules.netmask': '請輸入子網掩碼',
   'system.form.rules.ip': '請輸入管理地址',
   'system.form.rules.ipPoolBegin': '請輸入 DHCP 起始地址',
@@ -50,11 +56,11 @@ export default {
   'system.form.rules.dns': '請輸入 DNS 伺服器',
   'system.form.rules.ssid': '請輸入 SSID',
   'system.form.rules.security': '請選擇加密方式',
+  'system.form.rules.cronExpr': '請選擇常用定時策略或自訂輸入定時策略',
 
+  // placeholder
   'system.form.placeholder.sysTimeZone': '請選擇時區',
   'system.form.placeholder.sysTime': '請選擇時間',
-
-  // port
   'system.form.placeholder.timeout': '請輸入超時時間',
   'system.form.placeholder.baudRate': '請選擇波特率',
   'system.form.placeholder.dataBits': '請選擇數據位',
@@ -108,7 +114,8 @@ export default {
   'system.button.wifi.ntp': '掃描 WIFI',
   'system.button.scan': '掃描端口',
   'system.button.more': '查看更多信息',
-  'system.button.config': '查看系統配置',
+  'system.button.showConfig': '查看系統配置',
+  'system.button.comfirmConfig': '提交配置',
 
   /**
    * modal
@@ -122,6 +129,8 @@ export default {
   'system.modal.content.recover':
     '恢復原廠設定將刪除目前所有資料並停止所有正在進行中的任務，請謹慎操作',
   'system.modal.content.user': '確定要修改用戶名 / 密碼並重新登入嗎？',
+  'system.modal.content.cornExpr':
+    '請準確填寫 CRON 表達式以確保重啟時間的準確性。重新啟動將斷開網路資源和資料轉送鏈路，請提前備份資料以避免遺失。在啟用定時重新啟動策略前務必完成備份。',
   'system.modal.title.portDetail': '串口詳情',
   'system.modal.title.portUpdate': '編輯串口',
   'system.modal.title.config': '系統配置參數',
@@ -163,8 +172,12 @@ export default {
   'system.routing.tab.config': 'DHCP 配置',
   'system.routing.tab.list': 'DHCP 列表',
   'system.tips.apn': '此配置項屬於高級網絡功能，配置不當會造成設備斷網，請謹慎操作',
+
+  // tooltip
   'system.tooltip.cdmapwd': '是否在 CDMA 網絡下保存用戶名和密碼',
   'system.tooltip.new': '新建一行',
+  'system.tooltip.corn':
+    '本功能採用標準 crontab 格式，讓使用者可以透過自訂分鐘、小時、日期、月份、星期的值來設定重新啟動策略。',
 
   'system.option.shanghai': '中國',
   'system.option.tokyo': '日本',
@@ -174,6 +187,7 @@ export default {
   'system.desc.recovery': '僅支持 zip 文件',
   'system.message.error.upload': '僅支持 zip 格式的文件，請檢查上傳文件格式',
   'system.message.success.ntp': 'NTP 時間更新成功',
+  'system.message.success.scheduledReboot': '設定成功',
 
   'system.type.ethernet': '以太網',
   'system.type.bridge': '橋接設備',
@@ -195,4 +209,11 @@ export default {
   'system.time.hour': '時',
   'system.time.minute': '分',
   'system.time.second': '秒',
+
+  // cron expression
+  'system.cronExpr.option1': '每天凌晨 0 點執行一次',
+  'system.cronExpr.option2': '每天凌晨 3 點 33 分執行一次',
+  'system.cronExpr.option3': '每週日凌晨 0 點執行一次',
+  'system.cronExpr.option4': '每個月的第一天凌晨 0 點執行一次',
+  'system.cronExpr.option5': '每三個月的第一天凌晨 0 點執行一次',
 };
