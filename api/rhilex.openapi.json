@@ -22245,6 +22245,205 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-215565387-run",
         "security": []
       }
+    },
+    "/api/v1/menu/distConfig": {
+      "get": {
+        "summary": "获取配置菜单",
+        "x-apifox-folder": "操作菜单",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "操作菜单"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "key": {
+                            "type": "string"
+                          },
+                          "access": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "key",
+                          "access"
+                        ],
+                        "x-apifox-ignore-properties": [],
+                        "x-apifox-orders": [
+                          "id",
+                          "key",
+                          "access"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "id": 0,
+                          "key": "dashboard",
+                          "access": true
+                        },
+                        {
+                          "id": 1,
+                          "key": "device",
+                          "access": true
+                        },
+                        {
+                          "id": 2,
+                          "key": "schema",
+                          "access": true
+                        },
+                        {
+                          "id": 3,
+                          "key": "dataRepository",
+                          "access": true
+                        },
+                        {
+                          "id": 4,
+                          "key": "inend",
+                          "access": true
+                        },
+                        {
+                          "id": 5,
+                          "key": "outend",
+                          "access": true
+                        },
+                        {
+                          "id": 6,
+                          "key": "appStack",
+                          "access": true
+                        },
+                        {
+                          "id": 7,
+                          "key": "plugin",
+                          "access": true
+                        },
+                        {
+                          "id": 8,
+                          "key": "communicationModule",
+                          "access": true
+                        },
+                        {
+                          "id": 9,
+                          "key": "system",
+                          "access": true
+                        }
+                      ]
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "id": 0,
+                          "key": "resource",
+                          "access": true
+                        },
+                        {
+                          "id": 1,
+                          "key": "netStatus",
+                          "access": true
+                        },
+                        {
+                          "id": 2,
+                          "key": "port",
+                          "access": true
+                        },
+                        {
+                          "id": 3,
+                          "key": "network",
+                          "access": true
+                        },
+                        {
+                          "id": 4,
+                          "key": "routing",
+                          "access": false
+                        },
+                        {
+                          "id": 5,
+                          "key": "wifi",
+                          "access": true
+                        },
+                        {
+                          "id": 6,
+                          "key": "time",
+                          "access": true
+                        },
+                        {
+                          "id": 7,
+                          "key": "firmware",
+                          "access": true
+                        },
+                        {
+                          "id": 8,
+                          "key": "backup",
+                          "access": true
+                        },
+                        {
+                          "id": 9,
+                          "key": "user",
+                          "access": true
+                        },
+                        {
+                          "id": 10,
+                          "key": "reboot",
+                          "access": true
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-215638311-run",
+        "security": []
+      }
     }
   },
   "components": {
@@ -22372,10 +22571,5 @@
     },
     "securitySchemes": {}
   },
-  "servers": [
-    {
-      "url": "http://127.0.0.1:2580",
-      "description": "本机环境"
-    }
-  ]
+  "servers": []
 }

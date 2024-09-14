@@ -1,6 +1,6 @@
 import PageContainer from '@/components/ProPageContainer';
+import { getMenuDistConfig } from '@/services/rhilex/caozuocaidan';
 import { getSettingsCtrlTree } from '@/services/rhilex/wangluopeizhi';
-import { Product } from '@/utils/enum';
 import { ProCard } from '@ant-design/pro-components';
 import { FormattedMessage, useModel, useRequest } from '@umijs/max';
 import type { TabPaneProps } from 'antd';
@@ -27,10 +27,8 @@ type NetworkItem = {
   [key: string]: any;
 };
 
-const defaultConfig = ['resource', 'port', 'firmware', 'backup', 'user'];
-
 const System = () => {
-  const { isWindows, product, activeKey, setActiveKey } = useModel('useSystem');
+  const { activeKey, setActiveKey } = useModel('useSystem');
   const [interfaceOption, setInterfaceOption] = useState<OptionItem[]>([]);
   const [tabItems, setItems] = useState<TabItem[]>([]);
 
@@ -95,26 +93,18 @@ const System = () => {
     },
   ];
 
-  const changeItems = (hasWifi: boolean, hasRoute: boolean) => {
-    const filteredItems = baseItems.filter((item) => {
-      if (isWindows) {
-        return defaultConfig.includes(item.key);
-      } else {
-        if ([Product.COMMON].includes(product)) {
-          return [...defaultConfig, 'reboot'].includes(item.key);
-        }
-        if (!hasRoute) {
-          return !['routing'].includes(item.key);
-        }
-        if (!hasWifi) {
-          return !['wifi'].includes(item.key);
-        }
-        return item;
-      }
-    });
+  //获取系统菜单权限
+  useRequest(() => getMenuDistConfig(), {
+    onSuccess: (data) => {
+      const accessMenu = baseItems.filter((item) => {
+        const activeMenu = data.find((menu) => menu.key === item.key);
 
-    setItems(filteredItems);
-  };
+        return activeMenu && activeMenu.access;
+      });
+
+      setItems(accessMenu);
+    },
+  });
 
   const changeInterface = (network: NetworkItem[]) => {
     const newOption =
@@ -127,14 +117,7 @@ const System = () => {
   useRequest(() => getSettingsCtrlTree(), {
     ready: !!accessToken,
     onSuccess: (res) => {
-      if (!res) return;
-      const { wlan, soft_router, network } = res;
-
-      const hasWifi = wlan && wlan.length > 0;
-      const hasRoute = soft_router && soft_router.length > 0;
-
-      changeItems(hasWifi, hasRoute);
-      changeInterface(network);
+      changeInterface(res?.network);
     },
   });
 
