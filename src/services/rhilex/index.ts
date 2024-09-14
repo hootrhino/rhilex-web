@@ -4,6 +4,7 @@
 // API 唯一标识：
 import * as bacnetdianweiguanli from './bacnetdianweiguanli';
 import * as bacnetRoutermoshi from './bacnetRoutermoshi';
+import * as caozuocaidan from './caozuocaidan';
 import * as chajianguanli from './chajianguanli';
 import * as dapingguanli from './dapingguanli';
 import * as dingshirenwu from './dingshirenwu';
@@ -81,4 +82,5 @@ export default {
   tongyongdianweiguanli,
   mBusMasterdianweiguanli,
   dingshizhongqi,
+  caozuocaidan,
 };

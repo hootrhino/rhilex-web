@@ -51,6 +51,7 @@ export default {
    * page
    */
   'page.404.subTitle': 'Sorry, the page you visited does not exist',
+  'page.403.subTitle': 'Sorry, you are not authorized to access this page',
   /**
    * form
    */

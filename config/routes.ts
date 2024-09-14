@@ -102,7 +102,7 @@
     title: 'menu.dataRepository',
     icon: 'database',
     component: './DataRepository',
-    key: 'dataRepository',
+    key: 'repository',
   },
   {
     path: '/inend',
@@ -185,7 +185,7 @@
     title: 'menu.appStack',
     icon: 'appstoreAdd',
     hideChildrenInMenu: true,
-    key: 'appStack',
+    key: 'app',
     routes: [
       {
         path: '/app',
@@ -219,7 +219,7 @@
     path: '/module',
     title: 'menu.cm',
     icon: 'icon-menu-com',
-    key: 'communicationModule',
+    key: 'module',
     component: './CommunicationModule',
   },
   {
@@ -244,5 +244,10 @@
     path: '*',
     layout: false,
     component: './404',
+  },
+  {
+    path: '/403',
+    layout: false,
+    component: './403',
   },
 ];

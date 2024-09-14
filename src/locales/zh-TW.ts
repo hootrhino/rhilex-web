@@ -50,7 +50,8 @@ export default {
   /**
    * page
    */
-  'page.404.subTitle': '對不起，你訪問的頁面不存在',
+  'page.404.subTitle': '抱歉，你訪問的頁面不存在',
+  'page.403.subTitle': '抱歉，你無權訪問此頁面',
   /**
    * form
    */

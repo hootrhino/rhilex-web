@@ -8,6 +8,7 @@ import type { ProFormInstance, Settings as LayoutSettings } from '@ant-design/pr
 import { DefaultFooter, LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { Helmet, history, SelectLang, useIntl, useModel } from '@umijs/max';
 
+import { getMenuMain } from '@/services/rhilex/caozuocaidan';
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import UserAgreementModal from './AgreementModal';
@@ -47,7 +48,6 @@ const defaultSettings = {
 
 const Login: React.FC = () => {
   const { setInitialState } = useModel('@@initialState');
-  const { product } = useModel('useSystem');
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
@@ -62,11 +62,13 @@ const Login: React.FC = () => {
       const params = pick(values, ['username', 'password']);
 
       const { data } = await postLogin(params);
+      const { data: menuData } = await getMenuMain();
+
       flushSync(() =>
         setInitialState({
           currentUser: formRef.current?.getFieldsValue(),
-          product,
           settings: defaultSettings as Partial<LayoutSettings>,
+          accessMenu: menuData,
         }),
       );
       handleOnSecret();

@@ -10,7 +10,7 @@ const useUser = () => {
   const { run: logout } = useRequest(() => postUsersLogout(), {
     manual: true,
     onSuccess: () => {
-      setInitialState({ currentUser: undefined, settings: {}, product: '' });
+      setInitialState({ currentUser: undefined, settings: {}, accessMenu: [] });
       localStorage.clear();
       history.push(LOGIN_PATH);
       cancel();

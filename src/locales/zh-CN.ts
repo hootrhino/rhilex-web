@@ -52,6 +52,7 @@ export default {
    * page
    */
   'page.404.subTitle': '抱歉，你访问的页面不存在',
+  'page.403.subTitle': '抱歉，你无权访问此页面',
   /**
    * form
    */

@@ -1,9 +1,5 @@
 import { GoBackModal } from '@/components/ProPageContainer';
 import RightContent from '@/components/RightContent';
-import { ProductMenuAccess } from '@/models/useSystem';
-import { LOGIN_PATH } from '@/utils/constant';
-import { Product } from '@/utils/enum';
-import { IconFont } from '@/utils/utils';
 import { DefaultFooter } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
@@ -14,11 +10,17 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
     siderWidth: 208,
     rightContentRender: () => <RightContent />,
-    onPageChange: () => {
-      // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser) {
-        history.push(LOGIN_PATH);
+    onPageChange: (location) => {
+      const activePathname = location?.pathname?.split('/')[1];
+      const activeMenu = initialState?.accessMenu?.find((menu) => menu.key === activePathname);
+
+      if (activeMenu && !activeMenu?.access) {
+        history.push('/403');
       }
+      // 如果没有登录，重定向到 login
+      // if (!initialState?.currentUser) {
+      //   history.push(LOGIN_PATH);
+      // }
     },
     itemRender: (route: any, _: any, routes: any, paths: any) => {
       if (!route['component']) return <span>{route.title}</span>;
@@ -36,15 +38,21 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
     ),
     menuHeaderRender: undefined,
     menuDataRender: (menuData) => {
-      const filterData = menuData.filter((item) =>
-        initialState?.product && Product[initialState?.product]
-          ? ProductMenuAccess[initialState?.product].includes(item?.key)
-          : ['dashboard'].includes(item?.key || ''),
-      );
+      const accessData = initialState ? initialState?.accessMenu : [];
+      const accessMenuData = menuData?.map((menu) => {
+        const activeKey = accessData?.find((item) => item.key === menu.key);
 
-      return filterData.map((item) =>
-        item?.icon ? item : { ...item, icon: <IconFont type={item.icon as string} /> },
-      );
+        if (activeKey) {
+          return {
+            ...menu,
+            hideInMenu: !activeKey?.access,
+          };
+        } else {
+          return menu;
+        }
+      });
+
+      return accessMenuData;
     },
     menuItemRender(item, defaultDom) {
       const currentPath = window.location?.pathname;

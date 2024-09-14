@@ -3,26 +3,6 @@ import { Product } from '@/utils/enum';
 import { useRequest } from '@umijs/max';
 import { useEffect, useMemo, useState } from 'react';
 
-const allMenu = [
-  'dashboard',
-  'device',
-  'schema',
-  'dataRepository',
-  'inend',
-  'outend',
-  'appStack',
-  'plugin',
-  'communicationModule',
-  'system',
-];
-
-export const ProductMenuAccess = {
-  [Product.COMMON]: allMenu,
-  [Product.EN6400]: allMenu.filter((menu) => !['plugins'].includes(menu)),
-  [Product.RASPI4B]: allMenu,
-  [Product.RHILEXG1]: allMenu,
-};
-
 const useSystem = () => {
   const [isWindows, setWindows] = useState<boolean>(false);
   const [product, setProduct] = useState<Product>(Product.COMMON);
