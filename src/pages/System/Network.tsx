@@ -1,5 +1,9 @@
 import { message } from '@/components/PopupHack';
-import { getSettingsEth, postSettingsEth } from '@/services/rhilex/wangluopeizhi';
+import {
+  getSettingsCtrlTree,
+  getSettingsEth,
+  postSettingsEth,
+} from '@/services/rhilex/wangluopeizhi';
 import { FormItemType } from '@/utils/enum';
 import { omit } from '@/utils/redash';
 import { validateFormItem } from '@/utils/utils';
@@ -36,10 +40,6 @@ type UpdateParams = Omit<BaseFormItem, 'dnsList'> & {
   dns: string[];
 };
 
-type NetworkConfigProps = {
-  interfaceOption: OptionItem[];
-};
-
 const initialValue = {
   interface: 'eth0',
   address: '192.168.199.1',
@@ -48,13 +48,24 @@ const initialValue = {
   dnsList: [{ dns: '8.8.8.8' }, { dns: '114.114.114.114' }],
 };
 
-const NetworkConfig = ({ interfaceOption }: NetworkConfigProps) => {
+const NetworkConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const actionRef = useRef<FormListActionType>();
   const sizeRef = useRef(null);
   const size = useSize(sizeRef);
-  // const { interfaceOption } = useModel('useSystem');
   const { formatMessage } = useIntl();
+
+  // 获取 Network 列表
+  const handleOnNetworkList = async () => {
+    const { data } = await getSettingsCtrlTree();
+    const hasNetwork = data?.network && data?.network.length > 0;
+
+    const options = hasNetwork
+      ? data?.network?.map((item) => ({ label: item?.name, value: item?.name }))
+      : [];
+
+    return options;
+  };
 
   // 详情
   const { data: detail } = useRequest(() => getSettingsEth(), {
@@ -115,11 +126,11 @@ const NetworkConfig = ({ interfaceOption }: NetworkConfigProps) => {
         }}
       >
         <ProFormSelect
-          options={interfaceOption}
           name="interface"
           label={formatMessage({ id: 'system.form.title.interface' })}
           width="xl"
           allowClear={false}
+          request={handleOnNetworkList}
           placeholder={formatMessage({ id: 'system.form.rules.interface' })}
           rules={[
             { required: true, message: formatMessage({ id: 'system.form.rules.interface' }) },

@@ -80,7 +80,6 @@ const FirmwareConfig = () => {
   const { data: logData } = useRequest(() => getFirmwareUpgradeLog());
 
   const handleOnEnd = () => {
-    // getVendorKey();
     setOpen(false);
     run();
     message.success(errorMsg ? errorMsg : `${confirmConfig.afterOkText}成功`);

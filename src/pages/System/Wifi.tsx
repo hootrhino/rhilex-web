@@ -24,9 +24,10 @@ type UpdateParams = UpdateForm & {
 
 const WIFIConfig = () => {
   const formRef = useRef<ProFormInstance>();
-  const { formatMessage } = useIntl();
+  const { formatMessage, locale } = useIntl();
   const sizeRef = useRef(null);
   const size = useSize(sizeRef);
+  const labelCol = locale === 'en-US' ? { span: 3 } : { span: 2 };
 
   // 扫描信号强度
   const { data, loading, run } = useRequest(() => getSettingsWifiScanSignal(), {
@@ -72,11 +73,11 @@ const WIFIConfig = () => {
         formRef={formRef}
         onFinish={handleOnFinish}
         layout={size && size?.width < 1200 ? 'vertical' : 'horizontal'}
-        labelCol={size && size?.width < 1200 ? {} : { span: 3 }}
+        labelCol={size && size?.width < 1200 ? {} : labelCol}
         submitter={{
           render: (props, dom) => (
             <ProForm.Item
-              labelCol={{ span: 3 }}
+              labelCol={labelCol}
               label={<div className="invisible">action</div>}
               colon={false}
             >

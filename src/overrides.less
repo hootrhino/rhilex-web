@@ -1,3 +1,4 @@
+/* Layout */
 .rhilex-layout {
   aside {
     .ant-menu {
@@ -11,23 +12,14 @@
   }
 }
 
-//modal
+/* 全局 global */
+
+// Modal
 .ant-modal .ant-modal-footer {
   border-top: none;
 }
 
-// login footer
-.ant-pro-global-footer-copyright {
-  color: rgba(0, 0, 0, 0.45);
-}
-
-#agreement {
-  span {
-    color: rgba(0, 0, 0, 0.7);
-  }
-}
-
-// pageContainer
+// PageContainer
 .ant-page-header-content {
   padding-block-start: 0;
 }
@@ -36,7 +28,65 @@
   padding-block-start: 0;
 }
 
-// right-content
+// Header - Logo
+.ant-pro-global-header-logo {
+  width: 120px;
+  a {
+    width: 100%;
+
+    img {
+      width: 100%;
+    }
+
+    h1 {
+      display: none;
+    }
+  }
+}
+
+// Input
+.input-tag-wrapper {
+  .ant-tag,
+  .ant-tag-success {
+    background: transparent;
+  }
+}
+
+/* 登录 Login */
+
+// Footer
+.ant-pro-global-footer-copyright {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+// Agreement
+#agreement {
+  span {
+    color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+// Form
+.ant-pro-form-login-header {
+  height: 50px;
+  line-height: 50px;
+}
+
+.ant-pro-form-login-container {
+  padding-inline: 100px;
+}
+
+.ant-input-filled {
+  background-color: rgba(255, 255, 255, 1);
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+  input {
+    background: transparent;
+  }
+}
+
+/* RightContent - NoticeIcon */
 .notification-popver .ant-popover-inner-content {
   padding: 0;
 
@@ -45,7 +95,6 @@
   }
 }
 
-// notification
 .notification-list {
   min-width: 300px;
   height: 266px;
@@ -91,42 +140,7 @@
   }
 }
 
-// header logo
-.ant-pro-global-header-logo {
-  width: 120px;
-  a {
-    width: 100%;
-
-    img {
-      width: 100%;
-    }
-
-    h1 {
-      display: none;
-    }
-  }
-}
-
-// login form
-.ant-pro-form-login-header {
-  height: 50px;
-  line-height: 50px;
-}
-
-.ant-pro-form-login-container {
-  padding-inline: 100px;
-}
-
-.ant-input-filled {
-  background-color: rgba(255, 255, 255, 1);
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.02);
-  }
-  input {
-    background: transparent;
-  }
-}
-
+/* Dashboard */
 .dashboard-device-card {
   .ant-pro-card .ant-pro-card-body {
     padding-inline: 12px;
@@ -146,19 +160,7 @@
   }
 }
 
-// 路由配置 tab
-.ant-pro-card-tabs .routing-tab > .ant-tabs-nav .ant-tabs-nav-list {
-  padding-inline-start: 0;
-}
-
-.input-tag-wrapper {
-  .ant-tag,
-  .ant-tag-success {
-    background: transparent;
-  }
-}
-
-// 插件
+/* Plugin - 插件 */
 .plugin-card {
   .ant-pro-checkcard {
     border-color: transparent;
@@ -170,17 +172,7 @@
   }
 }
 
-.variable-list {
-  label {
-    display: flex;
-    justify-content: end;
-    width: 150px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-}
-
-// dataRepo
+/* DataRepository - 数据中心 */
 .data-repo-tree-unselectable {
   cursor: not-allowed;
 
@@ -189,12 +181,7 @@
   }
 }
 
-// .lua-example-tabs {
-//   .ant-tabs-nav {
-//     margin: 0;
-//   }
-// }
-
+/* 规则 */
 .rule-label {
   label {
     width: 100%;
@@ -205,6 +192,7 @@
   }
 }
 
+/* CommunicationModule - 通信模组 */
 .send-button-item {
   width: 100%;
 
@@ -213,21 +201,7 @@
   }
 }
 
-// 自定义规则
-.rule-modal {
-  .ant-modal-content {
-    height: 750px;
-
-    .ant-modal-body {
-      height: calc(100% - 57px - 48px);
-      overflow-y: auto;
-
-      .rule-form {
-        height: 100%;
-      }
-    }
-  }
-}
+/* Device - 设备 */
 
 // modbus-device-point
 .data-type-cascader {
@@ -253,4 +227,18 @@
       height: 100%;
     }
   }
+}
+
+/* 系统设置 */
+
+// 系统资源
+.resource-statistic-card {
+  .ant-pro-card-body {
+    padding-inline: 10px;
+  }
+}
+
+// 路由配置 tab
+.ant-pro-card-tabs .routing-tab > .ant-tabs-nav .ant-tabs-nav-list {
+  padding-inline-start: 0;
 }

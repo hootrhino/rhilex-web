@@ -40,7 +40,7 @@ const TimeConfig = () => {
     },
   });
 
-  // 立即更新NTP时间
+  // 立即更新 NTP 时间
   const { run: updateNtp, loading } = useRequest(() => putSettingsNtp(), {
     manual: true,
     onSuccess: () => {
