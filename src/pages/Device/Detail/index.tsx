@@ -1,8 +1,9 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
 import ProDescriptions from '@/components/ProDescriptions';
+import { getHwifaceList } from '@/services/rhilex/jiekouguanli';
 import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
-import { SheetType } from '@/utils/enum';
+import { Product, SheetType } from '@/utils/enum';
 import { flatten, omit } from '@/utils/redash';
 import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
@@ -27,19 +28,24 @@ const getPortName = (portList: Record<string, any>[] = [], key: string) => {
 };
 
 const Detail = ({ uuid, open, ...props }: DetailProps) => {
-  const { run: getPort, data: portList } = useModel('usePort');
   const { product, setActiveKey } = useModel('useSystem');
   const { changeConfig } = useModel('useCommon');
   const { formatMessage, locale } = useIntl();
 
   const labelWidth = locale === 'en-US' ? 150 : 100;
 
+  // 获取设备详情
   const { data: detail, run: getDetail } = useRequest(
     (params: API.getDevicesDetailParams) => getDevicesDetail(params),
     {
       manual: true,
     },
   );
+
+  // 获取接口列表
+  const { run: getPort, data: portList } = useRequest(() => getHwifaceList(), {
+    manual: true,
+  });
 
   const { type = DeviceType.GENERIC_UART_PROTOCOL, config } = detail || {};
 
@@ -55,7 +61,6 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
                 history.push('/system');
                 changeConfig({ open: true, uuid: portUuid });
                 setActiveKey('port');
-                // getPortDetail({ uuid: portUuid });
               }}
             >
               {getPortName(portList, portUuid)}
@@ -106,7 +111,9 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
         <ProDescriptions
           title={formatMessage({ id: 'device.title.base' })}
           dataSource={detail && omit(detail, ['config'])}
-          columns={formatColumns(baseColumns(product)) as EnhancedProDescriptionsItemProps[]}
+          columns={
+            formatColumns(baseColumns(product as Product)) as EnhancedProDescriptionsItemProps[]
+          }
           column={3}
           labelWidth={labelWidth}
           rootClassName="detail-descriptions"

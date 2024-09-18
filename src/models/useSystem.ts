@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 const useSystem = () => {
   const [isWindows, setWindows] = useState<boolean>(false);
-  const [product, setProduct] = useState<Product | string>(Product.COMMON);
+  const [product, setProduct] = useState<string>(Product.COMMON);
   const [activeKey, setActiveKey] = useState<string>('resource');
 
   const accessToken = localStorage.getItem('accessToken');

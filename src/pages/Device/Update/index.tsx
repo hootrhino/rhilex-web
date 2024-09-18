@@ -19,6 +19,7 @@ import { defaultConfig, defaultModelConfig } from './initialValues';
 
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
 import PageContainer from '@/components/ProPageContainer';
+import { Product } from '@/utils/enum';
 import { defaultDeviceType, DeviceMode } from '../enum';
 
 const DefaultListUrl = '/device/list';
@@ -183,7 +184,7 @@ const UpdateForm = () => {
       <ProBetaSchemaForm
         formRef={formRef}
         onFinish={handleOnFinish}
-        columns={columns(product) as ProFormColumnsType<Record<string, any>>[]}
+        columns={columns(product as Product) as ProFormColumnsType<Record<string, any>>[]}
         loading={loading}
         handleOnReset={handleOnReset}
         onValuesChange={handleOnValuesChange}

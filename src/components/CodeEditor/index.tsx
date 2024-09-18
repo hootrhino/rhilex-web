@@ -7,7 +7,7 @@ import { darculaInit } from '@uiw/codemirror-theme-darcula';
 import { githubLightInit } from '@uiw/codemirror-theme-github';
 import type { ReactCodeMirrorProps } from '@uiw/react-codemirror';
 import CodeMirror, { basicSetup, keymap } from '@uiw/react-codemirror';
-import { useIntl, useModel, useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 
 import {
   funcIcon,
@@ -17,7 +17,7 @@ import {
 } from '@/components/CodeEditor/images/autocomplete';
 import type { InendItem } from '@/pages/Inend';
 import type { OutendItem } from '@/pages/Outend';
-import { useMemo } from 'react';
+import { getDevicesList } from '@/services/rhilex/shebeiguanli';
 import { autoCompletions, createDetailEl, createIconEl, luaLinter } from './utils';
 
 export enum Lang {
@@ -71,7 +71,19 @@ const basicSetupSetting = {
 
 const CodeEditor = ({ lang, theme = Theme.DARK, ...props }: CodeEditorProps) => {
   const { formatMessage } = useIntl();
-  const { allDeviceData } = useModel('useDevice');
+
+  // 获取设备资源
+  const { data: deviceVariables } = useRequest(() => getDevicesList({ current: 1, size: 999 }), {
+    formatResult: ({ data }: any) =>
+      data?.records?.map((item: any) => ({
+        label: `${item?.name} - ${item.uuid}`,
+        type: 'variable',
+        detail: formatMessage({ id: 'component.tpl.device' }),
+        apply: item.uuid,
+      })),
+  });
+
+  // 获取南向资源
   const { data: inendVariables } = useRequest(() => getInendsList(), {
     formatResult: ({ data }: any) =>
       data?.map((item: InendItem) => ({
@@ -81,6 +93,8 @@ const CodeEditor = ({ lang, theme = Theme.DARK, ...props }: CodeEditorProps) => 
         apply: item.uuid,
       })),
   });
+
+  // 获取北向资源
   const { data: outendVariables } = useRequest(() => getOutendsList(), {
     formatResult: (res) =>
       (res as any)?.data?.map((item: OutendItem) => ({
@@ -91,26 +105,13 @@ const CodeEditor = ({ lang, theme = Theme.DARK, ...props }: CodeEditorProps) => 
       })),
   });
 
-  const deviceVariables = useMemo(
-    () =>
-      allDeviceData &&
-      allDeviceData?.records?.map((item: any) => ({
-        label: `${item?.name} - ${item.uuid}`,
-        type: 'variable',
-        detail: formatMessage({ id: 'component.tpl.device' }),
-        apply: item.uuid,
-      })),
-    [allDeviceData],
-  );
-
   const getEditorConfig = () => {
     if (lang !== Lang.LUA) return [];
 
     return [
       autocompletion({
         override: [
-          (context) =>
-            autoCompletions(context, inendVariables, outendVariables, deviceVariables as any),
+          (context) => autoCompletions(context, inendVariables, outendVariables, deviceVariables),
         ],
         addToOptions: [
           {

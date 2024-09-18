@@ -2,6 +2,7 @@ import { message } from '@/components/PopupHack';
 import type { LogRef } from '@/components/ProLog';
 import ProLog from '@/components/ProLog';
 import PageContainer from '@/components/ProPageContainer';
+import { getDevicesList } from '@/services/rhilex/shebeiguanli';
 import { postOsResetInterMetric } from '@/services/rhilex/xitongshuju';
 import { sum } from '@/utils/redash';
 import { cn, IconFont } from '@/utils/utils';
@@ -21,7 +22,6 @@ const Dashboard = () => {
   const logRef = useRef<LogRef>(null);
 
   const { dataSource, run } = useModel('useSystem');
-  const { allDeviceData } = useModel('useDevice');
   const { changeConfig } = useModel('useCommon');
 
   const { formatMessage } = useIntl();
@@ -92,6 +92,11 @@ const Dashboard = () => {
     },
   ];
 
+  // 获取设备列表
+  const { data: allDeviceData } = useRequest(() => getDevicesList({ current: 1, size: 999 }), {
+    formatResult: (res) => res?.data?.records,
+  });
+
   const { run: reset } = useRequest(() => postOsResetInterMetric(), {
     manual: true,
     onSuccess: () => {
@@ -142,7 +147,7 @@ const Dashboard = () => {
                 {formatMessage({ id: 'dashboard.title.resource' })}
               </span>
             }
-            dataSource={allDeviceData?.records}
+            dataSource={allDeviceData}
             expandable={{
               expandedRowKeys,
               onExpandedRowsChange: setExpandedRowKeys,
