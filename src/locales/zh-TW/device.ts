@@ -243,4 +243,9 @@ export default {
   'device.mbus.type.elecMeter': '電表',
   'device.mbus.type.transparent': '透傳設備',
   'device.mbus.type.protocol': '協議轉換器',
+
+  /**
+   * BACnet objectType
+   */
+  'device.bacnet.objectType.ai': 'AI 類比輸入',
 };

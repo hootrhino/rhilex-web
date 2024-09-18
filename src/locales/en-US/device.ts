@@ -246,4 +246,9 @@ export default {
   'device.mbus.type.elecMeter': 'Electric Meter',
   'device.mbus.type.transparent': 'Transparent',
   'device.mbus.type.protocol': 'Protocol Converter',
+
+  /**
+   * BACnet objectType
+   */
+  'device.bacnet.objectType.ai': 'AI',
 };

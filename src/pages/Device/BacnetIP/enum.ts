@@ -1,3 +1,5 @@
+import { getIntl, getLocale } from '@umijs/max';
+
 export enum ObjectType {
   AI = 'AI',
   // AO = 'AO',
@@ -11,7 +13,7 @@ export enum ObjectType {
 }
 
 export const ObjectTypeOption = {
-  [ObjectType.AI]: 'AI 模拟输入',
+  [ObjectType.AI]: getIntl(getLocale()).formatMessage({ id: 'device.bacnet.objectType.ai' }), // AI 模拟输入
   // [ObjectType.AO]: 'AO 模拟输出',
   // [ObjectType.AV]: 'AV 模拟值',
   // [ObjectType.BI]: 'BI 二进制输入',

@@ -32,7 +32,7 @@ const defaultModbusConfig = {
   frequency: 1000,
   slaverId: 1,
   address: 0,
-  quantity: 2,
+  quantity: Quantity['RAW'],
   type: ['RAW', 'DCBA'],
   weight: 1,
 };
@@ -45,7 +45,7 @@ const defaultUploadData = {
   frequency: 1000,
   slaverId: 1,
   address: 0,
-  quantity: 2,
+  quantity: Quantity['FLOAT32'],
   type: 'FLOAT32',
   order: 'DCBA',
   weight: 1,
@@ -74,6 +74,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
   const { formatMessage } = useIntl();
 
   const [deviceUuid, setDeviceId] = useState<string>();
+  const [disabledQty, setDisabled] = useState<boolean>(false);
 
   const formatUpdateParams = (params: Partial<DataSheetItem>) => {
     let newParams = {
@@ -242,6 +243,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
                   quantity: Number(Quantity[dataType]),
                   weight: dataType === 'UTF8' ? 0 : 1,
                 });
+                setDisabled(dataType !== 'RAW');
               },
               options,
             }}
@@ -297,9 +299,9 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.quantity' }) },
-          { min: 1, type: 'integer', message: formatMessage({ id: 'device.form.rules.quantity' }) },
+          { min: 0, type: 'integer', message: formatMessage({ id: 'device.form.rules.quantity' }) },
           {
-            max: 256,
+            max: 128,
             type: 'integer',
             message: formatMessage({ id: 'device.form.rules.quantity' }),
           },
@@ -308,7 +310,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
       renderFormItem: () => (
         <ProFormDigit
           noStyle
-          disabled={true}
+          disabled={disabledQty}
           fieldProps={{
             style: { width: '100%' },
             placeholder: formatMessage({ id: 'device.form.placeholder.quantity' }),

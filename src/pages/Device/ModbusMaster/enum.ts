@@ -84,7 +84,7 @@ export const baseOptions = [
 export const modbusDataTypeOptions = [
   {
     value: 'RAW',
-    label: `RAW（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
+    label: `RAW（0-256 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: orderRawOption,
   },
   {
@@ -114,9 +114,9 @@ export enum Quantity {
   BYTE = 1,
   INT16 = 1,
   UINT16 = 1,
-  RAW = 2,
   INT32 = 2,
   UINT32 = 2,
   FLOAT32 = 2,
   UFLOAT32 = 2,
+  RAW = 4,
 }
