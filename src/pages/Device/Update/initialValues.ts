@@ -51,19 +51,20 @@ export const defaultConfig = {
       host: '0.0.0.0',
     },
   },
-  [DeviceType.GENERIC_MBUS_MASTER]: {
-    commonConfig: {
-      autoRequest: DEFAULT_TRUE,
-      batchRequest: DEFAULT_FALSE,
-      mode: DeviceMode.UART,
-      frequency: DEFAULT_FREQUENCE,
-    },
-    hostConfig: {
-      port: 6005,
-      host: '0.0.0.0',
-      timeout: DEFAULT_TIMEOUT,
-    },
-  },
+  // TODO 暂无需求，先隐藏
+  // [DeviceType.GENERIC_MBUS_MASTER]: {
+  //   commonConfig: {
+  //     autoRequest: DEFAULT_TRUE,
+  //     batchRequest: DEFAULT_FALSE,
+  //     mode: DeviceMode.UART,
+  //     frequency: DEFAULT_FREQUENCE,
+  //   },
+  //   hostConfig: {
+  //     port: 6005,
+  //     host: '0.0.0.0',
+  //     timeout: DEFAULT_TIMEOUT,
+  //   },
+  // },
   [DeviceType.SIEMENS_PLC]: {
     commonConfig: {
       autoRequest: DEFAULT_TRUE,
