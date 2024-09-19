@@ -7,6 +7,7 @@ import { getRfcomAction } from '@/templates/BuildIn/comTpl';
 import { getDataToAction, getDataToQuickAction } from '@/templates/BuildIn/dataToTpl';
 import { getDebugCode } from '@/templates/BuildIn/standardTpl';
 import { getAppStackAction } from '@/templates/Quick/appStackTpl';
+import { Product } from '@/utils/enum';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -71,7 +72,7 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
 
     // appStack
     if (data?.key === 'appStack' && changedValue?.ip) {
-      newCode = getAppStackAction(product, changedValue?.ip);
+      newCode = getAppStackAction(product as Product, changedValue?.ip);
     }
 
     formRef.current?.setFieldsValue({

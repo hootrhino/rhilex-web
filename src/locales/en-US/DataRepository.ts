@@ -4,6 +4,7 @@ export default {
    */
   'dataRepo.button.export': 'Export',
   'dataRepo.button.code': 'Quick Request',
+  'dataRepo.button.script': 'Script Preview',
 
   /**
    * title

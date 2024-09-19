@@ -1,6 +1,8 @@
 import { message, modal } from '@/components/PopupHack';
 import PageContainer from '@/components/ProPageContainer';
+import CopyButton from '@/components/RuleExample/RuleList/CopyButton';
 import UnitValue from '@/components/UnitValue';
+import { postRulesFormatLua } from '@/services/rhilex/guizeguanli';
 import {
   deleteDatacenterClearSchemaData,
   getDatacenterListSchemaDdl,
@@ -10,19 +12,31 @@ import {
 } from '@/services/rhilex/shujuzhongxin';
 import { defaultPagination } from '@/utils/constant';
 import { IconFont, toPascalCase } from '@/utils/utils';
-import { DeleteOutlined, DownloadOutlined, TableOutlined } from '@ant-design/icons';
+import { DeleteOutlined, DownloadOutlined, EyeOutlined, TableOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
 import { useIntl, useModel, useRequest } from '@umijs/max';
 import type { TreeDataNode } from 'antd';
-import { Button, Empty, Space, Tooltip, Tree, Typography } from 'antd';
+import { Button, Empty, Modal, Space, Tooltip, Tree } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
+import { Type } from '../DataSchema/enum';
 
 type SchemaDDLDefineItem = {
   name: string;
   type: string;
   [key: string]: any;
+};
+
+enum ModalType {
+  SCRIPT = 'script-preview',
+  REQUEST = 'quick-request',
+}
+
+const defaultModalConfig = {
+  open: false,
+  type: ModalType.REQUEST,
+  code: '',
 };
 
 const getChildName = ({ name, type }: SchemaDDLDefineItem) => {
@@ -39,11 +53,16 @@ const DataRepository = () => {
   const actionRef = useRef<ActionType>();
   const { activeDataCenterkey: activeKey } = useModel('useSchema');
 
-  const secret = localStorage.getItem('secret');
-
   const [selectedKey, setSelectedKey] = useState<string>();
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [treeData, setTreeData] = useState<TreeDataNode[]>([]);
+  const [modalConfig, setModalConfig] = useState<{ open: boolean; type: ModalType; code: string }>(
+    defaultModalConfig,
+  );
+  const [selectedItemTree, setItemTree] = useState<Record<string, any>[]>([]);
+  // const [scriptCode, setScript] = useState<string>('');
+
+  const secret = localStorage.getItem('secret');
 
   // 获取数据表列表
   useRequest(() => getDatacenterListSchemaDdl({ secret: secret || '' }), {
@@ -93,7 +112,7 @@ const DataRepository = () => {
   const handleOnLoadData = async ({ key }: any) => {
     if (!secret) return [];
     const { data } = await getDatacenterSchemaDdlDefine({ uuid: key, secret });
-
+    setItemTree(data);
     return new Promise<void>((resolve) => {
       setTimeout(() => {
         setTreeData((origin) => updateTreeData(origin, key, data));
@@ -183,34 +202,50 @@ const DataRepository = () => {
   };
 
   // 生成代码
-  const handleOnCode = () => {
+  const getRequestCode = () => {
     const { current, pageSize } = actionRef.current?.pageInfo || {
       current: defaultPagination.defaultCurrent,
       pageSize: defaultPagination.defaultPageSize,
     };
 
-    modal.info({
-      title: formatMessage({ id: 'dataRepo.modal.title.code' }),
-      content: (
-        <Typography.Paragraph
-          copyable={{
-            tooltips: [
-              formatMessage({ id: 'dataRepo.tooltip.copy' }),
-              formatMessage({ id: 'dataRepo.tooltip.copied' }),
-            ],
-          }}
-        >
-          {`curl --location --request GET 'http://${window.location.host}/api/v1/datacenter/queryDataList?secret=
-          ${secret}&uuid=${selectedKey}&current=${current}&size=${pageSize}&order=DESC' --header
-          'User-Agent: RHILEX'`}
-        </Typography.Paragraph>
-      ),
-      okText: formatMessage({ id: 'button.cancel' }),
-    });
+    const code = `curl --location --request GET 'http://${window.location.host}/api/v1/datacenter/queryDataList?secret=
+    ${secret}&uuid=${selectedKey}&current=${current}&size=${pageSize}&order=DESC' --header
+    'User-Agent: RHILEX'`;
+
+    setModalConfig({ open: true, type: ModalType.REQUEST, code });
+  };
+
+  const getScriptCode = async () => {
+    const formatParams = selectedItemTree
+      .filter((tree) => !['create_at', 'id'].includes(tree.name))
+      .map((item) => {
+        if ([Type.INTEGER, Type.FLOAT].includes(item.type)) {
+          return `${item.name} = 0`;
+        }
+        if (item.type === Type.BOOL) {
+          return `${item.name} = false`;
+        }
+        if (item.type === Type.GEO) {
+          return `${item.name} = "0,0"`;
+        }
+        return `${item.name} = ""`;
+      })
+      .join(',');
+
+    const code = `local err = rds:Save('$uuid', ${`{${formatParams}}`})
+    if err ~= nil then
+        Throw(err)
+        return 0
+    end`;
+    const { data: formatCode } = await postRulesFormatLua({ source: code });
+    setModalConfig({ open: true, type: ModalType.SCRIPT, code: formatCode.source });
   };
 
   const toolBarRender = () => [
-    <Button key="code" onClick={handleOnCode} icon={<IconFont type="icon-code" />}>
+    <Button key="script-preview" onClick={getScriptCode} icon={<EyeOutlined />}>
+      {formatMessage({ id: 'dataRepo.button.script' })}
+    </Button>,
+    <Button key="quick-request" onClick={getRequestCode} icon={<IconFont type="icon-code" />}>
       {formatMessage({ id: 'dataRepo.button.code' })}
     </Button>,
     <Button danger key="clear" onClick={handleOnClear} icon={<DeleteOutlined />}>
@@ -266,6 +301,31 @@ const DataRepository = () => {
           )}
         </ProCard>
       </ProCard>
+      <Modal
+        destroyOnClose
+        width="35%"
+        title={`${selectedKey} - ${formatMessage({
+          id:
+            modalConfig.type === ModalType.REQUEST
+              ? 'dataRepo.modal.title.code'
+              : 'dataRepo.button.script',
+        })}`}
+        maskClosable={false}
+        open={modalConfig.open}
+        onCancel={() => setModalConfig(defaultModalConfig)}
+        footer={
+          <Space>
+            <Button onClick={() => setModalConfig(defaultModalConfig)}>
+              {formatMessage({ id: 'button.close' })}
+            </Button>
+            <CopyButton apply={modalConfig.code} key="copy-code" />
+          </Space>
+        }
+      >
+        <pre className="json-code">
+          <code>{modalConfig.code}</code>
+        </pre>
+      </Modal>
     </PageContainer>
   );
 };

@@ -4,6 +4,7 @@ export default {
    */
   'dataRepo.button.export': '導出',
   'dataRepo.button.code': '快速請求',
+  'dataRepo.button.script': '腳本預覽',
 
   /**
    * title
