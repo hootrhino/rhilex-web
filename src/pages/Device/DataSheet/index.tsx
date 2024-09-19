@@ -1,5 +1,5 @@
 import IndexBorder from '@/components/IndexBorder';
-import { modal } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
 // import { IconFont } from '@/utils/utils';
 import {
   DeleteOutlined,
@@ -25,6 +25,8 @@ import { omit } from '@/utils/redash';
 import UploadSheetConfirm from './ConfirmModal';
 import type { DataSheetItem, DataSheetProps } from './typings';
 
+const POLLING_INTERVAL = 3000;
+
 const DataSheet = ({
   type = SheetType.LIST,
   columns,
@@ -44,10 +46,11 @@ const DataSheet = ({
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   // const [editableRows, setEditableRows] = useState<Partial<DataSheetItem>[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
-  const [polling, setPolling] = useState<number>(3000);
+  const [polling, setPolling] = useState<number>(POLLING_INTERVAL);
   const [stopPolling, setStopPolling] = useState<boolean>(false);
 
   const disabled = selectedRowKeys?.length === 0;
+  const hasEditabledItem = editableKeys.length > 0;
 
   const handleOnReset = () => {
     setSelectedRowKeys([]);
@@ -90,7 +93,7 @@ const DataSheet = ({
       setStopPolling(true);
       return;
     }
-    setPolling(3000);
+    setPolling(POLLING_INTERVAL);
     setStopPolling(false);
   };
 
@@ -104,6 +107,10 @@ const DataSheet = ({
           : formatMessage({ id: 'device.title.sheet' }),
       ),
   });
+
+  const handleOnOnlyOneEdit = () => {
+    message.warning(formatMessage({ id: 'device.message.onlyOneEdit' }));
+  };
 
   const baseColumns: ProColumns<Partial<DataSheetItem>>[] = [
     {
@@ -155,7 +162,7 @@ const DataSheet = ({
     {
       title: formatMessage({ id: 'device.form.title.status' }),
       dataIndex: 'status',
-      width: 80,
+      width: 100,
       editable: false,
       hideInTable: type === SheetType.DETAIL,
       renderText: (_, record) => <ProTag type={StatusType.POINT}>{record?.status || 0}</ProTag>,
@@ -197,24 +204,32 @@ const DataSheet = ({
               {formatMessage({ id: 'button.edit' })}
             </a>
             <Popconfirm
+              disabled={hasEditabledItem}
               title={formatMessage({ id: 'device.modal.title.remove.sheet' })}
               onConfirm={() => remove([record?.uuid])}
               okText={formatMessage({ id: 'button.yes' })}
               cancelText={formatMessage({ id: 'button.no' })}
               key="remove"
             >
-              <a>{formatMessage({ id: 'button.remove' })}</a>
+              <a onClick={() => hasEditabledItem && handleOnOnlyOneEdit()}>
+                {formatMessage({ id: 'button.remove' })}
+              </a>
             </Popconfirm>
+
             {record?.status === 0 && (
               <Dropdown
                 menu={{
                   items: [{ key: 'error', label: formatMessage({ id: 'button.error' }) }],
                   onClick: () => {
-                    modal.error({
-                      title: formatMessage({ id: 'device.title.modal.error.sheet' }),
-                      content: <div className="flex flex-wrap">{record?.errMsg}</div>,
-                      okText: formatMessage({ id: 'button.close' }),
-                    });
+                    if (hasEditabledItem) {
+                      handleOnOnlyOneEdit();
+                    } else {
+                      modal.error({
+                        title: formatMessage({ id: 'device.title.modal.error.sheet' }),
+                        content: <div className="flex flex-wrap">{record?.errMsg}</div>,
+                        okText: formatMessage({ id: 'button.close' }),
+                      });
+                    }
                   },
                 }}
               >
@@ -303,7 +318,7 @@ const DataSheet = ({
       setPolling(0);
       return;
     } else {
-      setPolling(stopPolling ? 0 : 3000);
+      setPolling(stopPolling ? 0 : POLLING_INTERVAL);
     }
   }, [editableKeys]);
 
@@ -335,10 +350,11 @@ const DataSheet = ({
         toolBarRender={() => toolBar}
         pagination={defaultPagination}
         editable={{
-          type: 'multiple',
+          type: 'single',
           editableKeys,
           onSave: handleOnSave,
           onChange: setEditableRowKeys,
+          actionRender: (_row, _config, defaultDom) => [defaultDom.save, defaultDom.cancel],
           // onValuesChange: (_record, dataSource) => {
           //   setEditableRows(dataSource);
           // },

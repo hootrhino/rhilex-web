@@ -193,6 +193,7 @@ export default {
   'device.unit.byte': 'Byte',
   'device.bigEndian': 'Big-Endian',
   'device.littleEndian': 'Little-Endian',
+  'device.message.onlyOneEdit': 'Only one line can be edited',
 
   /**
    * device type

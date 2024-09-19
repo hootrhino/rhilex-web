@@ -190,6 +190,7 @@ export default {
   'device.unit.byte': '字节',
   'device.bigEndian': '大端',
   'device.littleEndian': '小端',
+  'device.message.onlyOneEdit': '只能同时编辑一行',
 
   /**
    * device type
