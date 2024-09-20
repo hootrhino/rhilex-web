@@ -11,14 +11,14 @@ import { DeviceType, deviceTypeOptions } from '../enum';
 import { BACNET_ROUTER_GW_CONFIG } from './bacnetRouterGW';
 import { GENERIC_BACNET_IP_CONFIG } from './genericBacnetIP';
 import { GENERIC_HTTP_DEVICE_CONFIG } from './genericHttpDevice';
-// import { GENERIC_MBUS_MASTER_CONFIG } from './genericMBusMaster';
+import { GENERIC_MBUS_MASTER_CONFIG } from './genericMBusMaster';
 import { GENERIC_MODBUS_MASTER_CONFIG } from './genericModbusMaster';
 import { GENERIC_MODBUS_SLAVER_CONFIG } from './genericModbusSlaver';
 import { GENERIC_SNMP_CONFIG } from './genericSnmp';
 import { GENERIC_UART_PROTOCOL_CONFIG } from './genericUartProtocol';
 import { GENERIC_UART_RW_CONFIG } from './genericUartRW';
 import { SIEMENS_PLC_CONFIG } from './siemensPLC';
-// import { TENCENT_IOTHUB_GATEWAY_CONFIG } from './tencentIothubGateway';
+import { TENCENT_IOTHUB_GATEWAY_CONFIG } from './tencentIothubGateway';
 
 const intl = getIntl(getLocale());
 
@@ -155,13 +155,13 @@ export const typeConfigColumns = {
   [DeviceType.GENERIC_UART_PROTOCOL]: GENERIC_UART_PROTOCOL_CONFIG,
   [DeviceType.GENERIC_MODBUS_MASTER]: GENERIC_MODBUS_MASTER_CONFIG,
   [DeviceType.GENERIC_MODBUS_SLAVER]: GENERIC_MODBUS_SLAVER_CONFIG,
-  // TODO 暂无需求，先隐藏 [DeviceType.GENERIC_MBUS_MASTER]: GENERIC_MBUS_MASTER_CONFIG,
+  [DeviceType.GENERIC_MBUS_MASTER]: GENERIC_MBUS_MASTER_CONFIG,
   [DeviceType.SIEMENS_PLC]: SIEMENS_PLC_CONFIG,
   [DeviceType.GENERIC_HTTP_DEVICE]: GENERIC_HTTP_DEVICE_CONFIG,
   [DeviceType.GENERIC_SNMP]: GENERIC_SNMP_CONFIG,
   [DeviceType.GENERIC_BACNET_IP]: GENERIC_BACNET_IP_CONFIG,
   [DeviceType.BACNET_ROUTER_GW]: BACNET_ROUTER_GW_CONFIG,
-  // TODO [DeviceType.TENCENT_IOTHUB_GATEWAY]: TENCENT_IOTHUB_GATEWAY_CONFIG,
+  [DeviceType.TENCENT_IOTHUB_GATEWAY]: TENCENT_IOTHUB_GATEWAY_CONFIG,
   [DeviceType.GENERIC_UART_RW]: GENERIC_UART_RW_CONFIG,
 };
 
