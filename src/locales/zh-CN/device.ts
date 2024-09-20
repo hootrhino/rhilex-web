@@ -25,7 +25,9 @@ export default {
   'device.title.modal.error.device': '设备异常信息',
   'device.title.modal.error.sheet': '点位异常信息',
   'device.title.sheet': '点位表配置',
+  'device.title.oid': '对象列表',
   'device.title.sheetList': '{name} - 点位表配置',
+  'device.title.snmpOidList': '{name} - 对象列表',
   'device.title.registers': '寄存器组详情',
 
   /**

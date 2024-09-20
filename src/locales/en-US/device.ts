@@ -25,7 +25,9 @@ export default {
   'device.title.modal.error.device': 'Device exception information',
   'device.title.modal.error.sheet': 'Point exception information',
   'device.title.sheet': 'Point sheet configuration',
+  'device.title.oid': 'SNMP OIDs',
   'device.title.sheetList': '{name} - Point sheet configuration',
+  'device.title.snmpOidList': '{name} - OIDs',
   'device.title.registers': 'Registers details',
 
   /**
