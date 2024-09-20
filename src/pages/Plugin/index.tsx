@@ -177,14 +177,11 @@ const Plugins = () => {
               render: (_dom, { version }) => <ProTag color="blue">{version}</ProTag>,
             },
             content: {
-              render: (_dom, { description }) =>
-                description && description.length > 40 ? (
-                  <Tooltip title={description}>
-                    <div className="truncate">{description}</div>
-                  </Tooltip>
-                ) : (
+              render: (_dom, { description }) => (
+                <Tooltip title={description && description.length > 40 ? description : ''}>
                   <div className={description ? 'truncate' : 'invisible'}>{description || '-'}</div>
-                ),
+                </Tooltip>
+              ),
             },
             actions: {
               cardActionProps: 'extra',
