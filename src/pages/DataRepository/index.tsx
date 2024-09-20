@@ -19,7 +19,7 @@ import { useIntl, useModel, useRequest } from '@umijs/max';
 import type { TreeDataNode } from 'antd';
 import { Button, Empty, Modal, Space, Tooltip, Tree } from 'antd';
 import dayjs from 'dayjs';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Type } from '../DataSchema/enum';
 
 type SchemaDDLDefineItem = {
@@ -53,96 +53,29 @@ const DataRepository = () => {
   const actionRef = useRef<ActionType>();
   const { activeDataCenterkey: activeKey } = useModel('useSchema');
 
-  const [selectedKey, setSelectedKey] = useState<string>();
+  const [selectedKey, setSelectedKey] = useState<string>('');
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [treeData, setTreeData] = useState<TreeDataNode[]>([]);
   const [modalConfig, setModalConfig] = useState<{ open: boolean; type: ModalType; code: string }>(
     defaultModalConfig,
   );
   const [selectedItemTree, setItemTree] = useState<Record<string, any>[]>([]);
-  // const [scriptCode, setScript] = useState<string>('');
 
-  const secret = localStorage.getItem('secret');
+  const secret = localStorage.getItem('secret') || '';
 
   // 获取数据表列表
-  useRequest(() => getDatacenterListSchemaDdl({ secret: secret || '' }), {
-    ready: !!secret,
-    refreshDeps: [secret],
-    onSuccess: (data) => {
-      const formatData = data?.map((item) => ({
-        title: item.published ? (
-          item.name
-        ) : (
-          <Tooltip title={formatMessage({ id: 'dataRepo.tooltip.unpublish' })}>{item.name}</Tooltip>
-        ),
-        key: item.uuid || '',
-        disabled: !item.published,
-        isLeaf: item.published ? false : true,
-        icon: <TableOutlined />,
-      }));
-
-      const publishedData = data?.filter((item) => item.published)?.map((d) => d.uuid);
-      const defaultKey = activeKey ? activeKey : publishedData?.[0];
-
-      setTreeData(formatData);
-      setSelectedKey(defaultKey);
-      setExpandedKeys(defaultKey ? [defaultKey] : []);
+  const { data, run } = useRequest(
+    (params: API.getDatacenterListSchemaDDLParams) => getDatacenterListSchemaDdl(params),
+    {
+      manual: true,
     },
-  });
-
-  const updateTreeData = (list: any[], key: React.Key, children: any[]): any[] => {
-    return list.map((node) => {
-      if (node.key === key) {
-        return {
-          ...node,
-          children: children?.map((d) => ({
-            title: getChildName(d),
-            key: `${d.name}-${Math.random()}`,
-            isLeaf: true,
-            selectable: false,
-            className: 'data-repo-tree-unselectable',
-          })),
-        };
-      }
-
-      return node;
-    });
-  };
-
-  const handleOnLoadData = async ({ key }: any) => {
-    if (!secret) return [];
-    const { data } = await getDatacenterSchemaDdlDefine({ uuid: key, secret });
-    setItemTree(data);
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        setTreeData((origin) => updateTreeData(origin, key, data));
-        resolve();
-      }, 500);
-    });
-  };
+  );
 
   // 获取表头
   const { run: getColumns, data: columns } = useRequest(
     (params: API.getDatacenterSchemaDDLDetailParams) => getDatacenterSchemaDdlDetail(params),
     {
       manual: true,
-      formatResult: (res) =>
-        res?.data?.map((item) => ({
-          title: toPascalCase(item?.name),
-          dataIndex: item?.name,
-          render: (_dom: React.ReactNode, record: Record<string, any>) => {
-            if (item?.unit) {
-              return <UnitValue value={record[item.name]} unit={item.unit} />;
-            } else {
-              if (typeof record[item.name] === 'boolean') {
-                return record[item.name] === true ? item.rule.trueLabel : item.rule.falseLabel;
-              }
-              return item.name === 'create_at'
-                ? dayjs(record['create_at']).format('YYYY-MM-DD HH:mm:ss')
-                : record[item.name];
-            }
-          },
-        })),
     },
   );
 
@@ -163,6 +96,36 @@ const DataRepository = () => {
     },
   );
 
+  const updateTreeData = (list: any[], key: React.Key, children: any[]): any[] =>
+    list.map((node) => {
+      if (node.key === key) {
+        return {
+          ...node,
+          children: children?.map((d) => ({
+            title: getChildName(d),
+            key: `${d.name}-${Math.random()}`,
+            isLeaf: true,
+            selectable: false,
+            className: 'data-repo-tree-unselectable',
+          })),
+        };
+      }
+
+      return node;
+    });
+
+  const handleOnLoadData = async ({ key }: any) => {
+    if (!secret) return [];
+    const { data } = await getDatacenterSchemaDdlDefine({ uuid: key, secret });
+    setItemTree(data);
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        setTreeData((origin) => updateTreeData(origin, key, data));
+        resolve();
+      }, 500);
+    });
+  };
+
   const handleOnClear = () => {
     modal.confirm({
       title: formatMessage({ id: 'dataRepo.modal.title.clear' }),
@@ -171,34 +134,6 @@ const DataRepository = () => {
       cancelText: formatMessage({ id: 'button.cancel' }),
       onOk: () => selectedKey && secret && clear({ uuid: selectedKey, secret }),
     });
-  };
-
-  const requestTable = async ({
-    current = defaultPagination.defaultCurrent,
-    pageSize = defaultPagination.defaultPageSize,
-    ...keyword
-  }) => {
-    if (keyword?.uuid && secret) {
-      const { data } = await getDatacenterQueryDataList({
-        current,
-        size: pageSize,
-        order: 'DESC',
-        uuid: keyword.uuid,
-        secret,
-      });
-
-      return Promise.resolve({
-        data: data?.records,
-        total: data?.total || 0,
-        success: true,
-      });
-    } else {
-      return Promise.resolve({
-        data: [],
-        total: 0,
-        success: true,
-      });
-    }
   };
 
   // 生成代码
@@ -256,11 +191,59 @@ const DataRepository = () => {
     </Button>,
   ];
 
+  const formatColumns = useMemo(
+    () =>
+      columns?.map((item) => ({
+        title: toPascalCase(item?.name),
+        dataIndex: item?.name,
+        render: (_dom: React.ReactNode, record: Record<string, any>) => {
+          if (item?.unit) {
+            return <UnitValue value={record[item.name]} unit={item.unit} />;
+          } else {
+            if (typeof record[item.name] === 'boolean') {
+              return record[item.name] === true ? item.rule.trueLabel : item.rule.falseLabel;
+            }
+            return item.name === 'create_at'
+              ? dayjs(record['create_at']).format('YYYY-MM-DD HH:mm:ss')
+              : record[item.name];
+          }
+        },
+      })),
+    [columns],
+  );
+
+  useMemo(() => {
+    const formatData = data?.map((item) => ({
+      title: (
+        <Tooltip title={item.published ? '' : formatMessage({ id: 'dataRepo.tooltip.unpublish' })}>
+          {item.name}
+        </Tooltip>
+      ),
+      key: item.uuid,
+      disabled: !item.published,
+      isLeaf: item.published ? false : true,
+      icon: <TableOutlined />,
+    }));
+
+    const publishedData = data?.filter((item) => item.published)?.map((d) => d.uuid);
+    const defaultKey = activeKey ? activeKey : publishedData?.[0];
+
+    setTreeData(formatData as TreeDataNode[]);
+    setSelectedKey(defaultKey as string);
+    setExpandedKeys(defaultKey ? [defaultKey] : []);
+  }, [data]);
+
   useEffect(() => {
     if (selectedKey && secret) {
       getColumns({ uuid: selectedKey, secret });
     }
-  }, [selectedKey]);
+  }, [selectedKey, secret]);
+
+  useEffect(() => {
+    if (secret) {
+      run({ secret });
+    }
+  }, [secret]);
 
   return (
     <PageContainer>
@@ -283,15 +266,33 @@ const DataRepository = () => {
           />
         </ProCard>
         <ProCard title={formatMessage({ id: 'dataRepo.title.table' })}>
-          {columns && columns?.length > 0 ? (
+          {formatColumns && formatColumns?.length > 0 ? (
             <ProTable
               rowKey="id"
               polling={5000}
               actionRef={actionRef}
               params={{ uuid: selectedKey }}
-              request={requestTable}
+              request={async ({
+                current = defaultPagination.defaultCurrent,
+                pageSize = defaultPagination.defaultPageSize,
+                uuid,
+              }) => {
+                const { data } = await getDatacenterQueryDataList({
+                  current,
+                  size: pageSize,
+                  order: 'DESC',
+                  uuid,
+                  secret,
+                });
+
+                return Promise.resolve({
+                  data: data?.records,
+                  total: data?.total || 0,
+                  success: true,
+                });
+              }}
               pagination={defaultPagination}
-              columns={columns}
+              columns={formatColumns}
               search={false}
               rootClassName="stripe-table"
               toolBarRender={toolBarRender}
