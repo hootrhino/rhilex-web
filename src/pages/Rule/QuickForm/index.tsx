@@ -1,6 +1,7 @@
 import type { OutendItem } from '@/pages/Outend';
 import { OutendType, outendTypeOption } from '@/pages/Outend/enum';
 import { postRulesCreate } from '@/services/rhilex/guizeguanli';
+import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
 import { getOutendsList } from '@/services/rhilex/shuchuziyuanguanli';
 import { getDataToQuickAction } from '@/templates/BuildIn/dataToTpl';
 import { FormItemType } from '@/utils/enum';
@@ -12,9 +13,10 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useIntl, useParams } from '@umijs/max';
+import { useIntl, useParams, useRequest } from '@umijs/max';
 import { Empty, message, Space } from 'antd';
 import type { Rule } from 'antd/es/form';
+import { useEffect } from 'react';
 import { DefaultFailed, DefaultSuccess } from '../initialValues';
 
 type QuickFormProps = ModalFormProps & {
@@ -25,6 +27,20 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
   const { formatMessage } = useIntl();
   const { deviceId, inendId } = useParams();
 
+  // 获取设备详情
+  const { data: deviceDetail, run: getDeviceDetail } = useRequest(
+    (params: API.getDevicesDetailParams) => getDevicesDetail(params),
+    {
+      manual: true,
+    },
+  );
+  console.log(deviceDetail);
+  useEffect(() => {
+    if (deviceId) {
+      getDeviceDetail({ uuid: deviceId });
+    }
+  }, [deviceId]);
+
   return (
     <ModalForm
       title={formatMessage({ id: 'ruleConfig.title.new' })}
@@ -33,6 +49,8 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
       modalProps={{ destroyOnClose: true, maskClosable: false }}
       onFinish={async ({ targetId, targetType, ...values }) => {
         try {
+          const batchRequest = deviceDetail?.config?.commonConfig?.batchRequest;
+          console.log(batchRequest);
           const params = {
             name: values?.name || '',
             description: values?.description || '',
@@ -40,7 +58,7 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
             fromDevice: deviceId ? [deviceId] : [],
             success: DefaultSuccess,
             failed: DefaultFailed,
-            actions: getDataToQuickAction(targetType, targetId),
+            actions: getDataToQuickAction(targetType, targetId, batchRequest),
           };
 
           await postRulesCreate(params);

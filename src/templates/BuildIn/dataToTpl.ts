@@ -9,9 +9,10 @@ const intl = getIntl(getLocale());
 
 // 完整示例（快捷模板）
 // Modbus 数据解析并推向 MqttServer 快捷模板
-export const getDataToQuickAction = (type?: OutendType, uuid?: string) => {
+export const getDataToQuickAction = (type?: OutendType, uuid?: string, enableBatchRequest?: boolean) => {
   const target = type ? dataToType[type] : 'Target';
- const targetId = uuid || 'uuid';
+  const targetId = uuid || 'uuid';
+  const requestCode = enableBatchRequest ? `params[value['tag']] = value.value` : `params[value.tag] = value.value * 1`;
 
   return `Actions = {
     function(args)
@@ -22,7 +23,7 @@ export const getDataToQuickAction = (type?: OutendType, uuid?: string) => {
         end
         for _, value in pairs(dataT) do
             local params = {}
-            params[value['tag']] = value.value
+            ${requestCode}
             local json = json:T2J({
                 id = time:TimeMs(),
                 method = "thing.event.property.post",
