@@ -16,6 +16,7 @@ export enum OutendType {
   TDENGINE = 'TDENGINE',
   GENERIC_UART_TARGET = 'GENERIC_UART_TARGET',
   SEMTECH_UDP_FORWARDER = 'SEMTECH_UDP_FORWARDER',
+  ITHINGS_IOT = 'ITHINGS_IOT',
 }
 export const outendTypeOption = {
   [OutendType.MQTT]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' MQTT Broker' }),
@@ -29,6 +30,7 @@ export const outendTypeOption = {
     { id: 'outend.type.push' },
     { type: ' GRPC Server' },
   ),
+  [OutendType.ITHINGS_IOT]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' iThings' }),
   [OutendType.MONGO_SINGLE]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' MongoDB' }),
   [OutendType.GREPTIME_DATABASE]: intl.formatMessage(
     { id: 'outend.type.push' },

@@ -9,14 +9,17 @@ const DEFAULT_VALUE = DEFAULT_TITLE.toLocaleLowerCase();
 
 const randomNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
 
+const mqttConfig = {
+  cacheOfflineData: DEFAULT_ENABLE_OFFLINE_CACHE,
+  port: 1883,
+  host: DEFAULT_HOST,
+  clientId: `${DEFAULT_VALUE}${randomNumber}`,
+  pubTopic: `${DEFAULT_VALUE}${randomNumber}`,
+};
+
 export const defaultConfig = {
-  [OutendType.MQTT]: {
-    cacheOfflineData: DEFAULT_ENABLE_OFFLINE_CACHE,
-    port: 1883,
-    host: DEFAULT_HOST,
-    clientId: `${DEFAULT_VALUE}${randomNumber}`,
-    pubTopic: `${DEFAULT_VALUE}${randomNumber}`,
-  },
+  [OutendType.MQTT]: mqttConfig,
+  [OutendType.ITHINGS_IOT]: mqttConfig,
   [OutendType.UDP_TARGET]: {
     dataMode: DataMode.RAW_STRING,
     cacheOfflineData: DEFAULT_ENABLE_OFFLINE_CACHE,

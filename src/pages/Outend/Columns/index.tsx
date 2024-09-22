@@ -53,6 +53,7 @@ export const baseColumns = [
 
 export const configColumns = {
   [OutendType.MQTT]: MQTT,
+  [OutendType.ITHINGS_IOT]: MQTT,
   [OutendType.UDP_TARGET]: UDP_TARGET,
   [OutendType.TCP_TRANSPORT]: UDP_TARGET,
   [OutendType.MONGO_SINGLE]: MONGO_SINGLE,

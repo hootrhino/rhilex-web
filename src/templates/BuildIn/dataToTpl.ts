@@ -7,14 +7,13 @@ import { OutendType, dataToType } from '@/pages/Outend/enum';
 
 const intl = getIntl(getLocale());
 
-// 完整示例（快捷模板）
-// Modbus 数据解析并推向 MqttServer 快捷模板
+// Modbus 数据解析并推向北向资源快捷模板
 export const getDataToQuickAction = (type?: OutendType, uuid?: string, enableBatchRequest?: boolean) => {
-  const target = type ? dataToType[type] : 'Target';
+  const target = type ? dataToType[type === OutendType.ITHINGS_IOT ? OutendType.MQTT : type] : 'Target';
   const targetId = uuid || 'uuid';
   const requestCode = enableBatchRequest ? `params[value['tag']] = value.value` : `params[value.tag] = value.value * 1`;
 
-  return `Actions = {
+  const ithingsAction = `Actions = {
     function(args)
         local dataT, err = json:J2T(args)
         if (err ~= nil) then
@@ -25,9 +24,10 @@ export const getDataToQuickAction = (type?: OutendType, uuid?: string, enableBat
             local params = {}
             ${requestCode}
             local json = json:T2J({
-                id = time:TimeMs(),
-                method = "thing.event.property.post",
-                params = params
+              timestamp = time:TimeMs(),
+              msgToken = "rhilex",
+              method = "report",
+              params = params
             })
             local err = data:To${target}("${targetId}", json)
             if err ~= nil then
@@ -36,7 +36,33 @@ export const getDataToQuickAction = (type?: OutendType, uuid?: string, enableBat
         end
         return true, args
     end
-  }`
+  }`;
+
+  const defaultAction = `Actions = {
+    function(args)
+        local dataT, err = json:J2T(args)
+        if (err ~= nil) then
+            Throw(err)
+            return true, args
+        end
+        for _, value in pairs(dataT) do
+            local params = {}
+            ${requestCode}
+            local json = json:T2J({
+              id = time:TimeMs(),
+              method = "thing.event.property.post",
+              params = params
+            })
+            local err = data:To${target}("${targetId}", json)
+            if err ~= nil then
+                Throw(err)
+            end
+        end
+        return true, args
+    end
+  }`;
+
+  return type === OutendType.ITHINGS_IOT ? ithingsAction : defaultAction;
 };
 
 // 函数使用示例
