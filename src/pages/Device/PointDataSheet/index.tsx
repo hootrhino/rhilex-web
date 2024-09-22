@@ -78,7 +78,6 @@ const PointDataSheet = ({ type = SheetType.LIST, deviceId }: PointDataSheetProps
       dataSource = { ...pick(snmpData, ['records', 'total']) };
     }
 
-    console.log(keyword);
     return Promise.resolve({
       data: dataSource.records,
       total: dataSource.total,

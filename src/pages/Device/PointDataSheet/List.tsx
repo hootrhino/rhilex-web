@@ -8,14 +8,18 @@ import {
   ReloadOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
-import type { EditableProTableProps } from '@ant-design/pro-components';
+import type {
+  EditableProTableProps,
+  ActionType,
+  EditableFormInstance,
+} from '@ant-design/pro-components';
 import { EditableProTable, PageContainer } from '@ant-design/pro-components';
 import { history, useIntl, useParams } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space, Tooltip, Upload } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DeviceType } from '../enum';
 import { defaultConfig, defaultUploadData } from './initialValue';
-import { DataType, ValueType } from './typings';
+import { DataSheetItem, DataType, ValueType } from './typings';
 import UploadSheetConfirm from './UploadModal';
 
 type PointDataSheetTableProps = EditableProTableProps<DataType, ValueType> & {
@@ -31,6 +35,8 @@ const PointDataSheetTablePage = ({
   deviceName,
   ...props
 }: PointDataSheetTableProps) => {
+  const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
+  const actionRef = useRef<ActionType>();
   const { deviceId } = useParams();
   const { formatMessage } = useIntl();
 
@@ -221,6 +227,9 @@ const PointDataSheetTablePage = ({
     >
       <EditableProTable<DataType>
         controlled
+        rowKey="uuid"
+        editableFormRef={editorFormRef}
+        actionRef={actionRef}
         columns={formatColumns}
         polling={polling}
         scroll={{ x: 1200 }}
@@ -247,10 +256,6 @@ const PointDataSheetTablePage = ({
           },
           onChange: setEditableRowKeys,
           actionRender: (_row, _config, defaultDom) => [defaultDom.save, defaultDom.cancel],
-        }}
-        onValuesChange={(values, record) => {
-          // TODO 处理 modbus 依赖
-          console.log(values, record);
         }}
         {...props}
       />

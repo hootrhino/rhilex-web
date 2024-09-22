@@ -79,6 +79,11 @@ const byte4Options = [
 // 基本数据类型
 export const baseOptions = [
   {
+    value: 'BYTE',
+    label: `BYTE（1 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
+    children: byte1Options,
+  },
+  {
     value: 'INT16',
     label: `Int16（2 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte2Options,
@@ -117,11 +122,6 @@ export const modbusDataTypeOptions = [
     label: `RAW（0-256 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
     children: orderRawOption,
   },
-  {
-    value: 'BYTE',
-    label: `Byte（1 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
-    children: byte1Options,
-  },
   ...baseOptions,
   {
     value: 'UTF8',
@@ -155,11 +155,6 @@ export enum Quantity {
  * PLC
  */
 export const plcDataTypeOptions = [
-  {
-    value: 'BYTE',
-    label: `Byte（1 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
-    children: byte1Options,
-  },
   {
     value: 'I',
     label: `I（1 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,

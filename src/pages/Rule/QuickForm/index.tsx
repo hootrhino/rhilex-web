@@ -34,7 +34,7 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
       manual: true,
     },
   );
-  console.log(deviceDetail);
+
   useEffect(() => {
     if (deviceId) {
       getDeviceDetail({ uuid: deviceId });
@@ -50,7 +50,7 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
       onFinish={async ({ targetId, targetType, ...values }) => {
         try {
           const batchRequest = deviceDetail?.config?.commonConfig?.batchRequest;
-          console.log(batchRequest);
+
           const params = {
             name: values?.name || '',
             description: values?.description || '',
