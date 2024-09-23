@@ -167,7 +167,7 @@ const DataRepository = () => {
       })
       .join(',');
 
-    const code = `local err = rds:Save('$uuid', ${`{${formatParams}}`})
+    const code = `local err = rds:Save('${selectedKey}', ${`{${formatParams}}`})
     if err ~= nil then
         Throw(err)
         return 0
@@ -176,7 +176,7 @@ const DataRepository = () => {
     setModalConfig({ open: true, type: ModalType.SCRIPT, code: formatCode.source });
   };
 
-  const toolBarRender = () => [
+  const toolBarRender = [
     <Button key="script-preview" onClick={getScriptCode} icon={<EyeOutlined />}>
       {formatMessage({ id: 'dataRepo.button.script' })}
     </Button>,
@@ -295,7 +295,7 @@ const DataRepository = () => {
               columns={formatColumns}
               search={false}
               rootClassName="stripe-table"
-              toolBarRender={toolBarRender}
+              toolBarRender={() => toolBarRender}
             />
           ) : (
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
