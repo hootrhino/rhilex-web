@@ -1,4 +1,4 @@
-import type { ActiveSchema } from '@/pages/DataSchema';
+import type { ActiveSchema } from '@/pages/DataSchema/typings';
 import { getSchemaList } from '@/services/rhilex/shujumoxing';
 import { useRequest } from '@umijs/max';
 import { useState } from 'react';

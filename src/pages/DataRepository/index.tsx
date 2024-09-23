@@ -20,7 +20,7 @@ import type { TreeDataNode } from 'antd';
 import { Button, Empty, Modal, Space, Tooltip, Tree } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Type } from '../DataSchema/enum';
+import { Type } from '../DataSchema/Property/enum';
 
 type SchemaDDLDefineItem = {
   name: string;

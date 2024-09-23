@@ -392,6 +392,11 @@ declare namespace API {
     uuid: string;
   };
 
+  type postSchemaGenTemplateParams = {
+    schemaId: string;
+    templateId: string;
+  };
+
   type postSchemaPublishParams = {
     uuid: string;
   };

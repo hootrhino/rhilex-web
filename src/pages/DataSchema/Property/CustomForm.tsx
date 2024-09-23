@@ -1,3 +1,8 @@
+import { message } from '@/components/PopupHack';
+import {
+  postSchemaPropertiesCreate,
+  putSchemaPropertiesUpdate,
+} from '@/services/rhilex/shujumoxing';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -10,11 +15,11 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useIntl } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import { AutoComplete } from 'antd';
 import { useEffect, useRef } from 'react';
-import type { Property } from '..';
-import { RW, rwOption, Type, typeOption, unitOptions } from '../enum';
+import type { Property } from '../typings';
+import { RW, rwOption, Type, typeOption, unitOptions } from './enum';
 
 const defaultProperty = {
   rw: RW.R,
@@ -24,11 +29,13 @@ const defaultProperty = {
 
 type PropertyFormProps = ModalFormProps & {
   initialValue: Partial<Property>;
+  reload: () => void;
 };
 
-const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
+const CustomPropertyForm = ({ initialValue, reload, ...props }: PropertyFormProps) => {
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
+  const { activeSchema } = useModel('useSchema');
 
   useEffect(() => {
     formRef.current?.setFieldsValue(
@@ -54,14 +61,33 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
       formRef={formRef}
       width="60%"
       initialValues={defaultProperty}
-      // onValuesChange={(changedValue) => {
-      //   if ([Type.INTEGER, Type.FLOAT].includes(changedValue?.type)) {
-      //     formRef.current?.setFieldsValue({ rule: { defaultValue: 0 } });
-      //   }
-      //   if (changedValue?.type === Type.BOOL) {
-      //     formRef.current?.setFieldsValue({ rule: { defaultValue: false } });
-      //   }
-      // }}
+      modalProps={{
+        destroyOnClose: true,
+        maskClosable: false,
+      }}
+      onFinish={async (values) => {
+        let info = formatMessage({ id: 'message.success.new' });
+        let params = {
+          ...values,
+          unit: values?.unit || '',
+          rule:
+            {
+              ...values?.rule,
+              defaultValue: '0',
+            } || {},
+          schemaId: activeSchema.uuid,
+        };
+        if (initialValue?.uuid) {
+          info = formatMessage({ id: 'message.success.update' });
+          await putSchemaPropertiesUpdate({ ...params, uuid: initialValue.uuid } as any);
+        } else {
+          await postSchemaPropertiesCreate(params as any);
+        }
+
+        message.success(info);
+        reload();
+        return true;
+      }}
       {...props}
     >
       <ProForm.Group>
@@ -218,20 +244,8 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
                     {formatMessage({ id: 'schemaMgt.title.card' })}
                   </div>
                 }
-                // headStyle={{ paddingBlockStart: 0 }}
               >
-                <ProForm.Group>
-                  {/* {[Type.STRING, Type.INTEGER, Type.FLOAT, Type.BOOL].includes(type) && (
-                    <ProFormText
-                      name={['rule', 'defaultValue']}
-                      width="md"
-                      label={formatMessage({ id: 'schemaMgt.form.title.defaultValue' })}
-                      placeholder={formatMessage({ id: 'schemaMgt.form.placeholder.defaultValue' })}
-                    />
-                  )} */}
-
-                  {dom}
-                </ProForm.Group>
+                <ProForm.Group>{dom}</ProForm.Group>
               </ProCard>
               <ProForm.Group style={{ marginTop: 24 }}>
                 {![Type.STRING, Type.GEO].includes(type) && (
@@ -259,7 +273,6 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
                   name="rw"
                   label={formatMessage({ id: 'schemaMgt.form.title.rw' })}
                   valueEnum={rwOption}
-                  // rules={[{ required: true, message: '请选择读写' }]}
                 />
               </ProForm.Group>
             </>
@@ -270,4 +283,4 @@ const PropertyForm = ({ initialValue, ...props }: PropertyFormProps) => {
   );
 };
 
-export default PropertyForm;
+export default CustomPropertyForm;

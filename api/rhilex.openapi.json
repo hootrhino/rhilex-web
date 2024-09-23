@@ -106,13 +106,7 @@
       "name": "snmp点位管理 "
     },
     {
-      "name": "华中数控点位管理"
-    },
-    {
       "name": "流媒体管理"
-    },
-    {
-      "name": "shelly设备"
     },
     {
       "name": "bacnet点位管理"
@@ -14055,13 +14049,11 @@
     "/api/v1/hnc8_data_sheet/sheetImport": {
       "post": {
         "summary": "导入点位表",
-        "x-apifox-folder": "华中数控点位管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "华中数控点位管理"
-        ],
+        "tags": [],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -14141,13 +14133,11 @@
     "/api/v1/hnc8_data_sheet/list": {
       "get": {
         "summary": "分页查看点位表",
-        "x-apifox-folder": "华中数控点位管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "华中数控点位管理"
-        ],
+        "tags": [],
         "parameters": [
           {
             "name": "device_uuid",
@@ -14444,13 +14434,11 @@
     "/api/v1/hnc8_data_sheet/update": {
       "post": {
         "summary": "更新点位表",
-        "x-apifox-folder": "华中数控点位管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "华中数控点位管理"
-        ],
+        "tags": [],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -14582,13 +14570,11 @@
     "/api/v1/hnc8_data_sheet/delIds": {
       "delete": {
         "summary": "多行删除",
-        "x-apifox-folder": "华中数控点位管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "华中数控点位管理"
-        ],
+        "tags": [],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -14680,13 +14666,11 @@
     "/api/v1/hnc8_data_sheet/sheetExport": {
       "get": {
         "summary": "导出点表",
-        "x-apifox-folder": "华中数控点位管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "华中数控点位管理"
-        ],
+        "tags": [],
         "parameters": [
           {
             "name": "device_uuid",
@@ -15807,13 +15791,11 @@
     "/api/v1/shelly_gen1/list": {
       "get": {
         "summary": "Shelly设备列表",
-        "x-apifox-folder": "shelly设备",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "shelly设备"
-        ],
+        "tags": [],
         "parameters": [
           {
             "name": "uuid",
@@ -16038,13 +16020,11 @@
     "/api/v1/shelly_gen1/scan": {
       "post": {
         "summary": "Shelly设备扫描",
-        "x-apifox-folder": "shelly设备",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "shelly设备"
-        ],
+        "tags": [],
         "parameters": [
           {
             "name": "uuid",
@@ -16101,13 +16081,11 @@
     "/api/v1/shelly_gen1/detail": {
       "get": {
         "summary": "Shelly设备详情",
-        "x-apifox-folder": "shelly设备",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "shelly设备"
-        ],
+        "tags": [],
         "parameters": [
           {
             "name": "mac",
@@ -16162,13 +16140,11 @@
     "/api/v1/shelly_gen1/status": {
       "get": {
         "summary": "Shelly设备状态",
-        "x-apifox-folder": "shelly设备",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "shelly设备"
-        ],
+        "tags": [],
         "parameters": [
           {
             "name": "ip",
@@ -16352,13 +16328,11 @@
     "/api/v1/shelly_gen1/pro1/switch1/toggle": {
       "get": {
         "summary": "Pro1拨动开关",
-        "x-apifox-folder": "shelly设备",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "shelly设备"
-        ],
+        "tags": [],
         "parameters": [
           {
             "name": "ip",
@@ -17122,13 +17096,11 @@
     "/api/v1/shelly_gen1/pro1/configWebHook": {
       "post": {
         "summary": "快速将设备接入网关",
-        "x-apifox-folder": "shelly设备",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "shelly设备"
-        ],
+        "tags": [],
         "parameters": [
           {
             "name": "opType",
@@ -22442,6 +22414,57 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-215638311-run",
+        "security": []
+      }
+    },
+    "/api/v1/schema/genTemplate": {
+      "post": {
+        "summary": "生成模板",
+        "x-apifox-folder": "数据模型",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据模型"
+        ],
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "11111111",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "templateId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "11111111",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-217290118-run",
         "security": []
       }
     }

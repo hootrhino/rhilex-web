@@ -14,7 +14,7 @@ import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Popconfirm, Space, Tooltip } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import type { SchemaItem } from '..';
+import type { SchemaItem } from '../typings';
 
 type SchemaListProps = ModalFormProps & {
   changeOpen: (value: boolean) => void;

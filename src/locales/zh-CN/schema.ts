@@ -13,6 +13,7 @@ export default {
   'schemaMgt.form.title.defaultValue': '默认值',
   'schemaMgt.form.title.unit': '单位',
   'schemaMgt.form.title.rw': '读写',
+  'schemaMgt.form.title.templateId': '属性模板',
 
   'schemaMgt.form.placeholder.id': '请输入标志符',
   'schemaMgt.form.placeholder.max': '请输入最大长度',
@@ -24,6 +25,7 @@ export default {
   'schemaMgt.form.placeholder.defaultValue': '请输入默认值',
   'schemaMgt.form.placeholder.unit': '请输入单位',
   'schemaMgt.form.rules.range': '请输入取值范围',
+  'schemaMgt.form.rules.templateId': '请选择属性模板',
 
   /**
    * modal
@@ -33,9 +35,10 @@ export default {
   'schemaMgt.modal.title.property.new': '新建属性',
   'schemaMgt.modal.title.property.update': '编辑属性',
   'schemaMgt.modal.title.property.publish': '发布模型',
+  'schemaMgt.modal.title.property.fix': '修复模型',
+  'schemaMgt.modal.title.property.new.quick': '快速配置属性',
   'schemaMgt.modal.content.property.publish':
     '模型发布后，您将无法对其进行修改。请确保在发布前完成所有的设计工作。',
-  'schemaMgt.modal.title.property.fix': '修复模型',
   'schemaMgt.modal.content.property.fix':
     '此操作将删除所有数据并将其恢复至未发布状态，请确保谨慎操作。',
 
@@ -73,16 +76,27 @@ export default {
   'schemaMgt.unit.t': '吨',
 
   /**
-   * others
+   * button
+   */
+  'schemaMgt.button.publish': '发布',
+  'schemaMgt.button.published': '已发布',
+  'schemaMgt.button.new.custom': '自定义属性',
+  'schemaMgt.button.new.quick': '快速配置属性',
+  'schemaMgt.button.apply': '应用模板',
+
+  /**
+   * tooltip
    */
   'schemaMgt.tooltip.update': '重命名模型',
   'schemaMgt.tooltip.remove': '删除模型',
   'schemaMgt.tooltip.copy': '复制 UUID',
   'schemaMgt.tooltip.publish': '发布前，请确保至少添加一个属性',
+
+  /**
+   * others
+   */
   'schemaMgt.popconfirm.remove': '删除操作将同步清除所有模型相关联的数据库，请谨慎操作',
   'schemaMgt.popconfirm.remove.property': '确定要删除此属性？',
-  'schemaMgt.button.publish': '发布',
-  'schemaMgt.button.published': '已发布',
   'schemaMgt.message.success.publish': '发布成功',
   'schemaMgt.status.published': '已发布',
   'schemaMgt.status.unpublished': '未发布',

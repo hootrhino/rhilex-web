@@ -4,9 +4,7 @@ import {
   getSchemaPropertiesDetail,
   getSchemaPropertiesList,
   postSchemaFix,
-  postSchemaPropertiesCreate,
   postSchemaPublish,
-  putSchemaPropertiesUpdate,
 } from '@/services/rhilex/shujumoxing';
 import { defaultPagination } from '@/utils/constant';
 import { isEmpty } from '@/utils/redash';
@@ -15,99 +13,42 @@ import {
   PlusOutlined,
   RedoOutlined,
   SendOutlined,
+  ThunderboltOutlined,
 } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { FormattedMessage, useIntl, useModel, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import type { DescriptionsProps } from 'antd';
 import { Button, Descriptions, Popconfirm, Tooltip } from 'antd';
-import { useRef, useState } from 'react';
-import { rwOption, Type, typeOption } from '../enum';
-import PropertyForm from './UpdateForm';
-
-type Rule = {
-  defaultValue?: string;
-  max?: number;
-  min?: number;
-  round?: number;
-  trueLabel?: string;
-  falseLabel?: string;
-};
-
-export type Property = {
-  uuid?: string;
-  schemaId?: string;
-  label?: string;
-  name?: string;
-  type?: string;
-  rw?: string;
-  unit?: string;
-  rule?: Rule;
-  description?: string;
-  value?: string;
-};
-
-const baseColumns: ProColumns<Property>[] = [
-  {
-    title: <FormattedMessage id="form.title.name" />,
-    dataIndex: 'label',
-    ellipsis: true,
-  },
-  {
-    title: <FormattedMessage id="schemaMgt.form.title.id" />,
-    dataIndex: 'name',
-    ellipsis: true,
-  },
-  {
-    title: <FormattedMessage id="form.title.type" />,
-    dataIndex: 'type',
-    valueType: 'select',
-    valueEnum: typeOption,
-    width: 100,
-  },
-  {
-    title: <FormattedMessage id="schemaMgt.form.title.unit" />,
-    dataIndex: 'unit',
-    width: 100,
-  },
-  {
-    title: <FormattedMessage id="schemaMgt.form.title.rw" />,
-    dataIndex: 'rw',
-    valueType: 'select',
-    valueEnum: rwOption,
-    width: 100,
-  },
-  {
-    title: <FormattedMessage id="table.title.desc" />,
-    dataIndex: 'description',
-    ellipsis: true,
-  },
-];
-
-const ruleFilterData = {
-  [Type.STRING]: ['defaultValue', 'max'],
-  [Type.INTEGER]: ['defaultValue', 'range'],
-  [Type.FLOAT]: ['defaultValue', 'range', 'round'],
-  [Type.BOOL]: ['defaultValue', 'trueLabel', 'falseLabel'],
-  [Type.GEO]: ['defaultValue', 'latitude', 'longitude'],
-};
+import { useEffect, useRef, useState } from 'react';
+import type { Property } from '../typings';
+import CustomPropertyForm from './CustomForm';
+import { dataDefineItems, ruleFilterData, rwOption, Type, typeOption } from './enum';
+import QuickPropertyForm from './QuickForm';
 
 const PropertyList = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
   const { run: getSchemaList, activeSchema } = useModel('useSchema');
   const [open, setOpen] = useState<boolean>(false);
+  const [openQuick, setOpenQuick] = useState<boolean>(false);
   const [initialValue, setInitialValue] = useState<Property>({});
   const [total, setTotal] = useState<number>(0);
 
+  const disabledAdd = !activeSchema.uuid || activeSchema.published;
+
   // 详情
-  const { run: getDetail } = useRequest(
+  const { run: getDetail, data: detail } = useRequest(
     (params: API.getSchemaPropertiesDetailParams) => getSchemaPropertiesDetail(params),
     {
       manual: true,
-      onSuccess: (res) => setInitialValue(res),
     },
   );
+
+  // 刷新
+  const handleOnReload = () => {
+    actionRef.current?.reload();
+  };
 
   // 删除属性
   const { run: remove } = useRequest(
@@ -116,7 +57,7 @@ const PropertyList = () => {
       manual: true,
       onSuccess: () => {
         message.success(formatMessage({ id: 'message.success.remove' }));
-        actionRef.current?.reload();
+        handleOnReload();
       },
     },
   );
@@ -147,12 +88,46 @@ const PropertyList = () => {
           message.success(formatMessage({ id: 'schemaMgt.message.success.publish' }));
         }
         getSchemaList();
-        actionRef.current?.reload();
+        handleOnReload();
       },
     });
   };
 
-  const columns: ProColumns<Property>[] = baseColumns.concat([
+  const columns: ProColumns<Property>[] = [
+    {
+      title: formatMessage({ id: 'form.title.name' }),
+      dataIndex: 'label',
+      ellipsis: true,
+    },
+    {
+      title: formatMessage({ id: 'schemaMgt.form.title.id' }),
+      dataIndex: 'name',
+      ellipsis: true,
+    },
+    {
+      title: formatMessage({ id: 'form.title.type' }),
+      dataIndex: 'type',
+      valueType: 'select',
+      valueEnum: typeOption,
+      width: 100,
+    },
+    {
+      title: formatMessage({ id: 'schemaMgt.form.title.unit' }),
+      dataIndex: 'unit',
+      width: 100,
+    },
+    {
+      title: formatMessage({ id: 'schemaMgt.form.title.rw' }),
+      dataIndex: 'rw',
+      valueType: 'select',
+      valueEnum: rwOption,
+      width: 100,
+    },
+    {
+      title: formatMessage({ id: 'table.title.desc' }),
+      dataIndex: 'description',
+      ellipsis: true,
+    },
     {
       title: formatMessage({ id: 'table.title.option' }),
       valueType: 'option',
@@ -193,52 +168,13 @@ const PropertyList = () => {
         </Popconfirm>,
       ],
     },
-  ]);
-
-  const items = [
-    // {
-    //   key: 'defaultValue',
-    //   label: formatMessage({ id: 'schemaMgt.form.title.defaultValue' }),
-    // },
-    {
-      key: 'falseLabel',
-      label: 'false',
-    },
-    {
-      key: 'trueLabel',
-      label: 'true',
-    },
-    {
-      key: 'round',
-      label: formatMessage({ id: 'schemaMgt.form.title.round' }),
-    },
-    {
-      key: 'max',
-      label: formatMessage({ id: 'schemaMgt.form.title.range.max' }),
-    },
-    {
-      key: 'min',
-      label: formatMessage({ id: 'schemaMgt.form.title.range.min' }),
-    },
-    {
-      key: 'latitude',
-      label: formatMessage({ id: 'schemaMgt.form.title.latitude' }),
-    },
-    {
-      key: 'longitude',
-      label: formatMessage({ id: 'schemaMgt.form.title.longitude' }),
-    },
-    {
-      key: 'range',
-      label: formatMessage({ id: 'schemaMgt.form.title.range' }),
-    },
   ];
 
   const expandedRowRender = (record: Property) => {
     const type = record?.type || Type.STRING;
     const data = record?.rule;
 
-    const ruleItems = items
+    const ruleItems = dataDefineItems
       .filter((r) => ruleFilterData[type].includes(r.key))
       .map((item) => {
         let children = data?.[item.key];
@@ -246,9 +182,6 @@ const PropertyList = () => {
           case 'range':
             children = `${data?.min} ~ ${data?.max}`;
             break;
-          // case 'defaultValue':
-          //   children = data?.defaultValue?.toString() || '-';
-          //   break;
           default:
             children = data?.[item.key];
         }
@@ -266,6 +199,51 @@ const PropertyList = () => {
       />
     );
   };
+
+  const toolBarRender = [
+    <Tooltip
+      title={total === 0 ? formatMessage({ id: 'schemaMgt.tooltip.publish' }) : ''}
+      key="publish-property"
+    >
+      <Button
+        ghost
+        type="primary"
+        icon={activeSchema.published ? <RedoOutlined /> : <SendOutlined />}
+        onClick={handleOnPublish}
+        disabled={!activeSchema.uuid || total === 0}
+      >
+        {activeSchema.published
+          ? formatMessage({ id: 'button.reset' })
+          : formatMessage({ id: 'schemaMgt.button.publish' })}
+      </Button>
+    </Tooltip>,
+    <Button
+      ghost
+      key="new-property"
+      type="primary"
+      icon={<PlusOutlined />}
+      onClick={() => {
+        setInitialValue({});
+        setOpen(true);
+      }}
+      disabled={disabledAdd}
+    >
+      {formatMessage({ id: 'schemaMgt.button.new.custom' })}
+    </Button>,
+    <Button
+      key="custom-property"
+      type="primary"
+      icon={<ThunderboltOutlined />}
+      onClick={() => setOpenQuick(true)}
+      disabled={disabledAdd}
+    >
+      {formatMessage({ id: 'schemaMgt.button.new.quick' })}
+    </Button>,
+  ];
+
+  useEffect(() => {
+    setInitialValue(detail ? detail : {});
+  }, [detail]);
 
   return (
     <>
@@ -299,69 +277,18 @@ const PropertyList = () => {
           indentSize: 0,
           rowExpandable: (record) => !isEmpty(record?.rule),
         }}
-        toolBarRender={() => [
-          <Tooltip
-            title={total === 0 ? formatMessage({ id: 'schemaMgt.tooltip.publish' }) : ''}
-            key="publish-property"
-          >
-            <Button
-              ghost
-              type="primary"
-              icon={activeSchema.published ? <RedoOutlined /> : <SendOutlined />}
-              onClick={handleOnPublish}
-              disabled={!activeSchema.uuid || total === 0}
-            >
-              {activeSchema.published
-                ? formatMessage({ id: 'button.reset' })
-                : formatMessage({ id: 'schemaMgt.button.publish' })}
-            </Button>
-          </Tooltip>,
-          <Button
-            key="new-property"
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={() => setOpen(true)}
-            disabled={!activeSchema.uuid || activeSchema.published}
-          >
-            {formatMessage({ id: 'button.new' })}
-          </Button>,
-        ]}
+        toolBarRender={() => toolBarRender}
       />
-      <PropertyForm
+      <CustomPropertyForm
         open={open}
         onOpenChange={(visible) => setOpen(visible)}
         initialValue={initialValue}
-        onFinish={async (values) => {
-          let info = formatMessage({ id: 'message.success.new' });
-          let params = {
-            ...values,
-            unit: values?.unit || '',
-            rule:
-              {
-                ...values?.rule,
-                defaultValue: '0',
-              } || {},
-            schemaId: activeSchema.uuid,
-          };
-          if (initialValue?.uuid) {
-            info = formatMessage({ id: 'message.success.update' });
-            await putSchemaPropertiesUpdate({ ...params, uuid: initialValue.uuid } as any);
-          } else {
-            await postSchemaPropertiesCreate(params as any);
-          }
-          setOpen(false);
-          message.success(info);
-          actionRef.current?.reload();
-        }}
-        modalProps={{
-          destroyOnClose: true,
-          maskClosable: false,
-          afterOpenChange(open) {
-            if (!open) {
-              setInitialValue({});
-            }
-          },
-        }}
+        reload={handleOnReload}
+      />
+      <QuickPropertyForm
+        open={openQuick}
+        onOpenChange={(open) => setOpenQuick(open)}
+        reload={handleOnReload}
       />
     </>
   );

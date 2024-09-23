@@ -12,7 +12,6 @@ import * as dingshizhongqi from './dingshizhongqi';
 import * as fenzuguanli from './fenzuguanli';
 import * as guizeguanli from './guizeguanli';
 import * as gujiancaozuo from './gujiancaozuo';
-import * as huazhongshukongdianweiguanli from './huazhongshukongdianweiguanli';
 import * as jiekouguanli from './jiekouguanli';
 import * as kuozhanxieyi from './kuozhanxieyi';
 import * as liumeitiguanli from './liumeitiguanli';
@@ -24,7 +23,6 @@ import * as qingliangyingyong from './qingliangyingyong';
 import * as qudongguanli from './qudongguanli';
 import * as rizhiguanli from './rizhiguanli';
 import * as shebeiguanli from './shebeiguanli';
-import * as shellyshebei from './shellyshebei';
 import * as shijianpeizhi from './shijianpeizhi';
 import * as shuchuziyuanguanli from './shuchuziyuanguanli';
 import * as shujubeifen from './shujubeifen';
@@ -71,9 +69,7 @@ export default {
   modbusMasterdianweiguanli,
   ximenzidianweiguanli,
   shujumoxing,
-  huazhongshukongdianweiguanli,
   liumeitiguanli,
-  shellyshebei,
   snmpdianweiguanli,
   bacnetdianweiguanli,
   bacnetRoutermoshi,

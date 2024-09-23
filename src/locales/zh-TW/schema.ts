@@ -13,6 +13,7 @@ export default {
   'schemaMgt.form.title.defaultValue': '預設值',
   'schemaMgt.form.title.unit': '單位',
   'schemaMgt.form.title.rw': '讀寫',
+  'schemaMgt.form.title.templateId': '屬性模板',
 
   'schemaMgt.form.placeholder.id': '請輸入識別符',
   'schemaMgt.form.placeholder.max': '請輸入最大長度',
@@ -24,6 +25,7 @@ export default {
   'schemaMgt.form.placeholder.defaultValue': '請輸入預設值',
   'schemaMgt.form.placeholder.unit': '請輸入單位',
   'schemaMgt.form.rules.range': '請輸入取值範圍',
+  'schemaMgt.form.rules.templateId': '請選擇屬性模板',
 
   /**
    * modal
@@ -33,9 +35,10 @@ export default {
   'schemaMgt.modal.title.property.new': '新建屬性',
   'schemaMgt.modal.title.property.update': '編輯屬性',
   'schemaMgt.modal.title.property.publish': '發布模型',
+  'schemaMgt.modal.title.property.fix': '修復模型',
+  'schemaMgt.modal.title.property.new.quick': '快速配置屬性',
   'schemaMgt.modal.content.property.publish':
     '模型發布後，您將無法對其進行修改。請確保在發布前完成所有的設計工作。',
-  'schemaMgt.modal.title.property.fix': '修復模型',
   'schemaMgt.modal.content.property.fix':
     '此操作將刪除所有數據並將其恢復至未發佈狀態，請確保謹慎操作。',
 
@@ -73,16 +76,27 @@ export default {
   'schemaMgt.unit.t': '噸',
 
   /**
-   * others
+   * button
+   */
+  'schemaMgt.button.publish': '發布',
+  'schemaMgt.button.published': '已發布',
+  'schemaMgt.button.new.custom': '自訂屬性',
+  'schemaMgt.button.new.quick': '快速配置屬性',
+  'schemaMgt.button.apply': '應用模板',
+
+  /**
+   * tooltip
    */
   'schemaMgt.tooltip.update': '重新命名模型',
   'schemaMgt.tooltip.remove': '刪除模型',
   'schemaMgt.tooltip.copy': '複製 UUID',
   'schemaMgt.tooltip.publish': '發布前，請確保至少添加一個屬性',
+
+  /**
+   * others
+   */
   'schemaMgt.popconfirm.remove': '刪除操作將同步清除所有模型相關聯的資料庫，請謹慎操作',
   'schemaMgt.popconfirm.remove.property': '確定要刪除此屬性？',
-  'schemaMgt.button.publish': '發布',
-  'schemaMgt.button.published': '已發布',
   'schemaMgt.message.success.publish': '發布成功',
   'schemaMgt.status.published': '已發布',
   'schemaMgt.status.unpublished': '未發布',
