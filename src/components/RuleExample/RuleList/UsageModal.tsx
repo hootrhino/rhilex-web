@@ -7,7 +7,6 @@ import { getRfcomAction } from '@/templates/BuildIn/comTpl';
 import { getDataToAction, getDataToQuickAction } from '@/templates/BuildIn/dataToTpl';
 import { getDebugCode } from '@/templates/BuildIn/standardTpl';
 import { getAppStackAction } from '@/templates/Quick/appStackTpl';
-import { Product } from '@/utils/enum';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
@@ -16,7 +15,7 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useIntl, useModel, useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Button, Empty, Space } from 'antd';
 import { useRef, useState } from 'react';
 import { defaultConfig } from '.';
@@ -31,7 +30,6 @@ type UsageModalProps = ModalFormProps & {
 const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
-  const { product } = useModel('useSystem');
   const [copyData, setCopyData] = useState<string>('');
 
   const { data: resourceData } = useRequest(() => getRulesGetCanUsedResources());
@@ -72,7 +70,7 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
 
     // appStack
     if (data?.key === 'appStack' && changedValue?.ip) {
-      newCode = getAppStackAction(product as Product, changedValue?.ip);
+      newCode = getAppStackAction(changedValue?.ip);
     }
 
     formRef.current?.setFieldsValue({

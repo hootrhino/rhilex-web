@@ -3,7 +3,7 @@ import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescripti
 import ProDescriptions from '@/components/ProDescriptions';
 import { getHwifaceList } from '@/services/rhilex/jiekouguanli';
 import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
-import { Product, SheetType } from '@/utils/enum';
+import { SheetType } from '@/utils/enum';
 import { flatten, omit } from '@/utils/redash';
 import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
@@ -28,7 +28,7 @@ const getPortName = (portList: Record<string, any>[] = [], key: string) => {
 };
 
 const Detail = ({ uuid, open, ...props }: DetailProps) => {
-  const { product, setActiveKey } = useModel('useSystem');
+  const { setActiveKey } = useModel('useSystem');
   const { changeConfig } = useModel('useCommon');
   const { formatMessage, locale } = useIntl();
 
@@ -111,9 +111,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
         <ProDescriptions
           title={formatMessage({ id: 'device.title.base' })}
           dataSource={detail && omit(detail, ['config'])}
-          columns={
-            formatColumns(baseColumns(product as Product)) as EnhancedProDescriptionsItemProps[]
-          }
+          columns={formatColumns(baseColumns) as EnhancedProDescriptionsItemProps[]}
           column={3}
           labelWidth={labelWidth}
           rootClassName="detail-descriptions"

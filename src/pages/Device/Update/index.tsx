@@ -12,15 +12,14 @@ import {
   stringToBool,
 } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
-import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
+import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { columns } from '../Columns';
 import { defaultConfig, defaultModelConfig } from './initialValues';
 
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
 import PageContainer from '@/components/ProPageContainer';
-import { Product } from '@/utils/enum';
-import { defaultDeviceType, DeviceMode } from '../enum';
+import { DeviceMode, DeviceType } from '../enum';
 
 const DefaultListUrl = '/device/list';
 
@@ -90,16 +89,14 @@ const convertBooleanOrString = (config: Record<string, any>) => {
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { deviceId, groupId } = useParams();
-  const { product } = useModel('useSystem');
   const { formatMessage } = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
-  const defaultType = defaultDeviceType[product];
 
   const initialValues = {
-    type: defaultType,
+    type: DeviceType.GENERIC_UART_PROTOCOL,
     gid: groupId,
     name: `DEVICE_${generateRandomId()}`,
-    config: defaultConfig[defaultType],
+    config: defaultConfig[DeviceType.GENERIC_UART_PROTOCOL],
   };
 
   // 设备详情
@@ -184,7 +181,7 @@ const UpdateForm = () => {
       <ProBetaSchemaForm
         formRef={formRef}
         onFinish={handleOnFinish}
-        columns={columns(product as Product) as ProFormColumnsType<Record<string, any>>[]}
+        columns={columns as ProFormColumnsType<Record<string, any>>[]}
         loading={loading}
         handleOnReset={handleOnReset}
         onValuesChange={handleOnValuesChange}

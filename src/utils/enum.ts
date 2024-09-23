@@ -27,13 +27,3 @@ export enum FormItemType {
   GATEWAY = 'gateway', // 网关
   TIMEOUT = 'timeout', // 读写超时
 }
-
-/**
- * 产品类型
- */
-export enum Product {
-  RHILEXG1 = 'RHILEXG1',
-  EN6400 = 'EN6400',
-  COMMON = 'COMMON',
-  RASPI4B = 'RASPI4B',
-}

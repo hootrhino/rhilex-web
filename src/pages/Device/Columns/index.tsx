@@ -2,7 +2,6 @@ import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
 import { getHwifaceList } from '@/services/rhilex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rhilex/shebeiguanli';
-import { Product } from '@/utils/enum';
 import { getIntl, getLocale } from '@umijs/max';
 import { Space } from 'antd';
 import type { LabeledValue } from 'antd/es/select';
@@ -94,7 +93,7 @@ export const modeColumns = {
 /**
  * 基本配置
  */
-export const baseColumns = (product: Product) => [
+export const baseColumns = [
   {
     title: 'UUID',
     dataIndex: 'uuid',
@@ -115,8 +114,8 @@ export const baseColumns = (product: Product) => [
     valueType: 'select',
     required: true,
     ellipsis: true,
-    valueEnum: deviceTypeOptions[product],
-    renderText: (type: DeviceType) => type && deviceTypeOptions[product][type],
+    valueEnum: deviceTypeOptions,
+    renderText: (type: DeviceType) => type && deviceTypeOptions[type],
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.gid' }),
@@ -168,10 +167,10 @@ export const typeConfigColumns = {
 /**
  * 设备配置
  */
-export const columns = (product: Product) => [
+export const columns = [
   {
     valueType: 'group',
-    columns: baseColumns(product),
+    columns: baseColumns,
   },
   {
     valueType: 'dependency',

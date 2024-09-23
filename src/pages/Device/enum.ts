@@ -1,5 +1,3 @@
-import { Product } from '@/utils/enum';
-import { pick } from '@/utils/redash';
 import { getIntl, getLocale } from '@umijs/max';
 
 const intl = getIntl(getLocale());
@@ -21,7 +19,7 @@ export enum DeviceType {
   TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
 }
 
-const baseTypeOption = {
+export const deviceTypeOptions = {
   [DeviceType.GENERIC_UART_PROTOCOL]: intl.formatMessage({ id: 'device.type.uart' }),
   [DeviceType.GENERIC_UART_RW]: intl.formatMessage({ id: 'device.type.uartRW' }),
   [DeviceType.GENERIC_MODBUS_MASTER]: intl.formatMessage({ id: 'device.type.modbus.master' }),
@@ -33,25 +31,6 @@ const baseTypeOption = {
   [DeviceType.GENERIC_HTTP_DEVICE]: intl.formatMessage({ id: 'device.type.http' }),
   [DeviceType.SIEMENS_PLC]: intl.formatMessage({ id: 'device.type.plc' }),
   // TODO 暂无需求，先隐藏 [DeviceType.TENCENT_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.tencent' }),
-};
-
-export const deviceTypeOptions = {
-  [Product.COMMON]: baseTypeOption,
-  [Product.EN6400]: pick(baseTypeOption, [
-    DeviceType.GENERIC_MODBUS_MASTER,
-    DeviceType.GENERIC_MODBUS_SLAVER,
-    DeviceType.GENERIC_SNMP,
-    DeviceType.SIEMENS_PLC,
-  ]),
-  [Product.RASPI4B]: baseTypeOption,
-  [Product.RHILEXG1]: baseTypeOption,
-};
-
-export const defaultDeviceType = {
-  [Product.COMMON]: DeviceType.GENERIC_UART_PROTOCOL,
-  [Product.EN6400]: DeviceType.GENERIC_MODBUS_MASTER,
-  [Product.RASPI4B]: DeviceType.GENERIC_UART_PROTOCOL,
-  [Product.RHILEXG1]: DeviceType.GENERIC_UART_PROTOCOL,
 };
 
 /**

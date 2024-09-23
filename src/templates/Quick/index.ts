@@ -1,6 +1,5 @@
 import { getIntl, getLocale } from '@umijs/max';
 import {appStackQuickTpl } from './appStackTpl';
-import { Product } from '@/utils/enum';
 import { dataToQuickTpl } from '../BuildIn/dataToTpl';
 
 // 自定义快捷模板
@@ -11,4 +10,4 @@ export const quickLuaTpl = [
   },
 ];
 
-export const quickChildren = (product: Product) => new Map([['default_quick_group', [...dataToQuickTpl, ...appStackQuickTpl(product)]]]);
+export const quickChildren = new Map([['default_quick_group', [...dataToQuickTpl, ...appStackQuickTpl]]]);

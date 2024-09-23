@@ -24,11 +24,11 @@ enum Category {
 }
 
 const Resource = () => {
-  const { dataSource, product } = useModel('useSystem');
+  const { dataSource } = useModel('useSystem');
   const { formatMessage, locale } = useIntl();
   const currentTimeRef = useRef(new Date());
   const [resourceData, setResourceData] = useState<Record<string, any>[]>([]);
-  const { version, osUpTime, osArch, memPercent, diskInfo, cpuPercent } =
+  const { version, osUpTime, osArch, memPercent, diskInfo, cpuPercent, product } =
     dataSource?.hardWareInfo || {};
 
   const isEn = locale === 'en-US';

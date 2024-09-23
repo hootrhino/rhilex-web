@@ -1,5 +1,5 @@
 import { builtInChildren, builtInLuaTpl, quickChildren, quickLuaTpl } from '@/templates';
-import { useIntl, useModel } from '@umijs/max';
+import { useIntl } from '@umijs/max';
 import { Collapse, Divider, Space } from 'antd';
 import { useState } from 'react';
 import { ExampleType } from '../enum';
@@ -16,7 +16,6 @@ const panelStyle: React.CSSProperties = {
 };
 
 const RuleList = () => {
-  const { product } = useModel('useSystem');
   const { formatMessage } = useIntl();
 
   const [valModalConfig, setValConfig] = useState<ValConfig>(defaultConfig);
@@ -93,7 +92,7 @@ const RuleList = () => {
           items={getItems(
             ExampleType.QUICK,
             quickLuaTpl,
-            quickChildren(product).get(quickActivekey[0]) || [],
+            quickChildren.get(quickActivekey[0]) || [],
           )}
           onChange={(key) => {
             setQuickKey(key as string[]);

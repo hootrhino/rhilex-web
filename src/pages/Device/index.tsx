@@ -8,7 +8,6 @@ import {
   putDevicesRestart,
 } from '@/services/rhilex/shebeiguanli';
 import { defaultPagination, DEFAULT_GROUP_KEY_DEVICE } from '@/utils/constant';
-import { Product } from '@/utils/enum';
 import {
   ControlOutlined,
   DownOutlined,
@@ -53,7 +52,6 @@ const Devices = () => {
   const actionRef = useRef<ActionType>();
 
   const { detailConfig, changeConfig, initialConfig } = useModel('useCommon');
-  const { product } = useModel('useSystem');
   const { formatMessage } = useIntl();
 
   const [open, setOpen] = useState<boolean>(false);
@@ -254,7 +252,7 @@ const Devices = () => {
               actionRef={actionRef}
               rowKey="uuid"
               rootClassName="stripe-table"
-              columns={[...baseColumns(product as Product), ...actionColumns] as any}
+              columns={[...baseColumns, ...actionColumns] as any}
               search={false}
               params={{ uuid: activeGroupKey }}
               request={async ({ current, pageSize, ...keyword }) => {
