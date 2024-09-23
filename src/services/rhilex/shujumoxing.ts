@@ -84,6 +84,41 @@ export async function postSchemaGenTemplate(
   });
 }
 
+/** 模板字段列表 GET /api/v1/schema/getTemplateFields */
+export async function getSchemaGetTemplateFields(options?: { [key: string]: any }) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      AIR_QUALITY: { name: string; type: string; comment: string }[];
+      GPS_TRACKER: { name: string; type: string; comment: string }[];
+      MOTION_SENSOR: { name: string; type: string; comment: string }[];
+      SIX_AXIS_ACCELEROMETER: { name: string; type: string; comment: string }[];
+      SMART_LOCK: { name: string; type: string; comment: string }[];
+      SMART_METER: { name: string; type: string; comment: string }[];
+      SMOKE_DETECTOR: { name: string; type: string; comment: string }[];
+      SOIL_MOISTURE: { name: string; type: string; comment: string }[];
+      SWITCH_STATUS: { name: string; type: string; comment: string }[];
+      TEMP_HUMIDITY: { name: string; type: string; comment: string }[];
+      WATER_QUALITY: { name: string; type: string; comment: string }[];
+    };
+  }>('/api/v1/schema/getTemplateFields', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 模板类型列表 GET /api/v1/schema/getTemplates */
+export async function getSchemaGetTemplates(options?: { [key: string]: any }) {
+  return request<{ code: number; msg: string; data: { label: string; value: string }[] }>(
+    '/api/v1/schema/getTemplates',
+    {
+      method: 'GET',
+      ...(options || {}),
+    },
+  );
+}
+
 /** 模型列表 GET /api/v1/schema/list */
 export async function getSchemaList(options?: { [key: string]: any }) {
   return request<{
