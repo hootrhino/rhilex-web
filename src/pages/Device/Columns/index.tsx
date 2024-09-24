@@ -16,8 +16,9 @@ import { GENERIC_MODBUS_SLAVER_CONFIG } from './genericModbusSlaver';
 import { GENERIC_SNMP_CONFIG } from './genericSnmp';
 import { GENERIC_UART_PROTOCOL_CONFIG } from './genericUartProtocol';
 import { GENERIC_UART_RW_CONFIG } from './genericUartRW';
+import { ITHINGS_IOTHUB_GATEWAY_CONFIG } from './ithings';
 import { SIEMENS_PLC_CONFIG } from './siemensPLC';
-import { TENCENT_IOTHUB_GATEWAY_CONFIG } from './tencentIothubGateway';
+import { TENCENT_IOTHUB_GATEWAY_CONFIG } from './tencentCloud';
 
 const intl = getIntl(getLocale());
 
@@ -152,6 +153,7 @@ export const baseColumns = [
  */
 export const typeConfigColumns = {
   [DeviceType.GENERIC_UART_PROTOCOL]: GENERIC_UART_PROTOCOL_CONFIG,
+  [DeviceType.GENERIC_UART_RW]: GENERIC_UART_RW_CONFIG,
   [DeviceType.GENERIC_MODBUS_MASTER]: GENERIC_MODBUS_MASTER_CONFIG,
   [DeviceType.GENERIC_MODBUS_SLAVER]: GENERIC_MODBUS_SLAVER_CONFIG,
   [DeviceType.GENERIC_MBUS_MASTER]: GENERIC_MBUS_MASTER_CONFIG,
@@ -161,7 +163,7 @@ export const typeConfigColumns = {
   [DeviceType.GENERIC_BACNET_IP]: GENERIC_BACNET_IP_CONFIG,
   [DeviceType.BACNET_ROUTER_GW]: BACNET_ROUTER_GW_CONFIG,
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: TENCENT_IOTHUB_GATEWAY_CONFIG,
-  [DeviceType.GENERIC_UART_RW]: GENERIC_UART_RW_CONFIG,
+  [DeviceType.ITHINGS_IOTHUB_GATEWAY]: ITHINGS_IOTHUB_GATEWAY_CONFIG,
 };
 
 /**

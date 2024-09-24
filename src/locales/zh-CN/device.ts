@@ -143,6 +143,9 @@ export default {
   'device.form.title.dataLength': '数据长度',
   'device.form.title.manufacturer': '制造商',
 
+  // ithings
+  'device.form.title.serverEndpoint': '服务接入地址',
+
   /**
    * tooltip
    */
@@ -205,7 +208,8 @@ export default {
   'device.type.http': '通用 HTTP 协议数据采集网关',
   'device.type.bacnet.ip': '通用 BACnet IP 主机网关',
   'device.type.bacnet.router': '通用 BACnet IP 从机网关',
-  'device.type.tencent': '腾讯云物联网平台网关接入',
+  'device.type.tencent': '腾讯云物联网平台',
+  'device.type.ithings': 'iThings 物联网平台',
   'device.type.uartRW': '通用串口读写网关',
   'device.type.mbus': '通用 M-Bus 数据采集网关',
 

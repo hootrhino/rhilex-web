@@ -143,6 +143,9 @@ export default {
   'device.form.title.dataLength': '數據長度',
   'device.form.title.manufacturer': '製造商',
 
+  // ithings
+  'device.form.title.serverEndpoint': '服務接入地址',
+
   /**
    * tooltip
    */
@@ -205,7 +208,8 @@ export default {
   'device.type.http': '通用 HTTP 協議數據採集網關',
   'device.type.bacnet.ip': '通用 BACnet IP 主機網關',
   'device.type.bacnet.router': '通用 BACnet IP 從機網關',
-  'device.type.tencent': '騰訊雲端物聯網平台網關接入',
+  'device.type.tencent': '騰訊雲端物聯網平台',
+  'device.type.ithings': 'iThings 物聯網平台',
   'device.type.uartRW': '通用串口讀寫網關',
   'device.type.mbus': '通用 M-Bus 數據採集網關',
 

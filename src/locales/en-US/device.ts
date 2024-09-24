@@ -145,6 +145,9 @@ export default {
   'device.form.title.dataLength': 'Data Length',
   'device.form.title.manufacturer': 'Manufacturer',
 
+  // ithings
+  'device.form.title.serverEndpoint': 'Server Endpoints',
+
   /**
    * tooltip
    */
@@ -208,7 +211,8 @@ export default {
   'device.type.http': 'Generic HTTP Gatewa',
   'device.type.bacnet.ip': 'Generic BACnet IP Master Gateway',
   'device.type.bacnet.router': 'Generic BACnet IP Slaver Gateway',
-  'device.type.tencent': 'Tencent IoT Hub Gateway Access',
+  'device.type.tencent': 'Tencent Cloud IoT Platform',
+  'device.type.ithings': 'iThings IoT Platform',
   'device.type.uartRW': 'Generic Serial Read/Write Gateway',
   'device.type.mbus': 'Generic M-Bus Gateway',
 

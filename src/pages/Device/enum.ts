@@ -17,6 +17,7 @@ export enum DeviceType {
   GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
   SIEMENS_PLC = 'SIEMENS_PLC',
   TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
+  ITHINGS_IOTHUB_GATEWAY = 'ITHINGS_IOTHUB_GATEWAY',
 }
 
 export const deviceTypeOptions = {
@@ -30,7 +31,8 @@ export const deviceTypeOptions = {
   // TODO 暂无需求，先隐藏 [DeviceType.GENERIC_MBUS_MASTER]: intl.formatMessage({ id: 'device.type.mbus' }),
   [DeviceType.GENERIC_HTTP_DEVICE]: intl.formatMessage({ id: 'device.type.http' }),
   [DeviceType.SIEMENS_PLC]: intl.formatMessage({ id: 'device.type.plc' }),
-  // TODO 暂无需求，先隐藏 [DeviceType.TENCENT_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.tencent' }),
+  [DeviceType.TENCENT_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.tencent' }),
+  [DeviceType.ITHINGS_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.ithings' }),
 };
 
 /**

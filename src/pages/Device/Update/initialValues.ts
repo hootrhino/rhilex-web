@@ -130,6 +130,11 @@ export const defaultConfig = {
       mode: TencentMode.GATEWAY,
     },
   },
+  [DeviceType.ITHINGS_IOTHUB_GATEWAY]: {
+    ithingsConfig: {
+      mode: TencentMode.GATEWAY,
+    },
+  },
   [DeviceType.GENERIC_UART_RW]: {
     commonConfig: {
       autoRequest: DEFAULT_TRUE,
