@@ -159,6 +159,7 @@ export default {
   'system.desc.maxLostCacheSize': '最大緩存大小',
   'system.desc.extLibs': '外部 Lua 庫',
   'system.desc.dataSchemaSecret': '密鑰列表',
+  'system.desc.empty': '目前設備不支援該功能',
 
   /**
    * others

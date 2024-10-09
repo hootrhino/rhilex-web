@@ -19,7 +19,7 @@ import {
 } from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
 import { useSize } from 'ahooks';
-import { Space, Tooltip } from 'antd';
+import { Empty, Space, Tooltip } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useRef } from 'react';
 
@@ -135,6 +135,14 @@ const NetworkConfig = () => {
           rules={[
             { required: true, message: formatMessage({ id: 'system.form.rules.interface' }) },
           ]}
+          fieldProps={{
+            notFoundContent: (
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={formatMessage({ id: 'system.desc.empty' })}
+              />
+            ),
+          }}
         />
         <ProFormText
           name="address"

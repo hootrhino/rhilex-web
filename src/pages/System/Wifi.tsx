@@ -10,7 +10,7 @@ import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
 import { useSize } from 'ahooks';
-import { AutoComplete, Button, Progress, Space } from 'antd';
+import { AutoComplete, Button, Empty, Progress, Space } from 'antd';
 import { useEffect, useRef } from 'react';
 
 type UpdateFormParams = {
@@ -123,6 +123,14 @@ const WIFIConfig = () => {
           rules={[
             { required: true, message: formatMessage({ id: 'system.form.rules.interface' }) },
           ]}
+          fieldProps={{
+            notFoundContent: (
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={formatMessage({ id: 'system.desc.empty' })}
+              />
+            ),
+          }}
         />
         <ProForm.Item
           name="ssid"

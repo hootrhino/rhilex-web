@@ -163,6 +163,7 @@ export default {
   'system.desc.maxLostCacheSize': 'MaxLostCacheSize',
   'system.desc.extLibs': 'ExtLibs',
   'system.desc.dataSchemaSecret': 'DataSchemaSecret',
+  'system.desc.empty': 'Current device does not support this feature',
 
   /**
    * others
