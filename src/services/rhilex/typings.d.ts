@@ -216,16 +216,6 @@ declare namespace API {
     uuid: string;
   };
 
-  type getHnc8DataSheetListParams = {
-    device_uuid?: string;
-    current?: number;
-    size?: number;
-  };
-
-  type getHnc8DataSheetSheetExportParams = {
-    device_uuid: string;
-  };
-
   type getHwifaceDetailParams = {
     uuid: string;
   };
@@ -331,26 +321,12 @@ declare namespace API {
     schema_uuid: string;
   };
 
-  type getSettingsNetDetailsParams = {
+  type getSettingsWifiParams = {
     iface: string;
   };
 
-  type getShellyGen1DetailParams = {
-    mac: string;
-    deviceId: string;
-    ip: string;
-  };
-
-  type getShellyGen1ListParams = {
-    uuid: string;
-  };
-
-  type getShellyGen1Pro1Switch1ToggleParams = {
-    ip: string;
-  };
-
-  type getShellyGen1StatusParams = {
-    ip: string;
+  type getSettingsWifiScanSignalParams = {
+    iface: string;
   };
 
   type getSnmpOidsSheetListParams = {
@@ -398,17 +374,6 @@ declare namespace API {
   };
 
   type postSchemaPublishParams = {
-    uuid: string;
-  };
-
-  type postShellyGen1Pro1ConfigWebHookParams = {
-    opType: string;
-    deviceIp: string;
-    gwIp: string;
-    webHookPort?: number;
-  };
-
-  type postShellyGen1ScanParams = {
     uuid: string;
   };
 

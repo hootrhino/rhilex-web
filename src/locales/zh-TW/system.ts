@@ -5,14 +5,17 @@ export default {
   'system.tab.resource': '系統資源',
   'system.tab.netStatus': '網絡狀態',
   'system.tab.network': '網卡設定',
-  'system.tab.wifi': 'WIFI 設定',
-  'system.tab.time': '時間設定',
+  'system.tab.datetime': '時間設定',
   'system.tab.routing': '路由設定',
   'system.tab.firmware': '固件設定',
   'system.tab.backup': '數據備份',
   'system.tab.user': '用戶設定',
   'system.tab.port': '串口設定',
   'system.tab.reboot': '定時重啟',
+  'system.tab.time': '系統時間',
+  'system.tab.sysver': '系統版本',
+  'system.tab.nerworking': '網絡設定',
+  'system.tab.setting': '{item} 設定',
 
   /**
    * form
@@ -80,14 +83,6 @@ export default {
   'system.table.title.authorizeAdmin': '證書簽發方',
   'system.table.title.beginAuthorize': '授權起始時間',
   'system.table.title.endAuthorize': '授權結束時間',
-  'system.table.title.device': '網卡名稱',
-  'system.table.title.type': '網卡類型',
-  'system.table.title.state': '網絡狀態',
-  'system.table.title.connection': '當前網絡',
-  'system.table.title.hwAddr': '實體地址',
-  'system.table.title.mtu': '網絡 MTU',
-  'system.table.title.ipv4Addr': 'IPV4 地址',
-  'system.table.title.ipv6Addr': 'IPV6 地址',
   'system.table.title.product': '產品型號',
   'system.table.title.version': '當前版本',
   'system.table.title.osUpTime': '運行時長',
@@ -141,7 +136,6 @@ export default {
   'system.title.firmware.auth': '設備授權資訊',
   'system.title.firmware.log': '固件升級日誌',
   'system.title.firmware.upload': '上傳固件',
-  'system.title.network.detail': '網卡詳情',
   'system.title.network.status': '網絡狀態',
   'system.title.resource.detail': '系統詳情',
 
@@ -188,15 +182,6 @@ export default {
   'system.message.error.upload': '僅支持 zip 格式的文件，請檢查上傳文件格式',
   'system.message.success.ntp': 'NTP 時間更新成功',
   'system.message.success.scheduledReboot': '設定成功',
-
-  'system.type.ethernet': '以太網',
-  'system.type.bridge': '橋接設備',
-  'system.type.loopback': '本地迴環口',
-  'system.state.connected': '已連接到',
-  'system.state.disconnected': '未連接',
-  'system.state.unmanaged': '系統默認',
-  'system.state.unavailable': '網絡不可用',
-  'system.scene.option1': '場景1',
 
   // port
   'system.option.uart': '系統串口',

@@ -5,14 +5,17 @@ export default {
   'system.tab.resource': 'Resources',
   'system.tab.netStatus': 'Network Status',
   'system.tab.network': 'Network Settings',
-  'system.tab.wifi': 'WIFI Settings',
-  'system.tab.time': 'Time Settings',
+  'system.tab.datetime': 'Time Settings',
   'system.tab.routing': 'Routing Settings',
   'system.tab.firmware': 'Firmware Settings',
   'system.tab.backup': 'Backup Settings',
   'system.tab.user': 'User Settings',
   'system.tab.port': 'Serial Port Settings',
   'system.tab.reboot': 'Scheduled Reboot',
+  'system.tab.time': 'System Time',
+  'system.tab.sysver': 'System Version',
+  'system.tab.nerworking': 'Network Settings',
+  'system.tab.setting': '{item} Settings',
 
   /**
    * form
@@ -81,14 +84,6 @@ export default {
   'system.table.title.authorizeAdmin': 'Authorized Admin',
   'system.table.title.beginAuthorize': 'Start Authorization',
   'system.table.title.endAuthorize': 'End Authorization',
-  'system.table.title.device': 'Network Name',
-  'system.table.title.type': 'Network Type',
-  'system.table.title.state': 'Network Status',
-  'system.table.title.connection': 'Active Network',
-  'system.table.title.hwAddr': 'Physical Address',
-  'system.table.title.mtu': 'MTU',
-  'system.table.title.ipv4Addr': 'IPV4 Address',
-  'system.table.title.ipv6Addr': 'IPV6 Address',
   'system.table.title.product': 'Product Model',
   'system.table.title.version': 'Version',
   'system.table.title.osUpTime': 'Up Start Time',
@@ -145,7 +140,6 @@ export default {
   'system.title.firmware.auth': 'Device authorization information',
   'system.title.firmware.log': 'Firmware upgrade log',
   'system.title.firmware.upload': 'Upload firmware',
-  'system.title.network.detail': 'Network details',
   'system.title.network.status': 'Network Status',
   'system.title.resource.detail': 'System details',
 
@@ -194,15 +188,6 @@ export default {
     'Only ZIP format files are supported. Please check the uploaded file format',
   'system.message.success.ntp': 'NTP update successful',
   'system.message.success.scheduledReboot': 'Settings saved successfully',
-
-  'system.type.ethernet': 'Ethernet',
-  'system.type.bridge': 'Bridge',
-  'system.type.loopback': 'Loopback',
-  'system.state.connected': 'connected',
-  'system.state.disconnected': 'disconnected',
-  'system.state.unmanaged': 'default',
-  'system.state.unavailable': 'unaccessible',
-  'system.scene.option1': 'Scene1',
 
   // port
   'system.option.uart': 'Serial Port',

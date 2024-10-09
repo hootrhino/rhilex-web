@@ -7,7 +7,13 @@ export async function getMenuDistConfig(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { id: number; key: string; access: boolean }[];
+    data: {
+      id: number;
+      group: string;
+      key: string;
+      access: boolean;
+      children: { id: number; key: string; access: boolean }[];
+    }[];
   }>('/api/v1/menu/distConfig', {
     method: 'GET',
     ...(options || {}),
@@ -19,7 +25,7 @@ export async function getMenuMain(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { id: number; key: string; access: boolean }[];
+    data: { id: number; group: string; key: string; access: boolean; children: string[] }[];
   }>('/api/v1/menu/main', {
     method: 'GET',
     ...(options || {}),

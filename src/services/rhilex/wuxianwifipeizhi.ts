@@ -3,13 +3,20 @@
 import { request } from '@umijs/max';
 
 /** 获取WIFI配置 GET /api/v1/settings/wifi */
-export async function getSettingsWifi(options?: { [key: string]: any }) {
+export async function getSettingsWifi(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getSettingsWifiParams,
+  options?: { [key: string]: any },
+) {
   return request<{
     code: number;
     msg: string;
-    data: { wlan0: { interface: string; ssid: string; password: string; security: string } };
+    data: { interface: string; ssid: string; password: string; security: string };
   }>('/api/v1/settings/wifi', {
     method: 'GET',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }
@@ -63,20 +70,19 @@ export async function getSettingsWifiRefreshDns(options?: { [key: string]: any }
   });
 }
 
-/** 扫描WIFI GET /api/v1/settings/wifi/scan */
-export async function getSettingsWifiScan(options?: { [key: string]: any }) {
-  return request<{ code: number; msg: string; data: string[] }>('/api/v1/settings/wifi/scan', {
-    method: 'GET',
-    ...(options || {}),
-  });
-}
-
-/** 扫描WIFI信号强度 GET /api/v1/settings/wifi/scanSignal */
-export async function getSettingsWifiScanSignal(options?: { [key: string]: any }) {
+/** 扫描WIFI GET /api/v1/settings/wifi/scanSignal */
+export async function getSettingsWifiScanSignal(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getSettingsWifiScanSignalParams,
+  options?: { [key: string]: any },
+) {
   return request<{ code: number; msg: string; data: string[][] }>(
     '/api/v1/settings/wifi/scanSignal',
     {
       method: 'GET',
+      params: {
+        ...params,
+      },
       ...(options || {}),
     },
   );

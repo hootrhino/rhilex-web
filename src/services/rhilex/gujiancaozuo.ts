@@ -66,7 +66,7 @@ export async function postFirmwareUpload(body: {}, file?: File, options?: { [key
     }
   });
 
-  return request<{ code: number; msg: string; data: string }>('/api/v1/firmware/upload', {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/firmware/upload', {
     method: 'POST',
     data: formData,
     requestType: 'form',

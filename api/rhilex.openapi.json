@@ -6962,7 +6962,7 @@
     },
     "/api/v1/settings/eth": {
       "post": {
-        "summary": "配置ETH0网口参数",
+        "summary": "配置网口参数",
         "x-apifox-folder": "系统配置/网络配置",
         "x-apifox-status": "developing",
         "deprecated": false,
@@ -7050,7 +7050,7 @@
         "security": []
       },
       "get": {
-        "summary": "获取ETH0网口参数",
+        "summary": "获取网口参数",
         "x-apifox-folder": "系统配置/网络配置",
         "x-apifox-status": "developing",
         "deprecated": false,
@@ -7381,7 +7381,10 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   },
                   "required": [
@@ -7389,12 +7392,12 @@
                     "msg",
                     "data"
                   ],
+                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ],
-                  "x-apifox-ignore-properties": []
+                  ]
                 },
                 "examples": {
                   "1": {
@@ -7562,7 +7565,18 @@
         "tags": [
           "系统配置/无线wifi配置"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "iface",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "wlan0",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "成功",
@@ -7580,44 +7594,32 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "wlan0": {
-                          "type": "object",
-                          "properties": {
-                            "interface": {
-                              "type": "string"
-                            },
-                            "ssid": {
-                              "type": "string"
-                            },
-                            "password": {
-                              "type": "string"
-                            },
-                            "security": {
-                              "type": "string"
-                            }
-                          },
-                          "required": [
-                            "interface",
-                            "ssid",
-                            "password",
-                            "security"
-                          ],
-                          "x-apifox-orders": [
-                            "interface",
-                            "ssid",
-                            "password",
-                            "security"
-                          ],
-                          "x-apifox-ignore-properties": []
+                        "interface": {
+                          "type": "string"
+                        },
+                        "ssid": {
+                          "type": "string"
+                        },
+                        "password": {
+                          "type": "string"
+                        },
+                        "security": {
+                          "type": "string"
                         }
                       },
                       "required": [
-                        "wlan0"
+                        "interface",
+                        "ssid",
+                        "password",
+                        "security"
                       ],
+                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
-                        "wlan0"
-                      ],
-                      "x-apifox-ignore-properties": []
+                        "interface",
+                        "ssid",
+                        "password",
+                        "security"
+                      ]
                     }
                   },
                   "required": [
@@ -7625,12 +7627,12 @@
                     "msg",
                     "data"
                   ],
+                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ],
-                  "x-apifox-ignore-properties": []
+                  ]
                 },
                 "examples": {
                   "1": {
@@ -7639,12 +7641,10 @@
                       "code": 200,
                       "msg": "Success",
                       "data": {
-                        "wlan0": {
-                          "interface": "wlan0",
-                          "ssid": "example.net",
-                          "password": "123456",
-                          "security": "wpa2-psk"
-                        }
+                        "interface": "wlan0",
+                        "ssid": "example.wifi",
+                        "password": "123456",
+                        "security": "wpa2-psk"
                       }
                     }
                   }
@@ -8136,7 +8136,7 @@
         "security": []
       }
     },
-    "/api/v1/settings/wifi/scan": {
+    "/api/v1/settings/wifi/scanSignal": {
       "get": {
         "summary": "扫描WIFI",
         "x-apifox-folder": "系统配置/无线wifi配置",
@@ -8146,7 +8146,18 @@
         "tags": [
           "系统配置/无线wifi配置"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "iface",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "wlan0",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "成功",
@@ -8164,7 +8175,10 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "type": "string"
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
                       }
                     }
                   },
@@ -8173,12 +8187,12 @@
                     "msg",
                     "data"
                   ],
+                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ],
-                  "x-apifox-ignore-properties": []
+                  ]
                 },
                 "examples": {
                   "1": {
@@ -8187,8 +8201,66 @@
                       "code": 200,
                       "msg": "Success",
                       "data": [
-                        "HUAWEI-1",
-                        "CMCC-FJ"
+                        [
+                          "",
+                          "-35.00"
+                        ],
+                        [
+                          "CZS",
+                          "-51.00"
+                        ],
+                        [
+                          "ChinaNet-2Uv3",
+                          "-72.00"
+                        ],
+                        [
+                          "HiWiFi_57EB5C",
+                          "-29.00"
+                        ],
+                        [
+                          "HiWiFi_57EB5C_5G",
+                          "-48.00"
+                        ],
+                        [
+                          "Mju",
+                          "-42.00"
+                        ],
+                        [
+                          "Mju-1x",
+                          "-57.00"
+                        ],
+                        [
+                          "OpenWrt",
+                          "-31.00"
+                        ],
+                        [
+                          "SSID",
+                          "-62.00"
+                        ],
+                        [
+                          "USV_Router",
+                          "-71.00"
+                        ],
+                        [
+                          "eduroam",
+                          "-41.00"
+                        ],
+                        [
+                          "gk-4f",
+                          "-31.00"
+                        ],
+                        [
+                          "iotlab407A",
+                          "-33.00"
+                        ],
+                        [
+                          "wlw501",
+                          "-73.00"
+                        ],
+                        [
+                          "xzsys",
+                          "-44.00"
+                        ]
                       ]
                     }
                   }
@@ -13825,37 +13897,7 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "device": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
-                          },
-                          "state": {
-                            "type": "string"
-                          },
-                          "connection": {
-                            "type": "string"
-                          }
-                        },
-                        "required": [
-                          "device",
-                          "type",
-                          "state",
-                          "connection"
-                        ],
-                        "x-apifox-ignore-properties": [],
-                        "x-apifox-orders": [
-                          "device",
-                          "type",
-                          "state",
-                          "connection"
-                        ]
-                      }
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -13876,38 +13918,7 @@
                     "value": {
                       "code": 200,
                       "msg": "Success",
-                      "data": [
-                        {
-                          "device": "eth0",
-                          "type": "ethernet",
-                          "state": "connected",
-                          "connection": "eth0"
-                        },
-                        {
-                          "device": "usb0",
-                          "type": "ethernet",
-                          "state": "connected",
-                          "connection": "usb0"
-                        },
-                        {
-                          "device": "wlx0cc6551c5026",
-                          "type": "wifi",
-                          "state": "connected",
-                          "connection": "iotlab4072"
-                        },
-                        {
-                          "device": "eth1",
-                          "type": "ethernet",
-                          "state": "connected",
-                          "connection": "eth1"
-                        },
-                        {
-                          "device": "lo",
-                          "type": "loopback",
-                          "state": "unmanaged",
-                          "connection": "--"
-                        }
-                      ]
+                      "data": "can1      Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  \n          NOARP  MTU:16  Metric:1\n          RX packets:0 errors:0 dropped:0 overruns:0 frame:0\n          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0\n          collisions:0 txqueuelen:10 \n          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)\n          Interrupt:23 \n\ncan2      Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  \n          NOARP  MTU:16  Metric:1\n          RX packets:0 errors:0 dropped:0 overruns:0 frame:0\n          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0\n          collisions:0 txqueuelen:10 \n          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)\n          Interrupt:24 \n\neth0      Link encap:Ethernet  HWaddr AC:0C:29:A3:9B:6D  \n          inet addr:192.168.0.100  Bcast:192.168.0.255  Mask:255.255.255.0\n          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1\n          RX packets:13 errors:0 dropped:0 overruns:0 frame:0\n          TX packets:15 errors:0 dropped:0 overruns:0 carrier:0\n          collisions:0 txqueuelen:1000 \n          RX bytes:1186 (1.1 KiB)  TX bytes:2652 (2.5 KiB)\n\neth1      Link encap:Ethernet  HWaddr 2E:F6:01:E3:76:B6  \n          UP BROADCAST MULTICAST  MTU:1500  Metric:1\n          RX packets:0 errors:0 dropped:0 overruns:0 frame:0\n          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0\n          collisions:0 txqueuelen:1000 \n          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)\n          Interrupt:11 \n\neth2      Link encap:Ethernet  HWaddr BE:18:A0:FA:35:6A  \n          BROADCAST MULTICAST  MTU:1500  Metric:1\n          RX packets:0 errors:0 dropped:0 overruns:0 frame:0\n          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0\n          collisions:0 txqueuelen:1000 \n          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)\n          Interrupt:10 \n\nlo        Link encap:Local Loopback  \n          inet addr:127.0.0.1  Mask:255.0.0.0\n          UP LOOPBACK RUNNING  MTU:65536  Metric:1\n          RX packets:0 errors:0 dropped:0 overruns:0 frame:0\n          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0\n          collisions:0 txqueuelen:1000 \n          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)\n\nwlan0     Link encap:Ethernet  HWaddr C4:3C:B0:6D:58:E8  \n          inet addr:192.168.10.227  Bcast:192.168.10.255  Mask:255.255.255.0\n          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1\n          RX packets:54533 errors:0 dropped:13210 overruns:0 frame:0\n          TX packets:27407 errors:0 dropped:0 overruns:0 carrier:0\n          collisions:0 txqueuelen:1000 \n          RX bytes:62656583 (59.7 MiB)  TX bytes:7646022 (7.2 MiB)\n\n"
                     }
                   }
                 }
@@ -13916,789 +13927,6 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-144572234-run",
-        "security": []
-      }
-    },
-    "/api/v1/settings/netDetails": {
-      "get": {
-        "summary": "获取网络详情",
-        "x-apifox-folder": "系统配置/网络配置",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "系统配置/网络配置"
-        ],
-        "parameters": [
-          {
-            "name": "iface",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "eth0",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "device": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "string"
-                        },
-                        "hwAddr": {
-                          "type": "string"
-                        },
-                        "mtu": {
-                          "type": "integer"
-                        },
-                        "state": {
-                          "type": "string"
-                        },
-                        "connection": {
-                          "type": "string"
-                        },
-                        "carrier": {
-                          "type": "string"
-                        },
-                        "ipv4Addr": {
-                          "type": "string"
-                        },
-                        "ipv4Gateway": {
-                          "type": "string"
-                        },
-                        "ipv4Dns": {
-                          "type": "string"
-                        },
-                        "ipv6Addr": {
-                          "type": "string"
-                        },
-                        "ipv6Gateway": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "device",
-                        "type",
-                        "hwAddr",
-                        "mtu",
-                        "state",
-                        "connection",
-                        "carrier",
-                        "ipv4Addr",
-                        "ipv4Gateway",
-                        "ipv4Dns",
-                        "ipv6Addr",
-                        "ipv6Gateway"
-                      ],
-                      "x-apifox-ignore-properties": [],
-                      "x-apifox-orders": [
-                        "device",
-                        "type",
-                        "hwAddr",
-                        "mtu",
-                        "state",
-                        "connection",
-                        "carrier",
-                        "ipv4Addr",
-                        "ipv4Gateway",
-                        "ipv4Dns",
-                        "ipv6Addr",
-                        "ipv6Gateway"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-144638587-run",
-        "security": []
-      }
-    },
-    "/api/v1/hnc8_data_sheet/sheetImport": {
-      "post": {
-        "summary": "导入点位表",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_uuid": {
-                    "type": "string",
-                    "example": "DEVICEPGCZHKFU"
-                  },
-                  "file": {
-                    "type": "string",
-                    "example": "file://C:\\Users\\wangwenhai\\workspace\\rulex\\test\\data\\test-modbus-sheet.xlsx",
-                    "format": "binary"
-                  }
-                },
-                "required": [
-                  "device_uuid",
-                  "file"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": []
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-151192733-run",
-        "security": []
-      }
-    },
-    "/api/v1/hnc8_data_sheet/list": {
-      "get": {
-        "summary": "分页查看点位表",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "device_uuid",
-            "in": "query",
-            "description": "",
-            "required": false,
-            "example": "DEVICEDQNLO8",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "current",
-            "in": "query",
-            "description": "",
-            "required": false,
-            "example": "6",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "description": "",
-            "required": false,
-            "example": "2",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "current": {
-                          "type": "integer"
-                        },
-                        "size": {
-                          "type": "integer"
-                        },
-                        "total": {
-                          "type": "integer"
-                        },
-                        "records": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "uuid": {
-                                "type": "string"
-                              },
-                              "device_uuid": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              },
-                              "alias": {
-                                "type": "string"
-                              },
-                              "apiFunction": {
-                                "type": "string"
-                              },
-                              "group": {
-                                "type": "integer"
-                              },
-                              "address": {
-                                "type": "string"
-                              },
-                              "status": {
-                                "type": "integer"
-                              },
-                              "lastFetchTime": {
-                                "type": "integer"
-                              },
-                              "value": {
-                                "type": "string"
-                              }
-                            },
-                            "required": [
-                              "uuid",
-                              "device_uuid",
-                              "name",
-                              "alias",
-                              "apiFunction",
-                              "group",
-                              "address",
-                              "status",
-                              "lastFetchTime",
-                              "value"
-                            ],
-                            "x-apifox-ignore-properties": [],
-                            "x-apifox-orders": [
-                              "uuid",
-                              "device_uuid",
-                              "name",
-                              "alias",
-                              "apiFunction",
-                              "group",
-                              "address",
-                              "status",
-                              "lastFetchTime",
-                              "value"
-                            ]
-                          }
-                        }
-                      },
-                      "required": [
-                        "current",
-                        "size",
-                        "total",
-                        "records"
-                      ],
-                      "x-apifox-ignore-properties": [],
-                      "x-apifox-orders": [
-                        "current",
-                        "size",
-                        "total",
-                        "records"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "current": 1,
-                        "size": 10,
-                        "total": 11,
-                        "records": [
-                          {
-                            "uuid": "HNC86YYVT8V8",
-                            "device_uuid": "DEVICEHELKBOTX",
-                            "name": "机床状态",
-                            "alias": "机床状态",
-                            "apiFunction": "/MACHINE/STATUS",
-                            "group": 10,
-                            "address": "value.0.0",
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "HNC8E4L7FHZD",
-                            "device_uuid": "DEVICEHELKBOTX",
-                            "name": "报警信息",
-                            "alias": "报警信息",
-                            "apiFunction": "/MACHINE/CONTROLLER/WARNING",
-                            "group": 10,
-                            "address": "value.0.0",
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "HNC8XYVEFVJ8",
-                            "device_uuid": "DEVICEHELKBOTX",
-                            "name": "进给速度",
-                            "alias": "进给速度",
-                            "apiFunction": "/MACHINE/FEED_SPEED",
-                            "group": 10,
-                            "address": "value.0.0",
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "HNC8BO4NTAZE",
-                            "device_uuid": "DEVICEHELKBOTX",
-                            "name": "进给倍率",
-                            "alias": "进给倍率",
-                            "apiFunction": "/MACHINE/FEED_OVERRIDE",
-                            "group": 10,
-                            "address": "value.0.0",
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "HNC8KRYBYB6K",
-                            "device_uuid": "DEVICEHELKBOTX",
-                            "name": "主轴倍率",
-                            "alias": "主轴倍率",
-                            "apiFunction": "/MACHINE/SPDL_OVERRIDE",
-                            "group": 10,
-                            "address": "value.0.0",
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "HNC8P9BWUYZT",
-                            "device_uuid": "DEVICEHELKBOTX",
-                            "name": "加工件数",
-                            "alias": "加工件数",
-                            "apiFunction": "/MACHINE/PART_COUNT",
-                            "group": 10,
-                            "address": "value.0.0",
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "HNC8IPVH7V3H",
-                            "device_uuid": "DEVICEHELKBOTX",
-                            "name": "程序名",
-                            "alias": "程序名",
-                            "apiFunction": "/MACHINE/CONTROLLER/PROGRAM",
-                            "group": 10,
-                            "address": "value.0.0",
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "HNC89MU7AYNO",
-                            "device_uuid": "DEVICEHELKBOTX",
-                            "name": "刀具长度",
-                            "alias": "刀具长度",
-                            "apiFunction": "/MACHINE/CONTROLLER/TOOL_PARAM",
-                            "group": 10,
-                            "address": "value.0.length",
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "HNC8BF2MDV4S",
-                            "device_uuid": "DEVICEHELKBOTX",
-                            "name": "刀具半径",
-                            "alias": "刀具半径",
-                            "apiFunction": "/MACHINE/CONTROLLER/TOOL_PARAM",
-                            "group": 10,
-                            "address": "value.0.radius",
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          },
-                          {
-                            "uuid": "HNC8W99Z887D",
-                            "device_uuid": "DEVICEHELKBOTX",
-                            "name": "刀具磨损长度",
-                            "alias": "刀具磨损长度",
-                            "apiFunction": "/MACHINE/CONTROLLER/TOOL_PARAM",
-                            "group": 10,
-                            "address": "value.0.length_abrasion",
-                            "status": 0,
-                            "lastFetchTime": 0,
-                            "value": ""
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-151192734-run",
-        "security": []
-      }
-    },
-    "/api/v1/hnc8_data_sheet/update": {
-      "post": {
-        "summary": "更新点位表",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_uuid": {
-                    "type": "string"
-                  },
-                  "Hnc8_data_points": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "uuid": {
-                          "type": "string"
-                        },
-                        "device_uuid": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "alias": {
-                          "type": "string"
-                        },
-                        "apiFunction": {
-                          "type": "string"
-                        },
-                        "group": {
-                          "type": "integer"
-                        },
-                        "address": {
-                          "type": "string"
-                        }
-                      },
-                      "x-apifox-ignore-properties": [],
-                      "x-apifox-orders": [
-                        "uuid",
-                        "device_uuid",
-                        "name",
-                        "alias",
-                        "apiFunction",
-                        "group",
-                        "address"
-                      ]
-                    }
-                  }
-                },
-                "required": [
-                  "device_uuid",
-                  "Hnc8_data_points"
-                ],
-                "x-apifox-orders": [
-                  "device_uuid",
-                  "Hnc8_data_points"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "device_uuid": "DEVICEHELKBOTX",
-                "Hnc8_data_points": [
-                  {
-                    "uuid": "HNC8BO4NTAZE",
-                    "device_uuid": "DEVICEHELKBOTX",
-                    "name": "进给倍率",
-                    "alias": "进给倍率",
-                    "apiFunction": "/MACHINE/FEED_OVERRIDE",
-                    "group": 10,
-                    "address": "value.0.0"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": []
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-151192735-run",
-        "security": []
-      }
-    },
-    "/api/v1/hnc8_data_sheet/delIds": {
-      "delete": {
-        "summary": "多行删除",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_uuid": {
-                    "type": "string"
-                  },
-                  "uuids": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "required": [
-                  "device_uuid",
-                  "uuids"
-                ],
-                "x-apifox-orders": [
-                  "device_uuid",
-                  "uuids"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "device_uuid": "DEVICEDQNLO8",
-                "uuids": [
-                  "MDTBJJMDUX",
-                  "MDTBC4TT8B"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": []
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-151192736-run",
-        "security": []
-      }
-    },
-    "/api/v1/hnc8_data_sheet/sheetExport": {
-      "get": {
-        "summary": "导出点表",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "device_uuid",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "AABBCCDD",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-151192737-run",
         "security": []
       }
     },
@@ -15410,10 +14638,27 @@
                         "net5g": {
                           "type": "array",
                           "items": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "integer"
+                              }
+                            },
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "name",
+                              "type",
+                              "status"
+                            ]
                           }
                         },
-                        "soft_router": {
+                        "canbus": {
                           "type": "array",
                           "items": {
                             "type": "object",
@@ -15447,7 +14692,7 @@
                         "wlan",
                         "net4g",
                         "net5g",
-                        "soft_router"
+                        "canbus"
                       ],
                       "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
@@ -15455,7 +14700,7 @@
                         "wlan",
                         "net4g",
                         "net5g",
-                        "soft_router"
+                        "canbus"
                       ]
                     }
                   },
@@ -15785,625 +15030,6 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-164362781-run",
-        "security": []
-      }
-    },
-    "/api/v1/shelly_gen1/list": {
-      "get": {
-        "summary": "Shelly设备列表",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "uuid",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "ip": {
-                            "type": "string"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "mac": {
-                            "type": "string"
-                          },
-                          "slot": {
-                            "type": "integer"
-                          },
-                          "model": {
-                            "type": "string"
-                          },
-                          "gen": {
-                            "type": "integer"
-                          },
-                          "fw_id": {
-                            "type": "string"
-                          },
-                          "ver": {
-                            "type": "string"
-                          },
-                          "app": {
-                            "type": "string"
-                          },
-                          "auth_en": {
-                            "type": "boolean"
-                          },
-                          "auth_domain": {
-                            "type": "null"
-                          },
-                          "input": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "id": {
-                                  "type": "integer"
-                                },
-                                "status": {
-                                  "type": "boolean"
-                                }
-                              },
-                              "required": [
-                                "id",
-                                "status"
-                              ],
-                              "x-apifox-ignore-properties": [],
-                              "x-apifox-orders": [
-                                "id",
-                                "status"
-                              ]
-                            }
-                          },
-                          "switch": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "id": {
-                                  "type": "integer"
-                                },
-                                "source": {
-                                  "type": "string"
-                                },
-                                "output": {
-                                  "type": "boolean"
-                                },
-                                "temperature": {
-                                  "type": "object",
-                                  "properties": {
-                                    "tC": {
-                                      "type": "number"
-                                    },
-                                    "tF": {
-                                      "type": "number"
-                                    }
-                                  },
-                                  "required": [
-                                    "tC",
-                                    "tF"
-                                  ],
-                                  "x-apifox-ignore-properties": [],
-                                  "x-apifox-orders": [
-                                    "tC",
-                                    "tF"
-                                  ]
-                                }
-                              },
-                              "x-apifox-ignore-properties": [],
-                              "x-apifox-orders": [
-                                "id",
-                                "source",
-                                "output",
-                                "temperature"
-                              ]
-                            }
-                          }
-                        },
-                        "x-apifox-ignore-properties": [],
-                        "x-apifox-orders": [
-                          "ip",
-                          "name",
-                          "id",
-                          "mac",
-                          "slot",
-                          "model",
-                          "gen",
-                          "fw_id",
-                          "ver",
-                          "app",
-                          "auth_en",
-                          "auth_domain",
-                          "input",
-                          "switch"
-                        ]
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": [
-                        {
-                          "ip": "192.168.1.106",
-                          "name": "UNKNOWN",
-                          "id": "shellypro1-30c6f78474c0",
-                          "mac": "30C6F78474C0",
-                          "slot": 0,
-                          "model": "SPSW-001XE16EU",
-                          "gen": 2,
-                          "fw_id": "20240223-142004/1.2.2-g7c39781",
-                          "ver": "1.2.2",
-                          "app": "Pro1",
-                          "auth_en": false,
-                          "auth_domain": null,
-                          "input": [
-                            {
-                              "id": 0,
-                              "status": false
-                            },
-                            {
-                              "id": 1,
-                              "status": false
-                            }
-                          ],
-                          "switch": [
-                            {
-                              "id": 0,
-                              "source": "WS_in",
-                              "output": true,
-                              "temperature": {
-                                "tC": 33.3,
-                                "tF": 91.9
-                              }
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-165070242-run",
-        "security": []
-      }
-    },
-    "/api/v1/shelly_gen1/scan": {
-      "post": {
-        "summary": "Shelly设备扫描",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "uuid",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "12345678",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-165073175-run",
-        "security": []
-      }
-    },
-    "/api/v1/shelly_gen1/detail": {
-      "get": {
-        "summary": "Shelly设备详情",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "mac",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "123435656",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "deviceId",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "DEVICENNYXUF82",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "ip",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "192.168.7.7",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-165073184-run",
-        "security": []
-      }
-    },
-    "/api/v1/shelly_gen1/status": {
-      "get": {
-        "summary": "Shelly设备状态",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "ip",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "192.168.1.106",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "mac": {
-                          "type": "string"
-                        },
-                        "restart_required": {
-                          "type": "boolean"
-                        },
-                        "time": {
-                          "type": "string"
-                        },
-                        "unixtime": {
-                          "type": "integer"
-                        },
-                        "uptime": {
-                          "type": "integer"
-                        },
-                        "ram_size": {
-                          "type": "integer"
-                        },
-                        "ram_free": {
-                          "type": "integer"
-                        },
-                        "fs_size": {
-                          "type": "integer"
-                        },
-                        "fs_free": {
-                          "type": "integer"
-                        },
-                        "cfg_rev": {
-                          "type": "integer"
-                        },
-                        "kvs_rev": {
-                          "type": "integer"
-                        },
-                        "schedule_rev": {
-                          "type": "integer"
-                        },
-                        "webhook_rev": {
-                          "type": "integer"
-                        },
-                        "available_updates": {
-                          "type": "object",
-                          "properties": {
-                            "stable": {
-                              "type": "object",
-                              "properties": {
-                                "version": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": [
-                                "version"
-                              ],
-                              "x-apifox-ignore-properties": [],
-                              "x-apifox-orders": [
-                                "version"
-                              ]
-                            }
-                          },
-                          "required": [
-                            "stable"
-                          ],
-                          "x-apifox-ignore-properties": [],
-                          "x-apifox-orders": [
-                            "stable"
-                          ]
-                        }
-                      },
-                      "required": [
-                        "mac",
-                        "restart_required",
-                        "time",
-                        "unixtime",
-                        "uptime",
-                        "ram_size",
-                        "ram_free",
-                        "fs_size",
-                        "fs_free",
-                        "cfg_rev",
-                        "kvs_rev",
-                        "schedule_rev",
-                        "webhook_rev",
-                        "available_updates"
-                      ],
-                      "x-apifox-ignore-properties": [],
-                      "x-apifox-orders": [
-                        "mac",
-                        "restart_required",
-                        "time",
-                        "unixtime",
-                        "uptime",
-                        "ram_size",
-                        "ram_free",
-                        "fs_size",
-                        "fs_free",
-                        "cfg_rev",
-                        "kvs_rev",
-                        "schedule_rev",
-                        "webhook_rev",
-                        "available_updates"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "mac": "30C6F78474C0",
-                        "restart_required": false,
-                        "time": "22:21",
-                        "unixtime": 1713187285,
-                        "uptime": 78006,
-                        "ram_size": 258932,
-                        "ram_free": 113212,
-                        "fs_size": 524288,
-                        "fs_free": 217088,
-                        "cfg_rev": 3,
-                        "kvs_rev": 0,
-                        "schedule_rev": 0,
-                        "webhook_rev": 0,
-                        "available_updates": {
-                          "stable": {
-                            "version": ""
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-165138168-run",
-        "security": []
-      }
-    },
-    "/api/v1/shelly_gen1/pro1/switch1/toggle": {
-      "get": {
-        "summary": "Pro1拨动开关",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "ip",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "192.168.1.106",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "was_on": {
-                          "type": "boolean"
-                        }
-                      },
-                      "required": [
-                        "was_on"
-                      ],
-                      "x-apifox-ignore-properties": [],
-                      "x-apifox-orders": [
-                        "was_on"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "was_on": true
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-166063042-run",
         "security": []
       }
     },
@@ -17090,75 +15716,6 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-167318967-run",
-        "security": []
-      }
-    },
-    "/api/v1/shelly_gen1/pro1/configWebHook": {
-      "post": {
-        "summary": "快速将设备接入网关",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "opType",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "set_webhook",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "deviceIp",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "192.168.1.106",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "gwIp",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "192.168.1.175",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "webHookPort",
-            "in": "query",
-            "description": "",
-            "required": false,
-            "example": "7000",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-168752798-run",
         "security": []
       }
     },
@@ -18810,320 +17367,6 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-184218598-run",
-        "security": []
-      }
-    },
-    "/api/v1/settings/wifi/scanSignal": {
-      "get": {
-        "summary": "扫描WIFI信号强度",
-        "x-apifox-folder": "系统配置/无线wifi配置",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "系统配置/无线wifi配置"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": [
-                        [
-                          "ShellyPro1-30C6F78474C0",
-                          "100"
-                        ],
-                        [
-                          "iotlab407A",
-                          "100"
-                        ],
-                        [
-                          "HiWiFi_57EB5C",
-                          "100"
-                        ],
-                        [
-                          "HAP_PSMZBA",
-                          "100"
-                        ],
-                        [
-                          "eduroam",
-                          "92"
-                        ],
-                        [
-                          "Mju-1x",
-                          "92"
-                        ],
-                        [
-                          "Mju",
-                          "92"
-                        ],
-                        [
-                          "gk-4f",
-                          "82"
-                        ],
-                        [
-                          "CZS",
-                          "80"
-                        ],
-                        [
-                          "",
-                          "80"
-                        ],
-                        [
-                          "ChinaNet-2Uv3",
-                          "65"
-                        ],
-                        [
-                          "Mju-1x",
-                          "64"
-                        ],
-                        [
-                          "Mju",
-                          "64"
-                        ],
-                        [
-                          "xzsys",
-                          "62"
-                        ],
-                        [
-                          "eduroam",
-                          "62"
-                        ],
-                        [
-                          "eduroam",
-                          "62"
-                        ],
-                        [
-                          "Mju-1x",
-                          "60"
-                        ],
-                        [
-                          "Mju",
-                          "60"
-                        ],
-                        [
-                          "Mju",
-                          "57"
-                        ],
-                        [
-                          "Mju-1x",
-                          "55"
-                        ],
-                        [
-                          "eduroam",
-                          "55"
-                        ],
-                        [
-                          "SpringOffice",
-                          "52"
-                        ],
-                        [
-                          "gk-4f",
-                          "47"
-                        ],
-                        [
-                          "Mju",
-                          "45"
-                        ],
-                        [
-                          "hyzb-inner",
-                          "45"
-                        ],
-                        [
-                          "eduroam",
-                          "44"
-                        ],
-                        [
-                          "Mju-1x",
-                          "44"
-                        ],
-                        [
-                          "",
-                          "42"
-                        ],
-                        [
-                          "",
-                          "42"
-                        ],
-                        [
-                          "TL-WDR7661-PINK",
-                          "42"
-                        ],
-                        [
-                          "Mju",
-                          "42"
-                        ],
-                        [
-                          "gk-4f",
-                          "42"
-                        ],
-                        [
-                          "eduroam",
-                          "40"
-                        ],
-                        [
-                          "Mju-1x",
-                          "40"
-                        ],
-                        [
-                          "Mju",
-                          "40"
-                        ],
-                        [
-                          "",
-                          "35"
-                        ],
-                        [
-                          "SpringOffice",
-                          "35"
-                        ],
-                        [
-                          "eduroam",
-                          "35"
-                        ],
-                        [
-                          "Mju",
-                          "35"
-                        ],
-                        [
-                          "Mju-1x",
-                          "34"
-                        ],
-                        [
-                          "Xiaomi_6F12",
-                          "32"
-                        ],
-                        [
-                          "eduroam",
-                          "32"
-                        ],
-                        [
-                          "eduroam",
-                          "30"
-                        ],
-                        [
-                          "Mju-1x",
-                          "30"
-                        ],
-                        [
-                          "eduroam",
-                          "30"
-                        ],
-                        [
-                          "Mju",
-                          "30"
-                        ],
-                        [
-                          "Mju",
-                          "30"
-                        ],
-                        [
-                          "Mju",
-                          "30"
-                        ],
-                        [
-                          "",
-                          "29"
-                        ],
-                        [
-                          "Mju",
-                          "29"
-                        ],
-                        [
-                          "xzsys",
-                          "29"
-                        ],
-                        [
-                          "eduroam",
-                          "29"
-                        ],
-                        [
-                          "Mju-1x",
-                          "27"
-                        ],
-                        [
-                          "xzsys",
-                          "25"
-                        ],
-                        [
-                          "ChinaNet-MvXB",
-                          "25"
-                        ],
-                        [
-                          "Mju-1x",
-                          "25"
-                        ],
-                        [
-                          "Mju",
-                          "25"
-                        ],
-                        [
-                          "Mju-1x",
-                          "24"
-                        ],
-                        [
-                          "eduroam",
-                          "24"
-                        ],
-                        [
-                          "Mju",
-                          "22"
-                        ],
-                        [
-                          "Mju-1x",
-                          "20"
-                        ],
-                        [
-                          "Mju",
-                          "9"
-                        ]
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-184218898-run",
         "security": []
       }
     },
@@ -22116,23 +20359,36 @@
                           "id": {
                             "type": "integer"
                           },
+                          "group": {
+                            "type": "string"
+                          },
                           "key": {
                             "type": "string"
                           },
                           "access": {
                             "type": "boolean"
+                          },
+                          "children": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
                           }
                         },
                         "required": [
                           "id",
+                          "group",
                           "key",
-                          "access"
+                          "access",
+                          "children"
                         ],
                         "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
                           "id",
+                          "group",
                           "key",
-                          "access"
+                          "access",
+                          "children"
                         ]
                       }
                     }
@@ -22158,53 +20414,73 @@
                       "data": [
                         {
                           "id": 0,
+                          "group": "root",
                           "key": "dashboard",
-                          "access": true
+                          "access": true,
+                          "children": []
                         },
                         {
                           "id": 1,
+                          "group": "root",
                           "key": "device",
-                          "access": true
+                          "access": true,
+                          "children": []
                         },
                         {
                           "id": 2,
+                          "group": "root",
                           "key": "schema",
-                          "access": true
+                          "access": true,
+                          "children": []
                         },
                         {
                           "id": 3,
-                          "key": "dataRepository",
-                          "access": true
+                          "group": "root",
+                          "key": "repository",
+                          "access": true,
+                          "children": []
                         },
                         {
                           "id": 4,
+                          "group": "root",
                           "key": "inend",
-                          "access": true
+                          "access": true,
+                          "children": []
                         },
                         {
                           "id": 5,
+                          "group": "root",
                           "key": "outend",
-                          "access": true
+                          "access": true,
+                          "children": []
                         },
                         {
                           "id": 6,
-                          "key": "appStack",
-                          "access": true
+                          "group": "root",
+                          "key": "app",
+                          "access": true,
+                          "children": []
                         },
                         {
                           "id": 7,
+                          "group": "root",
                           "key": "plugin",
-                          "access": true
+                          "access": true,
+                          "children": []
                         },
                         {
                           "id": 8,
-                          "key": "communicationModule",
-                          "access": true
+                          "group": "root",
+                          "key": "module",
+                          "access": true,
+                          "children": []
                         },
                         {
                           "id": 9,
+                          "group": "root",
                           "key": "system",
-                          "access": true
+                          "access": true,
+                          "children": []
                         }
                       ]
                     }
@@ -22251,23 +20527,58 @@
                           "id": {
                             "type": "integer"
                           },
+                          "group": {
+                            "type": "string"
+                          },
                           "key": {
                             "type": "string"
                           },
                           "access": {
                             "type": "boolean"
+                          },
+                          "children": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer"
+                                },
+                                "key": {
+                                  "type": "string"
+                                },
+                                "access": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "key",
+                                "access"
+                              ],
+                              "x-apifox-ignore-properties": [],
+                              "x-apifox-orders": [
+                                "id",
+                                "key",
+                                "access"
+                              ]
+                            }
                           }
                         },
                         "required": [
                           "id",
+                          "group",
                           "key",
-                          "access"
+                          "access",
+                          "children"
                         ],
                         "x-apifox-ignore-properties": [],
                         "x-apifox-orders": [
                           "id",
+                          "group",
                           "key",
-                          "access"
+                          "access",
+                          "children"
                         ]
                       }
                     }
@@ -22293,52 +20604,73 @@
                       "data": [
                         {
                           "id": 0,
-                          "key": "dashboard",
+                          "group": "resource",
+                          "key": "resource",
                           "access": true
                         },
                         {
                           "id": 1,
-                          "key": "device",
-                          "access": true
-                        },
-                        {
-                          "id": 2,
-                          "key": "schema",
-                          "access": true
+                          "group": "nerworking",
+                          "key": "nerworking",
+                          "access": true,
+                          "children": [
+                            {
+                              "id": 1,
+                              "key": "netStatus",
+                              "access": true
+                            },
+                            {
+                              "id": 2,
+                              "key": "network",
+                              "access": true
+                            },
+                            {
+                              "id": 3,
+                              "key": "wifi",
+                              "access": true
+                            }
+                          ]
                         },
                         {
                           "id": 3,
-                          "key": "dataRepository",
-                          "access": true
+                          "group": "datetime",
+                          "key": "datetime",
+                          "access": true,
+                          "children": [
+                            {
+                              "id": 1,
+                              "key": "time",
+                              "access": true
+                            },
+                            {
+                              "id": 2,
+                              "key": "reboot",
+                              "access": true
+                            }
+                          ]
                         },
                         {
                           "id": 4,
-                          "key": "inend",
-                          "access": true
+                          "group": "sysver",
+                          "key": "sysver",
+                          "access": true,
+                          "children": [
+                            {
+                              "id": 1,
+                              "key": "firmware",
+                              "access": true
+                            },
+                            {
+                              "id": 2,
+                              "key": "backup",
+                              "access": true
+                            }
+                          ]
                         },
                         {
                           "id": 5,
-                          "key": "outend",
-                          "access": true
-                        },
-                        {
-                          "id": 6,
-                          "key": "appStack",
-                          "access": true
-                        },
-                        {
-                          "id": 7,
-                          "key": "plugin",
-                          "access": true
-                        },
-                        {
-                          "id": 8,
-                          "key": "communicationModule",
-                          "access": true
-                        },
-                        {
-                          "id": 9,
-                          "key": "system",
+                          "group": "user",
+                          "key": "user",
                           "access": true
                         }
                       ]

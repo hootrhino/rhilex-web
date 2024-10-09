@@ -374,7 +374,7 @@ const Resource = () => {
           }}
         />
       </StatisticCard.Group>
-      <Line {...config} containerStyle={{ minHeight: 560 }} />
+      <Line {...config} containerStyle={{ minHeight: 400 }} />
     </ProCard>
   );
 };

@@ -1,4 +1,5 @@
 import { message } from '@/components/PopupHack';
+import { getSettingsCtrlTree } from '@/services/rhilex/wangluopeizhi';
 import {
   getSettingsWifi,
   getSettingsWifiScanSignal,
@@ -10,15 +11,12 @@ import { ProCard, ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-co
 import { useIntl, useRequest } from '@umijs/max';
 import { useSize } from 'ahooks';
 import { AutoComplete, Button, Progress, Space } from 'antd';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-type UpdateForm = {
+type UpdateFormParams = {
   ssid: string;
   password: string;
   security: string;
-};
-
-type UpdateParams = UpdateForm & {
   interface: string;
 };
 
@@ -29,33 +27,31 @@ const WIFIConfig = () => {
   const size = useSize(sizeRef);
   const labelCol = locale === 'en-US' ? { span: 3 } : { span: 2 };
 
-  // 扫描信号强度
-  const { data, loading, run } = useRequest(() => getSettingsWifiScanSignal(), {
-    formatResult: (res) => res?.data?.filter((item) => item && item[0] && item[1]),
+  // 获取设备树
+  const { data: ifaceData } = useRequest(() => getSettingsCtrlTree(), {
+    formatResult: (res) => res.data.wlan,
   });
 
   // 详情
-  const { data: detail } = useRequest(() => getSettingsWifi(), {
-    onSuccess: (data) => {
-      if (!data) {
-        formRef.current?.setFieldsValue({
-          security: 'wpa-psk',
-        });
-      } else {
-        formRef.current?.setFieldsValue({ ...data.wlan0 });
-      }
+  const { data: detail, run: getDetail } = useRequest(
+    (params: API.getSettingsWifiParams) => getSettingsWifi(params),
+    {
+      manual: true,
     },
-  });
+  );
 
-  const handleOnFinish = async (values: UpdateForm) => {
+  // 扫描信号强度
+  const { data, loading, run } = useRequest(
+    (params: API.getSettingsWifiScanSignalParams) => getSettingsWifiScanSignal(params),
+    {
+      manual: true,
+      formatResult: (res) => res?.data?.filter((item) => item && item[0] && item[1]),
+    },
+  );
+
+  const handleOnFinish = async (values: UpdateFormParams) => {
     try {
-      if (!detail?.wlan0?.interface) return;
-
-      const params: UpdateParams = {
-        ...values,
-        interface: detail?.wlan0?.interface,
-      };
-      await postSettingsWifi(params);
+      await postSettingsWifi(values);
       message.success(formatMessage({ id: 'message.success.update' }));
       return true;
     } catch (error) {
@@ -63,9 +59,23 @@ const WIFIConfig = () => {
     }
   };
 
+  useEffect(() => {
+    if (ifaceData && ifaceData?.length > 0) {
+      if (ifaceData[0].name) {
+        getDetail({ iface: ifaceData[0].name });
+      }
+    }
+  }, [ifaceData]);
+
+  useEffect(() => {
+    if (detail) {
+      formRef.current?.setFieldsValue({ ...detail });
+    }
+  }, [detail]);
+
   return (
     <ProCard
-      title={formatMessage({ id: 'system.tab.wifi' })}
+      title={formatMessage({ id: 'system.tab.setting' }, { item: 'WIFI' })}
       headStyle={{ paddingBlock: 0 }}
       ref={sizeRef}
     >
@@ -88,8 +98,10 @@ const WIFIConfig = () => {
                     icon={<WifiOutlined />}
                     type="primary"
                     onClick={() => {
-                      run();
-                      message.success(formatMessage({ id: 'message.success.scan' }));
+                      if (detail?.interface) {
+                        run({ iface: detail?.interface });
+                        message.success(formatMessage({ id: 'message.success.scan' }));
+                      }
                     }}
                     loading={loading}
                   >
@@ -101,6 +113,17 @@ const WIFIConfig = () => {
           ),
         }}
       >
+        <ProFormSelect
+          name="interface"
+          label={formatMessage({ id: 'system.form.title.interface' })}
+          width="xl"
+          allowClear={false}
+          options={ifaceData?.map((iface) => ({ label: iface.name, value: iface.name }))}
+          placeholder={formatMessage({ id: 'system.form.rules.interface' })}
+          rules={[
+            { required: true, message: formatMessage({ id: 'system.form.rules.interface' }) },
+          ]}
+        />
         <ProForm.Item
           name="ssid"
           label="SSID"
@@ -137,8 +160,8 @@ const WIFIConfig = () => {
         />
         <ProFormSelect
           options={[
-            { label: 'wpa-psk', value: 'wpa-psk' },
             { label: 'wpa2-psk', value: 'wpa2-psk' },
+            { label: 'wpa3-psk', value: 'wpa3-psk' },
           ]}
           name="security"
           label={formatMessage({ id: 'system.form.title.security' })}

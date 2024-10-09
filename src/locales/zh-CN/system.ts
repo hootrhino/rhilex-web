@@ -5,14 +5,17 @@ export default {
   'system.tab.resource': '系统资源',
   'system.tab.netStatus': '网络状态',
   'system.tab.network': '网卡设置',
-  'system.tab.wifi': 'WIFI 设置',
-  'system.tab.time': '时间设置',
+  'system.tab.datetime': '时间设置',
   'system.tab.routing': '路由设置',
   'system.tab.firmware': '固件设置',
   'system.tab.backup': '数据备份',
   'system.tab.user': '用户设置',
   'system.tab.port': '串口设置',
   'system.tab.reboot': '定时重启',
+  'system.tab.time': '系统时间',
+  'system.tab.sysver': '系统版本',
+  'system.tab.nerworking': '网络设置',
+  'system.tab.setting': '{item} 设置',
 
   /**
    * form
@@ -80,14 +83,6 @@ export default {
   'system.table.title.authorizeAdmin': '证书签发方',
   'system.table.title.beginAuthorize': '授权起始时间',
   'system.table.title.endAuthorize': '授权结束时间',
-  'system.table.title.device': '网卡名称',
-  'system.table.title.type': '网卡类型',
-  'system.table.title.state': '网络状态',
-  'system.table.title.connection': '当前网络',
-  'system.table.title.hwAddr': '物理地址',
-  'system.table.title.mtu': '网络 MTU',
-  'system.table.title.ipv4Addr': 'IPV4 地址',
-  'system.table.title.ipv6Addr': 'IPV6 地址',
   'system.table.title.product': '产品型号',
   'system.table.title.version': '当前版本',
   'system.table.title.osUpTime': '运行时长',
@@ -141,7 +136,6 @@ export default {
   'system.title.firmware.auth': '设备授权信息',
   'system.title.firmware.log': '固件升级日志',
   'system.title.firmware.upload': '上传固件',
-  'system.title.network.detail': '网卡详情',
   'system.title.network.status': '网络状态',
   'system.title.resource.detail': '系统详情',
 
@@ -188,15 +182,6 @@ export default {
   'system.message.error.upload': '仅支持 zip 格式文件，请检查上传文件格式',
   'system.message.success.ntp': 'NTP 时间更新成功',
   'system.message.success.scheduledReboot': '设置成功',
-
-  'system.type.ethernet': '以太网',
-  'system.type.bridge': '桥接设备',
-  'system.type.loopback': '本地回环口',
-  'system.state.connected': '已连接到',
-  'system.state.disconnected': '未连接',
-  'system.state.unmanaged': '系统默认',
-  'system.state.unavailable': '网络不可用',
-  'system.scene.option1': '场景1',
 
   // port
   'system.option.uart': '系统串口',
