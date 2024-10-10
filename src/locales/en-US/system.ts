@@ -179,8 +179,19 @@ export default {
   'system.tooltip.corn':
     'This feature uses the standard crontab format to allow the user to set the reboot policy by customizing the values for minutes, hours, day, month, and week.',
 
-  'system.option.shanghai': 'China',
-  'system.option.tokyo': 'Japan',
+  // 系统时区
+  'system.option.group.asia': 'Asia',
+  'system.option.group.america': 'America',
+  'system.option.asia.beijing': 'Beijing',
+  'system.option.asia.seoul': 'Seoul',
+  'system.option.asia.tokyo': 'Tokyo',
+  'system.option.asia.kolkata': 'Delhi',
+  'system.option.america.newYork': 'New York',
+  'system.option.america.losAngeles': 'Los Angeles',
+  'system.option.america.chicago': 'Chicago',
+  'system.option.america.toronto': 'Toronto',
+  'system.option.america.mexico': 'Mexico City',
+
   'system.switch.checked': 'enable',
   'system.switch.unchecked': 'disable',
 

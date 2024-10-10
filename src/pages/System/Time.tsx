@@ -95,8 +95,48 @@ const TimeConfig = () => {
       >
         <ProFormSelect
           options={[
-            { label: formatMessage({ id: 'system.option.shanghai' }), value: 'Asia/Shanghai' },
-            { label: formatMessage({ id: 'system.option.tokyo' }), value: 'Asia/Tokyo' },
+            {
+              label: <span>{formatMessage({ id: 'system.option.group.asia' })}</span>,
+              title: 'Asia',
+              options: [
+                {
+                  label: formatMessage({ id: 'system.option.asia.beijing' }),
+                  value: 'Asia/Shanghai',
+                },
+                { label: formatMessage({ id: 'system.option.asia.tokyo' }), value: 'Asia/Tokyo' },
+                { label: formatMessage({ id: 'system.option.asia.seoul' }), value: 'Asia/Seoul' },
+                {
+                  label: formatMessage({ id: 'system.option.asia.kolkata' }),
+                  value: 'Asia/Kolkata',
+                },
+              ],
+            },
+            {
+              label: <span>{formatMessage({ id: 'system.option.group.america' })}</span>,
+              title: 'America',
+              options: [
+                {
+                  label: formatMessage({ id: 'system.option.america.newYork' }),
+                  value: 'America/New_York',
+                },
+                {
+                  label: formatMessage({ id: 'system.option.america.losAngeles' }),
+                  value: 'America/Los_Angeles',
+                },
+                {
+                  label: formatMessage({ id: 'system.option.america.chicago' }),
+                  value: 'America/Chicago',
+                },
+                {
+                  label: formatMessage({ id: 'system.option.america.toronto' }),
+                  value: 'America/Toronto',
+                },
+                {
+                  label: formatMessage({ id: 'system.option.america.mexico' }),
+                  value: 'America/Mexico_City',
+                },
+              ],
+            },
           ]}
           name="sysTimeZone"
           label={formatMessage({ id: 'system.table.title.sysTimeZone' })}

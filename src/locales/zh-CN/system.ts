@@ -174,8 +174,19 @@ export default {
   'system.tooltip.corn':
     '本功能采用标准 crontab 格式，允许用户通过自定义分钟、小时、日期、月份、星期的值来设置重启策略。',
 
-  'system.option.shanghai': '中国',
-  'system.option.tokyo': '日本',
+  // 系统时区
+  'system.option.group.asia': '亚洲',
+  'system.option.group.america': '美洲',
+  'system.option.asia.beijing': '北京',
+  'system.option.asia.seoul': '首尔',
+  'system.option.asia.tokyo': '东京',
+  'system.option.asia.kolkata': '德里',
+  'system.option.america.newYork': '纽约',
+  'system.option.america.losAngeles': '洛杉矶',
+  'system.option.america.chicago': '芝加哥',
+  'system.option.america.toronto': '多伦多',
+  'system.option.america.mexico': '墨西哥城',
+
   'system.switch.checked': '开启',
   'system.switch.unchecked': '关闭',
 
