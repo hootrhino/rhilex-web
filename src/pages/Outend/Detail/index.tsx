@@ -7,6 +7,7 @@ import { useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import { baseColumns, configColumns } from '../Columns';
+import { uartColumns } from '../Columns/uart';
 import { OutendType } from '../enum';
 
 type DetailProps = DrawerProps & {
@@ -31,7 +32,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
     <Drawer
       title={formatMessage({ id: 'outend.title.detail' })}
       placement="right"
-      width="40%"
+      width="35%"
       {...props}
     >
       <ProDescriptions
@@ -52,6 +53,16 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
             loading={loading}
             rootClassName="detail-descriptions"
           />
+          {data?.config?.uartConfig && (
+            <ProDescriptions
+              columns={uartColumns as EnhancedProDescriptionsItemProps[]}
+              labelWidth={labelWidth}
+              title="串口配置"
+              dataSource={data?.config?.uartConfig}
+              loading={loading}
+              rootClassName="detail-descriptions"
+            />
+          )}
           {data?.type === OutendType.HTTP && Object.keys(data?.config?.headers)?.length > 0 && (
             <HeadersDetail data={data?.config?.headers} />
           )}

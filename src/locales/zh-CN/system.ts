@@ -9,7 +9,6 @@ export default {
   'system.tab.firmware': '固件设置',
   'system.tab.backup': '数据备份',
   'system.tab.user': '用户设置',
-  'system.tab.port': '串口设置',
   'system.tab.reboot': '定时重启',
   'system.tab.time': '系统时间',
   'system.tab.sysver': '系统版本',
@@ -26,16 +25,6 @@ export default {
   'system.form.title.dns': 'DNS 服务器',
   'system.form.title.dhcpEnabled': '开启 DHCP',
   'system.form.title.security': '加密方式',
-
-  // port
-  'system.form.title.occupyBy': '占用设备',
-  'system.form.title.config': '串口配置',
-  'system.form.title.timeout': '超时时间',
-  'system.form.title.baudRate': '波特率',
-  'system.form.title.dataBits': '数据位',
-  'system.form.title.parity': '奇偶校验',
-  'system.form.title.stopBits': '停止位',
-  'system.form.title.uart': '系统串口',
 
   // reboot
   'system.form.title.enableReboot': '开启定时重启',
@@ -54,12 +43,6 @@ export default {
   // placeholder
   'system.form.placeholder.sysTimeZone': '请选择时区',
   'system.form.placeholder.sysTime': '请选择时间',
-  'system.form.placeholder.timeout': '请输入超时时间',
-  'system.form.placeholder.baudRate': '请选择波特率',
-  'system.form.placeholder.dataBits': '请选择数据位',
-  'system.form.placeholder.parity': '请选择奇偶校验',
-  'system.form.placeholder.stopBits': '请选择停止位',
-  'system.form.placeholder.uart': '请输入系统串口',
 
   /**
    * table
@@ -94,7 +77,6 @@ export default {
   'system.button.firmware.recover': '恢复出厂',
   'system.button.time.ntp': '立即同步 NTP',
   'system.button.wifi.ntp': '扫描 WIFI',
-  'system.button.scan': '扫描端口',
   'system.button.more': '查看更多信息',
   'system.button.showConfig': '查看系统配置',
   'system.button.comfirmConfig': '提交配置',
@@ -113,8 +95,6 @@ export default {
   'system.modal.content.user': '确定要修改用户名 / 密码并重新登录吗？',
   'system.modal.content.cornExpr':
     '请准确填写 CRON 表达式以确保重启时间的准确性。重启将断开网络资源和数据转发链路，请提前备份数据以避免丢失。在启用定时重启策略前务必完成备份。',
-  'system.modal.title.portDetail': '串口详情',
-  'system.modal.title.portUpdate': '编辑串口',
   'system.modal.title.config': '系统配置参数',
 
   /**
@@ -178,12 +158,6 @@ export default {
   'system.message.error.upload': '仅支持 zip 格式文件，请检查上传文件格式',
   'system.message.success.ntp': 'NTP 时间更新成功',
   'system.message.success.scheduledReboot': '设置成功',
-
-  // port
-  'system.option.uart': '系统串口',
-  'system.option.e': '奇校验',
-  'system.option.o': '偶校验',
-  'system.option.n': '不校验',
 
   // time
   'system.time.day': '天',

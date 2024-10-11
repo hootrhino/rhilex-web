@@ -78,7 +78,7 @@ export default {
 
   // other
   'device.form.title.mode': 'Mode',
-  'device.form.title.portUuid': 'Serial Port',
+  'device.form.title.uart': 'Serial Port',
   'device.form.title.host': 'Host',
   'device.form.title.gid': 'Device Group',
   'device.form.title.retryTime': 'Max Fault Count',
@@ -136,7 +136,7 @@ export default {
   'device.form.title.deviceName': 'Device Name',
   'device.form.title.devicePsk': 'Device PSK',
 
-  // uart rw
+  // uart
   'device.form.title.rwConfig.autoRequest': 'Enable Auto Request',
   'device.form.title.readFormat': 'Read Format',
   'device.form.title.timeSlice': 'Time Slice',
@@ -201,7 +201,7 @@ export default {
   'device.message.onlyOneEdit': 'Only one line can be edited',
 
   /**
-   * device type
+   * Device type
    */
   'device.type.uart': 'Generic Serial Port Gateway',
   'device.type.modbus.master': 'Generic Modbus Master Gateway',
@@ -217,7 +217,7 @@ export default {
   'device.type.mbus': 'Generic M-Bus Gateway',
 
   /**
-   * modbus function
+   * Modbus function
    */
   'device.modbus.func1': '01 Read Coils',
   'device.modbus.func2': '02 Read Discrete Inputs',
@@ -225,7 +225,7 @@ export default {
   'device.modbus.func4': '04 Read Input Registers',
 
   /**
-   * plc model
+   * PLC model
    */
   'device.plc.model': 'Siemens {model} PLC',
 

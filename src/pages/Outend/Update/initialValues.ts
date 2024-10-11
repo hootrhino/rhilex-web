@@ -76,6 +76,13 @@ export const defaultConfig = {
     pingPacket: DEFAULT_VALUE,
     timeout: DEFAULT_TIMEOUT,
     dataMode: DataMode.RAW_STRING,
+    uartConfig: {
+      timeout: DEFAULT_TIMEOUT,
+      baudRate: 9600,
+      dataBits: 8,
+      parity: 'N',
+      stopBits: 1,
+    },
   },
   [OutendType.SEMTECH_UDP_FORWARDER]: {
     cacheOfflineData: DEFAULT_ENABLE_OFFLINE_CACHE,

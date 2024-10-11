@@ -76,7 +76,7 @@ export default {
 
   // other
   'device.form.title.mode': '工作模式',
-  'device.form.title.portUuid': '系統串口',
+  'device.form.title.uart': '系統串口',
   'device.form.title.host': '服務地址',
   'device.form.title.gid': '設備分組',
   'device.form.title.retryTime': '最大容錯次數',
@@ -134,7 +134,7 @@ export default {
   'device.form.title.deviceName': '設備名稱',
   'device.form.title.devicePsk': '設備秘鑰',
 
-  // uart rw
+  // uart
   'device.form.title.rwConfig.autoRequest': '自動讀取',
   'device.form.title.readFormat': '讀取格式',
   'device.form.title.timeSlice': '超時時間',
@@ -198,7 +198,7 @@ export default {
   'device.message.onlyOneEdit': '只能同時編輯一行',
 
   /**
-   * device type
+   * Device type
    */
   'device.type.uart': '通用串口控制網關',
   'device.type.modbus.master': '通用 Modbus 主機網關',
@@ -214,7 +214,7 @@ export default {
   'device.type.mbus': '通用 M-Bus 數據採集網關',
 
   /**
-   * modbus function
+   * Modbus function
    */
   'device.modbus.func1': '01 讀線圈狀態',
   'device.modbus.func2': '02 讀離散輸入狀態',
@@ -222,7 +222,7 @@ export default {
   'device.modbus.func4': '04 讀輸入寄存器',
 
   /**
-   * plc model
+   * PLC model
    */
   'device.plc.model': '西門子 {model} 系列 PLC',
 

@@ -9,7 +9,6 @@ export default {
   'system.tab.firmware': 'Firmware Settings',
   'system.tab.backup': 'Backup Settings',
   'system.tab.user': 'User Settings',
-  'system.tab.port': 'Serial Port Settings',
   'system.tab.reboot': 'Scheduled Reboot',
   'system.tab.time': 'System Time',
   'system.tab.sysver': 'System Version',
@@ -26,16 +25,6 @@ export default {
   'system.form.title.dns': 'DNS Server',
   'system.form.title.dhcpEnabled': 'Enable DHCP',
   'system.form.title.security': 'Encryption Method',
-
-  // port
-  'system.form.title.occupyBy': 'Occupied Device',
-  'system.form.title.config': 'Serial Port Configuration',
-  'system.form.title.timeout': 'Timeout',
-  'system.form.title.baudRate': 'Baud Rate',
-  'system.form.title.dataBits': 'Data Bits',
-  'system.form.title.parity': 'Parity',
-  'system.form.title.stopBits': 'Stop Bits',
-  'system.form.title.uart': 'Serial Port',
 
   // reboot
   'system.form.title.enableReboot': 'Enable Reboot',
@@ -55,12 +44,6 @@ export default {
   // placeholder
   'system.form.placeholder.sysTimeZone': 'Please select a time zone',
   'system.form.placeholder.sysTime': 'Please select a time',
-  'system.form.placeholder.timeout': 'Please enter a timeout',
-  'system.form.placeholder.baudRate': 'Please select a baud rate',
-  'system.form.placeholder.dataBits': 'Please select a data bits',
-  'system.form.placeholder.parity': 'Please select a parity',
-  'system.form.placeholder.stopBits': 'Please select a stop bits',
-  'system.form.placeholder.uart': 'Please enter a serial port',
 
   /**
    * table
@@ -95,7 +78,6 @@ export default {
   'system.button.firmware.recover': 'Factory Reset',
   'system.button.time.ntp': 'Synchronize  NTP',
   'system.button.wifi.ntp': 'Scan WIFI',
-  'system.button.scan': 'Scan Ports',
   'system.button.more': 'More Info',
   'system.button.showConfig': 'Show Configuration',
   'system.button.comfirmConfig': 'Submit',
@@ -117,8 +99,6 @@ export default {
     'Are you sure you want to change the username/password and login again?',
   'system.modal.content.cornExpr':
     'Please fill in the CRON expression accurately to ensure the accuracy of the reboot time. Reboot will disconnect network resources and data forwarding links, please backup data in advance to avoid loss. Be sure to complete the backup before enabling the timed reboot policy.',
-  'system.modal.title.portDetail': 'Serial port details',
-  'system.modal.title.portUpdate': 'Update serial port',
   'system.modal.title.config': 'System configuration parameters',
 
   /**
@@ -183,12 +163,6 @@ export default {
     'Only ZIP format files are supported. Please check the uploaded file format',
   'system.message.success.ntp': 'NTP update successful',
   'system.message.success.scheduledReboot': 'Settings saved successfully',
-
-  // port
-  'system.option.uart': 'Serial Port',
-  'system.option.e': 'Even',
-  'system.option.o': 'Odd',
-  'system.option.n': 'None',
 
   // time
   'system.time.day': 'day',

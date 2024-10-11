@@ -24,6 +24,15 @@ export const defaultHostConfig = {
   timeout: DEFAULT_TIMEOUT,
 };
 
+// UART 配置
+export const defaultUartConfig = {
+  timeout: DEFAULT_TIMEOUT,
+  baudRate: 9600,
+  dataBits: 8,
+  parity: 'N',
+  stopBits: 1,
+};
+
 export const defaultConfig = {
   [DeviceType.GENERIC_UART_PROTOCOL]: {
     commonConfig: {
@@ -32,6 +41,7 @@ export const defaultConfig = {
       timeout: 50,
     },
     hostConfig: defaultHostConfig,
+    uartConfig: defaultUartConfig,
   },
   [DeviceType.GENERIC_MODBUS_MASTER]: {
     commonConfig: {
@@ -42,11 +52,13 @@ export const defaultConfig = {
       maxRegNum: 64,
     },
     hostConfig: defaultHostConfig,
+    uartConfig: defaultUartConfig,
   },
   [DeviceType.GENERIC_MODBUS_SLAVER]: {
     commonConfig: {
       mode: DeviceMode.UART,
     },
+    uartConfig: defaultUartConfig,
     hostConfig: {
       port: 1502,
       host: '0.0.0.0',
@@ -64,6 +76,7 @@ export const defaultConfig = {
       host: '0.0.0.0',
       timeout: DEFAULT_TIMEOUT,
     },
+    uartConfig: defaultUartConfig,
   },
   [DeviceType.SIEMENS_PLC]: {
     commonConfig: {
@@ -139,6 +152,7 @@ export const defaultConfig = {
     commonConfig: {
       autoRequest: DEFAULT_TRUE,
     },
+    uartConfig: defaultUartConfig,
     rwConfig: {
       readFormat: ReadFormat.HEX,
       timeSlice: 50,

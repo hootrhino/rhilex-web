@@ -1,14 +1,12 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
 import ProDescriptions from '@/components/ProDescriptions';
-import { getHwifaceList } from '@/services/rhilex/jiekouguanli';
 import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
 import { SheetType } from '@/utils/enum';
 import { flatten, omit } from '@/utils/redash';
-import { history, useIntl, useModel, useRequest } from '@umijs/max';
+import { useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
-import type { DeviceItem } from '..';
 import BacnetIPSheet from '../BacnetIP';
 import BacnetRouterSheet from '../BacnetRouter';
 import { baseColumns, typeConfigColumns } from '../Columns';
@@ -21,15 +19,7 @@ type DetailProps = DrawerProps & {
   uuid: string;
 };
 
-const getPortName = (portList: Record<string, any>[] = [], key: string) => {
-  const currentItem = portList?.find((item: Record<string, any>) => item.uuid === key);
-
-  return currentItem?.name;
-};
-
 const Detail = ({ uuid, open, ...props }: DetailProps) => {
-  const { setActiveKey } = useModel('useSystem');
-  const { changeConfig } = useModel('useCommon');
   const { formatMessage, locale } = useIntl();
 
   const labelWidth = locale === 'en-US' ? 150 : 100;
@@ -42,45 +32,20 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     },
   );
 
-  // 获取接口列表
-  const { run: getPort, data: portList } = useRequest(() => getHwifaceList(), {
-    manual: true,
-  });
-
   const { type = DeviceType.GENERIC_UART_PROTOCOL, config } = detail || {};
 
-  const renderDescription = (data: Record<string, any>[]) => {
-    return data?.map((item, index) => {
-      let formatColumns = item.columns;
-      if (item?.key === 'portConfig') {
-        formatColumns = item?.columns?.map((c: any) => ({
-          ...c,
-          render: (_: any, { portUuid }: DeviceItem) => (
-            <a
-              onClick={() => {
-                history.push('/system');
-                changeConfig({ open: true, uuid: portUuid });
-                setActiveKey('port');
-              }}
-            >
-              {getPortName(portList, portUuid)}
-            </a>
-          ),
-        }));
-      }
-      return (
-        <ProDescriptions
-          key={`description-${index}`}
-          title={item?.title}
-          dataSource={config}
-          columns={formatColumns}
-          column={3}
-          labelWidth={labelWidth}
-          rootClassName="detail-descriptions"
-        />
-      );
-    });
-  };
+  const renderDescription = (data: Record<string, any>[]) =>
+    data?.map((item, index) => (
+      <ProDescriptions
+        key={`description-${index}`}
+        title={item?.title}
+        dataSource={config}
+        columns={item.columns}
+        column={3}
+        labelWidth={labelWidth}
+        rootClassName="detail-descriptions"
+      />
+    ));
 
   const formatColumns = (sourceColumns: any[]) => {
     const formatData = sourceColumns
@@ -93,7 +58,6 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
   useEffect(() => {
     if (uuid && open) {
       getDetail({ uuid });
-      getPort();
     }
   }, [uuid, open]);
 
