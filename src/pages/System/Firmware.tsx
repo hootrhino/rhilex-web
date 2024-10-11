@@ -146,6 +146,7 @@ const FirmwareConfig = () => {
     {
       title: formatMessage({ id: 'system.table.title.license' }),
       dataIndex: 'license',
+      valueType: 'code',
     },
     {
       title: formatMessage({ id: 'system.table.title.authorizeAdmin' }),
@@ -176,6 +177,7 @@ const FirmwareConfig = () => {
           title={formatMessage({ id: 'system.title.firmware.auth' })}
         >
           <ProDescriptions
+            rootClassName="firmware-descriptions"
             columns={columns as EnhancedProDescriptionsItemProps[]}
             labelWidth={getLocale() === 'en-US' ? 140 : 110}
             request={async () => {
