@@ -6,7 +6,6 @@ export default {
   'system.tab.netStatus': 'Network Status',
   'system.tab.network': 'Network Settings',
   'system.tab.datetime': 'Time Settings',
-  'system.tab.routing': 'Routing Settings',
   'system.tab.firmware': 'Firmware Settings',
   'system.tab.backup': 'Backup Settings',
   'system.tab.user': 'User Settings',
@@ -21,10 +20,6 @@ export default {
    * form
    */
   'system.form.title.netmask': 'Subnet Mask',
-  'system.form.title.ip': 'Admin Address',
-  'system.form.title.ipPoolRange': 'IP Range',
-  'system.form.title.ifaceFrom': 'LAN Interface',
-  'system.form.title.ifaceTo': 'Traffic Direction',
   'system.form.title.interface': 'Select Interface',
   'system.form.title.address': 'IP Address',
   'system.form.title.gateway': 'Gateway',
@@ -48,11 +43,6 @@ export default {
 
   // rules
   'system.form.rules.netmask': 'Please enter a subnet mask',
-  'system.form.rules.ip': 'Please enter an address',
-  'system.form.rules.ipPoolBegin': 'Please enter a dhcp start address',
-  'system.form.rules.ipPoolEnd': 'Please enter a dhcp end address',
-  'system.form.rules.ifaceFrom': 'Please select a LAN interface',
-  'system.form.rules.ifaceTo': 'Please select a traffic direction',
   'system.form.rules.interface': 'Please select a interface',
   'system.form.rules.address': 'Please enter a ip address',
   'system.form.rules.gateway': 'Please enter a gateway',
@@ -75,9 +65,6 @@ export default {
   /**
    * table
    */
-  'system.table.title.ipAddress': 'IP Address',
-  'system.table.title.macAddress': 'Device MAC',
-  'system.table.title.hostname': 'Device Name',
   'system.table.title.deviceId': 'Device ID',
   'system.table.title.mac': 'MAC Address',
   'system.table.title.license': 'License',
@@ -168,10 +155,6 @@ export default {
   /**
    * others
    */
-  'system.routing.tab.config': 'DHCP Configuration',
-  'system.routing.tab.list': 'DHCP List',
-  'system.tips.apn':
-    'This configuration item is a high-level network feature; incorrect configuration can lead to network disconnection. Please proceed with caution',
 
   // tooltip
   'system.tooltip.cdmapwd': 'Whether to save the username and password on the CDMA network',

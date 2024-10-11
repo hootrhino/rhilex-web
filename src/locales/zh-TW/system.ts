@@ -6,7 +6,6 @@ export default {
   'system.tab.netStatus': '網絡狀態',
   'system.tab.network': '網卡設定',
   'system.tab.datetime': '時間設定',
-  'system.tab.routing': '路由設定',
   'system.tab.firmware': '固件設定',
   'system.tab.backup': '數據備份',
   'system.tab.user': '用戶設定',
@@ -21,10 +20,6 @@ export default {
    * form
    */
   'system.form.title.netmask': '子網掩碼',
-  'system.form.title.ip': '管理地址',
-  'system.form.title.ipPoolRange': 'IP 分配範圍',
-  'system.form.title.ifaceFrom': 'LAN 網卡',
-  'system.form.title.ifaceTo': '流量出口',
   'system.form.title.interface': '網卡選擇',
   'system.form.title.address': 'IP 地址',
   'system.form.title.gateway': '默認網關',
@@ -48,11 +43,6 @@ export default {
 
   // rules
   'system.form.rules.netmask': '請輸入子網掩碼',
-  'system.form.rules.ip': '請輸入管理地址',
-  'system.form.rules.ipPoolBegin': '請輸入 DHCP 起始地址',
-  'system.form.rules.ipPoolEnd': '請輸入 DHCP 結束地址',
-  'system.form.rules.ifaceFrom': '請選擇 LAN 網卡',
-  'system.form.rules.ifaceTo': '請選擇流量出口',
   'system.form.rules.interface': '請選擇網卡',
   'system.form.rules.address': '請輸入 IP 地址',
   'system.form.rules.gateway': '請輸入默認網關',
@@ -74,9 +64,6 @@ export default {
   /**
    * table
    */
-  'system.table.title.ipAddress': 'IP 地址',
-  'system.table.title.macAddress': '設備 MAC',
-  'system.table.title.hostname': '設備名稱',
   'system.table.title.deviceId': '設備序號',
   'system.table.title.mac': '已授權 MAC',
   'system.table.title.license': '設備許可證',
@@ -164,9 +151,6 @@ export default {
   /**
    * others
    */
-  'system.routing.tab.config': 'DHCP 配置',
-  'system.routing.tab.list': 'DHCP 列表',
-  'system.tips.apn': '此配置項屬於高級網絡功能，配置不當會造成設備斷網，請謹慎操作',
 
   // tooltip
   'system.tooltip.cdmapwd': '是否在 CDMA 網絡下保存用戶名和密碼',

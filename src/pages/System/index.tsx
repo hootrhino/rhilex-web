@@ -7,7 +7,6 @@ import FirmwareConfig from './Firmware';
 import NetworkConfig from './Network';
 import NetworkStatus from './NetworkStatus';
 // TODO v0.7.5 版本移除这个模块 import PortSettings from './PortMgt';
-// TODO v0.7.5 版本移除这个模块 import RoutingConfig from './Routing';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { useMemo } from 'react';
