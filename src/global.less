@@ -182,3 +182,16 @@ canvas {
     width: 328px;
   }
 }
+
+.gradient-border {
+  border: 1px solid;
+  border-image: linear-gradient(90deg, #fdc830 0%, #f37335 100%) 1;
+}
+
+.gradient-text {
+  color: transparent;
+  // background-image: linear-gradient(180deg, #FFEAB4 17.65%, #F8C235 85.29%);
+  background-image: linear-gradient(90deg, #fdc830 0%, #f37335 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}

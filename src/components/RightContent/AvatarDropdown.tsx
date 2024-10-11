@@ -1,4 +1,4 @@
-import { cn } from '@/utils/utils';
+import { IconFont } from '@/utils/utils';
 import {
   ExclamationCircleOutlined,
   LogoutOutlined,
@@ -86,23 +86,31 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
         width: 150,
       }}
     >
-      <span className="flex items-center h-[56px] ml-auto px-[12px] cursor-pointer rounded-[2px] hover:bg-[#32393F]">
-        <Avatar
-          size="small"
-          className="mr-[8px] text-[#fff] border border-[#fff] align-top md:m-0"
-          src={undefined}
-          icon={<UserOutlined />}
-          alt="avatar"
-        />
-        <span
-          className={cn(
-            'text-[16px] text-[#fff] h-[56px] overflow-hidden leading-[56px] whitespace-nowrap text-ellipsis md:hidden',
-            'anticon',
-          )}
-        >
-          {currentUser?.username}
-        </span>
-      </span>
+      <div className="flex items-center h-[56px] ml-auto px-[12px] cursor-pointer rounded-[2px] hover:bg-[#32393F]">
+        <div className="flex items-center h-[40px] px-[12px] gradient-border rounded-[2px]">
+          <Avatar
+            size="small"
+            className="text-[#fff] bg-[#e0eafc] mr-[8px] align-top md:m-0"
+            src={undefined}
+            icon={<UserOutlined />}
+            alt="avatar"
+          />
+
+          {/* <span
+            className={cn(
+              'text-[16px] text-[#fff] h-[56px] overflow-hidden leading-[56px] whitespace-nowrap text-ellipsis md:hidden',
+              'anticon',
+            )}
+          >
+            {currentUser?.username}
+          </span>
+          */}
+          <div className="text-[12px] gradient-text">
+            <IconFont type="icon-pro" className="pr-[6px]" />
+            升级企业版，解锁专业效能
+          </div>
+        </div>
+      </div>
     </HeaderDropdown>
   );
 };
