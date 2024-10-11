@@ -42,6 +42,7 @@ type UpdateParams = Omit<BaseFormItem, 'dnsList'> & {
 
 const initialValue = {
   interface: 'eth0',
+  dhcp_enabled: false,
   address: '192.168.199.1',
   netmask: '255.255.255.0',
   gateway: '192.168.199.1',
