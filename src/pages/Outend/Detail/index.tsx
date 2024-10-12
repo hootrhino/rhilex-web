@@ -48,8 +48,8 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
           <ProDescriptions
             columns={configColumns[data?.type]}
             labelWidth={labelWidth}
-            title={formatMessage({ id: 'outend.title.source' })}
-            dataSource={data}
+            title={formatMessage({ id: 'outend.title.common' })}
+            dataSource={data?.config?.commonConfig}
             loading={loading}
             rootClassName="detail-descriptions"
           />
@@ -57,7 +57,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
             <ProDescriptions
               columns={uartColumns as EnhancedProDescriptionsItemProps[]}
               labelWidth={labelWidth}
-              title="串口配置"
+              title={formatMessage({ id: 'outend.title.uart' })}
               dataSource={data?.config?.uartConfig}
               loading={loading}
               rootClassName="detail-descriptions"

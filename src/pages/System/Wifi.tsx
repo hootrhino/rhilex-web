@@ -41,7 +41,11 @@ const WIFIConfig = () => {
   );
 
   // 扫描信号强度
-  const { data, loading, run } = useRequest(
+  const {
+    data: ssidData,
+    loading,
+    run,
+  } = useRequest(
     (params: API.getSettingsWifiScanSignalParams) => getSettingsWifiScanSignal(params),
     {
       manual: true,
@@ -69,7 +73,11 @@ const WIFIConfig = () => {
 
   useEffect(() => {
     if (detail) {
-      formRef.current?.setFieldsValue({ ...detail });
+      formRef.current?.setFieldsValue({
+        ...detail,
+        interface: detail?.interface || ifaceData?.[0].name,
+        security: detail?.security || 'wpa2-psk',
+      });
     }
   }, [detail]);
 
@@ -98,8 +106,10 @@ const WIFIConfig = () => {
                     icon={<WifiOutlined />}
                     type="primary"
                     onClick={() => {
-                      if (detail?.interface) {
-                        run({ iface: detail?.interface });
+                      const iface = detail?.interface || ifaceData?.[0].name;
+
+                      if (iface) {
+                        run({ iface });
                         message.success(formatMessage({ id: 'message.success.scan' }));
                       }
                     }}
@@ -138,10 +148,10 @@ const WIFIConfig = () => {
           rules={[{ required: true, message: formatMessage({ id: 'system.form.rules.ssid' }) }]}
         >
           <AutoComplete
-            options={data?.map((item) => ({
+            options={ssidData?.map((item) => ({
               label: (
                 <Space className="w-full justify-between">
-                  <span>{item[0]}</span>
+                  <span className="max-w-[200px] truncate">{item[0]}</span>
                   <Progress
                     steps={10}
                     size="small"

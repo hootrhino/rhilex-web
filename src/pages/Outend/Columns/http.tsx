@@ -9,43 +9,49 @@ const intl = getIntl(getLocale());
 export const HTTP = [
   {
     title: intl.formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
-    dataIndex: ['config', 'cacheOfflineData'],
+    dataIndex: ['config', 'commonConfig', 'cacheOfflineData'],
     required: true,
     renderFormItem: () => <ProSegmented width="md" />,
-    renderText: (cacheOfflineData: boolean) => (
-      <ProTag type={StatusType.BOOL}>{cacheOfflineData}</ProTag>
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => (
+      <ProTag type={StatusType.BOOL}>{commonConfig?.cacheOfflineData}</ProTag>
     ),
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.allowPing' }),
-    dataIndex: ['config', 'allowPing'],
+    dataIndex: ['config', 'commonConfig', 'allowPing'],
     required: true,
     renderFormItem: () => <ProSegmented width="md" />,
-    renderText: (allowPing: boolean) => <ProTag type={StatusType.BOOL}>{allowPing}</ProTag>,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => (
+      <ProTag type={StatusType.BOOL}>{commonConfig?.allowPing}</ProTag>
+    ),
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.pingPacket' }),
-    dataIndex: ['config', 'pingPacket'],
+    dataIndex: ['config', 'commonConfig', 'pingPacket'],
     required: true,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.pingPacket,
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.timeout' }),
-    dataIndex: ['config', 'timeout'],
+    dataIndex: ['config', 'commonConfig', 'timeout'],
     required: true,
     valueType: 'digit',
     fieldProps: {
       addonAfter: 'ms',
     },
-    render: (timeout: number) => <UnitValue value={timeout} />,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => (
+      <UnitValue value={commonConfig?.timeout} />
+    ),
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.url' }),
-    dataIndex: ['config', 'url'],
+    dataIndex: ['config', 'commonConfig', 'url'],
     required: true,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.url,
   },
   {
     valueType: 'formList',
-    dataIndex: ['config', 'headers'],
+    dataIndex: ['config', 'commonConfig', 'headers'],
     title: <HeadersTitle />,
     fieldProps: {
       creatorButtonProps: {

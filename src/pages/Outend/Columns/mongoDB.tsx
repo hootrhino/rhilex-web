@@ -7,26 +7,29 @@ const intl = getIntl(getLocale());
 export const MONGO_SINGLE = [
   {
     title: intl.formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
-    dataIndex: ['config', 'cacheOfflineData'],
+    dataIndex: ['config', 'commonConfig', 'cacheOfflineData'],
     required: true,
     renderFormItem: () => <ProSegmented width="md" />,
-    renderText: (cacheOfflineData: boolean) => (
-      <ProTag type={StatusType.BOOL}>{cacheOfflineData}</ProTag>
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => (
+      <ProTag type={StatusType.BOOL}>{commonConfig?.cacheOfflineData}</ProTag>
     ),
   },
   {
     title: 'MongoDB URL',
-    dataIndex: ['config', 'mongoUrl'],
+    dataIndex: ['config', 'commonConfig', 'mongoUrl'],
     required: true,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.mongoUrl,
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.database' }),
-    dataIndex: ['config', 'database'],
+    dataIndex: ['config', 'commonConfig', 'database'],
     required: true,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.database,
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.collection' }, { type: 'MongoDB' }),
-    dataIndex: ['config', 'collection'],
+    dataIndex: ['config', 'commonConfig', 'collection'],
     required: true,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.collection,
   },
 ];

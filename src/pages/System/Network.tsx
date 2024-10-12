@@ -21,7 +21,7 @@ import { useIntl, useRequest } from '@umijs/max';
 import { useSize } from 'ahooks';
 import { Empty, Space, Tooltip } from 'antd';
 import { Rule } from 'antd/es/form';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 type DnsListItem = {
   dns: string;
@@ -40,15 +40,6 @@ type UpdateParams = Omit<BaseFormItem, 'dnsList'> & {
   dns: string[];
 };
 
-const initialValue = {
-  interface: 'eth0',
-  dhcp_enabled: false,
-  address: '192.168.199.1',
-  netmask: '255.255.255.0',
-  gateway: '192.168.199.1',
-  dnsList: [{ dns: '8.8.8.8' }, { dns: '114.114.114.114' }],
-};
-
 const NetworkConfig = () => {
   const formRef = useRef<ProFormInstance>();
   const actionRef = useRef<FormListActionType>();
@@ -56,29 +47,18 @@ const NetworkConfig = () => {
   const size = useSize(sizeRef);
   const { formatMessage } = useIntl();
 
-  // 获取 Network 列表
-  const handleOnNetworkList = async () => {
-    const { data } = await getSettingsCtrlTree();
-    const hasNetwork = data?.network && data?.network.length > 0;
-
-    const options = hasNetwork
-      ? data?.network?.map((item) => ({ label: item?.name, value: item?.name }))
-      : [];
-
-    return options;
-  };
+  // 获取设备树
+  const { data: ifaceData } = useRequest(() => getSettingsCtrlTree(), {
+    formatResult: (res) => res.data.network,
+  });
 
   // 详情
-  const { data: detail } = useRequest(() => getSettingsEth(), {
-    onSuccess: (data) => {
-      if (!data) {
-        formRef.current?.setFieldsValue(initialValue);
-      } else {
-        const dnsList = data['eth0'].dns?.map((item) => ({ dns: item }));
-        formRef.current?.setFieldsValue({ ...omit(data['eth0'], ['dns']), dnsList });
-      }
+  const { data: detail, run: getDetail } = useRequest(
+    (params: API.getSettingsEthParams) => getSettingsEth(params),
+    {
+      manual: true,
     },
-  });
+  );
 
   // 更新
   const handleOnFinish = async ({ dnsList, ...values }: BaseFormItem) => {
@@ -96,6 +76,27 @@ const NetworkConfig = () => {
     }
   };
 
+  useEffect(() => {
+    if (ifaceData && ifaceData?.length > 0) {
+      if (ifaceData[0].name) {
+        getDetail({ iface: ifaceData[0].name });
+      }
+    }
+  }, [ifaceData]);
+
+  useEffect(() => {
+    if (detail) {
+      const dnsList = detail.dns?.map((item) => ({ dns: item }));
+
+      formRef.current?.setFieldsValue({
+        ...omit(detail, ['dns']),
+        dnsList,
+        interface: detail?.interface || ifaceData?.[0].name,
+        dhcp_enabled: detail?.dhcp_enabled || false,
+      });
+    }
+  }, [detail]);
+
   return (
     <ProCard
       title={formatMessage({ id: 'system.tab.network' })}
@@ -105,6 +106,7 @@ const NetworkConfig = () => {
       <ProForm
         formRef={formRef}
         onFinish={handleOnFinish}
+        initialValues={{ dhcp_enabled: false }}
         layout={size && size?.width < 1000 ? 'vertical' : 'horizontal'}
         labelCol={size && size?.width < 1000 ? {} : { span: 3 }}
         onValuesChange={(changedValue) => {
@@ -131,7 +133,7 @@ const NetworkConfig = () => {
           label={formatMessage({ id: 'system.form.title.interface' })}
           width="xl"
           allowClear={false}
-          request={handleOnNetworkList}
+          options={ifaceData?.map((item) => ({ label: item?.name, value: item?.name }))}
           placeholder={formatMessage({ id: 'system.form.rules.interface' })}
           rules={[
             { required: true, message: formatMessage({ id: 'system.form.rules.interface' }) },

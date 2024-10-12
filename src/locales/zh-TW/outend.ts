@@ -28,7 +28,8 @@ export default {
   'outend.title.edit': '編輯資源',
   'outend.title.detail': '資源詳情',
   'outend.title.base': '基本配置',
-  'outend.title.source': '資源配置',
+  'outend.title.common': '通用配置',
+  'outend.title.uart': '串口配置',
 
   /**
    * modal

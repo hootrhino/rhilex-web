@@ -7,39 +7,43 @@ const intl = getIntl(getLocale());
 export const TDENGINE = [
   {
     title: intl.formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
-    dataIndex: ['config', 'cacheOfflineData'],
+    dataIndex: ['config', 'commonConfig', 'cacheOfflineData'],
     required: true,
     renderFormItem: () => <ProSegmented width="md" />,
-    renderText: (cacheOfflineData: boolean) => (
-      <ProTag type={StatusType.BOOL}>{cacheOfflineData}</ProTag>
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => (
+      <ProTag type={StatusType.BOOL}>{commonConfig?.cacheOfflineData}</ProTag>
     ),
   },
   {
     title: 'FQDN',
-    dataIndex: ['config', 'fqdn'],
+    dataIndex: ['config', 'commonConfig', 'fqdn'],
     required: true,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.fqdn,
   },
   {
     title: intl.formatMessage({ id: 'form.title.port' }),
-    dataIndex: ['config', 'port'],
+    dataIndex: ['config', 'commonConfig', 'port'],
     valueType: 'digit',
     required: true,
-    render: (port: number) => port,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.port,
   },
   {
     title: intl.formatMessage({ id: 'form.title.username' }),
-    dataIndex: ['config', 'username'],
+    dataIndex: ['config', 'commonConfig', 'username'],
     required: true,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.username,
   },
   {
     title: intl.formatMessage({ id: 'form.title.password' }),
-    dataIndex: ['config', 'password'],
+    dataIndex: ['config', 'commonConfig', 'password'],
     valueType: 'password',
     required: true,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.password,
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.dbName' }),
-    dataIndex: ['config', 'dbName'],
+    dataIndex: ['config', 'commonConfig', 'dbName'],
     required: true,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.dbName,
   },
 ];

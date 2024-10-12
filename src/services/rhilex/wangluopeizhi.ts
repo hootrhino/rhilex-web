@@ -33,30 +33,27 @@ export async function getSettingsCtrlTree(options?: { [key: string]: any }) {
 }
 
 /** 获取网口参数 GET /api/v1/settings/eth */
-export async function getSettingsEth(options?: { [key: string]: any }) {
+export async function getSettingsEth(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getSettingsEthParams,
+  options?: { [key: string]: any },
+) {
   return request<{
     code: number;
     msg: string;
     data: {
-      eth0: {
-        interface: string;
-        address: string;
-        netmask: string;
-        gateway: string;
-        dns: string[];
-        dhcp_enabled: boolean;
-      };
-      eth1: {
-        interface: string;
-        address: string;
-        netmask: string;
-        gateway: string;
-        dns: string[];
-        dhcp_enabled: boolean;
-      };
+      interface: string;
+      address: string;
+      netmask: string;
+      gateway: string;
+      dns: string[];
+      dhcp_enabled: boolean;
     };
   }>('/api/v1/settings/eth', {
     method: 'GET',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }
@@ -79,6 +76,32 @@ export async function postSettingsEth(
       'Content-Type': 'application/json',
     },
     data: body,
+    ...(options || {}),
+  });
+}
+
+/** 获取网口配置列表 GET /api/v1/settings/eths */
+export async function getSettingsEths(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getSettingsEthsParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      interface: string;
+      address: string;
+      netmask: string;
+      gateway: string;
+      dns: string[];
+      dhcp_enabled: boolean;
+    }[];
+  }>('/api/v1/settings/eths', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }

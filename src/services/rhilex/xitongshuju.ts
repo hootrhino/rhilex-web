@@ -7,7 +7,7 @@ export async function getOsNetInterfaces(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { name: string; addr: string; mac: string }[];
+    data: { name: string; mac: string; addr: string }[];
   }>('/api/v1/os/netInterfaces', {
     method: 'GET',
     ...(options || {}),
@@ -97,6 +97,14 @@ export async function getOsSystem(options?: { [key: string]: any }) {
       statistic: { inSuccess: number; outSuccess: number; inFailed: number; outFailed: number };
     };
   }>('/api/v1/os/system', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 串口列表 GET /api/v1/os/uarts */
+export async function getOsUarts(options?: { [key: string]: any }) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/os/uarts', {
     method: 'GET',
     ...(options || {}),
   });

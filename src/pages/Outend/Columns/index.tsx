@@ -78,7 +78,7 @@ export const columns = [
 
       return [
         {
-          title: intl.formatMessage({ id: 'outend.title.source' }),
+          title: intl.formatMessage({ id: 'outend.title.common' }),
           valueType: 'group',
           columns: [
             {

@@ -1,7 +1,7 @@
 import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
-import { getHwifaceList } from '@/services/rhilex/jiekouguanli';
 import { getDevicesGroup } from '@/services/rhilex/shebeiguanli';
+import { getOsUarts } from '@/services/rhilex/xitongshuju';
 import { getIntl, getLocale } from '@umijs/max';
 import type { DeviceItem } from '..';
 import {
@@ -87,9 +87,9 @@ export const modeColumns = {
           required: true,
           valueType: 'select',
           request: async () => {
-            const { data } = await getHwifaceList();
+            const { data } = await getOsUarts();
 
-            return data.map((item) => ({ label: item.name, value: item.name }));
+            return data.map((item) => ({ label: item, value: item }));
           },
           render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) => uartConfig?.uart,
         },

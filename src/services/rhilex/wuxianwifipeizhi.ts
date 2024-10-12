@@ -87,3 +87,22 @@ export async function getSettingsWifiScanSignal(
     },
   );
 }
+
+/** 获取WIFI配置列表 GET /api/v1/settings/wifis */
+export async function getSettingsWifis(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getSettingsWifisParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code: number;
+    msg: string;
+    data: { interface?: string; ssid?: string; password?: string; security?: string }[];
+  }>('/api/v1/settings/wifis', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}

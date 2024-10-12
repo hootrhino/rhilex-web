@@ -2,7 +2,7 @@ import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
 import { baudRateEnum, dataBitsEnum, parityEnum, stopBitsEnum } from '@/pages/Device/enum';
-import { getHwifaceList } from '@/services/rhilex/jiekouguanli';
+import { getOsUarts } from '@/services/rhilex/xitongshuju';
 import { getIntl, getLocale } from '@umijs/max';
 import { dataModeOption } from '../enum';
 
@@ -60,9 +60,9 @@ export const uartColumns = [
     required: true,
     valueType: 'select',
     request: async () => {
-      const { data } = await getHwifaceList();
+      const { data } = await getOsUarts();
 
-      return data.map((item) => ({ label: item.name, value: item.name }));
+      return data.map((item) => ({ label: item, value: item }));
     },
     render: (_dom: React.ReactNode, uartConfig: Record<string, any>) => uartConfig?.uart,
   },
@@ -71,41 +71,48 @@ export const uartColumns = [
 export const GENERIC_UART_TARGET = [
   {
     title: intl.formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
-    dataIndex: ['config', 'cacheOfflineData'],
+    dataIndex: ['config', 'commonConfig', 'cacheOfflineData'],
     required: true,
     renderFormItem: () => <ProSegmented width="md" />,
-    renderText: (cacheOfflineData: boolean) => (
-      <ProTag type={StatusType.BOOL}>{cacheOfflineData}</ProTag>
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => (
+      <ProTag type={StatusType.BOOL}>{commonConfig?.cacheOfflineData}</ProTag>
     ),
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.allowPing' }),
-    dataIndex: ['config', 'allowPing'],
+    dataIndex: ['config', 'commonConfig', 'allowPing'],
     required: true,
     renderFormItem: () => <ProSegmented width="md" />,
-    renderText: (allowPing: boolean) => <ProTag type={StatusType.BOOL}>{allowPing}</ProTag>,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => (
+      <ProTag type={StatusType.BOOL}>{commonConfig?.allowPing}</ProTag>
+    ),
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.pingPacket' }),
-    dataIndex: ['config', 'pingPacket'],
+    dataIndex: ['config', 'commonConfig', 'pingPacket'],
     required: true,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.pingPacket,
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.timeout' }),
-    dataIndex: ['config', 'timeout'],
+    dataIndex: ['config', 'commonConfig', 'timeout'],
     required: true,
     valueType: 'digit',
     fieldProps: {
       addonAfter: 'ms',
     },
-    render: (timeout: number) => <UnitValue value={timeout} />,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => (
+      <UnitValue value={commonConfig?.timeout} />
+    ),
   },
   {
     title: intl.formatMessage({ id: 'outend.table.title.dataMode' }),
-    dataIndex: ['config', 'dataMode'],
+    dataIndex: ['config', 'commonConfig', 'dataMode'],
     valueEnum: dataModeOption,
     valueType: 'select',
     required: true,
+    render: (_dom: React.ReactNode, commonConfig: Record<string, any>) =>
+      dataModeOption[commonConfig?.dataMode],
   },
   {
     title: intl.formatMessage({ id: 'device.form.title.group.port' }),

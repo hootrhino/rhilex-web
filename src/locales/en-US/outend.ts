@@ -28,7 +28,8 @@ export default {
   'outend.title.edit': 'Edit resource',
   'outend.title.detail': 'Resource details',
   'outend.title.base': 'Basic configuration',
-  'outend.title.source': 'Resource configuration',
+  'outend.title.common': 'Common configuration',
+  'outend.title.uart': 'Uart configuration',
 
   /**
    * modal

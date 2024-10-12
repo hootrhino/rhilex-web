@@ -321,11 +321,23 @@ declare namespace API {
     schema_uuid: string;
   };
 
+  type getSettingsEthParams = {
+    iface: string;
+  };
+
+  type getSettingsEthsParams = {
+    iface: string;
+  };
+
   type getSettingsWifiParams = {
     iface: string;
   };
 
   type getSettingsWifiScanSignalParams = {
+    iface: string;
+  };
+
+  type getSettingsWifisParams = {
     iface: string;
   };
 

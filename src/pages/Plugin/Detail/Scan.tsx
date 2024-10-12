@@ -2,7 +2,7 @@ import type { LogRef } from '@/components/ProLog';
 import ProLog from '@/components/ProLog';
 import { baudRateEnum, dataBitsEnum, parityEnum, stopBitsEnum } from '@/pages/Device/enum';
 import { postPlugwareService } from '@/services/rhilex/chajianguanli';
-import { getHwifaceList } from '@/services/rhilex/jiekouguanli';
+import { getOsUarts } from '@/services/rhilex/xitongshuju';
 import { omit } from '@/utils/redash';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProForm, ProFormDigit, ProFormSelect } from '@ant-design/pro-components';
@@ -207,8 +207,8 @@ const Scan = ({ detailConfig, setDetailConfig }: ScanProps) => {
               { text: formatMessage({ id: 'form.title.uart' }) },
             )}
             request={async () => {
-              const { data } = await getHwifaceList();
-              return data.map((item) => ({ label: item.name, value: item.name }));
+              const { data } = await getOsUarts();
+              return data.map((item) => ({ label: item, value: item }));
             }}
             rules={[
               {
