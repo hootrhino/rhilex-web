@@ -185,13 +185,32 @@ canvas {
 
 .gradient-border {
   border: 1px solid;
-  border-image: linear-gradient(90deg, #fdc830 0%, #f37335 100%) 1;
+  border-image: linear-gradient(
+      90deg,
+      rgb(230, 169, 66) 0%,
+      rgb(166, 77, 0) 50%,
+      rgb(166, 77, 0) 100%
+    )
+    1;
 }
 
 .gradient-text {
   color: transparent;
-  // background-image: linear-gradient(180deg, #FFEAB4 17.65%, #F8C235 85.29%);
-  background-image: linear-gradient(90deg, #fdc830 0%, #f37335 100%);
+  background-image: linear-gradient(270deg, rgb(166, 77, 0), #e6a942 50%, rgb(166, 77, 0) 100%);
   -webkit-background-clip: text;
   background-clip: text;
+}
+
+.gradient-gold-bg {
+  background-image: linear-gradient(-82deg, #ffd585, #fffae0 67%, #ffebb8);
+}
+
+.gradient-grey-bg {
+  background: linear-gradient(
+    to right,
+    rgb(173, 169, 150),
+    rgb(242, 242, 242),
+    rgb(219, 219, 219),
+    rgb(234, 234, 234)
+  );
 }

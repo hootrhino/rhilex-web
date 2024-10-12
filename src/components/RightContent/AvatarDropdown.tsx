@@ -1,11 +1,6 @@
 import { IconFont } from '@/utils/utils';
-import {
-  ExclamationCircleOutlined,
-  LogoutOutlined,
-  SettingOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import { history, useIntl, useModel } from '@umijs/max';
+import { ExclamationCircleOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { useIntl, useModel } from '@umijs/max';
 import { App, Avatar, Spin } from 'antd';
 import type { MenuInfo } from 'rc-menu/es/interface';
 import React, { useCallback } from 'react';
@@ -16,7 +11,6 @@ export type GlobalHeaderRightProps = {
 };
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
-  const { setActiveKey } = useModel('useSystem');
   const { logout } = useModel('useUser');
   const { initialState } = useModel('@@initialState');
   const { formatMessage } = useIntl();
@@ -42,10 +36,6 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
       if (key === 'logout') {
         loginOut();
       }
-      if (key === 'user') {
-        history.push('/system');
-        setActiveKey('user');
-      }
     },
     [loginOut],
   );
@@ -61,14 +51,6 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
 
   const menuItems = [
     {
-      key: 'user',
-      icon: <SettingOutlined />,
-      label: formatMessage({ id: 'component.button.user' }),
-    },
-    {
-      type: 'divider' as const,
-    },
-    {
       key: 'logout',
       icon: <LogoutOutlined />,
       label: formatMessage({ id: 'component.button.logout' }),
@@ -82,11 +64,9 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
         onClick: onMenuClick,
         items: menuItems,
       }}
-      overlayStyle={{
-        width: 150,
-      }}
+      overlayClassName="w-[300px] user-dropdown"
     >
-      <div className="flex items-center h-[56px] ml-auto px-[12px] cursor-pointer rounded-[2px] hover:bg-[#32393F]">
+      <div className="flex items-center h-[56px] ml-auto px-[12px] cursor-pointer rounded-[2px]">
         <div className="flex items-center h-[40px] px-[12px] gradient-border rounded-[2px]">
           <Avatar
             size="small"
@@ -95,16 +75,6 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
             icon={<UserOutlined />}
             alt="avatar"
           />
-
-          {/* <span
-            className={cn(
-              'text-[16px] text-[#fff] h-[56px] overflow-hidden leading-[56px] whitespace-nowrap text-ellipsis md:hidden',
-              'anticon',
-            )}
-          >
-            {currentUser?.username}
-          </span>
-          */}
           <div className="text-[12px] gradient-text">
             <IconFont type="icon-pro" className="pr-[6px]" />
             升级企业版，解锁专业效能
