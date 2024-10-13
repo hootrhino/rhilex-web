@@ -51,6 +51,23 @@ export default {
   'component.tpl.rfcom.arg.placeholder': '請選擇通訊模組資源',
 
   /**
+   * RightContent
+   */
+  'component.rightContent.slogan': '升級企業版，解鎖專業效能',
+  'component.rightContent.free.time': '試用將於 {time} 到期',
+  'component.rightContent.enterprise.time': '{time} 到期',
+  'component.rightContent.version.free': '試用版',
+  'component.rightContent.version.enterprise': '企業版',
+  'component.rightContent.status': '尚未升級',
+  'component.rightContent.enterprise.desc': '升級企業版，享有專業服務',
+  'component.rightContent.feature.protocol': '10+ 連接協議',
+  'component.rightContent.feature.custom': '個性化客製化',
+  'component.rightContent.feature.moreAdvance': '更多進階功能',
+  'component.rightContent.button.upgrade': '升級企業版',
+  'component.rightContent.button.account': '修改帳號資訊',
+  'component.rightContent.button.logout': '退出登錄',
+
+  /**
    * others
    */
   'component.title.notify': '內部通知',
@@ -64,8 +81,6 @@ export default {
   'component.link.httpHeaders': '更多訊息請參考',
   'component.link.form': '前往官方文檔主頁查看更多幫助訊息',
 
-  'component.button.user': '個人設置',
-  'component.button.logout': '退出登錄',
   'component.button.more': '查看更多',
   'component.button.use': '立即使用',
   'component.button.rule': '規則示例',

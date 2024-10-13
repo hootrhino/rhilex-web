@@ -52,6 +52,24 @@ export default {
   'component.tpl.rfcom.arg.placeholder': 'Please select a module resource',
 
   /**
+   * RightContent
+   */
+  'component.rightContent.slogan': 'Upgrade to Enterprise for advanced efficiency',
+  'component.rightContent.free.time': 'The trial will expire at {time}',
+  'component.rightContent.enterprise.time': 'Expires at {time}',
+  'component.rightContent.version.free': 'Trial Version',
+  'component.rightContent.version.enterprise': 'Enterprise Version',
+  'component.rightContent.status': 'Not upgraded',
+  'component.rightContent.enterprise.desc':
+    'Upgrade to Enterprise for immediate professional services',
+  'component.rightContent.feature.protocol': '10+ Device protocol',
+  'component.rightContent.feature.custom': 'Customized service',
+  'component.rightContent.feature.moreAdvance': 'More advanced features',
+  'component.rightContent.button.upgrade': 'Upgrade to Enterprise',
+  'component.rightContent.button.account': 'Edit Account',
+  'component.rightContent.button.logout': 'Logout',
+
+  /**
    * others
    */
   'component.title.notify': 'Notification',
@@ -65,8 +83,6 @@ export default {
   'component.link.httpHeaders': 'For more information, please refer to',
   'component.link.form': 'Go to the official documentation homepage for more help information',
 
-  'component.button.user': 'User Settings',
-  'component.button.logout': 'Logout',
   'component.button.more': 'Show More',
   'component.button.use': 'Use Now',
   'component.button.rule': 'Rule Example',

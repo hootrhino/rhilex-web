@@ -51,6 +51,23 @@ export default {
   'component.tpl.rfcom.arg.placeholder': '请选择通信控制函数',
 
   /**
+   * RightContent
+   */
+  'component.rightContent.slogan': '升级企业版，解锁专业效能',
+  'component.rightContent.free.time': '试用将于 {time} 到期',
+  'component.rightContent.enterprise.time': '{time} 到期',
+  'component.rightContent.version.free': '试用版',
+  'component.rightContent.version.enterprise': '企业版',
+  'component.rightContent.status': '尚未升级',
+  'component.rightContent.enterprise.desc': '升级企业版，立享专业服务',
+  'component.rightContent.feature.protocol': '10+ 连接协议',
+  'component.rightContent.feature.custom': '个性化定制',
+  'component.rightContent.feature.moreAdvance': '更多高级功能',
+  'component.rightContent.button.upgrade': '升级企业版',
+  'component.rightContent.button.account': '修改账户信息',
+  'component.rightContent.button.logout': '退出登录',
+
+  /**
    * others
    */
   'component.title.notify': '内部通知',
@@ -64,8 +81,6 @@ export default {
   'component.link.httpHeaders': '更多信息请参考',
   'component.link.form': '前往官方文档主页查看更多帮助信息',
 
-  'component.button.user': '个人设置',
-  'component.button.logout': '退出登录',
   'component.button.more': '查看更多',
   'component.button.use': '立即使用',
   'component.button.rule': '规则示例',

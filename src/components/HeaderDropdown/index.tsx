@@ -51,10 +51,15 @@ const HeaderDropdown: React.FC<PopoverProps> = (props) => {
             <div className="text-[16px]">
               <Space>
                 {currentUser?.username}
-                <Tag color="#fdc830">试用版</Tag>
+                <Tag color="#fdc830">
+                  {formatMessage({ id: 'component.rightContent.version.free' })}
+                </Tag>
               </Space>
               <div className="text-[12px] text-[#1f212680] mt-[6px]">
-                试用将于 {dayjs(endAuthorize).format('YYYY-MM-DD HH:mm:ss')} 到期
+                {formatMessage(
+                  { id: 'component.rightContent.free.time' },
+                  { time: dayjs(endAuthorize).format('YYYY-MM-DD HH:mm:ss') },
+                )}
               </div>
             </div>
           </Flex>
@@ -63,25 +68,37 @@ const HeaderDropdown: React.FC<PopoverProps> = (props) => {
             style={{ border: '1px solid rgba(5,5,5,0.06)' }}
           >
             <div className="gradient-grey-bg text-[#52565e] p-[12px] rounded-t-[8px]">
-              <div className="text-[22px]">企业版</div>
-              <div className="text-[12px] text-[rgba(5,5,5,0.5)]">尚未升级</div>
+              <div className="text-[22px]">
+                {formatMessage({ id: 'component.rightContent.version.enterprise' })}
+              </div>
+              <div className="text-[12px] text-[rgba(5,5,5,0.5)]">
+                {formatMessage({ id: 'component.rightContent.status' })}
+              </div>
             </div>
             <div className="mx-[14px] mt-[10px] mb-[20px]">
-              <div className="text-[rgba(5,5,5,0.7)] text-[12px]">升级企业版，立享专业服务</div>
+              <div className="text-[rgba(5,5,5,0.7)] text-[12px]">
+                {formatMessage({ id: 'component.rightContent.enterprise.desc' })}
+              </div>
               <Flex align="center" justify="center" gap={16} className="my-[16px]">
                 <Flex vertical align="center" gap={4}>
                   <Avatar className="bg-[#ffebb8] text-[#693f16] font-semibold" gap={5}>
                     10+
                   </Avatar>
-                  <span className="text-[12px] text-[#D49753]">10+ 连接协议</span>
+                  <span className="text-[12px] text-[#D49753]">
+                    {formatMessage({ id: 'component.rightContent.feature.protocol' })}
+                  </span>
                 </Flex>
                 <Flex vertical align="center" gap={4}>
                   <Avatar className="bg-[#ffebb8]" icon={<IconFont type="icon-customize" />} />
-                  <span className="text-[12px] text-[#D49753]">个性化定制</span>
+                  <span className="text-[12px] text-[#D49753]">
+                    {formatMessage({ id: 'component.rightContent.feature.custom' })}
+                  </span>
                 </Flex>
                 <Flex vertical align="center" gap={4}>
                   <Avatar className="bg-[#ffebb8]" icon={<IconFont type="icon-advanced" />} />
-                  <span className="text-[12px] text-[#D49753]">更多高级功能</span>
+                  <span className="text-[12px] text-[#D49753]">
+                    {formatMessage({ id: 'component.rightContent.feature.moreAdvance' })}
+                  </span>
                 </Flex>
               </Flex>
               <a
@@ -90,7 +107,7 @@ const HeaderDropdown: React.FC<PopoverProps> = (props) => {
                 target="_blank"
                 rel="noreferrer"
               >
-                升级企业版
+                {formatMessage({ id: 'component.rightContent.button.upgrade' })}
               </a>
             </div>
           </div>
@@ -107,7 +124,7 @@ const HeaderDropdown: React.FC<PopoverProps> = (props) => {
                 setActiveKey('user');
               }}
             >
-              <span>修改账户信息</span>
+              <span>{formatMessage({ id: 'component.rightContent.button.account' })}</span>
               <RightOutlined />
             </Flex>
           </div>
@@ -117,7 +134,7 @@ const HeaderDropdown: React.FC<PopoverProps> = (props) => {
             className="p-[10px] bg-[rgba(31,35,41,0.08)] cursor-pointer"
             onClick={loginOut}
           >
-            <div>{formatMessage({ id: 'component.button.logout' })}</div>
+            <div>{formatMessage({ id: 'component.rightContent.button.logout' })}</div>
             <LogoutOutlined />
           </Flex>
         </div>
@@ -135,7 +152,9 @@ const HeaderDropdown: React.FC<PopoverProps> = (props) => {
           />
           <Space size={4} className="gradient-text">
             <IconFont type="icon-pro" />
-            <span className="text-[12px]">升级企业版，解锁专业效能</span>
+            <span className="text-[12px]">
+              {formatMessage({ id: 'component.rightContent.slogan' })}
+            </span>
           </Space>
         </Flex>
       </Flex>
