@@ -13,7 +13,14 @@ export async function postLogin(
   return request<{
     code: number;
     msg: string;
-    data: { description: string; role: string; token: string; username: string };
+    data: {
+      beginAuthorize: number;
+      description: string;
+      endAuthorize: number;
+      role: string;
+      token: string;
+      username: string;
+    };
   }>('/api/v1/login', {
     method: 'POST',
     headers: {

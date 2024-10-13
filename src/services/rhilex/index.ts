@@ -12,7 +12,6 @@ import * as dingshizhongqi from './dingshizhongqi';
 import * as fenzuguanli from './fenzuguanli';
 import * as guizeguanli from './guizeguanli';
 import * as gujiancaozuo from './gujiancaozuo';
-import * as jiekouguanli from './jiekouguanli';
 import * as kuozhanxieyi from './kuozhanxieyi';
 import * as liumeitiguanli from './liumeitiguanli';
 import * as luyoupeizhi from './luyoupeizhi';
@@ -63,7 +62,6 @@ export default {
   yidongwangluo4Gshezhi,
   luyoupeizhi,
   shujubeifen,
-  jiekouguanli,
   zhanneitongzhi,
   yonghudingyiluamoban,
   modbusMasterdianweiguanli,

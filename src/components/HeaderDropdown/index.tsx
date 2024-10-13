@@ -10,6 +10,7 @@ import {
 import { history, useIntl, useModel } from '@umijs/max';
 import type { PopoverProps } from 'antd';
 import { App, Avatar, Flex, Popover, Space, Tag } from 'antd';
+import dayjs from 'dayjs';
 
 const HeaderDropdown: React.FC<PopoverProps> = (props) => {
   const { modal } = App.useApp();
@@ -17,7 +18,7 @@ const HeaderDropdown: React.FC<PopoverProps> = (props) => {
   const { logout } = useModel('useUser');
   const { setActiveKey } = useModel('useSystem');
   const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState || {};
+  const { currentUser, endAuthorize } = initialState || {};
 
   /**
    * 退出登录，并且将当前的 url 保存
@@ -52,7 +53,9 @@ const HeaderDropdown: React.FC<PopoverProps> = (props) => {
                 {currentUser?.username}
                 <Tag color="#fdc830">试用版</Tag>
               </Space>
-              <div className="text-[12px] text-[#1f212680] mt-[6px]">试用将于 2024.10.20 到期</div>
+              <div className="text-[12px] text-[#1f212680] mt-[6px]">
+                试用将于 {dayjs(endAuthorize).format('YYYY-MM-DD HH:mm:ss')} 到期
+              </div>
             </div>
           </Flex>
           <div

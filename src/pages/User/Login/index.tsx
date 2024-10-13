@@ -69,6 +69,7 @@ const Login: React.FC = () => {
           currentUser: formRef.current?.getFieldsValue(),
           settings: defaultSettings as Partial<LayoutSettings>,
           accessMenu: menuData,
+          endAuthorize: data.endAuthorize,
         }),
       );
       handleOnSecret();

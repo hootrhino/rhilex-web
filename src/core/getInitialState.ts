@@ -16,6 +16,7 @@ async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
   currentUser?: Omit<CurrentUser, 'agreement'>;
   accessMenu?: MenuItem[];
+  endAuthorize?: number;
 }> {
   if (history.location.pathname !== LOGIN_PATH) {
     const isLogin = localStorage.getItem('accessToken');
