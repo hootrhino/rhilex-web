@@ -209,7 +209,7 @@ export default {
   'device.type.bacnet.ip': '通用 BACnet IP 主機網關',
   'device.type.bacnet.router': '通用 BACnet IP 從機網關',
   'device.type.tencent': '騰訊雲端物聯網平台',
-  'device.type.ithings': 'iThings 物聯網平台',
+  'device.type.ithings': '聯犀物聯網平台',
   'device.type.uartRW': '通用串口讀寫網關',
   'device.type.mbus': '通用 M-Bus 數據採集網關',
 
