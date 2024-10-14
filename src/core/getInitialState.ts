@@ -2,6 +2,7 @@ import { history } from '@umijs/max';
 
 import { CurrentUser } from '@/pages/User/Login';
 import { getMenuMain } from '@/services/rhilex/caozuocaidan';
+import { getUsersDetail } from '@/services/rhilex/yonghuguanli';
 import { LOGIN_PATH } from '@/utils/constant';
 import { VersionType } from '@/utils/enum';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
@@ -15,25 +16,25 @@ type MenuItem = {
 
 async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
-  currentUser?: Omit<CurrentUser, 'agreement'>;
+  currentUser?: Omit<CurrentUser, 'agreement' | 'password'>;
   accessMenu?: MenuItem[];
   endAuthorize?: number;
   type?: VersionType;
 }> {
-  if (history.location.pathname !== LOGIN_PATH) {
-    const isLogin = localStorage.getItem('accessToken');
-    let menuData: any[] = [];
+  const isLogin = localStorage.getItem('accessToken');
+  if (history.location.pathname !== LOGIN_PATH && isLogin) {
+    // 获取菜单权限
+    const { data: menuData } = await getMenuMain();
 
-    if (isLogin) {
-      const { data } = await getMenuMain();
-      menuData = data;
-    }
+    // 获取用户信息
+    const { data: usedrInfo } = await getUsersDetail();
 
     return {
-      currentUser: { username: 'rhilex', password: '12345678' },
+      currentUser: { username: usedrInfo.username },
       settings: defaultSettings as Partial<LayoutSettings>,
       accessMenu: menuData,
-      type: VersionType.COMMERCIAL,
+      endAuthorize: usedrInfo.endAuthorize,
+      type: usedrInfo.type as VersionType,
     };
   }
 

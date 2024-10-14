@@ -5,11 +5,12 @@ import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
 import { useIntl, useModel } from '@umijs/max';
 import { useSize } from 'ahooks';
 import { Button, Space } from 'antd';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 type UpdateParams = {
   username: string;
-  password: string;
+  password1: string; // 旧密码
+  password2: string; // 新密码
 };
 
 const UserConfig = () => {
@@ -30,13 +31,6 @@ const UserConfig = () => {
       return false;
     }
   };
-
-  useEffect(() => {
-    formRef.current?.setFieldsValue({
-      username: initialState?.currentUser?.username,
-      password: initialState?.currentUser?.password,
-    });
-  }, [initialState]);
 
   return (
     <ProCard
@@ -77,6 +71,7 @@ const UserConfig = () => {
             </ProForm.Item>
           ),
         }}
+        initialValues={{ username: initialState?.currentUser?.username }}
       >
         <ProFormText
           name="username"
@@ -86,8 +81,16 @@ const UserConfig = () => {
           rules={[{ required: true, message: formatMessage({ id: 'form.placeholder.username' }) }]}
         />
         <ProFormText.Password
-          name="password"
-          label={formatMessage({ id: 'form.title.password' })}
+          name="password1"
+          label={formatMessage({ id: 'form.title.password.old' })}
+          placeholder={formatMessage({ id: 'form.placeholder.password' })}
+          width="xl"
+          allowClear
+          rules={[{ required: true, message: formatMessage({ id: 'form.placeholder.password' }) }]}
+        />
+        <ProFormText.Password
+          name="password2"
+          label={formatMessage({ id: 'form.title.password.new' })}
           placeholder={formatMessage({ id: 'form.placeholder.password' })}
           width="xl"
           allowClear

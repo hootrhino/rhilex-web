@@ -32,58 +32,22 @@ export async function postLogin(
   });
 }
 
-/** 用户列表 用户列表 GET /api/v1/users */
-export async function getUsers(options?: { [key: string]: any }) {
+/** 用户详情 GET /api/v1/users/detail */
+export async function getUsersDetail(options?: { [key: string]: any }) {
   return request<{
     code: number;
     msg: string;
-    data: { role?: string; username?: string; description?: string }[];
-  }>('/api/v1/users', {
+    data: {
+      beginAuthorize: number;
+      description: string;
+      endAuthorize: number;
+      role: string;
+      token: string;
+      type: string;
+      username: string;
+    };
+  }>('/api/v1/users/detail', {
     method: 'GET',
-    ...(options || {}),
-  });
-}
-
-/** 用户创建 POST /api/v1/users */
-export async function postUsers(
-  body: {
-    username: string;
-    password: string;
-  },
-  options?: { [key: string]: any },
-) {
-  return request<{ code: number; msg: string; data: string[] }>('/api/v1/users', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
-    ...(options || {}),
-  });
-}
-
-/** 用户删除 DELETE /api/v1/users */
-export async function deleteUsers(
-  body: {
-    username: string;
-    password: string;
-  },
-  options?: { [key: string]: any },
-) {
-  return request<{ code: number; msg: string; data: string }>('/api/v1/users', {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
-    ...(options || {}),
-  });
-}
-
-/** 清空用户 DELETE /api/v1/users/clear */
-export async function deleteUsersClear(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/v1/users/clear', {
-    method: 'DELETE',
     ...(options || {}),
   });
 }
@@ -100,7 +64,8 @@ export async function postUsersLogout(options?: { [key: string]: any }) {
 export async function putUsersUpdate(
   body: {
     username: string;
-    password: string;
+    password1: string;
+    password2: string;
   },
   options?: { [key: string]: any },
 ) {

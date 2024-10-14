@@ -208,6 +208,16 @@ declare namespace API {
     size?: number;
   };
 
+  type getDlt6452007MasterSheetListParams = {
+    device_uuid?: string;
+    current?: number;
+    size?: number;
+  };
+
+  type getDlt6452007MasterSheetSheetExportParams = {
+    device_uuid: string;
+  };
+
   type getGoodsDetailParams = {
     uuid: string;
   };

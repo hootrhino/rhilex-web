@@ -49,6 +49,8 @@ export default {
   'form.title.port': '端口',
   'form.title.username': '用户名',
   'form.title.password': '密码',
+  'form.title.password.old': '旧密码',
+  'form.title.password.new': '新密码',
 
   // uart
   'form.title.timeout': '超时时间',

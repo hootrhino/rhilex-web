@@ -49,6 +49,8 @@ export default {
   'form.title.port': 'Port',
   'form.title.username': 'Username',
   'form.title.password': 'Password',
+  'form.title.password.old': 'Old Password',
+  'form.title.password.new': 'New Password',
 
   // uart
   'form.title.timeout': 'Timeout',

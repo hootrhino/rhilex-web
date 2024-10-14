@@ -28,7 +28,7 @@ const useSystem = () => {
     } else {
       cancel();
     }
-  }, []);
+  }, [accessToken]);
 
   return {
     dataSource,
