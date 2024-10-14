@@ -9,6 +9,7 @@ import {
   postFirmwareRecoverNew,
   postFirmwareUpgrade,
 } from '@/services/rhilex/gujiancaozuo';
+import { VersionType } from '@/utils/enum';
 import { endsWith } from '@/utils/redash';
 import {
   CloudUploadOutlined,
@@ -20,7 +21,7 @@ import { ProCard } from '@ant-design/pro-components';
 import { getIntl, getLocale, useIntl, useModel, useRequest } from '@umijs/max';
 import { useSize } from 'ahooks';
 import type { ProgressProps } from 'antd';
-import { Button, Modal, Progress, Space, Upload } from 'antd';
+import { Button, Modal, Progress, Space, Tag, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { useRef, useState } from 'react';
 
@@ -67,6 +68,8 @@ const FirmwareConfig = () => {
   const ref = useRef(null);
   const size = useSize(ref);
   const { run, cancel, isWindows } = useModel('useSystem');
+  const { isFreeTrial } = useModel('useCommon');
+
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
   const [confirmConfig, setConfirmConfig] = useState<ConfirmCofig>(defaultUpgradeConfig);
@@ -135,6 +138,22 @@ const FirmwareConfig = () => {
   };
 
   const columns = [
+    {
+      title: formatMessage({ id: 'system.table.title.version' }),
+      dataIndex: 'type',
+      renderText: (type: VersionType) =>
+        type && Object.keys(VersionType).includes(type) ? (
+          <Tag color={isFreeTrial ? '#fdc830' : '#292f33'}>
+            {formatMessage({
+              id: isFreeTrial
+                ? 'component.rightContent.version.free'
+                : 'component.rightContent.version.enterprise',
+            })}
+          </Tag>
+        ) : (
+          '-'
+        ),
+    },
     {
       title: formatMessage({ id: 'system.table.title.deviceId' }),
       dataIndex: 'device_id',

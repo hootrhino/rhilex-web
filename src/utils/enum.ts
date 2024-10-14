@@ -27,3 +27,11 @@ export enum FormItemType {
   GATEWAY = 'gateway', // 网关
   TIMEOUT = 'timeout', // 读写超时
 }
+
+/**
+ * 版本类型
+ */
+export enum VersionType {
+  FREETRIAL = 'FREETRIAL',
+  COMMERCIAL = 'COMMERCIAL',
+}

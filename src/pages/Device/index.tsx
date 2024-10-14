@@ -7,7 +7,7 @@ import {
   getDevicesListByGroup,
   putDevicesRestart,
 } from '@/services/rhilex/shebeiguanli';
-import { defaultPagination, DEFAULT_GROUP_KEY_DEVICE } from '@/utils/constant';
+import { defaultPagination, DEFAULT_GROUP_KEY_DEVICE, MAX_TOTAL } from '@/utils/constant';
 import {
   ControlOutlined,
   DownOutlined,
@@ -50,9 +50,9 @@ const sheetType = {
 
 const Devices = () => {
   const actionRef = useRef<ActionType>();
-
-  const { detailConfig, changeConfig, initialConfig } = useModel('useCommon');
   const { formatMessage } = useIntl();
+  const { isFreeTrial, detailConfig, total, changeConfig, initialConfig, changeTotal } =
+    useModel('useCommon');
 
   const [open, setOpen] = useState<boolean>(false);
   const [activeDevice, setActiveDevice] = useState<string>('');
@@ -221,6 +221,7 @@ const Devices = () => {
                 key="add"
                 type="primary"
                 icon={<PlusOutlined />}
+                disabled={isFreeTrial}
                 onClick={() => {
                   setGroupConfig({ ...DEFAULT_CONFIG, open: true });
                 }}
@@ -268,12 +269,14 @@ const Devices = () => {
                   success: true,
                 });
               }}
+              onDataSourceChange={(d) => changeTotal(d.length)}
               pagination={defaultPagination}
               toolBarRender={() => [
                 <Button
                   key="new"
                   type="primary"
                   icon={<PlusOutlined />}
+                  disabled={isFreeTrial && total >= MAX_TOTAL}
                   onClick={() => history.push(`/device/${activeGroupKey}/new`)}
                 >
                   {formatMessage({ id: 'button.new' })}

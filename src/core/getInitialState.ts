@@ -3,6 +3,7 @@ import { history } from '@umijs/max';
 import { CurrentUser } from '@/pages/User/Login';
 import { getMenuMain } from '@/services/rhilex/caozuocaidan';
 import { LOGIN_PATH } from '@/utils/constant';
+import { VersionType } from '@/utils/enum';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import defaultSettings from '../../config/defaultSettings';
 
@@ -17,6 +18,7 @@ async function getInitialState(): Promise<{
   currentUser?: Omit<CurrentUser, 'agreement'>;
   accessMenu?: MenuItem[];
   endAuthorize?: number;
+  type?: VersionType;
 }> {
   if (history.location.pathname !== LOGIN_PATH) {
     const isLogin = localStorage.getItem('accessToken');
@@ -31,6 +33,7 @@ async function getInitialState(): Promise<{
       currentUser: { username: 'rhilex', password: '12345678' },
       settings: defaultSettings as Partial<LayoutSettings>,
       accessMenu: menuData,
+      type: VersionType.COMMERCIAL,
     };
   }
 

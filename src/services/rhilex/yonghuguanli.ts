@@ -19,6 +19,7 @@ export async function postLogin(
       endAuthorize: number;
       role: string;
       token: string;
+      type: string;
       username: string;
     };
   }>('/api/v1/login', {

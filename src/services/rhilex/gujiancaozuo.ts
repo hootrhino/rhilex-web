@@ -80,11 +80,13 @@ export async function getFirmwareVendorKey(options?: { [key: string]: any }) {
     code: number;
     msg: string;
     data: {
+      type: string;
       device_id: string;
       authorize_admin: string;
       authorize_password: string;
       begin_authorize: number;
       end_authorize: number;
+      iface: string;
       mac: string;
       license: string;
     };

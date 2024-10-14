@@ -6,11 +6,12 @@ import {
   putAppStart,
   putAppStop,
 } from '@/services/rhilex/qingliangyingyong';
+import { MAX_TOTAL } from '@/utils/constant';
 import { DetailModalType } from '@/utils/enum';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { history, useIntl, useRequest } from '@umijs/max';
+import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import { baseColumns } from './columns';
@@ -36,6 +37,7 @@ type DetailLogModalConfig = {
 const AppStack = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
+  const { isFreeTrial, total, changeTotal } = useModel('useCommon');
   const [detailConfig, setConfig] = useState<DetailLogModalConfig>({
     uuid: '',
     open: false,
@@ -144,11 +146,13 @@ const AppStack = () => {
               success: true,
             });
           }}
+          onDataSourceChange={(d) => changeTotal(d.length)}
           toolBarRender={() => [
             <Button
               key="new"
               type="primary"
               icon={<PlusOutlined />}
+              disabled={isFreeTrial && total >= MAX_TOTAL}
               onClick={() => history.push('/app/new')}
             >
               {formatMessage({ id: 'button.new' })}

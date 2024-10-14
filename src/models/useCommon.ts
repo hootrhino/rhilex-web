@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { VersionType } from '@/utils/enum';
+import { useModel } from '@umijs/max';
+import { useEffect, useState } from 'react';
 
 type DetailConfig = {
   open: boolean;
@@ -12,15 +14,29 @@ const defaultConfig = {
 
 const useCommon = () => {
   const [detailConfig, setDetailConfig] = useState<DetailConfig>(defaultConfig);
+  const [isFreeTrial, setFreeTrial] = useState<boolean>(true);
+  const [total, setTotal] = useState<number>(0);
+
+  const { initialState } = useModel('@@initialState');
+  const { type } = initialState || {};
 
   const changeConfig = (value: DetailConfig) => setDetailConfig(value);
 
   const initialConfig = () => setDetailConfig(defaultConfig);
 
+  const changeTotal = (value: number) => setTotal(value);
+
+  useEffect(() => {
+    setFreeTrial(type === VersionType.FREETRIAL);
+  }, [type]);
+
   return {
     detailConfig,
     changeConfig,
     initialConfig,
+    isFreeTrial,
+    changeTotal,
+    total,
   };
 };
 

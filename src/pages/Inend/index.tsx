@@ -22,6 +22,7 @@ import {
 } from '@/services/rhilex/shuruziyuanguanli';
 import { useIntl, useModel, useRequest } from '@umijs/max';
 
+import { MAX_TOTAL } from '@/utils/constant';
 import { baseColumns } from './Columns';
 import Detail from './Detail';
 import { InendType } from './enum';
@@ -37,7 +38,8 @@ export type InendItem = {
 
 const Inend = () => {
   const actionRef = useRef<ActionType>();
-  const { detailConfig, changeConfig, initialConfig } = useModel('useCommon');
+  const { detailConfig, isFreeTrial, total, changeConfig, initialConfig, changeTotal } =
+    useModel('useCommon');
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
   const [restartId, setRestartId] = useState<string>('');
@@ -151,11 +153,13 @@ const Inend = () => {
           }}
           search={false}
           pagination={false}
+          onDataSourceChange={(d) => changeTotal(d.length)}
           toolBarRender={() => [
             <Button
               key="new"
               type="primary"
               icon={<PlusOutlined />}
+              disabled={isFreeTrial && total >= MAX_TOTAL}
               onClick={() => history.push('/inend/new')}
             >
               {formatMessage({ id: 'button.new' })}

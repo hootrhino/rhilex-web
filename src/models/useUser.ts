@@ -15,6 +15,7 @@ const useUser = () => {
         settings: {},
         accessMenu: [],
         endAuthorize: undefined,
+        type: undefined,
       });
       localStorage.clear();
       history.push(LOGIN_PATH);

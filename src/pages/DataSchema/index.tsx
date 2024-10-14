@@ -1,4 +1,5 @@
 import PageContainer from '@/components/ProPageContainer';
+import { MAX_TOTAL } from '@/utils/constant';
 import { PlusOutlined } from '@ant-design/icons';
 import { ProCard } from '@ant-design/pro-components';
 import { useIntl, useModel } from '@umijs/max';
@@ -10,6 +11,8 @@ import SchemaList from './Schema';
 const DataSchema = () => {
   const { formatMessage } = useIntl();
   const { activeSchema } = useModel('useSchema');
+  const { isFreeTrial, total } = useModel('useCommon');
+
   const [open, setOpen] = useState<boolean>(false);
 
   const getPropertyTitle = () => {
@@ -30,7 +33,13 @@ const DataSchema = () => {
           colSpan="300px"
           title={formatMessage({ id: 'schemaMgt.title.schema' })}
           extra={
-            <Button key="add" type="primary" icon={<PlusOutlined />} onClick={() => setOpen(true)}>
+            <Button
+              key="add"
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => setOpen(true)}
+              disabled={isFreeTrial && total >= MAX_TOTAL}
+            >
               {formatMessage({ id: 'button.new' })}
             </Button>
           }

@@ -26,3 +26,6 @@ export const defaultPagination = {
   hideOnSinglePage: true,
   showSizeChanger: false,
 };
+
+// 限制试用版最大资源数
+export const MAX_TOTAL = 2;

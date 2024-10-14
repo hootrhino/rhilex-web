@@ -1,7 +1,7 @@
 import { DownOutlined, PlusOutlined, PoweroffOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { history } from '@umijs/max';
+import { history, useModel } from '@umijs/max';
 import { Button, Dropdown, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 
@@ -13,6 +13,7 @@ import {
   getOutendsList,
   putOutendsRestart,
 } from '@/services/rhilex/shuchuziyuanguanli';
+import { MAX_TOTAL } from '@/utils/constant';
 import { useIntl } from '@umijs/max';
 import { baseColumns } from './Columns';
 import Detail from './Detail';
@@ -26,18 +27,12 @@ export type OutendItem = {
   [key: string]: any;
 };
 
-type DetailModalConfig = {
-  open: boolean;
-  uuid: string;
-};
-
 const Outend = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
-  const [detailConfig, setConfig] = useState<DetailModalConfig>({
-    uuid: '',
-    open: false,
-  });
+  const { isFreeTrial, total, detailConfig, changeTotal, initialConfig, changeConfig } =
+    useModel('useCommon');
+
   const [open, setOpen] = useState<boolean>(false);
   const [restartId, setRestartId] = useState<string>('');
 
@@ -60,7 +55,7 @@ const Outend = () => {
       key: 'option',
       width: 230,
       render: (_, { uuid }) => [
-        <a key="detail" onClick={() => setConfig({ open: true, uuid })}>
+        <a key="detail" onClick={() => changeConfig({ open: true, uuid })}>
           {formatMessage({ id: 'button.detail' })}
         </a>,
         <a key="edit" onClick={() => history.push(`/outend/edit/${uuid}`)}>
@@ -122,19 +117,21 @@ const Outend = () => {
           }}
           search={false}
           pagination={false}
+          onDataSourceChange={(d) => changeTotal(d.length)}
           toolBarRender={() => [
             <Button
               type="primary"
               key="new"
               onClick={() => history.push('/outend/new')}
               icon={<PlusOutlined />}
+              disabled={isFreeTrial && total >= MAX_TOTAL}
             >
               {formatMessage({ id: 'button.new' })}
             </Button>,
           ]}
         />
       </PageContainer>
-      <Detail {...detailConfig} onClose={() => setConfig({ ...detailConfig, open: false })} />
+      <Detail {...detailConfig} onClose={initialConfig} />
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}

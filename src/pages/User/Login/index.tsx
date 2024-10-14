@@ -9,6 +9,7 @@ import { DefaultFooter, LoginForm, ProFormCheckbox, ProFormText } from '@ant-des
 import { Helmet, history, SelectLang, useIntl, useModel } from '@umijs/max';
 
 import { getMenuMain } from '@/services/rhilex/caozuocaidan';
+import { VersionType } from '@/utils/enum';
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import UserAgreementModal from './AgreementModal';
@@ -70,6 +71,7 @@ const Login: React.FC = () => {
           settings: defaultSettings as Partial<LayoutSettings>,
           accessMenu: menuData,
           endAuthorize: data.endAuthorize,
+          type: data.type as VersionType,
         }),
       );
       handleOnSecret();

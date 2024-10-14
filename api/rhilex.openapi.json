@@ -780,6 +780,9 @@
                         "token": {
                           "type": "string"
                         },
+                        "type": {
+                          "type": "string"
+                        },
                         "username": {
                           "type": "string"
                         }
@@ -790,6 +793,7 @@
                         "endAuthorize",
                         "role",
                         "token",
+                        "type",
                         "username"
                       ],
                       "x-apifox-ignore-properties": [],
@@ -799,6 +803,7 @@
                         "endAuthorize",
                         "role",
                         "token",
+                        "type",
                         "username"
                       ]
                     }
@@ -7128,6 +7133,9 @@
                     "data": {
                       "type": "object",
                       "properties": {
+                        "type": {
+                          "type": "string"
+                        },
                         "device_id": {
                           "type": "string"
                         },
@@ -7143,6 +7151,9 @@
                         "end_authorize": {
                           "type": "integer"
                         },
+                        "iface": {
+                          "type": "string"
+                        },
                         "mac": {
                           "type": "string"
                         },
@@ -7151,21 +7162,25 @@
                         }
                       },
                       "required": [
+                        "type",
                         "device_id",
                         "authorize_admin",
                         "authorize_password",
                         "begin_authorize",
                         "end_authorize",
+                        "iface",
                         "mac",
                         "license"
                       ],
                       "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
+                        "type",
                         "device_id",
                         "authorize_admin",
                         "authorize_password",
                         "begin_authorize",
                         "end_authorize",
+                        "iface",
                         "mac",
                         "license"
                       ]
@@ -7190,13 +7205,15 @@
                       "code": 200,
                       "msg": "Success",
                       "data": {
-                        "device_id": "00001",
-                        "authorize_admin": "rhino",
-                        "authorize_password": "hoot",
-                        "begin_authorize": 0,
-                        "end_authorize": 0,
-                        "mac": "FF:FF:FF:FF:FF:FF",
-                        "license": "DefaultLicense"
+                        "type": "FREETRIAL",
+                        "device_id": "000000000001",
+                        "authorize_admin": "RHILEX-COPYRIGHT",
+                        "authorize_password": "RHILEX",
+                        "begin_authorize": 1728802647322,
+                        "end_authorize": 1791874647322,
+                        "iface": "eth0",
+                        "mac": "A8:A1:59:2E:A2:D9",
+                        "license": "xcU86TdY0NYswn6bOHPZgK+Zr5vNElqswZCeK0lkBupscjKkZZbTVyQmFE66dxQM70c2ubts6Mkhsf2imt5ZMHC2NKZLks/zx3KTLWNpWg6Z6XT6O8cT1vGBAb9hFN5HcWNQKJQ/0MeUi6vfDJY6kSx7zQGBTRWVWqc8kDY/OMMJch8bhEhKV3IDncXiQOmtFKhnwE9u7qTws2o67cZX3kwwgpXBmBFjPPmUcZHQ7EuiNkicH18FYEze/rlb0clYCwr4BatRVSgh0jKICbjw8HEQZCi1LMG7VhfsOHOIjeF5QIckZmQX3bo41agY5wturLtFraY3DvoGqzyK9o4cxg=="
                       }
                     }
                   }
