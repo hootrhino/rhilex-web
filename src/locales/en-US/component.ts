@@ -65,7 +65,7 @@ export default {
   'component.rightContent.feature.protocol': '10+ Device protocol',
   'component.rightContent.feature.custom': 'Customized service',
   'component.rightContent.feature.moreAdvance': 'More advanced features',
-  'component.rightContent.button.upgrade': 'Upgrade to Enterprise',
+  'component.rightContent.button.upgrade': 'Try Enterprise',
   'component.rightContent.button.account': 'Edit Account',
   'component.rightContent.button.logout': 'Logout',
 

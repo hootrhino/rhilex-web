@@ -22,6 +22,7 @@ async function getInitialState(): Promise<{
   type?: VersionType;
 }> {
   const isLogin = localStorage.getItem('accessToken');
+
   if (history.location.pathname !== LOGIN_PATH && isLogin) {
     // 获取菜单权限
     const { data: menuData } = await getMenuMain();
@@ -39,7 +40,7 @@ async function getInitialState(): Promise<{
   }
 
   return {
-    settings: {},
+    settings: defaultSettings as Partial<LayoutSettings>,
     accessMenu: [],
   };
 }

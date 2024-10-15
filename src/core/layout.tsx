@@ -1,12 +1,16 @@
 import { GoBackModal } from '@/components/ProPageContainer';
 import RightContent from '@/components/RightContent';
+import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import { DefaultFooter } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
 import { MacScrollbar } from 'mac-scrollbar';
 import 'mac-scrollbar/dist/mac-scrollbar.css';
+import defaultSettings from '../../config/defaultSettings';
 
 const layout: RunTimeLayoutConfig = ({ initialState }) => {
+  const settings = initialState?.settings || defaultSettings;
+
   return {
     siderWidth: 208,
     rightContentRender: () => <RightContent />,
@@ -80,7 +84,7 @@ const layout: RunTimeLayoutConfig = ({ initialState }) => {
       return <MacScrollbar>{children}</MacScrollbar>;
     },
     className: 'h-[100vh] rhilex-layout',
-    ...initialState?.settings,
+    ...(settings as Partial<LayoutSettings>),
   };
 };
 
