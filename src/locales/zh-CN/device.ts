@@ -185,6 +185,8 @@ export default {
   'device.form.rules.weight': '权重系数必须在 -0.0001 到 100000 范围内',
   'device.form.rules.slaverId': '从设备地址 在 1-255 之间',
   'device.form.rules.id': '请输入有效的设备 ID，范围为 0-4194302',
+  'device.form.rules.meterId.len': '请输入有效的 12 位设备 ID',
+  'device.form.rules.meterId.number': '设备 ID 只能包含数字，请输入有效的 12 位设备 ID',
   'device.form.rules.bacnet.objectId': '请输入有效的对象 ID，范围为 0-4194303',
 
   /**
@@ -212,6 +214,7 @@ export default {
   'device.type.ithings': '联犀物联网平台',
   'device.type.uartRW': '通用串口读写网关',
   'device.type.mbus': '通用 M-Bus 数据采集网关',
+  'device.type.dlt645': '国标 DL/T645-2007 协议采集网关',
 
   /**
    * Modbus function

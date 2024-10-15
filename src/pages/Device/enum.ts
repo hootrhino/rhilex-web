@@ -1,6 +1,6 @@
 import { getIntl, getLocale } from '@umijs/max';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 /**
  * 设备类型枚举
@@ -16,23 +16,25 @@ export enum DeviceType {
   GENERIC_MBUS_MASTER = 'GENERIC_MBUS_MASTER',
   GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
   SIEMENS_PLC = 'SIEMENS_PLC',
+  DLT6452007_MASTER = 'DLT6452007_MASTER',
   TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
   ITHINGS_IOTHUB_GATEWAY = 'ITHINGS_IOTHUB_GATEWAY',
 }
 
 export const deviceTypeOptions = {
-  [DeviceType.GENERIC_UART_PROTOCOL]: intl.formatMessage({ id: 'device.type.uart' }),
-  [DeviceType.GENERIC_UART_RW]: intl.formatMessage({ id: 'device.type.uartRW' }),
-  [DeviceType.GENERIC_MODBUS_MASTER]: intl.formatMessage({ id: 'device.type.modbus.master' }),
-  [DeviceType.GENERIC_MODBUS_SLAVER]: intl.formatMessage({ id: 'device.type.modbus.slaver' }),
-  [DeviceType.GENERIC_BACNET_IP]: intl.formatMessage({ id: 'device.type.bacnet.ip' }),
-  [DeviceType.BACNET_ROUTER_GW]: intl.formatMessage({ id: 'device.type.bacnet.router' }),
-  [DeviceType.GENERIC_SNMP]: intl.formatMessage({ id: 'device.type.snmp' }),
-  // TODO 暂无需求，先隐藏 [DeviceType.GENERIC_MBUS_MASTER]: intl.formatMessage({ id: 'device.type.mbus' }),
-  [DeviceType.GENERIC_HTTP_DEVICE]: intl.formatMessage({ id: 'device.type.http' }),
-  [DeviceType.SIEMENS_PLC]: intl.formatMessage({ id: 'device.type.plc' }),
-  [DeviceType.TENCENT_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.tencent' }),
-  [DeviceType.ITHINGS_IOTHUB_GATEWAY]: intl.formatMessage({ id: 'device.type.ithings' }),
+  [DeviceType.GENERIC_UART_PROTOCOL]: formatMessage({ id: 'device.type.uart' }),
+  [DeviceType.GENERIC_UART_RW]: formatMessage({ id: 'device.type.uartRW' }),
+  [DeviceType.GENERIC_MODBUS_MASTER]: formatMessage({ id: 'device.type.modbus.master' }),
+  [DeviceType.GENERIC_MODBUS_SLAVER]: formatMessage({ id: 'device.type.modbus.slaver' }),
+  [DeviceType.GENERIC_BACNET_IP]: formatMessage({ id: 'device.type.bacnet.ip' }),
+  [DeviceType.BACNET_ROUTER_GW]: formatMessage({ id: 'device.type.bacnet.router' }),
+  [DeviceType.GENERIC_SNMP]: formatMessage({ id: 'device.type.snmp' }),
+  // TODO 暂无需求，先隐藏 [DeviceType.GENERIC_MBUS_MASTER]: formatMessage({ id: 'device.type.mbus' }),
+  [DeviceType.GENERIC_HTTP_DEVICE]: formatMessage({ id: 'device.type.http' }),
+  [DeviceType.SIEMENS_PLC]: formatMessage({ id: 'device.type.plc' }),
+  [DeviceType.DLT6452007_MASTER]: formatMessage({ id: 'device.type.dlt645' }),
+  [DeviceType.TENCENT_IOTHUB_GATEWAY]: formatMessage({ id: 'device.type.tencent' }),
+  [DeviceType.ITHINGS_IOTHUB_GATEWAY]: formatMessage({ id: 'device.type.ithings' }),
 };
 
 /**
@@ -47,10 +49,10 @@ export enum DeviceMode {
  * GENERIC_MODBUS_MASTER & GENERIC_MODBUS_SLAVER
  */
 export const funcEnum = new Map([
-  [1, intl.formatMessage({ id: 'device.modbus.func1' })],
-  [2, intl.formatMessage({ id: 'device.modbus.func2' })],
-  [3, intl.formatMessage({ id: 'device.modbus.func3' })],
-  [4, intl.formatMessage({ id: 'device.modbus.func4' })],
+  [1, formatMessage({ id: 'device.modbus.func1' })],
+  [2, formatMessage({ id: 'device.modbus.func2' })],
+  [3, formatMessage({ id: 'device.modbus.func3' })],
+  [4, formatMessage({ id: 'device.modbus.func4' })],
   // [5, '05 写单个线圈'],
   // [6, '06 写单个保持寄存器'],
   // [15, '15 写多个线圈'],
@@ -69,11 +71,11 @@ export enum PLCModel {
 }
 
 export const plcModelOptions = {
-  [PLCModel.S7200]: intl.formatMessage({ id: 'device.plc.model' }, { model: 'S7-200' }),
-  [PLCModel.S7300]: intl.formatMessage({ id: 'device.plc.model' }, { model: 'S7-300' }),
-  [PLCModel.S7400]: intl.formatMessage({ id: 'device.plc.model' }, { model: 'S7-400' }),
-  [PLCModel.S71200]: intl.formatMessage({ id: 'device.plc.model' }, { model: 'S7-1200' }),
-  [PLCModel.S71500]: intl.formatMessage({ id: 'device.plc.model' }, { model: 'S7-1500' }),
+  [PLCModel.S7200]: formatMessage({ id: 'device.plc.model' }, { model: 'S7-200' }),
+  [PLCModel.S7300]: formatMessage({ id: 'device.plc.model' }, { model: 'S7-300' }),
+  [PLCModel.S7400]: formatMessage({ id: 'device.plc.model' }, { model: 'S7-400' }),
+  [PLCModel.S71200]: formatMessage({ id: 'device.plc.model' }, { model: 'S7-1200' }),
+  [PLCModel.S71500]: formatMessage({ id: 'device.plc.model' }, { model: 'S7-1500' }),
 };
 
 // 机架号 rack
@@ -134,7 +136,7 @@ export enum BacnetMode {
 }
 
 export const BacnetModeOption = {
-  [BacnetMode.BROADCAST]: intl.formatMessage({ id: 'device.form.title.mode.broadcast' }),
+  [BacnetMode.BROADCAST]: formatMessage({ id: 'device.form.title.mode.broadcast' }),
 };
 
 /**
@@ -155,9 +157,9 @@ export enum ReadFormat {
 }
 
 export const ReadFormatOption = {
-  [ReadFormat.RAW]: intl.formatMessage({ id: 'device.readFormat.raw' }),
-  [ReadFormat.HEX]: intl.formatMessage({ id: 'device.readFormat.hex' }),
-  [ReadFormat.UTF8]: intl.formatMessage({ id: 'device.readFormat.utf8' }),
+  [ReadFormat.RAW]: formatMessage({ id: 'device.readFormat.raw' }),
+  [ReadFormat.HEX]: formatMessage({ id: 'device.readFormat.hex' }),
+  [ReadFormat.UTF8]: formatMessage({ id: 'device.readFormat.utf8' }),
 };
 
 /**
@@ -200,9 +202,9 @@ export const dataBitsEnum = new Map([
 
 // 奇偶校验
 export const parityEnum = {
-  E: intl.formatMessage({ id: 'options.parity.e' }),
-  O: intl.formatMessage({ id: 'options.parity.o' }),
-  N: intl.formatMessage({ id: 'options.parity.n' }),
+  E: formatMessage({ id: 'options.parity.e' }),
+  O: formatMessage({ id: 'options.parity.o' }),
+  N: formatMessage({ id: 'options.parity.n' }),
 };
 
 // 停止位

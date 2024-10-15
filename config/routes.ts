@@ -88,6 +88,11 @@
         title: 'menu.device.sheet',
         component: './Device/BacnetRouter',
       },
+      {
+        path: '/device/:groupId/:deviceId/dlt6452007-master-sheet',
+        title: 'menu.device.sheet',
+        component: './Device/Dlt6452007Master',
+      },
       // {
       //   path: '/device/:groupId/:deviceId/point-data-sheet',
       //   title: 'menu.device.sheet',

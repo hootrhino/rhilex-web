@@ -159,6 +159,15 @@ export const defaultConfig = {
       tag: DEFAULT_VALUE,
     },
   },
+  [DeviceType.DLT6452007_MASTER]: {
+    commonConfig: {
+      autoRequest: DEFAULT_TRUE,
+      batchRequest: DEFAULT_FALSE,
+      mode: DeviceMode.UART,
+    },
+    hostConfig: defaultHostConfig,
+    uartConfig: defaultUartConfig,
+  },
 };
 
 // 根据 PLC 型号改变 rack&slot 默认值

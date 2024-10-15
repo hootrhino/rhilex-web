@@ -13,6 +13,7 @@ import {
   stopBitsEnum,
 } from '../enum';
 import { BACNET_ROUTER_GW_CONFIG } from './bacnetRouterGW';
+import { DLT6452007_MASTER_CONFIG } from './dtl6452007Master';
 import { GENERIC_BACNET_IP_CONFIG } from './genericBacnetIP';
 import { GENERIC_HTTP_DEVICE_CONFIG } from './genericHttpDevice';
 import { GENERIC_MBUS_MASTER_CONFIG } from './genericMBusMaster';
@@ -204,6 +205,7 @@ export const typeConfigColumns = {
   [DeviceType.GENERIC_SNMP]: GENERIC_SNMP_CONFIG,
   [DeviceType.GENERIC_BACNET_IP]: GENERIC_BACNET_IP_CONFIG,
   [DeviceType.BACNET_ROUTER_GW]: BACNET_ROUTER_GW_CONFIG,
+  [DeviceType.DLT6452007_MASTER]: DLT6452007_MASTER_CONFIG,
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: TENCENT_IOTHUB_GATEWAY_CONFIG,
   [DeviceType.ITHINGS_IOTHUB_GATEWAY]: ITHINGS_IOTHUB_GATEWAY_CONFIG,
 };

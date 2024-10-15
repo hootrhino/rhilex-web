@@ -185,6 +185,8 @@ export default {
   'device.form.rules.weight': '權重係數必須在 -0.0001 到 100000 範圍內',
   'device.form.rules.slaverId': '從設備地址 在 1-255 之間',
   'device.form.rules.id': '請輸入有效的設備 ID，範圍为 0-4194302',
+  'device.form.rules.meterId.len': '請輸入有效的 12 位設備 ID',
+  'device.form.rules.meterId.number': '設備 ID 只能包含數字，請輸入有效的 12 位設備 ID',
   'device.form.rules.bacnet.objectId': '請輸入有效的對象 ID，範圍为 0-4194303',
 
   /**
@@ -212,6 +214,7 @@ export default {
   'device.type.ithings': '聯犀物聯網平台',
   'device.type.uartRW': '通用串口讀寫網關',
   'device.type.mbus': '通用 M-Bus 數據採集網關',
+  'device.type.dlt645': '國標 DL/T645-2007 協議採集網關',
 
   /**
    * Modbus function

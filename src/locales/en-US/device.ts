@@ -187,6 +187,9 @@ export default {
   'device.form.rules.weight': 'The weight must be within the range of -0.0001 to 100,000',
   'device.form.rules.slaverId': 'The slaver address must be between 1 and 255',
   'device.form.rules.id': 'Please enter a valid device ID, ranging from 0 to 4194302',
+  'device.form.rules.meterId.len': 'Please enter a valid 12-digit device ID',
+  'device.form.rules.meterId.number':
+    'Device IDs can only contain numbers, enter a valid 12-digit device ID',
   'device.form.rules.bacnet.objectId': 'Please enter a valid object ID, ranging from 0 to 4194303',
 
   /**
@@ -208,13 +211,14 @@ export default {
   'device.type.modbus.slaver': 'Generic Modbus Slaver Gateway',
   'device.type.snmp': 'Generic SNMP Gateway',
   'device.type.plc': 'Generic Siemens S7 PLC Gateway',
-  'device.type.http': 'Generic HTTP Gatewa',
+  'device.type.http': 'Generic HTTP Gateway',
   'device.type.bacnet.ip': 'Generic BACnet IP Master Gateway',
   'device.type.bacnet.router': 'Generic BACnet IP Slaver Gateway',
   'device.type.tencent': 'Tencent Cloud IoT Platform',
   'device.type.ithings': 'iThings IoT Platform',
   'device.type.uartRW': 'Generic Serial Read/Write Gateway',
   'device.type.mbus': 'Generic M-Bus Gateway',
+  'device.type.dlt645': 'National Standard DL/T645-2007 Gateway',
 
   /**
    * Modbus function
