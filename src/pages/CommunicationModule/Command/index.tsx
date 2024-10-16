@@ -14,7 +14,7 @@ type SendCommandProps = ModalProps & {
   onCancel: () => void;
 };
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 const SendCommand = ({ name, type, onCancel, ...props }: SendCommandProps) => {
   const [form] = Form.useForm();
@@ -37,7 +37,7 @@ const SendCommand = ({ name, type, onCancel, ...props }: SendCommandProps) => {
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'com.modal.title.command' })}
+      title={formatMessage({ id: 'com.modal.title.command' })}
       onCancel={() => {
         onCancel();
         setResult(undefined);
@@ -58,23 +58,21 @@ const SendCommand = ({ name, type, onCancel, ...props }: SendCommandProps) => {
         }}
       >
         <Form.Item
-          label={intl.formatMessage({ id: 'com.form.title.cmd' })}
+          label={formatMessage({ id: 'com.form.title.cmd' })}
           name="args"
-          rules={[
-            { required: true, message: intl.formatMessage({ id: 'com.form.placeholder.cmd' }) },
-          ]}
+          rules={[{ required: true, message: formatMessage({ id: 'com.form.placeholder.cmd' }) }]}
         >
-          <TextArea rows={4} placeholder={intl.formatMessage({ id: 'com.form.placeholder.cmd' })} />
+          <TextArea rows={4} placeholder={formatMessage({ id: 'com.form.placeholder.cmd' })} />
         </Form.Item>
         <Form.Item className="send-button-item">
           <Button type="primary" htmlType="submit" className={cn('w-full')} loading={loading}>
-            {intl.formatMessage({ id: 'com.button.send' })}
+            {formatMessage({ id: 'com.button.send' })}
           </Button>
         </Form.Item>
       </Form>
       {result && (
         <div>
-          <div className="pb-[8px]">{intl.formatMessage({ id: 'com.form.title.result' })}</div>
+          <div className="pb-[8px]">{formatMessage({ id: 'com.form.title.result' })}</div>
           <TextArea autoSize={{ minRows: 2, maxRows: 5 }} value={result} variant="borderless" />
         </div>
       )}

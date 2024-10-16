@@ -5,15 +5,15 @@ import { getIntl, getLocale } from '@umijs/max';
 import type { DeviceItem } from '..';
 import { SNMPVersionOption, TransportOption } from '../enum';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
-export const GENERIC_SNMP_CONFIG = [
+export const GENERIC_SNMP = [
   {
-    title: intl.formatMessage({ id: 'device.form.title.group.common' }),
+    title: formatMessage({ id: 'device.form.title.group.common' }),
     valueType: 'group',
     columns: [
       {
-        title: intl.formatMessage({ id: 'device.form.title.autoRequest' }),
+        title: formatMessage({ id: 'device.form.title.autoRequest' }),
         dataIndex: ['config', 'commonConfig', 'autoRequest'],
         required: true,
         renderFormItem: () => <ProSegmented width="md" />,
@@ -22,7 +22,7 @@ export const GENERIC_SNMP_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.enableGroup' }),
+        title: formatMessage({ id: 'device.form.title.enableGroup' }),
         dataIndex: ['config', 'commonConfig', 'enableGroup'],
         required: true,
         renderFormItem: () => <ProSegmented width="md" />,
@@ -31,7 +31,7 @@ export const GENERIC_SNMP_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.enableBatchRequest' }),
+        title: formatMessage({ id: 'device.form.title.enableBatchRequest' }),
         dataIndex: ['config', 'commonConfig', 'batchRequest'],
         required: true,
         renderFormItem: () => <ProSegmented width="md" />,
@@ -40,7 +40,7 @@ export const GENERIC_SNMP_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.timeout.request' }),
+        title: formatMessage({ id: 'device.form.title.timeout.request' }),
         dataIndex: ['config', 'commonConfig', 'timeout'],
         valueType: 'digit',
         required: true,
@@ -52,7 +52,7 @@ export const GENERIC_SNMP_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.frequency.request' }),
+        title: formatMessage({ id: 'device.form.title.frequency.request' }),
         dataIndex: ['config', 'commonConfig', 'frequency'],
         valueType: 'digit',
         required: true,
@@ -66,24 +66,24 @@ export const GENERIC_SNMP_CONFIG = [
     ],
   },
   {
-    title: intl.formatMessage({ id: 'device.form.title.group.snmp' }),
+    title: formatMessage({ id: 'device.form.title.group.snmp' }),
     valueType: 'group',
     columns: [
       {
-        title: intl.formatMessage({ id: 'device.form.title.target.device' }),
+        title: formatMessage({ id: 'device.form.title.target.device' }),
         dataIndex: ['config', 'snmpConfig', 'target'],
         required: true,
         render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.target,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.target.port' }),
+        title: formatMessage({ id: 'device.form.title.target.port' }),
         dataIndex: ['config', 'snmpConfig', 'port'],
         valueType: 'digit',
         required: true,
         render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.port,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.transport' }),
+        title: formatMessage({ id: 'device.form.title.transport' }),
         dataIndex: ['config', 'snmpConfig', 'transport'],
         required: true,
         valueType: 'select',
@@ -92,13 +92,13 @@ export const GENERIC_SNMP_CONFIG = [
           TransportOption[snmpConfig?.transport],
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.community' }),
+        title: formatMessage({ id: 'device.form.title.community' }),
         dataIndex: ['config', 'snmpConfig', 'community'],
         required: true,
         render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) => snmpConfig?.community,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.version' }),
+        title: formatMessage({ id: 'device.form.title.version' }),
         dataIndex: ['config', 'snmpConfig', 'version'],
         required: true,
         valueType: 'select',

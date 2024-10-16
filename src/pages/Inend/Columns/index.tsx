@@ -6,7 +6,7 @@ import { DEFAULT_CONFIG } from './defaultConfig';
 import { GENERIC_MQTT_SERVER } from './genericMqttServer';
 import { INTERNAL_EVENT } from './internalEvent';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 /**
  * 类型配置
@@ -32,13 +32,13 @@ export const baseColumns = [
     copyable: true,
   },
   {
-    title: intl.formatMessage({ id: 'table.title.name' }),
+    title: formatMessage({ id: 'table.title.name' }),
     dataIndex: 'name',
     ellipsis: true,
     required: true,
   },
   {
-    title: intl.formatMessage({ id: 'table.title.type' }),
+    title: formatMessage({ id: 'table.title.type' }),
     dataIndex: 'type',
     valueType: 'select',
     valueEnum: inendTypeOption,
@@ -47,13 +47,13 @@ export const baseColumns = [
     renderText: (record: InendType) => (record ? inendTypeOption[record] : '-'),
   },
   {
-    title: intl.formatMessage({ id: 'table.title.status' }),
+    title: formatMessage({ id: 'table.title.status' }),
     dataIndex: 'state',
     hideInForm: true,
     renderText: (state: number) => <ProTag type={StatusType.DEVICE}>{state}</ProTag>,
   },
   {
-    title: intl.formatMessage({ id: 'table.title.desc' }),
+    title: formatMessage({ id: 'table.title.desc' }),
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => description || '-',
@@ -70,7 +70,7 @@ export const columns = [
     name: ['type'],
     columns: ({ type }: any) => [
       {
-        title: intl.formatMessage({ id: 'inend.title.group' }),
+        title: formatMessage({ id: 'inend.title.group' }),
         valueType: 'group',
         columns: [
           {

@@ -6,15 +6,15 @@ import { modeColumns } from '.';
 import type { DeviceItem } from '..';
 import { DeviceMode } from '../enum';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
-export const GENERIC_MBUS_MASTER_CONFIG = [
+export const GENERIC_MBUS_MASTER = [
   {
-    title: intl.formatMessage({ id: 'device.form.title.group.common' }),
+    title: formatMessage({ id: 'device.form.title.group.common' }),
     valueType: 'group',
     columns: [
       {
-        title: intl.formatMessage({ id: 'device.form.title.autoRequest' }),
+        title: formatMessage({ id: 'device.form.title.autoRequest' }),
         dataIndex: ['config', 'commonConfig', 'autoRequest'],
         required: true,
         renderFormItem: () => <ProSegmented width="md" />,
@@ -23,7 +23,7 @@ export const GENERIC_MBUS_MASTER_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.enableBatchRequest' }),
+        title: formatMessage({ id: 'device.form.title.enableBatchRequest' }),
         dataIndex: ['config', 'commonConfig', 'batchRequest'],
         required: true,
         renderFormItem: () => <ProSegmented width="md" />,
@@ -32,7 +32,7 @@ export const GENERIC_MBUS_MASTER_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.frequency' }),
+        title: formatMessage({ id: 'device.form.title.frequency' }),
         dataIndex: ['config', 'commonConfig', 'frequency'],
         valueType: 'digit',
         required: true,
@@ -44,7 +44,7 @@ export const GENERIC_MBUS_MASTER_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.mode' }),
+        title: formatMessage({ id: 'device.form.title.mode' }),
         dataIndex: ['config', 'commonConfig', 'mode'],
         valueType: 'select',
         valueEnum: DeviceMode,

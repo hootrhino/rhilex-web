@@ -11,7 +11,7 @@ import { TDENGINE } from './tdengine';
 import { GENERIC_UART_TARGET } from './uart';
 import { UDP_TARGET } from './udp';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 export const baseColumns = [
   {
@@ -23,13 +23,13 @@ export const baseColumns = [
     copyable: true,
   },
   {
-    title: intl.formatMessage({ id: 'table.title.name' }),
+    title: formatMessage({ id: 'table.title.name' }),
     dataIndex: 'name',
     ellipsis: true,
     required: true,
   },
   {
-    title: intl.formatMessage({ id: 'table.title.type' }),
+    title: formatMessage({ id: 'table.title.type' }),
     dataIndex: 'type',
     valueType: 'select',
     valueEnum: outendTypeOption,
@@ -38,13 +38,13 @@ export const baseColumns = [
     renderText: (type: OutendType) => (type ? outendTypeOption[type] : '-'),
   },
   {
-    title: intl.formatMessage({ id: 'table.title.status' }),
+    title: formatMessage({ id: 'table.title.status' }),
     dataIndex: 'state',
     hideInForm: true,
     renderText: (state: number) => <ProTag type={StatusType.DEVICE}>{state || 0}</ProTag>,
   },
   {
-    title: intl.formatMessage({ id: 'table.title.desc' }),
+    title: formatMessage({ id: 'table.title.desc' }),
     dataIndex: 'description',
     ellipsis: true,
     renderText: (description: string) => description || '-',
@@ -78,7 +78,7 @@ export const columns = [
 
       return [
         {
-          title: intl.formatMessage({ id: 'outend.title.common' }),
+          title: formatMessage({ id: 'outend.title.common' }),
           valueType: 'group',
           columns: [
             {

@@ -17,6 +17,7 @@ export enum DeviceType {
   GENERIC_HTTP_DEVICE = 'GENERIC_HTTP_DEVICE',
   SIEMENS_PLC = 'SIEMENS_PLC',
   DLT6452007_MASTER = 'DLT6452007_MASTER',
+  CJT1882004_MASTER = 'CJT1882004_MASTER',
   TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
   ITHINGS_IOTHUB_GATEWAY = 'ITHINGS_IOTHUB_GATEWAY',
 }
@@ -29,10 +30,17 @@ export const deviceTypeOptions = {
   [DeviceType.GENERIC_BACNET_IP]: formatMessage({ id: 'device.type.bacnet.ip' }),
   [DeviceType.BACNET_ROUTER_GW]: formatMessage({ id: 'device.type.bacnet.router' }),
   [DeviceType.GENERIC_SNMP]: formatMessage({ id: 'device.type.snmp' }),
-  // TODO 暂无需求，先隐藏 [DeviceType.GENERIC_MBUS_MASTER]: formatMessage({ id: 'device.type.mbus' }),
+  [DeviceType.GENERIC_MBUS_MASTER]: formatMessage({ id: 'device.type.mbus' }),
   [DeviceType.GENERIC_HTTP_DEVICE]: formatMessage({ id: 'device.type.http' }),
   [DeviceType.SIEMENS_PLC]: formatMessage({ id: 'device.type.plc' }),
-  [DeviceType.DLT6452007_MASTER]: formatMessage({ id: 'device.type.dlt645' }),
+  [DeviceType.DLT6452007_MASTER]: formatMessage(
+    { id: 'device.type.national' },
+    { protocol: 'DL/T645-2007' },
+  ),
+  [DeviceType.CJT1882004_MASTER]: formatMessage(
+    { id: 'device.type.national' },
+    { protocol: 'CJ/T188-2004' },
+  ),
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: formatMessage({ id: 'device.type.tencent' }),
   [DeviceType.ITHINGS_IOTHUB_GATEWAY]: formatMessage({ id: 'device.type.ithings' }),
 };
@@ -167,6 +175,7 @@ export const ReadFormatOption = {
  */
 // 波特率
 export const baudRateEnum = new Map([
+  [2400, '2400'],
   [4800, '4800'],
   [9600, '9600'],
   [19200, '19200'],

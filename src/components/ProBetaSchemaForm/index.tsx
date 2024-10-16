@@ -26,7 +26,7 @@ type ProBetaSchemaFormProps<T = Record<string, any>, Values = any> = {
   onValuesChange?: (changedValues: any, values: Values) => void;
 };
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 // 辅助函数：根据不同条件生成规则
 const getRules = (col: any) => {
@@ -40,7 +40,7 @@ const getRules = (col: any) => {
     return [
       {
         required: col.required,
-        message: intl.formatMessage(
+        message: formatMessage(
           { id: 'placeholder.input' },
           { text: getLocale() === 'en-US' ? col.title.toLowerCase() : col.title },
         ),
@@ -55,7 +55,7 @@ const getRules = (col: any) => {
     return [
       {
         required: col.required,
-        message: intl.formatMessage(
+        message: formatMessage(
           { id: 'placeholder.select' },
           { text: getLocale() === 'en-US' ? col.title.toLowerCase() : col.title },
         ),
@@ -66,7 +66,7 @@ const getRules = (col: any) => {
   return [
     {
       required: col.required,
-      message: intl.formatMessage(
+      message: formatMessage(
         { id: 'placeholder.input' },
         { text: getLocale() === 'en-US' ? col.title.toLowerCase() : col.title },
       ),
@@ -78,7 +78,7 @@ const getRules = (col: any) => {
 const getFieldProps = (col: any) => {
   if (['select'].includes(col.valueType)) {
     return {
-      placeholder: intl.formatMessage(
+      placeholder: formatMessage(
         { id: 'placeholder.select' },
         { text: getLocale() === 'en-US' ? col.title.toLowerCase() : col.title },
       ),
@@ -87,7 +87,7 @@ const getFieldProps = (col: any) => {
   }
 
   return {
-    placeholder: intl.formatMessage(
+    placeholder: formatMessage(
       { id: 'placeholder.input' },
       { text: getLocale() === 'en-US' ? col.title.toLowerCase() : col.title },
     ),
@@ -165,7 +165,7 @@ const ProBetaSchemaForm = ({
             <FooterToolbar>
               <Popconfirm
                 key="reset"
-                title={intl.formatMessage({ id: 'component.popconfirm.title.reset' })}
+                title={formatMessage({ id: 'component.popconfirm.title.reset' })}
                 onConfirm={() => {
                   reset();
                   handleOnReset();

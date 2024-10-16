@@ -3,11 +3,11 @@ import ProTag, { StatusType } from '@/components/ProTag';
 import { stringToBool } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 export const GENERIC_MQTT_SERVER = [
   {
-    title: intl.formatMessage({ id: 'inend.table.title.anonymous' }),
+    title: formatMessage({ id: 'inend.table.title.anonymous' }),
     dataIndex: ['config', 'anonymous'],
     required: true,
     convertValue: (value: boolean) => value?.toString(),
@@ -16,17 +16,17 @@ export const GENERIC_MQTT_SERVER = [
     renderText: (anonymous: boolean) => <ProTag type={StatusType.BOOL}>{anonymous}</ProTag>,
   },
   {
-    title: intl.formatMessage({ id: 'inend.table.title.serverName' }),
+    title: formatMessage({ id: 'inend.table.title.serverName' }),
     dataIndex: ['config', 'serverName'],
     required: true,
   },
   {
-    title: intl.formatMessage({ id: 'inend.table.title.listenHost' }),
+    title: formatMessage({ id: 'inend.table.title.listenHost' }),
     dataIndex: ['config', 'host'],
     required: true,
   },
   {
-    title: intl.formatMessage({ id: 'inend.table.title.listenPort' }),
+    title: formatMessage({ id: 'inend.table.title.listenPort' }),
     dataIndex: ['config', 'port'],
     valueType: 'digit',
     required: true,

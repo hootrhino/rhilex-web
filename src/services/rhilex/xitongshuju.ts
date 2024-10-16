@@ -2,6 +2,17 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
+/** 获取前端证书 GET /api/v1/os/getSecurityLicense */
+export async function getOsGetSecurityLicense(options?: { [key: string]: any }) {
+  return request<{ code: number; msg: string; data: { public_key: string } }>(
+    '/api/v1/os/getSecurityLicense',
+    {
+      method: 'GET',
+      ...(options || {}),
+    },
+  );
+}
+
 /** 网卡列表 GET /api/v1/os/netInterfaces */
 export async function getOsNetInterfaces(options?: { [key: string]: any }) {
   return request<{

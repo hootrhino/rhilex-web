@@ -3,7 +3,7 @@ import { getIntl, getLocale } from '@umijs/max';
 /**
  * 北向资源类型
  */
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 export enum OutendType {
   MQTT = 'MQTT',
@@ -19,29 +19,26 @@ export enum OutendType {
   ITHINGS_IOT = 'ITHINGS_IOT',
 }
 export const outendTypeOption = {
-  [OutendType.MQTT]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' MQTT Broker' }),
-  [OutendType.UDP_TARGET]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' UDP Server' }),
-  [OutendType.TCP_TRANSPORT]: intl.formatMessage(
-    { id: 'outend.type.push' },
-    { type: ' TCP Server' },
-  ),
-  [OutendType.HTTP]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' HTTP Server' }),
-  [OutendType.RHILEX_GRPC_TARGET]: intl.formatMessage(
+  [OutendType.MQTT]: formatMessage({ id: 'outend.type.push' }, { type: ' MQTT Broker' }),
+  [OutendType.UDP_TARGET]: formatMessage({ id: 'outend.type.push' }, { type: ' UDP Server' }),
+  [OutendType.TCP_TRANSPORT]: formatMessage({ id: 'outend.type.push' }, { type: ' TCP Server' }),
+  [OutendType.HTTP]: formatMessage({ id: 'outend.type.push' }, { type: ' HTTP Server' }),
+  [OutendType.RHILEX_GRPC_TARGET]: formatMessage(
     { id: 'outend.type.push' },
     { type: ' GRPC Server' },
   ),
-  [OutendType.ITHINGS_IOT]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' iThings' }),
-  [OutendType.MONGO_SINGLE]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' MongoDB' }),
-  [OutendType.GREPTIME_DATABASE]: intl.formatMessage(
+  [OutendType.ITHINGS_IOT]: formatMessage({ id: 'outend.type.push' }, { type: ' iThings' }),
+  [OutendType.MONGO_SINGLE]: formatMessage({ id: 'outend.type.push' }, { type: ' MongoDB' }),
+  [OutendType.GREPTIME_DATABASE]: formatMessage(
     { id: 'outend.type.push' },
     { type: ' GreptimeDB' },
   ),
-  [OutendType.TDENGINE]: intl.formatMessage({ id: 'outend.type.push' }, { type: ' TDengine' }),
-  [OutendType.GENERIC_UART_TARGET]: intl.formatMessage(
+  [OutendType.TDENGINE]: formatMessage({ id: 'outend.type.push' }, { type: ' TDengine' }),
+  [OutendType.GENERIC_UART_TARGET]: formatMessage(
     { id: 'outend.type.push' },
-    { type: intl.formatMessage({ id: 'outend.table.title.uart' }) },
+    { type: formatMessage({ id: 'outend.table.title.uart' }) },
   ),
-  [OutendType.SEMTECH_UDP_FORWARDER]: intl.formatMessage(
+  [OutendType.SEMTECH_UDP_FORWARDER]: formatMessage(
     { id: 'outend.type.push' },
     { type: ' Semtech UDP Forwarder' },
   ),
@@ -67,6 +64,6 @@ export enum DataMode {
   HEX_STRING = 'HEX_STRING',
 }
 export const dataModeOption = {
-  [DataMode.RAW_STRING]: intl.formatMessage({ id: 'outend.mode.raw' }),
-  [DataMode.HEX_STRING]: intl.formatMessage({ id: 'outend.mode.hex' }),
+  [DataMode.RAW_STRING]: formatMessage({ id: 'outend.mode.raw' }),
+  [DataMode.HEX_STRING]: formatMessage({ id: 'outend.mode.hex' }),
 };

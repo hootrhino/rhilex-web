@@ -91,7 +91,12 @@
       {
         path: '/device/:groupId/:deviceId/dlt6452007-master-sheet',
         title: 'menu.device.sheet',
-        component: './Device/Dlt6452007Master',
+        component: './Device/DLT6452007Master',
+      },
+      {
+        path: '/device/:groupId/:deviceId/cjt1882004-master-sheet',
+        title: 'menu.device.sheet',
+        component: './Device/CJT1882004Master',
       },
       // {
       //   path: '/device/:groupId/:deviceId/point-data-sheet',

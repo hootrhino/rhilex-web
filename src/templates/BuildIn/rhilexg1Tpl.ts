@@ -3,36 +3,36 @@
  */
 
 import { getIntl, getLocale } from '@umijs/max';
-const intl = getIntl(getLocale());
+const {formatMessage} = getIntl(getLocale());
 
 const rhilexg1List = [
   {
     target: 'DO1Set',
-    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.set' }, { target: 'DO1' }),
+    detail: formatMessage({ id: 'component.tpl.rhilexg1.set' }, { target: 'DO1' }),
   },
   {
     target: 'DO1Get',
-    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DO1' }),
+    detail: formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DO1' }),
   },
   {
     target: 'DO2Set',
-    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.set' }, { target: 'DO2' }),
+    detail: formatMessage({ id: 'component.tpl.rhilexg1.set' }, { target: 'DO2' }),
   },
   {
     target: 'DO2Get',
-    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DO2' }),
+    detail: formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DO2' }),
   },
   {
     target: 'DI1Get',
-    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DI1' }),
+    detail: formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DI1' }),
   },
   {
     target: 'DI2Get',
-    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DI2' }),
+    detail: formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DI2' }),
   },
   {
     target: 'DI3Get',
-    detail: intl.formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DI3' }),
+    detail: formatMessage({ id: 'component.tpl.rhilexg1.get' }, { target: 'DI3' }),
   },
 ];
 

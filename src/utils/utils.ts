@@ -2,6 +2,7 @@ import { createFromIconfontCN } from '@ant-design/icons';
 import { getIntl, getLocale } from '@umijs/max';
 import type { RcFile } from 'antd/es/upload';
 import { clsx, type ClassValue } from 'clsx';
+import JSEncrypt from 'jsencrypt';
 import { customAlphabet } from 'nanoid';
 import { twMerge } from 'tailwind-merge';
 import { FormItemType } from './enum';
@@ -18,6 +19,15 @@ import {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+//  RSA 非对称加密
+export const encryptText = (publicKey: string, text: string) => {
+  const encrypt = new JSEncrypt();
+  encrypt.setPublicKey(publicKey); // 设置公钥
+  const encrypted = encrypt.encrypt(text) || text; // 使用公钥加密
+
+  return encrypted;
+};
 
 export const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {

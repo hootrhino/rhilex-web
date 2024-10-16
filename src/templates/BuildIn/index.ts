@@ -12,7 +12,7 @@ import { rhilexg1Tpl } from './rhilexg1Tpl';
 import { standardTpl } from './standardTpl';
 import { timeTpl } from './timeTpl';
 
-const intl = getIntl(getLocale());
+const {formatMessage} = getIntl(getLocale());
 
 /**
  * 编辑器代码提示 - Lua 关键词
@@ -156,51 +156,51 @@ export const buildInSnippet = new Map([['luaSnappet', [
  */
 export const builtInLuaTpl = [
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Data' }),
+    name: formatMessage({ id: 'component.tpl.name' }, { name: 'Data' }),
     uuid: 'data',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Time' }),
+    name: formatMessage({ id: 'component.tpl.name' }, { name: 'Time' }),
     uuid: 'time',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Rhilexg1' }),
+    name: formatMessage({ id: 'component.tpl.name' }, { name: 'Rhilexg1' }),
     uuid: 'rhilexg1',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Device' }),
+    name: formatMessage({ id: 'component.tpl.name' }, { name: 'Device' }),
     uuid: 'device',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Modbus' }),
+    name: formatMessage({ id: 'component.tpl.name' }, { name: 'Modbus' }),
     uuid: 'modbus',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'KV' }),
+    name: formatMessage({ id: 'component.tpl.name' }, { name: 'KV' }),
     uuid: 'kv',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name.standard' }),
+    name: formatMessage({ id: 'component.tpl.name.standard' }),
     uuid: 'standard',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'Localdb' }),
+    name: formatMessage({ id: 'component.tpl.name' }, { name: 'Localdb' }),
     uuid: 'localdb',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name' }, { name: 'JSON' }),
+    name: formatMessage({ id: 'component.tpl.name' }, { name: 'JSON' }),
     uuid: 'json',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name.dataRepo' }),
+    name: formatMessage({ id: 'component.tpl.name.dataRepo' }),
     uuid: 'dataRepo',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.rfcom.name' }),
+    name: formatMessage({ id: 'component.tpl.rfcom.name' }),
     uuid: 'com',
   },
   {
-    name: intl.formatMessage({ id: 'component.tpl.name.other' }),
+    name: formatMessage({ id: 'component.tpl.name.other' }),
     uuid: 'other',
   },
 ];

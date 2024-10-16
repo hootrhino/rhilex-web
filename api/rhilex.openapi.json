@@ -97,6 +97,9 @@
       "name": "DLT6452007点位管理"
     },
     {
+      "name": "CJT18832004点位管理"
+    },
+    {
       "name": "ModbusSlaver寄存器管理"
     },
     {
@@ -20956,7 +20959,7 @@
                                 "type": "integer"
                               },
                               "value": {
-                                "type": "string"
+                                "type": "integer"
                               },
                               "errMsg": {
                                 "type": "string"
@@ -21026,20 +21029,8 @@
                       "data": {
                         "current": 1,
                         "size": 20,
-                        "total": 10,
+                        "total": 9,
                         "records": [
-                          {
-                            "device_uuid": "DEVICEFA5TN6VK",
-                            "uuid": "DLT645D54PHRM3",
-                            "meterId": "100023669245",
-                            "tag": "meter1",
-                            "alias": "meter1",
-                            "frequency": 100,
-                            "status": 1,
-                            "lastFetchTime": 1728914814429,
-                            "value": "0",
-                            "errMsg": "Loading"
-                          },
                           {
                             "device_uuid": "DEVICEFA5TN6VK",
                             "uuid": "DLT645JMJ3RT7C",
@@ -21048,9 +21039,9 @@
                             "alias": "meter2",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 1728914814429,
-                            "value": "0",
-                            "errMsg": "Loading"
+                            "lastFetchTime": 1728917808748,
+                            "value": 2238,
+                            "errMsg": ""
                           },
                           {
                             "device_uuid": "DEVICEFA5TN6VK",
@@ -21060,9 +21051,9 @@
                             "alias": "meter3",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 1728914814429,
-                            "value": "0",
-                            "errMsg": "Loading"
+                            "lastFetchTime": 1728917809714,
+                            "value": 2238,
+                            "errMsg": ""
                           },
                           {
                             "device_uuid": "DEVICEFA5TN6VK",
@@ -21072,9 +21063,9 @@
                             "alias": "meter4",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 1728914814429,
-                            "value": "0",
-                            "errMsg": "Loading"
+                            "lastFetchTime": 1728917810037,
+                            "value": 2238,
+                            "errMsg": ""
                           },
                           {
                             "device_uuid": "DEVICEFA5TN6VK",
@@ -21084,9 +21075,9 @@
                             "alias": "meter5",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 1728914814429,
-                            "value": "0",
-                            "errMsg": "Loading"
+                            "lastFetchTime": 1728917809071,
+                            "value": 2238,
+                            "errMsg": ""
                           },
                           {
                             "device_uuid": "DEVICEFA5TN6VK",
@@ -21096,9 +21087,9 @@
                             "alias": "meter6",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 1728914814429,
-                            "value": "0",
-                            "errMsg": "Loading"
+                            "lastFetchTime": 1728917809392,
+                            "value": 2238,
+                            "errMsg": ""
                           },
                           {
                             "device_uuid": "DEVICEFA5TN6VK",
@@ -21108,9 +21099,9 @@
                             "alias": "meter7",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 1728914814429,
-                            "value": "0",
-                            "errMsg": "Loading"
+                            "lastFetchTime": 1728917807457,
+                            "value": 2238,
+                            "errMsg": ""
                           },
                           {
                             "device_uuid": "DEVICEFA5TN6VK",
@@ -21120,9 +21111,9 @@
                             "alias": "meter8",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 1728914814429,
-                            "value": "0",
-                            "errMsg": "Loading"
+                            "lastFetchTime": 1728917807781,
+                            "value": 2238,
+                            "errMsg": ""
                           },
                           {
                             "device_uuid": "DEVICEFA5TN6VK",
@@ -21132,9 +21123,9 @@
                             "alias": "meter9",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 1728914814429,
-                            "value": "0",
-                            "errMsg": "Loading"
+                            "lastFetchTime": 1728917810365,
+                            "value": 2238,
+                            "errMsg": ""
                           },
                           {
                             "device_uuid": "DEVICEFA5TN6VK",
@@ -21144,9 +21135,9 @@
                             "alias": "meter10",
                             "frequency": 100,
                             "status": 1,
-                            "lastFetchTime": 1728914814429,
-                            "value": "0",
-                            "errMsg": "Loading"
+                            "lastFetchTime": 1728917808426,
+                            "value": 2238,
+                            "errMsg": ""
                           }
                         ]
                       }
@@ -21430,6 +21421,683 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-222903102-run",
+        "security": []
+      }
+    },
+    "/api/v1/os/getSecurityLicense": {
+      "get": {
+        "summary": "获取前端证书",
+        "x-apifox-folder": "系统数据",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "系统数据"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "public_key": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "public_key"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "public_key"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-223102696-run",
+        "security": []
+      }
+    },
+    "/api/v1/cjt1882004_master_sheet/sheetImport": {
+      "post": {
+        "summary": "导入点位表",
+        "x-apifox-folder": "CJT18832004点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "CJT18832004点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string",
+                    "example": "11223344"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-223576109-run",
+        "security": []
+      }
+    },
+    "/api/v1/cjt1882004_master_sheet/list": {
+      "get": {
+        "summary": "分页查看点位表",
+        "x-apifox-folder": "CJT18832004点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "CJT18832004点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "DEVICEDQNLO8",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "6",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "2",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "device_uuid": {
+                                "type": "string"
+                              },
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "meterId": {
+                                "type": "string"
+                              },
+                              "tag": {
+                                "type": "string"
+                              },
+                              "alias": {
+                                "type": "string"
+                              },
+                              "frequency": {
+                                "type": "integer"
+                              },
+                              "status": {
+                                "type": "integer"
+                              },
+                              "lastFetchTime": {
+                                "type": "integer"
+                              },
+                              "value": {
+                                "type": "integer"
+                              },
+                              "errMsg": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "device_uuid",
+                              "uuid",
+                              "meterId",
+                              "tag",
+                              "alias",
+                              "frequency",
+                              "status",
+                              "lastFetchTime",
+                              "value",
+                              "errMsg"
+                            ],
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "device_uuid",
+                              "uuid",
+                              "meterId",
+                              "tag",
+                              "alias",
+                              "frequency",
+                              "status",
+                              "lastFetchTime",
+                              "value",
+                              "errMsg"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 20,
+                        "total": 9,
+                        "records": [
+                          {
+                            "device_uuid": "DEVICEFA5TN6VK",
+                            "uuid": "DLT645JMJ3RT7C",
+                            "meterId": "100023669245",
+                            "tag": "meter2",
+                            "alias": "meter2",
+                            "frequency": 100,
+                            "status": 1,
+                            "lastFetchTime": 1728917808748,
+                            "value": 2238,
+                            "errMsg": ""
+                          },
+                          {
+                            "device_uuid": "DEVICEFA5TN6VK",
+                            "uuid": "DLT645M8QZLKZC",
+                            "meterId": "100023669245",
+                            "tag": "meter3",
+                            "alias": "meter3",
+                            "frequency": 100,
+                            "status": 1,
+                            "lastFetchTime": 1728917809714,
+                            "value": 2238,
+                            "errMsg": ""
+                          },
+                          {
+                            "device_uuid": "DEVICEFA5TN6VK",
+                            "uuid": "DLT6457WE92MAG",
+                            "meterId": "100023669245",
+                            "tag": "meter4",
+                            "alias": "meter4",
+                            "frequency": 100,
+                            "status": 1,
+                            "lastFetchTime": 1728917810037,
+                            "value": 2238,
+                            "errMsg": ""
+                          },
+                          {
+                            "device_uuid": "DEVICEFA5TN6VK",
+                            "uuid": "DLT645JHRCCARA",
+                            "meterId": "100023669245",
+                            "tag": "meter5",
+                            "alias": "meter5",
+                            "frequency": 100,
+                            "status": 1,
+                            "lastFetchTime": 1728917809071,
+                            "value": 2238,
+                            "errMsg": ""
+                          },
+                          {
+                            "device_uuid": "DEVICEFA5TN6VK",
+                            "uuid": "DLT645DG5AHN3A",
+                            "meterId": "100023669245",
+                            "tag": "meter6",
+                            "alias": "meter6",
+                            "frequency": 100,
+                            "status": 1,
+                            "lastFetchTime": 1728917809392,
+                            "value": 2238,
+                            "errMsg": ""
+                          },
+                          {
+                            "device_uuid": "DEVICEFA5TN6VK",
+                            "uuid": "DLT6456YKIT4K5",
+                            "meterId": "100023669245",
+                            "tag": "meter7",
+                            "alias": "meter7",
+                            "frequency": 100,
+                            "status": 1,
+                            "lastFetchTime": 1728917807457,
+                            "value": 2238,
+                            "errMsg": ""
+                          },
+                          {
+                            "device_uuid": "DEVICEFA5TN6VK",
+                            "uuid": "DLT645RFAYHINF",
+                            "meterId": "100023669245",
+                            "tag": "meter8",
+                            "alias": "meter8",
+                            "frequency": 100,
+                            "status": 1,
+                            "lastFetchTime": 1728917807781,
+                            "value": 2238,
+                            "errMsg": ""
+                          },
+                          {
+                            "device_uuid": "DEVICEFA5TN6VK",
+                            "uuid": "DLT645U3XPRUGF",
+                            "meterId": "100023669245",
+                            "tag": "meter9",
+                            "alias": "meter9",
+                            "frequency": 100,
+                            "status": 1,
+                            "lastFetchTime": 1728917810365,
+                            "value": 2238,
+                            "errMsg": ""
+                          },
+                          {
+                            "device_uuid": "DEVICEFA5TN6VK",
+                            "uuid": "DLT6455HRWQZL3",
+                            "meterId": "100023669245",
+                            "tag": "meter10",
+                            "alias": "meter10",
+                            "frequency": 100,
+                            "status": 1,
+                            "lastFetchTime": 1728917808426,
+                            "value": 2238,
+                            "errMsg": ""
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-223576110-run",
+        "security": []
+      }
+    },
+    "/api/v1/cjt1882004_master_sheet/update": {
+      "post": {
+        "summary": "更新点位表",
+        "x-apifox-folder": "CJT18832004点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "CJT18832004点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "cjt1882004_data_points": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "device_uuid": {
+                          "type": "string"
+                        },
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "meterId": {
+                          "type": "string"
+                        },
+                        "tag": {
+                          "type": "string"
+                        },
+                        "alias": {
+                          "type": "string"
+                        },
+                        "frequency": {
+                          "type": "integer"
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "device_uuid",
+                        "uuid",
+                        "meterId",
+                        "tag",
+                        "alias",
+                        "frequency"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "cjt1882004_data_points"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "cjt1882004_data_points"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICEFA5TN6VK",
+                "dlt6452007_data_points": [
+                  {
+                    "device_uuid": "DEVICEFA5TN6VK",
+                    "uuid": "DLT645D54PHRM3",
+                    "meterId": "100023669245",
+                    "tag": "meter1",
+                    "alias": "meter1",
+                    "frequency": 100
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-223576111-run",
+        "security": []
+      }
+    },
+    "/api/v1/cjt1882004_master_sheet/delIds": {
+      "delete": {
+        "summary": "多行删除",
+        "x-apifox-folder": "CJT18832004点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "CJT18832004点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_uuid": {
+                    "type": "string"
+                  },
+                  "uuids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-orders": [
+                  "device_uuid",
+                  "uuids"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "device_uuid": "DEVICEFA5TN6VK",
+                "uuids": [
+                  "DLT645D54PHRM3",
+                  "DLT645D54PHRM3"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-223576112-run",
+        "security": []
+      }
+    },
+    "/api/v1/cjt1882004_master_sheet/sheetExport": {
+      "get": {
+        "summary": "导出点表",
+        "x-apifox-folder": "CJT18832004点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "CJT18832004点位管理"
+        ],
+        "parameters": [
+          {
+            "name": "device_uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "AABBCCDD",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-223576113-run",
         "security": []
       }
     }

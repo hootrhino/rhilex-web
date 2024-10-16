@@ -113,6 +113,16 @@ declare namespace API {
     device_uuid: string;
   };
 
+  type getCjt1882004MasterSheetListParams = {
+    device_uuid?: string;
+    current?: number;
+    size?: number;
+  };
+
+  type getCjt1882004MasterSheetSheetExportParams = {
+    device_uuid: string;
+  };
+
   type getCrontaskResultsPageParams = {
     /** 当前页 */
     current?: string;

@@ -92,8 +92,8 @@ export default {
   'antd.upload.title': '點擊或拖曳文件到此區域進行上傳',
 
   // UART parity options
-  'options.parity.e': '奇校驗',
-  'options.parity.o': '偶校驗',
+  'options.parity.e': '偶校驗',
+  'options.parity.o': '奇校驗',
   'options.parity.n': '不校驗',
 
   /**

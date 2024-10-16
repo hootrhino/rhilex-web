@@ -2,11 +2,11 @@ import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
 import { getIntl, getLocale } from '@umijs/max';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 export const RHILEX_GRPC_TARGET = [
   {
-    title: intl.formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
+    title: formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
     dataIndex: ['config', 'commonConfig', 'cacheOfflineData'],
     required: true,
     renderFormItem: () => <ProSegmented width="md" />,
@@ -15,14 +15,14 @@ export const RHILEX_GRPC_TARGET = [
     ),
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.host' }),
+    title: formatMessage({ id: 'outend.table.title.host' }),
     dataIndex: ['config', 'commonConfig', 'host'],
     required: true,
     copyable: true,
     render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.host,
   },
   {
-    title: intl.formatMessage({ id: 'form.title.port' }),
+    title: formatMessage({ id: 'form.title.port' }),
     dataIndex: ['config', 'commonConfig', 'port'],
     valueType: 'digit',
     required: true,

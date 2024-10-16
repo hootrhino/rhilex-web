@@ -11,15 +11,15 @@ import type { LabeledValue } from 'antd/es/select';
 import type { DeviceItem } from '..';
 import { BacnetModeOption } from '../enum';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
-export const GENERIC_BACNET_IP_CONFIG = [
+export const GENERIC_BACNET_IP = [
   {
-    title: intl.formatMessage({ id: 'device.form.title.group.common' }),
+    title: formatMessage({ id: 'device.form.title.group.common' }),
     valueType: 'group',
     columns: [
       {
-        title: intl.formatMessage({ id: 'device.form.title.enableBatchRequest' }),
+        title: formatMessage({ id: 'device.form.title.enableBatchRequest' }),
         dataIndex: ['config', 'commonConfig', 'batchRequest'],
         required: true,
         renderFormItem: () => <ProSegmented width="md" />,
@@ -28,7 +28,7 @@ export const GENERIC_BACNET_IP_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.frequency' }),
+        title: formatMessage({ id: 'device.form.title.frequency' }),
         dataIndex: ['config', 'commonConfig', 'frequency'],
         valueType: 'digit',
         required: true,
@@ -42,18 +42,18 @@ export const GENERIC_BACNET_IP_CONFIG = [
     ],
   },
   {
-    title: intl.formatMessage({ id: 'device.form.title.group.bacnet' }),
+    title: formatMessage({ id: 'device.form.title.group.bacnet' }),
     valueType: 'group',
     columns: [
       {
-        title: intl.formatMessage({ id: 'device.form.title.vendorId' }),
+        title: formatMessage({ id: 'device.form.title.vendorId' }),
         dataIndex: ['config', 'bacnetConfig', 'vendorId'],
         valueType: 'digit',
         formItemProps: {
           rules: [
             {
               required: true,
-              message: intl.formatMessage({ id: 'device.form.placeholder.vendorId' }),
+              message: formatMessage({ id: 'device.form.placeholder.vendorId' }),
             },
             {
               validator: (_rule: Rule, value: number) =>
@@ -64,20 +64,20 @@ export const GENERIC_BACNET_IP_CONFIG = [
         render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.vendorId,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.id' }),
+        title: formatMessage({ id: 'device.form.title.id' }),
         dataIndex: ['config', 'bacnetConfig', 'deviceId'],
         valueType: 'digit',
         formItemProps: {
           rules: [
-            { required: true, message: intl.formatMessage({ id: 'device.form.placeholder.id' }) },
+            { required: true, message: formatMessage({ id: 'device.form.placeholder.id' }) },
             {
               min: 0,
-              message: intl.formatMessage({ id: 'device.form.rules.id' }),
+              message: formatMessage({ id: 'device.form.rules.id' }),
               type: 'integer',
             },
             {
               max: 4194302,
-              message: intl.formatMessage({ id: 'device.form.rules.id' }),
+              message: formatMessage({ id: 'device.form.rules.id' }),
               type: 'integer',
             },
           ],
@@ -85,7 +85,7 @@ export const GENERIC_BACNET_IP_CONFIG = [
         render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.deviceId,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.mode' }),
+        title: formatMessage({ id: 'device.form.title.mode' }),
         dataIndex: ['config', 'bacnetConfig', 'mode'],
         valueType: 'select',
         valueEnum: BacnetModeOption,
@@ -94,7 +94,7 @@ export const GENERIC_BACNET_IP_CONFIG = [
           BacnetModeOption[bacnetConfig?.mode],
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.cidr' }),
+        title: formatMessage({ id: 'device.form.title.cidr' }),
         dataIndex: ['config', 'bacnetConfig', 'networkCidr'],
         valueType: 'select',
         required: true,
@@ -114,7 +114,7 @@ export const GENERIC_BACNET_IP_CONFIG = [
         render: (_dom: React.ReactNode, { bacnetConfig }: DeviceItem) => bacnetConfig?.networkCidr,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.localPort' }),
+        title: formatMessage({ id: 'device.form.title.localPort' }),
         dataIndex: ['config', 'bacnetConfig', 'localPort'],
         required: true,
         valueType: 'digit',

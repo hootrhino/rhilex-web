@@ -1,6 +1,6 @@
 import { getIntl, getLocale } from '@umijs/max';
 
-const intl = getIntl(getLocale());
+const {formatMessage} = getIntl(getLocale());
 
 export const getAppStackAction = (ip?: string) => `function Main(arg)
 while true do
@@ -26,8 +26,8 @@ end;`
 export const appStackQuickTpl = [
   {
     key: 'appStack',
-    label: intl.formatMessage({ id: 'component.tpl.rhilex.label' }),
-    detail: intl.formatMessage({ id: 'component.tpl.rhilex.detail' }, { name: 'RHILEXG1' }),
+    label: formatMessage({ id: 'component.tpl.rhilex.label' }),
+    detail: formatMessage({ id: 'component.tpl.rhilex.detail' }, { name: 'RHILEXG1' }),
     apply: getAppStackAction('8.8.8.8'),
     type: 'function',
     hasVariables: true

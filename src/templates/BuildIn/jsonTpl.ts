@@ -3,7 +3,7 @@
  */
 
 import { getIntl, getLocale } from '@umijs/max';
-const intl = getIntl(getLocale());
+const {formatMessage} = getIntl(getLocale());
 
 export const jsonTpl = [
   {
@@ -11,13 +11,13 @@ export const jsonTpl = [
     label: 'json:T2J',
     apply: `local Value = json:T2J(arg)`,
     type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.jsonT2J.detail' }),
+    detail: formatMessage({ id: 'component.tpl.jsonT2J.detail' }),
   },
   {
     key: 'json-J2T',
     label: 'json:J2T',
     apply: `local Value = json:J2T(arg)`,
     type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.jsonJ2T.detail' }),
+    detail: formatMessage({ id: 'component.tpl.jsonJ2T.detail' }),
   },
 ];

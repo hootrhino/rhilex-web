@@ -218,7 +218,7 @@ export default {
   'device.type.ithings': 'iThings IoT Platform',
   'device.type.uartRW': 'Generic Serial Read/Write Gateway',
   'device.type.mbus': 'Generic M-Bus Gateway',
-  'device.type.dlt645': 'National Standard DL/T645-2007 Gateway',
+  'device.type.national': 'National Standard {protocol} Gateway',
 
   /**
    * Modbus function

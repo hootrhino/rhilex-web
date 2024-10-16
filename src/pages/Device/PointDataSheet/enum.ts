@@ -1,6 +1,6 @@
 import { getIntl, getLocale } from '@umijs/max';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 /**
  * BACnetIP
@@ -18,7 +18,7 @@ export enum ObjectType {
 }
 
 export const ObjectTypeOption = {
-  [ObjectType.AI]: intl.formatMessage({ id: 'device.bacnet.objectType.ai' }), // AI 模拟输入
+  [ObjectType.AI]: formatMessage({ id: 'device.bacnet.objectType.ai' }), // AI 模拟输入
   // [ObjectType.AO]: 'AO 模拟输出',
   // [ObjectType.AV]: 'AV 模拟值',
   // [ObjectType.BI]: 'BI 二进制输入',
@@ -80,37 +80,37 @@ const byte4Options = [
 export const baseOptions = [
   {
     value: 'BYTE',
-    label: `BYTE（1 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
+    label: `BYTE（1 ${formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte1Options,
   },
   {
     value: 'INT16',
-    label: `Int16（2 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
+    label: `Int16（2 ${formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte2Options,
   },
   {
     value: 'INT32',
-    label: `Int32（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
+    label: `Int32（4 ${formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte4Options,
   },
   {
     value: 'FLOAT32',
-    label: `Float32（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
+    label: `Float32（4 ${formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte4Options,
   },
   {
     value: 'UINT16',
-    label: `UInt16（2 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
+    label: `UInt16（2 ${formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte2Options,
   },
   {
     value: 'UINT32',
-    label: `UInt32（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
+    label: `UInt32（4 ${formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte4Options,
   },
   {
     value: 'UFLOAT32',
-    label: `UFloat32（4 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
+    label: `UFloat32（4 ${formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte4Options,
   },
 ];
@@ -119,21 +119,21 @@ export const baseOptions = [
 export const modbusDataTypeOptions = [
   {
     value: 'RAW',
-    label: `RAW（0-256 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
+    label: `RAW（0-256 ${formatMessage({ id: 'device.unit.byte' })}）`,
     children: orderRawOption,
   },
   ...baseOptions,
   {
     value: 'UTF8',
-    label: `UTF8（1-256 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
+    label: `UTF8（1-256 ${formatMessage({ id: 'device.unit.byte' })}）`,
     children: [
       {
         value: 'BIG_ENDIAN',
-        label: intl.formatMessage({ id: 'device.bigEndian' }),
+        label: formatMessage({ id: 'device.bigEndian' }),
       },
       {
         value: 'LITTLE_ENDIAN',
-        label: intl.formatMessage({ id: 'device.littleEndian' }),
+        label: formatMessage({ id: 'device.littleEndian' }),
       },
     ],
   },
@@ -157,12 +157,12 @@ export enum Quantity {
 export const plcDataTypeOptions = [
   {
     value: 'I',
-    label: `I（1 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
+    label: `I（1 ${formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte1Options,
   },
   {
     value: 'Q',
-    label: `Q（1 ${intl.formatMessage({ id: 'device.unit.byte' })}）`,
+    label: `Q（1 ${formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte1Options,
   },
   ...baseOptions,

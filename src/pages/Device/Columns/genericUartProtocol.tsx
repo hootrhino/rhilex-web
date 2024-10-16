@@ -7,22 +7,22 @@ import { modeColumns } from '.';
 import type { DeviceItem } from '..';
 import { DeviceMode } from '../enum';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
-export const GENERIC_UART_PROTOCOL_CONFIG = [
+export const GENERIC_UART_PROTOCOL = [
   {
-    title: intl.formatMessage({ id: 'device.form.title.group.common' }),
+    title: formatMessage({ id: 'device.form.title.group.common' }),
     valueType: 'group',
     columns: [
       {
-        title: intl.formatMessage({ id: 'device.form.title.retryTime' }),
+        title: formatMessage({ id: 'device.form.title.retryTime' }),
         dataIndex: ['config', 'commonConfig', 'retryTime'],
         valueType: 'digit',
         required: true,
         render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.retryTime,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.mode' }),
+        title: formatMessage({ id: 'device.form.title.mode' }),
         dataIndex: ['config', 'commonConfig', 'mode'],
         valueType: 'select',
         valueEnum: [DeviceMode.UART],
@@ -30,7 +30,7 @@ export const GENERIC_UART_PROTOCOL_CONFIG = [
         render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.mode,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.timeout.uart' }),
+        title: formatMessage({ id: 'device.form.title.timeout.uart' }),
         dataIndex: ['config', 'commonConfig', 'timeout'],
         valueType: 'digit',
         required: true,
@@ -38,7 +38,7 @@ export const GENERIC_UART_PROTOCOL_CONFIG = [
           rules: [
             {
               required: true,
-              message: intl.formatMessage({ id: 'device.form.placeholder.uartTimeout' }),
+              message: formatMessage({ id: 'device.form.placeholder.uartTimeout' }),
             },
             {
               validator: (_rule: Rule, value: number) =>
@@ -46,7 +46,7 @@ export const GENERIC_UART_PROTOCOL_CONFIG = [
             },
           ],
         },
-        tooltip: intl.formatMessage({ id: 'device.tooltip.uartTimeout' }),
+        tooltip: formatMessage({ id: 'device.tooltip.uartTimeout' }),
         fieldProps: {
           addonAfter: 'ms',
         },

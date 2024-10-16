@@ -94,9 +94,9 @@ export default {
   'antd.upload.title': 'Click or drag file to this area to upload',
 
   // UART parity options
-  'options.parity.e': 'Even',
-  'options.parity.o': 'Odd',
-  'options.parity.n': 'None',
+  'options.parity.e': 'Even Parity',
+  'options.parity.o': 'Odd Parity',
+  'options.parity.n': 'No Parity',
 
   /**
    * menu

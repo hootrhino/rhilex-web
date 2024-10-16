@@ -47,6 +47,7 @@ const sheetType = {
   [DeviceType.GENERIC_BACNET_IP]: 'bacnet-sheet',
   [DeviceType.BACNET_ROUTER_GW]: 'bacnet-router-sheet',
   [DeviceType.DLT6452007_MASTER]: 'dlt6452007-master-sheet',
+  [DeviceType.CJT1882004_MASTER]: 'cjt1882004-master-sheet',
 };
 
 const Devices = () => {
@@ -131,6 +132,7 @@ const Devices = () => {
       case DeviceType.GENERIC_BACNET_IP:
       case DeviceType.BACNET_ROUTER_GW:
       case DeviceType.DLT6452007_MASTER:
+      case DeviceType.CJT1882004_MASTER:
         newItems = [
           ...newItems,
           {

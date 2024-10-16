@@ -1,6 +1,6 @@
 import { getIntl, getLocale } from '@umijs/max';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 export enum TransceiverType {
   COMMON_RF = 0,
@@ -22,7 +22,7 @@ export enum TransceiverType {
 export const TransceiverTypeOption = {
   [TransceiverType.COMMON_RF]: {
     icon: 'commonrf',
-    text: intl.formatMessage({ id: 'com.type.urf' }),
+    text: formatMessage({ id: 'com.type.urf' }),
   },
   [TransceiverType.WIFI]: {
     icon: 'wifi',
@@ -30,11 +30,11 @@ export const TransceiverTypeOption = {
   },
   [TransceiverType.BLC]: {
     icon: 'blc',
-    text: intl.formatMessage({ id: 'com.type.blc' }),
+    text: formatMessage({ id: 'com.type.blc' }),
   },
   [TransceiverType.BLE]: {
     icon: 'ble',
-    text: intl.formatMessage({ id: 'com.type.ble' }),
+    text: formatMessage({ id: 'com.type.ble' }),
   },
   [TransceiverType.ZIGBEE]: {
     icon: 'zigbee',
@@ -42,27 +42,27 @@ export const TransceiverTypeOption = {
   },
   [TransceiverType.RF24g]: {
     icon: 'rf24g',
-    text: intl.formatMessage({ id: 'com.type.rf' }, { type: '2.4G' }),
+    text: formatMessage({ id: 'com.type.rf' }, { type: '2.4G' }),
   },
   [TransceiverType.RF433M]: {
     icon: 'rf433m',
-    text: intl.formatMessage({ id: 'com.type.rf' }, { type: '433M' }),
+    text: formatMessage({ id: 'com.type.rf' }, { type: '433M' }),
   },
   [TransceiverType.MN4G]: {
     icon: 'mn4g',
-    text: intl.formatMessage({ id: 'com.type.rf' }, { type: '4G' }),
+    text: formatMessage({ id: 'com.type.rf' }, { type: '4G' }),
   },
   [TransceiverType.MN5G]: {
     icon: 'mn5g',
-    text: intl.formatMessage({ id: 'com.type.rf' }, { type: '5G' }),
+    text: formatMessage({ id: 'com.type.rf' }, { type: '5G' }),
   },
   [TransceiverType.NBIoT]: {
     icon: 'nbiot',
-    text: intl.formatMessage({ id: 'com.type.rf' }, { type: 'NB-IoT' }),
+    text: formatMessage({ id: 'com.type.rf' }, { type: 'NB-IoT' }),
   },
   [TransceiverType.LORA]: {
     icon: 'lora',
-    text: intl.formatMessage({ id: 'com.type.rf' }, { type: 'LoRa' }),
+    text: formatMessage({ id: 'com.type.rf' }, { type: 'LoRa' }),
   },
   [TransceiverType.LORA_WAN]: {
     icon: 'lorawan',
@@ -70,11 +70,11 @@ export const TransceiverTypeOption = {
   },
   [TransceiverType.IR]: {
     icon: 'ir',
-    text: intl.formatMessage({ id: 'com.type.ir' }),
+    text: formatMessage({ id: 'com.type.ir' }),
   },
   [TransceiverType.BEEP]: {
     icon: 'beep',
-    text: intl.formatMessage({ id: 'com.type.beep' }),
+    text: formatMessage({ id: 'com.type.beep' }),
   },
 };
 

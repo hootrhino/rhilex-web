@@ -5,15 +5,15 @@ import { getIntl, getLocale } from '@umijs/max';
 import type { DeviceItem } from '..';
 import { plcModelOptions, rackEnum, slotEnum } from '../enum';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
-export const SIEMENS_PLC_CONFIG = [
+export const SIEMENS_PLC = [
   {
-    title: intl.formatMessage({ id: 'device.form.title.group.common' }),
+    title: formatMessage({ id: 'device.form.title.group.common' }),
     valueType: 'group',
     columns: [
       {
-        title: intl.formatMessage({ id: 'device.form.title.autoRequest' }),
+        title: formatMessage({ id: 'device.form.title.autoRequest' }),
         dataIndex: ['config', 'commonConfig', 'autoRequest'],
         required: true,
         renderFormItem: () => <ProSegmented width="md" />,
@@ -22,7 +22,7 @@ export const SIEMENS_PLC_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.enableBatchRequest' }),
+        title: formatMessage({ id: 'device.form.title.enableBatchRequest' }),
         dataIndex: ['config', 'commonConfig', 'batchRequest'],
         required: true,
         renderFormItem: () => <ProSegmented width="md" />,
@@ -31,7 +31,7 @@ export const SIEMENS_PLC_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.timeout.connect' }),
+        title: formatMessage({ id: 'device.form.title.timeout.connect' }),
         dataIndex: ['config', 'commonConfig', 'timeout'],
         valueType: 'digit',
         required: true,
@@ -43,7 +43,7 @@ export const SIEMENS_PLC_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.timeout.idle' }),
+        title: formatMessage({ id: 'device.form.title.timeout.idle' }),
         dataIndex: ['config', 'commonConfig', 'idleTimeout'],
         valueType: 'digit',
         required: true,
@@ -55,13 +55,13 @@ export const SIEMENS_PLC_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.host.plc' }),
+        title: formatMessage({ id: 'device.form.title.host.plc' }),
         dataIndex: ['config', 'commonConfig', 'host'],
         required: true,
         render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.host,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.model.plc' }),
+        title: formatMessage({ id: 'device.form.title.model.plc' }),
         dataIndex: ['config', 'commonConfig', 'model'],
         required: true,
         valueType: 'select',
@@ -70,7 +70,7 @@ export const SIEMENS_PLC_CONFIG = [
           plcModelOptions[commonConfig?.model],
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.rack' }),
+        title: formatMessage({ id: 'device.form.title.rack' }),
         dataIndex: ['config', 'commonConfig', 'rack'],
         required: true,
         valueType: 'select',
@@ -78,7 +78,7 @@ export const SIEMENS_PLC_CONFIG = [
         render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.rack,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.slot' }),
+        title: formatMessage({ id: 'device.form.title.slot' }),
         dataIndex: ['config', 'commonConfig', 'slot'],
         required: true,
         valueType: 'select',

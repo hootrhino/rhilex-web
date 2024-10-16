@@ -6,15 +6,15 @@ import { modeColumns } from '.';
 import type { DeviceItem } from '..';
 import { ReadFormatOption } from '../enum';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
-export const GENERIC_UART_RW_CONFIG = [
+export const GENERIC_UART_RW = [
   {
-    title: intl.formatMessage({ id: 'device.form.title.group.common' }),
+    title: formatMessage({ id: 'device.form.title.group.common' }),
     valueType: 'group',
     columns: [
       {
-        title: intl.formatMessage({ id: 'device.form.title.rwConfig.autoRequest' }),
+        title: formatMessage({ id: 'device.form.title.rwConfig.autoRequest' }),
         dataIndex: ['config', 'commonConfig', 'autoRequest'],
         required: true,
         renderFormItem: () => <ProSegmented width="md" />,
@@ -25,17 +25,17 @@ export const GENERIC_UART_RW_CONFIG = [
     ],
   },
   {
-    title: intl.formatMessage({ id: 'device.form.title.group.uartRW' }),
+    title: formatMessage({ id: 'device.form.title.group.uartRW' }),
     valueType: 'group',
     columns: [
       {
-        title: intl.formatMessage({ id: 'device.form.title.tag' }),
+        title: formatMessage({ id: 'device.form.title.tag' }),
         required: true,
         dataIndex: ['config', 'rwConfig', 'tag'],
         render: (_dom: React.ReactNode, { rwConfig }: DeviceItem) => rwConfig.tag,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.readFormat' }),
+        title: formatMessage({ id: 'device.form.title.readFormat' }),
         valueType: 'select',
         required: true,
         valueEnum: ReadFormatOption,
@@ -44,7 +44,7 @@ export const GENERIC_UART_RW_CONFIG = [
           rwConfig.readFormat ? ReadFormatOption[rwConfig.readFormat] : '-',
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.timeSlice' }),
+        title: formatMessage({ id: 'device.form.title.timeSlice' }),
         valueType: 'digit',
         dataIndex: ['config', 'rwConfig', 'timeSlice'],
         required: true,

@@ -3,7 +3,7 @@
  */
 
 import { getIntl, getLocale } from '@umijs/max';
-const intl = getIntl(getLocale());
+const {formatMessage} = getIntl(getLocale());
 
 export const kvTpl = [
   {
@@ -11,20 +11,20 @@ export const kvTpl = [
     label: 'kv:Set',
     apply: `kv:Set(arg1, arg2)`,
     type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.kvSet.detail' }),
+    detail: formatMessage({ id: 'component.tpl.kvSet.detail' }),
   },
   {
     key: 'kv-get',
     label: 'kv:Get',
     apply: `local value = kv:Get(arg)`,
     type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.kvGet.detail' }),
+    detail: formatMessage({ id: 'component.tpl.kvGet.detail' }),
   },
   {
     key: 'kv-del',
     label: 'kv:Del',
     apply: `kv:Del(arg)`,
     type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.kvDel.detail' }),
+    detail: formatMessage({ id: 'component.tpl.kvDel.detail' }),
   },
 ];

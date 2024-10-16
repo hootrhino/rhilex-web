@@ -1,6 +1,6 @@
 import { getIntl, getLocale } from '@umijs/max';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 /**
  * 设备类型 - type
@@ -15,10 +15,10 @@ export enum MBusDeviceType {
 }
 
 export const mBusDeviceTypeOptions = {
-  [MBusDeviceType.HEAT_METER]: intl.formatMessage({ id: 'device.mbus.type.heatMeter' }),
-  [MBusDeviceType.WATER_METER]: intl.formatMessage({ id: 'device.mbus.type.waterMeter' }),
-  [MBusDeviceType.GAS_METER]: intl.formatMessage({ id: 'device.mbus.type.gasMeter' }),
-  [MBusDeviceType.ELECTRIC_METER]: intl.formatMessage({ id: 'device.mbus.type.elecMeter' }),
-  [MBusDeviceType.TRANSPARENT]: intl.formatMessage({ id: 'device.mbus.type.transparent' }),
-  [MBusDeviceType.PROTOCOL_CONVERTER]: intl.formatMessage({ id: 'device.mbus.type.protocol' }),
+  [MBusDeviceType.HEAT_METER]: formatMessage({ id: 'device.mbus.type.heatMeter' }),
+  [MBusDeviceType.WATER_METER]: formatMessage({ id: 'device.mbus.type.waterMeter' }),
+  [MBusDeviceType.GAS_METER]: formatMessage({ id: 'device.mbus.type.gasMeter' }),
+  [MBusDeviceType.ELECTRIC_METER]: formatMessage({ id: 'device.mbus.type.elecMeter' }),
+  [MBusDeviceType.TRANSPARENT]: formatMessage({ id: 'device.mbus.type.transparent' }),
+  [MBusDeviceType.PROTOCOL_CONVERTER]: formatMessage({ id: 'device.mbus.type.protocol' }),
 };

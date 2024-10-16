@@ -5,7 +5,7 @@ import { getIntl, getLocale } from '@umijs/max';
 import type { TplItem } from '@/components/RuleExample/typings';
 import { OutendType, dataToType } from '@/pages/Outend/enum';
 
-const intl = getIntl(getLocale());
+const {formatMessage} = getIntl(getLocale());
 
 // Modbus 数据解析并推向北向资源快捷模板
 export const getDataToQuickAction = (type?: OutendType, uuid?: string, enableBatchRequest?: boolean) => {
@@ -86,7 +86,7 @@ export const dataToTpl: TplItem[] = [{
   key: 'dataToTarget',
   label: 'data:ToTarget',
   apply: getDataToAction(),
-  detail: intl.formatMessage({id: 'component.tpl.data'}),
+  detail: formatMessage({id: 'component.tpl.data'}),
   type: 'function',
   hasVariables: true
 }];
@@ -94,7 +94,7 @@ export const dataToTpl: TplItem[] = [{
 export const dataToQuickTpl: TplItem[] = [{
   label: '',
   key: 'dataToTargetQuick',
-  detail: intl.formatMessage({id: 'component.tpl.data.quick.modbus'}),
+  detail: formatMessage({id: 'component.tpl.data.quick.modbus'}),
   apply: getDataToQuickAction(),
   type: 'function',
   hasVariables: true

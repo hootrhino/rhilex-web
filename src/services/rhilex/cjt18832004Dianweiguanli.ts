@@ -2,8 +2,8 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 多行删除 DELETE /api/v1/dlt6452007_master_sheet/delIds */
-export async function deleteDlt6452007MasterSheetDelIds(
+/** 多行删除 DELETE /api/v1/cjt1882004_master_sheet/delIds */
+export async function deleteCjt1882004MasterSheetDelIds(
   body: {
     device_uuid: string;
     uuids: string[];
@@ -11,7 +11,7 @@ export async function deleteDlt6452007MasterSheetDelIds(
   options?: { [key: string]: any },
 ) {
   return request<{ code: number; msg: string; data: string[] }>(
-    '/api/v1/dlt6452007_master_sheet/delIds',
+    '/api/v1/cjt1882004_master_sheet/delIds',
     {
       method: 'DELETE',
       headers: {
@@ -23,10 +23,10 @@ export async function deleteDlt6452007MasterSheetDelIds(
   );
 }
 
-/** 分页查看点位表 GET /api/v1/dlt6452007_master_sheet/list */
-export async function getDlt6452007MasterSheetList(
+/** 分页查看点位表 GET /api/v1/cjt1882004_master_sheet/list */
+export async function getCjt1882004MasterSheetList(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getDlt6452007MasterSheetListParams,
+  params: API.getCjt1882004MasterSheetListParams,
   options?: { [key: string]: any },
 ) {
   return request<{
@@ -49,7 +49,7 @@ export async function getDlt6452007MasterSheetList(
         errMsg: string;
       }[];
     };
-  }>('/api/v1/dlt6452007_master_sheet/list', {
+  }>('/api/v1/cjt1882004_master_sheet/list', {
     method: 'GET',
     params: {
       ...params,
@@ -58,13 +58,13 @@ export async function getDlt6452007MasterSheetList(
   });
 }
 
-/** 导出点表 GET /api/v1/dlt6452007_master_sheet/sheetExport */
-export async function getDlt6452007MasterSheetSheetExport(
+/** 导出点表 GET /api/v1/cjt1882004_master_sheet/sheetExport */
+export async function getCjt1882004MasterSheetSheetExport(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getDlt6452007MasterSheetSheetExportParams,
+  params: API.getCjt1882004MasterSheetSheetExportParams,
   options?: { [key: string]: any },
 ) {
-  return request<Record<string, any>>('/api/v1/dlt6452007_master_sheet/sheetExport', {
+  return request<Record<string, any>>('/api/v1/cjt1882004_master_sheet/sheetExport', {
     method: 'GET',
     params: {
       ...params,
@@ -73,8 +73,8 @@ export async function getDlt6452007MasterSheetSheetExport(
   });
 }
 
-/** 导入点位表 POST /api/v1/dlt6452007_master_sheet/sheetImport */
-export async function postDlt6452007MasterSheetSheetImport(
+/** 导入点位表 POST /api/v1/cjt1882004_master_sheet/sheetImport */
+export async function postCjt1882004MasterSheetSheetImport(
   body: {
     device_uuid: string;
   },
@@ -103,7 +103,7 @@ export async function postDlt6452007MasterSheetSheetImport(
     }
   });
 
-  return request<Record<string, any>>('/api/v1/dlt6452007_master_sheet/sheetImport', {
+  return request<Record<string, any>>('/api/v1/cjt1882004_master_sheet/sheetImport', {
     method: 'POST',
     data: formData,
     requestType: 'form',
@@ -111,11 +111,11 @@ export async function postDlt6452007MasterSheetSheetImport(
   });
 }
 
-/** 更新点位表 POST /api/v1/dlt6452007_master_sheet/update */
-export async function postDlt6452007MasterSheetUpdate(
+/** 更新点位表 POST /api/v1/cjt1882004_master_sheet/update */
+export async function postCjt1882004MasterSheetUpdate(
   body: {
     device_uuid: string;
-    dlt6452007_data_points: {
+    cjt1882004_data_points: {
       device_uuid?: string;
       uuid?: string;
       meterId?: string;
@@ -127,7 +127,7 @@ export async function postDlt6452007MasterSheetUpdate(
   options?: { [key: string]: any },
 ) {
   return request<{ code: number; msg: string; data: string[] }>(
-    '/api/v1/dlt6452007_master_sheet/update',
+    '/api/v1/cjt1882004_master_sheet/update',
     {
       method: 'POST',
       headers: {

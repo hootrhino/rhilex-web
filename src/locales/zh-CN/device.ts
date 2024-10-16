@@ -214,7 +214,7 @@ export default {
   'device.type.ithings': '联犀物联网平台',
   'device.type.uartRW': '通用串口读写网关',
   'device.type.mbus': '通用 M-Bus 数据采集网关',
-  'device.type.dlt645': '国标 DL/T645-2007 协议采集网关',
+  'device.type.national': '国标 {protocol} 协议采集网关',
 
   /**
    * Modbus function

@@ -3,7 +3,6 @@ import { message, modal } from '@/components/PopupHack';
 import { getDatacenterSecret } from '@/services/rhilex/shujuzhongxin';
 import { postLogin } from '@/services/rhilex/yonghuguanli';
 import { DEFAULT_TITLE } from '@/utils/constant';
-import { pick } from '@/utils/redash';
 import type { ProFormInstance, Settings as LayoutSettings } from '@ant-design/pro-components';
 import { DefaultFooter, LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { Helmet, history, SelectLang, useIntl, useModel } from '@umijs/max';
@@ -13,38 +12,14 @@ import { VersionType } from '@/utils/enum';
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import UserAgreementModal from './AgreementModal';
+// import { getOsGetSecurityLicense } from '@/services/rhilex/xitongshuju';
+// import { encryptText } from '@/utils/utils';
+import defaultSettings from '../../../../config/defaultSettings';
 
 export type CurrentUser = {
   username: string;
   password: string;
   agreement: string[];
-};
-
-const defaultSettings = {
-  navTheme: 'light',
-  layout: 'mix',
-  contentWidth: 'Fluid',
-  fixedHeader: true,
-  fixSiderbar: true,
-  colorWeak: false,
-  splitMenus: false,
-  title: '',
-  // pwa: false,
-  logo: '/logo.svg',
-  iconfontUrl: '',
-  menu: { locale: false },
-  token: {
-    header: {
-      colorBgHeader: '#292f33',
-      colorHeaderTitle: '#fff',
-      colorTextMenuSelected: '#fff',
-      colorTextRightActionsItem: '#dfdfdf',
-      colorTextMenuActive: 'rgba(255,255,255,0.85)',
-      colorBgMenuItemSelected: '#22272b',
-      colorTextMenu: '#dfdfdf',
-      colorTextMenuSecondary: '#dfdfdf',
-    },
-  },
 };
 
 const Login: React.FC = () => {
@@ -58,9 +33,18 @@ const Login: React.FC = () => {
     localStorage.setItem('secret', data.secret);
   };
 
-  const handleOnFinish = async (values: CurrentUser) => {
+  const handleOnFinish = async ({ username, password }: CurrentUser) => {
     try {
-      const params = pick(values, ['username', 'password']);
+      // TODO 请求接口获取公钥
+      // const { data: license } = await getOsGetSecurityLicense();
+      // TODO 加密密码 encryptText(publicKey, password)
+
+      // TODO 将加密好的 password 替换至 params
+      const params = {
+        username,
+        password,
+        // password: encryptText(license.public_key, password),
+      };
 
       const { data } = await postLogin(params);
       const { data: menuData } = await getMenuMain();

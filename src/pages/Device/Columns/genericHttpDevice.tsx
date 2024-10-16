@@ -5,15 +5,15 @@ import UnitValue from '@/components/UnitValue';
 import { getIntl, getLocale } from '@umijs/max';
 import type { DeviceItem } from '..';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
-export const GENERIC_HTTP_DEVICE_CONFIG = [
+export const GENERIC_HTTP_DEVICE = [
   {
-    title: intl.formatMessage({ id: 'device.form.title.group.common' }),
+    title: formatMessage({ id: 'device.form.title.group.common' }),
     valueType: 'group',
     columns: [
       {
-        title: intl.formatMessage({ id: 'device.form.title.autoRequest' }),
+        title: formatMessage({ id: 'device.form.title.autoRequest' }),
         dataIndex: ['config', 'commonConfig', 'autoRequest'],
         required: true,
         renderFormItem: () => <ProSegmented width="md" />,
@@ -22,7 +22,7 @@ export const GENERIC_HTTP_DEVICE_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.timeout.connect' }),
+        title: formatMessage({ id: 'device.form.title.timeout.connect' }),
         dataIndex: ['config', 'commonConfig', 'timeout'],
         valueType: 'digit',
         required: true,
@@ -34,7 +34,7 @@ export const GENERIC_HTTP_DEVICE_CONFIG = [
         ),
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.frequency' }),
+        title: formatMessage({ id: 'device.form.title.frequency' }),
         dataIndex: ['config', 'commonConfig', 'frequency'],
         valueType: 'digit',
         required: true,
@@ -48,7 +48,7 @@ export const GENERIC_HTTP_DEVICE_CONFIG = [
     ],
   },
   {
-    title: intl.formatMessage({ id: 'device.form.title.group.http' }),
+    title: formatMessage({ id: 'device.form.title.group.http' }),
     valueType: 'group',
     fieldProps: {
       direction: 'vertical',
@@ -56,7 +56,7 @@ export const GENERIC_HTTP_DEVICE_CONFIG = [
     key: 'http',
     columns: [
       {
-        title: intl.formatMessage({ id: 'device.form.title.url' }),
+        title: formatMessage({ id: 'device.form.title.url' }),
         dataIndex: ['config', 'httpConfig', 'url'],
         required: true,
         render: (_dom: React.ReactNode, { httpConfig }: DeviceItem) => httpConfig.url,
@@ -90,10 +90,7 @@ export const GENERIC_HTTP_DEVICE_CONFIG = [
                         rules: [
                           {
                             required: isSuccess ? false : true,
-                            message: intl.formatMessage(
-                              { id: 'placeholder.input' },
-                              { text: 'value' },
-                            ),
+                            message: formatMessage({ id: 'placeholder.input' }, { text: 'value' }),
                           },
                         ],
                       },

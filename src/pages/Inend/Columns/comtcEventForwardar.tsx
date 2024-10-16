@@ -4,11 +4,11 @@ import { IconFont } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 import { Space } from 'antd';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 export const COMTC_EVENT_FORWARDER = [
   {
-    title: intl.formatMessage({ id: 'inend.table.title.comName' }),
+    title: formatMessage({ id: 'inend.table.title.comName' }),
     dataIndex: ['config', 'comName'],
     valueType: 'select',
     required: true,

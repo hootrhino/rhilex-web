@@ -7,7 +7,7 @@ import { DeviceMode } from '../enum';
 
 const { formatMessage } = getIntl(getLocale());
 
-export const GENERIC_MODBUS_MASTER = [
+export const CJT1882004_MASTER = [
   {
     title: formatMessage({ id: 'device.form.title.group.common' }),
     valueType: 'group',
@@ -22,15 +22,6 @@ export const GENERIC_MODBUS_MASTER = [
         ),
       },
       {
-        title: formatMessage({ id: 'device.form.title.enableOptimize' }),
-        dataIndex: ['config', 'commonConfig', 'enableOptimize'],
-        required: true,
-        renderFormItem: () => <ProSegmented width="md" />,
-        render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
-          <ProTag type={StatusType.BOOL}>{commonConfig?.enableOptimize}</ProTag>
-        ),
-      },
-      {
         title: formatMessage({ id: 'device.form.title.enableBatchRequest' }),
         dataIndex: ['config', 'commonConfig', 'batchRequest'],
         required: true,
@@ -38,13 +29,6 @@ export const GENERIC_MODBUS_MASTER = [
         render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
           <ProTag type={StatusType.BOOL}>{commonConfig?.batchRequest}</ProTag>
         ),
-      },
-      {
-        title: formatMessage({ id: 'device.form.title.maxRegNum' }),
-        dataIndex: ['config', 'commonConfig', 'maxRegNum'],
-        valueType: 'digit',
-        required: true,
-        render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => commonConfig?.maxRegNum,
       },
       {
         title: formatMessage({ id: 'device.form.title.mode' }),

@@ -8,22 +8,22 @@ import type { LabeledValue } from 'antd/es/select';
 import type { DeviceItem } from '..';
 import { BacnetModeOption } from '../enum';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
-export const BACNET_ROUTER_GW_CONFIG = [
+export const BACNET_ROUTER_GW = [
   {
-    title: intl.formatMessage({ id: 'device.form.title.group.bacnet' }),
+    title: formatMessage({ id: 'device.form.title.group.bacnet' }),
     valueType: 'group',
     columns: [
       {
-        title: intl.formatMessage({ id: 'device.form.title.vendorId' }),
+        title: formatMessage({ id: 'device.form.title.vendorId' }),
         dataIndex: ['config', 'bacnetRouterConfig', 'vendorId'],
         valueType: 'digit',
         formItemProps: {
           rules: [
             {
               required: true,
-              message: intl.formatMessage({ id: 'device.form.placeholder.vendorId' }),
+              message: formatMessage({ id: 'device.form.placeholder.vendorId' }),
             },
             {
               validator: (_rule: Rule, value: number) =>
@@ -35,20 +35,20 @@ export const BACNET_ROUTER_GW_CONFIG = [
           bacnetRouterConfig?.vendorId,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.id' }),
+        title: formatMessage({ id: 'device.form.title.id' }),
         dataIndex: ['config', 'bacnetRouterConfig', 'deviceId'],
         valueType: 'digit',
         formItemProps: {
           rules: [
-            { required: true, message: intl.formatMessage({ id: 'device.form.placeholder.id' }) },
+            { required: true, message: formatMessage({ id: 'device.form.placeholder.id' }) },
             {
               min: 0,
-              message: intl.formatMessage({ id: 'device.form.rules.id' }),
+              message: formatMessage({ id: 'device.form.rules.id' }),
               type: 'integer',
             },
             {
               max: 4194302,
-              message: intl.formatMessage({ id: 'device.form.rules.id' }),
+              message: formatMessage({ id: 'device.form.rules.id' }),
               type: 'integer',
             },
           ],
@@ -57,13 +57,13 @@ export const BACNET_ROUTER_GW_CONFIG = [
           bacnetRouterConfig?.deviceId,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.deviceName' }),
+        title: formatMessage({ id: 'device.form.title.deviceName' }),
         dataIndex: ['config', 'bacnetRouterConfig', 'deviceName'],
         render: (_dom: React.ReactNode, { bacnetRouterConfig }: DeviceItem) =>
           bacnetRouterConfig?.deviceName,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.mode' }),
+        title: formatMessage({ id: 'device.form.title.mode' }),
         dataIndex: ['config', 'bacnetRouterConfig', 'mode'],
         valueType: 'select',
         valueEnum: BacnetModeOption,
@@ -72,7 +72,7 @@ export const BACNET_ROUTER_GW_CONFIG = [
           BacnetModeOption[bacnetRouterConfig?.mode],
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.cidr' }),
+        title: formatMessage({ id: 'device.form.title.cidr' }),
         dataIndex: ['config', 'bacnetRouterConfig', 'networkCidr'],
         valueType: 'select',
         required: true,
@@ -93,7 +93,7 @@ export const BACNET_ROUTER_GW_CONFIG = [
           bacnetRouterConfig?.networkCidr,
       },
       {
-        title: intl.formatMessage({ id: 'device.form.title.localPort' }),
+        title: formatMessage({ id: 'device.form.title.localPort' }),
         dataIndex: ['config', 'bacnetRouterConfig', 'localPort'],
         required: true,
         valueType: 'digit',

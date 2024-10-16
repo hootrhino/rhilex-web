@@ -34,29 +34,29 @@ type ConfirmCofig = {
   handleOnEnd?: () => void;
 };
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
-const title = intl.formatMessage({ id: 'modal.title.confirm' });
+const title = formatMessage({ id: 'modal.title.confirm' });
 
 const defaultUpgradeConfig = {
   title,
-  content: intl.formatMessage({ id: 'system.modal.content.upgrade' }),
-  okText: intl.formatMessage({ id: 'system.button.confirm.upgrade' }),
-  afterOkText: intl.formatMessage({ id: 'system.button.upgrade' }),
+  content: formatMessage({ id: 'system.modal.content.upgrade' }),
+  okText: formatMessage({ id: 'system.button.confirm.upgrade' }),
+  afterOkText: formatMessage({ id: 'system.button.upgrade' }),
 };
 
 const defaultRebootConfig = {
   title,
-  content: intl.formatMessage({ id: 'system.modal.content.reboot' }),
-  okText: intl.formatMessage({ id: 'system.button.confirm.reboot' }),
-  afterOkText: intl.formatMessage({ id: 'button.reboot' }),
+  content: formatMessage({ id: 'system.modal.content.reboot' }),
+  okText: formatMessage({ id: 'system.button.confirm.reboot' }),
+  afterOkText: formatMessage({ id: 'button.reboot' }),
 };
 
 const defaultRecoverConfig = {
   title,
-  content: intl.formatMessage({ id: 'system.modal.content.recover' }),
-  okText: intl.formatMessage({ id: 'system.button.confirm.recover' }),
-  afterOkText: intl.formatMessage({ id: 'button.recover' }),
+  content: formatMessage({ id: 'system.modal.content.recover' }),
+  okText: formatMessage({ id: 'system.button.confirm.recover' }),
+  afterOkText: formatMessage({ id: 'button.recover' }),
 };
 
 export const twoColors: ProgressProps['strokeColor'] = {

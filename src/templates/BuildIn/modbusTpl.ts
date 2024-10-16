@@ -3,13 +3,13 @@
  */
 
 import { getIntl, getLocale } from '@umijs/max';
-const intl = getIntl(getLocale());
+const {formatMessage} = getIntl(getLocale());
 
 const modbusList = [
-  { target: 'F5', detail: intl.formatMessage({ id: 'component.tpl.f5' }) },
-  { target: 'F6', detail: intl.formatMessage({ id: 'component.tpl.f6' }) },
-  { target: 'F15', detail: intl.formatMessage({ id: 'component.tpl.f15' }) },
-  { target: 'F16', detail: intl.formatMessage({ id: 'component.tpl.f16' }) },
+  { target: 'F5', detail: formatMessage({ id: 'component.tpl.f5' }) },
+  { target: 'F6', detail: formatMessage({ id: 'component.tpl.f6' }) },
+  { target: 'F15', detail: formatMessage({ id: 'component.tpl.f15' }) },
+  { target: 'F16', detail: formatMessage({ id: 'component.tpl.f16' }) },
 ];
 
 export const modbusTpl = modbusList?.map(({target, ...rest}) => {

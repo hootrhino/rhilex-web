@@ -3,16 +3,16 @@
  */
 import { getIntl, getLocale } from '@umijs/max';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 export const DEFAULT_CONFIG = [
   {
-    title: intl.formatMessage({ id: 'inend.table.title.host' }),
+    title: formatMessage({ id: 'inend.table.title.host' }),
     dataIndex: ['config', 'host'],
     required: true,
   },
   {
-    title: intl.formatMessage({ id: 'form.title.port' }),
+    title: formatMessage({ id: 'form.title.port' }),
     dataIndex: ['config', 'port'],
     valueType: 'digit',
     required: true,

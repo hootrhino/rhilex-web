@@ -13,18 +13,18 @@ type DetailProps = ModalProps & {
   type: number;
 };
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 const labelWidth = getLocale() === 'en-US' ? 120 : 80;
 
 const Detail = ({ name, type, ...props }: DetailProps) => {
   // 基本信息
   const columns = [
     {
-      title: intl.formatMessage({ id: 'table.title.name' }),
+      title: formatMessage({ id: 'table.title.name' }),
       dataIndex: 'name',
     },
     {
-      title: intl.formatMessage({ id: 'table.title.type' }),
+      title: formatMessage({ id: 'table.title.type' }),
       dataIndex: 'type',
       renderText: (type: number) =>
         type ? (
@@ -37,25 +37,25 @@ const Detail = ({ name, type, ...props }: DetailProps) => {
         ),
     },
     {
-      title: intl.formatMessage({ id: 'com.table.title.model' }),
+      title: formatMessage({ id: 'com.table.title.model' }),
       dataIndex: 'model',
     },
     {
-      title: intl.formatMessage({ id: 'com.table.title.vendor' }),
+      title: formatMessage({ id: 'com.table.title.vendor' }),
       dataIndex: 'vendor',
     },
     {
-      title: intl.formatMessage({ id: 'com.table.title.firmware' }),
+      title: formatMessage({ id: 'com.table.title.firmware' }),
       dataIndex: 'firmware',
       hideInTable: true,
     },
     {
-      title: intl.formatMessage({ id: 'com.table.title.mac' }),
+      title: formatMessage({ id: 'com.table.title.mac' }),
       dataIndex: 'mac',
       hideInTable: true,
     },
     {
-      title: intl.formatMessage({ id: 'table.title.status' }),
+      title: formatMessage({ id: 'table.title.status' }),
       dataIndex: 'status',
       renderText: (status: number) => <ProTag type={StatusType.COM}>{status || 0}</ProTag>,
     },
@@ -65,7 +65,7 @@ const Detail = ({ name, type, ...props }: DetailProps) => {
   const parameterColumns = {
     [TransceiverType.MN4G]: [
       {
-        title: intl.formatMessage({ id: 'com.table.title.cops' }),
+        title: formatMessage({ id: 'com.table.title.cops' }),
         dataIndex: 'cops',
       },
       {
@@ -73,7 +73,7 @@ const Detail = ({ name, type, ...props }: DetailProps) => {
         dataIndex: 'iccid',
       },
       {
-        title: intl.formatMessage({ id: 'com.table.title.csq' }),
+        title: formatMessage({ id: 'com.table.title.csq' }),
         dataIndex: 'csq',
         renderText: (csq: number) => {
           const base = 31 / 100;
@@ -85,11 +85,11 @@ const Detail = ({ name, type, ...props }: DetailProps) => {
     ],
     [TransceiverType.BLE]: [
       {
-        title: intl.formatMessage({ id: 'com.table.title.bleName' }),
+        title: formatMessage({ id: 'com.table.title.bleName' }),
         dataIndex: 'name',
       },
       {
-        title: intl.formatMessage({ id: 'com.table.title.bleMac' }),
+        title: formatMessage({ id: 'com.table.title.bleMac' }),
         dataIndex: 'mac',
       },
     ],
@@ -98,22 +98,22 @@ const Detail = ({ name, type, ...props }: DetailProps) => {
   // 获取参数 title
   const parameterTitle = {
     [TransceiverType.MN4G]: '4G',
-    [TransceiverType.BLE]: intl.formatMessage({ id: 'com.modal.title.detail.parameter.ble' }),
+    [TransceiverType.BLE]: formatMessage({ id: 'com.modal.title.detail.parameter.ble' }),
   };
 
   return (
     <Modal
       destroyOnClose
-      title={intl.formatMessage({ id: 'com.modal.title.detail' })}
+      title={formatMessage({ id: 'com.modal.title.detail' })}
       footer={
         <Button key="close" type="primary" onClick={props.onCancel}>
-          {intl.formatMessage({ id: 'button.close' })}
+          {formatMessage({ id: 'button.close' })}
         </Button>
       }
       {...props}
     >
       <ProDescriptions
-        title={intl.formatMessage({ id: 'com.modal.title.detail.basic' })}
+        title={formatMessage({ id: 'com.modal.title.detail.basic' })}
         columns={columns}
         labelWidth={labelWidth}
         request={async () => {
@@ -127,7 +127,7 @@ const Detail = ({ name, type, ...props }: DetailProps) => {
       />
       {[TransceiverType.MN4G, TransceiverType.BLE].includes(type) && (
         <ProDescriptions
-          title={intl.formatMessage(
+          title={formatMessage(
             { id: 'com.modal.title.detail.parameter' },
             { type: parameterTitle[type] },
           )}

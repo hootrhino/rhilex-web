@@ -4,11 +4,11 @@ import UnitValue from '@/components/UnitValue';
 import { getIntl, getLocale } from '@umijs/max';
 import { dataModeOption } from '../enum';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 export const UDP_TARGET = [
   {
-    title: intl.formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
+    title: formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
     dataIndex: ['config', 'commonConfig', 'cacheOfflineData'],
     required: true,
     renderFormItem: () => <ProSegmented width="md" />,
@@ -17,7 +17,7 @@ export const UDP_TARGET = [
     ),
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.allowPing' }),
+    title: formatMessage({ id: 'outend.table.title.allowPing' }),
     dataIndex: ['config', 'commonConfig', 'allowPing'],
     required: true,
     renderFormItem: () => <ProSegmented width="md" />,
@@ -26,13 +26,13 @@ export const UDP_TARGET = [
     ),
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.pingPacket' }),
+    title: formatMessage({ id: 'outend.table.title.pingPacket' }),
     dataIndex: ['config', 'commonConfig', 'pingPacket'],
     required: true,
     render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.pingPacket,
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.timeout' }),
+    title: formatMessage({ id: 'outend.table.title.timeout' }),
     dataIndex: ['config', 'commonConfig', 'timeout'],
     required: true,
     valueType: 'digit',
@@ -44,7 +44,7 @@ export const UDP_TARGET = [
     ),
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.dataMode' }),
+    title: formatMessage({ id: 'outend.table.title.dataMode' }),
     dataIndex: ['config', 'commonConfig', 'dataMode'],
     valueEnum: dataModeOption,
     valueType: 'select',
@@ -53,14 +53,14 @@ export const UDP_TARGET = [
       dataModeOption[commonConfig?.dataMode],
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.host' }),
+    title: formatMessage({ id: 'outend.table.title.host' }),
     dataIndex: ['config', 'commonConfig', 'host'],
     required: true,
     copyable: true,
     render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.host,
   },
   {
-    title: intl.formatMessage({ id: 'form.title.port' }),
+    title: formatMessage({ id: 'form.title.port' }),
     dataIndex: ['config', 'commonConfig', 'port'],
     valueType: 'digit',
     required: true,

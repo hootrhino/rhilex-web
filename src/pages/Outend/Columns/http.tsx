@@ -4,11 +4,11 @@ import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
 import { getIntl, getLocale } from '@umijs/max';
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 export const HTTP = [
   {
-    title: intl.formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
+    title: formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
     dataIndex: ['config', 'commonConfig', 'cacheOfflineData'],
     required: true,
     renderFormItem: () => <ProSegmented width="md" />,
@@ -17,7 +17,7 @@ export const HTTP = [
     ),
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.allowPing' }),
+    title: formatMessage({ id: 'outend.table.title.allowPing' }),
     dataIndex: ['config', 'commonConfig', 'allowPing'],
     required: true,
     renderFormItem: () => <ProSegmented width="md" />,
@@ -26,13 +26,13 @@ export const HTTP = [
     ),
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.pingPacket' }),
+    title: formatMessage({ id: 'outend.table.title.pingPacket' }),
     dataIndex: ['config', 'commonConfig', 'pingPacket'],
     required: true,
     render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.pingPacket,
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.timeout' }),
+    title: formatMessage({ id: 'outend.table.title.timeout' }),
     dataIndex: ['config', 'commonConfig', 'timeout'],
     required: true,
     valueType: 'digit',
@@ -44,7 +44,7 @@ export const HTTP = [
     ),
   },
   {
-    title: intl.formatMessage({ id: 'outend.table.title.url' }),
+    title: formatMessage({ id: 'outend.table.title.url' }),
     dataIndex: ['config', 'commonConfig', 'url'],
     required: true,
     render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => commonConfig?.url,
@@ -55,7 +55,7 @@ export const HTTP = [
     title: <HeadersTitle />,
     fieldProps: {
       creatorButtonProps: {
-        creatorButtonText: intl.formatMessage({ id: 'button.list' }, { item: 'Header' }),
+        creatorButtonText: formatMessage({ id: 'button.list' }, { item: 'Header' }),
       },
     },
     columns: [
@@ -83,7 +83,7 @@ export const HTTP = [
                     rules: [
                       {
                         required: isSuccess ? false : true,
-                        message: intl.formatMessage({ id: 'placeholder.input' }, { text: 'value' }),
+                        message: formatMessage({ id: 'placeholder.input' }, { text: 'value' }),
                       },
                     ],
                   },

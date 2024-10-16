@@ -4,7 +4,7 @@
 
 import { getIntl, getLocale } from '@umijs/max';
 
-const intl = getIntl(getLocale());
+const {formatMessage} = getIntl(getLocale());
 
 export const getRfcomAction = (uuid?: string) => `Actions = {
   function(args)
@@ -25,7 +25,7 @@ export const comTpl = [
     label: 'rfcom:Ctrl',
     apply: getRfcomAction('uuid'),
     type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.rfcom.detail' }),
+    detail: formatMessage({ id: 'component.tpl.rfcom.detail' }),
     hasVariables: true
   },
 ];

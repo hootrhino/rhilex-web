@@ -166,7 +166,24 @@ export const defaultConfig = {
       mode: DeviceMode.UART,
     },
     hostConfig: defaultHostConfig,
-    uartConfig: defaultUartConfig,
+    uartConfig: {
+      ...defaultUartConfig,
+      baudRate: 2400,
+      parity: 'E',
+    },
+  },
+  [DeviceType.CJT1882004_MASTER]: {
+    commonConfig: {
+      autoRequest: DEFAULT_TRUE,
+      batchRequest: DEFAULT_FALSE,
+      mode: DeviceMode.UART,
+    },
+    hostConfig: defaultHostConfig,
+    uartConfig: {
+      ...defaultUartConfig,
+      baudRate: 2400,
+      parity: 'E',
+    },
   },
 };
 

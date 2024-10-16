@@ -3,12 +3,12 @@
  */
 
 import { getIntl, getLocale } from '@umijs/max';
-const intl = getIntl(getLocale());
+const {formatMessage} = getIntl(getLocale());
 
 const deviceList = [
-  { target: 'Write', detail: intl.formatMessage({ id: 'component.tpl.device.write' }) },
-  { target: 'Read', detail: intl.formatMessage({ id: 'component.tpl.device.read' }) },
-  { target: 'Ctrl', detail: intl.formatMessage({ id: 'component.tpl.device.ctrl' }) },
+  { target: 'Write', detail: formatMessage({ id: 'component.tpl.device.write' }) },
+  { target: 'Read', detail: formatMessage({ id: 'component.tpl.device.read' }) },
+  { target: 'Ctrl', detail: formatMessage({ id: 'component.tpl.device.ctrl' }) },
 ];
 
 const getCode = (target: string) => {

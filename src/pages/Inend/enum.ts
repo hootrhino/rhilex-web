@@ -15,20 +15,20 @@ export enum InendType {
   COMTC_EVENT_FORWARDER = 'COMTC_EVENT_FORWARDER',
 }
 
-const intl = getIntl(getLocale());
+const { formatMessage } = getIntl(getLocale());
 
 export const inendTypeOption = {
-  [InendType.COAP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'CoAP Server' }),
-  [InendType.UDP_SERVER]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'UDP Server' }),
-  [InendType.TCP_SERVER]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'TCP Server' }),
-  [InendType.HTTP]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'HTTP Server' }),
-  [InendType.GRPC]: intl.formatMessage({ id: 'inend.type.serve' }, { type: 'GRPC Server' }),
-  [InendType.GENERIC_MQTT_SERVER]: intl.formatMessage(
+  [InendType.COAP]: formatMessage({ id: 'inend.type.serve' }, { type: 'CoAP Server' }),
+  [InendType.UDP_SERVER]: formatMessage({ id: 'inend.type.serve' }, { type: 'UDP Server' }),
+  [InendType.TCP_SERVER]: formatMessage({ id: 'inend.type.serve' }, { type: 'TCP Server' }),
+  [InendType.HTTP]: formatMessage({ id: 'inend.type.serve' }, { type: 'HTTP Server' }),
+  [InendType.GRPC]: formatMessage({ id: 'inend.type.serve' }, { type: 'GRPC Server' }),
+  [InendType.GENERIC_MQTT_SERVER]: formatMessage(
     { id: 'inend.type.serve' },
     { type: 'MQTT Broker' },
   ),
-  [InendType.INTERNAL_EVENT]: intl.formatMessage({ id: 'inend.type.event' }, { type: 'RHILEX' }),
-  [InendType.COMTC_EVENT_FORWARDER]: intl.formatMessage({ id: 'inend.type.comtc' }),
+  [InendType.INTERNAL_EVENT]: formatMessage({ id: 'inend.type.event' }, { type: 'RHILEX' }),
+  [InendType.COMTC_EVENT_FORWARDER]: formatMessage({ id: 'inend.type.comtc' }),
 };
 
 /**
@@ -39,8 +39,8 @@ export enum Mode {
   DC = 'DC',
 }
 export const modeOption = {
-  [Mode.GW]: intl.formatMessage({ id: 'inend.mode.gw' }),
-  [Mode.DC]: intl.formatMessage({ id: 'inend.mode.dc' }),
+  [Mode.GW]: formatMessage({ id: 'inend.mode.gw' }),
+  [Mode.DC]: formatMessage({ id: 'inend.mode.dc' }),
 };
 
 /**
@@ -55,10 +55,10 @@ export enum EventType {
   HARDWARE = 'HARDWARE',
 }
 export const eventTypeOption = {
-  [EventType.ALL]: intl.formatMessage({ id: 'inend.event.all' }),
-  [EventType.SOURCE]: intl.formatMessage({ id: 'inend.event.source' }),
-  [EventType.DEVICE]: intl.formatMessage({ id: 'inend.event.device' }),
-  [EventType.TARGET]: intl.formatMessage({ id: 'inend.event.target' }),
-  [EventType.SYSTEM]: intl.formatMessage({ id: 'inend.event.system' }),
-  [EventType.HARDWARE]: intl.formatMessage({ id: 'inend.event.hardware' }),
+  [EventType.ALL]: formatMessage({ id: 'inend.event.all' }),
+  [EventType.SOURCE]: formatMessage({ id: 'inend.event.source' }),
+  [EventType.DEVICE]: formatMessage({ id: 'inend.event.device' }),
+  [EventType.TARGET]: formatMessage({ id: 'inend.event.target' }),
+  [EventType.SYSTEM]: formatMessage({ id: 'inend.event.system' }),
+  [EventType.HARDWARE]: formatMessage({ id: 'inend.event.hardware' }),
 };

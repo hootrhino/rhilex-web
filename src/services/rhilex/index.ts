@@ -6,6 +6,7 @@ import * as bacnetdianweiguanli from './bacnetdianweiguanli';
 import * as bacnetRoutermoshi from './bacnetRoutermoshi';
 import * as caozuocaidan from './caozuocaidan';
 import * as chajianguanli from './chajianguanli';
+import * as cjt18832004Dianweiguanli from './cjt18832004Dianweiguanli';
 import * as dapingguanli from './dapingguanli';
 import * as dingshirenwu from './dingshirenwu';
 import * as dingshizhongqi from './dingshizhongqi';
@@ -79,4 +80,5 @@ export default {
   dingshizhongqi,
   caozuocaidan,
   dlt6452007Dianweiguanli,
+  cjt18832004Dianweiguanli,
 };

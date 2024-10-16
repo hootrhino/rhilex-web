@@ -2,7 +2,7 @@
  * 标准库函数
  */
 import { getIntl, getLocale } from '@umijs/max';
-const intl = getIntl(getLocale());
+const {formatMessage} = getIntl(getLocale());
 
 export const getDebugCode = (info?: string) => `Actions = {
   function(args)
@@ -17,7 +17,7 @@ export const standardTpl = [
     label: 'Debug',
     apply: getDebugCode('success'),
     type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.standard.debug' }),
+    detail: formatMessage({ id: 'component.tpl.standard.debug' }),
     hasVariables: true
   },
   {
@@ -25,6 +25,6 @@ export const standardTpl = [
     label: 'Throw',
     apply: 'Throw(err)',
     type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.standard.debug.usage2' }),
+    detail: formatMessage({ id: 'component.tpl.standard.debug.usage2' }),
   },
 ];

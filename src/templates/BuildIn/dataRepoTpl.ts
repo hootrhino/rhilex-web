@@ -3,7 +3,7 @@
  */
 
 import { getIntl, getLocale } from '@umijs/max';
-const intl = getIntl(getLocale());
+const {formatMessage} = getIntl(getLocale());
 
 const apply = `local err = rds:Save(uuid, schema)
 if err ~= nil then
@@ -17,6 +17,6 @@ export const dataRepoTpl = [
     label: 'rds:Save',
     apply,
     type: 'function',
-    detail: intl.formatMessage({ id: 'component.tpl.save.detail' }),
+    detail: formatMessage({ id: 'component.tpl.save.detail' }),
   },
 ];
