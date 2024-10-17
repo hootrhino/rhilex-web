@@ -100,7 +100,7 @@ const Devices = () => {
     return formatMessage({ id: 'device.button.sheet' });
   };
 
-  const getMenuItems = ({ type = DeviceType.GENERIC_UART_PROTOCOL, state = 0 }) => {
+  const getMenuItems = ({ type = DeviceType.GENERIC_UART_RW, state = 0 }) => {
     const baseItems = [
       {
         key: 'restart',

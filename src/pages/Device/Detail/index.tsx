@@ -32,7 +32,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     },
   );
 
-  const { type = DeviceType.GENERIC_UART_PROTOCOL, config } = detail || {};
+  const { type = DeviceType.GENERIC_UART_RW, config } = detail || {};
 
   const renderDescription = (data: Record<string, any>[]) =>
     data?.map((item, index) => (

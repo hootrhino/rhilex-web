@@ -21,7 +21,6 @@ import { GENERIC_MBUS_MASTER } from './genericMBusMaster';
 import { GENERIC_MODBUS_MASTER } from './genericModbusMaster';
 import { GENERIC_MODBUS_SLAVER } from './genericModbusSlaver';
 import { GENERIC_SNMP } from './genericSnmp';
-import { GENERIC_UART_PROTOCOL } from './genericUartProtocol';
 import { GENERIC_UART_RW } from './genericUartRW';
 import { ITHINGS_IOTHUB_GATEWAY } from './ithings';
 import { SIEMENS_PLC } from './siemensPLC';
@@ -196,7 +195,6 @@ export const baseColumns = [
  * 类型配置
  */
 export const typeConfigColumns = {
-  [DeviceType.GENERIC_UART_PROTOCOL]: GENERIC_UART_PROTOCOL,
   [DeviceType.GENERIC_UART_RW]: GENERIC_UART_RW,
   [DeviceType.GENERIC_MODBUS_MASTER]: GENERIC_MODBUS_MASTER,
   [DeviceType.GENERIC_MODBUS_SLAVER]: GENERIC_MODBUS_SLAVER,

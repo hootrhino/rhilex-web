@@ -67,7 +67,6 @@ export default {
   'device.form.title.timeout.connect': '連接超時',
   'device.form.title.timeout.idle': '心跳超時',
   'device.form.title.timeout.scan': '掃描超時',
-  'device.form.title.timeout.uart': '讀寫超時',
 
   // frequency
   'device.form.title.frequency': '採集頻率',
@@ -79,7 +78,6 @@ export default {
   'device.form.title.uart': '系統串口',
   'device.form.title.host': '服務地址',
   'device.form.title.gid': '設備分組',
-  'device.form.title.retryTime': '最大容錯次數',
   'device.form.title.autoRequest': '啓動輪詢',
   'device.form.title.enableOptimize': '優化採集',
   'device.form.title.enableBatchRequest': '批量採集',
@@ -152,8 +150,6 @@ export default {
   'device.tooltip.group.edit': '重命名分組',
   'device.tooltip.group.remove': '刪除分組',
   'device.tooltip.copy': '以當前行為模板新建一行數據',
-  'device.tooltip.uartTimeout':
-    '此值表示串口讀取完整資料包的最佳週期。請謹慎設置，避免隨意更改。在修改之前，請確保理解此參數的具體含義。如需調整，建議設定值在 30-1000ms 之間',
 
   /**
    * placeholder
@@ -169,7 +165,6 @@ export default {
   'device.form.placeholder.frequency': '請輸入採集頻率',
   'device.form.placeholder.siemensAddress': '請輸入地址',
   'device.form.placeholder.oid': '請輸入對象標識符',
-  'device.form.placeholder.uartTimeout': '請輸入讀寫超時',
   'device.form.placeholder.cidr': '請選擇網路',
   'device.form.placeholder.vendorId': '請輸入廠商 ID',
   'device.form.placeholder.id': '請輸入設備 ID',
@@ -202,7 +197,6 @@ export default {
   /**
    * Device type
    */
-  'device.type.uart': '通用串口控制網關',
   'device.type.modbus.master': '通用 Modbus 主機網關',
   'device.type.modbus.slaver': '通用 Modbus 從機網關',
   'device.type.snmp': '通用 SNMP 協議採集網關',

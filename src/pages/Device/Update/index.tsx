@@ -93,10 +93,10 @@ const UpdateForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const initialValues = {
-    type: DeviceType.GENERIC_UART_PROTOCOL,
+    type: DeviceType.GENERIC_UART_RW,
     gid: groupId,
     name: `DEVICE_${generateRandomId()}`,
-    config: defaultConfig[DeviceType.GENERIC_UART_PROTOCOL],
+    config: defaultConfig[DeviceType.GENERIC_UART_RW],
   };
 
   // 设备详情

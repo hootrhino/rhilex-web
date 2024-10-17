@@ -34,15 +34,6 @@ export const defaultUartConfig = {
 };
 
 export const defaultConfig = {
-  [DeviceType.GENERIC_UART_PROTOCOL]: {
-    commonConfig: {
-      retryTime: 5,
-      mode: DeviceMode.UART,
-      timeout: 50,
-    },
-    hostConfig: defaultHostConfig,
-    uartConfig: defaultUartConfig,
-  },
   [DeviceType.GENERIC_MODBUS_MASTER]: {
     commonConfig: {
       autoRequest: DEFAULT_TRUE,

@@ -69,7 +69,6 @@ export default {
   'device.form.title.timeout.connect': 'Connection Timeout',
   'device.form.title.timeout.idle': 'Heartbeat Timeout',
   'device.form.title.timeout.scan': 'Scanning Timeout',
-  'device.form.title.timeout.uart': 'Read/Write Timeout',
 
   // frequency
   'device.form.title.frequency': 'Execution Frequency',
@@ -81,7 +80,6 @@ export default {
   'device.form.title.uart': 'Serial Port',
   'device.form.title.host': 'Host',
   'device.form.title.gid': 'Device Group',
-  'device.form.title.retryTime': 'Max Fault Count',
   'device.form.title.autoRequest': 'Enable Auto Request',
   'device.form.title.enableOptimize': 'Enable Optimize Fetch',
   'device.form.title.enableBatchRequest': 'Enable Batch Fetch',
@@ -154,8 +152,6 @@ export default {
   'device.tooltip.group.edit': 'Rename group',
   'device.tooltip.group.remove': 'Delete group',
   'device.tooltip.copy': 'Create a new row based on the current row as a templat',
-  'device.tooltip.uartTimeout':
-    'This value represents the optimal period for the serial port to read complete packets. Please set it with caution to avoid making random changes. Before making any modifications, ensure you understand the specific meaning of this parameter. If adjustments are needed, it is recommended to set the value within the range of 30-1000ms',
 
   /**
    * placeholder
@@ -171,7 +167,6 @@ export default {
   'device.form.placeholder.frequency': 'Please enter a frequency',
   'device.form.placeholder.siemensAddress': 'Please enter an address',
   'device.form.placeholder.oid': 'Please enter an OID',
-  'device.form.placeholder.uartTimeout': 'Please enter a timeout',
   'device.form.placeholder.cidr': 'Please select a CIDR',
   'device.form.placeholder.vendorId': 'Please enter a vendor ID',
   'device.form.placeholder.id': 'Please enter a device ID',
@@ -206,7 +201,6 @@ export default {
   /**
    * Device type
    */
-  'device.type.uart': 'Generic Serial Port Gateway',
   'device.type.modbus.master': 'Generic Modbus Master Gateway',
   'device.type.modbus.slaver': 'Generic Modbus Slaver Gateway',
   'device.type.snmp': 'Generic SNMP Gateway',

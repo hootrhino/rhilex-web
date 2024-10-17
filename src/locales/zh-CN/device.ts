@@ -67,7 +67,6 @@ export default {
   'device.form.title.timeout.connect': '连接超时',
   'device.form.title.timeout.idle': '心跳超时',
   'device.form.title.timeout.scan': '扫描超时',
-  'device.form.title.timeout.uart': '读写超时',
 
   // frequency
   'device.form.title.frequency': '采集频率',
@@ -79,7 +78,6 @@ export default {
   'device.form.title.uart': '系统串口',
   'device.form.title.host': '服务地址',
   'device.form.title.gid': '设备分组',
-  'device.form.title.retryTime': '最大容错次数',
   'device.form.title.autoRequest': '启动轮询',
   'device.form.title.enableOptimize': '优化采集',
   'device.form.title.enableBatchRequest': '批量采集',
@@ -152,8 +150,6 @@ export default {
   'device.tooltip.group.edit': '重命名分组',
   'device.tooltip.group.remove': '删除分组',
   'device.tooltip.copy': '以当前行为模板新建一行数据',
-  'device.tooltip.uartTimeout':
-    '此值表示串口读取完整数据包的最佳周期。请谨慎设置，避免随意更改。在修改前，请确保理解此参数的具体含义。如需调整，建议设置值在 30-1000ms 之间',
 
   /**
    * placeholder
@@ -169,7 +165,6 @@ export default {
   'device.form.placeholder.frequency': '请输入采集频率',
   'device.form.placeholder.siemensAddress': '请输入地址',
   'device.form.placeholder.oid': '请输入对象标识符',
-  'device.form.placeholder.uartTimeout': '请输入读写超时',
   'device.form.placeholder.cidr': '请选择网络',
   'device.form.placeholder.vendorId': '请输入厂商 ID',
   'device.form.placeholder.id': '请输入设备 ID',
@@ -202,7 +197,6 @@ export default {
   /**
    * device type
    */
-  'device.type.uart': '通用串口控制网关',
   'device.type.modbus.master': '通用 Modbus 主机网关',
   'device.type.modbus.slaver': '通用 Modbus 从机网关',
   'device.type.snmp': '通用 SNMP 协议采集网关',

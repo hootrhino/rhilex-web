@@ -1,11 +1,5 @@
 import { DeviceType } from "@/pages/Device/enum";
 
-// GENERIC_UART_PROTOCOL - 通用串口网关
-const device_protocol_ds = `{
-  "in": "0001020304ABCDEF",
-  "out": "11220ABCDEF"
-}`;
-
 // GENERIC_MODBUS_MASTER - 通用 Modbus 主机网关 && GENERIC_MODBUS_SLAVER - 通用 Modbus 从机网关
 const device_modbus_ds = `{
   "tag":{
@@ -65,8 +59,8 @@ const device_bacnet_ds = `{
   }
 }`;
 
+// TODO 补充新增协议的数据结构
 export const deviceDS = {
-  [DeviceType.GENERIC_UART_PROTOCOL]: device_protocol_ds,
   [DeviceType.GENERIC_MODBUS_MASTER]: device_modbus_ds,
   [DeviceType.GENERIC_MODBUS_SLAVER]: device_modbus_ds,
   [DeviceType.GENERIC_HTTP_DEVICE]: device_http_ds,
