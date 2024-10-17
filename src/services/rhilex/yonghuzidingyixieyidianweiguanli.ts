@@ -2,8 +2,8 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 多行删除 DELETE /api/v1/mbus_master_sheet/delIds */
-export async function deleteMbusMasterSheetDelIds(
+/** 多行删除 DELETE /api/v1/user_protocol_sheet/delIds */
+export async function deleteUserProtocolSheetDelIds(
   body: {
     device_uuid: string;
     uuids: string[];
@@ -11,7 +11,7 @@ export async function deleteMbusMasterSheetDelIds(
   options?: { [key: string]: any },
 ) {
   return request<{ code: number; msg: string; data: string[] }>(
-    '/api/v1/mbus_master_sheet/delIds',
+    '/api/v1/user_protocol_sheet/delIds',
     {
       method: 'DELETE',
       headers: {
@@ -23,10 +23,10 @@ export async function deleteMbusMasterSheetDelIds(
   );
 }
 
-/** 分页查看点位表 GET /api/v1/mbus_master_sheet/list */
-export async function getMbusMasterSheetList(
+/** 分页查看点位表 GET /api/v1/user_protocol_sheet/list */
+export async function getUserProtocolSheetList(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getMbusMasterSheetListParams,
+  params: API.getUserProtocolSheetListParams,
   options?: { [key: string]: any },
 ) {
   return request<{
@@ -37,22 +37,19 @@ export async function getMbusMasterSheetList(
       size: number;
       total: number;
       records: {
-        uuid: string;
         device_uuid: string;
-        slaverId: string;
-        type: string;
+        uuid: string;
+        command: string;
         tag: string;
         alias: string;
         frequency: number;
-        dataLength: number;
-        manufacturer: string;
         status: number;
         lastFetchTime: number;
         value: string;
         errMsg: string;
       }[];
     };
-  }>('/api/v1/mbus_master_sheet/list', {
+  }>('/api/v1/user_protocol_sheet/list', {
     method: 'GET',
     params: {
       ...params,
@@ -61,13 +58,13 @@ export async function getMbusMasterSheetList(
   });
 }
 
-/** 导出点表 GET /api/v1/mbus_master_sheet/sheetExport */
-export async function getMbusMasterSheetSheetExport(
+/** 导出点表 GET /api/v1/user_protocol_sheet/sheetExport */
+export async function getUserProtocolSheetSheetExport(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getMbusMasterSheetSheetExportParams,
+  params: API.getUserProtocolSheetSheetExportParams,
   options?: { [key: string]: any },
 ) {
-  return request<Record<string, any>>('/api/v1/mbus_master_sheet/sheetExport', {
+  return request<Record<string, any>>('/api/v1/user_protocol_sheet/sheetExport', {
     method: 'GET',
     params: {
       ...params,
@@ -76,8 +73,8 @@ export async function getMbusMasterSheetSheetExport(
   });
 }
 
-/** 导入点位表 POST /api/v1/mbus_master_sheet/sheetImport */
-export async function postMbusMasterSheetSheetImport(
+/** 导入点位表 POST /api/v1/user_protocol_sheet/sheetImport */
+export async function postUserProtocolSheetSheetImport(
   body: {
     device_uuid: string;
   },
@@ -106,7 +103,7 @@ export async function postMbusMasterSheetSheetImport(
     }
   });
 
-  return request<Record<string, any>>('/api/v1/mbus_master_sheet/sheetImport', {
+  return request<Record<string, any>>('/api/v1/user_protocol_sheet/sheetImport', {
     method: 'POST',
     data: formData,
     requestType: 'form',
@@ -114,26 +111,23 @@ export async function postMbusMasterSheetSheetImport(
   });
 }
 
-/** 更新点位表 POST /api/v1/mbus_master_sheet/update */
-export async function postMbusMasterSheetUpdate(
+/** 更新点位表 POST /api/v1/user_protocol_sheet/update */
+export async function postUserProtocolSheetUpdate(
   body: {
     device_uuid: string;
     data_points: {
-      uuid?: string;
       device_uuid?: string;
-      slaverId?: string;
-      type?: string;
+      uuid?: string;
+      command?: string;
       tag?: string;
       alias?: string;
       frequency?: number;
-      dataLength?: number;
-      manufacturer?: string;
     }[];
   },
   options?: { [key: string]: any },
 ) {
   return request<{ code: number; msg: string; data: string[] }>(
-    '/api/v1/mbus_master_sheet/update',
+    '/api/v1/user_protocol_sheet/update',
     {
       method: 'POST',
       headers: {

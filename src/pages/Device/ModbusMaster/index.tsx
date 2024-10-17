@@ -64,7 +64,7 @@ type ModbusPoint = Point & {
 
 export type UpdateParams = {
   device_uuid: string;
-  modbus_data_points: ModbusPoint[];
+  data_points: ModbusPoint[];
 };
 
 const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterDataSheetProps) => {
@@ -387,7 +387,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
         const points = data?.map((item) => formatUpdateParams(item));
         if (!deviceUuid || !points) return;
 
-        update({ device_uuid: deviceUuid, modbus_data_points: points });
+        update({ device_uuid: deviceUuid, data_points: points });
       }}
       remove={(uuids: string[]) => {
         if (!deviceUuid || !uuids) return;

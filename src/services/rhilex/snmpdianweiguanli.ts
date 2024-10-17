@@ -115,7 +115,7 @@ export async function postSnmpOidsSheetSheetImport(
 export async function postSnmpOidsSheetUpdate(
   body: {
     device_uuid: string;
-    snmp_oids: {
+    data_points: {
       uuid?: string;
       device_uuid?: string;
       oid?: string;

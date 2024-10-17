@@ -17,6 +17,7 @@ import MbusMasterDataSheet from '../MbusMaster';
 import ModbusMasterDataSheet from '../ModbusMaster';
 import PlcSheet from '../Plc';
 import SnmpOidsSheet from '../Snmp';
+import UserProtocolDataSheet from '../UserProtocol';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -144,6 +145,9 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
             )}
             {type === DeviceType.CJT1882004_MASTER && (
               <CJTDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
+            )}
+            {type === DeviceType.GENERIC_USER_PROTOCOL && (
+              <UserProtocolDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
             )}
           </>
         )}

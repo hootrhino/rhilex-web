@@ -33,7 +33,7 @@ const defaultUploadData = {
 
 export type UpdateParams = {
   device_uuid: string;
-  dlt6452007_data_points: Point[];
+  data_points: Point[];
 };
 
 export type DLTDataSheetProps = {
@@ -165,7 +165,7 @@ const DLTDataSheet = ({ uuid, type = SheetType.LIST }: DLTDataSheetProps) => {
       download={handleOnDownload}
       update={(data: Point[]) => {
         if (deviceUuid && data) {
-          update({ device_uuid: deviceUuid, dlt6452007_data_points: data });
+          update({ device_uuid: deviceUuid, data_points: data });
         }
       }}
       remove={(uuids: string[]) => {

@@ -109,7 +109,7 @@ export async function postBacnetipDataSheetSheetImport(
 export async function postBacnetipDataSheetUpdate(
   body: {
     device_uuid: string;
-    points: {
+    data_points: {
       uuid?: string;
       tag?: string;
       alias?: string;

@@ -144,6 +144,9 @@ export default {
   // ithings
   'device.form.title.serverEndpoint': '服務接入地址',
 
+  // user protocol
+  'device.form.title.command': '自訂指令',
+
   /**
    * tooltip
    */
@@ -172,6 +175,7 @@ export default {
   'device.form.placeholder.objectId': '請輸入對象 ID',
   'device.form.placeholder.dataLength': '請輸入數據長度',
   'device.form.placeholder.manufacturer': '請輸入製造商',
+  'device.form.placeholder.command': '請輸入指令',
 
   /**
    * rules
@@ -183,6 +187,7 @@ export default {
   'device.form.rules.meterId.len': '請輸入有效的 12 位設備 ID',
   'device.form.rules.meterId.number': '設備 ID 只能包含數字，請輸入有效的 12 位設備 ID',
   'device.form.rules.bacnet.objectId': '請輸入有效的對象 ID，範圍为 0-4194303',
+  'device.form.rules.command': '請輸入不超過 64 個字符的指令',
 
   /**
    * others
@@ -209,6 +214,7 @@ export default {
   'device.type.uartRW': '通用串口讀寫網關',
   'device.type.mbus': '通用 M-Bus 數據採集網關',
   'device.type.national': '國標 {protocol} 協議採集網關',
+  'device.type.user': '通用自訂協議採集網關',
 
   /**
    * Modbus function

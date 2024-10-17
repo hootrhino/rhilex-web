@@ -115,7 +115,7 @@ export async function postDlt6452007MasterSheetSheetImport(
 export async function postDlt6452007MasterSheetUpdate(
   body: {
     device_uuid: string;
-    dlt6452007_data_points: {
+    data_points: {
       device_uuid?: string;
       uuid?: string;
       meterId?: string;

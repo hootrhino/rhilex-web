@@ -384,6 +384,16 @@ declare namespace API {
     keyword: string;
   };
 
+  type getUserProtocolSheetListParams = {
+    device_uuid?: string;
+    current?: number;
+    size?: number;
+  };
+
+  type getUserProtocolSheetSheetExportParams = {
+    device_uuid: string;
+  };
+
   type getVisualDetailParams = {
     uuid: string;
   };

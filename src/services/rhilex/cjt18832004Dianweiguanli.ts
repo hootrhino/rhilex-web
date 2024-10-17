@@ -115,7 +115,7 @@ export async function postCjt1882004MasterSheetSheetImport(
 export async function postCjt1882004MasterSheetUpdate(
   body: {
     device_uuid: string;
-    cjt1882004_data_points: {
+    data_points: {
       device_uuid?: string;
       uuid?: string;
       meterId?: string;

@@ -34,6 +34,15 @@ export const defaultUartConfig = {
 };
 
 export const defaultConfig = {
+  [DeviceType.GENERIC_USER_PROTOCOL]: {
+    commonConfig: {
+      autoRequest: DEFAULT_TRUE,
+      batchRequest: DEFAULT_FALSE,
+      mode: DeviceMode.UART,
+    },
+    hostConfig: defaultHostConfig,
+    uartConfig: defaultUartConfig,
+  },
   [DeviceType.GENERIC_MODBUS_MASTER]: {
     commonConfig: {
       autoRequest: DEFAULT_TRUE,

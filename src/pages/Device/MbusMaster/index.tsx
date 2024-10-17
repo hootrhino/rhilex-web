@@ -51,7 +51,7 @@ type MbusPoint = Point & {
 
 export type UpdateParams = {
   device_uuid: string;
-  mbus_data_points: MbusPoint[];
+  data_points: MbusPoint[];
 };
 
 const MbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: MbusMasterDataSheetProps) => {
@@ -212,7 +212,7 @@ const MbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: MbusMasterDataShee
       update={(data: Point[]) => {
         if (!deviceUuid || !data) return;
 
-        update({ device_uuid: deviceUuid, mbus_data_points: data });
+        update({ device_uuid: deviceUuid, data_points: data });
       }}
       remove={(uuids: string[]) => {
         if (!deviceUuid || !uuids) return;

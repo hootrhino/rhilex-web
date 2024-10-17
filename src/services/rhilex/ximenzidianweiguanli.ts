@@ -118,7 +118,7 @@ export async function postS1200DataSheetSheetImport(
 export async function postS1200DataSheetUpdate(
   body: {
     device_uuid: string;
-    siemens_data_points: {
+    data_points: {
       uuid?: string;
       device_uuid?: string;
       siemensAddress?: string;

@@ -146,6 +146,9 @@ export default {
   // ithings
   'device.form.title.serverEndpoint': 'Server Endpoints',
 
+  // user protocol
+  'device.form.title.command': 'Command',
+
   /**
    * tooltip
    */
@@ -174,6 +177,7 @@ export default {
   'device.form.placeholder.objectId': 'Please enter an object ID',
   'device.form.placeholder.dataLength': 'Please enter a data length',
   'device.form.placeholder.manufacturer': 'Please enter a manufacturer',
+  'device.form.placeholder.command': 'Please enter a command',
 
   /**
    * rules
@@ -186,6 +190,7 @@ export default {
   'device.form.rules.meterId.number':
     'Device IDs can only contain numbers, enter a valid 12-digit device ID',
   'device.form.rules.bacnet.objectId': 'Please enter a valid object ID, ranging from 0 to 4194303',
+  'device.form.rules.command': 'Please enter a command with no more than 64 characters',
 
   /**
    * others
@@ -213,6 +218,7 @@ export default {
   'device.type.uartRW': 'Generic Serial Read/Write Gateway',
   'device.type.mbus': 'Generic M-Bus Gateway',
   'device.type.national': 'National Standard {protocol} Gateway',
+  'device.type.user': 'Generic Custom Protocol Gateway',
 
   /**
    * Modbus function

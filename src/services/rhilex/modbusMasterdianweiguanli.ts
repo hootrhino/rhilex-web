@@ -121,19 +121,19 @@ export async function postModbusMasterSheetSheetImport(
 export async function postModbusMasterSheetUpdate(
   body: {
     device_uuid: string;
-    modbus_data_points: {
+    data_points: {
+      dataType?: string;
+      dataOrder?: string;
       uuid?: string;
-      device_uuid?: string;
       tag?: string;
       alias?: string;
+      frequency?: number;
+      device_uuid?: string;
       function?: number;
       slaverId?: number;
       address?: number;
-      frequency?: number;
       quantity?: number;
-      dataType: string;
-      dataOrder: string;
-      weight: number;
+      weight?: number;
     }[];
   },
   options?: { [key: string]: any },

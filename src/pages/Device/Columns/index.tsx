@@ -22,6 +22,7 @@ import { GENERIC_MODBUS_MASTER } from './genericModbusMaster';
 import { GENERIC_MODBUS_SLAVER } from './genericModbusSlaver';
 import { GENERIC_SNMP } from './genericSnmp';
 import { GENERIC_UART_RW } from './genericUartRW';
+import { GENERIC_USER_PROTOCOL } from './genericUserProtocol';
 import { ITHINGS_IOTHUB_GATEWAY } from './ithings';
 import { SIEMENS_PLC } from './siemensPLC';
 import { TENCENT_IOTHUB_GATEWAY } from './tencentCloud';
@@ -196,6 +197,7 @@ export const baseColumns = [
  */
 export const typeConfigColumns = {
   [DeviceType.GENERIC_UART_RW]: GENERIC_UART_RW,
+  [DeviceType.GENERIC_USER_PROTOCOL]: GENERIC_USER_PROTOCOL,
   [DeviceType.GENERIC_MODBUS_MASTER]: GENERIC_MODBUS_MASTER,
   [DeviceType.GENERIC_MODBUS_SLAVER]: GENERIC_MODBUS_SLAVER,
   [DeviceType.GENERIC_MBUS_MASTER]: GENERIC_MBUS_MASTER,

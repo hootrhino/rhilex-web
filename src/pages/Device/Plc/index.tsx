@@ -43,7 +43,7 @@ type PlcPoint = Point & { weight: number };
 
 export type UpdateParams = {
   device_uuid: string;
-  siemens_data_points: PlcPoint[];
+  data_points: PlcPoint[];
 };
 
 export type PlcSheetProps = {
@@ -250,7 +250,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       update={(data: Point[]) => {
         const points = data?.map((item) => formatUpdateParams(item));
         if (deviceUuid && points) {
-          update({ device_uuid: deviceUuid, siemens_data_points: points });
+          update({ device_uuid: deviceUuid, data_points: points });
         }
       }}
       remove={(uuids: string[]) => {

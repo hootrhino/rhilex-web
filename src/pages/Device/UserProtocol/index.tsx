@@ -1,31 +1,32 @@
 import { message } from '@/components/PopupHack';
+import UnitValue from '@/components/UnitValue';
 import {
-  deleteSnmpOidsSheetDelIds,
-  getSnmpOidsSheetList,
-  postSnmpOidsSheetSheetImport,
-  postSnmpOidsSheetUpdate,
-} from '@/services/rhilex/snmpdianweiguanli';
+  deleteUserProtocolSheetDelIds,
+  getUserProtocolSheetList,
+  postUserProtocolSheetSheetImport,
+  postUserProtocolSheetUpdate,
+} from '@/services/rhilex/yonghuzidingyixieyidianweiguanli';
 import { defaultPagination } from '@/utils/constant';
 import { SheetType } from '@/utils/enum';
-import { omit } from '@/utils/redash';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { useIntl, useParams, useRequest } from '@umijs/max';
+import type { Rule } from 'antd/es/form';
 import { useEffect, useRef, useState } from 'react';
 import DataSheet from '../DataSheet';
 import type { DataSheetItem, Point, removeParams } from '../DataSheet/typings';
 
-const defaultSnmpConfig = {
-  oid: '',
+const defaultConfig = {
+  command: '',
   tag: '',
   alias: '',
   frequency: 1000,
 };
 
 const defaultUploadData = {
-  uuid: 'snmpUploadData',
-  oid: '.1.3.6.1.2.1.1.1.0',
-  tag: 'Total Processes',
-  alias: '线程总数',
+  uuid: 'uploadData',
+  command: '010300000002CC40B',
+  tag: 'device1',
+  alias: '风机1',
   frequency: 1000,
 };
 
@@ -34,51 +35,46 @@ export type UpdateParams = {
   data_points: Point[];
 };
 
-export type SnmpOidsSheetProps = {
-  type: SheetType;
+export type UserProtocolDataSheetProps = {
   uuid?: string;
+  type: SheetType;
 };
 
-const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
+const UserProtocolDataSheet = ({ uuid, type = SheetType.LIST }: UserProtocolDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
   const { formatMessage } = useIntl();
   const [deviceUuid, setDeviceId] = useState<string>();
 
-  const formatUpdateParams = (params: Partial<DataSheetItem>) => {
-    let newParams = {
-      ...omit(params, ['type']),
-      dataType: params?.type?.[0],
-      dataOrder: params?.type?.[1],
-      weight: Number(params?.weight),
-    };
-
-    return newParams;
-  };
-
-  // 删除
-  const { run: remove } = useRequest((params: removeParams) => deleteSnmpOidsSheetDelIds(params), {
-    manual: true,
-    onSuccess: () => {
-      actionRef.current?.reload();
-      message.success(formatMessage({ id: 'message.success.remove' }));
+  // 删除点位表
+  const { run: remove } = useRequest(
+    (params: removeParams) => deleteUserProtocolSheetDelIds(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        actionRef.current?.reload();
+        message.success(formatMessage({ id: 'message.success.remove' }));
+      },
     },
-  });
+  );
 
-  // 更新
-  const { run: update } = useRequest((params: UpdateParams) => postSnmpOidsSheetUpdate(params), {
-    manual: true,
-    onSuccess: () => {
-      actionRef.current?.reload();
-      editorFormRef.current?.setRowData?.('new', { ...defaultSnmpConfig, uuid: 'new' });
-      message.success(formatMessage({ id: 'message.success.update' }));
+  // 更新点位表
+  const { run: update } = useRequest(
+    (params: UpdateParams) => postUserProtocolSheetUpdate(params),
+    {
+      manual: true,
+      onSuccess: () => {
+        actionRef.current?.reload();
+        editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
+        message.success(formatMessage({ id: 'message.success.update' }));
+      },
     },
-  });
+  );
 
-  // 导入
+  // 导入点位表
   const { run: upload } = useRequest(
-    (file: File) => postSnmpOidsSheetSheetImport({ device_uuid: deviceUuid || '' }, file),
+    (file: File) => postUserProtocolSheetSheetImport({ device_uuid: deviceUuid || '' }, file),
     {
       manual: true,
       onSuccess: () => {
@@ -90,7 +86,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
 
   // 导出点位表
   const handleOnDownload = () =>
-    (window.location.href = `/api/v1/snmp_oids_sheet/sheetExport?device_uuid=${deviceId}`);
+    (window.location.href = `/api/v1/user_protocol_sheet/sheetExport?device_uuid=${deviceId}`);
 
   useEffect(() => {
     setDeviceId(deviceId || uuid);
@@ -98,21 +94,29 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
 
   const columns: ProColumns<Partial<DataSheetItem>>[] = [
     {
-      title: formatMessage({ id: 'device.form.title.oid' }),
-      dataIndex: 'oid',
-      ellipsis: true,
-      fieldProps: {
-        placeholder: formatMessage({ id: 'device.form.placeholder.oid' }),
-      },
+      title: formatMessage({ id: 'device.form.title.command' }),
+      dataIndex: 'command',
       formItemProps: {
-        rules: [{ required: true, message: formatMessage({ id: 'device.form.placeholder.oid' }) }],
+        rules: [
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.command' }) },
+          {
+            validator: (_rule: Rule, value: string) => {
+              if (value && value.length > 64) {
+                return Promise.reject(formatMessage({ id: 'device.form.rules.command' }));
+              }
+              return Promise.resolve();
+            },
+          },
+        ],
+      },
+      fieldProps: {
+        placeholder: formatMessage({ id: 'device.form.placeholder.command' }),
       },
     },
     {
       title: formatMessage({ id: 'device.form.title.frequency' }),
       dataIndex: 'frequency',
       valueType: 'digit',
-      width: 100,
       hideInTable: type === SheetType.DETAIL,
       fieldProps: {
         addonAfter: 'ms',
@@ -123,6 +127,7 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
           { required: true, message: formatMessage({ id: 'device.form.placeholder.frequency' }) },
         ],
       },
+      render: (_, { frequency }) => <UnitValue value={frequency} />,
     },
   ];
 
@@ -137,27 +142,26 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
       }) => {
-        const { data } = await getSnmpOidsSheetList({
-          device_uuid: deviceUuid,
+        const { data } = await getUserProtocolSheetList({
+          device_uuid: deviceUuid || '',
           current,
           size: pageSize,
         });
 
         return Promise.resolve({
-          data: data?.records,
+          data: data?.records || [],
           total: data?.total,
           success: true,
         });
       }}
-      defaultConfig={defaultSnmpConfig}
+      defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
       type={type}
       upload={(file: File) => deviceUuid && upload(file)}
       download={handleOnDownload}
       update={(data: Point[]) => {
-        const points = data?.map((item) => formatUpdateParams(item));
-        if (deviceUuid && points) {
-          update({ device_uuid: deviceUuid, data_points: points });
+        if (deviceUuid && data) {
+          update({ device_uuid: deviceUuid, data_points: data });
         }
       }}
       remove={(uuids: string[]) => {
@@ -173,4 +177,4 @@ const SnmpOidsSheet = ({ type = SheetType.LIST, uuid }: SnmpOidsSheetProps) => {
   );
 };
 
-export default SnmpOidsSheet;
+export default UserProtocolDataSheet;
