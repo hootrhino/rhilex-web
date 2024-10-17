@@ -7,14 +7,6 @@ export enum DetailModalType {
 }
 
 /**
- * 点位表 or 对象列表类型
- */
-export enum SheetType {
-  DETAIL = 'detail',
-  LIST = 'list',
-}
-
-/**
  * 校验表单类型
  */
 export enum FormItemType {

@@ -130,7 +130,7 @@ export async function postBacnetRouterSheetSheetImport(
 export async function postBacnetRouterSheetUpdate(
   body: {
     device_uuid: string;
-    points: {
+    data_points: {
       uuid?: string;
       tag?: string;
       alias?: string;

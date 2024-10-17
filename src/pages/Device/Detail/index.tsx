@@ -2,7 +2,6 @@ import HeadersDetail from '@/components/HttpHeaders/Detail';
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
 import ProDescriptions from '@/components/ProDescriptions';
 import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
-import { SheetType } from '@/utils/enum';
 import { flatten, omit } from '@/utils/redash';
 import { useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
@@ -122,32 +121,18 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
                 <HeadersDetail data={config?.httpConfig?.headers} />
               )}
             {/* TODO GENERIC_MODBUS_SLAVER 不需要在详情页展示寄存器 */}
-            {type === DeviceType.GENERIC_SNMP && (
-              <SnmpOidsSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
-            )}
+            {type === DeviceType.GENERIC_SNMP && <SnmpOidsSheet uuid={detail?.uuid} />}
             {type === DeviceType.GENERIC_MODBUS_MASTER && (
-              <ModbusMasterDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
+              <ModbusMasterDataSheet uuid={detail?.uuid} />
             )}
-            {type === DeviceType.GENERIC_MBUS_MASTER && (
-              <MbusMasterDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
-            )}
-            {type === DeviceType.SIEMENS_PLC && (
-              <PlcSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
-            )}
-            {type === DeviceType.GENERIC_BACNET_IP && (
-              <BacnetIPSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
-            )}
-            {type === DeviceType.BACNET_ROUTER_GW && (
-              <BacnetRouterSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
-            )}
-            {type === DeviceType.DLT6452007_MASTER && (
-              <DLTDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
-            )}
-            {type === DeviceType.CJT1882004_MASTER && (
-              <CJTDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
-            )}
+            {type === DeviceType.GENERIC_MBUS_MASTER && <MbusMasterDataSheet uuid={detail?.uuid} />}
+            {type === DeviceType.SIEMENS_PLC && <PlcSheet uuid={detail?.uuid} />}
+            {type === DeviceType.GENERIC_BACNET_IP && <BacnetIPSheet uuid={detail?.uuid} />}
+            {type === DeviceType.BACNET_ROUTER_GW && <BacnetRouterSheet uuid={detail?.uuid} />}
+            {type === DeviceType.DLT6452007_MASTER && <DLTDataSheet uuid={detail?.uuid} />}
+            {type === DeviceType.CJT1882004_MASTER && <CJTDataSheet uuid={detail?.uuid} />}
             {type === DeviceType.GENERIC_USER_PROTOCOL && (
-              <UserProtocolDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
+              <UserProtocolDataSheet uuid={detail?.uuid} />
             )}
           </>
         )}

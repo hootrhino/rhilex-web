@@ -1,4 +1,3 @@
-import { message } from '@/components/PopupHack';
 import UnitValue from '@/components/UnitValue';
 import {
   deleteUserProtocolSheetDelIds,
@@ -7,13 +6,19 @@ import {
   postUserProtocolSheetUpdate,
 } from '@/services/rhilex/yonghuzidingyixieyidianweiguanli';
 import { defaultPagination } from '@/utils/constant';
-import { SheetType } from '@/utils/enum';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
-import { useIntl, useParams, useRequest } from '@umijs/max';
+import { useIntl, useParams } from '@umijs/max';
 import type { Rule } from 'antd/es/form';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import DataSheet from '../DataSheet';
-import type { DataSheetItem, Point, removeParams } from '../DataSheet/typings';
+import type {
+  BaseDataSheetProps,
+  DataSheetItem,
+  Point,
+  removeParams,
+  UpdateParams,
+  UploadParams,
+} from '../DataSheet/typings';
 
 const defaultConfig = {
   command: '',
@@ -30,67 +35,16 @@ const defaultUploadData = {
   frequency: 1000,
 };
 
-export type UpdateParams = {
-  device_uuid: string;
-  data_points: Point[];
+type UserProtocolPoint = Point & {
+  command?: string;
+  frequency?: number;
 };
 
-export type UserProtocolDataSheetProps = {
-  uuid?: string;
-  type: SheetType;
-};
-
-const UserProtocolDataSheet = ({ uuid, type = SheetType.LIST }: UserProtocolDataSheetProps) => {
+const UserProtocolDataSheet = ({ uuid }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
   const { formatMessage } = useIntl();
-  const [deviceUuid, setDeviceId] = useState<string>();
-
-  // 删除点位表
-  const { run: remove } = useRequest(
-    (params: removeParams) => deleteUserProtocolSheetDelIds(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        actionRef.current?.reload();
-        message.success(formatMessage({ id: 'message.success.remove' }));
-      },
-    },
-  );
-
-  // 更新点位表
-  const { run: update } = useRequest(
-    (params: UpdateParams) => postUserProtocolSheetUpdate(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        actionRef.current?.reload();
-        editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
-        message.success(formatMessage({ id: 'message.success.update' }));
-      },
-    },
-  );
-
-  // 导入点位表
-  const { run: upload } = useRequest(
-    (file: File) => postUserProtocolSheetSheetImport({ device_uuid: deviceUuid || '' }, file),
-    {
-      manual: true,
-      onSuccess: () => {
-        actionRef.current?.reload();
-        message.success(formatMessage({ id: 'message.success.upload' }));
-      },
-    },
-  );
-
-  // 导出点位表
-  const handleOnDownload = () =>
-    (window.location.href = `/api/v1/user_protocol_sheet/sheetExport?device_uuid=${deviceId}`);
-
-  useEffect(() => {
-    setDeviceId(deviceId || uuid);
-  }, [uuid]);
 
   const columns: ProColumns<Partial<DataSheetItem>>[] = [
     {
@@ -117,7 +71,7 @@ const UserProtocolDataSheet = ({ uuid, type = SheetType.LIST }: UserProtocolData
       title: formatMessage({ id: 'device.form.title.frequency' }),
       dataIndex: 'frequency',
       valueType: 'digit',
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !!uuid,
       fieldProps: {
         addonAfter: 'ms',
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
@@ -137,13 +91,12 @@ const UserProtocolDataSheet = ({ uuid, type = SheetType.LIST }: UserProtocolData
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
-      params={{ deviceUuid }}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
       }) => {
         const { data } = await getUserProtocolSheetList({
-          device_uuid: deviceUuid || '',
+          device_uuid: deviceId || uuid,
           current,
           size: pageSize,
         });
@@ -156,22 +109,16 @@ const UserProtocolDataSheet = ({ uuid, type = SheetType.LIST }: UserProtocolData
       }}
       defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      type={type}
-      upload={(file: File) => deviceUuid && upload(file)}
-      download={handleOnDownload}
-      update={(data: Point[]) => {
-        if (deviceUuid && data) {
-          update({ device_uuid: deviceUuid, data_points: data });
-        }
+      downloadKey="user_protocol_sheet"
+      upload={async ({ file, ...params }: UploadParams) => {
+        await postUserProtocolSheetSheetImport({ ...params }, file);
       }}
-      remove={(uuids: string[]) => {
-        if (deviceUuid && uuids) {
-          const params = {
-            device_uuid: deviceUuid,
-            uuids,
-          };
-          remove(params);
-        }
+      update={async (values: UpdateParams<UserProtocolPoint>) => {
+        await postUserProtocolSheetUpdate(values);
+        editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
+      }}
+      remove={async (params: removeParams) => {
+        await deleteUserProtocolSheetDelIds(params);
       }}
     />
   );

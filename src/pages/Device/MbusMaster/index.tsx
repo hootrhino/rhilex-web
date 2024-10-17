@@ -1,4 +1,3 @@
-import { message } from '@/components/PopupHack';
 import UnitValue from '@/components/UnitValue';
 import {
   deleteMbusMasterSheetDelIds,
@@ -7,15 +6,21 @@ import {
   postMbusMasterSheetUpdate,
 } from '@/services/rhilex/mBusMasterdianweiguanli';
 import { defaultPagination } from '@/utils/constant';
-import { SheetType } from '@/utils/enum';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
-import { useIntl, useParams, useRequest } from '@umijs/max';
-import { useEffect, useRef, useState } from 'react';
+import { useIntl, useParams } from '@umijs/max';
+import { useRef } from 'react';
 import DataSheet from '../DataSheet';
-import { DataSheetItem, Point, removeParams } from '../DataSheet/typings';
+import {
+  BaseDataSheetProps,
+  DataSheetItem,
+  Point,
+  removeParams,
+  UpdateParams,
+  UploadParams,
+} from '../DataSheet/typings';
 import { MBusDeviceType, mBusDeviceTypeOptions } from './enum';
 
-const defaultMbusConfig = {
+const defaultConfig = {
   slaverId: '1',
   type: MBusDeviceType.HEAT_METER,
   tag: '',
@@ -36,11 +41,6 @@ const defaultUploadData = {
   type: MBusDeviceType.HEAT_METER,
 };
 
-export type MbusMasterDataSheetProps = {
-  uuid?: string;
-  type: SheetType;
-};
-
 type MbusPoint = Point & {
   slaverId?: string;
   type?: string;
@@ -49,56 +49,11 @@ type MbusPoint = Point & {
   manufacturer?: string;
 };
 
-export type UpdateParams = {
-  device_uuid: string;
-  data_points: MbusPoint[];
-};
-
-const MbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: MbusMasterDataSheetProps) => {
+const MbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const actionRef = useRef<ActionType>();
   const { deviceId } = useParams();
   const { formatMessage } = useIntl();
-
-  const [deviceUuid, setDeviceId] = useState<string>();
-
-  // 删除点位表
-  const { run: remove } = useRequest(
-    (params: removeParams) => deleteMbusMasterSheetDelIds(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        actionRef.current?.reload();
-        message.success(formatMessage({ id: 'message.success.remove' }));
-      },
-    },
-  );
-
-  // 更新点位表
-  const { run: update } = useRequest((params: UpdateParams) => postMbusMasterSheetUpdate(params), {
-    manual: true,
-    onSuccess: () => {
-      actionRef.current?.reload();
-      editorFormRef.current?.setRowData?.('new', { ...defaultMbusConfig, uuid: 'new' });
-      message.success(formatMessage({ id: 'message.success.update' }));
-    },
-  });
-
-  // 导入点位表
-  const { run: upload } = useRequest(
-    (file: File) => postMbusMasterSheetSheetImport({ device_uuid: deviceUuid || '' }, file),
-    {
-      manual: true,
-      onSuccess: () => {
-        actionRef.current?.reload();
-        message.success(formatMessage({ id: 'message.success.upload' }));
-      },
-    },
-  );
-
-  // 导出点位表
-  const handleOnDownload = () =>
-    (window.location.href = `/api/v1/mbus_master_sheet/sheetExport?device_uuid=${deviceId}`);
 
   // 获取列表
   const handleOnRequest = async ({
@@ -106,7 +61,7 @@ const MbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: MbusMasterDataShee
     pageSize = defaultPagination.defaultPageSize,
   }) => {
     const { data } = await getMbusMasterSheetList({
-      device_uuid: deviceUuid,
+      device_uuid: deviceId || uuid,
       current,
       size: pageSize,
     });
@@ -117,10 +72,6 @@ const MbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: MbusMasterDataShee
       success: true,
     });
   };
-
-  useEffect(() => {
-    setDeviceId(deviceId || uuid);
-  }, [uuid]);
 
   const columns: ProColumns<Partial<DataSheetItem>>[] = [
     {
@@ -135,6 +86,7 @@ const MbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: MbusMasterDataShee
       title: formatMessage({ id: 'form.title.type' }),
       dataIndex: 'type',
       width: 120,
+      hideInTable: !!uuid,
       valueEnum: mBusDeviceTypeOptions,
       fieldProps: {
         allowClear: false,
@@ -149,7 +101,7 @@ const MbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: MbusMasterDataShee
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 150,
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !!uuid,
       fieldProps: {
         addonAfter: 'ms',
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
@@ -166,7 +118,7 @@ const MbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: MbusMasterDataShee
       dataIndex: 'dataLength',
       valueType: 'digit',
       width: 120,
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !!uuid,
       fieldProps: {
         style: { width: '100%' },
         placeholder: formatMessage({ id: 'device.form.placeholder.dataLength' }),
@@ -181,6 +133,7 @@ const MbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: MbusMasterDataShee
       title: formatMessage({ id: 'device.form.title.manufacturer' }),
       dataIndex: 'manufacturer',
       width: 150,
+      hideInTable: !!uuid,
       fieldProps: {
         placeholder: formatMessage({ id: 'device.form.placeholder.manufacturer' }),
       },
@@ -201,26 +154,20 @@ const MbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: MbusMasterDataShee
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
-      params={{ deviceUuid }}
       request={handleOnRequest}
-      defaultConfig={defaultMbusConfig}
+      defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      type={type}
+      downloadKey="mbus_master_sheet"
       scroll={{ x: 1200 }}
-      upload={(file: File) => deviceUuid && upload(file)}
-      download={handleOnDownload}
-      update={(data: Point[]) => {
-        if (!deviceUuid || !data) return;
-
-        update({ device_uuid: deviceUuid, data_points: data });
+      upload={async ({ file, ...params }: UploadParams) => {
+        await postMbusMasterSheetSheetImport({ ...params }, file);
       }}
-      remove={(uuids: string[]) => {
-        if (!deviceUuid || !uuids) return;
-        const params = {
-          device_uuid: deviceUuid,
-          uuids,
-        };
-        remove(params);
+      update={async (values: UpdateParams<MbusPoint>) => {
+        await postMbusMasterSheetUpdate(values);
+        editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
+      }}
+      remove={async (params: removeParams) => {
+        await deleteMbusMasterSheetDelIds(params);
       }}
     />
   );

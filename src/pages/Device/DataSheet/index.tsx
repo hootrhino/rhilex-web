@@ -16,10 +16,8 @@ import { Button, Dropdown, Popconfirm, Space, Tooltip, Upload } from 'antd';
 import { useEffect, useState } from 'react';
 
 import PageContainer from '@/components/ProPageContainer';
-import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
-import { SheetType } from '@/utils/enum';
-
 import ProTag, { StatusType } from '@/components/ProTag';
+import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
 import { defaultPagination } from '@/utils/constant';
 import { omit } from '@/utils/redash';
 import UploadSheetConfirm from './ConfirmModal';
@@ -28,14 +26,13 @@ import type { DataSheetItem, DataSheetProps } from './typings';
 const POLLING_INTERVAL = 3000;
 
 const DataSheet = ({
-  type = SheetType.LIST,
+  downloadKey,
   columns,
   defaultConfig,
   defaultUploadData,
   remove,
   update,
   upload,
-  download,
   scroll,
   ...props
 }: DataSheetProps) => {
@@ -58,6 +55,10 @@ const DataSheet = ({
     setEditableRowKeys([]);
   };
 
+  const handleOnReload = () => {
+    props?.actionRef.current.reload();
+  };
+
   // TODO 暂时隐藏 - 批量更新
   // const handleOnBatchUpdate = () => {
   //   if (deviceId && editableRows) {
@@ -68,21 +69,44 @@ const DataSheet = ({
 
   // 单个更新
   const handleOnSave = async (rowKey: RecordKey, data: Partial<DataSheetItem>) => {
-    let params = data;
+    let dataPoints = [data];
 
     if (rowKey === 'new') {
-      params = {
-        ...omit(params, ['uuid']),
-        device_uuid: deviceId,
-      } as any;
+      dataPoints = [
+        {
+          ...omit(dataPoints[0], ['uuid']),
+          device_uuid: deviceId,
+        },
+      ];
     }
-    update([params]);
+
+    update({ device_uuid: deviceId, data_points: dataPoints });
+    handleOnReload();
     handleOnReset();
+
+    message.success(formatMessage({ id: 'message.success.update' }));
+  };
+
+  // 删除
+  const handleOnRemove = (uuids: React.Key[]) => {
+    try {
+      if (!deviceId && uuids.length === 0) return;
+      const params = {
+        device_uuid: deviceId,
+        uuids,
+      };
+      remove(params);
+      handleOnReload();
+
+      message.success(formatMessage({ id: 'message.success.remove' }));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // 批量删除
   const handleOnBatchRemove = () => {
-    remove(selectedRowKeys);
+    handleOnRemove(selectedRowKeys);
     handleOnReset();
   };
 
@@ -112,6 +136,24 @@ const DataSheet = ({
     message.warning(formatMessage({ id: 'device.message.onlyOneEdit' }));
   };
 
+  // 导入
+  const handleOnUpload = (file: File) => {
+    if (!deviceId) return;
+
+    const params = {
+      device_uuid: deviceId,
+      file,
+    };
+
+    upload(params);
+    handleOnReload();
+    message.success(formatMessage({ id: 'message.success.upload' }));
+  };
+
+  // 导出点位表
+  const handleOnDownload = () =>
+    (window.location.href = `/api/v1/${downloadKey}/sheetExport?device_uuid=${deviceId}`);
+
   const baseColumns: ProColumns<Partial<DataSheetItem>>[] = [
     {
       title: formatMessage({ id: 'table.title.index' }),
@@ -125,7 +167,7 @@ const DataSheet = ({
       dataIndex: 'status',
       width: 80,
       editable: false,
-      hideInTable: type === SheetType.LIST,
+      hideInTable: !!deviceId,
       renderText: (_, record) => <ProTag type={StatusType.POINT}>{record?.status || 0}</ProTag>,
     },
     {
@@ -164,7 +206,7 @@ const DataSheet = ({
       dataIndex: 'status',
       width: 100,
       editable: false,
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !deviceId,
       renderText: (_, record) => <ProTag type={StatusType.POINT}>{record?.status || 0}</ProTag>,
     },
     {
@@ -179,7 +221,7 @@ const DataSheet = ({
       title: formatMessage({ id: 'table.title.option' }),
       valueType: 'option',
       width: 150,
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !deviceId,
       render: (_text, record, _, action) => {
         return (
           <Space align="end">
@@ -206,7 +248,7 @@ const DataSheet = ({
             <Popconfirm
               disabled={hasEditabledItem}
               title={formatMessage({ id: 'device.modal.title.remove.sheet' })}
-              onConfirm={() => remove([record?.uuid])}
+              onConfirm={() => record?.uuid && handleOnRemove([record?.uuid])}
               okText={formatMessage({ id: 'button.yes' })}
               cancelText={formatMessage({ id: 'button.no' })}
               key="remove"
@@ -265,7 +307,7 @@ const DataSheet = ({
           title: formatMessage({ id: 'device.modal.title.upload.confirm' }),
           width: '60%',
           content: <UploadSheetConfirm fileName={file?.name} initialValue={defaultUploadData} />,
-          onOk: () => upload(file),
+          onOk: () => handleOnUpload(file),
           okText: formatMessage({ id: 'button.ok' }),
           cancelText: formatMessage({ id: 'button.cancel' }),
         });
@@ -307,7 +349,7 @@ const DataSheet = ({
     >
       {formatMessage({ id: 'device.button.remove.bulk' })}
     </Button>,
-    <Button key="download" icon={<UploadOutlined />} onClick={download}>
+    <Button key="download" icon={<UploadOutlined />} onClick={handleOnDownload}>
       {formatMessage({ id: 'device.button.export.sheet' })}
     </Button>,
   ];
@@ -328,7 +370,7 @@ const DataSheet = ({
     }
   }, [deviceId]);
 
-  return type === SheetType.LIST ? (
+  return deviceId ? (
     <PageContainer title={title} onBack={() => history.push('/device/list')}>
       <EditableProTable<Partial<DataSheetItem>>
         controlled
@@ -369,11 +411,11 @@ const DataSheet = ({
         title={
           <>
             <span>{formatMessage({ id: 'device.title.sheet' })}</span>
-            {props?.scroll && (
+            {/* {props?.scroll && (
               <span className="text-[12px] opacity-[.8] pl-[5px] font-normal">
                 ({formatMessage({ id: 'device.tips.scroll' })})
               </span>
-            )}
+            )} */}
           </>
         }
       />

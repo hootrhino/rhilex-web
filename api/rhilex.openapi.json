@@ -16071,7 +16071,7 @@
                   "device_uuid": {
                     "type": "string"
                   },
-                  "points": {
+                  "data_points": {
                     "type": "array",
                     "items": {
                       "type": "object",
@@ -16105,11 +16105,11 @@
                 },
                 "required": [
                   "device_uuid",
-                  "points"
+                  "data_points"
                 ],
                 "x-apifox-orders": [
                   "device_uuid",
-                  "points"
+                  "data_points"
                 ],
                 "x-apifox-ignore-properties": []
               },

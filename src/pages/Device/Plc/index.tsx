@@ -1,4 +1,3 @@
-import { message } from '@/components/PopupHack';
 import {
   deleteS1200DataSheetDelIds,
   getS1200DataSheetList,
@@ -8,18 +7,24 @@ import {
 import { omit } from '@/utils/redash';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { ProFormCascader, ProFormText } from '@ant-design/pro-components';
-import { useIntl, useParams, useRequest } from '@umijs/max';
-import { useEffect, useRef, useState } from 'react';
+import { useIntl, useParams } from '@umijs/max';
+import { useRef } from 'react';
 import { plcDataTypeOptions } from './enum';
 
 import UnitValue from '@/components/UnitValue';
 import { defaultPagination } from '@/utils/constant';
-import { SheetType } from '@/utils/enum';
 import { inRange } from '@/utils/redash';
 import DataSheet from '../DataSheet';
-import type { DataSheetItem, Point, removeParams } from '../DataSheet/typings';
+import type {
+  BaseDataSheetProps,
+  DataSheetItem,
+  Point,
+  removeParams,
+  UpdateParams,
+  UploadParams,
+} from '../DataSheet/typings';
 
-const defaultPlcConfig = {
+const defaultConfig = {
   tag: '',
   alias: '',
   type: ['FLOAT32', 'DCBA'],
@@ -41,22 +46,11 @@ const defaultUploadData = {
 
 type PlcPoint = Point & { weight: number };
 
-export type UpdateParams = {
-  device_uuid: string;
-  data_points: PlcPoint[];
-};
-
-export type PlcSheetProps = {
-  type: SheetType;
-  uuid?: string;
-};
-
-const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
+const PlcDataSheet = ({ uuid }: BaseDataSheetProps) => {
   const { deviceId } = useParams();
   const { formatMessage } = useIntl();
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
-  const [deviceUuid, setDeviceId] = useState<string>();
 
   const formatUpdateParams = (params: Partial<DataSheetItem>) => {
     let newParams = {
@@ -68,45 +62,6 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
 
     return newParams;
   };
-
-  // 删除点位表
-  const { run: remove } = useRequest((params: removeParams) => deleteS1200DataSheetDelIds(params), {
-    manual: true,
-    onSuccess: () => {
-      actionRef.current?.reload();
-      message.success(formatMessage({ id: 'message.success.remove' }));
-    },
-  });
-
-  // 更新点位表
-  const { run: update } = useRequest((params: UpdateParams) => postS1200DataSheetUpdate(params), {
-    manual: true,
-    onSuccess: () => {
-      actionRef.current?.reload();
-      editorFormRef.current?.setRowData?.('new', { ...defaultPlcConfig, uuid: 'new' });
-      message.success(formatMessage({ id: 'message.success.update' }));
-    },
-  });
-
-  // 导入点位表
-  const { run: upload } = useRequest(
-    (file: File) => postS1200DataSheetSheetImport({ device_uuid: deviceUuid || '' }, file),
-    {
-      manual: true,
-      onSuccess: () => {
-        message.success(formatMessage({ id: 'message.success.upload' }));
-        actionRef.current?.reload();
-      },
-    },
-  );
-
-  // 导出点位表
-  const handleOnDownload = () =>
-    (window.location.href = `/api/v1/s1200_data_sheet/sheetExport?device_uuid=${deviceId}`);
-
-  useEffect(() => {
-    setDeviceId(deviceId || uuid);
-  }, [uuid]);
 
   const columns: ProColumns<Partial<DataSheetItem>>[] = [
     {
@@ -130,7 +85,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       title: formatMessage({ id: 'device.form.title.dataType' }),
       dataIndex: 'type',
       // width: 150,
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !!uuid,
       renderFormItem: () => (
         <ProFormCascader
           noStyle
@@ -170,7 +125,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       dataIndex: 'weight',
       valueType: 'digit',
       width: 100,
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !!uuid,
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.weight' }) },
@@ -201,7 +156,7 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !!uuid,
       fieldProps: {
         addonAfter: 'ms',
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
@@ -221,13 +176,12 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
-      params={{ deviceUuid }}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
       }) => {
         const { data } = await getS1200DataSheetList({
-          device_uuid: deviceUuid,
+          device_uuid: deviceId || uuid,
           current,
           size: pageSize,
         });
@@ -241,26 +195,20 @@ const PlcDataSheet = ({ uuid, type = SheetType.LIST }: PlcSheetProps) => {
           success: true,
         });
       }}
-      defaultConfig={defaultPlcConfig}
+      defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      type={type}
+      downloadKey="s1200_data_sheet"
       scroll={{ x: 1200 }}
-      upload={(file: File) => deviceUuid && upload(file)}
-      download={handleOnDownload}
-      update={(data: Point[]) => {
-        const points = data?.map((item) => formatUpdateParams(item));
-        if (deviceUuid && points) {
-          update({ device_uuid: deviceUuid, data_points: points });
-        }
+      upload={async ({ file, ...params }: UploadParams) => {
+        await postS1200DataSheetSheetImport({ ...params }, file);
       }}
-      remove={(uuids: string[]) => {
-        if (deviceUuid && uuids) {
-          const params = {
-            device_uuid: deviceUuid,
-            uuids,
-          };
-          remove(params);
-        }
+      update={async (values: UpdateParams<PlcPoint>) => {
+        const points = values.data_points?.map((item) => formatUpdateParams(item));
+        await postS1200DataSheetUpdate({ ...values, data_points: points });
+        editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
+      }}
+      remove={async (params: removeParams) => {
+        await deleteS1200DataSheetDelIds(params);
       }}
     />
   );

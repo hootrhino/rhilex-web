@@ -1,4 +1,3 @@
-import { message } from '@/components/PopupHack';
 import UnitValue from '@/components/UnitValue';
 import {
   deleteModbusMasterSheetDelIds,
@@ -7,7 +6,7 @@ import {
   postModbusMasterSheetUpdate,
 } from '@/services/rhilex/modbusMasterdianweiguanli';
 import { defaultPagination } from '@/utils/constant';
-import { FormItemType, SheetType } from '@/utils/enum';
+import { FormItemType } from '@/utils/enum';
 import { inRange, omit } from '@/utils/redash';
 import { validateFormItem } from '@/utils/utils';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
@@ -17,15 +16,22 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useIntl, useParams, useRequest } from '@umijs/max';
+import { useIntl, useParams } from '@umijs/max';
 import type { Rule } from 'antd/es/form';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import DataSheet from '../DataSheet';
-import { DataSheetItem, Point, removeParams } from '../DataSheet/typings';
+import {
+  BaseDataSheetProps,
+  DataSheetItem,
+  Point,
+  removeParams,
+  UpdateParams,
+  UploadParams,
+} from '../DataSheet/typings';
 import { funcEnum } from '../enum';
 import { modbusDataTypeOptions, Quantity } from './enum';
 
-const defaultModbusConfig = {
+const defaultConfig = {
   tag: '',
   alias: '',
   function: 3,
@@ -51,29 +57,17 @@ const defaultUploadData = {
   weight: 1,
 };
 
-export type ModbusMasterDataSheetProps = {
-  uuid?: string;
-  type: SheetType;
-};
-
 type ModbusPoint = Point & {
   dataType: string;
   dataOrder: string;
   weight: number;
 };
 
-export type UpdateParams = {
-  device_uuid: string;
-  data_points: ModbusPoint[];
-};
-
-const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterDataSheetProps) => {
+const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const actionRef = useRef<ActionType>();
   const { deviceId } = useParams();
   const { formatMessage } = useIntl();
-
-  const [deviceUuid, setDeviceId] = useState<string>();
   const [disabledQty, setDisabled] = useState<boolean>(false);
 
   const formatUpdateParams = (params: Partial<DataSheetItem>) => {
@@ -87,54 +81,13 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
     return newParams;
   };
 
-  // 删除点位表
-  const { run: remove } = useRequest(
-    (params: removeParams) => deleteModbusMasterSheetDelIds(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        actionRef.current?.reload();
-        message.success(formatMessage({ id: 'message.success.remove' }));
-      },
-    },
-  );
-
-  // 更新点位表
-  const { run: update } = useRequest(
-    (params: UpdateParams) => postModbusMasterSheetUpdate(params),
-    {
-      manual: true,
-      onSuccess: () => {
-        actionRef.current?.reload();
-        editorFormRef.current?.setRowData?.('new', { ...defaultModbusConfig, uuid: 'new' });
-        message.success(formatMessage({ id: 'message.success.update' }));
-      },
-    },
-  );
-
-  // 导入点位表
-  const { run: upload } = useRequest(
-    (file: File) => postModbusMasterSheetSheetImport({ device_uuid: deviceUuid || '' }, file),
-    {
-      manual: true,
-      onSuccess: () => {
-        actionRef.current?.reload();
-        message.success(formatMessage({ id: 'message.success.upload' }));
-      },
-    },
-  );
-
-  // 导出点位表
-  const handleOnDownload = () =>
-    (window.location.href = `/api/v1/modbus_master_sheet/sheetExport?device_uuid=${deviceId}`);
-
   // 获取列表
   const handleOnRequest = async ({
     current = defaultPagination.defaultCurrent,
     pageSize = defaultPagination.defaultPageSize,
   }) => {
     const { data } = await getModbusMasterSheetList({
-      device_uuid: deviceUuid,
+      device_uuid: deviceId || uuid,
       current,
       size: pageSize,
     });
@@ -148,10 +101,6 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
       success: true,
     });
   };
-
-  useEffect(() => {
-    setDeviceId(deviceId || uuid);
-  }, [uuid]);
 
   const columns: ProColumns<Partial<DataSheetItem>>[] = [
     {
@@ -180,7 +129,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
       dataIndex: 'function',
       valueType: 'select',
       width: 150,
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !!uuid,
       valueEnum: funcEnum,
       renderFormItem: (_, { record }) => (
         <ProFormSelect
@@ -197,6 +146,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
               } else {
                 editorFormRef.current?.setRowData?.(record?.uuid as string, {
                   type: ['RAW', 'DCBA'],
+                  quantity: Quantity['RAW'],
                   weight: 1,
                 });
               }
@@ -213,7 +163,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
       title: formatMessage({ id: 'device.form.title.dataType' }),
       dataIndex: 'type',
       width: 150,
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !!uuid,
       ellipsis: true,
       renderFormItem: (_, { record }) => {
         let options = modbusDataTypeOptions;
@@ -274,7 +224,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
       dataIndex: 'address',
       valueType: 'digit',
       width: 100,
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !!uuid,
       ellipsis: true,
       fieldProps: {
         style: { width: '100%' },
@@ -295,7 +245,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
       dataIndex: 'quantity',
       valueType: 'digit',
       width: 100,
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !!uuid,
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.quantity' }) },
@@ -324,7 +274,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
       dataIndex: 'weight',
       valueType: 'digit',
       width: 80,
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !!uuid,
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.weight' }) },
@@ -355,7 +305,7 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
-      hideInTable: type === SheetType.DETAIL,
+      hideInTable: !!uuid,
       fieldProps: {
         addonAfter: 'ms',
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
@@ -375,27 +325,21 @@ const ModbusMasterDataSheet = ({ uuid, type = SheetType.LIST }: ModbusMasterData
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
-      params={{ deviceUuid }}
       request={handleOnRequest}
-      defaultConfig={defaultModbusConfig}
+      defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      type={type}
+      downloadKey="modbus_master_sheet"
       scroll={{ x: 1200 }}
-      upload={(file: File) => deviceUuid && upload(file)}
-      download={handleOnDownload}
-      update={(data: Point[]) => {
-        const points = data?.map((item) => formatUpdateParams(item));
-        if (!deviceUuid || !points) return;
-
-        update({ device_uuid: deviceUuid, data_points: points });
+      upload={async ({ file, ...params }: UploadParams) => {
+        await postModbusMasterSheetSheetImport({ ...params }, file);
       }}
-      remove={(uuids: string[]) => {
-        if (!deviceUuid || !uuids) return;
-        const params = {
-          device_uuid: deviceUuid,
-          uuids,
-        };
-        remove(params);
+      update={async (values: UpdateParams<ModbusPoint>) => {
+        const points = values.data_points?.map((item) => formatUpdateParams(item));
+        await postModbusMasterSheetUpdate({ ...values, data_points: points });
+        editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
+      }}
+      remove={async (params: removeParams) => {
+        await deleteModbusMasterSheetDelIds(params);
       }}
     />
   );
