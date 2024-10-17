@@ -9,8 +9,11 @@ import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
 import BacnetIPSheet from '../BacnetIP';
 import BacnetRouterSheet from '../BacnetRouter';
+import CJTDataSheet from '../CJT1882004Master';
 import { baseColumns, typeConfigColumns } from '../Columns';
+import DLTDataSheet from '../DLT6452007Master';
 import { DeviceType } from '../enum';
+import MbusMasterDataSheet from '../MbusMaster';
 import ModbusMasterDataSheet from '../ModbusMaster';
 import PlcSheet from '../Plc';
 import SnmpOidsSheet from '../Snmp';
@@ -117,20 +120,30 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
               Object.keys(config?.httpConfig?.headers)?.length > 0 && (
                 <HeadersDetail data={config?.httpConfig?.headers} />
               )}
+            {/* TODO GENERIC_MODBUS_SLAVER 不需要在详情页展示寄存器 */}
+            {type === DeviceType.GENERIC_SNMP && (
+              <SnmpOidsSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
+            )}
             {type === DeviceType.GENERIC_MODBUS_MASTER && (
               <ModbusMasterDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
             )}
+            {type === DeviceType.GENERIC_MBUS_MASTER && (
+              <MbusMasterDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
+            )}
             {type === DeviceType.SIEMENS_PLC && (
               <PlcSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
-            )}
-            {type === DeviceType.GENERIC_SNMP && (
-              <SnmpOidsSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
             )}
             {type === DeviceType.GENERIC_BACNET_IP && (
               <BacnetIPSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
             )}
             {type === DeviceType.BACNET_ROUTER_GW && (
               <BacnetRouterSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
+            )}
+            {type === DeviceType.DLT6452007_MASTER && (
+              <DLTDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
+            )}
+            {type === DeviceType.CJT1882004_MASTER && (
+              <CJTDataSheet uuid={detail?.uuid} type={SheetType.DETAIL} />
             )}
           </>
         )}
