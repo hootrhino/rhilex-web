@@ -8,13 +8,13 @@ import { DefaultFooter, LoginForm, ProFormCheckbox, ProFormText } from '@ant-des
 import { Helmet, history, SelectLang, useIntl, useModel } from '@umijs/max';
 
 import { getMenuMain } from '@/services/rhilex/caozuocaidan';
+import { getOsGetSecurityLicense } from '@/services/rhilex/xitongshuju';
 import { VersionType } from '@/utils/enum';
+import { encryptText } from '@/utils/utils';
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
-import UserAgreementModal from './AgreementModal';
-// import { getOsGetSecurityLicense } from '@/services/rhilex/xitongshuju';
-// import { encryptText } from '@/utils/utils';
 import defaultSettings from '../../../../config/defaultSettings';
+import UserAgreementModal from './AgreementModal';
 
 export type CurrentUser = {
   username: string;
@@ -35,15 +35,10 @@ const Login: React.FC = () => {
 
   const handleOnFinish = async ({ username, password }: CurrentUser) => {
     try {
-      // TODO 请求接口获取公钥
-      // const { data: license } = await getOsGetSecurityLicense();
-      // TODO 加密密码 encryptText(publicKey, password)
-
-      // TODO 将加密好的 password 替换至 params
+      const { data: license } = await getOsGetSecurityLicense();
       const params = {
         username,
-        password,
-        // password: encryptText(license.public_key, password),
+        password: encryptText(license.public_key, password),
       };
 
       const { data } = await postLogin(params);

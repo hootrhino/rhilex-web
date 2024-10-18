@@ -68,7 +68,6 @@ const FirmwareConfig = () => {
   const ref = useRef(null);
   const size = useSize(ref);
   const { run, cancel, isWindows } = useModel('useSystem');
-  const { isFreeTrial } = useModel('useCommon');
 
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
@@ -143,11 +142,12 @@ const FirmwareConfig = () => {
       dataIndex: 'type',
       renderText: (type: VersionType) =>
         type && Object.keys(VersionType).includes(type) ? (
-          <Tag color={isFreeTrial ? '#fdc830' : '#292f33'}>
+          <Tag color={type === VersionType.FREETRIAL ? '#fdc830' : '#292f33'}>
             {formatMessage({
-              id: isFreeTrial
-                ? 'component.rightContent.version.free'
-                : 'component.rightContent.version.enterprise',
+              id:
+                type === VersionType.FREETRIAL
+                  ? 'component.rightContent.version.free'
+                  : 'component.rightContent.version.enterprise',
             })}
           </Tag>
         ) : (
