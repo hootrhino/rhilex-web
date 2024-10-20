@@ -367,6 +367,16 @@ declare namespace API {
     device_uuid: string;
   };
 
+  type getSzy2062016MasterSheetListParams = {
+    device_uuid?: string;
+    current?: number;
+    size?: number;
+  };
+
+  type getSzy2062016MasterSheetSheetExportParams = {
+    device_uuid: string;
+  };
+
   type getTransceiverDetailParams = {
     name: string;
   };

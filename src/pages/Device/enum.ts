@@ -18,6 +18,7 @@ export enum DeviceType {
   SIEMENS_PLC = 'SIEMENS_PLC',
   DLT6452007_MASTER = 'DLT6452007_MASTER',
   CJT1882004_MASTER = 'CJT1882004_MASTER',
+  SZY2062016_MASTER = 'SZY2062016_MASTER',
   TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
   ITHINGS_IOTHUB_GATEWAY = 'ITHINGS_IOTHUB_GATEWAY',
 }
@@ -40,6 +41,10 @@ export const deviceTypeOptions = {
   [DeviceType.CJT1882004_MASTER]: formatMessage(
     { id: 'device.type.national' },
     { protocol: 'CJ/T188-2004' },
+  ),
+  [DeviceType.SZY2062016_MASTER]: formatMessage(
+    { id: 'device.type.national' },
+    { protocol: 'SZY206-2016' },
   ),
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: formatMessage({ id: 'device.type.tencent' }),
   [DeviceType.ITHINGS_IOTHUB_GATEWAY]: formatMessage({ id: 'device.type.ithings' }),

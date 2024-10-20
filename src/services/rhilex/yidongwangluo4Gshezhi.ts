@@ -43,18 +43,27 @@ export async function postMn4GApn(
 
 /** 移动网络4G参数获取 GET /api/v1/mn4g/info */
 export async function getMn4GInfo(options?: { [key: string]: any }) {
-  return request<{ code: number; msg: string; data: { cops: string; csq: number; iccid: string } }>(
-    '/api/v1/mn4g/info',
-    {
-      method: 'GET',
-      ...(options || {}),
-    },
-  );
+  return request<{
+    code: number;
+    msg: string;
+    data: { cops: string; csq: number; iccid: string; imel: string };
+  }>('/api/v1/mn4g/info', {
+    method: 'GET',
+    ...(options || {}),
+  });
 }
 
-/** 重启4G POST /api/v1/settings/mn4g/restart */
-export async function postSettingsMn4GRestart(options?: { [key: string]: any }) {
-  return request<{ code: number; msg: string; data: string[] }>('/api/v1/settings/mn4g/restart', {
+/** 关闭4G POST /api/v1/mn4g/turnoff */
+export async function postMn4GTurnoff(options?: { [key: string]: any }) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/mn4g/turnoff', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+/** 开启4G POST /api/v1/mn4g/turnon */
+export async function postMn4GTurnon(options?: { [key: string]: any }) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/mn4g/turnon', {
     method: 'POST',
     ...(options || {}),
   });

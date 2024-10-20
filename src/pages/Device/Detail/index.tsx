@@ -16,6 +16,7 @@ import MbusMasterDataSheet from '../MbusMaster';
 import ModbusMasterDataSheet from '../ModbusMaster';
 import PlcSheet from '../Plc';
 import SnmpOidsSheet from '../Snmp';
+import SZYDataSheet from '../SZY2062016Master';
 import UserProtocolDataSheet from '../UserProtocol';
 
 type DetailProps = DrawerProps & {
@@ -131,6 +132,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
             {type === DeviceType.BACNET_ROUTER_GW && <BacnetRouterSheet uuid={detail?.uuid} />}
             {type === DeviceType.DLT6452007_MASTER && <DLTDataSheet uuid={detail?.uuid} />}
             {type === DeviceType.CJT1882004_MASTER && <CJTDataSheet uuid={detail?.uuid} />}
+            {type === DeviceType.SZY2062016_MASTER && <SZYDataSheet uuid={detail?.uuid} />}
             {type === DeviceType.GENERIC_USER_PROTOCOL && (
               <UserProtocolDataSheet uuid={detail?.uuid} />
             )}

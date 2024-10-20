@@ -31,6 +31,7 @@ import * as shujumoxing from './shujumoxing';
 import * as shujuzhongxin from './shujuzhongxin';
 import * as shuruziyuanguanli from './shuruziyuanguanli';
 import * as snmpdianweiguanli from './snmpdianweiguanli';
+import * as szy2062016Dianweiguanli from './szy2062016Dianweiguanli';
 import * as tongxinmozu from './tongxinmozu';
 import * as tongyongdianweiguanli from './tongyongdianweiguanli';
 import * as wangluopeizhi from './wangluopeizhi';
@@ -83,4 +84,5 @@ export default {
   dlt6452007Dianweiguanli,
   cjt18832004Dianweiguanli,
   yonghuzidingyixieyidianweiguanli,
+  szy2062016Dianweiguanli,
 };

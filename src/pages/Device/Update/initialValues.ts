@@ -33,6 +33,21 @@ export const defaultUartConfig = {
   stopBits: 1,
 };
 
+// 国标配置
+const defaultNationalConfig = {
+  commonConfig: {
+    autoRequest: DEFAULT_TRUE,
+    batchRequest: DEFAULT_FALSE,
+    mode: DeviceMode.UART,
+  },
+  hostConfig: defaultHostConfig,
+  uartConfig: {
+    ...defaultUartConfig,
+    baudRate: 2400,
+    parity: 'E',
+  },
+};
+
 export const defaultConfig = {
   [DeviceType.GENERIC_USER_PROTOCOL]: {
     commonConfig: {
@@ -159,32 +174,9 @@ export const defaultConfig = {
       tag: DEFAULT_VALUE,
     },
   },
-  [DeviceType.DLT6452007_MASTER]: {
-    commonConfig: {
-      autoRequest: DEFAULT_TRUE,
-      batchRequest: DEFAULT_FALSE,
-      mode: DeviceMode.UART,
-    },
-    hostConfig: defaultHostConfig,
-    uartConfig: {
-      ...defaultUartConfig,
-      baudRate: 2400,
-      parity: 'E',
-    },
-  },
-  [DeviceType.CJT1882004_MASTER]: {
-    commonConfig: {
-      autoRequest: DEFAULT_TRUE,
-      batchRequest: DEFAULT_FALSE,
-      mode: DeviceMode.UART,
-    },
-    hostConfig: defaultHostConfig,
-    uartConfig: {
-      ...defaultUartConfig,
-      baudRate: 2400,
-      parity: 'E',
-    },
-  },
+  [DeviceType.DLT6452007_MASTER]: defaultNationalConfig,
+  [DeviceType.CJT1882004_MASTER]: defaultNationalConfig,
+  [DeviceType.SZY2062016_MASTER]: defaultNationalConfig,
 };
 
 // 根据 PLC 型号改变 rack&slot 默认值

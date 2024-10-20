@@ -48,6 +48,7 @@ const sheetType = {
   [DeviceType.BACNET_ROUTER_GW]: 'bacnet-router-sheet',
   [DeviceType.DLT6452007_MASTER]: 'dlt6452007-master-sheet',
   [DeviceType.CJT1882004_MASTER]: 'cjt1882004-master-sheet',
+  [DeviceType.SZY2062016_MASTER]: 'szy2062016-master-sheet',
   [DeviceType.GENERIC_USER_PROTOCOL]: 'user-protocol-sheet',
 };
 
@@ -134,6 +135,7 @@ const Devices = () => {
       case DeviceType.BACNET_ROUTER_GW:
       case DeviceType.DLT6452007_MASTER:
       case DeviceType.CJT1882004_MASTER:
+      case DeviceType.SZY2062016_MASTER:
       case DeviceType.GENERIC_USER_PROTOCOL:
         newItems = [
           ...newItems,

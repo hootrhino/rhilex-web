@@ -99,6 +99,11 @@
         component: './Device/CJT1882004Master',
       },
       {
+        path: '/device/:groupId/:deviceId/szy2062016-master-sheet',
+        title: 'menu.device.sheet',
+        component: './Device/SZY2062016Master',
+      },
+      {
         path: '/device/:groupId/:deviceId/user-protocol-sheet',
         title: 'menu.device.sheet',
         component: './Device/UserProtocol',

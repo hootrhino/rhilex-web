@@ -25,6 +25,7 @@ import { GENERIC_UART_RW } from './genericUartRW';
 import { GENERIC_USER_PROTOCOL } from './genericUserProtocol';
 import { ITHINGS_IOTHUB_GATEWAY } from './ithings';
 import { SIEMENS_PLC } from './siemensPLC';
+import { SZY2062016_MASTER } from './szy2062016Master';
 import { TENCENT_IOTHUB_GATEWAY } from './tencentCloud';
 
 const { formatMessage } = getIntl(getLocale());
@@ -208,6 +209,7 @@ export const typeConfigColumns = {
   [DeviceType.BACNET_ROUTER_GW]: BACNET_ROUTER_GW,
   [DeviceType.DLT6452007_MASTER]: DLT6452007_MASTER,
   [DeviceType.CJT1882004_MASTER]: CJT1882004_MASTER,
+  [DeviceType.SZY2062016_MASTER]: SZY2062016_MASTER,
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: TENCENT_IOTHUB_GATEWAY,
   [DeviceType.ITHINGS_IOTHUB_GATEWAY]: ITHINGS_IOTHUB_GATEWAY,
 };
