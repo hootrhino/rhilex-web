@@ -69,7 +69,12 @@ const Inend = () => {
     ];
 
     if (
-      [InendType.COAP, InendType.UDP_SERVER, InendType.HTTP, InendType.TCP_SERVER].includes(type)
+      [
+        InendType.COAP_SERVER,
+        InendType.UDP_SERVER,
+        InendType.HTTP_SERVER,
+        InendType.TCP_SERVER,
+      ].includes(type)
     ) {
       newItems = [
         ...newItems,

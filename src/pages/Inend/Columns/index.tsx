@@ -12,11 +12,11 @@ const { formatMessage } = getIntl(getLocale());
  * 类型配置
  */
 export const typeConfigColumns = {
-  [InendType.COAP]: DEFAULT_CONFIG,
+  [InendType.COAP_SERVER]: DEFAULT_CONFIG,
   [InendType.UDP_SERVER]: DEFAULT_CONFIG,
   [InendType.TCP_SERVER]: DEFAULT_CONFIG,
-  [InendType.HTTP]: DEFAULT_CONFIG,
-  [InendType.GRPC]: DEFAULT_CONFIG,
+  [InendType.HTTP_SERVER]: DEFAULT_CONFIG,
+  [InendType.GRPC_SERVER]: DEFAULT_CONFIG,
   [InendType.INTERNAL_EVENT]: INTERNAL_EVENT,
   [InendType.GENERIC_MQTT_SERVER]: GENERIC_MQTT_SERVER,
   [InendType.COMTC_EVENT_FORWARDER]: COMTC_EVENT_FORWARDER,

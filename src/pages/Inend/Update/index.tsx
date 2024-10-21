@@ -24,8 +24,8 @@ const UpdateForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const defaultValue = {
     name: `INEND_${generateRandomId()}`,
-    type: InendType.COAP,
-    config: defaultConfig[InendType.COAP],
+    type: InendType.COAP_SERVER,
+    config: defaultConfig[InendType.COAP_SERVER],
   };
 
   // 获取详情

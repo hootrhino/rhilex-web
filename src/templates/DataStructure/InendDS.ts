@@ -34,11 +34,11 @@ const inend_com_ds = `{
 }`;
 
 export const inendDS = {
-  [InendType.COAP]: inend_coap_ds,
+  [InendType.COAP_SERVER]: inend_coap_ds,
   [InendType.UDP_SERVER]: inend_udp_ds,
   [InendType.TCP_SERVER]: inend_udp_ds,
-  [InendType.HTTP]: inend_udp_ds,
-  [InendType.GRPC]: inend_udp_ds,
+  [InendType.HTTP_SERVER]: inend_udp_ds,
+  [InendType.GRPC_SERVER]: inend_udp_ds,
   [InendType.INTERNAL_EVENT]: inend_event_ds,
   [InendType.COMTC_EVENT_FORWARDER]: inend_com_ds,
 };

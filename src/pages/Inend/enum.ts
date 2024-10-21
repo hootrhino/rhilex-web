@@ -5,11 +5,11 @@ import { getIntl, getLocale } from '@umijs/max';
  */
 
 export enum InendType {
-  COAP = 'COAP',
+  COAP_SERVER = 'COAP_SERVER',
   UDP_SERVER = 'UDP_SERVER',
   TCP_SERVER = 'TCP_SERVER',
-  HTTP = 'HTTP',
-  GRPC = 'GRPC',
+  HTTP_SERVER = 'HTTP_SERVER',
+  GRPC_SERVER = 'GRPC_SERVER',
   GENERIC_MQTT_SERVER = 'GENERIC_MQTT_SERVER',
   INTERNAL_EVENT = 'INTERNAL_EVENT',
   COMTC_EVENT_FORWARDER = 'COMTC_EVENT_FORWARDER',
@@ -18,11 +18,11 @@ export enum InendType {
 const { formatMessage } = getIntl(getLocale());
 
 export const inendTypeOption = {
-  [InendType.COAP]: formatMessage({ id: 'inend.type.serve' }, { type: 'CoAP Server' }),
+  [InendType.COAP_SERVER]: formatMessage({ id: 'inend.type.serve' }, { type: 'CoAP Server' }),
   [InendType.UDP_SERVER]: formatMessage({ id: 'inend.type.serve' }, { type: 'UDP Server' }),
   [InendType.TCP_SERVER]: formatMessage({ id: 'inend.type.serve' }, { type: 'TCP Server' }),
-  [InendType.HTTP]: formatMessage({ id: 'inend.type.serve' }, { type: 'HTTP Server' }),
-  [InendType.GRPC]: formatMessage({ id: 'inend.type.serve' }, { type: 'GRPC Server' }),
+  [InendType.HTTP_SERVER]: formatMessage({ id: 'inend.type.serve' }, { type: 'HTTP Server' }),
+  [InendType.GRPC_SERVER]: formatMessage({ id: 'inend.type.serve' }, { type: 'GRPC Server' }),
   [InendType.GENERIC_MQTT_SERVER]: formatMessage(
     { id: 'inend.type.serve' },
     { type: 'MQTT Broker' },

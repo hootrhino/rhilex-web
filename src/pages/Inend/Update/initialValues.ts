@@ -3,7 +3,7 @@ import { EventType, InendType } from '../enum';
 const DEFAULT_HOST = '127.0.0.1';
 
 export const defaultConfig = {
-  [InendType.COAP]: {
+  [InendType.COAP_SERVER]: {
     port: 2582,
     host: DEFAULT_HOST,
   },
@@ -15,11 +15,11 @@ export const defaultConfig = {
     port: 2583,
     host: DEFAULT_HOST,
   },
-  [InendType.HTTP]: {
+  [InendType.HTTP_SERVER]: {
     port: 2584,
     host: DEFAULT_HOST,
   },
-  [InendType.GRPC]: {
+  [InendType.GRPC_SERVER]: {
     port: 2585,
     host: DEFAULT_HOST,
   },
