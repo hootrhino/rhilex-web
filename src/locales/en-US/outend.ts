@@ -35,8 +35,6 @@ export default {
    * modal
    */
   'outend.modal.title.remove': 'Are you sure to delete this resource?',
-  'outend.modal.content.restart':
-    'The reload process will briefly disconnect resource connections for 5-10 seconds; please proceed with caution',
 
   /**
    * others

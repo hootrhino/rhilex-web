@@ -85,6 +85,7 @@ export default {
   'modal.title.forget': '忘记密码？',
   'modal.content.forget': '如果忘记密码，请按照当前设备的手册进行重置。',
   'modal.content.logout': '确定要退出登录吗？',
+  'modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，请谨慎操作',
 
   /**
    * others

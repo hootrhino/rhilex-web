@@ -1,36 +1,38 @@
 import { ExclamationCircleFilled } from '@ant-design/icons';
-import { useIntl } from '@umijs/max';
+import { history, useIntl, useModel } from '@umijs/max';
 import { useCountDown } from 'ahooks';
 import type { ModalProps } from 'antd';
 import { Button, Modal, Space } from 'antd';
 import { useState } from 'react';
 
 type ProConfirmModalProps = ModalProps & {
-  afterOkText: string;
-  content: string | React.ReactNode;
+  content?: string | React.ReactNode;
+  afterOkText?: string;
   handleOnOk?: () => void;
-  handleOnEnd?: () => void;
 };
 
 const ProConfirmModal = ({
-  title,
   open,
   onCancel,
   okText,
   afterOkText,
   handleOnOk,
-  handleOnEnd,
   content,
   ...props
 }: ProConfirmModalProps) => {
   const [targetDate, setTargetDate] = useState<number>();
   const { formatMessage } = useIntl();
+  const { cancel } = useModel('useSystem');
+
+  const okButtonText = okText || formatMessage({ id: 'button.comfirm' });
 
   const [countdown] = useCountDown({
     targetDate,
     onEnd: () => {
       setTargetDate(undefined);
-      handleOnEnd!();
+      onCancel();
+      localStorage.clear();
+      history.push('/login');
     },
   });
 
@@ -39,7 +41,7 @@ const ProConfirmModal = ({
       title={
         <Space align="center">
           <ExclamationCircleFilled style={{ color: '#faad14', fontSize: 22 }} />
-          <span>{title}</span>
+          <span>{formatMessage({ id: 'modal.title.confirm' })}</span>
         </Space>
       }
       open={open}
@@ -56,21 +58,25 @@ const ProConfirmModal = ({
             type="primary"
             onClick={async () => {
               setTargetDate(Date.now() + 10000);
+              cancel();
               handleOnOk!();
             }}
           >
             {countdown === 0
-              ? okText
+              ? okButtonText
               : formatMessage(
                   { id: 'component.button.countdown' },
-                  { countdown: Math.round(countdown / 1000), text: afterOkText },
+                  {
+                    countdown: Math.round(countdown / 1000),
+                    text: afterOkText || formatMessage({ id: 'button.restart' }),
+                  },
                 )}
           </Button>
         </Space>
       }
       {...props}
     >
-      {content}
+      {content || formatMessage({ id: 'modal.content.restart' })}
     </Modal>
   );
 };

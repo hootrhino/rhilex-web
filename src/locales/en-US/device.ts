@@ -45,8 +45,6 @@ export default {
 
   'device.modal.content.group.remove':
     'Please ensure no devices are mounted under this group before performing the deletion. If there are devices under the group, deletion is not permitted',
-  'device.modal.content.restart':
-    'The restart process will temporarily disconnect resource connections for 5-10 seconds; please proceed with caution',
   'device.modal.content.remove.batchSheet':
     'This operation will delete multiple points at once. Please proceed with caution',
 

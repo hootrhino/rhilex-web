@@ -135,15 +135,6 @@ const Outend = () => {
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}
-        title={formatMessage({ id: 'modal.title.confirm' })}
-        okText={formatMessage({ id: 'button.comfirm' })}
-        afterOkText={formatMessage({ id: 'button.restart' })}
-        content={formatMessage({ id: 'outend.modal.content.restart' })}
-        handleOnEnd={() => {
-          actionRef.current?.reload();
-          message.success(formatMessage({ id: 'message.success.restart' }));
-          setOpen(false);
-        }}
         handleOnOk={async () => {
           await putOutendsRestart({ uuid: restartId });
         }}

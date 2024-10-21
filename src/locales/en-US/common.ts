@@ -87,6 +87,8 @@ export default {
   'modal.content.forget':
     'If you have forgotten your password, please follow the manual for your current device to reset it.',
   'modal.content.logout': 'Are you sure you want to log out?',
+  'modal.content.restart':
+    'The reboot process will briefly disconnect resource connections for 5-10 seconds; please proceed with caution',
 
   /**
    * others

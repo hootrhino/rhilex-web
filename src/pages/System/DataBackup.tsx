@@ -5,30 +5,19 @@ import { endsWith } from '@/utils/redash';
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormUploadDragger } from '@ant-design/pro-components';
-import { history, useIntl, useModel } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import { Button, Space, Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
 const DataBackupConfig = () => {
-  const { run, cancel, activeKey } = useModel('useSystem');
+  const { activeKey } = useModel('useSystem');
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
   const [uploadFile, setUploadFile] = useState<File>();
-  const [errorMsg, setMsg] = useState<string>('');
 
   const handleReset = () => {
     formRef.current?.setFieldsValue({ recovery: undefined });
-  };
-
-  const handleOnEnd = () => {
-    handleReset();
-    if (errorMsg) {
-      message.error(errorMsg);
-    } else {
-      history.push('/');
-      run();
-    }
   };
 
   useEffect(() => {
@@ -113,15 +102,10 @@ const DataBackupConfig = () => {
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}
-        title={formatMessage({ id: 'modal.title.confirm' })}
         okText={formatMessage({ id: 'system.button.confirm.upload' })}
-        afterOkText={formatMessage({ id: 'button.restart' })}
         content={formatMessage({ id: 'system.modal.content.upload' })}
-        handleOnEnd={handleOnEnd}
         handleOnOk={async () => {
-          const { data } = await postBackupUpload({}, uploadFile);
-          setMsg(data);
-          cancel();
+          await postBackupUpload({}, uploadFile);
         }}
       />
     </ProCard>

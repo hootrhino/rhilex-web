@@ -33,8 +33,6 @@ export default {
    * other
    */
   'inend.popconfirm.title.remove': 'Are you sure to delete this resource?',
-  'inend.modal.content.restart':
-    'The reboot process will briefly disconnect resource connections for 5-10 seconds; please proceed with caution',
   'inend.message.warning.new':
     'Successfully created, but currently unable to operate normally. Please modify the configuration parameters promptly according to the error message {msg}',
 

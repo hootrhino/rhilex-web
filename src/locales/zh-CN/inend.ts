@@ -33,7 +33,6 @@ export default {
    * other
    */
   'inend.popconfirm.title.remove': '确定要删除此资源？',
-  'inend.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，请谨慎操作',
   'inend.message.warning.new':
     '创建成功，但目前无法正常运行。请根据错误信息 {msg} 及时修改配置参数',
 

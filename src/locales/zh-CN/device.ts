@@ -45,7 +45,6 @@ export default {
 
   'device.modal.content.group.remove':
     '请确认该分组下无任何设备挂载后再执行删除操作。若分组下有设备，则不允许删除',
-  'device.modal.content.restart': '重启过程会短暂（5-10秒）断开资源连接，请谨慎操作',
   'device.modal.content.remove.batchSheet': '此操作会一次性删除多个点位，请谨慎操作',
 
   /**

@@ -306,16 +306,6 @@ const Devices = () => {
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}
-        title={formatMessage({ id: 'modal.title.confirm' })}
-        okText={formatMessage({ id: 'button.comfirm' })}
-        afterOkText={formatMessage({ id: 'button.restart' })}
-        content={formatMessage({ id: 'device.modal.content.restart' })}
-        handleOnEnd={() => {
-          actionRef.current?.reload();
-          message.success(formatMessage({ id: 'message.success.restart' }));
-          setOpen(false);
-          setActiveDevice('');
-        }}
         handleOnOk={async () => {
           await putDevicesRestart({ uuid: activeDevice });
         }}

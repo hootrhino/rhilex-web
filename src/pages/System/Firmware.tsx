@@ -26,7 +26,6 @@ import type { RcFile } from 'antd/es/upload';
 import { useRef, useState } from 'react';
 
 type ConfirmCofig = {
-  title: string;
   content: string | React.ReactNode;
   okText: string;
   afterOkText: string;
@@ -36,24 +35,19 @@ type ConfirmCofig = {
 
 const { formatMessage } = getIntl(getLocale());
 
-const title = formatMessage({ id: 'modal.title.confirm' });
-
 const defaultUpgradeConfig = {
-  title,
   content: formatMessage({ id: 'system.modal.content.upgrade' }),
   okText: formatMessage({ id: 'system.button.confirm.upgrade' }),
   afterOkText: formatMessage({ id: 'system.button.upgrade' }),
 };
 
 const defaultRebootConfig = {
-  title,
   content: formatMessage({ id: 'system.modal.content.reboot' }),
   okText: formatMessage({ id: 'system.button.confirm.reboot' }),
   afterOkText: formatMessage({ id: 'button.reboot' }),
 };
 
 const defaultRecoverConfig = {
-  title,
   content: formatMessage({ id: 'system.modal.content.recover' }),
   okText: formatMessage({ id: 'system.button.confirm.recover' }),
   afterOkText: formatMessage({ id: 'button.recover' }),
@@ -67,12 +61,11 @@ export const twoColors: ProgressProps['strokeColor'] = {
 const FirmwareConfig = () => {
   const ref = useRef(null);
   const size = useSize(ref);
-  const { run, cancel, isWindows } = useModel('useSystem');
+  const { isWindows } = useModel('useSystem');
 
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
   const [confirmConfig, setConfirmConfig] = useState<ConfirmCofig>(defaultUpgradeConfig);
-  const [errorMsg, setMsg] = useState<string>('');
   const [showProgress, setShowProgress] = useState<boolean>(false);
   const [uploadProgress, setProgress] = useState<number>(0);
 
@@ -81,10 +74,8 @@ const FirmwareConfig = () => {
   // 查看日志
   const { data: logData } = useRequest(() => getFirmwareUpgradeLog());
 
-  const handleOnEnd = () => {
+  const handleOnCancel = () => {
     setOpen(false);
-    run();
-    message.success(errorMsg ? errorMsg : `${confirmConfig.afterOkText}成功`);
   };
 
   const handleFileUpload = (file: RcFile | undefined) => {
@@ -239,11 +230,8 @@ const FirmwareConfig = () => {
                   setConfirmConfig({
                     ...defaultUpgradeConfig,
                     handleOnOk: async () => {
-                      const { data } = await postFirmwareUpgrade();
-                      setMsg(data);
-                      cancel();
+                      await postFirmwareUpgrade();
                     },
-                    handleOnEnd,
                   });
                 }}
                 icon={<CloudUploadOutlined />}
@@ -259,11 +247,8 @@ const FirmwareConfig = () => {
                   setConfirmConfig({
                     ...defaultRebootConfig,
                     handleOnOk: async () => {
-                      const { data } = await postFirmwareReboot();
-                      setMsg(data);
-                      cancel();
+                      await postFirmwareReboot();
                     },
-                    handleOnEnd,
                   });
                 }}
                 icon={<PoweroffOutlined />}
@@ -279,11 +264,8 @@ const FirmwareConfig = () => {
                   setConfirmConfig({
                     ...defaultRecoverConfig,
                     handleOnOk: async () => {
-                      const { data } = await postFirmwareRecoverNew();
-                      setMsg(data);
-                      cancel();
+                      await postFirmwareRecoverNew();
                     },
-                    handleOnEnd,
                   });
                 }}
                 icon={<SyncOutlined />}
@@ -297,7 +279,7 @@ const FirmwareConfig = () => {
             title={formatMessage({ id: 'system.title.firmware.upload' })}
             open={showProgress}
             footer={false}
-            onCancel={() => setOpen(false)}
+            onCancel={handleOnCancel}
             destroyOnClose
           >
             <Progress
@@ -315,7 +297,7 @@ const FirmwareConfig = () => {
           <div className="w-full break-words whitespace-pre-wrap">{logData}</div>
         </ProCard>
       </ProCard>
-      <ProConfirmModal open={open} onCancel={() => setOpen(false)} {...confirmConfig} />
+      <ProConfirmModal open={open} onCancel={handleOnCancel} {...confirmConfig} />
     </div>
   );
 };
