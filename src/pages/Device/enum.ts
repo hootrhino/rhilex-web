@@ -26,9 +26,9 @@ export enum DeviceType {
 
 export const deviceTypeOptions = {
   [DeviceType.GENERIC_UART_RW]: formatMessage({ id: 'device.type.uartRW' }),
-  [DeviceType.GENERIC_USER_PROTOCOL]: formatMessage({ id: 'device.type.user' }),
   [DeviceType.GENERIC_MODBUS_MASTER]: formatMessage({ id: 'device.type.modbus.master' }),
   [DeviceType.GENERIC_MODBUS_SLAVER]: formatMessage({ id: 'device.type.modbus.slaver' }),
+  [DeviceType.GENERIC_USER_PROTOCOL]: formatMessage({ id: 'device.type.user' }),
   [DeviceType.GENERIC_BACNET_IP]: formatMessage({ id: 'device.type.bacnet.ip' }),
   [DeviceType.BACNET_ROUTER_GW]: formatMessage({ id: 'device.type.bacnet.router' }),
   [DeviceType.GENERIC_SNMP]: formatMessage({ id: 'device.type.snmp' }),

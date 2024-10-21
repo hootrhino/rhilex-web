@@ -79,7 +79,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
         <ProDescriptions
           title={formatMessage({ id: 'device.title.base' })}
           dataSource={detail && omit(detail, ['config'])}
-          columns={formatColumns(baseColumns) as EnhancedProDescriptionsItemProps[]}
+          columns={formatColumns(baseColumns()) as EnhancedProDescriptionsItemProps[]}
           column={3}
           labelWidth={labelWidth}
           rootClassName="detail-descriptions"

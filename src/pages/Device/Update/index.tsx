@@ -12,7 +12,7 @@ import {
   stringToBool,
 } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
-import { history, useIntl, useParams, useRequest } from '@umijs/max';
+import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { columns } from '../Columns';
 import { defaultConfig, defaultModelConfig } from './initialValues';
@@ -90,6 +90,8 @@ const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
   const { deviceId, groupId } = useParams();
   const { formatMessage } = useIntl();
+  const { isFreeTrial } = useModel('useCommon');
+
   const [loading, setLoading] = useState<boolean>(false);
 
   const initialValues = {
@@ -181,7 +183,7 @@ const UpdateForm = () => {
       <ProBetaSchemaForm
         formRef={formRef}
         onFinish={handleOnFinish}
-        columns={columns as ProFormColumnsType<Record<string, any>>[]}
+        columns={columns(isFreeTrial) as ProFormColumnsType<Record<string, any>>[]}
         loading={loading}
         handleOnReset={handleOnReset}
         onValuesChange={handleOnValuesChange}

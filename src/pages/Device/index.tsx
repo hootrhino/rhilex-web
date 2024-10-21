@@ -269,7 +269,7 @@ const Devices = () => {
               actionRef={actionRef}
               rowKey="uuid"
               rootClassName="stripe-table"
-              columns={[...baseColumns, ...actionColumns] as any}
+              columns={[...baseColumns(), ...actionColumns] as any}
               search={false}
               params={{ uuid: activeGroupKey }}
               request={async ({ current, pageSize, ...keyword }) => {

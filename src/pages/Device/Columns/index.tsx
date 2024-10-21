@@ -139,7 +139,7 @@ export const modeColumns = {
 /**
  * 基本配置
  */
-export const baseColumns = [
+export const baseColumns = (isFreeTrial?: boolean) => [
   {
     title: 'UUID',
     dataIndex: 'uuid',
@@ -160,7 +160,25 @@ export const baseColumns = [
     valueType: 'select',
     required: true,
     ellipsis: true,
-    valueEnum: deviceTypeOptions,
+    request: () =>
+      Object.keys(deviceTypeOptions).map((key) => {
+        if (isFreeTrial) {
+          return {
+            label: deviceTypeOptions[key],
+            value: key,
+            disabled: ![
+              DeviceType.GENERIC_UART_RW,
+              DeviceType.GENERIC_MODBUS_MASTER,
+              DeviceType.GENERIC_MODBUS_SLAVER,
+            ].includes(key as DeviceType),
+          };
+        }
+
+        return {
+          label: deviceTypeOptions[key],
+          value: key,
+        };
+      }),
     renderText: (type: DeviceType) => type && deviceTypeOptions[type],
   },
   {
@@ -217,10 +235,10 @@ export const typeConfigColumns = {
 /**
  * 设备配置
  */
-export const columns = [
+export const columns = (isFreeTrial: boolean) => [
   {
     valueType: 'group',
-    columns: baseColumns,
+    columns: baseColumns(isFreeTrial),
   },
   {
     valueType: 'dependency',
