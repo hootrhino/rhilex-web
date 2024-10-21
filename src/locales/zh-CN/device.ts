@@ -258,4 +258,24 @@ export default {
    * BACnet objectType
    */
   'device.bacnet.objectType.ai': 'AI 模拟输入',
+
+  /**
+   * SZY2062016_MASTER MeterType
+   */
+  'device.meterType.command': '命令',
+  'device.meterType.rainfall': '雨量参数',
+  'device.meterType.waterLevel': '水位参数',
+  'device.meterType.flowRate': '流量（水量）参数',
+  'device.meterType.flowSpeed': '流速参数',
+  'device.meterType.gatePosition': '闸位参数',
+  'device.meterType.power': '功率参数',
+  'device.meterType.airPressure': '气压参数',
+  'device.meterType.windSpeed': '风速参数',
+  'device.meterType.waterTemp': '水温参数',
+  'device.meterType.waterQuality': '水质参数',
+  'device.meterType.soilMoisture': '土壤含水率参数',
+  'device.meterType.evaporation': '蒸发量参数',
+  'device.meterType.alarmStatus': '报警或状态参数',
+  'device.meterType.comprehensive': '综合参数',
+  'device.meterType.waterPressure': '水压参数',
 };

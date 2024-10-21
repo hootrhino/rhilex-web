@@ -262,4 +262,24 @@ export default {
    * BACnet objectType
    */
   'device.bacnet.objectType.ai': 'AI',
+
+  /**
+   * SZY2062016_MASTER MeterType
+   */
+  'device.meterType.command': 'Command',
+  'device.meterType.rainfall': 'Rainfall Paramete',
+  'device.meterType.waterLevel': 'Water Level Parameter',
+  'device.meterType.flowRate': 'Flow Rate (Water Volume) Parameter',
+  'device.meterType.flowSpeed': 'Flow Speed Parameter',
+  'device.meterType.gatePosition': 'Gate Position Parameter',
+  'device.meterType.power': 'Power Parameter',
+  'device.meterType.airPressure': 'Air Pressure Parameter',
+  'device.meterType.windSpeed': 'Wind Speed Parameter',
+  'device.meterType.waterTemp': 'Water Temperature Parameter',
+  'device.meterType.waterQuality': 'Water Quality Parameter',
+  'device.meterType.soilMoisture': 'Soil Moisture Parameter',
+  'device.meterType.evaporation': 'Evaporation Parameter',
+  'device.meterType.alarmStatus': 'Alarm or Status Parameter',
+  'device.meterType.comprehensive': 'Comprehensive Parameter',
+  'device.meterType.waterPressure': 'Water Pressure Parameter',
 };

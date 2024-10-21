@@ -1,3 +1,7 @@
+import { getIntl, getLocale } from '@umijs/max';
+
+const { formatMessage } = getIntl(getLocale());
+
 export enum MeterType {
   FCCommand = '0',
   FCRainfall = '1',
@@ -18,20 +22,20 @@ export enum MeterType {
 }
 
 export const meterTypeOptions = {
-  [MeterType.FCCommand]: '命令',
-  [MeterType.FCRainfall]: '雨量参数',
-  [MeterType.FCWaterLevel]: '水位参数',
-  [MeterType.FCFlowRate]: '流量(水量)参数',
-  [MeterType.FCFlowSpeed]: '流速参数',
-  [MeterType.FCGatePosition]: '闸位参数',
-  [MeterType.FCPower]: '功率参数',
-  [MeterType.FCAirPressure]: '气压参数',
-  [MeterType.FCWindSpeed]: '风速参数',
-  [MeterType.FCWaterTemperature]: '水温参数',
-  [MeterType.FCWaterQuality]: '水质参数',
-  [MeterType.FCSoilMoisture]: '土壤含水率参数',
-  [MeterType.FCEvaporation]: '蒸发量参数',
-  [MeterType.FCAlarmStatus]: '报警或状态参数',
-  [MeterType.FCComprehensive]: '综合参数',
-  [MeterType.FCWaterPressure]: '水压参数',
+  [MeterType.FCCommand]: formatMessage({ id: 'device.meterType.command' }),
+  [MeterType.FCRainfall]: formatMessage({ id: 'device.meterType.rainfall' }),
+  [MeterType.FCWaterLevel]: formatMessage({ id: 'device.meterType.waterLevel' }),
+  [MeterType.FCFlowRate]: formatMessage({ id: 'device.meterType.flowRate' }),
+  [MeterType.FCFlowSpeed]: formatMessage({ id: 'device.meterType.flowSpeed' }),
+  [MeterType.FCGatePosition]: formatMessage({ id: 'device.meterType.gatePosition' }),
+  [MeterType.FCPower]: formatMessage({ id: 'device.meterType.power' }),
+  [MeterType.FCAirPressure]: formatMessage({ id: 'device.meterType.airPressure' }),
+  [MeterType.FCWindSpeed]: formatMessage({ id: 'device.meterType.windSpeed' }),
+  [MeterType.FCWaterTemperature]: formatMessage({ id: 'device.meterType.waterTemp' }),
+  [MeterType.FCWaterQuality]: formatMessage({ id: 'device.meterType.waterQuality' }),
+  [MeterType.FCSoilMoisture]: formatMessage({ id: 'device.meterType.soilMoisture' }),
+  [MeterType.FCEvaporation]: formatMessage({ id: 'device.meterType.evaporation' }),
+  [MeterType.FCAlarmStatus]: formatMessage({ id: 'device.meterType.alarmStatus' }),
+  [MeterType.FCComprehensive]: formatMessage({ id: 'device.meterType.comprehensive' }),
+  [MeterType.FCWaterPressure]: formatMessage({ id: 'device.meterType.waterPressure' }),
 };
