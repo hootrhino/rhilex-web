@@ -5,6 +5,7 @@ const { formatMessage } = getIntl(getLocale());
 /**
  * 设备类型枚举
  */
+// TODO 免费版本开放 GENERIC_UART_RW、GENERIC_MODBUS_MASTER、GENERIC_MODBUS_SLAVER
 export enum DeviceType {
   GENERIC_UART_RW = 'GENERIC_UART_RW',
   GENERIC_USER_PROTOCOL = 'GENERIC_USER_PROTOCOL',

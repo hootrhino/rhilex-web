@@ -1,27 +1,20 @@
 import { message } from '@/components/PopupHack';
 import PageContainer from '@/components/ProPageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
+import type { DetailConfig } from '@/models/useCommon';
+import { defaultConfig } from '@/models/useCommon';
 import { deleteRulesDel } from '@/services/rhilex/guizeguanli';
 import { getDevicesDetail, getRulesByDevice } from '@/services/rhilex/shebeiguanli';
 import { getInendsDetail, getRulesByInend } from '@/services/rhilex/shuruziyuanguanli';
 import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { ProTable, type ProColumns } from '@ant-design/pro-components';
-import { history, useIntl, useParams, useRequest } from '@umijs/max';
+import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import { Button, Popconfirm } from 'antd';
 import { useState } from 'react';
-import { DeviceType } from '../Device/enum';
-import { InendType } from '../Inend/enum';
 import Debug from './Debug';
 import Detail from './Detail';
 import Log from './Log';
 import QuickForm from './QuickForm';
-
-export type DSType = DeviceType & InendType;
-
-export enum RuleType {
-  DEVICE = 'device',
-  INEND = 'inend',
-}
 
 export type RuleItem = {
   uuid: string;
@@ -31,19 +24,9 @@ export type RuleItem = {
   [key: string]: any;
 };
 
-type DetailConfig = {
-  open: boolean;
-  uuid: string;
-};
-
 type DebugConfig = {
   topic: string;
   open: boolean;
-};
-
-const defaultConfig = {
-  uuid: '',
-  open: false,
 };
 
 const defaultDebugConfig = {
@@ -54,13 +37,12 @@ const defaultDebugConfig = {
 const Rule = () => {
   const { groupId, deviceId, inendId } = useParams();
   const { formatMessage } = useIntl();
+  const { detailConfig, changeConfig, initialConfig } = useModel('useCommon');
 
   const [dataSource, setDataSource] = useState<RuleItem[]>([]);
   const [title, setTitle] = useState<string>();
   const [goBackUrl, setUrl] = useState<string>('');
   const [goNewUrl, setNewUrl] = useState<string>('');
-  const [ruleType, setRuleType] = useState<DSType>();
-  const [detailConfig, setDetailConfig] = useState<DetailConfig>(defaultConfig);
   const [logConfig, setLogConfig] = useState<DetailConfig>(defaultConfig);
   const [debugConfig, setDebugConfig] = useState<DebugConfig>(defaultDebugConfig);
   const [openQuickForm, setOpen] = useState<boolean>(false);
@@ -88,7 +70,6 @@ const Rule = () => {
     refreshDeps: [inendId],
     onSuccess: (res) => {
       setTitle(res?.name);
-      setRuleType(res?.type as DSType);
       setUrl('/inend/list');
       setNewUrl(`/inend/${inendId}/rule/new`);
     },
@@ -99,7 +80,6 @@ const Rule = () => {
     refreshDeps: [deviceId],
     onSuccess: (res) => {
       setTitle(res?.name);
-      setRuleType(res?.type as DSType);
       setUrl('/device/list');
       setNewUrl(`/device/${groupId}/${deviceId}/rule/new`);
     },
@@ -165,7 +145,7 @@ const Rule = () => {
         <a
           key="detail"
           onClick={() => {
-            setDetailConfig({ open: true, uuid });
+            changeConfig({ open: true, uuid });
           }}
         >
           {formatMessage({ id: 'button.detail' })}
@@ -223,11 +203,10 @@ const Rule = () => {
           </Button>,
         ]}
       />
-      <Detail onClose={() => setDetailConfig(defaultConfig)} {...detailConfig} />
+      <Detail onClose={initialConfig} {...detailConfig} />
       <Log onCancel={() => setLogConfig(defaultConfig)} {...logConfig} />
       <Debug
         onOpenChange={(visible: boolean) => setDebugConfig({ ...debugConfig, open: visible })}
-        ruleType={ruleType}
         {...debugConfig}
       />
       <QuickForm

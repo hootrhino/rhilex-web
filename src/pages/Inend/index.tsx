@@ -40,6 +40,7 @@ const Inend = () => {
   const actionRef = useRef<ActionType>();
   const { detailConfig, isFreeTrial, total, changeConfig, initialConfig, changeTotal } =
     useModel('useCommon');
+
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
   const [restartId, setRestartId] = useState<string>('');
@@ -116,6 +117,13 @@ const Inend = () => {
                   setRestartId(uuid);
                   break;
                 case 'rule':
+                  localStorage.setItem(
+                    'testDataConfig',
+                    JSON.stringify({
+                      enableBatchRequest: false,
+                      ruleType: type,
+                    }),
+                  );
                   history.push(`/inend/${uuid}/rule`);
                   break;
                 case 'sub-device':

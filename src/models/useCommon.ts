@@ -2,12 +2,12 @@ import { VersionType } from '@/utils/enum';
 import { useModel } from '@umijs/max';
 import { useEffect, useState } from 'react';
 
-type DetailConfig = {
+export type DetailConfig = {
   open: boolean;
   uuid: string;
 };
 
-const defaultConfig = {
+export const defaultConfig = {
   uuid: '',
   open: false,
 };

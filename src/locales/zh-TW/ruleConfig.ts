@@ -9,8 +9,16 @@ export default {
   'ruleConfig.form.title.output': '輸出結果',
   'ruleConfig.form.title.targetType': '北向資源類型',
   'ruleConfig.form.title.targetId': '北向資源 UUID',
+  'ruleConfig.form.title.type': '示例數據結構',
 
   'ruleConfig.form.placeholder.testData': '請輸入數據',
+
+  /**
+   * options
+   */
+  'ruleConfig.type.option.default': '預設數據結構',
+  'ruleConfig.type.option.control': '設備遠端控制數據結構',
+  'ruleConfig.type.option.action': '設備行為調用數據結構',
 
   /**
    * title
@@ -33,6 +41,5 @@ export default {
    */
   'ruleConfig.popconfirm.title.remove': '確定要刪除此規則？',
   'ruleConfig.popconfirm.title.reset': '重置可能會丟失數據，確定要重置嗎？',
-  'ruleConfig.modal.title.test': '在開始測試之前，請確保已儲存規則。確定要提交表單並執行測試嗎？',
   'ruleConfig.empty.targetId': '系統未識別到可用北向資源。請參考操作指南完成資源建置步驟。',
 };

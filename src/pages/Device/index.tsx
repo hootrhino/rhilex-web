@@ -154,13 +154,21 @@ const Devices = () => {
     return [...newItems, showErr ? errItem : null];
   };
 
-  const handleOnMenu = ({ key }: MenuInfo, { uuid, gid, type }: Partial<DeviceItem>) => {
+  const handleOnMenu = ({ key }: MenuInfo, { uuid, gid, type, config }: Partial<DeviceItem>) => {
     switch (key) {
       case 'restart':
         setOpen(true);
         setActiveDevice(uuid);
         break;
       case 'rule':
+        localStorage.setItem(
+          'testDataConfig',
+          JSON.stringify({
+            enableBatchRequest: config?.commonConfig?.batchRequest,
+            ruleType: type,
+          }),
+        );
+
         history.push(`/device/${gid}/${uuid}/rule`);
         break;
       case 'data-sheet':

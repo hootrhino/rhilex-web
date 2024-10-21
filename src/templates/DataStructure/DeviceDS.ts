@@ -32,14 +32,12 @@ const device_siemens_ds = `{
 }`;
 
 // GENERIC_SNMP - 通用 SNMP 协议采集网关
-const device_snmp_ds = `[
-  {
+const device_snmp_ds = `{
     "oid": ".1.3.6.1.2.1.1.7.0",
     "tag": "SysServices",
     "alias": "SysServices",
     "value": 0
-  }
-]`;
+  }`;
 
 // GENERIC_BACNET_IP & BACNET_ROUTER_GW
 const device_bacnet_ds = `{
@@ -59,7 +57,69 @@ const device_bacnet_ds = `{
   }
 }`;
 
-// TODO 补充新增协议的数据结构
+// 国标协议 & MBUS
+const device_national_ds = `{
+  "tag": "tag",
+  "meterId": "W0001",
+  "value": "12345.67"
+}`;
+
+// GENERIC_UART_RW - 通用串口读写网关
+const device_uart_ds = `{
+  "tag": "tag",
+  "value": "12345.67"
+}`;
+
+// GENERIC_USER_PROTOCOL - 通用自定义协议采集网关
+const device_user_ds = `{
+  "tag": "tag",
+  "value": "12345.67",
+  "command": "010300000002C40B"
+}`;
+
+// TENCENT_IOTHUB_GATEWAY - 腾讯云物联网平台
+const device_iothub_control_ds = `{
+  "method": "control",
+  "clientToken": "123",
+  "params": {
+      "power_switch": 1,
+      "color": 1,
+      "brightness": 66
+  }
+}`;
+
+const device_iothub_action_ds = `{
+  "method": "action",
+  "clientToken": "20a4ccfd-d308-****-86c6-5254008a4f10",
+  "actionId": "openDoor",
+  "timestamp": 1212121221,
+  "params": {
+      "userid": "323343"
+  }
+}`;
+
+// ITHINGS_IOTHUB_GATEWAY - 联犀物联网平台
+const device_ithings_control_ds = `{
+  "method": "control",
+  "msgToken": "123",
+  "params": {
+    "power_switch": 1,
+    "color": 1,
+    "brightness": 66
+  }
+}`;
+
+const device_ithings_action_ds = `{
+  "method": "action",
+  "msgToken": "20a4ccfd-d308-****-86c6-5254008a4f10",
+  "actionID": "openDoor",
+  "timestamp": 1677762028638,
+  "params": {
+    "userid": "323343"
+  }
+}`;
+
+
 export const deviceDS = {
   [DeviceType.GENERIC_MODBUS_MASTER]: device_modbus_ds,
   [DeviceType.GENERIC_MODBUS_SLAVER]: device_modbus_ds,
@@ -68,4 +128,23 @@ export const deviceDS = {
   [DeviceType.GENERIC_SNMP]: device_snmp_ds,
   [DeviceType.GENERIC_BACNET_IP]: device_bacnet_ds,
   [DeviceType.BACNET_ROUTER_GW]: device_bacnet_ds,
+  [DeviceType.DLT6452007_MASTER]: device_national_ds,
+  [DeviceType.CJT1882004_MASTER]: device_national_ds,
+  [DeviceType.SZY2062016_MASTER]: device_national_ds,
+  [DeviceType.GENERIC_MBUS_MASTER]: device_national_ds,
+  [DeviceType.GENERIC_UART_RW]: device_uart_ds,
+  [DeviceType.GENERIC_USER_PROTOCOL]: device_user_ds,
+  [DeviceType.TENCENT_IOTHUB_GATEWAY]: device_iothub_control_ds,
+  [DeviceType.ITHINGS_IOTHUB_GATEWAY]: device_ithings_control_ds
 };
+
+export const multTestData = {
+  [DeviceType.TENCENT_IOTHUB_GATEWAY]: {
+    'defaultDS': device_iothub_control_ds,
+    'action': device_iothub_action_ds
+  },
+  [DeviceType.ITHINGS_IOTHUB_GATEWAY]: {
+    'defaultDS': device_ithings_control_ds,
+    'action': device_ithings_action_ds
+  },
+}

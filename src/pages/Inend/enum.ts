@@ -5,7 +5,7 @@ import { getIntl, getLocale } from '@umijs/max';
  */
 
 export enum InendType {
-  COAP = 'CoAP',
+  COAP = 'COAP',
   UDP_SERVER = 'UDP_SERVER',
   TCP_SERVER = 'TCP_SERVER',
   HTTP = 'HTTP',

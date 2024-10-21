@@ -9,8 +9,16 @@ export default {
   'ruleConfig.form.title.output': '输出结果',
   'ruleConfig.form.title.targetType': '北向资源类型',
   'ruleConfig.form.title.targetId': '北向资源 UUID',
+  'ruleConfig.form.title.type': '示例数据结构',
 
   'ruleConfig.form.placeholder.testData': '请输入数据',
+
+  /**
+   * options
+   */
+  'ruleConfig.type.option.default': '默认数据结构',
+  'ruleConfig.type.option.control': '设备远程控制数据结构',
+  'ruleConfig.type.option.action': '设备行为调用数据结构',
 
   /**
    * title
@@ -33,6 +41,5 @@ export default {
    */
   'ruleConfig.popconfirm.title.remove': '确定要删除此规则？',
   'ruleConfig.popconfirm.title.reset': '重置可能会丢失数据，确定要重置吗？',
-  'ruleConfig.modal.title.test': '在开始测试之前，请确保已保存规则。确定要提交表单并执行测试吗？',
   'ruleConfig.empty.targetId': '系统未识别到可用北向资源。请参照操作指南完成资源构建步骤。',
 };
