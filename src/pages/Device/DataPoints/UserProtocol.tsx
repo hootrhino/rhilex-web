@@ -1,35 +1,43 @@
+import DataSheet from '@/components/DataSheet';
+import type {
+  BaseDataSheetProps,
+  DataSheetItem,
+  Point,
+  removeParams,
+  UpdateParams,
+  UploadParams,
+} from '@/components/DataSheet/typings';
 import UnitValue from '@/components/UnitValue';
 import {
-  deleteDlt6452007MasterSheetDelIds,
-  getDlt6452007MasterSheetList,
-  postDlt6452007MasterSheetSheetImport,
-  postDlt6452007MasterSheetUpdate,
-} from '@/services/rhilex/dlt6452007Dianweiguanli';
+  deleteUserProtocolSheetDelIds,
+  getUserProtocolSheetList,
+  postUserProtocolSheetSheetImport,
+  postUserProtocolSheetUpdate,
+} from '@/services/rhilex/yonghuzidingyixieyidianweiguanli';
 import { defaultPagination } from '@/utils/constant';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
 import type { Rule } from 'antd/es/form';
 import { useRef } from 'react';
-import DataSheet from '../DataSheet';
-import type {
-  BaseDataSheetProps,
-  DataSheetItem,
-  removeParams,
-  UpdateParams,
-  UploadParams,
-} from '../DataSheet/typings';
 
 const defaultConfig = {
-  meterId: '',
+  command: '',
   frequency: 1000,
 };
 
 const defaultUploadData = {
-  meterId: '100023669245',
+  command: '010300000002CC40B',
+  tag: 'device1',
+  alias: '风机1',
   frequency: 1000,
 };
 
-const DLTDataSheet = ({ uuid }: BaseDataSheetProps) => {
+type UserProtocolPoint = Point & {
+  command?: string;
+  frequency?: number;
+};
+
+const UserProtocolDataSheet = ({ uuid }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
@@ -37,18 +45,15 @@ const DLTDataSheet = ({ uuid }: BaseDataSheetProps) => {
 
   const columns: ProColumns<Partial<DataSheetItem>>[] = [
     {
-      title: formatMessage({ id: 'device.form.title.id' }),
-      dataIndex: 'meterId',
+      title: formatMessage({ id: 'device.form.title.command' }),
+      dataIndex: 'command',
       formItemProps: {
         rules: [
-          { required: true, message: formatMessage({ id: 'device.form.placeholder.id' }) },
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.command' }) },
           {
             validator: (_rule: Rule, value: string) => {
-              if (isNaN(Number(value))) {
-                return Promise.reject(formatMessage({ id: 'device.form.rules.meterId.number' }));
-              }
-              if (value && value.length !== 12) {
-                return Promise.reject(formatMessage({ id: 'device.form.rules.meterId.len' }));
+              if (value && value.length > 64) {
+                return Promise.reject(formatMessage({ id: 'device.form.rules.command' }));
               }
               return Promise.resolve();
             },
@@ -56,7 +61,7 @@ const DLTDataSheet = ({ uuid }: BaseDataSheetProps) => {
         ],
       },
       fieldProps: {
-        placeholder: formatMessage({ id: 'device.form.placeholder.id' }),
+        placeholder: formatMessage({ id: 'device.form.placeholder.command' }),
       },
     },
     {
@@ -87,7 +92,7 @@ const DLTDataSheet = ({ uuid }: BaseDataSheetProps) => {
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
       }) => {
-        const { data } = await getDlt6452007MasterSheetList({
+        const { data } = await getUserProtocolSheetList({
           device_uuid: deviceId || uuid,
           current,
           size: pageSize,
@@ -101,19 +106,18 @@ const DLTDataSheet = ({ uuid }: BaseDataSheetProps) => {
       }}
       defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      downloadKey="dlt6452007_master_sheet"
       upload={async ({ file, ...params }: UploadParams) => {
-        await postDlt6452007MasterSheetSheetImport({ ...params }, file);
+        await postUserProtocolSheetSheetImport({ ...params }, file);
       }}
-      update={async (values: UpdateParams) => {
-        await postDlt6452007MasterSheetUpdate(values);
+      update={async (values: UpdateParams<UserProtocolPoint>) => {
+        await postUserProtocolSheetUpdate(values);
         editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
       }}
       remove={async (params: removeParams) => {
-        await deleteDlt6452007MasterSheetDelIds(params);
+        await deleteUserProtocolSheetDelIds(params);
       }}
     />
   );
 };
 
-export default DLTDataSheet;
+export default UserProtocolDataSheet;

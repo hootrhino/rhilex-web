@@ -1,23 +1,23 @@
-import UnitValue from '@/components/UnitValue';
-import {
-  deleteCjt1882004MasterSheetDelIds,
-  getCjt1882004MasterSheetList,
-  postCjt1882004MasterSheetSheetImport,
-  postCjt1882004MasterSheetUpdate,
-} from '@/services/rhilex/cjt18832004Dianweiguanli';
-import { defaultPagination } from '@/utils/constant';
-import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
-import { useIntl, useParams } from '@umijs/max';
-import type { Rule } from 'antd/es/form';
-import { useRef } from 'react';
-import DataSheet from '../DataSheet';
+import DataSheet from '@/components/DataSheet';
 import type {
   BaseDataSheetProps,
   DataSheetItem,
   removeParams,
   UpdateParams,
   UploadParams,
-} from '../DataSheet/typings';
+} from '@/components/DataSheet/typings';
+import UnitValue from '@/components/UnitValue';
+import {
+  deleteDlt6452007MasterSheetDelIds,
+  getDlt6452007MasterSheetList,
+  postDlt6452007MasterSheetSheetImport,
+  postDlt6452007MasterSheetUpdate,
+} from '@/services/rhilex/dlt6452007Dianweiguanli';
+import { defaultPagination } from '@/utils/constant';
+import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
+import { useIntl, useParams } from '@umijs/max';
+import type { Rule } from 'antd/es/form';
+import { useRef } from 'react';
 
 const defaultConfig = {
   meterId: '',
@@ -26,12 +26,10 @@ const defaultConfig = {
 
 const defaultUploadData = {
   meterId: '100023669245',
-  tag: 'meter1',
-  alias: 'meter1',
   frequency: 1000,
 };
 
-const CJTDataSheet = ({ uuid }: BaseDataSheetProps) => {
+const DLTDataSheet = ({ uuid }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
@@ -89,7 +87,7 @@ const CJTDataSheet = ({ uuid }: BaseDataSheetProps) => {
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
       }) => {
-        const { data } = await getCjt1882004MasterSheetList({
+        const { data } = await getDlt6452007MasterSheetList({
           device_uuid: deviceId || uuid,
           current,
           size: pageSize,
@@ -103,19 +101,18 @@ const CJTDataSheet = ({ uuid }: BaseDataSheetProps) => {
       }}
       defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      downloadKey="cjt1882004_master_sheet"
       upload={async ({ file, ...params }: UploadParams) => {
-        await postCjt1882004MasterSheetSheetImport({ ...params }, file);
+        await postDlt6452007MasterSheetSheetImport({ ...params }, file);
       }}
       update={async (values: UpdateParams) => {
-        await postCjt1882004MasterSheetUpdate(values);
+        await postDlt6452007MasterSheetUpdate(values);
         editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
       }}
       remove={async (params: removeParams) => {
-        await deleteCjt1882004MasterSheetDelIds(params);
+        await deleteDlt6452007MasterSheetDelIds(params);
       }}
     />
   );
 };
 
-export default CJTDataSheet;
+export default DLTDataSheet;

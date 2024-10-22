@@ -6,18 +6,9 @@ import { flatten, omit } from '@/utils/redash';
 import { useIntl, useRequest } from '@umijs/max';
 import { Drawer, DrawerProps } from 'antd';
 import { useEffect } from 'react';
-import BacnetIPSheet from '../BacnetIP';
-import BacnetRouterSheet from '../BacnetRouter';
-import CJTDataSheet from '../CJT1882004Master';
 import { baseColumns, typeConfigColumns } from '../Columns';
-import DLTDataSheet from '../DLT6452007Master';
+import DataPoints from '../DataPoints';
 import { DeviceType } from '../enum';
-import MbusMasterDataSheet from '../MbusMaster';
-import ModbusMasterDataSheet from '../ModbusMaster';
-import PlcSheet from '../Plc';
-import SnmpOidsSheet from '../Snmp';
-import SZYDataSheet from '../SZY2062016Master';
-import UserProtocolDataSheet from '../UserProtocol';
 
 type DetailProps = DrawerProps & {
   uuid: string;
@@ -33,6 +24,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     (params: API.getDevicesDetailParams) => getDevicesDetail(params),
     {
       manual: true,
+      onSuccess: (res) => localStorage.setItem('deviceType', res.type),
     },
   );
 
@@ -122,20 +114,18 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
                 <HeadersDetail data={config?.httpConfig?.headers} />
               )}
             {/* TODO GENERIC_MODBUS_SLAVER 不需要在详情页展示寄存器 */}
-            {type === DeviceType.GENERIC_SNMP && <SnmpOidsSheet uuid={detail?.uuid} />}
-            {type === DeviceType.GENERIC_MODBUS_MASTER && (
-              <ModbusMasterDataSheet uuid={detail?.uuid} />
-            )}
-            {type === DeviceType.GENERIC_MBUS_MASTER && <MbusMasterDataSheet uuid={detail?.uuid} />}
-            {type === DeviceType.SIEMENS_PLC && <PlcSheet uuid={detail?.uuid} />}
-            {type === DeviceType.GENERIC_BACNET_IP && <BacnetIPSheet uuid={detail?.uuid} />}
-            {type === DeviceType.BACNET_ROUTER_GW && <BacnetRouterSheet uuid={detail?.uuid} />}
-            {type === DeviceType.DLT6452007_MASTER && <DLTDataSheet uuid={detail?.uuid} />}
-            {type === DeviceType.CJT1882004_MASTER && <CJTDataSheet uuid={detail?.uuid} />}
-            {type === DeviceType.SZY2062016_MASTER && <SZYDataSheet uuid={detail?.uuid} />}
-            {type === DeviceType.GENERIC_USER_PROTOCOL && (
-              <UserProtocolDataSheet uuid={detail?.uuid} />
-            )}
+            {[
+              DeviceType.GENERIC_SNMP,
+              DeviceType.GENERIC_MBUS_MASTER,
+              DeviceType.GENERIC_MODBUS_MASTER,
+              DeviceType.SIEMENS_PLC,
+              DeviceType.GENERIC_BACNET_IP,
+              DeviceType.BACNET_ROUTER_GW,
+              DeviceType.DLT6452007_MASTER,
+              DeviceType.CJT1882004_MASTER,
+              DeviceType.SZY2062016_MASTER,
+              DeviceType.GENERIC_USER_PROTOCOL,
+            ].includes(type as DeviceType) && <DataPoints uuid={detail?.uuid} />}
           </>
         )}
       </>

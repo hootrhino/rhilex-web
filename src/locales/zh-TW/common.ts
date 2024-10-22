@@ -107,7 +107,7 @@ export default {
   'menu.device.update': '編輯設備',
   'menu.device.sheet': '点位表配置',
   'menu.device.registers': '查看暫存器組',
-  'menu.device.objectList': 'SNMP 對象列表',
+  // 'menu.device.objectList': 'SNMP 對象列表',
   'menu.device.subDevice': '子設備列表',
   'menu.schema': '數據模型',
   'menu.dataRepository': '資料中心',

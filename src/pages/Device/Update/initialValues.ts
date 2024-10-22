@@ -33,13 +33,25 @@ export const defaultUartConfig = {
   stopBits: 1,
 };
 
+// 根据 PLC 型号改变 slot 默认值
+export const defaultModelSlot = {
+  [PLCModel.S7200]: 2,
+  [PLCModel.S7300]: 2,
+  [PLCModel.S7400]: 2,
+  [PLCModel.S71200]: 1,
+  [PLCModel.S71500]: 1,
+};
+
+// 默认通用配置
+const defaultCommonConfig = {
+  autoRequest: DEFAULT_TRUE,
+  batchRequest: DEFAULT_FALSE,
+  mode: DeviceMode.UART,
+};
+
 // 国标配置
 const defaultNationalConfig = {
-  commonConfig: {
-    autoRequest: DEFAULT_TRUE,
-    batchRequest: DEFAULT_FALSE,
-    mode: DeviceMode.UART,
-  },
+  commonConfig: defaultCommonConfig,
   hostConfig: defaultHostConfig,
   uartConfig: {
     ...defaultUartConfig,
@@ -53,22 +65,35 @@ const defaultIotHubConfig = {
   mode: TencentMode.GATEWAY,
 };
 
+// BACnet 配置
+const defaultBacnetConfig = {
+  mode: BacnetMode.BROADCAST,
+  localPort: 47808,
+  deviceId: 2580,
+  vendorId: 2580,
+};
+
 export const defaultConfig = {
-  [DeviceType.GENERIC_USER_PROTOCOL]: {
+  [DeviceType.GENERIC_UART_RW]: {
     commonConfig: {
       autoRequest: DEFAULT_TRUE,
-      batchRequest: DEFAULT_FALSE,
-      mode: DeviceMode.UART,
     },
+    uartConfig: defaultUartConfig,
+    rwConfig: {
+      readFormat: ReadFormat.HEX,
+      timeSlice: 50,
+      tag: DEFAULT_VALUE,
+    },
+  },
+  [DeviceType.GENERIC_USER_PROTOCOL]: {
+    commonConfig: defaultCommonConfig,
     hostConfig: defaultHostConfig,
     uartConfig: defaultUartConfig,
   },
   [DeviceType.GENERIC_MODBUS_MASTER]: {
     commonConfig: {
-      autoRequest: DEFAULT_TRUE,
+      ...defaultCommonConfig,
       enableOptimize: DEFAULT_FALSE,
-      batchRequest: DEFAULT_FALSE,
-      mode: DeviceMode.UART,
       maxRegNum: 64,
     },
     hostConfig: defaultHostConfig,
@@ -86,9 +111,7 @@ export const defaultConfig = {
   },
   [DeviceType.GENERIC_MBUS_MASTER]: {
     commonConfig: {
-      autoRequest: DEFAULT_TRUE,
-      batchRequest: DEFAULT_FALSE,
-      mode: DeviceMode.UART,
+      ...defaultCommonConfig,
       frequency: DEFAULT_FREQUENCE,
     },
     hostConfig: {
@@ -103,9 +126,9 @@ export const defaultConfig = {
       autoRequest: DEFAULT_TRUE,
       batchRequest: DEFAULT_FALSE,
       host: `${DEFAULT_HOST}:102`,
-      model: 'S71200',
+      model: PLCModel.S71200,
       rack: 0,
-      slot: 1,
+      slot: defaultModelSlot[PLCModel.S71200],
       timeout: DEFAULT_TIMEOUT,
       idleTimeout: DEFAULT_FREQUENCE,
     },
@@ -124,8 +147,8 @@ export const defaultConfig = {
   [DeviceType.GENERIC_SNMP]: {
     commonConfig: {
       autoRequest: DEFAULT_TRUE,
-      enableGroup: DEFAULT_FALSE,
       batchRequest: DEFAULT_FALSE,
+      enableGroup: DEFAULT_FALSE,
       timeout: DEFAULT_TIMEOUT,
       frequency: DEFAULT_FREQUENCE,
     },
@@ -139,23 +162,15 @@ export const defaultConfig = {
   },
   [DeviceType.GENERIC_BACNET_IP]: {
     commonConfig: {
-      frequency: DEFAULT_FREQUENCE,
       batchRequest: DEFAULT_FALSE,
+      frequency: DEFAULT_FREQUENCE,
     },
-    bacnetConfig: {
-      mode: BacnetMode.BROADCAST,
-      localPort: 47808,
-      deviceId: 2580,
-      vendorId: 2580,
-    },
+    bacnetConfig: defaultBacnetConfig,
   },
   [DeviceType.BACNET_ROUTER_GW]: {
     bacnetRouterConfig: {
-      mode: BacnetMode.BROADCAST,
-      localPort: 47808,
-      deviceId: 2580,
+      ...defaultBacnetConfig,
       deviceName: DEFAULT_VALUE,
-      vendorId: 2580,
     },
   },
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: {
@@ -164,47 +179,7 @@ export const defaultConfig = {
   [DeviceType.ITHINGS_IOTHUB_GATEWAY]: {
     ithingsConfig: defaultIotHubConfig,
   },
-  [DeviceType.GENERIC_UART_RW]: {
-    commonConfig: {
-      autoRequest: DEFAULT_TRUE,
-    },
-    uartConfig: defaultUartConfig,
-    rwConfig: {
-      readFormat: ReadFormat.HEX,
-      timeSlice: 50,
-      tag: DEFAULT_VALUE,
-    },
-  },
   [DeviceType.DLT6452007_MASTER]: defaultNationalConfig,
   [DeviceType.CJT1882004_MASTER]: defaultNationalConfig,
   [DeviceType.SZY2062016_MASTER]: defaultNationalConfig,
-};
-
-// 根据 PLC 型号改变 rack&slot 默认值
-export const defaultModelConfig = {
-  [PLCModel.S7200]: {
-    commonConfig: {
-      slot: 2,
-    },
-  },
-  [PLCModel.S7300]: {
-    commonConfig: {
-      slot: 2,
-    },
-  },
-  [PLCModel.S7400]: {
-    commonConfig: {
-      slot: 2,
-    },
-  },
-  [PLCModel.S71200]: {
-    commonConfig: {
-      slot: 1,
-    },
-  },
-  [PLCModel.S71500]: {
-    commonConfig: {
-      slot: 1,
-    },
-  },
 };

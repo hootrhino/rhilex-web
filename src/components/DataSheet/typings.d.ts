@@ -30,7 +30,6 @@ export type DataSheetItem = Point & {
 };
 
 export type DataSheetProps = ProTableProps & {
-  downloadKey: string;
   defaultConfig: Record<string, any>;
   defaultUploadData: Record<string, any>;
   remove: (uuids: string[]) => void;

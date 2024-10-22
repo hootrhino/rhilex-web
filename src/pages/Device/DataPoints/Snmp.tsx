@@ -1,3 +1,11 @@
+import DataSheet from '@/components/DataSheet';
+import type {
+  BaseDataSheetProps,
+  DataSheetItem,
+  removeParams,
+  UpdateParams,
+  UploadParams,
+} from '@/components/DataSheet/typings';
 import {
   deleteSnmpOidsSheetDelIds,
   getSnmpOidsSheetList,
@@ -9,14 +17,6 @@ import { omit } from '@/utils/redash';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
 import { useRef } from 'react';
-import DataSheet from '../DataSheet';
-import type {
-  BaseDataSheetProps,
-  DataSheetItem,
-  removeParams,
-  UpdateParams,
-  UploadParams,
-} from '../DataSheet/typings';
 
 const defaultConfig = {
   oid: '',
@@ -101,7 +101,6 @@ const SnmpOidsSheet = ({ uuid }: BaseDataSheetProps) => {
       }}
       defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      downloadKey="snmp_oids_sheet"
       upload={async ({ file, ...params }: UploadParams) => {
         await postSnmpOidsSheetSheetImport({ ...params }, file);
       }}

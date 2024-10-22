@@ -15,13 +15,17 @@ import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-compon
 import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { columns } from '../Columns';
-import { defaultConfig, defaultModelConfig } from './initialValues';
+import {
+  defaultConfig,
+  defaultHostConfig,
+  defaultModelSlot,
+  defaultUartConfig,
+} from './initialValues';
 
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
 import PageContainer from '@/components/ProPageContainer';
+import { DEVICE_LIST } from '@/utils/constant';
 import { DeviceMode, DeviceType } from '../enum';
-
-const DefaultListUrl = '/device/list';
 
 const filterData = (obj: Record<string, any>) => {
   const filteredObj = {};
@@ -127,12 +131,12 @@ const UpdateForm = () => {
           message.warning(info);
         }
       }
-      history.push(DefaultListUrl);
+      history.push(DEVICE_LIST);
       setLoading(false);
       return true;
     } catch (error) {
       setLoading(false);
-      history.push(DefaultListUrl);
+      history.push(DEVICE_LIST);
       return false;
     }
   };
@@ -151,15 +155,27 @@ const UpdateForm = () => {
   const handleOnValuesChange = (changedValue: any) => {
     const type = changedValue?.type;
     const model = changedValue?.config?.commonConfig?.model;
+    const mode = changedValue?.config?.commonConfig?.mode;
 
     if (type) {
       formRef.current?.setFieldsValue({
-        config: defaultConfig[changedValue?.type],
+        config:
+          type === detail?.type
+            ? detail?.config && convertBooleanOrString(detail?.config)
+            : defaultConfig[changedValue?.type],
       });
     }
     if (model) {
       formRef.current?.setFieldsValue({
-        config: defaultModelConfig[model],
+        config: { commonConfig: { slot: defaultModelSlot[model] } },
+      });
+    }
+    if (mode) {
+      formRef.current?.setFieldsValue({
+        config:
+          mode === DeviceMode.TCP
+            ? { hostConfig: detail?.config.hostConfig || defaultHostConfig }
+            : { uartConfig: detail?.config.uartConfig || defaultUartConfig },
       });
     }
   };
@@ -178,7 +194,7 @@ const UpdateForm = () => {
           ? formatMessage({ id: 'device.title.update' })
           : formatMessage({ id: 'device.title.new' })
       }
-      backUrl={DefaultListUrl}
+      backUrl={DEVICE_LIST}
     >
       <ProBetaSchemaForm
         formRef={formRef}

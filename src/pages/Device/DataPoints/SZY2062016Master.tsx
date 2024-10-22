@@ -1,43 +1,38 @@
+import DataSheet from '@/components/DataSheet';
+import type {
+  BaseDataSheetProps,
+  DataSheetItem,
+  removeParams,
+  UpdateParams,
+  UploadParams,
+} from '@/components/DataSheet/typings';
 import UnitValue from '@/components/UnitValue';
 import {
-  deleteUserProtocolSheetDelIds,
-  getUserProtocolSheetList,
-  postUserProtocolSheetSheetImport,
-  postUserProtocolSheetUpdate,
-} from '@/services/rhilex/yonghuzidingyixieyidianweiguanli';
+  deleteSzy2062016MasterSheetDelIds,
+  getSzy2062016MasterSheetList,
+  postSzy2062016MasterSheetSheetImport,
+  postSzy2062016MasterSheetUpdate,
+} from '@/services/rhilex/szy2062016Dianweiguanli';
 import { defaultPagination } from '@/utils/constant';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
 import type { Rule } from 'antd/es/form';
 import { useRef } from 'react';
-import DataSheet from '../DataSheet';
-import type {
-  BaseDataSheetProps,
-  DataSheetItem,
-  Point,
-  removeParams,
-  UpdateParams,
-  UploadParams,
-} from '../DataSheet/typings';
+import { MeterType, meterTypeOptions } from './enum';
 
 const defaultConfig = {
-  command: '',
+  meterId: '',
+  meterType: MeterType.FCCommand,
   frequency: 1000,
 };
 
 const defaultUploadData = {
-  command: '010300000002CC40B',
-  tag: 'device1',
-  alias: '风机1',
+  meterId: '100023669245',
+  meterType: MeterType.FCCommand,
   frequency: 1000,
 };
 
-type UserProtocolPoint = Point & {
-  command?: string;
-  frequency?: number;
-};
-
-const UserProtocolDataSheet = ({ uuid }: BaseDataSheetProps) => {
+const SZYDataSheet = ({ uuid }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
@@ -45,15 +40,19 @@ const UserProtocolDataSheet = ({ uuid }: BaseDataSheetProps) => {
 
   const columns: ProColumns<Partial<DataSheetItem>>[] = [
     {
-      title: formatMessage({ id: 'device.form.title.command' }),
-      dataIndex: 'command',
+      title: formatMessage({ id: 'device.form.title.id' }),
+      dataIndex: 'meterId',
+      ellipsis: true,
       formItemProps: {
         rules: [
-          { required: true, message: formatMessage({ id: 'device.form.placeholder.command' }) },
+          { required: true, message: formatMessage({ id: 'device.form.placeholder.id' }) },
           {
             validator: (_rule: Rule, value: string) => {
-              if (value && value.length > 64) {
-                return Promise.reject(formatMessage({ id: 'device.form.rules.command' }));
+              if (isNaN(Number(value))) {
+                return Promise.reject(formatMessage({ id: 'device.form.rules.meterId.number' }));
+              }
+              if (value && value.length !== 12) {
+                return Promise.reject(formatMessage({ id: 'device.form.rules.meterId.len' }));
               }
               return Promise.resolve();
             },
@@ -61,7 +60,26 @@ const UserProtocolDataSheet = ({ uuid }: BaseDataSheetProps) => {
         ],
       },
       fieldProps: {
-        placeholder: formatMessage({ id: 'device.form.placeholder.command' }),
+        placeholder: formatMessage({ id: 'device.form.placeholder.id' }),
+      },
+    },
+    {
+      title: formatMessage({ id: 'form.title.type' }),
+      dataIndex: 'meterType',
+      valueType: 'select',
+      hideInTable: !!uuid,
+      valueEnum: meterTypeOptions,
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: formatMessage({ id: 'form.placeholder.type' }),
+          },
+        ],
+      },
+      fieldProps: {
+        allowClear: false,
+        placeholder: formatMessage({ id: 'form.placeholder.type' }),
       },
     },
     {
@@ -88,11 +106,12 @@ const UserProtocolDataSheet = ({ uuid }: BaseDataSheetProps) => {
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
+      scroll={{ x: 1200 }}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
       }) => {
-        const { data } = await getUserProtocolSheetList({
+        const { data } = await getSzy2062016MasterSheetList({
           device_uuid: deviceId || uuid,
           current,
           size: pageSize,
@@ -106,19 +125,18 @@ const UserProtocolDataSheet = ({ uuid }: BaseDataSheetProps) => {
       }}
       defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      downloadKey="user_protocol_sheet"
       upload={async ({ file, ...params }: UploadParams) => {
-        await postUserProtocolSheetSheetImport({ ...params }, file);
+        await postSzy2062016MasterSheetSheetImport({ ...params }, file);
       }}
-      update={async (values: UpdateParams<UserProtocolPoint>) => {
-        await postUserProtocolSheetUpdate(values);
+      update={async (values: UpdateParams) => {
+        await postSzy2062016MasterSheetUpdate(values);
         editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
       }}
       remove={async (params: removeParams) => {
-        await deleteUserProtocolSheetDelIds(params);
+        await deleteSzy2062016MasterSheetDelIds(params);
       }}
     />
   );
 };
 
-export default UserProtocolDataSheet;
+export default SZYDataSheet;

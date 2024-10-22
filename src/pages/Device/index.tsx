@@ -38,20 +38,6 @@ export type DeviceItem = {
   [key: string]: any;
 };
 
-const sheetType = {
-  [DeviceType.GENERIC_SNMP]: 'snmp-sheet',
-  [DeviceType.SIEMENS_PLC]: 'plc-sheet',
-  [DeviceType.GENERIC_MODBUS_MASTER]: 'modbus-master-sheet',
-  [DeviceType.GENERIC_MODBUS_SLAVER]: 'modbus-slaver-registers',
-  [DeviceType.GENERIC_MBUS_MASTER]: 'mbus-master-sheet',
-  [DeviceType.GENERIC_BACNET_IP]: 'bacnet-sheet',
-  [DeviceType.BACNET_ROUTER_GW]: 'bacnet-router-sheet',
-  [DeviceType.DLT6452007_MASTER]: 'dlt6452007-master-sheet',
-  [DeviceType.CJT1882004_MASTER]: 'cjt1882004-master-sheet',
-  [DeviceType.SZY2062016_MASTER]: 'szy2062016-master-sheet',
-  [DeviceType.GENERIC_USER_PROTOCOL]: 'user-protocol-sheet',
-};
-
 const Devices = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
@@ -173,7 +159,14 @@ const Devices = () => {
         break;
       case 'data-sheet':
         if (!type) return;
-        history.push(`/device/${gid}/${uuid}/${sheetType[type]}`);
+
+        if (type === DeviceType.GENERIC_MODBUS_SLAVER) {
+          history.push(`/device/${gid}/${uuid}/registers`);
+        } else {
+          localStorage.setItem('deviceType', type);
+          history.push(`/device/${gid}/${uuid}/data-sheet`);
+        }
+
         break;
       case 'error':
         getErrorMsg({ uuid });

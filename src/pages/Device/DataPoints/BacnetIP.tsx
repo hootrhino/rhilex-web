@@ -1,15 +1,8 @@
-import {
-  deleteBacnetRouterSheetDelIds,
-  getBacnetRouterSheetList,
-  postBacnetRouterSheetSheetImport,
-  postBacnetRouterSheetUpdate,
-} from '@/services/rhilex/bacnetRoutermoshi';
-import { defaultPagination } from '@/utils/constant';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
 import { useRef } from 'react';
-import { ObjectType, ObjectTypeOption } from '../BacnetIP/enum';
-import DataSheet from '../DataSheet';
+
+import DataSheet from '@/components/DataSheet';
 import type {
   BaseDataSheetProps,
   DataSheetItem,
@@ -17,19 +10,30 @@ import type {
   removeParams,
   UpdateParams,
   UploadParams,
-} from '../DataSheet/typings';
+} from '@/components/DataSheet/typings';
+import {
+  deleteBacnetipDataSheetDelIds,
+  getBacnetipDataSheetList,
+  postBacnetipDataSheetSheetImport,
+  postBacnetipDataSheetUpdate,
+} from '@/services/rhilex/bacnetdianweiguanli';
+import { defaultPagination } from '@/utils/constant';
+import { ObjectType, ObjectTypeOption } from './enum';
 
 type BACnetPoint = Point & {
+  bacnetDeviceId?: number;
   objectType?: string;
   objectId?: number;
 };
 
 const defaultConfig = {
+  bacnetDeviceId: 1,
   objectType: ObjectType.AI,
   objectId: 1,
 };
 
 const defaultUploadData = {
+  bacnetDeviceId: 1,
   objectType: ObjectType.AI,
   objectId: 1,
 };
@@ -42,9 +46,43 @@ const BacnetDataSheet = ({ uuid }: BaseDataSheetProps) => {
 
   const columns: ProColumns<Partial<DataSheetItem>>[] = [
     {
+      title: formatMessage({ id: 'device.form.title.id' }),
+      dataIndex: 'bacnetDeviceId',
+      valueType: 'digit',
+      width: 100,
+      formItemProps: {
+        rules: [{ required: true, message: formatMessage({ id: 'device.form.placeholder.id' }) }],
+      },
+      fieldProps: {
+        style: { width: '100%' },
+        placeholder: formatMessage({ id: 'device.form.placeholder.id' }),
+      },
+    },
+    {
+      title: formatMessage({ id: 'device.form.title.objectType' }),
+      dataIndex: 'objectType',
+      valueType: 'select',
+      width: 150,
+      hideInTable: !!uuid,
+      valueEnum: ObjectTypeOption,
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: formatMessage({ id: 'device.form.placeholder.objectType' }),
+          },
+        ],
+      },
+      fieldProps: {
+        allowClear: false,
+        placeholder: formatMessage({ id: 'device.form.placeholder.objectType' }),
+      },
+    },
+    {
       title: formatMessage({ id: 'device.form.title.objectId' }),
       dataIndex: 'objectId',
       width: 150,
+      hideInTable: !!uuid,
       valueType: 'digit',
       formItemProps: {
         rules: [
@@ -69,26 +107,6 @@ const BacnetDataSheet = ({ uuid }: BaseDataSheetProps) => {
         placeholder: formatMessage({ id: 'device.form.placeholder.objectId' }),
       },
     },
-    {
-      title: formatMessage({ id: 'device.form.title.objectType' }),
-      dataIndex: 'objectType',
-      valueType: 'select',
-      width: 150,
-      valueEnum: ObjectTypeOption,
-      hideInTable: !!uuid,
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: formatMessage({ id: 'device.form.placeholder.objectType' }),
-          },
-        ],
-      },
-      fieldProps: {
-        allowClear: false,
-        placeholder: formatMessage({ id: 'device.form.placeholder.objectType' }),
-      },
-    },
   ];
 
   return (
@@ -102,7 +120,7 @@ const BacnetDataSheet = ({ uuid }: BaseDataSheetProps) => {
         pageSize = defaultPagination.defaultPageSize,
       }) => {
         const deviceUuid = deviceId || uuid || '';
-        const { data } = await getBacnetRouterSheetList({
+        const { data } = await getBacnetipDataSheetList({
           device_uuid: deviceUuid,
           current,
           size: pageSize,
@@ -116,17 +134,15 @@ const BacnetDataSheet = ({ uuid }: BaseDataSheetProps) => {
       }}
       defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      downloadKey="bacnet_router_sheet"
-      scroll={{ x: 1200 }}
       upload={async ({ file, ...params }: UploadParams) => {
-        await postBacnetRouterSheetSheetImport({ ...params }, file);
+        await postBacnetipDataSheetSheetImport({ ...params }, file);
       }}
       update={async (values: UpdateParams<BACnetPoint>) => {
-        await postBacnetRouterSheetUpdate(values);
+        await postBacnetipDataSheetUpdate(values);
         editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
       }}
       remove={async (params: removeParams) => {
-        await deleteBacnetRouterSheetDelIds(params);
+        await deleteBacnetipDataSheetDelIds(params);
       }}
     />
   );

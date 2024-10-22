@@ -54,59 +54,14 @@
         component: './Rule/Update',
       },
       {
-        path: '/device/:groupId/:deviceId/plc-sheet',
+        path: '/device/:groupId/:deviceId/data-sheet',
         title: 'menu.device.sheet',
-        component: './Device/Plc',
+        component: './Device/DataPoints',
       },
       {
-        path: '/device/:groupId/:deviceId/modbus-master-sheet',
-        title: 'menu.device.sheet',
-        component: './Device/ModbusMaster',
-      },
-      {
-        path: '/device/:groupId/:deviceId/modbus-slaver-registers',
+        path: '/device/:groupId/:deviceId/registers',
         title: 'menu.device.registers',
         component: './Device/ModbusSlaver',
-      },
-      {
-        path: '/device/:groupId/:deviceId/mbus-master-sheet',
-        title: 'menu.device.sheet',
-        component: './Device/MbusMaster',
-      },
-      {
-        path: '/device/:groupId/:deviceId/snmp-sheet',
-        title: 'menu.device.objectList',
-        component: './Device/Snmp',
-      },
-      {
-        path: '/device/:groupId/:deviceId/bacnet-sheet',
-        title: 'menu.device.sheet',
-        component: './Device/BacnetIP',
-      },
-      {
-        path: '/device/:groupId/:deviceId/bacnet-router-sheet',
-        title: 'menu.device.sheet',
-        component: './Device/BacnetRouter',
-      },
-      {
-        path: '/device/:groupId/:deviceId/dlt6452007-master-sheet',
-        title: 'menu.device.sheet',
-        component: './Device/DLT6452007Master',
-      },
-      {
-        path: '/device/:groupId/:deviceId/cjt1882004-master-sheet',
-        title: 'menu.device.sheet',
-        component: './Device/CJT1882004Master',
-      },
-      {
-        path: '/device/:groupId/:deviceId/szy2062016-master-sheet',
-        title: 'menu.device.sheet',
-        component: './Device/SZY2062016Master',
-      },
-      {
-        path: '/device/:groupId/:deviceId/user-protocol-sheet',
-        title: 'menu.device.sheet',
-        component: './Device/UserProtocol',
       },
     ],
   },

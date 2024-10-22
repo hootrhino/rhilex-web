@@ -1,38 +1,37 @@
-import UnitValue from '@/components/UnitValue';
-import {
-  deleteSzy2062016MasterSheetDelIds,
-  getSzy2062016MasterSheetList,
-  postSzy2062016MasterSheetSheetImport,
-  postSzy2062016MasterSheetUpdate,
-} from '@/services/rhilex/szy2062016Dianweiguanli';
-import { defaultPagination } from '@/utils/constant';
-import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
-import { useIntl, useParams } from '@umijs/max';
-import type { Rule } from 'antd/es/form';
-import { useRef } from 'react';
-import DataSheet from '../DataSheet';
+import DataSheet from '@/components/DataSheet';
 import type {
   BaseDataSheetProps,
   DataSheetItem,
   removeParams,
   UpdateParams,
   UploadParams,
-} from '../DataSheet/typings';
-import { MeterType, meterTypeOptions } from './enum';
+} from '@/components/DataSheet/typings';
+import UnitValue from '@/components/UnitValue';
+import {
+  deleteCjt1882004MasterSheetDelIds,
+  getCjt1882004MasterSheetList,
+  postCjt1882004MasterSheetSheetImport,
+  postCjt1882004MasterSheetUpdate,
+} from '@/services/rhilex/cjt18832004Dianweiguanli';
+import { defaultPagination } from '@/utils/constant';
+import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
+import { useIntl, useParams } from '@umijs/max';
+import type { Rule } from 'antd/es/form';
+import { useRef } from 'react';
 
 const defaultConfig = {
   meterId: '',
-  meterType: MeterType.FCCommand,
   frequency: 1000,
 };
 
 const defaultUploadData = {
   meterId: '100023669245',
-  meterType: MeterType.FCCommand,
+  tag: 'meter1',
+  alias: 'meter1',
   frequency: 1000,
 };
 
-const SZYDataSheet = ({ uuid }: BaseDataSheetProps) => {
+const CJTDataSheet = ({ uuid }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
@@ -42,7 +41,6 @@ const SZYDataSheet = ({ uuid }: BaseDataSheetProps) => {
     {
       title: formatMessage({ id: 'device.form.title.id' }),
       dataIndex: 'meterId',
-      ellipsis: true,
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.id' }) },
@@ -61,25 +59,6 @@ const SZYDataSheet = ({ uuid }: BaseDataSheetProps) => {
       },
       fieldProps: {
         placeholder: formatMessage({ id: 'device.form.placeholder.id' }),
-      },
-    },
-    {
-      title: formatMessage({ id: 'form.title.type' }),
-      dataIndex: 'meterType',
-      valueType: 'select',
-      hideInTable: !!uuid,
-      valueEnum: meterTypeOptions,
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: formatMessage({ id: 'form.placeholder.type' }),
-          },
-        ],
-      },
-      fieldProps: {
-        allowClear: false,
-        placeholder: formatMessage({ id: 'form.placeholder.type' }),
       },
     },
     {
@@ -106,12 +85,11 @@ const SZYDataSheet = ({ uuid }: BaseDataSheetProps) => {
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
-      scroll={{ x: 1200 }}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
       }) => {
-        const { data } = await getSzy2062016MasterSheetList({
+        const { data } = await getCjt1882004MasterSheetList({
           device_uuid: deviceId || uuid,
           current,
           size: pageSize,
@@ -125,19 +103,18 @@ const SZYDataSheet = ({ uuid }: BaseDataSheetProps) => {
       }}
       defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      downloadKey="szy2062016_master_sheet"
       upload={async ({ file, ...params }: UploadParams) => {
-        await postSzy2062016MasterSheetSheetImport({ ...params }, file);
+        await postCjt1882004MasterSheetSheetImport({ ...params }, file);
       }}
       update={async (values: UpdateParams) => {
-        await postSzy2062016MasterSheetUpdate(values);
+        await postCjt1882004MasterSheetUpdate(values);
         editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
       }}
       remove={async (params: removeParams) => {
-        await deleteSzy2062016MasterSheetDelIds(params);
+        await deleteCjt1882004MasterSheetDelIds(params);
       }}
     />
   );
 };
 
-export default SZYDataSheet;
+export default CJTDataSheet;

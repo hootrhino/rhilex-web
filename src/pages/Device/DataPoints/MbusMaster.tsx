@@ -1,3 +1,12 @@
+import DataSheet from '@/components/DataSheet';
+import {
+  BaseDataSheetProps,
+  DataSheetItem,
+  Point,
+  removeParams,
+  UpdateParams,
+  UploadParams,
+} from '@/components/DataSheet/typings';
 import UnitValue from '@/components/UnitValue';
 import {
   deleteMbusMasterSheetDelIds,
@@ -9,15 +18,6 @@ import { defaultPagination } from '@/utils/constant';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
 import { useRef } from 'react';
-import DataSheet from '../DataSheet';
-import {
-  BaseDataSheetProps,
-  DataSheetItem,
-  Point,
-  removeParams,
-  UpdateParams,
-  UploadParams,
-} from '../DataSheet/typings';
 import { MBusDeviceType, mBusDeviceTypeOptions } from './enum';
 
 const defaultConfig = {
@@ -152,7 +152,6 @@ const MbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       request={handleOnRequest}
       defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      downloadKey="mbus_master_sheet"
       scroll={{ x: 1200 }}
       upload={async ({ file, ...params }: UploadParams) => {
         await postMbusMasterSheetSheetImport({ ...params }, file);

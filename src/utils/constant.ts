@@ -29,3 +29,6 @@ export const defaultPagination = {
 
 // 限制试用版最大资源数
 export const MAX_TOTAL = 2;
+
+// 列表 URL
+export const DEVICE_LIST = '/device/list';

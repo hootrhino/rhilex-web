@@ -1,3 +1,12 @@
+import DataSheet from '@/components/DataSheet';
+import {
+  BaseDataSheetProps,
+  DataSheetItem,
+  Point,
+  removeParams,
+  UpdateParams,
+  UploadParams,
+} from '@/components/DataSheet/typings';
 import UnitValue from '@/components/UnitValue';
 import {
   deleteModbusMasterSheetDelIds,
@@ -19,15 +28,6 @@ import {
 import { useIntl, useParams } from '@umijs/max';
 import type { Rule } from 'antd/es/form';
 import { useRef, useState } from 'react';
-import DataSheet from '../DataSheet';
-import {
-  BaseDataSheetProps,
-  DataSheetItem,
-  Point,
-  removeParams,
-  UpdateParams,
-  UploadParams,
-} from '../DataSheet/typings';
 import { funcEnum } from '../enum';
 import { modbusDataTypeOptions, Quantity } from './enum';
 
@@ -323,7 +323,6 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       request={handleOnRequest}
       defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      downloadKey="modbus_master_sheet"
       scroll={{ x: 1200 }}
       upload={async ({ file, ...params }: UploadParams) => {
         await postModbusMasterSheetSheetImport({ ...params }, file);

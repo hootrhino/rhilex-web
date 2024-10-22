@@ -17,16 +17,29 @@ import { useEffect, useState } from 'react';
 
 import PageContainer from '@/components/ProPageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
+import { DeviceType } from '@/pages/Device/enum';
 import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
-import { defaultPagination } from '@/utils/constant';
+import { defaultPagination, DEVICE_LIST } from '@/utils/constant';
 import { omit } from '@/utils/redash';
 import UploadSheetConfirm from './ConfirmModal';
 import type { DataSheetItem, DataSheetProps } from './typings';
 
 const POLLING_INTERVAL = 3000;
 
+const downloadType = {
+  [DeviceType.GENERIC_SNMP]: 'snmp_oids_sheet',
+  [DeviceType.SIEMENS_PLC]: 's1200_data_sheet',
+  [DeviceType.GENERIC_MODBUS_MASTER]: 'modbus_master_sheet',
+  [DeviceType.GENERIC_MBUS_MASTER]: 'mbus_master_sheet',
+  [DeviceType.GENERIC_BACNET_IP]: 'bacnetip_data_sheet',
+  [DeviceType.BACNET_ROUTER_GW]: 'bacnet_router_sheet',
+  [DeviceType.DLT6452007_MASTER]: 'dlt6452007_master_sheet',
+  [DeviceType.CJT1882004_MASTER]: 'cjt1882004_master_sheet',
+  [DeviceType.SZY2062016_MASTER]: 'szy2062016_master_sheet',
+  [DeviceType.GENERIC_USER_PROTOCOL]: 'user_protocol_sheet',
+};
+
 const DataSheet = ({
-  downloadKey,
   columns,
   defaultConfig,
   defaultUploadData,
@@ -48,6 +61,8 @@ const DataSheet = ({
 
   const disabled = selectedRowKeys?.length === 0;
   const hasEditabledItem = editableKeys.length > 0;
+
+  const deviceType = localStorage.getItem('deviceType') || '';
 
   const handleOnReset = () => {
     setSelectedRowKeys([]);
@@ -124,12 +139,18 @@ const DataSheet = ({
   // 设备详情
   const { run } = useRequest((params: API.getDevicesDetailParams) => getDevicesDetail(params), {
     manual: true,
-    onSuccess: (record) =>
+    onSuccess: (record) => {
+      const isSnmp = record.type === DeviceType.GENERIC_SNMP;
+
       setTitle(
         record?.name
-          ? formatMessage({ id: 'device.title.sheetList' }, { name: record?.name })
-          : formatMessage({ id: 'device.title.sheet' }),
-      ),
+          ? formatMessage(
+              { id: `device.title.${isSnmp ? 'snmpOidList' : 'sheetList'}` },
+              { name: record?.name },
+            )
+          : formatMessage({ id: `device.title.${isSnmp ? 'oid' : 'sheet'}` }),
+      );
+    },
   });
 
   const handleOnOnlyOneEdit = () => {
@@ -152,7 +173,7 @@ const DataSheet = ({
 
   // 导出点位表
   const handleOnDownload = () =>
-    (window.location.href = `/api/v1/${downloadKey}/sheetExport?device_uuid=${deviceId}`);
+    (window.location.href = `/api/v1/${downloadType[deviceType]}/sheetExport?device_uuid=${deviceId}`);
 
   const baseColumns: ProColumns<Partial<DataSheetItem>>[] = [
     {
@@ -381,7 +402,7 @@ const DataSheet = ({
   }, [deviceId]);
 
   return deviceId ? (
-    <PageContainer title={title} onBack={() => history.push('/device/list')}>
+    <PageContainer title={title} onBack={() => history.push(DEVICE_LIST)}>
       <EditableProTable<Partial<DataSheetItem>>
         controlled
         columns={baseColumns}
@@ -420,16 +441,9 @@ const DataSheet = ({
   ) : (
     <>
       <ProDescriptions
-        title={
-          <>
-            <span>{formatMessage({ id: 'device.title.sheet' })}</span>
-            {/* {props?.scroll && (
-              <span className="text-[12px] opacity-[.8] pl-[5px] font-normal">
-                ({formatMessage({ id: 'device.tips.scroll' })})
-              </span>
-            )} */}
-          </>
-        }
+        title={formatMessage({
+          id: `device.title.${deviceType === DeviceType.GENERIC_SNMP ? 'oid' : 'sheet'}`,
+        })}
       />
       <ProTable
         columns={baseColumns}

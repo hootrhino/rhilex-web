@@ -4,6 +4,7 @@ import ProLog from '@/components/ProLog';
 import PageContainer from '@/components/ProPageContainer';
 import { getDevicesList } from '@/services/rhilex/shebeiguanli';
 import { postOsResetInterMetric } from '@/services/rhilex/xitongshuju';
+import { DEVICE_LIST } from '@/utils/constant';
 import { sum } from '@/utils/redash';
 import { cn, IconFont } from '@/utils/utils';
 import {
@@ -159,7 +160,7 @@ const Dashboard = () => {
                   <a
                     onClick={() => {
                       if (!uuid) return;
-                      history.push('/device/list');
+                      history.push(DEVICE_LIST);
                       changeConfig({ open: true, uuid });
                     }}
                   >

@@ -109,27 +109,18 @@ const processColumns = (columns: ProColumnsType[]) =>
       };
     }
     if (col.valueType === 'formList') {
-      const fieldProps =
-        col.mode === 'single'
-          ? {
-              ...col.fieldProps,
-              creatorButtonProps: false,
-              copyIconProps: false,
-              deleteIconProps: false,
-            }
-          : {
-              ...col.fieldProps,
-              creatorButtonProps: {
-                position: 'top',
-                creatorButtonText: <FormattedMessage id="button.new.formList" />,
-                ...col?.fieldProps?.creatorButtonProps,
-              },
-              creatorRecord: col?.initialValue,
-            };
       return {
         ...omit(col, ['mode']),
         columns: processColumns(col.columns),
-        fieldProps,
+        fieldProps: {
+          ...col.fieldProps,
+          creatorButtonProps: {
+            position: 'top',
+            creatorButtonText: <FormattedMessage id="button.new.formList" />,
+            ...col?.fieldProps?.creatorButtonProps,
+          },
+          creatorRecord: col?.initialValue,
+        },
       };
     }
 

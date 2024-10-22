@@ -11,10 +11,7 @@ import { useIntl, useParams } from '@umijs/max';
 import { useRef } from 'react';
 import { plcDataTypeOptions } from './enum';
 
-import UnitValue from '@/components/UnitValue';
-import { defaultPagination } from '@/utils/constant';
-import { inRange } from '@/utils/redash';
-import DataSheet from '../DataSheet';
+import DataSheet from '@/components/DataSheet';
 import type {
   BaseDataSheetProps,
   DataSheetItem,
@@ -22,7 +19,10 @@ import type {
   removeParams,
   UpdateParams,
   UploadParams,
-} from '../DataSheet/typings';
+} from '@/components/DataSheet/typings';
+import UnitValue from '@/components/UnitValue';
+import { defaultPagination } from '@/utils/constant';
+import { inRange } from '@/utils/redash';
 
 const defaultConfig = {
   type: ['FLOAT32', 'DCBA'],
@@ -173,6 +173,7 @@ const PlcDataSheet = ({ uuid }: BaseDataSheetProps) => {
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
+      scroll={{ x: 1200 }}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
@@ -194,8 +195,6 @@ const PlcDataSheet = ({ uuid }: BaseDataSheetProps) => {
       }}
       defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      downloadKey="s1200_data_sheet"
-      scroll={{ x: 1200 }}
       upload={async ({ file, ...params }: UploadParams) => {
         await postS1200DataSheetSheetImport({ ...params }, file);
       }}
