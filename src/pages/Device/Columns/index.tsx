@@ -13,8 +13,6 @@ import {
   stopBitsEnum,
 } from '../enum';
 import { BACNET_ROUTER_GW } from './bacnetRouterGW';
-import { CJT1882004_MASTER } from './cjt1882004Master';
-import { DLT6452007_MASTER } from './dtl6452007Master';
 import { GENERIC_BACNET_IP } from './genericBacnetIP';
 import { GENERIC_HTTP_DEVICE } from './genericHttpDevice';
 import { GENERIC_MBUS_MASTER } from './genericMBusMaster';
@@ -24,8 +22,8 @@ import { GENERIC_SNMP } from './genericSnmp';
 import { GENERIC_UART_RW } from './genericUartRW';
 import { GENERIC_USER_PROTOCOL } from './genericUserProtocol';
 import { ITHINGS_IOTHUB_GATEWAY } from './ithings';
+import { National_Standard } from './nationalStandard';
 import { SIEMENS_PLC } from './siemensPLC';
-import { SZY2062016_MASTER } from './szy2062016Master';
 import { TENCENT_IOTHUB_GATEWAY } from './tencentCloud';
 
 const { formatMessage } = getIntl(getLocale());
@@ -105,7 +103,6 @@ export const modeColumns = {
       valueType: 'group',
       columns: [
         {
-          key: 'timeout',
           title: formatMessage({ id: 'device.form.title.timeout.request' }),
           dataIndex: ['config', 'hostConfig', 'timeout'],
           valueType: 'digit',
@@ -225,9 +222,9 @@ export const typeConfigColumns = {
   [DeviceType.GENERIC_SNMP]: GENERIC_SNMP,
   [DeviceType.GENERIC_BACNET_IP]: GENERIC_BACNET_IP,
   [DeviceType.BACNET_ROUTER_GW]: BACNET_ROUTER_GW,
-  [DeviceType.DLT6452007_MASTER]: DLT6452007_MASTER,
-  [DeviceType.CJT1882004_MASTER]: CJT1882004_MASTER,
-  [DeviceType.SZY2062016_MASTER]: SZY2062016_MASTER,
+  [DeviceType.DLT6452007_MASTER]: National_Standard,
+  [DeviceType.CJT1882004_MASTER]: National_Standard,
+  [DeviceType.SZY2062016_MASTER]: National_Standard,
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: TENCENT_IOTHUB_GATEWAY,
   [DeviceType.ITHINGS_IOTHUB_GATEWAY]: ITHINGS_IOTHUB_GATEWAY,
 };

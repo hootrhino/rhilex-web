@@ -25,7 +25,7 @@ export const GENERIC_MODBUS_SLAVER = [
     name: ['config'],
     columns: ({ config }: DeviceItem) => {
       const tcpConfig = modeColumns['TCP'][0];
-      const slaverTcpConfig = tcpConfig.columns.filter((col) => col.key !== 'timeout');
+      const slaverTcpConfig = tcpConfig.columns.slice(1);
 
       const modeColumn = {
         UART: modeColumns['UART'],

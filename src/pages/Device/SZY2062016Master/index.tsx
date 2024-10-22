@@ -23,17 +23,12 @@ import { MeterType, meterTypeOptions } from './enum';
 const defaultConfig = {
   meterId: '',
   meterType: MeterType.FCCommand,
-  tag: '',
-  alias: '',
   frequency: 1000,
 };
 
 const defaultUploadData = {
-  uuid: 'uploadData',
   meterId: '100023669245',
   meterType: MeterType.FCCommand,
-  tag: 'meter1',
-  alias: 'meter1',
   frequency: 1000,
 };
 

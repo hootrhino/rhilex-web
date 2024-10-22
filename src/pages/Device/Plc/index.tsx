@@ -25,8 +25,6 @@ import type {
 } from '../DataSheet/typings';
 
 const defaultConfig = {
-  tag: '',
-  alias: '',
   type: ['FLOAT32', 'DCBA'],
   siemensAddress: '',
   frequency: 1000,
@@ -34,7 +32,6 @@ const defaultConfig = {
 };
 
 const defaultUploadData = {
-  uuid: 'plcUploadData',
   address: 'DB4900.DBD1000',
   tag: 'R0',
   alias: '新砂轮直径（mm）',

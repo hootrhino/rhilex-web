@@ -13,22 +13,23 @@ import DataSheet from '../DataSheet';
 import type {
   BaseDataSheetProps,
   DataSheetItem,
+  Point,
   removeParams,
   UpdateParams,
   UploadParams,
 } from '../DataSheet/typings';
 
+type BACnetPoint = Point & {
+  objectType?: string;
+  objectId?: number;
+};
+
 const defaultConfig = {
-  tag: '',
-  alias: '',
   objectType: ObjectType.AI,
   objectId: 1,
 };
 
 const defaultUploadData = {
-  uuid: 'bacnetUploadData',
-  tag: 'tag1',
-  alias: 'tag1',
   objectType: ObjectType.AI,
   objectId: 1,
 };
@@ -120,7 +121,7 @@ const BacnetDataSheet = ({ uuid }: BaseDataSheetProps) => {
       upload={async ({ file, ...params }: UploadParams) => {
         await postBacnetRouterSheetSheetImport({ ...params }, file);
       }}
-      update={async (values: UpdateParams) => {
+      update={async (values: UpdateParams<BACnetPoint>) => {
         await postBacnetRouterSheetUpdate(values);
         editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
       }}

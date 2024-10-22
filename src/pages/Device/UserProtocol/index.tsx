@@ -22,13 +22,10 @@ import type {
 
 const defaultConfig = {
   command: '',
-  tag: '',
-  alias: '',
   frequency: 1000,
 };
 
 const defaultUploadData = {
-  uuid: 'uploadData',
   command: '010300000002CC40B',
   tag: 'device1',
   alias: '风机1',

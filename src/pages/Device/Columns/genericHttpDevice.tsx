@@ -53,7 +53,6 @@ export const GENERIC_HTTP_DEVICE = [
     fieldProps: {
       direction: 'vertical',
     },
-    key: 'http',
     columns: [
       {
         title: formatMessage({ id: 'device.form.title.url' }),

@@ -21,16 +21,11 @@ import type {
 
 const defaultConfig = {
   meterId: '',
-  tag: '',
-  alias: '',
   frequency: 1000,
 };
 
 const defaultUploadData = {
-  uuid: 'dltUploadData',
   meterId: '100023669245',
-  tag: 'meter1',
-  alias: 'meter1',
   frequency: 1000,
 };
 

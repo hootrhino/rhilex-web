@@ -32,8 +32,6 @@ import { funcEnum } from '../enum';
 import { modbusDataTypeOptions, Quantity } from './enum';
 
 const defaultConfig = {
-  tag: '',
-  alias: '',
   function: 3,
   frequency: 1000,
   slaverId: 1,
@@ -44,9 +42,6 @@ const defaultConfig = {
 };
 
 const defaultUploadData = {
-  uuid: 'modbusUploadData',
-  tag: 'a1',
-  alias: 'a1',
   function: 3,
   frequency: 1000,
   slaverId: 1,

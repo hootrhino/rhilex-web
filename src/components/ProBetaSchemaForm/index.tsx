@@ -34,7 +34,7 @@ const getRules = (col: any) => {
     typeof col.dataIndex === 'object' &&
     col.dataIndex.length > 0 &&
     col.dataIndex[col.dataIndex.length - 1];
-  const isPort = ['port', 'webHookPort'].includes(activeKey);
+  const isPort = ['port'].includes(activeKey);
 
   if (['name'].includes(col.dataIndex) || isPort) {
     return [

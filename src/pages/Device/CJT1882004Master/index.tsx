@@ -21,13 +21,10 @@ import type {
 
 const defaultConfig = {
   meterId: '',
-  tag: '',
-  alias: '',
   frequency: 1000,
 };
 
 const defaultUploadData = {
-  uuid: 'cjtUploadData',
   meterId: '100023669245',
   tag: 'meter1',
   alias: 'meter1',

@@ -306,7 +306,17 @@ const DataSheet = ({
         modal.confirm({
           title: formatMessage({ id: 'device.modal.title.upload.confirm' }),
           width: '60%',
-          content: <UploadSheetConfirm fileName={file?.name} initialValue={defaultUploadData} />,
+          content: (
+            <UploadSheetConfirm
+              fileName={file?.name}
+              initialValue={{
+                uuid: 'uploadData',
+                tag: 'tag1',
+                alias: 'tag1',
+                ...defaultUploadData,
+              }}
+            />
+          ),
           onOk: () => handleOnUpload(file),
           okText: formatMessage({ id: 'button.ok' }),
           cancelText: formatMessage({ id: 'button.cancel' }),
@@ -381,8 +391,10 @@ const DataSheet = ({
           position: 'top',
           creatorButtonText: formatMessage({ id: 'device.button.new.sheet' }),
           record: () => ({
-            ...defaultConfig,
             uuid: 'new',
+            tag: '',
+            alias: '',
+            ...defaultConfig,
           }),
         }}
         rowSelection={{

@@ -13,25 +13,27 @@ import DataSheet from '../DataSheet';
 import type {
   BaseDataSheetProps,
   DataSheetItem,
+  Point,
   removeParams,
   UpdateParams,
   UploadParams,
 } from '../DataSheet/typings';
 import { ObjectType, ObjectTypeOption } from './enum';
 
+type BACnetPoint = Point & {
+  bacnetDeviceId?: number;
+  objectType?: string;
+  objectId?: number;
+};
+
 const defaultConfig = {
   bacnetDeviceId: 1,
-  tag: '',
-  alias: '',
   objectType: ObjectType.AI,
   objectId: 1,
 };
 
 const defaultUploadData = {
-  uuid: 'bacnetUploadData',
   bacnetDeviceId: 1,
-  tag: 'tag1',
-  alias: 'tag1',
   objectType: ObjectType.AI,
   objectId: 1,
 };
@@ -136,7 +138,7 @@ const BacnetDataSheet = ({ uuid }: BaseDataSheetProps) => {
       upload={async ({ file, ...params }: UploadParams) => {
         await postBacnetipDataSheetSheetImport({ ...params }, file);
       }}
-      update={async (values: UpdateParams) => {
+      update={async (values: UpdateParams<BACnetPoint>) => {
         await postBacnetipDataSheetUpdate(values);
         editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
       }}

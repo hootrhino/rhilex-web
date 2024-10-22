@@ -1,5 +1,6 @@
 import { useModel } from '@umijs/max';
 import { Spin } from 'antd';
+import { useEffect } from 'react';
 import HeaderDropdown from '../HeaderDropdown';
 
 export type GlobalHeaderRightProps = {
@@ -9,6 +10,12 @@ export type GlobalHeaderRightProps = {
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
+
+  useEffect(() => {
+    if (!initialState || !currentUser || !currentUser.username) {
+      localStorage.clear();
+    }
+  }, [initialState]);
 
   if (!initialState || !currentUser || !currentUser.username) {
     // loading

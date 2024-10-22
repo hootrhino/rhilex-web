@@ -48,6 +48,11 @@ const defaultNationalConfig = {
   },
 };
 
+// 云配置
+const defaultIotHubConfig = {
+  mode: TencentMode.GATEWAY,
+};
+
 export const defaultConfig = {
   [DeviceType.GENERIC_USER_PROTOCOL]: {
     commonConfig: {
@@ -154,14 +159,10 @@ export const defaultConfig = {
     },
   },
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: {
-    tencentConfig: {
-      mode: TencentMode.GATEWAY,
-    },
+    tencentConfig: defaultIotHubConfig,
   },
   [DeviceType.ITHINGS_IOTHUB_GATEWAY]: {
-    ithingsConfig: {
-      mode: TencentMode.GATEWAY,
-    },
+    ithingsConfig: defaultIotHubConfig,
   },
   [DeviceType.GENERIC_UART_RW]: {
     commonConfig: {

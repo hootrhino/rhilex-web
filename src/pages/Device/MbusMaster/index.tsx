@@ -23,17 +23,12 @@ import { MBusDeviceType, mBusDeviceTypeOptions } from './enum';
 const defaultConfig = {
   slaverId: '1',
   type: MBusDeviceType.HEAT_METER,
-  tag: '',
-  alias: '',
   frequency: 1000,
   dataLength: 1,
   manufacturer: '',
 };
 
 const defaultUploadData = {
-  uuid: 'mbusUploadData',
-  tag: 'a1',
-  alias: 'a1',
   frequency: 1000,
   slaverId: '1',
   dataLength: 1,
