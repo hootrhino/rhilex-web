@@ -183,11 +183,9 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
       />
       <ModalForm
         open={open}
-        title={
-          initialValue?.uuid
-            ? formatMessage({ id: 'schemaMgt.modal.title.schema.update' })
-            : formatMessage({ id: 'schemaMgt.modal.title.schema.new' })
-        }
+        title={formatMessage({
+          id: `schemaMgt.modal.title.schema.${initialValue?.uuid ? 'update' : 'new'}`,
+        })}
         formRef={formRef}
         width="30%"
         layout="horizontal"

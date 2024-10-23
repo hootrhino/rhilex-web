@@ -33,3 +33,5 @@ export const MAX_TOTAL = 2;
 // 列表 URL
 export const DEVICE_LIST = '/device/list';
 export const INEND_LIST = '/inend/list';
+export const OUTEND_LIST = '/outend/list';
+export const APP_LIST = '/app/list';

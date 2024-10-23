@@ -6,14 +6,13 @@ import RuleExample from '@/components/RuleExample';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import { postRulesFormatLua } from '@/services/rhilex/guizeguanli';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rhilex/qingliangyingyong';
+import { APP_LIST } from '@/utils/constant';
 import { generateRandomId } from '@/utils/utils';
 import { ProForm, type ProFormColumnsType, type ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { AppStackItem } from '..';
 import { baseColumns } from '../columns';
-
-const DefaultListUrl = '/app/list';
 
 const defaultValue = {
   name: `APP_${generateRandomId()}`,
@@ -103,7 +102,7 @@ const UpdateForm = () => {
         message.success(formatMessage({ id: 'message.success.new' }));
       }
       setLoading(false);
-      history.push(DefaultListUrl);
+      history.push(APP_LIST);
       return true;
     } catch (error) {
       setLoading(false);
@@ -124,12 +123,8 @@ const UpdateForm = () => {
   return (
     <PageContainer
       showExtra
-      title={
-        uuid
-          ? formatMessage({ id: 'appStack.title.update' })
-          : formatMessage({ id: 'appStack.title.new' })
-      }
-      backUrl={DefaultListUrl}
+      title={formatMessage({ id: `appStack.title.${uuid ? 'update' : 'new'}` })}
+      backUrl={APP_LIST}
     >
       <ProBetaSchemaForm
         formRef={formRef}

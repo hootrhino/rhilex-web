@@ -53,11 +53,9 @@ const CustomPropertyForm = ({ initialValue, reload, ...props }: PropertyFormProp
 
   return (
     <ModalForm
-      title={
-        initialValue?.uuid
-          ? formatMessage({ id: 'schemaMgt.modal.title.property.update' })
-          : formatMessage({ id: 'schemaMgt.modal.title.property.new' })
-      }
+      title={formatMessage({
+        id: `schemaMgt.modal.title.property.${initialValue?.uuid ? 'update' : 'new'}`,
+      })}
       formRef={formRef}
       width="60%"
       initialValues={defaultProperty}

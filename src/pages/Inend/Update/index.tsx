@@ -81,11 +81,7 @@ const UpdateForm = () => {
   return (
     <PageContainer
       showExtra
-      title={
-        uuid
-          ? formatMessage({ id: 'inend.title.update' })
-          : formatMessage({ id: 'inend.title.new' })
-      }
+      title={formatMessage({ id: `inend.title.${uuid ? 'update' : 'new'}` })}
       backUrl={INEND_LIST}
     >
       <ProBetaSchemaForm

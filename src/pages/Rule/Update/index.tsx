@@ -90,11 +90,7 @@ const UpdateForm = () => {
   return (
     <PageContainer
       showExtra
-      title={
-        ruleId
-          ? formatMessage({ id: 'ruleConfig.title.edit' })
-          : formatMessage({ id: 'ruleConfig.title.new' })
-      }
+      title={formatMessage({ id: `ruleConfig.title.${ruleId ? 'edit' : 'new'}` })}
       backUrl={getBackUrl()}
     >
       <ProCard>

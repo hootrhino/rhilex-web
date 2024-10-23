@@ -7,6 +7,7 @@ import {
   postOutendsCreate,
   putOutendsUpdate,
 } from '@/services/rhilex/shuchuziyuanguanli';
+import { OUTEND_LIST } from '@/utils/constant';
 import {
   formatHeaders2Arr,
   formatHeaders2Obj,
@@ -25,8 +26,6 @@ export type UpdateFormItem = {
   type: string;
   config: Record<string, any>[];
 };
-
-const DefaultListUrl = '/outend/list';
 
 const convertBooleanOrString = (config: Record<string, any>) => {
   let formatConfig = { ...config };
@@ -92,11 +91,11 @@ const UpdateForm = () => {
         }
       }
       setLoading(false);
-      history.push(DefaultListUrl);
+      history.push(OUTEND_LIST);
       return true;
     } catch (error) {
       setLoading(false);
-      history.push(DefaultListUrl);
+      history.push(OUTEND_LIST);
       return false;
     }
   };
@@ -134,12 +133,8 @@ const UpdateForm = () => {
   return (
     <PageContainer
       showExtra
-      title={
-        uuid
-          ? formatMessage({ id: 'outend.title.edit' })
-          : formatMessage({ id: 'outend.title.new' })
-      }
-      backUrl={DefaultListUrl}
+      title={formatMessage({ id: `outend.title.${uuid ? 'edit' : 'new'}` })}
+      backUrl={OUTEND_LIST}
     >
       <ProBetaSchemaForm
         formRef={formRef}

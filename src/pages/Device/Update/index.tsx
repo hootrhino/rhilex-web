@@ -189,11 +189,7 @@ const UpdateForm = () => {
   return (
     <PageContainer
       showExtra
-      title={
-        deviceId
-          ? formatMessage({ id: 'device.title.update' })
-          : formatMessage({ id: 'device.title.new' })
-      }
+      title={formatMessage({ id: `device.title.${deviceId ? 'update' : 'new'}` })}
       backUrl={DEVICE_LIST}
     >
       <ProBetaSchemaForm
