@@ -37,6 +37,6 @@ export const defaultConfig = {
     port: 1883,
     timeout: 3000,
     maxDataLength: 1024,
-    protocolExpr: 'type:16:int:BE;Length:16:BE',
+    protocolExpr: 'type:16:int:BE;length:16:int:BE;',
   },
 };
