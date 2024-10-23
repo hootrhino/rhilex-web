@@ -1,6 +1,5 @@
 import loginIcon from '@/assets/loginLogo.svg';
 import { message, modal } from '@/components/PopupHack';
-import { getDatacenterSecret } from '@/services/rhilex/shujuzhongxin';
 import { postLogin } from '@/services/rhilex/yonghuguanli';
 import { DEFAULT_TITLE } from '@/utils/constant';
 import type { ProFormInstance, Settings as LayoutSettings } from '@ant-design/pro-components';
@@ -28,11 +27,6 @@ const Login: React.FC = () => {
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
 
-  const handleOnSecret = async () => {
-    const { data } = await getDatacenterSecret();
-    localStorage.setItem('secret', data.secret);
-  };
-
   const handleOnFinish = async ({ username, password }: CurrentUser) => {
     try {
       const { data: license } = await getOsGetSecurityLicense();
@@ -53,7 +47,7 @@ const Login: React.FC = () => {
           type: data.type as VersionType,
         }),
       );
-      handleOnSecret();
+
       history.push('/');
       message.success(formatMessage({ id: 'message.success.login' }));
       localStorage.setItem('accessToken', data.token);

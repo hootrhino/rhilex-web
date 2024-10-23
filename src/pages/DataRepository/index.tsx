@@ -9,6 +9,7 @@ import {
   getDatacenterQueryDataList,
   getDatacenterSchemaDdlDefine,
   getDatacenterSchemaDdlDetail,
+  getDatacenterSecret,
 } from '@/services/rhilex/shujuzhongxin';
 import { defaultPagination } from '@/utils/constant';
 import { IconFont, toPascalCase } from '@/utils/utils';
@@ -61,7 +62,10 @@ const DataRepository = () => {
   );
   const [selectedItemTree, setItemTree] = useState<Record<string, any>[]>([]);
 
-  const secret = localStorage.getItem('secret') || '';
+  // 获取密钥
+  const { data: secret } = useRequest(() => getDatacenterSecret(), {
+    formatResult: (res) => res.data.secret,
+  });
 
   // 获取数据表列表
   const { data, run } = useRequest(
@@ -271,18 +275,19 @@ const DataRepository = () => {
               rowKey="id"
               polling={5000}
               actionRef={actionRef}
-              params={{ uuid: selectedKey }}
+              params={{ uuid: selectedKey, secret }}
               request={async ({
                 current = defaultPagination.defaultCurrent,
                 pageSize = defaultPagination.defaultPageSize,
                 uuid,
+                secret,
               }) => {
                 const { data } = await getDatacenterQueryDataList({
                   current,
                   size: pageSize,
                   order: 'DESC',
                   uuid,
-                  secret,
+                  secret: secret || '',
                 });
 
                 return Promise.resolve({
