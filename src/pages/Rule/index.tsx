@@ -6,7 +6,7 @@ import { defaultConfig } from '@/models/useCommon';
 import { deleteRulesDel } from '@/services/rhilex/guizeguanli';
 import { getDevicesDetail, getRulesByDevice } from '@/services/rhilex/shebeiguanli';
 import { getInendsDetail, getRulesByInend } from '@/services/rhilex/shuruziyuanguanli';
-import { DEVICE_LIST } from '@/utils/constant';
+import { DEVICE_LIST, INEND_LIST } from '@/utils/constant';
 import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { ProTable, type ProColumns } from '@ant-design/pro-components';
 import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
@@ -71,7 +71,7 @@ const Rule = () => {
     refreshDeps: [inendId],
     onSuccess: (res) => {
       setTitle(res?.name);
-      setUrl('/inend/list');
+      setUrl(INEND_LIST);
       setNewUrl(`/inend/${inendId}/rule/new`);
     },
   });

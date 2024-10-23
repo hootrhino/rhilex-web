@@ -2,6 +2,7 @@ import ProTag, { StatusType } from '@/components/ProTag';
 import { getIntl, getLocale } from '@umijs/max';
 import { InendType, inendTypeOption } from '../enum';
 import { COMTC_EVENT_FORWARDER } from './comtcEventForwardar';
+import { CUSTOM_PROTOCOL_SERVER } from './customProtocol';
 import { DEFAULT_CONFIG } from './defaultConfig';
 import { GENERIC_MQTT_SERVER } from './genericMqttServer';
 import { INTERNAL_EVENT } from './internalEvent';
@@ -20,6 +21,7 @@ export const typeConfigColumns = {
   [InendType.INTERNAL_EVENT]: INTERNAL_EVENT,
   [InendType.GENERIC_MQTT_SERVER]: GENERIC_MQTT_SERVER,
   [InendType.COMTC_EVENT_FORWARDER]: COMTC_EVENT_FORWARDER,
+  [InendType.CUSTOM_PROTOCOL_SERVER]: CUSTOM_PROTOCOL_SERVER,
 };
 
 export const baseColumns = [

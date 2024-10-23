@@ -2,7 +2,7 @@ import IndexBorder from '@/components/IndexBorder';
 import PageContainer from '@/components/ProPageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
 import { getInendsClients, getInendsDetail } from '@/services/rhilex/shuruziyuanguanli';
-import { defaultPagination } from '@/utils/constant';
+import { defaultPagination, INEND_LIST } from '@/utils/constant';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
 import { useIntl, useParams, useRequest } from '@umijs/max';
@@ -53,7 +53,7 @@ const SubDeviceList = () => {
 
   return (
     <PageContainer
-      backUrl={`/inend/list`}
+      backUrl={INEND_LIST}
       title={formatMessage({ id: 'inend.title.subDevice' }, { name: inendsDetail?.name || '' })}
     >
       <ProCard>

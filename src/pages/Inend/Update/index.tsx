@@ -7,6 +7,7 @@ import {
   postInendsCreate,
   putInendsUpdate,
 } from '@/services/rhilex/shuruziyuanguanli';
+import { INEND_LIST } from '@/utils/constant';
 import { generateRandomId } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
@@ -14,8 +15,6 @@ import { useEffect, useRef, useState } from 'react';
 import { columns } from '../Columns';
 import { InendType } from '../enum';
 import { defaultConfig } from './initialValues';
-
-const DefaultListUrl = '/inend/list';
 
 const UpdateForm = () => {
   const formRef = useRef<ProFormInstance>();
@@ -54,11 +53,11 @@ const UpdateForm = () => {
         }
       }
       setLoading(false);
-      history.push(DefaultListUrl);
+      history.push(INEND_LIST);
       return true;
     } catch (error) {
       setLoading(false);
-      history.push(DefaultListUrl);
+      history.push(INEND_LIST);
       return false;
     }
   };
@@ -87,7 +86,7 @@ const UpdateForm = () => {
           ? formatMessage({ id: 'inend.title.update' })
           : formatMessage({ id: 'inend.title.new' })
       }
-      backUrl={DefaultListUrl}
+      backUrl={INEND_LIST}
     >
       <ProBetaSchemaForm
         formRef={formRef}

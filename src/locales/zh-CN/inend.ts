@@ -14,9 +14,15 @@ export default {
   'inend.table.title.anonymous': '允许匿名连接',
   'inend.table.title.serverName': '服务名称',
   'inend.table.title.comName': '通信模块名称',
+  'inend.table.title.timeout': '超时时间',
+  'inend.table.title.protocolExpr': '数据解析表达式',
+  'inend.table.title.maxDataLength': '最大数据长度',
 
+  'inend.table.placeholder.maxDataLength': '请输入最大数据长度',
   'inend.table.placeholder.subTopics': '请输入 topic',
+
   'inend.table.rules.subTopics': '请至少订阅一个 topic',
+  'inend.table.rules.maxDataLength': '数据长度需在 1-1024 之间',
 
   /**
    * title
@@ -42,6 +48,7 @@ export default {
   'inend.type.serve': '作为通用 {type} 提供接入服务',
   'inend.type.event': '{type} 内部事件源',
   'inend.type.comtc': '来自通信模块的数据',
+  'inend.type.custom': '自定义协议解析服务',
 
   /**
    * mode

@@ -14,9 +14,15 @@ export default {
   'inend.table.title.anonymous': '允許匿名連線',
   'inend.table.title.serverName': '服務名稱',
   'inend.table.title.comName': '通訊模組名稱',
+  'inend.table.title.timeout': '超時時間',
+  'inend.table.title.protocolExpr': '數據解析表達式',
+  'inend.table.title.maxDataLength': '最大數據長度',
 
+  'inend.table.placeholder.maxDataLength': '請輸入最大數據長度',
   'inend.table.placeholder.subTopics': '請輸入 topic',
+
   'inend.table.rules.subTopics': '請至少訂閱一個 topic',
+  'inend.table.rules.maxDataLength': '最大數據長度需在 1-1024 之間',
 
   /**
    * title
@@ -42,6 +48,7 @@ export default {
   'inend.type.serve': '作為通用 {type} 提供接入服務',
   'inend.type.event': '{type} 內部事件源',
   'inend.type.comtc': '來自通訊模組的數據',
+  'inend.type.custom': '自訂協定解析服務',
 
   /**
    * mode

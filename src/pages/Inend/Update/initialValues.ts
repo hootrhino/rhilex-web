@@ -32,4 +32,11 @@ export const defaultConfig = {
     host: DEFAULT_HOST,
     port: 1883,
   },
+  [InendType.CUSTOM_PROTOCOL_SERVER]: {
+    host: DEFAULT_HOST,
+    port: 1883,
+    timeout: 3000,
+    maxDataLength: 1024,
+    protocolExpr: 'type:16:int:BE;Length:16:BE',
+  },
 };

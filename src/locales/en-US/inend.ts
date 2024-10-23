@@ -14,9 +14,15 @@ export default {
   'inend.table.title.anonymous': 'Enabled Anonymous',
   'inend.table.title.serverName': 'Service Name',
   'inend.table.title.comName': 'Communication Module Name',
+  'inend.table.title.timeout': 'Timeout',
+  'inend.table.title.protocolExpr': 'Data Parsing Expression',
+  'inend.table.title.maxDataLength': 'Max Data Length',
 
+  'inend.table.placeholder.maxDataLength': 'Please enter a max data length',
   'inend.table.placeholder.subTopics': 'Please enter a topic',
+
   'inend.table.rules.subTopics': 'Please subscribe to at least one topic',
+  'inend.table.rules.maxDataLength': 'Data length must be between 1-1024',
 
   /**
    * title
@@ -42,6 +48,7 @@ export default {
   'inend.type.serve': 'Generic {type}',
   'inend.type.event': '{type} Internal Event Source',
   'inend.type.comtc': 'Data from Communication Module',
+  'inend.type.custom': 'Custom Protocol Service',
 
   /**
    * mode
