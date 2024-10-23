@@ -12,7 +12,7 @@ const { formatMessage } = getIntl(getLocale());
 
 export const BACNET_ROUTER_GW = [
   {
-    title: formatMessage({ id: 'device.form.title.group.bacnet' }),
+    title: formatMessage({ id: 'device.form.title.group' }, { type: 'BACnet' }),
     valueType: 'group',
     columns: [
       {

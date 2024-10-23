@@ -54,11 +54,8 @@ export default {
 
   // formList
   'device.form.title.group.port': 'UART configuration',
-  'device.form.title.group.tcp': 'TCP configuration',
   'device.form.title.group.common': 'Common configuration',
-  'device.form.title.group.http': 'HTTP configuration',
-  'device.form.title.group.snmp': 'SNMP configuration',
-  'device.form.title.group.bacnet': 'BACnet configuration',
+  'device.form.title.group': '{type} configuration',
   'device.form.title.group.tencent': 'Tencent IoT Hub access configuration',
   'device.form.title.group.uartRW': 'Read/Write configuration',
 

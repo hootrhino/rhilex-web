@@ -125,12 +125,14 @@ export const defaultConfig = {
     commonConfig: {
       autoRequest: DEFAULT_TRUE,
       batchRequest: DEFAULT_FALSE,
+      timeout: DEFAULT_TIMEOUT,
+      idleTimeout: DEFAULT_FREQUENCE,
+    },
+    s1200Config: {
       host: `${DEFAULT_HOST}:102`,
       model: PLCModel.S71200,
       rack: 0,
       slot: defaultModelSlot[PLCModel.S71200],
-      timeout: DEFAULT_TIMEOUT,
-      idleTimeout: DEFAULT_FREQUENCE,
     },
   },
   [DeviceType.GENERIC_HTTP_DEVICE]: {

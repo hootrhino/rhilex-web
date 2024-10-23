@@ -53,11 +53,8 @@ export default {
 
   // formList
   'device.form.title.group.port': '串口配置',
-  'device.form.title.group.tcp': 'TCP 配置',
   'device.form.title.group.common': '通用配置',
-  'device.form.title.group.http': 'HTTP 配置',
-  'device.form.title.group.snmp': 'SNMP 配置',
-  'device.form.title.group.bacnet': 'BACnet 配置',
+  'device.form.title.group': '{type} 配置',
   'device.form.title.group.tencent': '腾讯云物联网平台接入配置',
   'device.form.title.group.uartRW': '读写配置',
 

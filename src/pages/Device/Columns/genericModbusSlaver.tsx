@@ -31,7 +31,7 @@ export const GENERIC_MODBUS_SLAVER = [
         UART: modeColumns['UART'],
         TCP: [
           {
-            title: formatMessage({ id: 'device.form.title.group.tcp' }),
+            title: formatMessage({ id: 'device.form.title.group' }, { type: 'TCP' }),
             valueType: 'group',
             columns: slaverTcpConfig,
           },

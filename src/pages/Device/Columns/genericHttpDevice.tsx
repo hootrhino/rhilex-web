@@ -48,7 +48,7 @@ export const GENERIC_HTTP_DEVICE = [
     ],
   },
   {
-    title: formatMessage({ id: 'device.form.title.group.http' }),
+    title: formatMessage({ id: 'device.form.title.group' }, { type: 'HTTP' }),
     valueType: 'group',
     fieldProps: {
       direction: 'vertical',

@@ -42,7 +42,7 @@ export const GENERIC_BACNET_IP = [
     ],
   },
   {
-    title: formatMessage({ id: 'device.form.title.group.bacnet' }),
+    title: formatMessage({ id: 'device.form.title.group' }, { type: 'BACnet' }),
     valueType: 'group',
     columns: [
       {

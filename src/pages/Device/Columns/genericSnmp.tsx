@@ -66,7 +66,7 @@ export const GENERIC_SNMP = [
     ],
   },
   {
-    title: formatMessage({ id: 'device.form.title.group.snmp' }),
+    title: formatMessage({ id: 'device.form.title.group' }, { type: 'SNMP' }),
     valueType: 'group',
     columns: [
       {

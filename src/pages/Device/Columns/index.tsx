@@ -99,7 +99,7 @@ export const modeColumns = {
   ],
   TCP: [
     {
-      title: formatMessage({ id: 'device.form.title.group.tcp' }),
+      title: formatMessage({ id: 'device.form.title.group' }, { type: 'TCP' }),
       valueType: 'group',
       columns: [
         {
