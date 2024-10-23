@@ -26,6 +26,12 @@ export default {
   'system.form.title.dhcpEnabled': 'Enable DHCP',
   'system.form.title.security': 'Encryption Method',
 
+  // 4G
+  'system.form.title.csq': 'CSQ',
+  'system.form.title.imel': 'IMEI',
+  'system.form.title.cops': 'COPS',
+  'system.form.title.up': 'Network Connection',
+
   // reboot
   'system.form.title.enableReboot': 'Enable Reboot',
   'system.form.title.cronExpr': 'CRON Expression',
@@ -81,6 +87,8 @@ export default {
   'system.button.more': 'More Info',
   'system.button.showConfig': 'Show Configuration',
   'system.button.comfirmConfig': 'Submit',
+  'system.button.turnOff': 'Turn Off 4G',
+  'system.button.turnOn': 'Turn On 4G',
 
   /**
    * modal
@@ -162,7 +170,7 @@ export default {
   'system.message.error.upload':
     'Only ZIP format files are supported. Please check the uploaded file format',
   'system.message.success.ntp': 'NTP update successful',
-  'system.message.success.scheduledReboot': 'Settings saved successfully',
+  'system.message.success.setting': 'Settings saved successfully',
 
   // time
   'system.time.day': 'day',

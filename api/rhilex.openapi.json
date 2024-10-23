@@ -25,9 +25,6 @@
       "name": "规则管理"
     },
     {
-      "name": "驱动管理"
-    },
-    {
       "name": "日志管理"
     },
     {
@@ -41,9 +38,6 @@
     },
     {
       "name": "分组管理"
-    },
-    {
-      "name": "大屏管理"
     },
     {
       "name": "扩展协议"
@@ -923,13 +917,11 @@
     "/api/v1/drivers": {
       "get": {
         "summary": "驱动列表",
-        "x-apifox-folder": "驱动管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "驱动管理"
-        ],
+        "tags": [],
         "parameters": [],
         "responses": {
           "200": {
@@ -4781,13 +4773,11 @@
     "/api/v1/visual/create": {
       "post": {
         "summary": "新建大屏",
-        "x-apifox-folder": "大屏管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "大屏管理"
-        ],
+        "tags": [],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -4883,13 +4873,11 @@
     "/api/v1/visual/update": {
       "put": {
         "summary": "更新大屏",
-        "x-apifox-folder": "大屏管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "大屏管理"
-        ],
+        "tags": [],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -4992,13 +4980,11 @@
     "/api/v1/visual": {
       "delete": {
         "summary": "删除大屏",
-        "x-apifox-folder": "大屏管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "大屏管理"
-        ],
+        "tags": [],
         "parameters": [
           {
             "name": "uuid",
@@ -5055,13 +5041,11 @@
     "/api/v1/visual/publish": {
       "put": {
         "summary": "发布大屏",
-        "x-apifox-folder": "大屏管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "大屏管理"
-        ],
+        "tags": [],
         "parameters": [
           {
             "name": "uuid",
@@ -5164,13 +5148,11 @@
     "/api/v1/visual/detail": {
       "get": {
         "summary": "大屏详情",
-        "x-apifox-folder": "大屏管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "大屏管理"
-        ],
+        "tags": [],
         "parameters": [
           {
             "name": "uuid",
@@ -5205,13 +5187,11 @@
     "/api/v1/visual/group": {
       "get": {
         "summary": "大屏分组",
-        "x-apifox-folder": "大屏管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "大屏管理"
-        ],
+        "tags": [],
         "parameters": [],
         "responses": {
           "200": {
@@ -5235,13 +5215,11 @@
     "/api/v1/visual/listByGroup": {
       "get": {
         "summary": "大屏列表",
-        "x-apifox-folder": "大屏管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "大屏管理"
-        ],
+        "tags": [],
         "parameters": [
           {
             "name": "uuid",
@@ -5275,13 +5253,11 @@
     "/api/v1/visual/thumbnail": {
       "post": {
         "summary": "上传图片",
-        "x-apifox-folder": "大屏管理",
+        "x-apifox-folder": "",
         "x-apifox-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "大屏管理"
-        ],
+        "tags": [],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -7394,7 +7370,18 @@
         "tags": [
           "系统配置/移动网络4G设置"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "iface",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "usb0",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "成功",
@@ -7412,8 +7399,8 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "cops": {
-                          "type": "string"
+                        "up": {
+                          "type": "boolean"
                         },
                         "csq": {
                           "type": "integer"
@@ -7423,9 +7410,13 @@
                         },
                         "imel": {
                           "type": "string"
+                        },
+                        "cops": {
+                          "type": "string"
                         }
                       },
                       "required": [
+                        "up",
                         "csq",
                         "iccid",
                         "imel",
@@ -7433,10 +7424,11 @@
                       ],
                       "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
-                        "cops",
+                        "up",
                         "csq",
                         "iccid",
-                        "imel"
+                        "imel",
+                        "cops"
                       ]
                     }
                   },

@@ -26,6 +26,12 @@ export default {
   'system.form.title.dhcpEnabled': '开启 DHCP',
   'system.form.title.security': '加密方式',
 
+  // 4G
+  'system.form.title.csq': '信号',
+  'system.form.title.imel': '入网 ID',
+  'system.form.title.cops': '运营商',
+  'system.form.title.up': '是否联网',
+
   // reboot
   'system.form.title.enableReboot': '开启定时重启',
   'system.form.title.cronExpr': 'CRON 表达式',
@@ -80,6 +86,8 @@ export default {
   'system.button.more': '查看更多信息',
   'system.button.showConfig': '查看系统配置',
   'system.button.comfirmConfig': '提交配置',
+  'system.button.turnOff': '关闭 4G',
+  'system.button.turnOn': '开启 4G',
 
   /**
    * modal
@@ -157,7 +165,7 @@ export default {
   'system.desc.recovery': '仅支持 zip 文件',
   'system.message.error.upload': '仅支持 zip 格式文件，请检查上传文件格式',
   'system.message.success.ntp': 'NTP 时间更新成功',
-  'system.message.success.scheduledReboot': '设置成功',
+  'system.message.success.setting': '设置成功',
 
   // time
   'system.time.day': '天',

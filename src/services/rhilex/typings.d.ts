@@ -266,6 +266,10 @@ declare namespace API {
     device_uuid: string;
   };
 
+  type getMn4gInfoParams = {
+    iface: string;
+  };
+
   type getModbusMasterSheetListParams = {
     device_uuid?: string;
     current?: number;

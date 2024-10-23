@@ -1,14 +1,13 @@
 import PageContainer from '@/components/ProPageContainer';
-import { getMenuDistConfig } from '@/services/rhilex/caozuocaidan';
 import { ProCard } from '@ant-design/pro-components';
-import { useIntl, useModel, useRequest } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import { useMemo } from 'react';
 import NoFoundPage from '../403';
 import DataBackupConfig from './DataBackup';
 import FirmwareConfig from './Firmware';
 import NetworkConfig from './Network';
+import Network4G from './Network4G';
 import NetworkStatus from './NetworkStatus';
 import Resource from './Resource';
 import ScheduledReboot from './ScheduledReboot';
@@ -40,8 +39,16 @@ const System = () => {
         { key: 'network', label: formatMessage({ id: 'system.tab.network' }) },
         { key: 'wifi', label: formatMessage({ id: 'system.tab.setting' }, { item: 'WIFI' }) },
         { key: 'net4g', label: formatMessage({ id: 'system.tab.setting' }, { item: '4G' }) },
-        { key: 'net5g', label: formatMessage({ id: 'system.tab.setting' }, { item: '5G' }) },
-        { key: 'can', label: formatMessage({ id: 'system.tab.setting' }, { item: 'CAN' }) },
+        {
+          key: 'net5g',
+          label: formatMessage({ id: 'system.tab.setting' }, { item: '5G' }),
+          disabled: true,
+        },
+        {
+          key: 'can',
+          label: formatMessage({ id: 'system.tab.setting' }, { item: 'CAN' }),
+          disabled: true,
+        },
       ],
     },
     {
@@ -78,7 +85,7 @@ const System = () => {
   ];
 
   const renderComponent = () => {
-    // TODO 4g,5g,can
+    // TODO 5g,can
     switch (activeKey) {
       case 'resource':
         return <Resource />;
@@ -88,6 +95,8 @@ const System = () => {
         return <NetworkConfig />;
       case 'wifi':
         return <WIFIConfig />;
+      case 'net4g':
+        return <Network4G />;
       case 'time':
         return <TimeConfig />;
       case 'reboot':
@@ -104,28 +113,28 @@ const System = () => {
   };
 
   // 获取系统菜单权限
-  const { data } = useRequest(() => getMenuDistConfig());
+  // const { data } = useRequest(() => getMenuDistConfig());
 
-  const accessItems = useMemo(() => {
-    const newData = menuItems.filter((item) => {
-      if (item?.type === 'divider') return true;
-      const activeMenu = data?.find((menu) => menu.key === item?.key);
+  // const accessItems = useMemo(() => {
+  //   const newData = menuItems.filter((item) => {
+  //     if (item?.type === 'divider') return true;
+  //     const activeMenu = data?.find((menu) => menu.key === item?.key);
 
-      if (item?.type === 'group' && item.children) {
-        item.children = item.children.filter((child) => {
-          const accessChild = activeMenu?.children.find((c) => c.key === child?.key);
-          return accessChild && accessChild.access;
-        });
+  //     if (item?.type === 'group' && item.children) {
+  //       item.children = item.children.filter((child) => {
+  //         const accessChild = activeMenu?.children.find((c) => c.key === child?.key);
+  //         return accessChild && accessChild.access;
+  //       });
 
-        // 如果过滤后的子项数组为空，则不返回该 group
-        if (item.children.length === 0) return false;
-      }
+  //       // 如果过滤后的子项数组为空，则不返回该 group
+  //       if (item.children.length === 0) return false;
+  //     }
 
-      return activeMenu && activeMenu.access;
-    });
+  //     return activeMenu && activeMenu.access;
+  //   });
 
-    return newData;
-  }, [data]);
+  //   return newData;
+  // }, [data]);
 
   return (
     <PageContainer>
@@ -135,7 +144,7 @@ const System = () => {
             onClick={(e) => setActiveKey(e.key)}
             selectedKeys={[activeKey]}
             mode="inline"
-            items={accessItems}
+            items={menuItems}
             style={{ paddingRight: 12, border: 'none' }}
           />
         </ProCard>

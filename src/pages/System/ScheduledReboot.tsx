@@ -42,7 +42,7 @@ const ScheduledReboot = () => {
               content: alertMessage,
               onOk: async () => {
                 await postCronRebootUpdate(values);
-                message.success(formatMessage({ id: 'system.message.success.scheduledReboot' }));
+                message.success(formatMessage({ id: 'system.message.success.setting' }));
               },
               cancelText: formatMessage({ id: 'button.cancel' }),
               okText: formatMessage({ id: 'system.button.comfirmConfig' }),

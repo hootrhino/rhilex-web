@@ -42,13 +42,20 @@ export async function postMn4GApn(
 }
 
 /** 移动网络4G参数获取 GET /api/v1/mn4g/info */
-export async function getMn4GInfo(options?: { [key: string]: any }) {
+export async function getMn4GInfo(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getMn4gInfoParams,
+  options?: { [key: string]: any },
+) {
   return request<{
     code: number;
     msg: string;
-    data: { cops: string; csq: number; iccid: string; imel: string };
+    data: { up: boolean; csq: number; iccid: string; imel: string; cops: string };
   }>('/api/v1/mn4g/info', {
     method: 'GET',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }

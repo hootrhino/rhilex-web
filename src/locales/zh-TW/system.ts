@@ -30,6 +30,12 @@ export default {
   'system.form.title.enableReboot': '開啟定時重啟',
   'system.form.title.cronExpr': 'CRON 表達式',
 
+  // 4G
+  'system.form.title.csq': '訊號',
+  'system.form.title.imel': '入網 ID',
+  'system.form.title.cops': '營運商',
+  'system.form.title.up': '是否聯網',
+
   // rules
   'system.form.rules.netmask': '請輸入子網掩碼',
   'system.form.rules.interface': '請選擇網卡',
@@ -80,6 +86,8 @@ export default {
   'system.button.more': '查看更多信息',
   'system.button.showConfig': '查看系統配置',
   'system.button.comfirmConfig': '提交配置',
+  'system.button.turnOff': '關閉 4G',
+  'system.button.turnOn': '開啟 4G',
 
   /**
    * modal
@@ -157,7 +165,7 @@ export default {
   'system.desc.recovery': '僅支持 zip 文件',
   'system.message.error.upload': '僅支持 zip 格式的文件，請檢查上傳文件格式',
   'system.message.success.ntp': 'NTP 時間更新成功',
-  'system.message.success.scheduledReboot': '設定成功',
+  'system.message.success.setting': '設定成功',
 
   // time
   'system.time.day': '天',
