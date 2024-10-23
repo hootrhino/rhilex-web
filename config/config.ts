@@ -14,10 +14,12 @@ export default defineConfig({
   proxy: proxy[(REACT_APP_ENV as keyof typeof proxy) || 'dev'],
   fastRefresh: true,
   model: {},
+  mako: {},
+  tailwindcss: {},
+  request: {},
   initialState: {
     loading: '@/loading',
   },
-  tailwindcss: {},
   title: defaultSettings.title as string,
   layout: defaultSettings,
   antd: {
@@ -29,7 +31,6 @@ export default defineConfig({
     antd: true,
     title: true,
   },
-  request: {},
   presets: ['umi-presets-pro'],
   openAPI,
   mfsu: {
@@ -38,14 +39,5 @@ export default defineConfig({
   requestRecord: {},
   favicons: ['/favicon.svg'],
   esbuildMinifyIIFE: true,
-  inlineLimit: 100000, // 配置图片文件是否走 base64 编译的阈值 100k
-  // jsMinifier: 'uglifyJs', // 配置构建时压缩 JavaScript 的工具
   codeSplitting: { jsStrategy: 'granularChunks' }, // 代码拆分
-  // chainWebpack: (config) => {
-  //   config.module
-  //     .rule('woff2')
-  //     .test(/\.(woff|woff2)$/)
-  //     .use('file-loader')
-  //     .loader('file-loader');
-  // },
 });
