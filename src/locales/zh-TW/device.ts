@@ -200,7 +200,7 @@ export default {
    */
   'device.type.modbus.master': '通用 Modbus 協議數據採集主機網關',
   'device.type.modbus.slaver': '通用 Modbus 協議數據採集從機網關',
-  'device.type.plc': '通用西門子 S7 系列 PLC 協議數據採集網關',
+  'device.type.plc': 'SIEMENS SIMATIC S7 協議數據採集主機網關',
   'device.type.bacnet.ip': '通用 BACnet IP 協議數據採集主機網關',
   'device.type.bacnet.router': '通用 BACnet IP 協議數據採集從機網關',
   'device.type.tencent': '騰訊雲端物聯網平台',

@@ -200,7 +200,7 @@ export default {
    */
   'device.type.modbus.master': '通用 Modbus 协议数据采集主机网关',
   'device.type.modbus.slaver': '通用 Modbus 协议数据采集从机网关',
-  'device.type.plc': '通用西门子 S7 系列 PLC 协议数据采集网关',
+  'device.type.plc': 'SIEMENS SIMATIC S7 协议数据采集主机网关',
   'device.type.bacnet.ip': '通用 BACnet IP 协议数据采集主机网关',
   'device.type.bacnet.router': '通用 BACnet IP 协议数据采集从机网关',
   'device.type.tencent': '腾讯云物联网平台',

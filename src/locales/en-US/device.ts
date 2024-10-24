@@ -203,7 +203,7 @@ export default {
    */
   'device.type.modbus.master': 'Generic Modbus Master Gateway',
   'device.type.modbus.slaver': 'Generic Modbus Slaver Gateway',
-  'device.type.plc': 'Generic Siemens S7 PLC Gateway',
+  'device.type.plc': 'SIEMENS SIMATIC S7 Master Gateway',
   'device.type.bacnet.ip': 'Generic BACnet IP Master Gateway',
   'device.type.bacnet.router': 'Generic BACnet IP Slaver Gateway',
   'device.type.tencent': 'Tencent Cloud IoT Platform',
