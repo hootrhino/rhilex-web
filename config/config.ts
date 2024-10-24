@@ -14,7 +14,6 @@ export default defineConfig({
   proxy: proxy[(REACT_APP_ENV as keyof typeof proxy) || 'dev'],
   fastRefresh: true,
   model: {},
-  mako: {},
   tailwindcss: {},
   request: {},
   initialState: {
