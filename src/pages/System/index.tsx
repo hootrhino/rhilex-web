@@ -4,10 +4,12 @@ import { useIntl, useModel } from '@umijs/max';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import NoFoundPage from '../403';
+import CanBus from './Canbus';
 import DataBackupConfig from './DataBackup';
 import FirmwareConfig from './Firmware';
 import NetworkConfig from './Network';
 import Network4G from './Network4G';
+import Network5G from './Network5G';
 import NetworkStatus from './NetworkStatus';
 import Resource from './Resource';
 import ScheduledReboot from './ScheduledReboot';
@@ -42,12 +44,10 @@ const System = () => {
         {
           key: 'net5g',
           label: formatMessage({ id: 'system.tab.setting' }, { item: '5G' }),
-          disabled: true,
         },
         {
-          key: 'can',
+          key: 'canbus',
           label: formatMessage({ id: 'system.tab.setting' }, { item: 'CAN' }),
-          disabled: true,
         },
       ],
     },
@@ -85,7 +85,6 @@ const System = () => {
   ];
 
   const renderComponent = () => {
-    // TODO 5g,can
     switch (activeKey) {
       case 'resource':
         return <Resource />;
@@ -97,6 +96,10 @@ const System = () => {
         return <WIFIConfig />;
       case 'net4g':
         return <Network4G />;
+      case 'net5g':
+        return <Network5G />;
+      case 'canbus':
+        return <CanBus />;
       case 'time':
         return <TimeConfig />;
       case 'reboot':

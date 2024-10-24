@@ -1,9 +1,5 @@
 import { message } from '@/components/PopupHack';
-import {
-  getSettingsCtrlTree,
-  getSettingsEth,
-  postSettingsEth,
-} from '@/services/rhilex/wangluopeizhi';
+import { getSettingsEth, postSettingsEth } from '@/services/rhilex/wangluopeizhi';
 import { FormItemType } from '@/utils/enum';
 import { omit } from '@/utils/redash';
 import { validateFormItem } from '@/utils/utils';
@@ -17,7 +13,7 @@ import {
   ProFormSwitch,
   ProFormText,
 } from '@ant-design/pro-components';
-import { useIntl, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { useSize } from 'ahooks';
 import { Empty, Space, Tooltip } from 'antd';
 import { Rule } from 'antd/es/form';
@@ -47,10 +43,7 @@ const NetworkConfig = () => {
   const size = useSize(sizeRef);
   const { formatMessage } = useIntl();
 
-  // 获取设备树
-  const { data: ifaceData } = useRequest(() => getSettingsCtrlTree(), {
-    formatResult: (res) => res.data.network,
-  });
+  const { network: ifaceData } = useModel('useSystem');
 
   // 详情
   const { data: detail, run: getDetail } = useRequest(

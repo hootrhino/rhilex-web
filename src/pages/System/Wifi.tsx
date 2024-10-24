@@ -1,5 +1,4 @@
 import { message } from '@/components/PopupHack';
-import { getSettingsCtrlTree } from '@/services/rhilex/wangluopeizhi';
 import {
   getSettingsWifi,
   getSettingsWifiScanSignal,
@@ -8,7 +7,7 @@ import {
 import { WifiOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { ProCard, ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { useIntl, useRequest } from '@umijs/max';
+import { useIntl, useModel, useRequest } from '@umijs/max';
 import { useSize } from 'ahooks';
 import { AutoComplete, Button, Empty, Progress, Space } from 'antd';
 import { useEffect, useRef } from 'react';
@@ -25,12 +24,9 @@ const WIFIConfig = () => {
   const { formatMessage, locale } = useIntl();
   const sizeRef = useRef(null);
   const size = useSize(sizeRef);
-  const labelCol = locale === 'en-US' ? { span: 3 } : { span: 2 };
+  const { wlan: ifaceData } = useModel('useSystem');
 
-  // 获取设备树
-  const { data: ifaceData } = useRequest(() => getSettingsCtrlTree(), {
-    formatResult: (res) => res.data.wlan,
-  });
+  const labelCol = locale === 'en-US' ? { span: 3 } : { span: 2 };
 
   // 详情
   const { data: detail, run: getDetail } = useRequest(
