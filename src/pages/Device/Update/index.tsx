@@ -154,7 +154,7 @@ const UpdateForm = () => {
 
   const handleOnValuesChange = (changedValue: any) => {
     const type = changedValue?.type;
-    const model = changedValue?.config?.commonConfig?.model;
+    const model = changedValue?.config?.s1200Config?.model;
     const mode = changedValue?.config?.commonConfig?.mode;
 
     if (type) {
@@ -167,7 +167,7 @@ const UpdateForm = () => {
     }
     if (model) {
       formRef.current?.setFieldsValue({
-        config: { commonConfig: { slot: defaultModelSlot[model] } },
+        config: { s1200Config: { slot: defaultModelSlot[model] } },
       });
     }
     if (mode) {
