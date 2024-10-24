@@ -131,7 +131,7 @@ export const deviceDS = {
   [DeviceType.DLT6452007_MASTER]: device_national_ds,
   [DeviceType.CJT1882004_MASTER]: device_national_ds,
   [DeviceType.SZY2062016_MASTER]: device_national_ds,
-  [DeviceType.GENERIC_MBUS_MASTER]: device_national_ds,
+  [DeviceType.GENERIC_MBUS_EN13433_MASTER]: device_national_ds,
   [DeviceType.GENERIC_UART_RW]: device_uart_ds,
   [DeviceType.GENERIC_USER_PROTOCOL]: device_user_ds,
   [DeviceType.TENCENT_IOTHUB_GATEWAY]: device_iothub_control_ds,

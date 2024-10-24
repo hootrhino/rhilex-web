@@ -115,7 +115,7 @@ const Devices = () => {
       case DeviceType.GENERIC_SNMP:
       case DeviceType.GENERIC_MODBUS_MASTER:
       case DeviceType.GENERIC_MODBUS_SLAVER:
-      case DeviceType.GENERIC_MBUS_MASTER:
+      case DeviceType.GENERIC_MBUS_EN13433_MASTER:
       case DeviceType.SIEMENS_PLC:
       case DeviceType.GENERIC_BACNET_IP:
       case DeviceType.BACNET_ROUTER_GW:

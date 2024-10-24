@@ -116,7 +116,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
             {/* TODO GENERIC_MODBUS_SLAVER 不需要在详情页展示寄存器 */}
             {[
               DeviceType.GENERIC_SNMP,
-              DeviceType.GENERIC_MBUS_MASTER,
+              DeviceType.GENERIC_MBUS_EN13433_MASTER,
               DeviceType.GENERIC_MODBUS_MASTER,
               DeviceType.SIEMENS_PLC,
               DeviceType.GENERIC_BACNET_IP,

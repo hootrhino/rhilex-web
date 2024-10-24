@@ -30,7 +30,7 @@ const downloadType = {
   [DeviceType.GENERIC_SNMP]: 'snmp_oids_sheet',
   [DeviceType.SIEMENS_PLC]: 's1200_data_sheet',
   [DeviceType.GENERIC_MODBUS_MASTER]: 'modbus_master_sheet',
-  [DeviceType.GENERIC_MBUS_MASTER]: 'mbus_master_sheet',
+  [DeviceType.GENERIC_MBUS_EN13433_MASTER]: 'mbus_master_sheet',
   [DeviceType.GENERIC_BACNET_IP]: 'bacnetip_data_sheet',
   [DeviceType.BACNET_ROUTER_GW]: 'bacnet_router_sheet',
   [DeviceType.DLT6452007_MASTER]: 'dlt6452007_master_sheet',

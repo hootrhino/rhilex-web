@@ -198,19 +198,17 @@ export default {
   /**
    * Device type
    */
-  'device.type.modbus.master': '通用 Modbus 主機網關',
-  'device.type.modbus.slaver': '通用 Modbus 從機網關',
-  'device.type.snmp': '通用 SNMP 協議採集網關',
-  'device.type.plc': '通用西門子 S7 系列 PLC 採集網關',
-  'device.type.http': '通用 HTTP 協議數據採集網關',
-  'device.type.bacnet.ip': '通用 BACnet IP 主機網關',
-  'device.type.bacnet.router': '通用 BACnet IP 從機網關',
+  'device.type.modbus.master': '通用 Modbus 協議數據採集主機網關',
+  'device.type.modbus.slaver': '通用 Modbus 協議數據採集從機網關',
+  'device.type.plc': '通用西門子 S7 系列 PLC 協議數據採集網關',
+  'device.type.bacnet.ip': '通用 BACnet IP 協議數據採集主機網關',
+  'device.type.bacnet.router': '通用 BACnet IP 協議數據採集從機網關',
   'device.type.tencent': '騰訊雲端物聯網平台',
   'device.type.ithings': '聯犀物聯網平台',
   'device.type.uartRW': '通用串口讀寫網關',
-  'device.type.mbus': '通用 M-Bus 數據採集網關',
-  'device.type.national': '國標 {protocol} 協議採集網關',
-  'device.type.user': '通用自訂協議採集網關',
+  'device.type.national': '國標 {protocol} 協議數據採集網關',
+  'device.type.user': '通用自訂協議數據採集網關',
+  'device.type.common': '通用 {type} 協議數據採集網關',
 
   /**
    * Modbus function

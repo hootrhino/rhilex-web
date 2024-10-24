@@ -198,19 +198,17 @@ export default {
   /**
    * device type
    */
-  'device.type.modbus.master': '通用 Modbus 主机网关',
-  'device.type.modbus.slaver': '通用 Modbus 从机网关',
-  'device.type.snmp': '通用 SNMP 协议采集网关',
-  'device.type.plc': '通用西门子 S7 系列 PLC 采集网关',
-  'device.type.http': '通用 HTTP 协议数据采集网关',
-  'device.type.bacnet.ip': '通用 BACnet IP 主机网关',
-  'device.type.bacnet.router': '通用 BACnet IP 从机网关',
+  'device.type.modbus.master': '通用 Modbus 协议数据采集主机网关',
+  'device.type.modbus.slaver': '通用 Modbus 协议数据采集从机网关',
+  'device.type.plc': '通用西门子 S7 系列 PLC 协议数据采集网关',
+  'device.type.bacnet.ip': '通用 BACnet IP 协议数据采集主机网关',
+  'device.type.bacnet.router': '通用 BACnet IP 协议数据采集从机网关',
   'device.type.tencent': '腾讯云物联网平台',
   'device.type.ithings': '联犀物联网平台',
   'device.type.uartRW': '通用串口读写网关',
-  'device.type.mbus': '通用 M-Bus 数据采集网关',
-  'device.type.national': '国标 {protocol} 协议采集网关',
-  'device.type.user': '通用自定义协议采集网关',
+  'device.type.national': '国标 {protocol} 协议数据采集网关',
+  'device.type.user': '通用自定义协议数据采集网关',
+  'device.type.common': '通用 {type} 协议数据采集网关',
 
   /**
    * Modbus function

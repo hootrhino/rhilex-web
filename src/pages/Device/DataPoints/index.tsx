@@ -23,7 +23,7 @@ const DataPoints = ({ uuid }: BaseDataSheetProps) => {
     [DeviceType.GENERIC_SNMP]: <SnmpOidsSheet uuid={uuid} />,
     [DeviceType.SIEMENS_PLC]: <PlcDataSheet uuid={uuid} />,
     [DeviceType.GENERIC_MODBUS_MASTER]: <ModbusMasterDataSheet uuid={uuid} />,
-    [DeviceType.GENERIC_MBUS_MASTER]: <MbusMasterDataSheet uuid={uuid} />,
+    [DeviceType.GENERIC_MBUS_EN13433_MASTER]: <MbusMasterDataSheet uuid={uuid} />,
     [DeviceType.GENERIC_BACNET_IP]: <BacnetDataSheet uuid={uuid} />,
     [DeviceType.BACNET_ROUTER_GW]: <BacnetRouterDataSheet uuid={uuid} />,
     [DeviceType.DLT6452007_MASTER]: <DLTDataSheet uuid={uuid} />,

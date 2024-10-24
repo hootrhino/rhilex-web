@@ -15,7 +15,7 @@ import {
 import { BACNET_ROUTER_GW } from './bacnetRouterGW';
 import { GENERIC_BACNET_IP } from './genericBacnetIP';
 import { GENERIC_HTTP_DEVICE } from './genericHttpDevice';
-import { GENERIC_MBUS_MASTER } from './genericMBusMaster';
+import { GENERIC_MBUS_EN13433_MASTER } from './genericMBusMaster';
 import { GENERIC_MODBUS_MASTER } from './genericModbusMaster';
 import { GENERIC_MODBUS_SLAVER } from './genericModbusSlaver';
 import { GENERIC_SNMP } from './genericSnmp';
@@ -216,7 +216,7 @@ export const typeConfigColumns = {
   [DeviceType.GENERIC_USER_PROTOCOL]: GENERIC_USER_PROTOCOL,
   [DeviceType.GENERIC_MODBUS_MASTER]: GENERIC_MODBUS_MASTER,
   [DeviceType.GENERIC_MODBUS_SLAVER]: GENERIC_MODBUS_SLAVER,
-  [DeviceType.GENERIC_MBUS_MASTER]: GENERIC_MBUS_MASTER,
+  [DeviceType.GENERIC_MBUS_EN13433_MASTER]: GENERIC_MBUS_EN13433_MASTER,
   [DeviceType.SIEMENS_PLC]: SIEMENS_PLC,
   [DeviceType.GENERIC_HTTP_DEVICE]: GENERIC_HTTP_DEVICE,
   [DeviceType.GENERIC_SNMP]: GENERIC_SNMP,

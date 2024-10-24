@@ -203,17 +203,15 @@ export default {
    */
   'device.type.modbus.master': 'Generic Modbus Master Gateway',
   'device.type.modbus.slaver': 'Generic Modbus Slaver Gateway',
-  'device.type.snmp': 'Generic SNMP Gateway',
   'device.type.plc': 'Generic Siemens S7 PLC Gateway',
-  'device.type.http': 'Generic HTTP Gateway',
   'device.type.bacnet.ip': 'Generic BACnet IP Master Gateway',
   'device.type.bacnet.router': 'Generic BACnet IP Slaver Gateway',
   'device.type.tencent': 'Tencent Cloud IoT Platform',
   'device.type.ithings': 'iThings IoT Platform',
   'device.type.uartRW': 'Generic Serial Read/Write Gateway',
-  'device.type.mbus': 'Generic M-Bus Gateway',
   'device.type.national': 'National Standard {protocol} Gateway',
   'device.type.user': 'Generic Custom Protocol Gateway',
+  'device.type.common': 'Generic {type} Gateway',
 
   /**
    * Modbus function

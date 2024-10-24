@@ -109,7 +109,7 @@ export const defaultConfig = {
       host: '0.0.0.0',
     },
   },
-  [DeviceType.GENERIC_MBUS_MASTER]: {
+  [DeviceType.GENERIC_MBUS_EN13433_MASTER]: {
     commonConfig: {
       ...defaultCommonConfig,
       frequency: DEFAULT_FREQUENCE,
