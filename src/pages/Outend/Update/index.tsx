@@ -76,7 +76,10 @@ const UpdateForm = () => {
     try {
       const params = {
         ...values,
-        config: convertBooleanOrString(values.config),
+        config: {
+          ...values.config,
+          commonConfig: convertBooleanOrString(values.config.commonConfig),
+        },
       };
 
       if (uuid) {
@@ -104,7 +107,10 @@ const UpdateForm = () => {
     if (detail) {
       formRef.current?.setFieldsValue({
         ...detail,
-        config: detail.config && convertBooleanOrString(detail.config),
+        config: {
+          ...detail.config,
+          commonConfig: convertBooleanOrString(detail.config?.commonConfig),
+        },
       });
     } else {
       formRef.current?.setFieldsValue({
