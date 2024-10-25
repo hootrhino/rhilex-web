@@ -45,7 +45,7 @@ export async function getCjt1882004MasterSheetList(
         frequency: number;
         status: number;
         lastFetchTime: number;
-        value: number;
+        value: boolean[] | string[] | number[];
         errMsg: string;
       }[];
     };

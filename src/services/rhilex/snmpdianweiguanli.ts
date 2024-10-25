@@ -43,7 +43,7 @@ export async function getSnmpOidsSheetList(
         errMsg: string;
         status: number;
         lastFetchTime: number;
-        value: string;
+        value: boolean[] | string[] | number[];
       }[];
     };
   }>('/api/v1/snmp_oids_sheet/list', {

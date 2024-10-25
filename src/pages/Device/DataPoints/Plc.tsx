@@ -173,7 +173,7 @@ const PlcDataSheet = ({ uuid }: BaseDataSheetProps) => {
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
-      scroll={{ x: 1200 }}
+      scroll={{ x: 1500 }}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,

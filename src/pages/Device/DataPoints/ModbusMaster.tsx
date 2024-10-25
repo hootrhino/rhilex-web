@@ -323,7 +323,7 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       request={handleOnRequest}
       defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
-      scroll={{ x: 1200 }}
+      scroll={{ x: 1700 }}
       upload={async ({ file, ...params }: UploadParams) => {
         await postModbusMasterSheetSheetImport({ ...params }, file);
       }}

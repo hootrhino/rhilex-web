@@ -51,7 +51,7 @@ export async function getModbusMasterSheetList(
         weight: number;
         status: number;
         lastFetchTime: number;
-        value: string;
+        value: boolean[] | number[] | string[];
         errMsg: string;
       }[];
     };

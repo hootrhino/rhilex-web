@@ -914,55 +914,6 @@
         "security": []
       }
     },
-    "/api/v1/drivers": {
-      "get": {
-        "summary": "驱动列表",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "操作成功",
-                      "data": [
-                        {
-                          "name": "Generic ModBus TCP Driver",
-                          "type": "TCP",
-                          "description": "Generic ModBus TCP Driver"
-                        },
-                        {
-                          "name": "Generic ModBus TCP Driver",
-                          "type": "TCP",
-                          "description": "Generic ModBus TCP Driver"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-30852114-run",
-        "security": []
-      }
-    },
     "/api/v1/rules/create": {
       "post": {
         "summary": "新建规则",
@@ -4767,574 +4718,6 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-114238073-run",
-        "security": []
-      }
-    },
-    "/api/v1/visual/create": {
-      "post": {
-        "summary": "新建大屏",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "gid": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string"
-                  },
-                  "content": {
-                    "type": "string"
-                  },
-                  "thumbnail": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "gid",
-                  "name",
-                  "type",
-                  "content",
-                  "thumbnail"
-                ],
-                "x-apifox-orders": [
-                  "gid",
-                  "name",
-                  "type",
-                  "content",
-                  "thumbnail"
-                ],
-                "x-apifox-ignore-properties": []
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "uuid": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "uuid"
-                      ],
-                      "x-apifox-orders": [
-                        "uuid"
-                      ],
-                      "x-apifox-ignore-properties": []
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-115151858-run",
-        "security": []
-      }
-    },
-    "/api/v1/visual/update": {
-      "put": {
-        "summary": "更新大屏",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "gid": {
-                    "type": "string"
-                  },
-                  "uuid": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string"
-                  },
-                  "content": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "gid",
-                  "uuid",
-                  "name",
-                  "type",
-                  "content"
-                ],
-                "x-apifox-orders": [
-                  "gid",
-                  "uuid",
-                  "name",
-                  "type",
-                  "content"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "gid": "VROOT",
-                "uuid": "VISUALNSJ8TL",
-                "name": "大屏12121212",
-                "type": "BUILDIN",
-                "content": "大屏的内容"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "uuid": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "uuid"
-                      ],
-                      "x-apifox-orders": [
-                        "uuid"
-                      ],
-                      "x-apifox-ignore-properties": []
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-115152262-run",
-        "security": []
-      }
-    },
-    "/api/v1/visual": {
-      "delete": {
-        "summary": "删除大屏",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "uuid",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "112233454",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-115152575-run",
-        "security": []
-      }
-    },
-    "/api/v1/visual/publish": {
-      "put": {
-        "summary": "发布大屏",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "uuid",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "VISUALV4IUKX",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "uuid": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string"
-                  },
-                  "content": {
-                    "type": "string"
-                  },
-                  "thumbnail": {
-                    "type": "string"
-                  },
-                  "status": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "uuid",
-                  "name",
-                  "type",
-                  "content",
-                  "thumbnail",
-                  "status"
-                ],
-                "x-apifox-orders": [
-                  "uuid",
-                  "name",
-                  "type",
-                  "content",
-                  "thumbnail",
-                  "status"
-                ],
-                "x-apifox-ignore-properties": []
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-115236241-run",
-        "security": []
-      }
-    },
-    "/api/v1/visual/detail": {
-      "get": {
-        "summary": "大屏详情",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "uuid",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "VISUALV4IUKX",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-115240200-run",
-        "security": []
-      }
-    },
-    "/api/v1/visual/group": {
-      "get": {
-        "summary": "大屏分组",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-115784664-run",
-        "security": []
-      }
-    },
-    "/api/v1/visual/listByGroup": {
-      "get": {
-        "summary": "大屏列表",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "uuid",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-115799099-run",
-        "security": []
-      }
-    },
-    "/api/v1/visual/thumbnail": {
-      "post": {
-        "summary": "上传图片",
-        "x-apifox-folder": "",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "description": "上传的图片文件",
-                    "example": "file://C:\\Users\\wangwenhai\\Pictures\\Saved Pictures\\1.jpg",
-                    "format": "binary"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "url": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "url"
-                      ],
-                      "x-apifox-orders": [
-                        "url"
-                      ],
-                      "x-apifox-ignore-properties": []
-                    }
-                  },
-                  "required": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-orders": [
-                    "code",
-                    "msg",
-                    "data"
-                  ],
-                  "x-apifox-ignore-properties": []
-                },
-                "examples": {
-                  "1": {
-                    "summary": "成功示例",
-                    "value": {
-                      "code": 200,
-                      "msg": "Success",
-                      "data": {
-                        "url": "file_1697177470407784.png"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-116561632-run",
         "security": []
       }
     },
@@ -10154,7 +9537,26 @@
                                 "type": "integer"
                               },
                               "value": {
-                                "type": "string"
+                                "anyOf": [
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  }
+                                ]
                               },
                               "errMsg": {
                                 "type": "string"
@@ -10178,7 +9580,6 @@
                               "value",
                               "errMsg"
                             ],
-                            "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "uuid",
                               "device_uuid",
@@ -10196,7 +9597,8 @@
                               "lastFetchTime",
                               "value",
                               "errMsg"
-                            ]
+                            ],
+                            "x-apifox-ignore-properties": []
                           }
                         }
                       },
@@ -10206,13 +9608,13 @@
                         "total",
                         "records"
                       ],
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "current",
                         "size",
                         "total",
                         "records"
-                      ]
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -10220,12 +9622,12 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
                 },
                 "examples": {
                   "1": {
@@ -10799,7 +10201,26 @@
                                 "type": "integer"
                               },
                               "value": {
-                                "type": "string"
+                                "anyOf": [
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "number"
+                                    }
+                                  }
+                                ]
                               },
                               "errMsg": {
                                 "type": "string"
@@ -14225,7 +13646,26 @@
                                 "type": "integer"
                               },
                               "value": {
-                                "type": "string"
+                                "anyOf": [
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "number"
+                                    }
+                                  }
+                                ]
                               }
                             },
                             "required": [
@@ -14240,7 +13680,6 @@
                               "lastFetchTime",
                               "value"
                             ],
-                            "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "uuid",
                               "device_uuid",
@@ -14252,7 +13691,8 @@
                               "status",
                               "lastFetchTime",
                               "value"
-                            ]
+                            ],
+                            "x-apifox-ignore-properties": []
                           }
                         }
                       },
@@ -14262,13 +13702,13 @@
                         "total",
                         "records"
                       ],
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "current",
                         "size",
                         "total",
                         "records"
-                      ]
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -14276,12 +13716,105 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 10,
+                        "total": 7,
+                        "records": [
+                          {
+                            "uuid": "SNMPFD7SYFQD",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "Total Processes",
+                            "alias": "线程总数",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "SNMPY8EBZAPP",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "Users Count",
+                            "alias": "用户总数",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "SNMPJYQLMHX5",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "CPU",
+                            "alias": "CPU使用率",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "SNMPYYBS7EMD",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "Load",
+                            "alias": "负载力",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "1",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "SystemDescription",
+                            "alias": "SystemDescription",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "2",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "PCName",
+                            "alias": "PCName",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          },
+                          {
+                            "uuid": "3",
+                            "device_uuid": "DEVICEPY8DYMPM",
+                            "oid": "",
+                            "tag": "sysServices",
+                            "alias": "sysServices",
+                            "frequency": 1000,
+                            "status": 0,
+                            "lastFetchTime": 0,
+                            "value": ""
+                          }
+                        ]
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -15922,7 +15455,26 @@
                                 "type": "integer"
                               },
                               "value": {
-                                "type": "string"
+                                "anyOf": [
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "number"
+                                    }
+                                  }
+                                ]
                               }
                             },
                             "required": [
@@ -15938,7 +15490,6 @@
                               "lastFetchTime",
                               "value"
                             ],
-                            "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "uuid",
                               "device_uuid",
@@ -15951,7 +15502,8 @@
                               "status",
                               "lastFetchTime",
                               "value"
-                            ]
+                            ],
+                            "x-apifox-ignore-properties": []
                           }
                         }
                       },
@@ -15961,13 +15513,13 @@
                         "total",
                         "records"
                       ],
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "current",
                         "size",
                         "total",
                         "records"
-                      ]
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -15975,12 +15527,12 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
               }
             }
@@ -18450,7 +18002,26 @@
                                 "type": "integer"
                               },
                               "value": {
-                                "type": "string"
+                                "anyOf": [
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "number"
+                                    }
+                                  }
+                                ]
                               },
                               "errMsg": {
                                 "type": "string"
@@ -18471,7 +18042,6 @@
                               "value",
                               "errMsg"
                             ],
-                            "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "uuid",
                               "device_uuid",
@@ -18486,7 +18056,8 @@
                               "lastFetchTime",
                               "value",
                               "errMsg"
-                            ]
+                            ],
+                            "x-apifox-ignore-properties": []
                           }
                         }
                       },
@@ -18496,13 +18067,13 @@
                         "total",
                         "records"
                       ],
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "current",
                         "size",
                         "total",
                         "records"
-                      ]
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -18510,12 +18081,12 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
                 },
                 "examples": {
                   "1": {
@@ -20896,7 +20467,26 @@
                                 "type": "integer"
                               },
                               "value": {
-                                "type": "integer"
+                                "anyOf": [
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "number"
+                                    }
+                                  }
+                                ]
                               },
                               "errMsg": {
                                 "type": "string"
@@ -20914,7 +20504,6 @@
                               "value",
                               "errMsg"
                             ],
-                            "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "device_uuid",
                               "uuid",
@@ -20926,7 +20515,8 @@
                               "lastFetchTime",
                               "value",
                               "errMsg"
-                            ]
+                            ],
+                            "x-apifox-ignore-properties": []
                           }
                         }
                       },
@@ -20936,13 +20526,13 @@
                         "total",
                         "records"
                       ],
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "current",
                         "size",
                         "total",
                         "records"
-                      ]
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -20950,12 +20540,12 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
                 },
                 "examples": {
                   "1": {
@@ -21573,7 +21163,26 @@
                                 "type": "integer"
                               },
                               "value": {
-                                "type": "integer"
+                                "anyOf": [
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "number"
+                                    }
+                                  }
+                                ]
                               },
                               "errMsg": {
                                 "type": "string"
@@ -21591,7 +21200,6 @@
                               "value",
                               "errMsg"
                             ],
-                            "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "device_uuid",
                               "uuid",
@@ -21603,7 +21211,8 @@
                               "lastFetchTime",
                               "value",
                               "errMsg"
-                            ]
+                            ],
+                            "x-apifox-ignore-properties": []
                           }
                         }
                       },
@@ -21613,13 +21222,13 @@
                         "total",
                         "records"
                       ],
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "current",
                         "size",
                         "total",
                         "records"
-                      ]
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -21627,12 +21236,12 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
                 },
                 "examples": {
                   "1": {
@@ -22189,7 +21798,26 @@
                                 "type": "integer"
                               },
                               "value": {
-                                "type": "string"
+                                "anyOf": [
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "number"
+                                    }
+                                  }
+                                ]
                               },
                               "errMsg": {
                                 "type": "string"
@@ -22207,7 +21835,6 @@
                               "value",
                               "errMsg"
                             ],
-                            "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "device_uuid",
                               "uuid",
@@ -22219,7 +21846,8 @@
                               "lastFetchTime",
                               "value",
                               "errMsg"
-                            ]
+                            ],
+                            "x-apifox-ignore-properties": []
                           }
                         }
                       },
@@ -22229,13 +21857,13 @@
                         "total",
                         "records"
                       ],
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "current",
                         "size",
                         "total",
                         "records"
-                      ]
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -22243,12 +21871,12 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
                 },
                 "examples": {
                   "1": {
@@ -22924,7 +22552,10 @@
                                 "type": "integer"
                               },
                               "value": {
-                                "type": "string"
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
                               },
                               "errMsg": {
                                 "type": "string"
@@ -22943,7 +22574,6 @@
                               "value",
                               "errMsg"
                             ],
-                            "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "device_uuid",
                               "uuid",
@@ -22956,7 +22586,8 @@
                               "lastFetchTime",
                               "value",
                               "errMsg"
-                            ]
+                            ],
+                            "x-apifox-ignore-properties": []
                           }
                         }
                       },
@@ -22966,13 +22597,13 @@
                         "total",
                         "records"
                       ],
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "current",
                         "size",
                         "total",
                         "records"
-                      ]
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   },
                   "required": [
@@ -22980,12 +22611,12 @@
                     "msg",
                     "data"
                   ],
-                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ]
+                  ],
+                  "x-apifox-ignore-properties": []
                 },
                 "examples": {
                   "1": {

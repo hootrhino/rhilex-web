@@ -97,7 +97,6 @@ const BacnetRouterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
-      scroll={{ x: 1200 }}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,

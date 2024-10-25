@@ -45,7 +45,7 @@ export async function getS1200DataSheetList(
         frequency: number;
         status: number;
         lastFetchTime: number;
-        value: string;
+        value: boolean[] | string[] | number[];
         errMsg: string;
       }[];
     };

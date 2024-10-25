@@ -46,7 +46,7 @@ export async function getSzy2062016MasterSheetList(
         frequency: number;
         status: number;
         lastFetchTime: number;
-        value: string;
+        value: string[];
         errMsg: string;
       }[];
     };

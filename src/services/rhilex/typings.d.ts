@@ -85,10 +85,6 @@ declare namespace API {
     uuid: string;
   };
 
-  type deleteVisualParams = {
-    uuid: string;
-  };
-
   type getAppDetailParams = {
     uuid: string;
   };
@@ -408,14 +404,6 @@ declare namespace API {
     device_uuid: string;
   };
 
-  type getVisualDetailParams = {
-    uuid: string;
-  };
-
-  type getVisualListByGroupParams = {
-    uuid: string;
-  };
-
   type postSchemaFixParams = {
     uuid: string;
   };
@@ -463,10 +451,6 @@ declare namespace API {
   };
 
   type putOutendsRestartParams = {
-    uuid: string;
-  };
-
-  type putVisualPublishParams = {
     uuid: string;
   };
 

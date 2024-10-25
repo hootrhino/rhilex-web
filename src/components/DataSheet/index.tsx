@@ -22,7 +22,7 @@ import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
 import { defaultPagination, DEVICE_LIST } from '@/utils/constant';
 import { omit } from '@/utils/redash';
 import UploadSheetConfirm from './ConfirmModal';
-import type { DataSheetItem, DataSheetProps } from './typings';
+import type { DataSheetItem, DataSheetProps, DataSheetValue } from './typings';
 
 const POLLING_INTERVAL = 3000;
 
@@ -37,6 +37,10 @@ const downloadType = {
   [DeviceType.CJT1882004_MASTER]: 'cjt1882004_master_sheet',
   [DeviceType.SZY2062016_MASTER]: 'szy2062016_master_sheet',
   [DeviceType.GENERIC_USER_PROTOCOL]: 'user_protocol_sheet',
+};
+
+const isValidArrayType = (array: any[]): array is DataSheetValue[] => {
+  return array.every((item) => ['boolean', 'string', 'number'].includes(typeof item));
 };
 
 const DataSheet = ({
@@ -221,6 +225,19 @@ const DataSheet = ({
       dataIndex: 'value',
       editable: false,
       ellipsis: true,
+      render: (_text, record) => {
+        if (!Array.isArray(record.value) || !isValidArrayType(record.value)) {
+          return '0';
+        }
+        const isBooleanArray = (record.value as DataSheetValue[])?.every(
+          (item: DataSheetValue) => typeof item === 'boolean',
+        );
+        const formatValue = isBooleanArray
+          ? record.value.map((item) => item.toString())
+          : record.value;
+
+        return formatValue?.join(',');
+      },
     },
     {
       title: formatMessage({ id: 'device.form.title.status' }),

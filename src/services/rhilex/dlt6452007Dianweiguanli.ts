@@ -45,7 +45,7 @@ export async function getDlt6452007MasterSheetList(
         frequency: number;
         status: number;
         lastFetchTime: number;
-        value: number;
+        value: boolean[] | string[] | number[];
         errMsg: string;
       }[];
     };

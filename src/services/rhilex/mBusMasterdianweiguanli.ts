@@ -48,7 +48,7 @@ export async function getMbusMasterSheetList(
         manufacturer: string;
         status: number;
         lastFetchTime: number;
-        value: string;
+        value: boolean[] | string[] | number[];
         errMsg: string;
       }[];
     };

@@ -22,10 +22,12 @@ export type UpdateParams<T = Point> = {
   data_points: T[];
 };
 
+export type DataSheetValue = string | number | boolean;
+
 export type DataSheetItem = Point & {
   status: number;
   lastFetchTime: number;
-  value: string;
+  value: DataSheetValue[];
   [key: string]: any;
 };
 

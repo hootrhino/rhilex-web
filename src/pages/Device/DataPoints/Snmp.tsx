@@ -2,10 +2,12 @@ import DataSheet from '@/components/DataSheet';
 import type {
   BaseDataSheetProps,
   DataSheetItem,
+  Point,
   removeParams,
   UpdateParams,
   UploadParams,
 } from '@/components/DataSheet/typings';
+import UnitValue from '@/components/UnitValue';
 import {
   deleteSnmpOidsSheetDelIds,
   getSnmpOidsSheetList,
@@ -13,7 +15,6 @@ import {
   postSnmpOidsSheetUpdate,
 } from '@/services/rhilex/snmpdianweiguanli';
 import { defaultPagination } from '@/utils/constant';
-import { omit } from '@/utils/redash';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
 import { useRef } from 'react';
@@ -30,22 +31,13 @@ const defaultUploadData = {
   frequency: 1000,
 };
 
+type SnmpPoint = Point & { oid?: string; frequency?: number };
+
 const SnmpOidsSheet = ({ uuid }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
   const { formatMessage } = useIntl();
-
-  const formatUpdateParams = (params: Partial<DataSheetItem>) => {
-    let newParams = {
-      ...omit(params, ['type']),
-      dataType: params?.type?.[0],
-      dataOrder: params?.type?.[1],
-      weight: Number(params?.weight),
-    };
-
-    return newParams;
-  };
 
   const columns: ProColumns<Partial<DataSheetItem>>[] = [
     {
@@ -63,7 +55,6 @@ const SnmpOidsSheet = ({ uuid }: BaseDataSheetProps) => {
       title: formatMessage({ id: 'device.form.title.frequency' }),
       dataIndex: 'frequency',
       valueType: 'digit',
-      width: 100,
       hideInTable: !!uuid,
       fieldProps: {
         addonAfter: 'ms',
@@ -74,6 +65,7 @@ const SnmpOidsSheet = ({ uuid }: BaseDataSheetProps) => {
           { required: true, message: formatMessage({ id: 'device.form.placeholder.frequency' }) },
         ],
       },
+      render: (_, { frequency }) => <UnitValue value={frequency} />,
     },
   ];
 
@@ -104,9 +96,8 @@ const SnmpOidsSheet = ({ uuid }: BaseDataSheetProps) => {
       upload={async ({ file, ...params }: UploadParams) => {
         await postSnmpOidsSheetSheetImport({ ...params }, file);
       }}
-      update={async (values: UpdateParams) => {
-        const points = values.data_points?.map((item) => formatUpdateParams(item));
-        await postSnmpOidsSheetUpdate({ ...values, data_points: points });
+      update={async (values: UpdateParams<SnmpPoint>) => {
+        await postSnmpOidsSheetUpdate(values);
         editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
       }}
       remove={async (params: removeParams) => {
