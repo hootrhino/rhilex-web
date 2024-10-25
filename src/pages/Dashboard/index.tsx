@@ -14,7 +14,7 @@ import {
   PlayCircleOutlined,
   ReloadOutlined,
 } from '@ant-design/icons';
-import { ProCard, ProList } from '@ant-design/pro-components';
+import { ProCard, ProList, StatisticCard } from '@ant-design/pro-components';
 import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Badge, Button, Col, Empty, Row, Space, Statistic } from 'antd';
 import { useEffect, useRef, useState } from 'react';
@@ -69,25 +69,25 @@ const Dashboard = () => {
   const statisticData = [
     {
       label: formatMessage({ id: 'dashboard.statistic.inSuccess' }),
-      value: inSuccess,
+      value: inSuccess || 0,
       status: 'success',
       key: 'inSuccess',
     },
     {
       label: formatMessage({ id: 'dashboard.statistic.inFailed' }),
-      value: inFailed,
+      value: inFailed || 0,
       status: 'error',
       key: 'inFailed',
     },
     {
       label: formatMessage({ id: 'dashboard.statistic.outSuccess' }),
-      value: outSuccess,
+      value: outSuccess || 0,
       status: 'success',
       key: 'outSuccess',
     },
     {
       label: formatMessage({ id: 'dashboard.statistic.outFailed' }),
-      value: outFailed,
+      value: outFailed || 0,
       status: 'error',
       key: 'outFailed',
     },
@@ -113,28 +113,13 @@ const Dashboard = () => {
 
   return (
     <PageContainer className="overflow-x-hidden">
-      <div className="mb-6 flex justify-between">
-        {sourceCountData.map(({ key, title, value }) => (
-          <div
-            key={key}
-            className="flex-1 h-[80px] rounded-[10px] odd:bg-[rgba(230,240,255,0.6)] even:bg-[rgba(42,46,54,0.03)] mr-[16px] last-of-type:mr-0"
-          >
-            <div className="p-[10px]">
-              <div className="flex justify-between items-center">
-                <span className="text-[14px] text-[#585858]">{title}</span>
-                <IconFont type={`icon-dashboard-${key}`} />
-              </div>
-              <div className="text-[20px] font-bold mt-[6px]">{value}</div>
-            </div>
-          </div>
-        ))}
-      </div>
       <Row gutter={[16, 16]}>
-        <Col lg={{ span: 12 }} md={{ span: 24 }}>
+        <Col xl={{ span: 12 }} lg={{ span: 24 }} md={{ span: 24 }}>
           <ProList
             rowKey="uuid"
             size="small"
-            className="dashboard-device-card"
+            className="dashboard-device-card h-full"
+            cardProps={{ className: 'h-full' }}
             locale={{
               emptyText: (
                 <Empty
@@ -192,48 +177,75 @@ const Dashboard = () => {
             }}
           />
         </Col>
-        <Col lg={{ span: 12 }} md={{ span: 24 }}>
-          <ProCard bodyStyle={{ padding: 0 }} className="dashboard-card">
-            <Button
-              size="small"
-              type="primary"
-              ghost
-              className="absolute top-[8px] left-[8px]"
-              icon={<ReloadOutlined />}
-              onClick={reset}
-            >
-              {formatMessage({ id: 'button.reset' })}
-            </Button>
-            <ProCard layout="center" direction="column" type="inner" colSpan="25%">
-              <div className="text-[#585858]">
-                {formatMessage({ id: 'dashboard.title.statistic' })}
-              </div>
-              <Statistic value={sum(statisticData, (s) => s.value || 0)} />
-            </ProCard>
-            <ProCard gutter={[16, 16]} wrap bodyStyle={{ paddingInline: 14 }}>
-              {statisticData?.map((item) => (
-                <ProCard
-                  key={item.key}
-                  layout="center"
-                  direction="column"
-                  type="inner"
-                  colSpan="50%"
-                  className="bg-[rgba(42,46,54,0.04)]"
-                  bodyStyle={{ paddingBlock: 14, paddingInline: 14 }}
-                >
-                  <Space>
-                    <div
-                      className={cn(
-                        'w-[4px] h-[10px] bg-[#52C41B]',
-                        item.status === 'success' ? 'bg-[#52C41B]' : 'bg-[#F54C4F]',
-                      )}
-                    />
-                    <div className="text-[#585858] text-[13px]">{item.label}</div>
-                  </Space>
-                  <Statistic value={item.value} />
-                </ProCard>
-              ))}
-            </ProCard>
+        <Col xl={{ span: 12 }} lg={{ span: 24 }} md={{ span: 24 }}>
+          <ProCard bodyStyle={{ padding: 0 }} className="dashboard-card h-full">
+            <StatisticCard.Group direction="row" className="w-full h-full">
+              <StatisticCard
+                title={
+                  <div className="text-[14px]">
+                    {formatMessage({ id: 'dashboard.title.resourceTotal' })}
+                  </div>
+                }
+                statistic={{
+                  value: sum(sourceCountData, (s) => s.value || 0),
+                }}
+                chart={
+                  <Row gutter={[16, 16]}>
+                    {sourceCountData.map(({ key, title, value }) => (
+                      <Col span={8} key={key}>
+                        <Statistic
+                          title={title}
+                          value={value}
+                          prefix={<IconFont type={`icon-dashboard-${key}`} />}
+                        />
+                      </Col>
+                    ))}
+                  </Row>
+                }
+              />
+              <StatisticCard.Divider type="vertical" />
+              <StatisticCard
+                title={
+                  <div className="text-[14px]">
+                    {formatMessage({ id: 'dashboard.title.statistic' })}
+                  </div>
+                }
+                statistic={{
+                  value: sum(statisticData, (s) => s.value || 0),
+                }}
+                chart={
+                  <Row gutter={[16, 16]}>
+                    {statisticData.map(({ key, label, value, status }) => (
+                      <Col span={12} key={key}>
+                        <Statistic
+                          title={label}
+                          value={value}
+                          prefix={
+                            <div
+                              className={cn(
+                                'w-[4px] h-[16px] bg-[#52C41B] mr-[4px]',
+                                status === 'success' ? 'bg-[#52C41B]' : 'bg-[#F54C4F]',
+                              )}
+                            />
+                          }
+                        />
+                      </Col>
+                    ))}
+                  </Row>
+                }
+                extra={
+                  <Button
+                    size="small"
+                    type="primary"
+                    ghost
+                    icon={<ReloadOutlined />}
+                    onClick={reset}
+                  >
+                    {formatMessage({ id: 'button.reset' })}
+                  </Button>
+                }
+              />
+            </StatisticCard.Group>
           </ProCard>
         </Col>
       </Row>

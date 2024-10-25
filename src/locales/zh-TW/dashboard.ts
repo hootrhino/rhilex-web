@@ -4,7 +4,8 @@ export default {
    */
   'dashboard.title.log': '運行日誌',
   'dashboard.title.resource': '活躍資源',
-  'dashboard.title.statistic': '數據輸入 / 輸出總數',
+  'dashboard.title.statistic': '數據輸入/輸出',
+  'dashboard.title.resourceTotal': '系統資源數',
 
   /**
    * count
