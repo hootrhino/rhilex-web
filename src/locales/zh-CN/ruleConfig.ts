@@ -9,9 +9,12 @@ export default {
   'ruleConfig.form.title.output': '输出结果',
   'ruleConfig.form.title.targetType': '北向资源类型',
   'ruleConfig.form.title.targetId': '北向资源 UUID',
+  'ruleConfig.form.title.resourceType': '资源类型',
+  'ruleConfig.form.title.resourceId': '资源选择',
   'ruleConfig.form.title.type': '示例数据结构',
 
   'ruleConfig.form.placeholder.testData': '请输入数据',
+  'ruleConfig.form.placeholder.targetId': '请选择资源',
 
   /**
    * options
@@ -19,6 +22,8 @@ export default {
   'ruleConfig.type.option.default': '默认数据结构',
   'ruleConfig.type.option.control': '设备远程控制数据结构',
   'ruleConfig.type.option.action': '设备行为调用数据结构',
+  'ruleConfig.iothub.option.tencent': '腾讯云指令下发响应',
+  'ruleConfig.iothub.option.ithings': '联犀平台指令下发响应',
 
   /**
    * title
@@ -29,6 +34,8 @@ export default {
   'ruleConfig.title.detail': '规则详情',
   'ruleConfig.title.log': '规则日志',
   'ruleConfig.title.test': '测试脚本',
+  'ruleConfig.title.group.dataTo': '数据推送',
+  'ruleConfig.title.group.iothub': '平台系统集成',
 
   /**
    * button
@@ -41,5 +48,5 @@ export default {
    */
   'ruleConfig.popconfirm.title.remove': '确定要删除此规则？',
   'ruleConfig.popconfirm.title.reset': '重置可能会丢失数据，确定要重置吗？',
-  'ruleConfig.empty.targetId': '系统未识别到可用北向资源。请参照操作指南完成资源构建步骤。',
+  'ruleConfig.empty.targetId': '系统未识别到可用资源。请参照操作指南完成资源构建步骤。',
 };

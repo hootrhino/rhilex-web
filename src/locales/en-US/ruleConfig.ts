@@ -9,9 +9,12 @@ export default {
   'ruleConfig.form.title.output': 'Output',
   'ruleConfig.form.title.targetType': 'Outend Type',
   'ruleConfig.form.title.targetId': 'Outend UUID',
+  'ruleConfig.form.title.resourceType': 'Resource Type',
+  'ruleConfig.form.title.resourceId': 'Select Resource',
   'ruleConfig.form.title.type': 'Example Data Structures',
 
   'ruleConfig.form.placeholder.testData': 'Please enter test data',
+  'ruleConfig.form.placeholder.targetId': 'Please select a resource',
 
   /**
    * options
@@ -19,6 +22,8 @@ export default {
   'ruleConfig.type.option.default': 'Default Data Structure',
   'ruleConfig.type.option.control': 'Device Remote Control Data Structure',
   'ruleConfig.type.option.action': 'Device Action Invocation Data Structure',
+  'ruleConfig.iothub.option.tencent': 'Tencent Cloud Command Issuance Response',
+  'ruleConfig.iothub.option.ithings': 'iThings Command Issuance Response',
 
   /**
    * title
@@ -29,6 +34,8 @@ export default {
   'ruleConfig.title.detail': 'Rule details',
   'ruleConfig.title.log': 'Rule log',
   'ruleConfig.title.test': 'Test script',
+  'ruleConfig.title.group.dataTo': 'data push',
+  'ruleConfig.title.group.iothub': 'platform system integration',
 
   /**
    * button
@@ -43,5 +50,5 @@ export default {
   'ruleConfig.popconfirm.title.reset':
     'Resetting may result in data loss. Are you sure you want to continue?',
   'ruleConfig.empty.targetId':
-    'The system did not recognize an available northbound resource. Please refer to the operating instructions to complete the resource construction steps.',
+    'The system did not recognize an available resource. Please refer to the operating instructions to complete the resource construction steps.',
 };

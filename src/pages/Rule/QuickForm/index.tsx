@@ -1,12 +1,14 @@
+import { DeviceType } from '@/pages/Device/enum';
 import type { OutendItem } from '@/pages/Outend';
 import { OutendType, outendTypeOption } from '@/pages/Outend/enum';
 import { postRulesCreate } from '@/services/rhilex/guizeguanli';
-import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
+import { getDevicesDetail, getDevicesList } from '@/services/rhilex/shebeiguanli';
 import { getOutendsList } from '@/services/rhilex/shuchuziyuanguanli';
 import { getDataToQuickAction } from '@/templates/BuildIn/dataToTpl';
+import { getIotHubQuickAction } from '@/templates/IotHub';
 import { FormItemType } from '@/utils/enum';
 import { generateRandomId, validateFormItem } from '@/utils/utils';
-import type { ModalFormProps } from '@ant-design/pro-components';
+import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import {
   ModalForm,
   ProFormDependency,
@@ -16,7 +18,7 @@ import {
 import { useIntl, useParams, useRequest } from '@umijs/max';
 import { Empty, message, Space } from 'antd';
 import type { Rule } from 'antd/es/form';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { DefaultFailed, DefaultSuccess } from '../initialValues';
 
 type QuickFormProps = ModalFormProps & {
@@ -24,6 +26,7 @@ type QuickFormProps = ModalFormProps & {
 };
 
 const QuickForm = ({ reload, ...props }: QuickFormProps) => {
+  const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
   const { deviceId, inendId } = useParams();
 
@@ -35,6 +38,31 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
     },
   );
 
+  const getTargetTypeOptions = [
+    {
+      label: <span>{formatMessage({ id: 'ruleConfig.title.group.dataTo' })}</span>,
+      title: 'dataTo',
+      options: Object.keys(outendTypeOption).map((key) => ({
+        label: outendTypeOption[key],
+        value: key,
+      })),
+    },
+    {
+      label: <span>{formatMessage({ id: 'ruleConfig.title.group.iothub' })}</span>,
+      title: 'iothub',
+      options: [
+        {
+          label: <span>{formatMessage({ id: 'ruleConfig.iothub.option.tencent' })}</span>,
+          value: DeviceType.TENCENT_IOTHUB_GATEWAY,
+        },
+        {
+          label: <span>{formatMessage({ id: 'ruleConfig.iothub.option.ithings' })}</span>,
+          value: DeviceType.ITHINGS_IOTHUB_GATEWAY,
+        },
+      ],
+    },
+  ];
+
   useEffect(() => {
     if (deviceId) {
       getDeviceDetail({ uuid: deviceId });
@@ -43,6 +71,7 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
 
   return (
     <ModalForm
+      formRef={formRef}
       title={formatMessage({ id: 'ruleConfig.title.new' })}
       initialValues={{ name: `RULE_${generateRandomId()}`, targetType: OutendType.MQTT }}
       width="30%"
@@ -50,6 +79,13 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
       onFinish={async ({ targetId, targetType, ...values }) => {
         try {
           const batchRequest = deviceDetail?.config?.commonConfig?.batchRequest;
+          const isIothub = [
+            DeviceType.ITHINGS_IOTHUB_GATEWAY,
+            DeviceType.TENCENT_IOTHUB_GATEWAY,
+          ].includes(targetType);
+          const actions = isIothub
+            ? getIotHubQuickAction(targetType, targetId)
+            : getDataToQuickAction(targetType, targetId, batchRequest);
 
           const params = {
             name: values?.name || '',
@@ -58,7 +94,7 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
             fromDevice: deviceId ? [deviceId] : [],
             success: DefaultSuccess,
             failed: DefaultFailed,
-            actions: getDataToQuickAction(targetType, targetId, batchRequest),
+            actions,
           };
 
           await postRulesCreate(params);
@@ -69,6 +105,11 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
         } catch (error) {
           console.log(error);
           return false;
+        }
+      }}
+      onValuesChange={(values) => {
+        if (values?.targetType) {
+          formRef.current?.setFieldsValue({ targetId: undefined });
         }
       }}
       {...props}
@@ -89,11 +130,8 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
       />
       <ProFormSelect
         name="targetType"
-        label={formatMessage({ id: 'ruleConfig.form.title.targetType' })}
-        options={Object.keys(outendTypeOption).map((key) => ({
-          label: outendTypeOption[key],
-          value: key,
-        }))}
+        label={formatMessage({ id: 'ruleConfig.form.title.resourceType' })}
+        options={getTargetTypeOptions}
         placeholder={formatMessage({ id: 'form.placeholder.type' })}
         rules={[
           {
@@ -104,45 +142,63 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
         allowClear={false}
       />
       <ProFormDependency name={['targetType']} labelCol={{ span: 4 }}>
-        {({ targetType }) => (
-          <ProFormSelect
-            name="targetId"
-            label={formatMessage({ id: 'ruleConfig.form.title.targetId' })}
-            fieldProps={{
-              notFoundContent: (
-                <Empty
-                  image={Empty.PRESENTED_IMAGE_SIMPLE}
-                  description={formatMessage({ id: 'ruleConfig.empty.targetId' })}
-                />
-              ),
-              optionRender: (option) => (
-                <Space>
-                  <span>{option?.label}</span>
-                  <span className="text-[12px] text-[#000000A6]">{option?.value}</span>
-                </Space>
-              ),
-            }}
-            params={{ targetType }}
-            request={async () => {
-              const res = await getOutendsList();
+        {({ targetType }) => {
+          const isIothub = [
+            DeviceType.ITHINGS_IOTHUB_GATEWAY,
+            DeviceType.TENCENT_IOTHUB_GATEWAY,
+          ].includes(targetType);
 
-              return (res as any)?.data
-                ?.filter((item: OutendItem) => item.type === targetType)
-                .map((item: OutendItem) => ({
-                  label: item.name,
-                  value: item.uuid,
-                }));
-            }}
-            rules={[
-              {
-                required: true,
-                message: formatMessage({ id: 'placeholder.select' }, { text: ' UUID' }),
-              },
-            ]}
-            placeholder={formatMessage({ id: 'placeholder.select' }, { text: ' UUID' })}
-            allowClear={false}
-          />
-        )}
+          return (
+            <ProFormSelect
+              name="targetId"
+              label={formatMessage({
+                id: 'ruleConfig.form.title.resourceId',
+              })}
+              fieldProps={{
+                notFoundContent: (
+                  <Empty
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    description={formatMessage({ id: 'ruleConfig.empty.targetId' })}
+                  />
+                ),
+                optionRender: (option) => (
+                  <Space>
+                    <span>{option?.label}</span>
+                    <span className="text-[12px] text-[#000000A6]">{option?.value}</span>
+                  </Space>
+                ),
+              }}
+              params={{ targetType, isIothub }}
+              request={async () => {
+                if (isIothub) {
+                  const { data } = await getDevicesList({ current: 1, size: 999 });
+                  return data?.records
+                    ?.filter((item: any) => item.type === targetType)
+                    .map((item: any) => ({
+                      label: item.name,
+                      value: item.uuid,
+                    }));
+                } else {
+                  const res = await getOutendsList();
+                  return (res as any)?.data
+                    ?.filter((item: OutendItem) => item.type === targetType)
+                    .map((item: OutendItem) => ({
+                      label: item.name,
+                      value: item.uuid,
+                    }));
+                }
+              }}
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'ruleConfig.form.placeholder.targetId' }),
+                },
+              ]}
+              placeholder={formatMessage({ id: 'ruleConfig.form.placeholder.targetId' })}
+              allowClear={false}
+            />
+          );
+        }}
       </ProFormDependency>
 
       <ProFormText

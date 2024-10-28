@@ -13,7 +13,7 @@ export const getDataToQuickAction = (type?: OutendType, uuid?: string, enableBat
   const targetId = uuid || 'uuid';
   const requestCode = enableBatchRequest ? `params[value['tag']] = value.value` : `params[value.tag] = value.value * 1`;
 
-  const ithingsAction = `Actions = {
+  return `Actions = {
     function(args)
         local dataT, err = json:J2T(args)
         if (err ~= nil) then
@@ -24,34 +24,12 @@ export const getDataToQuickAction = (type?: OutendType, uuid?: string, enableBat
             local params = {}
             ${requestCode}
             local json = json:T2J({
-              timestamp = time:TimeMs(),
+              ${type === OutendType.ITHINGS_IOT ? `timestamp = time:TimeMs(),
               msgToken = "rhilex",
               method = "report",
-              params = params
-            })
-            local err = data:To${target}("${targetId}", json)
-            if err ~= nil then
-                Throw(err)
-            end
-        end
-        return true, args
-    end
-  }`;
-
-  const defaultAction = `Actions = {
-    function(args)
-        local dataT, err = json:J2T(args)
-        if (err ~= nil) then
-            Throw(err)
-            return true, args
-        end
-        for _, value in pairs(dataT) do
-            local params = {}
-            ${requestCode}
-            local json = json:T2J({
-              id = time:TimeMs(),
+              params = params` : `id = time:TimeMs(),
               method = "thing.event.property.post",
-              params = params
+              params = params`}
             })
             local err = data:To${target}("${targetId}", json)
             if err ~= nil then
@@ -61,8 +39,6 @@ export const getDataToQuickAction = (type?: OutendType, uuid?: string, enableBat
         return true, args
     end
   }`;
-
-  return type === OutendType.ITHINGS_IOT ? ithingsAction : defaultAction;
 };
 
 // 函数使用示例
