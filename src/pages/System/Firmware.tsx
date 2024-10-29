@@ -61,7 +61,7 @@ export const twoColors: ProgressProps['strokeColor'] = {
 const FirmwareConfig = () => {
   const ref = useRef(null);
   const size = useSize(ref);
-  const { isWindows } = useModel('useSystem');
+  const { isCommon } = useModel('useSystem');
 
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
@@ -198,7 +198,7 @@ const FirmwareConfig = () => {
               });
             }}
           />
-          {!isWindows && (
+          {!isCommon && (
             <Space className="mt-[24px] w-full justify-end flex-wrap">
               <Upload
                 accept="application/zip"
@@ -290,12 +290,14 @@ const FirmwareConfig = () => {
             />
           </Modal>
         </ProCard>
-        <ProCard
-          title={formatMessage({ id: 'system.title.firmware.log' })}
-          colSpan={isSmallView ? '100%' : '50%'}
-        >
-          <div className="w-full break-words whitespace-pre-wrap">{logData}</div>
-        </ProCard>
+        {!isCommon && (
+          <ProCard
+            title={formatMessage({ id: 'system.title.firmware.log' })}
+            colSpan={isSmallView ? '100%' : '50%'}
+          >
+            <div className="w-full break-words whitespace-pre-wrap">{logData}</div>
+          </ProCard>
+        )}
       </ProCard>
       <ProConfirmModal open={open} onCancel={handleOnCancel} {...confirmConfig} />
     </div>

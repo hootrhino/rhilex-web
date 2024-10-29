@@ -4,7 +4,7 @@ import { useRequest } from '@umijs/max';
 import { useEffect, useMemo, useState } from 'react';
 
 const useSystem = () => {
-  const [isWindows, setWindows] = useState<boolean>(false);
+  const [isCommon, setCommon] = useState<boolean>(false);
   const [activeKey, setActiveKey] = useState<string>('resource');
 
   const accessToken = localStorage.getItem('accessToken');
@@ -23,7 +23,7 @@ const useSystem = () => {
     if (!dataSource) return;
     const { hardWareInfo } = dataSource;
 
-    setWindows(hardWareInfo?.osDist?.includes('windows'));
+    setCommon(hardWareInfo.product === 'COMMON');
   }, [dataSource]);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const useSystem = () => {
     dataSource,
     run,
     cancel,
-    isWindows,
+    isCommon,
     activeKey,
     setActiveKey,
     ...ifaceData,
