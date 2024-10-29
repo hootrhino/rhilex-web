@@ -78,7 +78,7 @@ const UpdateForm = () => {
         ...values,
         config: {
           ...values.config,
-          commonConfig: convertBooleanOrString(values.config.commonConfig),
+          commonConfig: convertBooleanOrString(values.config?.commonConfig),
         },
       };
 

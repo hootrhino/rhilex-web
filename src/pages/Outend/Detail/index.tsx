@@ -63,9 +63,10 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
               rootClassName="detail-descriptions"
             />
           )}
-          {data?.type === OutendType.HTTP && Object.keys(data?.config?.headers)?.length > 0 && (
-            <HeadersDetail data={data?.config?.headers} />
-          )}
+          {data?.type === OutendType.HTTP &&
+            Object.keys(data?.config?.commonConfig?.headers)?.length > 0 && (
+              <HeadersDetail data={data?.config?.commonConfig?.headers} />
+            )}
         </>
       )}
     </Drawer>
