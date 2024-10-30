@@ -233,7 +233,7 @@ export default {
   /**
    * Tab
    */
-  'device.tab.coils': '线圈寄存器',
+  'device.tab.coil': '线圈寄存器',
   'device.tab.discrete': '離散寄存器',
   'device.tab.holding': '保持寄存器',
   'device.tab.input': '輸入寄存器',

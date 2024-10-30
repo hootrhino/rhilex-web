@@ -236,7 +236,7 @@ export default {
   /**
    * Tab
    */
-  'device.tab.coils': 'Coils Registers',
+  'device.tab.coil': 'Coils Registers',
   'device.tab.discrete': 'Discrete Registers',
   'device.tab.holding': 'Holding Registers',
   'device.tab.input': 'Input Registers',
