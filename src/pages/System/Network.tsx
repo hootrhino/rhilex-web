@@ -8,6 +8,7 @@ import type { FormListActionType, ProFormInstance } from '@ant-design/pro-compon
 import {
   ProCard,
   ProForm,
+  ProFormDependency,
   ProFormList,
   ProFormSelect,
   ProFormSwitch,
@@ -54,12 +55,14 @@ const NetworkConfig = () => {
   );
 
   // 更新
-  const handleOnFinish = async ({ dnsList, ...values }: BaseFormItem) => {
+  const handleOnFinish = async ({ dnsList, dhcp_enabled, ...values }: BaseFormItem) => {
     try {
       const params = {
         ...values,
+        address: dhcp_enabled ? detail?.address : values?.address,
         dns: dnsList?.map((item: { dns: string }) => item.dns),
       };
+
       await postSettingsEth(params as UpdateParams);
       message.success(formatMessage({ id: 'message.success.update' }));
 
@@ -139,18 +142,28 @@ const NetworkConfig = () => {
               { required: true, message: formatMessage({ id: 'system.form.rules.interface' }) },
             ]}
           />
-          <ProFormText
-            name="address"
-            label={formatMessage({ id: 'system.form.title.address' })}
-            width="xl"
-            placeholder={formatMessage({ id: 'system.form.rules.address' })}
-            rules={[
-              { required: true, message: formatMessage({ id: 'system.form.rules.address' }) },
-              {
-                validator: (_rule: Rule, value: string) => validateFormItem(value, FormItemType.IP),
-              },
-            ]}
-          />
+          <ProFormDependency name={['dhcp_enabled']}>
+            {({ dhcp_enabled }) => {
+              if (dhcp_enabled) return null;
+
+              return (
+                <ProFormText
+                  name="address"
+                  label={formatMessage({ id: 'system.form.title.address' })}
+                  width="xl"
+                  placeholder={formatMessage({ id: 'system.form.rules.address' })}
+                  rules={[
+                    { required: true, message: formatMessage({ id: 'system.form.rules.address' }) },
+                    {
+                      validator: (_rule: Rule, value: string) =>
+                        validateFormItem(value, FormItemType.IP),
+                    },
+                  ]}
+                />
+              );
+            }}
+          </ProFormDependency>
+
           <ProFormText
             name="netmask"
             label={formatMessage({ id: 'system.form.title.netmask' })}
