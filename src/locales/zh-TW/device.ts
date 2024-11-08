@@ -21,7 +21,6 @@ export default {
   'device.title.detail': '設備詳情',
   'device.title.new': '新建設備',
   'device.title.update': '編輯設備',
-  'device.title.base': '基本配置',
   'device.title.modal.error.device': '設備異常訊息',
   'device.title.modal.error.sheet': '點位異常訊息',
   'device.title.sheet': '點位表配置',

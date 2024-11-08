@@ -230,7 +230,7 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
           name="description"
           labelCol={{ span: 4 }}
           label={formatMessage({ id: 'table.title.desc' })}
-          placeholder={formatMessage({ id: 'placeholder.desc' })}
+          placeholder={formatMessage({ id: 'form.placeholder.desc' })}
         />
       </ModalForm>
     </>

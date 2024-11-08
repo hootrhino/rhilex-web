@@ -38,7 +38,7 @@ export const getBase64 = (file: RcFile): Promise<string> =>
   });
 
 export const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/c/font_4557572_i7kuo8qjow7.js', // 在 iconfont.cn 上生成
+  scriptUrl: '//at.alicdn.com/t/c/font_4557572_1paayid3j8k.js', // 在 iconfont.cn 上生成
 });
 
 // 格式化 k-v

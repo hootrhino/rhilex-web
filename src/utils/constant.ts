@@ -15,6 +15,7 @@ export const GROUP_TYPE_LUA_TPL = 'USER_LUA_TEMPLATE';
 
 // 分组默认 key
 export const DEFAULT_GROUP_KEY_DEVICE = 'DROOT';
+export const DEFAULT_GROUP_KEY_CECOLLAS = 'CEROOT';
 export const DEFAULT_GROUP_KEY_LUA_TPL = 'ULTROOT';
 
 // 其他

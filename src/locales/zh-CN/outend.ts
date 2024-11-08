@@ -27,7 +27,6 @@ export default {
   'outend.title.new': '新建资源',
   'outend.title.edit': '编辑资源',
   'outend.title.detail': '资源详情',
-  'outend.title.base': '基本配置',
   'outend.title.common': '通用配置',
   'outend.title.uart': '串口配置',
 

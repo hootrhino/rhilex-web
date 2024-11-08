@@ -20,7 +20,6 @@ export default {
    */
   'placeholder.input': '請輸入{text}',
   'placeholder.select': '請選擇{text}',
-  'placeholder.desc': '請輸入備註',
 
   /**
    * table
@@ -64,6 +63,7 @@ export default {
   'form.placeholder.name': '請輸入名稱',
   'form.placeholder.alias': '请输入别名',
   'form.placeholder.type': '請選擇類型',
+  'form.placeholder.desc': '請輸入備註',
   'form.placeholder.username': '請輸入用户名',
   'form.placeholder.password': '請輸入密碼',
 
@@ -91,6 +91,8 @@ export default {
    * others
    */
   'antd.upload.title': '點擊或拖曳文件到此區域進行上傳',
+  'common.title.base': '基本配置',
+  'common.title.defaultGroup': '默認分組',
 
   // UART parity options
   'options.parity.e': '偶校驗',
@@ -128,4 +130,5 @@ export default {
   'menu.rule.new': '新建規則配置',
   'menu.rule.update': '編輯規則配置',
   'menu.cm': '通訊模組',
+  'menu.cecollas': '雲邊協同',
 };

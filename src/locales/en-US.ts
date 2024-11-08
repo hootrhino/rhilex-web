@@ -3,6 +3,7 @@ import component from './en-US/component';
 import status from './en-US/status';
 // pages
 import appStack from './en-US/appStack';
+import cecollas from './en-US/cecollas';
 import com from './en-US/com';
 import common from './en-US/common';
 import dashboard from './en-US/dashboard';
@@ -35,4 +36,5 @@ export default {
   ...DataRepository,
   ...com,
   ...login,
+  ...cecollas,
 };

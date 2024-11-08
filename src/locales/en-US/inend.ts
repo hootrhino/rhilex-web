@@ -32,7 +32,6 @@ export default {
   'inend.title.update': 'Edit resource',
   'inend.title.subDevice': 'Resource {name} - Subdevice list',
   'inend.title.detail': 'Resource details',
-  'inend.title.base': 'Basic configuration',
   'inend.title.source': 'Resource configuration',
 
   /**

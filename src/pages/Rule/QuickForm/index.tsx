@@ -204,7 +204,7 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
       <ProFormText
         label={formatMessage({ id: 'table.title.desc' })}
         name="description"
-        placeholder={formatMessage({ id: 'placeholder.desc' })}
+        placeholder={formatMessage({ id: 'form.placeholder.desc' })}
       />
     </ModalForm>
   );

@@ -20,7 +20,6 @@ export default {
    */
   'placeholder.input': '请输入{text}',
   'placeholder.select': '请选择{text}',
-  'placeholder.desc': '请输入备注',
 
   /**
    * table
@@ -44,6 +43,7 @@ export default {
   'form.title.name': '名称',
   'form.title.alias': '别名',
   'form.title.type': '类型',
+  'form.placeholder.desc': '请输入备注',
   'form.title.status': '状态',
   'form.title.clientId': '客户端 ID',
   'form.title.port': '端口',
@@ -91,6 +91,8 @@ export default {
    * others
    */
   'antd.upload.title': '单击或拖动文件到此区域进行上传',
+  'common.title.base': '基本配置',
+  'common.title.defaultGroup': '默认分组',
 
   // UART parity options
   'options.parity.e': '偶校验',
@@ -128,4 +130,5 @@ export default {
   'menu.rule.new': '新建规则配置',
   'menu.rule.update': '编辑规则配置',
   'menu.cm': '通信模组',
+  'menu.cecollas': '云边协同',
 };

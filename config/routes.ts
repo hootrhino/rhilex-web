@@ -156,6 +156,14 @@
     ],
   },
   {
+    path: '/cecollas',
+    title: 'menu.cecollas',
+    icon: 'icon-menu-cecollas',
+    hideChildrenInMenu: true,
+    key: 'cecollas',
+    component: './Cecollas',
+  },
+  {
     path: '/app',
     title: 'menu.appStack',
     icon: 'appstoreAdd',

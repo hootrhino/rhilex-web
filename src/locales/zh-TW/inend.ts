@@ -32,7 +32,6 @@ export default {
   'inend.title.update': '編輯資源',
   'inend.title.subDevice': '資源 {name} - 子設備列表',
   'inend.title.detail': '資源詳情',
-  'inend.title.base': '基本配置',
   'inend.title.source': '資源配置',
 
   /**

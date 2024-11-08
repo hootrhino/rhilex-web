@@ -20,7 +20,6 @@ export default {
    */
   'placeholder.input': 'Please enter a {text}',
   'placeholder.select': 'Please select a {text}',
-  'placeholder.desc': 'Please enter a description',
 
   /**
    * table
@@ -64,6 +63,7 @@ export default {
   'form.placeholder.name': 'Please enter a name',
   'form.placeholder.alias': 'Please enter an alias',
   'form.placeholder.type': 'Please select a type',
+  'form.placeholder.desc': 'Please enter a description',
   'form.placeholder.username': 'Please enter a username',
   'form.placeholder.password': 'Please enter a password',
 
@@ -94,6 +94,8 @@ export default {
    * others
    */
   'antd.upload.title': 'Click or drag file to this area to upload',
+  'common.title.base': 'Basic configuration',
+  'common.title.defaultGroup': 'Default group',
 
   // UART parity options
   'options.parity.e': 'Even Parity',
@@ -131,4 +133,5 @@ export default {
   'menu.rule.new': 'New Rule Configuration',
   'menu.rule.update': 'Edit Rule Configuration',
   'menu.cm': 'COM Module',
+  'menu.cecollas': 'Cloud Edge Collaboration',
 };

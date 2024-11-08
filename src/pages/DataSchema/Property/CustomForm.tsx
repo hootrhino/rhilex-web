@@ -264,7 +264,7 @@ const CustomPropertyForm = ({ initialValue, reload, ...props }: PropertyFormProp
                 <ProFormText
                   name="description"
                   label={formatMessage({ id: 'table.title.desc' })}
-                  placeholder={formatMessage({ id: 'placeholder.desc' })}
+                  placeholder={formatMessage({ id: 'form.placeholder.desc' })}
                   width="md"
                 />
                 <ProFormRadio.Group

@@ -33,6 +33,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type deleteCecollasDelParams = {
+    uuid: string;
+  };
+
   type deleteCrontaskDelParams = {
     /** uuid */
     uuid: string;
@@ -107,6 +111,20 @@ declare namespace API {
 
   type getBacnetRouterSheetSheetExportParams = {
     device_uuid: string;
+  };
+
+  type getCecollasCecollaErrMsgParams = {
+    uuid: string;
+  };
+
+  type getCecollasDetailParams = {
+    uuid: string;
+  };
+
+  type getCecollasListByGroupParams = {
+    current?: number;
+    size?: number;
+    uuid: string;
   };
 
   type getCjt1882004MasterSheetListParams = {
@@ -410,6 +428,10 @@ declare namespace API {
   };
 
   type putAppStopParams = {
+    uuid: string;
+  };
+
+  type putCecollasRestartParams = {
     uuid: string;
   };
 

@@ -139,7 +139,7 @@ const UpdateForm = () => {
               label={formatMessage({ id: 'table.title.desc' })}
               name="description"
               width="lg"
-              placeholder={formatMessage({ id: 'placeholder.desc' })}
+              placeholder={formatMessage({ id: 'form.placeholder.desc' })}
             />
           </ProForm.Group>
           <ProForm.Item

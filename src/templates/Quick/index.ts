@@ -5,7 +5,7 @@ import { dataToQuickTpl } from '../BuildIn/dataToTpl';
 // 自定义快捷模板
 export const quickLuaTpl = [
   {
-    name: getIntl(getLocale()).formatMessage({ id: 'component.title.defaultGroup' }),
+    name: getIntl(getLocale()).formatMessage({ id: 'common.title.defaultGroup' }),
     uuid: 'default_quick_group',
   },
 ];

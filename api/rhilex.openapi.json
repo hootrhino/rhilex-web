@@ -22,6 +22,9 @@
       "name": "设备管理"
     },
     {
+      "name": "云边协同"
+    },
+    {
       "name": "规则管理"
     },
     {
@@ -22700,6 +22703,812 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-224846116-run",
+        "security": []
+      }
+    },
+    "/api/v1/cecollas/create": {
+      "post": {
+        "summary": "新建云边协同",
+        "x-apifox-folder": "云边协同",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "云边协同"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "gid": {
+                    "type": "string"
+                  },
+                  "config": {
+                    "type": "object",
+                    "properties": {},
+                    "x-apifox-orders": [],
+                    "x-apifox-ignore-properties": []
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "type",
+                  "gid",
+                  "config",
+                  "description"
+                ],
+                "x-apifox-orders": [
+                  "name",
+                  "type",
+                  "gid",
+                  "config",
+                  "description"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "name": "GENERIC_AIS",
+                "type": "GENERIC_AIS",
+                "gid": "GROUPKNIFF8",
+                "schemaId": "123456",
+                "config": {
+                  "host": "0.0.0.0",
+                  "port": 6007
+                },
+                "description": "GENERIC_AIS"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-231337499-run",
+        "security": []
+      }
+    },
+    "/api/v1/cecollas/del": {
+      "delete": {
+        "summary": "删除云边协同",
+        "x-apifox-folder": "云边协同",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "云边协同"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "DEVICE:c4e4e16c51a64bd0a442fd6147482b68",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "操作成功"
+                    }
+                  },
+                  "2": {
+                    "summary": "异常示例",
+                    "value": {
+                      "code": 400,
+                      "msg": "操作失败"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-231337500-run",
+        "security": []
+      }
+    },
+    "/api/v1/cecollas/update": {
+      "put": {
+        "summary": "更新云边协同",
+        "x-apifox-folder": "云边协同",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "云边协同"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "gid": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "config": {
+                    "type": "object",
+                    "properties": {},
+                    "x-apifox-orders": [],
+                    "x-apifox-ignore-properties": []
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "name",
+                  "type",
+                  "gid",
+                  "description",
+                  "config"
+                ],
+                "x-apifox-orders": [
+                  "uuid",
+                  "name",
+                  "type",
+                  "gid",
+                  "description",
+                  "config"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "uuid": "DEVICENSOWWG",
+                "name": "GENERIC_AIS",
+                "type": "GENERIC_AIS",
+                "schemaId": "123456",
+                "gid": "DROOT",
+                "description": "GENERIC_AIS",
+                "config": {
+                  "host": "0.0.0.0",
+                  "port": 6005
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "操作成功"
+                    }
+                  },
+                  "2": {
+                    "summary": "异常示例",
+                    "value": {
+                      "code": 400,
+                      "msg": "操作失败"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-231337501-run",
+        "security": []
+      }
+    },
+    "/api/v1/cecollas/listByGroup": {
+      "get": {
+        "summary": "云边协同列表",
+        "x-apifox-folder": "云边协同",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "设备列表",
+        "tags": [
+          "云边协同"
+        ],
+        "parameters": [
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "10",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "ROOT",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "gid": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "state": {
+                                "type": "integer"
+                              },
+                              "errMsg": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "uuid",
+                              "gid",
+                              "name",
+                              "type",
+                              "state",
+                              "errMsg",
+                              "description"
+                            ],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "gid",
+                              "name",
+                              "type",
+                              "state",
+                              "errMsg",
+                              "description"
+                            ],
+                            "x-apifox-ignore-properties": []
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 2,
+                        "total": 2,
+                        "records": [
+                          {
+                            "uuid": "DEVICE4OFIDHZS",
+                            "gid": "DROOT",
+                            "name": "GENERIC_AIS_RECEIVER",
+                            "type": "GENERIC_AIS_RECEIVER",
+                            "schemaId": "PROPERDRAR6PAY",
+                            "state": 1,
+                            "config": {
+                              "commonConfig": {
+                                "mode": "TCP",
+                                "parseAis": false
+                              },
+                              "hostConfig": {
+                                "host": "0.0.0.0",
+                                "port": 6006,
+                                "timeout": 3000
+                              },
+                              "portUuid": "COM12"
+                            },
+                            "description": "GENERIC_AIS_RECEIVER"
+                          },
+                          {
+                            "uuid": "DEVICE8EWNMGZA",
+                            "gid": "DROOT",
+                            "name": "GENERIC_AIS_RECEIVER",
+                            "type": "GENERIC_AIS_RECEIVER",
+                            "schemaId": "",
+                            "state": 1,
+                            "config": {
+                              "commonConfig": {
+                                "mode": "TCP",
+                                "parseAis": false
+                              },
+                              "hostConfig": {
+                                "host": "0.0.0.0",
+                                "port": 6005,
+                                "timeout": 3000
+                              },
+                              "portUuid": "COM12"
+                            },
+                            "description": "GENERIC_AIS_RECEIVER"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": [
+                        {
+                          "uuid": "DEVICEV7XKMT",
+                          "gid": "DROOT",
+                          "name": "GENERIC_AIS",
+                          "type": "GENERIC_AIS",
+                          "state": 1,
+                          "config": {
+                            "host": "0.0.0.0",
+                            "port": 6005
+                          },
+                          "description": "GENERIC_AIS"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-231337503-run",
+        "security": []
+      }
+    },
+    "/api/v1/cecollas/detail": {
+      "get": {
+        "summary": "云边协同详情",
+        "x-apifox-folder": "云边协同",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "设备列表",
+        "tags": [
+          "云边协同"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "DEVICEe8882237360f4a0489aab0983a4e90f0",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "gid": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "type": "integer"
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {},
+                          "x-apifox-orders": [],
+                          "x-apifox-ignore-properties": []
+                        },
+                        "description": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "uuid",
+                        "gid",
+                        "name",
+                        "type",
+                        "state",
+                        "config",
+                        "description"
+                      ],
+                      "x-apifox-orders": [
+                        "uuid",
+                        "gid",
+                        "name",
+                        "type",
+                        "state",
+                        "config",
+                        "description"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "uuid": "DEVICEZXTBZQ",
+                        "gid": "DROOT",
+                        "name": "GENERIC_AIS",
+                        "type": "GENERIC_AIS",
+                        "state": 1,
+                        "config": {},
+                        "description": "GENERIC_AIS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-231337504-run",
+        "security": []
+      }
+    },
+    "/api/v1/cecollas/restart": {
+      "put": {
+        "summary": "重启云边协同",
+        "x-apifox-folder": "云边协同",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "云边协同"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "AABBCCDD",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-231337509-run",
+        "security": []
+      }
+    },
+    "/api/v1/cecollas/cecollaErrMsg": {
+      "get": {
+        "summary": "云边协同异常信息",
+        "x-apifox-folder": "云边协同",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "云边协同"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "12345678",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": "Normal worked"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-231337510-run",
         "security": []
       }
     }

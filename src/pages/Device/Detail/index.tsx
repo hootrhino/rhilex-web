@@ -69,7 +69,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
     >
       <>
         <ProDescriptions
-          title={formatMessage({ id: 'device.title.base' })}
+          title={formatMessage({ id: 'common.title.base' })}
           dataSource={detail && omit(detail, ['config'])}
           columns={formatColumns(baseColumns()) as EnhancedProDescriptionsItemProps[]}
           column={3}

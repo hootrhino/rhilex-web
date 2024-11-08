@@ -3,6 +3,7 @@ import component from './zh-TW/component';
 import status from './zh-TW/status';
 // pages
 import appStack from './zh-TW/appStack';
+import cecollas from './zh-TW/cecollas';
 import com from './zh-TW/com';
 import common from './zh-TW/common';
 import dashboard from './zh-TW/dashboard';
@@ -35,4 +36,5 @@ export default {
   ...DataRepository,
   ...com,
   ...login,
+  ...cecollas,
 };

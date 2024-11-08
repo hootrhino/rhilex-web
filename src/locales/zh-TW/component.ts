@@ -72,7 +72,6 @@ export default {
    */
   'component.title.notify': '內部通知',
   'component.title.customRule': '自定義規則示例',
-  'component.title.defaultGroup': '默認分組',
   'component.title.builtInTpl': '內置函數',
   'component.title.customTpl': '自定義模板',
   'component.title.quickTpl': '快捷模板',

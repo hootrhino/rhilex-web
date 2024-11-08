@@ -74,7 +74,6 @@ export default {
    */
   'component.title.notify': 'Notification',
   'component.title.customRule': 'Custom rule example',
-  'component.title.defaultGroup': 'Default group',
   'component.title.builtInTpl': 'Built-in function',
   'component.title.customTpl': 'Custom templates',
   'component.title.quickTpl': 'Quick templates',

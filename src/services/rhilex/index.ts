@@ -39,6 +39,7 @@ import * as yidongwangluo4Gshezhi from './yidongwangluo4Gshezhi';
 import * as yonghudingyiluamoban from './yonghudingyiluamoban';
 import * as yonghuguanli from './yonghuguanli';
 import * as yonghuzidingyixieyidianweiguanli from './yonghuzidingyixieyidianweiguanli';
+import * as yunbianxietong from './yunbianxietong';
 import * as zhanneitongzhi from './zhanneitongzhi';
 export default {
   shebeiguanli,
@@ -79,4 +80,5 @@ export default {
   cjt18832004Dianweiguanli,
   yonghuzidingyixieyidianweiguanli,
   szy2062016Dianweiguanli,
+  yunbianxietong,
 };
