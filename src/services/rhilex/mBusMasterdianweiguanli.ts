@@ -44,6 +44,7 @@ export async function getMbusMasterSheetList(
         tag: string;
         alias: string;
         frequency: number;
+        weight: number;
         dataLength: number;
         manufacturer: string;
         status: number;
@@ -127,6 +128,7 @@ export async function postMbusMasterSheetUpdate(
       alias?: string;
       frequency?: number;
       dataLength?: number;
+      weight: number;
       manufacturer?: string;
     }[];
   },

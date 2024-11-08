@@ -15,7 +15,12 @@ import {
   postMbusMasterSheetUpdate,
 } from '@/services/rhilex/mBusMasterdianweiguanli';
 import { defaultPagination } from '@/utils/constant';
-import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
+import { inRange } from '@/utils/redash';
+import {
+  type ActionType,
+  type EditableFormInstance,
+  type ProColumns,
+} from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
 import { useRef } from 'react';
 import { MBusDeviceType, mBusDeviceTypeOptions } from './enum';
@@ -26,6 +31,7 @@ const defaultConfig = {
   frequency: 1000,
   dataLength: 1,
   manufacturer: '',
+  weight: 1,
 };
 
 const defaultUploadData = {
@@ -34,6 +40,7 @@ const defaultUploadData = {
   dataLength: 1,
   manufacturer: '',
   type: MBusDeviceType.HEAT_METER,
+  weight: 1,
 };
 
 type MbusPoint = Point & {
@@ -42,6 +49,7 @@ type MbusPoint = Point & {
   frequency?: number;
   dataLength?: number;
   manufacturer?: string;
+  weight: number;
 };
 
 const MbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
@@ -89,6 +97,29 @@ const MbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       },
       formItemProps: {
         rules: [{ required: true, message: formatMessage({ id: 'form.placeholder.type' }) }],
+      },
+    },
+    {
+      title: formatMessage({ id: 'device.form.title.weight' }),
+      dataIndex: 'weight',
+      width: 140,
+      hideInTable: !!uuid,
+      formItemProps: {
+        rules: [
+          {
+            validator: (_, value) => {
+              if (!value) {
+                return Promise.reject(formatMessage({ id: 'device.form.placeholder.weight' }));
+              }
+
+              if (value && !inRange(value, -0.0001, 100000)) {
+                return Promise.reject(formatMessage({ id: 'device.form.rules.weight' }));
+              }
+
+              return Promise.resolve();
+            },
+          },
+        ],
       },
     },
     {
@@ -157,7 +188,11 @@ const MbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
         await postMbusMasterSheetSheetImport({ ...params }, file);
       }}
       update={async (values: UpdateParams<MbusPoint>) => {
-        await postMbusMasterSheetUpdate(values);
+        const points = values.data_points?.map((item) => ({
+          ...item,
+          weight: Number(item.weight),
+        }));
+        await postMbusMasterSheetUpdate({ ...values, data_points: points });
         editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
       }}
       remove={async (params: removeParams) => {

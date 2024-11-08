@@ -85,13 +85,13 @@
       "name": "ModbusMaster点位管理"
     },
     {
+      "name": "用户自定义协议点位管理"
+    },
+    {
       "name": "MBusMaster点位管理"
     },
     {
       "name": "DLT6452007点位管理"
-    },
-    {
-      "name": "用户自定义协议点位管理"
     },
     {
       "name": "CJT18832004点位管理"
@@ -119,9 +119,6 @@
     },
     {
       "name": "通信模组"
-    },
-    {
-      "name": "通用点位管理"
     },
     {
       "name": "定时任务"
@@ -17451,397 +17448,6 @@
         "security": []
       }
     },
-    "/api/v1/datapoint/update": {
-      "post": {
-        "summary": "创建或更新点位",
-        "x-apifox-folder": "通用点位管理",
-        "x-apifox-status": "released",
-        "deprecated": false,
-        "description": "# points字段element示例\n\n## Modbus Master\n```json\n{\n    \"tag\": \"tag1\",\n    \"alias\": \"tag1\",\n    \"frequency\": 50,\n    \"config\": {\n        \"function\": 1,\n        \"slaverId\": 1,\n        \"address\": 0,\n        \"quality\": 2,\n        \"dataType\": \"INT\",\n        \"dataOrder\": \"ABCD\",\n        \"weight\": 1.0\n    }\n}\n```\n\n## SNMP\n```json\n{\n    \"tag\": \"tag1\",\n    \"alias\": \"tag1\",\n    \"frequency\": 50,\n    \"config\": {\n        \"oid\": \"A.B.C\"\n    }\n}\n```\n\n\n## BACnetIP \n```json\n{\n    \"tag\": \"tag1\",\n    \"alias\": \"tag1\",\n    \"config\": {\n        \"bacnetDeviceId\": 1,\n        \"objectType\": \"AO\",\n        \"objectId\": 1\n    }\n}\n```\n\n## BACnet Router\n```json\n{\n    \"tag\": \"tag1\",\n    \"alias\": \"tag1\",\n    \"config\": {\n        \"objectType\": \"AI\",\n        \"objectId\": 1\n    }\n}\n```\n\n## siemens PLC\n```json\n{\n    \"tag\": \"tag1\",\n    \"alias\": \"tag1\",\n    \"frequency\": 100,\n    \"config\": {\n        \"siemensAddress\": \"AI\",\n        \"dataBlockType\": \"FLOAT\",\n        \"dataBlockOrder\": \"ABCD\",\n        \"weight\": 1\n    }\n}\n```\n",
-        "tags": [
-          "通用点位管理"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_uuid": {
-                    "type": "string"
-                  },
-                  "points": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "tag": {
-                          "type": "string"
-                        },
-                        "alias": {
-                          "type": "string"
-                        },
-                        "frequency": {
-                          "type": "integer"
-                        },
-                        "config": {
-                          "type": "object",
-                          "properties": {
-                            "bacnetDeviceId": {
-                              "type": "integer"
-                            },
-                            "objectType": {
-                              "type": "string"
-                            },
-                            "objectId": {
-                              "type": "integer"
-                            }
-                          },
-                          "required": [
-                            "bacnetDeviceId",
-                            "objectType",
-                            "objectId"
-                          ],
-                          "x-apifox-orders": [
-                            "bacnetDeviceId",
-                            "objectType",
-                            "objectId"
-                          ],
-                          "x-apifox-ignore-properties": []
-                        }
-                      },
-                      "x-apifox-orders": [
-                        "tag",
-                        "alias",
-                        "frequency",
-                        "config"
-                      ],
-                      "x-apifox-ignore-properties": []
-                    }
-                  }
-                },
-                "required": [
-                  "device_uuid",
-                  "points"
-                ],
-                "x-apifox-orders": [
-                  "device_uuid",
-                  "points"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "device_uuid": "DEVICEGAFJS2HE",
-                "points": [
-                  {
-                    "tag": "tag1",
-                    "alias": "tag1",
-                    "frequency": 100,
-                    "config": {
-                      "bacnetDeviceId": 2,
-                      "objectType": "AA",
-                      "objectId": 1
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-orders": [],
-                  "x-apifox-ignore-properties": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204439247-run",
-        "security": []
-      }
-    },
-    "/api/v1/datapoint/list": {
-      "get": {
-        "summary": "分页查询",
-        "x-apifox-folder": "通用点位管理",
-        "x-apifox-status": "released",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "通用点位管理"
-        ],
-        "parameters": [
-          {
-            "name": "device_uuid",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "DEVICEFVZPNTAW",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "current",
-            "in": "query",
-            "description": "当前页",
-            "required": false,
-            "example": "",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "description": "每页数量",
-            "required": false,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-orders": [],
-                  "x-apifox-ignore-properties": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204439248-run",
-        "security": []
-      }
-    },
-    "/api/v1/datapoint/sheetImport": {
-      "post": {
-        "summary": "点位导入",
-        "x-apifox-folder": "通用点位管理",
-        "x-apifox-status": "released",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "通用点位管理"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  },
-                  "device_uuid": {
-                    "type": "string",
-                    "example": "DEVICENSDMC7QA"
-                  }
-                },
-                "required": [
-                  "file",
-                  "device_uuid"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-orders": [],
-                  "x-apifox-ignore-properties": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204439249-run",
-        "security": []
-      }
-    },
-    "/api/v1/datapoint/sheetExport": {
-      "get": {
-        "summary": "点位导出",
-        "x-apifox-folder": "通用点位管理",
-        "x-apifox-status": "released",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "通用点位管理"
-        ],
-        "parameters": [
-          {
-            "name": "device_uuid",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": "DEVICECMJURMFY",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-orders": [],
-                  "x-apifox-ignore-properties": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204439250-run",
-        "security": []
-      }
-    },
-    "/api/v1/datapoint/delIds": {
-      "delete": {
-        "summary": "多行删除",
-        "x-apifox-folder": "通用点位管理",
-        "x-apifox-status": "released",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "通用点位管理"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_uuid": {
-                    "type": "string"
-                  },
-                  "uuids": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "required": [
-                  "device_uuid",
-                  "uuids"
-                ],
-                "x-apifox-orders": [
-                  "device_uuid",
-                  "uuids"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "device_uuid": "DEVICECMJURMFY",
-                "uuids": [
-                  "MDTBNFNSF7K8",
-                  "MDTBCGIVDFZZ"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-orders": [],
-                  "x-apifox-ignore-properties": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204439251-run",
-        "security": []
-      }
-    },
-    "/api/v1/datapoint/delAll": {
-      "delete": {
-        "summary": "删除所有点位",
-        "x-apifox-folder": "通用点位管理",
-        "x-apifox-status": "released",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "通用点位管理"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_uuid": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "device_uuid"
-                ],
-                "x-apifox-orders": [
-                  "device_uuid"
-                ],
-                "x-apifox-ignore-properties": []
-              },
-              "example": {
-                "device_uuid": "DEVICECMJURMFY"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-orders": [],
-                  "x-apifox-ignore-properties": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-204439252-run",
-        "security": []
-      }
-    },
     "/api/v1/mbus_master_sheet/sheetImport": {
       "post": {
         "summary": "导入点位表",
@@ -17989,6 +17595,9 @@
                               "frequency": {
                                 "type": "integer"
                               },
+                              "weight": {
+                                "type": "number"
+                              },
                               "dataLength": {
                                 "type": "integer"
                               },
@@ -18040,7 +17649,8 @@
                               "status",
                               "lastFetchTime",
                               "value",
-                              "errMsg"
+                              "errMsg",
+                              "weight"
                             ],
                             "x-apifox-orders": [
                               "uuid",
@@ -18050,6 +17660,7 @@
                               "tag",
                               "alias",
                               "frequency",
+                              "weight",
                               "dataLength",
                               "manufacturer",
                               "status",
@@ -18296,11 +17907,13 @@
                         "dataLength": {
                           "type": "integer"
                         },
+                        "weight": {
+                          "type": "number"
+                        },
                         "manufacturer": {
                           "type": "string"
                         }
                       },
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "uuid",
                         "device_uuid",
@@ -18310,8 +17923,13 @@
                         "alias",
                         "frequency",
                         "dataLength",
+                        "weight",
                         "manufacturer"
-                      ]
+                      ],
+                      "required": [
+                        "weight"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   }
                 },
@@ -20460,6 +20078,9 @@
                               "frequency": {
                                 "type": "integer"
                               },
+                              "weight": {
+                                "type": "number"
+                              },
                               "status": {
                                 "type": "integer"
                               },
@@ -20502,7 +20123,8 @@
                               "status",
                               "lastFetchTime",
                               "value",
-                              "errMsg"
+                              "errMsg",
+                              "weight"
                             ],
                             "x-apifox-orders": [
                               "device_uuid",
@@ -20511,6 +20133,7 @@
                               "tag",
                               "alias",
                               "frequency",
+                              "weight",
                               "status",
                               "lastFetchTime",
                               "value",
@@ -20721,17 +20344,24 @@
                         },
                         "frequency": {
                           "type": "integer"
+                        },
+                        "weight": {
+                          "type": "number"
                         }
                       },
-                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "device_uuid",
                         "uuid",
                         "meterId",
                         "tag",
                         "alias",
-                        "frequency"
-                      ]
+                        "frequency",
+                        "weight"
+                      ],
+                      "required": [
+                        "weight"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
                   }
                 },
@@ -21156,6 +20786,9 @@
                               "frequency": {
                                 "type": "integer"
                               },
+                              "weight": {
+                                "type": "number"
+                              },
                               "status": {
                                 "type": "integer"
                               },
@@ -21198,7 +20831,8 @@
                               "status",
                               "lastFetchTime",
                               "value",
-                              "errMsg"
+                              "errMsg",
+                              "weight"
                             ],
                             "x-apifox-orders": [
                               "device_uuid",
@@ -21207,6 +20841,7 @@
                               "tag",
                               "alias",
                               "frequency",
+                              "weight",
                               "status",
                               "lastFetchTime",
                               "value",
@@ -21417,6 +21052,9 @@
                         },
                         "frequency": {
                           "type": "integer"
+                        },
+                        "weight": {
+                          "type": "number"
                         }
                       },
                       "x-apifox-orders": [
@@ -21425,7 +21063,11 @@
                         "meterId",
                         "tag",
                         "alias",
-                        "frequency"
+                        "frequency",
+                        "weight"
+                      ],
+                      "required": [
+                        "weight"
                       ],
                       "x-apifox-ignore-properties": []
                     }
@@ -22545,6 +22187,9 @@
                               "frequency": {
                                 "type": "integer"
                               },
+                              "weight": {
+                                "type": "number"
+                              },
                               "status": {
                                 "type": "integer"
                               },
@@ -22572,7 +22217,8 @@
                               "status",
                               "lastFetchTime",
                               "value",
-                              "errMsg"
+                              "errMsg",
+                              "weight"
                             ],
                             "x-apifox-orders": [
                               "device_uuid",
@@ -22582,6 +22228,7 @@
                               "tag",
                               "alias",
                               "frequency",
+                              "weight",
                               "status",
                               "lastFetchTime",
                               "value",
@@ -22815,6 +22462,9 @@
                         "frequency": {
                           "type": "integer"
                         },
+                        "weight": {
+                          "type": "number"
+                        },
                         "meterType": {
                           "type": "string"
                         }
@@ -22826,7 +22476,11 @@
                         "tag",
                         "alias",
                         "frequency",
+                        "weight",
                         "meterType"
+                      ],
+                      "required": [
+                        "weight"
                       ],
                       "x-apifox-ignore-properties": []
                     }

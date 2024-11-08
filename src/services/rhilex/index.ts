@@ -31,7 +31,6 @@ import * as shuruziyuanguanli from './shuruziyuanguanli';
 import * as snmpdianweiguanli from './snmpdianweiguanli';
 import * as szy2062016Dianweiguanli from './szy2062016Dianweiguanli';
 import * as tongxinmozu from './tongxinmozu';
-import * as tongyongdianweiguanli from './tongyongdianweiguanli';
 import * as wangluopeizhi from './wangluopeizhi';
 import * as wuxianwifipeizhi from './wuxianwifipeizhi';
 import * as ximenzidianweiguanli from './ximenzidianweiguanli';
@@ -73,7 +72,6 @@ export default {
   bacnetRoutermoshi,
   tongxinmozu,
   modbusSlaverjicunqiguanli,
-  tongyongdianweiguanli,
   mBusMasterdianweiguanli,
   dingshizhongqi,
   caozuocaidan,

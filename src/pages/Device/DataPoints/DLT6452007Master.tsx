@@ -14,6 +14,7 @@ import {
   postDlt6452007MasterSheetUpdate,
 } from '@/services/rhilex/dlt6452007Dianweiguanli';
 import { defaultPagination } from '@/utils/constant';
+import { inRange } from '@/utils/redash';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
 import type { Rule } from 'antd/es/form';
@@ -22,11 +23,13 @@ import { useRef } from 'react';
 const defaultConfig = {
   meterId: '',
   frequency: 1000,
+  weight: 1,
 };
 
 const defaultUploadData = {
   meterId: '100023669245',
   frequency: 1000,
+  weight: 1,
 };
 
 const DLTDataSheet = ({ uuid }: BaseDataSheetProps) => {
@@ -57,6 +60,29 @@ const DLTDataSheet = ({ uuid }: BaseDataSheetProps) => {
       },
       fieldProps: {
         placeholder: formatMessage({ id: 'device.form.placeholder.id' }),
+      },
+    },
+    {
+      title: formatMessage({ id: 'device.form.title.weight' }),
+      dataIndex: 'weight',
+      width: 140,
+      hideInTable: !!uuid,
+      formItemProps: {
+        rules: [
+          {
+            validator: (_, value) => {
+              if (!value) {
+                return Promise.reject(formatMessage({ id: 'device.form.placeholder.weight' }));
+              }
+
+              if (value && !inRange(value, -0.0001, 100000)) {
+                return Promise.reject(formatMessage({ id: 'device.form.rules.weight' }));
+              }
+
+              return Promise.resolve();
+            },
+          },
+        ],
       },
     },
     {
@@ -105,7 +131,11 @@ const DLTDataSheet = ({ uuid }: BaseDataSheetProps) => {
         await postDlt6452007MasterSheetSheetImport({ ...params }, file);
       }}
       update={async (values: UpdateParams) => {
-        await postDlt6452007MasterSheetUpdate(values);
+        const points = values.data_points?.map((item) => ({
+          ...item,
+          weight: Number(item.weight),
+        }));
+        await postDlt6452007MasterSheetUpdate({ ...values, data_points: points });
         editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
       }}
       remove={async (params: removeParams) => {

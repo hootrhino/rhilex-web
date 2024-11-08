@@ -43,6 +43,7 @@ export async function getDlt6452007MasterSheetList(
         tag: string;
         alias: string;
         frequency: number;
+        weight: number;
         status: number;
         lastFetchTime: number;
         value: boolean[] | string[] | number[];
@@ -122,6 +123,7 @@ export async function postDlt6452007MasterSheetUpdate(
       tag?: string;
       alias?: string;
       frequency?: number;
+      weight: number;
     }[];
   },
   options?: { [key: string]: any },

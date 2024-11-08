@@ -14,6 +14,7 @@ import {
   postCjt1882004MasterSheetUpdate,
 } from '@/services/rhilex/cjt18832004Dianweiguanli';
 import { defaultPagination } from '@/utils/constant';
+import { inRange } from '@/utils/redash';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
 import type { Rule } from 'antd/es/form';
@@ -22,6 +23,7 @@ import { useRef } from 'react';
 const defaultConfig = {
   meterId: '',
   frequency: 1000,
+  weight: 1,
 };
 
 const defaultUploadData = {
@@ -29,6 +31,7 @@ const defaultUploadData = {
   tag: 'meter1',
   alias: 'meter1',
   frequency: 1000,
+  weight: 1,
 };
 
 const CJTDataSheet = ({ uuid }: BaseDataSheetProps) => {
@@ -62,6 +65,29 @@ const CJTDataSheet = ({ uuid }: BaseDataSheetProps) => {
       },
     },
     {
+      title: formatMessage({ id: 'device.form.title.weight' }),
+      dataIndex: 'weight',
+      width: 140,
+      hideInTable: !!uuid,
+      formItemProps: {
+        rules: [
+          {
+            validator: (_, value) => {
+              if (!value) {
+                return Promise.reject(formatMessage({ id: 'device.form.placeholder.weight' }));
+              }
+
+              if (value && !inRange(value, -0.0001, 100000)) {
+                return Promise.reject(formatMessage({ id: 'device.form.rules.weight' }));
+              }
+
+              return Promise.resolve();
+            },
+          },
+        ],
+      },
+    },
+    {
       title: formatMessage({ id: 'device.form.title.frequency' }),
       dataIndex: 'frequency',
       valueType: 'digit',
@@ -85,6 +111,7 @@ const CJTDataSheet = ({ uuid }: BaseDataSheetProps) => {
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
+      scroll={{ x: 1200 }}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
@@ -107,7 +134,11 @@ const CJTDataSheet = ({ uuid }: BaseDataSheetProps) => {
         await postCjt1882004MasterSheetSheetImport({ ...params }, file);
       }}
       update={async (values: UpdateParams) => {
-        await postCjt1882004MasterSheetUpdate(values);
+        const points = values.data_points?.map((item) => ({
+          ...item,
+          weight: Number(item.weight),
+        }));
+        await postCjt1882004MasterSheetUpdate({ ...values, data_points: points });
         editorFormRef.current?.setRowData?.('new', { ...defaultConfig, uuid: 'new' });
       }}
       remove={async (params: removeParams) => {

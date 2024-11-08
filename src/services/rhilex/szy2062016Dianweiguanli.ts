@@ -44,6 +44,7 @@ export async function getSzy2062016MasterSheetList(
         tag: string;
         alias: string;
         frequency: number;
+        weight: number;
         status: number;
         lastFetchTime: number;
         value: string[];
@@ -123,6 +124,7 @@ export async function postSzy2062016MasterSheetUpdate(
       tag?: string;
       alias?: string;
       frequency?: number;
+      weight: number;
       meterType?: string;
     }[];
   },

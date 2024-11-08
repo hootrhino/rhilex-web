@@ -263,11 +263,9 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
         />
       ),
     },
-
     {
       title: formatMessage({ id: 'device.form.title.weight' }),
       dataIndex: 'weight',
-      valueType: 'digit',
       width: 80,
       hideInTable: !!uuid,
       formItemProps: {

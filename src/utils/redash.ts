@@ -73,7 +73,7 @@ export const flatten = <T>(arrays: T[][]): T[] => {
  * @returns {boolean} Returns `true` if `number` is in the range, else `false`.
  */
 export const inRange = (value: number, start: number, end: number = start): boolean => {
-  return value >= Math.min(start, end) && value < Math.max(start, end);
+  return value >= Math.min(start, end) && value <= Math.max(start, end);
 };
 
 // Typed
