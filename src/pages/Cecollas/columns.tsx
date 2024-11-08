@@ -1,7 +1,7 @@
 import ProTag, { StatusType } from '@/components/ProTag';
 import type { ProFormColumnsType } from '@ant-design/pro-components';
 import { getIntl, getLocale } from '@umijs/max';
-import { CecollasType, cecollasTypeOptions, groupData, TencentMode } from './enum';
+import { CecollasType, cecollasTypeOptions, groupData, Mode } from './enum';
 
 const { formatMessage } = getIntl(getLocale());
 
@@ -87,7 +87,7 @@ export const typeColumns = (type: string) => [
     title: formatMessage({ id: 'cecollas.form.title.mode' }),
     dataIndex: ['config', 'mode'],
     valueType: 'select',
-    valueEnum: TencentMode,
+    valueEnum: Mode,
     width: 'md',
     fieldProps: {
       allowClear: false,
@@ -96,7 +96,7 @@ export const typeColumns = (type: string) => [
         { text: formatMessage({ id: 'cecollas.form.title.mode' }) },
       ),
     },
-    render: (_dom: React.ReactNode, { mode }: any) => TencentMode[mode],
+    render: (_dom: React.ReactNode, { mode }: any) => Mode[mode],
   },
   {
     title: formatMessage({ id: 'cecollas.form.title.productId' }),

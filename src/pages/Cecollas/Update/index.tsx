@@ -10,13 +10,13 @@ import { BetaSchemaForm } from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
 import { useEffect, useRef } from 'react';
 import { CecollasFormItem, columns } from '../columns';
-import { CecollasType, TencentMode } from '../enum';
+import { CecollasType, Mode } from '../enum';
 
 const initialValues = {
   type: CecollasType.TENCENT_IOTHUB_CEC,
   gid: DEFAULT_GROUP_KEY_CECOLLAS,
   config: {
-    mode: TencentMode.GATEWAY,
+    mode: Mode.GATEWAY,
   },
 };
 

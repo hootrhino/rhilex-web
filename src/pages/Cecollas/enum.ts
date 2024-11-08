@@ -5,13 +5,10 @@ const { formatMessage } = getIntl(getLocale());
 
 export enum CecollasType {
   TENCENT_IOTHUB_CEC = 'TENCENT_IOTHUB_CEC',
-  ITHINGS_IOTHUB_CEC = 'ITHINGS_IOTHUB_CEC ',
+  ITHINGS_IOTHUB_CEC = 'ITHINGS_IOTHUB_CEC',
 }
 
-/**
- * TENCENT_IOTHUB_GATEWAY
- */
-export enum TencentMode {
+export enum Mode {
   GATEWAY = 'GATEWAY',
   DEVICE = 'DEVICE',
 }
