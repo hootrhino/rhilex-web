@@ -99,6 +99,21 @@ export async function getInendsDetail(
   });
 }
 
+/** 异常信息 GET /api/v1/inends/inendErrMsg */
+export async function getInendsInendErrMsg(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getInendsInendErrMsgParams,
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string }>('/api/v1/inends/inendErrMsg', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 输出输入资源 输出资源列表 GET /api/v1/inends/list */
 export async function getInendsList(options?: { [key: string]: any }) {
   return request<{ type: string; name: string; description: string; config: Record<string, any> }>(

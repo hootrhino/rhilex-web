@@ -21,8 +21,6 @@ export default {
   'device.title.detail': '设备详情',
   'device.title.new': '新建设备',
   'device.title.update': '编辑设备',
-  'device.title.modal.error.device': '设备异常信息',
-  'device.title.modal.error.sheet': '点位异常信息',
   'device.title.sheet': '点位表配置',
   'device.title.oid': '对象列表',
   'device.title.sheetList': '{name} - 点位表配置',

@@ -67,7 +67,7 @@ const Cecollas = () => {
       manual: true,
       onSuccess: (res) =>
         modal.error({
-          title: formatMessage({ id: 'cecollas.modal.title.error' }),
+          title: formatMessage({ id: 'common.title.exception' }),
           content: <div className="break-words">{res}</div>,
           okText: formatMessage({ id: 'button.close' }),
         }),
@@ -75,7 +75,7 @@ const Cecollas = () => {
   );
 
   const getMenuItems = ({ state = 0 }) => {
-    const baseItems = [
+    let newItems = [
       {
         key: 'restart',
         label: formatMessage({ id: 'button.reload' }),
@@ -83,16 +83,19 @@ const Cecollas = () => {
         danger: true,
       },
     ] as ItemType[];
-    const showErr = state === 0;
-    const errItem = {
-      key: 'error',
-      label: formatMessage({ id: 'button.error' }),
-      icon: <ExceptionOutlined />,
-    };
 
-    let newItems = [...baseItems];
+    if (state === 0) {
+      newItems = [
+        ...newItems,
+        {
+          key: 'error',
+          label: formatMessage({ id: 'button.error' }),
+          icon: <ExceptionOutlined />,
+        },
+      ];
+    }
 
-    return [...newItems, showErr ? errItem : null];
+    return newItems;
   };
 
   const handleOnMenu = ({ key }: MenuInfo, { uuid }: CecollasItem) => {

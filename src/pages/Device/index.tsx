@@ -69,7 +69,7 @@ const Devices = () => {
       manual: true,
       onSuccess: (res) =>
         modal.error({
-          title: formatMessage({ id: 'device.title.modal.error.device' }),
+          title: formatMessage({ id: 'common.title.exception' }),
           content: <div className="break-words">{res}</div>,
           okText: formatMessage({ id: 'button.close' }),
         }),
@@ -102,14 +102,19 @@ const Devices = () => {
         icon: <SettingOutlined />,
       },
     ] as ItemType[];
-    const showErr = state === 0;
-    const errItem = {
-      key: 'error',
-      label: formatMessage({ id: 'button.error' }),
-      icon: <ExceptionOutlined />,
-    };
 
     let newItems = [...baseItems];
+
+    if (state === 0) {
+      newItems = [
+        ...newItems,
+        {
+          key: 'error',
+          label: formatMessage({ id: 'button.error' }),
+          icon: <ExceptionOutlined />,
+        },
+      ];
+    }
 
     switch (type) {
       case DeviceType.GENERIC_SNMP:
@@ -137,7 +142,7 @@ const Devices = () => {
         break;
     }
 
-    return [...newItems, showErr ? errItem : null];
+    return newItems;
   };
 
   const handleOnMenu = ({ key }: MenuInfo, { uuid, gid, type, config }: Partial<DeviceItem>) => {

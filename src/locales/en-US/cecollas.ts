@@ -21,7 +21,6 @@ export default {
   /**
    * others
    */
-  'cecollas.modal.title.error': 'Exception details',
   'cecollas.popconfirm.title.remove': 'Are you sure to delete this platform?',
   'cecollas.type.tencent': 'Tencent Cloud IoT Platform',
   'cecollas.type.ithings': 'iThings IoT Platform',

@@ -83,6 +83,21 @@ export async function getOutendsList(options?: { [key: string]: any }) {
   );
 }
 
+/** 异常信息 GET /api/v1/outends/outendErrMsg */
+export async function getOutendsOutendErrMsg(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getOutendsOutendErrMsgParams,
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string }>('/api/v1/outends/outendErrMsg', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 重启资源 PUT /api/v1/outends/restart */
 export async function putOutendsRestart(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)

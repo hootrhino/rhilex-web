@@ -21,7 +21,6 @@ export default {
   /**
    * others
    */
-  'cecollas.modal.title.error': '异常信息',
   'cecollas.popconfirm.title.remove': '确定要删除此平台？',
   'cecollas.type.tencent': '腾讯云物联网平台',
   'cecollas.type.ithings': '联犀物联网平台',

@@ -248,6 +248,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type getInendsInendErrMsgParams = {
+    uuid: string;
+  };
+
   type getInendsMqttClientsParams = {
     uuid?: string;
     current?: number;
@@ -294,6 +298,10 @@ declare namespace API {
   };
 
   type getOutendsDetailParams = {
+    uuid: string;
+  };
+
+  type getOutendsOutendErrMsgParams = {
     uuid: string;
   };
 

@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 
 import {
   DownOutlined,
+  ExceptionOutlined,
   HddOutlined,
   PlusOutlined,
   PoweroffOutlined,
@@ -12,17 +13,18 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Button, Dropdown, Popconfirm } from 'antd';
 
-import { message } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
 import PageContainer from '@/components/ProPageContainer';
 import {
   deleteInendsDel,
+  getInendsInendErrMsg,
   getInendsList,
   putInendsRestart,
 } from '@/services/rhilex/shuruziyuanguanli';
-import { useIntl, useModel, useRequest } from '@umijs/max';
-
 import { MAX_TOTAL } from '@/utils/constant';
+import { useIntl, useModel, useRequest } from '@umijs/max';
+import type { MenuInfo } from 'rc-menu/lib/interface';
 import { baseColumns } from './Columns';
 import Detail from './Detail';
 import { InendType } from './enum';
@@ -57,7 +59,21 @@ const Inend = () => {
     },
   );
 
-  const getMenuItems = (type: InendType) => {
+  // 查看异常弹窗
+  const { run: getErrorMsg } = useRequest(
+    (params: API.getDevicesDeviceErrMsgParams) => getInendsInendErrMsg(params),
+    {
+      manual: true,
+      onSuccess: (res) =>
+        modal.error({
+          title: formatMessage({ id: 'common.title.exception' }),
+          content: <div className="break-words">{res}</div>,
+          okText: formatMessage({ id: 'button.close' }),
+        }),
+    },
+  );
+
+  const getMenuItems = ({ type, state }: InendItem) => {
     let newItems = [
       {
         key: 'restart',
@@ -86,16 +102,54 @@ const Inend = () => {
       ];
     }
 
+    if (state === 0) {
+      newItems = [
+        ...newItems,
+        {
+          key: 'error',
+          label: formatMessage({ id: 'button.error' }),
+          icon: <ExceptionOutlined />,
+        },
+      ];
+    }
+
     return newItems;
   };
 
-  const columns: ProColumns<InendItem>[] = (baseColumns as ProColumns<InendItem>[]).concat([
+  const handleOnMenu = ({ key }: MenuInfo, { uuid, type }: InendItem) => {
+    switch (key) {
+      case 'restart':
+        setOpen(true);
+        setRestartId(uuid);
+        break;
+      case 'rule':
+        localStorage.setItem(
+          'testDataConfig',
+          JSON.stringify({
+            enableBatchRequest: false,
+            ruleType: type,
+          }),
+        );
+        history.push(`/inend/${uuid}/rule`);
+        break;
+      case 'sub-device':
+        history.push(`/inend/${uuid}/sub-device`);
+        break;
+      case 'error':
+        getErrorMsg({ uuid });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const actionColumns: ProColumns<InendItem>[] = [
     {
       title: formatMessage({ id: 'table.title.option' }),
       width: 230,
       key: 'option',
       valueType: 'option',
-      render: (_, { uuid, type }) => [
+      render: (_, { uuid, type, state }) => [
         <a key="detail" onClick={() => changeConfig({ open: true, uuid })}>
           {formatMessage({ id: 'button.detail' })}
         </a>,
@@ -114,30 +168,8 @@ const Inend = () => {
         <Dropdown
           key="advance-action"
           menu={{
-            items: getMenuItems(type),
-            onClick: ({ key }) => {
-              switch (key) {
-                case 'restart':
-                  setOpen(true);
-                  setRestartId(uuid);
-                  break;
-                case 'rule':
-                  localStorage.setItem(
-                    'testDataConfig',
-                    JSON.stringify({
-                      enableBatchRequest: false,
-                      ruleType: type,
-                    }),
-                  );
-                  history.push(`/inend/${uuid}/rule`);
-                  break;
-                case 'sub-device':
-                  history.push(`/inend/${uuid}/sub-device`);
-                  break;
-                default:
-                  break;
-              }
-            },
+            items: getMenuItems({ type, state } as InendItem),
+            onClick: (info: MenuInfo) => handleOnMenu(info, { uuid, type } as InendItem),
           }}
         >
           <a>
@@ -146,7 +178,7 @@ const Inend = () => {
         </Dropdown>,
       ],
     },
-  ]);
+  ];
 
   return (
     <>
@@ -154,7 +186,7 @@ const Inend = () => {
         <ProTable
           rowKey="uuid"
           actionRef={actionRef}
-          columns={columns}
+          columns={[...baseColumns, ...actionColumns] as ProColumns<InendItem>[]}
           rootClassName="stripe-table"
           request={async () => {
             const res = await getInendsList();

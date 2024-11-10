@@ -21,8 +21,6 @@ export default {
   'device.title.detail': 'Device details',
   'device.title.new': 'New device',
   'device.title.update': 'Edit device',
-  'device.title.modal.error.device': 'Device exception information',
-  'device.title.modal.error.sheet': 'Point exception information',
   'device.title.sheet': 'Point sheet configuration',
   'device.title.oid': 'SNMP OIDs',
   'device.title.sheetList': '{name} - Point sheet configuration',

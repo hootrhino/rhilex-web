@@ -1,20 +1,21 @@
-import { DownOutlined, PlusOutlined, PoweroffOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { ProTable } from '@ant-design/pro-components';
-import { history, useModel } from '@umijs/max';
-import { Button, Dropdown, Popconfirm } from 'antd';
-import { useRef, useState } from 'react';
-
-import { message } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
 import PageContainer from '@/components/ProPageContainer';
 import {
   deleteOutendsDel,
   getOutendsList,
+  getOutendsOutendErrMsg,
   putOutendsRestart,
 } from '@/services/rhilex/shuchuziyuanguanli';
 import { MAX_TOTAL } from '@/utils/constant';
-import { useIntl } from '@umijs/max';
+import { DownOutlined, ExceptionOutlined, PlusOutlined, PoweroffOutlined } from '@ant-design/icons';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
+import { history, useIntl, useModel, useRequest } from '@umijs/max';
+import { Button, Dropdown, Popconfirm } from 'antd';
+import type { ItemType } from 'antd/es/menu/interface';
+import type { MenuInfo } from 'rc-menu/lib/interface';
+import { useRef, useState } from 'react';
 import { baseColumns } from './Columns';
 import Detail from './Detail';
 
@@ -48,13 +49,65 @@ const Outend = () => {
     }
   };
 
-  const columns: ProColumns<OutendItem>[] = (baseColumns as ProColumns<OutendItem>[]).concat([
+  // 查看异常弹窗
+  const { run: getErrorMsg } = useRequest(
+    (params: API.getDevicesDeviceErrMsgParams) => getOutendsOutendErrMsg(params),
+    {
+      manual: true,
+      onSuccess: (res) =>
+        modal.error({
+          title: formatMessage({ id: 'common.title.exception' }),
+          content: <div className="break-words">{res}</div>,
+          okText: formatMessage({ id: 'button.close' }),
+        }),
+    },
+  );
+
+  const getMenuItems = ({ state }: OutendItem) => {
+    let newItems = [
+      {
+        key: 'restart',
+        label: formatMessage({ id: 'button.reload' }),
+        icon: <PoweroffOutlined />,
+        danger: true,
+      },
+    ] as ItemType[];
+
+    if (state === 0) {
+      newItems = [
+        ...newItems,
+        {
+          key: 'error',
+          label: formatMessage({ id: 'button.error' }),
+          icon: <ExceptionOutlined />,
+        },
+      ];
+    }
+
+    return newItems;
+  };
+
+  const handleOnMenu = ({ key }: MenuInfo, { uuid }: OutendItem) => {
+    switch (key) {
+      case 'restart':
+        setOpen(true);
+        setRestartId(uuid);
+        break;
+      case 'error':
+        getErrorMsg({ uuid });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const actionColumns: ProColumns<OutendItem>[] = [
     {
       title: formatMessage({ id: 'table.title.option' }),
       valueType: 'option',
       key: 'option',
       width: 230,
-      render: (_, { uuid }) => [
+      render: (_, { uuid, state }) => [
         <a key="detail" onClick={() => changeConfig({ open: true, uuid })}>
           {formatMessage({ id: 'button.detail' })}
         </a>,
@@ -71,24 +124,8 @@ const Outend = () => {
         <Dropdown
           key="advance-action"
           menu={{
-            items: [
-              {
-                key: 'restart',
-                label: formatMessage({ id: 'button.reload' }),
-                icon: <PoweroffOutlined />,
-                danger: true,
-              },
-            ],
-            onClick: ({ key }) => {
-              switch (key) {
-                case 'restart':
-                  setOpen(true);
-                  setRestartId(uuid);
-                  break;
-                default:
-                  break;
-              }
-            },
+            items: getMenuItems({ state } as OutendItem),
+            onClick: (info: MenuInfo) => handleOnMenu(info, { uuid } as OutendItem),
           }}
         >
           <a>
@@ -97,7 +134,7 @@ const Outend = () => {
         </Dropdown>,
       ],
     },
-  ]);
+  ];
 
   return (
     <>
@@ -105,7 +142,7 @@ const Outend = () => {
         <ProTable
           rowKey="uuid"
           actionRef={actionRef}
-          columns={columns}
+          columns={[...baseColumns, ...actionColumns] as ProColumns<OutendItem>[]}
           rootClassName="stripe-table"
           request={async () => {
             const res = await getOutendsList();

@@ -91,11 +91,12 @@ export default {
     'The reboot process will briefly disconnect resource connections for 5-10 seconds; please proceed with caution',
 
   /**
-   * others
+   * title
    */
   'antd.upload.title': 'Click or drag file to this area to upload',
   'common.title.base': 'Basic configuration',
   'common.title.defaultGroup': 'Default group',
+  'common.title.exception': 'Exception details',
 
   // UART parity options
   'options.parity.e': 'Even Parity',

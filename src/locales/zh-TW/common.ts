@@ -88,11 +88,12 @@ export default {
   'modal.content.restart': '重啓過程會短暫（5-10秒）斷開資源連接，請謹慎操作',
 
   /**
-   * others
+   * title
    */
   'antd.upload.title': '點擊或拖曳文件到此區域進行上傳',
   'common.title.base': '基本配置',
   'common.title.defaultGroup': '默認分組',
+  'common.title.exception': '異常訊息',
 
   // UART parity options
   'options.parity.e': '偶校驗',

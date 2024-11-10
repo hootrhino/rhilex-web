@@ -305,8 +305,8 @@ const DataSheet = ({
                       handleOnOnlyOneEdit();
                     } else {
                       modal.error({
-                        title: formatMessage({ id: 'device.title.modal.error.sheet' }),
-                        content: <div className="flex flex-wrap">{record?.errMsg}</div>,
+                        title: formatMessage({ id: 'common.title.exception' }),
+                        content: <div className="break-words">{record?.errMsg}</div>,
                         okText: formatMessage({ id: 'button.close' }),
                       });
                     }

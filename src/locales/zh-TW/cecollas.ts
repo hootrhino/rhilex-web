@@ -21,7 +21,6 @@ export default {
   /**
    * others
    */
-  'cecollas.modal.title.error': '異常訊息',
   'cecollas.popconfirm.title.remove': '確定要刪除此平台？',
   'cecollas.type.tencent': '騰訊雲端物聯網平台',
   'cecollas.type.ithings': '聯犀物聯網平台',
