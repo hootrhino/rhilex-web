@@ -89,7 +89,7 @@ export default {
   'device.form.title.community': '社區名稱',
   'device.form.title.version': '協議版本',
   'device.form.title.cecollas.enable': '開啓雲邊協同',
-  'device.form.title.cecollas.uuid': '雲平台 ID',
+  'device.form.title.cecollaId': '雲平台',
 
   // group
   'device.form.title.group.name': '分組名稱',

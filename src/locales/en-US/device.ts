@@ -90,7 +90,7 @@ export default {
   'device.form.title.community': 'Community',
   'device.form.title.version': 'Version',
   'device.form.title.cecollas.enable': 'Enable Cloud Edge Collaboration',
-  'device.form.title.cecollas.uuid': 'Cloud Platform ID',
+  'device.form.title.cecollaId': 'Cloud Platform',
 
   // group
   'device.form.title.group.name': 'Group Name',

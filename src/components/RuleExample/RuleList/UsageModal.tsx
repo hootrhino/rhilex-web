@@ -159,10 +159,10 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
                 rules={[
                   {
                     required: true,
-                    message: formatMessage({ id: 'placeholder.select' }, { text: ' UUID' }),
+                    message: formatMessage({ id: 'ruleConfig.form.placeholder.targetId' }),
                   },
                 ]}
-                placeholder={formatMessage({ id: 'placeholder.select' }, { text: ' UUID' })}
+                placeholder={formatMessage({ id: 'ruleConfig.form.placeholder.targetId' })}
                 allowClear={false}
               />
             )}

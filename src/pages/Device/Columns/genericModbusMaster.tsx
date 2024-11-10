@@ -76,7 +76,7 @@ export const GENERIC_MODBUS_MASTER = [
             ),
           },
           {
-            title: formatMessage({ id: 'device.form.title.cecollas.uuid' }),
+            title: formatMessage({ id: 'device.form.title.cecollaId' }),
             dataIndex: ['config', 'cellaConfig', 'cecollaId'],
             valueType: 'select',
             required: true,

@@ -8,7 +8,7 @@ export default {
   'ruleConfig.form.title.testData': '輸入數據',
   'ruleConfig.form.title.output': '輸出結果',
   'ruleConfig.form.title.targetType': '北向資源類型',
-  'ruleConfig.form.title.targetId': '北向資源 UUID',
+  'ruleConfig.form.title.targetId': '北向資源',
   'ruleConfig.form.title.resourceType': '資源類型',
   'ruleConfig.form.title.resourceId': '資源選擇',
   'ruleConfig.form.title.type': '示例數據結構',

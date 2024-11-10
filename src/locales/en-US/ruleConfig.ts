@@ -8,7 +8,7 @@ export default {
   'ruleConfig.form.title.testData': 'Input devices',
   'ruleConfig.form.title.output': 'Output',
   'ruleConfig.form.title.targetType': 'Outend Type',
-  'ruleConfig.form.title.targetId': 'Outend UUID',
+  'ruleConfig.form.title.targetId': 'Outend',
   'ruleConfig.form.title.resourceType': 'Resource Type',
   'ruleConfig.form.title.resourceId': 'Select Resource',
   'ruleConfig.form.title.type': 'Example Data Structures',

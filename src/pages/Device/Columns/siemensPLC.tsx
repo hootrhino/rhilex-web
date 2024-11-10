@@ -112,7 +112,7 @@ export const SIEMENS_PLC = [
         name: ['config'],
         columns: ({ config }: DeviceItem) => [
           {
-            title: formatMessage({ id: 'device.form.title.cecollas.uuid' }),
+            title: formatMessage({ id: 'device.form.title.cecollaId' }),
             dataIndex: ['config', 'cellaConfig', 'cecollaId'],
             valueType: 'select',
             required: true,

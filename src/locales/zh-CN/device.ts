@@ -89,7 +89,7 @@ export default {
   'device.form.title.community': '社区名称',
   'device.form.title.version': '协议版本',
   'device.form.title.cecollas.enable': '开启云边协同',
-  'device.form.title.cecollas.uuid': '云平台 ID',
+  'device.form.title.cecollaId': '云平台',
 
   // group
   'device.form.title.group.name': '分组名称',
