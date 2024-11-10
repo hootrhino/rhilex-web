@@ -20,10 +20,6 @@ export default {
    * options
    */
   'ruleConfig.type.option.default': '默认数据结构',
-  'ruleConfig.type.option.control': '设备远程控制数据结构',
-  'ruleConfig.type.option.action': '设备行为调用数据结构',
-  'ruleConfig.iothub.option.tencent': '腾讯云指令下发响应',
-  'ruleConfig.iothub.option.ithings': '联犀平台指令下发响应',
 
   /**
    * title

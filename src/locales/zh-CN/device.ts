@@ -54,8 +54,8 @@ export default {
   'device.form.title.group.port': '串口配置',
   'device.form.title.group.common': '通用配置',
   'device.form.title.group': '{type} 配置',
-  'device.form.title.group.tencent': '腾讯云物联网平台接入配置',
   'device.form.title.group.uartRW': '读写配置',
+  'device.form.title.group.cecollas': '云边协同配置',
 
   // timeout
   'device.form.title.timeout.request': '请求超时',
@@ -70,7 +70,6 @@ export default {
 
   // other
   'device.form.title.mode': '工作模式',
-  'device.form.title.uart': '系统串口',
   'device.form.title.host': '服务地址',
   'device.form.title.gid': '设备分组',
   'device.form.title.autoRequest': '启动轮询',
@@ -91,6 +90,8 @@ export default {
   'device.form.title.transport': '传输协议',
   'device.form.title.community': '社区名称',
   'device.form.title.version': '协议版本',
+  'device.form.title.cecollas.enable': '开启云边协同',
+  'device.form.title.cecollas.uuid': '云平台 ID',
 
   // group
   'device.form.title.group.name': '分组名称',
@@ -121,11 +122,7 @@ export default {
   'device.form.title.vendorId': '厂商 ID',
   'device.form.title.objectType': '对象类型',
   'device.form.title.objectId': '对象 ID',
-
-  // tencent
-  'device.form.title.productId': '产品 ID',
   'device.form.title.deviceName': '设备名称',
-  'device.form.title.devicePsk': '设备秘钥',
 
   // uart
   'device.form.title.rwConfig.autoRequest': '自动读取',
@@ -135,9 +132,6 @@ export default {
   // MBus
   'device.form.title.dataLength': '数据长度',
   'device.form.title.manufacturer': '制造商',
-
-  // ithings
-  'device.form.title.serverEndpoint': '服务接入地址',
 
   // user protocol
   'device.form.title.command': '自定义指令',
@@ -202,8 +196,6 @@ export default {
   'device.type.plc': 'SIEMENS SIMATIC S7 协议数据采集主机网关',
   'device.type.bacnet.ip': '通用 BACnet IP 协议数据采集主机网关',
   'device.type.bacnet.router': '通用 BACnet IP 协议数据采集从机网关',
-  'device.type.tencent': '腾讯云物联网平台',
-  'device.type.ithings': '联犀物联网平台',
   'device.type.uartRW': '通用串口读写网关',
   'device.type.national': '国标 {protocol} 协议数据采集网关',
   'device.type.user': '通用自定义协议数据采集网关',

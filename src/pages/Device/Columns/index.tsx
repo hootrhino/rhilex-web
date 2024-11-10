@@ -21,10 +21,8 @@ import { GENERIC_MODBUS_SLAVER } from './genericModbusSlaver';
 import { GENERIC_SNMP } from './genericSnmp';
 import { GENERIC_UART_RW } from './genericUartRW';
 import { GENERIC_USER_PROTOCOL } from './genericUserProtocol';
-import { ITHINGS_IOTHUB_GATEWAY } from './ithings';
 import { National_Standard } from './nationalStandard';
 import { SIEMENS_PLC } from './siemensPLC';
-import { TENCENT_IOTHUB_GATEWAY } from './tencentCloud';
 
 const { formatMessage } = getIntl(getLocale());
 
@@ -90,7 +88,11 @@ export const modeColumns = {
           request: async () => {
             const { data } = await getOsUarts();
 
-            return data.map((item) => ({ label: item, value: item }));
+            return data.map((item) => ({
+              label: item,
+              value: item,
+              key: `UART-${item}-${Math.random()}`,
+            }));
           },
           render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) => uartConfig?.uart,
         },
@@ -225,8 +227,6 @@ export const typeConfigColumns = {
   [DeviceType.DLT6452007_MASTER]: National_Standard,
   [DeviceType.CJT1882004_MASTER]: National_Standard,
   [DeviceType.SZY2062016_MASTER]: National_Standard,
-  [DeviceType.TENCENT_IOTHUB_GATEWAY]: TENCENT_IOTHUB_GATEWAY,
-  [DeviceType.ITHINGS_IOTHUB_GATEWAY]: ITHINGS_IOTHUB_GATEWAY,
 };
 
 /**

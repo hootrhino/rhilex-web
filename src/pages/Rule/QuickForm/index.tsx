@@ -1,11 +1,9 @@
-import { DeviceType } from '@/pages/Device/enum';
 import type { OutendItem } from '@/pages/Outend';
 import { OutendType, outendTypeOption } from '@/pages/Outend/enum';
 import { postRulesCreate } from '@/services/rhilex/guizeguanli';
-import { getDevicesDetail, getDevicesList } from '@/services/rhilex/shebeiguanli';
+import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
 import { getOutendsList } from '@/services/rhilex/shuchuziyuanguanli';
 import { getDataToQuickAction } from '@/templates/BuildIn/dataToTpl';
-import { getIotHubQuickAction } from '@/templates/IotHub';
 import { FormItemType } from '@/utils/enum';
 import { generateRandomId, validateFormItem } from '@/utils/utils';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
@@ -38,31 +36,6 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
     },
   );
 
-  const getTargetTypeOptions = [
-    {
-      label: <span>{formatMessage({ id: 'ruleConfig.title.group.dataTo' })}</span>,
-      title: 'dataTo',
-      options: Object.keys(outendTypeOption).map((key) => ({
-        label: outendTypeOption[key],
-        value: key,
-      })),
-    },
-    {
-      label: <span>{formatMessage({ id: 'ruleConfig.title.group.iothub' })}</span>,
-      title: 'iothub',
-      options: [
-        {
-          label: <span>{formatMessage({ id: 'ruleConfig.iothub.option.tencent' })}</span>,
-          value: DeviceType.TENCENT_IOTHUB_GATEWAY,
-        },
-        {
-          label: <span>{formatMessage({ id: 'ruleConfig.iothub.option.ithings' })}</span>,
-          value: DeviceType.ITHINGS_IOTHUB_GATEWAY,
-        },
-      ],
-    },
-  ];
-
   useEffect(() => {
     if (deviceId) {
       getDeviceDetail({ uuid: deviceId });
@@ -79,13 +52,7 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
       onFinish={async ({ targetId, targetType, ...values }) => {
         try {
           const batchRequest = deviceDetail?.config?.commonConfig?.batchRequest;
-          const isIothub = [
-            DeviceType.ITHINGS_IOTHUB_GATEWAY,
-            DeviceType.TENCENT_IOTHUB_GATEWAY,
-          ].includes(targetType);
-          const actions = isIothub
-            ? getIotHubQuickAction(targetType, targetId)
-            : getDataToQuickAction(targetType, targetId, batchRequest);
+          const actions = getDataToQuickAction(targetType, targetId, batchRequest);
 
           const params = {
             name: values?.name || '',
@@ -131,7 +98,16 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
       <ProFormSelect
         name="targetType"
         label={formatMessage({ id: 'ruleConfig.form.title.resourceType' })}
-        options={getTargetTypeOptions}
+        options={[
+          {
+            label: <span>{formatMessage({ id: 'ruleConfig.title.group.dataTo' })}</span>,
+            title: 'dataTo',
+            options: Object.keys(outendTypeOption).map((key) => ({
+              label: outendTypeOption[key],
+              value: key,
+            })),
+          },
+        ]}
         placeholder={formatMessage({ id: 'form.placeholder.type' })}
         rules={[
           {
@@ -143,11 +119,6 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
       />
       <ProFormDependency name={['targetType']} labelCol={{ span: 4 }}>
         {({ targetType }) => {
-          const isIothub = [
-            DeviceType.ITHINGS_IOTHUB_GATEWAY,
-            DeviceType.TENCENT_IOTHUB_GATEWAY,
-          ].includes(targetType);
-
           return (
             <ProFormSelect
               name="targetId"
@@ -168,25 +139,16 @@ const QuickForm = ({ reload, ...props }: QuickFormProps) => {
                   </Space>
                 ),
               }}
-              params={{ targetType, isIothub }}
+              params={{ targetType }}
               request={async () => {
-                if (isIothub) {
-                  const { data } = await getDevicesList({ current: 1, size: 999 });
-                  return data?.records
-                    ?.filter((item: any) => item.type === targetType)
-                    .map((item: any) => ({
-                      label: item.name,
-                      value: item.uuid,
-                    }));
-                } else {
-                  const res = await getOutendsList();
-                  return (res as any)?.data
-                    ?.filter((item: OutendItem) => item.type === targetType)
-                    .map((item: OutendItem) => ({
-                      label: item.name,
-                      value: item.uuid,
-                    }));
-                }
+                const res = await getOutendsList();
+
+                return (res as any)?.data
+                  ?.filter((item: OutendItem) => item.type === targetType)
+                  .map((item: OutendItem) => ({
+                    label: item.name,
+                    value: item.uuid,
+                  }));
               }}
               rules={[
                 {

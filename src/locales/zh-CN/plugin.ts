@@ -34,7 +34,6 @@ export default {
   /**
    * form
    */
-  'plugin.form.title.portUuid': '系统串口',
   'plugin.form.title.output': '输出结果',
   'plugin.form.title.ip': '地址',
   'plugin.form.title.ca': '校验算法',

@@ -64,6 +64,7 @@ export const GENERIC_HTTP_DEVICE = [
         valueType: 'formList',
         dataIndex: ['config', 'httpConfig', 'headers'],
         title: <HeadersTitle />,
+        hideInDescriptions: true,
         columns: [
           {
             valueType: 'group',
@@ -100,7 +101,6 @@ export const GENERIC_HTTP_DEVICE = [
             ],
           },
         ],
-        hideInDescriptions: true,
       },
     ],
   },

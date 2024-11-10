@@ -110,6 +110,7 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
             })}
 
             {type === DeviceType.GENERIC_HTTP_DEVICE &&
+              config?.httpConfig?.headers &&
               Object.keys(config?.httpConfig?.headers)?.length > 0 && (
                 <HeadersDetail data={config?.httpConfig?.headers} />
               )}

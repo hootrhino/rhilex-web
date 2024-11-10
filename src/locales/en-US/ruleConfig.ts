@@ -20,10 +20,6 @@ export default {
    * options
    */
   'ruleConfig.type.option.default': 'Default Data Structure',
-  'ruleConfig.type.option.control': 'Device Remote Control Data Structure',
-  'ruleConfig.type.option.action': 'Device Action Invocation Data Structure',
-  'ruleConfig.iothub.option.tencent': 'Tencent Cloud Command Issuance Response',
-  'ruleConfig.iothub.option.ithings': 'iThings Command Issuance Response',
 
   /**
    * title

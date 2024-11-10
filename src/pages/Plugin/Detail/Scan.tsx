@@ -208,7 +208,11 @@ const Scan = ({ detailConfig, setDetailConfig }: ScanProps) => {
             )}
             request={async () => {
               const { data } = await getOsUarts();
-              return data.map((item) => ({ label: item, value: item }));
+              return data.map((item) => ({
+                label: item,
+                value: item,
+                key: `UART-${item}-${Math.random()}`,
+              }));
             }}
             rules={[
               {

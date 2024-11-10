@@ -6,7 +6,6 @@ import {
   PLCModel,
   ReadFormat,
   SNMPVersion,
-  TencentMode,
   Transport,
 } from '../enum';
 
@@ -49,6 +48,11 @@ const defaultCommonConfig = {
   mode: DeviceMode.UART,
 };
 
+// 云边协同配置
+const defaultCellaConfig = {
+  enable: 'false',
+};
+
 // 国标配置
 const defaultNationalConfig = {
   commonConfig: defaultCommonConfig,
@@ -58,11 +62,7 @@ const defaultNationalConfig = {
     baudRate: 2400,
     parity: 'E',
   },
-};
-
-// 云配置
-const defaultIotHubConfig = {
-  mode: TencentMode.GATEWAY,
+  cellaConfig: defaultCellaConfig,
 };
 
 // BACnet 配置
@@ -98,6 +98,7 @@ export const defaultConfig = {
     },
     hostConfig: defaultHostConfig,
     uartConfig: defaultUartConfig,
+    cellaConfig: defaultCellaConfig,
   },
   [DeviceType.GENERIC_MODBUS_SLAVER]: {
     commonConfig: {
@@ -108,6 +109,7 @@ export const defaultConfig = {
       port: 1502,
       host: '0.0.0.0',
     },
+    cellaConfig: defaultCellaConfig,
   },
   [DeviceType.GENERIC_MBUS_EN13433_MASTER]: {
     commonConfig: {
@@ -120,6 +122,7 @@ export const defaultConfig = {
       timeout: DEFAULT_TIMEOUT,
     },
     uartConfig: defaultUartConfig,
+    cellaConfig: defaultCellaConfig,
   },
   [DeviceType.SIEMENS_PLC]: {
     commonConfig: {
@@ -134,6 +137,7 @@ export const defaultConfig = {
       rack: 0,
       slot: defaultModelSlot[PLCModel.S71200],
     },
+    cellaConfig: defaultCellaConfig,
   },
   [DeviceType.GENERIC_HTTP_DEVICE]: {
     commonConfig: {
@@ -161,6 +165,7 @@ export const defaultConfig = {
       community: 'public',
       version: SNMPVersion.V2,
     },
+    cellaConfig: defaultCellaConfig,
   },
   [DeviceType.GENERIC_BACNET_IP]: {
     commonConfig: {
@@ -168,18 +173,14 @@ export const defaultConfig = {
       frequency: DEFAULT_FREQUENCE,
     },
     bacnetConfig: defaultBacnetConfig,
+    cellaConfig: defaultCellaConfig,
   },
   [DeviceType.BACNET_ROUTER_GW]: {
     bacnetRouterConfig: {
       ...defaultBacnetConfig,
       deviceName: DEFAULT_VALUE,
     },
-  },
-  [DeviceType.TENCENT_IOTHUB_GATEWAY]: {
-    tencentConfig: defaultIotHubConfig,
-  },
-  [DeviceType.ITHINGS_IOTHUB_GATEWAY]: {
-    ithingsConfig: defaultIotHubConfig,
+    cellaConfig: defaultCellaConfig,
   },
   [DeviceType.DLT6452007_MASTER]: defaultNationalConfig,
   [DeviceType.CJT1882004_MASTER]: defaultNationalConfig,

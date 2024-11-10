@@ -14,7 +14,6 @@ export default {
   'outend.table.title.dataMode': '傳輸模式',
   'outend.table.title.dbName': '數據庫名',
   'outend.table.title.url': '請求地址',
-  'outend.table.title.portUuid': '系統串口',
   'outend.table.title.mac': 'MAC 地址',
   'outend.table.title.uart': '本地串口',
   'outend.table.title.database': 'MongoDB 資料庫',

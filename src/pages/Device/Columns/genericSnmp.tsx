@@ -1,6 +1,8 @@
 import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
+import { getCecollasListByGroup } from '@/services/rhilex/yunbianxietong';
+import { DEFAULT_GROUP_KEY_CECOLLAS } from '@/utils/constant';
 import { getIntl, getLocale } from '@umijs/max';
 import type { DeviceItem } from '..';
 import { SNMPVersionOption, TransportOption } from '../enum';
@@ -105,6 +107,44 @@ export const GENERIC_SNMP = [
         valueEnum: SNMPVersionOption,
         render: (_dom: React.ReactNode, { snmpConfig }: DeviceItem) =>
           SNMPVersionOption.get(snmpConfig?.version),
+      },
+    ],
+  },
+  {
+    title: formatMessage({ id: 'device.form.title.group.cecollas' }),
+    valueType: 'group',
+    columns: [
+      {
+        title: formatMessage({ id: 'device.form.title.cecollas.enable' }),
+        dataIndex: ['config', 'cellaConfig', 'enable'],
+        renderFormItem: () => <ProSegmented width="md" />,
+        render: (_dom: React.ReactNode, { cellaConfig }: DeviceItem) => (
+          <ProTag type={StatusType.BOOL}>{cellaConfig?.enable}</ProTag>
+        ),
+      },
+      {
+        valueType: 'dependency',
+        name: ['config'],
+        columns: ({ config }: DeviceItem) => [
+          {
+            title: formatMessage({ id: 'device.form.title.cecollas.uuid' }),
+            dataIndex: ['config', 'cellaConfig', 'cecollaId'],
+            valueType: 'select',
+            required: true,
+            hideInForm: config?.cellaConfig?.enable === 'false',
+            hideInDescriptions: !config?.cellaConfig?.enable,
+            request: async () => {
+              const { data } = await getCecollasListByGroup({
+                current: 1,
+                size: 999,
+                uuid: DEFAULT_GROUP_KEY_CECOLLAS,
+              });
+
+              return data.records?.map((item) => ({ label: item.name, value: item.uuid }));
+            },
+            render: (_dom: React.ReactNode, { cellaConfig }: DeviceItem) => cellaConfig?.cecollaId,
+          },
+        ],
       },
     ],
   },

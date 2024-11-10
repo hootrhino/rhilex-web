@@ -20,9 +20,14 @@ const initialValues = {
   },
 };
 
-type UpdateProps = { uuid?: string; open: boolean; onOpenChange: (open: boolean) => void };
+type UpdateProps = {
+  uuid?: string;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  reload: () => void;
+};
 
-const Update = ({ uuid, open, ...props }: UpdateProps) => {
+const Update = ({ uuid, open, reload, ...props }: UpdateProps) => {
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
 
@@ -62,6 +67,7 @@ const Update = ({ uuid, open, ...props }: UpdateProps) => {
           } else {
             await postCecollasCreate(values);
           }
+          reload();
           message.success(formatMessage({ id: `message.success.${uuid ? 'update' : 'new'}` }));
           return true;
         } catch (error) {

@@ -68,7 +68,7 @@ const Cecollas = () => {
       onSuccess: (res) =>
         modal.error({
           title: formatMessage({ id: 'cecollas.modal.title.error' }),
-          content: <div className="flex flex-wrap">{res}</div>,
+          content: <div className="break-words">{res}</div>,
           okText: formatMessage({ id: 'button.close' }),
         }),
     },
@@ -225,6 +225,7 @@ const Cecollas = () => {
       <Update
         {...updateConfig}
         onOpenChange={(open) => changeUpdateConfig({ open, uuid: open ? updateConfig.uuid : '' })}
+        reload={() => actionRef.current?.reload()}
       />
       <ProConfirmModal
         open={open}

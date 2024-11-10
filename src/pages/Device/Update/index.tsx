@@ -5,12 +5,7 @@ import {
   postDevicesCreate,
   putDevicesUpdate,
 } from '@/services/rhilex/shebeiguanli';
-import {
-  formatHeaders2Arr,
-  formatHeaders2Obj,
-  generateRandomId,
-  stringToBool,
-} from '@/utils/utils';
+import { formatHeaders, generateRandomId } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
@@ -27,67 +22,69 @@ import PageContainer from '@/components/ProPageContainer';
 import { DEVICE_LIST } from '@/utils/constant';
 import { DeviceMode, DeviceType } from '../enum';
 
-const filterData = (obj: Record<string, any>) => {
-  const filteredObj = {};
+const convertValue = (value: any) => {
+  if (typeof value === 'string' && ['true', 'false'].includes(value)) {
+    return value === 'true';
+  } else if (typeof value === 'boolean') {
+    return value.toString();
+  }
+  return value;
+};
+
+const convertConfig = (config: Record<string, any>) => {
+  return (
+    config &&
+    Object.fromEntries(
+      Object.entries(config).map(([key, value]) => {
+        return [key, convertValue(value)];
+      }),
+    )
+  );
+};
+
+const filterUndefined = (obj: Record<string, any>) => {
+  if (typeof obj !== 'object' || obj === null) {
+    return obj;
+  }
+
+  const filteredObj = Array.isArray(obj) ? [] : {};
+
   Object.keys(obj).forEach((key) => {
-    if (
-      obj.hasOwnProperty(key) &&
-      obj[key] !== undefined &&
-      obj[key] !== '' &&
-      (typeof obj[key] !== 'object' || Object.keys(obj[key]).length > 0)
-    ) {
-      filteredObj[key] = obj[key];
+    const value = obj[key];
+
+    if (value === undefined) {
+      // Skip undefined values
+      return;
     }
+
+    // Recursively filter nested objects or arrays
+    const filteredValue = filterUndefined(value);
+
+    // Only add the key if the filtered value is not an empty object or array
+    if (typeof filteredValue === 'object' && Object.keys(filteredValue).length === 0) {
+      return;
+    }
+
+    filteredObj[key] = filteredValue;
   });
+
   return filteredObj;
 };
 
 const convertBooleanOrString = (config: Record<string, any>) => {
   const formatConfig = JSON.parse(JSON.stringify(config));
-  let formatCommonConfig = { ...formatConfig.commonConfig };
-  let formatHttpConfig = { ...formatConfig.httpConfig };
 
-  const { autoRequest, enableOptimize, enableGroup, autoScan, batchRequest } = formatCommonConfig;
-
-  const options = {
-    autoRequest,
-    enableOptimize,
-    enableGroup,
-    autoScan,
-    batchRequest,
+  const formatData = {
+    ...formatConfig,
+    commonConfig: convertConfig(formatConfig?.commonConfig),
+    cellaConfig: convertConfig(formatConfig?.cellaConfig),
+    httpConfig: {
+      ...formatConfig?.httpConfig,
+      headers: formatHeaders(formatConfig?.httpConfig?.headers),
+    },
   };
 
-  Object.keys(options).forEach((key) => {
-    if (options[key] && typeof options[key] === 'string') {
-      formatCommonConfig[key] = stringToBool(options[key]);
-    }
-    if (options[key] !== 'undefined' && typeof options[key] === 'boolean') {
-      formatCommonConfig[key] = options[key].toString();
-    }
-  });
-
-  if (
-    formatHttpConfig &&
-    formatHttpConfig.headers &&
-    typeof formatHttpConfig.headers === 'object'
-  ) {
-    const formatHeaders =
-      formatHttpConfig.headers.length >= 0
-        ? formatHeaders2Obj(formatHttpConfig.headers)
-        : formatHeaders2Arr(formatHttpConfig.headers);
-
-    formatHttpConfig = {
-      ...formatHttpConfig,
-      headers: formatHeaders,
-    };
-  }
-
-  return filterData({
-    ...formatConfig,
-    commonConfig: formatCommonConfig,
-    httpConfig: formatHttpConfig,
-    hostConfig: formatCommonConfig.mode === DeviceMode.TCP ? formatConfig?.hostConfig : undefined,
-  });
+  return filterUndefined(formatData);
 };
 
 const UpdateForm = () => {
@@ -131,6 +128,7 @@ const UpdateForm = () => {
           message.warning(info);
         }
       }
+
       history.push(DEVICE_LIST);
       setLoading(false);
       return true;

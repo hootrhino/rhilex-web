@@ -55,8 +55,8 @@ export default {
   'device.form.title.group.port': 'UART configuration',
   'device.form.title.group.common': 'Common configuration',
   'device.form.title.group': '{type} configuration',
-  'device.form.title.group.tencent': 'Tencent IoT Hub access configuration',
   'device.form.title.group.uartRW': 'Read/Write configuration',
+  'device.form.title.group.cecollas': 'Cloud edge collaboration configuration',
 
   // timeout
   'device.form.title.timeout.request': 'Request Timeout',
@@ -71,7 +71,6 @@ export default {
 
   // other
   'device.form.title.mode': 'Mode',
-  'device.form.title.uart': 'Serial Port',
   'device.form.title.host': 'Host',
   'device.form.title.gid': 'Device Group',
   'device.form.title.autoRequest': 'Enable Auto Request',
@@ -92,6 +91,8 @@ export default {
   'device.form.title.transport': 'Transport Protocol',
   'device.form.title.community': 'Community',
   'device.form.title.version': 'Version',
+  'device.form.title.cecollas.enable': 'Enable Cloud Edge Collaboration',
+  'device.form.title.cecollas.uuid': 'Cloud Platform ID',
 
   // group
   'device.form.title.group.name': 'Group Name',
@@ -122,11 +123,7 @@ export default {
   'device.form.title.objectType': 'Object Type',
   'device.form.title.objectId': 'Object ID',
   'device.form.title.cidr': 'CIDR',
-
-  // tencent
-  'device.form.title.productId': 'Product ID',
   'device.form.title.deviceName': 'Device Name',
-  'device.form.title.devicePsk': 'Device PSK',
 
   // uart
   'device.form.title.rwConfig.autoRequest': 'Enable Auto Request',
@@ -136,9 +133,6 @@ export default {
   // MBus
   'device.form.title.dataLength': 'Data Length',
   'device.form.title.manufacturer': 'Manufacturer',
-
-  // ithings
-  'device.form.title.serverEndpoint': 'Server Endpoints',
 
   // user protocol
   'device.form.title.command': 'Command',
@@ -205,8 +199,6 @@ export default {
   'device.type.plc': 'SIEMENS SIMATIC S7 Master Gateway',
   'device.type.bacnet.ip': 'Generic BACnet IP Master Gateway',
   'device.type.bacnet.router': 'Generic BACnet IP Slaver Gateway',
-  'device.type.tencent': 'Tencent Cloud IoT Platform',
-  'device.type.ithings': 'iThings IoT Platform',
   'device.type.uartRW': 'Generic Serial Read/Write Gateway',
   'device.type.national': 'National Standard {protocol} Gateway',
   'device.type.user': 'Generic Custom Protocol Gateway',

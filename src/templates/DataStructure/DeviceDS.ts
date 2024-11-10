@@ -77,49 +77,6 @@ const device_user_ds = `{
   "command": "010300000002C40B"
 }`;
 
-// TENCENT_IOTHUB_GATEWAY - 腾讯云物联网平台
-const device_iothub_control_ds = `{
-  "method": "control",
-  "clientToken": "123",
-  "params": {
-      "power_switch": 1,
-      "color": 1,
-      "brightness": 66
-  }
-}`;
-
-const device_iothub_action_ds = `{
-  "method": "action",
-  "clientToken": "20a4ccfd-d308-****-86c6-5254008a4f10",
-  "actionId": "openDoor",
-  "timestamp": 1212121221,
-  "params": {
-      "userid": "323343"
-  }
-}`;
-
-// ITHINGS_IOTHUB_GATEWAY - 联犀物联网平台
-const device_ithings_control_ds = `{
-  "method": "control",
-  "msgToken": "123",
-  "params": {
-    "power_switch": 1,
-    "color": 1,
-    "brightness": 66
-  }
-}`;
-
-const device_ithings_action_ds = `{
-  "method": "action",
-  "msgToken": "20a4ccfd-d308-****-86c6-5254008a4f10",
-  "actionID": "openDoor",
-  "timestamp": 1677762028638,
-  "params": {
-    "userid": "323343"
-  }
-}`;
-
-
 export const deviceDS = {
   [DeviceType.GENERIC_MODBUS_MASTER]: device_modbus_ds,
   [DeviceType.GENERIC_MODBUS_SLAVER]: device_modbus_ds,
@@ -134,17 +91,4 @@ export const deviceDS = {
   [DeviceType.GENERIC_MBUS_EN13433_MASTER]: device_national_ds,
   [DeviceType.GENERIC_UART_RW]: device_uart_ds,
   [DeviceType.GENERIC_USER_PROTOCOL]: device_user_ds,
-  [DeviceType.TENCENT_IOTHUB_GATEWAY]: device_iothub_control_ds,
-  [DeviceType.ITHINGS_IOTHUB_GATEWAY]: device_ithings_control_ds
 };
-
-export const multTestData = {
-  [DeviceType.TENCENT_IOTHUB_GATEWAY]: {
-    'defaultDS': device_iothub_control_ds,
-    'action': device_iothub_action_ds
-  },
-  [DeviceType.ITHINGS_IOTHUB_GATEWAY]: {
-    'defaultDS': device_ithings_control_ds,
-    'action': device_ithings_action_ds
-  },
-}

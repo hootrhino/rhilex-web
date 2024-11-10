@@ -34,7 +34,6 @@ export default {
   /**
    * form
    */
-  'plugin.form.title.portUuid': 'Serial Port',
   'plugin.form.title.output': 'Output',
   'plugin.form.title.ip': 'IP Address',
   'plugin.form.title.ca': 'CRC Algorithm',

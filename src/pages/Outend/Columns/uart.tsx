@@ -62,7 +62,11 @@ export const uartColumns = [
     request: async () => {
       const { data } = await getOsUarts();
 
-      return data.map((item) => ({ label: item, value: item }));
+      return data.map((item) => ({
+        label: item,
+        value: item,
+        key: `UART-${item}-${Math.random()}`,
+      }));
     },
     render: (_dom: React.ReactNode, uartConfig: Record<string, any>) => uartConfig?.uart,
   },

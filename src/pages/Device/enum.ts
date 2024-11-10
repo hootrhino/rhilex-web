@@ -20,8 +20,6 @@ export enum DeviceType {
   DLT6452007_MASTER = 'DLT6452007_MASTER',
   CJT1882004_MASTER = 'CJT1882004_MASTER',
   SZY2062016_MASTER = 'SZY2062016_MASTER',
-  TENCENT_IOTHUB_GATEWAY = 'TENCENT_IOTHUB_GATEWAY',
-  ITHINGS_IOTHUB_GATEWAY = 'ITHINGS_IOTHUB_GATEWAY',
 }
 
 export const deviceTypeOptions = {
@@ -50,8 +48,6 @@ export const deviceTypeOptions = {
     { id: 'device.type.national' },
     { protocol: 'SZY206-2016' },
   ),
-  [DeviceType.TENCENT_IOTHUB_GATEWAY]: formatMessage({ id: 'device.type.tencent' }),
-  [DeviceType.ITHINGS_IOTHUB_GATEWAY]: formatMessage({ id: 'device.type.ithings' }),
 };
 
 /**
@@ -155,14 +151,6 @@ export enum BacnetMode {
 export const BacnetModeOption = {
   [BacnetMode.BROADCAST]: formatMessage({ id: 'device.form.title.mode.broadcast' }),
 };
-
-/**
- * TENCENT_IOTHUB_GATEWAY
- */
-export enum TencentMode {
-  GATEWAY = 'GATEWAY',
-  DEVICE = 'DEVICE',
-}
 
 /**
  * GENERIC_UART_RW

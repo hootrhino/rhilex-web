@@ -41,6 +41,30 @@ export const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_4557572_1paayid3j8k.js', // 在 iconfont.cn 上生成
 });
 
+export const formatHeaders = (headers: { k: string; v: string }[] | Record<string, any>) => {
+  if (!headers || typeof headers !== 'object') return;
+  if (headers.length >= 0) {
+    const newData = headers.reduce((acc: any, curr: { k: string; v: string }) => {
+      if (curr.k && curr.v) {
+        acc[curr.k] = curr.v;
+      }
+
+      return acc;
+    }, {});
+
+    return newData;
+  } else {
+    const newData = !isEmpty(headers)
+      ? Object.keys(headers)?.map((item) => ({
+          k: item,
+          v: headers[item],
+        }))
+      : [{ k: '', v: '' }];
+
+    return newData;
+  }
+};
+
 // 格式化 k-v
 export const formatHeaders2Obj = (data: { k: string; v: string }[]) => {
   const newData = data.reduce((acc: any, curr: { k: string; v: string }) => {

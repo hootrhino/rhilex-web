@@ -70,7 +70,7 @@ const Devices = () => {
       onSuccess: (res) =>
         modal.error({
           title: formatMessage({ id: 'device.title.modal.error.device' }),
-          content: <div className="flex flex-wrap">{res}</div>,
+          content: <div className="break-words">{res}</div>,
           okText: formatMessage({ id: 'button.close' }),
         }),
     },

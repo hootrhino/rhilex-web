@@ -14,7 +14,6 @@ export default {
   'outend.table.title.dataMode': 'Mode',
   'outend.table.title.dbName': 'Database Name',
   'outend.table.title.url': 'Request Url',
-  'outend.table.title.portUuid': 'Serial Port',
   'outend.table.title.mac': 'MAC Address',
   'outend.table.title.uart': ' Local UART',
   'outend.table.title.database': 'MongoDB Database',

@@ -20,10 +20,6 @@ export default {
    * options
    */
   'ruleConfig.type.option.default': '預設數據結構',
-  'ruleConfig.type.option.control': '設備遠端控制數據結構',
-  'ruleConfig.type.option.action': '設備行為調用數據結構',
-  'ruleConfig.iothub.option.tencent': '騰訊雲指令下發響應',
-  'ruleConfig.iothub.option.ithings': '聯犀平台指令下發響應',
 
   /**
    * title

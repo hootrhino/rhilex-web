@@ -1,9 +1,7 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
 import ProLog from '@/components/ProLog';
-import { DeviceType } from '@/pages/Device/enum';
 import { postRulesTest } from '@/services/rhilex/guizeguanli';
 import { debugData } from '@/templates';
-import { multTestData } from '@/templates/DataStructure/DeviceDS';
 import type { ModalFormProps, ProFormInstance } from '@ant-design/pro-components';
 import { ModalForm, ProForm, ProFormSelect } from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
@@ -20,21 +18,6 @@ const Debug = ({ topic, ...props }: DebugProps) => {
   const { formatMessage } = useIntl();
   const defaultTestData = localStorage.getItem('testDataConfig');
   const { ruleType, enableBatchRequest } = defaultTestData && JSON.parse(defaultTestData);
-
-  const getTypeOptions = () => {
-    if (
-      [DeviceType.TENCENT_IOTHUB_GATEWAY, DeviceType.ITHINGS_IOTHUB_GATEWAY].includes(
-        ruleType as any,
-      )
-    ) {
-      return [
-        { label: formatMessage({ id: 'ruleConfig.type.option.control' }), value: 'defaultDS' },
-        { label: formatMessage({ id: 'ruleConfig.type.option.action' }), value: 'action' },
-      ];
-    }
-
-    return [{ label: formatMessage({ id: 'ruleConfig.type.option.default' }), value: 'defaultDS' }];
-  };
 
   return (
     <ModalForm
@@ -85,15 +68,6 @@ const Debug = ({ topic, ...props }: DebugProps) => {
         type: 'defaultDS',
         testData: enableBatchRequest ? `[${debugData[ruleType]}]` : debugData[ruleType],
       }}
-      onValuesChange={({ type }) => {
-        if (
-          type &&
-          [DeviceType.TENCENT_IOTHUB_GATEWAY, DeviceType.ITHINGS_IOTHUB_GATEWAY].includes(ruleType)
-        ) {
-          const data = multTestData[ruleType][type];
-          formRef.current?.setFieldsValue({ testData: enableBatchRequest ? `[${data}]` : data });
-        }
-      }}
       style={{ height: 500, overflowY: 'auto' }}
       {...props}
     >
@@ -102,7 +76,9 @@ const Debug = ({ topic, ...props }: DebugProps) => {
         name="type"
         label={formatMessage({ id: 'ruleConfig.form.title.type' })}
         allowClear={false}
-        options={getTypeOptions()}
+        options={[
+          { label: formatMessage({ id: 'ruleConfig.type.option.default' }), value: 'defaultDS' },
+        ]}
       />
       <ProForm.Item
         name="testData"
