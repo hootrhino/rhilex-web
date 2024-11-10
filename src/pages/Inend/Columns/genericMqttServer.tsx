@@ -1,6 +1,5 @@
 import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
-import { stringToBool } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 
 const { formatMessage } = getIntl(getLocale());
@@ -11,7 +10,7 @@ export const GENERIC_MQTT_SERVER = [
     dataIndex: ['config', 'anonymous'],
     required: true,
     convertValue: (value: boolean) => value?.toString(),
-    transform: (value: string) => ({ config: { anonymous: stringToBool(value) } }),
+    transform: (value: string) => ({ config: { anonymous: value === 'true' ? true : false } }),
     renderFormItem: () => <ProSegmented width="md" />,
     renderText: (anonymous: boolean) => <ProTag type={StatusType.BOOL}>{anonymous}</ProTag>,
   },

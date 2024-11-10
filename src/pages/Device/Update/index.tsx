@@ -5,7 +5,7 @@ import {
   postDevicesCreate,
   putDevicesUpdate,
 } from '@/services/rhilex/shebeiguanli';
-import { formatHeaders, generateRandomId } from '@/utils/utils';
+import { convertConfig, filterUndefined, formatHeaders, generateRandomId } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useModel, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
@@ -21,55 +21,6 @@ import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
 import PageContainer from '@/components/ProPageContainer';
 import { DEVICE_LIST } from '@/utils/constant';
 import { DeviceMode, DeviceType } from '../enum';
-
-const convertValue = (value: any) => {
-  if (typeof value === 'string' && ['true', 'false'].includes(value)) {
-    return value === 'true';
-  } else if (typeof value === 'boolean') {
-    return value.toString();
-  }
-  return value;
-};
-
-const convertConfig = (config: Record<string, any>) => {
-  return (
-    config &&
-    Object.fromEntries(
-      Object.entries(config).map(([key, value]) => {
-        return [key, convertValue(value)];
-      }),
-    )
-  );
-};
-
-const filterUndefined = (obj: Record<string, any>) => {
-  if (typeof obj !== 'object' || obj === null) {
-    return obj;
-  }
-
-  const filteredObj = Array.isArray(obj) ? [] : {};
-
-  Object.keys(obj).forEach((key) => {
-    const value = obj[key];
-
-    if (value === undefined) {
-      // Skip undefined values
-      return;
-    }
-
-    // Recursively filter nested objects or arrays
-    const filteredValue = filterUndefined(value);
-
-    // Only add the key if the filtered value is not an empty object or array
-    if (typeof filteredValue === 'object' && Object.keys(filteredValue).length === 0) {
-      return;
-    }
-
-    filteredObj[key] = filteredValue;
-  });
-
-  return filteredObj;
-};
 
 const convertBooleanOrString = (config: Record<string, any>) => {
   const formatConfig = JSON.parse(JSON.stringify(config));

@@ -8,12 +8,7 @@ import {
   putOutendsUpdate,
 } from '@/services/rhilex/shuchuziyuanguanli';
 import { OUTEND_LIST } from '@/utils/constant';
-import {
-  formatHeaders2Arr,
-  formatHeaders2Obj,
-  generateRandomId,
-  stringToBool,
-} from '@/utils/utils';
+import { convertConfig, filterUndefined, formatHeaders, generateRandomId } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
@@ -27,36 +22,11 @@ export type UpdateFormItem = {
   config: Record<string, any>[];
 };
 
-const convertBooleanOrString = (config: Record<string, any>) => {
-  let formatConfig = { ...config };
-
-  const { cacheOfflineData, allowPing, headers } = formatConfig;
-
-  const options = {
-    cacheOfflineData,
-    allowPing,
-  };
-
-  Object.keys(options).forEach((key) => {
-    if (options[key] && typeof options[key] === 'string') {
-      formatConfig[key] = stringToBool(options[key]);
-    }
-    if (options[key] !== 'undefined' && typeof options[key] === 'boolean') {
-      formatConfig[key] = options[key].toString();
-    }
+const formatCommonConfig = ({ headers, ...formatConfig }: Record<string, any>) => {
+  return filterUndefined({
+    ...convertConfig(formatConfig),
+    headers: formatHeaders(headers),
   });
-
-  if (headers && typeof headers === 'object') {
-    const formatHeaders =
-      headers.length >= 0 ? formatHeaders2Obj(headers) : formatHeaders2Arr(headers);
-
-    formatConfig = {
-      ...formatConfig,
-      headers: formatHeaders,
-    };
-  }
-
-  return formatConfig;
 };
 
 const UpdateForm = () => {
@@ -78,7 +48,7 @@ const UpdateForm = () => {
         ...values,
         config: {
           ...values.config,
-          commonConfig: convertBooleanOrString(values.config?.commonConfig),
+          commonConfig: formatCommonConfig(values.config?.commonConfig),
         },
       };
 
@@ -93,6 +63,7 @@ const UpdateForm = () => {
           message.warning(formatMessage({ id: 'outend.message.warning.new' }, { msg: msg }));
         }
       }
+
       setLoading(false);
       history.push(OUTEND_LIST);
       return true;
@@ -109,7 +80,7 @@ const UpdateForm = () => {
         ...detail,
         config: {
           ...detail.config,
-          commonConfig: convertBooleanOrString(detail.config?.commonConfig),
+          commonConfig: formatCommonConfig(detail.config?.commonConfig),
         },
       });
     } else {

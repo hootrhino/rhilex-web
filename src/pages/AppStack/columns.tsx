@@ -1,6 +1,5 @@
 import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
-import { stringToBool } from '@/utils/utils';
 import { getIntl, getLocale } from '@umijs/max';
 
 export const baseColumns = [
@@ -26,7 +25,7 @@ export const baseColumns = [
     dataIndex: 'autoStart',
     required: true,
     convertValue: (value: boolean) => value?.toString(),
-    transform: (value: string) => ({ autoStart: stringToBool(value) }),
+    transform: (value: string) => ({ autoStart: value === 'true' ? true : false }),
     renderFormItem: () => <ProSegmented width="md" />,
     renderText: (autoStart: boolean) => <ProTag type={StatusType.BOOL}>{autoStart}</ProTag>,
   },

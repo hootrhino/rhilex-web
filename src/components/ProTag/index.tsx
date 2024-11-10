@@ -1,4 +1,3 @@
-import { bool2String } from '@/utils/utils';
 import {
   CheckCircleOutlined,
   ClockCircleOutlined,
@@ -220,6 +219,13 @@ const typeEnum = {
 type ProTagProps = Omit<TagProps, 'children'> & {
   children: string | number | boolean;
   type?: StatusType;
+};
+
+const bool2String = (value: boolean | string | number) => {
+  if (typeof value === 'boolean') {
+    return value ? 'true' : 'false';
+  }
+  return value;
 };
 
 const ProTag = ({ children, type, ...props }: ProTagProps) => {

@@ -20,6 +20,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const IconFont = createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/c/font_4557572_1paayid3j8k.js', // 在 iconfont.cn 上生成
+});
+
 //  RSA 非对称加密
 export const encryptText = (publicKey: string, text: string) => {
   const encrypt = new JSEncrypt();
@@ -27,6 +31,26 @@ export const encryptText = (publicKey: string, text: string) => {
   const encrypted = encrypt.encrypt(text) || text; // 使用公钥加密
 
   return encrypted;
+};
+
+// 首字母大写
+export const toPascalCase = (str: string) => {
+  if (str === 'id') {
+    return 'ID';
+  } else if (!str.includes('_')) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+  return str
+    .replace(/_([a-z])/g, (match, char) => char.toUpperCase())
+    .replace(/_/g, '')
+    .replace(/^\w/, (char) => char.toUpperCase());
+};
+
+// 生成随机字符串的函数
+export const generateRandomId = () => {
+  const nanoId = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 8);
+
+  return nanoId();
 };
 
 export const getBase64 = (file: RcFile): Promise<string> =>
@@ -37,10 +61,10 @@ export const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-export const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/c/font_4557572_1paayid3j8k.js', // 在 iconfont.cn 上生成
-});
-
+/**
+ *
+ * 复杂表单数据处理
+ */
 export const formatHeaders = (headers: { k: string; v: string }[] | Record<string, any>) => {
   if (!headers || typeof headers !== 'object') return;
   if (headers.length >= 0) {
@@ -65,64 +89,53 @@ export const formatHeaders = (headers: { k: string; v: string }[] | Record<strin
   }
 };
 
-// 格式化 k-v
-export const formatHeaders2Obj = (data: { k: string; v: string }[]) => {
-  const newData = data.reduce((acc: any, curr: { k: string; v: string }) => {
-    if (curr.k && curr.v) {
-      acc[curr.k] = curr.v;
-    }
-
-    return acc;
-  }, {});
-
-  return newData;
-};
-
-export const formatHeaders2Arr = (data: Record<string, any>) => {
-  const newData = !isEmpty(data)
-    ? Object.keys(data)?.map((item) => ({
-        k: item,
-        v: data[item],
-      }))
-    : [{ k: '', v: '' }];
-
-  return newData;
-};
-
-// 首字母大写
-export const toPascalCase = (str: string) => {
-  if (str === 'id') {
-    return 'ID';
-  } else if (!str.includes('_')) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
-  return str
-    .replace(/_([a-z])/g, (match, char) => char.toUpperCase())
-    .replace(/_/g, '')
-    .replace(/^\w/, (char) => char.toUpperCase());
-};
-
-export const stringToBool = (value: string) => {
-  const valueMap = {
-    true: true,
-    false: false,
-  };
-
-  return valueMap[value];
-};
-
-export const bool2String = (value: boolean | string | number) => {
-  if (typeof value === 'boolean') {
-    return value ? 'true' : 'false';
+const convertValue = (value: any) => {
+  if (typeof value === 'string' && ['true', 'false'].includes(value)) {
+    return value === 'true';
+  } else if (typeof value === 'boolean') {
+    return value.toString();
   }
   return value;
 };
 
-// 生成随机字符串的函数
-export const generateRandomId = () => {
-  const nanoId = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 8);
+export const convertConfig = (config: Record<string, any>) => {
+  return (
+    config &&
+    Object.fromEntries(
+      Object.entries(config).map(([key, value]) => {
+        return [key, convertValue(value)];
+      }),
+    )
+  );
+};
 
-  return nanoId();
+export const filterUndefined = (obj: Record<string, any>) => {
+  if (typeof obj !== 'object' || obj === null) {
+    return obj;
+  }
+
+  const filteredObj = Array.isArray(obj) ? [] : {};
+
+  Object.keys(obj).forEach((key) => {
+    const value = obj[key];
+
+    if (value === undefined) {
+      // Skip undefined values
+      return;
+    }
+
+    // Recursively filter nested objects or arrays
+    const filteredValue = filterUndefined(value);
+
+    // Only add the key if the filtered value is not an empty object or array
+    if (typeof filteredValue === 'object' && Object.keys(filteredValue).length === 0) {
+      return;
+    }
+
+    filteredObj[key] = filteredValue;
+  });
+
+  return filteredObj;
 };
 
 /**
