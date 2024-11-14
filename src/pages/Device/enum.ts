@@ -20,6 +20,7 @@ export enum DeviceType {
   DLT6452007_MASTER = 'DLT6452007_MASTER',
   CJT1882004_MASTER = 'CJT1882004_MASTER',
   SZY2062016_MASTER = 'SZY2062016_MASTER',
+  GENERIC_NEMA_GNS_PROTOCOL = 'GENERIC_NEMA_GNS_PROTOCOL',
 }
 
 export const deviceTypeOptions = {
@@ -47,6 +48,10 @@ export const deviceTypeOptions = {
   [DeviceType.SZY2062016_MASTER]: formatMessage(
     { id: 'device.type.national' },
     { protocol: 'SZY206-2016' },
+  ),
+  [DeviceType.GENERIC_NEMA_GNS_PROTOCOL]: formatMessage(
+    { id: 'device.type.common' },
+    { type: 'GPS' },
   ),
 };
 

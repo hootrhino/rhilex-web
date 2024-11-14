@@ -12,7 +12,7 @@ const { formatMessage } = getIntl(getLocale());
 /**
  * 国标协议配置 DLT6452007_MASTER | CJT1882004_MASTER | SZY2062016_MASTER
  */
-export const National_Standard = [
+export const NATIONAL_STANDARD = [
   {
     title: formatMessage({ id: 'device.form.title.group.common' }),
     valueType: 'group',

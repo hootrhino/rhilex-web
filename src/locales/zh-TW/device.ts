@@ -90,6 +90,8 @@ export default {
   'device.form.title.version': '協議版本',
   'device.form.title.cecollas.enable': '開啓雲邊協同',
   'device.form.title.cecollaId': '雲平台',
+  'device.form.title.parse': '是否解析',
+  'device.form.title.gwsn': '網關序號',
 
   // group
   'device.form.title.group.name': '分組名稱',

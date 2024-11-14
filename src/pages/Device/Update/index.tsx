@@ -29,6 +29,7 @@ const convertBooleanOrString = (config: Record<string, any>) => {
     ...formatConfig,
     commonConfig: convertConfig(formatConfig?.commonConfig),
     cellaConfig: convertConfig(formatConfig?.cellaConfig),
+    gpsConfig: convertConfig(formatConfig?.gpsConfig),
     httpConfig: {
       ...formatConfig?.httpConfig,
       headers: formatHeaders(formatConfig?.httpConfig?.headers),

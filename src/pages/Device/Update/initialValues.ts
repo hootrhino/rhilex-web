@@ -185,4 +185,11 @@ export const defaultConfig = {
   [DeviceType.DLT6452007_MASTER]: defaultNationalConfig,
   [DeviceType.CJT1882004_MASTER]: defaultNationalConfig,
   [DeviceType.SZY2062016_MASTER]: defaultNationalConfig,
+  [DeviceType.GENERIC_NEMA_GNS_PROTOCOL]: {
+    gpsConfig: {
+      parse: 'false',
+      gwsn: 'rhilex',
+    },
+    uartConfig: defaultUartConfig,
+  },
 };

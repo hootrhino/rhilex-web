@@ -14,6 +14,7 @@ import {
 } from '../enum';
 import { BACNET_ROUTER_GW } from './bacnetRouterGW';
 import { GENERIC_BACNET_IP } from './genericBacnetIP';
+import { GENERIC_NEMA_GNS_PROTOCOL } from './genericGPS';
 import { GENERIC_HTTP_DEVICE } from './genericHttpDevice';
 import { GENERIC_MBUS_EN13433_MASTER } from './genericMBusMaster';
 import { GENERIC_MODBUS_MASTER } from './genericModbusMaster';
@@ -21,7 +22,7 @@ import { GENERIC_MODBUS_SLAVER } from './genericModbusSlaver';
 import { GENERIC_SNMP } from './genericSnmp';
 import { GENERIC_UART_RW } from './genericUartRW';
 import { GENERIC_USER_PROTOCOL } from './genericUserProtocol';
-import { National_Standard } from './nationalStandard';
+import { NATIONAL_STANDARD } from './nationalStandard';
 import { SIEMENS_PLC } from './siemensPLC';
 
 const { formatMessage } = getIntl(getLocale());
@@ -224,9 +225,10 @@ export const typeConfigColumns = {
   [DeviceType.GENERIC_SNMP]: GENERIC_SNMP,
   [DeviceType.GENERIC_BACNET_IP]: GENERIC_BACNET_IP,
   [DeviceType.BACNET_ROUTER_GW]: BACNET_ROUTER_GW,
-  [DeviceType.DLT6452007_MASTER]: National_Standard,
-  [DeviceType.CJT1882004_MASTER]: National_Standard,
-  [DeviceType.SZY2062016_MASTER]: National_Standard,
+  [DeviceType.DLT6452007_MASTER]: NATIONAL_STANDARD,
+  [DeviceType.CJT1882004_MASTER]: NATIONAL_STANDARD,
+  [DeviceType.SZY2062016_MASTER]: NATIONAL_STANDARD,
+  [DeviceType.GENERIC_NEMA_GNS_PROTOCOL]: GENERIC_NEMA_GNS_PROTOCOL,
 };
 
 /**
