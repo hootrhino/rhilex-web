@@ -126,7 +126,7 @@ const Detail = () => {
               {
                 label: '属性',
                 key: 'properties',
-                children: <Property data={schema?.[activeSchema].properties || []} />,
+                children: <Property data={schema?.[activeSchema]?.properties || []} />,
               },
               {
                 label: '行为',
@@ -134,7 +134,7 @@ const Detail = () => {
                 children: (
                   <Action
                     schema={activeSchema}
-                    data={schema?.[activeSchema].actions}
+                    data={schema?.[activeSchema]?.actions}
                     refresh={() => uuid && getSchema({ uuid })}
                   />
                 ),

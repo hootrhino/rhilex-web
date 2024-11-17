@@ -50,7 +50,7 @@ export const baseColumns = [
         label: cecollasTypeOptions[key],
         value: key,
       })),
-    renderText: (type: CecollasType) => type && cecollasTypeOptions[type],
+    renderText: (type: CecollasType) => (type ? cecollasTypeOptions[type] : '-'),
   },
   {
     title: formatMessage({ id: 'cecollas.form.title.gid' }),
@@ -128,13 +128,15 @@ export const typeColumns = (type: string) => [
     dataIndex: ['config', 'subProduct'],
     width: 'md',
     hideInForm: true,
-    render: (_dom: React.ReactNode, { subProduct }: any) => subProduct,
+    hideInDescriptions: type !== CecollasType.ITHINGS_IOTHUB_CEC,
+    render: (_dom: React.ReactNode, { subProduct }: any) => subProduct || '-',
   },
   {
     title: formatMessage({ id: 'cecollas.form.title.serverEndpoint' }),
     dataIndex: ['config', 'serverEndpoint'],
     width: 'md',
     hideInForm: true,
+    hideInDescriptions: type !== CecollasType.ITHINGS_IOTHUB_CEC,
     render: (_dom: React.ReactNode, { serverEndpoint }: any) => serverEndpoint,
   },
   {
