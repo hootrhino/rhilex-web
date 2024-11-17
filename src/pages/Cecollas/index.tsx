@@ -19,13 +19,12 @@ import {
 } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProCard, ProList, ProTable } from '@ant-design/pro-components';
-import { useIntl, useModel, useRequest } from '@umijs/max';
+import { history, useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Space } from 'antd';
 import type { ItemType } from 'antd/es/menu/interface';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useRef, useState } from 'react';
 import { baseColumns } from './columns';
-import Detail from './Detail';
 import { groupData } from './enum';
 import Update from './Update';
 
@@ -44,8 +43,7 @@ type CecollasItem = {
 const Cecollas = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
-  const { isFreeTrial, detailConfig, total, changeConfig, initialConfig, changeTotal } =
-    useModel('useCommon');
+  const { isFreeTrial, total, changeTotal } = useModel('useCommon');
   const [open, setOpen] = useState<boolean>(false);
   const [updateConfig, changeUpdateConfig] = useState<DetailConfig>(defaultConfig);
   const [activeCecollas, setActiveCecollas] = useState<string>('');
@@ -128,7 +126,7 @@ const Cecollas = () => {
 
         return (
           <Space>
-            <a key="detail" onClick={() => uuid && changeConfig({ open: true, uuid })}>
+            <a key="detail" onClick={() => history.push(`/cecollas/detail/${uuid}`)}>
               {formatMessage({ id: 'button.detail' })}
             </a>
             <a key="edit" onClick={() => uuid && changeUpdateConfig({ open: true, uuid })}>
@@ -164,7 +162,6 @@ const Cecollas = () => {
       <PageContainer>
         <ProCard split="vertical">
           <ProCard
-            // title="云平台分组"
             colSpan="270px"
             headStyle={{ paddingInline: 16 }}
             bodyStyle={{ paddingInline: 16 }}
@@ -228,7 +225,6 @@ const Cecollas = () => {
           </ProCard>
         </ProCard>
       </PageContainer>
-      <Detail {...detailConfig} onClose={initialConfig} />
       <Update
         {...updateConfig}
         onOpenChange={(open) => changeUpdateConfig({ open, uuid: open ? updateConfig.uuid : '' })}

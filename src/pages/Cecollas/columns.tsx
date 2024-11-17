@@ -27,6 +27,7 @@ export const baseColumns = [
     dataIndex: 'name',
     ellipsis: true,
     width: 'md',
+    hideInDescriptions: true,
     fieldProps: {
       placeholder: formatMessage({ id: 'form.placeholder.name' }),
     },
@@ -68,6 +69,7 @@ export const baseColumns = [
     dataIndex: 'state',
     width: 100,
     hideInForm: true,
+    hideInDescriptions: true,
     renderText: (state: number) => <ProTag type={StatusType.DEVICE}>{state || 0}</ProTag>,
   },
   {
@@ -99,42 +101,6 @@ export const typeColumns = (type: string) => [
     render: (_dom: React.ReactNode, { mode }: any) => Mode[mode],
   },
   {
-    valueType: 'dependency',
-    name: ['config'],
-    columns: ({ config }: CecollasFormItem) => {
-      const mode = config.mode;
-      const show = type === CecollasType.ITHINGS_IOTHUB_CEC && mode === Mode.GATEWAY;
-
-      return [
-        {
-          title: formatMessage({ id: 'cecollas.form.title.subProduct' }),
-          dataIndex: ['config', 'subProduct'],
-          width: 'md',
-          hideInForm: !show,
-          hideInDescriptions: !show,
-          fieldProps: {
-            placeholder: formatMessage(
-              { id: 'placeholder.input' },
-              { text: formatMessage({ id: 'cecollas.form.title.subProduct' }) },
-            ),
-          },
-          formItemProps: {
-            rules: [
-              {
-                required: true,
-                message: formatMessage(
-                  { id: 'placeholder.input' },
-                  { text: formatMessage({ id: 'cecollas.form.title.subProduct' }) },
-                ),
-              },
-            ],
-          },
-          render: (_dom: React.ReactNode, { productId }: any) => productId,
-        },
-      ];
-    },
-  },
-  {
     title: formatMessage({ id: 'cecollas.form.title.productId' }),
     dataIndex: ['config', 'productId'],
     width: 'md',
@@ -157,6 +123,85 @@ export const typeColumns = (type: string) => [
     },
     render: (_dom: React.ReactNode, { productId }: any) => productId,
   },
+  {
+    title: formatMessage({ id: 'cecollas.form.title.subProduct' }),
+    dataIndex: ['config', 'subProduct'],
+    width: 'md',
+    hideInForm: true,
+    render: (_dom: React.ReactNode, { subProduct }: any) => subProduct,
+  },
+  {
+    title: formatMessage({ id: 'cecollas.form.title.serverEndpoint' }),
+    dataIndex: ['config', 'serverEndpoint'],
+    width: 'md',
+    hideInForm: true,
+    render: (_dom: React.ReactNode, { serverEndpoint }: any) => serverEndpoint,
+  },
+  {
+    valueType: 'dependency',
+    name: ['config'],
+    hideInDescriptions: true,
+    columns: ({ config }: CecollasFormItem) => {
+      const mode = config.mode;
+      const isiThings = type === CecollasType.ITHINGS_IOTHUB_CEC;
+      const show = isiThings && mode === Mode.GATEWAY;
+
+      return [
+        {
+          valueType: 'group',
+          columns: [
+            {
+              title: formatMessage({ id: 'cecollas.form.title.subProduct' }),
+              dataIndex: ['config', 'subProduct'],
+              width: 'md',
+              hideInForm: !show,
+              fieldProps: {
+                placeholder: formatMessage(
+                  { id: 'placeholder.input' },
+                  { text: formatMessage({ id: 'cecollas.form.title.subProduct' }) },
+                ),
+              },
+              formItemProps: {
+                rules: [
+                  {
+                    required: true,
+                    message: formatMessage(
+                      { id: 'placeholder.input' },
+                      { text: formatMessage({ id: 'cecollas.form.title.subProduct' }) },
+                    ),
+                  },
+                ],
+              },
+            },
+            {
+              title: formatMessage({ id: 'cecollas.form.title.serverEndpoint' }),
+              dataIndex: ['config', 'serverEndpoint'],
+              width: 'md',
+              hideInForm: !isiThings,
+              fieldProps: {
+                placeholder: formatMessage(
+                  { id: 'placeholder.input' },
+                  { text: formatMessage({ id: 'cecollas.form.title.serverEndpoint' }) },
+                ),
+              },
+              formItemProps: {
+                rules: [
+                  {
+                    required: true,
+                    message: formatMessage(
+                      { id: 'placeholder.input' },
+                      { text: formatMessage({ id: 'cecollas.form.title.serverEndpoint' }) },
+                    ),
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ];
+    },
+  },
+
   {
     title: formatMessage({ id: 'cecollas.form.title.deviceName' }),
     dataIndex: ['config', 'deviceName'],
@@ -202,31 +247,6 @@ export const typeColumns = (type: string) => [
       ],
     },
     render: (_dom: React.ReactNode, { devicePsk }: any) => devicePsk,
-  },
-  {
-    title: formatMessage({ id: 'cecollas.form.title.serverEndpoint' }),
-    dataIndex: ['config', 'serverEndpoint'],
-    width: 'md',
-    hideInForm: type === CecollasType.TENCENT_IOTHUB_CEC,
-    hideInDescriptions: type === CecollasType.TENCENT_IOTHUB_CEC,
-    fieldProps: {
-      placeholder: formatMessage(
-        { id: 'placeholder.input' },
-        { text: formatMessage({ id: 'cecollas.form.title.serverEndpoint' }) },
-      ),
-    },
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: formatMessage(
-            { id: 'placeholder.input' },
-            { text: formatMessage({ id: 'cecollas.form.title.serverEndpoint' }) },
-          ),
-        },
-      ],
-    },
-    render: (_dom: React.ReactNode, { serverEndpoint }: any) => serverEndpoint,
   },
 ];
 

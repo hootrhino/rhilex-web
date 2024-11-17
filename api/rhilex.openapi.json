@@ -22938,8 +22938,7 @@
                   "gid",
                   "name",
                   "type",
-                  "config",
-                  "description"
+                  "config"
                 ],
                 "x-apifox-orders": [
                   "uuid",

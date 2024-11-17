@@ -5,7 +5,7 @@ export default {
   'cecollas.title.config': 'Cloud platform configuration',
   'cecollas.title.update': 'Edit cloud platform',
   'cecollas.title.new': 'New cloud platform',
-  'cecollas.title.detail': 'Cloud platform details',
+  'cecollas.title.detail': '{name} - Cloud platform details',
   'cecollas.title.list': 'Default group - Cloud platform list',
 
   /**

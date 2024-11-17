@@ -161,7 +161,22 @@
     icon: 'icon-menu-cecollas',
     hideChildrenInMenu: true,
     key: 'cecollas',
-    component: './Cecollas',
+    routes: [
+      {
+        path: '/cecollas',
+        redirect: '/cecollas/list',
+      },
+      {
+        path: '/cecollas/list',
+        title: 'menu.cecollas.list',
+        component: './Cecollas',
+      },
+      {
+        path: '/cecollas/detail/:uuid',
+        title: 'menu.cecollas.detail',
+        component: './Cecollas/Detail',
+      },
+    ],
   },
   {
     path: '/app',

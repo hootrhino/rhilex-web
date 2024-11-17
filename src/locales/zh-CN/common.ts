@@ -14,6 +14,7 @@ export default {
   'message.success.reboot': '重启成功',
   'message.success.reset': '重置成功',
   'message.success.clear': '清空成功',
+  'message.success.refresh': '刷新成功',
 
   /**
    * placeholder
@@ -132,4 +133,6 @@ export default {
   'menu.rule.update': '编辑规则配置',
   'menu.cm': '通信模组',
   'menu.cecollas': '云边协同',
+  'menu.cecollas.list': '云边协同列表',
+  'menu.cecollas.detail': '云边协同详情',
 };

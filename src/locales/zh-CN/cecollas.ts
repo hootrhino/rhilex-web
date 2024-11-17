@@ -5,7 +5,7 @@ export default {
   'cecollas.title.config': '云平台配置',
   'cecollas.title.update': '编辑云平台',
   'cecollas.title.new': '新建云平台',
-  'cecollas.title.detail': '云平台详情',
+  'cecollas.title.detail': '{name} - 云平台详情',
   'cecollas.title.list': '默认分组 - 云平台列表',
 
   /**

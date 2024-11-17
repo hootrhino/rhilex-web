@@ -169,7 +169,7 @@ export async function putCecollasUpdate(
     name: string;
     type: string;
     gid: string;
-    description: string;
+    description?: string;
     config: Record<string, any>;
   },
   options?: { [key: string]: any },

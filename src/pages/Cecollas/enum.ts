@@ -13,6 +13,11 @@ export enum Mode {
   DEVICE = 'DEVICE',
 }
 
+export enum Schema {
+  GATEWAY = 'gatewaySchema',
+  SUB_DEVICE = 'subDeviceSchema',
+}
+
 export const cecollasTypeOptions = {
   [CecollasType.TENCENT_IOTHUB_CEC]: formatMessage({ id: 'cecollas.type.tencent' }),
   [CecollasType.ITHINGS_IOTHUB_CEC]: formatMessage({ id: 'cecollas.type.ithings' }),

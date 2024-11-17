@@ -12,8 +12,9 @@ export default {
   'message.success.scan': 'Scanned successfully',
   'message.success.restart': 'Restarted successfully',
   'message.success.reboot': 'Rebooted successfully',
-  'message.success.reset': 'Reseted Successfully',
+  'message.success.reset': 'Reseted successfully',
   'message.success.clear': 'Cleared successfully',
+  'message.success.refresh': 'Refresh successfully',
 
   /**
    * placeholder
@@ -135,4 +136,6 @@ export default {
   'menu.rule.update': 'Edit Rule Configuration',
   'menu.cm': 'COM Module',
   'menu.cecollas': 'Cloud Edge Collaboration',
+  'menu.cecollas.list': 'Cloud Edge Collaboration List',
+  'menu.cecollas.detail': 'Cloud Edge Collaboration Detail',
 };
