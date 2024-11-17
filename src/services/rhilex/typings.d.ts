@@ -117,6 +117,10 @@ declare namespace API {
     uuid: string;
   };
 
+  type getCecollasCecollaSchemaParams = {
+    uuid: string;
+  };
+
   type getCecollasDetailParams = {
     uuid: string;
   };
@@ -124,7 +128,7 @@ declare namespace API {
   type getCecollasListByGroupParams = {
     current?: number;
     size?: number;
-    uuid: string;
+    gid: string;
   };
 
   type getCjt1882004MasterSheetListParams = {

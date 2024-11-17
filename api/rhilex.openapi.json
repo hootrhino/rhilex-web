@@ -22935,11 +22935,11 @@
                 },
                 "required": [
                   "uuid",
+                  "gid",
                   "name",
                   "type",
-                  "gid",
-                  "description",
-                  "config"
+                  "config",
+                  "description"
                 ],
                 "x-apifox-orders": [
                   "uuid",
@@ -22952,16 +22952,12 @@
                 "x-apifox-ignore-properties": []
               },
               "example": {
-                "uuid": "DEVICENSOWWG",
-                "name": "GENERIC_AIS",
-                "type": "GENERIC_AIS",
-                "schemaId": "123456",
-                "gid": "DROOT",
-                "description": "GENERIC_AIS",
-                "config": {
-                  "host": "0.0.0.0",
-                  "port": 6005
-                }
+                "uuid": "CECANCNGCDR",
+                "gid": "CEROOT",
+                "name": "ITHINGS_IOTHUB_CEC",
+                "type": "ITHINGS_IOTHUB_CEC",
+                "config": {},
+                "description": "ITHINGS_IOTHUB_CEC"
               }
             }
           }
@@ -23047,11 +23043,11 @@
             }
           },
           {
-            "name": "uuid",
+            "name": "gid",
             "in": "query",
             "description": "",
             "required": true,
-            "example": "ROOT",
+            "example": "CEROOT",
             "schema": {
               "type": "string"
             }
@@ -23100,35 +23096,71 @@
                               "type": {
                                 "type": "string"
                               },
+                              "action": {
+                                "type": "string"
+                              },
                               "state": {
                                 "type": "integer"
                               },
                               "errMsg": {
                                 "type": "string"
                               },
+                              "config": {
+                                "type": "object",
+                                "properties": {
+                                  "deviceName": {
+                                    "type": "string"
+                                  },
+                                  "devicePsk": {
+                                    "type": "string"
+                                  },
+                                  "mode": {
+                                    "type": "string"
+                                  },
+                                  "productId": {
+                                    "type": "string"
+                                  },
+                                  "serverEndpoint": {
+                                    "type": "string"
+                                  },
+                                  "subProduct": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "deviceName",
+                                  "devicePsk",
+                                  "mode",
+                                  "productId",
+                                  "serverEndpoint",
+                                  "subProduct"
+                                ],
+                                "x-apifox-ignore-properties": [],
+                                "x-apifox-orders": [
+                                  "deviceName",
+                                  "devicePsk",
+                                  "mode",
+                                  "productId",
+                                  "serverEndpoint",
+                                  "subProduct"
+                                ]
+                              },
                               "description": {
                                 "type": "string"
                               }
                             },
-                            "required": [
-                              "uuid",
-                              "gid",
-                              "name",
-                              "type",
-                              "state",
-                              "errMsg",
-                              "description"
-                            ],
+                            "x-apifox-ignore-properties": [],
                             "x-apifox-orders": [
                               "uuid",
                               "gid",
                               "name",
                               "type",
+                              "action",
                               "state",
                               "errMsg",
+                              "config",
                               "description"
-                            ],
-                            "x-apifox-ignore-properties": []
+                            ]
                           }
                         }
                       },
@@ -23138,13 +23170,13 @@
                         "total",
                         "records"
                       ],
+                      "x-apifox-ignore-properties": [],
                       "x-apifox-orders": [
                         "current",
                         "size",
                         "total",
                         "records"
-                      ],
-                      "x-apifox-ignore-properties": []
+                      ]
                     }
                   },
                   "required": [
@@ -23152,12 +23184,12 @@
                     "msg",
                     "data"
                   ],
+                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "code",
                     "msg",
                     "data"
-                  ],
-                  "x-apifox-ignore-properties": []
+                  ]
                 },
                 "examples": {
                   "1": {
@@ -23167,50 +23199,26 @@
                       "msg": "Success",
                       "data": {
                         "current": 1,
-                        "size": 2,
-                        "total": 2,
+                        "size": 10,
+                        "total": 1,
                         "records": [
                           {
-                            "uuid": "DEVICE4OFIDHZS",
-                            "gid": "DROOT",
-                            "name": "GENERIC_AIS_RECEIVER",
-                            "type": "GENERIC_AIS_RECEIVER",
-                            "schemaId": "PROPERDRAR6PAY",
+                            "uuid": "CECANCNGCDR",
+                            "gid": "CEROOT",
+                            "name": "ITHINGS_IOTHUB_CEC",
+                            "type": "ITHINGS_IOTHUB_CEC",
+                            "action": "--\n-- Go https://www.hootrhino.com for more tutorials\n--\n-- ID: CECANCNGCDR\n-- NAME = \"ITHINGS_IOTHUB_CEC\"\n-- DESCRIPTION = \"ITHINGS_IOTHUB_CEC\"\n--\n-- Action Main\n--\nfunction Main(Payload)\n\tDebug(\"== Payload ==\", Payload)\nend\n",
                             "state": 1,
+                            "errMsg": "",
                             "config": {
-                              "commonConfig": {
-                                "mode": "TCP",
-                                "parseAis": false
-                              },
-                              "hostConfig": {
-                                "host": "0.0.0.0",
-                                "port": 6006,
-                                "timeout": 3000
-                              },
-                              "portUuid": "COM12"
+                              "deviceName": "基站1",
+                              "devicePsk": "xSL17wB6+qtcj3n2Pqotfcr8WVE=",
+                              "mode": "GATEWAY",
+                              "productId": "01D",
+                              "serverEndpoint": "tcp://demo.ithings.net.cn:1883",
+                              "subProduct": "01J"
                             },
-                            "description": "GENERIC_AIS_RECEIVER"
-                          },
-                          {
-                            "uuid": "DEVICE8EWNMGZA",
-                            "gid": "DROOT",
-                            "name": "GENERIC_AIS_RECEIVER",
-                            "type": "GENERIC_AIS_RECEIVER",
-                            "schemaId": "",
-                            "state": 1,
-                            "config": {
-                              "commonConfig": {
-                                "mode": "TCP",
-                                "parseAis": false
-                              },
-                              "hostConfig": {
-                                "host": "0.0.0.0",
-                                "port": 6005,
-                                "timeout": 3000
-                              },
-                              "portUuid": "COM12"
-                            },
-                            "description": "GENERIC_AIS_RECEIVER"
+                            "description": "ITHINGS_IOTHUB_CEC"
                           }
                         ]
                       }
@@ -23649,6 +23657,304 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-231930339-run",
+        "security": []
+      }
+    },
+    "/api/v1/cecollas/cecollaSchema": {
+      "get": {
+        "summary": "获取物模型",
+        "x-apifox-folder": "云边协同",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "云边协同"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "12345678",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "gatewaySchema": {
+                          "type": "object",
+                          "properties": {
+                            "properties": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "mode": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string"
+                                  },
+                                  "mapping": {
+                                    "type": "null"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "name",
+                                  "mode",
+                                  "type",
+                                  "mapping"
+                                ],
+                                "x-apifox-ignore-properties": [],
+                                "x-apifox-orders": [
+                                  "id",
+                                  "name",
+                                  "mode",
+                                  "type",
+                                  "mapping"
+                                ]
+                              }
+                            },
+                            "events": {
+                              "type": "null"
+                            },
+                            "actions": {
+                              "type": "null"
+                            }
+                          },
+                          "required": [
+                            "properties",
+                            "events",
+                            "actions"
+                          ],
+                          "x-apifox-ignore-properties": [],
+                          "x-apifox-orders": [
+                            "properties",
+                            "events",
+                            "actions"
+                          ]
+                        },
+                        "subDeviceSchema": {
+                          "type": "object",
+                          "properties": {
+                            "properties": {
+                              "type": "null"
+                            },
+                            "events": {
+                              "type": "null"
+                            },
+                            "actions": {
+                              "type": "null"
+                            }
+                          },
+                          "required": [
+                            "properties",
+                            "events",
+                            "actions"
+                          ],
+                          "x-apifox-ignore-properties": [],
+                          "x-apifox-orders": [
+                            "properties",
+                            "events",
+                            "actions"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "gatewaySchema",
+                        "subDeviceSchema"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "gatewaySchema",
+                        "subDeviceSchema"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "gatewaySchema": {
+                          "properties": [
+                            {
+                              "id": "AX",
+                              "name": "AX",
+                              "mode": "r",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "AY",
+                              "name": "AY",
+                              "mode": "r",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "AZ",
+                              "name": "AZ",
+                              "mode": "r",
+                              "type": "float",
+                              "mapping": null
+                            }
+                          ],
+                          "events": null,
+                          "actions": null
+                        },
+                        "subDeviceSchema": {
+                          "properties": null,
+                          "events": null,
+                          "actions": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-234356934-run",
+        "security": []
+      }
+    },
+    "/api/v1/cecollas/updateAction": {
+      "put": {
+        "summary": "更新Action",
+        "x-apifox-folder": "云边协同",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "云边协同"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "action": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "action"
+                ],
+                "x-apifox-orders": [
+                  "uuid",
+                  "action"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "uuid": "CECANCNGCDR",
+                "action": "--\n-- Go https://www.hootrhino.com for more tutorials\n--\n-- ID: CECANCNGCDR\n-- NAME = \"ITHINGS_IOTHUB_CEC\"\n-- DESCRIPTION = \"ITHINGS_IOTHUB_CEC\"\n--\n-- Action Main\n--\nfunction Main(Payload)\n\tDebug(\"== Payload ==\", Payload)\nend\n"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  },
+                  "2": {
+                    "summary": "异常示例",
+                    "value": {
+                      "code": 400,
+                      "msg": "操作失败"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-234372826-run",
         "security": []
       }
     }

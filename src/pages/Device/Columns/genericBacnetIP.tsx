@@ -151,7 +151,7 @@ export const GENERIC_BACNET_IP = [
               const { data } = await getCecollasListByGroup({
                 current: 1,
                 size: 999,
-                uuid: DEFAULT_GROUP_KEY_CECOLLAS,
+                gid: DEFAULT_GROUP_KEY_CECOLLAS,
               });
 
               return data.records?.map((item) => ({ label: item.name, value: item.uuid }));

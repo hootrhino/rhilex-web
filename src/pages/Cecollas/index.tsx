@@ -30,12 +30,14 @@ import { groupData } from './enum';
 import Update from './Update';
 
 type CecollasItem = {
-  uuid: string;
-  name: string;
-  type: string;
-  state: number;
-  errMsg: string;
-  description: string;
+  uuid?: string;
+  gid?: string;
+  name?: string;
+  type?: string;
+  action?: string;
+  state?: number;
+  errMsg?: string;
+  description?: string;
   [key: string]: any;
 };
 
@@ -99,6 +101,8 @@ const Cecollas = () => {
   };
 
   const handleOnMenu = ({ key }: MenuInfo, { uuid }: CecollasItem) => {
+    if (!uuid) return;
+
     switch (key) {
       case 'restart':
         setOpen(true);
@@ -124,15 +128,15 @@ const Cecollas = () => {
 
         return (
           <Space>
-            <a key="detail" onClick={() => changeConfig({ open: true, uuid })}>
+            <a key="detail" onClick={() => uuid && changeConfig({ open: true, uuid })}>
               {formatMessage({ id: 'button.detail' })}
             </a>
-            <a key="edit" onClick={() => changeUpdateConfig({ open: true, uuid })}>
+            <a key="edit" onClick={() => uuid && changeUpdateConfig({ open: true, uuid })}>
               {formatMessage({ id: 'button.edit' })}
             </a>
             <Popconfirm
               title={formatMessage({ id: 'cecollas.popconfirm.title.remove' })}
-              onConfirm={() => remove({ uuid })}
+              onConfirm={() => uuid && remove({ uuid })}
               okText={formatMessage({ id: 'button.yes' })}
               cancelText={formatMessage({ id: 'button.no' })}
               key="remove"
@@ -198,7 +202,7 @@ const Cecollas = () => {
                 const { data } = await getCecollasListByGroup({
                   current,
                   size: pageSize,
-                  uuid: DEFAULT_GROUP_KEY_CECOLLAS,
+                  gid: DEFAULT_GROUP_KEY_CECOLLAS,
                 });
 
                 return Promise.resolve({

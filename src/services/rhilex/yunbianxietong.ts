@@ -17,6 +17,32 @@ export async function getCecollasCecollaErrMsg(
   });
 }
 
+/** 获取物模型 GET /api/v1/cecollas/cecollaSchema */
+export async function getCecollasCecollaSchema(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getCecollasCecollaSchemaParams,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    code: number;
+    msg: string;
+    data: {
+      gatewaySchema: {
+        properties: { id: string; name: string; mode: string; type: string; mapping: null }[];
+        events: null;
+        actions: null;
+      };
+      subDeviceSchema: { properties: null; events: null; actions: null };
+    };
+  }>('/api/v1/cecollas/cecollaSchema', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 新建云边协同 POST /api/v1/cecollas/create */
 export async function postCecollasCreate(
   body: {
@@ -94,13 +120,22 @@ export async function getCecollasListByGroup(
       size: number;
       total: number;
       records: {
-        uuid: string;
-        gid: string;
-        name: string;
-        type: string;
-        state: number;
-        errMsg: string;
-        description: string;
+        uuid?: string;
+        gid?: string;
+        name?: string;
+        type?: string;
+        action?: string;
+        state?: number;
+        errMsg?: string;
+        config: {
+          deviceName: string;
+          devicePsk: string;
+          mode: string;
+          productId: string;
+          serverEndpoint: string;
+          subProduct: string;
+        };
+        description?: string;
       }[];
     };
   }>('/api/v1/cecollas/listByGroup', {
@@ -140,6 +175,24 @@ export async function putCecollasUpdate(
   options?: { [key: string]: any },
 ) {
   return request<{ code: number; msg: string }>('/api/v1/cecollas/update', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 更新Action PUT /api/v1/cecollas/updateAction */
+export async function putCecollasUpdateAction(
+  body: {
+    uuid: string;
+    action: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{ code: number; msg: string; data: string[] }>('/api/v1/cecollas/updateAction', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

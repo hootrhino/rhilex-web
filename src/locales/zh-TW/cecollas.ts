@@ -13,6 +13,7 @@ export default {
    */
   'cecollas.form.title.gid': '分組',
   'cecollas.form.title.mode': '工作模式',
+  'cecollas.form.title.subProduct': '子產品名',
   'cecollas.form.title.productId': '產品 ID',
   'cecollas.form.title.deviceName': '設備名稱',
   'cecollas.form.title.devicePsk': '設備秘鑰',

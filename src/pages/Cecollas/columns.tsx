@@ -99,6 +99,42 @@ export const typeColumns = (type: string) => [
     render: (_dom: React.ReactNode, { mode }: any) => Mode[mode],
   },
   {
+    valueType: 'dependency',
+    name: ['config'],
+    columns: ({ config }: CecollasFormItem) => {
+      const mode = config.mode;
+      const show = type === CecollasType.ITHINGS_IOTHUB_CEC && mode === Mode.GATEWAY;
+
+      return [
+        {
+          title: formatMessage({ id: 'cecollas.form.title.subProduct' }),
+          dataIndex: ['config', 'subProduct'],
+          width: 'md',
+          hideInForm: !show,
+          hideInDescriptions: !show,
+          fieldProps: {
+            placeholder: formatMessage(
+              { id: 'placeholder.input' },
+              { text: formatMessage({ id: 'cecollas.form.title.subProduct' }) },
+            ),
+          },
+          formItemProps: {
+            rules: [
+              {
+                required: true,
+                message: formatMessage(
+                  { id: 'placeholder.input' },
+                  { text: formatMessage({ id: 'cecollas.form.title.subProduct' }) },
+                ),
+              },
+            ],
+          },
+          render: (_dom: React.ReactNode, { productId }: any) => productId,
+        },
+      ];
+    },
+  },
+  {
     title: formatMessage({ id: 'cecollas.form.title.productId' }),
     dataIndex: ['config', 'productId'],
     width: 'md',

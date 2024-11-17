@@ -13,6 +13,7 @@ export default {
    */
   'cecollas.form.title.gid': 'Group',
   'cecollas.form.title.mode': 'Mode',
+  'cecollas.form.title.subProduct': 'Sub Product Name',
   'cecollas.form.title.productId': 'Product ID',
   'cecollas.form.title.deviceName': 'Device Name',
   'cecollas.form.title.devicePsk': 'Device PSK',
