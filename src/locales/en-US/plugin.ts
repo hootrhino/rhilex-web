@@ -15,7 +15,6 @@ export default {
    * title
    */
   'plugin.title.ping': 'Test network speed',
-  'plugin.title.clients': 'Client list',
   'plugin.title.scan': 'Modbus scanner',
   'plugin.title.terminal': 'Terminal',
   'plugin.title.calc': 'Modbus CRC calculate',

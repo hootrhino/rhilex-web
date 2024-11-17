@@ -70,22 +70,6 @@ const Plugins = () => {
           </a>,
         ];
         break;
-      case PluginUUID.MQTT:
-        options = [
-          <a
-            key="detail"
-            onClick={() =>
-              handleOnDetail({
-                name: PluginName.CLIENTS,
-                titleId: 'plugin.title.clients',
-                args: [],
-              })
-            }
-          >
-            {formatMessage({ id: 'button.detail' })}
-          </a>,
-        ];
-        break;
       case PluginUUID.SCANNER:
         options = [
           <a

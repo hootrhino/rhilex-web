@@ -15,7 +15,6 @@ export default {
    * title
    */
   'plugin.title.ping': '網絡測速',
-  'plugin.title.clients': '客戶端列表',
   'plugin.title.scan': 'Modbus 掃描儀',
   'plugin.title.terminal': '終端',
   'plugin.title.calc': 'Modbus CRC 計算',

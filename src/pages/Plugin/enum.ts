@@ -1,7 +1,6 @@
 export enum PluginName {
   PING = 'ping',
   SCAN = 'scan',
-  CLIENTS = 'clients',
   KICKOUT = 'kickout',
   START = 'start',
   STOP = 'stop',
@@ -14,7 +13,6 @@ export enum PluginName {
 // 插件类型
 export enum PluginUUID {
   ICMP = 'ICMPSender',
-  MQTT = 'RHILEX-MqttServer',
   SCANNER = 'MODBUS_SCANNER',
   CRC = 'MODBUS_CRC_CALCULATOR',
   TERMINAL = 'WEB_TTYD_TERMINAL',

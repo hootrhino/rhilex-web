@@ -6,7 +6,6 @@ import { useRef } from 'react';
 import { defaultConfig } from '..';
 import { PluginName, PluginUUID } from '../enum';
 import type { PluginConfig, PluginParams } from '../typings';
-import ClientList from './ClientList';
 import ModbusCRC from './CRC';
 import Ngrok from './Ngrok';
 import Ping from './Ping';
@@ -60,7 +59,6 @@ const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
 
     switch (name) {
       case PluginName.NGROKC:
-      case PluginName.CLIENTS:
       case PluginName.START:
       case PluginName.TEL:
         footer = (
@@ -113,7 +111,6 @@ const Detail = ({ detailConfig, setDetailConfig }: DetailProps) => {
         {...detailConfig}
       >
         {detailConfig.name === PluginName.NGROKC && <Ngrok />}
-        {detailConfig.name === PluginName.CLIENTS && <ClientList />}
         {detailConfig.name === PluginName.START && <Terminal />}
         {detailConfig.name === PluginName.CRC && <ModbusCRC formRef={formRef} />}
         {detailConfig.name === PluginName.TEL && <TelemetryProtocol />}
