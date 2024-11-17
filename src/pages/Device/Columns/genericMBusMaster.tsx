@@ -66,19 +66,19 @@ export const GENERIC_MBUS_EN13433_MASTER = [
         columns: [
           {
             title: formatMessage({ id: 'device.form.title.cecollas.enable' }),
-            dataIndex: ['config', 'cellaConfig', 'enable'],
+            dataIndex: ['config', 'cecollaConfig', 'enable'],
             renderFormItem: () => <ProSegmented width="md" />,
-            render: (_dom: React.ReactNode, { cellaConfig }: DeviceItem) => (
-              <ProTag type={StatusType.BOOL}>{cellaConfig?.enable}</ProTag>
+            render: (_dom: React.ReactNode, { cecollaConfig }: DeviceItem) => (
+              <ProTag type={StatusType.BOOL}>{cecollaConfig?.enable}</ProTag>
             ),
           },
           {
             title: formatMessage({ id: 'device.form.title.cecollaId' }),
-            dataIndex: ['config', 'cellaConfig', 'cecollaId'],
+            dataIndex: ['config', 'cecollaConfig', 'cecollaId'],
             valueType: 'select',
             required: true,
-            hideInForm: config?.cellaConfig?.enable === 'false',
-            hideInDescriptions: !config?.cellaConfig?.enable,
+            hideInForm: config?.cecollaConfig?.enable === 'false',
+            hideInDescriptions: !config?.cecollaConfig?.enable,
             request: async () => {
               const { data } = await getCecollasListByGroup({
                 current: 1,
@@ -88,7 +88,8 @@ export const GENERIC_MBUS_EN13433_MASTER = [
 
               return data.records?.map((item) => ({ label: item.name, value: item.uuid }));
             },
-            render: (_dom: React.ReactNode, { cellaConfig }: DeviceItem) => cellaConfig?.cecollaId,
+            render: (_dom: React.ReactNode, { cecollaConfig }: DeviceItem) =>
+              cecollaConfig?.cecollaId,
           },
         ],
       },
