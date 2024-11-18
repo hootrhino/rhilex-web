@@ -7,6 +7,7 @@ export default {
   'cecollas.title.new': 'New cloud platform',
   'cecollas.title.detail': '{name} - Cloud platform details',
   'cecollas.title.list': 'Default group - Cloud platform list',
+  'cecollas.title.schemaJson': 'Schema JSON',
 
   /**
    * form
@@ -20,9 +21,31 @@ export default {
   'cecollas.form.title.serverEndpoint': 'Server Endpoints',
 
   /**
+   * table
+   */
+  'cecollas.table.title.name': 'Field Name',
+  'cecollas.table.title.type': 'Type',
+  'cecollas.table.title.mode': 'Read/Write Mode',
+  'cecollas.table.title.mapping': 'Others',
+
+  /**
+   * tabs
+   */
+  'cecollas.tab.gateway': 'Gateway Schema',
+  'cecollas.tab.subDevice': 'SubDevice Schema',
+  'cecollas.tab.properties': 'Properties',
+  'cecollas.tab.actions': 'Actions',
+  'cecollas.tab.events': 'Events',
+
+  /**
    * others
    */
   'cecollas.popconfirm.title.remove': 'Are you sure to delete this platform?',
   'cecollas.type.tencent': 'Tencent Cloud IoT Platform',
   'cecollas.type.ithings': 'iThings IoT Platform',
+  'cecollas.tooltip.readOnly': 'Read-only mode',
+  'cecollas.tooltip.readWrite': 'Read-write mode',
+  'cecollas.button.update': 'Update',
+  'cecollas.mode.readOnly': 'Read-only',
+  'cecollas.mode.readWrite': 'Read-write',
 };

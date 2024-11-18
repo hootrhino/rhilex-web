@@ -1,26 +1,30 @@
 import { ProTable } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 
 type PropertyProps = {
   data: Record<string, any>[];
 };
 
 const Property = ({ data }: PropertyProps) => {
+  const { formatMessage } = useIntl();
+
   const columns = [
     {
-      title: '字段名',
+      title: formatMessage({ id: 'cecollas.table.title.name' }),
       dataIndex: 'name',
     },
     {
-      title: '类型',
+      title: formatMessage({ id: 'cecollas.table.title.type' }),
       dataIndex: 'type',
     },
     {
-      title: '读写模式',
+      title: formatMessage({ id: 'cecollas.table.title.mode' }),
       dataIndex: 'mode',
-      renderText: (mode: string) => (mode === 'r' ? '只读' : '读写'),
+      renderText: (mode: string) =>
+        formatMessage({ id: `cecollas.mode.${mode === 'r' ? 'readOnly' : 'readWrite'}` }),
     },
     {
-      title: '其他',
+      title: formatMessage({ id: 'cecollas.table.title.mapping' }),
       dataIndex: 'mapping',
       valueType: 'jsonCode',
     },
@@ -28,7 +32,7 @@ const Property = ({ data }: PropertyProps) => {
 
   return (
     <ProTable
-      headerTitle={<div className="hidden">属性列表</div>}
+      headerTitle={<div className="hidden">{formatMessage({ id: 'cecollas.title.property' })}</div>}
       search={false}
       pagination={false}
       options={false}

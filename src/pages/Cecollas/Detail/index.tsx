@@ -86,29 +86,34 @@ const Detail = () => {
       }
       extra={
         <Button type="primary" key="reload" onClick={handleOnRefresh}>
-          刷新
+          {formatMessage({ id: 'button.refresh' })}
         </Button>
       }
       tabList={[
         {
-          tab: '网关物模型',
+          tab: formatMessage({ id: 'cecollas.tab.gateway' }),
           key: Schema.GATEWAY,
         },
         {
-          tab: '子设备物模型',
+          tab: formatMessage({ id: 'cecollas.tab.subDevice' }),
           key: Schema.SUB_DEVICE,
         },
       ]}
       tabActiveKey={activeSchema}
       onTabChange={(tab) => setModel(tab as Schema)}
       tabBarExtraContent={
-        <Tooltip title={readOnly ? '只读模式' : '读写模式'}>
+        <Tooltip
+          title={formatMessage({ id: `cecollas.tooltip.${readOnly ? 'readOnly' : 'readWrite'}` })}
+        >
           <Button icon={<BlockOutlined />} size="small" onClick={() => setMode(!readOnly)} />
         </Tooltip>
       }
     >
       {readOnly ? (
-        <ProCard title="物模型 JSON" className="network-card">
+        <ProCard
+          title={formatMessage({ id: 'cecollas.title.schemaJson' })}
+          className="network-card"
+        >
           <ProField
             text={
               activeSchema === Schema.GATEWAY
@@ -124,12 +129,12 @@ const Detail = () => {
           tabs={{
             items: [
               {
-                label: '属性',
+                label: formatMessage({ id: 'cecollas.tab.properties' }),
                 key: 'properties',
                 children: <Property data={schema?.[activeSchema]?.properties || []} />,
               },
               {
-                label: '行为',
+                label: formatMessage({ id: 'cecollas.tab.actions' }),
                 key: 'actions',
                 children: (
                   <Action
@@ -140,7 +145,7 @@ const Detail = () => {
                 ),
               },
               {
-                label: '事件',
+                label: formatMessage({ id: 'cecollas.tab.events' }),
                 key: 'events',
                 disabled: true,
               },

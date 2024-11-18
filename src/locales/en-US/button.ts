@@ -36,4 +36,5 @@ export default {
   'button.list': 'New {item}',
   'button.clear': 'Clear',
   'button.download': 'Download',
+  'button.refresh': 'Refresh',
 };

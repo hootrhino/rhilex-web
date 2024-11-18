@@ -40,7 +40,7 @@ const Action = ({ schema, data, refresh }: ActionProps) => {
       formRef={formRef}
       initialValues={{ action: data ? JSON.stringify(data) : '' }}
       submitter={{
-        searchConfig: { submitText: '更新' },
+        searchConfig: { submitText: formatMessage({ id: 'cecollas.button.update' }) },
         render: (props, dom) => <div className="flex justify-end gap-2">{dom}</div>,
       }}
       onFinish={async ({ action }) => {

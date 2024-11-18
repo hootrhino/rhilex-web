@@ -203,7 +203,6 @@ export const typeColumns = (type: string) => [
       ];
     },
   },
-
   {
     title: formatMessage({ id: 'cecollas.form.title.deviceName' }),
     dataIndex: ['config', 'deviceName'],

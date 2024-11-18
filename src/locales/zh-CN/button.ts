@@ -36,4 +36,5 @@ export default {
   'button.list': '新建 {item}',
   'button.clear': '清空',
   'button.download': '下载',
+  'button.refresh': '刷新',
 };
