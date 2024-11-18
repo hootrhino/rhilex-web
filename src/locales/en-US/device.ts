@@ -9,6 +9,7 @@ export default {
   'device.button.polling': 'Start Refresh',
   'device.button.import.sheet': 'Import Sheet',
   'device.button.export.sheet': 'Export Sheet',
+  'device.button.update.register': 'Update Register',
   'device.button.update.bulk': 'Bulk Update',
   'device.button.remove.bulk': 'Bulk Delete',
   'device.button.new.sheet': 'Add point',
@@ -39,11 +40,17 @@ export default {
   'device.modal.title.group.edit': 'Edit Group',
   'device.modal.title.group.remove': 'Are you sure to delete this group',
   'device.modal.title.upload.confirm': 'Import Sheet',
+  'device.modal.title.update.register': 'Update register',
 
   'device.modal.content.group.remove':
     'Please ensure no devices are mounted under this group before performing the deletion. If there are devices under the group, deletion is not permitted',
   'device.modal.content.remove.batchSheet':
     'This operation will delete multiple points at once. Please proceed with caution',
+  'device.modal.content.update.register.form.title': 'Value',
+  'device.modal.content.update.register.form.placeholder': 'Please enter a register value',
+  'device.modal.content.update.register.form.rule': 'Valid register values are {min}~{max}',
+  'device.modal.content.update.register.form.rule.valid':
+    'Please enter a valid number as the register value',
 
   /**
    * form

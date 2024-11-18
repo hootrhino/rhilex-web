@@ -9,6 +9,7 @@ export default {
   'device.button.polling': '開始刷新',
   'device.button.import.sheet': '導入點位表',
   'device.button.export.sheet': '導出點位表',
+  'device.button.update.register': '更新暫存器',
   'device.button.update.bulk': '批量更新',
   'device.button.remove.bulk': '批量刪除',
   'device.button.new.sheet': '添加點位',
@@ -39,10 +40,15 @@ export default {
   'device.modal.title.group.edit': '編輯分組',
   'device.modal.title.group.remove': '確定要刪除此分組？',
   'device.modal.title.upload.confirm': '導入點位表',
+  'device.modal.title.update.register': '更新暫存器',
 
   'device.modal.content.group.remove':
     '請確認該分組下無任何設備掛載後再執行刪除操作。若分組下有設備，則不允許刪除',
   'device.modal.content.remove.batchSheet': '此操作會一次性刪除多個點位，請謹慎操作',
+  'device.modal.content.update.register.form.title': '更新值',
+  'device.modal.content.update.register.form.placeholder': '請輸入暫存器值',
+  'device.modal.content.update.register.form.rule': '有效暫存器值為 {min}~{max}',
+  'device.modal.content.update.register.form.rule.valid': '請輸入一個有效的數字作為暫存器值',
 
   /**
    * form

@@ -150,3 +150,23 @@ export async function postModbusMasterSheetUpdate(
     },
   );
 }
+
+/** 写点位操作 POST /api/v1/modbus_master_sheet/writeModbusSheet */
+export async function postModbusMasterSheetWriteModbusSheet(
+  body: {
+    uuid: string;
+    tag: string;
+    type: string;
+    value: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/api/v1/modbus_master_sheet/writeModbusSheet', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}

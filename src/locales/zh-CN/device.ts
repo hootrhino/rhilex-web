@@ -9,6 +9,7 @@ export default {
   'device.button.polling': '开始刷新',
   'device.button.import.sheet': '导入点位表',
   'device.button.export.sheet': '导出点位表',
+  'device.button.update.register': '更新寄存器',
   'device.button.update.bulk': '批量更新',
   'device.button.remove.bulk': '批量删除',
   'device.button.new.sheet': '添加点位',
@@ -39,10 +40,15 @@ export default {
   'device.modal.title.group.edit': '编辑分组',
   'device.modal.title.group.remove': '确定要删除此分组？',
   'device.modal.title.upload.confirm': '导入点位表',
+  'device.modal.title.update.register': '更新寄存器',
 
   'device.modal.content.group.remove':
     '请确认该分组下无任何设备挂载后再执行删除操作。若分组下有设备，则不允许删除',
   'device.modal.content.remove.batchSheet': '此操作会一次性删除多个点位，请谨慎操作',
+  'device.modal.content.update.register.form.title': '更新值',
+  'device.modal.content.update.register.form.placeholder': '请输入寄存器值',
+  'device.modal.content.update.register.form.rule': '有效寄存器值为 {min}~{max}',
+  'device.modal.content.update.register.form.rule.valid': '请输入一个有效的数字作为寄存器值',
 
   /**
    * form

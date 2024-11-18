@@ -5,6 +5,8 @@ import {
   DeleteOutlined,
   DownloadOutlined,
   DownOutlined,
+  ExceptionOutlined,
+  FileSyncOutlined,
   LoadingOutlined,
   ReloadOutlined,
   UploadOutlined,
@@ -21,8 +23,11 @@ import { DeviceType } from '@/pages/Device/enum';
 import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
 import { defaultPagination, DEVICE_LIST } from '@/utils/constant';
 import { omit } from '@/utils/redash';
+import type { ItemType } from 'antd/es/menu/interface';
+import type { MenuInfo } from 'rc-menu/lib/interface';
 import UploadSheetConfirm from './ConfirmModal';
 import type { DataSheetItem, DataSheetProps, DataSheetValue } from './typings';
+import UpdateRegister from './UpdateRegister';
 
 const POLLING_INTERVAL = 3000;
 
@@ -62,6 +67,10 @@ const DataSheet = ({
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [polling, setPolling] = useState<number>(POLLING_INTERVAL);
   const [stopPolling, setStopPolling] = useState<boolean>(false);
+  const [updateRegisterData, setRegisterData] = useState<{
+    open: boolean;
+    data?: Partial<DataSheetItem>;
+  }>({ open: false });
 
   const disabled = selectedRowKeys?.length === 0;
   const hasEditabledItem = editableKeys.length > 0;
@@ -178,6 +187,52 @@ const DataSheet = ({
   // 导出点位表
   const handleOnDownload = () =>
     (window.location.href = `/api/v1/${downloadType[deviceType]}/sheetExport?device_uuid=${deviceId}`);
+
+  // Dropdown Menu
+  const getMenu = ({ status }: Partial<DataSheetItem>) => {
+    let menus: ItemType[] = [];
+
+    if (status === 0) {
+      menus = [
+        ...menus,
+        {
+          key: 'exception-detail',
+          label: formatMessage({ id: 'button.error' }),
+          icon: <ExceptionOutlined />,
+        },
+      ];
+    }
+    if (deviceType === DeviceType.GENERIC_MODBUS_MASTER) {
+      menus = [
+        ...menus,
+        {
+          key: 'update-register',
+          label: formatMessage({ id: 'device.button.update.register' }),
+          icon: <FileSyncOutlined />,
+        },
+      ];
+    }
+    return menus;
+  };
+
+  const handleOnMenu = ({ key }: MenuInfo, record: Partial<DataSheetItem>) => {
+    if (hasEditabledItem) {
+      handleOnOnlyOneEdit();
+    } else {
+      switch (key) {
+        case 'exception-detail':
+          modal.error({
+            title: formatMessage({ id: 'common.title.exception' }),
+            content: <div className="break-words">{record?.errMsg}</div>,
+            okText: formatMessage({ id: 'button.close' }),
+          });
+          break;
+        case 'update-register':
+          setRegisterData({ open: true, data: record });
+          break;
+      }
+    }
+  };
 
   const baseColumns: ProColumns<Partial<DataSheetItem>>[] = [
     {
@@ -296,28 +351,16 @@ const DataSheet = ({
               </a>
             </Popconfirm>
 
-            {record?.status === 0 && (
-              <Dropdown
-                menu={{
-                  items: [{ key: 'error', label: formatMessage({ id: 'button.error' }) }],
-                  onClick: () => {
-                    if (hasEditabledItem) {
-                      handleOnOnlyOneEdit();
-                    } else {
-                      modal.error({
-                        title: formatMessage({ id: 'common.title.exception' }),
-                        content: <div className="break-words">{record?.errMsg}</div>,
-                        okText: formatMessage({ id: 'button.close' }),
-                      });
-                    }
-                  },
-                }}
-              >
-                <a onClick={(e) => e.preventDefault()}>
-                  <DownOutlined />
-                </a>
-              </Dropdown>
-            )}
+            <Dropdown
+              menu={{
+                items: getMenu(record),
+                onClick: (info: MenuInfo) => handleOnMenu(info, record),
+              }}
+            >
+              <a onClick={(e) => e.preventDefault()}>
+                <DownOutlined />
+              </a>
+            </Dropdown>
           </Space>
         );
       },
@@ -419,42 +462,56 @@ const DataSheet = ({
   }, [deviceId]);
 
   return deviceId ? (
-    <PageContainer title={title} onBack={() => history.push(DEVICE_LIST)}>
-      <EditableProTable<Partial<DataSheetItem>>
-        controlled
-        columns={baseColumns}
-        polling={polling}
-        rootClassName="stripe-table"
-        recordCreatorProps={{
-          position: 'top',
-          creatorButtonText: formatMessage({ id: 'device.button.new.sheet' }),
-          record: () => ({
-            uuid: 'new',
-            tag: '',
-            alias: '',
-            ...defaultConfig,
-          }),
+    <>
+      <PageContainer title={title} onBack={() => history.push(DEVICE_LIST)}>
+        <EditableProTable<Partial<DataSheetItem>>
+          controlled
+          columns={baseColumns}
+          polling={polling}
+          rootClassName="stripe-table"
+          recordCreatorProps={{
+            position: 'top',
+            creatorButtonText: formatMessage({ id: 'device.button.new.sheet' }),
+            record: () => ({
+              uuid: 'new',
+              tag: '',
+              alias: '',
+              ...defaultConfig,
+            }),
+          }}
+          rowSelection={{
+            selectedRowKeys: selectedRowKeys,
+            onChange: setSelectedRowKeys,
+          }}
+          toolBarRender={() => toolBar}
+          pagination={defaultPagination}
+          editable={{
+            type: 'single',
+            editableKeys,
+            onSave: handleOnSave,
+            onChange: setEditableRowKeys,
+            actionRender: (_row, _config, defaultDom) => [defaultDom.save, defaultDom.cancel],
+            // onValuesChange: (_record, dataSource) => {
+            //   setEditableRows(dataSource);
+            // },
+          }}
+          scroll={scroll}
+          {...props}
+        />
+      </PageContainer>
+      <UpdateRegister
+        open={updateRegisterData.open}
+        onOpenChange={(visible: boolean) =>
+          setRegisterData({ open: visible, data: visible ? updateRegisterData.data : undefined })
+        }
+        data={{
+          uuid: deviceId,
+          tag: updateRegisterData.data?.tag as string,
+          type: updateRegisterData.data?.dataType,
         }}
-        rowSelection={{
-          selectedRowKeys: selectedRowKeys,
-          onChange: setSelectedRowKeys,
-        }}
-        toolBarRender={() => toolBar}
-        pagination={defaultPagination}
-        editable={{
-          type: 'single',
-          editableKeys,
-          onSave: handleOnSave,
-          onChange: setEditableRowKeys,
-          actionRender: (_row, _config, defaultDom) => [defaultDom.save, defaultDom.cancel],
-          // onValuesChange: (_record, dataSource) => {
-          //   setEditableRows(dataSource);
-          // },
-        }}
-        scroll={scroll}
-        {...props}
+        dataType={updateRegisterData.data?.dataType}
       />
-    </PageContainer>
+    </>
   ) : (
     <>
       <ProDescriptions

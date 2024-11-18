@@ -23762,7 +23762,42 @@
                           "type": "object",
                           "properties": {
                             "properties": {
-                              "type": "null"
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "mode": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string"
+                                  },
+                                  "mapping": {
+                                    "type": "null"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "name",
+                                  "mode",
+                                  "type",
+                                  "mapping"
+                                ],
+                                "x-apifox-ignore-properties": [],
+                                "x-apifox-orders": [
+                                  "id",
+                                  "name",
+                                  "mode",
+                                  "type",
+                                  "mapping"
+                                ]
+                              }
                             },
                             "events": {
                               "type": "null"
@@ -23817,23 +23852,65 @@
                         "gatewaySchema": {
                           "properties": [
                             {
-                              "id": "AX",
-                              "name": "AX",
-                              "mode": "r",
+                              "id": "p5",
+                              "name": "属性5",
+                              "mode": "rw",
                               "type": "float",
                               "mapping": null
                             },
                             {
-                              "id": "AY",
-                              "name": "AY",
-                              "mode": "r",
+                              "id": "p6",
+                              "name": "属性6",
+                              "mode": "rw",
                               "type": "float",
                               "mapping": null
                             },
                             {
-                              "id": "AZ",
-                              "name": "AZ",
-                              "mode": "r",
+                              "id": "p7",
+                              "name": "属性7",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p8",
+                              "name": "属性8",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p10",
+                              "name": "属性10",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p1",
+                              "name": "属性1",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p2",
+                              "name": "属性2",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p3",
+                              "name": "属性3",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p9",
+                              "name": "属性9",
+                              "mode": "rw",
                               "type": "float",
                               "mapping": null
                             }
@@ -23842,7 +23919,71 @@
                           "actions": null
                         },
                         "subDeviceSchema": {
-                          "properties": null,
+                          "properties": [
+                            {
+                              "id": "p1",
+                              "name": "属性1",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p2",
+                              "name": "属性2",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p3",
+                              "name": "属性3",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p6",
+                              "name": "属性6",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p8",
+                              "name": "属性8",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p5",
+                              "name": "属性5",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p7",
+                              "name": "属性7",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p9",
+                              "name": "属性9",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            },
+                            {
+                              "id": "p10",
+                              "name": "属性10",
+                              "mode": "rw",
+                              "type": "float",
+                              "mapping": null
+                            }
+                          ],
                           "events": null,
                           "actions": null
                         }
@@ -23954,6 +24095,73 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-234372826-run",
+        "security": []
+      }
+    },
+    "/api/v1/modbus_master_sheet/writeModbusSheet": {
+      "post": {
+        "summary": "写点位操作",
+        "x-apifox-folder": "ModbusMaster点位管理",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ModbusMaster点位管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "tag": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "tag",
+                  "type",
+                  "value"
+                ],
+                "x-apifox-ignore-properties": [],
+                "x-apifox-orders": [
+                  "uuid",
+                  "tag",
+                  "type",
+                  "value"
+                ]
+              },
+              "example": ""
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-234765987-run",
         "security": []
       }
     }

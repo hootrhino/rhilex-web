@@ -97,6 +97,18 @@ const byte4Options = [
   },
 ];
 
+export enum DataType {
+  INT16 = 'INT16',
+  INT32 = 'INT32',
+  FLOAT32 = 'FLOAT32',
+  UINT16 = 'UINT16',
+  UINT32 = 'UINT32',
+  UFLOAT32 = 'UFLOAT32',
+  RAW = 'RAW',
+  BYTE = 'BYTE',
+  UTF8 = 'UTF8',
+}
+
 // 基本数据类型
 export const baseOptions = [
   {

@@ -32,7 +32,11 @@ export async function getCecollasCecollaSchema(
         events: null;
         actions: null;
       };
-      subDeviceSchema: { properties: null; events: null; actions: null };
+      subDeviceSchema: {
+        properties: { id: string; name: string; mode: string; type: string; mapping: null }[];
+        events: null;
+        actions: null;
+      };
     };
   }>('/api/v1/cecollas/cecollaSchema', {
     method: 'GET',
