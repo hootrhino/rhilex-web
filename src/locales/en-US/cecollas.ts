@@ -8,6 +8,7 @@ export default {
   'cecollas.title.detail': '{name} - Cloud platform details',
   'cecollas.title.list': 'Default group - Cloud platform list',
   'cecollas.title.schemaJson': 'Schema JSON',
+  'cecollas.title.action': '{name} - Action callback',
 
   /**
    * form
@@ -23,10 +24,14 @@ export default {
   /**
    * table
    */
-  'cecollas.table.title.name': 'Field Name',
+  'cecollas.table.title.id': 'ID',
+  'cecollas.table.title.propertyName': 'Property Name',
+  'cecollas.table.title.actionName': 'Action Name',
   'cecollas.table.title.type': 'Type',
   'cecollas.table.title.mode': 'Read/Write Mode',
   'cecollas.table.title.mapping': 'Others',
+  'cecollas.table.title.input': 'Input Params',
+  'cecollas.table.title.output': 'Output Params',
 
   /**
    * tabs

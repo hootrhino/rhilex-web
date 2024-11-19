@@ -133,6 +133,7 @@ export default {
   'menu.rule.update': '編輯規則配置',
   'menu.cm': '通訊模組',
   'menu.cecollas': '雲邊協同',
-  'menu.cecollas.list': '雲邊協同列表',
-  'menu.cecollas.detail': '雲邊協同詳情',
+  'menu.cecollas.list': '雲端平台列表',
+  'menu.cecollas.detail': '雲端平台詳情',
+  'menu.cecollas.action': '本地回調',
 };

@@ -14,6 +14,7 @@ import {
   DownOutlined,
   ExceptionOutlined,
   FolderOpenOutlined,
+  FormOutlined,
   PlusOutlined,
   PoweroffOutlined,
 } from '@ant-design/icons';
@@ -28,7 +29,7 @@ import { baseColumns } from './columns';
 import { groupData } from './enum';
 import Update from './Update';
 
-type CecollasItem = {
+export type CecollasItem = {
   uuid?: string;
   gid?: string;
   name?: string;
@@ -82,6 +83,11 @@ const Cecollas = () => {
         icon: <PoweroffOutlined />,
         danger: true,
       },
+      {
+        key: 'action',
+        label: '本地回调',
+        icon: <FormOutlined />,
+      },
     ] as ItemType[];
 
     if (state === 0) {
@@ -105,6 +111,9 @@ const Cecollas = () => {
       case 'restart':
         setOpen(true);
         setActiveCecollas(uuid);
+        break;
+      case 'action':
+        history.push(`/cecollas/action/${uuid}`);
         break;
       case 'error':
         getErrorMsg({ uuid });
@@ -159,7 +168,7 @@ const Cecollas = () => {
 
   return (
     <>
-      <PageContainer>
+      <PageContainer title="云边协同列表">
         <ProCard split="vertical">
           <ProCard
             colSpan="270px"

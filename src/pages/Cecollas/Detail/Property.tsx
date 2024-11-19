@@ -10,7 +10,11 @@ const Property = ({ data }: PropertyProps) => {
 
   const columns = [
     {
-      title: formatMessage({ id: 'cecollas.table.title.name' }),
+      title: formatMessage({ id: 'cecollas.table.title.id' }),
+      dataIndex: 'id',
+    },
+    {
+      title: formatMessage({ id: 'cecollas.table.title.propertyName' }),
       dataIndex: 'name',
     },
     {
@@ -26,7 +30,8 @@ const Property = ({ data }: PropertyProps) => {
     {
       title: formatMessage({ id: 'cecollas.table.title.mapping' }),
       dataIndex: 'mapping',
-      valueType: 'jsonCode',
+      ellipsis: true,
+      renderText: (mapping: Record<string, any>[]) => (mapping ? JSON.stringify(mapping) : '-'),
     },
   ];
 

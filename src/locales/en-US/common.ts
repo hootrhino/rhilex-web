@@ -136,6 +136,7 @@ export default {
   'menu.rule.update': 'Edit Rule Configuration',
   'menu.cm': 'COM Module',
   'menu.cecollas': 'Cloud Edge Collaboration',
-  'menu.cecollas.list': 'Cloud Edge Collaboration List',
-  'menu.cecollas.detail': 'Cloud Edge Collaboration Detail',
+  'menu.cecollas.list': 'Cloud Platform List',
+  'menu.cecollas.detail': 'Cloud Platform Details',
+  'menu.cecollas.action': 'Action Callback',
 };

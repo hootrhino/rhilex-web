@@ -17,18 +17,6 @@ export enum ObjectType {
   // MV = 'MV',
 }
 
-export const ObjectTypeOption = {
-  [ObjectType.AI]: formatMessage({ id: 'device.bacnet.objectType.ai' }), // AI 模拟输入
-  // [ObjectType.AO]: 'AO 模拟输出',
-  // [ObjectType.AV]: 'AV 模拟值',
-  // [ObjectType.BI]: 'BI 二进制输入',
-  // [ObjectType.BO]: 'BO 二进制输出',
-  // [ObjectType.BV]: 'BV 二进制值',
-  // [ObjectType.MI]: 'MI 多状态输入',
-  // [ObjectType.MO]: 'MO 多状态输出',
-  // [ObjectType.MV]: 'MV 多状态值',
-};
-
 /**
  * MBUS
  */
@@ -41,136 +29,41 @@ export enum MBusDeviceType {
   PROTOCOL_CONVERTER = 'PROTOCOL_CONVERTER', // 协议转换器，具备较强的逻辑处理能力，可主动采集和转换数据
 }
 
-export const mBusDeviceTypeOptions = {
-  [MBusDeviceType.HEAT_METER]: formatMessage({ id: 'device.mbus.type.heatMeter' }),
-  [MBusDeviceType.WATER_METER]: formatMessage({ id: 'device.mbus.type.waterMeter' }),
-  [MBusDeviceType.GAS_METER]: formatMessage({ id: 'device.mbus.type.gasMeter' }),
-  [MBusDeviceType.ELECTRIC_METER]: formatMessage({ id: 'device.mbus.type.elecMeter' }),
-  [MBusDeviceType.TRANSPARENT]: formatMessage({ id: 'device.mbus.type.transparent' }),
-  [MBusDeviceType.PROTOCOL_CONVERTER]: formatMessage({ id: 'device.mbus.type.protocol' }),
-};
-
 /**
  * Modbus
  */
-// 不转换-字节序
-const orderRawOption = [
-  {
-    value: 'DCBA',
-    label: 'DCBA',
-  },
-];
-
-// 1个字节-字节序
-export const byte1Options = [
-  {
-    value: 'A',
-    label: 'A',
-  },
-];
-
-// 2个字节-字节序
-const byte2Options = [
-  {
-    value: 'AB',
-    label: 'AB',
-  },
-  {
-    value: 'BA',
-    label: 'BA',
-  },
-];
-
-// 4个字节-字节序
-const byte4Options = [
-  {
-    value: 'ABCD',
-    label: 'ABCD',
-  },
-  {
-    value: 'DCBA',
-    label: 'DCBA',
-  },
-  {
-    value: 'CDAB',
-    label: 'CDAB',
-  },
-];
-
-export enum ModbusDataType {
+enum BaseDataType {
   INT16 = 'INT16',
   INT32 = 'INT32',
   FLOAT32 = 'FLOAT32',
   UINT16 = 'UINT16',
   UINT32 = 'UINT32',
   UFLOAT32 = 'UFLOAT32',
+}
+
+export enum ModbusDataType {
+  INT16 = BaseDataType.INT16,
+  INT32 = BaseDataType.INT32,
+  FLOAT32 = BaseDataType.FLOAT32,
+  UINT16 = BaseDataType.UINT16,
+  UINT32 = BaseDataType.UINT32,
+  UFLOAT32 = BaseDataType.UFLOAT32,
   RAW = 'RAW',
   BOOL = 'BOOL',
   UTF8 = 'UTF8',
 }
 
-// 基本数据类型
-export const baseOptions = [
-  {
-    value: 'INT16',
-    label: `Int16（2 ${formatMessage({ id: 'device.unit.byte' })}）`,
-    children: byte2Options,
-  },
-  {
-    value: 'INT32',
-    label: `Int32（4 ${formatMessage({ id: 'device.unit.byte' })}）`,
-    children: byte4Options,
-  },
-  {
-    value: 'FLOAT32',
-    label: `Float32（4 ${formatMessage({ id: 'device.unit.byte' })}）`,
-    children: byte4Options,
-  },
-  {
-    value: 'UINT16',
-    label: `UInt16（2 ${formatMessage({ id: 'device.unit.byte' })}）`,
-    children: byte2Options,
-  },
-  {
-    value: 'UINT32',
-    label: `UInt32（4 ${formatMessage({ id: 'device.unit.byte' })}）`,
-    children: byte4Options,
-  },
-  {
-    value: 'UFLOAT32',
-    label: `UFloat32（4 ${formatMessage({ id: 'device.unit.byte' })}）`,
-    children: byte4Options,
-  },
-];
-
-// modbus 数据类型
-export const modbusDataTypeOptions = [
-  {
-    value: 'RAW',
-    label: `RAW（0-256 ${formatMessage({ id: 'device.unit.byte' })}）`,
-    children: orderRawOption,
-  },
-  {
-    value: 'BOOL',
-    label: `Bool ${formatMessage({ id: 'device.unit.byte' })}）`,
-    children: byte1Options,
-  },
-  ...baseOptions,
-  {
-    value: 'UTF8',
-    label: `UTF8（1-256 ${formatMessage({ id: 'device.unit.byte' })}）`,
-    children: [
-      {
-        value: 'BIG_ENDIAN',
-        label: formatMessage({ id: 'device.bigEndian' }),
-      },
-      {
-        value: 'LITTLE_ENDIAN',
-        label: formatMessage({ id: 'device.littleEndian' }),
-      },
-    ],
-  },
-];
+export enum PLCDataType {
+  INT16 = BaseDataType.INT16,
+  INT32 = BaseDataType.INT32,
+  FLOAT32 = BaseDataType.FLOAT32,
+  UINT16 = BaseDataType.UINT16,
+  UINT32 = BaseDataType.UINT32,
+  UFLOAT32 = BaseDataType.UFLOAT32,
+  BYTE = 'BYTE',
+  I = 'I',
+  Q = 'Q',
+}
 
 export enum Quantity {
   UTF8 = 0,
@@ -184,27 +77,15 @@ export enum Quantity {
   RAW = 4,
 }
 
-/**
- * PLC
- */
-export const plcDataTypeOptions = [
-  {
-    value: 'BYTE',
-    label: `Byte（1 ${formatMessage({ id: 'device.unit.byte' })}）`,
-    children: byte1Options,
-  },
-  {
-    value: 'I',
-    label: `I（1 ${formatMessage({ id: 'device.unit.byte' })}）`,
-    children: byte1Options,
-  },
-  {
-    value: 'Q',
-    label: `Q（1 ${formatMessage({ id: 'device.unit.byte' })}）`,
-    children: byte1Options,
-  },
-  ...baseOptions,
-];
+// 字节序
+export enum ByteOrder {
+  A = 'A',
+  AB = 'AB',
+  BA = 'BA',
+  ABCD = 'ABCD',
+  DCBA = 'DCBA',
+  CDAB = 'CDAB',
+}
 
 /**
  * SZY2062016Master
@@ -227,6 +108,157 @@ export enum MeterType {
   FCComprehensive = '14',
   FCWaterPressure = '15',
 }
+
+export const objectTypeOption = {
+  [ObjectType.AI]: formatMessage({ id: 'device.bacnet.objectType.ai' }), // AI 模拟输入
+  // [ObjectType.AO]: 'AO 模拟输出',
+  // [ObjectType.AV]: 'AV 模拟值',
+  // [ObjectType.BI]: 'BI 二进制输入',
+  // [ObjectType.BO]: 'BO 二进制输出',
+  // [ObjectType.BV]: 'BV 二进制值',
+  // [ObjectType.MI]: 'MI 多状态输入',
+  // [ObjectType.MO]: 'MO 多状态输出',
+  // [ObjectType.MV]: 'MV 多状态值',
+};
+
+export const mBusDeviceTypeOptions = {
+  [MBusDeviceType.HEAT_METER]: formatMessage({ id: 'device.mbus.type.heatMeter' }),
+  [MBusDeviceType.WATER_METER]: formatMessage({ id: 'device.mbus.type.waterMeter' }),
+  [MBusDeviceType.GAS_METER]: formatMessage({ id: 'device.mbus.type.gasMeter' }),
+  [MBusDeviceType.ELECTRIC_METER]: formatMessage({ id: 'device.mbus.type.elecMeter' }),
+  [MBusDeviceType.TRANSPARENT]: formatMessage({ id: 'device.mbus.type.transparent' }),
+  [MBusDeviceType.PROTOCOL_CONVERTER]: formatMessage({ id: 'device.mbus.type.protocol' }),
+};
+
+/**
+ * Modbus
+ */
+
+// 1个字节-字节序
+const byte1Options = [
+  {
+    value: ByteOrder.A,
+    label: ByteOrder.A,
+  },
+];
+
+// 2个字节-字节序
+const byte2Options = [
+  {
+    value: ByteOrder.AB,
+    label: ByteOrder.AB,
+  },
+  {
+    value: ByteOrder.BA,
+    label: ByteOrder.BA,
+  },
+];
+
+// 4个字节-字节序
+const byte4Options = [
+  {
+    value: ByteOrder.ABCD,
+    label: ByteOrder.ABCD,
+  },
+  {
+    value: ByteOrder.DCBA,
+    label: ByteOrder.DCBA,
+  },
+  {
+    value: ByteOrder.CDAB,
+    label: ByteOrder.CDAB,
+  },
+];
+
+// 基本数据类型
+export const baseOptions = [
+  {
+    value: BaseDataType.INT16,
+    label: `Int16（2 ${formatMessage({ id: 'device.unit.byte' })}）`,
+    children: byte2Options,
+  },
+  {
+    value: BaseDataType.INT32,
+    label: `Int32（4 ${formatMessage({ id: 'device.unit.byte' })}）`,
+    children: byte4Options,
+  },
+  {
+    value: BaseDataType.FLOAT32,
+    label: `Float32（4 ${formatMessage({ id: 'device.unit.byte' })}）`,
+    children: byte4Options,
+  },
+  {
+    value: BaseDataType.UINT16,
+    label: `UInt16（2 ${formatMessage({ id: 'device.unit.byte' })}）`,
+    children: byte2Options,
+  },
+  {
+    value: BaseDataType.UINT32,
+    label: `UInt32（4 ${formatMessage({ id: 'device.unit.byte' })}）`,
+    children: byte4Options,
+  },
+  {
+    value: BaseDataType.UFLOAT32,
+    label: `UFloat32（4 ${formatMessage({ id: 'device.unit.byte' })}）`,
+    children: byte4Options,
+  },
+];
+
+// modbus 数据类型
+export const modbusDataTypeOptions = [
+  {
+    value: ModbusDataType.RAW,
+    label: `RAW（0-256 ${formatMessage({ id: 'device.unit.byte' })}）`,
+    children: [
+      {
+        value: ByteOrder.DCBA,
+        label: ByteOrder.DCBA,
+      },
+    ],
+  },
+  {
+    value: ModbusDataType.BOOL,
+    label: `Bool ${formatMessage({ id: 'device.unit.byte' })}）`,
+    children: byte1Options,
+  },
+  ...baseOptions,
+  {
+    value: ModbusDataType.UTF8,
+    label: `UTF8（1-256 ${formatMessage({ id: 'device.unit.byte' })}）`,
+    children: [
+      {
+        value: 'BIG_ENDIAN',
+        label: formatMessage({ id: 'device.bigEndian' }),
+      },
+      {
+        value: 'LITTLE_ENDIAN',
+        label: formatMessage({ id: 'device.littleEndian' }),
+      },
+    ],
+  },
+];
+
+/**
+ * PLC
+ */
+export const plcDataTypeOptions = [
+  {
+    value: PLCDataType.BYTE,
+    label: `Byte（1 ${formatMessage({ id: 'device.unit.byte' })}）`,
+    children: byte1Options,
+  },
+  {
+    value: PLCDataType.I,
+    label: `I（1 ${formatMessage({ id: 'device.unit.byte' })}）`,
+    children: byte1Options,
+  },
+  {
+    value: PLCDataType.Q,
+    label: `Q（1 ${formatMessage({ id: 'device.unit.byte' })}）`,
+    children: byte1Options,
+  },
+  ...baseOptions,
+];
 
 export const meterTypeOptions = {
   [MeterType.FCCommand]: formatMessage({ id: 'device.meterType.command' }),

@@ -136,13 +136,7 @@ const Detail = () => {
               {
                 label: formatMessage({ id: 'cecollas.tab.actions' }),
                 key: 'actions',
-                children: (
-                  <Action
-                    schema={activeSchema}
-                    data={schema?.[activeSchema]?.actions}
-                    refresh={() => uuid && getSchema({ uuid })}
-                  />
-                ),
+                children: <Action data={schema?.[activeSchema]?.actions || []} />,
               },
               {
                 label: formatMessage({ id: 'cecollas.tab.events' }),

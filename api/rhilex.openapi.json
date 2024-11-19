@@ -23740,10 +23740,134 @@
                               }
                             },
                             "events": {
-                              "type": "null"
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string"
+                                  },
+                                  "params": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "type": {
+                                          "type": "string"
+                                        },
+                                        "mapping": {
+                                          "type": "null"
+                                        }
+                                      },
+                                      "x-apifox-ignore-properties": [],
+                                      "x-apifox-orders": [
+                                        "id",
+                                        "name",
+                                        "type",
+                                        "mapping"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "x-apifox-ignore-properties": [],
+                                "x-apifox-orders": [
+                                  "id",
+                                  "name",
+                                  "type",
+                                  "params"
+                                ]
+                              }
                             },
                             "actions": {
-                              "type": "null"
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "dir": {
+                                    "type": "string"
+                                  },
+                                  "input": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "type": {
+                                          "type": "string"
+                                        },
+                                        "mapping": {
+                                          "type": "null"
+                                        }
+                                      },
+                                      "x-apifox-ignore-properties": [],
+                                      "x-apifox-orders": [
+                                        "id",
+                                        "name",
+                                        "type",
+                                        "mapping"
+                                      ]
+                                    }
+                                  },
+                                  "output": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "type": {
+                                          "type": "string"
+                                        },
+                                        "mapping": {
+                                          "type": "null"
+                                        }
+                                      },
+                                      "x-apifox-ignore-properties": [],
+                                      "x-apifox-orders": [
+                                        "id",
+                                        "name",
+                                        "type",
+                                        "mapping"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "x-apifox-ignore-properties": [],
+                                "x-apifox-orders": [
+                                  "id",
+                                  "name",
+                                  "dir",
+                                  "input",
+                                  "output"
+                                ]
+                              }
                             }
                           },
                           "required": [
@@ -23800,10 +23924,134 @@
                               }
                             },
                             "events": {
-                              "type": "null"
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string"
+                                  },
+                                  "params": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "type": {
+                                          "type": "string"
+                                        },
+                                        "mapping": {
+                                          "type": "null"
+                                        }
+                                      },
+                                      "x-apifox-ignore-properties": [],
+                                      "x-apifox-orders": [
+                                        "id",
+                                        "name",
+                                        "type",
+                                        "mapping"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "x-apifox-ignore-properties": [],
+                                "x-apifox-orders": [
+                                  "id",
+                                  "name",
+                                  "type",
+                                  "params"
+                                ]
+                              }
                             },
                             "actions": {
-                              "type": "null"
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "dir": {
+                                    "type": "string"
+                                  },
+                                  "input": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "type": {
+                                          "type": "string"
+                                        },
+                                        "mapping": {
+                                          "type": "null"
+                                        }
+                                      },
+                                      "x-apifox-ignore-properties": [],
+                                      "x-apifox-orders": [
+                                        "id",
+                                        "name",
+                                        "type",
+                                        "mapping"
+                                      ]
+                                    }
+                                  },
+                                  "output": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "type": {
+                                          "type": "string"
+                                        },
+                                        "mapping": {
+                                          "type": "null"
+                                        }
+                                      },
+                                      "x-apifox-ignore-properties": [],
+                                      "x-apifox-orders": [
+                                        "id",
+                                        "name",
+                                        "type",
+                                        "mapping"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "x-apifox-ignore-properties": [],
+                                "x-apifox-orders": [
+                                  "id",
+                                  "name",
+                                  "dir",
+                                  "input",
+                                  "output"
+                                ]
+                              }
                             }
                           },
                           "required": [

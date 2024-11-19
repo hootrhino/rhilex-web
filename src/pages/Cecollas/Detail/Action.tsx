@@ -1,68 +1,46 @@
-import CodeEditor, { Lang } from '@/components/CodeEditor';
-import { message } from '@/components/PopupHack';
-import RuleExample from '@/components/RuleExample';
-import { putCecollasUpdateAction } from '@/services/rhilex/yunbianxietong';
-import { ProField, ProForm, ProFormInstance } from '@ant-design/pro-components';
-import { useIntl, useParams } from '@umijs/max';
-import { Empty } from 'antd';
-import { useRef } from 'react';
-import { Schema } from '../enum';
+import { ProTable } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 
 type ActionProps = {
-  schema: Schema;
-  data: string | undefined | null;
-  refresh: () => void;
+  data: Record<string, any>[];
 };
 
-const Action = ({ schema, data, refresh }: ActionProps) => {
+const Action = ({ data }: ActionProps) => {
   const { formatMessage } = useIntl();
-  const formRef = useRef<ProFormInstance>();
-  const { uuid } = useParams();
 
-  // 格式化代码
-  const handleOnFormatCode = () => {
-    const code = formRef.current?.getFieldValue('action');
-    const formatCode = JSON.stringify(JSON.parse(code), null, 2);
-    console.log(code, formatCode);
-    formRef.current?.setFieldsValue({ action: formatCode });
-  };
+  const columns = [
+    {
+      title: formatMessage({ id: 'cecollas.table.title.id' }),
+      dataIndex: 'id',
+    },
+    {
+      title: formatMessage({ id: 'cecollas.table.title.actionName' }),
+      dataIndex: 'name',
+    },
+    {
+      title: formatMessage({ id: 'cecollas.table.title.input' }),
+      dataIndex: 'input',
+      ellipsis: true,
+      renderText: (input: Record<string, any>[]) => (input ? JSON.stringify(input) : '-'),
+    },
+    {
+      title: formatMessage({ id: 'cecollas.table.title.output' }),
+      dataIndex: 'output',
+      ellipsis: true,
+      renderText: (input: Record<string, any>[]) => (input ? JSON.stringify(input) : '-'),
+    },
+  ];
 
-  return schema === Schema.SUB_DEVICE ? (
-    <div className="network-card mt-4">
-      {data ? (
-        <ProField text={data || ''} valueType="jsonCode" mode="read" />
-      ) : (
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-      )}
-    </div>
-  ) : (
-    <ProForm
-      formRef={formRef}
-      initialValues={{ action: data ? JSON.stringify(data) : '' }}
-      submitter={{
-        searchConfig: { submitText: formatMessage({ id: 'cecollas.button.update' }) },
-        render: (props, dom) => <div className="flex justify-end gap-2">{dom}</div>,
-      }}
-      onFinish={async ({ action }) => {
-        if (!uuid) return;
-        const params = {
-          uuid,
-          action: action ? JSON.stringify(action) : '',
-        };
-
-        await putCecollasUpdateAction(params);
-        refresh();
-        message.success(formatMessage({ id: 'message.success.update' }));
-      }}
-    >
-      <ProForm.Item
-        rootClassName="rule-label"
-        label={<RuleExample name="" handleOnFormatCode={handleOnFormatCode} />}
-        name="action"
-      >
-        <CodeEditor key="action" minHeight="400px" lang={Lang.JSON} />
-      </ProForm.Item>
-    </ProForm>
+  return (
+    <ProTable
+      headerTitle={<div className="hidden">行为列表</div>}
+      search={false}
+      pagination={false}
+      options={false}
+      rootClassName="stripe-table"
+      dataSource={data}
+      columns={columns}
+    />
   );
 };
 

@@ -176,6 +176,11 @@
         title: 'menu.cecollas.detail',
         component: './Cecollas/Detail',
       },
+      {
+        path: '/cecollas/action/:uuid',
+        title: 'menu.cecollas.action',
+        component: './Cecollas/Action',
+      },
     ],
   },
   {

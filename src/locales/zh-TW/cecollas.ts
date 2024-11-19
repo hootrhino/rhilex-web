@@ -8,6 +8,7 @@ export default {
   'cecollas.title.detail': '{name} - 雲平台詳情',
   'cecollas.title.list': '默认分组 - 雲平台列表',
   'cecollas.title.schemaJson': '物模型 JSON',
+  'cecollas.title.action': '{name} - 本地回調',
 
   /**
    * form
@@ -23,10 +24,14 @@ export default {
   /**
    * table
    */
-  'cecollas.table.title.name': '欄位名',
+  'cecollas.table.title.id': '識別符',
+  'cecollas.table.title.propertyName': '屬性名稱',
+  'cecollas.table.title.actionName': '行為名稱',
   'cecollas.table.title.type': '類型',
   'cecollas.table.title.mode': '讀寫模式',
   'cecollas.table.title.mapping': '其他',
+  'cecollas.table.title.input': '輸入參數',
+  'cecollas.table.title.output': '輸出參數',
 
   /**
    * tabs

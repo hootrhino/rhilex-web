@@ -18,7 +18,7 @@ import {
   postBacnetipDataSheetUpdate,
 } from '@/services/rhilex/bacnetdianweiguanli';
 import { defaultPagination } from '@/utils/constant';
-import { ObjectType, ObjectTypeOption } from './enum';
+import { ObjectType, objectTypeOption } from './enum';
 
 type BACnetPoint = Point & {
   bacnetDeviceId?: number;
@@ -64,7 +64,7 @@ const BacnetDataSheet = ({ uuid }: BaseDataSheetProps) => {
       valueType: 'select',
       width: 150,
       hideInTable: !!uuid,
-      valueEnum: ObjectTypeOption,
+      valueEnum: objectTypeOption,
       formItemProps: {
         rules: [
           {

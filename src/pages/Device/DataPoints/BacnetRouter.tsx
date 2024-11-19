@@ -17,7 +17,7 @@ import { defaultPagination } from '@/utils/constant';
 import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
 import { useRef } from 'react';
-import { ObjectType, ObjectTypeOption } from './enum';
+import { ObjectType, objectTypeOption } from './enum';
 
 type BACnetPoint = Point & {
   objectType?: string;
@@ -74,7 +74,7 @@ const BacnetRouterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       dataIndex: 'objectType',
       valueType: 'select',
       width: 150,
-      valueEnum: ObjectTypeOption,
+      valueEnum: objectTypeOption,
       hideInTable: !!uuid,
       formItemProps: {
         rules: [

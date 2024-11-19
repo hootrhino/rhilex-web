@@ -9,6 +9,7 @@ export default {
   'cecollas.title.list': '默认分组 - 云平台列表',
   'cecollas.title.schemaJson': '物模型 JSON',
   'cecollas.title.property': '属性列表',
+  'cecollas.title.action': '{name} - 本地回调',
 
   /**
    * form
@@ -24,10 +25,14 @@ export default {
   /**
    * table
    */
-  'cecollas.table.title.name': '字段名',
+  'cecollas.table.title.id': '标识符',
+  'cecollas.table.title.propertyName': '属性名称',
+  'cecollas.table.title.actionName': '行为名称',
   'cecollas.table.title.type': '类型',
   'cecollas.table.title.mode': '读写模式',
   'cecollas.table.title.mapping': '其他',
+  'cecollas.table.title.input': '输入参数',
+  'cecollas.table.title.output': '输出参数',
 
   /**
    * tabs

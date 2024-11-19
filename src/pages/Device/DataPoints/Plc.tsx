@@ -9,7 +9,7 @@ import type { ActionType, EditableFormInstance, ProColumns } from '@ant-design/p
 import { ProFormCascader, ProFormText } from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
 import { useRef } from 'react';
-import { plcDataTypeOptions } from './enum';
+import { ByteOrder, PLCDataType, plcDataTypeOptions } from './enum';
 
 import DataSheet from '@/components/DataSheet';
 import type {
@@ -25,7 +25,7 @@ import { defaultPagination } from '@/utils/constant';
 import { inRange } from '@/utils/redash';
 
 const defaultConfig = {
-  type: ['FLOAT32', 'DCBA'],
+  type: [PLCDataType.FLOAT32, ByteOrder.DCBA],
   siemensAddress: '',
   frequency: 1000,
   weight: 1,
@@ -35,8 +35,8 @@ const defaultUploadData = {
   address: 'DB4900.DBD1000',
   tag: 'R0',
   alias: '新砂轮直径（mm）',
-  type: 'FLOAT32',
-  order: 'ABCD',
+  type: PLCDataType.FLOAT32,
+  order: ByteOrder.ABCD,
   weight: 1,
   frequency: 1000,
 };
@@ -142,7 +142,7 @@ const PlcDataSheet = ({ uuid }: BaseDataSheetProps) => {
         return (
           <ProFormText
             noStyle
-            disabled={['RAW', 'BYTE', 'I', 'Q'].includes(type)}
+            disabled={[PLCDataType.BYTE, PLCDataType.I, PLCDataType.Q].includes(type)}
             fieldProps={{ placeholder: formatMessage({ id: 'device.form.placeholder.weight' }) }}
           />
         );

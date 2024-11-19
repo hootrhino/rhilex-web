@@ -133,6 +133,7 @@ export default {
   'menu.rule.update': '编辑规则配置',
   'menu.cm': '通信模组',
   'menu.cecollas': '云边协同',
-  'menu.cecollas.list': '云边协同列表',
-  'menu.cecollas.detail': '云边协同详情',
+  'menu.cecollas.list': '云平台列表',
+  'menu.cecollas.detail': '云平台详情',
+  'menu.cecollas.action': '本地回调',
 };

@@ -29,13 +29,35 @@ export async function getCecollasCecollaSchema(
     data: {
       gatewaySchema: {
         properties: { id: string; name: string; mode: string; type: string; mapping: null }[];
-        events: null;
-        actions: null;
+        events: {
+          id?: string;
+          name?: string;
+          type?: string;
+          params?: { id?: string; name?: string; type?: string; mapping?: null }[];
+        }[];
+        actions: {
+          id?: string;
+          name?: string;
+          dir?: string;
+          input?: { id?: string; name?: string; type?: string; mapping?: null }[];
+          output?: { id?: string; name?: string; type?: string; mapping?: null }[];
+        }[];
       };
       subDeviceSchema: {
         properties: { id: string; name: string; mode: string; type: string; mapping: null }[];
-        events: null;
-        actions: null;
+        events: {
+          id?: string;
+          name?: string;
+          type?: string;
+          params?: { id?: string; name?: string; type?: string; mapping?: null }[];
+        }[];
+        actions: {
+          id?: string;
+          name?: string;
+          dir?: string;
+          input?: { id?: string; name?: string; type?: string; mapping?: null }[];
+          output?: { id?: string; name?: string; type?: string; mapping?: null }[];
+        }[];
       };
     };
   }>('/api/v1/cecollas/cecollaSchema', {

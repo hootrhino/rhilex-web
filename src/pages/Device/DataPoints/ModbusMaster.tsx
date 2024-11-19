@@ -29,7 +29,7 @@ import { useIntl, useParams } from '@umijs/max';
 import type { Rule } from 'antd/es/form';
 import { useRef } from 'react';
 import { funcEnum } from '../enum';
-import { ModbusDataType, modbusDataTypeOptions, Quantity } from './enum';
+import { ByteOrder, ModbusDataType, modbusDataTypeOptions, Quantity } from './enum';
 
 const defaultConfig = {
   function: 3,
@@ -37,7 +37,7 @@ const defaultConfig = {
   slaverId: 1,
   address: 0,
   quantity: Quantity[ModbusDataType.RAW],
-  type: [ModbusDataType.RAW, 'DCBA'],
+  type: [ModbusDataType.RAW, ByteOrder.DCBA],
   weight: 1,
 };
 
@@ -48,7 +48,7 @@ const defaultUploadData = {
   address: 0,
   quantity: Quantity[ModbusDataType.FLOAT32],
   type: ModbusDataType.FLOAT32,
-  order: 'DCBA',
+  order: ByteOrder.DCBA,
   weight: 1,
 };
 
@@ -139,7 +139,7 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
                 });
               } else {
                 editorFormRef.current?.setRowData?.(record?.uuid as string, {
-                  type: [ModbusDataType.RAW, 'DCBA'],
+                  type: [ModbusDataType.RAW, ByteOrder.DCBA],
                   quantity: Quantity[ModbusDataType.RAW],
                   weight: 1,
                 });
