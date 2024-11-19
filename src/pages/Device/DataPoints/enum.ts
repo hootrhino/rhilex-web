@@ -97,7 +97,7 @@ const byte4Options = [
   },
 ];
 
-export enum DataType {
+export enum ModbusDataType {
   INT16 = 'INT16',
   INT32 = 'INT32',
   FLOAT32 = 'FLOAT32',
@@ -105,7 +105,7 @@ export enum DataType {
   UINT32 = 'UINT32',
   UFLOAT32 = 'UFLOAT32',
   RAW = 'RAW',
-  BYTE = 'BYTE',
+  BOOL = 'BOOL',
   UTF8 = 'UTF8',
 }
 
@@ -151,8 +151,8 @@ export const modbusDataTypeOptions = [
     children: orderRawOption,
   },
   {
-    value: 'BYTE',
-    label: `Byte（1 ${formatMessage({ id: 'device.unit.byte' })}）`,
+    value: 'BOOL',
+    label: `Bool ${formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte1Options,
   },
   ...baseOptions,
@@ -174,7 +174,7 @@ export const modbusDataTypeOptions = [
 
 export enum Quantity {
   UTF8 = 0,
-  BYTE = 1,
+  BOOL = 1,
   INT16 = 1,
   UINT16 = 1,
   INT32 = 2,

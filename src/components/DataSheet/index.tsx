@@ -507,7 +507,7 @@ const DataSheet = ({
         data={{
           uuid: deviceId,
           tag: updateRegisterData.data?.tag as string,
-          type: updateRegisterData.data?.dataType,
+          pointId: updateRegisterData.data?.uuid as string,
         }}
         dataType={updateRegisterData.data?.dataType}
       />

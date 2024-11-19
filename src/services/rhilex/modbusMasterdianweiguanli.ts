@@ -155,8 +155,8 @@ export async function postModbusMasterSheetUpdate(
 export async function postModbusMasterSheetWriteModbusSheet(
   body: {
     uuid: string;
+    pointId: string;
     tag: string;
-    type: string;
     value: string;
   },
   options?: { [key: string]: any },

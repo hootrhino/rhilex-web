@@ -27,17 +27,17 @@ import {
 } from '@ant-design/pro-components';
 import { useIntl, useParams } from '@umijs/max';
 import type { Rule } from 'antd/es/form';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { funcEnum } from '../enum';
-import { modbusDataTypeOptions, Quantity } from './enum';
+import { ModbusDataType, modbusDataTypeOptions, Quantity } from './enum';
 
 const defaultConfig = {
   function: 3,
   frequency: 1000,
   slaverId: 1,
   address: 0,
-  quantity: Quantity['RAW'],
-  type: ['RAW', 'DCBA'],
+  quantity: Quantity[ModbusDataType.RAW],
+  type: [ModbusDataType.RAW, 'DCBA'],
   weight: 1,
 };
 
@@ -46,8 +46,8 @@ const defaultUploadData = {
   frequency: 1000,
   slaverId: 1,
   address: 0,
-  quantity: Quantity['FLOAT32'],
-  type: 'FLOAT32',
+  quantity: Quantity[ModbusDataType.FLOAT32],
+  type: ModbusDataType.FLOAT32,
   order: 'DCBA',
   weight: 1,
 };
@@ -63,7 +63,6 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const { deviceId } = useParams();
   const { formatMessage } = useIntl();
-  const [disabledQty, setDisabled] = useState<boolean>(false);
 
   const formatUpdateParams = (params: Partial<DataSheetItem>) => {
     let newParams = {
@@ -135,13 +134,13 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
             onChange: (value) => {
               if (value === 1) {
                 editorFormRef.current?.setRowData?.(record?.uuid as string, {
-                  type: ['BYTE', 'A'],
+                  type: [ModbusDataType.BOOL, 'A'],
                   quantity: 1,
                 });
               } else {
                 editorFormRef.current?.setRowData?.(record?.uuid as string, {
-                  type: ['RAW', 'DCBA'],
-                  quantity: Quantity['RAW'],
+                  type: [ModbusDataType.RAW, 'DCBA'],
+                  quantity: Quantity[ModbusDataType.RAW],
                   weight: 1,
                 });
               }
@@ -164,13 +163,16 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
         let options = modbusDataTypeOptions;
 
         if (record?.function === 1) {
-          options = options?.filter((item) => item.value === 'BYTE');
+          options = options?.filter((item) => item.value === ModbusDataType.BOOL);
         }
         if (record?.function === 2) {
-          options = options?.filter((item) => !['BYTE', 'UTF8'].includes(item.value));
+          options = options?.filter(
+            (item) =>
+              ![ModbusDataType.BOOL, ModbusDataType.UTF8].includes(item.value as ModbusDataType),
+          );
         }
         if (record?.function && [3, 4].includes(record.function)) {
-          options = options?.filter((item) => item.value !== 'BYTE');
+          options = options?.filter((item) => item.value !== ModbusDataType.BOOL);
         }
 
         return (
@@ -186,9 +188,8 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
 
                 editorFormRef.current?.setRowData?.(record?.uuid as string, {
                   quantity: Number(Quantity[dataType]),
-                  weight: dataType === 'UTF8' ? 0 : 1,
+                  weight: dataType === ModbusDataType.UTF8 ? 0 : 1,
                 });
-                setDisabled(dataType !== 'RAW');
               },
               options,
             }}
@@ -205,13 +206,7 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
         const currentType = modbusDataTypeOptions?.find((item) => item?.value === dataType);
         const typeLabel = currentType?.label?.split('（')?.[0];
 
-        return typeLabel && dataOrder ? (
-          <>
-            {typeLabel}（{dataOrder}）
-          </>
-        ) : (
-          '-'
-        );
+        return typeLabel && dataOrder ? `${typeLabel}（${dataOrder}）` : '-';
       },
     },
     {
@@ -252,16 +247,21 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
           },
         ],
       },
-      renderFormItem: () => (
-        <ProFormDigit
-          noStyle
-          disabled={disabledQty}
-          fieldProps={{
-            style: { width: '100%' },
-            placeholder: formatMessage({ id: 'device.form.placeholder.quantity' }),
-          }}
-        />
-      ),
+      renderFormItem: (_, { record }) => {
+        const dataType = record?.type?.[0];
+        const disabled = dataType !== ModbusDataType.RAW;
+
+        return (
+          <ProFormDigit
+            noStyle
+            disabled={disabled}
+            fieldProps={{
+              style: { width: '100%' },
+              placeholder: formatMessage({ id: 'device.form.placeholder.quantity' }),
+            }}
+          />
+        );
+      },
     },
     {
       title: formatMessage({ id: 'device.form.title.weight' }),
@@ -287,7 +287,9 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
         return (
           <ProFormText
             noStyle
-            disabled={['RAW', 'UTF8'].includes(dataType)}
+            disabled={[ModbusDataType.RAW, ModbusDataType.UTF8, ModbusDataType.BOOL].includes(
+              dataType,
+            )}
             fieldProps={{ placeholder: formatMessage({ id: 'device.form.placeholder.weight' }) }}
           />
         );

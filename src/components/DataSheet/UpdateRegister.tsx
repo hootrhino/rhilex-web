@@ -1,6 +1,12 @@
-import { DataType } from '@/pages/Device/DataPoints/enum';
+import { ModbusDataType } from '@/pages/Device/DataPoints/enum';
 import { postModbusMasterSheetWriteModbusSheet } from '@/services/rhilex/modbusMasterdianweiguanli';
-import { ModalForm, ModalFormProps, ProFormDigit, ProFormText } from '@ant-design/pro-components';
+import {
+  ModalForm,
+  ModalFormProps,
+  ProFormDigit,
+  ProFormRadio,
+  ProFormText,
+} from '@ant-design/pro-components';
 import { useIntl } from '@umijs/max';
 import { Rule } from 'antd/es/form';
 import { message } from '../PopupHack';
@@ -8,7 +14,7 @@ import { message } from '../PopupHack';
 type UpdateParams = {
   uuid: string;
   tag: string;
-  type: string;
+  pointId: string;
 };
 
 type UpdateRegisterProps = ModalFormProps & {
@@ -24,24 +30,24 @@ const UpdateRegister = ({ data, dataType, ...props }: UpdateRegisterProps) => {
     let min = 0;
 
     switch (dataType) {
-      case DataType.BYTE:
-        max = 255;
-        break;
-      case DataType.UINT16:
+      // case ModbusDataType.BYTE:
+      //   max = 255;
+      //   break;
+      case ModbusDataType.UINT16:
         max = 65535;
         break;
-      case DataType.UINT32:
+      case ModbusDataType.UINT32:
         max = 4294967295;
         break;
-      case DataType.INT16:
+      case ModbusDataType.INT16:
         min = -32768;
         max = 32768;
         break;
-      case DataType.INT32:
+      case ModbusDataType.INT32:
         min = -2147483648;
         max = 2147483648;
         break;
-      case DataType.FLOAT32:
+      case ModbusDataType.FLOAT32:
         min = -3.4028235e38;
         max = 3.4028235e38;
         break;
@@ -49,7 +55,26 @@ const UpdateRegister = ({ data, dataType, ...props }: UpdateRegisterProps) => {
         break;
     }
 
-    if ([DataType.BYTE, DataType.UINT16, DataType.UINT32].includes(dataType as DataType)) {
+    if (dataType === ModbusDataType.BOOL) {
+      return (
+        <ProFormRadio.Group
+          name="value"
+          label={formatMessage({ id: 'device.modal.content.update.register.form.title' })}
+          options={[
+            {
+              label: 'true',
+              value: '1',
+            },
+            {
+              label: 'false',
+              value: '0',
+            },
+          ]}
+        />
+      );
+    }
+
+    if ([ModbusDataType.UINT16, ModbusDataType.UINT32].includes(dataType as ModbusDataType)) {
       return (
         <ProFormDigit
           label={formatMessage({ id: 'device.modal.content.update.register.form.title' })}
@@ -97,7 +122,9 @@ const UpdateRegister = ({ data, dataType, ...props }: UpdateRegisterProps) => {
           {
             validator: (_rule: Rule, value: string) => {
               if (
-                [DataType.INT16, DataType.INT32, DataType.FLOAT32].includes(dataType as DataType)
+                [ModbusDataType.INT16, ModbusDataType.INT32, ModbusDataType.FLOAT32].includes(
+                  dataType as ModbusDataType,
+                )
               ) {
                 if (isNaN(Number(value))) {
                   return Promise.reject(
@@ -133,6 +160,7 @@ const UpdateRegister = ({ data, dataType, ...props }: UpdateRegisterProps) => {
       width="40%"
       layout="horizontal"
       modalProps={{ destroyOnClose: true, maskClosable: false }}
+      initialValues={{ value: dataType === ModbusDataType.BOOL ? '0' : '' }}
       onFinish={async ({ value }) => {
         const params = {
           ...data,

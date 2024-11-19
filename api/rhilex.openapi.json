@@ -24118,10 +24118,10 @@
                   "uuid": {
                     "type": "string"
                   },
-                  "tag": {
+                  "pointId": {
                     "type": "string"
                   },
-                  "type": {
+                  "tag": {
                     "type": "string"
                   },
                   "value": {
@@ -24130,19 +24130,24 @@
                 },
                 "required": [
                   "uuid",
+                  "pointId",
                   "tag",
-                  "type",
                   "value"
                 ],
                 "x-apifox-ignore-properties": [],
                 "x-apifox-orders": [
                   "uuid",
+                  "pointId",
                   "tag",
-                  "type",
                   "value"
                 ]
               },
-              "example": ""
+              "example": {
+                "uuid": "DEVICEVJSUXBAY",
+                "pointId": "MDTBUSRJTIHXDQ",
+                "tag": "sw1",
+                "value": "1"
+              }
             }
           }
         },
