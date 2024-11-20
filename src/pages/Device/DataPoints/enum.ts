@@ -218,7 +218,7 @@ export const modbusDataTypeOptions = [
   },
   {
     value: ModbusDataType.BOOL,
-    label: `Bool ${formatMessage({ id: 'device.unit.byte' })}）`,
+    label: `Bool（1 ${formatMessage({ id: 'device.unit.byte' })}）`,
     children: byte1Options,
   },
   ...baseOptions,
