@@ -94,6 +94,17 @@ export const GENERIC_MODBUS_MASTER = [
             render: (_dom: React.ReactNode, { cecollaConfig }: DeviceItem) =>
               cecollaConfig?.cecollaId,
           },
+          {
+            title: formatMessage({ id: 'device.form.title.enableCreateSchema' }),
+            dataIndex: ['config', 'cecollaConfig', 'enableCreateSchema'],
+            required: true,
+            hideInForm: config?.cecollaConfig?.enable === 'false',
+            hideInDescriptions: !config?.cecollaConfig?.enable,
+            renderFormItem: () => <ProSegmented width="md" />,
+            render: (_dom: React.ReactNode, { cecollaConfig }: DeviceItem) => (
+              <ProTag type={StatusType.BOOL}>{cecollaConfig?.enableCreateSchema}</ProTag>
+            ),
+          },
         ],
       },
     ],

@@ -51,6 +51,7 @@ const defaultCommonConfig = {
 // 云边协同配置
 const defaultCecollaConfig = {
   enable: 'false',
+  enableCreateSchema: 'false',
 };
 
 // 国标配置

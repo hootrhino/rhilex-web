@@ -123,23 +123,39 @@ export const BACNET_ROUTER_GW = [
         name: ['config'],
         columns: ({ config }: DeviceItem) => [
           {
-            title: formatMessage({ id: 'device.form.title.cecollaId' }),
-            dataIndex: ['config', 'cecollaConfig', 'cecollaId'],
-            valueType: 'select',
-            required: true,
-            hideInForm: config?.cecollaConfig?.enable === 'false',
-            hideInDescriptions: !config?.cecollaConfig?.enable,
-            request: async () => {
-              const { data } = await getCecollasListByGroup({
-                current: 1,
-                size: 999,
-                gid: DEFAULT_GROUP_KEY_CECOLLAS,
-              });
+            valueType: 'group',
+            columns: [
+              {
+                title: formatMessage({ id: 'device.form.title.cecollaId' }),
+                dataIndex: ['config', 'cecollaConfig', 'cecollaId'],
+                valueType: 'select',
+                required: true,
+                hideInForm: config?.cecollaConfig?.enable === 'false',
+                hideInDescriptions: !config?.cecollaConfig?.enable,
+                request: async () => {
+                  const { data } = await getCecollasListByGroup({
+                    current: 1,
+                    size: 999,
+                    gid: DEFAULT_GROUP_KEY_CECOLLAS,
+                  });
 
-              return data.records?.map((item) => ({ label: item.name, value: item.uuid }));
-            },
-            render: (_dom: React.ReactNode, { cecollaConfig }: DeviceItem) =>
-              cecollaConfig?.cecollaId,
+                  return data.records?.map((item) => ({ label: item.name, value: item.uuid }));
+                },
+                render: (_dom: React.ReactNode, { cecollaConfig }: DeviceItem) =>
+                  cecollaConfig?.cecollaId,
+              },
+              {
+                title: formatMessage({ id: 'device.form.title.enableCreateSchema' }),
+                dataIndex: ['config', 'cecollaConfig', 'enableCreateSchema'],
+                required: true,
+                hideInForm: config?.cecollaConfig?.enable === 'false',
+                hideInDescriptions: !config?.cecollaConfig?.enable,
+                renderFormItem: () => <ProSegmented width="md" />,
+                render: (_dom: React.ReactNode, { cecollaConfig }: DeviceItem) => (
+                  <ProTag type={StatusType.BOOL}>{cecollaConfig?.enableCreateSchema}</ProTag>
+                ),
+              },
+            ],
           },
         ],
       },

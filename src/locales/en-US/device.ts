@@ -98,6 +98,7 @@ export default {
   'device.form.title.version': 'Version',
   'device.form.title.cecollas.enable': 'Enable Cloud Edge Collaboration',
   'device.form.title.cecollaId': 'Cloud Platform',
+  'device.form.title.enableCreateSchema': 'Enable Schema Creation',
   'device.form.title.parse': 'Enable Parsing',
   'device.form.title.gwsn': 'GWSN',
 
