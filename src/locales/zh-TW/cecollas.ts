@@ -17,7 +17,7 @@ export default {
   'cecollas.form.title.mode': '工作模式',
   'cecollas.form.title.subProduct': '子產品名',
   'cecollas.form.title.productId': '產品 ID',
-  'cecollas.form.title.deviceName': '設備名稱',
+  'cecollas.form.title.deviceId': '設備 ID',
   'cecollas.form.title.devicePsk': '設備秘鑰',
   'cecollas.form.title.serverEndpoint': '服務接入地址',
 
