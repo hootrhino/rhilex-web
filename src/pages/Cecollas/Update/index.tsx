@@ -13,7 +13,7 @@ import { CecollasFormItem, columns } from '../columns';
 import { CecollasType, Mode } from '../enum';
 
 const initialValues = {
-  type: CecollasType.TENCENT_IOTHUB_CEC,
+  type: CecollasType.ITHINGS_IOTHUB_CEC,
   gid: DEFAULT_GROUP_KEY_CECOLLAS,
   config: {
     mode: Mode.GATEWAY,

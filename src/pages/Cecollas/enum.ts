@@ -19,7 +19,7 @@ export enum Schema {
 }
 
 export const cecollasTypeOptions = {
-  [CecollasType.TENCENT_IOTHUB_CEC]: formatMessage({ id: 'cecollas.type.tencent' }),
+  // TODO 暂时隐藏 [CecollasType.TENCENT_IOTHUB_CEC]: formatMessage({ id: 'cecollas.type.tencent' }),
   [CecollasType.ITHINGS_IOTHUB_CEC]: formatMessage({ id: 'cecollas.type.ithings' }),
 };
 
