@@ -1,12 +1,11 @@
 import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
 import { getIntl, getLocale } from '@umijs/max';
-import { modeColumns } from '.';
 import type { DeviceItem } from '..';
 
 const { formatMessage } = getIntl(getLocale());
 
-export const GENERIC_NEMA_GNS_PROTOCOL = [
+export const GENERIC_NEMA_GNS_PROTOCOL = (uartColumns: Record<string, any>[]) => [
   {
     title: formatMessage({ id: 'device.form.title.group' }, { type: 'GPS' }),
     valueType: 'group',
@@ -28,9 +27,5 @@ export const GENERIC_NEMA_GNS_PROTOCOL = [
       },
     ],
   },
-  {
-    valueType: 'dependency',
-    name: ['config'],
-    columns: () => modeColumns['UART'] || [],
-  },
+  ...uartColumns,
 ];

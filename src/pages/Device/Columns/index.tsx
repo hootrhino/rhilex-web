@@ -27,79 +27,81 @@ import { SIEMENS_PLC } from './siemensPLC';
 
 const { formatMessage } = getIntl(getLocale());
 
+export const uartColumns = [
+  {
+    title: formatMessage({ id: 'device.form.title.group.port' }),
+    valueType: 'group',
+    columns: [
+      {
+        title: formatMessage({ id: 'form.title.timeout' }),
+        dataIndex: ['config', 'uartConfig', 'timeout'],
+        required: true,
+        valueType: 'digit',
+        fieldProps: {
+          addonAfter: 'ms',
+        },
+        render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) => (
+          <UnitValue value={uartConfig?.timeout} />
+        ),
+      },
+      {
+        title: formatMessage({ id: 'form.title.baudRate' }),
+        dataIndex: ['config', 'uartConfig', 'baudRate'],
+        required: true,
+        valueType: 'select',
+        valueEnum: baudRateEnum,
+        render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) => uartConfig?.baudRate,
+      },
+      {
+        title: formatMessage({ id: 'form.title.dataBits' }),
+        dataIndex: ['config', 'uartConfig', 'dataBits'],
+        required: true,
+        valueType: 'select',
+        valueEnum: dataBitsEnum,
+        render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) => uartConfig?.dataBits,
+      },
+      {
+        title: formatMessage({ id: 'form.title.parity' }),
+        dataIndex: ['config', 'uartConfig', 'parity'],
+        required: true,
+        valueType: 'select',
+        valueEnum: parityEnum,
+        render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) =>
+          parityEnum[uartConfig?.parity],
+      },
+      {
+        title: formatMessage({ id: 'form.title.stopBits' }),
+        dataIndex: ['config', 'uartConfig', 'stopBits'],
+        required: true,
+        valueType: 'select',
+        valueEnum: stopBitsEnum,
+        render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) => uartConfig?.stopBits,
+      },
+      {
+        title: formatMessage({ id: 'form.title.uart' }),
+        dataIndex: ['config', 'uartConfig', 'uart'],
+        required: true,
+        valueType: 'select',
+        request: async () => {
+          const { data } = await getOsUarts();
+
+          return data.map((item) => ({
+            label: item,
+            value: item,
+            key: `UART-${item}-${Math.random()}`,
+          }));
+        },
+        render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) => uartConfig?.uart,
+      },
+    ],
+  },
+];
+
 /**
  * TCP & UART 配置
  */
 export const modeColumns = {
-  UART: [
-    {
-      title: formatMessage({ id: 'device.form.title.group.port' }),
-      valueType: 'group',
-      columns: [
-        {
-          title: formatMessage({ id: 'form.title.timeout' }),
-          dataIndex: ['config', 'uartConfig', 'timeout'],
-          required: true,
-          valueType: 'digit',
-          fieldProps: {
-            addonAfter: 'ms',
-          },
-          render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) => (
-            <UnitValue value={uartConfig?.timeout} />
-          ),
-        },
-        {
-          title: formatMessage({ id: 'form.title.baudRate' }),
-          dataIndex: ['config', 'uartConfig', 'baudRate'],
-          required: true,
-          valueType: 'select',
-          valueEnum: baudRateEnum,
-          render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) => uartConfig?.baudRate,
-        },
-        {
-          title: formatMessage({ id: 'form.title.dataBits' }),
-          dataIndex: ['config', 'uartConfig', 'dataBits'],
-          required: true,
-          valueType: 'select',
-          valueEnum: dataBitsEnum,
-          render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) => uartConfig?.dataBits,
-        },
-        {
-          title: formatMessage({ id: 'form.title.parity' }),
-          dataIndex: ['config', 'uartConfig', 'parity'],
-          required: true,
-          valueType: 'select',
-          valueEnum: parityEnum,
-          render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) =>
-            parityEnum[uartConfig?.parity],
-        },
-        {
-          title: formatMessage({ id: 'form.title.stopBits' }),
-          dataIndex: ['config', 'uartConfig', 'stopBits'],
-          required: true,
-          valueType: 'select',
-          valueEnum: stopBitsEnum,
-          render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) => uartConfig?.stopBits,
-        },
-        {
-          title: formatMessage({ id: 'form.title.uart' }),
-          dataIndex: ['config', 'uartConfig', 'uart'],
-          required: true,
-          valueType: 'select',
-          request: async () => {
-            const { data } = await getOsUarts();
-
-            return data.map((item) => ({
-              label: item,
-              value: item,
-              key: `UART-${item}-${Math.random()}`,
-            }));
-          },
-          render: (_dom: React.ReactNode, { uartConfig }: DeviceItem) => uartConfig?.uart,
-        },
-      ],
-    },
-  ],
+  UART: uartColumns,
   TCP: [
     {
       title: formatMessage({ id: 'device.form.title.group' }, { type: 'TCP' }),
@@ -215,7 +217,7 @@ export const baseColumns = (isFreeTrial?: boolean) => [
  * 类型配置
  */
 export const typeConfigColumns = {
-  [DeviceType.GENERIC_UART_RW]: GENERIC_UART_RW,
+  [DeviceType.GENERIC_UART_RW]: GENERIC_UART_RW(uartColumns),
   [DeviceType.GENERIC_USER_PROTOCOL]: GENERIC_USER_PROTOCOL,
   [DeviceType.GENERIC_MODBUS_MASTER]: GENERIC_MODBUS_MASTER,
   [DeviceType.GENERIC_MODBUS_SLAVER]: GENERIC_MODBUS_SLAVER,
@@ -228,7 +230,8 @@ export const typeConfigColumns = {
   [DeviceType.DLT6452007_MASTER]: NATIONAL_STANDARD,
   [DeviceType.CJT1882004_MASTER]: NATIONAL_STANDARD,
   [DeviceType.SZY2062016_MASTER]: NATIONAL_STANDARD,
-  [DeviceType.GENERIC_NEMA_GNS_PROTOCOL]: GENERIC_NEMA_GNS_PROTOCOL,
+  [DeviceType.GENERIC_NEMA_GNS_PROTOCOL]: GENERIC_NEMA_GNS_PROTOCOL(uartColumns),
+  [DeviceType.TAOJINGCHI_UARTHMI_MASTER]: uartColumns,
 };
 
 /**

@@ -2,13 +2,12 @@ import ProSegmented from '@/components/ProSegmented';
 import ProTag, { StatusType } from '@/components/ProTag';
 import UnitValue from '@/components/UnitValue';
 import { getIntl, getLocale } from '@umijs/max';
-import { modeColumns } from '.';
 import type { DeviceItem } from '..';
 import { ReadFormatOption } from '../enum';
 
 const { formatMessage } = getIntl(getLocale());
 
-export const GENERIC_UART_RW = [
+export const GENERIC_UART_RW = (uartColumns: Record<string, any>[]) => [
   {
     title: formatMessage({ id: 'device.form.title.group.common' }),
     valueType: 'group',
@@ -57,9 +56,5 @@ export const GENERIC_UART_RW = [
       },
     ],
   },
-  {
-    valueType: 'dependency',
-    name: ['config'],
-    columns: () => modeColumns['UART'] || [],
-  },
+  ...uartColumns,
 ];

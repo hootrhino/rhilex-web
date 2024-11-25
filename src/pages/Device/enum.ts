@@ -21,6 +21,7 @@ export enum DeviceType {
   CJT1882004_MASTER = 'CJT1882004_MASTER',
   SZY2062016_MASTER = 'SZY2062016_MASTER',
   GENERIC_NEMA_GNS_PROTOCOL = 'GENERIC_NEMA_GNS_PROTOCOL',
+  TAOJINGCHI_UARTHMI_MASTER = 'TAOJINGCHI_UARTHMI_MASTER',
 }
 
 export const deviceTypeOptions = {
@@ -53,6 +54,7 @@ export const deviceTypeOptions = {
     { id: 'device.type.common' },
     { type: 'GPS' },
   ),
+  [DeviceType.TAOJINGCHI_UARTHMI_MASTER]: formatMessage({ id: 'device.type.tjc' }),
 };
 
 /**

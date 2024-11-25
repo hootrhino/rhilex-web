@@ -193,4 +193,7 @@ export const defaultConfig = {
     },
     uartConfig: defaultUartConfig,
   },
+  [DeviceType.TAOJINGCHI_UARTHMI_MASTER]: {
+    uartConfig: defaultUartConfig,
+  },
 };

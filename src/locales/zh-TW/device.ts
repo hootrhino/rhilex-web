@@ -207,6 +207,7 @@ export default {
   'device.type.national': '國標 {protocol} 協議數據採集網關',
   'device.type.user': '通用自訂協議數據採集網關',
   'device.type.common': '通用 {type} 協議數據採集網關',
+  'device.type.tjc': '淘晶馳通用串口屏',
 
   /**
    * Modbus function

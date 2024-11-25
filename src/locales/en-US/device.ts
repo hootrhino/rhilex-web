@@ -211,6 +211,7 @@ export default {
   'device.type.national': 'National Standard {protocol} Gateway',
   'device.type.user': 'Generic Custom Protocol Gateway',
   'device.type.common': 'Generic {type} Gateway',
+  'device.type.tjc': 'TAOJINGCHI USART HMI',
 
   /**
    * Modbus function
