@@ -9,7 +9,7 @@ import type { TplItem } from '../typings';
 type CopyButtonProps = Pick<TplItem, 'apply'> & BaseButtonProps;
 
 const CopyButton = ({ apply, ...props }: CopyButtonProps) => {
-  const [copied, setCopied] = useState<string>('');
+  const [copied, setCopied] = useState<string>();
   const { formatMessage } = useIntl();
 
   const handleOnCopy = (text: string, result: boolean) => {

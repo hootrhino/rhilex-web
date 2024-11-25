@@ -41,6 +41,7 @@ export default {
   'component.tpl.standard.debug.arg.placeholder': '请输入调试文本',
   'component.tpl.rhilex.label': '当没有网络时，网关上的 LED 会快速闪烁 5 次',
   'component.tpl.rhilex.detail': '{name} 联网测试',
+  'component.tpl.cecollas.detail': 'iThings 云边协同通用代码',
   'component.tpl.inend': 'UUID 参数来自南向资源',
   'component.tpl.outend': 'UUID 参数来自北向资源',
   'component.tpl.device': 'UUID 参数来自设备接入',

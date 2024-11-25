@@ -27,7 +27,7 @@ export const appStackQuickTpl = [
   {
     key: 'appStack',
     label: formatMessage({ id: 'component.tpl.rhilex.label' }),
-    detail: formatMessage({ id: 'component.tpl.rhilex.detail' }, { name: 'RHILEXG1' }),
+    detail: formatMessage({ id: 'component.tpl.rhilex.detail' }, { name: 'RHILEX G1' }),
     apply: getAppStackAction('8.8.8.8'),
     type: 'function',
     hasVariables: true

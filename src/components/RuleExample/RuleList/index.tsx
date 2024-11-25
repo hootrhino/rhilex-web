@@ -35,7 +35,6 @@ const RuleList = () => {
       children: (
         <ExampleItemChild
           className="pb-[20px]"
-          type={type}
           data={item}
           handleOnCopy={() => setValConfig({ open: true, data: item })}
         />

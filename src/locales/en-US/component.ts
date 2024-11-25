@@ -42,6 +42,7 @@ export default {
   'component.tpl.rhilex.label':
     'When there is no network, the gateway’s LED will flash quickly 5 times',
   'component.tpl.rhilex.detail': '{name} network connection test',
+  'component.tpl.cecollas.detail': 'iTings cloud edge collaboration common code',
   'component.tpl.inend': 'UUID parameter comes from the input',
   'component.tpl.outend': 'UUID parameter comes from the output',
   'component.tpl.device': 'UUID parameter comes from the Device',

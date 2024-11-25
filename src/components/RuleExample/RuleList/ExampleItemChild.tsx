@@ -3,18 +3,15 @@ import { pick } from '@/utils/redash';
 import { FormOutlined } from '@ant-design/icons';
 import { useIntl } from '@umijs/max';
 import { Button } from 'antd';
-import { ExampleType } from '../enum';
 import CopyButton from './CopyButton';
 
 type ExampleItemChildProps = {
-  type: ExampleType;
   [key: string]: any;
 };
 
-const ExampleItemChild = ({ type, data, handleOnCopy, ...props }: ExampleItemChildProps) => {
+const ExampleItemChild = ({ data, handleOnCopy, ...props }: ExampleItemChildProps) => {
   const { formatMessage } = useIntl();
-  const isBuiltIn = type === ExampleType.BUILTIN;
-  const hideUsageButton = isBuiltIn && !(data && data?.hasVariables);
+  const hideUsageButton = !(data && data?.hasVariables);
 
   return (
     <div {...props}>
