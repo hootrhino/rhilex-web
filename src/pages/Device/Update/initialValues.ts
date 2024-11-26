@@ -194,6 +194,6 @@ export const defaultConfig = {
     uartConfig: defaultUartConfig,
   },
   [DeviceType.TAOJINGCHI_UARTHMI_MASTER]: {
-    uartConfig: defaultUartConfig,
+    uartConfig: { ...defaultUartConfig, timeout: 30 },
   },
 };
