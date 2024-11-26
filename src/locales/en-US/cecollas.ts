@@ -17,7 +17,7 @@ export default {
   'cecollas.form.title.mode': 'Mode',
   'cecollas.form.title.subProduct': 'Sub Product Name',
   'cecollas.form.title.productId': 'Product ID',
-  'cecollas.form.title.deviceId': 'Device ID',
+  'cecollas.form.title.deviceName': 'Device Name',
   'cecollas.form.title.devicePsk': 'Device PSK',
   'cecollas.form.title.serverEndpoint': 'Server Endpoints',
 

@@ -204,13 +204,13 @@ export const typeColumns = (type: string) => [
     },
   },
   {
-    title: formatMessage({ id: 'cecollas.form.title.deviceId' }),
-    dataIndex: ['config', 'deviceId'],
+    title: formatMessage({ id: 'cecollas.form.title.deviceName' }),
+    dataIndex: ['config', 'deviceName'],
     width: 'md',
     fieldProps: {
       placeholder: formatMessage(
         { id: 'placeholder.input' },
-        { text: formatMessage({ id: 'cecollas.form.title.deviceId' }) },
+        { text: formatMessage({ id: 'cecollas.form.title.deviceName' }) },
       ),
     },
     formItemProps: {
@@ -219,12 +219,12 @@ export const typeColumns = (type: string) => [
           required: true,
           message: formatMessage(
             { id: 'placeholder.input' },
-            { text: formatMessage({ id: 'cecollas.form.title.deviceId' }) },
+            { text: formatMessage({ id: 'cecollas.form.title.deviceName' }) },
           ),
         },
       ],
     },
-    render: (_dom: React.ReactNode, { deviceId }: any) => deviceId,
+    render: (_dom: React.ReactNode, { deviceName }: any) => deviceName,
   },
   {
     title: formatMessage({ id: 'cecollas.form.title.devicePsk' }),

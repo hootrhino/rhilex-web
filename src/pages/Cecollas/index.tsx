@@ -168,7 +168,7 @@ const Cecollas = () => {
 
   return (
     <>
-      <PageContainer title="云边协同列表">
+      <PageContainer>
         <ProCard split="vertical">
           <ProCard
             colSpan="270px"
