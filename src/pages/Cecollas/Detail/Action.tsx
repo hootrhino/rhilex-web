@@ -33,6 +33,7 @@ const Action = ({ data }: ActionProps) => {
 
   return (
     <ProTable
+      rowKey="id"
       headerTitle={<div className="hidden">行为列表</div>}
       search={false}
       pagination={false}

@@ -18,6 +18,17 @@ export enum Schema {
   SUB_DEVICE = 'subDeviceSchema',
 }
 
+export const modeOptions = [
+  {
+    label: formatMessage({ id: 'cecollas.mode.device' }),
+    value: Mode.DEVICE,
+  },
+  {
+    label: formatMessage({ id: 'cecollas.mode.gateway' }),
+    value: Mode.GATEWAY,
+  },
+];
+
 export const cecollasTypeOptions = {
   // TODO 暂时隐藏 [CecollasType.TENCENT_IOTHUB_CEC]: formatMessage({ id: 'cecollas.type.tencent' }),
   [CecollasType.ITHINGS_IOTHUB_CEC]: formatMessage({ id: 'cecollas.type.ithings' }),

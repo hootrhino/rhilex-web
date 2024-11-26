@@ -37,6 +37,7 @@ const Property = ({ data }: PropertyProps) => {
 
   return (
     <ProTable
+      rowKey="id"
       headerTitle={<div className="hidden">{formatMessage({ id: 'cecollas.title.property' })}</div>}
       search={false}
       pagination={false}

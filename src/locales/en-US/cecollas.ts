@@ -53,4 +53,6 @@ export default {
   'cecollas.button.update': 'Update',
   'cecollas.mode.readOnly': 'Read-only',
   'cecollas.mode.readWrite': 'Read-write',
+  'cecollas.mode.device': 'Device',
+  'cecollas.mode.gateway': 'Gateway',
 };

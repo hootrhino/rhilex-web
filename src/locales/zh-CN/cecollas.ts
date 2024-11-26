@@ -54,4 +54,6 @@ export default {
   'cecollas.button.update': '更新',
   'cecollas.mode.readOnly': '只读',
   'cecollas.mode.readWrite': '读写',
+  'cecollas.mode.device': '直连',
+  'cecollas.mode.gateway': '网关',
 };
