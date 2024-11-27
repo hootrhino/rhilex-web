@@ -4,7 +4,6 @@ import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
 import PageContainer from '@/components/ProPageContainer';
 import RuleExample from '@/components/RuleExample';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
-import { postRulesFormatLua } from '@/services/rhilex/guizeguanli';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rhilex/qingliangyingyong';
 import { APP_LIST } from '@/utils/constant';
 import { generateRandomId } from '@/utils/utils';
@@ -13,6 +12,7 @@ import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { AppStackItem } from '..';
 import { baseColumns } from '../columns';
+import { formatLuaCode } from '@/components/CodeEditor/utils';
 
 const defaultValue = {
   name: `APP_${generateRandomId()}`,
@@ -32,9 +32,9 @@ const UpdateForm = () => {
   // 代码格式化
   const handleOnFormatCode = async () => {
     const code = formRef.current?.getFieldValue('luaSource');
-    const { data } = await postRulesFormatLua({ source: code });
+    const formatCode = formatLuaCode(code);
 
-    formRef.current?.setFieldsValue({ luaSource: data.source });
+    formRef.current?.setFieldsValue({ luaSource: formatCode });
   };
 
   const columns = [

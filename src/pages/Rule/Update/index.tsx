@@ -2,12 +2,7 @@ import CodeEditor, { Lang } from '@/components/CodeEditor';
 import { message } from '@/components/PopupHack';
 import PageContainer from '@/components/ProPageContainer';
 import RuleExample from '@/components/RuleExample';
-import {
-  getRulesDetail,
-  postRulesCreate,
-  postRulesFormatLua,
-  putRulesUpdate,
-} from '@/services/rhilex/guizeguanli';
+import { getRulesDetail, postRulesCreate, putRulesUpdate } from '@/services/rhilex/guizeguanli';
 import { FormItemType } from '@/utils/enum';
 import { validateFormItem } from '@/utils/utils';
 import type { ProFormInstance } from '@ant-design/pro-components';
@@ -17,6 +12,7 @@ import { Button, Popconfirm } from 'antd';
 import type { Rule } from 'antd/es/form';
 import { useEffect, useRef, useState } from 'react';
 import { DefaultFailed, DefaultSuccess, initialValue } from '../initialValues';
+import { formatLuaCode } from '@/components/CodeEditor/utils';
 
 export type FormParams = {
   name: string;
@@ -50,9 +46,9 @@ const UpdateForm = () => {
   // 代码格式化
   const handleOnFormatCode = async () => {
     const code = formRef.current?.getFieldValue('actions');
-    const { data } = await postRulesFormatLua({ source: code });
+    const formatCode = formatLuaCode(code);
 
-    formRef.current?.setFieldsValue({ actions: data.source });
+    formRef.current?.setFieldsValue({ actions: formatCode });
   };
 
   // 新建&更新规则表单

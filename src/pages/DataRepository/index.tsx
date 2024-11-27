@@ -2,7 +2,6 @@ import { message, modal } from '@/components/PopupHack';
 import PageContainer from '@/components/ProPageContainer';
 import CopyButton from '@/components/RuleExample/RuleList/CopyButton';
 import UnitValue from '@/components/UnitValue';
-import { postRulesFormatLua } from '@/services/rhilex/guizeguanli';
 import {
   deleteDatacenterClearSchemaData,
   getDatacenterListSchemaDdl,
@@ -22,6 +21,7 @@ import { Button, Empty, Modal, Space, Tooltip, Tree } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Type } from '../DataSchema/Property/enum';
+import { formatLuaCode } from '@/components/CodeEditor/utils';
 
 type SchemaDDLDefineItem = {
   name: string;
@@ -176,8 +176,9 @@ const DataRepository = () => {
         Throw(err)
         return 0
     end`;
-    const { data: formatCode } = await postRulesFormatLua({ source: code });
-    setModalConfig({ open: true, type: ModalType.SCRIPT, code: formatCode.source });
+    const formatCode = formatLuaCode(code);
+
+    setModalConfig({ open: true, type: ModalType.SCRIPT, code: formatCode });
   };
 
   const toolBarRender = [

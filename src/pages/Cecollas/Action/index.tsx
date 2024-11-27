@@ -1,7 +1,6 @@
 import CodeEditor, { Lang } from '@/components/CodeEditor';
 import PageContainer from '@/components/ProPageContainer';
 import RuleExample from '@/components/RuleExample';
-import { postRulesFormatLua } from '@/services/rhilex/guizeguanli';
 import { getCecollasDetail, putCecollasUpdateAction } from '@/services/rhilex/yunbianxietong';
 import { CECOLLAS_LIST } from '@/utils/constant';
 import {
@@ -15,6 +14,7 @@ import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, message, Popconfirm } from 'antd';
 import { useEffect, useRef } from 'react';
 import { CecollasItem } from '..';
+import { formatLuaCode } from '@/components/CodeEditor/utils';
 
 export type ActionModalParams = {
   uuid?: string;
@@ -31,9 +31,9 @@ const ActionModal = ({ ...props }: ActionModalProps) => {
   // 格式化代码
   const handleOnFormatCode = async () => {
     const code = formRef.current?.getFieldValue('action');
-    const { data: formatCode } = await postRulesFormatLua({ source: code });
+    const formatCode = formatLuaCode(code);
 
-    formRef.current?.setFieldsValue({ action: formatCode.source });
+    formRef.current?.setFieldsValue({ action: formatCode });
   };
 
   // 获取详情

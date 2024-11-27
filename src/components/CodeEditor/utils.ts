@@ -9,6 +9,7 @@ import { buildInKeywords, buildInSnippet, builtInFuncs } from '@/templates/Build
 import { CompletionContext } from '@codemirror/autocomplete';
 import { Diagnostic, linter } from '@codemirror/lint';
 import luaparse from 'luaparse';
+import luaminp from './luamin';
 
 // autocomplete 代码提示
 export const autoCompletions = (
@@ -68,4 +69,17 @@ export const createDetailEl = (detail: string) => {
   el.innerText = detail;
   el.className = 'autocomplete-detail';
   return el;
+};
+
+/**
+ * 格式化 lua
+ */
+export const formatLuaCode = (code: string) => {
+  const formatCode = luaminp.Beautify(code, {
+    RenameVariables: false,
+    RenameGlobals: false,
+    SolveMath: true,
+    Indentation: '\t',
+  });
+  return formatCode.trim();
 };
