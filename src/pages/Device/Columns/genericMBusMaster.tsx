@@ -19,7 +19,7 @@ export const GENERIC_MBUS_EN13433_MASTER = [
         title: formatMessage({ id: 'device.form.title.autoRequest' }),
         dataIndex: ['config', 'commonConfig', 'autoRequest'],
         required: true,
-        renderFormItem: () => <ProSegmented width="md" />,
+        renderFormItem: () => <ProSegmented />,
         render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
           <ProTag type={StatusType.BOOL}>{commonConfig?.autoRequest}</ProTag>
         ),
@@ -28,7 +28,7 @@ export const GENERIC_MBUS_EN13433_MASTER = [
         title: formatMessage({ id: 'device.form.title.enableBatchRequest' }),
         dataIndex: ['config', 'commonConfig', 'batchRequest'],
         required: true,
-        renderFormItem: () => <ProSegmented width="md" />,
+        renderFormItem: () => <ProSegmented />,
         render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
           <ProTag type={StatusType.BOOL}>{commonConfig?.batchRequest}</ProTag>
         ),
@@ -67,7 +67,7 @@ export const GENERIC_MBUS_EN13433_MASTER = [
           {
             title: formatMessage({ id: 'device.form.title.cecollas.enable' }),
             dataIndex: ['config', 'cecollaConfig', 'enable'],
-            renderFormItem: () => <ProSegmented width="md" />,
+            renderFormItem: () => <ProSegmented />,
             render: (_dom: React.ReactNode, { cecollaConfig }: DeviceItem) => (
               <ProTag type={StatusType.BOOL}>{cecollaConfig?.enable}</ProTag>
             ),
@@ -97,7 +97,7 @@ export const GENERIC_MBUS_EN13433_MASTER = [
             required: true,
             hideInForm: config?.cecollaConfig?.enable === 'false',
             hideInDescriptions: !config?.cecollaConfig?.enable,
-            renderFormItem: () => <ProSegmented width="md" />,
+            renderFormItem: () => <ProSegmented />,
             render: (_dom: React.ReactNode, { cecollaConfig }: DeviceItem) => (
               <ProTag type={StatusType.BOOL}>{cecollaConfig?.enableCreateSchema}</ProTag>
             ),

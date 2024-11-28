@@ -51,7 +51,7 @@ export const GENERIC_MODBUS_SLAVER = [
             {
               title: formatMessage({ id: 'device.form.title.cecollas.enable' }),
               dataIndex: ['config', 'cecollaConfig', 'enable'],
-              renderFormItem: () => <ProSegmented width="md" />,
+              renderFormItem: () => <ProSegmented />,
               render: (_dom: React.ReactNode, { cecollaConfig }: DeviceItem) => (
                 <ProTag type={StatusType.BOOL}>{cecollaConfig?.enable}</ProTag>
               ),
@@ -81,7 +81,7 @@ export const GENERIC_MODBUS_SLAVER = [
               required: true,
               hideInForm: config?.cecollaConfig?.enable === 'false',
               hideInDescriptions: !config?.cecollaConfig?.enable,
-              renderFormItem: () => <ProSegmented width="md" />,
+              renderFormItem: () => <ProSegmented />,
               render: (_dom: React.ReactNode, { cecollaConfig }: DeviceItem) => (
                 <ProTag type={StatusType.BOOL}>{cecollaConfig?.enableCreateSchema}</ProTag>
               ),

@@ -35,7 +35,6 @@ const UpdateForm = () => {
     {
       dataIndex: 'luaSource',
       hideInForm: !uuid,
-      // fieldProps: { style: { width: '100%' } },
       formItemProps: {
         rules: [
           {
@@ -68,7 +67,6 @@ const UpdateForm = () => {
         ...values,
         type: 'lua',
       };
-
       if (uuid) {
         await putAppUpdate({ ...params, uuid });
         message.success(formatMessage({ id: 'message.success.update' }));

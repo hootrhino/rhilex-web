@@ -16,7 +16,7 @@ export const GENERIC_USER_PROTOCOL = [
         title: formatMessage({ id: 'device.form.title.autoRequest' }),
         dataIndex: ['config', 'commonConfig', 'autoRequest'],
         required: true,
-        renderFormItem: () => <ProSegmented width="md" />,
+        renderFormItem: () => <ProSegmented />,
         render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
           <ProTag type={StatusType.BOOL}>{commonConfig?.autoRequest}</ProTag>
         ),
@@ -25,7 +25,7 @@ export const GENERIC_USER_PROTOCOL = [
         title: formatMessage({ id: 'device.form.title.enableBatchRequest' }),
         dataIndex: ['config', 'commonConfig', 'batchRequest'],
         required: true,
-        renderFormItem: () => <ProSegmented width="md" />,
+        renderFormItem: () => <ProSegmented />,
         render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
           <ProTag type={StatusType.BOOL}>{commonConfig?.batchRequest}</ProTag>
         ),

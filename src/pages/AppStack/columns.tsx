@@ -26,7 +26,7 @@ export const baseColumns = [
     required: true,
     convertValue: (value: boolean) => value?.toString(),
     transform: (value: string) => ({ autoStart: value === 'true' ? true : false }),
-    renderFormItem: () => <ProSegmented width="md" />,
+    renderFormItem: () => <ProSegmented />,
     renderText: (autoStart: boolean) => <ProTag type={StatusType.BOOL}>{autoStart}</ProTag>,
   },
   {

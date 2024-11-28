@@ -14,7 +14,7 @@ export const GENERIC_NEMA_GNS_PROTOCOL = (uartColumns: Record<string, any>[]) =>
         title: formatMessage({ id: 'device.form.title.parse' }),
         dataIndex: ['config', 'gpsConfig', 'parse'],
         required: true,
-        renderFormItem: () => <ProSegmented width="md" />,
+        renderFormItem: () => <ProSegmented />,
         render: (_dom: React.ReactNode, { gpsConfig }: DeviceItem) => (
           <ProTag type={StatusType.BOOL}>{gpsConfig?.parse}</ProTag>
         ),

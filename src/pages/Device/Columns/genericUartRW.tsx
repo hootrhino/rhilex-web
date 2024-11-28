@@ -16,7 +16,7 @@ export const GENERIC_UART_RW = (uartColumns: Record<string, any>[]) => [
         title: formatMessage({ id: 'device.form.title.rwConfig.autoRequest' }),
         dataIndex: ['config', 'commonConfig', 'autoRequest'],
         required: true,
-        renderFormItem: () => <ProSegmented width="md" />,
+        renderFormItem: () => <ProSegmented />,
         render: (_dom: React.ReactNode, { commonConfig }: DeviceItem) => (
           <ProTag type={StatusType.BOOL}>{commonConfig?.autoRequest}</ProTag>
         ),

@@ -9,7 +9,7 @@ export const MQTT = [
     title: formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
     dataIndex: ['config', 'commonConfig', 'cacheOfflineData'],
     required: true,
-    renderFormItem: () => <ProSegmented width="md" />,
+    renderFormItem: () => <ProSegmented />,
     render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => (
       <ProTag type={StatusType.BOOL}>{commonConfig?.cacheOfflineData}</ProTag>
     ),

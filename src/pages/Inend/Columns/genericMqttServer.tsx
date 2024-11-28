@@ -11,7 +11,7 @@ export const GENERIC_MQTT_SERVER = [
     required: true,
     convertValue: (value: boolean) => value?.toString(),
     transform: (value: string) => ({ config: { anonymous: value === 'true' ? true : false } }),
-    renderFormItem: () => <ProSegmented width="md" />,
+    renderFormItem: () => <ProSegmented />,
     renderText: (anonymous: boolean) => <ProTag type={StatusType.BOOL}>{anonymous}</ProTag>,
   },
   {

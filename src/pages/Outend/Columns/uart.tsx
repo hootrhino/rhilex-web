@@ -77,7 +77,7 @@ export const GENERIC_UART_TARGET = [
     title: formatMessage({ id: 'outend.table.title.cacheOfflineData' }),
     dataIndex: ['config', 'commonConfig', 'cacheOfflineData'],
     required: true,
-    renderFormItem: () => <ProSegmented width="md" />,
+    renderFormItem: () => <ProSegmented />,
     render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => (
       <ProTag type={StatusType.BOOL}>{commonConfig?.cacheOfflineData}</ProTag>
     ),
@@ -86,7 +86,7 @@ export const GENERIC_UART_TARGET = [
     title: formatMessage({ id: 'outend.table.title.allowPing' }),
     dataIndex: ['config', 'commonConfig', 'allowPing'],
     required: true,
-    renderFormItem: () => <ProSegmented width="md" />,
+    renderFormItem: () => <ProSegmented />,
     render: (_dom: React.ReactNode, commonConfig: Record<string, any>) => (
       <ProTag type={StatusType.BOOL}>{commonConfig?.allowPing}</ProTag>
     ),

@@ -1,21 +1,31 @@
-import type { ProFormFieldProps } from '@ant-design/pro-components';
-import { ProFormSegmented } from '@ant-design/pro-components';
 import { useIntl } from '@umijs/max';
+import { ConfigProvider, Segmented, SegmentedProps } from 'antd';
 
-type ProSegmentedProps = ProFormFieldProps;
+type ProSegmentedProps = Omit<SegmentedProps, 'options'>;
 
 const ProSegmented = (props: ProSegmentedProps) => {
   const { formatMessage } = useIntl();
 
   return (
-    <ProFormSegmented
-      valueEnum={{
-        true: formatMessage({ id: 'status.enabled' }),
-        false: formatMessage({ id: 'status.disabled' }),
+    <ConfigProvider
+      theme={{
+        components: {
+          Segmented: {
+            itemSelectedBg: '#1890ff',
+            itemSelectedColor: '#fff',
+          },
+        },
       }}
-      fieldProps={{ block: true, className: 'pro-form-segmented' }}
-      {...props}
-    />
+    >
+      <Segmented
+        {...props}
+        options={[
+          { label: formatMessage({ id: 'status.enabled' }), value: 'true' },
+          { label: formatMessage({ id: 'status.disabled' }), value: 'false' },
+        ]}
+        block
+      />
+    </ConfigProvider>
   );
 };
 
