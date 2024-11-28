@@ -76,7 +76,6 @@ export default {
   'component.title.builtInTpl': '内置函数',
   'component.title.customTpl': '自定义模板',
   'component.title.quickTpl': '快捷模板',
-  'component.title.exampleChild': '函数基本形式',
 
   'component.link.httpHeaders': '更多信息请参考',
   'component.link.form': '前往官方文档主页查看更多帮助信息',

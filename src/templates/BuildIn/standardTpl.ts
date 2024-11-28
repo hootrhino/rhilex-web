@@ -26,5 +26,6 @@ export const standardTpl = [
     apply: 'Throw(err)',
     type: 'function',
     detail: formatMessage({ id: 'component.tpl.standard.debug.usage2' }),
+    hasVariables: false
   },
 ];

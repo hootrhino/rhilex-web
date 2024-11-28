@@ -1,4 +1,3 @@
-import CodeEditor, { Lang } from '@/components/CodeEditor';
 import type { OutendItem } from '@/pages/Outend';
 import { outendTypeOption } from '@/pages/Outend/enum';
 import { getRulesGetCanUsedResources } from '@/services/rhilex/guizeguanli';
@@ -19,8 +18,9 @@ import { useIntl, useRequest } from '@umijs/max';
 import { Button, Empty, Space } from 'antd';
 import { useRef, useState } from 'react';
 import { defaultConfig } from '.';
-import { TplItem, ValConfig } from '../typings';
-import CopyButton from './CopyButton';
+import ProLuaEditor from '..';
+import { TplItem, ValConfig } from './typings';
+import CopyButton from '@/components/CopyButton';
 
 type UsageModalProps = ModalFormProps & {
   data: TplItem;
@@ -91,7 +91,7 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
           <Button key="cancel" onClick={handleOnCancel}>
             {formatMessage({ id: 'button.cancel' })}
           </Button>,
-          <CopyButton apply={copyData} key="copy-item" />,
+          <CopyButton text={copyData} key="copy-item" />,
         ],
       }}
       initialValues={{
@@ -212,7 +212,7 @@ const UsageModal = ({ data, changeConfig, ...props }: UsageModalProps) => {
         />
       )}
       <ProForm.Item name="code">
-        <CodeEditor readOnly lang={Lang.LUA} />
+        <ProLuaEditor readOnly hasVariables={null} />
       </ProForm.Item>
     </ModalForm>
   );

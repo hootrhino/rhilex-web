@@ -29,5 +29,6 @@ export const timeTpl = timeList.map(({target, ...rest}) => {
     label,
     apply: code,
     type: 'function',
+    hasVariables: false
   };
 });

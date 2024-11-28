@@ -12,6 +12,7 @@ export const kvTpl = [
     apply: `kv:Set(arg1, arg2)`,
     type: 'function',
     detail: formatMessage({ id: 'component.tpl.kvSet.detail' }),
+    hasVariables: false
   },
   {
     key: 'kv-get',
@@ -19,6 +20,7 @@ export const kvTpl = [
     apply: `local value = kv:Get(arg)`,
     type: 'function',
     detail: formatMessage({ id: 'component.tpl.kvGet.detail' }),
+    hasVariables: false
   },
   {
     key: 'kv-del',
@@ -26,5 +28,6 @@ export const kvTpl = [
     apply: `kv:Del(arg)`,
     type: 'function',
     detail: formatMessage({ id: 'component.tpl.kvDel.detail' }),
+    hasVariables: false
   },
 ];

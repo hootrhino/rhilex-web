@@ -2,10 +2,14 @@ import { builtInChildren, builtInLuaTpl, quickChildren, quickLuaTpl } from '@/te
 import { useIntl } from '@umijs/max';
 import { Collapse, Divider, Space } from 'antd';
 import { useState } from 'react';
-import { ExampleType } from '../enum';
-import type { TplGroupItem, TplItem, ValConfig } from '../typings';
-import ExampleItemChild from './ExampleItemChild';
+import type { TplGroupItem, TplItem, ValConfig } from './typings';
 import UsageModal from './UsageModal';
+import ProLuaEditor from '..';
+
+enum ExampleType {
+  QUICK = 'quick',
+  BUILTIN = 'built-in',
+}
 
 export const defaultConfig = { open: false, data: {} };
 
@@ -22,7 +26,7 @@ const RuleList = () => {
   const [builtInActivekey, setBuiltInKey] = useState<string[]>(['data']);
   const [quickActivekey, setQuickKey] = useState<string[]>([]);
 
-  const getItemsChildren = (type: ExampleType, data: TplItem[]) =>
+  const getItemsChildren = (data: TplItem[]) =>
     data?.map((item) => ({
       key: item.key,
       label: (
@@ -33,10 +37,11 @@ const RuleList = () => {
       ),
       style: panelStyle,
       children: (
-        <ExampleItemChild
-          className="pb-[20px]"
-          data={item}
-          handleOnCopy={() => setValConfig({ open: true, data: item })}
+        <ProLuaEditor
+          readOnly
+          value={item.apply}
+          hasVariables={item && item?.hasVariables}
+          onCopy={() => setValConfig({ open: true, data: item })}
         />
       ),
     }));
@@ -50,7 +55,7 @@ const RuleList = () => {
         <Collapse
           accordion
           ghost
-          items={getItemsChildren(type, children)}
+          items={getItemsChildren(children)}
           key={`collapse-${tpl.uuid}`}
           expandIconPosition="end"
         />

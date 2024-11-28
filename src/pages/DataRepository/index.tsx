@@ -1,6 +1,5 @@
 import { message, modal } from '@/components/PopupHack';
 import PageContainer from '@/components/ProPageContainer';
-import CopyButton from '@/components/RuleExample/RuleList/CopyButton';
 import UnitValue from '@/components/UnitValue';
 import {
   deleteDatacenterClearSchemaData,
@@ -21,7 +20,8 @@ import { Button, Empty, Modal, Space, Tooltip, Tree } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Type } from '../DataSchema/Property/enum';
-import { formatLuaCode } from '@/components/CodeEditor/utils';
+import { formatLuaCode } from '@/components/ProLuaEditor/utils/utils';
+import CopyButton from '@/components/CopyButton';
 
 type SchemaDDLDefineItem = {
   name: string;
@@ -325,7 +325,7 @@ const DataRepository = () => {
             <Button onClick={() => setModalConfig(defaultModalConfig)}>
               {formatMessage({ id: 'button.close' })}
             </Button>
-            <CopyButton apply={modalConfig.code} key="copy-code" />
+            <CopyButton text={modalConfig.code} key="copy-code" />
           </Space>
         }
       >

@@ -35,6 +35,10 @@ canvas {
   outline: none;
 }
 
+.cm-foldGutter {
+  padding: 0 6px;
+}
+
 .customize-autocomplete-tooltip {
   width: 50%;
   ul {
@@ -53,6 +57,18 @@ canvas {
         transform: translateY(-50%);
       }
     }
+  }
+}
+
+.pro-code-label {
+  &::before {
+    display: inline-block;
+    margin-inline-end: 4px;
+    color: #ff4d4f;
+    font-size: 14px;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    content: "*";
   }
 }
 
@@ -92,13 +108,6 @@ canvas {
     border-bottom: none;
   }
 }
-
-// .readonly-editor-wrapper {
-//   .cm-activeLine,
-//   .cm-activeLineGutter {
-//     background-color: transparent;
-//   }
-// }
 
 .custom-rule-wrapper {
   .ant-pro-table-list-toolbar-container {

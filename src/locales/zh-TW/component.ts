@@ -76,7 +76,6 @@ export default {
   'component.title.builtInTpl': '內置函數',
   'component.title.customTpl': '自定義模板',
   'component.title.quickTpl': '快捷模板',
-  'component.title.exampleChild': '函數基本形式',
 
   'component.link.httpHeaders': '更多訊息請參考',
   'component.link.form': '前往官方文檔主頁查看更多幫助訊息',

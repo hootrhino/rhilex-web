@@ -48,5 +48,6 @@ end`;
     label: `rhilexg1:${target}`,
     apply: code,
     type: 'function',
+    hasVariables: false
   };
 });

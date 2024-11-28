@@ -78,7 +78,6 @@ export default {
   'component.title.builtInTpl': 'Built-in function',
   'component.title.customTpl': 'Custom templates',
   'component.title.quickTpl': 'Quick templates',
-  'component.title.exampleChild': 'Basic form of functions',
 
   'component.link.httpHeaders': 'For more information, please refer to',
   'component.link.form': 'Go to the official documentation homepage for more help information',

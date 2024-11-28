@@ -18,5 +18,6 @@ export const dataRepoTpl = [
     apply,
     type: 'function',
     detail: formatMessage({ id: 'component.tpl.save.detail' }),
+    hasVariables: false
   },
 ];

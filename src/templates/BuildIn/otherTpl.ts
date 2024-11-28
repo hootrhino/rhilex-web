@@ -12,6 +12,7 @@ export const otherTpl = [
     apply: `local Value = json:TFloat(arg1, arg2)`,
     type: 'function',
     detail: formatMessage({ id: 'component.tpl.math.detail' }),
+    hasVariables: false
   },
   {
     key: 'jq-execute',
@@ -19,6 +20,7 @@ export const otherTpl = [
     apply: `local Value = jq:Execute(arg1, arg2 )`,
     type: 'function',
     detail: formatMessage({ id: 'component.tpl.jq.detail' }),
+    hasVariables: false
   },
   {
     key: 'rpc-request',
@@ -26,5 +28,6 @@ export const otherTpl = [
     apply: `local Value = rpc:Request(arg1, arg2, arg3)`,
     type: 'function',
     detail: formatMessage({ id: 'component.tpl.rpc.detail' }),
+    hasVariables: false
   },
 ];

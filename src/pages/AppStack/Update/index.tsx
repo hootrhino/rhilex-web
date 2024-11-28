@@ -1,18 +1,16 @@
-import CodeEditor, { Lang } from '@/components/CodeEditor';
 import { message } from '@/components/PopupHack';
 import ProBetaSchemaForm from '@/components/ProBetaSchemaForm';
+import ProLuaEditor from '@/components/ProLuaEditor';
 import PageContainer from '@/components/ProPageContainer';
-import RuleExample from '@/components/RuleExample';
 import useBeforeUnloadConfirm from '@/hooks/useBeforeUnload';
 import { getAppDetail, postAppCreate, putAppUpdate } from '@/services/rhilex/qingliangyingyong';
 import { APP_LIST } from '@/utils/constant';
 import { generateRandomId } from '@/utils/utils';
-import { ProForm, type ProFormColumnsType, type ProFormInstance } from '@ant-design/pro-components';
+import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { useEffect, useRef, useState } from 'react';
 import { AppStackItem } from '..';
 import { baseColumns } from '../columns';
-import { formatLuaCode } from '@/components/CodeEditor/utils';
 
 const defaultValue = {
   name: `APP_${generateRandomId()}`,
@@ -29,56 +27,32 @@ const UpdateForm = () => {
   const { formatMessage } = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
 
-  // 代码格式化
-  const handleOnFormatCode = async () => {
-    const code = formRef.current?.getFieldValue('luaSource');
-    const formatCode = formatLuaCode(code);
-
-    formRef.current?.setFieldsValue({ luaSource: formatCode });
-  };
-
   const columns = [
     {
       valueType: 'group',
       columns: baseColumns,
     },
     {
-      valueType: 'dependency',
-      name: ['type'],
-      columns: ({ type }: any) => {
-        if (type !== 'lua') return [];
-        return [
+      dataIndex: 'luaSource',
+      hideInForm: !uuid,
+      // fieldProps: { style: { width: '100%' } },
+      formItemProps: {
+        rules: [
           {
-            title: '',
-            dataIndex: 'luaSource',
-            hideInForm: !uuid,
-            renderFormItem: () => (
-              <ProForm.Item
-                name="luaSource"
-                rootClassName="rule-label"
-                label={
-                  <RuleExample
-                    name={formatMessage({ id: 'appStack.table.title.luaSource' })}
-                    handleOnFormatCode={handleOnFormatCode}
-                  />
-                }
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage(
-                      { id: 'placeholder.input' },
-                      { text: formatMessage({ id: 'ruleConfig.form.title.actions' }) },
-                    ),
-                  },
-                ]}
-                className="w-full"
-              >
-                <CodeEditor key="luaSource" minHeight="400px" lang={Lang.LUA} />
-              </ProForm.Item>
+            required: true,
+            message: formatMessage(
+              { id: 'placeholder.input' },
+              { text: formatMessage({ id: 'ruleConfig.form.title.actions' }) },
             ),
           },
-        ];
+        ],
       },
+      renderFormItem: () => (
+        <ProLuaEditor
+          label={formatMessage({ id: 'appStack.table.title.luaSource' })}
+          minHeight="400px"
+        />
+      ),
     },
   ];
 
@@ -94,6 +68,7 @@ const UpdateForm = () => {
         ...values,
         type: 'lua',
       };
+
       if (uuid) {
         await putAppUpdate({ ...params, uuid });
         message.success(formatMessage({ id: 'message.success.update' }));

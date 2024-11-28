@@ -29,4 +29,5 @@ export const deviceTpl = deviceList?.map(({target, ...rest}) => ({
   label: `device:${target}`,
   apply: getCode(target),
   type: 'function',
+  hasVariables: false
 }));

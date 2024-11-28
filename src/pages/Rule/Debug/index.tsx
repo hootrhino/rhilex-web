@@ -1,4 +1,4 @@
-import CodeEditor, { Lang } from '@/components/CodeEditor';
+import ProJsonEditor from '@/components/ProJsonEditor';
 import ProLog from '@/components/ProLog';
 import { postRulesTest } from '@/services/rhilex/guizeguanli';
 import { debugData } from '@/templates';
@@ -90,7 +90,7 @@ const Debug = ({ topic, ...props }: DebugProps) => {
           },
         ]}
       >
-        <CodeEditor autoFocus lang={Lang.SHELL} />
+        <ProJsonEditor />
       </ProForm.Item>
       <ProForm.Item
         name="output"

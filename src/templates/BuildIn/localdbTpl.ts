@@ -15,6 +15,7 @@ for i, v in ipairs(Table) do
 end`,
     type: 'function',
     detail: formatMessage({ id: 'component.tpl.query.detail' }),
+    hasVariables: false
   },
   {
     key: 'localdb-execute',
@@ -22,5 +23,6 @@ end`,
     apply: `local error = localdb:Query(arg)`,
     type: 'function',
     detail: formatMessage({ id: 'component.tpl.execute.detail' }),
+    hasVariables: false
   },
 ];

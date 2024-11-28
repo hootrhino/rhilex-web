@@ -12,6 +12,7 @@ export const jsonTpl = [
     apply: `local Value = json:T2J(arg)`,
     type: 'function',
     detail: formatMessage({ id: 'component.tpl.jsonT2J.detail' }),
+    hasVariables: false
   },
   {
     key: 'json-J2T',
@@ -19,5 +20,6 @@ export const jsonTpl = [
     apply: `local Value = json:J2T(arg)`,
     type: 'function',
     detail: formatMessage({ id: 'component.tpl.jsonJ2T.detail' }),
+    hasVariables: false
   },
 ];

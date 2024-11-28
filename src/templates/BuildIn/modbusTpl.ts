@@ -31,5 +31,6 @@ end`;
     label: `modbus:${target}`,
     apply: code,
     type: 'function',
+    hasVariables: false
   };
 });

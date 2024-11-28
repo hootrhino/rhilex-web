@@ -1,6 +1,5 @@
-import CodeEditor, { Lang } from '@/components/CodeEditor';
+import ProLuaEditor from '@/components/ProLuaEditor';
 import PageContainer from '@/components/ProPageContainer';
-import RuleExample from '@/components/RuleExample';
 import { getCecollasDetail, putCecollasUpdateAction } from '@/services/rhilex/yunbianxietong';
 import { CECOLLAS_LIST } from '@/utils/constant';
 import {
@@ -14,7 +13,6 @@ import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, message, Popconfirm } from 'antd';
 import { useEffect, useRef } from 'react';
 import { CecollasItem } from '..';
-import { formatLuaCode } from '@/components/CodeEditor/utils';
 
 export type ActionModalParams = {
   uuid?: string;
@@ -27,14 +25,6 @@ const ActionModal = ({ ...props }: ActionModalProps) => {
   const { formatMessage } = useIntl();
   const formRef = useRef<ProFormInstance>();
   const { uuid } = useParams();
-
-  // 格式化代码
-  const handleOnFormatCode = async () => {
-    const code = formRef.current?.getFieldValue('action');
-    const formatCode = formatLuaCode(code);
-
-    formRef.current?.setFieldsValue({ action: formatCode });
-  };
 
   // 获取详情
   const { data: detail, run: getDetail } = useRequest(
@@ -99,12 +89,8 @@ const ActionModal = ({ ...props }: ActionModalProps) => {
           }}
           {...props}
         >
-          <ProForm.Item
-            rootClassName="rule-label"
-            label={<RuleExample name="" handleOnFormatCode={handleOnFormatCode} />}
-            name="action"
-          >
-            <CodeEditor key="action" minHeight="400px" lang={Lang.LUA} />
+          <ProForm.Item name="action">
+            <ProLuaEditor required={false} minHeight="400px" />
           </ProForm.Item>
         </ProForm>
       </ProCard>
