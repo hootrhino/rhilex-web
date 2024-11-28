@@ -14,7 +14,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "ignoreDeprecations": "5.0",
     "noUnusedLocals": true,
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "strict": true,
