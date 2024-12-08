@@ -29,6 +29,11 @@
         component: './Device',
       },
       {
+        path: '/device/:groupId/detail/:deviceId',
+        title: 'menu.device.detail',
+        component: './Device/Detail',
+      },
+      {
         path: '/device/:groupId/new',
         title: 'menu.device.new',
         component: './Device/Update',
@@ -63,6 +68,11 @@
         title: 'menu.device.registers',
         component: './Device/ModbusSlaver',
       },
+      {
+        path: '/device/:groupId/:deviceId/alarm-rule',
+        title: 'menu.alarmRule.list',
+        component: './AlarmRule',
+      },
     ],
   },
   {
@@ -71,6 +81,13 @@
     icon: 'icon-menu-schema',
     component: './DataSchema',
     key: 'schema',
+  },
+  {
+    path: '/alarm',
+    title: 'menu.alarm',
+    icon: 'alert',
+    component: './AlarmLog',
+    key: 'alarm',
   },
   {
     path: '/repository',

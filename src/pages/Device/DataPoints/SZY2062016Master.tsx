@@ -35,7 +35,7 @@ const defaultUploadData = {
   weight: 1,
 };
 
-const SZYDataSheet = ({ uuid }: BaseDataSheetProps) => {
+const SZYDataSheet = ({ isDetail = false }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
@@ -70,7 +70,6 @@ const SZYDataSheet = ({ uuid }: BaseDataSheetProps) => {
       title: formatMessage({ id: 'form.title.type' }),
       dataIndex: 'meterType',
       valueType: 'select',
-      hideInTable: !!uuid,
       valueEnum: meterTypeOptions,
       formItemProps: {
         rules: [
@@ -89,7 +88,6 @@ const SZYDataSheet = ({ uuid }: BaseDataSheetProps) => {
       title: formatMessage({ id: 'device.form.title.weight' }),
       dataIndex: 'weight',
       width: 140,
-      hideInTable: !!uuid,
       formItemProps: {
         rules: [
           {
@@ -112,7 +110,6 @@ const SZYDataSheet = ({ uuid }: BaseDataSheetProps) => {
       title: formatMessage({ id: 'device.form.title.frequency' }),
       dataIndex: 'frequency',
       valueType: 'digit',
-      hideInTable: !!uuid,
       fieldProps: {
         addonAfter: 'ms',
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
@@ -133,12 +130,13 @@ const SZYDataSheet = ({ uuid }: BaseDataSheetProps) => {
       actionRef={actionRef}
       columns={columns}
       scroll={{ x: 1200 }}
+      isDetail={isDetail}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
       }) => {
         const { data } = await getSzy2062016MasterSheetList({
-          device_uuid: deviceId || uuid,
+          device_uuid: deviceId || '',
           current,
           size: pageSize,
         });

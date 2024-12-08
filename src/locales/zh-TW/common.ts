@@ -107,6 +107,7 @@ export default {
   'menu.dashboard': '系統首頁',
   'menu.device': '設備接入',
   'menu.device.list': '設備列表',
+  'menu.device.detail': '設備詳情',
   'menu.device.new': '新建設備',
   'menu.device.update': '編輯設備',
   'menu.device.sheet': '点位表配置',
@@ -114,6 +115,7 @@ export default {
   // 'menu.device.objectList': 'SNMP 對象列表',
   'menu.device.subDevice': '子設備列表',
   'menu.schema': '數據模型',
+  'menu.alarm': '預警中心',
   'menu.dataRepository': '資料中心',
   'menu.inend': '南向資源',
   'menu.source.list': '資源列表',
@@ -136,4 +138,5 @@ export default {
   'menu.cecollas.list': '雲端平台列表',
   'menu.cecollas.detail': '雲端平台詳情',
   'menu.cecollas.action': '本地回調',
+  'menu.alarmRule.list': '告警规则',
 };

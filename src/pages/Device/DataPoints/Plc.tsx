@@ -43,7 +43,7 @@ const defaultUploadData = {
 
 type PlcPoint = Point & { weight: number };
 
-const PlcDataSheet = ({ uuid }: BaseDataSheetProps) => {
+const PlcDataSheet = ({ isDetail = false }: BaseDataSheetProps) => {
   const { deviceId } = useParams();
   const { formatMessage } = useIntl();
   const actionRef = useRef<ActionType>();
@@ -81,8 +81,6 @@ const PlcDataSheet = ({ uuid }: BaseDataSheetProps) => {
     {
       title: formatMessage({ id: 'device.form.title.dataType' }),
       dataIndex: 'type',
-      // width: 150,
-      hideInTable: !!uuid,
       renderFormItem: () => (
         <ProFormCascader
           noStyle
@@ -122,7 +120,6 @@ const PlcDataSheet = ({ uuid }: BaseDataSheetProps) => {
       dataIndex: 'weight',
       valueType: 'digit',
       width: 100,
-      hideInTable: !!uuid,
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.weight' }) },
@@ -153,7 +150,6 @@ const PlcDataSheet = ({ uuid }: BaseDataSheetProps) => {
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
-      hideInTable: !!uuid,
       fieldProps: {
         addonAfter: 'ms',
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
@@ -174,12 +170,13 @@ const PlcDataSheet = ({ uuid }: BaseDataSheetProps) => {
       actionRef={actionRef}
       columns={columns}
       scroll={{ x: 1500 }}
+      isDetail={isDetail}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
       }) => {
         const { data } = await getS1200DataSheetList({
-          device_uuid: deviceId || uuid,
+          device_uuid: deviceId || '',
           current,
           size: pageSize,
         });

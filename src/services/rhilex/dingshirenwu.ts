@@ -3,10 +3,7 @@
 import { request } from '@umijs/max';
 
 /** 创建定时任务 POST /api/v1/crontask/create */
-export async function postCrontaskCreate(
-  body: API.CronTaskCreateDTO,
-  options?: { [key: string]: any },
-) {
+export async function postCrontaskCreate(body: {}, options?: { [key: string]: any }) {
   return request<API.R>('/api/v1/crontask/create', {
     method: 'POST',
     headers: {
@@ -86,10 +83,7 @@ export async function getCrontaskStop(
 }
 
 /** 更新定时任务 PUT /api/v1/crontask/update */
-export async function putCrontaskUpdate(
-  body: API.CronTaskUpdateDTO,
-  options?: { [key: string]: any },
-) {
+export async function putCrontaskUpdate(body: {}, options?: { [key: string]: any }) {
   return request<API.R>('/api/v1/crontask/update', {
     method: 'PUT',
     headers: {

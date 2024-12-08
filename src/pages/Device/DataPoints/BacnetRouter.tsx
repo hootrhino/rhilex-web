@@ -34,7 +34,7 @@ const defaultUploadData = {
   objectId: 1,
 };
 
-const BacnetRouterDataSheet = ({ uuid }: BaseDataSheetProps) => {
+const BacnetRouterDataSheet = ({ uuid, isDetail = false }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
@@ -75,7 +75,6 @@ const BacnetRouterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       valueType: 'select',
       width: 150,
       valueEnum: objectTypeOption,
-      hideInTable: !!uuid,
       formItemProps: {
         rules: [
           {
@@ -97,6 +96,7 @@ const BacnetRouterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
+      isDetail={isDetail}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,

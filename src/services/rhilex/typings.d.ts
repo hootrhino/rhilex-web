@@ -1,31 +1,9 @@
 declare namespace API {
-  type CronTaskCreateDTO = {
-    /** "param1 param2 param3" */
-    args?: string;
-    /** cron表达式，6个域，使用quartz标准 */
-    cronExpr: string;
-    /** ["A=e1", "B=e2", "C=e3"] */
-    env?: string[];
-    /** 定时任务名称 */
-    name: string;
-    /** base64编码的shell脚本，脚本不要加#!/bin/bash */
-    script?: string;
-    /** 目前仅支持LINUX_SHELL */
-    taskType: string;
+  type deleteAlarmLogDelParams = {
+    uuid: string;
   };
 
-  type CronTaskUpdateDTO = {
-    /** "param1 param2 param3" */
-    args?: string;
-    /** cron表达式，6个域不支持年份，使用quartz标准 */
-    cronExpr?: string;
-    /** ["A=e1", "B=e2", "C=e3"] */
-    env?: string[];
-    name?: string;
-    /** 脚本内容，base64编码 */
-    script?: string;
-    /** 1-shell 2-cmd */
-    taskType?: string;
+  type deleteAlarmRuleDelParams = {
     uuid: string;
   };
 
@@ -87,6 +65,25 @@ declare namespace API {
 
   type deleteUserluaDelParams = {
     uuid: string;
+  };
+
+  type getAlarmLogDetailParams = {
+    uuid: string;
+  };
+
+  type getAlarmLogListParams = {
+    current: number;
+    size: number;
+    ruleId: string;
+  };
+
+  type getAlarmRuleDetailParams = {
+    uuid: string;
+  };
+
+  type getAlarmRuleListParams = {
+    current: number;
+    size: number;
   };
 
   type getAppDetailParams = {

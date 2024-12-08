@@ -9,6 +9,7 @@ import {
 } from '@/services/rhilex/shebeiguanli';
 import { defaultPagination, DEFAULT_GROUP_KEY_DEVICE, MAX_TOTAL } from '@/utils/constant';
 import {
+  AlertOutlined,
   ControlOutlined,
   DownOutlined,
   ExceptionOutlined,
@@ -24,7 +25,6 @@ import type { ItemType } from 'antd/es/menu/interface';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useRef, useState } from 'react';
 import { baseColumns } from './Columns';
-import Detail from './Detail';
 import { DeviceType } from './enum';
 import type { GroupConfig } from './Group';
 import GroupList, { DEFAULT_CONFIG } from './Group';
@@ -41,8 +41,7 @@ export type DeviceItem = {
 const Devices = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
-  const { isFreeTrial, detailConfig, total, changeConfig, initialConfig, changeTotal } =
-    useModel('useCommon');
+  const { isFreeTrial, total, changeTotal } = useModel('useCommon');
 
   const [open, setOpen] = useState<boolean>(false);
   const [activeDevice, setActiveDevice] = useState<string>('');
@@ -100,6 +99,11 @@ const Devices = () => {
         key: 'rule',
         label: formatMessage({ id: 'button.ruleConfig' }),
         icon: <SettingOutlined />,
+      },
+      {
+        key: 'alarm-rule',
+        label: formatMessage({ id: 'device.button.alarmRule' }),
+        icon: <AlertOutlined />,
       },
     ] as ItemType[];
 
@@ -162,6 +166,9 @@ const Devices = () => {
 
         history.push(`/device/${gid}/${uuid}/rule`);
         break;
+      case 'alarm-rule':
+        history.push(`/device/${gid}/${uuid}/alarm-rule`);
+        break;
       case 'data-sheet':
         if (!type) return;
 
@@ -192,7 +199,7 @@ const Devices = () => {
 
         return (
           <Space>
-            <a key="detail" onClick={() => changeConfig({ open: true, uuid })}>
+            <a key="detail" onClick={() => history.push(`/device/${gid}/detail/${uuid}`)}>
               {formatMessage({ id: 'button.detail' })}
             </a>
             <a key="edit" onClick={() => history.push(`/device/${gid}/edit/${uuid}`)}>
@@ -300,7 +307,6 @@ const Devices = () => {
           </ProCard>
         </ProCard>
       </PageContainer>
-      <Detail {...detailConfig} onClose={initialConfig} />
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}

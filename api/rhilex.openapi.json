@@ -125,6 +125,9 @@
     },
     {
       "name": "定时任务"
+    },
+    {
+      "name": "预警中心"
     }
   ],
   "paths": {
@@ -4496,7 +4499,8 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/dto.CronTaskCreateDTO"
+                "type": "object",
+                "properties": {}
               },
               "example": ""
             }
@@ -4533,7 +4537,8 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/dto.CronTaskUpdateDTO"
+                "type": "object",
+                "properties": {}
               },
               "example": ""
             }
@@ -24417,6 +24422,1229 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-234765987-run",
         "security": []
       }
+    },
+    "/api/v1/alarm_rule/list": {
+      "get": {
+        "summary": "规则列表",
+        "x-apifox-folder": "预警中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "预警中心"
+        ],
+        "parameters": [
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "10",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "expr": {
+                                "type": "string"
+                              },
+                              "interval": {
+                                "type": "integer"
+                              },
+                              "threshold": {
+                                "type": "integer"
+                              },
+                              "description": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "uuid",
+                              "name",
+                              "expr",
+                              "interval",
+                              "threshold",
+                              "description"
+                            ],
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "name",
+                              "expr",
+                              "interval",
+                              "threshold",
+                              "description"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 10,
+                        "total": 20,
+                        "records": [
+                          {
+                            "uuid": "uuid20",
+                            "name": "规则20",
+                            "expr": "expr20",
+                            "interval": 1200,
+                            "threshold": 2000,
+                            "description": "描述20"
+                          },
+                          {
+                            "uuid": "uuid19",
+                            "name": "规则19",
+                            "expr": "expr19",
+                            "interval": 1140,
+                            "threshold": 1900,
+                            "description": "描述19"
+                          },
+                          {
+                            "uuid": "uuid18",
+                            "name": "规则18",
+                            "expr": "expr18",
+                            "interval": 1080,
+                            "threshold": 1800,
+                            "description": "描述18"
+                          },
+                          {
+                            "uuid": "uuid17",
+                            "name": "规则17",
+                            "expr": "expr17",
+                            "interval": 1020,
+                            "threshold": 1700,
+                            "description": "描述17"
+                          },
+                          {
+                            "uuid": "uuid16",
+                            "name": "规则16",
+                            "expr": "expr16",
+                            "interval": 960,
+                            "threshold": 1600,
+                            "description": "描述16"
+                          },
+                          {
+                            "uuid": "uuid15",
+                            "name": "规则15",
+                            "expr": "expr15",
+                            "interval": 900,
+                            "threshold": 1500,
+                            "description": "描述15"
+                          },
+                          {
+                            "uuid": "uuid14",
+                            "name": "规则14",
+                            "expr": "expr14",
+                            "interval": 840,
+                            "threshold": 1400,
+                            "description": "描述14"
+                          },
+                          {
+                            "uuid": "uuid13",
+                            "name": "规则13",
+                            "expr": "expr13",
+                            "interval": 780,
+                            "threshold": 1300,
+                            "description": "描述13"
+                          },
+                          {
+                            "uuid": "uuid12",
+                            "name": "规则12",
+                            "expr": "expr12",
+                            "interval": 720,
+                            "threshold": 1200,
+                            "description": "描述12"
+                          },
+                          {
+                            "uuid": "uuid11",
+                            "name": "规则11",
+                            "expr": "expr11",
+                            "interval": 660,
+                            "threshold": 1100,
+                            "description": "描述11"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-241413047-run",
+        "security": []
+      }
+    },
+    "/api/v1/alarm_rule/create": {
+      "post": {
+        "summary": "新建规则",
+        "x-apifox-folder": "预警中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "预警中心"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "expr": {
+                    "type": "string"
+                  },
+                  "interval": {
+                    "type": "integer"
+                  },
+                  "threshold": {
+                    "type": "integer"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "expr",
+                  "interval",
+                  "threshold"
+                ],
+                "x-apifox-orders": [
+                  "name",
+                  "expr",
+                  "interval",
+                  "threshold",
+                  "description"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": ""
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-241415648-run",
+        "security": []
+      }
+    },
+    "/api/v1/alarm_rule/update": {
+      "put": {
+        "summary": "更新规则",
+        "x-apifox-folder": "预警中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "预警中心"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "expr": {
+                    "type": "string"
+                  },
+                  "interval": {
+                    "type": "integer"
+                  },
+                  "threshold": {
+                    "type": "integer"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "uuid",
+                  "name",
+                  "expr",
+                  "interval",
+                  "threshold"
+                ],
+                "x-apifox-orders": [
+                  "uuid",
+                  "name",
+                  "expr",
+                  "interval",
+                  "threshold",
+                  "description"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "uuid": "ALARM648FSERF",
+                "name": "系统负载警报",
+                "expr": "load1 > 5",
+                "interval": 60,
+                "description": "当系统负载超过5时触发警报"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-241416459-run",
+        "security": []
+      }
+    },
+    "/api/v1/alarm_rule/detail": {
+      "get": {
+        "summary": "规则详情",
+        "x-apifox-folder": "预警中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "预警中心"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "11223344556677",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "expr": {
+                          "type": "string"
+                        },
+                        "interval": {
+                          "type": "integer"
+                        },
+                        "threshold": {
+                          "type": "integer"
+                        },
+                        "description": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "uuid",
+                        "name",
+                        "expr",
+                        "interval",
+                        "threshold",
+                        "description"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "uuid",
+                        "name",
+                        "expr",
+                        "interval",
+                        "threshold",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "uuid": "uuid1",
+                        "name": "规则1",
+                        "expr": "expr1",
+                        "interval": 60,
+                        "threshold": 100,
+                        "description": "描述1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-241458423-run",
+        "security": []
+      }
+    },
+    "/api/v1/alarm_rule/del": {
+      "delete": {
+        "summary": "删除规则",
+        "x-apifox-folder": "预警中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "预警中心"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "11223344556677",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "uuid": "ALARM648FSERF",
+                        "name": "系统负载警报",
+                        "expr": "load1 > 5",
+                        "interval": 60,
+                        "description": "当系统负载超过5时触发警报"
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-241458512-run",
+        "security": []
+      }
+    },
+    "/api/v1/alarm_log/list": {
+      "get": {
+        "summary": "预警日志列表",
+        "x-apifox-folder": "预警中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "预警中心"
+        ],
+        "parameters": [
+          {
+            "name": "current",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "10",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "ruleId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "AABBCCDD",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "integer"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string"
+                              },
+                              "source": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "event": {
+                                "type": "string"
+                              },
+                              "ts": {
+                                "type": "integer"
+                              },
+                              "summary": {
+                                "type": "string"
+                              },
+                              "info": {
+                                "type": "string"
+                              }
+                            },
+                            "x-apifox-ignore-properties": [],
+                            "x-apifox-orders": [
+                              "uuid",
+                              "source",
+                              "type",
+                              "event",
+                              "ts",
+                              "summary",
+                              "info"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "current",
+                        "size",
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 10,
+                        "total": 11,
+                        "records": [
+                          {
+                            "uuid": "uuid-0011",
+                            "ruleId": "rule-011",
+                            "source": "source-K",
+                            "type": "ERROR",
+                            "event": "event-11",
+                            "ts": 1670476200,
+                            "summary": "Summary 11",
+                            "info": "{\"expr\": \"errors_per_minute > 10\", \"data\": {\"errors_per_minute\": 15, \"system\": \"Payment\"}}"
+                          },
+                          {
+                            "uuid": "uuid-0010",
+                            "ruleId": "rule-010",
+                            "source": "source-J",
+                            "type": "WARNING",
+                            "event": "event-10",
+                            "ts": 1670476100,
+                            "summary": "Summary 10",
+                            "info": "{\"expr\": \"disk_space < 1\", \"data\": {\"disk_space\": 0.5, \"partition\": \"C:\"}}"
+                          },
+                          {
+                            "uuid": "uuid-0009",
+                            "ruleId": "rule-009",
+                            "source": "source-I",
+                            "type": "INFO",
+                            "event": "event-9",
+                            "ts": 1670476000,
+                            "summary": "Summary 9",
+                            "info": "{\"expr\": \"inventory < 10\", \"data\": {\"inventory\": 5, \"product\": \"Widget\"}}"
+                          },
+                          {
+                            "uuid": "uuid-0008",
+                            "ruleId": "rule-008",
+                            "source": "source-H",
+                            "type": "FATAL",
+                            "event": "event-8",
+                            "ts": 1670475900,
+                            "summary": "Summary 8",
+                            "info": "{\"expr\": \"power_consumption > 1000\", \"data\": {\"power_consumption\": 1100, \"facility\": \"Data Center\"}}"
+                          },
+                          {
+                            "uuid": "uuid-0007",
+                            "ruleId": "rule-007",
+                            "source": "source-G",
+                            "type": "ERROR",
+                            "event": "event-7",
+                            "ts": 1670475800,
+                            "summary": "Summary 7",
+                            "info": "{\"expr\": \"response_time > 5000\", \"data\": {\"response_time\": 5500, \"service\": \"API\"}}"
+                          },
+                          {
+                            "uuid": "uuid-0006",
+                            "ruleId": "rule-006",
+                            "source": "source-F",
+                            "type": "WARNING",
+                            "event": "event-6",
+                            "ts": 1670475700,
+                            "summary": "Summary 6",
+                            "info": "{\"expr\": \"cpu_load > 70\", \"data\": {\"cpu_load\": 75, \"server\": \"web01\"}}"
+                          },
+                          {
+                            "uuid": "uuid-0005",
+                            "ruleId": "rule-005",
+                            "source": "source-E",
+                            "type": "INFO",
+                            "event": "event-5",
+                            "ts": 1670475600,
+                            "summary": "Summary 5",
+                            "info": "{\"expr\": \"network_latency > 100\", \"data\": {\"network_latency\": 120, \"interface\": \"eth0\"}}"
+                          },
+                          {
+                            "uuid": "uuid-0004",
+                            "ruleId": "rule-004",
+                            "source": "source-D",
+                            "type": "FATAL",
+                            "event": "event-4",
+                            "ts": 1670475500,
+                            "summary": "Summary 4",
+                            "info": "{\"expr\": \"memory_usage > 99\", \"data\": {\"memory_usage\": 99, \"process\": \"database\", \"urgent\": true}}"
+                          },
+                          {
+                            "uuid": "uuid-0003",
+                            "ruleId": "rule-003",
+                            "source": "source-C",
+                            "type": "ERROR",
+                            "event": "event-3",
+                            "ts": 1670475400,
+                            "summary": "Summary 3",
+                            "info": "{\"expr\": \"disk_usage > 90\", \"data\": {\"disk_usage\": 95, \"device\": \"/dev/sda1\", \"alert\": true}}"
+                          },
+                          {
+                            "uuid": "uuid-0002",
+                            "ruleId": "rule-002",
+                            "source": "source-B",
+                            "type": "WARNING",
+                            "event": "event-2",
+                            "ts": 1670475300,
+                            "summary": "Summary 2",
+                            "info": "{\"expr\": \"temperature > 30\", \"data\": {\"temperature\": 35, \"location\": \"Server Room\", \"critical\": false}}"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-241471891-run",
+        "security": []
+      }
+    },
+    "/api/v1/alarm_log/del": {
+      "delete": {
+        "summary": "删除预警日志",
+        "x-apifox-folder": "预警中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "预警中心"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "1122334455667",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "current": 1,
+                        "size": 10,
+                        "total": 1,
+                        "records": [
+                          {
+                            "uuid": "1",
+                            "source": "",
+                            "type": "WARNING",
+                            "event": "着火了",
+                            "ts": 0,
+                            "summary": "着火了着火了",
+                            "info": "着火了着火了"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-241473255-run",
+        "security": []
+      }
+    },
+    "/api/v1/alarm_log/detail": {
+      "get": {
+        "summary": "预警日志详情",
+        "x-apifox-folder": "预警中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "预警中心"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "1122334455",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        },
+                        "ruleId": {
+                          "type": "string"
+                        },
+                        "source": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "event": {
+                          "type": "string"
+                        },
+                        "ts": {
+                          "type": "integer"
+                        },
+                        "summary": {
+                          "type": "string"
+                        },
+                        "info": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "uuid",
+                        "ruleId",
+                        "source",
+                        "type",
+                        "event",
+                        "ts",
+                        "summary",
+                        "info"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "uuid",
+                        "ruleId",
+                        "source",
+                        "type",
+                        "event",
+                        "ts",
+                        "summary",
+                        "info"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 200,
+                      "msg": "Success",
+                      "data": {
+                        "uuid": "uuid-0011",
+                        "ruleId": "rule-011",
+                        "source": "source-K",
+                        "type": "ERROR",
+                        "event": "event-11",
+                        "ts": 1670476200,
+                        "summary": "Summary 11",
+                        "info": "{\"expr\": \"errors_per_minute > 10\", \"data\": {\"errors_per_minute\": 15, \"system\": \"Payment\"}}"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-241473690-run",
+        "security": []
+      }
+    },
+    "/api/v1/alarm_rule/verifySyntax": {
+      "post": {
+        "summary": "语法检查",
+        "x-apifox-folder": "预警中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "预警中心"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expr": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "expr"
+                ],
+                "x-apifox-ignore-properties": [],
+                "x-apifox-orders": [
+                  "expr"
+                ]
+              },
+              "example": ""
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-242071157-run",
+        "security": []
+      }
+    },
+    "/api/v1/alarm_rule/testRule": {
+      "post": {
+        "summary": "规则测试",
+        "x-apifox-folder": "预警中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "预警中心"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expr": {
+                    "type": "string"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {},
+                    "x-apifox-orders": [],
+                    "x-apifox-ignore-properties": []
+                  }
+                },
+                "required": [
+                  "expr",
+                  "data"
+                ],
+                "x-apifox-orders": [
+                  "expr",
+                  "data"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "expr": "price > 100",
+                "data": {
+                  "price": 150,
+                  "name": "高端耳机",
+                  "available": true
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-242072069-run",
+        "security": []
+      }
     }
   },
   "components": {
@@ -24442,101 +25670,6 @@
           "code",
           "data",
           "msg"
-        ],
-        "x-apifox-ignore-properties": [],
-        "x-apifox-folder": "Schemas"
-      },
-      "dto.CronTaskUpdateDTO": {
-        "type": "object",
-        "required": [
-          "uuid"
-        ],
-        "properties": {
-          "args": {
-            "description": "\"param1 param2 param3\"",
-            "type": "string"
-          },
-          "cronExpr": {
-            "type": "string",
-            "description": "cron表达式，6个域不支持年份，使用quartz标准"
-          },
-          "env": {
-            "description": "[\"A=e1\", \"B=e2\", \"C=e3\"]",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "name": {
-            "type": "string"
-          },
-          "script": {
-            "type": "string",
-            "description": "脚本内容，base64编码"
-          },
-          "taskType": {
-            "type": "string",
-            "description": "1-shell 2-cmd"
-          },
-          "uuid": {
-            "type": "string"
-          }
-        },
-        "x-apifox-orders": [
-          "args",
-          "cronExpr",
-          "env",
-          "name",
-          "script",
-          "taskType",
-          "uuid"
-        ],
-        "x-apifox-ignore-properties": [],
-        "x-apifox-folder": "Schemas"
-      },
-      "dto.CronTaskCreateDTO": {
-        "type": "object",
-        "required": [
-          "cronExpr",
-          "name",
-          "taskType"
-        ],
-        "properties": {
-          "args": {
-            "description": "\"param1 param2 param3\"",
-            "type": "string"
-          },
-          "cronExpr": {
-            "type": "string",
-            "description": "cron表达式，6个域，使用quartz标准"
-          },
-          "env": {
-            "description": "[\"A=e1\", \"B=e2\", \"C=e3\"]",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "name": {
-            "type": "string",
-            "description": "定时任务名称"
-          },
-          "script": {
-            "type": "string",
-            "description": "base64编码的shell脚本，脚本不要加#!/bin/bash"
-          },
-          "taskType": {
-            "type": "string",
-            "description": "目前仅支持LINUX_SHELL"
-          }
-        },
-        "x-apifox-orders": [
-          "args",
-          "cronExpr",
-          "env",
-          "name",
-          "script",
-          "taskType"
         ],
         "x-apifox-ignore-properties": [],
         "x-apifox-folder": "Schemas"

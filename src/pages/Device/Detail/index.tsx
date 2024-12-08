@@ -1,21 +1,21 @@
 import HeadersDetail from '@/components/HttpHeaders/Detail';
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
 import ProDescriptions from '@/components/ProDescriptions';
+import PageContainer from '@/components/ProPageContainer';
 import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
+import { DEVICE_LIST } from '@/utils/constant';
 import { flatten, omit } from '@/utils/redash';
-import { useIntl, useRequest } from '@umijs/max';
-import { Drawer, DrawerProps } from 'antd';
-import { useEffect } from 'react';
+import { ProCard } from '@ant-design/pro-components';
+import { useIntl, useParams, useRequest } from '@umijs/max';
+import { Divider } from 'antd';
+import { Fragment, useEffect } from 'react';
 import { baseColumns, typeConfigColumns } from '../Columns';
 import DataPoints from '../DataPoints';
 import { DeviceType } from '../enum';
 
-type DetailProps = DrawerProps & {
-  uuid: string;
-};
-
-const Detail = ({ uuid, open, ...props }: DetailProps) => {
+const Detail = () => {
   const { formatMessage, locale } = useIntl();
+  const { deviceId } = useParams();
 
   const labelWidth = locale === 'en-US' ? 150 : 100;
 
@@ -32,15 +32,17 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
 
   const renderDescription = (data: Record<string, any>[]) =>
     data?.map((item, index) => (
-      <ProDescriptions
-        key={`description-${index}`}
-        title={item?.title}
-        dataSource={config}
-        columns={item.columns}
-        column={3}
-        labelWidth={labelWidth}
-        rootClassName="detail-descriptions"
-      />
+      <Fragment key={`description-${index}`}>
+        <ProDescriptions
+          title={item?.title}
+          dataSource={config}
+          columns={item.columns}
+          column={3}
+          labelWidth={labelWidth}
+          rootClassName="mb-[48px]"
+        />
+        <Divider />
+      </Fragment>
     ));
 
   const formatColumns = (sourceColumns: any[]) => {
@@ -52,59 +54,44 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
   };
 
   useEffect(() => {
-    if (uuid && open) {
-      getDetail({ uuid });
+    if (deviceId) {
+      getDetail({ uuid: deviceId });
     }
-  }, [uuid, open]);
+  }, [deviceId]);
 
   return (
-    <Drawer
-      open={open}
-      title={formatMessage({ id: 'device.title.detail' })}
-      placement="right"
-      width="50%"
-      destroyOnClose
-      maskClosable={false}
-      {...props}
+    <PageContainer
+      title={`${detail?.name} - ${formatMessage({ id: 'device.title.detail' })}`}
+      backUrl={DEVICE_LIST}
     >
-      <>
+      <ProCard>
         <ProDescriptions
           title={formatMessage({ id: 'common.title.base' })}
           dataSource={detail && omit(detail, ['config'])}
           columns={formatColumns(baseColumns()) as EnhancedProDescriptionsItemProps[]}
           column={3}
           labelWidth={labelWidth}
-          rootClassName="detail-descriptions"
+          rootClassName="mb-[48px]"
         />
+        <Divider />
         {detail && type && Object.keys(DeviceType).includes(type) && (
           <>
             {typeConfigColumns[type]?.map((item: any, index: number) => {
               if (item.valueType === 'dependency') {
                 return renderDescription(item?.columns(detail));
               } else {
-                let column = 3;
-                switch (item?.key) {
-                  case 'http':
-                    column = 1;
-                    break;
-                  case 'camera':
-                    column = 2;
-                    break;
-                  default:
-                    column = 3;
-                    break;
-                }
-
                 return (
-                  <ProDescriptions
-                    key={`description-${index}`}
-                    title={item?.title}
-                    dataSource={detail.config}
-                    columns={item?.columns && formatColumns(item?.columns)}
-                    column={column}
-                    labelWidth={labelWidth}
-                    rootClassName="detail-descriptions"
-                  />
+                  <Fragment key={`description-${index}`}>
+                    <ProDescriptions
+                      title={item?.title}
+                      dataSource={detail.config}
+                      columns={item?.columns && formatColumns(item?.columns)}
+                      column={item?.key === 'http' ? 1 : 3}
+                      labelWidth={labelWidth}
+                      rootClassName="mb-[48px]"
+                    />
+                    <Divider />
+                  </Fragment>
                 );
               }
             })}
@@ -112,7 +99,10 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
             {type === DeviceType.GENERIC_HTTP_DEVICE &&
               config?.httpConfig?.headers &&
               Object.keys(config?.httpConfig?.headers)?.length > 0 && (
-                <HeadersDetail data={config?.httpConfig?.headers} />
+                <>
+                  <HeadersDetail data={config?.httpConfig?.headers} />
+                  <Divider />
+                </>
               )}
             {/* TODO GENERIC_MODBUS_SLAVER 不需要在详情页展示寄存器 */}
             {[
@@ -126,11 +116,11 @@ const Detail = ({ uuid, open, ...props }: DetailProps) => {
               DeviceType.CJT1882004_MASTER,
               DeviceType.SZY2062016_MASTER,
               DeviceType.GENERIC_USER_PROTOCOL,
-            ].includes(type as DeviceType) && <DataPoints uuid={detail?.uuid} />}
+            ].includes(type as DeviceType) && <DataPoints isDetail />}
           </>
         )}
-      </>
-    </Drawer>
+      </ProCard>
+    </PageContainer>
   );
 };
 

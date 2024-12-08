@@ -52,7 +52,7 @@ type MbusPoint = Point & {
   weight: number;
 };
 
-const MbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
+const MbusMasterDataSheet = ({ uuid, isDetail = false }: BaseDataSheetProps) => {
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const actionRef = useRef<ActionType>();
   const { deviceId } = useParams();
@@ -89,7 +89,6 @@ const MbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       title: formatMessage({ id: 'form.title.type' }),
       dataIndex: 'type',
       width: 120,
-      hideInTable: !!uuid,
       valueEnum: mBusDeviceTypeOptions,
       fieldProps: {
         allowClear: false,
@@ -103,7 +102,6 @@ const MbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       title: formatMessage({ id: 'device.form.title.weight' }),
       dataIndex: 'weight',
       width: 140,
-      hideInTable: !!uuid,
       formItemProps: {
         rules: [
           {
@@ -127,7 +125,6 @@ const MbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 150,
-      hideInTable: !!uuid,
       fieldProps: {
         addonAfter: 'ms',
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
@@ -144,7 +141,6 @@ const MbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       dataIndex: 'dataLength',
       valueType: 'digit',
       width: 120,
-      hideInTable: !!uuid,
       fieldProps: {
         style: { width: '100%' },
         placeholder: formatMessage({ id: 'device.form.placeholder.dataLength' }),
@@ -159,7 +155,6 @@ const MbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       title: formatMessage({ id: 'device.form.title.manufacturer' }),
       dataIndex: 'manufacturer',
       width: 150,
-      hideInTable: !!uuid,
       fieldProps: {
         placeholder: formatMessage({ id: 'device.form.placeholder.manufacturer' }),
       },
@@ -184,6 +179,7 @@ const MbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
       scroll={{ x: 1200 }}
+      isDetail={isDetail}
       upload={async ({ file, ...params }: UploadParams) => {
         await postMbusMasterSheetSheetImport({ ...params }, file);
       }}

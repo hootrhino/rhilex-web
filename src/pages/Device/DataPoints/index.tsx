@@ -1,38 +1,36 @@
 import type { BaseDataSheetProps } from '@/components/DataSheet/typings';
 import NoFoundPage from '@/pages/404';
+import React from 'react';
 import { DeviceType } from '../enum';
-import BacnetDataSheet from './BacnetIP';
-import BacnetRouterDataSheet from './BacnetRouter';
-import CJTDataSheet from './CJT1882004Master';
-import DLTDataSheet from './DLT6452007Master';
-import MbusMasterDataSheet from './MbusMaster';
-import ModbusMasterDataSheet from './ModbusMaster';
-import PlcDataSheet from './Plc';
-import SnmpOidsSheet from './Snmp';
-import SZYDataSheet from './SZY2062016Master';
-import UserProtocolDataSheet from './UserProtocol';
 
-const DataPoints = ({ uuid }: BaseDataSheetProps) => {
+// Import DataSheet components
+const DataSheetComponents = {
+  [DeviceType.GENERIC_SNMP]: React.lazy(() => import('./Snmp')),
+  [DeviceType.SIEMENS_PLC]: React.lazy(() => import('./Plc')),
+  [DeviceType.GENERIC_MODBUS_MASTER]: React.lazy(() => import('./ModbusMaster')),
+  [DeviceType.GENERIC_MBUS_EN13433_MASTER]: React.lazy(() => import('./MbusMaster')),
+  [DeviceType.GENERIC_BACNET_IP]: React.lazy(() => import('./BacnetIP')),
+  [DeviceType.BACNET_ROUTER_GW]: React.lazy(() => import('./BacnetRouter')),
+  [DeviceType.DLT6452007_MASTER]: React.lazy(() => import('./DLT6452007Master')),
+  [DeviceType.CJT1882004_MASTER]: React.lazy(() => import('./CJT1882004Master')),
+  [DeviceType.SZY2062016_MASTER]: React.lazy(() => import('./SZY2062016Master')),
+  [DeviceType.GENERIC_USER_PROTOCOL]: React.lazy(() => import('./UserProtocol')),
+};
+
+const DataPoints = ({ uuid, isDetail }: BaseDataSheetProps) => {
   const type = localStorage.getItem('deviceType');
 
   if (!type) {
     return <NoFoundPage />;
   }
 
-  const dataSheetConfig = {
-    [DeviceType.GENERIC_SNMP]: <SnmpOidsSheet uuid={uuid} />,
-    [DeviceType.SIEMENS_PLC]: <PlcDataSheet uuid={uuid} />,
-    [DeviceType.GENERIC_MODBUS_MASTER]: <ModbusMasterDataSheet uuid={uuid} />,
-    [DeviceType.GENERIC_MBUS_EN13433_MASTER]: <MbusMasterDataSheet uuid={uuid} />,
-    [DeviceType.GENERIC_BACNET_IP]: <BacnetDataSheet uuid={uuid} />,
-    [DeviceType.BACNET_ROUTER_GW]: <BacnetRouterDataSheet uuid={uuid} />,
-    [DeviceType.DLT6452007_MASTER]: <DLTDataSheet uuid={uuid} />,
-    [DeviceType.CJT1882004_MASTER]: <CJTDataSheet uuid={uuid} />,
-    [DeviceType.SZY2062016_MASTER]: <SZYDataSheet uuid={uuid} />,
-    [DeviceType.GENERIC_USER_PROTOCOL]: <UserProtocolDataSheet uuid={uuid} />,
-  };
+  const DataSheetComponent = DataSheetComponents[type];
 
-  return dataSheetConfig[type];
+  if (!DataSheetComponent) {
+    return <NoFoundPage />;
+  }
+
+  return <DataSheetComponent uuid={uuid} isDetail={isDetail} />;
 };
 
-export default DataPoints;
+export default React.memo(DataPoints);

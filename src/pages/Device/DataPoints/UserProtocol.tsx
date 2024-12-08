@@ -37,7 +37,7 @@ type UserProtocolPoint = Point & {
   frequency?: number;
 };
 
-const UserProtocolDataSheet = ({ uuid }: BaseDataSheetProps) => {
+const UserProtocolDataSheet = ({ isDetail = false }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
@@ -68,7 +68,6 @@ const UserProtocolDataSheet = ({ uuid }: BaseDataSheetProps) => {
       title: formatMessage({ id: 'device.form.title.frequency' }),
       dataIndex: 'frequency',
       valueType: 'digit',
-      hideInTable: !!uuid,
       fieldProps: {
         addonAfter: 'ms',
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
@@ -88,12 +87,13 @@ const UserProtocolDataSheet = ({ uuid }: BaseDataSheetProps) => {
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
+      isDetail={isDetail}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
       }) => {
         const { data } = await getUserProtocolSheetList({
-          device_uuid: deviceId || uuid,
+          device_uuid: deviceId || '',
           current,
           size: pageSize,
         });

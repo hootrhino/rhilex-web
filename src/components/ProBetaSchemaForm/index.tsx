@@ -4,7 +4,7 @@ import { validateFormItem } from '@/utils/utils';
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { BetaSchemaForm, FooterToolbar, ProCard } from '@ant-design/pro-components';
 import { FormattedMessage, getIntl, getLocale, useIntl } from '@umijs/max';
-import { Button, Popconfirm } from 'antd';
+import { Button, Divider, Popconfirm } from 'antd';
 import type { Rule } from 'antd/es/form';
 
 type FormFieldType = 'group' | 'formList' | 'formSet' | 'divider' | 'dependency';
@@ -99,6 +99,13 @@ const processColumns = (columns: ProColumnsType[]) =>
     if (col.valueType === 'group') {
       return {
         ...col,
+        title: col.title ? (
+          <Divider orientation="left" plain>
+            {col.title}
+          </Divider>
+        ) : (
+          col.title
+        ),
         columns: processColumns(col.columns as ProColumnsType[]),
       };
     }

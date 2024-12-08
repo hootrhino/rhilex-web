@@ -32,7 +32,7 @@ const defaultUploadData = {
   weight: 1,
 };
 
-const DLTDataSheet = ({ uuid }: BaseDataSheetProps) => {
+const DLTDataSheet = ({ uuid, isDetail = false }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
@@ -89,7 +89,6 @@ const DLTDataSheet = ({ uuid }: BaseDataSheetProps) => {
       title: formatMessage({ id: 'device.form.title.frequency' }),
       dataIndex: 'frequency',
       valueType: 'digit',
-      hideInTable: !!uuid,
       fieldProps: {
         addonAfter: 'ms',
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
@@ -109,6 +108,7 @@ const DLTDataSheet = ({ uuid }: BaseDataSheetProps) => {
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
+      isDetail={isDetail}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,

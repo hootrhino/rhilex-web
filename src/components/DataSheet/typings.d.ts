@@ -32,6 +32,7 @@ export type DataSheetItem = Point & {
 };
 
 export type DataSheetProps = ProTableProps & {
+  isDetail?: boolean;
   defaultConfig: Record<string, any>;
   defaultUploadData: Record<string, any>;
   remove: (uuids: string[]) => void;
@@ -40,7 +41,7 @@ export type DataSheetProps = ProTableProps & {
 };
 
 export type BaseDataSheetProps = {
-  uuid?: string;
+  isDetail?: boolean;
 };
 
 /**

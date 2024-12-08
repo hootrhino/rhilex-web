@@ -1,6 +1,5 @@
 import IndexBorder from '@/components/IndexBorder';
 import { message, modal } from '@/components/PopupHack';
-// import { IconFont } from '@/utils/utils';
 import {
   DeleteOutlined,
   DownloadOutlined,
@@ -55,7 +54,7 @@ const DataSheet = ({
   remove,
   update,
   upload,
-  scroll,
+  isDetail,
   ...props
 }: DataSheetProps) => {
   const { deviceId } = useParams();
@@ -63,7 +62,6 @@ const DataSheet = ({
 
   const [title, setTitle] = useState<string>(formatMessage({ id: 'device.title.sheet' }));
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  // const [editableRows, setEditableRows] = useState<Partial<DataSheetItem>[]>([]);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [polling, setPolling] = useState<number>(POLLING_INTERVAL);
   const [stopPolling, setStopPolling] = useState<boolean>(false);
@@ -79,21 +77,12 @@ const DataSheet = ({
 
   const handleOnReset = () => {
     setSelectedRowKeys([]);
-    // setEditableRows([]);
     setEditableRowKeys([]);
   };
 
   const handleOnReload = () => {
     props?.actionRef.current.reload();
   };
-
-  // TODO 暂时隐藏 - 批量更新
-  // const handleOnBatchUpdate = () => {
-  //   if (deviceId && editableRows) {
-  //     update(editableRows);
-  //     handleOnReset();
-  //   }
-  // };
 
   // 单个更新
   const handleOnSave = async (rowKey: RecordKey, data: Partial<DataSheetItem>) => {
@@ -299,7 +288,6 @@ const DataSheet = ({
       dataIndex: 'status',
       width: 100,
       editable: false,
-      hideInTable: !deviceId,
       renderText: (_, record) => <ProTag type={StatusType.POINT}>{record?.status || 0}</ProTag>,
     },
     {
@@ -314,7 +302,7 @@ const DataSheet = ({
       title: formatMessage({ id: 'table.title.option' }),
       valueType: 'option',
       width: 150,
-      hideInTable: !deviceId,
+      hideInTable: isDetail,
       render: (_text, record, _, action) => {
         return (
           <Space align="end">
@@ -409,20 +397,6 @@ const DataSheet = ({
         {formatMessage({ id: 'device.button.import.sheet' })}
       </Button>
     </Upload>,
-    // <Button
-    //   key="batch-update"
-    //   type="primary"
-    //   icon={
-    //     <IconFont
-    //       type={disabled ? 'icon-batch-create-disabled' : 'icon-batch-create'}
-    //       className="text-[16px]"
-    //     />
-    //   }
-    //   onClick={handleOnBatchUpdate}
-    //   disabled={disabled}
-    // >
-    //   {formatMessage({ id: 'device.button.update.bulk' })}
-    // </Button>,
     <Button
       key="batch-remove"
       danger
@@ -461,7 +435,7 @@ const DataSheet = ({
     }
   }, [deviceId]);
 
-  return deviceId ? (
+  return !isDetail ? (
     <>
       <PageContainer title={title} onBack={() => history.push(DEVICE_LIST)}>
         <EditableProTable<Partial<DataSheetItem>>
@@ -491,11 +465,7 @@ const DataSheet = ({
             onSave: handleOnSave,
             onChange: setEditableRowKeys,
             actionRender: (_row, _config, defaultDom) => [defaultDom.save, defaultDom.cancel],
-            // onValuesChange: (_record, dataSource) => {
-            //   setEditableRows(dataSource);
-            // },
           }}
-          scroll={scroll}
           {...props}
         />
       </PageContainer>
@@ -505,7 +475,7 @@ const DataSheet = ({
           setRegisterData({ open: visible, data: visible ? updateRegisterData.data : undefined })
         }
         data={{
-          uuid: deviceId,
+          uuid: deviceId as string,
           tag: updateRegisterData.data?.tag as string,
           pointId: updateRegisterData.data?.uuid as string,
         }}
@@ -526,7 +496,6 @@ const DataSheet = ({
         search={false}
         toolBarRender={false}
         pagination={defaultPagination}
-        scroll={false}
         {...props}
       />
     </>

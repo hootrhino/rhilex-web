@@ -2,6 +2,7 @@ import button from './zh-TW/button';
 import component from './zh-TW/component';
 import status from './zh-TW/status';
 // pages
+import alarm from './zh-TW/alarm';
 import appStack from './zh-TW/appStack';
 import cecollas from './zh-TW/cecollas';
 import com from './zh-TW/com';
@@ -37,4 +38,5 @@ export default {
   ...com,
   ...login,
   ...cecollas,
+  ...alarm,
 };

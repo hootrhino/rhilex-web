@@ -43,7 +43,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         title={formatMessage({ id: 'common.title.base' })}
         dataSource={data && omit(data, ['config'])}
         loading={loading}
-        rootClassName="detail-descriptions"
+        rootClassName="mb-[24px]"
       />
       {data?.type && Object.values(InendType).includes(data?.type as InendType) && (
         <ProDescriptions

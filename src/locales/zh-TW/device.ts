@@ -4,6 +4,7 @@ export default {
    */
   'device.button.snmp': 'SNMP 對象列表',
   'device.button.sheet': '點位表配置',
+  'device.button.alarmRule': '告警規則配置',
   'device.button.registers': '查看暫存器組',
   'device.button.nonPolling': '停止刷新',
   'device.button.polling': '開始刷新',
@@ -60,6 +61,7 @@ export default {
   'device.form.title.group': '{type} 配置',
   'device.form.title.group.uartRW': '讀寫配置',
   'device.form.title.group.cecollas': '雲邊協同配置',
+  'device.form.title.group.alarm': '預警配置',
 
   // timeout
   'device.form.title.timeout.request': '請求超時',
@@ -99,6 +101,8 @@ export default {
   'device.form.title.enableCreateSchema': '允許創建物模型',
   'device.form.title.parse': '是否解析',
   'device.form.title.gwsn': '網關序號',
+  'device.form.title.alarm.enable': '開啟預警',
+  'device.form.title.alarm.ruleId': '預警規則',
 
   // group
   'device.form.title.group.name': '分組名稱',

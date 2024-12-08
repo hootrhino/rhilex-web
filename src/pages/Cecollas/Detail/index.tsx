@@ -70,7 +70,7 @@ const Detail = () => {
             columns={baseColumns as EnhancedProDescriptionsItemProps[]}
             column={3}
             labelWidth={labelWidth}
-            rootClassName="detail-descriptions"
+            rootClassName="mb-[24px]"
             className="mt-6 mb-4"
           />
           {detail && detail.type && Object.keys(CecollasType).includes(detail.type) && (
@@ -79,7 +79,7 @@ const Detail = () => {
               columns={typeColumns(detail.type) as EnhancedProDescriptionsItemProps[]}
               column={3}
               labelWidth={labelWidth}
-              rootClassName="detail-descriptions"
+              rootClassName="mb-[24px]"
             />
           )}
         </>

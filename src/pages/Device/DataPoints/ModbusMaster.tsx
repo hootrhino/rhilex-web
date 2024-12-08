@@ -58,7 +58,7 @@ type ModbusPoint = Point & {
   weight: number;
 };
 
-const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
+const ModbusMasterDataSheet = ({ isDetail = false }: BaseDataSheetProps) => {
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const actionRef = useRef<ActionType>();
   const { deviceId } = useParams();
@@ -81,7 +81,7 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
     pageSize = defaultPagination.defaultPageSize,
   }) => {
     const { data } = await getModbusMasterSheetList({
-      device_uuid: deviceId || uuid,
+      device_uuid: deviceId || '',
       current,
       size: pageSize,
     });
@@ -123,7 +123,6 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       dataIndex: 'function',
       valueType: 'select',
       width: 150,
-      hideInTable: !!uuid,
       valueEnum: funcEnum,
       renderFormItem: (_, { record }) => (
         <ProFormSelect
@@ -157,7 +156,6 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       title: formatMessage({ id: 'device.form.title.dataType' }),
       dataIndex: 'type',
       width: 150,
-      hideInTable: !!uuid,
       ellipsis: true,
       renderFormItem: (_, { record }) => {
         let options = modbusDataTypeOptions;
@@ -214,7 +212,6 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       dataIndex: 'address',
       valueType: 'digit',
       width: 100,
-      hideInTable: !!uuid,
       ellipsis: true,
       fieldProps: {
         style: { width: '100%' },
@@ -235,7 +232,6 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       dataIndex: 'quantity',
       valueType: 'digit',
       width: 100,
-      hideInTable: !!uuid,
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.quantity' }) },
@@ -267,7 +263,6 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       title: formatMessage({ id: 'device.form.title.weight' }),
       dataIndex: 'weight',
       width: 80,
-      hideInTable: !!uuid,
       formItemProps: {
         rules: [
           { required: true, message: formatMessage({ id: 'device.form.placeholder.weight' }) },
@@ -300,7 +295,6 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       dataIndex: 'frequency',
       valueType: 'digit',
       width: 120,
-      hideInTable: !!uuid,
       fieldProps: {
         addonAfter: 'ms',
         placeholder: formatMessage({ id: 'device.form.placeholder.frequency' }),
@@ -324,6 +318,7 @@ const ModbusMasterDataSheet = ({ uuid }: BaseDataSheetProps) => {
       defaultConfig={defaultConfig}
       defaultUploadData={defaultUploadData}
       scroll={{ x: 1700 }}
+      isDetail={isDetail}
       upload={async ({ file, ...params }: UploadParams) => {
         await postModbusMasterSheetSheetImport({ ...params }, file);
       }}

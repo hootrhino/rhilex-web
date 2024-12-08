@@ -4,6 +4,7 @@ export default {
    */
   'device.button.snmp': 'SNMP OIDs',
   'device.button.sheet': 'Sheet Configuration',
+  'device.button.alarmRule': 'Alarm Rule Configuration',
   'device.button.registers': 'Registers Detail',
   'device.button.nonPolling': 'Stop Refresh',
   'device.button.polling': 'Start Refresh',
@@ -62,6 +63,7 @@ export default {
   'device.form.title.group': '{type} configuration',
   'device.form.title.group.uartRW': 'Read/Write configuration',
   'device.form.title.group.cecollas': 'Cloud edge collaboration configuration',
+  'device.form.title.group.alarm': 'Alarm configuration',
 
   // timeout
   'device.form.title.timeout.request': 'Request Timeout',
@@ -101,6 +103,8 @@ export default {
   'device.form.title.enableCreateSchema': 'Enable Schema Creation',
   'device.form.title.parse': 'Enable Parsing',
   'device.form.title.gwsn': 'GWSN',
+  'device.form.title.alarm.enable': 'Enable Alarm',
+  'device.form.title.alarm.ruleId': 'Alarm Rule',
 
   // group
   'device.form.title.group.name': 'Group Name',

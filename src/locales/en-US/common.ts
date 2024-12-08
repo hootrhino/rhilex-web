@@ -110,6 +110,7 @@ export default {
   'menu.dashboard': 'Dashboard',
   'menu.device': 'Device Access',
   'menu.device.list': 'Device List',
+  'menu.device.detail': 'Device details',
   'menu.device.new': 'New Device',
   'menu.device.update': 'Edit Device',
   'menu.device.sheet': 'Register Sheet Configuration',
@@ -117,6 +118,7 @@ export default {
   // 'menu.device.objectList': 'SNMP OID Sheet',
   'menu.device.subDevice': 'Subdevice List',
   'menu.schema': 'Data Schema',
+  'menu.alarm': 'Alarm Center',
   'menu.dataRepository': 'Data Repository',
   'menu.inend': 'Input Resource',
   'menu.source.list': 'Resource List',
@@ -139,4 +141,5 @@ export default {
   'menu.cecollas.list': 'Cloud Platform List',
   'menu.cecollas.detail': 'Cloud Platform Details',
   'menu.cecollas.action': 'Action Callback',
+  'menu.alarmRule.list': '告警规则',
 };

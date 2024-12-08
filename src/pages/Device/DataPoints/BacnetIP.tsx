@@ -38,7 +38,7 @@ const defaultUploadData = {
   objectId: 1,
 };
 
-const BacnetDataSheet = ({ uuid }: BaseDataSheetProps) => {
+const BacnetDataSheet = ({ isDetail = false }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
@@ -63,7 +63,6 @@ const BacnetDataSheet = ({ uuid }: BaseDataSheetProps) => {
       dataIndex: 'objectType',
       valueType: 'select',
       width: 150,
-      hideInTable: !!uuid,
       valueEnum: objectTypeOption,
       formItemProps: {
         rules: [
@@ -82,7 +81,6 @@ const BacnetDataSheet = ({ uuid }: BaseDataSheetProps) => {
       title: formatMessage({ id: 'device.form.title.objectId' }),
       dataIndex: 'objectId',
       width: 150,
-      hideInTable: !!uuid,
       valueType: 'digit',
       formItemProps: {
         rules: [
@@ -115,13 +113,13 @@ const BacnetDataSheet = ({ uuid }: BaseDataSheetProps) => {
       editableFormRef={editorFormRef}
       actionRef={actionRef}
       columns={columns}
+      isDetail={isDetail}
       request={async ({
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
       }) => {
-        const deviceUuid = deviceId || uuid || '';
         const { data } = await getBacnetipDataSheetList({
-          device_uuid: deviceUuid,
+          device_uuid: deviceId || '',
           current,
           size: pageSize,
         });

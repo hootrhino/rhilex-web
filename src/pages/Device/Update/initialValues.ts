@@ -54,6 +54,11 @@ const defaultCecollaConfig = {
   enableCreateSchema: 'false',
 };
 
+// 预警配置
+const defaultAlarmConfig = {
+  enable: 'false',
+};
+
 // 国标配置
 const defaultNationalConfig = {
   commonConfig: defaultCommonConfig,
@@ -64,6 +69,7 @@ const defaultNationalConfig = {
     parity: 'E',
   },
   cecollaConfig: defaultCecollaConfig,
+  alarmConfig: defaultAlarmConfig,
 };
 
 // BACnet 配置
@@ -90,6 +96,8 @@ export const defaultConfig = {
     commonConfig: defaultCommonConfig,
     hostConfig: defaultHostConfig,
     uartConfig: defaultUartConfig,
+    cecollaConfig: defaultCecollaConfig,
+    alarmConfig: defaultAlarmConfig,
   },
   [DeviceType.GENERIC_MODBUS_MASTER]: {
     commonConfig: {
@@ -100,6 +108,7 @@ export const defaultConfig = {
     hostConfig: defaultHostConfig,
     uartConfig: defaultUartConfig,
     cecollaConfig: defaultCecollaConfig,
+    alarmConfig: defaultAlarmConfig,
   },
   [DeviceType.GENERIC_MODBUS_SLAVER]: {
     commonConfig: {
@@ -111,6 +120,7 @@ export const defaultConfig = {
       host: '0.0.0.0',
     },
     cecollaConfig: defaultCecollaConfig,
+    alarmConfig: defaultAlarmConfig,
   },
   [DeviceType.GENERIC_MBUS_EN13433_MASTER]: {
     commonConfig: {
@@ -124,6 +134,7 @@ export const defaultConfig = {
     },
     uartConfig: defaultUartConfig,
     cecollaConfig: defaultCecollaConfig,
+    alarmConfig: defaultAlarmConfig,
   },
   [DeviceType.SIEMENS_PLC]: {
     commonConfig: {
@@ -139,6 +150,7 @@ export const defaultConfig = {
       slot: defaultModelSlot[PLCModel.S71200],
     },
     cecollaConfig: defaultCecollaConfig,
+    alarmConfig: defaultAlarmConfig,
   },
   [DeviceType.GENERIC_HTTP_DEVICE]: {
     commonConfig: {
@@ -167,6 +179,7 @@ export const defaultConfig = {
       version: SNMPVersion.V2,
     },
     cecollaConfig: defaultCecollaConfig,
+    alarmConfig: defaultAlarmConfig,
   },
   [DeviceType.GENERIC_BACNET_IP]: {
     commonConfig: {
@@ -175,6 +188,7 @@ export const defaultConfig = {
     },
     bacnetConfig: defaultBacnetConfig,
     cecollaConfig: defaultCecollaConfig,
+    alarmConfig: defaultAlarmConfig,
   },
   [DeviceType.BACNET_ROUTER_GW]: {
     bacnetRouterConfig: {
@@ -182,6 +196,7 @@ export const defaultConfig = {
       deviceName: DEFAULT_VALUE,
     },
     cecollaConfig: defaultCecollaConfig,
+    alarmConfig: defaultAlarmConfig,
   },
   [DeviceType.DLT6452007_MASTER]: defaultNationalConfig,
   [DeviceType.CJT1882004_MASTER]: defaultNationalConfig,

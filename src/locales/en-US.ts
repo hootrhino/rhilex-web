@@ -2,6 +2,7 @@ import button from './en-US/button';
 import component from './en-US/component';
 import status from './en-US/status';
 // pages
+import alarm from './en-US/alarm';
 import appStack from './en-US/appStack';
 import cecollas from './en-US/cecollas';
 import com from './en-US/com';
@@ -37,4 +38,5 @@ export default {
   ...com,
   ...login,
   ...cecollas,
+  ...alarm,
 };

@@ -41,7 +41,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
         title={formatMessage({ id: 'common.title.base' })}
         dataSource={data && omit(data, ['config'])}
         loading={loading}
-        rootClassName="detail-descriptions"
+        rootClassName="mb-[24px]"
       />
       {data?.type && Object.keys(OutendType).includes(data?.type) && (
         <>
@@ -51,7 +51,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
             title={formatMessage({ id: 'outend.title.common' })}
             dataSource={data?.config?.commonConfig}
             loading={loading}
-            rootClassName="detail-descriptions"
+            rootClassName="mb-[24px]"
           />
           {data?.config?.uartConfig && (
             <ProDescriptions
@@ -60,7 +60,7 @@ const Detail = ({ uuid, ...props }: DetailProps) => {
               title={formatMessage({ id: 'outend.title.uart' })}
               dataSource={data?.config?.uartConfig}
               loading={loading}
-              rootClassName="detail-descriptions"
+              rootClassName="mb-[24px]"
             />
           )}
           {data?.type === OutendType.HTTP &&

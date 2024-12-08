@@ -4,6 +4,7 @@ export default {
    */
   'device.button.snmp': 'SNMP 对象列表',
   'device.button.sheet': '点位表配置',
+  'device.button.alarmRule': '告警规则配置',
   'device.button.registers': '查看寄存器组',
   'device.button.nonPolling': '停止刷新',
   'device.button.polling': '开始刷新',
@@ -60,6 +61,7 @@ export default {
   'device.form.title.group': '{type} 配置',
   'device.form.title.group.uartRW': '读写配置',
   'device.form.title.group.cecollas': '云边协同配置',
+  'device.form.title.group.alarm': '预警配置',
 
   // timeout
   'device.form.title.timeout.request': '请求超时',
@@ -99,6 +101,8 @@ export default {
   'device.form.title.enableCreateSchema': '允许创建物模型',
   'device.form.title.parse': '是否解析',
   'device.form.title.gwsn': '网关序列号',
+  'device.form.title.alarm.enable': '开启预警',
+  'device.form.title.alarm.ruleId': '预警规则',
 
   // group
   'device.form.title.group.name': '分组名称',
