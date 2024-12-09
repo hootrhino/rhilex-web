@@ -34,7 +34,7 @@ const defaultUploadData = {
   objectId: 1,
 };
 
-const BacnetRouterDataSheet = ({ uuid, isDetail = false }: BaseDataSheetProps) => {
+const BacnetRouterDataSheet = ({ isDetail = false }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
@@ -101,7 +101,7 @@ const BacnetRouterDataSheet = ({ uuid, isDetail = false }: BaseDataSheetProps) =
         current = defaultPagination.defaultCurrent,
         pageSize = defaultPagination.defaultPageSize,
       }) => {
-        const deviceUuid = deviceId || uuid || '';
+        const deviceUuid = deviceId || '';
         const { data } = await getBacnetRouterSheetList({
           device_uuid: deviceUuid,
           current,

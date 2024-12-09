@@ -34,7 +34,7 @@ const defaultUploadData = {
   weight: 1,
 };
 
-const CJTDataSheet = ({ uuid, isDetail = false }: BaseDataSheetProps) => {
+const CJTDataSheet = ({ isDetail = false }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
@@ -116,7 +116,7 @@ const CJTDataSheet = ({ uuid, isDetail = false }: BaseDataSheetProps) => {
         pageSize = defaultPagination.defaultPageSize,
       }) => {
         const { data } = await getCjt1882004MasterSheetList({
-          device_uuid: deviceId || uuid,
+          device_uuid: deviceId || '',
           current,
           size: pageSize,
         });

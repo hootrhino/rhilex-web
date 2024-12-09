@@ -32,7 +32,7 @@ const defaultUploadData = {
   weight: 1,
 };
 
-const DLTDataSheet = ({ uuid, isDetail = false }: BaseDataSheetProps) => {
+const DLTDataSheet = ({ isDetail = false }: BaseDataSheetProps) => {
   const actionRef = useRef<ActionType>();
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const { deviceId } = useParams();
@@ -66,7 +66,6 @@ const DLTDataSheet = ({ uuid, isDetail = false }: BaseDataSheetProps) => {
       title: formatMessage({ id: 'device.form.title.weight' }),
       dataIndex: 'weight',
       width: 140,
-      hideInTable: !!uuid,
       formItemProps: {
         rules: [
           {
@@ -114,7 +113,7 @@ const DLTDataSheet = ({ uuid, isDetail = false }: BaseDataSheetProps) => {
         pageSize = defaultPagination.defaultPageSize,
       }) => {
         const { data } = await getDlt6452007MasterSheetList({
-          device_uuid: deviceId || uuid,
+          device_uuid: deviceId || '',
           current,
           size: pageSize,
         });

@@ -52,7 +52,7 @@ type MbusPoint = Point & {
   weight: number;
 };
 
-const MbusMasterDataSheet = ({ uuid, isDetail = false }: BaseDataSheetProps) => {
+const MbusMasterDataSheet = ({ isDetail = false }: BaseDataSheetProps) => {
   const editorFormRef = useRef<EditableFormInstance<DataSheetItem>>();
   const actionRef = useRef<ActionType>();
   const { deviceId } = useParams();
@@ -64,7 +64,7 @@ const MbusMasterDataSheet = ({ uuid, isDetail = false }: BaseDataSheetProps) => 
     pageSize = defaultPagination.defaultPageSize,
   }) => {
     const { data } = await getMbusMasterSheetList({
-      device_uuid: deviceId || uuid,
+      device_uuid: deviceId || '',
       current,
       size: pageSize,
     });

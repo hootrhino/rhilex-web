@@ -17,7 +17,7 @@ const DataSheetComponents = {
   [DeviceType.GENERIC_USER_PROTOCOL]: React.lazy(() => import('./UserProtocol')),
 };
 
-const DataPoints = ({ uuid, isDetail }: BaseDataSheetProps) => {
+const DataPoints = ({ isDetail }: BaseDataSheetProps) => {
   const type = localStorage.getItem('deviceType');
 
   if (!type) {
@@ -30,7 +30,7 @@ const DataPoints = ({ uuid, isDetail }: BaseDataSheetProps) => {
     return <NoFoundPage />;
   }
 
-  return <DataSheetComponent uuid={uuid} isDetail={isDetail} />;
+  return <DataSheetComponent isDetail={isDetail} />;
 };
 
 export default React.memo(DataPoints);
