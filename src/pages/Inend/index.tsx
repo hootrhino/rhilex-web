@@ -26,7 +26,6 @@ import { MAX_TOTAL } from '@/utils/constant';
 import { useIntl, useModel, useRequest } from '@umijs/max';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { baseColumns } from './Columns';
-import Detail from './Detail';
 import { InendType } from './enum';
 
 export type InendItem = {
@@ -40,8 +39,7 @@ export type InendItem = {
 
 const Inend = () => {
   const actionRef = useRef<ActionType>();
-  const { detailConfig, isFreeTrial, total, changeConfig, initialConfig, changeTotal } =
-    useModel('useCommon');
+  const { isFreeTrial, total, changeTotal } = useModel('useCommon');
 
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
@@ -150,7 +148,7 @@ const Inend = () => {
       key: 'option',
       valueType: 'option',
       render: (_, { uuid, type, state }) => [
-        <a key="detail" onClick={() => changeConfig({ open: true, uuid })}>
+        <a key="detail" onClick={() => history.push(`/inend/detail/${uuid}`)}>
           {formatMessage({ id: 'button.detail' })}
         </a>,
         <a key="edit" onClick={() => history.push(`/inend/edit/${uuid}`)}>
@@ -212,7 +210,6 @@ const Inend = () => {
           ]}
         />
       </PageContainer>
-      <Detail {...detailConfig} onClose={initialConfig} />
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}

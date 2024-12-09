@@ -95,6 +95,7 @@ export default {
   'common.title.base': '基本配置',
   'common.title.defaultGroup': '默認分組',
   'common.title.exception': '異常訊息',
+  'common.title.detail': '{name} - 資源詳情',
 
   // UART parity options
   'options.parity.e': '偶校驗',
@@ -121,6 +122,7 @@ export default {
   'menu.source.list': '資源列表',
   'menu.source.new': '新建資源',
   'menu.source.update': '編輯資源',
+  'menu.source.detail': '資源詳情',
   'menu.outend': '北向資源',
   'menu.appStack': '輕量應用',
   'menu.appStack.list': '應用列表',

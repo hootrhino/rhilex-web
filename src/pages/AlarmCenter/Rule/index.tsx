@@ -19,7 +19,7 @@ import type {
   RequestOptionsType,
 } from '@ant-design/pro-components';
 import { BetaSchemaForm, ProTable } from '@ant-design/pro-components';
-import { useIntl, useModel, useRequest } from '@umijs/max';
+import { Link, useIntl, useModel, useRequest } from '@umijs/max';
 import { Button, Popconfirm } from 'antd';
 import { useEffect, useRef } from 'react';
 
@@ -152,7 +152,7 @@ const AlarmRule = () => {
       request: async () => outends,
       renderText: (handleId) => {
         const outend = outends?.find((item: RequestOptionsType) => item.value === handleId);
-        return outend.label;
+        return outend ? <Link to={`/outend/detail/${outend.value}`}>{outend.label}</Link> : '-';
       },
     },
     {

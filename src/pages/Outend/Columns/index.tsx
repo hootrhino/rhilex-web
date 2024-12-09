@@ -18,7 +18,6 @@ export const baseColumns = [
     title: 'UUID',
     dataIndex: 'uuid',
     hideInForm: true,
-    hideInDescriptions: true,
     ellipsis: true,
     copyable: true,
   },

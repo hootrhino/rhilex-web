@@ -148,7 +148,6 @@ export const baseColumns = (isFreeTrial?: boolean) => [
     ellipsis: true,
     copyable: true,
     hideInForm: true,
-    hideInDescriptions: true,
   },
   {
     title: formatMessage({ id: 'form.title.name' }),

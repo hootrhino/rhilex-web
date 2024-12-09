@@ -98,6 +98,7 @@ export default {
   'common.title.base': 'Basic configuration',
   'common.title.defaultGroup': 'Default group',
   'common.title.exception': 'Exception details',
+  'common.title.detail': '{name} - Resource details',
 
   // UART parity options
   'options.parity.e': 'Even Parity',
@@ -124,6 +125,7 @@ export default {
   'menu.source.list': 'Resource List',
   'menu.source.new': 'New Resource',
   'menu.source.update': 'Edit Resource',
+  'menu.source.detail': 'Resource details',
   'menu.outend': 'Output Resource',
   'menu.appStack': 'Micro Application',
   'menu.appStack.list': 'Application List',

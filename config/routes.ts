@@ -118,6 +118,11 @@
         component: './Inend/Update',
       },
       {
+        path: '/inend/detail/:uuid',
+        title: 'menu.source.detail',
+        component: './Inend/Detail',
+      },
+      {
         path: '/inend/:inendId/rule',
         title: 'menu.rule.list',
         component: './Rule',
@@ -164,6 +169,11 @@
         path: '/outend/edit/:uuid',
         title: 'menu.source.update',
         component: './Outend/Update',
+      },
+      {
+        path: '/outend/detail/:uuid',
+        title: 'menu.source.detail',
+        component: './Outend/Detail',
       },
     ],
   },

@@ -17,7 +17,6 @@ import type { ItemType } from 'antd/es/menu/interface';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useRef, useState } from 'react';
 import { baseColumns } from './Columns';
-import Detail from './Detail';
 
 export type OutendItem = {
   name: string;
@@ -31,8 +30,7 @@ export type OutendItem = {
 const Outend = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
-  const { isFreeTrial, total, detailConfig, changeTotal, initialConfig, changeConfig } =
-    useModel('useCommon');
+  const { isFreeTrial, total, changeTotal } = useModel('useCommon');
 
   const [open, setOpen] = useState<boolean>(false);
   const [restartId, setRestartId] = useState<string>('');
@@ -108,7 +106,7 @@ const Outend = () => {
       key: 'option',
       width: 230,
       render: (_, { uuid, state }) => [
-        <a key="detail" onClick={() => changeConfig({ open: true, uuid })}>
+        <a key="detail" onClick={() => history.push(`/outend/detail/${uuid}`)}>
           {formatMessage({ id: 'button.detail' })}
         </a>,
         <a key="edit" onClick={() => history.push(`/outend/edit/${uuid}`)}>
@@ -168,7 +166,6 @@ const Outend = () => {
           ]}
         />
       </PageContainer>
-      <Detail {...detailConfig} onClose={initialConfig} />
       <ProConfirmModal
         open={open}
         onCancel={() => setOpen(false)}
