@@ -85,6 +85,7 @@ export async function postAlarmRuleCreate(
     interval: number;
     threshold: number;
     description?: string;
+    handleId: string;
   },
   options?: { [key: string]: any },
 ) {
@@ -128,6 +129,7 @@ export async function getAlarmRuleDetail(
       expr: string;
       interval: number;
       threshold: number;
+      handleId: string;
       description: string;
     };
   }>('/api/v1/alarm_rule/detail', {
@@ -158,6 +160,7 @@ export async function getAlarmRuleList(
         expr: string;
         interval: number;
         threshold: number;
+        handleId: string;
         description: string;
       }[];
     };
@@ -197,28 +200,12 @@ export async function putAlarmRuleUpdate(
     interval: number;
     threshold: number;
     description?: string;
+    handleId: string;
   },
   options?: { [key: string]: any },
 ) {
   return request<{ code: number; msg: string; data: string[] }>('/api/v1/alarm_rule/update', {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
-    ...(options || {}),
-  });
-}
-
-/** 语法检查 POST /api/v1/alarm_rule/verifySyntax */
-export async function postAlarmRuleVerifySyntax(
-  body: {
-    expr: string;
-  },
-  options?: { [key: string]: any },
-) {
-  return request<Record<string, any>>('/api/v1/alarm_rule/verifySyntax', {
-    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },

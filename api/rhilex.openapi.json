@@ -24501,6 +24501,9 @@
                               "threshold": {
                                 "type": "integer"
                               },
+                              "handleId": {
+                                "type": "string"
+                              },
                               "description": {
                                 "type": "string"
                               }
@@ -24511,6 +24514,7 @@
                               "expr",
                               "interval",
                               "threshold",
+                              "handleId",
                               "description"
                             ],
                             "x-apifox-ignore-properties": [],
@@ -24520,6 +24524,7 @@
                               "expr",
                               "interval",
                               "threshold",
+                              "handleId",
                               "description"
                             ]
                           }
@@ -24687,20 +24692,25 @@
                   },
                   "description": {
                     "type": "string"
+                  },
+                  "handleId": {
+                    "type": "string"
                   }
                 },
                 "required": [
                   "name",
                   "expr",
                   "interval",
-                  "threshold"
+                  "threshold",
+                  "handleId"
                 ],
                 "x-apifox-orders": [
                   "name",
                   "expr",
                   "interval",
                   "threshold",
-                  "description"
+                  "description",
+                  "handleId"
                 ],
                 "x-apifox-ignore-properties": []
               },
@@ -24783,6 +24793,9 @@
                   },
                   "description": {
                     "type": "string"
+                  },
+                  "handleId": {
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -24790,7 +24803,8 @@
                   "name",
                   "expr",
                   "interval",
-                  "threshold"
+                  "threshold",
+                  "handleId"
                 ],
                 "x-apifox-orders": [
                   "uuid",
@@ -24798,16 +24812,19 @@
                   "expr",
                   "interval",
                   "threshold",
-                  "description"
+                  "description",
+                  "handleId"
                 ],
                 "x-apifox-ignore-properties": []
               },
               "example": {
-                "uuid": "ALARM648FSERF",
-                "name": "系统负载警报",
-                "expr": "load1 > 5",
-                "interval": 60,
-                "description": "当系统负载超过5时触发警报"
+                "uuid": "ALARMM9FJV7CT",
+                "name": "规则20",
+                "expr": "a>100",
+                "interval": 1200,
+                "threshold": 2000,
+                "handleId": "1234",
+                "description": "描述20"
               }
             }
           }
@@ -24907,6 +24924,9 @@
                         "threshold": {
                           "type": "integer"
                         },
+                        "handleId": {
+                          "type": "string"
+                        },
                         "description": {
                           "type": "string"
                         }
@@ -24917,6 +24937,7 @@
                         "expr",
                         "interval",
                         "threshold",
+                        "handleId",
                         "description"
                       ],
                       "x-apifox-ignore-properties": [],
@@ -24926,6 +24947,7 @@
                         "expr",
                         "interval",
                         "threshold",
+                        "handleId",
                         "description"
                       ]
                     }
@@ -24949,12 +24971,13 @@
                       "code": 200,
                       "msg": "Success",
                       "data": {
-                        "uuid": "uuid1",
-                        "name": "规则1",
-                        "expr": "expr1",
-                        "interval": 60,
-                        "threshold": 100,
-                        "description": "描述1"
+                        "uuid": "ALARMM9FJV7CT",
+                        "name": "规则20",
+                        "expr": "a>100",
+                        "interval": 1200,
+                        "threshold": 2000,
+                        "handleId": "1234",
+                        "description": "描述20"
                       }
                     }
                   }
@@ -25524,58 +25547,6 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-241473690-run",
-        "security": []
-      }
-    },
-    "/api/v1/alarm_rule/verifySyntax": {
-      "post": {
-        "summary": "语法检查",
-        "x-apifox-folder": "预警中心",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "tags": [
-          "预警中心"
-        ],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "expr": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "expr"
-                ],
-                "x-apifox-ignore-properties": [],
-                "x-apifox-orders": [
-                  "expr"
-                ]
-              },
-              "example": ""
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {},
-                  "x-apifox-ignore-properties": [],
-                  "x-apifox-orders": []
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-242071157-run",
         "security": []
       }
     },

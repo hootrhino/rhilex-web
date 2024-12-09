@@ -4,7 +4,6 @@ export default {
    */
   'device.button.snmp': 'SNMP 對象列表',
   'device.button.sheet': '點位表配置',
-  'device.button.alarmRule': '告警規則配置',
   'device.button.registers': '查看暫存器組',
   'device.button.nonPolling': '停止刷新',
   'device.button.polling': '開始刷新',

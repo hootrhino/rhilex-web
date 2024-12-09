@@ -1,6 +1,7 @@
 import { message } from '@/components/PopupHack';
-import PageContainer from '@/components/ProPageContainer';
-import { getDevicesDetail } from '@/services/rhilex/shebeiguanli';
+import UnitValue from '@/components/UnitValue';
+import type { OutendItem } from '@/pages/Outend';
+import { getOutendsList } from '@/services/rhilex/shuchuziyuanguanli';
 import {
   deleteAlarmRuleDel,
   getAlarmRuleDetail,
@@ -8,19 +9,19 @@ import {
   postAlarmRuleCreate,
   putAlarmRuleUpdate,
 } from '@/services/rhilex/yujingzhongxin';
-import { defaultPagination, DEVICE_LIST } from '@/utils/constant';
+import { defaultPagination } from '@/utils/constant';
 import { generateRandomId } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import type {
   ActionType,
   ProColumns,
-  ProDescriptionsItemProps,
   ProFormInstance,
+  RequestOptionsType,
 } from '@ant-design/pro-components';
-import { BetaSchemaForm, ProDescriptions, ProTable } from '@ant-design/pro-components';
-import { history, useIntl, useParams, useRequest } from '@umijs/max';
-import { Button, Modal, Popconfirm } from 'antd';
-import { useEffect, useRef, useState } from 'react';
+import { BetaSchemaForm, ProTable } from '@ant-design/pro-components';
+import { useIntl, useModel, useRequest } from '@umijs/max';
+import { Button, Popconfirm } from 'antd';
+import { useEffect, useRef } from 'react';
 
 type AlarmRuleItem = {
   uuid: string;
@@ -28,41 +29,15 @@ type AlarmRuleItem = {
   expr: string;
   interval: number;
   threshold: number;
-  description: string;
-};
-
-enum ConfigType {
-  DETAIL = 'detail',
-  FORM = 'form',
-}
-
-type Config = {
-  open: boolean;
-  uuid: string;
-  type: ConfigType;
-};
-
-const defaultConfig = {
-  open: false,
-  uuid: '',
-  type: ConfigType.DETAIL,
+  handleId: string;
+  description?: string;
 };
 
 const AlarmRule = () => {
   const actionRef = useRef<ActionType>();
   const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
-  const { deviceId } = useParams();
-
-  const [modalConfig, setConfig] = useState<Config>(defaultConfig);
-
-  // 获取设备详情
-  const { data: deviceDetail, run: getDeviceDetail } = useRequest(
-    (params: API.getDevicesDetailParams) => getDevicesDetail(params),
-    {
-      manual: true,
-    },
-  );
+  const { detailConfig, changeConfig, initialConfig } = useModel('useCommon');
 
   // 告警详情
   const { run: getDetail } = useRequest(
@@ -85,15 +60,27 @@ const AlarmRule = () => {
     },
   );
 
+  // 北向列表
+  const { data: outends } = useRequest(() => getOutendsList(), {
+    formatResult: (res) => {
+      return (res as any).data?.map((item: OutendItem) => ({
+        label: item.name,
+        value: item.uuid,
+      }));
+    },
+  });
+
   const columns: ProColumns<AlarmRuleItem>[] = [
     {
       title: 'UUID',
       dataIndex: 'uuid',
       hideInForm: true,
+      ellipsis: true,
     },
     {
       title: formatMessage({ id: 'table.title.name' }),
       dataIndex: 'name',
+      ellipsis: true,
       fieldProps: { placeholder: formatMessage({ id: 'alarm.form.placeholder.name' }) },
       formItemProps: {
         rules: [{ required: true, message: formatMessage({ id: 'alarm.form.placeholder.name' }) }],
@@ -103,6 +90,7 @@ const AlarmRule = () => {
       title: formatMessage({ id: 'alarm.table.title.expr' }),
       dataIndex: 'expr',
       valueType: 'textarea',
+      ellipsis: true,
       fieldProps: { placeholder: formatMessage({ id: 'alarm.form.placeholder.expr' }) },
       formItemProps: {
         rules: [{ required: true, message: formatMessage({ id: 'alarm.form.placeholder.expr' }) }],
@@ -130,6 +118,9 @@ const AlarmRule = () => {
           { required: true, message: formatMessage({ id: 'alarm.form.placeholder.interval' }) },
         ],
       },
+      render: (_dom: React.ReactNode, { interval }: AlarmRuleItem) => (
+        <UnitValue value={interval} unit="s" />
+      ),
     },
     {
       title: formatMessage({ id: 'alarm.table.title.threshold' }),
@@ -146,32 +137,43 @@ const AlarmRule = () => {
       },
     },
     {
+      title: formatMessage({ id: 'alarm.table.title.handleId' }),
+      dataIndex: 'handleId',
+      valueType: 'select',
+      ellipsis: true,
+      fieldProps: {
+        placeholder: formatMessage({ id: 'alarm.form.placeholder.handleId' }),
+      },
+      formItemProps: {
+        rules: [
+          { required: true, message: formatMessage({ id: 'alarm.form.placeholder.handleId' }) },
+        ],
+      },
+      request: async () => outends,
+      renderText: (handleId) => {
+        const outend = outends?.find((item: RequestOptionsType) => item.value === handleId);
+        return outend.label;
+      },
+    },
+    {
       title: formatMessage({ id: 'table.title.desc' }),
       dataIndex: 'description',
       ellipsis: true,
       fieldProps: { placeholder: formatMessage({ id: 'form.placeholder.desc' }) },
+      renderText: (description) => description || '-',
     },
     {
       title: formatMessage({ id: 'table.title.option' }),
-      width: 180,
+      width: 100,
       key: 'option',
       valueType: 'option',
       hideInDescriptions: true,
       hideInForm: true,
       render: (_, { uuid }) => [
         <a
-          key="detail"
-          onClick={() => {
-            setConfig({ open: true, uuid, type: ConfigType.DETAIL });
-          }}
-        >
-          {formatMessage({ id: 'button.detail' })}
-        </a>,
-
-        <a
           key="edit"
           onClick={() => {
-            setConfig({ open: true, uuid, type: ConfigType.FORM });
+            changeConfig({ open: true, uuid });
           }}
         >
           {formatMessage({ id: 'button.edit' })}
@@ -191,28 +193,20 @@ const AlarmRule = () => {
   ];
 
   useEffect(() => {
-    if (deviceId) {
-      getDeviceDetail({ uuid: deviceId });
+    if (detailConfig.uuid) {
+      getDetail({ uuid: detailConfig.uuid });
     }
-  }, [deviceId]);
-
-  useEffect(() => {
-    if (modalConfig.uuid && modalConfig.type === ConfigType.FORM) {
-      getDetail({ uuid: modalConfig.uuid });
-    }
-  }, [modalConfig]);
+  }, [detailConfig.uuid]);
 
   return (
-    <PageContainer
-      onBack={() => history.push(DEVICE_LIST)}
-      title={formatMessage({ id: 'alarm.rule.title.list' }, { name: deviceDetail?.name })}
-    >
+    <>
       <ProTable
         rowKey="uuid"
         actionRef={actionRef}
         rootClassName="stripe-table"
         search={false}
         columns={columns}
+        pagination={defaultPagination}
         request={async ({
           current = defaultPagination.defaultCurrent,
           pageSize = defaultPagination.defaultPageSize,
@@ -229,45 +223,27 @@ const AlarmRule = () => {
           <Button
             type="primary"
             key="new"
-            onClick={() => setConfig({ open: true, uuid: '', type: ConfigType.FORM })}
+            onClick={() => changeConfig({ open: true, uuid: '' })}
             icon={<PlusOutlined />}
           >
             {formatMessage({ id: 'button.new' })}
           </Button>,
         ]}
       />
-      <Modal
-        destroyOnClose
-        width="50%"
-        maskClosable={false}
-        open={modalConfig.open && modalConfig.type === ConfigType.DETAIL}
-        title={formatMessage({ id: 'alarm.rule.title.detail' })}
-        footer={
-          <Button type="primary" onClick={() => setConfig(defaultConfig)}>
-            {formatMessage({ id: 'button.close' })}
-          </Button>
-        }
-        onCancel={() => setConfig(defaultConfig)}
-      >
-        <ProDescriptions
-          columns={columns as ProDescriptionsItemProps<Record<string, any>, AlarmRuleItem>[]}
-          request={async () => {
-            const { data } = await getAlarmRuleDetail({ uuid: modalConfig.uuid });
-            return Promise.resolve({
-              success: true,
-              data,
-            });
-          }}
-        />
-      </Modal>
       <BetaSchemaForm<AlarmRuleItem>
         width="35%"
         formRef={formRef}
         layoutType="ModalForm"
-        open={modalConfig.open && modalConfig.type === ConfigType.FORM}
-        onOpenChange={(open) => setConfig(open ? { ...modalConfig, open } : defaultConfig)}
+        open={detailConfig.open}
+        onOpenChange={(open) => {
+          if (open) {
+            changeConfig({ ...detailConfig, open });
+          } else {
+            initialConfig();
+          }
+        }}
         title={formatMessage({
-          id: modalConfig.uuid ? 'alarm.rule.title.update' : 'alarm.rule.title.new',
+          id: detailConfig.uuid ? 'alarm.rule.title.update' : 'alarm.rule.title.new',
         })}
         columns={columns as any[]}
         modalProps={{ maskClosable: false, destroyOnClose: true }}
@@ -275,22 +251,22 @@ const AlarmRule = () => {
         onFinish={async (values) => {
           try {
             const params = { ...values };
-            if (modalConfig.uuid) {
-              await putAlarmRuleUpdate({ ...params, uuid: modalConfig.uuid });
+            if (detailConfig.uuid) {
+              await putAlarmRuleUpdate({ ...params, uuid: detailConfig.uuid });
               message.success(formatMessage({ id: 'message.success.update' }));
             } else {
               await postAlarmRuleCreate({ ...params });
               message.success(formatMessage({ id: 'message.success.new' }));
             }
             actionRef.current?.reload();
-            setConfig(defaultConfig);
+            initialConfig();
             return true;
           } catch (error) {
             return false;
           }
         }}
       />
-    </PageContainer>
+    </>
   );
 };
 

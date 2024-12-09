@@ -54,7 +54,7 @@ const ScheduledReboot = () => {
           }
         }}
         layout={size && size?.width < 1000 ? 'vertical' : 'horizontal'}
-        labelCol={size && size?.width < 1000 ? {} : { span: 3 }}
+        labelCol={size && size?.width < 1000 ? {} : { span: 4 }}
         initialValues={{ enable: false }}
         submitter={{
           render: (props, dom) => (

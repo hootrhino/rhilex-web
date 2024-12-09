@@ -9,7 +9,6 @@ import {
 } from '@/services/rhilex/shebeiguanli';
 import { defaultPagination, DEFAULT_GROUP_KEY_DEVICE, MAX_TOTAL } from '@/utils/constant';
 import {
-  AlertOutlined,
   ControlOutlined,
   DownOutlined,
   ExceptionOutlined,
@@ -100,11 +99,6 @@ const Devices = () => {
         label: formatMessage({ id: 'button.ruleConfig' }),
         icon: <SettingOutlined />,
       },
-      {
-        key: 'alarm-rule',
-        label: formatMessage({ id: 'device.button.alarmRule' }),
-        icon: <AlertOutlined />,
-      },
     ] as ItemType[];
 
     let newItems = [...baseItems];
@@ -165,9 +159,6 @@ const Devices = () => {
         );
 
         history.push(`/device/${gid}/${uuid}/rule`);
-        break;
-      case 'alarm-rule':
-        history.push(`/device/${gid}/${uuid}/alarm-rule`);
         break;
       case 'data-sheet':
         if (!type) return;

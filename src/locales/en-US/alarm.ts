@@ -5,10 +5,13 @@ export default {
   'alarm.table.title.event': 'Event',
   'alarm.table.title.summary': 'Summary',
   'alarm.table.title.info': 'Detailed Information',
-  'alarm.table.title.ts': 'Alert Time',
+  'alarm.table.title.ts': 'Alarm Time',
+  'alarm.table.title.ruleId': 'Rule',
+  'alarm.table.title.source': 'Source',
   'alarm.table.title.expr': 'Rule Expression',
   'alarm.table.title.interval': 'Execution Interval',
   'alarm.table.title.threshold': 'Threshold',
+  'alarm.table.title.handleId': 'Alarm Handling',
 
   /**
    * form
@@ -17,6 +20,8 @@ export default {
   'alarm.form.placeholder.expr': 'Please enter a rule expression',
   'alarm.form.placeholder.interval': 'Please enter a execution interval',
   'alarm.form.placeholder.threshold': 'Please enter a threshold',
+  'alarm.form.placeholder.handleId': 'Please select an alarm handling method',
+  'alarm.form.placeholder.ruleId': 'Please select a rule',
 
   /**
    * others
@@ -31,7 +36,6 @@ export default {
    * title
    */
   'alarm.rule.title.list': '{name} - Alert rule list',
-  'alarm.rule.title.detail': 'Alert rule details',
   'alarm.rule.title.new': 'New alert rule',
   'alarm.rule.title.update': 'Update alert rule',
 };

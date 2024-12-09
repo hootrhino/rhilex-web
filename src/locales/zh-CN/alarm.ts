@@ -6,9 +6,12 @@ export default {
   'alarm.table.title.summary': '概要',
   'alarm.table.title.info': '详细信息',
   'alarm.table.title.ts': '预警时间',
+  'alarm.table.title.ruleId': '规则',
+  'alarm.table.title.source': '来源',
   'alarm.table.title.expr': '规则表达式',
   'alarm.table.title.interval': '执行频率',
   'alarm.table.title.threshold': '阈值',
+  'alarm.table.title.handleId': '预警处理',
 
   /**
    * form
@@ -17,6 +20,8 @@ export default {
   'alarm.form.placeholder.expr': '请输入规则表达式',
   'alarm.form.placeholder.interval': '请输入执行频率',
   'alarm.form.placeholder.threshold': '请输入阈值',
+  'alarm.form.placeholder.handleId': '请选择预警处理',
+  'alarm.form.placeholder.ruleId': '请选择预警规则',
 
   /**
    * others
@@ -31,7 +36,6 @@ export default {
    * title
    */
   'alarm.rule.title.list': '{name} - 告警规则列表',
-  'alarm.rule.title.detail': '告警规则详情',
   'alarm.rule.title.new': '新建告警规则',
   'alarm.rule.title.update': '更新告警规则',
 };

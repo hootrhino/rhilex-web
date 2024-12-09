@@ -4,7 +4,6 @@ export default {
    */
   'device.button.snmp': 'SNMP OIDs',
   'device.button.sheet': 'Sheet Configuration',
-  'device.button.alarmRule': 'Alarm Rule Configuration',
   'device.button.registers': 'Registers Detail',
   'device.button.nonPolling': 'Stop Refresh',
   'device.button.polling': 'Start Refresh',

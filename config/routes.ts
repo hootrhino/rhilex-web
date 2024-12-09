@@ -68,11 +68,6 @@
         title: 'menu.device.registers',
         component: './Device/ModbusSlaver',
       },
-      {
-        path: '/device/:groupId/:deviceId/alarm-rule',
-        title: 'menu.alarmRule.list',
-        component: './AlarmRule',
-      },
     ],
   },
   {
@@ -86,7 +81,7 @@
     path: '/alarm',
     title: 'menu.alarm',
     icon: 'alert',
-    component: './AlarmLog',
+    component: './AlarmCenter',
     key: 'alarm',
   },
   {
