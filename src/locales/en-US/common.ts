@@ -143,5 +143,4 @@ export default {
   'menu.cecollas.list': 'Cloud Platform List',
   'menu.cecollas.detail': 'Cloud Platform Details',
   'menu.cecollas.action': 'Action Callback',
-  'menu.alarmRule.list': '告警规则',
 };

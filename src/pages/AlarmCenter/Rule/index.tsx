@@ -6,47 +6,55 @@ import {
   deleteAlarmRuleDel,
   getAlarmRuleDetail,
   getAlarmRuleList,
-  postAlarmRuleCreate,
-  putAlarmRuleUpdate,
 } from '@/services/rhilex/yujingzhongxin';
 import { defaultPagination } from '@/utils/constant';
-import { generateRandomId } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import type {
   ActionType,
   ProColumns,
-  ProFormInstance,
+  ProDescriptionsItemProps,
   RequestOptionsType,
 } from '@ant-design/pro-components';
-import { BetaSchemaForm, ProTable } from '@ant-design/pro-components';
+import { ProDescriptions, ProTable } from '@ant-design/pro-components';
 import { Link, useIntl, useModel, useRequest } from '@umijs/max';
-import { Button, Popconfirm } from 'antd';
-import { useEffect, useRef } from 'react';
+import { Button, Modal, Popconfirm, Tag } from 'antd';
+import { nanoid } from 'nanoid';
+import { useRef, useState } from 'react';
+import TestRule from './Test';
+import UpdateRule from './Update';
 
-type AlarmRuleItem = {
-  uuid: string;
+type ExprDefine = {
+  expr?: string;
+  eventType?: string;
+};
+
+export type AlarmRuleItem = {
+  uuid?: string;
   name: string;
-  expr: string;
+  exprDefine: ExprDefine[];
   interval: number;
   threshold: number;
   handleId: string;
   description?: string;
+  [key: string]: any;
+};
+
+type FormConfig = {
+  open: boolean;
+  uuid: string;
+};
+
+const defaultConfig = {
+  uuid: '',
+  open: false,
 };
 
 const AlarmRule = () => {
   const actionRef = useRef<ActionType>();
-  const formRef = useRef<ProFormInstance>();
   const { formatMessage } = useIntl();
   const { detailConfig, changeConfig, initialConfig } = useModel('useCommon');
-
-  // 告警详情
-  const { run: getDetail } = useRequest(
-    (params: API.getAlarmRuleDetailParams) => getAlarmRuleDetail(params),
-    {
-      manual: true,
-      onSuccess: (res) => formRef.current?.setFieldsValue({ ...res }),
-    },
-  );
+  const [formConfig, setFormConfig] = useState<FormConfig>(defaultConfig);
+  const [testConfig, setTestConfig] = useState<FormConfig>(defaultConfig);
 
   // 删除
   const { run: remove } = useRequest(
@@ -70,31 +78,21 @@ const AlarmRule = () => {
     },
   });
 
-  const columns: ProColumns<AlarmRuleItem>[] = [
+  const columns: ProColumns<Partial<AlarmRuleItem>>[] = [
     {
       title: 'UUID',
       dataIndex: 'uuid',
-      hideInForm: true,
       ellipsis: true,
     },
     {
       title: formatMessage({ id: 'table.title.name' }),
       dataIndex: 'name',
       ellipsis: true,
-      fieldProps: { placeholder: formatMessage({ id: 'alarm.form.placeholder.name' }) },
-      formItemProps: {
-        rules: [{ required: true, message: formatMessage({ id: 'alarm.form.placeholder.name' }) }],
-      },
     },
     {
-      title: formatMessage({ id: 'alarm.table.title.expr' }),
-      dataIndex: 'expr',
-      valueType: 'textarea',
-      ellipsis: true,
-      fieldProps: { placeholder: formatMessage({ id: 'alarm.form.placeholder.expr' }) },
-      formItemProps: {
-        rules: [{ required: true, message: formatMessage({ id: 'alarm.form.placeholder.expr' }) }],
-      },
+      title: formatMessage({ id: 'alarm.table.title.exprDefine' }),
+      dataIndex: 'exprDefine',
+      hideInTable: true,
       tooltip: (
         <div>
           {formatMessage({ id: 'alarm.tooltip.expr' })}
@@ -103,77 +101,91 @@ const AlarmRule = () => {
           </a>
         </div>
       ),
+      renderText: (exprDefine) => {
+        return exprDefine.length > 0 ? (
+          <div className="flex flex-col w-full">
+            {exprDefine.map((item: ExprDefine) => (
+              <div className="w-full relative" key={`rule-${nanoid()}`}>
+                <Tag color="blue" rootClassName="absolute -right-4 -top-[6px] mr-0">
+                  {item.eventType}
+                </Tag>
+                <pre className="json-code">
+                  <code>{item.expr}</code>
+                </pre>
+              </div>
+            ))}
+          </div>
+        ) : (
+          '-'
+        );
+      },
     },
     {
       title: formatMessage({ id: 'alarm.table.title.interval' }),
       dataIndex: 'interval',
       valueType: 'digit',
-      fieldProps: {
-        style: { width: '100%' },
-        addonAfter: formatMessage({ id: 'alarm.unit.sec' }),
-        placeholder: formatMessage({ id: 'alarm.form.placeholder.interval' }),
-      },
-      formItemProps: {
-        rules: [
-          { required: true, message: formatMessage({ id: 'alarm.form.placeholder.interval' }) },
-        ],
-      },
-      render: (_dom: React.ReactNode, { interval }: AlarmRuleItem) => (
-        <UnitValue value={interval} unit="s" />
-      ),
+      render: (_dom: React.ReactNode, { interval }: Partial<AlarmRuleItem>) =>
+        interval ? <UnitValue value={interval} unit="s" /> : '-',
     },
     {
       title: formatMessage({ id: 'alarm.table.title.threshold' }),
       dataIndex: 'threshold',
       valueType: 'digit',
-      fieldProps: {
-        style: { width: '100%' },
-        placeholder: formatMessage({ id: 'alarm.form.placeholder.threshold' }),
-      },
-      formItemProps: {
-        rules: [
-          { required: true, message: formatMessage({ id: 'alarm.form.placeholder.threshold' }) },
-        ],
-      },
     },
     {
       title: formatMessage({ id: 'alarm.table.title.handleId' }),
       dataIndex: 'handleId',
       valueType: 'select',
       ellipsis: true,
-      fieldProps: {
-        placeholder: formatMessage({ id: 'alarm.form.placeholder.handleId' }),
-      },
-      formItemProps: {
-        rules: [
-          { required: true, message: formatMessage({ id: 'alarm.form.placeholder.handleId' }) },
-        ],
-      },
-      request: async () => outends,
       renderText: (handleId) => {
         const outend = outends?.find((item: RequestOptionsType) => item.value === handleId);
-        return outend ? <Link to={`/outend/detail/${outend.value}`}>{outend.label}</Link> : '-';
+        const result = outend ? (
+          <Link to={`/outend/detail/${outend.value}`}>{outend.label}</Link>
+        ) : (
+          handleId
+        );
+
+        return result || '-';
       },
     },
     {
       title: formatMessage({ id: 'table.title.desc' }),
       dataIndex: 'description',
       ellipsis: true,
-      fieldProps: { placeholder: formatMessage({ id: 'form.placeholder.desc' }) },
       renderText: (description) => description || '-',
     },
     {
       title: formatMessage({ id: 'table.title.option' }),
-      width: 100,
+      width: 170,
       key: 'option',
       valueType: 'option',
       hideInDescriptions: true,
       hideInForm: true,
       render: (_, { uuid }) => [
         <a
+          key="test"
+          onClick={() => {
+            if (!uuid) return;
+            setTestConfig({ open: true, uuid });
+          }}
+        >
+          {formatMessage({ id: 'button.test' })}
+        </a>,
+        <a
+          key="detail"
+          onClick={() => {
+            if (!uuid) return;
+            changeConfig({ open: true, uuid });
+          }}
+        >
+          {formatMessage({ id: 'button.detail' })}
+        </a>,
+        <a
           key="edit"
           onClick={() => {
-            changeConfig({ open: true, uuid });
+            if (!uuid) return;
+
+            setFormConfig({ open: true, uuid });
           }}
         >
           {formatMessage({ id: 'button.edit' })}
@@ -191,12 +203,6 @@ const AlarmRule = () => {
       ],
     },
   ];
-
-  useEffect(() => {
-    if (detailConfig.uuid) {
-      getDetail({ uuid: detailConfig.uuid });
-    }
-  }, [detailConfig.uuid]);
 
   return (
     <>
@@ -223,48 +229,53 @@ const AlarmRule = () => {
           <Button
             type="primary"
             key="new"
-            onClick={() => changeConfig({ open: true, uuid: '' })}
+            onClick={() => setFormConfig({ open: true, uuid: '' })}
             icon={<PlusOutlined />}
           >
             {formatMessage({ id: 'button.new' })}
           </Button>,
         ]}
       />
-      <BetaSchemaForm<AlarmRuleItem>
+      <Modal
+        destroyOnClose
         width="35%"
-        formRef={formRef}
-        layoutType="ModalForm"
+        title={formatMessage({ id: 'alarm.rule.title.detail' })}
         open={detailConfig.open}
-        onOpenChange={(open) => {
-          if (open) {
-            changeConfig({ ...detailConfig, open });
-          } else {
-            initialConfig();
-          }
+        onCancel={initialConfig}
+        maskClosable={false}
+        styles={{
+          body: { maxHeight: 500, overflowY: 'scroll' },
         }}
-        title={formatMessage({
-          id: detailConfig.uuid ? 'alarm.rule.title.update' : 'alarm.rule.title.new',
-        })}
-        columns={columns as any[]}
-        modalProps={{ maskClosable: false, destroyOnClose: true }}
-        initialValues={{ name: `RULE_${generateRandomId()}` }}
-        onFinish={async (values) => {
-          try {
-            const params = { ...values };
-            if (detailConfig.uuid) {
-              await putAlarmRuleUpdate({ ...params, uuid: detailConfig.uuid });
-              message.success(formatMessage({ id: 'message.success.update' }));
-            } else {
-              await postAlarmRuleCreate({ ...params });
-              message.success(formatMessage({ id: 'message.success.new' }));
-            }
-            actionRef.current?.reload();
-            initialConfig();
-            return true;
-          } catch (error) {
-            return false;
-          }
+        footer={
+          <Button type="primary" onClick={initialConfig}>
+            {formatMessage({ id: 'button.close' })}
+          </Button>
+        }
+      >
+        <ProDescriptions
+          column={1}
+          labelStyle={{ width: 120, justifyContent: 'end' }}
+          columns={columns as ProDescriptionsItemProps<Record<string, any>, AlarmRuleItem>[]}
+          request={async () => {
+            const { data } = await getAlarmRuleDetail({ uuid: detailConfig.uuid });
+            return Promise.resolve({
+              success: true,
+              data,
+            });
+          }}
+        />
+      </Modal>
+      <UpdateRule
+        {...formConfig}
+        onOpenChange={(open) => setFormConfig(open ? { ...formConfig, open } : defaultConfig)}
+        reload={() => {
+          actionRef.current?.reload();
+          setFormConfig(defaultConfig);
         }}
+      />
+      <TestRule
+        {...testConfig}
+        onOpenChange={(open) => setTestConfig(open ? { ...testConfig, open } : defaultConfig)}
       />
     </>
   );

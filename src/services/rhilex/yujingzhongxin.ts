@@ -30,8 +30,7 @@ export async function getAlarmLogDetail(
       uuid: string;
       ruleId: string;
       source: string;
-      type: string;
-      event: string;
+      eventType: string;
       ts: number;
       summary: string;
       info: string;
@@ -59,13 +58,13 @@ export async function getAlarmLogList(
       size: number;
       total: number;
       records: {
-        uuid?: string;
-        source?: string;
-        type?: string;
-        event?: string;
-        ts?: number;
-        summary?: string;
-        info?: string;
+        uuid: string;
+        ruleId: string;
+        source: string;
+        eventType: string;
+        ts: number;
+        summary: string;
+        info: string;
       }[];
     };
   }>('/api/v1/alarm_log/list', {
@@ -81,11 +80,11 @@ export async function getAlarmLogList(
 export async function postAlarmRuleCreate(
   body: {
     name: string;
-    expr: string;
     interval: number;
     threshold: number;
     description?: string;
     handleId: string;
+    exprDefine: { eventType?: string; expr?: string }[];
   },
   options?: { [key: string]: any },
 ) {
@@ -126,7 +125,7 @@ export async function getAlarmRuleDetail(
     data: {
       uuid: string;
       name: string;
-      expr: string;
+      exprDefine: { expr?: string; eventType?: string }[];
       interval: number;
       threshold: number;
       handleId: string;
@@ -155,13 +154,13 @@ export async function getAlarmRuleList(
       size: number;
       total: number;
       records: {
-        uuid: string;
-        name: string;
-        expr: string;
-        interval: number;
-        threshold: number;
-        handleId: string;
-        description: string;
+        uuid?: string;
+        name?: string;
+        exprDefine?: { expr?: string; eventType?: string }[];
+        interval?: number;
+        threshold?: number;
+        handleId?: string;
+        description?: string;
       }[];
     };
   }>('/api/v1/alarm_rule/list', {
@@ -196,11 +195,11 @@ export async function putAlarmRuleUpdate(
   body: {
     uuid: string;
     name: string;
-    expr: string;
     interval: number;
     threshold: number;
-    description?: string;
     handleId: string;
+    description?: string;
+    exprDefine: { expr?: string; eventType?: string }[];
   },
   options?: { [key: string]: any },
 ) {

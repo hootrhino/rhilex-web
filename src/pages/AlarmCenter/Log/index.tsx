@@ -7,52 +7,20 @@ import {
   getAlarmRuleList,
 } from '@/services/rhilex/yujingzhongxin';
 import { defaultPagination } from '@/utils/constant';
-import {
-  CloseCircleOutlined,
-  ExclamationCircleOutlined,
-  InfoCircleOutlined,
-  WarningOutlined,
-} from '@ant-design/icons';
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions, ProTable } from '@ant-design/pro-components';
 import { Link, useIntl, useRequest } from '@umijs/max';
 import { Button, Modal, Popconfirm, Tag } from 'antd';
+import dayjs from 'dayjs';
 import { useRef, useState } from 'react';
-
-enum LogType {
-  INFO = 'INFO',
-  WARNING = 'WARNING',
-  ERROR = 'ERROR',
-  FATAL = 'FATAL',
-}
 
 type AlarmItem = {
   uuid?: string;
   source?: string;
-  type?: string;
-  event?: string;
+  eventType?: string;
   ts?: number;
   summary?: string;
   info?: string;
-};
-
-const typeTag = {
-  [LogType.INFO]: {
-    color: 'processing',
-    icon: <InfoCircleOutlined />,
-  },
-  [LogType.WARNING]: {
-    color: 'warning',
-    icon: <ExclamationCircleOutlined />,
-  },
-  [LogType.ERROR]: {
-    color: 'error',
-    icon: <CloseCircleOutlined />,
-  },
-  [LogType.FATAL]: {
-    color: 'error',
-    icon: <WarningOutlined />,
-  },
 };
 
 const AlarmLog = () => {
@@ -92,28 +60,12 @@ const AlarmLog = () => {
     },
     {
       title: formatMessage({ id: 'table.title.type' }),
-      dataIndex: 'type',
-      search: false,
-      renderText: (type) => {
-        const matchType = Object.keys(LogType).includes(type);
-        return type ? (
-          <Tag
-            color={matchType ? typeTag[type].color : 'default'}
-            icon={matchType ? typeTag[type].icon : ''}
-          >
-            {type}
-          </Tag>
-        ) : (
-          '-'
-        );
-      },
-    },
-    {
-      title: formatMessage({ id: 'alarm.table.title.event' }),
-      dataIndex: 'event',
+      dataIndex: 'eventType',
       search: false,
       ellipsis: true,
-      renderText: (event) => event || '-',
+      renderText: (eventType) => {
+        return eventType ? <Tag color="processing">{eventType}</Tag> : '-';
+      },
     },
     {
       title: formatMessage({ id: 'alarm.table.title.ruleId' }),
@@ -135,19 +87,20 @@ const AlarmLog = () => {
       renderText: (source) => {
         const includesDevice = allDeviceData?.map((device) => device.uuid).includes(source);
         const matchDevice = allDeviceData?.find((device) => device.uuid === source);
-
-        return includesDevice ? (
+        const result = includesDevice ? (
           <Link to={`/device/${matchDevice?.gid}/detail/${source}`}>{matchDevice?.name}</Link>
         ) : (
           source
         );
+
+        return result || '-';
       },
     },
     {
       title: formatMessage({ id: 'alarm.table.title.summary' }),
       dataIndex: 'summary',
-      hideInTable: true,
       search: false,
+      ellipsis: true,
     },
     {
       title: formatMessage({ id: 'alarm.table.title.info' }),
@@ -158,9 +111,9 @@ const AlarmLog = () => {
     {
       title: formatMessage({ id: 'alarm.table.title.ts' }),
       dataIndex: 'ts',
-      valueType: 'dateTime',
       search: false,
       ellipsis: true,
+      renderText: (ts) => (ts ? dayjs(ts).format('YYYY-MM-DD HH:mm:ss') : '-'),
     },
     {
       title: formatMessage({ id: 'table.title.option' }),

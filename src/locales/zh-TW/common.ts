@@ -140,5 +140,4 @@ export default {
   'menu.cecollas.list': '雲端平台列表',
   'menu.cecollas.detail': '雲端平台詳情',
   'menu.cecollas.action': '本地回調',
-  'menu.alarmRule.list': '告警规则',
 };
