@@ -2,28 +2,17 @@ import { message } from '@/components/PopupHack';
 import UnitValue from '@/components/UnitValue';
 import type { OutendItem } from '@/pages/Outend';
 import { getOutendsList } from '@/services/rhilex/shuchuziyuanguanli';
-import {
-  deleteAlarmRuleDel,
-  getAlarmRuleDetail,
-  getAlarmRuleList,
-} from '@/services/rhilex/yujingzhongxin';
+import { deleteAlarmRuleDel, getAlarmRuleList } from '@/services/rhilex/yujingzhongxin';
 import { defaultPagination } from '@/utils/constant';
 import { PlusOutlined } from '@ant-design/icons';
-import type {
-  ActionType,
-  ProColumns,
-  ProDescriptionsItemProps,
-  RequestOptionsType,
-} from '@ant-design/pro-components';
-import { ProDescriptions, ProTable } from '@ant-design/pro-components';
-import { Link, useIntl, useModel, useRequest } from '@umijs/max';
-import { Button, Modal, Popconfirm, Tag } from 'antd';
-import { nanoid } from 'nanoid';
+import type { ActionType, ProColumns, RequestOptionsType } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
+import { history, Link, useIntl, useRequest } from '@umijs/max';
+import { Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import TestRule from './Test';
-import UpdateRule from './Update';
 
-type ExprDefine = {
+export type ExprDefine = {
   expr?: string;
   eventType?: string;
 };
@@ -52,8 +41,6 @@ const defaultConfig = {
 const AlarmRule = () => {
   const actionRef = useRef<ActionType>();
   const { formatMessage } = useIntl();
-  const { detailConfig, changeConfig, initialConfig } = useModel('useCommon');
-  const [formConfig, setFormConfig] = useState<FormConfig>(defaultConfig);
   const [testConfig, setTestConfig] = useState<FormConfig>(defaultConfig);
 
   // 删除
@@ -101,29 +88,12 @@ const AlarmRule = () => {
           </a>
         </div>
       ),
-      renderText: (exprDefine) => {
-        return exprDefine.length > 0 ? (
-          <div className="flex flex-col w-full">
-            {exprDefine.map((item: ExprDefine) => (
-              <div className="w-full relative" key={`rule-${nanoid()}`}>
-                <Tag color="blue" rootClassName="absolute -right-4 -top-[6px] mr-0">
-                  {item.eventType}
-                </Tag>
-                <pre className="json-code">
-                  <code>{item.expr}</code>
-                </pre>
-              </div>
-            ))}
-          </div>
-        ) : (
-          '-'
-        );
-      },
     },
     {
       title: formatMessage({ id: 'alarm.table.title.interval' }),
       dataIndex: 'interval',
       valueType: 'digit',
+      tooltip: formatMessage({ id: 'alarm.tooltip.interval' }),
       render: (_dom: React.ReactNode, { interval }: Partial<AlarmRuleItem>) =>
         interval ? <UnitValue value={interval} unit="s" /> : '-',
     },
@@ -131,6 +101,7 @@ const AlarmRule = () => {
       title: formatMessage({ id: 'alarm.table.title.threshold' }),
       dataIndex: 'threshold',
       valueType: 'digit',
+      tooltip: formatMessage({ id: 'alarm.tooltip.threshold' }),
     },
     {
       title: formatMessage({ id: 'alarm.table.title.handleId' }),
@@ -171,23 +142,10 @@ const AlarmRule = () => {
         >
           {formatMessage({ id: 'button.test' })}
         </a>,
-        <a
-          key="detail"
-          onClick={() => {
-            if (!uuid) return;
-            changeConfig({ open: true, uuid });
-          }}
-        >
+        <a key="detail" onClick={() => history.push(`/alarm/rule/detail/${uuid}`)}>
           {formatMessage({ id: 'button.detail' })}
         </a>,
-        <a
-          key="edit"
-          onClick={() => {
-            if (!uuid) return;
-
-            setFormConfig({ open: true, uuid });
-          }}
-        >
+        <a key="edit" onClick={() => history.push(`/alarm/rule/edit/${uuid}`)}>
           {formatMessage({ id: 'button.edit' })}
         </a>,
 
@@ -229,49 +187,12 @@ const AlarmRule = () => {
           <Button
             type="primary"
             key="new"
-            onClick={() => setFormConfig({ open: true, uuid: '' })}
+            onClick={() => history.push('/alarm/rule/new')}
             icon={<PlusOutlined />}
           >
             {formatMessage({ id: 'button.new' })}
           </Button>,
         ]}
-      />
-      <Modal
-        destroyOnClose
-        width="35%"
-        title={formatMessage({ id: 'alarm.rule.title.detail' })}
-        open={detailConfig.open}
-        onCancel={initialConfig}
-        maskClosable={false}
-        styles={{
-          body: { maxHeight: 500, overflowY: 'scroll' },
-        }}
-        footer={
-          <Button type="primary" onClick={initialConfig}>
-            {formatMessage({ id: 'button.close' })}
-          </Button>
-        }
-      >
-        <ProDescriptions
-          column={1}
-          labelStyle={{ width: 120, justifyContent: 'end' }}
-          columns={columns as ProDescriptionsItemProps<Record<string, any>, AlarmRuleItem>[]}
-          request={async () => {
-            const { data } = await getAlarmRuleDetail({ uuid: detailConfig.uuid });
-            return Promise.resolve({
-              success: true,
-              data,
-            });
-          }}
-        />
-      </Modal>
-      <UpdateRule
-        {...formConfig}
-        onOpenChange={(open) => setFormConfig(open ? { ...formConfig, open } : defaultConfig)}
-        reload={() => {
-          actionRef.current?.reload();
-          setFormConfig(defaultConfig);
-        }}
       />
       <TestRule
         {...testConfig}

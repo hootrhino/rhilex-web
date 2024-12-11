@@ -37,3 +37,4 @@ export const INEND_LIST = '/inend/list';
 export const OUTEND_LIST = '/outend/list';
 export const APP_LIST = '/app/list';
 export const CECOLLAS_LIST = '/cecollas/list';
+export const ALARM_LIST = '/alarm';

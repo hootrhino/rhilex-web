@@ -71,13 +71,19 @@ const TestRule = ({ uuid, ...props }: TestRuleProps) => {
         required
         name="expr"
         label={`Expr ${formatMessage({ id: 'alarm.table.title.exprDefine.expr' })}`}
-        placeholder={formatMessage({ id: 'alarm.form.placeholder.expr' })}
+        placeholder={formatMessage({ id: 'alarm.form.placeholder.expr.test' })}
         fieldProps={{ allowClear: false }}
-        options={detail?.exprDefine.map((item) => ({ label: item.eventType, value: item.expr }))}
+        options={detail?.exprDefine.map((item) => ({
+          label: item.eventType,
+          value: item.expr,
+          title: item.expr,
+        }))}
       />
       <ProFormTextArea
         name="data"
         label={`JSON ${formatMessage({ id: 'alarm.table.title.testData' })}`}
+        fieldProps={{ autoSize: { minRows: 3 } }}
+        placeholder={formatMessage({ id: 'alarm.form.placeholder.testData' })}
         rules={[
           { required: true, message: formatMessage({ id: 'alarm.form.placeholder.testData' }) },
         ]}

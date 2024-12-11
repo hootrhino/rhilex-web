@@ -46,6 +46,10 @@ const AlarmLog = () => {
     formatResult: (res) => res?.data?.records,
   });
 
+  const { data: rules } = useRequest(() => getAlarmRuleList({ current: 1, size: 999 }), {
+    formatResult: (res) => res.data.records,
+  });
+
   const handleOnClose = () => {
     setOpen(false);
     setActiveKey('');
@@ -57,33 +61,32 @@ const AlarmLog = () => {
       dataIndex: 'uuid',
       search: false,
       ellipsis: true,
-    },
-    {
-      title: formatMessage({ id: 'table.title.type' }),
-      dataIndex: 'eventType',
-      search: false,
-      ellipsis: true,
-      renderText: (eventType) => {
-        return eventType ? <Tag color="processing">{eventType}</Tag> : '-';
-      },
+      width: 150,
     },
     {
       title: formatMessage({ id: 'alarm.table.title.ruleId' }),
       dataIndex: 'ruleId',
-      fieldProps: { placeholder: formatMessage({ id: 'alarm.form.placeholder.ruleId' }) },
-      request: async () => {
-        const { data } = await getAlarmRuleList({ current: 1, size: 999 });
-
-        return data?.records?.map((item) => ({
+      valueType: 'select',
+      width: 150,
+      fieldProps: {
+        placeholder: formatMessage({ id: 'alarm.form.placeholder.ruleId' }),
+        options: rules?.map((item) => ({
           label: item.name,
           value: item.uuid,
-        }));
+        })),
+      },
+      renderText: (ruleId) => {
+        if (!ruleId) return '-';
+
+        const rule = rules?.find((item) => item.uuid === ruleId);
+        return rule ? <Link to={`/alarm/rule/detail/${ruleId}`}>{rule.name}</Link> : ruleId;
       },
     },
     {
       title: formatMessage({ id: 'alarm.table.title.source' }),
       dataIndex: 'source',
       search: false,
+      width: 150,
       renderText: (source) => {
         const includesDevice = allDeviceData?.map((device) => device.uuid).includes(source);
         const matchDevice = allDeviceData?.find((device) => device.uuid === source);
@@ -97,6 +100,15 @@ const AlarmLog = () => {
       },
     },
     {
+      title: formatMessage({ id: 'table.title.type' }),
+      dataIndex: 'eventType',
+      search: false,
+      ellipsis: true,
+      renderText: (eventType) => {
+        return eventType ? <Tag color="processing">{eventType}</Tag> : '-';
+      },
+    },
+    {
       title: formatMessage({ id: 'alarm.table.title.summary' }),
       dataIndex: 'summary',
       search: false,
@@ -107,12 +119,14 @@ const AlarmLog = () => {
       dataIndex: 'info',
       hideInTable: true,
       search: false,
+      valueType: 'jsonCode',
     },
     {
       title: formatMessage({ id: 'alarm.table.title.ts' }),
       dataIndex: 'ts',
       search: false,
       ellipsis: true,
+      width: 180,
       renderText: (ts) => (ts ? dayjs(ts).format('YYYY-MM-DD HH:mm:ss') : '-'),
     },
     {
@@ -177,7 +191,9 @@ const AlarmLog = () => {
         destroyOnClose
         title={formatMessage({ id: 'alarm.modal.title.detail' })}
         open={open}
-        width="35%"
+        width="40%"
+        styles={{ body: { height: 600, overflowY: 'scroll' } }}
+        rootClassName="alarm-log-detail"
         onCancel={handleOnClose}
         maskClosable={false}
         footer={

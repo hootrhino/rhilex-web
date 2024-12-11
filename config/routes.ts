@@ -81,8 +81,34 @@
     path: '/alarm',
     title: 'menu.alarm',
     icon: 'alert',
-    component: './AlarmCenter',
+    hideChildrenInMenu: true,
     key: 'alarm',
+    routes: [
+      // {
+      //   path: '/alarm',
+      //   redirect: '/alarm/list',
+      // },
+      {
+        path: '/alarm',
+        title: 'menu.alarm',
+        component: './AlarmCenter',
+      },
+      {
+        path: '/alarm/rule/new',
+        title: 'menu.alarm.new',
+        component: './AlarmCenter/Rule/Update',
+      },
+      {
+        path: '/alarm/rule/edit/:uuid',
+        title: 'menu.alarm.update',
+        component: './AlarmCenter/Rule/Update',
+      },
+      {
+        path: '/alarm/rule/detail/:uuid',
+        title: 'menu.alarm.detail',
+        component: './AlarmCenter/Rule/Detail',
+      },
+    ],
   },
   {
     path: '/repository',
