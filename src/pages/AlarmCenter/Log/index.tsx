@@ -1,12 +1,14 @@
-import { message } from '@/components/PopupHack';
+import { message, modal } from '@/components/PopupHack';
 import { getDevicesList } from '@/services/rhilex/shebeiguanli';
 import {
+  deleteAlarmLogClear,
   deleteAlarmLogDel,
   getAlarmLogDetail,
   getAlarmLogList,
   getAlarmRuleList,
 } from '@/services/rhilex/yujingzhongxin';
 import { defaultPagination } from '@/utils/constant';
+import { DeleteOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { ProDescriptions, ProTable } from '@ant-design/pro-components';
 import { Link, useIntl, useRequest } from '@umijs/max';
@@ -40,6 +42,15 @@ const AlarmLog = () => {
       },
     },
   );
+
+  // 清空日志
+  const { run: clear } = useRequest(() => deleteAlarmLogClear(), {
+    manual: true,
+    onSuccess: () => {
+      message.success(formatMessage({ id: 'message.success.clear' }));
+      actionRef.current?.reload();
+    },
+  });
 
   // 获取设备列表
   const { data: allDeviceData } = useRequest(() => getDevicesList({ current: 1, size: 999 }), {
@@ -100,7 +111,7 @@ const AlarmLog = () => {
       },
     },
     {
-      title: formatMessage({ id: 'table.title.type' }),
+      title: formatMessage({ id: 'alarm.table.title.eventType' }),
       dataIndex: 'eventType',
       search: false,
       ellipsis: true,
@@ -186,6 +197,25 @@ const AlarmLog = () => {
             success: true,
           });
         }}
+        toolBarRender={() => [
+          <Button
+            ghost
+            danger
+            type="primary"
+            icon={<DeleteOutlined />}
+            key="clear"
+            onClick={() =>
+              modal.confirm({
+                title: formatMessage({ id: 'alarm.modal.title.clear' }),
+                onOk: clear,
+                okText: formatMessage({ id: 'button.ok' }),
+                cancelText: formatMessage({ id: 'button.cancel' }),
+              })
+            }
+          >
+            {formatMessage({ id: 'alarm.button.clear' })}
+          </Button>,
+        ]}
       />
       <Modal
         destroyOnClose

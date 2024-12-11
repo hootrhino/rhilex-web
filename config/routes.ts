@@ -21,11 +21,7 @@
     routes: [
       {
         path: '/device',
-        redirect: '/device/list',
-      },
-      {
-        path: '/device/list',
-        title: 'menu.device.list',
+        title: 'menu.device',
         component: './Device',
       },
       {
@@ -84,10 +80,6 @@
     hideChildrenInMenu: true,
     key: 'alarm',
     routes: [
-      // {
-      //   path: '/alarm',
-      //   redirect: '/alarm/list',
-      // },
       {
         path: '/alarm',
         title: 'menu.alarm',
@@ -126,11 +118,7 @@
     routes: [
       {
         path: '/inend',
-        redirect: '/inend/list',
-      },
-      {
-        path: '/inend/list',
-        title: 'menu.source.list',
+        title: 'menu.inend',
         component: './Inend',
       },
       {
@@ -179,11 +167,7 @@
     routes: [
       {
         path: '/outend',
-        redirect: '/outend/list',
-      },
-      {
-        path: '/outend/list',
-        title: 'menu.source.list',
+        title: 'menu.outend',
         component: './Outend',
       },
       {
@@ -212,11 +196,7 @@
     routes: [
       {
         path: '/cecollas',
-        redirect: '/cecollas/list',
-      },
-      {
-        path: '/cecollas/list',
-        title: 'menu.cecollas.list',
+        title: 'menu.cecollas',
         component: './Cecollas',
       },
       {
@@ -240,11 +220,7 @@
     routes: [
       {
         path: '/app',
-        redirect: '/app/list',
-      },
-      {
-        path: '/app/list',
-        title: 'menu.appStack.list',
+        title: 'menu.appStack',
         component: './AppStack',
       },
       {

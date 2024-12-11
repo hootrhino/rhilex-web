@@ -25614,6 +25614,36 @@
         "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-242072069-run",
         "security": []
       }
+    },
+    "/api/v1/alarm_log/clear": {
+      "delete": {
+        "summary": "清空日志",
+        "x-apifox-folder": "预警中心",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "预警中心"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/1341241/apis/api-243450826-run",
+        "security": []
+      }
     }
   },
   "components": {

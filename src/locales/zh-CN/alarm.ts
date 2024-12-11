@@ -5,8 +5,8 @@ export default {
   'alarm.table.title.summary': '概要',
   'alarm.table.title.info': '详细信息',
   'alarm.table.title.ts': '预警时间',
-  'alarm.table.title.ruleId': '规则',
-  'alarm.table.title.source': '来源',
+  'alarm.table.title.ruleId': '触发规则',
+  'alarm.table.title.source': '数据来源',
   'alarm.table.title.exprDefine': '规则表达式',
   'alarm.table.title.interval': '执行频率',
   'alarm.table.title.threshold': '事件数量阈值',
@@ -22,7 +22,7 @@ export default {
   'alarm.form.placeholder.interval': '请输入执行频率',
   'alarm.form.placeholder.threshold': '请输入事件数量阈值',
   'alarm.form.placeholder.handleId': '请选择预警处理',
-  'alarm.form.placeholder.ruleId': '请选择预警规则',
+  'alarm.form.placeholder.ruleId': '请选择触发规则',
   'alarm.form.placeholder.testData': '请输入测试数据',
   'alarm.form.placeholder.eventType': '请选择预设事件标识，或手动输入自定义事件标识',
   'alarm.form.placeholder.expr': '请输入规则表达式',
@@ -34,7 +34,6 @@ export default {
    * others
    */
   'alarm.popconfirm.title.remove': '确定要删除此日志？',
-  'alarm.modal.title.detail': '预警详情',
   'alarm.rule.popconfirm.title.remove': '确定要删除此规则？',
   'alarm.unit.sec': '秒',
   'alarm.test.interval': '每 {interval} 秒执行一次',
@@ -53,8 +52,9 @@ export default {
   /**
    * button
    */
-  'alarm.rule.button.new': '新增规则',
-  'alarm.rule.button.test': '执行测试',
+  'alarm.button.new': '新增规则',
+  'alarm.button.test': '执行测试',
+  'alarm.button.clear': '清空日志',
 
   /**
    * tabs
@@ -68,6 +68,12 @@ export default {
   'alarm.tooltip.expr': '预警规则采用 go-expr 标准，详情请访问：',
   'alarm.tooltip.interval': '执行频率指的是预警事件发生后多久执行一次对外输出预警。',
   'alarm.tooltip.threshold': '事件数量阈值指的是事件积累一定数量后触发对外预警。',
+
+  /**
+   * modal
+   */
+  'alarm.modal.title.detail': '预警详情',
+  'alarm.modal.title.clear': '此操作将删除所有预警日志记录，操作前请确保已充分评估风险。',
 
   /**
    * built-in event type

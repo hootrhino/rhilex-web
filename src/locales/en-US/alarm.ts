@@ -5,8 +5,8 @@ export default {
   'alarm.table.title.summary': 'Summary',
   'alarm.table.title.info': 'Detailed Information',
   'alarm.table.title.ts': 'Alarm Time',
-  'alarm.table.title.ruleId': 'Rule',
-  'alarm.table.title.source': 'Source',
+  'alarm.table.title.ruleId': 'Trigger Rule',
+  'alarm.table.title.source': 'Data Source',
   'alarm.table.title.exprDefine': 'Rule Expression',
   'alarm.table.title.interval': 'Execution Interval',
   'alarm.table.title.threshold': 'Event Count Threshold',
@@ -22,7 +22,7 @@ export default {
   'alarm.form.placeholder.interval': 'Please enter a execution interval',
   'alarm.form.placeholder.threshold': 'Please enter an event count threshold',
   'alarm.form.placeholder.handleId': 'Please select an alarm handling method',
-  'alarm.form.placeholder.ruleId': 'Please select a rule',
+  'alarm.form.placeholder.ruleId': 'Please select a trigger rule',
   'alarm.form.placeholder.testData': 'Please enter the test data',
   'alarm.form.placeholder.eventType':
     'Please select a predefined event type, or manually enter a custom event type',
@@ -35,7 +35,6 @@ export default {
    * others
    */
   'alarm.popconfirm.title.remove': 'Are you sure you want to delete this log?',
-  'alarm.modal.title.detail': 'Alarm details',
   'alarm.rule.popconfirm.title.remove': 'Are you sure you want to delete this rule?',
   'alarm.unit.sec': 'Seconds',
   'alarm.test.interval': 'Execute every {interval}s',
@@ -54,8 +53,9 @@ export default {
   /**
    * button
    */
-  'alarm.rule.button.new': 'Add Rule',
-  'alarm.rule.button.test': 'Test',
+  'alarm.button.new': 'Add Rule',
+  'alarm.button.test': 'Test',
+  'alarm.button.clear': 'Clear Logs',
 
   /**
    * tabs
@@ -71,6 +71,13 @@ export default {
     'The interval refers to how often the external warning output is triggered following the occurrence of a warning event.',
   'alarm.tooltip.threshold':
     'The event count threshold refers to triggering an external alert after a certain number of events have accumulated.',
+
+  /**
+   * modal
+   */
+  'alarm.modal.title.detail': 'Alarm details',
+  'alarm.modal.title.clear':
+    'This operation will delete all alarm log records. Please ensure that the risks have been fully assessed before proceeding.',
 
   /**
    * built-in event type

@@ -2,6 +2,14 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
+/** 清空日志 DELETE /api/v1/alarm_log/clear */
+export async function deleteAlarmLogClear(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/api/v1/alarm_log/clear', {
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
 /** 删除预警日志 DELETE /api/v1/alarm_log/del */
 export async function deleteAlarmLogDel(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)

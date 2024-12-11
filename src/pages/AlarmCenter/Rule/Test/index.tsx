@@ -49,7 +49,7 @@ const TestRule = ({ uuid, ...props }: TestRuleProps) => {
       title={formatMessage({ id: 'alarm.rule.title.test' })}
       submitter={{
         searchConfig: {
-          submitText: formatMessage({ id: 'alarm.rule.button.test' }),
+          submitText: formatMessage({ id: 'alarm.button.test' }),
         },
       }}
       onFinish={async (values) => {

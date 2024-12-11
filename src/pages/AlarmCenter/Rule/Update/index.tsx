@@ -176,7 +176,7 @@ const UpdateRule = () => {
             min={1}
             creatorButtonProps={{
               position: 'top',
-              creatorButtonText: formatMessage({ id: 'alarm.rule.button.new' }),
+              creatorButtonText: formatMessage({ id: 'alarm.button.new' }),
             }}
             actionRender={(field, action, count) => {
               return count.length > 1
