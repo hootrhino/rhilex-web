@@ -74,6 +74,13 @@
     key: 'schema',
   },
   {
+    path: '/repository',
+    title: 'menu.dataRepository',
+    icon: 'database',
+    component: './DataRepository',
+    key: 'repository',
+  },
+  {
     path: '/alarm',
     title: 'menu.alarm',
     icon: 'alert',
@@ -101,13 +108,6 @@
         component: './AlarmCenter/Rule/Detail',
       },
     ],
-  },
-  {
-    path: '/repository',
-    title: 'menu.dataRepository',
-    icon: 'database',
-    component: './DataRepository',
-    key: 'repository',
   },
   {
     path: '/inend',
