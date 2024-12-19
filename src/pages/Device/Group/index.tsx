@@ -162,7 +162,7 @@ const GroupList = ({
             },
           };
         }}
-        rowClassName={({ uuid }: GroupItem) => (uuid === activeKey ? 'active-group' : '')}
+        rowClassName={({ uuid }: GroupItem) => (uuid === activeKey ? 'bg-[#f0f0f0]' : '')}
         metas={{
           title: {
             dataIndex: 'name',

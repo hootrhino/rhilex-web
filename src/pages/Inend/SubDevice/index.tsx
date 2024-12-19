@@ -1,4 +1,5 @@
 import IndexBorder from '@/components/IndexBorder';
+import JsonCode from '@/components/JsonCode';
 import PageContainer from '@/components/ProPageContainer';
 import ProTag, { StatusType } from '@/components/ProTag';
 import { getInendsClients, getInendsDetail } from '@/services/rhilex/shuruziyuanguanli';
@@ -43,11 +44,7 @@ const SubDeviceList = () => {
     {
       title: formatMessage({ id: 'inend.table.title.properties' }),
       dataIndex: 'properties',
-      renderText: (properties) => (
-        <pre className="json-code">
-          <code>{JSON.stringify(properties)}</code>
-        </pre>
-      ),
+      renderText: (properties) => <JsonCode code={JSON.stringify(properties)} />,
     },
   ];
 

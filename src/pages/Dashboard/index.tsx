@@ -178,7 +178,7 @@ const Dashboard = () => {
           />
         </Col>
         <Col xl={{ span: 12 }} lg={{ span: 24 }} md={{ span: 24 }}>
-          <ProCard bodyStyle={{ padding: 0 }} className="dashboard-card h-full">
+          <ProCard bodyStyle={{ padding: 0 }} className="h-full">
             <StatisticCard.Group direction="row" className="w-full h-full">
               <StatisticCard
                 title={

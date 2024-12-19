@@ -186,7 +186,7 @@ const Cecollas = () => {
                   success: true,
                 });
               }}
-              rowClassName="active-group"
+              rowClassName="bg-[#f0f0f0]"
               metas={{
                 title: {
                   dataIndex: 'label',

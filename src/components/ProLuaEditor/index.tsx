@@ -3,6 +3,7 @@ import type { OutendItem } from '@/pages/Outend';
 import { getDevicesList } from '@/services/rhilex/shebeiguanli';
 import { getOutendsList } from '@/services/rhilex/shuchuziyuanguanli';
 import { getInendsList } from '@/services/rhilex/shuruziyuanguanli';
+import { cn } from '@/utils/utils';
 import { CodeOutlined, FileTextOutlined, FormOutlined } from '@ant-design/icons';
 import { autocompletion, Completion } from '@codemirror/autocomplete';
 import { lintKeymap } from '@codemirror/lint';
@@ -12,6 +13,7 @@ import CodeMirror, { basicSetup, keymap, ReactCodeMirrorProps } from '@uiw/react
 import { useIntl, useRequest } from '@umijs/max';
 import { Button, Drawer, Space } from 'antd';
 import { useEffect, useState } from 'react';
+import CopyButton from '../CopyButton';
 import { funcIcon, keywordIcon, snippetIcon, variableIcon } from './images/autocomplete';
 import RuleList from './RuleList';
 import {
@@ -22,8 +24,6 @@ import {
   formatLuaCode,
   luaLinter,
 } from './utils/utils';
-import CopyButton from '../CopyButton';
-import { cn } from '@/utils/utils';
 
 const iconMap = {
   function: funcIcon,
@@ -51,7 +51,7 @@ const basicSetupSetting = {
   syntaxHighlighting: true,
 };
 
-type ProLuaEditor = ReactCodeMirrorProps & {
+type ProLuaEditorProps = ReactCodeMirrorProps & {
   hasVariables?: boolean | null;
   required?: boolean;
   label?: string;
@@ -68,7 +68,7 @@ const ProLuaEditor = ({
   onChange,
   onCopy,
   ...props
-}: ProLuaEditor) => {
+}: ProLuaEditorProps) => {
   const { formatMessage } = useIntl();
   const [open, setOpen] = useState<boolean>(false);
   const [newValue, setValue] = useState<string>();
@@ -173,7 +173,11 @@ const ProLuaEditor = ({
         </div>
       ) : (
         <Space className="w-full justify-between pb-2">
-          <label className={required ? 'pro-code-label' : ''}>{label}</label>
+          <label
+            className={required ? `before:text-[#ff4d4f] before:content-['*'] before:mr-1` : ''}
+          >
+            {label}
+          </label>
           <Space>
             <Button
               key="rule"

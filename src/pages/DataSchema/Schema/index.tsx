@@ -88,7 +88,7 @@ const SchemaList = ({ open, changeOpen }: SchemaListProps) => {
           };
         }}
         rowClassName={({ uuid }: Partial<SchemaItem>) =>
-          uuid === activeSchema.uuid ? 'active-group' : ''
+          uuid === activeSchema.uuid ? 'bg-[#f0f0f0]' : ''
         }
         metas={{
           title: {

@@ -60,61 +60,12 @@ canvas {
   }
 }
 
-.pro-code-label {
-  &::before {
-    display: inline-block;
-    color: #ff4d4f;
-    font-size: 14px;
-    font-family: SimSun, sans-serif;
-    line-height: 1;
-    content: '*';
-    margin-inline-end: 4px;
-  }
-}
-
 #terminal {
   width: 100%;
   height: 100%;
 
   .terminal {
     height: 100%;
-  }
-}
-
-.active-group {
-  background-color: #f0f0f0;
-}
-
-.editor-card {
-  .ant-pro-card-title {
-    font-weight: 400;
-    font-size: 14px;
-  }
-}
-
-.dashboard-card {
-  position: relative;
-  .ant-pro-card-body {
-    .ant-pro-card-col {
-      display: flex;
-      align-items: center;
-    }
-  }
-}
-
-.none-header-border {
-  .ant-modal-header {
-    padding: 16px 24px 0 24px;
-    border-bottom: none;
-  }
-}
-
-.custom-rule-wrapper {
-  .ant-pro-table-list-toolbar-container {
-    padding-block: 0;
-  }
-  .ant-pro-card-body {
-    padding-inline: 0;
   }
 }
 
@@ -147,27 +98,6 @@ canvas {
   outline: none;
 }
 
-// login form
-.rhilex-login-form-wrapper {
-  background: rgba(255, 255, 255, 0.25);
-  border: 0.5px solid #e7e9e8;
-  border-radius: 2px;
-  box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.13), 0 6px 16px 0 rgba(0, 0, 0, 0.08),
-    0 12px 24px 16px rgba(0, 0, 0, 0.04);
-}
-
-.json-code {
-  // width: fit-content;
-  padding: 16px;
-  overflow: auto;
-  color: rgba(42, 46, 54, 0.65);
-  font-size: 85%;
-  line-height: 1.45;
-  white-space: pre-wrap;
-  background-color: rgba(150, 150, 150, 0.1);
-  border-radius: 3px;
-}
-
 .modbus-slaver-table {
   table {
     thead {
@@ -186,36 +116,4 @@ canvas {
   #name_help {
     width: 328px;
   }
-}
-
-.gradient-border {
-  border: 1px solid;
-  border-image: linear-gradient(
-      90deg,
-      rgb(230, 169, 66) 0%,
-      rgb(166, 77, 0) 50%,
-      rgb(166, 77, 0) 100%
-    )
-    1;
-}
-
-.gradient-text {
-  color: transparent;
-  background-image: linear-gradient(270deg, rgb(166, 77, 0), #e6a942 50%, rgb(166, 77, 0) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-.gradient-gold-bg {
-  background-image: linear-gradient(-82deg, #ffd585, #fffae0 67%, #ffebb8);
-}
-
-.gradient-grey-bg {
-  background: linear-gradient(
-    to right,
-    rgb(173, 169, 150),
-    rgb(242, 242, 242),
-    rgb(219, 219, 219),
-    rgb(234, 234, 234)
-  );
 }

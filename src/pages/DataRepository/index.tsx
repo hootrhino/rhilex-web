@@ -1,4 +1,7 @@
+import CopyButton from '@/components/CopyButton';
+import JsonCode from '@/components/JsonCode';
 import { message, modal } from '@/components/PopupHack';
+import { formatLuaCode } from '@/components/ProLuaEditor/utils/utils';
 import PageContainer from '@/components/ProPageContainer';
 import UnitValue from '@/components/UnitValue';
 import {
@@ -20,8 +23,6 @@ import { Button, Empty, Modal, Space, Tooltip, Tree } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Type } from '../DataSchema/Property/enum';
-import { formatLuaCode } from '@/components/ProLuaEditor/utils/utils';
-import CopyButton from '@/components/CopyButton';
 
 type SchemaDDLDefineItem = {
   name: string;
@@ -329,9 +330,7 @@ const DataRepository = () => {
           </Space>
         }
       >
-        <pre className="json-code">
-          <code>{modalConfig.code}</code>
-        </pre>
+        <JsonCode code={modalConfig.code} />
       </Modal>
     </PageContainer>
   );

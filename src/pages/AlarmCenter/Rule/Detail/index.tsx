@@ -1,3 +1,4 @@
+import JsonCode from '@/components/JsonCode';
 import PageContainer from '@/components/ProPageContainer';
 import UnitValue from '@/components/UnitValue';
 import { getOutendsDetail } from '@/services/rhilex/shuchuziyuanguanli';
@@ -47,9 +48,7 @@ const RuleDetail = () => {
                 </Space>
               }
             >
-              <pre className="json-code">
-                <code>{rule.expr}</code>
-              </pre>
+              <JsonCode code={rule.expr} />
             </ProCard>
           ))}
         </div>

@@ -65,7 +65,7 @@ const Login: React.FC = () => {
         </title>
       </Helmet>
       <div className="flex justify-center flex-1 py-32">
-        <div className="rhilex-login-form-wrapper">
+        <div className="shadow-login bg-[rgba(255,255,255,0.25)] rounded-[2px] border border-[#e7e9e8]">
           <LoginForm
             formRef={formRef}
             requiredMark={false}

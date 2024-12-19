@@ -1,3 +1,4 @@
+import JsonCode from '@/components/JsonCode';
 import { message } from '@/components/PopupHack';
 import ProConfirmModal from '@/components/ProConfirmModal';
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
@@ -156,7 +157,7 @@ const FirmwareConfig = () => {
     {
       title: formatMessage({ id: 'system.table.title.license' }),
       dataIndex: 'license',
-      valueType: 'code',
+      renderText: (license: string) => <JsonCode code={license} />,
     },
     {
       title: formatMessage({ id: 'system.table.title.authorizeAdmin' }),

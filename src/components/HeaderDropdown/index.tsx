@@ -12,6 +12,7 @@ import { history, useIntl, useModel } from '@umijs/max';
 import type { PopoverProps } from 'antd';
 import { App, Avatar, Divider, Flex, Popover, Space, Tag } from 'antd';
 import dayjs from 'dayjs';
+import './index.less';
 
 const HeaderDropdown: React.FC<PopoverProps> = (props) => {
   const { modal } = App.useApp();

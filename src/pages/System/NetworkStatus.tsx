@@ -1,5 +1,6 @@
+import JsonCode from '@/components/JsonCode';
 import { getSettingsNetStatus } from '@/services/rhilex/wangluopeizhi';
-import { ProCard, ProField } from '@ant-design/pro-components';
+import { ProCard } from '@ant-design/pro-components';
 import { useIntl, useRequest } from '@umijs/max';
 
 const NetworkStatus = () => {
@@ -8,12 +9,8 @@ const NetworkStatus = () => {
   const { data } = useRequest(() => getSettingsNetStatus());
 
   return (
-    <ProCard
-      title={formatMessage({ id: 'system.tab.netStatus' })}
-      headStyle={{ paddingBlock: 0 }}
-      className="network-card"
-    >
-      <ProField text={data} valueType="jsonCode" mode="read" />
+    <ProCard title={formatMessage({ id: 'system.tab.netStatus' })} headStyle={{ paddingBlock: 0 }}>
+      <JsonCode code={data} />
     </ProCard>
   );
 };

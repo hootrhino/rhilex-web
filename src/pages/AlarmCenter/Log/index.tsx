@@ -223,7 +223,6 @@ const AlarmLog = () => {
         open={open}
         width="40%"
         styles={{ body: { height: 600, overflowY: 'scroll' } }}
-        rootClassName="alarm-log-detail"
         onCancel={handleOnClose}
         maskClosable={false}
         footer={
@@ -235,6 +234,7 @@ const AlarmLog = () => {
         <ProDescriptions
           column={1}
           labelStyle={{ width: 100, justifyContent: 'end' }}
+          rootClassName="alarm-log-detail"
           columns={columns as ProDescriptionsItemProps<Record<string, any>, AlarmItem>[]}
           request={async () => {
             const { data } = await getAlarmLogDetail({ uuid: activeKey });

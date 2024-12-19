@@ -1,3 +1,4 @@
+import JsonCode from '@/components/JsonCode';
 import type { EnhancedProDescriptionsItemProps } from '@/components/ProDescriptions';
 import ProDescriptions from '@/components/ProDescriptions';
 import PageContainer from '@/components/ProPageContainer';
@@ -6,7 +7,7 @@ import { getCecollasCecollaSchema, getCecollasDetail } from '@/services/rhilex/y
 import { CECOLLAS_LIST } from '@/utils/constant';
 import { omit } from '@/utils/redash';
 import { BlockOutlined } from '@ant-design/icons';
-import { ProCard, ProField } from '@ant-design/pro-components';
+import { ProCard } from '@ant-design/pro-components';
 import { history, useIntl, useParams, useRequest } from '@umijs/max';
 import { Button, message, Space, Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
@@ -110,18 +111,13 @@ const Detail = () => {
       }
     >
       {readOnly ? (
-        <ProCard
-          title={formatMessage({ id: 'cecollas.title.schemaJson' })}
-          className="network-card"
-        >
-          <ProField
-            text={
+        <ProCard title={formatMessage({ id: 'cecollas.title.schemaJson' })}>
+          <JsonCode
+            code={
               activeSchema === Schema.GATEWAY
                 ? JSON.stringify(schema?.gatewaySchema)
                 : JSON.stringify(schema?.subDeviceSchema)
             }
-            valueType="jsonCode"
-            mode="read"
           />
         </ProCard>
       ) : (

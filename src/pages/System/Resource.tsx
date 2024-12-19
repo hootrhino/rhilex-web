@@ -337,7 +337,7 @@ const Resource = () => {
     >
       <StatisticCard.Group direction="row" className="mb-[24px]">
         <StatisticCard
-          className="resource-statistic-card"
+          bodyStyle={{ paddingInline: 10 }}
           statistic={{
             title: formatMessage({ id: 'system.table.title.product' }),
             value: product,
@@ -347,7 +347,7 @@ const Resource = () => {
         />
         <StatisticCard.Divider type="vertical" />
         <StatisticCard
-          className="resource-statistic-card"
+          bodyStyle={{ paddingInline: 10 }}
           statistic={{
             title: formatMessage({ id: 'system.table.title.version' }),
             value: formatVersion(),
@@ -357,7 +357,7 @@ const Resource = () => {
         />
         <StatisticCard.Divider type="vertical" />
         <StatisticCard
-          className="resource-statistic-card"
+          bodyStyle={{ paddingInline: 10 }}
           statistic={{
             title: formatMessage({ id: 'system.table.title.osUpTime' }),
             value: formatTime(),
@@ -366,7 +366,7 @@ const Resource = () => {
         />
         <StatisticCard.Divider type="vertical" />
         <StatisticCard
-          className="resource-statistic-card"
+          bodyStyle={{ paddingInline: 10 }}
           statistic={{
             title: formatMessage({ id: 'system.table.title.osArch' }),
             value: osArch,

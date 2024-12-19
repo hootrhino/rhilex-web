@@ -47,7 +47,7 @@ const ProConfirmModal = ({
       open={open}
       destroyOnClose
       onCancel={onCancel}
-      rootClassName="none-header-border"
+      styles={{ header: { borderBottom: 'none', padding: '16px 24px 0 24px' } }}
       width={400}
       footer={
         <Space>
