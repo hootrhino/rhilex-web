@@ -71,8 +71,7 @@ const Login: React.FC = () => {
             requiredMark={false}
             contentStyle={{
               width: 375,
-              // minWidth: 280,
-              maxWidth: '75vw',
+              // maxWidth: '75vw',
               position: 'relative',
             }}
             title={<img alt="logo" src={loginIcon} style={{ width: 160 }} />}
@@ -155,7 +154,8 @@ const Login: React.FC = () => {
       </div>
       <DefaultFooter
         copyright={`2023-${new Date().getFullYear()} RHILEX Technologies Inc. All rights reserved.`}
-        className="bg-[#f0f2f5]"
+        // className="bg-none"
+        style={{ background: 'none' }}
       />
       <UserAgreementModal open={open} onCancel={() => setOpen(false)} />
       <SelectLang className="absolute right-[16px] p-[12px] rounded-md bg-transparent hover:bg-[rgba(0,0,0,0.06)]" />

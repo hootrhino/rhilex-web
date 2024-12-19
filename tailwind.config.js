@@ -3,10 +3,10 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {},
-    screens: {
-      xs: { max: '480px' },
-      md: { max: '768px' },
-    },
+    // screens: {
+    //   xs: { max: '480px' },
+    //   md: { max: '768px' },
+    // },
   },
   plugins: [],
   corePlugins: {
