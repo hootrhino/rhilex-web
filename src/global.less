@@ -1,0 +1,119 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  overscroll-behavior: none;
+}
+
+canvas {
+  display: block;
+}
+
+// ul,
+// ol {
+//   list-style: none;
+// }
+
+// lua editor
+.cm-completionIcon-function,
+.cm-completionIcon-keyword,
+.cm-completionIcon-snippet,
+.cm-completionIcon-variable {
+  display: none !important;
+}
+
+.cm-completionDetail {
+  display: none !important;
+}
+
+.cm-editor.cm-focused {
+  outline: none;
+}
+
+.cm-foldGutter {
+  padding: 0 6px;
+}
+
+.customize-autocomplete-tooltip {
+  width: 50%;
+  ul {
+    li {
+      position: relative;
+      .autocomplete-icon {
+        width: 12px;
+        margin-right: 5px;
+      }
+      .autocomplete-detail {
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        color: #969697;
+        font-size: 10px;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}
+
+#terminal {
+  width: 100%;
+  height: 100%;
+
+  .terminal {
+    height: 100%;
+  }
+}
+
+// table 条纹背景
+.stripe-table {
+  .ant-table-tbody {
+    .ant-table-row:nth-child(even) {
+      background: #fafafa;
+    }
+    .ant-form-item-margin-offset {
+      margin-bottom: 0 !important;
+    }
+  }
+}
+
+// 设备
+.device-form {
+  .@{ant-prefix}-pro-form-group-title {
+    font-weight: 400;
+    margin-block-end: 24px;
+  }
+
+  #name_help {
+    width: 328px;
+  }
+}
+
+// modal btn
+.ant-btn:not(:disabled):focus-visible {
+  outline: none;
+}
+
+.modbus-slaver-table {
+  table {
+    thead {
+      tr {
+        &:nth-child(1) {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
+
+// outend
+.outend-form,
+.inend-form {
+  #name_help {
+    width: 328px;
+  }
+}

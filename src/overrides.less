@@ -1,0 +1,239 @@
+/* Layout */
+.rhilex-layout {
+  aside {
+    .ant-menu {
+      .ant-menu-item {
+        color: rgba(0, 0, 0, 0.65);
+      }
+      .ant-menu-item-selected {
+        color: rgba(0, 0, 0, 0.95);
+      }
+    }
+  }
+}
+
+/* 全局 global */
+
+// Modal
+.ant-modal .ant-modal-footer {
+  border-top: none;
+}
+
+// PageContainer
+.ant-page-header-content {
+  padding-block-start: 0;
+}
+
+.ant-pro-page-container-children-container {
+  padding-block-start: 0;
+}
+
+// Header - Logo
+.ant-pro-global-header-logo {
+  width: 120px;
+  a {
+    width: 100%;
+
+    img {
+      width: 100%;
+    }
+
+    h1 {
+      display: none;
+    }
+  }
+}
+
+// Input
+.input-tag-wrapper {
+  .ant-tag,
+  .ant-tag-success {
+    background: transparent;
+  }
+}
+
+/* 登录 Login */
+
+// Footer
+.ant-pro-global-footer-copyright {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+// Agreement
+#agreement {
+  span {
+    color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+// Form
+.ant-pro-form-login-header {
+  height: 50px;
+  line-height: 50px;
+}
+
+.ant-pro-form-login-container {
+  // padding-inline: 100px;
+  padding: 80px 100px;
+}
+
+.ant-input-filled {
+  background-color: rgba(255, 255, 255, 1);
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+  input {
+    background: transparent;
+  }
+}
+
+/* RightContent - NoticeIcon */
+.notification-popver .ant-popover-inner-content {
+  padding: 0;
+
+  .ant-spin-nested-loading {
+    min-height: 220px;
+  }
+}
+
+.notification-list {
+  min-width: 300px;
+  height: 266px;
+  overflow-y: auto;
+
+  .ant-pro-card {
+    height: 100%;
+
+    .ant-pro-card-body {
+      padding: 0;
+
+      .ant-pro-table-list-toolbar-left {
+        max-width: 100%;
+      }
+    }
+  }
+
+  .ant-list {
+    height: 100%;
+
+    .ant-list-item {
+      padding: 12px 16px;
+
+      .ant-list-item-action > li {
+        padding: 0;
+
+        .ant-tag {
+          margin-inline-end: 0;
+        }
+      }
+    }
+
+    .ant-list-footer {
+      padding: 12px 16px;
+      text-align: right;
+    }
+  }
+}
+
+.notice-badge {
+  .ant-badge-count {
+    box-shadow: none;
+  }
+}
+
+.user-popover {
+  .ant-popover-inner-content {
+    padding: 0;
+  }
+
+  .ant-divider {
+    font-size: 12px;
+  }
+}
+
+/* Dashboard */
+.dashboard-device-card {
+  .ant-pro-card .ant-pro-card-body {
+    padding-inline: 12px;
+
+    .ant-list {
+      height: 175px;
+      overflow-y: scroll;
+    }
+
+    .ant-pro-list-row-title {
+      word-break: keep-all;
+    }
+
+    .ant-list-sm .ant-list-item {
+      padding: 6px 16px;
+    }
+  }
+}
+
+/* Plugin - 插件 */
+.plugin-card {
+  .ant-pro-checkcard {
+    border-color: transparent;
+    box-shadow: 0 1px 2px -2px #00000029, 0 3px 6px #0000001f, 0 5px 12px 4px #00000017;
+  }
+  .ant-pro-checkcard-body {
+    padding: 0 12px 24px !important;
+    color: rgba(42, 46, 54, 0.7);
+  }
+}
+
+/* DataRepository - 数据中心 */
+.data-repo-tree-unselectable {
+  cursor: not-allowed;
+
+  span {
+    cursor: not-allowed;
+  }
+}
+
+/* CommunicationModule - 通信模组 */
+.send-button-item {
+  width: 100%;
+
+  .ant-row {
+    width: 100%;
+  }
+}
+
+/* Device - 设备 */
+
+// modbus-device-point
+.data-type-cascader {
+  height: 280px;
+
+  .ant-cascader-menus {
+    height: 280px;
+
+    .ant-cascader-menu {
+      height: 100%;
+    }
+  }
+}
+
+// plc-device-point
+.plc-data-type-cascader {
+  height: 300px;
+
+  .ant-cascader-menus {
+    height: 300px;
+
+    .ant-cascader-menu {
+      height: 100%;
+    }
+  }
+}
+
+/* 预警中心 */
+.alarm-log-detail {
+  .ant-descriptions-item-content {
+    pre {
+      width: 100% !important;
+    }
+  }
+}
